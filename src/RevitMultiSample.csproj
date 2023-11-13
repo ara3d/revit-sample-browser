@@ -1,0 +1,2888 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{EF12A6B4-ADE7-438D-A469-6A590548C266}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>RevitMultiSample</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>RevitMultiSample</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RevitAddInUtility">
+      <HintPath>..\vendor\revit\2024\RevitAddInUtility.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPI">
+      <HintPath>..\vendor\revit\2024\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIIFC">
+      <HintPath>..\vendor\revit\2024\RevitAPIIFC.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\vendor\revit\2024\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitNET">
+      <HintPath>..\vendor\revit\2024\RevitNET.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="APIAppStartup\CS\Resources\test.rvt-Revit_black-93694.bmp" />
+    <Content Include="AppearanceAssetEditing\CS\Resources\element_select.ico" />
+    <Content Include="AppearanceAssetEditing\CS\Resources\shortcut_assign.ico" />
+    <Content Include="AppearanceAssetEditing\CS\Resources\shortcut_remove.ico" />
+    <Content Include="AttachedDetailGroup\CS\Resources\HideDetailGroupIcon.ico" />
+    <Content Include="AttachedDetailGroup\CS\Resources\ShowDetailGroupIcon.ico" />
+    <Content Include="CloudAPISample\CS\Resources\icon.ico" />
+    <Content Include="CreateShared\VB.NET\RevitParameters.txt" />
+    <Content Include="CurtainSystem\CS\Resources\delete.ico" />
+    <Content Include="CurtainSystem\CS\Resources\new.ico" />
+    <Content Include="CurvedBeam\CS\arc3.bmp" />
+    <Content Include="CurvedBeam\CS\partialellipse.bmp" />
+    <Content Include="CurvedBeam\CS\spline.bmp" />
+    <Content Include="DatumsModification\Align.png" />
+    <Content Include="DatumsModification\CS\grid.jpg" />
+    <Content Include="DatumsModification\Propagate.png" />
+    <Content Include="DatumsModification\Style.png" />
+    <Content Include="DisplacementElementAnimation\CS\Resources\DisplacementPlay.ico" />
+    <Content Include="DockableDialogs\CS\Resources\Hide.png" />
+    <Content Include="DockableDialogs\CS\Resources\Register.png" />
+    <Content Include="DockableDialogs\CS\Resources\Show.png" />
+    <Content Include="DoorSwing\InitialCommand_Large.bmp" />
+    <Content Include="DoorSwing\InitialCommand_Small.bmp" />
+    <Content Include="DoorSwing\UpdateGeometry_Large.bmp" />
+    <Content Include="DoorSwing\UpdateGeometry_Small.bmp" />
+    <Content Include="DoorSwing\UpdateParameter_Large.bmp" />
+    <Content Include="DoorSwing\UpdateParameter_Small.bmp" />
+    <Content Include="DuplicateViews\CS\Resources\ViewCopyAcrossFiles.ico" />
+    <Content Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\ExtensibleStorageManager.sln" />
+    <Content Include="ExtensibleStorageManager\ExtensibleStorageManager\schemas\aSimpleSchema_adsk___78630.xml" />
+    <Content Include="ExternalCommand\CS\ExternalCommand.sln" />
+    <Content Include="ExternalCommand\CS\ExternalCommandRegistration\Pictures\CreateWall.png" />
+    <Content Include="ExternalCommand\CS\ExternalCommandRegistration\Pictures\CreateWallTooltip.bmp" />
+    <Content Include="ExternalCommand\CS\ExternalCommandRegistration\Pictures\View3D.bmp" />
+    <Content Include="ExternalResourceServer\ExternalResourceDBServer\CS\SampleResourceServerRoot\Keynotes\Imperial\RevitKeynotes_Imperial.txt" />
+    <Content Include="ExternalResourceServer\ExternalResourceDBServer\CS\SampleResourceServerRoot\Keynotes\Metric\RevitKeynotes_Metric.txt" />
+    <Content Include="FamilyCreation\AutoParameter\CS\FamilyParameter.txt" />
+    <Content Include="FamilyCreation\AutoParameter\CS\SharedParameter.txt" />
+    <Content Include="FreeFormElement\CS\Resources\CreateNegative.ico" />
+    <Content Include="GeometryAPI\BRepBuilderExample\CS\Resources\large_shape.png" />
+    <Content Include="GeometryAPI\BRepBuilderExample\CS\Resources\small_shape.png" />
+    <Content Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\Resources\large_shape.png" />
+    <Content Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\Resources\small_shape.png" />
+    <Content Include="GetSetDefaultTypes\CS\Resources\type.png" />
+    <Content Include="InCanvasControlAPI\CS\issue.bmp" />
+    <Content Include="InCanvasControlAPI\CS\selected.bmp" />
+    <Content Include="LevelsProperty\CS\Resources\add.ico" />
+    <Content Include="LevelsProperty\CS\Resources\delete.ico" />
+    <Content Include="LevelsProperty\CS\Resources\new.ico" />
+    <Content Include="LevelsProperty\CS\Resources\subtract.ico" />
+    <Content Include="Massing\ParameterValuesFromImage\brickFanWall.rfa_grayscale.bmp" />
+    <Content Include="Massing\ParameterValuesFromImage\Tower.rfa_grayscale.bmp" />
+    <Content Include="Massing\ParameterValuesFromImage\Tower.rfa_grayscale2.bmp" />
+    <Content Include="Massing\ParameterValuesFromImage\Tower.rfa_grayscale3.bmp" />
+    <Content Include="Massing\ParameterValuesFromImage\Tower.rfa_grayscale4.bmp" />
+    <Content Include="Massing\ParameterValuesFromImage\Tower.rfa_grayscale5.bmp" />
+    <Content Include="Massing\ParameterValuesFromImage\Tower.rfa_grayscale6.bmp" />
+    <Content Include="Massing\ParameterValuesFromImage\Tower.rfa_grayscale7.bmp" />
+    <Content Include="NewHostedSweep\CS\Images\CBChecked.bmp" />
+    <Content Include="NewHostedSweep\CS\Images\CBIndeterminate.bmp" />
+    <Content Include="NewHostedSweep\CS\Images\CBUnchecked.bmp" />
+    <Content Include="PanelSchedule\CS\template.html" />
+    <Content Include="PerformanceAdviserControl\Button32.png" />
+    <Content Include="PointCloudEngine\CS\PointCloudEngine.XML" />
+    <Content Include="PointCloudEngine\tower.xml" />
+    <Content Include="PostCommandWorkflow\CS\Resources\RevisionIcon.ico" />
+    <Content Include="PowerCircuit\CS\Resources\AddToCircuit.png" />
+    <Content Include="PowerCircuit\CS\Resources\Cancel.png" />
+    <Content Include="PowerCircuit\CS\Resources\CreateCircuit.png" />
+    <Content Include="PowerCircuit\CS\Resources\DisconnectPanel.png" />
+    <Content Include="PowerCircuit\CS\Resources\EditCircuit.png" />
+    <Content Include="PowerCircuit\CS\Resources\RemoveFromCircuit.png" />
+    <Content Include="PowerCircuit\CS\Resources\SelectPanel.png" />
+    <Content Include="Ribbon\CircleWall.png" />
+    <Content Include="Ribbon\CreateWall-S.png" />
+    <Content Include="Ribbon\CreateWall.png" />
+    <Content Include="Ribbon\CreateWallTooltip.bmp" />
+    <Content Include="Ribbon\DeleteWalls.png" />
+    <Content Include="Ribbon\ExteriorBrick-S.png" />
+    <Content Include="Ribbon\ExteriorBrick.png" />
+    <Content Include="Ribbon\Generic8-S.png" />
+    <Content Include="Ribbon\Generic8.png" />
+    <Content Include="Ribbon\LevelsSelector.png" />
+    <Content Include="Ribbon\MoveWalls.png" />
+    <Content Include="Ribbon\MoveWallsXLarge.png" />
+    <Content Include="Ribbon\MoveWallsYLarge.png" />
+    <Content Include="Ribbon\RectangleWall.png" />
+    <Content Include="Ribbon\Reset.png" />
+    <Content Include="Ribbon\SquareWall.png" />
+    <Content Include="Ribbon\StrcturalWall-S.png" />
+    <Content Include="Ribbon\StrcturalWall.png" />
+    <Content Include="Ribbon\TriangleWall.png" />
+    <Content Include="Ribbon\WallMark.png" />
+    <Content Include="RoutingPreferenceTools\familyPaths.xml" />
+    <Content Include="RoutingPreferenceTools\routingPreferenceSample.xml" />
+    <Content Include="RvtSamples\CS\Icons\Analysis.ico" />
+    <Content Include="RvtSamples\CS\Icons\Annotation.ico" />
+    <Content Include="RvtSamples\CS\Icons\Basics.ico" />
+    <Content Include="RvtSamples\CS\Icons\DataExchange.ico" />
+    <Content Include="RvtSamples\CS\Icons\Elements.ico" />
+    <Content Include="RvtSamples\CS\Icons\Families.ico" />
+    <Content Include="RvtSamples\CS\Icons\Geometry.ico" />
+    <Content Include="RvtSamples\CS\Icons\Massing.ico" />
+    <Content Include="RvtSamples\CS\Icons\Materials.ico" />
+    <Content Include="RvtSamples\CS\Icons\MEP.ico" />
+    <Content Include="RvtSamples\CS\Icons\Parameters.ico" />
+    <Content Include="RvtSamples\CS\Icons\RoomsAndSpaces.ico" />
+    <Content Include="RvtSamples\CS\Icons\Selection.ico" />
+    <Content Include="RvtSamples\CS\Icons\Structure.ico" />
+    <Content Include="RvtSamples\CS\Icons\Views.ico" />
+    <Content Include="RvtSamples\CS\RvtSamples.txt" />
+    <Content Include="SamplesContent.htm" />
+    <Content Include="SamplesIndex.htm" />
+    <Content Include="SamplesReadMe.htm" />
+    <Content Include="ScheduleAutomaticFormatter\CS\Resources\ScheduleFormatter.ico" />
+    <Content Include="ScheduleToHTML\CS\Resources\ScheduleExport.ico" />
+    <Content Include="SharedCoordinateSystem\CS\timezone.txt" />
+    <Content Include="SinePlotter\CS\Resources\Start.png" />
+    <Content Include="SinePlotter\SinePlotter.sln" />
+    <Content Include="Site\CS\Resources\AddPond.ico" />
+    <Content Include="Site\CS\Resources\DeleteRegion.ico" />
+    <Content Include="Site\CS\Resources\LowerTerrain.ico" />
+    <Content Include="Site\CS\Resources\MoveRegion.ico" />
+    <Content Include="Site\CS\Resources\RaiseTerrain.ico" />
+    <Content Include="Site\CS\Resources\SiteNormalize.ico" />
+    <Content Include="TraverseSystem\CS\TraverseSystem.XML" />
+    <Content Include="UIAPI\CS\Images\autodesk.jpg" />
+    <Content Include="UIAPI\CS\Resources\StrcturalWall-S.png" />
+    <Content Include="UIAPI\CS\Resources\StrcturalWall.png" />
+    <Content Include="WinderStairs\CS\Forms\LWinder.png" />
+    <Content Include="WinderStairs\CS\Forms\UWinder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AddSpaceAndZone\CS\AddSpaceAndZone.addin" />
+    <None Include="AddSpaceAndZone\CS\ReadMe_AddSpaceAndZone.rtf" />
+    <None Include="AddSpaceAndZone\CS\~%24adMe_AddSpaceAndZone.rtf" />
+    <None Include="AllViews\CS\AllViews.addin" />
+    <None Include="AllViews\CS\ReadMe_AllViews.rtf" />
+    <None Include="AnalysisVisualizationFramework\DistanceToSurfaces\CS\DistanceToSurfaces.addin" />
+    <None Include="AnalysisVisualizationFramework\DistanceToSurfaces\CS\ReadMe_DistanceToSurfaces.rtf" />
+    <None Include="AnalysisVisualizationFramework\MultithreadedCalculation\CS\MultithreadedCalculation.addin" />
+    <None Include="AnalysisVisualizationFramework\MultithreadedCalculation\CS\ReadMe_MultithreadedCalculation.rtf" />
+    <None Include="AnalysisVisualizationFramework\SpatialFieldGradient\CS\ReadMe_SpatialFieldGradient.rtf" />
+    <None Include="AnalysisVisualizationFramework\SpatialFieldGradient\CS\SpatialFieldGradient.addin" />
+    <None Include="AnalyticalSupportData_Info\CS\AnalyticalSupportData_Info.addin" />
+    <None Include="AnalyticalSupportData_Info\CS\ReadMe_AnalyticalSupportData_Info.rtf" />
+    <None Include="APIAppStartup\CS\APIAppStartup.addin" />
+    <None Include="APIAppStartup\CS\ReadMe_APIAppStartup.rtf" />
+    <None Include="AppearanceAssetEditing\CS\AppearanceAssetEditing.addin" />
+    <None Include="AppearanceAssetEditing\CS\Readme_AppearanceAssetEditing.rtf" />
+    <None Include="ArchSample\VB.NET\ArchSample.addin" />
+    <None Include="ArchSample\VB.NET\ReadMe_ArchSample.rtf" />
+    <None Include="AreaReinCurve\CS\AreaReinCurve.addin" />
+    <None Include="AreaReinCurve\CS\ReadMe_AreaReinCurve.rtf" />
+    <None Include="AreaReinParameters\CS\AreaReinParameters.addin" />
+    <None Include="AreaReinParameters\CS\ReadMe_AreaReinParameters.rtf" />
+    <None Include="AttachedDetailGroup\CS\AttachedDetailGroup.addin" />
+    <None Include="AttachedDetailGroup\CS\Readme_AttachedDetailGroup.rtf" />
+    <None Include="AutoRoute\CS\AutoRoute.addin" />
+    <None Include="AutoRoute\CS\ReadMe_AutoRoute.rtf" />
+    <None Include="AutoTagRooms\CS\AutoTagRooms.addin" />
+    <None Include="AutoTagRooms\CS\ReadMe_AutoTagRooms.rtf" />
+    <None Include="AvoidObstruction\CS\AvoidObstruction.addin" />
+    <None Include="AvoidObstruction\CS\ReadMe_AvoidObstruction.rtf" />
+    <None Include="BeamAndSlabNewParameter\CS\BeamAndSlabNewParameter.addin" />
+    <None Include="BeamAndSlabNewParameter\CS\ReadMe_BeamAndSlabNewParameter.rtf" />
+    <None Include="BoundaryConditions\CS\BoundaryConditions.addin" />
+    <None Include="BoundaryConditions\CS\ReadMe_BoundaryConditions.rtf" />
+    <None Include="BrowseBindings\VB.NET\BrowseBindings.addin" />
+    <None Include="BrowseBindings\VB.NET\ReadMe_BrowseBindings.rtf" />
+    <None Include="CapitalizeAllTextNotes\CS\CapitalizeAllTextNotes.addin" />
+    <None Include="CapitalizeAllTextNotes\CS\Readme_CapitalizeAllTextNotes.rtf" />
+    <None Include="CloudAPISample\CS\CloudAPISample.addin" />
+    <None Include="CloudAPISample\CS\ReadMe_CloudAPISample.rtf" />
+    <None Include="ColorFill\CS\ColorFill.addin" />
+    <None Include="ColorFill\CS\ReadMe_ColorFill.rtf" />
+    <None Include="CompoundStructure\CS\CompoundStructure.addin" />
+    <None Include="CompoundStructure\CS\ReadMe_CompoundStructure.rtf" />
+    <None Include="ContextualAnalyticalModel\CS\ContextualAnalyticalModel.addin" />
+    <None Include="ContextualAnalyticalModel\CS\ReadMe_ContextualAnalyticalModel.rtf" />
+    <None Include="CreateBeamsColumnsBraces\CS\CreateBeamsColumnsBraces.addin" />
+    <None Include="CreateBeamsColumnsBraces\CS\ReadMe_CreateBeamsColumnsBraces.rtf" />
+    <None Include="CreateBeamsColumnsBraces\VB.NET\CreateBeamsColumnsBraces.addin" />
+    <None Include="CreateBeamsColumnsBraces\VB.NET\ReadMe_CreateBeamsColumnsBraces.rtf" />
+    <None Include="CreateBeamSystem\CS\CreateBeamSystem.addin" />
+    <None Include="CreateBeamSystem\CS\ReadMe_CreateBeamSystem.rtf" />
+    <None Include="CreateComplexAreaRein\CS\CreateComplexAreaRein.addin" />
+    <None Include="CreateComplexAreaRein\CS\ReadMe_CreateComplexAreaRein.rtf" />
+    <None Include="CreateDimensions\CS\CreateDimensions.addin" />
+    <None Include="CreateDimensions\CS\ReadMe_CreateDimensions.rtf" />
+    <None Include="CreateDuctworkStiffener\CS\CreateDuctworkStiffener.addin" />
+    <None Include="CreateDuctworkStiffener\CS\ReadMe_CreateDuctworkStiffener.rtf" />
+    <None Include="CreateFillPattern\CS\CreateFillPattern.addin" />
+    <None Include="CreateFillPattern\CS\Readme_CreateFillPattern.rtf" />
+    <None Include="CreateShared\VB.NET\CreateShared.addin" />
+    <None Include="CreateShared\VB.NET\ReadMe_CreateShared.rtf" />
+    <None Include="CreateSimpleAreaRein\CS\CreateSimpleAreaRein.addin" />
+    <None Include="CreateSimpleAreaRein\CS\ReadMe_CreateSimpleAreaRein.rtf" />
+    <None Include="CreateTrianglesTopography\CS\CreateTrianglesTopography.addin" />
+    <None Include="CreateTrianglesTopography\CS\Readme_CreateTrianglesTopography.rtf" />
+    <None Include="CreateTrianglesTopography\CS\TrianglesData.json" />
+    <None Include="CreateViewSection\CS\CreateViewSection.addin" />
+    <None Include="CreateViewSection\CS\ReadMe_CreateViewSection.rtf" />
+    <None Include="CreateWallinBeamProfile\CS\CreateWallinBeamProfile.addin" />
+    <None Include="CreateWallinBeamProfile\CS\ReadMe_CreateWallinBeamProfile.rtf" />
+    <None Include="CreateWallsUnderBeams\CS\CreateWallsUnderBeams.addin" />
+    <None Include="CreateWallsUnderBeams\CS\ReadMe_CreateWallsUnderBeams.rtf" />
+    <None Include="CurtainSystem\CS\CurtainSystem.addin" />
+    <None Include="CurtainSystem\CS\ReadMe_CurtainSystem.rtf" />
+    <None Include="CurtainWallGrid\CS\CurtainWallGrid.addin" />
+    <None Include="CurtainWallGrid\CS\ReadMe_CurtainWallGrid.rtf" />
+    <None Include="CurvedBeam\CS\CurvedBeam.addin" />
+    <None Include="CurvedBeam\CS\ReadMe_CurvedBeam.rtf" />
+    <None Include="CustomExporter\Custom2DExporter\CS\Custom2DExporter.addin" />
+    <None Include="CustomExporter\Custom2DExporter\CS\Readme_Custom2DExporter.rtf" />
+    <None Include="DatumsModification\CS\DatumsModification.addin" />
+    <None Include="DatumsModification\CS\Readme_DatumsModification.rtf" />
+    <None Include="DeckProperties\CS\DeckProperties.addin" />
+    <None Include="DeckProperties\CS\ReadMe_DeckProperties.rtf" />
+    <None Include="DeleteDimensions\CS\DeleteDimensions.addin" />
+    <None Include="DeleteDimensions\CS\ReadMe_DeleteDimensions.rtf" />
+    <None Include="DeleteObject\CS\DeleteObject.addin" />
+    <None Include="DeleteObject\CS\ReadMe_DeleteObject.rtf" />
+    <None Include="DeleteObject\VB.NET\DeleteObject.addin" />
+    <None Include="DeleteObject\VB.NET\ReadMe_DeleteObject.rtf" />
+    <None Include="DesignOptionReader\VB.NET\DesignOptionReader.addin" />
+    <None Include="DesignOptionReader\VB.NET\ReadMe_DesignOptionReader.rtf" />
+    <None Include="DimensionLeaderEnd\CS\DimensionLeaderEnd.addin" />
+    <None Include="DimensionLeaderEnd\CS\Readme_DimensionLeaderEnd.rtf" />
+    <None Include="DirectionCalculation\CS\DirectionCalculation.addin" />
+    <None Include="DirectionCalculation\CS\ReadMe_DirectionCalculation.rtf" />
+    <None Include="DisableCommand\CS\DisableCommand.addin" />
+    <None Include="DisableCommand\CS\Readme_DisableCommand.rtf" />
+    <None Include="DisplacementElementAnimation\CS\DisplacementElementAnimation.addin" />
+    <None Include="DisplacementElementAnimation\CS\Readme_DisplacementElementAnimation.rtf" />
+    <None Include="DockableDialogs\CS\DockableDialogs.addin" />
+    <None Include="DockableDialogs\CS\Readme_DockableDialogs.rtf" />
+    <None Include="DocumentChanged\CS\ChangesMonitor.addin" />
+    <None Include="DocumentChanged\CS\ReadMe_ChangesMonitor.rtf" />
+    <None Include="DoorSwing\CS\DoorSwing.addin" />
+    <None Include="DoorSwing\CS\ReadMe_DoorSwing.rtf" />
+    <None Include="DuplicateGraphics\CS\DuplicateGraphics.addin" />
+    <None Include="DuplicateGraphics\CS\Readme_DuplicateGraphics.rtf" />
+    <None Include="DuplicateViews\CS\DuplicateViews.addin" />
+    <None Include="DuplicateViews\CS\Readme_DuplicateViews.rtf" />
+    <None Include="DynamicModelUpdate\CS\DynamicModelUpdate.addin" />
+    <None Include="DynamicModelUpdate\CS\ReadMe_DynamicModelUpdate.rtf" />
+    <None Include="ElementFilter\ViewFilters\CS\ReadMe_ViewFilters.rtf" />
+    <None Include="ElementFilter\ViewFilters\CS\ViewFilters.addin" />
+    <None Include="ErrorHandling\CS\ErrorHandling.addin" />
+    <None Include="ErrorHandling\CS\ReadMe_ErrorHandling.rtf" />
+    <None Include="Events\AutoStamp\CS\AutoStamp.addin" />
+    <None Include="Events\AutoStamp\CS\ReadMe_AutoStamp.rtf" />
+    <None Include="Events\AutoUpdate\CS\AutoUpdate.addin" />
+    <None Include="Events\AutoUpdate\CS\ReadMe_AutoUpdate.rtf" />
+    <None Include="Events\CancelSave\CS\CancelSave.addin" />
+    <None Include="Events\CancelSave\CS\ReadMe_CancelSave.rtf" />
+    <None Include="Events\EventsMonitor\CS\EventsMonitor.addin" />
+    <None Include="Events\EventsMonitor\CS\ReadMe_EventsMonitor.rtf" />
+    <None Include="Events\PrintLog\CS\PrintLog.addin" />
+    <None Include="Events\PrintLog\CS\ReadMe_PrintLog.rtf" />
+    <None Include="Events\ProgressNotifier\CS\ProgressNotifier.addin" />
+    <None Include="Events\ProgressNotifier\CS\ReadMe_ProgressNotifier.rtf" />
+    <None Include="Events\SelectionChanged\CS\ReadMe_SelectionChanged.rtf" />
+    <None Include="Events\SelectionChanged\CS\SelectionChanged.addin" />
+    <None Include="ExportPDFSettingsSample\CS\ExportPDFSettingsSample.addin" />
+    <None Include="ExportPDFSettingsSample\CS\ReadMe_ExportPDFSettingsSample.rtf" />
+    <None Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\ExtensibleStorageManager.addin" />
+    <None Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\ReadMe_ExtensibleStorageManager.rtf" />
+    <None Include="ExtensibleStorageManager\SchemaWrapperTools\CS\ReadMe_SchemaWrapperTools.rtf" />
+    <None Include="ExtensibleStorageUtility\CS\ExtensibleStorageUtility.addin" />
+    <None Include="ExtensibleStorageUtility\CS\Readme_ExtensibleStorageUtility.rtf" />
+    <None Include="ExternalCommand\CS\ExternalCommand.addin" />
+    <None Include="ExternalCommand\CS\ReadMe_ExternalCommand.docx" />
+    <None Include="ExternalCommand\CS\RevitAddInUtilitySample\Properties\Settings.settings" />
+    <None Include="ExternalResourceServer\ExternalResourceDBServer\CS\ExternalResourceDBServer.addin" />
+    <None Include="ExternalResourceServer\ExternalResourceDBServer\CS\Readme_ExternalResourceDBServer.rtf" />
+    <None Include="ExternalResourceServer\ExternalResourceUIServer\CS\ExternalResourceUIServer.addin" />
+    <None Include="ExternalResourceServer\ExternalResourceUIServer\CS\Readme_ExternalResourceUIServer.rtf" />
+    <None Include="FabricationPartLayout\CS\FabricationPartLayout.addin" />
+    <None Include="FabricationPartLayout\CS\Readme_FabricationPartLayout.rtf" />
+    <None Include="FamilyCreation\AutoJoin\CS\AutoJoin.addin" />
+    <None Include="FamilyCreation\AutoJoin\CS\ReadMe_AutoJoin.rtf" />
+    <None Include="FamilyCreation\AutoParameter\CS\AutoParameter.addin" />
+    <None Include="FamilyCreation\AutoParameter\CS\ReadMe_AutoParameter.rtf" />
+    <None Include="FamilyCreation\CreateAirHandler\CS\CreateAirHandler.addin" />
+    <None Include="FamilyCreation\CreateAirHandler\CS\Mechanical Equipment.rft" />
+    <None Include="FamilyCreation\CreateAirHandler\CS\ReadMe_CreateAirHandler.rtf" />
+    <None Include="FamilyCreation\CreateTruss\CS\CreateTruss.addin" />
+    <None Include="FamilyCreation\CreateTruss\CS\ReadMe_CreateTruss.rtf" />
+    <None Include="FamilyCreation\DWGFamilyCreation\CS\DWGFamilyCreation.addin" />
+    <None Include="FamilyCreation\DWGFamilyCreation\CS\ReadMe_DWGFamilyCreation.rtf" />
+    <None Include="FamilyCreation\DWGFamilyCreation\Desk.dwg" />
+    <None Include="FamilyCreation\DWGFamilyCreation\Furniture.rft" />
+    <None Include="FamilyCreation\GenericModelCreation\CS\Generic Model.rft" />
+    <None Include="FamilyCreation\GenericModelCreation\CS\GenericModelCreation.addin" />
+    <None Include="FamilyCreation\GenericModelCreation\CS\ReadMe_GenericModelCreation.rtf" />
+    <None Include="FamilyCreation\TypeRegeneration\CS\ReadMe_TypeRegeneration.rtf" />
+    <None Include="FamilyCreation\TypeRegeneration\CS\TypeRegeneration.addin" />
+    <None Include="FamilyCreation\ValidateParameters\CS\ReadMe_ValidateParameters.rtf" />
+    <None Include="FamilyCreation\ValidateParameters\CS\ValidateParameters.addin" />
+    <None Include="FamilyCreation\WindowWizard\CS\ReadMe_WindowWizard.rtf" />
+    <None Include="FamilyCreation\WindowWizard\CS\WindowWizard.addin" />
+    <None Include="FamilyCreation\WindowWizard\Window.rft" />
+    <None Include="FamilyParametersOrder\CS\FamilyParametersOrder.addin" />
+    <None Include="FamilyParametersOrder\CS\Readme_FamilyParametersOrder.rtf" />
+    <None Include="FindReferencesByDirection\FindColumns\CS\FindColumns.addin" />
+    <None Include="FindReferencesByDirection\FindColumns\CS\ReadMe_FindColumns.rtf" />
+    <None Include="FindReferencesByDirection\MeasureHeight\CS\MeasureHeight.addin" />
+    <None Include="FindReferencesByDirection\MeasureHeight\CS\ReadMe_MeasureHeight.rtf" />
+    <None Include="FindReferencesByDirection\RaytraceBounce\CS\RayTraceBounce.addin" />
+    <None Include="FindReferencesByDirection\RaytraceBounce\CS\ReadMe_RaytraceBounce.rtf" />
+    <None Include="FireRating\VB.NET\FireRating.addin" />
+    <None Include="FireRating\VB.NET\ReadMe_FireRating.rtf" />
+    <None Include="FoundationSlab\CS\FoundationSlab.addin" />
+    <None Include="FoundationSlab\CS\ReadMe_FoundationSlab.rtf" />
+    <None Include="FrameBuilder\CS\FrameBuilder.addin" />
+    <None Include="FrameBuilder\CS\ReadMe_FrameBuilder.rtf" />
+    <None Include="FreeFormElement\CS\FreeFormElement.addin" />
+    <None Include="FreeFormElement\CS\Readme_FreeFormElement.rtf" />
+    <None Include="FreeFormElement\Generic Model.rft" />
+    <None Include="GenerateFloor\CS\GenerateFloor.addin" />
+    <None Include="GenerateFloor\CS\ReadMe_GenerateFloor.rtf" />
+    <None Include="GenericStructuralConnection\CS\GenericStructuralConnection.addin" />
+    <None Include="GenericStructuralConnection\CS\Readme_GenericStructuralConnection.rtf" />
+    <None Include="GeometryAPI\BRepBuilderExample\CS\BRepBuilderExample.addin" />
+    <None Include="GeometryAPI\BRepBuilderExample\CS\Readme_BRepBuilderExample.rtf" />
+    <None Include="GeometryAPI\ComputedSymbolGeometry\CS\ComputedSymbolGeometry.addin" />
+    <None Include="GeometryAPI\ComputedSymbolGeometry\CS\ReadMe_ComputedSymbolGeometry.rtf" />
+    <None Include="GeometryAPI\EnergyAnalysisModel\CS\EnergyAnalysisModel.addin" />
+    <None Include="GeometryAPI\EnergyAnalysisModel\CS\ReadMe_EnergyAnalysisModel.rtf" />
+    <None Include="GeometryAPI\GeometryCreation_BooleanOperation\CS\GeometryCreation_BooleanOperation.addin" />
+    <None Include="GeometryAPI\GeometryCreation_BooleanOperation\CS\Readme_GeometryCreation_BooleanOperation.rtf" />
+    <None Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\ProximityDetection_WallJoinControl.addin" />
+    <None Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\Readme_ProximityDetection_WallJoinControl.rtf" />
+    <None Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\ReadMe_UpdateExternallyTaggedBRep.rtf" />
+    <None Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\UpdateExternallyTaggedBRep.addin" />
+    <None Include="GetSetDefaultTypes\CS\GetSetDefaultTypes.addin" />
+    <None Include="GetSetDefaultTypes\CS\Readme_GetSetDefaultTypes.rtf" />
+    <None Include="GridCreation\CS\GridCreation.addin" />
+    <None Include="GridCreation\CS\Properties\Settings.settings" />
+    <None Include="GridCreation\CS\ReadMe_GridCreation.rtf" />
+    <None Include="HelloRevit\CS\HelloRevit.addin" />
+    <None Include="HelloRevit\CS\ReadMe_HelloRevit.rtf" />
+    <None Include="HelloRevit\VB.NET\HelloRevit.addin" />
+    <None Include="HelloRevit\VB.NET\ReadMe_HelloRevit.rtf" />
+    <None Include="ImportExport\CS\ImportExport.addin" />
+    <None Include="ImportExport\CS\ReadMe_ImportExport.rtf" />
+    <None Include="InCanvasControlAPI\CS\InCanvasControlAPI.addin" />
+    <None Include="InCanvasControlAPI\CS\ReadMe_InCanvasControlAPI.rtf" />
+    <None Include="InPlaceMembers\CS\InPlaceMembers.addin" />
+    <None Include="InPlaceMembers\CS\ReadMe_InPlaceMembers.rtf" />
+    <None Include="InvisibleParam\CS\InvisibleParam.addin" />
+    <None Include="InvisibleParam\CS\ReadMe_InvisibleParam.rtf" />
+    <None Include="Journaling\CS\Journaling.addin" />
+    <None Include="Journaling\CS\ReadMe_Journaling.rtf" />
+    <None Include="LevelsProperty\CS\LevelsProperty.addin" />
+    <None Include="LevelsProperty\CS\ReadMe_LevelsProperty.rtf" />
+    <None Include="Loads\CS\Loads.addin" />
+    <None Include="Loads\CS\ReadMe_Loads.rtf" />
+    <None Include="Massing\DistanceToPanels\CS\DistanceToPanels.addin" />
+    <None Include="Massing\DistanceToPanels\CS\ReadMe_DistanceToPanels.rtf" />
+    <None Include="Massing\DividedSurfaceByIntersects\CS\DividedSurfaceByIntersects.addin" />
+    <None Include="Massing\DividedSurfaceByIntersects\CS\ReadMe_DividedSurfaceByIntersects.rtf" />
+    <None Include="Massing\ManipulateForm\CS\ManipulateForm.addin" />
+    <None Include="Massing\ManipulateForm\CS\ReadMe_ManipulateForm.rtf" />
+    <None Include="Massing\MeasurePanelArea\CS\MeasurePanelArea.addin" />
+    <None Include="Massing\MeasurePanelArea\CS\ReadMe_MeasurePanelArea.rtf" />
+    <None Include="Massing\NewForm\CS\NewForm.addin" />
+    <None Include="Massing\NewForm\CS\ReadMe_NewForm.rtf" />
+    <None Include="Massing\PanelEdgeLengthAngle\CS\PanelEdgeLengthAngle.addin" />
+    <None Include="Massing\PanelEdgeLengthAngle\CS\ReadMe_PanelEdgeLengthAngle.rtf" />
+    <None Include="Massing\ParameterValuesFromImage\CS\ParameterValuesFromImage.addin" />
+    <None Include="Massing\ParameterValuesFromImage\CS\ReadMe_ParameterValuesFromImage.rtf" />
+    <None Include="Massing\PointCurveCreation\CS\PointCurveCreation.addin" />
+    <None Include="Massing\PointCurveCreation\CS\ReadMe_PointCurveCreation.rtf" />
+    <None Include="Massing\PointCurveCreation\CS\sphere.csv" />
+    <None Include="MaterialProperties\CS\MaterialProperties.addin" />
+    <None Include="MaterialProperties\CS\ReadMe_MaterialProperties.rtf" />
+    <None Include="MaterialProperties\VB.NET\MaterialProperties.addin" />
+    <None Include="MaterialProperties\VB.NET\ReadMe_MaterialProperties.rtf" />
+    <None Include="MaterialQuantities\CS\MaterialQuantities.addin" />
+    <None Include="MaterialQuantities\CS\ReadMe_MaterialQuantities.rtf" />
+    <None Include="ModelessDialog\ModelessForm_ExternalEvent\CS\ModelessForm_ExternalEvent.addin" />
+    <None Include="ModelessDialog\ModelessForm_ExternalEvent\CS\Readme_ModelessForm_ExternalEvent.rtf" />
+    <None Include="ModelessDialog\ModelessForm_IdlingEvent\CS\ModelessForm_IdlingEvent.addin" />
+    <None Include="ModelessDialog\ModelessForm_IdlingEvent\CS\Readme_ModelessForm_IdlingEvent.rtf" />
+    <None Include="ModelLines\CS\ModelLines.addin" />
+    <None Include="ModelLines\CS\ReadMe_ModelLines.rtf" />
+    <None Include="MoveLinear\CS\MoveLinear.addin" />
+    <None Include="MoveLinear\CS\ReadMe_MoveLinear.rtf" />
+    <None Include="MultiplanarRebar\CS\MultiplanarRebar.addin" />
+    <None Include="MultiplanarRebar\CS\ReadMe_MultiplanarRebar.rtf" />
+    <None Include="MultiSample.addin" />
+    <None Include="MultiThreading\WorkThread\CS\Readme_WorkThread.rtf" />
+    <None Include="MultiThreading\WorkThread\CS\WorkThread.addin" />
+    <None Include="NetworkPressureLossReport\CS\NetworkPressureLossReport.addin" />
+    <None Include="NetworkPressureLossReport\CS\ReadMe_NetworkPressureLossReport.rtf" />
+    <None Include="NewHostedSweep\CS\NewHostedSweep.addin" />
+    <None Include="NewHostedSweep\CS\ReadMe_NewHostedSweep.rtf" />
+    <None Include="NewOpenings\CS\NewOpenings.addin" />
+    <None Include="NewOpenings\CS\ReadMe_NewOpenings.rtf" />
+    <None Include="NewPathReinforcement\CS\NewPathReinforcement.addin" />
+    <None Include="NewPathReinforcement\CS\ReadMe_NewPathReinforcement.rtf" />
+    <None Include="NewRebar\CS\Customize RebarShapes Step by step\Customize a LappedCircle.doc" />
+    <None Include="NewRebar\CS\Customize RebarShapes Step by step\Customize a Segments Shape.doc" />
+    <None Include="NewRebar\CS\Customize RebarShapes Step by step\Customize an Arc Shape 2.doc" />
+    <None Include="NewRebar\CS\Customize RebarShapes Step by step\Customize an Arc Shape.doc" />
+    <None Include="NewRebar\CS\NewRebar.addin" />
+    <None Include="NewRebar\CS\ReadMe_NewRebar.rtf" />
+    <None Include="NewRoof\CS\NewRoof.addin" />
+    <None Include="NewRoof\CS\ReadMe_NewRoof.rtf" />
+    <None Include="Openings\CS\Openings.addin" />
+    <None Include="Openings\CS\ReadMe_Openings.rtf" />
+    <None Include="PanelSchedule\CS\PanelSchedule.addin" />
+    <None Include="PanelSchedule\CS\ReadMe_PanelSchedule.rtf" />
+    <None Include="ParameterUtils\CS\ParameterUtils.addin" />
+    <None Include="ParameterUtils\CS\ReadMe_ParameterUtils.rtf" />
+    <None Include="PathOfTravel\CS\PathOfTravel.addin" />
+    <None Include="PathOfTravel\CS\Readme_PathOfTravel.rtf" />
+    <None Include="PathReinforcement\CS\PathReinforcement.addin" />
+    <None Include="PathReinforcement\CS\ReadMe_PathReinforcement.rtf" />
+    <None Include="PerformanceAdviserControl\CS\PerformanceAdviserControl.addin" />
+    <None Include="PerformanceAdviserControl\CS\ReadMe_PerformanceAdviserControl.rtf" />
+    <None Include="PhaseSample\VB.NET\PhaseSample.addin" />
+    <None Include="PhaseSample\VB.NET\ReadMe_PhaseSample.rtf" />
+    <None Include="PhysicalProp\CS\PhysicalProp.addin" />
+    <None Include="PhysicalProp\CS\ReadMe_PhysicalProp.rtf" />
+    <None Include="PlaceFamilyInstanceByFace\CS\PlaceFamilyInstanceByFace.addin" />
+    <None Include="PlaceFamilyInstanceByFace\CS\ReadMe_PlaceFamilyInstanceByFace.rtf" />
+    <None Include="PlacementOptions\CS\PlacementOptions.addin" />
+    <None Include="PlacementOptions\CS\Readme_PlacementOptions.rtf" />
+    <None Include="PointCloudEngine\CS\PointCloudEngine.addin" />
+    <None Include="PointCloudEngine\CS\ReadMe_PointCloudEngine.rtf" />
+    <None Include="post-build.bat" />
+    <None Include="PostCommandWorkflow\CS\PostCommandWorkflow.addin" />
+    <None Include="PostCommandWorkflow\CS\Readme_PostCommandWorkflow.rtf" />
+    <None Include="PowerCircuit\CS\PowerCircuit.addin" />
+    <None Include="PowerCircuit\CS\ReadMe_PowerCircuit.rtf" />
+    <None Include="ProjectInfo\CS\ProjectInfo.addin" />
+    <None Include="ProjectInfo\CS\ReadMe_ProjectInfo.rtf" />
+    <None Include="ReadonlySharedParameters\CS\ReadMe_ReadonlySharedParameters.rtf" />
+    <None Include="ReadonlySharedParameters\CS\ReadonlySharedParameters.addin" />
+    <None Include="RebarContainerAnyShapeType\CS\ReadMe_RebarContainerAnyShapeType.rtf" />
+    <None Include="RebarContainerAnyShapeType\CS\RebarContainerAnyShapeType.addin" />
+    <None Include="RebarFreeForm\CS\Readme_RebarFreeForm.rtf" />
+    <None Include="RebarFreeForm\CS\RebarFreeForm.addin" />
+    <None Include="ReferencePlane\CS\ReadMe_ReferencePlane.rtf" />
+    <None Include="ReferencePlane\CS\ReferencePlane.addin" />
+    <None Include="Reinforcement\CS\ReadMe_Reinforcement.rtf" />
+    <None Include="Reinforcement\CS\Reinforcement.addin" />
+    <None Include="RevitCommands\VB.NET\ReadMe_RevitCommands.rtf" />
+    <None Include="RevitCommands\VB.NET\RevitCommands.addin" />
+    <None Include="Ribbon\CS\ReadMe_Ribbon.rtf" />
+    <None Include="Ribbon\CS\Ribbon.addin" />
+    <None Include="RoofsRooms\CS\ReadMe_RoofsRooms.rtf" />
+    <None Include="RoofsRooms\CS\RoofsRooms.addin" />
+    <None Include="RoomSchedule\CS\ReadMe_RoomSchedule.rtf" />
+    <None Include="RoomSchedule\CS\RoomSchedule.addin" />
+    <None Include="RoomSchedule\RoomSchedule.xls" />
+    <None Include="Rooms\CS\ReadMe_Rooms.rtf" />
+    <None Include="Rooms\CS\Rooms.addin" />
+    <None Include="RotateFramingObjects\CS\ReadMe_RotateFramingObjects.rtf" />
+    <None Include="RotateFramingObjects\CS\RotateFramingObjects.addin" />
+    <None Include="RotateFramingObjects\VB.NET\ReadMe_RotateFramingObjects.rtf" />
+    <None Include="RotateFramingObjects\VB.NET\RotateFramingObjects.addin" />
+    <None Include="RoutingPreferenceTools\CS\ReadMe_RoutingPreferenceTools.rtf" />
+    <None Include="RoutingPreferenceTools\CS\RoutingPreferenceBuilder\RoutingPreferenceBuilderData.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RoutingPreferenceTools\CS\RoutingPreferenceTools.addin" />
+    <None Include="RvtSamples\CS\ReadMe_RvtSamples.rtf" />
+    <None Include="RvtSamples\CS\RvtSamples.addin" />
+    <None Include="ScheduleAutomaticFormatter\CS\Readme_ScheduleAutomaticFormatter.rtf" />
+    <None Include="ScheduleAutomaticFormatter\CS\ScheduleAutomaticFormatter.addin" />
+    <None Include="ScheduleCreation\CS\Readme_ScheduleCreation.rtf" />
+    <None Include="ScheduleCreation\CS\ScheduleCreation.addin" />
+    <None Include="ScheduleToHTML\CS\Readme_ScheduleToHTML.rtf" />
+    <None Include="ScheduleToHTML\CS\ScheduleToHTML.addin" />
+    <None Include="Selections\CS\ReadMe_Selections.rtf" />
+    <None Include="Selections\CS\Selections.addin" />
+    <None Include="ShaftHolePuncher\CS\ReadMe_ShaftHolePuncher.rtf" />
+    <None Include="ShaftHolePuncher\CS\ShaftHolePuncher.addin" />
+    <None Include="SharedCoordinateSystem\CS\ReadMe_SharedCoordinateSystem.rtf" />
+    <None Include="SharedCoordinateSystem\CS\SharedCoordinateSystem.addin" />
+    <None Include="SheetToView3D\CS\ReadMe_SheetToView3D.rtf" />
+    <None Include="SheetToView3D\CS\SheetToView3D.addin" />
+    <None Include="SinePlotter\CS\Readme_SinePlotter.rtf" />
+    <None Include="SinePlotter\CS\SinePlotter.addin" />
+    <None Include="Site\CS\Readme_Site.rtf" />
+    <None Include="Site\CS\Resources\Site.addin" />
+    <None Include="Site\CS\Site.addin" />
+    <None Include="SlabProperties\CS\ReadMe_SlabProperties.rtf" />
+    <None Include="SlabProperties\CS\SlabProperties.addin" />
+    <None Include="SlabProperties\VB.NET\ReadMe_SlabProperties.rtf" />
+    <None Include="SlabProperties\VB.NET\SlabProperties.addin" />
+    <None Include="SlabShapeEditing\CS\ReadMe_SlabShapeEditing.rtf" />
+    <None Include="SlabShapeEditing\CS\SlabShapeEditing.addin" />
+    <None Include="SolidSolidCut\CS\ReadMe_SolidSolidCut.rtf" />
+    <None Include="SolidSolidCut\CS\SolidSolidCut.addin" />
+    <None Include="SpanDirection\CS\ReadMe_SpanDirection.rtf" />
+    <None Include="SpanDirection\CS\SpanDirection.addin" />
+    <None Include="SpotDimension\CS\ReadMe_SpotDimension.rtf" />
+    <None Include="SpotDimension\CS\SpotDimension.addin" />
+    <None Include="StairsAutomation\CS\Readme_StairsAutomationSample.rtf" />
+    <None Include="StairsAutomation\CS\StairsAutomation.addin" />
+    <None Include="StructSample\CS\ReadMe_StructSample.rtf" />
+    <None Include="StructSample\CS\StructSample.addin" />
+    <None Include="StructuralLayerFunction\CS\ReadMe_StructuralLayerFunction.rtf" />
+    <None Include="StructuralLayerFunction\CS\StructuralLayerFunction.addin" />
+    <None Include="StructuralLayerFunction\VB.NET\ReadMe_StructuralLayerFunction.rtf" />
+    <None Include="StructuralLayerFunction\VB.NET\StructuralLayerFunction.addin" />
+    <None Include="TagBeam\CS\ReadMe_TagBeam.rtf" />
+    <None Include="TagBeam\CS\TagBeam.addin" />
+    <None Include="TestFloorThickness\VB.NET\ReadMe_TestFloorThickness.rtf" />
+    <None Include="TestFloorThickness\VB.NET\TestFloorThickness.addin" />
+    <None Include="TestWallThickness\VB.NET\ReadMe_TestWallThickness.rtf" />
+    <None Include="TestWallThickness\VB.NET\TestWallThickness.addin" />
+    <None Include="Toposolid\CS\ReadMe_Toposolid.rtf" />
+    <None Include="Toposolid\CS\Toposolid.addin" />
+    <None Include="TransactionControl\CS\ReadMe_TransactionControl.rtf" />
+    <None Include="TransactionControl\CS\TransactionControl.addin" />
+    <None Include="TraverseSystem\CS\ReadMe_TraverseSystem.rtf" />
+    <None Include="TraverseSystem\CS\TraverseSystem.addin" />
+    <None Include="Truss\CS\ReadMe_Truss.rtf" />
+    <None Include="Truss\CS\Truss.addin" />
+    <None Include="TypeSelector\VB.NET\ReadMe_TypeSelector.rtf" />
+    <None Include="TypeSelector\VB.NET\TypeSelector.addin" />
+    <None Include="UIAPI\CS\ReadMe_UIAPI.rtf" />
+    <None Include="UIAPI\CS\UIAPI.addin" />
+    <None Include="Units\CS\Readme_Units.rtf" />
+    <None Include="Units\CS\Units.addin" />
+    <None Include="VersionChecking\CS\ReadMe_VersionChecking.rtf" />
+    <None Include="VersionChecking\CS\VersionChecking.addin" />
+    <None Include="VersionChecking\CS\~%24adMe_VersionChecking.rtf" />
+    <None Include="Viewers\AnalyticalViewer\VB.NET\AnalyticalViewer.addin" />
+    <None Include="Viewers\AnalyticalViewer\VB.NET\ReadMe_AnalyticalViewer.rtf" />
+    <None Include="Viewers\ElementViewer\VB.NET\ElementViewer.addin" />
+    <None Include="Viewers\ElementViewer\VB.NET\ReadMe_ElementViewer.rtf" />
+    <None Include="Viewers\RevitViewer\VB.NET\ReadMe_RevitViewer.rtf" />
+    <None Include="Viewers\RevitViewer\VB.NET\RevitViewer.addin" />
+    <None Include="Viewers\RoomViewer\VB.NET\ReadMe_RoomViewer.rtf" />
+    <None Include="Viewers\RoomViewer\VB.NET\RoomViewer.addin" />
+    <None Include="ViewPrinter\CS\ReadMe_ViewPrinter.rtf" />
+    <None Include="ViewPrinter\CS\ViewPrinter.addin" />
+    <None Include="ViewTemplateCreation\CS\Readme_ViewTemplateCreation.rtf" />
+    <None Include="ViewTemplateCreation\CS\ViewTemplateCreation.addin" />
+    <None Include="VisibilityControl\CS\ReadMe_VisibilityControl.rtf" />
+    <None Include="VisibilityControl\CS\VisibilityControl.addin" />
+    <None Include="WinderStairs\CS\Readme_WinderStairs.rtf" />
+    <None Include="WinderStairs\CS\WinderStairs.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddSpaceAndZone\CS\Command.cs" />
+    <Compile Include="AddSpaceAndZone\CS\DataManager.cs" />
+    <Compile Include="AddSpaceAndZone\CS\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddSpaceAndZone\CS\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddSpaceAndZone\CS\SpaceItem.cs" />
+    <Compile Include="AddSpaceAndZone\CS\SpaceManager.cs" />
+    <Compile Include="AddSpaceAndZone\CS\SpaceNode.cs" />
+    <Compile Include="AddSpaceAndZone\CS\ZoneEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddSpaceAndZone\CS\ZoneEditorForm.Designer.cs">
+      <DependentUpon>ZoneEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddSpaceAndZone\CS\ZoneManager.cs" />
+    <Compile Include="AddSpaceAndZone\CS\ZoneNode.cs" />
+    <Compile Include="AllViews\CS\AllViews.cs" />
+    <Compile Include="AllViews\CS\AllViewsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllViews\CS\AllViewsForm.Designer.cs">
+      <DependentUpon>AllViewsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AnalysisVisualizationFramework\DistanceToSurfaces\CS\Command.cs" />
+    <Compile Include="AnalysisVisualizationFramework\MultithreadedCalculation\CS\MultithreadedCalculation.cs" />
+    <Compile Include="AnalysisVisualizationFramework\SpatialFieldGradient\CS\Command.cs" />
+    <Compile Include="AnalyticalSupportData_Info\CS\AnalyticalSupportData_Info.cs" />
+    <Compile Include="AnalyticalSupportData_Info\CS\AnalyticalSupportData_InfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AnalyticalSupportData_Info\CS\AnalyticalSupportData_InfoForm.Designer.cs">
+      <DependentUpon>AnalyticalSupportData_InfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="APIAppStartup\CS\AppSample.cs" />
+    <Compile Include="APIAppStartup\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="APIAppStartup\CS\SplashWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="APIAppStartup\CS\SplashWindow.Designer.cs">
+      <DependentUpon>SplashWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AppearanceAssetEditing\CS\AppearanceAssetEditingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppearanceAssetEditing\CS\AppearanceAssetEditingForm.Designer.cs">
+      <DependentUpon>AppearanceAssetEditingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AppearanceAssetEditing\CS\Application.cs" />
+    <Compile Include="AppearanceAssetEditing\CS\Command.cs" />
+    <Compile Include="AppearanceAssetEditing\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="AppearanceAssetEditing\CS\Request.cs" />
+    <Compile Include="AppearanceAssetEditing\CS\RequestHandler.cs" />
+    <Compile Include="AreaReinCurve\CS\AreaReinCurve.cs" />
+    <Compile Include="AreaReinCurve\CS\GeomUtil.cs" />
+    <Compile Include="AreaReinCurve\CS\ParameterUtil.cs" />
+    <Compile Include="AreaReinParameters\CS\AreaReinData.cs" />
+    <Compile Include="AreaReinParameters\CS\AreaReinEnum.cs" />
+    <Compile Include="AreaReinParameters\CS\AreaReinParameters.cs" />
+    <Compile Include="AreaReinParameters\CS\AreaReinParametersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AreaReinParameters\CS\AreaReinParametersForm.Designer.cs">
+      <DependentUpon>AreaReinParametersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AreaReinParameters\CS\FloorAreaReinData.cs" />
+    <Compile Include="AreaReinParameters\CS\HookTypeConverter.cs" />
+    <Compile Include="AreaReinParameters\CS\ParameterUtil.cs" />
+    <Compile Include="AreaReinParameters\CS\WallAreaReinData.cs" />
+    <Compile Include="AttachedDetailGroup\CS\Application.cs" />
+    <Compile Include="AttachedDetailGroup\CS\AttachedDetailGroupHideAllCommand.cs" />
+    <Compile Include="AttachedDetailGroup\CS\AttachedDetailGroupShowAllCommand.cs" />
+    <Compile Include="AttachedDetailGroup\CS\GroupHelper.cs" />
+    <Compile Include="AttachedDetailGroup\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="AutoRoute\CS\Command.cs" />
+    <Compile Include="AutoTagRooms\CS\AutoTagRoomsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoTagRooms\CS\AutoTagRoomsForm.Designer.cs">
+      <DependentUpon>AutoTagRoomsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AutoTagRooms\CS\Command.cs" />
+    <Compile Include="AutoTagRooms\CS\RoomsData.cs" />
+    <Compile Include="AvoidObstruction\CS\Command.cs" />
+    <Compile Include="AvoidObstruction\CS\Detector.cs" />
+    <Compile Include="AvoidObstruction\CS\Resolver.cs" />
+    <Compile Include="AvoidObstruction\CS\Section.cs" />
+    <Compile Include="BeamAndSlabNewParameter\CS\BeamAndSlabNewParameter.cs" />
+    <Compile Include="BeamAndSlabNewParameter\CS\BeamAndSlabNewParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BoundaryConditions\CS\BCProperties.cs" />
+    <Compile Include="BoundaryConditions\CS\BoundaryConditionsData.cs" />
+    <Compile Include="BoundaryConditions\CS\BoundaryConditionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BoundaryConditions\CS\BoundaryConditionsForm.Designer.cs">
+      <DependentUpon>BoundaryConditionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BoundaryConditions\CS\Command.cs" />
+    <Compile Include="BoundaryConditions\CS\SpringModulusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BoundaryConditions\CS\SpringModulusForm.Designer.cs">
+      <DependentUpon>SpringModulusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BoundaryConditions\CS\UnitConversion.cs" />
+    <Compile Include="CapitalizeAllTextNotes\CS\Command.cs" />
+    <Compile Include="CloudAPISample\CS\Application.cs" />
+    <Compile Include="CloudAPISample\CS\Coroutine\Coroutine.cs" />
+    <Compile Include="CloudAPISample\CS\Coroutine\CoroutineScheduler.cs" />
+    <Compile Include="CloudAPISample\CS\SampleContext.cs" />
+    <Compile Include="CloudAPISample\CS\SampleEngine.cs" />
+    <Compile Include="CloudAPISample\CS\Samples\Migration\IMigrationModel.cs" />
+    <Compile Include="CloudAPISample\CS\Samples\Migration\MigrationToBim360.cs" />
+    <Compile Include="CloudAPISample\CS\Samples\Migration\UIMigrationViewModel.cs" />
+    <Compile Include="CloudAPISample\CS\View\ViewInputMigrationInfo.xaml.cs">
+      <DependentUpon>ViewInputMigrationInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CloudAPISample\CS\View\ViewMigrationToBim360.xaml.cs">
+      <DependentUpon>ViewMigrationToBim360.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CloudAPISample\CS\View\ViewSamplePortal.xaml.cs">
+      <DependentUpon>ViewSamplePortal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ColorFill\CS\ColorFillForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorFill\CS\ColorFillForm.Designer.cs">
+      <DependentUpon>ColorFillForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorFill\CS\ColorFillMgr.cs" />
+    <Compile Include="ColorFill\CS\Command.cs" />
+    <Compile Include="CompoundStructure\CS\Command.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\AddAssociation.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\AddCustomAssociation.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\AnalyticalNodeConnStatus.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\CreateAnalytcalPanel.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\CreateAnalyticalCurvedPanel.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\CreateAnalyticalMember.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\CreateAreaLoadWithRefPoint.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\CustomAreaLoad.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\CustomLineLoad.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\CustomPointLoad.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\FlipAnalyticalMember.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\MemberForcesAnalyticalMember.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\ModifyPanelContour.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\MoveAnalyticalMemberUsingElementTransformUtils.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\MoveAnalyticalMemberUsingSetCurve.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\MoveAnalyticalNodeUsingElementTransformUtils.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\MoveAnalyticalPanelUsingElementTransformUtils.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\MoveAnalyticalPanelUsingSketchEditScope.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\ReleaseConditionsAnalyticalMember.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\RemoveAssociation.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\SetOuterContourForPanels.cs" />
+    <Compile Include="ContextualAnalyticalModel\CS\Utilities.cs" />
+    <Compile Include="CreateBeamsColumnsBraces\CS\CreateBeamsColumnsBraces.cs" />
+    <Compile Include="CreateBeamsColumnsBraces\CS\CreateBeamsColumnsBracesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateBeamSystem\CS\BeamSystemBuilder.cs" />
+    <Compile Include="CreateBeamSystem\CS\BeamSystemData.cs" />
+    <Compile Include="CreateBeamSystem\CS\BeamSystemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateBeamSystem\CS\BeamSystemForm.Designer.cs">
+      <DependentUpon>BeamSystemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateBeamSystem\CS\BeamSystemParams.cs" />
+    <Compile Include="CreateBeamSystem\CS\BeamSystemSketch.cs" />
+    <Compile Include="CreateBeamSystem\CS\BeamTypeConverter.cs" />
+    <Compile Include="CreateBeamSystem\CS\Command.cs" />
+    <Compile Include="CreateBeamSystem\CS\ErrorMessageException.cs" />
+    <Compile Include="CreateBeamSystem\CS\GeometryUtil.cs" />
+    <Compile Include="CreateBeamSystem\CS\Line2D.cs" />
+    <Compile Include="CreateBeamSystem\CS\LineSketch.cs" />
+    <Compile Include="CreateBeamSystem\CS\ObjectSketch.cs" />
+    <Compile Include="CreateComplexAreaRein\CS\AreaReinData.cs" />
+    <Compile Include="CreateComplexAreaRein\CS\CreateComplexAreaRein.cs" />
+    <Compile Include="CreateComplexAreaRein\CS\CreateComplexAreaReinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateComplexAreaRein\CS\CreateComplexAreaReinForm.Designer.cs">
+      <DependentUpon>CreateComplexAreaReinForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateComplexAreaRein\CS\GeomHelper.cs" />
+    <Compile Include="CreateComplexAreaRein\CS\GeomUtil.cs" />
+    <Compile Include="CreateComplexAreaRein\CS\ParameterUtil.cs" />
+    <Compile Include="CreateDimensions\CS\Command.cs" />
+    <Compile Include="CreateDuctworkStiffener\CS\Command.cs" />
+    <Compile Include="CreateFillPattern\CS\Command.cs" />
+    <Compile Include="CreateFillPattern\CS\FillPatternForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateFillPattern\CS\FillPatternForm.Designer.cs">
+      <DependentUpon>FillPatternForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateSimpleAreaRein\CS\AreaReinData.cs" />
+    <Compile Include="CreateSimpleAreaRein\CS\CreateSimpleAreaRein.cs" />
+    <Compile Include="CreateSimpleAreaRein\CS\CreateSimpleAreaReinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateSimpleAreaRein\CS\CreateSimpleAreaReinForm.Designer.cs">
+      <DependentUpon>CreateSimpleAreaReinForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateSimpleAreaRein\CS\GeomHelper.cs" />
+    <Compile Include="CreateSimpleAreaRein\CS\GeomUtil.cs" />
+    <Compile Include="CreateSimpleAreaRein\CS\ParameterUtil.cs" />
+    <Compile Include="CreateTrianglesTopography\CS\Command.cs" />
+    <Compile Include="CreateTrianglesTopography\CS\TrianglesData.cs" />
+    <Compile Include="CreateViewSection\CS\Command.cs" />
+    <Compile Include="CreateViewSection\CS\XYZMath.cs" />
+    <Compile Include="CreateWallinBeamProfile\CS\CreateWallinBeamProfile.cs" />
+    <Compile Include="CreateWallinBeamProfile\CS\CreateWallinBeamProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateWallinBeamProfile\CS\CreateWallinBeamProfileForm.designer.cs">
+      <DependentUpon>CreateWallinBeamProfileForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateWallsUnderBeams\CS\CreateWallsUnderBeams.cs" />
+    <Compile Include="CreateWallsUnderBeams\CS\CreateWallsUnderBeamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateWallsUnderBeams\CS\CreateWallsUnderBeamsForm.Designer.cs">
+      <DependentUpon>CreateWallsUnderBeamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurtainSystem\CS\Command.cs" />
+    <Compile Include="CurtainSystem\CS\CurtainSystem\MassChecker.cs" />
+    <Compile Include="CurtainSystem\CS\CurtainSystem\SystemData.cs" />
+    <Compile Include="CurtainSystem\CS\Data\MyDocument.cs" />
+    <Compile Include="CurtainSystem\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="CurtainSystem\CS\UI\CreateCurtainSystemDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CurtainSystem\CS\UI\CreateCurtainSystemDialog.Designer.cs">
+      <DependentUpon>CreateCurtainSystemDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurtainSystem\CS\UI\CurtainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CurtainSystem\CS\UI\CurtainForm.Designer.cs">
+      <DependentUpon>CurtainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurtainSystem\CS\Utility\MathTools.cs" />
+    <Compile Include="CurtainWallGrid\CS\Command.cs" />
+    <Compile Include="CurtainWallGrid\CS\GridCoordinates.cs" />
+    <Compile Include="CurtainWallGrid\CS\GridDrawing.cs" />
+    <Compile Include="CurtainWallGrid\CS\GridForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CurtainWallGrid\CS\GridForm.Designer.cs">
+      <DependentUpon>GridForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurtainWallGrid\CS\GridGeometry.cs" />
+    <Compile Include="CurtainWallGrid\CS\GridLine2D.cs" />
+    <Compile Include="CurtainWallGrid\CS\GridProperties.cs" />
+    <Compile Include="CurtainWallGrid\CS\MathTools.cs" />
+    <Compile Include="CurtainWallGrid\CS\MyDocument.cs" />
+    <Compile Include="CurtainWallGrid\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="CurtainWallGrid\CS\Unit.cs" />
+    <Compile Include="CurtainWallGrid\CS\Utility.cs" />
+    <Compile Include="CurtainWallGrid\CS\WallDrawing.cs" />
+    <Compile Include="CurtainWallGrid\CS\WallGeometry.cs" />
+    <Compile Include="CurvedBeam\CS\CurvedBeam.cs" />
+    <Compile Include="CurvedBeam\CS\CurvedBeamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CurvedBeam\CS\CurvedBeamForm.Designer.cs">
+      <DependentUpon>CurvedBeamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurvedBeam\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="CustomExporter\Custom2DExporter\CS\Command.cs" />
+    <Compile Include="CustomExporter\Custom2DExporter\CS\Export2DView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomExporter\Custom2DExporter\CS\Export2DView.Designer.cs">
+      <DependentUpon>Export2DView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomExporter\Custom2DExporter\CS\TessellatedGeomAndText2DExportContext.cs" />
+    <Compile Include="CustomExporter\Custom2DExporter\CS\Utilities.cs" />
+    <Compile Include="DatumsModification\CS\AlignmentSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatumsModification\CS\AlignmentSetting.Designer.cs">
+      <DependentUpon>AlignmentSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatumsModification\CS\DatumsModificationApp.cs" />
+    <Compile Include="DatumsModification\CS\DatumsModificationCmd.cs" />
+    <Compile Include="DatumsModification\CS\DatumStyleSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatumsModification\CS\DatumStyleSetting.Designer.cs">
+      <DependentUpon>DatumStyleSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatumsModification\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="DatumsModification\CS\PropogateSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatumsModification\CS\PropogateSetting.Designer.cs">
+      <DependentUpon>PropogateSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeckProperties\CS\Command.cs" />
+    <Compile Include="DeckProperties\CS\GenericForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeckProperties\CS\GenericForm.Designer.cs">
+      <DependentUpon>GenericForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteDimensions\CS\DeleteDimesions.cs" />
+    <Compile Include="DeleteObject\CS\DeleteObject.cs" />
+    <Compile Include="DimensionLeaderEnd\CS\Command.cs" />
+    <Compile Include="DirectionCalculation\CS\Commands.cs" />
+    <Compile Include="DirectionCalculation\CS\FindSouthFacing.cs" />
+    <Compile Include="DirectionCalculation\CS\FindSouthFacingWalls.cs" />
+    <Compile Include="DirectionCalculation\CS\FindSouthFacingWindows.cs" />
+    <Compile Include="DisableCommand\CS\Application.cs" />
+    <Compile Include="DisplacementElementAnimation\CS\Application.cs" />
+    <Compile Include="DisplacementElementAnimation\CS\DisplacementStructureModelAnimator.cs" />
+    <Compile Include="DisplacementElementAnimation\CS\DisplacementStructureModelAnimatorCommand.cs" />
+    <Compile Include="DisplacementElementAnimation\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="DockableDialogs\CS\APIUtility\APIUtility.cs" />
+    <Compile Include="DockableDialogs\CS\APIUtility\APIUtilityCommandParser.cs" />
+    <Compile Include="DockableDialogs\CS\Application\ThisApplication.cs" />
+    <Compile Include="DockableDialogs\CS\DockingSetupDialog\DockingSetupDialog.xaml.cs">
+      <DependentUpon>DockingSetupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DockableDialogs\CS\ExternalEvents\APIExternalEventHandler.cs" />
+    <Compile Include="DockableDialogs\CS\ExternalEvents\MacroAPIExternalEventHandler.cs" />
+    <Compile Include="DockableDialogs\CS\ExternalEvents\ModelessCommand.cs" />
+    <Compile Include="DockableDialogs\CS\MainPage\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DockableDialogs\CS\TopLevelCommands\ExternalCommandHidePage.cs" />
+    <Compile Include="DockableDialogs\CS\TopLevelCommands\ExternalCommandRegisterPage.cs" />
+    <Compile Include="DockableDialogs\CS\TopLevelCommands\ExternalCommandShowPage.cs" />
+    <Compile Include="DockableDialogs\CS\Utility\Constants.cs" />
+    <Compile Include="DockableDialogs\CS\Utility\FileUtility.cs" />
+    <Compile Include="DockableDialogs\CS\Utility\Log.cs" />
+    <Compile Include="DockableDialogs\CS\Utility\StandardIORouter.cs" />
+    <Compile Include="DocumentChanged\CS\ChangesInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentChanged\CS\ChangesInfoForm.Designer.cs">
+      <DependentUpon>ChangesInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentChanged\CS\ChangesMonitor.cs" />
+    <Compile Include="DoorSwing\CS\Command.cs" />
+    <Compile Include="DoorSwing\CS\DoorFamily.cs" />
+    <Compile Include="DoorSwing\CS\DoorFamilyGeometry.cs" />
+    <Compile Include="DoorSwing\CS\DoorSharedParameters.cs" />
+    <Compile Include="DoorSwing\CS\DoorSwingData.cs" />
+    <Compile Include="DoorSwing\CS\DoorSwingResource.Designer.cs" />
+    <Compile Include="DoorSwing\CS\ExternalApplication.cs" />
+    <Compile Include="DoorSwing\CS\InitializeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DoorSwing\CS\InitializeForm.Designer.cs">
+      <DependentUpon>InitializeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DuplicateGraphics\CS\Application.cs" />
+    <Compile Include="DuplicateGraphics\CS\Command.cs" />
+    <Compile Include="DuplicateGraphics\CS\RevitElementDrawingServer.cs" />
+    <Compile Include="DuplicateViews\CS\Application.cs" />
+    <Compile Include="DuplicateViews\CS\DuplicateAcrossDocumentsCommand.cs" />
+    <Compile Include="DuplicateViews\CS\DuplicateViewUtils.cs" />
+    <Compile Include="DuplicateViews\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="DynamicModelUpdate\CS\Application.cs" />
+    <Compile Include="DynamicModelUpdate\CS\SectionUpdater.cs" />
+    <Compile Include="ElementFilter\ViewFilters\CS\Command.cs" />
+    <Compile Include="ElementFilter\ViewFilters\CS\Extensions.cs" />
+    <Compile Include="ElementFilter\ViewFilters\CS\FilterData.cs" />
+    <Compile Include="ElementFilter\ViewFilters\CS\FilterUtil.cs" />
+    <Compile Include="ElementFilter\ViewFilters\CS\NewFilterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementFilter\ViewFilters\CS\NewFilterForm.Designer.cs">
+      <DependentUpon>NewFilterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ElementFilter\ViewFilters\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="ElementFilter\ViewFilters\CS\ViewFiltersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementFilter\ViewFilters\CS\ViewFiltersForm.Designer.cs">
+      <DependentUpon>ViewFiltersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorHandling\CS\Command.cs" />
+    <Compile Include="Events\AutoStamp\CS\Application.cs" />
+    <Compile Include="Events\AutoStamp\CS\EventsReactor.cs" />
+    <Compile Include="Events\AutoUpdate\CS\ExternalApplication.cs" />
+    <Compile Include="Events\CancelSave\CS\CancelSave.cs" />
+    <Compile Include="Events\CancelSave\CS\LogManager.cs" />
+    <Compile Include="Events\EventsMonitor\CS\Command.cs" />
+    <Compile Include="Events\EventsMonitor\CS\EventManager.cs" />
+    <Compile Include="Events\EventsMonitor\CS\EventsInfoWindows.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\EventsMonitor\CS\EventsInfoWindows.designer.cs">
+      <DependentUpon>EventsInfoWindows.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\EventsMonitor\CS\EventsSettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\EventsMonitor\CS\EventsSettingForm.designer.cs">
+      <DependentUpon>EventsSettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\EventsMonitor\CS\ExternalApplication.cs" />
+    <Compile Include="Events\EventsMonitor\CS\JournalProcessor.cs" />
+    <Compile Include="Events\EventsMonitor\CS\LogManager.cs" />
+    <Compile Include="Events\PrintLog\CS\Application.cs" />
+    <Compile Include="Events\PrintLog\CS\Command.cs" />
+    <Compile Include="Events\PrintLog\CS\EventsReactor.cs" />
+    <Compile Include="Events\PrintLog\CS\EventsWatches.cs" />
+    <Compile Include="Events\ProgressNotifier\CS\Command.cs" />
+    <Compile Include="Events\ProgressNotifier\CS\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\ProgressNotifier\CS\ProgressItem.cs" />
+    <Compile Include="Events\ProgressNotifier\CS\ProgressStack.cs" />
+    <Compile Include="Events\SelectionChanged\CS\Command.cs" />
+    <Compile Include="Events\SelectionChanged\CS\InfoWindow.xaml.cs">
+      <DependentUpon>InfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\SelectionChanged\CS\LogManager.cs" />
+    <Compile Include="Events\SelectionChanged\CS\SelectionChanged.cs" />
+    <Compile Include="Events\SelectionChanged\CS\SelectionChangedEventArgsExtension.cs" />
+    <Compile Include="ExportPDFSettingsSample\CS\Application.cs" />
+    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\Application\Application.cs" />
+    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\Application\Command.cs" />
+    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\User\StorageCommand.cs" />
+    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\User\UICommand.xaml.cs">
+      <DependentUpon>UICommand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\User\UIData.xaml.cs">
+      <DependentUpon>UIData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExtensibleStorageManager\SchemaWrapperTools\CS\FieldData.cs" />
+    <Compile Include="ExtensibleStorageManager\SchemaWrapperTools\CS\SchemaDataWrapper.cs" />
+    <Compile Include="ExtensibleStorageManager\SchemaWrapperTools\CS\SchemaWrapper.cs" />
+    <Compile Include="ExtensibleStorageUtility\CS\DeleteStorage.cs" />
+    <Compile Include="ExtensibleStorageUtility\CS\QueryStorage.cs" />
+    <Compile Include="ExtensibleStorageUtility\CS\Utility.cs" />
+    <Compile Include="ExternalCommand\CS\ExternalCommandRegistration\AvailabilityClass.cs" />
+    <Compile Include="ExternalCommand\CS\ExternalCommandRegistration\ExternalCommandClass.cs" />
+    <Compile Include="ExternalCommand\CS\ExternalCommandRegistration\ExternalCommandResource.Designer.cs" />
+    <Compile Include="ExternalCommand\CS\RevitAddInUtilitySample\Program.cs" />
+    <Compile Include="ExternalCommand\CS\RevitAddInUtilitySample\Properties\Resources.Designer.cs" />
+    <Compile Include="ExternalCommand\CS\RevitAddInUtilitySample\Properties\Settings.Designer.cs" />
+    <Compile Include="ExternalCommand\CS\RevitAddInUtilitySample\RevitAddInUtilityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExternalCommand\CS\RevitAddInUtilitySample\RevitAddInUtilityForm.Designer.cs">
+      <DependentUpon>RevitAddInUtilityForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExternalResourceServer\ExternalResourceDBServer\CS\Application.cs" />
+    <Compile Include="ExternalResourceServer\ExternalResourceDBServer\CS\KeynotesDatabase.cs" />
+    <Compile Include="ExternalResourceServer\ExternalResourceDBServer\CS\SampleExternalResourceDBServer.cs" />
+    <Compile Include="ExternalResourceServer\ExternalResourceDBServer\CS\ServerInterfaceExtensionsForRevitLinks.cs" />
+    <Compile Include="ExternalResourceServer\ExternalResourceUIServer\CS\Application.cs" />
+    <Compile Include="ExternalResourceServer\ExternalResourceUIServer\CS\SampleExternalResourceUIServer.cs" />
+    <Compile Include="FabricationPartLayout\CS\Ancillaries.cs" />
+    <Compile Include="FabricationPartLayout\CS\ButtonPaletteExclusions.cs" />
+    <Compile Include="FabricationPartLayout\CS\ChangeService.cs" />
+    <Compile Include="FabricationPartLayout\CS\ConvertToFabrication.cs" />
+    <Compile Include="FabricationPartLayout\CS\CustomData.cs" />
+    <Compile Include="FabricationPartLayout\CS\ExportToMAJ.cs" />
+    <Compile Include="FabricationPartLayout\CS\ExportToPCF.cs" />
+    <Compile Include="FabricationPartLayout\CS\FabPartGeometry.cs" />
+    <Compile Include="FabricationPartLayout\CS\FabricationPartLayout.cs" />
+    <Compile Include="FabricationPartLayout\CS\FlipPart.cs" />
+    <Compile Include="FabricationPartLayout\CS\HangerRods.cs" />
+    <Compile Include="FabricationPartLayout\CS\ItemFile.cs" />
+    <Compile Include="FabricationPartLayout\CS\OptimizeStraights.cs" />
+    <Compile Include="FabricationPartLayout\CS\PartInfo.cs" />
+    <Compile Include="FabricationPartLayout\CS\PartRenumber.cs" />
+    <Compile Include="FabricationPartLayout\CS\SplitStraight.cs" />
+    <Compile Include="FabricationPartLayout\CS\StretchAndFit.cs" />
+    <Compile Include="FamilyCreation\AutoJoin\CS\AutoJoin.cs" />
+    <Compile Include="FamilyCreation\AutoJoin\CS\Command.cs" />
+    <Compile Include="FamilyCreation\AutoJoin\CS\Intersection.cs" />
+    <Compile Include="FamilyCreation\AutoParameter\CS\Command.cs" />
+    <Compile Include="FamilyCreation\AutoParameter\CS\FamilyParameterAssigner.cs" />
+    <Compile Include="FamilyCreation\CreateAirHandler\CS\Command.cs" />
+    <Compile Include="FamilyCreation\CreateTruss\CS\CreateTruss.cs" />
+    <Compile Include="FamilyCreation\DWGFamilyCreation\CS\Command.cs" />
+    <Compile Include="FamilyCreation\DWGFamilyCreation\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="FamilyCreation\GenericModelCreation\CS\Command.cs" />
+    <Compile Include="FamilyCreation\TypeRegeneration\CS\Command.cs" />
+    <Compile Include="FamilyCreation\TypeRegeneration\CS\MessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FamilyCreation\TypeRegeneration\CS\MessageForm.Designer.cs">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FamilyCreation\ValidateParameters\CS\Application.cs" />
+    <Compile Include="FamilyCreation\ValidateParameters\CS\Command.cs" />
+    <Compile Include="FamilyCreation\ValidateParameters\CS\MessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FamilyCreation\ValidateParameters\CS\MessageForm.Designer.cs">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FamilyCreation\WindowWizard\CS\Command.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\CreatAlignment.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\CreateDimension.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\CreateExtrusion.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\CreateReferencePlane.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\DoubleHungWinCreation.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\GeoHelper.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\Utility.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\ValidateWindowParameter.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\WindowCreation.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\WindowParameter.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\WindowWizard.cs" />
+    <Compile Include="FamilyCreation\WindowWizard\CS\WizardUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FamilyCreation\WindowWizard\CS\WizardUI.Designer.cs">
+      <DependentUpon>WizardUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FamilyParametersOrder\CS\Command.cs" />
+    <Compile Include="FamilyParametersOrder\CS\ExternalApplication.cs" />
+    <Compile Include="FamilyParametersOrder\CS\SortFamilyFilesParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FamilyParametersOrder\CS\SortFamilyFilesParamsForm.Designer.cs">
+      <DependentUpon>SortFamilyFilesParamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FamilyParametersOrder\CS\SortLoadedFamiliesParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FamilyParametersOrder\CS\SortLoadedFamiliesParamsForm.Designer.cs">
+      <DependentUpon>SortLoadedFamiliesParamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FindReferencesByDirection\FindColumns\CS\FindColumns.cs" />
+    <Compile Include="FindReferencesByDirection\MeasureHeight\CS\MeasureHeight.cs" />
+    <Compile Include="FindReferencesByDirection\RaytraceBounce\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="FindReferencesByDirection\RaytraceBounce\CS\RayTraceBounce.cs" />
+    <Compile Include="FindReferencesByDirection\RaytraceBounce\CS\RayTraceBounceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FindReferencesByDirection\RaytraceBounce\CS\RayTraceBounceForm.Designer.cs">
+      <DependentUpon>RayTraceBounceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FoundationSlab\CS\Command.cs" />
+    <Compile Include="FoundationSlab\CS\FoundationSlabForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FoundationSlab\CS\FoundationSlabForm.Designer.cs">
+      <DependentUpon>FoundationSlabForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FoundationSlab\CS\RegularSlab.cs" />
+    <Compile Include="FoundationSlab\CS\Sketch.cs" />
+    <Compile Include="FoundationSlab\CS\SlabData.cs" />
+    <Compile Include="FrameBuilder\CS\Command.cs" />
+    <Compile Include="FrameBuilder\CS\CreateFrameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrameBuilder\CS\CreateFrameForm.Designer.cs">
+      <DependentUpon>CreateFrameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrameBuilder\CS\DuplicateTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrameBuilder\CS\DuplicateTypeForm.Designer.cs">
+      <DependentUpon>DuplicateTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrameBuilder\CS\EditTypeNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrameBuilder\CS\EditTypeNameForm.Designer.cs">
+      <DependentUpon>EditTypeNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrameBuilder\CS\ErrorMessageException.cs" />
+    <Compile Include="FrameBuilder\CS\FrameBuilder.cs" />
+    <Compile Include="FrameBuilder\CS\FrameData.cs" />
+    <Compile Include="FrameBuilder\CS\FrameTypeParameters.cs" />
+    <Compile Include="FrameBuilder\CS\FrameTypesMgr.cs" />
+    <Compile Include="FreeFormElement\CS\Application.cs" />
+    <Compile Include="FreeFormElement\CS\CreateNegativeBlockCommand.cs" />
+    <Compile Include="FreeFormElement\CS\FreeFormElementUtils.cs" />
+    <Compile Include="FreeFormElement\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="GenerateFloor\CS\Command.cs" />
+    <Compile Include="GenerateFloor\CS\Data.cs" />
+    <Compile Include="GenerateFloor\CS\GenerateFloorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerateFloor\CS\GenerateFloorForm.Designer.cs">
+      <DependentUpon>GenerateFloorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GenericStructuralConnection\CS\Command.cs" />
+    <Compile Include="GenericStructuralConnection\CS\CommandOptions.cs" />
+    <Compile Include="GenericStructuralConnection\CS\DetailedStructuralConnectionOps.cs" />
+    <Compile Include="GenericStructuralConnection\CS\GenericStructuralConnectionOps.cs" />
+    <Compile Include="GenericStructuralConnection\CS\StructuralConnectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenericStructuralConnection\CS\StructuralConnectionForm.Designer.cs">
+      <DependentUpon>StructuralConnectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GenericStructuralConnection\CS\StructuralConnectionSelectionFilter.cs" />
+    <Compile Include="GenericStructuralConnection\CS\StructuralConnectionSelectionUtils.cs" />
+    <Compile Include="GeometryAPI\BRepBuilderExample\CS\Application.cs" />
+    <Compile Include="GeometryAPI\BRepBuilderExample\CS\CreateCube.cs" />
+    <Compile Include="GeometryAPI\BRepBuilderExample\CS\CreateNURBS.cs" />
+    <Compile Include="GeometryAPI\BRepBuilderExample\CS\CreatePeriodic.cs" />
+    <Compile Include="GeometryAPI\BRepBuilderExample\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="GeometryAPI\ComputedSymbolGeometry\CS\Command.cs" />
+    <Compile Include="GeometryAPI\ComputedSymbolGeometry\CS\ComputedSymbolGeometry.cs" />
+    <Compile Include="GeometryAPI\EnergyAnalysisModel\CS\Command.cs" />
+    <Compile Include="GeometryAPI\EnergyAnalysisModel\CS\EnergyAnalysisModel.cs" />
+    <Compile Include="GeometryAPI\EnergyAnalysisModel\CS\OptionsAndAnalysisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeometryAPI\EnergyAnalysisModel\CS\OptionsAndAnalysisForm.Designer.cs">
+      <DependentUpon>OptionsAndAnalysisForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeometryAPI\GeometryCreation_BooleanOperation\CS\AnalysisVisualizationFramework.cs" />
+    <Compile Include="GeometryAPI\GeometryCreation_BooleanOperation\CS\BooleanOperation.cs" />
+    <Compile Include="GeometryAPI\GeometryCreation_BooleanOperation\CS\Command.cs" />
+    <Compile Include="GeometryAPI\GeometryCreation_BooleanOperation\CS\GeometryCreation.cs" />
+    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\Command.cs" />
+    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\ProximityDetection.cs" />
+    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\ProximityDetectionAndWallJoinControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\ProximityDetectionAndWallJoinControlForm.Designer.cs">
+      <DependentUpon>ProximityDetectionAndWallJoinControlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\WallJoinControl.cs" />
+    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\Application.cs" />
+    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\CreateBRep.cs" />
+    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\HelperMethods.cs" />
+    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\Podium.cs" />
+    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\UpdateBRep.cs" />
+    <Compile Include="GetSetDefaultTypes\CS\DefaultElementTypes.xaml.cs">
+      <DependentUpon>DefaultElementTypes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GetSetDefaultTypes\CS\DefaultFamilyTypes.xaml.cs">
+      <DependentUpon>DefaultFamilyTypes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GetSetDefaultTypes\CS\ThisApplication.cs" />
+    <Compile Include="GetSetDefaultTypes\CS\ThisCommand.cs" />
+    <Compile Include="GridCreation\CS\Command.cs" />
+    <Compile Include="GridCreation\CS\CreateGridsData.cs" />
+    <Compile Include="GridCreation\CS\CreateOrthogonalGridsData.cs" />
+    <Compile Include="GridCreation\CS\CreateOrthogonalGridsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GridCreation\CS\CreateOrthogonalGridsForm.Designer.cs">
+      <DependentUpon>CreateOrthogonalGridsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GridCreation\CS\CreateRadialAndArcGridsData.cs" />
+    <Compile Include="GridCreation\CS\CreateRadialAndArcGridsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GridCreation\CS\CreateRadialAndArcGridsForm.Designer.cs">
+      <DependentUpon>CreateRadialAndArcGridsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GridCreation\CS\CreateWithSelectedCurvesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GridCreation\CS\CreateWithSelectedCurvesForm.Designer.cs">
+      <DependentUpon>CreateWithSelectedCurvesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GridCreation\CS\CreateWithSeletedCurvesData.cs" />
+    <Compile Include="GridCreation\CS\EnumsAndValues.cs" />
+    <Compile Include="GridCreation\CS\GridCreationOptionData.cs" />
+    <Compile Include="GridCreation\CS\GridCreationOptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GridCreation\CS\GridCreationOptionForm.Designer.cs">
+      <DependentUpon>GridCreationOptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GridCreation\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="GridCreation\CS\Properties\Settings.Designer.cs" />
+    <Compile Include="GridCreation\CS\Unit.cs" />
+    <Compile Include="GridCreation\CS\Validation.cs" />
+    <Compile Include="HelloRevit\CS\Command.cs" />
+    <Compile Include="ImportExport\CS\Command.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportBaseOptionsData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportBaseOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportBaseOptionsForm.Designer.cs">
+      <DependentUpon>ExportBaseOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportDataWithViews.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportDGNData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportDGNOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportDGNOptionsForm.Designer.cs">
+      <DependentUpon>ExportDGNOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportDWFData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportDWFOptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportDWFOptionForm.Designer.cs">
+      <DependentUpon>ExportDWFOptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportDWGData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportDWGOptionsData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportDXFData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportFBXData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportGBXMLData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportIMGData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportIMGOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportIMGOptionsForm.Designer.cs">
+      <DependentUpon>ExportIMGOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportPDFData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportPDFOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportPDFOptionsForm.Designer.cs">
+      <DependentUpon>ExportPDFOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportSATData.cs" />
+    <Compile Include="ImportExport\CS\Export\ExportWithViewsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\ExportWithViewsForm.Designer.cs">
+      <DependentUpon>ExportWithViewsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\SelectViewsData.cs" />
+    <Compile Include="ImportExport\CS\Export\SelectViewsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\Export\SelectViewsForm.Designer.cs">
+      <DependentUpon>SelectViewsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Import\ImportData.cs" />
+    <Compile Include="ImportExport\CS\Import\ImportDWGData.cs" />
+    <Compile Include="ImportExport\CS\Import\ImportDWGForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\Import\ImportDWGForm.Designer.cs">
+      <DependentUpon>ImportDWGForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Import\ImportGBXMLData.cs" />
+    <Compile Include="ImportExport\CS\Import\ImportImageData.cs" />
+    <Compile Include="ImportExport\CS\MainData.cs" />
+    <Compile Include="ImportExport\CS\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\CS\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\CS\Unit.cs" />
+    <Compile Include="InCanvasControlAPI\CS\Application.cs" />
+    <Compile Include="InCanvasControlAPI\CS\Command.cs" />
+    <Compile Include="InCanvasControlAPI\CS\IssueMarker.cs" />
+    <Compile Include="InCanvasControlAPI\CS\IssueMarkerSelector.cs" />
+    <Compile Include="InCanvasControlAPI\CS\IssueMarkerTracking.cs" />
+    <Compile Include="InCanvasControlAPI\CS\IssueMarkerTrackingManager.cs" />
+    <Compile Include="InCanvasControlAPI\CS\IssueMarkerUpdater.cs" />
+    <Compile Include="InCanvasControlAPI\CS\IssueSelectHandler.cs" />
+    <Compile Include="InCanvasControlAPI\CS\ResourceProvider.cs" />
+    <Compile Include="InPlaceMembers\CS\Command.cs" />
+    <Compile Include="InPlaceMembers\CS\GraphicsData.cs" />
+    <Compile Include="InPlaceMembers\CS\GraphicsDataFactory.cs" />
+    <Compile Include="InPlaceMembers\CS\InPlaceMembersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InPlaceMembers\CS\InPlaceMembersForm.Designer.cs">
+      <DependentUpon>InPlaceMembersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InPlaceMembers\CS\PictureBox3D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="InPlaceMembers\CS\Properties.cs" />
+    <Compile Include="InvisibleParam\CS\Command.cs" />
+    <Compile Include="Journaling\CS\Command.cs" />
+    <Compile Include="Journaling\CS\Journaling.cs" />
+    <Compile Include="Journaling\CS\JournalingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Journaling\CS\JournalingForm.Designer.cs">
+      <DependentUpon>JournalingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelsProperty\CS\Command.cs" />
+    <Compile Include="LevelsProperty\CS\LevelsDataSource.cs" />
+    <Compile Include="LevelsProperty\CS\LevelsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelsProperty\CS\LevelsForm.Designer.cs">
+      <DependentUpon>LevelsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelsProperty\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="LevelsProperty\CS\Unit.cs" />
+    <Compile Include="Loads\CS\LoadCaseDeal.cs" />
+    <Compile Include="Loads\CS\LoadCaseMap.cs" />
+    <Compile Include="Loads\CS\LoadCaseTabPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loads\CS\LoadCombinationDeal.cs" />
+    <Compile Include="Loads\CS\LoadCombinationFormulaMap.cs" />
+    <Compile Include="Loads\CS\LoadCombinationMap.cs" />
+    <Compile Include="Loads\CS\LoadCombinationsTabPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loads\CS\LoadCombinationUsageMap.cs" />
+    <Compile Include="Loads\CS\Loads.cs" />
+    <Compile Include="Loads\CS\LoadsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loads\CS\LoadsForm.Designer.cs">
+      <DependentUpon>LoadsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Massing\DistanceToPanels\CS\Command.cs" />
+    <Compile Include="Massing\DividedSurfaceByIntersects\CS\Command.cs" />
+    <Compile Include="Massing\ManipulateForm\CS\Command.cs" />
+    <Compile Include="Massing\MeasurePanelArea\CS\Command.cs" />
+    <Compile Include="Massing\MeasurePanelArea\CS\FormPanelArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Massing\MeasurePanelArea\CS\FormPanelArea.Designer.cs">
+      <DependentUpon>FormPanelArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Massing\NewForm\CS\Command.cs" />
+    <Compile Include="Massing\PanelEdgeLengthAngle\CS\Command.cs" />
+    <Compile Include="Massing\ParameterValuesFromImage\CS\Command.cs" />
+    <Compile Include="Massing\PointCurveCreation\CS\Command.cs" />
+    <Compile Include="MaterialProperties\CS\MaterialProperties.cs" />
+    <Compile Include="MaterialProperties\CS\MaterialPropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaterialQuantities\CS\MaterialQuantities.cs" />
+    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\CS\Application.cs" />
+    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\CS\Command.cs" />
+    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\CS\ModelessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\CS\ModelessForm.Designer.cs">
+      <DependentUpon>ModelessForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\CS\Request.cs" />
+    <Compile Include="ModelessDialog\ModelessForm_ExternalEvent\CS\RequestHandler.cs" />
+    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\CS\Application.cs" />
+    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\CS\Command.cs" />
+    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\CS\ModelessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\CS\ModelessForm.Designer.cs">
+      <DependentUpon>ModelessForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\CS\Request.cs" />
+    <Compile Include="ModelessDialog\ModelessForm_IdlingEvent\CS\RequestHandler.cs" />
+    <Compile Include="ModelLines\CS\Command.cs" />
+    <Compile Include="ModelLines\CS\Information.cs" />
+    <Compile Include="ModelLines\CS\ModelLines.cs" />
+    <Compile Include="ModelLines\CS\ModelLinesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelLines\CS\ModelLinesForm.Designer.cs">
+      <DependentUpon>ModelLinesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelLines\CS\SketchPlaneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelLines\CS\SketchPlaneForm.Designer.cs">
+      <DependentUpon>SketchPlaneForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoveLinear\CS\Command.cs" />
+    <Compile Include="MultiplanarRebar\CS\Command.cs" />
+    <Compile Include="MultiplanarRebar\CS\CorbelFrame.cs" />
+    <Compile Include="MultiplanarRebar\CS\CorbelReinforcementOptions.cs" />
+    <Compile Include="MultiplanarRebar\CS\CorbelReinforcementOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiplanarRebar\CS\CorbelReinforcementOptionsForm.Designer.cs">
+      <DependentUpon>CorbelReinforcementOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiplanarRebar\CS\GeometryUtil.cs" />
+    <Compile Include="MultiplanarRebar\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="MultiplanarRebar\CS\SharedParameterUtil.cs" />
+    <Compile Include="MultiSampleMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiSampleMainForm.Designer.cs">
+      <DependentUpon>MultiSampleMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiThreading\WorkThread\CS\Application.cs" />
+    <Compile Include="MultiThreading\WorkThread\CS\Command.cs" />
+    <Compile Include="MultiThreading\WorkThread\CS\FaceAnalyzer.cs" />
+    <Compile Include="MultiThreading\WorkThread\CS\SharedResults.cs" />
+    <Compile Include="MultiThreading\WorkThread\CS\ThreadAgent.cs" />
+    <Compile Include="NetworkPressureLossReport\CS\AVFViewer.cs" />
+    <Compile Include="NetworkPressureLossReport\CS\Command.cs" />
+    <Compile Include="NetworkPressureLossReport\CS\CSVExporter.cs" />
+    <Compile Include="NetworkPressureLossReport\CS\NetworkDialog.xaml.cs">
+      <DependentUpon>NetworkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkPressureLossReport\CS\NetworkInfo.cs" />
+    <Compile Include="NetworkPressureLossReport\CS\SectionInfo.cs" />
+    <Compile Include="NetworkPressureLossReport\CS\SegmentInfo.cs" />
+    <Compile Include="NewHostedSweep\CS\Command.cs" />
+    <Compile Include="NewHostedSweep\CS\Creators\CreationMgr.cs" />
+    <Compile Include="NewHostedSweep\CS\Creators\FasciaCreator.cs" />
+    <Compile Include="NewHostedSweep\CS\Creators\GutterCreator.cs" />
+    <Compile Include="NewHostedSweep\CS\Creators\HostedSweepCreator.cs" />
+    <Compile Include="NewHostedSweep\CS\Creators\SlabEdgeCreator.cs" />
+    <Compile Include="NewHostedSweep\CS\Data\CreationData.cs" />
+    <Compile Include="NewHostedSweep\CS\Data\ModificationData.cs" />
+    <Compile Include="NewHostedSweep\CS\Forms\CreationDataTypeConvertor.cs" />
+    <Compile Include="NewHostedSweep\CS\Forms\EdgeFetchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewHostedSweep\CS\Forms\EdgeFetchForm.Designer.cs">
+      <DependentUpon>EdgeFetchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewHostedSweep\CS\Forms\EdgeFormUITypeEditor.cs" />
+    <Compile Include="NewHostedSweep\CS\Forms\HostedSweepModifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewHostedSweep\CS\Forms\HostedSweepModifyForm.Designer.cs">
+      <DependentUpon>HostedSweepModifyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewHostedSweep\CS\Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewHostedSweep\CS\Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewHostedSweep\CS\Geom\ElementGeometry.cs" />
+    <Compile Include="NewHostedSweep\CS\Geom\TrackBall.cs" />
+    <Compile Include="NewOpenings\CS\ArcTool.cs" />
+    <Compile Include="NewOpenings\CS\CircleTool.cs" />
+    <Compile Include="NewOpenings\CS\command.cs" />
+    <Compile Include="NewOpenings\CS\EmptyTool.cs" />
+    <Compile Include="NewOpenings\CS\ITool.cs" />
+    <Compile Include="NewOpenings\CS\LineTool.cs" />
+    <Compile Include="NewOpenings\CS\MathTools.cs" />
+    <Compile Include="NewOpenings\CS\NewOpeningsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewOpenings\CS\NewOpeningsForm.Designer.cs">
+      <DependentUpon>NewOpeningsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewOpenings\CS\Profile.cs" />
+    <Compile Include="NewOpenings\CS\ProfileFloor.cs" />
+    <Compile Include="NewOpenings\CS\ProfileWall.cs" />
+    <Compile Include="NewOpenings\CS\RectTool.cs" />
+    <Compile Include="NewPathReinforcement\CS\Command.cs" />
+    <Compile Include="NewPathReinforcement\CS\LineTool.cs" />
+    <Compile Include="NewPathReinforcement\CS\MathTools.cs" />
+    <Compile Include="NewPathReinforcement\CS\NewPathReinforcementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewPathReinforcement\CS\NewPathReinforcementForm.Designer.cs">
+      <DependentUpon>NewPathReinforcementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewPathReinforcement\CS\Profile.cs" />
+    <Compile Include="NewPathReinforcement\CS\ProfileFloor.cs" />
+    <Compile Include="NewPathReinforcement\CS\ProfileWall.cs" />
+    <Compile Include="NewRebar\CS\Command.cs" />
+    <Compile Include="NewRebar\CS\Constraints\ConstraintOnArcShape.cs" />
+    <Compile Include="NewRebar\CS\Constraints\ConstraintOnRebarShape.cs" />
+    <Compile Include="NewRebar\CS\Constraints\ConstraintOnSegmentShape.cs" />
+    <Compile Include="NewRebar\CS\Forms\AddConstraintForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewRebar\CS\Forms\AddConstraintForm.Designer.cs">
+      <DependentUpon>AddConstraintForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRebar\CS\Forms\AddParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewRebar\CS\Forms\AddParameterForm.Designer.cs">
+      <DependentUpon>AddParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRebar\CS\Forms\NewRebarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewRebar\CS\Forms\NewRebarForm.Designer.cs">
+      <DependentUpon>NewRebarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRebar\CS\Forms\NewRebarShapeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewRebar\CS\Forms\NewRebarShapeForm.Designer.cs">
+      <DependentUpon>NewRebarShapeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRebar\CS\Geom\GeometrySupport.cs" />
+    <Compile Include="NewRebar\CS\Geom\GeomUtil.cs" />
+    <Compile Include="NewRebar\CS\Parameters\RebarShapeParameter.cs" />
+    <Compile Include="NewRebar\CS\Parameters\RebarShapeParameterDouble.cs" />
+    <Compile Include="NewRebar\CS\Parameters\RebarShapeParameterFormula.cs" />
+    <Compile Include="NewRebar\CS\RebarCreator.cs" />
+    <Compile Include="NewRebar\CS\RebarShapeDef\RebarShapeDef.cs" />
+    <Compile Include="NewRebar\CS\RebarShapeDef\RebarShapeDefByArc.cs" />
+    <Compile Include="NewRebar\CS\RebarShapeDef\RebarShapeDefBySegment.cs" />
+    <Compile Include="NewRebar\CS\TypeConverter\TypeConverterRebarShapeParameter.cs" />
+    <Compile Include="NewRebar\CS\TypeConverter\TypeConverterSegmentId.cs" />
+    <Compile Include="NewRoof\CS\Command.cs" />
+    <Compile Include="NewRoof\CS\RoofForms\CustomTypeConverter.cs" />
+    <Compile Include="NewRoof\CS\RoofForms\ExtrusionRoofWrapper.cs" />
+    <Compile Include="NewRoof\CS\RoofForms\FootPrintRoofWrapper.cs" />
+    <Compile Include="NewRoof\CS\RoofForms\GraphicsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NewRoof\CS\RoofForms\GraphicsControl.Designer.cs">
+      <DependentUpon>GraphicsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRoof\CS\RoofForms\RoofEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewRoof\CS\RoofForms\RoofEditorForm.Designer.cs">
+      <DependentUpon>RoofEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRoof\CS\RoofForms\RoofForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewRoof\CS\RoofForms\RoofForm.Designer.cs">
+      <DependentUpon>RoofForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRoof\CS\RoofForms\RoofItem.cs" />
+    <Compile Include="NewRoof\CS\RoofsManager\ExtrusionRoofManager.cs" />
+    <Compile Include="NewRoof\CS\RoofsManager\FootPrintRoofManager.cs" />
+    <Compile Include="NewRoof\CS\RoofsManager\RoofsManager.cs" />
+    <Compile Include="Openings\CS\BoundingBox.cs" />
+    <Compile Include="Openings\CS\Command.cs" />
+    <Compile Include="Openings\CS\CreateModelLineOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openings\CS\CreateModelLineOptionsForm.Designer.cs">
+      <DependentUpon>CreateModelLineOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Openings\CS\Line2D.cs" />
+    <Compile Include="Openings\CS\Line3D.cs" />
+    <Compile Include="Openings\CS\LineSketch.cs" />
+    <Compile Include="Openings\CS\ObjectSketch.cs" />
+    <Compile Include="Openings\CS\OpeningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openings\CS\OpeningForm.Designer.cs">
+      <DependentUpon>OpeningForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Openings\CS\OpeningInfo.cs" />
+    <Compile Include="Openings\CS\OpeningProperty.cs" />
+    <Compile Include="Openings\CS\UCS.cs" />
+    <Compile Include="Openings\CS\Vector.cs" />
+    <Compile Include="Openings\CS\WireFrame.cs" />
+    <Compile Include="PanelSchedule\CS\CSVTranslator.cs" />
+    <Compile Include="PanelSchedule\CS\HTMLTranslator.cs" />
+    <Compile Include="PanelSchedule\CS\InstanceViewCreation.cs" />
+    <Compile Include="PanelSchedule\CS\PanelScheduleExport.cs" />
+    <Compile Include="PanelSchedule\CS\SheetImport.cs" />
+    <Compile Include="PanelSchedule\CS\Translator.cs" />
+    <Compile Include="ParameterUtils\CS\Command.cs" />
+    <Compile Include="ParameterUtils\CS\PropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParameterUtils\CS\PropertiesForm.Designer.cs">
+      <DependentUpon>PropertiesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PathOfTravel\CS\Command.cs" />
+    <Compile Include="PathOfTravel\CS\CreateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PathOfTravel\CS\CreateForm.Designer.cs">
+      <DependentUpon>CreateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PathReinforcement\CS\BarTypeConverter.cs" />
+    <Compile Include="PathReinforcement\CS\Command.cs" />
+    <Compile Include="PathReinforcement\CS\MathTools.cs" />
+    <Compile Include="PathReinforcement\CS\PathReinforcementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PathReinforcement\CS\PathReinforcementForm.Designer.cs">
+      <DependentUpon>PathReinforcementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PathReinforcement\CS\PathReinProperties.cs" />
+    <Compile Include="PathReinforcement\CS\Profile.cs" />
+    <Compile Include="PerformanceAdviserControl\CS\Application.cs" />
+    <Compile Include="PerformanceAdviserControl\CS\FlippedDoorCheck.cs" />
+    <Compile Include="PerformanceAdviserControl\CS\RuleInfo.cs" />
+    <Compile Include="PerformanceAdviserControl\CS\TestDisplayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PerformanceAdviserControl\CS\TestDisplayDialog.Designer.cs">
+      <DependentUpon>TestDisplayDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PerformanceAdviserControl\CS\UICommand.cs" />
+    <Compile Include="PhysicalProp\CS\Command.cs" />
+    <Compile Include="PlaceFamilyInstanceByFace\CS\BasedType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlaceFamilyInstanceByFace\CS\BasedType.Designer.cs">
+      <DependentUpon>BasedType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlaceFamilyInstanceByFace\CS\Command.cs" />
+    <Compile Include="PlaceFamilyInstanceByFace\CS\FamilyInstanceCreator.cs" />
+    <Compile Include="PlaceFamilyInstanceByFace\CS\PlaceFamilyInstanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlaceFamilyInstanceByFace\CS\PlaceFamilyInstanceForm.Designer.cs">
+      <DependentUpon>PlaceFamilyInstanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlaceFamilyInstanceByFace\CS\PointUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PlaceFamilyInstanceByFace\CS\PointUserControl.designer.cs">
+      <DependentUpon>PointUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlacementOptions\CS\Command.cs" />
+    <Compile Include="PlacementOptions\CS\FacebasedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlacementOptions\CS\FacebasedForm.Designer.cs">
+      <DependentUpon>FacebasedForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlacementOptions\CS\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlacementOptions\CS\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlacementOptions\CS\SketchbasedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlacementOptions\CS\SketchbasedForm.Designer.cs">
+      <DependentUpon>SketchbasedForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointCloudEngine\CS\FileBasedPointCloud.cs" />
+    <Compile Include="PointCloudEngine\CS\PointCloudAccessBase.cs" />
+    <Compile Include="PointCloudEngine\CS\PointCloudCellStorage.cs" />
+    <Compile Include="PointCloudEngine\CS\PointCloudEngineSample.cs" />
+    <Compile Include="PointCloudEngine\CS\PredefinedPointCloud.cs" />
+    <Compile Include="PointCloudEngine\CS\PredefinedPointCloudEngine.cs" />
+    <Compile Include="PointCloudEngine\CS\XmlUtils.cs" />
+    <Compile Include="PostCommandWorkflow\CS\Application.cs" />
+    <Compile Include="PostCommandWorkflow\CS\PostCommandRevisionMonitor.cs" />
+    <Compile Include="PostCommandWorkflow\CS\PostCommandRevisionMonitorCommand.cs" />
+    <Compile Include="PostCommandWorkflow\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="PowerCircuit\CS\CircuitOperationData.cs" />
+    <Compile Include="PowerCircuit\CS\CircuitOperationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PowerCircuit\CS\CircuitOperationForm.Designer.cs">
+      <DependentUpon>CircuitOperationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PowerCircuit\CS\Command.cs" />
+    <Compile Include="PowerCircuit\CS\EditCircuitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PowerCircuit\CS\EditCircuitForm.Designer.cs">
+      <DependentUpon>EditCircuitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PowerCircuit\CS\ElectricalSystemItem.cs" />
+    <Compile Include="PowerCircuit\CS\Enum.cs" />
+    <Compile Include="PowerCircuit\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="PowerCircuit\CS\SelectCircuitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PowerCircuit\CS\SelectCircuitForm.Designer.cs">
+      <DependentUpon>SelectCircuitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectInfo\CS\Command.cs" />
+    <Compile Include="ProjectInfo\CS\Converters\AngleConverter.cs" />
+    <Compile Include="ProjectInfo\CS\Converters\CityConverter.cs" />
+    <Compile Include="ProjectInfo\CS\Converters\ConstructionWrapperConverter.cs" />
+    <Compile Include="ProjectInfo\CS\Converters\Converters.cs" />
+    <Compile Include="ProjectInfo\CS\Converters\ElementIdConverter.cs" />
+    <Compile Include="ProjectInfo\CS\Converters\ProjectLocationConverter.cs" />
+    <Compile Include="ProjectInfo\CS\Converters\RevitEnumConverter.cs" />
+    <Compile Include="ProjectInfo\CS\Converters\TimeZoneConverter.cs" />
+    <Compile Include="ProjectInfo\CS\ProjectInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectInfo\CS\ProjectInfoForm.Designer.cs">
+      <DependentUpon>ProjectInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectInfo\CS\RevitVersionAttribute.cs" />
+    <Compile Include="ProjectInfo\CS\Wrappers\ConstructionWrapper.cs" />
+    <Compile Include="ProjectInfo\CS\Wrappers\EnergyDataSettingsWrapper.cs" />
+    <Compile Include="ProjectInfo\CS\Wrappers\MEPBuildingConstructionWrapper.cs" />
+    <Compile Include="ProjectInfo\CS\Wrappers\ProjectInfoWrapper.cs" />
+    <Compile Include="ProjectInfo\CS\Wrappers\SiteLocationWrapper.cs" />
+    <Compile Include="ProjectInfo\CS\Wrappers\WrapperCustomDescriptor.cs" />
+    <Compile Include="ProjectInfo\CS\Wrappers\Wrappers.cs" />
+    <Compile Include="ReadonlySharedParameters\CS\ReadonlySharedParameterApplicaton.cs" />
+    <Compile Include="ReadonlySharedParameters\CS\ReadonlySharedParametersCommands.cs" />
+    <Compile Include="ReadonlySharedParameters\CS\SharedParameterBindingManager.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\BeamFramReinMaker.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\BeamFramReinMakerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RebarContainerAnyShapeType\CS\BeamFramReinMakerForm.Designer.cs">
+      <DependentUpon>BeamFramReinMakerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RebarContainerAnyShapeType\CS\BeamGeometrySupport.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\ColumnFramReinMaker.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\ColumnFramReinMakerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RebarContainerAnyShapeType\CS\ColumnFramReinMakerForm.Designer.cs">
+      <DependentUpon>ColumnFramReinMakerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RebarContainerAnyShapeType\CS\ColumnGeometrySupport.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\Command.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\FrameReinMakerFactory.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\FramReinMaker.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\GeomData.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\GeometrySupport.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\GeomUtil.cs" />
+    <Compile Include="RebarContainerAnyShapeType\CS\ParameterUtil.cs" />
+    <Compile Include="RebarFreeForm\CS\AddSharedParams.cs" />
+    <Compile Include="RebarFreeForm\CS\Application.cs" />
+    <Compile Include="RebarFreeForm\CS\Command.cs" />
+    <Compile Include="RebarFreeForm\CS\CurveElementRegenUpdater.cs" />
+    <Compile Include="RebarFreeForm\CS\RebarUpdateServer.cs" />
+    <Compile Include="ReferencePlane\CS\Command.cs" />
+    <Compile Include="ReferencePlane\CS\GeoHelper.cs" />
+    <Compile Include="ReferencePlane\CS\ReferencePlaneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReferencePlane\CS\ReferencePlaneForm.Designer.cs">
+      <DependentUpon>ReferencePlaneForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReferencePlane\CS\ReferencePlaneMgr.cs" />
+    <Compile Include="Reinforcement\CS\BeamFramReinMaker.cs" />
+    <Compile Include="Reinforcement\CS\BeamFramReinMakerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reinforcement\CS\BeamFramReinMakerForm.Designer.cs">
+      <DependentUpon>BeamFramReinMakerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reinforcement\CS\BeamGeometrySupport.cs" />
+    <Compile Include="Reinforcement\CS\ColumnFramReinMaker.cs" />
+    <Compile Include="Reinforcement\CS\ColumnFramReinMakerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reinforcement\CS\ColumnFramReinMakerForm.Designer.cs">
+      <DependentUpon>ColumnFramReinMakerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reinforcement\CS\ColumnGeometrySupport.cs" />
+    <Compile Include="Reinforcement\CS\Command.cs" />
+    <Compile Include="Reinforcement\CS\FrameReinMakerFactory.cs" />
+    <Compile Include="Reinforcement\CS\FramReinMaker.cs" />
+    <Compile Include="Reinforcement\CS\GeomData.cs" />
+    <Compile Include="Reinforcement\CS\GeometrySupport.cs" />
+    <Compile Include="Reinforcement\CS\GeomUtil.cs" />
+    <Compile Include="Reinforcement\CS\ParameterUtil.cs" />
+    <Compile Include="MultiSampleCommand.cs" />
+    <Compile Include="Ribbon\CS\AddInCommand.cs" />
+    <Compile Include="Ribbon\CS\Ribbon.cs" />
+    <Compile Include="RoofsRooms\CS\Command.cs" />
+    <Compile Include="RoomSchedule\CS\Command.cs" />
+    <Compile Include="RoomSchedule\CS\CtrlApplication.cs" />
+    <Compile Include="RoomSchedule\CS\EventsReactor.cs" />
+    <Compile Include="RoomSchedule\CS\RoomScheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RoomSchedule\CS\RoomScheduleForm.Designer.cs">
+      <DependentUpon>RoomScheduleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RoomSchedule\CS\RoomsData.cs" />
+    <Compile Include="RoomSchedule\CS\XlsDBConnector.cs" />
+    <Compile Include="Rooms\CS\Command.cs" />
+    <Compile Include="Rooms\CS\RoomInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Rooms\CS\RoomInfoForm.Designer.cs">
+      <DependentUpon>RoomInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Rooms\CS\RoomsData.cs" />
+    <Compile Include="RotateFramingObjects\CS\RotateFramingObjects.cs" />
+    <Compile Include="RotateFramingObjects\CS\RotateFramingObjectsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RoutingPreferenceTools\CS\RoutingPreferenceAnalysis\Analyzer.cs" />
+    <Compile Include="RoutingPreferenceTools\CS\RoutingPreferenceAnalysis\Command.cs" />
+    <Compile Include="RoutingPreferenceTools\CS\RoutingPreferenceAnalysis\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RoutingPreferenceTools\CS\RoutingPreferenceAnalysis\PartIdInfo.cs" />
+    <Compile Include="RoutingPreferenceTools\CS\RoutingPreferenceBuilder\CommandReadPreferences.cs" />
+    <Compile Include="RoutingPreferenceTools\CS\RoutingPreferenceBuilder\CommandWritePreferences.cs" />
+    <Compile Include="RoutingPreferenceTools\CS\RoutingPreferenceBuilder\RoutingPreferenceBuilder.cs" />
+    <Compile Include="RoutingPreferenceTools\CS\RoutingPreferenceBuilder\RoutingPreferenceBuilderUtility.cs" />
+    <Compile Include="RoutingPreferenceTools\CS\Utility.cs" />
+    <Compile Include="RvtSamples\CS\Application.cs" />
+    <Compile Include="RvtSamples\CS\Properties\Resource.Designer.cs" />
+    <Compile Include="RvtSamples\CS\SampleItem.cs" />
+    <Compile Include="ScheduleAutomaticFormatter\CS\Application.cs" />
+    <Compile Include="ScheduleAutomaticFormatter\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="ScheduleAutomaticFormatter\CS\ScheduleFormatter.cs" />
+    <Compile Include="ScheduleAutomaticFormatter\CS\ScheduleFormatterCommand.cs" />
+    <Compile Include="ScheduleCreation\CS\Command.cs" />
+    <Compile Include="ScheduleCreation\CS\ScheduleCreationUtility.cs" />
+    <Compile Include="ScheduleToHTML\CS\Application.cs" />
+    <Compile Include="ScheduleToHTML\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="ScheduleToHTML\CS\ScheduleHTMLExportCommand.cs" />
+    <Compile Include="ScheduleToHTML\CS\ScheduleHTMLExporter.cs" />
+    <Compile Include="Selections\CS\Command.cs" />
+    <Compile Include="Selections\CS\SelectionFilters.cs" />
+    <Compile Include="Selections\CS\SelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Selections\CS\SelectionForm.Designer.cs">
+      <DependentUpon>SelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Selections\CS\SelectionManager.cs" />
+    <Compile Include="ShaftHolePuncher\CS\Command.cs" />
+    <Compile Include="ShaftHolePuncher\CS\ITool.cs" />
+    <Compile Include="ShaftHolePuncher\CS\LineTool.cs" />
+    <Compile Include="ShaftHolePuncher\CS\MathTools.cs" />
+    <Compile Include="ShaftHolePuncher\CS\Profile.cs" />
+    <Compile Include="ShaftHolePuncher\CS\ProfileBeam.cs" />
+    <Compile Include="ShaftHolePuncher\CS\ProfileFloor.cs" />
+    <Compile Include="ShaftHolePuncher\CS\ProfileNull.cs" />
+    <Compile Include="ShaftHolePuncher\CS\ProfileWall.cs" />
+    <Compile Include="ShaftHolePuncher\CS\RectangleTool.cs" />
+    <Compile Include="ShaftHolePuncher\CS\ShaftHolePuncherForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShaftHolePuncher\CS\ShaftHolePuncherForm.Designer.cs">
+      <DependentUpon>ShaftHolePuncherForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SharedCoordinateSystem\CS\Command.cs" />
+    <Compile Include="SharedCoordinateSystem\CS\CoordinateSystemData.cs" />
+    <Compile Include="SharedCoordinateSystem\CS\CoordinateSystemDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SharedCoordinateSystem\CS\CoordinateSystemDataForm.Designer.cs">
+      <DependentUpon>CoordinateSystemDataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SharedCoordinateSystem\CS\DuplicateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SharedCoordinateSystem\CS\DuplicateForm.Designer.cs">
+      <DependentUpon>DuplicateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SharedCoordinateSystem\CS\PlaceInfo.cs" />
+    <Compile Include="SharedCoordinateSystem\CS\UnitConversion.cs" />
+    <Compile Include="SheetToView3D\CS\SheetToView3D.cs" />
+    <Compile Include="SinePlotter\CS\Application.cs" />
+    <Compile Include="SinePlotter\CS\Command.cs" />
+    <Compile Include="SinePlotter\CS\FamilyInstancePlotter.cs" />
+    <Compile Include="Site\CS\Application.cs" />
+    <Compile Include="Site\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="Site\CS\SiteAddRetainingPondCommand.cs" />
+    <Compile Include="Site\CS\SiteDeleteRegionAndPointsCommand.cs" />
+    <Compile Include="Site\CS\SiteEditingUtils.cs" />
+    <Compile Include="Site\CS\SiteLowerTerrainInRegionCommand.cs" />
+    <Compile Include="Site\CS\SiteMoveRegionAndPointsCommand.cs" />
+    <Compile Include="Site\CS\SiteNormalizeTerrainInRegionCommand.cs" />
+    <Compile Include="Site\CS\SiteRaiseTerrainInRegionCommand.cs" />
+    <Compile Include="Site\CS\SiteUIUtils.cs" />
+    <Compile Include="Site\CS\TopographyEditFailuresPreprocessor.cs" />
+    <Compile Include="SlabProperties\CS\Command.cs" />
+    <Compile Include="SlabProperties\CS\SlabProperitiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SlabShapeEditing\CS\Command.cs" />
+    <Compile Include="SlabShapeEditing\CS\LineTool.cs" />
+    <Compile Include="SlabShapeEditing\CS\MathTools.cs" />
+    <Compile Include="SlabShapeEditing\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="SlabShapeEditing\CS\SlabProfile.cs" />
+    <Compile Include="SlabShapeEditing\CS\SlabShapeEditingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SlabShapeEditing\CS\SlabShapeEditingForm.Designer.cs">
+      <DependentUpon>SlabShapeEditingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SolidSolidCut\CS\Command.cs" />
+    <Compile Include="SpanDirection\CS\Command.cs" />
+    <Compile Include="SpotDimension\CS\Command.cs" />
+    <Compile Include="SpotDimension\CS\SpotDimensionInfoDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpotDimension\CS\SpotDimensionInfoDlg.Designer.cs">
+      <DependentUpon>SpotDimensionInfoDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpotDimension\CS\SpotDimensionParams.cs" />
+    <Compile Include="SpotDimension\CS\SpotDimensionsData.cs" />
+    <Compile Include="StairsAutomation\CS\Command.cs" />
+    <Compile Include="StairsAutomation\CS\GeometryUtils.cs" />
+    <Compile Include="StairsAutomation\CS\IStairsConfiguration.cs" />
+    <Compile Include="StairsAutomation\CS\LandingComponents\IStairsLandingComponent.cs" />
+    <Compile Include="StairsAutomation\CS\LandingComponents\LandingComponentUtils.cs" />
+    <Compile Include="StairsAutomation\CS\LandingComponents\StairsRectangleLandingComponent.cs" />
+    <Compile Include="StairsAutomation\CS\RunComponents\CurvedStairsRunComponent.cs" />
+    <Compile Include="StairsAutomation\CS\RunComponents\IStairsRunComponent.cs" />
+    <Compile Include="StairsAutomation\CS\RunComponents\SketchedCurvedStairsRunComponent.cs" />
+    <Compile Include="StairsAutomation\CS\RunComponents\SketchedStraightStairsRunComponent.cs" />
+    <Compile Include="StairsAutomation\CS\RunComponents\StraightStairsRunComponent.cs" />
+    <Compile Include="StairsAutomation\CS\RunComponents\TransformedStairsComponent.cs" />
+    <Compile Include="StairsAutomation\CS\StairsAutomationUtility.cs" />
+    <Compile Include="StairsAutomation\CS\StairsConfiguration.cs" />
+    <Compile Include="StairsAutomation\CS\StairsSingleCurvedRun.cs" />
+    <Compile Include="StairsAutomation\CS\StairsSingleSketchedCurvedRun.cs" />
+    <Compile Include="StairsAutomation\CS\StairsSingleSketchedStraightRun.cs" />
+    <Compile Include="StairsAutomation\CS\StairsSingleStraightRun.cs" />
+    <Compile Include="StairsAutomation\CS\StairsStandardConfiguration.cs" />
+    <Compile Include="StructSample\CS\Command.cs" />
+    <Compile Include="StructuralLayerFunction\CS\Command.cs" />
+    <Compile Include="StructuralLayerFunction\CS\StructuralLayerFunctionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TagBeam\CS\Command.cs" />
+    <Compile Include="TagBeam\CS\FamilySymbolWrapper.cs" />
+    <Compile Include="TagBeam\CS\TagBeamData.cs" />
+    <Compile Include="TagBeam\CS\TagBeamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TagBeam\CS\TagBeamForm.Designer.cs">
+      <DependentUpon>TagBeamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Toposolid\CS\Command.cs" />
+    <Compile Include="TransactionControl\CS\Command.cs" />
+    <Compile Include="TransactionControl\CS\CreateWallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransactionControl\CS\CreateWallForm.Designer.cs">
+      <DependentUpon>CreateWallForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionControl\CS\TransactionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransactionControl\CS\TransactionForm.Designer.cs">
+      <DependentUpon>TransactionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TraverseSystem\CS\Command.cs" />
+    <Compile Include="TraverseSystem\CS\TraversalTree.cs" />
+    <Compile Include="Truss\CS\Command.cs" />
+    <Compile Include="Truss\CS\LineTool.cs" />
+    <Compile Include="Truss\CS\MathTools.cs" />
+    <Compile Include="Truss\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="Truss\CS\TrussForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Truss\CS\TrussForm.Designer.cs">
+      <DependentUpon>TrussForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Truss\CS\TrussGeometry.cs" />
+    <Compile Include="UIAPI\CS\ApplicationAvailabilityClass.cs" />
+    <Compile Include="UIAPI\CS\ApplicationOptions.cs" />
+    <Compile Include="UIAPI\CS\DragAndDrop\DragAndDrop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIAPI\CS\DragAndDrop\DragAndDrop.Designer.cs">
+      <DependentUpon>DragAndDrop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIAPI\CS\DragAndDrop\DragAndDropCommand.cs" />
+    <Compile Include="UIAPI\CS\ExternalApplication.cs" />
+    <Compile Include="UIAPI\CS\OptionsDialog\AddTabCommand.cs" />
+    <Compile Include="UIAPI\CS\OptionsDialog\Options.xaml.cs">
+      <DependentUpon>Options.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIAPI\CS\OptionsDialog\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIAPI\CS\OptionsDialog\UserControl2.xaml.cs">
+      <DependentUpon>UserControl2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIAPI\CS\OptionsDialog\UserControl3.xaml.cs">
+      <DependentUpon>UserControl3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIAPI\CS\PreviewControl\PreviewCommand.cs" />
+    <Compile Include="UIAPI\CS\PreviewControl\PreviewModel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIAPI\CS\PreviewControl\PreviewModel.Designer.cs">
+      <DependentUpon>PreviewModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIAPI\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="Units\CS\Command.cs" />
+    <Compile Include="Units\CS\FormatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Units\CS\FormatForm.Designer.cs">
+      <DependentUpon>FormatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Units\CS\UnitsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Units\CS\UnitsForm.Designer.cs">
+      <DependentUpon>UnitsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VersionChecking\CS\VersionChecking.cs" />
+    <Compile Include="VersionChecking\CS\VersionCheckingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VersionChecking\CS\VersionCheckingForm.Designer.cs">
+      <DependentUpon>VersionCheckingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\Command.cs" />
+    <Compile Include="ViewPrinter\CS\PrintMgr.cs" />
+    <Compile Include="ViewPrinter\CS\PrintMgrForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\PrintMgrForm.Designer.cs">
+      <DependentUpon>PrintMgrForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\PrintSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\PrintSetupForm.Designer.cs">
+      <DependentUpon>PrintSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\PrintSTP.cs" />
+    <Compile Include="ViewPrinter\CS\ReNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\ReNameForm.Designer.cs">
+      <DependentUpon>ReNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\SaveAsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\SaveAsForm.Designer.cs">
+      <DependentUpon>SaveAsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\ViewSheets.cs" />
+    <Compile Include="ViewPrinter\CS\ViewSheetSetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewPrinter\CS\ViewSheetSetForm.Designer.cs">
+      <DependentUpon>ViewSheetSetForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewTemplateCreation\CS\Command.cs" />
+    <Compile Include="ViewTemplateCreation\CS\Utils.cs" />
+    <Compile Include="ViewTemplateCreation\CS\ViewTemplateCreationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewTemplateCreation\CS\ViewTemplateCreationForm.Designer.cs">
+      <DependentUpon>ViewTemplateCreationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VisibilityControl\CS\Command.cs" />
+    <Compile Include="VisibilityControl\CS\VisibilityCtrl.cs" />
+    <Compile Include="VisibilityControl\CS\VisibilityCtrlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisibilityControl\CS\VisibilityCtrlForm.Designer.cs">
+      <DependentUpon>VisibilityCtrlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinderStairs\CS\Command.cs" />
+    <Compile Include="WinderStairs\CS\Forms\LWinderOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinderStairs\CS\Forms\LWinderOptions.Designer.cs">
+      <DependentUpon>LWinderOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinderStairs\CS\Forms\UWinderOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinderStairs\CS\Forms\UWinderOptions.Designer.cs">
+      <DependentUpon>UWinderOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinderStairs\CS\Properties\Resources.Designer.cs" />
+    <Compile Include="WinderStairs\CS\Winders\LWinder.cs" />
+    <Compile Include="WinderStairs\CS\Winders\UWinder.cs" />
+    <Compile Include="WinderStairs\CS\Winders\Winder.cs" />
+    <Compile Include="WinderStairs\CS\Winders\WinderCorner.cs" />
+    <Compile Include="WinderStairs\CS\Winders\WinderSinglePoint.cs" />
+    <Compile Include="WinderStairs\CS\Winders\WinderStraight.cs" />
+    <Compile Include="WinderStairs\CS\Winders\WinderUtil.cs" />
+    <Compile Include="WinderStairs\CS\WinderUpdater.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AddSpaceAndZone\CS\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddSpaceAndZone\CS\ZoneEditorForm.resx">
+      <DependentUpon>ZoneEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllViews\CS\AllViewsForm.resx">
+      <DependentUpon>AllViewsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnalyticalSupportData_Info\CS\AnalyticalSupportData_InfoForm.resx">
+      <DependentUpon>AnalyticalSupportData_InfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="APIAppStartup\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="APIAppStartup\CS\SplashWindow.resx">
+      <DependentUpon>SplashWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppearanceAssetEditing\CS\AppearanceAssetEditingForm.resx">
+      <DependentUpon>AppearanceAssetEditingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppearanceAssetEditing\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="AreaReinParameters\CS\AreaReinParametersForm.resx">
+      <DependentUpon>AreaReinParametersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AttachedDetailGroup\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="AutoTagRooms\CS\AutoTagRoomsForm.resx">
+      <DependentUpon>AutoTagRoomsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BeamAndSlabNewParameter\CS\BeamAndSlabNewParameterForm.resx">
+      <DependentUpon>BeamAndSlabNewParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BoundaryConditions\CS\BoundaryConditionsForm.resx">
+      <DependentUpon>BoundaryConditionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BoundaryConditions\CS\SpringModulusForm.resx">
+      <DependentUpon>SpringModulusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BrowseBindings\VB.NET\BindingsBrowserForm.resx" />
+    <EmbeddedResource Include="ColorFill\CS\ColorFillForm.resx">
+      <DependentUpon>ColorFillForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateBeamsColumnsBraces\CS\CreateBeamsColumnsBracesForm.resx">
+      <DependentUpon>CreateBeamsColumnsBracesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateBeamsColumnsBraces\VB.NET\CreateBeamsColumnsBracesForm.resx" />
+    <EmbeddedResource Include="CreateBeamSystem\CS\BeamSystemForm.resx">
+      <DependentUpon>BeamSystemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateComplexAreaRein\CS\CreateComplexAreaReinForm.resx">
+      <DependentUpon>CreateComplexAreaReinForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateDimensions\CS\CreateDimensionForm.resx" />
+    <EmbeddedResource Include="CreateFillPattern\CS\FillPatternForm.resx">
+      <DependentUpon>FillPatternForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateSimpleAreaRein\CS\CreateSimpleAreaReinForm.resx">
+      <DependentUpon>CreateSimpleAreaReinForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateWallinBeamProfile\CS\CreateWallinBeamProfileForm.resx">
+      <DependentUpon>CreateWallinBeamProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateWallsUnderBeams\CS\CreateWallsUnderBeamsForm.resx">
+      <DependentUpon>CreateWallsUnderBeamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurtainSystem\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="CurtainSystem\CS\UI\CreateCurtainSystemDialog.resx">
+      <DependentUpon>CreateCurtainSystemDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurtainSystem\CS\UI\CurtainForm.resx">
+      <DependentUpon>CurtainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurtainWallGrid\CS\GridForm.resx">
+      <DependentUpon>GridForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurtainWallGrid\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="CurvedBeam\CS\CurvedBeamForm.resx">
+      <DependentUpon>CurvedBeamForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurvedBeam\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="CustomExporter\Custom2DExporter\CS\Export2DView.resx">
+      <DependentUpon>Export2DView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatumsModification\CS\AlignmentSetting.resx">
+      <DependentUpon>AlignmentSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatumsModification\CS\DatumStyleSetting.resx">
+      <DependentUpon>DatumStyleSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatumsModification\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="DatumsModification\CS\PropogateSetting.resx">
+      <DependentUpon>PropogateSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeckProperties\CS\GenericForm.resx">
+      <DependentUpon>GenericForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DesignOptionReader\VB.NET\DesignOptionsDialog.resx" />
+    <EmbeddedResource Include="DisplacementElementAnimation\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="DocumentChanged\CS\ChangesInfoForm.resx">
+      <DependentUpon>ChangesInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DoorSwing\CS\DoorSwingResource.resx" />
+    <EmbeddedResource Include="DoorSwing\CS\InitializeForm.resx">
+      <DependentUpon>InitializeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DuplicateViews\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="ElementFilter\ViewFilters\CS\NewFilterForm.resx">
+      <DependentUpon>NewFilterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElementFilter\ViewFilters\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="ElementFilter\ViewFilters\CS\ViewFiltersForm.resx">
+      <DependentUpon>ViewFiltersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\EventsMonitor\CS\EventsInfoWindows.resx">
+      <DependentUpon>EventsInfoWindows.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\EventsMonitor\CS\EventsSettingForm.resx">
+      <DependentUpon>EventsSettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExternalCommand\CS\ExternalCommandRegistration\ExternalCommandResource.resx" />
+    <EmbeddedResource Include="ExternalCommand\CS\RevitAddInUtilitySample\Properties\Resources.resx" />
+    <EmbeddedResource Include="ExternalCommand\CS\RevitAddInUtilitySample\RevitAddInUtilityForm.resx">
+      <DependentUpon>RevitAddInUtilityForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FamilyCreation\DWGFamilyCreation\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="FamilyCreation\TypeRegeneration\CS\MessageForm.resx">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FamilyCreation\ValidateParameters\CS\MessageForm.resx">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FamilyCreation\WindowWizard\CS\WizardUI.resx">
+      <DependentUpon>WizardUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FamilyParametersOrder\CS\SortFamilyFilesParamsForm.resx">
+      <DependentUpon>SortFamilyFilesParamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FamilyParametersOrder\CS\SortLoadedFamiliesParamsForm.resx">
+      <DependentUpon>SortLoadedFamiliesParamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FindReferencesByDirection\RaytraceBounce\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="FindReferencesByDirection\RaytraceBounce\CS\RayTraceBounceForm.resx">
+      <DependentUpon>RayTraceBounceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FoundationSlab\CS\FoundationSlabForm.resx">
+      <DependentUpon>FoundationSlabForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrameBuilder\CS\CreateFrameForm.resx">
+      <DependentUpon>CreateFrameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrameBuilder\CS\DuplicateTypeForm.resx">
+      <DependentUpon>DuplicateTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrameBuilder\CS\EditTypeNameForm.resx">
+      <DependentUpon>EditTypeNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FreeFormElement\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="GenerateFloor\CS\GenerateFloorForm.resx">
+      <DependentUpon>GenerateFloorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenericStructuralConnection\CS\StructuralConnectionForm.resx">
+      <DependentUpon>StructuralConnectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeometryAPI\BRepBuilderExample\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="GeometryAPI\EnergyAnalysisModel\CS\OptionsAndAnalysisForm.resx">
+      <DependentUpon>OptionsAndAnalysisForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\ProximityDetectionAndWallJoinControlForm.resx">
+      <DependentUpon>ProximityDetectionAndWallJoinControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeometryAPI\UpdateExternallyTaggedBRep\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="GridCreation\CS\CreateOrthogonalGridsForm.resx">
+      <DependentUpon>CreateOrthogonalGridsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GridCreation\CS\CreateRadialAndArcGridsForm.resx">
+      <DependentUpon>CreateRadialAndArcGridsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GridCreation\CS\CreateWithSelectedCurvesForm.resx">
+      <DependentUpon>CreateWithSelectedCurvesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GridCreation\CS\GridCreationOptionForm.resx">
+      <DependentUpon>GridCreationOptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GridCreation\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="ImportExport\CS\Export\ExportBaseOptionsForm.resx">
+      <DependentUpon>ExportBaseOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\CS\Export\ExportDGNOptionsForm.resx">
+      <DependentUpon>ExportDGNOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\CS\Export\ExportDWFOptionForm.resx">
+      <DependentUpon>ExportDWFOptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\CS\Export\ExportIMGOptionsForm.resx">
+      <DependentUpon>ExportIMGOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\CS\Export\ExportPDFOptionsForm.resx">
+      <DependentUpon>ExportPDFOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\CS\Export\ExportWithViewsForm.resx">
+      <DependentUpon>ExportWithViewsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\CS\Export\SelectViewsForm.resx">
+      <DependentUpon>SelectViewsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\CS\Import\ImportDWGForm.resx">
+      <DependentUpon>ImportDWGForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\CS\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InPlaceMembers\CS\InPlaceMembersForm.resx">
+      <DependentUpon>InPlaceMembersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InPlaceMembers\CS\PictureBox3D.resx">
+      <DependentUpon>PictureBox3D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Journaling\CS\JournalingForm.resx">
+      <DependentUpon>JournalingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelsProperty\CS\LevelsForm.resx">
+      <DependentUpon>LevelsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelsProperty\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="Loads\CS\LoadsForm.resx">
+      <DependentUpon>LoadsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Massing\MeasurePanelArea\CS\FormPanelArea.resx">
+      <DependentUpon>FormPanelArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaterialProperties\CS\MaterialPropertiesForm.resx">
+      <DependentUpon>MaterialPropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaterialProperties\VB.NET\MaterialPropertiesForm.resx" />
+    <EmbeddedResource Include="ModelessDialog\ModelessForm_ExternalEvent\CS\ModelessForm.resx">
+      <DependentUpon>ModelessForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelessDialog\ModelessForm_IdlingEvent\CS\ModelessForm.resx">
+      <DependentUpon>ModelessForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelLines\CS\ModelLinesForm.resx">
+      <DependentUpon>ModelLinesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelLines\CS\SketchPlaneForm.resx">
+      <DependentUpon>SketchPlaneForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiplanarRebar\CS\CorbelReinforcementOptionsForm.resx">
+      <DependentUpon>CorbelReinforcementOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiplanarRebar\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="MultiSampleMainForm.resx">
+      <DependentUpon>MultiSampleMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewHostedSweep\CS\Forms\EdgeFetchForm.resx">
+      <DependentUpon>EdgeFetchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewHostedSweep\CS\Forms\HostedSweepModifyForm.resx">
+      <DependentUpon>HostedSweepModifyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewHostedSweep\CS\Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewOpenings\CS\NewOpeningsForm.resx">
+      <DependentUpon>NewOpeningsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewPathReinforcement\CS\NewPathReinforcementForm.resx">
+      <DependentUpon>NewPathReinforcementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRebar\CS\Forms\AddConstraintForm.resx">
+      <DependentUpon>AddConstraintForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRebar\CS\Forms\AddParameterForm.resx">
+      <DependentUpon>AddParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRebar\CS\Forms\NewRebarForm.resx">
+      <DependentUpon>NewRebarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRebar\CS\Forms\NewRebarShapeForm.resx">
+      <DependentUpon>NewRebarShapeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRoof\CS\RoofForms\GraphicsControl.resx">
+      <DependentUpon>GraphicsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRoof\CS\RoofForms\RoofEditorForm.resx">
+      <DependentUpon>RoofEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRoof\CS\RoofForms\RoofForm.resx">
+      <DependentUpon>RoofForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Openings\CS\CreateModelLineOptionsForm.resx">
+      <DependentUpon>CreateModelLineOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Openings\CS\OpeningForm.resx">
+      <DependentUpon>OpeningForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParameterUtils\CS\PropertiesForm.resx">
+      <DependentUpon>PropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PathOfTravel\CS\CreateForm.resx">
+      <DependentUpon>CreateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PathReinforcement\CS\PathReinforcementForm.resx">
+      <DependentUpon>PathReinforcementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PerformanceAdviserControl\CS\TestDisplayDialog.resx">
+      <DependentUpon>TestDisplayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PhaseSample\VB.NET\PickPhase.resx" />
+    <EmbeddedResource Include="PlaceFamilyInstanceByFace\CS\BasedType.resx">
+      <DependentUpon>BasedType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlaceFamilyInstanceByFace\CS\PlaceFamilyInstanceForm.resx">
+      <DependentUpon>PlaceFamilyInstanceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlaceFamilyInstanceByFace\CS\PointUserControl.resx">
+      <DependentUpon>PointUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlacementOptions\CS\FacebasedForm.resx">
+      <DependentUpon>FacebasedForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlacementOptions\CS\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlacementOptions\CS\SketchbasedForm.resx">
+      <DependentUpon>SketchbasedForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PostCommandWorkflow\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="PowerCircuit\CS\CircuitOperationForm.resx">
+      <DependentUpon>CircuitOperationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PowerCircuit\CS\EditCircuitForm.resx">
+      <DependentUpon>EditCircuitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PowerCircuit\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="PowerCircuit\CS\SelectCircuitForm.resx">
+      <DependentUpon>SelectCircuitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectInfo\CS\ProjectInfoForm.resx">
+      <DependentUpon>ProjectInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RebarContainerAnyShapeType\CS\BeamFramReinMakerForm.resx">
+      <DependentUpon>BeamFramReinMakerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RebarContainerAnyShapeType\CS\ColumnFramReinMakerForm.resx">
+      <DependentUpon>ColumnFramReinMakerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReferencePlane\CS\ReferencePlaneForm.resx">
+      <DependentUpon>ReferencePlaneForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reinforcement\CS\BeamFramReinMakerForm.resx">
+      <DependentUpon>BeamFramReinMakerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reinforcement\CS\ColumnFramReinMakerForm.resx">
+      <DependentUpon>ColumnFramReinMakerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RoomSchedule\CS\RoomScheduleForm.resx">
+      <DependentUpon>RoomScheduleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rooms\CS\RoomInfoForm.resx">
+      <DependentUpon>RoomInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RotateFramingObjects\CS\RotateFramingObjectsForm.resx">
+      <DependentUpon>RotateFramingObjectsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RotateFramingObjects\VB.NET\RotateFramingObjectsForm.resx" />
+    <EmbeddedResource Include="RvtSamples\CS\Properties\Resource.resx" />
+    <EmbeddedResource Include="ScheduleAutomaticFormatter\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="ScheduleToHTML\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="Selections\CS\SelectionForm.resx">
+      <DependentUpon>SelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShaftHolePuncher\CS\ShaftHolePuncherForm.resx">
+      <DependentUpon>ShaftHolePuncherForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SharedCoordinateSystem\CS\CoordinateSystemDataForm.resx">
+      <DependentUpon>CoordinateSystemDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SharedCoordinateSystem\CS\DuplicateForm.resx">
+      <DependentUpon>DuplicateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Site\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="SlabProperties\CS\SlabProperitiesForm.resx">
+      <DependentUpon>SlabProperitiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SlabProperties\VB.NET\SlabPropertiesForm.resx" />
+    <EmbeddedResource Include="SlabShapeEditing\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="SlabShapeEditing\CS\SlabShapeEditingForm.resx">
+      <DependentUpon>SlabShapeEditingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpotDimension\CS\SpotDimensionInfoDlg.resx">
+      <DependentUpon>SpotDimensionInfoDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StructuralLayerFunction\CS\StructuralLayerFunctionForm.resx">
+      <DependentUpon>StructuralLayerFunctionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StructuralLayerFunction\VB.NET\StructuralLayerFunctionForm.resx" />
+    <EmbeddedResource Include="TagBeam\CS\TagBeamForm.resx">
+      <DependentUpon>TagBeamForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransactionControl\CS\CreateWallForm.resx">
+      <DependentUpon>CreateWallForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransactionControl\CS\TransactionForm.resx">
+      <DependentUpon>TransactionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Truss\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="Truss\CS\TrussForm.resx">
+      <DependentUpon>TrussForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TypeSelector\VB.NET\TypeSelectorWindow.resx" />
+    <EmbeddedResource Include="UIAPI\CS\DragAndDrop\DragAndDrop.resx">
+      <DependentUpon>DragAndDrop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIAPI\CS\PreviewControl\PreviewModel.resx">
+      <DependentUpon>PreviewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIAPI\CS\Properties\Resources.resx" />
+    <EmbeddedResource Include="Units\CS\FormatForm.resx">
+      <DependentUpon>FormatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Units\CS\UnitsForm.resx">
+      <DependentUpon>UnitsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VersionChecking\CS\VersionCheckingForm.resx">
+      <DependentUpon>VersionCheckingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\RevitViewer\VB.NET\Viewer\ViewerWindow.resx" />
+    <EmbeddedResource Include="ViewPrinter\CS\PrintMgrForm.resx">
+      <DependentUpon>PrintMgrForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewPrinter\CS\PrintSetupForm.resx">
+      <DependentUpon>PrintSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewPrinter\CS\ReNameForm.resx">
+      <DependentUpon>ReNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewPrinter\CS\SaveAsForm.resx">
+      <DependentUpon>SaveAsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewPrinter\CS\ViewSheetSetForm.resx">
+      <DependentUpon>ViewSheetSetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewTemplateCreation\CS\ViewTemplateCreationForm.resx">
+      <DependentUpon>ViewTemplateCreationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisibilityControl\CS\VisibilityCtrlForm.resx">
+      <DependentUpon>VisibilityCtrlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinderStairs\CS\Forms\LWinderOptions.resx">
+      <DependentUpon>LWinderOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinderStairs\CS\Forms\UWinderOptions.resx">
+      <DependentUpon>UWinderOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinderStairs\CS\Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="CloudAPISample\CS\View\ViewInputMigrationInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CloudAPISample\CS\View\ViewMigrationToBim360.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CloudAPISample\CS\View\ViewSamplePortal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DockableDialogs\CS\DockingSetupDialog\DockingSetupDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DockableDialogs\CS\MainPage\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Events\ProgressNotifier\CS\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Events\SelectionChanged\CS\InfoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\User\UICommand.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\User\UIData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GetSetDefaultTypes\CS\DefaultElementTypes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GetSetDefaultTypes\CS\DefaultFamilyTypes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NetworkPressureLossReport\CS\NetworkDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RoutingPreferenceTools\CS\RoutingPreferenceAnalysis\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIAPI\CS\OptionsDialog\Options.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIAPI\CS\OptionsDialog\UserControl1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIAPI\CS\OptionsDialog\UserControl2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIAPI\CS\OptionsDialog\UserControl3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AddSpaceAndZone\CS\Properties\" />
+    <Folder Include="AllViews\CS\Properties\" />
+    <Folder Include="AnalyticalSupportData_Info\CS\Properties\" />
+    <Folder Include="AreaReinCurve\CS\Properties\" />
+    <Folder Include="AreaReinParameters\CS\Properties\" />
+    <Folder Include="AutoRoute\CS\Properties\" />
+    <Folder Include="AutoTagRooms\CS\Properties\" />
+    <Folder Include="BoundaryConditions\CS\Properties\" />
+    <Folder Include="CapitalizeAllTextNotes\CS\Properties\" />
+    <Folder Include="CloudAPISample\CS\Properties\" />
+    <Folder Include="ColorFill\CS\Properties\" />
+    <Folder Include="CompoundStructure\CS\Properties\" />
+    <Folder Include="ContextualAnalyticalModel\CS\Properties\" />
+    <Folder Include="CreateBeamSystem\CS\Properties\" />
+    <Folder Include="CreateComplexAreaRein\CS\Properties\" />
+    <Folder Include="CreateDimensions\CS\Properties\" />
+    <Folder Include="CreateDuctworkStiffener\CS\Properties\" />
+    <Folder Include="CreateFillPattern\CS\Properties\" />
+    <Folder Include="CreateSimpleAreaRein\CS\Properties\" />
+    <Folder Include="CreateTrianglesTopography\CS\Properties\" />
+    <Folder Include="CreateViewSection\CS\Properties\" />
+    <Folder Include="CreateWallinBeamProfile\CS\Properties\" />
+    <Folder Include="CreateWallsUnderBeams\CS\Properties\" />
+    <Folder Include="CustomExporter\Custom2DExporter\CS\Properties\" />
+    <Folder Include="DeckProperties\CS\Properties\" />
+    <Folder Include="DeleteDimensions\CS\Properties\" />
+    <Folder Include="DimensionLeaderEnd\CS\Properties\" />
+    <Folder Include="DisableCommand\CS\Properties\" />
+    <Folder Include="DockableDialogs\CS\Properties\" />
+    <Folder Include="DocumentChanged\CS\Properties\" />
+    <Folder Include="DoorSwing\CS\Properties\" />
+    <Folder Include="DuplicateGraphics\CS\Properties\" />
+    <Folder Include="DynamicModelUpdate\CS\Properties\" />
+    <Folder Include="ErrorHandling\CS\Properties\" />
+    <Folder Include="Events\AutoStamp\CS\Properties\" />
+    <Folder Include="Events\AutoUpdate\CS\Properties\" />
+    <Folder Include="Events\CancelSave\CS\Properties\" />
+    <Folder Include="Events\EventsMonitor\CS\Properties\" />
+    <Folder Include="Events\PrintLog\CS\Properties\" />
+    <Folder Include="Events\ProgressNotifier\CS\Properties\" />
+    <Folder Include="Events\SelectionChanged\CS\Properties\" />
+    <Folder Include="ExportPDFSettingsSample\CS\Properties\" />
+    <Folder Include="ExtensibleStorageManager\ExtensibleStorageManager\CS\Properties\" />
+    <Folder Include="ExtensibleStorageManager\SchemaWrapperTools\CS\Properties\" />
+    <Folder Include="ExtensibleStorageUtility\CS\Properties\" />
+    <Folder Include="ExternalCommand\CS\ExternalCommandRegistration\Properties\" />
+    <Folder Include="ExternalResourceServer\ExternalResourceDBServer\CS\Properties\" />
+    <Folder Include="ExternalResourceServer\ExternalResourceUIServer\CS\Properties\" />
+    <Folder Include="FabricationPartLayout\CS\Properties\" />
+    <Folder Include="FamilyCreation\AutoJoin\CS\Properties\" />
+    <Folder Include="FamilyCreation\AutoParameter\CS\Properties\" />
+    <Folder Include="FamilyCreation\CreateAirHandler\CS\Properties\" />
+    <Folder Include="FamilyCreation\CreateTruss\CS\Properties\" />
+    <Folder Include="FamilyCreation\GenericModelCreation\CS\Properties\" />
+    <Folder Include="FamilyCreation\TypeRegeneration\CS\Properties\" />
+    <Folder Include="FamilyCreation\ValidateParameters\CS\Properties\" />
+    <Folder Include="FamilyCreation\WindowWizard\CS\Properties\" />
+    <Folder Include="FamilyParametersOrder\CS\Properties\" />
+    <Folder Include="FoundationSlab\CS\Properties\" />
+    <Folder Include="FrameBuilder\CS\Properties\" />
+    <Folder Include="GenerateFloor\CS\Properties\" />
+    <Folder Include="GenericStructuralConnection\CS\Properties\" />
+    <Folder Include="GeometryAPI\ComputedSymbolGeometry\CS\Properties\" />
+    <Folder Include="GeometryAPI\EnergyAnalysisModel\CS\Properties\" />
+    <Folder Include="GeometryAPI\GeometryCreation_BooleanOperation\CS\Properties\" />
+    <Folder Include="GeometryAPI\ProximityDetection_WallJoinControl\CS\Properties\" />
+    <Folder Include="GetSetDefaultTypes\CS\Properties\" />
+    <Folder Include="HelloRevit\CS\Properties\" />
+    <Folder Include="ImportExport\CS\Properties\" />
+    <Folder Include="InCanvasControlAPI\CS\Properties\" />
+    <Folder Include="InPlaceMembers\CS\Properties\" />
+    <Folder Include="InvisibleParam\CS\Properties\" />
+    <Folder Include="Journaling\CS\Properties\" />
+    <Folder Include="Loads\CS\Properties\" />
+    <Folder Include="Massing\DistanceToPanels\CS\Properties\" />
+    <Folder Include="Massing\DividedSurfaceByIntersects\CS\Properties\" />
+    <Folder Include="Massing\ManipulateForm\CS\Properties\" />
+    <Folder Include="Massing\MeasurePanelArea\CS\Properties\" />
+    <Folder Include="Massing\NewForm\CS\Properties\" />
+    <Folder Include="Massing\PanelEdgeLengthAngle\CS\Properties\" />
+    <Folder Include="Massing\ParameterValuesFromImage\CS\Properties\" />
+    <Folder Include="Massing\PointCurveCreation\CS\Properties\" />
+    <Folder Include="ModelessDialog\ModelessForm_ExternalEvent\CS\Properties\" />
+    <Folder Include="ModelessDialog\ModelessForm_IdlingEvent\CS\Properties\" />
+    <Folder Include="ModelLines\CS\Properties\" />
+    <Folder Include="MultiThreading\WorkThread\CS\Properties\" />
+    <Folder Include="NetworkPressureLossReport\CS\Properties\" />
+    <Folder Include="NewHostedSweep\CS\Properties\" />
+    <Folder Include="NewOpenings\CS\Properties\" />
+    <Folder Include="NewPathReinforcement\CS\Properties\" />
+    <Folder Include="NewRebar\CS\Properties\" />
+    <Folder Include="NewRoof\CS\Properties\" />
+    <Folder Include="Openings\CS\Properties\" />
+    <Folder Include="PanelSchedule\CS\Properties\" />
+    <Folder Include="ParameterUtils\CS\Properties\" />
+    <Folder Include="PathOfTravel\CS\Properties\" />
+    <Folder Include="PathReinforcement\CS\Properties\" />
+    <Folder Include="PlaceFamilyInstanceByFace\CS\Properties\" />
+    <Folder Include="PlacementOptions\CS\Properties\" />
+    <Folder Include="ProjectInfo\CS\Properties\" />
+    <Folder Include="ReadonlySharedParameters\CS\Properties\" />
+    <Folder Include="RebarContainerAnyShapeType\CS\Properties\" />
+    <Folder Include="RebarFreeForm\CS\Properties\" />
+    <Folder Include="ReferencePlane\CS\Properties\" />
+    <Folder Include="Reinforcement\CS\Properties\" />
+    <Folder Include="Ribbon\CS\Properties\" />
+    <Folder Include="RoofsRooms\CS\Properties\" />
+    <Folder Include="RoomSchedule\CS\Properties\" />
+    <Folder Include="Rooms\CS\Properties\" />
+    <Folder Include="RoutingPreferenceTools\CS\Properties\" />
+    <Folder Include="ScheduleCreation\CS\Properties\" />
+    <Folder Include="Selections\CS\Properties\" />
+    <Folder Include="ShaftHolePuncher\CS\Properties\" />
+    <Folder Include="SharedCoordinateSystem\CS\Properties\" />
+    <Folder Include="SheetToView3D\CS\Properties\" />
+    <Folder Include="SinePlotter\CS\Properties\" />
+    <Folder Include="SolidSolidCut\CS\Properties\" />
+    <Folder Include="SpanDirection\CS\Properties\" />
+    <Folder Include="SpotDimension\CS\Properties\" />
+    <Folder Include="StairsAutomation\CS\Properties\" />
+    <Folder Include="StructSample\CS\Properties\" />
+    <Folder Include="TagBeam\CS\Properties\" />
+    <Folder Include="Toposolid\CS\Properties\" />
+    <Folder Include="TransactionControl\CS\Properties\" />
+    <Folder Include="TraverseSystem\CS\Properties\" />
+    <Folder Include="Units\CS\Properties\" />
+    <Folder Include="VersionChecking\CS\Properties\" />
+    <Folder Include="ViewPrinter\CS\Properties\" />
+    <Folder Include="ViewTemplateCreation\CS\Properties\" />
+    <Folder Include="VisibilityControl\CS\Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>call cd "$(ProjectDir)" 
+call "post-build.bat" "$(OutDir)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

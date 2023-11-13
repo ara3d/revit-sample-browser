@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Assembly>MultiSample\RevitMultiSample.dll</Assembly>
+    <ClientId>150FFD8A-91E4-4EB6-8348-222E9F00AA4C</ClientId>
+    <FullClassName>RevitMultiSample.MultiSampleCommand</FullClassName>
+    <Text>Ara3D MultiSample</Text>
+    <Description>Multiple sample plug-in for Revit in a single project.</Description>
+    <VisibilityMode>AlwaysVisible</VisibilityMode>
+    <VendorId>ARA3D</VendorId>
+    <VendorDescription>Ara 3D Inc.</VendorDescription>
+  </AddIn>
+</RevitAddIns>
