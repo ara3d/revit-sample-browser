@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             Drawing = new GridDrawing(myDoc, this);
             UGridLines = new List<CurtainGridLine>();
             VGridLines = new List<CurtainGridLine>();
-            GridVertexesXYZ = new List<XYZ>();
+            GridVertexesXyz = new List<XYZ>();
         }
 
         // store the mullion type used in this sample
@@ -88,7 +88,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         ///     stores all the vertexes of the curtain grid (in Autodesk.Revit.DB.XYZ format)
         /// </summary>
-        public List<XYZ> GridVertexesXYZ { get; }
+        public List<XYZ> GridVertexesXyz { get; }
 
         /// <summary>
         ///     stores all the properties of the curtain grid
@@ -785,7 +785,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             // even in "ReloadGeometryData()" method, no need to reload the boundary information
             // (as the boundary of the curtain grid won't be changed in the sample)
             // just need to load it after the curtain wall been created
-            if (null != GridVertexesXYZ && 0 < GridVertexesXYZ.Count) return true;
+            if (null != GridVertexesXyz && 0 < GridVertexesXyz.Count) return true;
 
             // the curtain grid is from "Curtain Wall: Curtain Wall 1" (by default, the "Curtain Wall 1" has no U/V grid lines)
             if (UGridLines.Count <= 0 || VGridLines.Count <= 0)
@@ -800,15 +800,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 act.Start();
                 var cells = ActiveGrid.GetCurtainCells();
                 act.Commit();
-                var minXYZ = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
-                var maxXYZ = new XYZ(double.MinValue, double.MinValue, double.MinValue);
-                GetVertexesByCells(cells, ref minXYZ, ref maxXYZ);
+                var minXyz = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
+                var maxXyz = new XYZ(double.MinValue, double.MinValue, double.MinValue);
+                GetVertexesByCells(cells, ref minXyz, ref maxXyz);
 
                 // move the U & V lines to the boundary of the curtain grid, and get their end points as the vertexes of the curtain grid
-                GridVertexesXYZ.Add(new XYZ(minXYZ.X, minXYZ.Y, minXYZ.Z));
-                GridVertexesXYZ.Add(new XYZ(maxXYZ.X, maxXYZ.Y, minXYZ.Z));
-                GridVertexesXYZ.Add(new XYZ(maxXYZ.X, maxXYZ.Y, maxXYZ.Z));
-                GridVertexesXYZ.Add(new XYZ(minXYZ.X, minXYZ.Y, maxXYZ.Z));
+                GridVertexesXyz.Add(new XYZ(minXyz.X, minXyz.Y, minXyz.Z));
+                GridVertexesXyz.Add(new XYZ(maxXyz.X, maxXyz.Y, minXyz.Z));
+                GridVertexesXyz.Add(new XYZ(maxXyz.X, maxXyz.Y, maxXyz.Z));
+                GridVertexesXyz.Add(new XYZ(minXyz.X, minXyz.Y, maxXyz.Z));
                 return true;
             }
 
@@ -830,10 +830,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             points.Add(vEndPoint);
 
             //move the U & V lines to the boundary of the curtain grid, and get their end points as the vertexes of the curtain grid
-            GridVertexesXYZ.Add(new XYZ(uStartPoint.X, uStartPoint.Y, vStartPoint.Z));
-            GridVertexesXYZ.Add(new XYZ(uEndPoint.X, uEndPoint.Y, vStartPoint.Z));
-            GridVertexesXYZ.Add(new XYZ(uEndPoint.X, uEndPoint.Y, vEndPoint.Z));
-            GridVertexesXYZ.Add(new XYZ(uStartPoint.X, uStartPoint.Y, vEndPoint.Z));
+            GridVertexesXyz.Add(new XYZ(uStartPoint.X, uStartPoint.Y, vStartPoint.Z));
+            GridVertexesXyz.Add(new XYZ(uEndPoint.X, uEndPoint.Y, vStartPoint.Z));
+            GridVertexesXyz.Add(new XYZ(uEndPoint.X, uEndPoint.Y, vEndPoint.Z));
+            GridVertexesXyz.Add(new XYZ(uStartPoint.X, uStartPoint.Y, vEndPoint.Z));
 
             return true;
         }
@@ -875,22 +875,22 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <param name="points">
         ///     the source points
         /// </param>
-        /// <param name="minXYZ">
+        /// <param name="minXyz">
         ///     one of the bounding box points
         /// </param>
-        /// <param name="maxXYZ">
+        /// <param name="maxXyz">
         ///     one of the bounding box points
         /// </param>
-        private void GetVertexesByPoints(List<XYZ> points, ref XYZ minXYZ, ref XYZ maxXYZ)
+        private void GetVertexesByPoints(List<XYZ> points, ref XYZ minXyz, ref XYZ maxXyz)
         {
             if (null == points || 0 == points.Count) return;
 
-            var minX = minXYZ.X;
-            var minY = minXYZ.Y;
-            var minZ = minXYZ.Z;
-            var maxX = maxXYZ.X;
-            var maxY = maxXYZ.Y;
-            var maxZ = maxXYZ.Z;
+            var minX = minXyz.X;
+            var minY = minXyz.Y;
+            var minZ = minXyz.Z;
+            var maxX = maxXyz.X;
+            var maxY = maxXyz.Y;
+            var maxZ = maxXyz.Z;
 
             foreach (var xyz in points)
             {
@@ -911,8 +911,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 if (xyz.Z > maxZ) maxZ = xyz.Z;
             } // end of loop
 
-            minXYZ = new XYZ(minX, minY, minZ);
-            maxXYZ = new XYZ(maxX, maxY, maxZ);
+            minXyz = new XYZ(minX, minY, minZ);
+            maxXyz = new XYZ(maxX, maxY, maxZ);
         }
 
         /// <summary>
@@ -921,18 +921,18 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <param name="cells">
         ///     the source curtain cells
         /// </param>
-        /// <param name="minXYZ">
+        /// <param name="minXyz">
         ///     the result bounding point
         /// </param>
-        /// <param name="maxXYZ">
+        /// <param name="maxXyz">
         ///     the result bounding point
         /// </param>
-        private void GetVertexesByCells(ICollection<CurtainCell> cells, ref XYZ minXYZ, ref XYZ maxXYZ)
+        private void GetVertexesByCells(ICollection<CurtainCell> cells, ref XYZ minXyz, ref XYZ maxXyz)
         {
             if (null == cells || cells.Count == 0) return;
 
             var points = GetPoints(cells);
-            GetVertexesByPoints(points, ref minXYZ, ref maxXYZ);
+            GetVertexesByPoints(points, ref minXyz, ref maxXyz);
         }
 
         /// <summary>

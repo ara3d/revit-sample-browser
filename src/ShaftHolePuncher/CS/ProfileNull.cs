@@ -16,8 +16,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     /// </summary>
     public class ProfileNull : Profile
     {
-        private Level level1; //level 1 used to create Shaft Opening
-        private Level level2; //level 2 used to create Shaft Opening
+        private Level m_level1; //level 1 used to create Shaft Opening
+        private Level m_level2; //level 2 used to create Shaft Opening
 
         /// <summary>
         ///     constructor
@@ -27,8 +27,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             : base(commandData)
         {
             GetLevels();
-            m_to2DMatrix = new Matrix4();
-            m_moveToCenterMatrix = new Matrix4();
+            To2DMatrix = new Matrix4();
+            MoveToCenterMatrix = new Matrix4();
         }
 
         /// <summary>
@@ -41,19 +41,19 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// </summary>
         private void GetLevels()
         {
-            var levelList = new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document)
+            var levelList = new FilteredElementCollector(CommandData.Application.ActiveUIDocument.Document)
                 .OfClass(typeof(Level)).ToElements();
             var levels = from elem in levelList
                 let level = elem as Level
                 where level != null && "Level 1" == level.Name
                 select level;
-            if (levels.Count() > 0) level1 = levels.First();
+            if (levels.Count() > 0) m_level1 = levels.First();
 
             levels = from elem in levelList
                 let level = elem as Level
                 where level != null && "Level 2" == level.Name
                 select level;
-            if (levels.Count() > 0) level2 = levels.First();
+            if (levels.Count() > 0) m_level2 = levels.First();
         }
 
         /// <summary>
@@ -63,8 +63,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <returns>maxtrix to scale the opening curve</returns>
         public override Matrix4 ComputeScaleMatrix(Size size)
         {
-            m_scaleMatrix = new Matrix4(Scale);
-            return m_scaleMatrix;
+            ScaleMatrix = new Matrix4(Scale);
+            return ScaleMatrix;
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <returns>maxtrix is use to transform 3d points to 2d</returns>
         public override Matrix4 Compute3DTo2DMatrix()
         {
-            m_transformMatrix = new Matrix4();
-            return m_transformMatrix;
+            TransformMatrix = new Matrix4();
+            return TransformMatrix;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                 //because our coordinate system is different with window UI
                 //so we should change what we got from UI coordinate
                 var v = new Vector4(point.X - 20, -(point.Y - 280), 0);
-                v = m_scaleMatrix.Transform(v);
+                v = ScaleMatrix.Transform(v);
                 result.Add(v);
             }
 
@@ -144,7 +144,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             XYZ p1, p2;
             Line curve;
-            var curves = m_appCreator.NewCurveArray();
+            var curves = AppCreator.NewCurveArray();
             for (var i = 0; i < points.Count - 1; i++)
             {
                 p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
@@ -160,7 +160,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             curve = Line.CreateBound(p1, p2);
             curves.Append(curve);
 
-            return m_docCreator.NewOpening(level1, level2, curves);
+            return DocCreator.NewOpening(m_level1, m_level2, curves);
         }
     }
 }

@@ -14,12 +14,12 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// <summary>
         ///     The first Winder Corner, connecting the first and the second straight runs.
         /// </summary>
-        private WinderSinglePoint m_corner1st;
+        private WinderSinglePoint m_corner1St;
 
         /// <summary>
         ///     The second Winder Corner, connecting the second and the third straight runs.
         /// </summary>
-        private WinderSinglePoint m_corner2nd;
+        private WinderSinglePoint m_corner2Nd;
 
         /// <summary>
         ///     The third straight run at end.
@@ -105,24 +105,24 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             //
             var dir1 = (ControlPoints[1] - ControlPoints[0]).Normalize();
             var dir2 = (ControlPoints[2] - ControlPoints[1]).Normalize();
-            m_corner1st = new WinderSinglePoint(ControlPoints[1], dir1, dir2, NumStepsInCorner1);
-            m_corner1st.Construct(RunWidth, CenterOffsetE1, CenterOffsetF1);
+            m_corner1St = new WinderSinglePoint(ControlPoints[1], dir1, dir2, NumStepsInCorner1);
+            m_corner1St.Construct(RunWidth, CenterOffsetE1, CenterOffsetF1);
 
             //
             // Construct the second winder corner
             //
             var dir3 = (ControlPoints[3] - ControlPoints[2]).Normalize();
-            m_corner2nd = new WinderSinglePoint(ControlPoints[1], dir2, dir3, NumStepsInCorner2);
-            m_corner2nd.Construct(RunWidth, CenterOffsetF2, CenterOffsetE2);
-            var moveDelta = (m_corner1st.Distance2 + m_corner2nd.Distance1
+            m_corner2Nd = new WinderSinglePoint(ControlPoints[1], dir2, dir3, NumStepsInCorner2);
+            m_corner2Nd.Construct(RunWidth, CenterOffsetF2, CenterOffsetE2);
+            var moveDelta = (m_corner1St.Distance2 + m_corner2Nd.Distance1
                                                    + TreadDepth * NumStepsInMiddle) * dir2;
-            m_corner2nd.Move(moveDelta);
+            m_corner2Nd.Move(moveDelta);
 
             //
             // Construct the three straight runs
             //
-            var startPnt = m_corner1st.StartPoint - TreadDepth * NumStepsAtStart * dir1;
-            var endPnt = m_corner2nd.EndPoint + TreadDepth * NumStepsAtEnd * dir3;
+            var startPnt = m_corner1St.StartPoint - TreadDepth * NumStepsAtStart * dir1;
+            var endPnt = m_corner2Nd.EndPoint + TreadDepth * NumStepsAtEnd * dir3;
             var bisectDir = (dir2 - dir1).Normalize();
             var perpendicularDir1 = new XYZ(-dir1.Y, dir1.X, 0);
             var perpendicularDir2 = new XYZ(-dir2.Y, dir2.X, 0);
@@ -135,11 +135,11 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             }
 
             m_straightAtStart = new WinderStraight(
-                startPnt, m_corner1st.StartPoint, perpendicularDir1, NumStepsAtStart);
+                startPnt, m_corner1St.StartPoint, perpendicularDir1, NumStepsAtStart);
             m_straightInMiddle = new WinderStraight(
-                m_corner1st.EndPoint, m_corner2nd.StartPoint, perpendicularDir2, NumStepsInMiddle);
+                m_corner1St.EndPoint, m_corner2Nd.StartPoint, perpendicularDir2, NumStepsInMiddle);
             m_straightAtEnd = new WinderStraight(
-                m_corner2nd.EndPoint, endPnt, perpendicularDir3, NumStepsAtEnd);
+                m_corner2Nd.EndPoint, endPnt, perpendicularDir3, NumStepsAtEnd);
         }
 
         /// <summary>
@@ -153,11 +153,11 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             // Generate the sketch for two winder corners and three straight runs.
             m_straightAtStart.GenerateSketch(
                 RunWidth, OuterBoundary, CenterWalkpath, InnerBoundary, RiserLines);
-            m_corner1st.GenerateSketch(
+            m_corner1St.GenerateSketch(
                 RunWidth, OuterBoundary, CenterWalkpath, InnerBoundary, RiserLines);
             m_straightInMiddle.GenerateSketch(
                 RunWidth, OuterBoundary, CenterWalkpath, InnerBoundary, RiserLines);
-            m_corner2nd.GenerateSketch(
+            m_corner2Nd.GenerateSketch(
                 RunWidth, OuterBoundary, CenterWalkpath, InnerBoundary, RiserLines);
             m_straightAtEnd.GenerateSketch(
                 RunWidth, OuterBoundary, CenterWalkpath, InnerBoundary, RiserLines);

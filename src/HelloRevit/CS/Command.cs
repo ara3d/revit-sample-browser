@@ -61,13 +61,13 @@ namespace Revit.SDK.Samples.HelloRevit.CS
                 // with only a Close button shows information about the Revit installation. 
                 case TaskDialogResult.CommandLink1:
                 {
-                    var dialog_CommandLink1 = new TaskDialog("Revit Build Information");
-                    dialog_CommandLink1.MainInstruction =
+                    var dialogCommandLink1 = new TaskDialog("Revit Build Information");
+                    dialogCommandLink1.MainInstruction =
                         "Revit Version Name is: " + app.VersionName + "\n"
                         + "Revit Version Number is: " + app.VersionNumber + "\n"
                         + "Revit Version Build is: " + app.VersionBuild;
 
-                    dialog_CommandLink1.Show();
+                    dialogCommandLink1.Show();
                     break;
                 }
                 // If the user clicks the second command link, a simple Task Dialog 

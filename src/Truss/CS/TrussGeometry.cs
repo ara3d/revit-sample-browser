@@ -19,10 +19,10 @@ namespace Revit.SDK.Samples.Truss.CS
     /// </summary>
     internal class TrussGeometry
     {
-        private XYZ endLocation; //store the end point of truss location
+        private XYZ m_endLocation; //store the end point of truss location
 
         private Matrix4
-            m_2DToTrussProfileMatrix; //store matrix use to transform point on pictureBox to truss (profile) plane
+            m_2dToTrussProfileMatrix; //store matrix use to transform point on pictureBox to truss (profile) plane
 
         private readonly LineTool m_bottomChord; //line tool used to draw top chord
 
@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.Truss.CS
 
         private readonly Autodesk.Revit.DB.Structure.Truss m_truss; //object of truss in Revit
 
-        private XYZ startLocation; //store the start point of truss location
+        private XYZ m_startLocation; //store the start point of truss location
 
         /// <summary>
         ///     constructor
@@ -90,7 +90,7 @@ namespace Revit.SDK.Samples.Truss.CS
             // transform from 2D to 3D
             m_restoreMatrix = Get2DTo3DMatrix();
             // transform from 2D (on picture box) to truss profile plane
-            m_2DToTrussProfileMatrix = Get2DToTrussProfileMatrix();
+            m_2dToTrussProfileMatrix = Get2DToTrussProfileMatrix();
             // create the graphics path which contains all the lines
             CreateGraphicsPath();
         }
@@ -138,10 +138,10 @@ namespace Revit.SDK.Samples.Truss.CS
         public Matrix4 GetTo2DMatrix()
         {
             var trussLocation = (m_truss.Location as LocationCurve).Curve as Line;
-            startLocation = trussLocation.GetEndPoint(0);
-            endLocation = trussLocation.GetEndPoint(1);
+            m_startLocation = trussLocation.GetEndPoint(0);
+            m_endLocation = trussLocation.GetEndPoint(1);
             //use baseline of truss as the X axis
-            var diff = endLocation - startLocation;
+            var diff = m_endLocation - m_startLocation;
             var xAxis = new Vector4(new XYZ(diff.X, diff.Y, diff.Z));
             xAxis.Normalize();
             //get Z Axis

@@ -30,7 +30,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        private static readonly string addinAssmeblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddinAssmeblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -39,11 +39,11 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            createRibbonButtons(application);
+            CreateRibbonButtons(application);
             return Result.Succeeded;
         }
 
-        private BitmapSource convertFromBitmap(Bitmap bitmap)
+        private BitmapSource ConvertFromBitmap(Bitmap bitmap)
         {
             return Imaging.CreateBitmapSourceFromHBitmap(
                 bitmap.GetHbitmap(),
@@ -52,35 +52,35 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
-        private void createRibbonButtons(UIControlledApplication application)
+        private void CreateRibbonButtons(UIControlledApplication application)
         {
             application.CreateRibbonTab("Create Geometry");
             var rp = application.CreateRibbonPanel("Create Geometry", "Create Geometry using BRepBuilder");
 
             var pbd1 = new PushButtonData("CreateCube", "Create Cube",
-                addinAssmeblyPath,
+                AddinAssmeblyPath,
                 "Revit.SDK.Samples.BRepBuilderExample.CS.CreateCube")
             {
-                LargeImage = convertFromBitmap(Resources.large_shape),
-                Image = convertFromBitmap(Resources.small_shape)
+                LargeImage = ConvertFromBitmap(Resources.large_shape),
+                Image = ConvertFromBitmap(Resources.small_shape)
             };
             _ = rp.AddItem(pbd1) as PushButton;
 
             var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
-                addinAssmeblyPath,
+                AddinAssmeblyPath,
                 "Revit.SDK.Samples.BRepBuilderExample.CS.CreateNURBS")
             {
-                LargeImage = convertFromBitmap(Resources.large_shape),
-                Image = convertFromBitmap(Resources.small_shape)
+                LargeImage = ConvertFromBitmap(Resources.large_shape),
+                Image = ConvertFromBitmap(Resources.small_shape)
             };
             _ = rp.AddItem(pbd2) as PushButton;
 
             var pbd3 = new PushButtonData("CreatePeriodic", "Create Periodic Surface",
-                addinAssmeblyPath,
+                AddinAssmeblyPath,
                 "Revit.SDK.Samples.BRepBuilderExample.CS.CreatePeriodic")
             {
-                LargeImage = convertFromBitmap(Resources.large_shape),
-                Image = convertFromBitmap(Resources.small_shape)
+                LargeImage = ConvertFromBitmap(Resources.large_shape),
+                Image = ConvertFromBitmap(Resources.small_shape)
             };
             _ = rp.AddItem(pbd3) as PushButton;
         }

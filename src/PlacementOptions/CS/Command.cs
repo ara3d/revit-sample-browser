@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
                             {
                                 if (DialogResult.OK == facebaseForm.ShowDialog())
                                     commandData.Application.ActiveUIDocument.PromptForFamilyInstancePlacement(
-                                        facebaseForm.SelectedFamilySymbol, facebaseForm.FIPlacementOptions);
+                                        facebaseForm.SelectedFamilySymbol, facebaseForm.FiPlacementOptions);
                             }
                         }
                         else
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
                             {
                                 if (DialogResult.OK == sketchbasedForm.ShowDialog())
                                     commandData.Application.ActiveUIDocument.PromptForFamilyInstancePlacement(
-                                        sketchbasedForm.SelectedFamilySymbol, sketchbasedForm.FIPlacementOptions);
+                                        sketchbasedForm.SelectedFamilySymbol, sketchbasedForm.FiPlacementOptions);
                             }
                         }
                     }

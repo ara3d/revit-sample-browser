@@ -21,11 +21,11 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
     ///     Provide user BIM360 project information and configuration for this sample.
     ///     Can be modified via ViewInputMigrationInfo dialog
     /// </summary>
-    public class UIMigrationViewModel : IMigrationModel, INotifyPropertyChanged
+    public class UiMigrationViewModel : IMigrationModel, INotifyPropertyChanged
     {
-        private string accountGuid;
+        private string m_accountGuid;
 
-        private string projectGuid;
+        private string m_projectGuid;
 
         /// <inheritdoc />
         public ObservableCollection<FolderLocation> AvailableFolders { get; set; } = new ObservableCollection<FolderLocation>();
@@ -36,12 +36,12 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
         /// <inheritdoc />
         public string AccountGuid
         {
-            get => accountGuid;
+            get => m_accountGuid;
             set
             {
-                if (accountGuid != value)
+                if (m_accountGuid != value)
                 {
-                    accountGuid = value;
+                    m_accountGuid = value;
                     NotifyPropertyChanged("AccountGuid");
                 }
             }
@@ -50,12 +50,12 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
         /// <inheritdoc />
         public string ProjectGuid
         {
-            get => projectGuid;
+            get => m_projectGuid;
             set
             {
-                if (projectGuid != value)
+                if (m_projectGuid != value)
                 {
-                    projectGuid = value;
+                    m_projectGuid = value;
                     NotifyPropertyChanged("ProjectGuid");
                 }
             }

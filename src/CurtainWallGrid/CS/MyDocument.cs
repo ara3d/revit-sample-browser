@@ -46,8 +46,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             if (null != commandData.Application.ActiveUIDocument)
             {
                 CommandData = commandData;
-                UIDocument = CommandData.Application.ActiveUIDocument;
-                Document = UIDocument.Document;
+                UiDocument = CommandData.Application.ActiveUIDocument;
+                Document = UiDocument.Document;
                 Views = new List<View>();
                 WallTypes = new List<WallType>();
                 WallGeometry = new WallGeometry(this);
@@ -75,7 +75,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         ///     the active document of Revit
         /// </summary>
-        public UIDocument UIDocument { get; }
+        public UIDocument UiDocument { get; }
 
         // the active document of Revit
         /// <summary>

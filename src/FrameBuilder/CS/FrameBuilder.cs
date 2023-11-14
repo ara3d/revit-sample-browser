@@ -55,7 +55,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             t.Start();
             m_data.UpdateLevels();
             var frameElems = new List<FamilyInstance>();
-            var matrixUV = CreateMatrix(m_data.XNumber, m_data.YNumber, m_data.Distance);
+            var matrixUv = CreateMatrix(m_data.XNumber, m_data.YNumber, m_data.Distance);
 
             // iterate levels from lower one to higher one by one according to FloorNumber
             for (var ii = 0; ii < m_data.FloorNumber; ii++)
@@ -63,20 +63,20 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                 var baseLevel = m_data.Levels.Values[ii];
                 var topLevel = m_data.Levels.Values[ii + 1];
 
-                var matrixXSize = matrixUV.GetLength(0); //length of matrix's x range
-                var matrixYSize = matrixUV.GetLength(1); //length of matrix's y range
+                var matrixXSize = matrixUv.GetLength(0); //length of matrix's x range
+                var matrixYSize = matrixUv.GetLength(1); //length of matrix's y range
 
                 // insert columns in an array format according to the calculated matrix
-                foreach (var point2D in matrixUV) frameElems.Add(NewColumn(point2D, baseLevel, topLevel));
+                foreach (var point2D in matrixUv) frameElems.Add(NewColumn(point2D, baseLevel, topLevel));
 
                 // insert beams between the tops of each adjacent column in the X and Y direction
                 for (var j = 0; j < matrixYSize; j++)
                 for (var i = 0; i < matrixXSize; i++)
                 {
                     //create beams in x direction
-                    if (i != matrixXSize - 1) frameElems.Add(NewBeam(matrixUV[i, j], matrixUV[i + 1, j], topLevel));
+                    if (i != matrixXSize - 1) frameElems.Add(NewBeam(matrixUv[i, j], matrixUv[i + 1, j], topLevel));
                     //create beams in y direction
-                    if (j != matrixYSize - 1) frameElems.Add(NewBeam(matrixUV[i, j], matrixUV[i, j + 1], topLevel));
+                    if (j != matrixYSize - 1) frameElems.Add(NewBeam(matrixUv[i, j], matrixUv[i, j + 1], topLevel));
                 }
 
                 // insert braces between the mid point of each column 
@@ -87,11 +87,11 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                     //create braces in x direction
                     if (i != matrixXSize - 1)
                         frameElems.AddRange(
-                            NewBraces(matrixUV[i, j], matrixUV[i + 1, j], baseLevel, topLevel));
+                            NewBraces(matrixUv[i, j], matrixUv[i + 1, j], baseLevel, topLevel));
                     //create braces in y direction
                     if (j != matrixYSize - 1)
                         frameElems.AddRange(
-                            NewBraces(matrixUV[i, j], matrixUV[i, j + 1], baseLevel, topLevel));
+                            NewBraces(matrixUv[i, j], matrixUv[i, j + 1], baseLevel, topLevel));
                 }
             }
 

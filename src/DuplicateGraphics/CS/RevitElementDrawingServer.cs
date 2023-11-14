@@ -129,10 +129,10 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
             {
                 // Populate geometry buffers if they are not initialized or need updating.
                 if (m_nonTransparentFaceBufferStorage == null ||
-                    m_nonTransparentFaceBufferStorage.needsUpdate(displayStyle) ||
+                    m_nonTransparentFaceBufferStorage.NeedsUpdate(displayStyle) ||
                     m_transparentFaceBufferStorage == null ||
-                    m_transparentFaceBufferStorage.needsUpdate(displayStyle) ||
-                    m_edgeBufferStorage == null || m_edgeBufferStorage.needsUpdate(displayStyle))
+                    m_transparentFaceBufferStorage.NeedsUpdate(displayStyle) ||
+                    m_edgeBufferStorage == null || m_edgeBufferStorage.NeedsUpdate(displayStyle))
                 {
                     var options = new Options();
                     var geomElem = m_element.get_Geometry(options);
@@ -243,7 +243,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
 
                     m_edgeBufferStorage.VertexBufferCount += xyzs.Count;
                     m_edgeBufferStorage.PrimitiveCount += xyzs.Count - 1;
-                    m_edgeBufferStorage.EdgeXYZs.Add(xyzs);
+                    m_edgeBufferStorage.EdgeXyZs.Add(xyzs);
                 }
             }
 
@@ -352,7 +352,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         // A helper function, analogous to ProcessFaces.
         private void ProcessEdges(RenderingPassBufferStorage bufferStorage)
         {
-            var edges = bufferStorage.EdgeXYZs;
+            var edges = bufferStorage.EdgeXyZs;
             if (edges.Count == 0)
                 return;
 
@@ -422,7 +422,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
             {
                 DisplayStyle = displayStyle;
                 Meshes = new List<MeshInfo>();
-                EdgeXYZs = new List<IList<XYZ>>();
+                EdgeXyZs = new List<IList<XYZ>>();
             }
 
             public DisplayStyle DisplayStyle { get; }
@@ -431,7 +431,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
 
             public List<MeshInfo> Meshes { get; }
 
-            public List<IList<XYZ>> EdgeXYZs { get; }
+            public List<IList<XYZ>> EdgeXyZs { get; }
 
             public int PrimitiveCount { get; set; }
 
@@ -447,7 +447,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
 
             public EffectInstance EffectInstance { get; set; }
 
-            public bool needsUpdate(DisplayStyle newDisplayStyle)
+            public bool NeedsUpdate(DisplayStyle newDisplayStyle)
             {
                 if (newDisplayStyle != DisplayStyle)
                     return true;

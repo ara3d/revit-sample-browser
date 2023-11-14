@@ -14,19 +14,19 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
-            ThisApplication.thisApp.GetDockableAPIUtility().Initialize(commandData.Application);
-            ThisApplication.thisApp.CreateWindow();
+            ThisApplication.ThisApp.GetDockableApiUtility().Initialize(commandData.Application);
+            ThisApplication.ThisApp.CreateWindow();
 
             var dlg = new DockingSetupDialog();
             var dlgResult = dlg.ShowDialog();
             if (dlgResult == false)
                 return Result.Succeeded;
 
-            ThisApplication.thisApp.GetMainWindow().SetInitialDockingParameters(dlg.FloatLeft, dlg.FloatRight,
+            ThisApplication.ThisApp.GetMainWindow().SetInitialDockingParameters(dlg.FloatLeft, dlg.FloatRight,
                 dlg.FloatTop, dlg.FloatBottom, dlg.DockPosition, dlg.TargetGuid);
             try
             {
-                ThisApplication.thisApp.RegisterDockableWindow(commandData.Application, dlg.MainPageGuid);
+                ThisApplication.ThisApp.RegisterDockableWindow(commandData.Application, dlg.MainPageGuid);
             }
             catch (Exception ex)
             {

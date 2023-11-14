@@ -108,26 +108,26 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             if (CreateRadialGrids() != 0)
             {
-                var failureReason = resManager.GetString("FailedToCreateRadialGrids") + "\r";
-                failureReason += resManager.GetString("AjustValues");
+                var failureReason = ResManager.GetString("FailedToCreateRadialGrids") + "\r";
+                failureReason += ResManager.GetString("AjustValues");
 
-                ShowMessage(failureReason, resManager.GetString("FailureCaptionCreateGrids"));
+                ShowMessage(failureReason, ResManager.GetString("FailureCaptionCreateGrids"));
             }
 
             var failureReasons = new ArrayList();
             if (CreateArcGrids(ref failureReasons) != 0)
             {
-                var failureReason = resManager.GetString("FailedToCreateArcGrids") +
-                                    resManager.GetString("Reasons") + "\r";
+                var failureReason = ResManager.GetString("FailedToCreateArcGrids") +
+                                    ResManager.GetString("Reasons") + "\r";
                 if (failureReasons.Count != 0)
                 {
                     failureReason += "\r";
                     foreach (string reason in failureReasons) failureReason += reason + "\r";
                 }
 
-                failureReason += "\r" + resManager.GetString("AjustValues");
+                failureReason += "\r" + ResManager.GetString("AjustValues");
 
-                ShowMessage(failureReason, resManager.GetString("FailureCaptionCreateGrids"));
+                ShowMessage(failureReason, ResManager.GetString("FailureCaptionCreateGrids"));
             }
         }
 
@@ -153,7 +153,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                     else
                     {
                         // The number of space between radial grids will be m_lineNumber if arc is a circle
-                        if (EndDegree - StartDegree == 2 * Values.PI)
+                        if (EndDegree - StartDegree == 2 * Values.Pi)
                             angel = StartDegree + i * (EndDegree - StartDegree) / LineNumber;
                         // The number of space between radial grids will be m_lineNumber-1 if arc is not a circle
                         else
@@ -199,8 +199,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         }
                         catch (ArgumentException)
                         {
-                            ShowMessage(resManager.GetString("FailedToSetLabel") + LineFirstLabel + "!",
-                                resManager.GetString("FailureCaptionSetLabel"));
+                            ShowMessage(ResManager.GetString("FailedToSetLabel") + LineFirstLabel + "!",
+                                ResManager.GetString("FailureCaptionSetLabel"));
                         }
                     }
                     else
@@ -243,9 +243,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
                     // In RevitAPI using NewGrid method with a circle as its argument will raise an exception. 
                     // Therefore in this sample we will create two arcs from the upper and lower parts of the 
                     // circle, and then create two grids on the base of the two arcs to accord with UI.
-                    if (EndDegree - StartDegree == 2 * Values.PI) // Create circular grids
+                    if (EndDegree - StartDegree == 2 * Values.Pi) // Create circular grids
                     {
-                        var upperArcToCreate = TransformArc(origin, radius, 0, Values.PI, ArcFirstBubbleLoc);
+                        var upperArcToCreate = TransformArc(origin, radius, 0, Values.Pi, ArcFirstBubbleLoc);
 
                         if (i == 0)
                         {
@@ -258,8 +258,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                 }
                                 catch (ArgumentException)
                                 {
-                                    ShowMessage(resManager.GetString("FailedToSetLabel") + ArcFirstLabel + "!",
-                                        resManager.GetString("FailureCaptionSetLabel"));
+                                    ShowMessage(ResManager.GetString("FailedToSetLabel") + ArcFirstLabel + "!",
+                                        ResManager.GetString("FailureCaptionSetLabel"));
                                 }
                         }
                         else
@@ -268,13 +268,13 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         }
 
                         var lowerArcToCreate =
-                            TransformArc(origin, radius, Values.PI, 2 * Values.PI, ArcFirstBubbleLoc);
+                            TransformArc(origin, radius, Values.Pi, 2 * Values.Pi, ArcFirstBubbleLoc);
                         curves.Append(lowerArcToCreate);
                     }
                     else // Create arc grids
                     {
                         // Each arc grid will has extension degree of 15 degree
-                        var extensionDegree = 15 * Values.DEGTORAD;
+                        var extensionDegree = 15 * Values.Degtorad;
                         Arc arcToCreate;
 
                         if (LineNumber != 0)
@@ -283,7 +283,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             // extension degrees.
                             // Also the room for bubble should be considered, so a room size of 3 * extensionDegree
                             // is reserved here
-                            if (EndDegree - StartDegree < 2 * Values.PI - 3 * extensionDegree)
+                            if (EndDegree - StartDegree < 2 * Values.Pi - 3 * extensionDegree)
                             {
                                 var startDegreeWithExtension = StartDegree - extensionDegree;
                                 var endDegreeWithExtension = EndDegree + extensionDegree;
@@ -300,7 +300,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                 }
                                 catch (ArgumentException)
                                 {
-                                    var failureReason = resManager.GetString("EndPointsTooClose");
+                                    var failureReason = ResManager.GetString("EndPointsTooClose");
                                     if (!failureReasons.Contains(failureReason)) failureReasons.Add(failureReason);
                                     errorCount++;
                                     continue;
@@ -315,7 +315,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             }
                             catch (ArgumentException)
                             {
-                                var failureReason = resManager.GetString("EndPointsTooClose");
+                                var failureReason = ResManager.GetString("EndPointsTooClose");
                                 if (!failureReasons.Contains(failureReason)) failureReasons.Add(failureReason);
                                 errorCount++;
                                 continue;
@@ -332,8 +332,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                 }
                                 catch (ArgumentException)
                                 {
-                                    ShowMessage(resManager.GetString("FailedToSetLabel") + ArcFirstLabel + "!",
-                                        resManager.GetString("FailureCaptionSetLabel"));
+                                    ShowMessage(ResManager.GetString("FailedToSetLabel") + ArcFirstLabel + "!",
+                                        ResManager.GetString("FailureCaptionSetLabel"));
                                 }
                         }
                         else

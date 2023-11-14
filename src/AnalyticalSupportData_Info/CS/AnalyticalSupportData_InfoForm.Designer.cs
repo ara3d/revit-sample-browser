@@ -2,7 +2,7 @@
 
 namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
 {
-    partial class AnalyticalSupportData_InfoForm
+    partial class AnalyticalSupportDataInfoForm
     {
         /// <summary>
         /// Required designer variable.
@@ -113,7 +113,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
            this.MaximizeBox = false;
            this.MinimizeBox = false;
-           this.Name = "AnalyticalSupportData_InfoForm";
+           this.Name = "AnalyticalSupportDataInfoForm";
            this.ShowInTaskbar = false;
            this.Text = "Analytical Support Data";
            ((System.ComponentModel.ISupportInitialize)(this.elementInfoDataGridView)).EndInit();

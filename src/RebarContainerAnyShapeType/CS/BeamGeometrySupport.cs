@@ -45,11 +45,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         public RebarGeometry GetTopRebar(TopRebarLocation location)
         {
             // sort the points of the swept profile
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
             // Get the normal parameter for reinforcement creation
-            var directions = GetRelatedVectors(m_points[3]);
+            var directions = GetRelatedVectors(Points[3]);
             directions.Sort(comparer);
             var normal = directions[1];
 
@@ -82,9 +82,9 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var startPoint = movedPoints[movedPoints.Count - 1];
 
             // offset the start point according startPointOffset
-            startPoint = GeomUtil.OffsetPoint(startPoint, m_drivingVector, startPointOffset);
+            startPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, startPointOffset);
             // get the coordinate of endpoint 
-            var endPoint = GeomUtil.OffsetPoint(startPoint, m_drivingVector, rebarLength);
+            var endPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, rebarLength);
             IList<Curve> curves = new List<Curve>(); //the profile of the top reinforcement
             curves.Add(Line.CreateBound(startPoint, endPoint));
 
@@ -102,11 +102,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         public RebarGeometry GetBottomRebar()
         {
             // sort the points of the swept profile
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
             // Get the normal parameter for bottom reinforcement creation
-            var directions = GetRelatedVectors(m_points[0]);
+            var directions = GetRelatedVectors(Points[0]);
             directions.Sort(comparer);
             var normal = directions[0];
 
@@ -119,7 +119,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var movedPoints = OffsetPoints(offset);
             var startPoint = movedPoints[0]; //get the coordinate of startpoint 
             //get the coordinate of endpoint  
-            var endPoint = GeomUtil.OffsetPoint(startPoint, m_drivingVector, m_beamLength);
+            var endPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, m_beamLength);
 
             IList<Curve> curves = new List<Curve>(); //the profile of the bottom reinforcement
             curves.Add(Line.CreateBound(startPoint, endPoint));
@@ -137,8 +137,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         public RebarGeometry GetTransverseRebar(TransverseRebarLocation location, double spacing)
         {
             // sort the points of the swept profile
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
             // the offset from the beam surface to the reinforcement
             var offset = BeamRebarData.TransverseOffset;
@@ -152,7 +152,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var rebarNumber = (int)(rebarLength / spacing) + 1;
 
             // get the origin and normal parameter for reinforcement creation
-            var normal = m_drivingVector;
+            var normal = DrivingVector;
             double curveOffset = 0;
 
             //judge the coordinate of transverse reinforcement according to the location
@@ -178,7 +178,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             // Translate curves points
             var translatedPoints = new List<XYZ>();
             foreach (var point in movedPoints)
-                translatedPoints.Add(GeomUtil.OffsetPoint(point, m_drivingVector, curveOffset));
+                translatedPoints.Add(GeomUtil.OffsetPoint(point, DrivingVector, curveOffset));
 
             IList<Curve> curves = new List<Curve>();
             var first = translatedPoints[0];
@@ -201,10 +201,10 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <returns>the down direction</returns>
         public XYZ GetDownDirection()
         {
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
-            var refPoint = m_points[3];
+            var refPoint = Points[3];
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 
@@ -217,10 +217,10 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <returns>the width data</returns>
         private double GetBeamWidth()
         {
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
-            var refPoint = m_points[0];
+            var refPoint = Points[0];
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 
@@ -233,10 +233,10 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <returns>the height data</returns>
         private double GetBeamHeight()
         {
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
-            var refPoint = m_points[0];
+            var refPoint = Points[0];
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 

@@ -12,22 +12,22 @@ namespace Revit.SDK.Samples.Loads.CS
     /// </summary>
     public partial class LoadsForm
     {
-        private DataGridViewTextBoxColumn combinationFormulaColumn;
+        private DataGridViewTextBoxColumn m_combinationFormulaColumn;
 
         // Private Members
         // Define the columns in LoadCombination DataGridView control
-        private DataGridViewTextBoxColumn combinationNameColumn;
-        private DataGridViewTextBoxColumn combinationStateColumn;
-        private DataGridViewTextBoxColumn combinationTypeColumn;
-        private DataGridViewTextBoxColumn combinationUsageColumn;
-        private DataGridViewComboBoxColumn formulaCaseColumn;
+        private DataGridViewTextBoxColumn m_combinationNameColumn;
+        private DataGridViewTextBoxColumn m_combinationStateColumn;
+        private DataGridViewTextBoxColumn m_combinationTypeColumn;
+        private DataGridViewTextBoxColumn m_combinationUsageColumn;
+        private DataGridViewComboBoxColumn m_formulaCaseColumn;
 
         // Define the columns in Formula DataGridView control
-        private DataGridViewTextBoxColumn formulaFactorColumn;
-        private DataGridViewTextBoxColumn usageNameColumn;
+        private DataGridViewTextBoxColumn m_formulaFactorColumn;
+        private DataGridViewTextBoxColumn m_usageNameColumn;
 
         // Define the columns in Usage DataGridView control
-        private DataGridViewCheckBoxColumn usageSetColumn;
+        private DataGridViewCheckBoxColumn m_usageSetColumn;
 
         // Methods
         /// <summary>
@@ -63,46 +63,46 @@ namespace Revit.SDK.Samples.Loads.CS
         private void InitializeCombinationGrid()
         {
             // Initialize the column data members.
-            combinationNameColumn = new DataGridViewTextBoxColumn();
-            combinationFormulaColumn = new DataGridViewTextBoxColumn();
-            combinationTypeColumn = new DataGridViewTextBoxColumn();
-            combinationStateColumn = new DataGridViewTextBoxColumn();
-            combinationUsageColumn = new DataGridViewTextBoxColumn();
+            m_combinationNameColumn = new DataGridViewTextBoxColumn();
+            m_combinationFormulaColumn = new DataGridViewTextBoxColumn();
+            m_combinationTypeColumn = new DataGridViewTextBoxColumn();
+            m_combinationStateColumn = new DataGridViewTextBoxColumn();
+            m_combinationUsageColumn = new DataGridViewTextBoxColumn();
 
             // Binging the columns to the DataGridView
             combinationDataGridView.AutoGenerateColumns = false;
-            combinationDataGridView.Columns.AddRange(combinationNameColumn, combinationFormulaColumn,
-                combinationTypeColumn, combinationStateColumn, combinationUsageColumn);
+            combinationDataGridView.Columns.AddRange(m_combinationNameColumn, m_combinationFormulaColumn,
+                m_combinationTypeColumn, m_combinationStateColumn, m_combinationUsageColumn);
 
             // Binging the data source and set this grid to readonly.
             combinationDataGridView.DataSource = m_dataBuffer.LoadCombinationMap;
             combinationDataGridView.ReadOnly = true;
 
             // Initialize each column
-            combinationNameColumn.DataPropertyName = "Name";
-            combinationNameColumn.HeaderText = "Name";
-            combinationNameColumn.Name = "combinationNameColumn";
-            combinationNameColumn.Width = combinationDataGridView.Width / 7;
+            m_combinationNameColumn.DataPropertyName = "Name";
+            m_combinationNameColumn.HeaderText = "Name";
+            m_combinationNameColumn.Name = "combinationNameColumn";
+            m_combinationNameColumn.Width = combinationDataGridView.Width / 7;
 
-            combinationFormulaColumn.DataPropertyName = "Formula";
-            combinationFormulaColumn.HeaderText = "Formula";
-            combinationFormulaColumn.Name = "combinationFormulaColumn";
-            combinationFormulaColumn.Width = combinationDataGridView.Width / 4;
+            m_combinationFormulaColumn.DataPropertyName = "Formula";
+            m_combinationFormulaColumn.HeaderText = "Formula";
+            m_combinationFormulaColumn.Name = "combinationFormulaColumn";
+            m_combinationFormulaColumn.Width = combinationDataGridView.Width / 4;
 
-            combinationTypeColumn.DataPropertyName = "Type";
-            combinationTypeColumn.HeaderText = "Type";
-            combinationTypeColumn.Name = "combinationTypeColumn";
-            combinationTypeColumn.Width = combinationDataGridView.Width / 7;
+            m_combinationTypeColumn.DataPropertyName = "Type";
+            m_combinationTypeColumn.HeaderText = "Type";
+            m_combinationTypeColumn.Name = "combinationTypeColumn";
+            m_combinationTypeColumn.Width = combinationDataGridView.Width / 7;
 
-            combinationStateColumn.DataPropertyName = "State";
-            combinationStateColumn.HeaderText = "State";
-            combinationStateColumn.Name = "combinationStateColumn";
-            combinationStateColumn.Width = combinationDataGridView.Width / 7;
+            m_combinationStateColumn.DataPropertyName = "State";
+            m_combinationStateColumn.HeaderText = "State";
+            m_combinationStateColumn.Name = "combinationStateColumn";
+            m_combinationStateColumn.Width = combinationDataGridView.Width / 7;
 
-            combinationUsageColumn.DataPropertyName = "Usage";
-            combinationUsageColumn.HeaderText = "Usage";
-            combinationUsageColumn.Name = "combinationUsageColumn";
-            combinationUsageColumn.Width = combinationDataGridView.Width / 3;
+            m_combinationUsageColumn.DataPropertyName = "Usage";
+            m_combinationUsageColumn.HeaderText = "Usage";
+            m_combinationUsageColumn.Name = "combinationUsageColumn";
+            m_combinationUsageColumn.Width = combinationDataGridView.Width / 3;
         }
 
         /// <summary>
@@ -111,12 +111,12 @@ namespace Revit.SDK.Samples.Loads.CS
         private void InitializeUsageGrid()
         {
             // Initialize the column data members.
-            usageSetColumn = new DataGridViewCheckBoxColumn();
-            usageNameColumn = new DataGridViewTextBoxColumn();
+            m_usageSetColumn = new DataGridViewCheckBoxColumn();
+            m_usageNameColumn = new DataGridViewTextBoxColumn();
 
             // Binging the columns to the DataGridView
             usageDataGridView.AutoGenerateColumns = false;
-            usageDataGridView.Columns.AddRange(usageSetColumn, usageNameColumn);
+            usageDataGridView.Columns.AddRange(m_usageSetColumn, m_usageNameColumn);
 
             // Binding the data source.
             usageDataGridView.DataSource = m_dataBuffer.UsageMap;
@@ -124,15 +124,15 @@ namespace Revit.SDK.Samples.Loads.CS
             // Binding event
             usageDataGridView.CellValidating += usageDataGridView_CellValidating;
             // Initialize each column.
-            usageSetColumn.HeaderText = "Set";
-            usageSetColumn.DataPropertyName = "Set";
-            usageSetColumn.Name = "usageSetColumn";
-            usageSetColumn.Width = usageDataGridView.Width / 4;
+            m_usageSetColumn.HeaderText = "Set";
+            m_usageSetColumn.DataPropertyName = "Set";
+            m_usageSetColumn.Name = "usageSetColumn";
+            m_usageSetColumn.Width = usageDataGridView.Width / 4;
 
-            usageNameColumn.DataPropertyName = "Name";
-            usageNameColumn.HeaderText = "Case";
-            usageNameColumn.Name = "usageNameColumn";
-            usageNameColumn.Width = usageDataGridView.Width / 2;
+            m_usageNameColumn.DataPropertyName = "Name";
+            m_usageNameColumn.HeaderText = "Case";
+            m_usageNameColumn.Name = "usageNameColumn";
+            m_usageNameColumn.Width = usageDataGridView.Width / 2;
         }
 
         /// <summary>
@@ -141,31 +141,31 @@ namespace Revit.SDK.Samples.Loads.CS
         private void InitializeFormulaGrid()
         {
             // Initialize the column data members.
-            formulaFactorColumn = new DataGridViewTextBoxColumn();
-            formulaCaseColumn = new DataGridViewComboBoxColumn();
+            m_formulaFactorColumn = new DataGridViewTextBoxColumn();
+            m_formulaCaseColumn = new DataGridViewComboBoxColumn();
 
             // Binging the columns to the DataGridView
             formulaDataGridView.AutoGenerateColumns = false;
-            formulaDataGridView.Columns.AddRange(formulaFactorColumn, formulaCaseColumn);
+            formulaDataGridView.Columns.AddRange(m_formulaFactorColumn, m_formulaCaseColumn);
 
             // Binging the data source.
             formulaDataGridView.DataSource = m_dataBuffer.FormulaMap;
 
             // Initialize each column.
-            formulaFactorColumn.DataPropertyName = "Factor";
-            formulaFactorColumn.HeaderText = "Factor";
-            formulaFactorColumn.Name = "formulaFactorColumn";
-            formulaFactorColumn.Width = formulaDataGridView.Width / 4;
+            m_formulaFactorColumn.DataPropertyName = "Factor";
+            m_formulaFactorColumn.HeaderText = "Factor";
+            m_formulaFactorColumn.Name = "formulaFactorColumn";
+            m_formulaFactorColumn.Width = formulaDataGridView.Width / 4;
 
-            formulaCaseColumn.DataPropertyName = "Case";
-            formulaCaseColumn.HeaderText = "Case";
-            formulaCaseColumn.Name = "formulaCaseColumn";
-            formulaCaseColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            formulaCaseColumn.Width = formulaDataGridView.Width / 2;
+            m_formulaCaseColumn.DataPropertyName = "Case";
+            m_formulaCaseColumn.HeaderText = "Case";
+            m_formulaCaseColumn.Name = "formulaCaseColumn";
+            m_formulaCaseColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            m_formulaCaseColumn.Width = formulaDataGridView.Width / 2;
 
-            formulaCaseColumn.DataSource = m_dataBuffer.LoadCases;
-            formulaCaseColumn.DisplayMember = "Name";
-            formulaCaseColumn.ValueMember = "Name";
+            m_formulaCaseColumn.DataSource = m_dataBuffer.LoadCases;
+            m_formulaCaseColumn.DisplayMember = "Name";
+            m_formulaCaseColumn.ValueMember = "Name";
         }
 
         // The Button Event method.

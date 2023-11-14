@@ -20,7 +20,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
     {
         private readonly Application m_application;
         private readonly string m_basePath;
-        private readonly Dictionary<string, string> m_Familyfiles;
+        private readonly Dictionary<string, string> m_familyfiles;
 
         /// <summary>
         ///     Create an instance of the helper class
@@ -30,10 +30,10 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             m_application = application;
             m_basePath = GetFamilyBasePath();
             var extraFamilyPaths = GetAdditionalFamilyPaths();
-            m_Familyfiles = new Dictionary<string, string>();
-            GetAllFiles(m_basePath, m_Familyfiles);
+            m_familyfiles = new Dictionary<string, string>();
+            GetAllFiles(m_basePath, m_familyfiles);
             //Get additional .rfa files in user-defined paths specified in familypaths.xml
-            foreach (var extraPath in extraFamilyPaths) GetAllFiles(extraPath, m_Familyfiles);
+            foreach (var extraPath in extraFamilyPaths) GetAllFiles(extraPath, m_familyfiles);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             var retval = "";
             try
             {
-                retval = m_Familyfiles[filename];
+                retval = m_familyfiles[filename];
             }
             catch (KeyNotFoundException)
             {

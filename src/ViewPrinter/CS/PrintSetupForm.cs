@@ -10,11 +10,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 {
     public partial class PrintSetupForm : Form
     {
-        private readonly double INCHES_IN_FEET = 12.0;
-        private readonly PrintSTP m_printSetup;
+        private readonly double m_inchesInFeet = 12.0;
+        private readonly PrintStp m_printSetup;
         private bool m_stopUpdateFlag;
 
-        public PrintSetupForm(PrintSTP printSetup)
+        public PrintSetupForm(PrintStp printSetup)
         {
             m_printSetup = printSetup;
             InitializeComponent();
@@ -209,8 +209,8 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 };
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
-                userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * INCHES_IN_FEET).ToString();
-                userDefinedMarginYTextBox.Text = (m_printSetup.OriginOffsetY * INCHES_IN_FEET).ToString();
+                userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * m_inchesInFeet).ToString();
+                userDefinedMarginYTextBox.Text = (m_printSetup.OriginOffsetY * m_inchesInFeet).ToString();
 
                 if (!revertButton.Enabled) revertButton.Enabled = true;
             }
@@ -233,8 +233,8 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 };
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
-                userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * INCHES_IN_FEET).ToString();
-                userDefinedMarginYTextBox.Text = (m_printSetup.OriginOffsetY * INCHES_IN_FEET).ToString();
+                userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * m_inchesInFeet).ToString();
+                userDefinedMarginYTextBox.Text = (m_printSetup.OriginOffsetY * m_inchesInFeet).ToString();
 
                 if (!revertButton.Enabled) revertButton.Enabled = true;
             }
@@ -252,8 +252,8 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 };
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
-                userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * INCHES_IN_FEET).ToString();
-                userDefinedMarginYTextBox.Text = (m_printSetup.OriginOffsetY * INCHES_IN_FEET).ToString();
+                userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * m_inchesInFeet).ToString();
+                userDefinedMarginYTextBox.Text = (m_printSetup.OriginOffsetY * m_inchesInFeet).ToString();
             }
 
             if (!revertButton.Enabled) revertButton.Enabled = true;
@@ -370,7 +370,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 return;
             }
 
-            m_printSetup.OriginOffsetX = doubleValue / INCHES_IN_FEET;
+            m_printSetup.OriginOffsetX = doubleValue / m_inchesInFeet;
 
             if (!revertButton.Enabled) revertButton.Enabled = true;
         }
@@ -384,7 +384,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 return;
             }
 
-            m_printSetup.OriginOffsetY = doubleValue / INCHES_IN_FEET;
+            m_printSetup.OriginOffsetY = doubleValue / m_inchesInFeet;
 
             if (!revertButton.Enabled) revertButton.Enabled = true;
         }

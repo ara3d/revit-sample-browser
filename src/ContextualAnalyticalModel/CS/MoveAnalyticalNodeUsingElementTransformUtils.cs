@@ -21,7 +21,7 @@ namespace ContextualAnalyticalModel
                 var document = activeDoc.Document;
 
                 // Create Analytical Panel
-                CreateAnalyticalPanel.CreateAMPanel(document);
+                CreateAnalyticalPanel.CreateAmPanel(document);
 
                 // Create the connected Analytical Member
                 CreateAnalyticalMember.CreateMember(document);

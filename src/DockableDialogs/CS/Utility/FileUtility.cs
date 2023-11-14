@@ -7,29 +7,29 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
 {
     public class FileUtility
     {
-        private static string sm_assemblyPath;
-        private static string sm_assemblyFullName;
-        private static string sm_appResourcePath;
+        private static string _smAssemblyPath;
+        private static string _smAssemblyFullName;
+        private static string _smAppResourcePath;
 
         public static string GetAssemblyPath()
         {
-            if (string.IsNullOrEmpty(sm_assemblyPath))
-                sm_assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return sm_assemblyPath;
+            if (string.IsNullOrEmpty(_smAssemblyPath))
+                _smAssemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            return _smAssemblyPath;
         }
 
         public static string GetAssemblyFullName()
         {
-            if (string.IsNullOrEmpty(sm_assemblyFullName))
-                sm_assemblyFullName = Assembly.GetExecutingAssembly().Location;
-            return sm_assemblyFullName;
+            if (string.IsNullOrEmpty(_smAssemblyFullName))
+                _smAssemblyFullName = Assembly.GetExecutingAssembly().Location;
+            return _smAssemblyFullName;
         }
 
         public static string GetApplicationResourcesPath()
         {
-            if (string.IsNullOrEmpty(sm_appResourcePath))
-                sm_appResourcePath = GetAssemblyPath() + "\\Resources\\";
-            return sm_appResourcePath;
+            if (string.IsNullOrEmpty(_smAppResourcePath))
+                _smAppResourcePath = GetAssemblyPath() + "\\Resources\\";
+            return _smAppResourcePath;
         }
     }
 }

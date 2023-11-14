@@ -39,7 +39,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         ///     layout rule
         /// </summary>
         [Category("Construction")]
-        public LayoutRules Layout_Rule
+        public LayoutRules LayoutRule
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Top Major Layer")]
         [TypeConverter(typeof(BarTypeItem))]
-        public ElementId Top_Major_Bar_Type
+        public ElementId TopMajorBarType
         {
             get => m_topMajorBarType.AsElementId();
             set => m_topMajorBarType.Set(value);
@@ -63,14 +63,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Top Major Layer")]
         [TypeConverter(typeof(HookTypeItem))]
-        public ElementId Top_Major_Hook_Type
+        public ElementId TopMajorHookType
         {
             get => m_topMajorHookType.AsElementId();
             set => m_topMajorHookType.Set(value);
         }
 
         [Category("Top Major Layer")]
-        public FloorHookOrientations Top_Major_Hook_Orientation
+        public FloorHookOrientations TopMajorHookOrientation
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Top Minor Layer")]
         [TypeConverter(typeof(BarTypeItem))]
-        public ElementId Top_Minor_Bar_Type
+        public ElementId TopMinorBarType
         {
             get => m_topMinorBarType.AsElementId();
             set => m_topMinorBarType.Set(value);
@@ -94,14 +94,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Top Minor Layer")]
         [TypeConverter(typeof(HookTypeItem))]
-        public ElementId Top_Minor_Hook_Type
+        public ElementId TopMinorHookType
         {
             get => m_topMinorHookType.AsElementId();
             set => m_topMinorHookType.Set(value);
         }
 
         [Category("Top Minor Layer")]
-        public FloorHookOrientations Top_Minor_Hook_Orientation
+        public FloorHookOrientations TopMinorHookOrientation
         {
             get
             {
@@ -117,7 +117,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Bottom Major Layer")]
         [TypeConverter(typeof(BarTypeItem))]
-        public ElementId Bottom_Major_Bar_Type
+        public ElementId BottomMajorBarType
         {
             get => m_bottomMajorBarType.AsElementId();
             set => m_bottomMajorBarType.Set(value);
@@ -125,14 +125,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Bottom Major Layer")]
         [TypeConverter(typeof(HookTypeItem))]
-        public ElementId Bottom_Major_Hook_Type
+        public ElementId BottomMajorHookType
         {
             get => m_bottomMajorHookType.AsElementId();
             set => m_bottomMajorHookType.Set(value);
         }
 
         [Category("Bottom Major Layer")]
-        public FloorHookOrientations Bottom_Major_Hook_Orientation
+        public FloorHookOrientations BottomMajorHookOrientation
         {
             get
             {
@@ -148,7 +148,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Bottom Minor Layer")]
         [TypeConverter(typeof(BarTypeItem))]
-        public ElementId Bottom_Minor_Bar_Type
+        public ElementId BottomMinorBarType
         {
             get => m_bottomMinorBarType.AsElementId();
             set => m_bottomMinorBarType.Set(value);
@@ -156,14 +156,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Bottom Minor Layer")]
         [TypeConverter(typeof(HookTypeItem))]
-        public ElementId Bottom_Minor_Hook_Type
+        public ElementId BottomMinorHookType
         {
             get => m_bottomMinorHookType.AsElementId();
             set => m_bottomMinorHookType.Set(value);
         }
 
         [Category("Bottom Minor Layer")]
-        public FloorHookOrientations Bottom_Minor_Hook_Orientation
+        public FloorHookOrientations BottomMinorHookOrientation
         {
             get
             {

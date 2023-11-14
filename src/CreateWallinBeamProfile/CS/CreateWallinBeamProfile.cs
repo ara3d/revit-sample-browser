@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class CreateWallinBeamProfile : IExternalCommand
     {
-        private const double PRECISION = 0.0000000001; // Define a precision of double data
+        private const double Precision = 0.0000000001; // Define a precision of double data
 
         // Private Members
         private readonly ArrayList m_beamCollection; // Store the selection of beams in Revit
@@ -255,9 +255,9 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// <returns>true if two points are the same; otherwise, false</returns>
         private bool EqualPoint(XYZ first, XYZ second)
         {
-            if (-PRECISION <= first.X - second.X && PRECISION >= first.X - second.X
-                                                 && -PRECISION <= first.Y - second.Y && PRECISION >= first.Y - second.Y
-                                                 && -PRECISION <= first.Z - second.Z && PRECISION >= first.Z - second.Z)
+            if (-Precision <= first.X - second.X && Precision >= first.X - second.X
+                                                 && -Precision <= first.Y - second.Y && Precision >= first.Y - second.Y
+                                                 && -Precision <= first.Z - second.Z && Precision >= first.Z - second.Z)
                 return true;
             return false;
         }
@@ -270,7 +270,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// <returns>true if two double data are the same; otherwise, false</returns>
         private bool EqualDouble(double first, double second)
         {
-            return -PRECISION <= first - second && PRECISION >= first - second;
+            return -Precision <= first - second && Precision >= first - second;
         }
 
         /// <summary>

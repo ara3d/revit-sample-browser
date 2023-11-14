@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
         {
             try
             {
-                Application.thisApp.ShowForm(commandData.Application);
+                Application.ThisApp.ShowForm(commandData.Application);
 
                 return Result.Succeeded;
             }

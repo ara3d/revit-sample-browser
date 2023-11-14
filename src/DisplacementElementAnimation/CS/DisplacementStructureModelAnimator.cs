@@ -18,22 +18,22 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <summary>
         ///     The increment by which the displacement parameter is reduced during animation.
         /// </summary>
-        private readonly double displacementIncrement = 0.05;
+        private readonly double m_displacementIncrement = 0.05;
 
         /// <summary>
         ///     The displacement parameter (proceeds from 1 -> 0 during the animation)
         /// </summary>
-        private double displacementParameter = 1.0;
+        private double m_displacementParameter = 1.0;
 
         /// <summary>
         ///     The initial height for the initial displacement.
         /// </summary>
-        private readonly double initialHeight = 100;
+        private readonly double m_initialHeight = 100;
 
         /// <summary>
         ///     The maximum ratio of displacement in XY.
         /// </summary>
-        private readonly double initialXYRatio = 1.25;
+        private readonly double m_initialXyRatio = 1.25;
 
         /// <summary>
         ///     The index of the current parent element being animated.
@@ -63,22 +63,22 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <summary>
         ///     The model center.  Currently hardcoded.
         /// </summary>
-        private readonly XYZ modelCenter = XYZ.Zero;
+        private readonly XYZ m_modelCenter = XYZ.Zero;
 
         /// <summary>
         ///     The number of milliseconds in between frames.
         /// </summary>
-        private readonly int timerInterval = 60;
+        private readonly int m_timerInterval = 60;
 
         /// <summary>
         ///     Signals that the timer has triggered.
         /// </summary>
-        private bool timerTripped;
+        private bool m_timerTripped;
 
         /// <summary>
         ///     The application.
         /// </summary>
-        private readonly UIApplication uiApplication;
+        private readonly UIApplication m_uiApplication;
 
         /// <summary>
         ///     Constructs an animator instance.
@@ -87,7 +87,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <param name="isUsingIdling">The switch for using Idling event.</param>
         public DisplacementStructureModelAnimator(UIApplication uiApp, bool isUsingIdling)
         {
-            uiApplication = uiApp;
+            m_uiApplication = uiApp;
             m_isUsingIdling = isUsingIdling;
         }
 
@@ -100,7 +100,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             m_displacementElements = new List<DisplacementElement>();
             m_currentDisplacementIndex = 0;
 
-            var uiDoc = uiApplication.ActiveUIDocument;
+            var uiDoc = m_uiApplication.ActiveUIDocument;
             var view = uiDoc.ActiveView;
             var doc = uiDoc.Document;
 
@@ -141,16 +141,16 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
                 t.Commit();
             }
 
-            displacementParameter = 1.0;
+            m_displacementParameter = 1.0;
 
             if (m_isUsingIdling)
             {
                 // Register idling for animation frames
-                uiApplication.Idling += IdlingResponse;
+                m_uiApplication.Idling += IdlingResponse;
 
                 // Register timer for animation framews
                 m_timer = new Timer();
-                m_timer.Interval = timerInterval;
+                m_timer.Interval = m_timerInterval;
                 m_timer.Elapsed += TimerElapsed;
                 m_timer.Start();
             }
@@ -163,9 +163,9 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         {
             var groupFinished = false; // Is the current animation group finished?
             var allFinished = false; // Are all animation groups finished?
-            if (displacementParameter <= 0)
+            if (m_displacementParameter <= 0)
             {
-                displacementParameter = 1.0;
+                m_displacementParameter = 1.0;
                 groupFinished = true;
                 m_currentDisplacementIndex++;
                 if (m_currentDisplacementIndex == m_displacementElements.Count)
@@ -174,20 +174,20 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
                     if (m_isUsingIdling)
                     {
                         m_timer.Stop();
-                        uiApplication.Idling -= IdlingResponse;
+                        m_uiApplication.Idling -= IdlingResponse;
                     }
                 }
             }
 
             // Execute transaction for next animation
-            using (var t = new Transaction(uiApplication.ActiveUIDocument.Document,
+            using (var t = new Transaction(m_uiApplication.ActiveUIDocument.Document,
                        groupFinished ? "Next animation group" : "Animation step"))
             {
                 t.Start();
                 if (groupFinished)
                 {
                     // Delete displacement element (and children)
-                    uiApplication.ActiveUIDocument.Document.Delete(m_displacementElement.Id);
+                    m_uiApplication.ActiveUIDocument.Document.Delete(m_displacementElement.Id);
 
                     // Increment to next group
                     m_displacementElement = allFinished ? null : m_displacementElements[m_currentDisplacementIndex];
@@ -199,7 +199,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
                     ChangeDisplacementLocationsForChildren();
 
                     // Decrement displacement parameter
-                    displacementParameter -= displacementIncrement;
+                    m_displacementParameter -= m_displacementIncrement;
                 }
 
                 t.Commit();
@@ -277,8 +277,8 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             // must remain assigned to the parent, so all child displacements will be relative to the 
             // parent's displacement.)
             var lastElement = doc.GetElement(ids.Last());
-            var parentDisplacedLocation = GetDisplacementXYFor(lastElement, XYZ.Zero);
-            parentDisplacedLocation = MoveToElevation(parentDisplacedLocation, initialHeight);
+            var parentDisplacedLocation = GetDisplacementXyFor(lastElement, XYZ.Zero);
+            parentDisplacedLocation = MoveToElevation(parentDisplacedLocation, m_initialHeight);
 
             // All elements are added to the parent displacement element. 
             var parent = DisplacementElement.Create(doc, ids, parentDisplacedLocation, view, null);
@@ -294,7 +294,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
                 var childId = idsList[index];
                 var e = doc.GetElement(childId);
 
-                var displacedLocation = GetDisplacementXYFor(e, parentDisplacedLocation);
+                var displacedLocation = GetDisplacementXyFor(e, parentDisplacedLocation);
 
                 // Setup id container for child DisplacementElement creation
                 childIds.Clear();
@@ -311,7 +311,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         private void ChangeDisplacementLocationForParent()
         {
             // Displacement includes displacement in Z
-            var displacement = GetDisplacementXY(m_displacementElement);
+            var displacement = GetDisplacementXy(m_displacementElement);
             displacement = MoveToElevation(displacement, GetHeightDisplacementValue());
             m_displacementElement.SetRelativeDisplacement(displacement);
         }
@@ -325,7 +325,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             foreach (var element in subDisplacementElements)
             {
                 // Displacement does not include change in Z
-                var displacedLocation = GetDisplacementXY(element);
+                var displacedLocation = GetDisplacementXy(element);
 
                 element.SetRelativeDisplacement(displacedLocation);
             }
@@ -346,7 +346,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// </summary>
         /// <param name="element">The displacement element.</param>
         /// <returns>The displacement.</returns>
-        private XYZ GetDisplacementXY(DisplacementElement element)
+        private XYZ GetDisplacementXy(DisplacementElement element)
         {
             // If the element is a child, need to take into account the displacement of the parent.
             var displacementDueToParent = XYZ.Zero;
@@ -360,7 +360,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             var id = element.GetDisplacedElementIds().First();
             var e = element.Document.GetElement(id);
 
-            return GetDisplacementXYFor(e, displacementDueToParent);
+            return GetDisplacementXyFor(e, displacementDueToParent);
         }
 
         /// <summary>
@@ -369,12 +369,12 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <param name="e">The element.</param>
         /// <param name="displacementDueToParent">The parent element displacement.</param>
         /// <returns>The XY displacement.</returns>
-        private XYZ GetDisplacementXYFor(Element e, XYZ displacementDueToParent)
+        private XYZ GetDisplacementXyFor(Element e, XYZ displacementDueToParent)
         {
-            var displacementDueToParentXY = MoveToElevationZero(displacementDueToParent);
+            var displacementDueToParentXy = MoveToElevationZero(displacementDueToParent);
             var location = GetNominalCenterLocation(e);
-            var delta = location - modelCenter;
-            var displacedLocation = delta * GetXYDisplacementRatio() - displacementDueToParentXY;
+            var delta = location - m_modelCenter;
+            var displacedLocation = delta * GetXyDisplacementRatio() - displacementDueToParentXy;
 
             return displacedLocation;
         }
@@ -383,11 +383,11 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         ///     Returns the current XY displacement ratio.
         /// </summary>
         /// <returns>The XY displacement ratio.</returns>
-        private double GetXYDisplacementRatio()
+        private double GetXyDisplacementRatio()
         {
-            if (displacementParameter == 1.0)
-                return initialXYRatio;
-            return initialXYRatio * 1 / Math.Pow(initialHeight - GetHeightDisplacementValue(), 0.75);
+            if (m_displacementParameter == 1.0)
+                return m_initialXyRatio;
+            return m_initialXyRatio * 1 / Math.Pow(m_initialHeight - GetHeightDisplacementValue(), 0.75);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <returns></returns>
         private double GetHeightDisplacementValue()
         {
-            return initialHeight * displacementParameter;
+            return m_initialHeight * m_displacementParameter;
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <param name="e"></param>
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
-            timerTripped = true;
+            m_timerTripped = true;
         }
 
         /// <summary>
@@ -419,9 +419,9 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             // Set to reraise idling immediately (unaffected by user activity)
             e.SetRaiseWithoutDelay();
 
-            if (timerTripped)
+            if (m_timerTripped)
             {
-                timerTripped = false;
+                m_timerTripped = false;
                 AnimateNextStep();
             }
         }

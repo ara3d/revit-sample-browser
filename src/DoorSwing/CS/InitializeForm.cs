@@ -70,7 +70,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             // The object of Graphics to draw sketch.
             var graphics = e.Graphics;
             // Get the element bounding box's rectangle area.
-            var doorGeoRectangleF = m_currentGraphic.BBOX2D;
+            var doorGeoRectangleF = m_currentGraphic.Bbox2D;
             // Get the display rectangle area of PreviewBox.
             RectangleF displayRectangleF = previewPictureBox.DisplayRectangle;
 

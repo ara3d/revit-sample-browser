@@ -45,7 +45,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         ///     parameter h in parameter category Dimension
         /// </summary>
         [Category("Dimensions")]
-        public double h
+        public double H
         {
             get => m_hDimension.AsDouble();
             set => m_hDimension.Set(value);
@@ -55,7 +55,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         ///     parameter b in parameter category Dimension
         /// </summary>
         [Category("Dimensions")]
-        public double b
+        public double B
         {
             get => m_bDimension.AsDouble();
             set => m_bDimension.Set(value);

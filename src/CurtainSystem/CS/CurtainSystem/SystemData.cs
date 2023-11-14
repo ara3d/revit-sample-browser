@@ -20,7 +20,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         public delegate void CurtainSystemChangedHandler();
 
         // the count of the created curtain systems
-        private static int m_csIndex = -1;
+        private static int _csIndex = -1;
 
         // the data of the sample
         private readonly MyDocument m_mydocument;
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             {
                 ByFaceArray = byFaceArray,
                 GridFacesIndices = faceIndices,
-                Index = ++m_csIndex
+                Index = ++_csIndex
             };
 
             //

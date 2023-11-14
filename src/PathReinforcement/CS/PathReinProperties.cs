@@ -16,12 +16,12 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <summary>
         ///     fixed number layout rule.
         /// </summary>
-        Fixed_Number = 2,
+        FixedNumber = 2,
 
         /// <summary>
         ///     maximum spacing layout rule.
         /// </summary>
-        Maximum_Spacing = 3
+        MaximumSpacing = 3
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <summary>
         ///     cache path reinforcement object.
         /// </summary>
-        protected readonly Autodesk.Revit.DB.Structure.PathReinforcement m_pathRein;
+        protected readonly Autodesk.Revit.DB.Structure.PathReinforcement PathRein;
 
         /// <summary>
         ///     primary bar length
@@ -93,14 +93,14 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <param name="pathRein"></param>
         public PathReinProperties(Autodesk.Revit.DB.Structure.PathReinforcement pathRein)
         {
-            m_pathRein = pathRein;
+            PathRein = pathRein;
             m_layoutRule = (LayoutRule)GetParameter("Layout Rule").AsInteger();
             m_face = (Face)GetParameter("Face").AsInteger();
-            m_numberOfBars = m_pathRein.get_Parameter(
+            m_numberOfBars = PathRein.get_Parameter(
                 BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).AsInteger();
-            m_barSpacing = m_pathRein.get_Parameter(
+            m_barSpacing = PathRein.get_Parameter(
                 BuiltInParameter.PATH_REIN_SPACING).AsValueString();
-            m_primaryBarLength = m_pathRein.get_Parameter(
+            m_primaryBarLength = PathRein.get_Parameter(
                 BuiltInParameter.PATH_REIN_LENGTH_1).AsValueString();
             m_primaryBarType = GetParameter("Primary Bar - Type").AsElementId();
         }
@@ -137,11 +137,11 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                     // set BarSpacing and NumberOfBars readonly dynamically when:
                     // When set LayoutRule to "Fixed Number", BarSpacing should be read only
                     // When set to "Maximum Spacing", Number Of Bars should be read only
-                    case LayoutRule.Fixed_Number:
+                    case LayoutRule.FixedNumber:
                         SetPropertyReadOnly("BarSpacing", true);
                         SetPropertyReadOnly("NumberOfBars", false);
                         break;
-                    case LayoutRule.Maximum_Spacing:
+                    case LayoutRule.MaximumSpacing:
                         SetPropertyReadOnly("BarSpacing", false);
                         SetPropertyReadOnly("NumberOfBars", true);
                         break;
@@ -221,7 +221,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 GetParameter("Layout Rule").Set((int)m_layoutRule);
                 GetParameter("Face").Set((int)m_face);
                 GetParameter("Primary Bar - Type").Set(m_primaryBarType);
-                m_pathRein.get_Parameter(
+                PathRein.get_Parameter(
                     BuiltInParameter.PATH_REIN_LENGTH_1).SetValueString(m_primaryBarLength);
 
                 switch (m_layoutRule)
@@ -229,22 +229,22 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                     // if layout rule is maximum spacing, number of bar will be read only.
                     // In order to update previously modified number of bar, we should change the layout rule
                     // to fixed number, and then set the layout rule back.
-                    case LayoutRule.Maximum_Spacing:
-                        m_pathRein.get_Parameter(
+                    case LayoutRule.MaximumSpacing:
+                        PathRein.get_Parameter(
                             BuiltInParameter.PATH_REIN_SPACING).SetValueString(m_barSpacing);
-                        GetParameter("Layout Rule").Set((int)LayoutRule.Fixed_Number);
-                        m_pathRein.get_Parameter(
+                        GetParameter("Layout Rule").Set((int)LayoutRule.FixedNumber);
+                        PathRein.get_Parameter(
                             BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(m_numberOfBars);
                         GetParameter("Layout Rule").Set((int)m_layoutRule);
                         break;
                     // if layout rule is fixed number, bar spacing will be read only.
                     // In order to update previously modified bar spacing, we should change the layout rule 
                     // to maximum spacing, and then set the layout rule back.
-                    case LayoutRule.Fixed_Number:
-                        m_pathRein.get_Parameter(
+                    case LayoutRule.FixedNumber:
+                        PathRein.get_Parameter(
                             BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(m_numberOfBars);
-                        GetParameter("Layout Rule").Set((int)LayoutRule.Maximum_Spacing);
-                        m_pathRein.get_Parameter(
+                        GetParameter("Layout Rule").Set((int)LayoutRule.MaximumSpacing);
+                        PathRein.get_Parameter(
                             BuiltInParameter.PATH_REIN_SPACING).SetValueString(m_barSpacing);
                         GetParameter("Layout Rule").Set((int)m_layoutRule);
                         break;
@@ -263,7 +263,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <returns>parameter whose definition name is the given name.</returns>
         protected Parameter GetParameter(string name)
         {
-            foreach (Parameter para in m_pathRein.Parameters)
+            foreach (Parameter para in PathRein.Parameters)
                 if (para.Definition.Name.Equals(name))
                     return para;
             return null;

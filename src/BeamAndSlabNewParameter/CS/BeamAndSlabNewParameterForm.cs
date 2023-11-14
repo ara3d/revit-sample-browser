@@ -13,18 +13,18 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
     /// </summary>
     public class BeamAndSlabParametersForm : Form
     {
-        private Button addParameterButton;
-        private Label attributeValueLabel;
-        private ListBox attributeValueListBox;
+        private Button m_addParameterButton;
+        private Label m_attributeValueLabel;
+        private ListBox m_attributeValueListBox;
 
         /// <summary>
         ///     Required designer variable.
         /// </summary>
-        private readonly Container components = null;
+        private readonly Container m_components = null;
 
-        private Button displayValueButton;
-        private Button exitButton;
-        private Button findButton;
+        private Button m_displayValueButton;
+        private Button m_exitButton;
+        private Button m_findButton;
 
         // an instance of Command class
         private readonly Command m_dataBuffer;
@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         {
             if (disposing)
             {
-                components?.Dispose();
+                m_components?.Dispose();
             }
 
             base.Dispose(disposing);
@@ -58,84 +58,84 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         /// </summary>
         private void InitializeComponent()
         {
-            addParameterButton = new Button();
-            displayValueButton = new Button();
-            exitButton = new Button();
-            attributeValueListBox = new ListBox();
-            attributeValueLabel = new Label();
-            findButton = new Button();
+            m_addParameterButton = new Button();
+            m_displayValueButton = new Button();
+            m_exitButton = new Button();
+            m_attributeValueListBox = new ListBox();
+            m_attributeValueLabel = new Label();
+            m_findButton = new Button();
             SuspendLayout();
             // 
             // addParameterButton
             // 
-            addParameterButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            addParameterButton.Location = new Point(311, 65);
-            addParameterButton.Name = "addParameterButton";
-            addParameterButton.Size = new Size(105, 26);
-            addParameterButton.TabIndex = 1;
-            addParameterButton.Text = "&Add";
-            addParameterButton.TextAlign = ContentAlignment.TopCenter;
-            addParameterButton.Click += addParameterButton_Click;
+            m_addParameterButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            m_addParameterButton.Location = new Point(311, 65);
+            m_addParameterButton.Name = "m_addParameterButton";
+            m_addParameterButton.Size = new Size(105, 26);
+            m_addParameterButton.TabIndex = 1;
+            m_addParameterButton.Text = "&Add";
+            m_addParameterButton.TextAlign = ContentAlignment.TopCenter;
+            m_addParameterButton.Click += addParameterButton_Click;
             // 
             // displayValueButton
             // 
-            displayValueButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            displayValueButton.Location = new Point(311, 111);
-            displayValueButton.Name = "displayValueButton";
-            displayValueButton.Size = new Size(105, 26);
-            displayValueButton.TabIndex = 2;
-            displayValueButton.Text = "&Display Value";
-            displayValueButton.Click += displayValueButton_Click;
+            m_displayValueButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            m_displayValueButton.Location = new Point(311, 111);
+            m_displayValueButton.Name = "m_displayValueButton";
+            m_displayValueButton.Size = new Size(105, 26);
+            m_displayValueButton.TabIndex = 2;
+            m_displayValueButton.Text = "&Display Value";
+            m_displayValueButton.Click += displayValueButton_Click;
             // 
             // exitButton
             // 
-            exitButton.DialogResult = DialogResult.Cancel;
-            exitButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            exitButton.Location = new Point(311, 203);
-            exitButton.Name = "exitButton";
-            exitButton.Size = new Size(105, 26);
-            exitButton.TabIndex = 4;
-            exitButton.Text = "&Exit";
-            exitButton.Click += exitButton_Click;
+            m_exitButton.DialogResult = DialogResult.Cancel;
+            m_exitButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            m_exitButton.Location = new Point(311, 203);
+            m_exitButton.Name = "m_exitButton";
+            m_exitButton.Size = new Size(105, 26);
+            m_exitButton.TabIndex = 4;
+            m_exitButton.Text = "&Exit";
+            m_exitButton.Click += exitButton_Click;
             // 
             // attributeValueListBox
             // 
-            attributeValueListBox.ItemHeight = 16;
-            attributeValueListBox.Location = new Point(19, 46);
-            attributeValueListBox.Name = "attributeValueListBox";
-            attributeValueListBox.Size = new Size(269, 228);
-            attributeValueListBox.TabIndex = 18;
-            attributeValueListBox.TabStop = false;
+            m_attributeValueListBox.ItemHeight = 16;
+            m_attributeValueListBox.Location = new Point(19, 46);
+            m_attributeValueListBox.Name = "m_attributeValueListBox";
+            m_attributeValueListBox.Size = new Size(269, 228);
+            m_attributeValueListBox.TabIndex = 18;
+            m_attributeValueListBox.TabStop = false;
             // 
             // attributeValueLabel
             // 
-            attributeValueLabel.Location = new Point(19, 9);
-            attributeValueLabel.Name = "attributeValueLabel";
-            attributeValueLabel.Size = new Size(279, 37);
-            attributeValueLabel.TabIndex = 19;
-            attributeValueLabel.Text = "Display the value of the Unique ID if present for all the selected elements";
+            m_attributeValueLabel.Location = new Point(19, 9);
+            m_attributeValueLabel.Name = "m_attributeValueLabel";
+            m_attributeValueLabel.Size = new Size(279, 37);
+            m_attributeValueLabel.TabIndex = 19;
+            m_attributeValueLabel.Text = "Display the value of the Unique ID if present for all the selected elements";
             // 
             // findButton
             // 
-            findButton.DialogResult = DialogResult.OK;
-            findButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            findButton.Location = new Point(311, 157);
-            findButton.Name = "findButton";
-            findButton.Size = new Size(105, 26);
-            findButton.TabIndex = 3;
-            findButton.Text = "&Find";
-            findButton.Click += findButton_Click;
+            m_findButton.DialogResult = DialogResult.OK;
+            m_findButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            m_findButton.Location = new Point(311, 157);
+            m_findButton.Name = "m_findButton";
+            m_findButton.Size = new Size(105, 26);
+            m_findButton.TabIndex = 3;
+            m_findButton.Text = "&Find";
+            m_findButton.Click += findButton_Click;
             // 
             // BeamAndSlabParametersForm
             // 
-            CancelButton = exitButton;
+            CancelButton = m_exitButton;
             ClientSize = new Size(438, 292);
-            Controls.Add(attributeValueLabel);
-            Controls.Add(attributeValueListBox);
-            Controls.Add(addParameterButton);
-            Controls.Add(findButton);
-            Controls.Add(displayValueButton);
-            Controls.Add(exitButton);
+            Controls.Add(m_attributeValueLabel);
+            Controls.Add(m_attributeValueListBox);
+            Controls.Add(m_addParameterButton);
+            Controls.Add(m_findButton);
+            Controls.Add(m_displayValueButton);
+            Controls.Add(m_exitButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -158,13 +158,13 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             if (successAddParameter)
             {
                 DialogResult = DialogResult.OK;
-                m_dataBuffer.SetValueToUniqueIDParameter();
+                m_dataBuffer.SetValueToUniqueIdParameter();
                 TaskDialog.Show("Revit", "Done");
             }
             else
             {
                 DialogResult = DialogResult.None;
-                m_dataBuffer.SetValueToUniqueIDParameter();
+                m_dataBuffer.SetValueToUniqueIdParameter();
                 TaskDialog.Show("Revit", "Unique ID parameter exist");
             }
         }
@@ -177,8 +177,8 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         /// <param name="e"></param>
         private void findButton_Click(object sender, EventArgs e)
         {
-            if (null != attributeValueListBox.SelectedItem)
-                m_dataBuffer.FindElement(attributeValueListBox.SelectedItem.ToString());
+            if (null != m_attributeValueListBox.SelectedItem)
+                m_dataBuffer.FindElement(m_attributeValueListBox.SelectedItem.ToString());
         }
 
         /// <summary>
@@ -188,10 +188,10 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         /// <param name="e"></param>
         private void displayValueButton_Click(object sender, EventArgs e)
         {
-            attributeValueListBox.DataSource = m_dataBuffer.SendValueToListBox();
+            m_attributeValueListBox.DataSource = m_dataBuffer.SendValueToListBox();
 
             //If we displayed nothing, give possible reasons
-            if (0 == attributeValueListBox.Items.Count)
+            if (0 == m_attributeValueListBox.Items.Count)
             {
                 var message = "There was an error executing the command.\r\n";
                 message = message + "Possible reasons for this are:\r\n\r\n";

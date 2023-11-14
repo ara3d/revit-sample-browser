@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        private static Application s_applicationInstance;
+        private static Application _sApplicationInstance;
         private HashSet<Document> m_documents;
         private readonly XYZ m_offset = new XYZ(0, 0, 45);
 
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
                 m_servers = new List<RevitElementDrawingServer>();
                 m_documents = new HashSet<Document>();
 
-                s_applicationInstance = this;
+                _sApplicationInstance = this;
             }
             catch (Exception)
             {
@@ -96,7 +96,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         /// <returns></returns>
         public void OnDocumentClosing(object sender, DocumentClosingEventArgs args)
         {
-            unregisterServers(args.Document, false);
+            UnregisterServers(args.Document, false);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         /// <param name="document"></param>
         public static void ProcessCommandDuplicateGraphics(Document document)
         {
-            s_applicationInstance?.AddMultipleRevitElementServers(new UIDocument(document));
+            _sApplicationInstance?.AddMultipleRevitElementServers(new UIDocument(document));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         /// <param name="document"></param>
         public static void ProcessCommandClearExternalGraphics(Document document)
         {
-            s_applicationInstance?.unregisterServers(null, true);
+            _sApplicationInstance?.UnregisterServers(null, true);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         /// </summary>
         /// <param name="document">The document whose servers should be removed, or null.</param>
         /// <param name="updateViews">Update views of the affected document(s).</param>
-        public void unregisterServers(Document document, bool updateViews)
+        public void UnregisterServers(Document document, bool updateViews)
         {
             var externalDrawerServiceId = ExternalServices.BuiltInExternalServices.DirectContext3DService;
             if (!(ExternalServiceRegistry.GetService(externalDrawerServiceId) is MultiServerService externalDrawerService))

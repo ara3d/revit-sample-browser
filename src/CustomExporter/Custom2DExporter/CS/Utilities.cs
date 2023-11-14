@@ -14,7 +14,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         /// </summary>
         /// <param name="to"></param>
         /// <param name="from"></param>
-        public static void addTo(IList<XYZ> to, IList<XYZ> from)
+        public static void AddTo(IList<XYZ> to, IList<XYZ> from)
         {
             var cnt = from.Count;
             for (var ii = 0; ii < cnt; ii++)
@@ -27,7 +27,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
                 }
         }
 
-        private static Plane getAppropriatePlane(View view)
+        private static Plane GetAppropriatePlane(View view)
         {
             var plane = Plane.CreateByNormalAndOrigin(view.ViewDirection, view.Origin);
             return plane;
@@ -40,9 +40,9 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         /// <param name="view">The view to draw the lines in.</param>
         /// <param name="points">The list of (start, end) points of the lines.</param>
         /// <param name="tolerance">The smallest curve length allowed to be drawn. Lines smaller than this are not drawn.</param>
-        private static void drawLines(View view, IList<XYZ> points, double tolerance)
+        private static void DrawLines(View view, IList<XYZ> points, double tolerance)
         {
-            var plane = getAppropriatePlane(view);
+            var plane = GetAppropriatePlane(view);
             if (plane != null)
                 for (var ii = 0; ii < points.Count; ii++)
                 {
@@ -70,7 +70,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         ///     Hide all elements visibe in the view.
         /// </summary>
         /// <param name="view">The view</param>
-        private static void hideAllInView(View view)
+        private static void HideAllInView(View view)
         {
             var viewElems = new FilteredElementCollector(view.Document, view.Id);
             var elementIds = viewElems.ToElementIds();
@@ -88,14 +88,14 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         /// </summary>
         /// <param name="view">The view in which to draw lines and hide elements.</param>
         /// <param name="points">The points which define the lines (start, end) points</param>
-        public static void displayExport(View view, IList<XYZ> points)
+        public static void DisplayExport(View view, IList<XYZ> points)
         {
             var doc = view.Document;
             using (var tran = new Transaction(view.Document, "ExportViewGeometry"))
             {
                 tran.Start("Draw Exported Lines and turn off everything but Lines");
-                hideAllInView(view);
-                drawLines(view, points, doc.Application.ShortCurveTolerance);
+                HideAllInView(view);
+                DrawLines(view, points, doc.Application.ShortCurveTolerance);
                 tran.Commit();
             }
         }

@@ -8,18 +8,18 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores the information for exporting gbxml format
     /// </summary>
-    internal class ExportGBXMLData : ExportData
+    internal class ExportGbxmlData : ExportData
     {
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
-        public ExportGBXMLData(ExternalCommandData commandData, ExportFormat exportFormat)
+        public ExportGbxmlData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
-            m_filter = "XML Documents |*.xml";
-            m_title = "Export GBXML";
+            Filter = "XML Documents |*.xml";
+            Title = "Export GBXML";
         }
 
         /// <summary>
@@ -28,12 +28,12 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <returns></returns>
         public override bool Export()
         {
-            var transaction = new Transaction(m_activeDoc, "Export_To_GBXML");
+            var transaction = new Transaction(ActiveDocument, "Export_To_GBXML");
             transaction.Start();
             base.Export();
 
             var options = new GBXMLExportOptions();
-            var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, options);
+            var exported = ActiveDocument.Export(ExportFolder, ExportFileName, options);
             transaction.Commit();
 
             return exported;

@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
     /// </summary>
     public class RuleInfo
     {
-        public readonly PerformanceAdviserRuleId ID;
+        public readonly PerformanceAdviserRuleId Id;
         public readonly bool IsEnabled;
         public readonly bool IsOurRule;
         public readonly string RuleDescription;
@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
 
         public RuleInfo(PerformanceAdviserRuleId id, bool isOurRule, string name, string description, bool isEnabled)
         {
-            ID = id;
+            Id = id;
             IsOurRule = isOurRule;
             RuleName = name;
             RuleDescription = description;

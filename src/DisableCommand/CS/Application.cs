@@ -29,22 +29,22 @@ namespace Revit.SDK.Samples.DisableCommand.CS
         ///     id string will be toward the end of the journal, look for the "Jrn.Command" entry that was recorded
         ///     when it was selected.
         /// </summary>
-        private static readonly string s_commandToDisable = "ID_EDIT_DESIGNOPTIONS";
+        private static readonly string SCommandToDisable = "ID_EDIT_DESIGNOPTIONS";
 
         /// <summary>
         ///     The command id, stored statically to allow for removal of the command binding.
         /// </summary>
-        private static RevitCommandId s_commandId;
+        private static RevitCommandId _sCommandId;
 
         public Result OnStartup(UIControlledApplication application)
         {
             // Lookup the desired command by name
-            s_commandId = RevitCommandId.LookupCommandId(s_commandToDisable);
+            _sCommandId = RevitCommandId.LookupCommandId(SCommandToDisable);
 
             // Confirm that the command can be overridden
-            if (!s_commandId.CanHaveBinding)
+            if (!_sCommandId.CanHaveBinding)
             {
-                ShowDialog("Error", "The target command " + s_commandToDisable +
+                ShowDialog("Error", "The target command " + SCommandToDisable +
                                     " selected for disabling cannot be overridden");
                 return Result.Failed;
             }
@@ -55,13 +55,13 @@ namespace Revit.SDK.Samples.DisableCommand.CS
             // no feedback would be available to the user about why the command is grayed out.
             try
             {
-                var commandBinding = application.CreateAddInCommandBinding(s_commandId);
+                var commandBinding = application.CreateAddInCommandBinding(_sCommandId);
                 commandBinding.Executed += DisableEvent;
             }
             // Most likely, this is because someone else has bound this command already.
             catch (Exception)
             {
-                ShowDialog("Error", "This add-in is unable to disable the target command " + s_commandToDisable +
+                ShowDialog("Error", "This add-in is unable to disable the target command " + SCommandToDisable +
                                     "; most likely another add-in has overridden this command.");
             }
 
@@ -71,8 +71,8 @@ namespace Revit.SDK.Samples.DisableCommand.CS
         public Result OnShutdown(UIControlledApplication application)
         {
             // Remove the command binding on shutdown
-            if (s_commandId.HasBinding)
-                application.RemoveAddInCommandBinding(s_commandId);
+            if (_sCommandId.HasBinding)
+                application.RemoveAddInCommandBinding(_sCommandId);
             return Result.Succeeded;
         }
 

@@ -21,7 +21,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
         /// <summary>
         ///     Revit document
         /// </summary>
-        private readonly Document RevitDoc;
+        private readonly Document m_revitDoc;
 
         /// <summary>
         ///     Constructor
@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
         /// <param name="doc">Revit Document</param>
         public ComputedSymbolGeometry(Document doc)
         {
-            RevitDoc = doc;
+            m_revitDoc = doc;
             m_options = new Options();
         }
 
@@ -38,23 +38,23 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
         /// </summary>
         public void GetInstanceGeometry()
         {
-            var instanceCollector = new FilteredElementCollector(RevitDoc);
+            var instanceCollector = new FilteredElementCollector(m_revitDoc);
             instanceCollector.OfClass(typeof(FamilyInstance));
 
             // create views by different names
-            var View3DId = ElementId.InvalidElementId;
-            var elems = new FilteredElementCollector(RevitDoc).OfClass(typeof(ViewFamilyType)).ToElements();
+            var view3DId = ElementId.InvalidElementId;
+            var elems = new FilteredElementCollector(m_revitDoc).OfClass(typeof(ViewFamilyType)).ToElements();
             foreach (var e in elems)
             {
                 if (e is ViewFamilyType v && v.ViewFamily == ViewFamily.ThreeDimensional)
                 {
-                    View3DId = e.Id;
+                    view3DId = e.Id;
                     break;
                 }
             }
 
             //View instanceView = RevitDoc.Create.NewView3D(new XYZ(1, 1, -1));
-            var instanceView = View3D.CreateIsometric(RevitDoc, View3DId);
+            var instanceView = View3D.CreateIsometric(m_revitDoc, view3DId);
             var instanceViewOrientation3D = new ViewOrientation3D(
                 new XYZ(-30.8272352809007, -2.44391067967133, 18.1013736367246),
                 new XYZ(0.577350269189626, 0.577350269189626, -0.577350269189626),
@@ -64,7 +64,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
             instanceView.Name = "InstanceGeometry";
 
             //View originalView = RevitDoc.Create.NewView3D(new XYZ(0, 1, -1));
-            var originalView = View3D.CreateIsometric(RevitDoc, View3DId);
+            var originalView = View3D.CreateIsometric(m_revitDoc, view3DId);
             var originalViewOrientation3D = new ViewOrientation3D(
                 new XYZ(-19.0249866627872, -5.09536632799455, 20.7528292850478),
                 new XYZ(0, 0.707106781186547, -0.707106781186547), new XYZ(0, 0.707106781186548, 0.707106781186548));
@@ -73,7 +73,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
             originalView.Name = "OriginalGeometry";
 
             //View transView = RevitDoc.Create.NewView3D(new XYZ(-1, 1, -1));
-            var transView = View3D.CreateIsometric(RevitDoc, View3DId);
+            var transView = View3D.CreateIsometric(m_revitDoc, view3DId);
             //ViewOrientation3D transViewOrientation3D = new ViewOrientation3D(new XYZ(-7.22273804467383, -2.44391067967133, 18.1013736367246), new XYZ(-0.577350269189626, 0.577350269189626, -0.577350269189626), new XYZ(-0.408248290463863, 0.408248290463863, 0.816496580927726));
             var transViewOrientation3D =
                 new ViewOrientation3D(new XYZ(-19.0249866627872, -5.09536632799455, 20.7528292850478),
@@ -91,10 +91,10 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
 
                 // show family instance geometry
                 //foreach (GeometryObject obj in instanceGeo.Objects)
-                var Objects = instanceGeo.GetEnumerator();
-                while (Objects.MoveNext())
+                var objects = instanceGeo.GetEnumerator();
+                while (objects.MoveNext())
                 {
-                    var obj = Objects.Current;
+                    var obj = objects.Current;
 
                     if (obj is Solid solid)
                     {
@@ -104,10 +104,10 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
 
                 // show geometry that is original geometry
                 //foreach (GeometryObject obj in computedGeo.Objects)
-                var Objects1 = computedGeo.GetEnumerator();
-                while (Objects1.MoveNext())
+                var objects1 = computedGeo.GetEnumerator();
+                while (objects1.MoveNext())
                 {
-                    var obj = Objects1.Current;
+                    var obj = objects1.Current;
 
                     if (obj is Solid solid)
                     {
@@ -117,10 +117,10 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
 
                 // show geometry that was transformed
                 //foreach (GeometryObject obj in transformGeo.Objects)
-                var Objects2 = transformGeo.GetEnumerator();
-                while (Objects2.MoveNext())
+                var objects2 = transformGeo.GetEnumerator();
+                while (objects2.MoveNext())
                 {
-                    var obj = Objects2.Current;
+                    var obj = objects2.Current;
 
                     if (obj is Solid solid)
                     {
@@ -130,7 +130,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
             }
 
             // remove original instances to view point results.
-            RevitDoc.Delete(instanceCollector.ToElementIds());
+            m_revitDoc.Delete(instanceCollector.ToElementIds());
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
             {
                 var resultSchema1 = new AnalysisResultSchema("PaintedSolid " + viewName, "Description");
 
-                var displayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(RevitDoc,
+                var displayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(m_revitDoc,
                     "Real_Color_Surface" + viewName, new AnalysisDisplayColoredSurfaceSettings(),
                     new AnalysisDisplayColorSettings(), new AnalysisDisplayLegendSettings());
 
@@ -200,10 +200,10 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
             {
                 var uvPnt = new UV(u, v);
                 uvPts.Add(uvPnt);
-                var faceXYZ = face.Evaluate(uvPnt);
+                var faceXyz = face.Evaluate(uvPnt);
                 // Specify three values for each point
                 for (var ii = 1; ii <= measurementNo; ii++)
-                    doubleList.Add(faceXYZ.DistanceTo(XYZ.Zero) * ii);
+                    doubleList.Add(faceXyz.DistanceTo(XYZ.Zero) * ii);
                 valList.Add(new ValueAtPoint(doubleList));
                 doubleList.Clear();
             }

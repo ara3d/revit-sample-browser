@@ -14,70 +14,70 @@ namespace Revit.SDK.Samples.UIAPI.CS
 {
     public partial class PreviewModel : Form
     {
-        private readonly RApplication _application;
+        private readonly RApplication m_application;
 
-        private ElementId _currentDBViewId;
-        private Document _dbDocument;
-        private readonly UIApplication _uiApplication;
+        private ElementId m_currentDbViewId;
+        private Document m_dbDocument;
+        private readonly UIApplication m_uiApplication;
 
         public PreviewModel(RApplication application, ElementId viewId)
         {
             InitializeComponent();
-            _application = application;
-            _uiApplication = new UIApplication(application);
-            _dbDocument = _uiApplication.ActiveUIDocument.Document;
+            m_application = application;
+            m_uiApplication = new UIApplication(application);
+            m_dbDocument = m_uiApplication.ActiveUIDocument.Document;
 
-            updateDocumentList(_dbDocument);
-            updateViewsList(_uiApplication.ActiveUIDocument.ActiveView.Id);
+            UpdateDocumentList(m_dbDocument);
+            UpdateViewsList(m_uiApplication.ActiveUIDocument.ActiveView.Id);
         }
 
-        private void updateViewsList(ElementId viewId)
+        private void UpdateViewsList(ElementId viewId)
         {
             // fill the combobox with printable views <name + id>
-            var collecotr = new FilteredElementCollector(_dbDocument);
+            var collecotr = new FilteredElementCollector(m_dbDocument);
             collecotr.OfClass(typeof(RView));
             var secs = from Element f in collecotr where (f as RView).CanBePrinted select f as RView;
             _cbViews.Items.Clear();
-            DBViewItem activeItem = null;
+            DbViewItem activeItem = null;
             foreach (var dbView in secs)
             {
                 if (viewId == null || viewId == ElementId.InvalidElementId)
                 {
-                    activeItem = new DBViewItem(dbView, _dbDocument);
+                    activeItem = new DbViewItem(dbView, m_dbDocument);
                     viewId = dbView.Id;
                 }
 
                 if (dbView.Id == viewId)
                 {
-                    activeItem = new DBViewItem(dbView, _dbDocument);
+                    activeItem = new DbViewItem(dbView, m_dbDocument);
                     _cbViews.Items.Add(activeItem);
                 }
                 else
                 {
-                    _cbViews.Items.Add(new DBViewItem(dbView, _dbDocument));
+                    _cbViews.Items.Add(new DbViewItem(dbView, m_dbDocument));
                 }
             }
 
             _cbViews.SelectedItem = activeItem;
         }
 
-        private void updateDocumentList(Document selectedDocument)
+        private void UpdateDocumentList(Document selectedDocument)
         {
             // fill the documents to the comboxbox _cbDocuments.
-            DBDocumentItem activeItem = null;
+            DbDocumentItem activeItem = null;
             _cbDocuments.Items.Clear();
-            var docIter = _application.Documents.ForwardIterator();
+            var docIter = m_application.Documents.ForwardIterator();
             docIter.Reset();
             while (docIter.MoveNext())
             {
                 var dbDoc = docIter.Current as Document;
                 string documentName = null;
-                DBDocumentItem item = null;
+                DbDocumentItem item = null;
                 if (dbDoc != null)
                 {
                     if (dbDoc.IsFamilyDocument)
                     {
-                        item = new DBDocumentItem(dbDoc.PathName, dbDoc);
+                        item = new DbDocumentItem(dbDoc.PathName, dbDoc);
                     }
                     else
                     {
@@ -94,12 +94,12 @@ namespace Revit.SDK.Samples.UIAPI.CS
                             documentName = projName;
                         }
 
-                        item = new DBDocumentItem(documentName, dbDoc);
+                        item = new DbDocumentItem(documentName, dbDoc);
                     }
 
                     if (dbDoc.Equals(selectedDocument))
                     {
-                        _dbDocument = selectedDocument;
+                        m_dbDocument = selectedDocument;
                         activeItem = item;
                     }
 
@@ -107,7 +107,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 }
             }
 
-            _cbDocuments.Items.Add(new DBDocumentItem());
+            _cbDocuments.Items.Add(new DbDocumentItem());
             _cbDocuments.SelectedItem = activeItem;
         }
 
@@ -115,7 +115,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
         {
             var cb = sender as ComboBox;
 
-            if (!(cb?.SelectedItem is DBViewItem dbItem))
+            if (!(cb?.SelectedItem is DbViewItem dbItem))
                 return;
 
             //if (_currentDBViewId == null)
@@ -130,14 +130,14 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
             var vc = _elementHostWPF.Child as PreviewControl;
             vc?.Dispose();
-            _elementHostWPF.Child = new PreviewControl(_dbDocument, dbItem.Id);
-            _currentDBViewId = dbItem.Id;
+            _elementHostWPF.Child = new PreviewControl(m_dbDocument, dbItem.Id);
+            m_currentDbViewId = dbItem.Id;
         }
 
         private void cbDocs_SelIdxChanged(object sender, EventArgs e)
         {
-            var documentItem = _cbDocuments.SelectedItem as DBDocumentItem;
-            if (documentItem.Document == _dbDocument)
+            var documentItem = _cbDocuments.SelectedItem as DbDocumentItem;
+            if (documentItem.Document == m_dbDocument)
                 return;
 
             if (documentItem.IsNull)
@@ -150,36 +150,36 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 {
                     try
                     {
-                        _dbDocument = _application.OpenDocumentFile(ofd.FileName);
+                        m_dbDocument = m_application.OpenDocumentFile(ofd.FileName);
                     }
                     catch (Exception)
                     {
                     }
 
-                    if (_dbDocument != null)
+                    if (m_dbDocument != null)
                     {
-                        updateDocumentList(_dbDocument);
-                        updateViewsList(null);
+                        UpdateDocumentList(m_dbDocument);
+                        UpdateViewsList(null);
                     }
                 }
                 else
                 {
                     // the combobox should show the current document item.
                     string documentName;
-                    var projName = _dbDocument.ProjectInformation.Name;
+                    var projName = m_dbDocument.ProjectInformation.Name;
                     if (string.IsNullOrEmpty(projName) || projName.ToLower().CompareTo("project name") == 0)
                     {
-                        if (string.IsNullOrEmpty(_dbDocument.PathName))
+                        if (string.IsNullOrEmpty(m_dbDocument.PathName))
                             documentName = projName;
                         else
-                            documentName = new FileInfo(_dbDocument.PathName).Name;
+                            documentName = new FileInfo(m_dbDocument.PathName).Name;
                     }
                     else
                     {
                         documentName = projName;
                     }
 
-                    foreach (DBDocumentItem dbItem in _cbDocuments.Items)
+                    foreach (DbDocumentItem dbItem in _cbDocuments.Items)
                         if (dbItem.Name.ToLower().CompareTo(documentName.ToLower()) == 0)
                         {
                             _cbDocuments.SelectedItem = dbItem;
@@ -189,19 +189,19 @@ namespace Revit.SDK.Samples.UIAPI.CS
             }
             else
             {
-                _dbDocument = documentItem.Document;
-                updateViewsList(null);
+                m_dbDocument = documentItem.Document;
+                UpdateViewsList(null);
             }
         }
     }
 
-    public class DBViewItem
+    public class DbViewItem
     {
         private string m_name;
         private ElementId m_id;
         private string m_uniqueId;
 
-        public DBViewItem(RView dbView, Document dbDoc)
+        public DbViewItem(RView dbView, Document dbDoc)
         {
             var viewType = dbDoc.GetElement(dbView.GetTypeId()) as ElementType;
             Name = viewType.Name + " " + dbView.Name;
@@ -233,20 +233,20 @@ namespace Revit.SDK.Samples.UIAPI.CS
         }
     }
 
-    public class DBDocumentItem
+    public class DbDocumentItem
     {
         private bool m_isNull;
         private string m_name;
         private Document m_document;
 
-        public DBDocumentItem(string name, Document doc)
+        public DbDocumentItem(string name, Document doc)
         {
             Name = name;
             Document = doc;
             IsNull = false;
         }
 
-        public DBDocumentItem()
+        public DbDocumentItem()
         {
             IsNull = true;
         }

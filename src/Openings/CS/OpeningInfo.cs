@@ -33,8 +33,8 @@ namespace Revit.SDK.Samples.Openings.CS
             Property = openingProperty;
 
             //get BoundingBox of Opening
-            var boxXYZ = Opening.get_BoundingBox(m_revit.ActiveUIDocument.Document.ActiveView);
-            var boundingBox = new BoundingBox(boxXYZ);
+            var boxXyz = Opening.get_BoundingBox(m_revit.ActiveUIDocument.Document.ActiveView);
+            var boundingBox = new BoundingBox(boxXyz);
             BoundingBox = boundingBox;
 
             //get profile
@@ -114,8 +114,8 @@ namespace Revit.SDK.Samples.Openings.CS
                 //just can get profile info from BoundaryRect Property
                 m_lines.Clear();
                 var boundRect = Opening.BoundaryRect as List<XYZ>;
-                var RectPoints = GetPoints(boundRect);
-                AddLine(RectPoints);
+                var rectPoints = GetPoints(boundRect);
+                AddLine(rectPoints);
                 var wireFrameSketch = new WireFrame(new ReadOnlyCollection<Line3D>(m_lines));
                 Sketch = wireFrameSketch;
             }

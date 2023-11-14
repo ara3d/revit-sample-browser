@@ -13,9 +13,9 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
     /// </summary>
     internal class SlabProfile
     {
-        private const int m_sizeXPictureBox = 354; //save picture box's size.X
+        private const int SizeXPictureBox = 354; //save picture box's size.X
 
-        private const int m_sizeYPictureBox = 280; //save picture box's size.Y
+        private const int SizeYPictureBox = 280; //save picture box's size.Y
 
         private PointF[] m_boundPoints; // store array store bound point of Slab
 
@@ -27,7 +27,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
 
         private Matrix4 m_moveToCenterMatrix; // store the Matrix used to move points to center
 
-        private Matrix4 m_MoveToPictureBoxCenter; // store the Matrix used to move profile to center of pictureBox
+        private Matrix4 m_moveToPictureBoxCenter; // store the Matrix used to move profile to center of pictureBox
 
         private Matrix4 m_restoreMatrix; // store the Matrix used to transform window UI coordinate to Revit
 
@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             // get a matrix for scaling all the points and lines within the canvas
             m_scaleMatrix = GetScaleMatrix();
             // get a matrix for moving all point in the middle of PictureBox
-            m_MoveToPictureBoxCenter = GetMoveToCenterOfPictureBox();
+            m_moveToPictureBoxCenter = GetMoveToCenterOfPictureBox();
             // transform 3D points to 2D
             m_transformMatrix = Get3DTo2DMatrix();
             // transform from 2D to 3D
@@ -94,12 +94,12 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             options.ComputeReferences = true;
             var geoElem = m_floor.get_Geometry(options);
             //GeometryObjectArray gObjects = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //get all the edges in the Geometry object
             //foreach (GeometryObject geo in gObjects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geo = Objects.Current;
+                var geo = objects.Current;
 
                 var solid = geo as Solid;
                 if (solid != null)
@@ -165,7 +165,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <returns>matrix used to move point to center of picture box</returns>
         private Matrix4 GetMoveToCenterOfPictureBox()
         {
-            return new Matrix4(new Vector4(m_sizeXPictureBox / 2, m_sizeYPictureBox / 2, 0));
+            return new Matrix4(new Vector4(SizeXPictureBox / 2, SizeYPictureBox / 2, 0));
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             var result = Matrix4.Multiply(
                 m_to2DMatrix.Inverse(), m_moveToCenterMatrix.Inverse());
             result = Matrix4.Multiply(result, m_scaleMatrix);
-            return Matrix4.Multiply(result, m_MoveToPictureBoxCenter);
+            return Matrix4.Multiply(result, m_moveToPictureBoxCenter);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         public Matrix4 Get2DTo3DMatrix()
         {
             var matrix = Matrix4.Multiply(
-                m_MoveToPictureBoxCenter.Inverse(), m_scaleMatrix.Inverse());
+                m_moveToPictureBoxCenter.Inverse(), m_scaleMatrix.Inverse());
             matrix = Matrix4.Multiply(
                 matrix, m_moveToCenterMatrix);
             return Matrix4.Multiply(matrix, m_to2DMatrix);
@@ -303,8 +303,8 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             var rotateY = Matrix4.RotateY(m_rotateAngleY);
             var rotateMatrix = Matrix4.Multiply(rotateX, rotateY);
 
-            m_rotateMatrix = Matrix4.Multiply(m_MoveToPictureBoxCenter.Inverse(), rotateMatrix);
-            m_rotateMatrix = Matrix4.Multiply(m_rotateMatrix, m_MoveToPictureBoxCenter);
+            m_rotateMatrix = Matrix4.Multiply(m_moveToPictureBoxCenter.Inverse(), rotateMatrix);
+            m_rotateMatrix = Matrix4.Multiply(m_rotateMatrix, m_moveToPictureBoxCenter);
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
-    partial class ExportDGNOptionsForm
+    partial class ExportDgnOptionsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -221,7 +221,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ExportDGNOptionsForm";
+            this.Name = "ExportDgnOptionsForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

@@ -25,11 +25,11 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
     /// </summary>
     public class CoroutineScheduler
     {
-        private static CoroutineScheduler instance;
+        private static CoroutineScheduler _instance;
 
-        private Coroutine coroutines;
+        private Coroutine m_coroutines;
 
-        private DispatcherTimer dispatcherTimer;
+        private DispatcherTimer m_dispatcherTimer;
 
         private CoroutineScheduler()
         {
@@ -37,34 +37,34 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
 
         private void Attach()
         {
-            dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += Update;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
+            m_dispatcherTimer = new DispatcherTimer();
+            m_dispatcherTimer.Tick += Update;
+            m_dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            m_dispatcherTimer.Start();
         }
 
         private void Detach()
         {
-            dispatcherTimer?.Stop();
-            dispatcherTimer = null;
+            m_dispatcherTimer?.Stop();
+            m_dispatcherTimer = null;
         }
 
         private void AddCoroutine(Coroutine coroutine)
         {
-            if (coroutines != null)
+            if (m_coroutines != null)
             {
-                coroutine.Next = coroutines;
-                coroutines.Previous = coroutine;
+                coroutine.Next = m_coroutines;
+                m_coroutines.Previous = coroutine;
             }
 
-            coroutines = coroutine;
+            m_coroutines = coroutine;
         }
 
         private void RemoveCoroutine(Coroutine coroutine)
         {
-            if (coroutines == coroutine)
+            if (m_coroutines == coroutine)
             {
-                coroutines = coroutines.Next;
+                m_coroutines = m_coroutines.Next;
             }
             else
             {
@@ -90,7 +90,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
 
         private void UpdateAllCoroutines()
         {
-            var iter = coroutines;
+            var iter = m_coroutines;
 
             while (iter != null)
             {
@@ -110,10 +110,10 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
         /// </summary>
         public static void Run()
         {
-            if (instance != null)
+            if (_instance != null)
                 return;
-            instance = new CoroutineScheduler();
-            instance.Attach();
+            _instance = new CoroutineScheduler();
+            _instance.Attach();
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
         /// </summary>
         public static void Stop()
         {
-            instance?.Detach();
-            instance = null;
+            _instance?.Detach();
+            _instance = null;
         }
 
         /// <summary>
@@ -131,10 +131,10 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
         /// <returns></returns>
         public static Coroutine StartCoroutine(IEnumerator enumerator)
         {
-            if (enumerator == null || instance == null) return null;
+            if (enumerator == null || _instance == null) return null;
 
             var coroutine = new Coroutine(enumerator);
-            instance.AddCoroutine(coroutine);
+            _instance.AddCoroutine(coroutine);
             return coroutine;
         }
     }

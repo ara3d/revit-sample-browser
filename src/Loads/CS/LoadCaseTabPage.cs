@@ -11,11 +11,11 @@ namespace Revit.SDK.Samples.Loads.CS
     /// </summary>
     public partial class LoadsForm
     {
-        private DataGridViewComboBoxColumn LoadCasesCategory;
-        private DataGridViewTextBoxColumn LoadCasesName;
-        private DataGridViewComboBoxColumn LoadCasesNature;
-        private DataGridViewTextBoxColumn LoadCasesNumber;
-        private DataGridViewTextBoxColumn LoadNatureName;
+        private DataGridViewComboBoxColumn m_loadCasesCategory;
+        private DataGridViewTextBoxColumn m_loadCasesName;
+        private DataGridViewComboBoxColumn m_loadCasesNature;
+        private DataGridViewTextBoxColumn m_loadCasesNumber;
+        private DataGridViewTextBoxColumn m_loadNatureName;
         private int m_loadCaseDataGridViewSelectedIndex;
         private int m_loadNatureDataGridViewSelectedIndex;
 
@@ -38,49 +38,49 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         private void InitializeLoadCasesDataGridView()
         {
-            LoadCasesName = new DataGridViewTextBoxColumn();
-            LoadCasesNumber = new DataGridViewTextBoxColumn();
-            LoadCasesNature = new DataGridViewComboBoxColumn();
-            LoadCasesCategory = new DataGridViewComboBoxColumn();
+            m_loadCasesName = new DataGridViewTextBoxColumn();
+            m_loadCasesNumber = new DataGridViewTextBoxColumn();
+            m_loadCasesNature = new DataGridViewComboBoxColumn();
+            m_loadCasesCategory = new DataGridViewComboBoxColumn();
             loadCasesDataGridView.AutoGenerateColumns = false;
-            loadCasesDataGridView.Columns.AddRange(LoadCasesName, LoadCasesNumber, LoadCasesNature, LoadCasesCategory);
+            loadCasesDataGridView.Columns.AddRange(m_loadCasesName, m_loadCasesNumber, m_loadCasesNature, m_loadCasesCategory);
             loadCasesDataGridView.DataSource = m_dataBuffer.LoadCasesMap;
 
-            LoadCasesName.DataPropertyName = "LoadCasesName";
-            LoadCasesName.HeaderText = "Name";
-            LoadCasesName.Name = "LoadCasesName";
-            LoadCasesName.ReadOnly = false;
-            LoadCasesName.Width = loadCasesDataGridView.Width / 6;
+            m_loadCasesName.DataPropertyName = "LoadCasesName";
+            m_loadCasesName.HeaderText = "Name";
+            m_loadCasesName.Name = "LoadCasesName";
+            m_loadCasesName.ReadOnly = false;
+            m_loadCasesName.Width = loadCasesDataGridView.Width / 6;
 
-            LoadCasesNumber.DataPropertyName = "LoadCasesNumber";
-            LoadCasesNumber.HeaderText = "Case Number";
-            LoadCasesNumber.Name = "LoadCasesNumber";
-            LoadCasesNumber.ReadOnly = true;
-            LoadCasesNumber.Width = loadCasesDataGridView.Width / 4;
+            m_loadCasesNumber.DataPropertyName = "LoadCasesNumber";
+            m_loadCasesNumber.HeaderText = "Case Number";
+            m_loadCasesNumber.Name = "LoadCasesNumber";
+            m_loadCasesNumber.ReadOnly = true;
+            m_loadCasesNumber.Width = loadCasesDataGridView.Width / 4;
 
-            LoadCasesNature.DataPropertyName = "LoadCasesNatureId";
-            LoadCasesNature.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            LoadCasesNature.HeaderText = "Nature";
-            LoadCasesNature.Name = "LoadCasesNature";
-            LoadCasesNature.Resizable = DataGridViewTriState.True;
-            LoadCasesNature.SortMode = DataGridViewColumnSortMode.Automatic;
-            LoadCasesNature.Width = loadCasesDataGridView.Width / 4;
+            m_loadCasesNature.DataPropertyName = "LoadCasesNatureId";
+            m_loadCasesNature.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            m_loadCasesNature.HeaderText = "Nature";
+            m_loadCasesNature.Name = "LoadCasesNature";
+            m_loadCasesNature.Resizable = DataGridViewTriState.True;
+            m_loadCasesNature.SortMode = DataGridViewColumnSortMode.Automatic;
+            m_loadCasesNature.Width = loadCasesDataGridView.Width / 4;
 
-            LoadCasesNature.DataSource = m_dataBuffer.LoadNatures;
-            LoadCasesNature.DisplayMember = "Name";
-            LoadCasesNature.ValueMember = "Id";
+            m_loadCasesNature.DataSource = m_dataBuffer.LoadNatures;
+            m_loadCasesNature.DisplayMember = "Name";
+            m_loadCasesNature.ValueMember = "Id";
 
-            LoadCasesCategory.DataPropertyName = "LoadCasesCategoryId";
-            LoadCasesCategory.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            LoadCasesCategory.HeaderText = "Category";
-            LoadCasesCategory.Name = "LoadCasesCategory";
-            LoadCasesCategory.Resizable = DataGridViewTriState.True;
-            LoadCasesCategory.SortMode = DataGridViewColumnSortMode.Automatic;
-            LoadCasesCategory.Width = loadCasesDataGridView.Width / 4;
+            m_loadCasesCategory.DataPropertyName = "LoadCasesCategoryId";
+            m_loadCasesCategory.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            m_loadCasesCategory.HeaderText = "Category";
+            m_loadCasesCategory.Name = "LoadCasesCategory";
+            m_loadCasesCategory.Resizable = DataGridViewTriState.True;
+            m_loadCasesCategory.SortMode = DataGridViewColumnSortMode.Automatic;
+            m_loadCasesCategory.Width = loadCasesDataGridView.Width / 4;
 
-            LoadCasesCategory.DataSource = m_dataBuffer.LoadCaseCategories;
-            LoadCasesCategory.DisplayMember = "Name";
-            LoadCasesCategory.ValueMember = "Id";
+            m_loadCasesCategory.DataSource = m_dataBuffer.LoadCaseCategories;
+            m_loadCasesCategory.DisplayMember = "Name";
+            m_loadCasesCategory.ValueMember = "Id";
             loadCasesDataGridView.MultiSelect = false;
             loadCasesDataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
         }
@@ -90,15 +90,15 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         private void InitializeLoadNaturesDataGridView()
         {
-            LoadNatureName = new DataGridViewTextBoxColumn();
+            m_loadNatureName = new DataGridViewTextBoxColumn();
             loadNaturesDataGridView.AutoGenerateColumns = false;
-            loadNaturesDataGridView.Columns.AddRange(LoadNatureName);
+            loadNaturesDataGridView.Columns.AddRange(m_loadNatureName);
             loadNaturesDataGridView.DataSource = m_dataBuffer.LoadNaturesMap;
-            LoadNatureName.DataPropertyName = "LoadNaturesName";
-            LoadNatureName.HeaderText = "Name";
-            LoadNatureName.Name = "LoadNaturesName";
-            LoadNatureName.ReadOnly = false;
-            LoadNatureName.Width = loadCasesDataGridView.Width - 100;
+            m_loadNatureName.DataPropertyName = "LoadNaturesName";
+            m_loadNatureName.HeaderText = "Name";
+            m_loadNatureName.Name = "LoadNaturesName";
+            m_loadNatureName.ReadOnly = false;
+            m_loadNatureName.Width = loadCasesDataGridView.Width - 100;
             loadNaturesDataGridView.MultiSelect = false;
             loadNaturesDataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
         }
@@ -262,7 +262,7 @@ namespace Revit.SDK.Samples.Loads.CS
         {
             loadNaturesDataGridView.DataSource = null;
             loadCasesDataGridView.DataSource = null;
-            LoadCasesNature.SortMode = DataGridViewColumnSortMode.Automatic;
+            m_loadCasesNature.SortMode = DataGridViewColumnSortMode.Automatic;
             loadNaturesDataGridView.DataSource = m_dataBuffer.LoadNaturesMap;
             loadCasesDataGridView.DataSource = m_dataBuffer.LoadCasesMap;
             Refresh();

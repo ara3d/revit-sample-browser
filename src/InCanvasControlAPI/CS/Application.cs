@@ -28,17 +28,17 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
     {
         private const string TabLabel = "Issues";
 
-        private readonly EventHandler<DocumentClosedEventArgs> closedHandler;
+        private readonly EventHandler<DocumentClosedEventArgs> m_closedHandler;
 
-        private readonly Dictionary<int, Guid> closingDocumentIdToIssueTrackingPairs = new Dictionary<int, Guid>();
+        private readonly Dictionary<int, Guid> m_closingDocumentIdToIssueTrackingPairs = new Dictionary<int, Guid>();
 
-        private readonly EventHandler<DocumentClosingEventArgs> closingHandler;
+        private readonly EventHandler<DocumentClosingEventArgs> m_closingHandler;
 
-        private readonly EventHandler<DocumentCreatedEventArgs> createHandler;
+        private readonly EventHandler<DocumentCreatedEventArgs> m_createHandler;
 
-        private readonly EventHandler<DocumentOpenedEventArgs> openHandler;
+        private readonly EventHandler<DocumentOpenedEventArgs> m_openHandler;
 
-        private readonly EventHandler<DocumentChangedEventArgs> updateHandler;
+        private readonly EventHandler<DocumentChangedEventArgs> m_updateHandler;
 
         /// <summary>
         ///     Creates external application object and initializes event handlers.
@@ -48,28 +48,28 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
             var issueMarkerTrackingManager = IssueMarkerTrackingManager.GetInstance();
 
             // This event handler moves or deletes the markers based on changes to the tracked elements
-            updateHandler = (sender, data) => { IssueMarkerUpdater.Execute(data); };
+            m_updateHandler = (sender, data) => { IssueMarkerUpdater.Execute(data); };
 
             // This event handler initiates data for the opened document
-            openHandler = (sender, data) => { issueMarkerTrackingManager.AddTracking(data.Document); };
+            m_openHandler = (sender, data) => { issueMarkerTrackingManager.AddTracking(data.Document); };
 
             // This event handler initiates data for the newly-created document
-            createHandler = (sender, data) => { issueMarkerTrackingManager.AddTracking(data.Document); };
+            m_createHandler = (sender, data) => { issueMarkerTrackingManager.AddTracking(data.Document); };
 
             // This event handler prepares marker data for the document to be cleaned
-            closingHandler = (closingSender, closeData) =>
+            m_closingHandler = (closingSender, closeData) =>
             {
                 var track = issueMarkerTrackingManager.GetTracking(closeData.Document);
-                if (!closingDocumentIdToIssueTrackingPairs.ContainsKey(closeData.DocumentId) &&
+                if (!m_closingDocumentIdToIssueTrackingPairs.ContainsKey(closeData.DocumentId) &&
                     !closeData.IsCancelled())
-                    closingDocumentIdToIssueTrackingPairs.Add(closeData.DocumentId, track.Id);
+                    m_closingDocumentIdToIssueTrackingPairs.Add(closeData.DocumentId, track.Id);
             };
 
             // This event handler cleans marker data after the document is closed
-            closedHandler = (closedSender, closedData) =>
+            m_closedHandler = (closedSender, closedData) =>
             {
-                issueMarkerTrackingManager.DeleteTracking(closingDocumentIdToIssueTrackingPairs[closedData.DocumentId]);
-                closingDocumentIdToIssueTrackingPairs.Remove(closedData.DocumentId);
+                issueMarkerTrackingManager.DeleteTracking(m_closingDocumentIdToIssueTrackingPairs[closedData.DocumentId]);
+                m_closingDocumentIdToIssueTrackingPairs.Remove(closedData.DocumentId);
             };
         }
 
@@ -80,11 +80,11 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
-            application.ControlledApplication.DocumentChanged -= updateHandler;
-            application.ControlledApplication.DocumentOpened -= openHandler;
-            application.ControlledApplication.DocumentCreated -= createHandler;
-            application.ControlledApplication.DocumentClosing -= closingHandler;
-            application.ControlledApplication.DocumentClosed -= closedHandler;
+            application.ControlledApplication.DocumentChanged -= m_updateHandler;
+            application.ControlledApplication.DocumentOpened -= m_openHandler;
+            application.ControlledApplication.DocumentCreated -= m_createHandler;
+            application.ControlledApplication.DocumentClosing -= m_closingHandler;
+            application.ControlledApplication.DocumentClosed -= m_closedHandler;
 
             IssueMarkerTrackingManager.GetInstance().ClearTrackings();
 
@@ -116,11 +116,11 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 
                 _ = (PushButton)ribbonPanel.AddItem(ribbonItemData);
 
-                application.ControlledApplication.DocumentChanged += updateHandler;
-                application.ControlledApplication.DocumentOpened += openHandler;
-                application.ControlledApplication.DocumentCreated += createHandler;
-                application.ControlledApplication.DocumentClosing += closingHandler;
-                application.ControlledApplication.DocumentClosed += closedHandler;
+                application.ControlledApplication.DocumentChanged += m_updateHandler;
+                application.ControlledApplication.DocumentOpened += m_openHandler;
+                application.ControlledApplication.DocumentCreated += m_createHandler;
+                application.ControlledApplication.DocumentClosing += m_closingHandler;
+                application.ControlledApplication.DocumentClosed += m_closedHandler;
 
                 return Result.Succeeded;
             }

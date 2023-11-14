@@ -27,12 +27,12 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <summary>
         ///     The monitor.
         /// </summary>
-        private static PostCommandRevisionMonitor monitor;
+        private static PostCommandRevisionMonitor _monitor;
 
         /// <summary>
         ///     The handle to the command's PushButton.
         /// </summary>
-        private static PushButton commandButton;
+        private static PushButton _commandButton;
 
         /// <summary>
         ///     The external command callback.
@@ -44,17 +44,17 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-            if (monitor == null)
+            if (_monitor == null)
             {
-                monitor = new PostCommandRevisionMonitor(doc);
-                monitor.Activate();
-                commandButton.ItemText = "Remove Revision Monitor";
+                _monitor = new PostCommandRevisionMonitor(doc);
+                _monitor.Activate();
+                _commandButton.ItemText = "Remove Revision Monitor";
             }
             else
             {
-                monitor.Deactivate();
-                monitor = null;
-                commandButton.ItemText = "Setup Revision Monitor";
+                _monitor.Deactivate();
+                _monitor = null;
+                _commandButton.ItemText = "Setup Revision Monitor";
             }
 
             return Result.Succeeded;
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <param name="pushButton"></param>
         public static void SetPushButton(PushButton pushButton)
         {
-            commandButton = pushButton;
+            _commandButton = pushButton;
         }
     }
 }

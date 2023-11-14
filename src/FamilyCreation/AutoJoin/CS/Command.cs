@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.AutoJoin.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        public static AppCreation s_appCreation;
+        public static AppCreation SAppCreation;
 
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
@@ -25,9 +25,9 @@ namespace Revit.SDK.Samples.AutoJoin.CS
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
                 "Revit.SDK.Samples.AutoJoin");
             trans.Start();
-            if (null == s_appCreation)
+            if (null == SAppCreation)
                 // share for class Intersection.
-                s_appCreation = commandData.Application.Application.Create;
+                SAppCreation = commandData.Application.Application.Create;
 
             var doc = commandData.Application.ActiveUIDocument;
             var solids

@@ -23,7 +23,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <summary>
         ///     Parameter LayoutRule of AreaReinforcement
         /// </summary>
-        public LayoutRules LayoutRule { get; set; } = LayoutRules.Maximum_Spacing;
+        public LayoutRules LayoutRule { get; set; } = LayoutRules.MaximumSpacing;
 
         /// <summary>
         ///     set the parameters to given AreaReinforcement

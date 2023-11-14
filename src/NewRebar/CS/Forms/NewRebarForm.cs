@@ -206,7 +206,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     Update the status of some controls.
         /// </summary>
-        private void UpdateUIStatus()
+        private void UpdateUiStatus()
         {
             segmentCountTextBox.Enabled = bySegmentsradioButton.Checked;
             arcTypecomboBox.Enabled = byArcradioButton.Checked;
@@ -219,7 +219,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="e"></param>
         private void byArcradioButton_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateUIStatus();
+            UpdateUiStatus();
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="e"></param>
         private void bySegmentsradioButton_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateUIStatus();
+            UpdateUiStatus();
         }
 
         /// <summary>

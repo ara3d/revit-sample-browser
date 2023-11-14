@@ -14,7 +14,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <summary>
         ///     ratio of margin to canvas width
         /// </summary>
-        private const float MARGINRATIO = 0.1f;
+        private const float Marginratio = 0.1f;
 
         //construct function
         /// <summary>
@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.Openings.CS
         {
             graphics.Clear(Color.Black);
             CalculateTransform(previewWidth, previewHeigh);
-            foreach (var sketch in m_objects) sketch.Draw(graphics, m_transform);
+            foreach (var sketch in Objects) sketch.Draw(graphics, Transform);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.Openings.CS
         private void CalculateTransform(float previewWidth, float previewHeigh)
         {
             var plgpts = CalculateCanvasRegion(previewWidth, previewHeigh);
-            m_transform = new Matrix(BoundingBox, plgpts);
+            Transform = new Matrix(BoundingBox, plgpts);
         }
 
         /// <summary>
@@ -66,12 +66,12 @@ namespace Revit.SDK.Samples.Openings.CS
         private PointF[] CalculateCanvasRegion(float previewWidth, float previewHeigh)
         {
             // get the area without margin
-            var realWidth = previewWidth * (1 - 2 * MARGINRATIO);
-            var realHeight = previewHeigh * (1 - 2 * MARGINRATIO);
-            var minX = previewWidth * MARGINRATIO;
-            var minY = previewHeigh * MARGINRATIO;
+            var realWidth = previewWidth * (1 - 2 * Marginratio);
+            var realHeight = previewHeigh * (1 - 2 * Marginratio);
+            var minX = previewWidth * Marginratio;
+            var minY = previewHeigh * Marginratio;
             // ratio of width to height
-            var originRate = m_boundingBox.Width / m_boundingBox.Height;
+            var originRate = BoundingBox.Width / BoundingBox.Height;
             var displayRate = realWidth / realHeight;
 
             if (originRate > displayRate)
@@ -102,8 +102,8 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         private void Frame3DTo2D(ReadOnlyCollection<Line3D> line3Ds)
         {
-            const double LengthEpsilon = 0.01;
-            const double AngleEpsilon = 0.1;
+            const double lengthEpsilon = 0.01;
+            const double angleEpsilon = 0.1;
             // find 3 points to form 2 lines whose length is bigger than LengthEpsilon 
             // and angle between them should be bigger than AngleEpsilon 
             var line0 = line3Ds[0];
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.Openings.CS
             for (var i = 1; i < line3Ds.Count; i++)
             {
                 vector0 = line3Ds[i].StartPoint - line0.StartPoint;
-                if (vector0.GetLength() > LengthEpsilon)
+                if (vector0.GetLength() > lengthEpsilon)
                 {
                     index = i;
                     break;
@@ -127,7 +127,7 @@ namespace Revit.SDK.Samples.Openings.CS
             {
                 vector1 = line3Ds[j].StartPoint - line3Ds[index].StartPoint;
                 var angle = Vector.GetAngleOf2Vectors(vector0, vector1, true);
-                if (vector1.GetLength() > LengthEpsilon && angle > AngleEpsilon) break;
+                if (vector1.GetLength() > lengthEpsilon && angle > angleEpsilon) break;
             }
 
             // find the local coordinate system in which the profile of opening is horizontal
@@ -135,28 +135,28 @@ namespace Revit.SDK.Samples.Openings.CS
             var xAxis = zAxis & new Vector(0.0, 1.0, 0.0);
             var yAxis = zAxis & xAxis;
             var origin = new Vector(0.0, 0.0, 0.0);
-            var ucs = new UCS(origin, xAxis, yAxis);
+            var ucs = new Ucs(origin, xAxis, yAxis);
 
             // transform all the 3D lines to UCS and create accordingly 2D lines
             var isFirst = true;
             foreach (var line in line3Ds)
             {
-                var tmp = ucs.GC2LC(line);
+                var tmp = ucs.Gc2Lc(line);
                 var startPnt = new PointF((float)tmp.StartPoint.X, (float)tmp.StartPoint.Y);
                 var endPnt = new PointF((float)tmp.EndPoint.X, (float)tmp.EndPoint.Y);
                 var line2D = new Line2D(startPnt, endPnt);
                 var aLineSketch = new LineSketch(line2D);
                 if (isFirst)
                 {
-                    m_boundingBox = aLineSketch.BoundingBox;
+                    BoundingBox = aLineSketch.BoundingBox;
                     isFirst = false;
                 }
                 else
                 {
-                    m_boundingBox = RectangleF.Union(m_boundingBox, aLineSketch.BoundingBox);
+                    BoundingBox = RectangleF.Union(BoundingBox, aLineSketch.BoundingBox);
                 }
 
-                m_objects.Add(aLineSketch);
+                Objects.Add(aLineSketch);
             }
         }
     }

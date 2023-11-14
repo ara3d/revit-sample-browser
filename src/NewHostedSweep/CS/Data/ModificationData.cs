@@ -31,7 +31,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         ///     Revit UI document.
         /// </summary>
-        private readonly UIDocument m_rvtUIDoc;
+        private readonly UIDocument m_rvtUiDoc;
 
         /// <summary>
         ///     Sub transaction
@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         public ModificationData(HostedSweep elem, CreationData creationData)
         {
             m_rvtDoc = creationData.Creator.RvtDocument;
-            m_rvtUIDoc = creationData.Creator.RvtUIDocument;
+            m_rvtUiDoc = creationData.Creator.RvtUiDocument;
             m_elemToModify = elem;
             m_creationData = creationData;
 
@@ -115,7 +115,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         ///     pop up dialog.
         /// </summary>
         [TypeConverter(typeof(CreationDataTypeConverter))]
-        [Editor(typeof(EdgeFormUITypeEditor), typeof(UITypeEditor))]
+        [Editor(typeof(EdgeFormUiTypeEditor), typeof(UITypeEditor))]
         [Category("Profile")]
         [DisplayName("Profile Edges")]
         public CreationData AddOrRemoveSegments => m_creationData;
@@ -316,7 +316,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             try
             {
                 StartTransaction();
-                m_rvtUIDoc.ShowElements(m_elemToModify);
+                m_rvtUiDoc.ShowElements(m_elemToModify);
                 CommitTransaction();
             }
             catch

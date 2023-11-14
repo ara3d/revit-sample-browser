@@ -22,11 +22,11 @@ namespace Revit.SDK.Samples.CancelSave.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class CancelSave : IExternalApplication
     {
-        private const string thisAddinFileName = "CancelSave.addin";
+        private const string ThisAddinFileName = "CancelSave.addin";
 
         // The dictionary contains document hashcode and its original "Project Status" pair.
-        private readonly Dictionary<int, string> documentOriginalStatusDic = new Dictionary<int, string>();
-        private int hashcodeofCurrentClosingDoc;
+        private readonly Dictionary<int, string> m_documentOriginalStatusDic = new Dictionary<int, string>();
+        private int m_hashcodeofCurrentClosingDoc;
 
         /// <summary>
         ///     Implement OnStartup method of IExternalApplication interface.
@@ -92,7 +92,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
             // retrieve the current value of "Project Status". 
             var currentProjectStatus = RetrieveProjectCurrentStatus(doc);
             // reserve "Project Status" current value in one dictionary, and use this project's hashCode as key.
-            documentOriginalStatusDic.Add(docHashCode, currentProjectStatus);
+            m_documentOriginalStatusDic.Add(docHashCode, currentProjectStatus);
 
             // write log file. 
             LogManager.WriteLog("   Current Project Status: " + currentProjectStatus);
@@ -119,7 +119,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
             var currentProjectStatus = RetrieveProjectCurrentStatus(args.Document);
 
             // get the old value of "Project Status" for one dictionary.
-            var originalProjectStatus = documentOriginalStatusDic[doc.GetHashCode()];
+            var originalProjectStatus = m_documentOriginalStatusDic[doc.GetHashCode()];
 
             // write log file.
             LogManager.WriteLog("   Current Project Status: " + currentProjectStatus + "; Original Project Status: " +
@@ -134,20 +134,20 @@ namespace Revit.SDK.Samples.CancelSave.CS
             }
 
             // update "Project Status" value reserved in the dictionary.
-            documentOriginalStatusDic.Remove(doc.GetHashCode());
-            documentOriginalStatusDic.Add(doc.GetHashCode(), currentProjectStatus);
+            m_documentOriginalStatusDic.Remove(doc.GetHashCode());
+            m_documentOriginalStatusDic.Add(doc.GetHashCode(), currentProjectStatus);
         }
 
         private void MemClosingDocumentHashCode(object sender, DocumentClosingEventArgs args)
         {
-            hashcodeofCurrentClosingDoc = args.Document.GetHashCode();
+            m_hashcodeofCurrentClosingDoc = args.Document.GetHashCode();
         }
 
         private void RemoveStatusofClosedDocument(object sender, DocumentClosedEventArgs args)
         {
             if (args.Status.Equals(RevitAPIEventStatus.Succeeded) &&
-                documentOriginalStatusDic.ContainsKey(hashcodeofCurrentClosingDoc))
-                documentOriginalStatusDic.Remove(hashcodeofCurrentClosingDoc);
+                m_documentOriginalStatusDic.ContainsKey(m_hashcodeofCurrentClosingDoc))
+                m_documentOriginalStatusDic.Remove(m_hashcodeofCurrentClosingDoc);
         }
 
         /// <summary>
@@ -219,9 +219,9 @@ namespace Revit.SDK.Samples.CancelSave.CS
                     var allUsersAddInFolder = revit.AllUsersAddInFolder;
                     var currentUserAddInFolder = revit.CurrentUserAddInFolder;
 
-                    if (File.Exists(Path.Combine(allUsersAddInFolder, thisAddinFileName)))
+                    if (File.Exists(Path.Combine(allUsersAddInFolder, ThisAddinFileName)))
                         addinFileFolderLocation = allUsersAddInFolder;
-                    else if (File.Exists(Path.Combine(currentUserAddInFolder, thisAddinFileName)))
+                    else if (File.Exists(Path.Combine(currentUserAddInFolder, ThisAddinFileName)))
                         addinFileFolderLocation = currentUserAddInFolder;
 
                     break;

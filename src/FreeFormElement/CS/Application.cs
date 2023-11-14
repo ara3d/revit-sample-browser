@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
         /// <summary>
         ///     The path to this add-in assembly.
         /// </summary>
-        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -55,11 +55,11 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
         {
             var rp = application.CreateRibbonPanel("FreeForm");
             var freeform = new PushButtonData("Negative_block", "Create negative block",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(CreateNegativeBlockCommand).FullName);
-            var freeformPB = rp.AddItem(freeform) as PushButton;
+            var freeformPb = rp.AddItem(freeform) as PushButton;
 
-            SetIconsForPushButton(freeformPB, Resources.CreateNegative);
+            SetIconsForPushButton(freeformPb, Resources.CreateNegative);
         }
 
         /// <summary>

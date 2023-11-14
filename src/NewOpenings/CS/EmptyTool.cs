@@ -7,14 +7,14 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw nothing
     /// </summary>
-    internal class EmptyTool : ITool
+    internal class EmptyTool : Tool
     {
         /// <summary>
         ///     Default constructor
         /// </summary>
         public EmptyTool()
         {
-            m_type = ToolType.None;
+            Type = ToolType.None;
         }
 
         /// <summary>

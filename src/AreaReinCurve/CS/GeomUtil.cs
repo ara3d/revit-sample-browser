@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
     /// </summary>
     internal class GeomUtil
     {
-        private const double PRECISION = 0.00001; //precision when judge whether two doubles are equal
+        private const double Precision = 0.00001; //precision when judge whether two doubles are equal
 
         /// <summary>
         ///     judge whether given 4 lines can form a rectangular
@@ -60,12 +60,12 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         /// <returns></returns>
         public static bool IsVertical(Line line1, Line line2)
         {
-            var vector1 = SubXYZ(line1.GetEndPoint(0), line1.GetEndPoint(1));
-            var vector2 = SubXYZ(line2.GetEndPoint(0), line2.GetEndPoint(1));
+            var vector1 = SubXyz(line1.GetEndPoint(0), line1.GetEndPoint(1));
+            var vector2 = SubXyz(line2.GetEndPoint(0), line2.GetEndPoint(1));
 
             var result = DotMatrix(vector1, vector2);
 
-            return Math.Abs(result) < PRECISION;
+            return Math.Abs(result) < Precision;
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static XYZ SubXYZ(XYZ p1, XYZ p2)
+        private static XYZ SubXyz(XYZ p1, XYZ p2)
         {
             var x = p1.X - p2.X;
             var y = p1.Y - p2.Y;
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         private static bool IsEqual(double d1, double d2)
         {
             var diff = Math.Abs(d1 - d2);
-            return diff < PRECISION;
+            return diff < Precision;
         }
     }
 }

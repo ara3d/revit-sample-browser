@@ -8,8 +8,8 @@ namespace APIAppStartup
 
     public partial class SplashWindow : Form
     {
-        private static SplashWindow m_instance;
-        private static Thread InstanceCaller;
+        private static SplashWindow _instance;
+        private static Thread _instanceCaller;
 
         private readonly DelegateCloseSplash m_delegateClose;
 
@@ -22,22 +22,22 @@ namespace APIAppStartup
         //start a new thread to display splash window
         public static void StartSplash()
         {
-            m_instance = new SplashWindow();
-            m_instance.TopMost = true;
-            InstanceCaller = new Thread(MySplashThreadFunc);
-            InstanceCaller.Start();
+            _instance = new SplashWindow();
+            _instance.TopMost = true;
+            _instanceCaller = new Thread(MySplashThreadFunc);
+            _instanceCaller.Start();
         }
 
         //kill the thread
         public static void StopSplash()
         {
-            m_instance?.Invoke(m_instance.m_delegateClose);
+            _instance?.Invoke(_instance.m_delegateClose);
         }
 
         //show Revit version info
         public static void ShowVersion(string version)
         {
-            m_instance.Version.Text = version;
+            _instance.Version.Text = version;
         }
 
         private void InternalCloseSplash()
@@ -49,10 +49,10 @@ namespace APIAppStartup
         // this is called by the new thread to show the splash screen
         private static void MySplashThreadFunc()
         {
-            if (m_instance != null)
+            if (_instance != null)
             {
-                m_instance.TopMost = true;
-                m_instance.ShowDialog();
+                _instance.TopMost = true;
+                _instance.ShowDialog();
             }
         }
     }

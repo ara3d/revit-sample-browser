@@ -25,7 +25,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private readonly WallGeometry m_refGeometry;
 
         // zoom the baseline to a suitable length
-        public readonly double SCALEFACTOR = 5.0;
+        public readonly double Scalefactor = 5.0;
 
         /// <summary>
         ///     default constructor
@@ -153,8 +153,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         {
             double x = srcPoint.X - m_origin.X;
             double y = m_origin.Y - srcPoint.Y;
-            x /= SCALEFACTOR;
-            y /= SCALEFACTOR;
+            x /= Scalefactor;
+            y /= Scalefactor;
             return new PointD(x, y);
         }
 
@@ -212,8 +212,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private void WriteCoordinate(Graphics graphics, Pen pen)
         {
             var assistPointD = ConvertToPointD(WallLine2D.AssistantPoint);
-            var x = Unit.CovertFromAPI(m_myDocument.LengthUnit, assistPointD.X);
-            var y = Unit.CovertFromAPI(m_myDocument.LengthUnit, assistPointD.Y);
+            var x = Unit.CovertFromApi(m_myDocument.LengthUnit, assistPointD.X);
+            var y = Unit.CovertFromApi(m_myDocument.LengthUnit, assistPointD.Y);
 
             var xCoorString = Convert.ToString(Math.Round(x, 1));
             var yCoorString = Convert.ToString(Math.Round(y, 1));

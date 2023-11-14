@@ -13,11 +13,11 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
     [Transaction(TransactionMode.Manual)]
     public class CreatePeriodic : IExternalCommand
     {
-        private Document _dbdocument;
+        private Document m_dbdocument;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            _dbdocument = commandData.Application.ActiveUIDocument.Document;
+            m_dbdocument = commandData.Application.ActiveUIDocument.Document;
 
             try
             {
@@ -40,17 +40,17 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
         /// </summary>
         /// <param name="myBRepBuilder"> The BRepBuilder object.</param>
         /// <param name="name"> Name of the BRepBuilder object, which will be passed on to the DirectShape creation method.</param>
-        private void createDirectShapeElementFromBrepBuilderObject(BRepBuilder myBRepBuilder, string name)
+        private void CreateDirectShapeElementFromBrepBuilderObject(BRepBuilder myBRepBuilder, string name)
         {
             if (!myBRepBuilder.IsResultAvailable())
                 return;
 
-            using (var tr = new Transaction(_dbdocument, "Create a DirectShape"))
+            using (var tr = new Transaction(m_dbdocument, "Create a DirectShape"))
             {
                 tr.Start();
 
                 var myDirectShape =
-                    DirectShape.CreateElement(_dbdocument, new ElementId(BuiltInCategory.OST_GenericModel));
+                    DirectShape.CreateElement(m_dbdocument, new ElementId(BuiltInCategory.OST_GenericModel));
                 myDirectShape.ApplicationId = "TestBRepBuilder";
                 myDirectShape.ApplicationDataId = name;
                 if (null != myDirectShape)
@@ -110,42 +110,42 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
             var backEdgeTopId = brepBuilder.AddEdge(backEdgeTop);
 
             // Loops of the four faces
-            var loopId_Top = brepBuilder.AddLoop(topFaceId);
-            var loopId_Bottom = brepBuilder.AddLoop(bottomFaceId);
-            var loopId_Front = brepBuilder.AddLoop(frontCylFaceId);
-            var loopId_Back = brepBuilder.AddLoop(backCylFaceId);
+            var loopIdTop = brepBuilder.AddLoop(topFaceId);
+            var loopIdBottom = brepBuilder.AddLoop(bottomFaceId);
+            var loopIdFront = brepBuilder.AddLoop(frontCylFaceId);
+            var loopIdBack = brepBuilder.AddLoop(backCylFaceId);
 
             // Add coedges for the loop of the front face
-            brepBuilder.AddCoEdge(loopId_Front, linearEdgeBackId, false);
-            brepBuilder.AddCoEdge(loopId_Front, frontEdgeTopId, false);
-            brepBuilder.AddCoEdge(loopId_Front, linearEdgeFrontId, true);
-            brepBuilder.AddCoEdge(loopId_Front, frontEdgeBottomId, true);
-            brepBuilder.FinishLoop(loopId_Front);
+            brepBuilder.AddCoEdge(loopIdFront, linearEdgeBackId, false);
+            brepBuilder.AddCoEdge(loopIdFront, frontEdgeTopId, false);
+            brepBuilder.AddCoEdge(loopIdFront, linearEdgeFrontId, true);
+            brepBuilder.AddCoEdge(loopIdFront, frontEdgeBottomId, true);
+            brepBuilder.FinishLoop(loopIdFront);
             brepBuilder.FinishFace(frontCylFaceId);
 
             // Add coedges for the loop of the back face
-            brepBuilder.AddCoEdge(loopId_Back, linearEdgeBackId, true);
-            brepBuilder.AddCoEdge(loopId_Back, backEdgeBottomId, true);
-            brepBuilder.AddCoEdge(loopId_Back, linearEdgeFrontId, false);
-            brepBuilder.AddCoEdge(loopId_Back, backEdgeTopId, true);
-            brepBuilder.FinishLoop(loopId_Back);
+            brepBuilder.AddCoEdge(loopIdBack, linearEdgeBackId, true);
+            brepBuilder.AddCoEdge(loopIdBack, backEdgeBottomId, true);
+            brepBuilder.AddCoEdge(loopIdBack, linearEdgeFrontId, false);
+            brepBuilder.AddCoEdge(loopIdBack, backEdgeTopId, true);
+            brepBuilder.FinishLoop(loopIdBack);
             brepBuilder.FinishFace(backCylFaceId);
 
             // Add coedges for the loop of the top face
-            brepBuilder.AddCoEdge(loopId_Top, backEdgeTopId, false);
-            brepBuilder.AddCoEdge(loopId_Top, frontEdgeTopId, true);
-            brepBuilder.FinishLoop(loopId_Top);
+            brepBuilder.AddCoEdge(loopIdTop, backEdgeTopId, false);
+            brepBuilder.AddCoEdge(loopIdTop, frontEdgeTopId, true);
+            brepBuilder.FinishLoop(loopIdTop);
             brepBuilder.FinishFace(topFaceId);
 
             // Add coedges for the loop of the bottom face
-            brepBuilder.AddCoEdge(loopId_Bottom, frontEdgeBottomId, false);
-            brepBuilder.AddCoEdge(loopId_Bottom, backEdgeBottomId, false);
-            brepBuilder.FinishLoop(loopId_Bottom);
+            brepBuilder.AddCoEdge(loopIdBottom, frontEdgeBottomId, false);
+            brepBuilder.AddCoEdge(loopIdBottom, backEdgeBottomId, false);
+            brepBuilder.FinishLoop(loopIdBottom);
             brepBuilder.FinishFace(bottomFaceId);
 
             brepBuilder.Finish();
 
-            createDirectShapeElementFromBrepBuilderObject(brepBuilder, "Full cylinder");
+            CreateDirectShapeElementFromBrepBuilderObject(brepBuilder, "Full cylinder");
         }
 
         private void CreateTruncatedCone()
@@ -228,7 +228,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
             brepBuilder.FinishFace(leftSideFaceId);
 
             brepBuilder.Finish();
-            createDirectShapeElementFromBrepBuilderObject(brepBuilder, "Cone surface");
+            CreateDirectShapeElementFromBrepBuilderObject(brepBuilder, "Cone surface");
         }
     }
 }

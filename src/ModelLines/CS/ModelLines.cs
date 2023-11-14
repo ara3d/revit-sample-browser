@@ -69,7 +69,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         ///     Get the id information of all ModelEllipses in revit,
         ///     which displayed this in elementIdComboBox when ellipseRadioButton checked
         /// </summary>
-        public ReadOnlyCollection<IdInfo> EllispeIDArray
+        public ReadOnlyCollection<IdInfo> EllispeIdArray
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         ///     Get the id information of all ModelHermiteSpline in revit,
         ///     which displayed this in elementIdComboBox when hermiteSplineRadioButton checked
         /// </summary>
-        public ReadOnlyCollection<IdInfo> HermiteSplineIDArray
+        public ReadOnlyCollection<IdInfo> HermiteSplineIdArray
         {
             get
             {
@@ -113,7 +113,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         ///     Get the id information of all ModelNurbSpline in revit,
         ///     which displayed this in elementIdComboBox when NurbSplineRadioButton checked
         /// </summary>
-        public ReadOnlyCollection<IdInfo> NurbSplineIDArray
+        public ReadOnlyCollection<IdInfo> NurbSplineIdArray
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// <summary>
         ///     Allow the user to get all sketch plane in revit
         /// </summary>
-        public ReadOnlyCollection<IdInfo> SketchPlaneIDArray
+        public ReadOnlyCollection<IdInfo> SketchPlaneIdArray
         {
             get
             {

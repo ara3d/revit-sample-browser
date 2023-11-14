@@ -34,7 +34,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// <summary>
         ///     Id of the element
         /// </summary>
-        private readonly ElementId m_Id;
+        private readonly ElementId m_id;
 
         /// <summary>
         ///     The connector of the previous element to which current element is connected
@@ -54,14 +54,14 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         public TreeNode(Document doc, ElementId id)
         {
             m_document = doc;
-            m_Id = id;
+            m_id = id;
             m_childNodes = new List<TreeNode>();
         }
 
         /// <summary>
         ///     Id of the element
         /// </summary>
-        public ElementId Id => m_Id;
+        public ElementId Id => m_id;
 
         /// <summary>
         ///     Flow direction of the node
@@ -113,10 +113,10 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         ///     Dump the node into XML file
         /// </summary>
         /// <param name="writer">XmlWriter object</param>
-        public void DumpIntoXML(XmlWriter writer)
+        public void DumpIntoXml(XmlWriter writer)
         {
             // Write node information
-            var element = GetElementById(m_Id);
+            var element = GetElementById(m_id);
             if (element is FamilyInstance fi)
             {
                 var mepModel = fi.MEPModel;
@@ -160,7 +160,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             {
                 if (m_childNodes.Count > 1) writer.WriteStartElement("Path");
 
-                node.DumpIntoXML(writer);
+                node.DumpIntoXml(writer);
 
                 if (m_childNodes.Count > 1) writer.WriteEndElement();
             }
@@ -425,7 +425,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         ///     Dump the traversal into an XML file
         /// </summary>
         /// <param name="fileName">Name of the XML file</param>
-        public void DumpIntoXML(string fileName)
+        public void DumpIntoXml(string fileName)
         {
             var settings = new XmlWriterSettings
             {
@@ -534,7 +534,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         private void WritePaths(XmlWriter writer)
         {
             writer.WriteStartElement("Path");
-            m_startingElementNode.DumpIntoXML(writer);
+            m_startingElementNode.DumpIntoXml(writer);
             writer.WriteEndElement();
         }
     }

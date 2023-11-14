@@ -22,8 +22,8 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         {
             InitializeComponent();
 
-            FIPlacementOptions = new PromptForFamilyInstancePlacementOptions();
-            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
+            FiPlacementOptions = new PromptForFamilyInstancePlacementOptions();
+            FiPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();
@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <summary>
         ///     The family instance placement options for placement.
         /// </summary>
-        public PromptForFamilyInstancePlacementOptions FIPlacementOptions { get; }
+        public PromptForFamilyInstancePlacementOptions FiPlacementOptions { get; }
 
         /// <summary>
         ///     The family symbol for placement.
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonLine_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
+            FiPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonArc3P_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Arc3Point;
+            FiPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Arc3Point;
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonArcC_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_ArcCenterEnds;
+            FiPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_ArcCenterEnds;
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonSpline_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Spline;
+            FiPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Spline;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonPEllipse_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_PartialEllipse;
+            FiPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_PartialEllipse;
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonPickLine_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_PickLines;
+            FiPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_PickLines;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores the main information for exporting dgn format
     /// </summary>
-    public class ExportDGNData : ExportDataWithViews
+    public class ExportDgnData : ExportDataWithViews
     {
         /// <summary>
         ///     String list of layer settings values defined in Revit
@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
-        public ExportDGNData(ExternalCommandData commandData, ExportFormat exportFormat)
+        public ExportDgnData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
             Initialize();
@@ -149,8 +149,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 "MicroStation V7 Format"
             };
 
-            m_filter = "Microstation DGN Files |*.dgn";
-            m_title = "Export DGN";
+            Filter = "Microstation DGN Files |*.dgn";
+            Title = "Export DGN";
         }
 
         /// <summary>
@@ -162,10 +162,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
             base.Export();
 
             ICollection<ElementId> views = new List<ElementId>();
-            if (m_currentViewOnly)
-                views.Add(m_activeDoc.ActiveView.Id);
+            if (CurrentViewOnly)
+                views.Add(ActiveDocument.ActiveView.Id);
             else
-                foreach (View view in m_selectViewsData.SelectedViews)
+                foreach (View view in SelectViewsData.SelectedViews)
                     views.Add(view.Id);
 
             //parameter : DWGExportOptions dwgExportOptions
@@ -184,11 +184,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
             dgnExportOptions.HideUnreferenceViewTags = m_hideUnreferenceViewTags;
             dgnExportOptions.HideReferencePlane = m_hideReferencePlane;
             var mainModule = Process.GetCurrentProcess().MainModule;
-            var RevitFolder = Path.GetDirectoryName(mainModule.FileName);
-            dgnExportOptions.SeedName = Path.Combine(RevitFolder, @"ACADInterop\V8-Imperial-Seed3D.dgn");
+            var revitFolder = Path.GetDirectoryName(mainModule.FileName);
+            dgnExportOptions.SeedName = Path.Combine(revitFolder, @"ACADInterop\V8-Imperial-Seed3D.dgn");
 
             //Export
-            var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, dgnExportOptions);
+            var exported = ActiveDocument.Export(ExportFolder, ExportFileName, views, dgnExportOptions);
             return exported;
         }
     }

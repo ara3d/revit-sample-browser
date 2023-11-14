@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// </summary>
         /// <param name="element">The element.</param>
         /// <returns>The XYZ.</returns>
-        public static XYZ GetXYZ(XElement element)
+        public static XYZ GetXyz(XElement element)
         {
             var x = element.Attribute("X");
             var y = element.Attribute("Y");

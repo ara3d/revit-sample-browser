@@ -10,14 +10,14 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw circle
     /// </summary>
-    internal class CircleTool : ITool
+    internal class CircleTool : Tool
     {
         /// <summary>
         ///     Default constructor
         /// </summary>
         public CircleTool()
         {
-            m_type = ToolType.Circle;
+            Type = ToolType.Circle;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="graphic"></param>
         public override void Draw(Graphics graphic)
         {
-            foreach (var line in m_lines) DrawCircle(graphic, m_foreGroundPen, line[0], line[1]);
+            foreach (var line in Lines) DrawCircle(graphic, ForeGroundPen, line[0], line[1]);
         }
 
         /// <summary>
@@ -39,10 +39,10 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             base.OnMouseDown(graphic, e);
             if (MouseButtons.Left == e.Button)
             {
-                m_preMovePoint = e.Location;
-                m_points.Add(e.Location);
+                PreMovePoint = e.Location;
+                Points.Add(e.Location);
 
-                if (2 == m_points.Count) DrawCircle(graphic, m_foreGroundPen, m_points[0], m_points[1]);
+                if (2 == Points.Count) DrawCircle(graphic, ForeGroundPen, Points[0], Points[1]);
             }
         }
 
@@ -55,11 +55,11 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             base.OnMouseMove(graphic, e);
 
-            if (1 == m_points.Count)
+            if (1 == Points.Count)
             {
-                DrawCircle(graphic, m_backGroundPen, m_points[0], m_preMovePoint);
-                m_preMovePoint = e.Location;
-                DrawCircle(graphic, m_foreGroundPen, m_points[0], e.Location);
+                DrawCircle(graphic, BackGroundPen, Points[0], PreMovePoint);
+                PreMovePoint = e.Location;
+                DrawCircle(graphic, ForeGroundPen, Points[0], e.Location);
             }
         }
 
@@ -72,11 +72,11 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             base.OnMouseUp(graphic, e);
 
-            if (2 == m_points.Count)
+            if (2 == Points.Count)
             {
-                var line = new List<Point>(m_points);
-                m_lines.Add(line);
-                m_points.Clear();
+                var line = new List<Point>(Points);
+                Lines.Add(line);
+                Points.Clear();
             }
         }
 

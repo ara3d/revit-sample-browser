@@ -13,7 +13,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <summary>
         ///     window message key number
         /// </summary>
-        private const int WM_KEYDOWN = 0X0100;
+        private const int WmKeydown = 0X0100;
 
         /// <summary>
         ///     Graphics data
@@ -50,7 +50,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         {
             if (!modelPictureBox.Focused) return false;
 
-            if (m.Msg == WM_KEYDOWN)
+            if (m.Msg == WmKeydown)
             {
                 var k = (Keys)(int)m.WParam;
                 var e = new KeyEventArgs(k);

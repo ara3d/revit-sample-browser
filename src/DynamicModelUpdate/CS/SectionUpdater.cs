@@ -20,9 +20,9 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
         private readonly UpdaterId m_updaterId;
         private ElementId m_windowId;
 
-        internal SectionUpdater(AddInId addinID)
+        internal SectionUpdater(AddInId addinId)
         {
-            m_updaterId = new UpdaterId(addinID, new Guid("FBF3F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
+            m_updaterId = new UpdaterId(addinId, new Guid("FBF3F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
         }
 
         // The Execute method for the updater

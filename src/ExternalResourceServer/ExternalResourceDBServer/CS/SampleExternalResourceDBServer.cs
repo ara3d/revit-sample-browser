@@ -35,12 +35,12 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
     ///         this project is placed.  See the separate *.rtf file for additional documentation.
     ///     </para>
     /// </summary>
-    public class SampleExternalResourceDBServer : IExternalResourceServer
+    public class SampleExternalResourceDbServer : IExternalResourceServer
     {
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public SampleExternalResourceDBServer()
+        public SampleExternalResourceDbServer()
         {
         }
 
@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         ///     stored in an ExternalResourceReference's reference information string-string Dictionary.
         ///     See the SetupKeynoteDatabaseBrowserData method.
         /// </summary>
-        private static string RefMapDBKeyEntry => "DBKey";
+        private static string RefMapDbKeyEntry => "DBKey";
 
         /// <summary>
         ///     Returns the string used to access the server-based relative path to the Revit link file
@@ -224,8 +224,8 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
 
             // Either the ExternalResourceReference has a valid database key (German/French keynote case) ...
             var refMap = extRef.GetReferenceInformation();
-            if (refMap.ContainsKey(RefMapDBKeyEntry))
-                return KeynotesDatabase.IsValidDBKey(refMap[RefMapDBKeyEntry]);
+            if (refMap.ContainsKey(RefMapDbKeyEntry))
+                return KeynotesDatabase.IsValidDbKey(refMap[RefMapDbKeyEntry]);
             if (refMap.ContainsKey(RefMapLinkPathEntry)) // ... OR it is a Revit link file
                 return File.Exists(GetFullServerLinkFilePath(extRef));
 
@@ -245,16 +245,16 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         ///     ExternalResourceReference
         /// </param>
         /// <returns></returns>
-        public virtual bool AreSameResources(IDictionary<string, string> referenceInformation_1,
-            IDictionary<string, string> referenceInformation_2)
+        public virtual bool AreSameResources(IDictionary<string, string> referenceInformation1,
+            IDictionary<string, string> referenceInformation2)
         {
             var same = true;
-            if (referenceInformation_1.Count != referenceInformation_2.Count)
+            if (referenceInformation1.Count != referenceInformation2.Count)
                 same = false;
             else
-                foreach (var key in referenceInformation_1.Keys)
-                    if (!referenceInformation_2.ContainsKey(key) ||
-                        referenceInformation_1[key] != referenceInformation_2[key])
+                foreach (var key in referenceInformation1.Keys)
+                    if (!referenceInformation2.ContainsKey(key) ||
+                        referenceInformation1[key] != referenceInformation2[key])
                     {
                         same = false;
                         break;
@@ -366,7 +366,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         private string GetCurrentlyAvailableResourceVersion(ExternalResourceReference extResRef)
         {
             var refMap = extResRef.GetReferenceInformation();
-            if (refMap.ContainsKey(RefMapDBKeyEntry))
+            if (refMap.ContainsKey(RefMapDbKeyEntry))
             {
                 return KeynotesDatabase.CurrentVersion;
             }
@@ -406,7 +406,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                 {
                     var refMap = new Dictionary<string, string>
                     {
-                        [RefMapDBKeyEntry] = "1"
+                        [RefMapDbKeyEntry] = "1"
                     };
                     browserData.AddResource("Keynotes1_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
                     break;
@@ -417,7 +417,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                     {
                         var refMap = new Dictionary<string, string>
                         {
-                            [RefMapDBKeyEntry] = "2"
+                            [RefMapDbKeyEntry] = "2"
                         };
                         browserData.AddResource("Keynotes2_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
                     }
@@ -433,7 +433,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                 {
                     var refMap = new Dictionary<string, string>
                     {
-                        [RefMapDBKeyEntry] = "3"
+                        [RefMapDbKeyEntry] = "3"
                     };
                     browserData.AddResource("Keynotes1_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
                     break;
@@ -444,7 +444,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                     {
                         var refMap = new Dictionary<string, string>
                         {
-                            [RefMapDBKeyEntry] = "4"
+                            [RefMapDbKeyEntry] = "4"
                         };
                         browserData.AddResource("Keynotes2_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
                     }
@@ -559,11 +559,11 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
 
             // Either the ExternalResourceReference has a valid database key (German/French case) ...
             var refMap = resourceReference.GetReferenceInformation();
-            if (refMap.ContainsKey(RefMapDBKeyEntry))
+            if (refMap.ContainsKey(RefMapDbKeyEntry))
             {
                 try
                 {
-                    KeynotesDatabase.LoadKeynoteEntries(refMap[RefMapDBKeyEntry], ref kdrlc);
+                    KeynotesDatabase.LoadKeynoteEntries(refMap[RefMapDbKeyEntry], ref kdrlc);
                     kdrlc.BuildEntries();
                     loadContent.LoadStatus = ExternalResourceLoadStatus.Success;
                 }

@@ -128,9 +128,9 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         private void createRoofButton_Click(object sender, EventArgs e)
         {
             if (roofsTabControl.SelectedTab == footprintRoofTabPage)
-                createFootPrintRoof();
+                CreateFootPrintRoof();
             else
-                createExtrusionRoof();
+                CreateExtrusionRoof();
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         ///     Create a new footprint roof.
         /// </summary>
-        private void createFootPrintRoof()
+        private void CreateFootPrintRoof()
         {
             try
             {
@@ -196,7 +196,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         ///     Create a extrusion roof.
         /// </summary>
-        private void createExtrusionRoof()
+        private void CreateExtrusionRoof()
         {
             try
             {

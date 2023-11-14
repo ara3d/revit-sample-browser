@@ -26,7 +26,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
     [Regeneration(RegenerationOption.Manual)]
     public class SpatialFieldGradient : IExternalCommand
     {
-        private static AddInId m_appId = new AddInId(new Guid("CF099951-E66B-4a35-BF7F-2959CA87A42D"));
+        private static AddInId _appId = new AddInId(new Guid("CF099951-E66B-4a35-BF7F-2959CA87A42D"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

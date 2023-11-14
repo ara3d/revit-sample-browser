@@ -44,9 +44,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
     /// </summary>
     internal static class Values
     {
-        public const double PI = 3.1415926535897900;
+        public const double Pi = 3.1415926535897900;
 
         // ratio from degree to radian
-        public const double DEGTORAD = PI / 180;
+        public const double Degtorad = Pi / 180;
     }
 }

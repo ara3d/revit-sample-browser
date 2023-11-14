@@ -340,10 +340,10 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
             geoOptions.ComputeReferences = true;
             var geoElement = form.get_Geometry(geoOptions);
             //foreach (GeometryObject geoObject in geoElement.Objects)
-            var Objects = geoElement.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geoElement.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var geoObject = Objects.Current;
+                var geoObject = objects.Current;
 
                 var solid = geoObject as Solid;
                 if (null == solid)

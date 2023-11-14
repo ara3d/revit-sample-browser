@@ -6,7 +6,7 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
-    internal class ExportIMGData : ExportDataWithViews
+    internal class ExportImgData : ExportDataWithViews
     {
         /// <summary>
         ///     String list of image type
@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
-        public ExportIMGData(ExternalCommandData commandData, ExportFormat exportFormat)
+        public ExportImgData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
             Initialize();
@@ -46,8 +46,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
             tmp.Append(m_imageType[3] + "|*.tga|");
             tmp.Append(m_imageType[4] + "|*.tif|");
 
-            m_filter = tmp.ToString().TrimEnd('|');
-            m_title = "Export IMG";
+            Filter = tmp.ToString().TrimEnd('|');
+            Title = "Export IMG";
         }
 
         /// <summary>

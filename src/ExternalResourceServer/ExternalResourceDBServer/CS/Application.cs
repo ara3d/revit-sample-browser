@@ -28,7 +28,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
     ///         using an IExternalDBApplication.
     ///     </para>
     /// </summary>
-    public class DBApplication : IExternalDBApplication
+    public class DbApplication : IExternalDBApplication
     {
         /// <summary>
         ///     Registers an instance of a SampleExternalResourceDBServer with the ExternalService
@@ -52,7 +52,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                 return ExternalDBApplicationResult.Failed;
 
             // Create an instance of your IExternalResourceServer and register it with the ExternalResourceService.
-            IExternalResourceServer sampleServer = new SampleExternalResourceDBServer();
+            IExternalResourceServer sampleServer = new SampleExternalResourceDbServer();
             externalResourceService.AddServer(sampleServer);
             return ExternalDBApplicationResult.Succeeded;
         }

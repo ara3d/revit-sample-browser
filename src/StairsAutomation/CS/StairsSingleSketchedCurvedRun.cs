@@ -20,7 +20,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         public StairsSingleSketchedCurvedRun(Stairs stairs, Level bottomLevel, double innerRadius)
         {
             var stairsType = stairs.Document.GetElement(stairs.GetTypeId()) as StairsType;
-            m_runConfigurations.Add(new SketchedCurvedStairsRunComponent(stairs.DesiredRisersNumber,
+            RunConfigurations.Add(new SketchedCurvedStairsRunComponent(stairs.DesiredRisersNumber,
                 bottomLevel.Elevation,
                 stairsType.MinTreadDepth, stairsType.MinRunWidth,
                 innerRadius, stairs.Document.Application.Create));
@@ -36,7 +36,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         public StairsSingleSketchedCurvedRun(Stairs stairs, Level bottomLevel, double innerRadius, Transform transform)
         {
             var stairsType = stairs.Document.GetElement(stairs.GetTypeId()) as StairsType;
-            m_runConfigurations.Add(new SketchedCurvedStairsRunComponent(stairs.DesiredRisersNumber,
+            RunConfigurations.Add(new SketchedCurvedStairsRunComponent(stairs.DesiredRisersNumber,
                 bottomLevel.Elevation, stairsType.MinTreadDepth,
                 stairsType.MinRunWidth, innerRadius,
                 stairs.Document.Application.Create,

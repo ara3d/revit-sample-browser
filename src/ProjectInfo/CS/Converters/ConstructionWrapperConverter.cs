@@ -46,10 +46,10 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                 (ConstructionType)Enum.Parse(typeof(ConstructionType), context.PropertyDescriptor.Name);
 
             // convert instance to MEPBuildingConstructionWrapper
-            var mEPBuildingConstruction = context.Instance as MEPBuildingConstructionWrapper;
+            var mEpBuildingConstruction = context.Instance as MepBuildingConstructionWrapper;
 
             // get all Constructions from MEPBuildingConstructionWrapper and add them to a list
-            foreach (var con in mEPBuildingConstruction.GetConstructions(constructionType))
+            foreach (var con in mEpBuildingConstruction.GetConstructions(constructionType))
                 list.Add(new ConstructionWrapper(con));
 
             // sort the list

@@ -53,7 +53,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             return newSegmentInfo;
         }
 
-        public void ExportCSV(CSVExporter ex, int sectionNumber)
+        public void ExportCsv(CsvExporter ex, int sectionNumber)
         {
             // "Section, Type/No, Element, Flow, Size, Velocity, Velocity Pressure, Length, Coefficients, Friction, Pressure Loss, Section Pressure Loss");
             string sNull = null;
@@ -104,7 +104,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
                 ex.ConvertFromInternalPressure(TotalPressureLoss));
         }
 
-        public void UpdateView(AVFViewer viewer, List<XYZ> points, List<VectorAtPoint> valList, double maxFlow)
+        public void UpdateView(AvfViewer viewer, List<XYZ> points, List<VectorAtPoint> valList, double maxFlow)
         {
             var coeff = viewer.Scale / 12.0;
 

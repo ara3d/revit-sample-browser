@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
     {
         public Result OnStartup(UIControlledApplication uiControlledApplication)
         {
-            uiControlledApplication.ControlledApplication.DocumentOpened += docOpen;
+            uiControlledApplication.ControlledApplication.DocumentOpened += DocOpen;
             return Result.Succeeded;
         }
 
@@ -27,7 +27,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
             return Result.Succeeded;
         }
 
-        private void docOpen(object sender, DocumentOpenedEventArgs e)
+        private void DocOpen(object sender, DocumentOpenedEventArgs e)
         {
             var app = sender as Application;
             var uiApp = new UIApplication(app);
@@ -72,27 +72,27 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
 
     public class SpatialFieldUpdater : IUpdater
     {
-        private readonly AddInId addinID;
-        private readonly ElementId sphereID;
-        private readonly UpdaterId updaterID;
-        private readonly ElementId viewID;
+        private readonly AddInId m_addinId;
+        private readonly ElementId m_sphereId;
+        private readonly UpdaterId m_updaterId;
+        private readonly ElementId m_viewId;
 
         public SpatialFieldUpdater(AddInId id, ElementId sphere, ElementId view)
         {
-            addinID = id;
-            sphereID = sphere;
-            viewID = view;
-            updaterID = new UpdaterId(addinID, new Guid("FBF2F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
+            m_addinId = id;
+            m_sphereId = sphere;
+            m_viewId = view;
+            m_updaterId = new UpdaterId(m_addinId, new Guid("FBF2F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
         }
 
         public void Execute(UpdaterData data)
         {
             var doc = data.GetDocument();
 
-            var view = doc.GetElement(viewID) as View;
-            var sphere = doc.GetElement(sphereID) as FamilyInstance;
-            var sphereLP = sphere.Location as LocationPoint;
-            var sphereXYZ = sphereLP.Point;
+            var view = doc.GetElement(m_viewId) as View;
+            var sphere = doc.GetElement(m_sphereId) as FamilyInstance;
+            var sphereLp = sphere.Location as LocationPoint;
+            var sphereXyz = sphereLp.Point;
 
             var sfm = SpatialFieldManager.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 3); // Three measurement values for each point
             sfm.Clear();
@@ -115,11 +115,11 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
                 {
                     var uvPnt = new UV(u, v);
                     uvPts.Add(uvPnt);
-                    var faceXYZ = face.Evaluate(uvPnt);
+                    var faceXyz = face.Evaluate(uvPnt);
                     // Specify three values for each point
-                    doubleList.Add(faceXYZ.DistanceTo(sphereXYZ));
-                    doubleList.Add(-faceXYZ.DistanceTo(sphereXYZ));
-                    doubleList.Add(faceXYZ.DistanceTo(sphereXYZ) * 10);
+                    doubleList.Add(faceXyz.DistanceTo(sphereXyz));
+                    doubleList.Add(-faceXyz.DistanceTo(sphereXyz));
+                    doubleList.Add(faceXyz.DistanceTo(sphereXyz) * 10);
                     valList.Add(new ValueAtPoint(doubleList));
                     doubleList.Clear();
                 }
@@ -151,7 +151,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
 
         public UpdaterId GetUpdaterId()
         {
-            return updaterID;
+            return m_updaterId;
         }
 
         public string GetUpdaterName()

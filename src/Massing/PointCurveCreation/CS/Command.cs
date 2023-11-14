@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class PointsParabola : IExternalCommand
     {
-        private static AddInId appId = new AddInId(new Guid("B6FBC0C1-F3AE-4ffa-AB46-B4CF94304827"));
+        private static AddInId _appId = new AddInId(new Guid("B6FBC0C1-F3AE-4ffa-AB46-B4CF94304827"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -64,7 +64,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class PointsOnCurve : IExternalCommand
     {
-        private static AddInId appId = new AddInId(new Guid("22D07F77-A3F7-490c-B0D8-0EC10D8DE7C7"));
+        private static AddInId _appId = new AddInId(new Guid("22D07F77-A3F7-490c-B0D8-0EC10D8DE7C7"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -102,7 +102,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class PointsFromTextFile : IExternalCommand
     {
-        private static AddInId appId = new AddInId(new Guid("C6D0F4DB-81C3-4927-9D68-8936D6EE67DD"));
+        private static AddInId _appId = new AddInId(new Guid("C6D0F4DB-81C3-4927-9D68-8936D6EE67DD"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -138,7 +138,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class SineCurve : IExternalCommand
     {
-        private static AddInId appId = new AddInId(new Guid("F18A831C-AE42-43cc-91FD-6B5D461A1AC7"));
+        private static AddInId _appId = new AddInId(new Guid("F18A831C-AE42-43cc-91FD-6B5D461A1AC7"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -146,17 +146,17 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
 
             var transaction = new Transaction(doc, "PointsParabola");
             transaction.Start();
-            var pnt_ctr = 0;
+            var pntCtr = 0;
             double xctr = 0;
             var xyz = new XYZ();
             var rparray = new ReferencePointArray();
-            while (pnt_ctr < 500)
+            while (pntCtr < 500)
             {
                 xyz = new XYZ(xctr, 0, Math.Cos(xctr) * 10);
                 var rp = doc.FamilyCreate.NewReferencePoint(xyz);
                 rparray.Append(rp);
                 xctr = xctr + 0.1;
-                pnt_ctr++;
+                pntCtr++;
             }
 
             doc.FamilyCreate.NewCurveByPoints(rparray);
@@ -174,7 +174,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class CatenaryCurve : IExternalCommand
     {
-        private static AddInId appId = new AddInId(new Guid("817C2A99-BF00-4029-86F3-2D10550F1410"));
+        private static AddInId _appId = new AddInId(new Guid("817C2A99-BF00-4029-86F3-2D10550F1410"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -212,7 +212,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class CyclicSurface : IExternalCommand
     {
-        private static AddInId appId = new AddInId(new Guid("3F926F3E-D93A-41cd-9ABF-A31594A827B3"));
+        private static AddInId _appId = new AddInId(new Guid("3F926F3E-D93A-41cd-9ABF-A31594A827B3"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

@@ -12,7 +12,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
     ///     Console.WriteLine, cout, printf, or something similar, the output will be funneled through here,
     ///     giving occasional output you may not have expected.
     /// </summary>
-    public class StandardIORouter : TextWriter
+    public class StandardIoRouter : TextWriter
     {
         /// <summary>
         ///     A stored reference of a textbox to output to.
@@ -22,7 +22,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         /// <summary>
         ///     Create a new router given a WPF Textbox to output to.
         /// </summary>
-        public StandardIORouter(TextBox output)
+        public StandardIoRouter(TextBox output)
         {
             m_outputTextBox = output;
         }

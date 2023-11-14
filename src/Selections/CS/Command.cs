@@ -180,7 +180,7 @@ namespace Revit.SDK.Samples.Selections.CS
         /// <summary>
         ///     For basic creation.
         /// </summary>
-        private ItemFactoryBase m_CreationBase;
+        private ItemFactoryBase m_creationBase;
 
         /// <summary>
         ///     store the document
@@ -194,9 +194,9 @@ namespace Revit.SDK.Samples.Selections.CS
                 m_application = commandData.Application;
                 m_document = m_application.ActiveUIDocument;
                 if (m_document.Document.IsFamilyDocument)
-                    m_CreationBase = m_document.Document.FamilyCreate;
+                    m_creationBase = m_document.Document.FamilyCreate;
                 else
-                    m_CreationBase = m_document.Document.Create;
+                    m_creationBase = m_document.Document.Create;
 
                 //Pick a face from UI, create a new sketch plane via the face and set it to the current view.
                 var faceRef = m_document.Selection.PickObject(ObjectType.Face,
@@ -224,7 +224,7 @@ namespace Revit.SDK.Samples.Selections.CS
                 createModelCurve.Start();
                 Curve circle = Arc.Create(point, 5, 0, Math.PI * 2, faceSketchPlane.GetPlane().XVec,
                     faceSketchPlane.GetPlane().YVec);
-                m_CreationBase.NewModelCurve(circle, faceSketchPlane);
+                m_creationBase.NewModelCurve(circle, faceSketchPlane);
                 createModelCurve.Commit();
 
                 return Result.Succeeded;

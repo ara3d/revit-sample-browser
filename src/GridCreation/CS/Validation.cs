@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
     public static class Validation
     {
         // Get the resource contains strings
-        private static readonly ResourceManager resManager = Resources.ResourceManager;
+        private static readonly ResourceManager ResManager = Resources.ResourceManager;
 
         /// <summary>
         ///     Validate numbers in UI
@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             if (Convert.ToUInt32(number1Ctrl.Text) == 0 && Convert.ToUInt32(number2Ctrl.Text) == 0)
             {
-                ShowWarningMessage(resManager.GetString("NumbersCannotBeBothZero"),
+                ShowWarningMessage(ResManager.GetString("NumbersCannotBeBothZero"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 number1Ctrl.Focus();
                 return false;
@@ -52,7 +52,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 var number = Convert.ToUInt32(numberCtrl.Text);
                 if (number > 200)
                 {
-                    ShowWarningMessage(resManager.GetString("NumberBetween0And200"),
+                    ShowWarningMessage(ResManager.GetString("NumberBetween0And200"),
                         Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     numberCtrl.Focus();
                     return false;
@@ -60,14 +60,14 @@ namespace Revit.SDK.Samples.GridCreation.CS
             }
             catch (OverflowException)
             {
-                ShowWarningMessage(resManager.GetString("NumberBetween0And200"),
+                ShowWarningMessage(ResManager.GetString("NumberBetween0And200"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 numberCtrl.Focus();
                 return false;
             }
             catch (Exception)
             {
-                ShowWarningMessage(resManager.GetString("NumberFormatWrong"),
+                ShowWarningMessage(ResManager.GetString("NumberFormatWrong"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 numberCtrl.Focus();
                 return false;
@@ -92,7 +92,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 var length = Convert.ToDouble(lengthCtrl.Text);
                 if (length <= 0 && !canBeZero)
                 {
-                    ShowWarningMessage(resManager.GetString(typeName + "CannotBeNegativeOrZero"),
+                    ShowWarningMessage(ResManager.GetString(typeName + "CannotBeNegativeOrZero"),
                         Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     lengthCtrl.Focus();
                     return false;
@@ -100,7 +100,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
                 if (length < 0 && canBeZero)
                 {
-                    ShowWarningMessage(resManager.GetString(typeName + "CannotBeNegative"),
+                    ShowWarningMessage(ResManager.GetString(typeName + "CannotBeNegative"),
                         Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     lengthCtrl.Focus();
                     return false;
@@ -108,7 +108,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             }
             catch (Exception)
             {
-                ShowWarningMessage(resManager.GetString(typeName + "FormatWrong"),
+                ShowWarningMessage(ResManager.GetString(typeName + "FormatWrong"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 lengthCtrl.Focus();
                 return false;
@@ -132,7 +132,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             }
             catch (Exception)
             {
-                ShowWarningMessage(resManager.GetString("CoordinateFormatWrong"),
+                ShowWarningMessage(ResManager.GetString("CoordinateFormatWrong"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 coordCtrl.Focus();
                 return false;
@@ -153,7 +153,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             if (Math.Abs(Convert.ToDouble(startDegree.Text) - Convert.ToDouble(endDegree.Text)) <= double.Epsilon)
             {
-                ShowWarningMessage(resManager.GetString("DegreesAreTooClose"),
+                ShowWarningMessage(ResManager.GetString("DegreesAreTooClose"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 startDegree.Focus();
                 return false;
@@ -161,7 +161,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             if (Convert.ToDouble(startDegree.Text) >= Convert.ToDouble(endDegree.Text))
             {
-                ShowWarningMessage(resManager.GetString("StartDegreeShouldBeLessThanEndDegree"),
+                ShowWarningMessage(ResManager.GetString("StartDegreeShouldBeLessThanEndDegree"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 startDegree.Focus();
                 return false;
@@ -184,7 +184,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 var startDegree = Convert.ToDouble(degreeCtrl.Text);
                 if (startDegree < 0 || startDegree > 360)
                 {
-                    ShowWarningMessage(resManager.GetString("DegreeWithin0To360"),
+                    ShowWarningMessage(ResManager.GetString("DegreeWithin0To360"),
                         Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     degreeCtrl.Focus();
                     return false;
@@ -192,7 +192,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             }
             catch (Exception)
             {
-                ShowWarningMessage(resManager.GetString("DegreeFormatWrong"),
+                ShowWarningMessage(ResManager.GetString("DegreeFormatWrong"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 degreeCtrl.Focus();
                 return false;
@@ -215,7 +215,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             foreach (string label in allLabels)
                 if (label == labelToBeValidated)
                 {
-                    ShowWarningMessage(resManager.GetString("LabelExisted"),
+                    ShowWarningMessage(ResManager.GetString("LabelExisted"),
                         Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     labelCtrl.Focus();
                     return false;
@@ -234,7 +234,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             if (string.IsNullOrEmpty(control.Text.TrimStart(' ').TrimEnd(' ')))
             {
-                ShowWarningMessage(resManager.GetString(typeName + "CannotBeNull"),
+                ShowWarningMessage(ResManager.GetString(typeName + "CannotBeNull"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 control.Focus();
                 return false;
@@ -253,7 +253,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             if (label1Ctrl.Text.TrimStart(' ').TrimEnd(' ') == label2Ctrl.Text.TrimStart(' ').TrimEnd(' '))
             {
-                ShowWarningMessage(resManager.GetString("LabelsCannotBeSame"),
+                ShowWarningMessage(ResManager.GetString("LabelsCannotBeSame"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 label1Ctrl.Focus();
                 return false;

@@ -34,7 +34,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     Revit UI document
         /// </summary>
-        private readonly UIDocument m_rvtUIDoc;
+        private readonly UIDocument m_rvtUiDoc;
 
         /// <summary>
         ///     Constructor, initialize fields and do some assert.
@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="commandData">ExternalCommandData</param>
         public RebarCreator(ExternalCommandData commandData)
         {
-            m_rvtUIDoc = commandData.Application.ActiveUIDocument;
+            m_rvtUiDoc = commandData.Application.ActiveUIDocument;
             Assert();
         }
 
@@ -55,9 +55,9 @@ namespace Revit.SDK.Samples.NewRebar.CS
         {
             // Reserve all element ids for following iteration
             var selectedIds = new List<ElementId>();
-            foreach (var elemId in m_rvtUIDoc.Selection.GetElementIds())
+            foreach (var elemId in m_rvtUiDoc.Selection.GetElementIds())
             {
-                var elem = m_rvtUIDoc.Document.GetElement(elemId);
+                var elem = m_rvtUiDoc.Document.GetElement(elemId);
                 selectedIds.Add(elem.Id);
             }
 
@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
             var hostFilter = new LogicalAndFilter(stFilter,
                 new StructuralMaterialTypeFilter(StructuralMaterialType.Concrete));
             // Expected rebar host: it should be family instance
-            var collector = new FilteredElementCollector(m_rvtUIDoc.Document, selectedIds);
+            var collector = new FilteredElementCollector(m_rvtUiDoc.Document, selectedIds);
             var rebarHost =
                 collector.OfClass(typeof(FamilyInstance)).WherePasses(hostFilter).FirstElement() as FamilyInstance;
             // Make sure the selected beam or column is rectangular.
@@ -105,7 +105,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public void Execute()
         {
-            using (var form = new NewRebarForm(m_rvtUIDoc.Document))
+            using (var form = new NewRebarForm(m_rvtUiDoc.Document))
             {
                 if (DialogResult.OK == form.ShowDialog())
                 {
@@ -117,7 +117,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                     var yVec = profilePoints[1] - origin;
                     var xVec = profilePoints[3] - origin;
 
-                    m_createdRebar = Rebar.CreateFromRebarShape(m_rvtUIDoc.Document, barShape, barType, m_rebarHost,
+                    m_createdRebar = Rebar.CreateFromRebarShape(m_rvtUiDoc.Document, barShape, barType, m_rebarHost,
                         origin, xVec, yVec);
 
                     LayoutRebar();

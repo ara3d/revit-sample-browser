@@ -430,13 +430,13 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
         ///     Find out a connector from pipe with a specified point.
         /// </summary>
         /// <param name="pipe">Pipe to find the connector</param>
-        /// <param name="conXYZ">Specified point</param>
+        /// <param name="conXyz">Specified point</param>
         /// <returns>Connector whose origin is conXYZ</returns>
-        private Connector FindConnector(Pipe pipe, XYZ conXYZ)
+        private Connector FindConnector(Pipe pipe, XYZ conXyz)
         {
             var conns = pipe.ConnectorManager.Connectors;
             foreach (Connector conn in conns)
-                if (conn.Origin.IsAlmostEqualTo(conXYZ))
+                if (conn.Origin.IsAlmostEqualTo(conXyz))
                     return conn;
             return null;
         }
@@ -446,11 +446,11 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
         ///     The pipe's specified connector is given by point conxyz.
         /// </summary>
         /// <param name="pipe">Pipe to find the connector</param>
-        /// <param name="conXYZ">Specified point</param>
+        /// <param name="conXyz">Specified point</param>
         /// <returns>Connector whose origin is conXYZ</returns>
-        private Connector FindConnectedTo(Pipe pipe, XYZ conXYZ)
+        private Connector FindConnectedTo(Pipe pipe, XYZ conXyz)
         {
-            var connItself = FindConnector(pipe, conXYZ);
+            var connItself = FindConnector(pipe, conXyz);
             var connSet = connItself.AllRefs;
             foreach (Connector conn in connSet)
                 if (conn.Owner.Id != pipe.Id &&

@@ -39,13 +39,13 @@ namespace Revit.SDK.Samples.ImportExport.CS
             Text = m_exportData.Title;
             switch (m_exportData.ExportFormat)
             {
-                case ExportFormat.SAT:
+                case ExportFormat.Sat:
                     buttonOptions.Visible = false;
                     break;
                 case ExportFormat.Image:
                 {
                     Hide();
-                    using (var exportOptionsForm = new ExportIMGOptionsForm(m_exportData))
+                    using (var exportOptionsForm = new ExportImgOptionsForm(m_exportData))
                     {
                         exportOptionsForm.ShowDialog();
                     }
@@ -65,7 +65,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             switch (m_exportData.ExportFormat)
             {
                 // Export dwg
-                case ExportFormat.DWG:
+                case ExportFormat.Dwg:
                 {
                     var contain3DView = false;
 
@@ -78,8 +78,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
                     }
 
-                    var exportDWGData = m_exportData as ExportDWGData;
-                    using (var exportOptionsForm = new ExportBaseOptionsForm(exportDWGData.ExportOptionsData,
+                    var exportDwgData = m_exportData as ExportDwgData;
+                    using (var exportOptionsForm = new ExportBaseOptionsForm(exportDwgData.ExportOptionsData,
                                contain3DView, "DWG"))
                     {
                         exportOptionsForm.ShowDialog();
@@ -88,7 +88,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     break;
                 }
                 //Export dxf
-                case ExportFormat.DXF:
+                case ExportFormat.Dxf:
                 {
                     var contain3DView = false;
 
@@ -101,9 +101,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
                     }
 
-                    var exportDXFData = m_exportData as ExportDXFData;
+                    var exportDxfData = m_exportData as ExportDxfData;
 
-                    using (var exportOptionsForm = new ExportBaseOptionsForm(exportDXFData.ExportOptionsData,
+                    using (var exportOptionsForm = new ExportBaseOptionsForm(exportDxfData.ExportOptionsData,
                                contain3DView, "DXF"))
                     {
                         exportOptionsForm.ShowDialog();
@@ -112,10 +112,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     break;
                 }
                 // Export dgn
-                case ExportFormat.DGN:
+                case ExportFormat.Dgn:
                 {
-                    var exportDGNData = m_exportData as ExportDGNData;
-                    using (var exportOptionsForm = new ExportDGNOptionsForm(exportDGNData))
+                    var exportDgnData = m_exportData as ExportDgnData;
+                    using (var exportOptionsForm = new ExportDgnOptionsForm(exportDgnData))
                     {
                         exportOptionsForm.ShowDialog();
                     }
@@ -123,10 +123,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     break;
                 }
                 // Export PDF
-                case ExportFormat.PDF:
+                case ExportFormat.Pdf:
                 {
-                    var exportPDFData = m_exportData as ExportPDFData;
-                    using (var exportOptionsForm = new ExportPDFOptionsForm(exportPDFData))
+                    var exportPdfData = m_exportData as ExportPdfData;
+                    using (var exportOptionsForm = new ExportPdfOptionsForm(exportPdfData))
                     {
                         exportOptionsForm.ShowDialog();
                     }
@@ -136,8 +136,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 // Export DWF
                 default:
                 {
-                    var exportDWFData = m_exportData as ExportDWFData;
-                    using (var exportOptionsForm = new ExportDWFOptionForm(exportDWFData))
+                    var exportDwfData = m_exportData as ExportDwfData;
+                    using (var exportOptionsForm = new ExportDwfOptionForm(exportDwfData))
                     {
                         exportOptionsForm.ShowDialog();
                     }
@@ -181,16 +181,16 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 textBoxSaveAs.Text = fileName;
                 switch (m_exportData.ExportFormat)
                 {
-                    case ExportFormat.DWG:
+                    case ExportFormat.Dwg:
                     {
-                        var exportDWGData = m_exportData as ExportDWGData;
-                        exportDWGData.ExportFileVersion = exportDWGData.EnumFileVersion[filterIndex - 1];
+                        var exportDwgData = m_exportData as ExportDwgData;
+                        exportDwgData.ExportFileVersion = exportDwgData.EnumFileVersion[filterIndex - 1];
                         break;
                     }
-                    case ExportFormat.DXF:
+                    case ExportFormat.Dxf:
                     {
-                        var exportDXFData = m_exportData as ExportDXFData;
-                        exportDXFData.ExportFileVersion = exportDXFData.EnumFileVersion[filterIndex - 1];
+                        var exportDxfData = m_exportData as ExportDxfData;
+                        exportDxfData.ExportFileVersion = exportDxfData.EnumFileVersion[filterIndex - 1];
                         break;
                     }
                 }

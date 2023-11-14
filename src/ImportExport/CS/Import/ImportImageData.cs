@@ -18,9 +18,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
         public ImportImageData(ExternalCommandData commandData, ImportFormat importFormat)
             : base(commandData, importFormat)
         {
-            m_filter =
+            Filter =
                 "All Image Files (*.bmp, *.gif, *.jpg, *.jpeg, *.pdf, *.png, *.tif)|*.bmp;*.gif;*.jpg;*.jpeg;*.pdf;*.png;*.tif";
-            m_title = "Import Image";
+            Title = "Import Image";
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <returns></returns>
         public override bool Import()
         {
-            using (var t = new Transaction(m_activeDoc))
+            using (var t = new Transaction(ActiveDoc))
             {
                 t.SetName("Import");
                 t.Start();
@@ -46,8 +46,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 // For other image types the page number should be 1 (the default),
                 // and the resolution is only used to determine the size of the image.
 
-                var typeOptions = new ImageTypeOptions(m_importFileFullName, true, ImageTypeSource.Import);
-                var imageType = ImageType.Create(m_activeDoc, typeOptions);
+                var typeOptions = new ImageTypeOptions(ImportFileFullName, true, ImageTypeSource.Import);
+                var imageType = ImageType.Create(ActiveDoc, typeOptions);
 
                 // Step 2: Create an ImageInstance, but only if the active view is able to contain images.
                 var view = CommandData.Application.ActiveUIDocument.Document.ActiveView;
@@ -58,7 +58,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     placementOptions.PlacementPoint = BoxPlacement.TopLeft;
                     placementOptions.Location = new XYZ(1, 1, 1);
 
-                    ImageInstance.Create(m_activeDoc, view, imageType.Id, placementOptions);
+                    ImageInstance.Create(ActiveDoc, view, imageType.Id, placementOptions);
                 }
 
                 t.Commit();

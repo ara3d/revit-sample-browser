@@ -5,7 +5,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     /// It contains a dialog which provides the options of import
     /// </summary>
-    partial class ImportDWGForm
+    partial class ImportDwgForm
     {
         /// <summary>
         /// Required designer variable.
@@ -330,7 +330,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ImportDWGForm";
+            this.Name = "ImportDwgForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

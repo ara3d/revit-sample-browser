@@ -23,7 +23,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         public BoundaryConditionsData(Element element)
         {
             // store the selected element and its BCs
-            SetBCHostMap(element);
+            SetBcHostMap(element);
         }
 
         // the selected Element
@@ -36,7 +36,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <summary>
         ///     gets or sets the object for which the grid in UI displays.
         /// </summary>
-        public BCProperties BCProperties { get; set; }
+        public BcProperties BcProperties { get; set; }
 
         /// <summary>
         ///     get current host element
@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         public bool CreateBoundaryConditions()
         {
-            CreateBCHandler createBCH = null;
+            CreateBcHandler createBch = null;
 
             switch (HostElement)
             {
@@ -67,37 +67,37 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                     {
                         // create Line BC for beam
                         case StructuralType.Beam:
-                            createBCH = CreateLineBC;
+                            createBch = CreateLineBc;
                             break;
                         case StructuralType.Brace:
                         case StructuralType.Column:
                         // create point BC for Column/brace
                         case StructuralType.Footing:
-                            createBCH = CreatePointBC;
+                            createBch = CreatePointBc;
                             break;
                     }
                     break;
                 }
                 case Wall _:
                     // create line BC for wall
-                    createBCH = CreateLineBC;
+                    createBch = CreateLineBc;
                     break;
                 case Floor _:
                     // create area BC for Floor
-                    createBCH = CreateAreaBC;
+                    createBch = CreateAreaBc;
                     break;
                 case WallFoundation _:
                     // create line BC for WallFoundation
-                    createBCH = CreateLineBC;
+                    createBch = CreateLineBc;
                     break;
             }
 
             // begin create
-            Autodesk.Revit.DB.Structure.BoundaryConditions NewBC = null;
+            Autodesk.Revit.DB.Structure.BoundaryConditions newBc = null;
             try
             {
-                NewBC = createBCH(HostElement);
-                if (null == NewBC) return false;
+                newBc = createBch(HostElement);
+                if (null == newBc) return false;
             }
             catch (Exception)
             {
@@ -105,7 +105,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             }
 
             // add the created Boundary Conditions into m_bCsDictionary
-            BCs.Add(NewBC.Id, NewBC);
+            BCs.Add(newBc.Id, newBc);
             return true;
         }
 
@@ -113,7 +113,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         ///     store the selected element and its corresponding BCs
         /// </summary>
         /// <param name="element"> use selected element in Revit UI(the host element)</param>
-        private void SetBCHostMap(Element element)
+        private void SetBcHostMap(Element element)
         {
             // set the Host element with current selected element
             HostElement = element;
@@ -157,7 +157,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         ///     structural element which provide the analytical line end reference
         /// </param>
         /// <returns> the created Point BoundaryConditions Element</returns>
-        private Autodesk.Revit.DB.Structure.BoundaryConditions CreatePointBC(Element hostElement)
+        private Autodesk.Revit.DB.Structure.BoundaryConditions CreatePointBc(Element hostElement)
         {
             if (!(hostElement is FamilyInstance)) return null;
 
@@ -175,9 +175,9 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             var createDoc = hostElement.Document.Create;
 
             // invoke Document.NewPointBoundaryConditions Method 
-            var createdBC =
+            var createdBc =
                 createDoc.NewPointBoundaryConditions(endReference, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-            return createdBC;
+            return createdBc;
         }
 
         /// <summary>
@@ -186,14 +186,14 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         /// <param name="hostElement">structural element which provide the hostElementId</param>
         /// <returns>the created Point BoundaryConditions Element</returns>
-        private Autodesk.Revit.DB.Structure.BoundaryConditions CreateLineBC(Element hostElement)
+        private Autodesk.Revit.DB.Structure.BoundaryConditions CreateLineBc(Element hostElement)
         {
             var createDoc = hostElement.Document.Create;
             // invoke Document.NewLineBoundaryConditions Method
             var analyticalModel = GetAnalyticalElement(hostElement);
-            var createdBC =
+            var createdBc =
                 createDoc.NewLineBoundaryConditions(analyticalModel, 0, 0, 0, 0, 0, 0, 0, 0);
-            return createdBC;
+            return createdBc;
         }
 
         /// <summary>
@@ -202,18 +202,18 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         /// <param name="hostElement">structural element which provide the hostElementId</param>
         /// <returns>the created Point BoundaryConditions Element</returns>
-        private Autodesk.Revit.DB.Structure.BoundaryConditions CreateAreaBC(Element hostElement)
+        private Autodesk.Revit.DB.Structure.BoundaryConditions CreateAreaBc(Element hostElement)
         {
             var createDoc = hostElement.Document.Create;
 
             // invoke Document.NewAreaBoundaryConditions Method
-            var createdBC =
+            var createdBc =
                 createDoc.NewAreaBoundaryConditions(GetAnalyticalElement(hostElement), 0, 0, 0, 0, 0, 0);
-            return createdBC;
+            return createdBc;
         }
 
         //A delegate for create boundary condition with different type
         private delegate Autodesk.Revit.DB.Structure.BoundaryConditions
-            CreateBCHandler(Element HostElement);
+            CreateBcHandler(Element hostElement);
     }
 }

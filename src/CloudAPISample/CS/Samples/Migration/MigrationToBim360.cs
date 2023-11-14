@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
         /// </summary>
         public MigrationToBim360()
         {
-            Model = new UIMigrationViewModel();
+            Model = new UiMigrationViewModel();
             View = new ViewMigrationToBim360(this);
         }
 

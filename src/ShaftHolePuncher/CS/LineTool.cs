@@ -20,9 +20,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             if (m_points.Count != 0 && !m_finished)
             {
-                graphic.DrawLine(m_backGroundPen, m_points[m_points.Count - 1], m_preMovePoint);
-                m_preMovePoint = e.Location;
-                graphic.DrawLine(m_foreGroundPen, m_points[m_points.Count - 1], e.Location);
+                graphic.DrawLine(BackGroundPen, m_points[m_points.Count - 1], PreMovePoint);
+                PreMovePoint = e.Location;
+                graphic.DrawLine(ForeGroundPen, m_points[m_points.Count - 1], e.Location);
             }
         }
 
@@ -40,8 +40,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                     m_finished = true;
                     break;
                 case MouseButtons.Left when !m_finished 
-                                            && GetDistance(m_preDownPoint, e.Location) > 2:
-                    m_preDownPoint = e.Location;
+                                            && GetDistance(PreDownPoint, e.Location) > 2:
+                    PreDownPoint = e.Location;
                     m_points.Add(e.Location);
                     break;
             }
@@ -54,10 +54,10 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         public override void Draw(Graphics graphic)
         {
             for (var i = 0; i < m_points.Count - 1; i++)
-                graphic.DrawLine(m_foreGroundPen, m_points[i], m_points[i + 1]);
+                graphic.DrawLine(ForeGroundPen, m_points[i], m_points[i + 1]);
 
             //if user finished draw (clicked the right button), then close the curve
-            if (m_finished) graphic.DrawLine(m_foreGroundPen, m_points[0], m_points[m_points.Count - 1]);
+            if (m_finished) graphic.DrawLine(ForeGroundPen, m_points[0], m_points[m_points.Count - 1]);
         }
     }
 }

@@ -21,11 +21,11 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                 var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
                     "Revit.SDK.Samples.SharedCoordinateSystem");
                 trans.Start();
-                var Data = new CoordinateSystemData(commandData);
-                Data.GatData();
+                var data = new CoordinateSystemData(commandData);
+                data.GatData();
 
                 using (var displayForm =
-                       new CoordinateSystemDataForm(Data, commandData.Application.Application.Cities,
+                       new CoordinateSystemDataForm(data, commandData.Application.Application.Cities,
                            commandData.Application.ActiveUIDocument.Document.SiteLocation))
                 {
                     if (DialogResult.OK != displayForm.ShowDialog())

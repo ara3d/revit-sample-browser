@@ -44,8 +44,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         public override void Commit(Document doc, DefinitionGroup defGroup)
         {
             var def = GetOrCreateDef(defGroup);
-            m_parameterId = RebarShapeParameters.GetOrCreateElementIdForExternalDefinition(doc, def);
-            m_rebarShapeDef.RebarshapeDefinition.AddParameter(m_parameterId, m_value);
+            Parameter = RebarShapeParameters.GetOrCreateElementIdForExternalDefinition(doc, def);
+            RebarShapeDef.RebarshapeDefinition.AddParameter(Parameter, m_value);
         }
     }
 }

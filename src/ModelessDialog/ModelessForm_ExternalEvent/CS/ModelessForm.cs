@@ -16,12 +16,12 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
     /// </remarks>
     public partial class ModelessForm : Form
     {
-        private ExternalEvent m_ExEvent;
+        private ExternalEvent m_exEvent;
         // In this sample, the dialog owns the handler and the event objects,
         // but it is not a requirement. They may as well be static properties
         // of the application.
 
-        private RequestHandler m_Handler;
+        private RequestHandler m_handler;
 
         /// <summary>
         ///     Dialog instantiation
@@ -29,8 +29,8 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         public ModelessForm(ExternalEvent exEvent, RequestHandler handler)
         {
             InitializeComponent();
-            m_Handler = handler;
-            m_ExEvent = exEvent;
+            m_handler = handler;
+            m_exEvent = exEvent;
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         {
             // we own both the event and the handler
             // we should dispose it before we are closed
-            m_ExEvent.Dispose();
-            m_ExEvent = null;
-            m_Handler = null;
+            m_exEvent.Dispose();
+            m_exEvent = null;
+            m_handler = null;
 
             // do not forget to call the base class
             base.OnFormClosed(e);
@@ -69,8 +69,8 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         /// </remarks>
         private void MakeRequest(RequestId request)
         {
-            m_Handler.Request.Make(request);
-            m_ExEvent.Raise();
+            m_handler.Request.Make(request);
+            m_exEvent.Raise();
             DozeOff();
         }
 

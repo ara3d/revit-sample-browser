@@ -19,11 +19,11 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private const double PRECISION = 0.0000000001; // Define a precision of double data
+        private const double Precision = 0.0000000001; // Define a precision of double data
 
         // 0 - wall, 1 - beam, 2 - floor, -1 - invalid
-        private const double LENGTH = 10; // Define half length and width of BoudingBoxXYZ
-        private const double HEIGHT = 5; // Define height of the BoudingBoxXYZ
+        private const double Length = 10; // Define half length and width of BoudingBoxXYZ
+        private const double Height = 5; // Define height of the BoudingBoxXYZ
 
         private BoundingBoxXYZ m_box; // Store the BoundingBoxXYZ reference used in creation
         private Element m_currentComponent; // Store the selected element
@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         /// </summary>
         public Command()
         {
-            m_type = SelectType.INVALID;
+            m_type = SelectType.Invalid;
         }
 
         public Result Execute(ExternalCommandData commandData,
@@ -58,7 +58,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 }
 
                 // Create a BoundingBoxXYZ instance which used in NewViewSection() method
-                if (!GenerateBoundingBoxXYZ())
+                if (!GenerateBoundingBoxXyz())
                 {
                     message = m_errorInformation;
                     return Result.Failed;
@@ -68,19 +68,19 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 var transaction = new Transaction(m_project.Document, "CreateSectionView");
                 transaction.Start();
                 //ViewSection section = m_project.Document.Create.NewViewSection(m_box);
-                var DetailViewId = ElementId.InvalidElementId;
+                var detailViewId = ElementId.InvalidElementId;
                 var elems = new FilteredElementCollector(m_project.Document).OfClass(typeof(ViewFamilyType))
                     .ToElements();
                 foreach (var e in elems)
                 {
                     if (e is ViewFamilyType v && v.ViewFamily == ViewFamily.Detail)
                     {
-                        DetailViewId = e.Id;
+                        detailViewId = e.Id;
                         break;
                     }
                 }
 
-                var section = ViewSection.CreateDetail(m_project.Document, DetailViewId, m_box);
+                var section = ViewSection.CreateDetail(m_project.Document, detailViewId, m_box);
                 if (null == section)
                 {
                     message = "Can't create the ViewSection.";
@@ -136,7 +136,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
 
                     if (location.Curve is Line)
                     {
-                        m_type = SelectType.WALL; // when the element is a linear wall
+                        m_type = SelectType.Wall; // when the element is a linear wall
                         return true;
                     }
 
@@ -144,10 +144,10 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                     return false;
                 }
                 case FamilyInstance beam when StructuralType.Beam == beam.StructuralType:
-                    m_type = SelectType.BEAM; // when the element is a beam
+                    m_type = SelectType.Beam; // when the element is a beam
                     return true;
                 case Floor _:
-                    m_type = SelectType.FLOOR; // when the element is a floor.
+                    m_type = SelectType.Floor; // when the element is a floor.
                     return true;
                 default:
                     // If it is not a wall, a beam or a floor, give error information.
@@ -160,15 +160,15 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         ///     Generate a BoundingBoxXYZ instance which used in NewViewSection() method
         /// </summary>
         /// <returns>true if the instance can be created; otherwise, false.</returns>
-        private bool GenerateBoundingBoxXYZ()
+        private bool GenerateBoundingBoxXyz()
         {
             var transaction = new Transaction(m_project.Document, "GenerateBoundingBox");
             transaction.Start();
             // First new a BoundingBoxXYZ, and set the MAX and Min property.
             m_box = new BoundingBoxXYZ();
             m_box.Enabled = true;
-            var maxPoint = new XYZ(LENGTH, LENGTH, 0);
-            var minPoint = new XYZ(-LENGTH, -LENGTH, -HEIGHT);
+            var maxPoint = new XYZ(Length, Length, 0);
+            var minPoint = new XYZ(-Length, -Length, -Height);
             m_box.Max = maxPoint;
             m_box.Min = minPoint;
 
@@ -194,11 +194,11 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             {
                 // Because different element have different ways to create Transform.
                 // So, this method just call corresponding method.
-                case SelectType.WALL:
+                case SelectType.Wall:
                     return GenerateWallTransform();
-                case SelectType.BEAM:
+                case SelectType.Beam:
                     return GenerateBeamTransform();
-                case SelectType.FLOOR:
+                case SelectType.Floor:
                     return GenerateFloorTransform();
                 default:
                     m_errorInformation = "The program should never go here.";
@@ -223,7 +223,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             var transform = Transform.Identity;
 
             // Second find the middle point of the wall and set it as Origin property.
-            var mPoint = XYZMath.FindMidPoint(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
+            var mPoint = XyzMath.FindMidPoint(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
             // midPoint is mid point of the wall location, but not the wall's.
             // The different is the elevation of the point. Then change it.
 
@@ -232,9 +232,9 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             transform.Origin = midPoint;
 
             // At last find out the directions of the created view, and set it as Basis property.
-            var basisZ = XYZMath.FindDirection(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
-            var basisX = XYZMath.FindRightDirection(basisZ);
-            var basisY = XYZMath.FindUpDirection(basisZ);
+            var basisZ = XyzMath.FindDirection(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
+            var basisX = XyzMath.FindRightDirection(basisZ);
+            var basisY = XyzMath.FindUpDirection(basisZ);
 
             transform.set_Basis(0, basisX);
             transform.set_Basis(1, basisY);
@@ -256,7 +256,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             // In order to predigest the calculation, only allow it to be horizontal
             var startOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END0_ELEVATION).AsDouble();
             var endOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END1_ELEVATION).AsDouble();
-            if (-PRECISION > startOffset - endOffset || PRECISION < startOffset - endOffset)
+            if (-Precision > startOffset - endOffset || Precision < startOffset - endOffset)
             {
                 m_errorInformation = "Please select a horizontal beam.";
                 return transform;
@@ -281,13 +281,13 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             // Third find the middle point of the line and set it as Origin property.
             var startPoint = curve.GetEndPoint(0);
             var endPoint = curve.GetEndPoint(1);
-            var midPoint = XYZMath.FindMidPoint(startPoint, endPoint);
+            var midPoint = XyzMath.FindMidPoint(startPoint, endPoint);
             transform.Origin = midPoint;
 
             // At last find out the directions of the created view, and set it as Basis property.   
-            var basisZ = XYZMath.FindDirection(startPoint, endPoint);
-            var basisX = XYZMath.FindRightDirection(basisZ);
-            var basisY = XYZMath.FindUpDirection(basisZ);
+            var basisZ = XyzMath.FindDirection(startPoint, endPoint);
+            var basisX = XyzMath.FindRightDirection(basisZ);
+            var basisY = XyzMath.FindUpDirection(basisZ);
 
             transform.set_Basis(0, basisX);
             transform.set_Basis(1, basisY);
@@ -341,13 +341,13 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             transform = Transform.Identity;
 
             // Third find the middle point of the floor and set it as Origin property.
-            var midPoint = XYZMath.FindMiddlePoint(curves);
+            var midPoint = XyzMath.FindMiddlePoint(curves);
             transform.Origin = midPoint;
 
             // At last find out the directions of the created view, and set it as Basis property.
-            var basisZ = XYZMath.FindFloorViewDirection(curves);
-            var basisX = XYZMath.FindRightDirection(basisZ);
-            var basisY = XYZMath.FindUpDirection(basisZ);
+            var basisZ = XyzMath.FindFloorViewDirection(curves);
+            var basisX = XyzMath.FindRightDirection(basisZ);
+            var basisY = XyzMath.FindUpDirection(basisZ);
 
             transform.set_Basis(0, basisX);
             transform.set_Basis(1, basisY);
@@ -372,10 +372,10 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         // Define a enum to indicate the selected element type
         private enum SelectType
         {
-            WALL = 0,
-            BEAM = 1,
-            FLOOR = 2,
-            INVALID = -1
+            Wall = 0,
+            Beam = 1,
+            Floor = 2,
+            Invalid = -1
         }
     }
 

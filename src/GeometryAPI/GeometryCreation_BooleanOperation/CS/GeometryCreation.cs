@@ -22,7 +22,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// <summary>
         ///     The singleton instance of GeometryCreation
         /// </summary>
-        private static GeometryCreation Instance;
+        private static GeometryCreation _instance;
 
         /// <summary>
         ///     revit application
@@ -43,9 +43,9 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// </summary>
         /// <param name="app">Revit application</param>
         /// <returns>The singleton instance of GeometryCreation</returns>
-        public static GeometryCreation getInstance(Application app)
+        public static GeometryCreation GetInstance(Application app)
         {
-            return Instance ?? (Instance = new GeometryCreation(app));
+            return _instance ?? (_instance = new GeometryCreation(app));
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// <summary>
         ///     Path to this assembly.
         /// </summary>
-        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -51,14 +51,14 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             var rp = application.CreateRibbonPanel("Schedule Formatter");
 
             var pbd = new PushButtonData("ScheduleFormatter", "Format schedule",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(ScheduleFormatterCommand).FullName)
             {
                 LongDescription = "Format the active schedule background columns."
             };
 
-            var formatSchedulePB = rp.AddItem(pbd) as PushButton;
-            SetIconsForPushButton(formatSchedulePB, Resources.ScheduleFormatter);
+            var formatSchedulePb = rp.AddItem(pbd) as PushButton;
+            SetIconsForPushButton(formatSchedulePb, Resources.ScheduleFormatter);
         }
 
         /// <summary>

@@ -19,9 +19,9 @@ namespace Revit.SDK.Samples.Openings.CS
         public LineSketch(Line2D line)
         {
             m_line = line;
-            m_boundingBox = line.BoundingBox;
-            m_pen.Color = Color.Yellow;
-            m_pen.Width = 1f;
+            BoundingBox = line.BoundingBox;
+            Pen.Color = Color.Yellow;
+            Pen.Width = 1f;
         }
 
         /// <summary>
@@ -31,11 +31,11 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <param name="translate">translation between drawn sketch and geometry object</param>
         public override void Draw(Graphics g, Matrix translate)
         {
-            m_transform = translate;
+            Transform = translate;
             var path = new GraphicsPath();
             path.AddLine(m_line.StartPnt, m_line.EndPnt);
             path.Transform(translate);
-            g.DrawPath(m_pen, path);
+            g.DrawPath(Pen, path);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <param name="f">a In-Place family instance</param>
         public Properties(FamilyInstance f)
         {
-            ID = f.Id.Value;
+            Id = f.Id.Value;
             Name = f.Name;
             Family = f.Symbol.Family.Name;
             Type = f.Symbol.Name;
@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         ///     the value of the element id as an integer
         /// </summary>
         [Category("Identity")]
-        public long ID { get; }
+        public long Id { get; }
 
         /// <summary>
         ///     a human readable name for the Element.

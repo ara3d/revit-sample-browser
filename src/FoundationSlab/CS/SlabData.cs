@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         private const double PlanarPrecision = 0.00033;
 
         // For finding elements and creating foundations slabs.
-        public static UIApplication m_revit;
+        public static UIApplication Revit;
         public static Application CreApp;
 
         // A set of regular slabs at the base of the building.
@@ -48,8 +48,8 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         /// <param name="revit">An application object that contains data related to revit command.</param>
         public SlabData(UIApplication revit)
         {
-            m_revit = revit;
-            CreApp = m_revit.Application.Create;
+            Revit = revit;
+            CreApp = Revit.Application.Create;
             // Find out all useful elements.
             FindElements();
             // Get all base slabs. If no slab be found, throw an exception and return cancel.
@@ -112,24 +112,24 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                 if (!slab.Selected) continue;
 
                 // Create a new slab.
-                var t = new Transaction(m_revit.ActiveUIDocument.Document, Guid.NewGuid().GetHashCode().ToString());
+                var t = new Transaction(Revit.ActiveUIDocument.Document, Guid.NewGuid().GetHashCode().ToString());
                 t.Start();
 
                 var loop = new CurveLoop();
                 foreach (Curve curve in slab.OctagonalProfile) loop.Append(curve);
 
                 var floorLoops = new List<CurveLoop> { loop };
-                var foundationSlab = Floor.Create(m_revit.ActiveUIDocument.Document, floorLoops,
+                var foundationSlab = Floor.Create(Revit.ActiveUIDocument.Document, floorLoops,
                     m_foundationSlabType.Id, m_levelList.Values[0].Id, true, null, 0.0);
 
                 t.Commit();
                 if (null == foundationSlab) return false;
 
                 // Delete the regular slab.
-                var t2 = new Transaction(m_revit.ActiveUIDocument.Document, Guid.NewGuid().GetHashCode().ToString());
+                var t2 = new Transaction(Revit.ActiveUIDocument.Document, Guid.NewGuid().GetHashCode().ToString());
                 t2.Start();
                 var deleteSlabId = slab.Id;
-                m_revit.ActiveUIDocument.Document.Delete(deleteSlabId);
+                Revit.ActiveUIDocument.Document.Delete(deleteSlabId);
                 t2.Commit();
             }
 
@@ -148,7 +148,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             filters.Add(new ElementClassFilter(typeof(FloorType)));
 
             var orFilter = new LogicalOrFilter(filters);
-            var collector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+            var collector = new FilteredElementCollector(Revit.ActiveUIDocument.Document);
             var iterator = collector.WherePasses(orFilter).GetElementIterator();
             while (iterator.MoveNext())
             {
@@ -196,14 +196,14 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             foreach (var floor in m_floorList)
                 if (floor.LevelId == m_levelList.Values[0].Id)
                 {
-                    var bbXYZ = floor.get_BoundingBox(baseView); // Get the slab's bounding box.
+                    var bbXyz = floor.get_BoundingBox(baseView); // Get the slab's bounding box.
 
                     // Check the floor. If the floor is planar, deal with it, otherwise, leap it.
-                    if (!IsPlanarFloor(bbXYZ, floor))
+                    if (!IsPlanarFloor(bbXyz, floor))
                         continue;
 
                     var floorProfile = GetFloorProfile(floor); // Get the slab's profile.
-                    var regularSlab = new RegularSlab(floor, floorProfile, bbXYZ); // Get a regular slab.
+                    var regularSlab = new RegularSlab(floor, floorProfile, bbXyz); // Get a regular slab.
                     m_allBaseSlabList.Add(regularSlab); // Add regular slab to the set.
                 }
 
@@ -214,19 +214,19 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         /// <summary>
         ///     Check whether the floor is planar.
         /// </summary>
-        /// <param name="bbXYZ">The floor's bounding box.</param>
+        /// <param name="bbXyz">The floor's bounding box.</param>
         /// <param name="floor">The floor object.</param>
         /// <returns>A bool value suggests the floor is planar or not.</returns>
-        private static bool IsPlanarFloor(BoundingBoxXYZ bbXYZ, Floor floor)
+        private static bool IsPlanarFloor(BoundingBoxXYZ bbXyz, Floor floor)
         {
             // Get floor thickness.
             var floorThickness = 0.0;
-            var floorType = m_revit.ActiveUIDocument.Document.GetElement(floor.GetTypeId()) as ElementType;
+            var floorType = Revit.ActiveUIDocument.Document.GetElement(floor.GetTypeId()) as ElementType;
             var attribute = floorType.get_Parameter(BuiltInParameter.FLOOR_ATTR_DEFAULT_THICKNESS_PARAM);
             if (null != attribute) floorThickness = attribute.AsDouble();
 
             // Get bounding box thickness.
-            var boundThickness = Math.Abs(bbXYZ.Max.Z - bbXYZ.Min.Z);
+            var boundThickness = Math.Abs(bbXyz.Max.Z - bbXyz.Min.Z);
 
             // Planar or not.
             return Math.Abs(boundThickness - floorThickness) < PlanarPrecision;
@@ -266,14 +266,14 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             }
 
             // Nonstructural floor's profile can be formed through it's Geometry.
-            var aOptions = m_revit.Application.Create.NewGeometryOptions();
+            var aOptions = Revit.Application.Create.NewGeometryOptions();
             var aElementOfGeometry = floor.get_Geometry(aOptions);
             //GeometryObjectArray geometryObjects = aElementOfGeometry.Objects;
-            var Objects = aElementOfGeometry.GetEnumerator();
+            var objects = aElementOfGeometry.GetEnumerator();
             //foreach (GeometryObject o in geometryObjects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var o = Objects.Current;
+                var o = objects.Current;
 
                 var solid = o as Solid;
                 if (null == solid)

@@ -24,9 +24,9 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
     /// </summary>
     public class IssueMarkerTracking
     {
-        private readonly HashSet<IssueMarker> issueMarkerSet = new HashSet<IssueMarker>();
+        private readonly HashSet<IssueMarker> m_issueMarkerSet = new HashSet<IssueMarker>();
 
-        private int selectedIndex;
+        private int m_selectedIndex;
 
         /// <summary>
         ///     Creates IssueMarkerTracking for the opened document and initializes selected index
@@ -36,7 +36,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         {
             Document = document;
             Id = Guid.NewGuid();
-            selectedIndex = -1;
+            m_selectedIndex = -1;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <param name="marker">Marker to be updated by selector or updater.</param>
         public void SubscribeMarker(IssueMarker marker)
         {
-            issueMarkerSet.Add(marker);
+            m_issueMarkerSet.Add(marker);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <param name="elementId">Tracked element id</param>
         public void RemoveMarkerByElement(ElementId elementId)
         {
-            issueMarkerSet.RemoveWhere(m => m.TrackedElementId == elementId);
+            m_issueMarkerSet.RemoveWhere(m => m.TrackedElementId == elementId);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns>A corresponding Issue Marker</returns>
         public IssueMarker GetMarkerByElementId(ElementId elementId)
         {
-            return issueMarkerSet.Where(m => m.TrackedElementId == elementId).FirstOrDefault();
+            return m_issueMarkerSet.Where(m => m.TrackedElementId == elementId).FirstOrDefault();
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns>A corresponding Issue Marker</returns>
         public IssueMarker GetMarkerByIndex(int index)
         {
-            return issueMarkerSet.Where(m => m.ControlIndex == index).FirstOrDefault();
+            return m_issueMarkerSet.Where(m => m.ControlIndex == index).FirstOrDefault();
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns>The index of selected marker</returns>
         public int GetSelected()
         {
-            return selectedIndex;
+            return m_selectedIndex;
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <param name="index">Index of the marker</param>
         public void SetSelected(int index)
         {
-            selectedIndex = index;
+            m_selectedIndex = index;
         }
     }
 }

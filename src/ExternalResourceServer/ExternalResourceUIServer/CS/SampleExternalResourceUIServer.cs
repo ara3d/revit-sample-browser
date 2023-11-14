@@ -10,10 +10,10 @@ using Revit.SDK.Samples.ExternalResourceDBServer.CS;
 
 namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
 {
-    internal class SampleExternalResourceUIServer : IExternalResourceUIServer
+    internal class SampleExternalResourceUiServer : IExternalResourceUIServer
     {
-        private static readonly Guid m_myServerId = new Guid("E9B6C194-62DE-4134-900D-BA8DF7AD33FA");
-        private static readonly Guid m_myDBServerId = new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
+        private static readonly Guid MyServerId = new Guid("E9B6C194-62DE-4134-900D-BA8DF7AD33FA");
+        private static readonly Guid MyDbServerId = new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
 
         // Methods that must be implemented by a server for any of Revit's external services
         /// <summary>
@@ -21,7 +21,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
         /// </summary>
         public Guid GetServerId()
         {
-            return m_myServerId;
+            return MyServerId;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
         /// </summary>
         public Guid GetDBServerId()
         {
-            return m_myDBServerId;
+            return MyDbServerId;
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
                 return;
             }
 
-            if (!(externalResourceService.GetServer(GetDBServerId()) is SampleExternalResourceDBServer myDBServer))
+            if (!(externalResourceService.GetServer(GetDBServerId()) is SampleExternalResourceDbServer myDbServer))
             {
                 MessageBox.Show("Cannot get SampleExternalResourceDBServer from ExternalResourceService.");
                 return;

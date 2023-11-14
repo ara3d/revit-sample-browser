@@ -6,9 +6,9 @@ namespace ExtensibleStorageManager
     /// <summary>
     ///     A class for a Window with a TextBox for displaying many lines of text data.
     /// </summary>
-    public partial class UIData : Window
+    public partial class UiData : Window
     {
-        public UIData()
+        public UiData()
         {
             InitializeComponent();
         }

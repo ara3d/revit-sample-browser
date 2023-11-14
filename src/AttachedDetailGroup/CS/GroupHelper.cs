@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
         /// <param name="uiDoc">The UIDocument that gives access to the selected elements.</param>
         /// <param name="modelGroup">The selected model group or null if no model group was selected.</param>
         /// <param name="errorMessage">The appropriate error message if a model group was not selected by the user.</param>
-        public bool getSelectedModelGroup(UIDocument uiDoc, out Group modelGroup, out string errorMessage)
+        public bool GetSelectedModelGroup(UIDocument uiDoc, out Group modelGroup, out string errorMessage)
         {
             modelGroup = null;
 

@@ -47,13 +47,13 @@ namespace Revit.SDK.Samples.Site.CS
             var doc = uiDoc.Document;
 
             // Pick subregion
-            var subregion = SiteUIUtils.PickSubregion(uiDoc);
+            var subregion = SiteUiUtils.PickSubregion(uiDoc);
             var toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
             var points = SiteEditingUtils.GetPointsFromSubregionExact(subregion);
             var sourceLocation = SiteEditingUtils.GetCenterOf(subregion);
 
             // Pick target location
-            var targetPoint = SiteUIUtils.PickPointNearToposurface(uiDoc, toposurface, "Pick point to move to");
+            var targetPoint = SiteUiUtils.PickPointNearToposurface(uiDoc, toposurface, "Pick point to move to");
 
             // Delta for the move
             var delta = targetPoint - sourceLocation;
@@ -85,7 +85,7 @@ namespace Revit.SDK.Samples.Site.CS
                 var newElevation = SiteEditingUtils.GetAverageElevation(subregion.GetPoints());
 
                 // Adjust delta for elevation based on calculated values
-                delta = SiteEditingUtils.MoveXYZToElevation(delta, newElevation - existingElevation);
+                delta = SiteEditingUtils.MoveXyzToElevation(delta, newElevation - existingElevation);
 
                 // Edit scope for points changes
                 using (var editScope = new TopographyEditScope(doc, "Edit TS"))

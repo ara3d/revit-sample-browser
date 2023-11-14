@@ -18,12 +18,12 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private static ExternalCommandData m_commandData;
+        private static ExternalCommandData _commandData;
 
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            m_commandData = commandData;
+            _commandData = commandData;
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
 
             FamilyInstance inPlace = null;
@@ -65,8 +65,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         private bool PrepareData(ref FamilyInstance inPlaceMember, ref AnalyticalElement model)
         {
             var selected = new ElementSet();
-            foreach (var elementId in m_commandData.Application.ActiveUIDocument.Selection.GetElementIds())
-                selected.Insert(m_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+            foreach (var elementId in _commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+                selected.Insert(_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
 
             if (selected.Size != 1) return false;
 

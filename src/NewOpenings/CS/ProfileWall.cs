@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             var p2 = new XYZ(points[2].X, points[2].Y, points[2].Z);
 
             //draw opening on wall
-            m_docCreator.NewOpening(m_data, p1, p2);
+            DocCreator.NewOpening(m_data, p1, p2);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    public class ExportPDFSettingsSampleApplication : IExternalApplication
+    public class ExportPdfSettingsSampleApplication : IExternalApplication
     {
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -95,7 +95,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
     ///     ExternalCommand to create an ExportPDFSettings instance.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    public class CreateExportPDFSettingsCommand : IExternalCommand
+    public class CreateExportPdfSettingsCommand : IExternalCommand
     {
         /// <summary>
         ///     The implementation for IExternalCommand.Execute()
@@ -132,7 +132,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
     ///     ExternalCommand to modify an ExportPDFSettings instance.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    public class ModifyExportPDFSettingsCommand : IExternalCommand
+    public class ModifyExportPdfSettingsCommand : IExternalCommand
     {
         /// <summary>
         ///     The implementation for IExternalCommand.Execute()

@@ -93,7 +93,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             }
 
             // Determine the rotation axis and the angle span in the corner.
-            var runwidth_2 = runWidth * 0.5;
+            var runwidth2 = runWidth * 0.5;
             var zDir = XYZ.BasisZ;
             var winderAngleSpan = perpendicularDir1.AngleOnPlaneTo(perpendicularDir2, zDir);
             if (winderAngleSpan > Math.PI)
@@ -103,15 +103,15 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             }
 
             // Calculate the corner points
-            var diagonalDist = runwidth_2 / Math.Cos(winderAngleSpan * 0.5);
+            var diagonalDist = runwidth2 / Math.Cos(winderAngleSpan * 0.5);
             var middleCornerPnt = CornerPoint + bisectDir * diagonalDist;
             var innerCornerPnt = middleCornerPnt + bisectDir * diagonalDist;
-            var middleStart = StartPoint + perpendicularDir1 * runwidth_2;
+            var middleStart = StartPoint + perpendicularDir1 * runwidth2;
             var innerStart = StartPoint + perpendicularDir1 * runWidth;
-            var middleEnd = EndPoint + perpendicularDir2 * runwidth_2;
+            var middleEnd = EndPoint + perpendicularDir2 * runwidth2;
             var innerEnd = EndPoint + perpendicularDir2 * runWidth;
-            var middleEnd0 = innerCornerPnt - perpendicularDir1 * runwidth_2;
-            var middleEnd1 = innerCornerPnt - perpendicularDir2 * runwidth_2;
+            var middleEnd0 = innerCornerPnt - perpendicularDir1 * runwidth2;
+            var middleEnd1 = innerCornerPnt - perpendicularDir2 * runwidth2;
 
             // Generate the two outer boundary lines
             var outerLine1 = Line.CreateBound(StartPoint, CornerPoint);
@@ -143,7 +143,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             }
 
             // Generate the middle fillet arc
-            var middleCenter = innerCornerPnt - bisectDir * runwidth_2;
+            var middleCenter = innerCornerPnt - bisectDir * runwidth2;
             var middleArc = Arc.Create(middleEnd0, middleEnd1, middleCenter);
             walkPath.Add(middleArc);
 

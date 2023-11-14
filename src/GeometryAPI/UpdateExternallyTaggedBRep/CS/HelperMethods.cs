@@ -12,10 +12,10 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
         ///     See CreateBRep.Execute method summary for the details.
         /// </summary>
         /// <param name="document">A Document that will be used for Transaction and DirectShape creation.</param>
-        public static Result executeCreateBRepCommand(Document document)
+        public static Result ExecuteCreateBRepCommand(Document document)
         {
             // Create the ExternallyTaggedBRep named "Podium".
-            var taggedBRep = createExternallyTaggedPodium(40.0, 12.0, 30.0);
+            var taggedBRep = CreateExternallyTaggedPodium(40.0, 12.0, 30.0);
             if (null == taggedBRep)
                 return Result.Failed;
 
@@ -24,7 +24,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
                 transaction.Start();
 
                 // Create the new DirectShape for this open Document and add the created ExternallyTaggedBRep to this DirectShape.
-                CreateBRep.CreatedDirectShape = createDirectShapeWithExternallyTaggedBRep(document, taggedBRep);
+                CreateBRep.CreatedDirectShape = CreateDirectShapeWithExternallyTaggedBRep(document, taggedBRep);
                 if (null == CreateBRep.CreatedDirectShape)
                     return Result.Failed;
 
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
         /// <param name="width">The width of the stairs BRep.</param>
         /// <param name="height">The height of the stairs BRep.</param>
         /// <param name="depth">The depth of the stairs BRep.</param>
-        public static ExternallyTaggedBRep createExternallyTaggedPodium(double width, double height, double depth)
+        public static ExternallyTaggedBRep CreateExternallyTaggedPodium(double width, double height, double depth)
         {
             var podium = new Podium(width, height, depth);
             return podium.CreateStairs();
@@ -67,7 +67,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
         /// </summary>
         /// <param name="document">A Document that will be used for the DirectShape creation.</param>
         /// <param name="taggedBRep">An ExternallyTaggedBRep that will be added to the created DirectShape.</param>
-        public static DirectShape createDirectShapeWithExternallyTaggedBRep(Document document,
+        public static DirectShape CreateDirectShapeWithExternallyTaggedBRep(Document document,
             ExternallyTaggedBRep taggedBRep)
         {
             var directShape = DirectShape.CreateElement(document, new ElementId(BuiltInCategory.OST_Stairs));

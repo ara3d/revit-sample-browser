@@ -24,22 +24,22 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         /// <summary>
         ///     The revit application
         /// </summary>
-        private static Application m_application;
+        private static Application _application;
 
         /// <summary>
         ///     The current document of the application
         /// </summary>
-        private static Document m_document;
+        private static Document _document;
 
         /// <summary>
         ///     the radius of the arc profile
         /// </summary>
-        private readonly double arcRadius = 0.17;
+        private readonly double m_arcRadius = 0.17;
 
         /// <summary>
         ///     the height and width of the connector
         /// </summary>
-        private readonly double[,] connectorDimensions = new double[2, 2]
+        private readonly double[,] m_connectorDimensions = new double[2, 2]
         {
             { 3.58, 3.4 },
             { 3.59, 10.833 }
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         /// <summary>
         ///     the start and end offsets of the extrusion
         /// </summary>
-        private readonly double[,] extrusionOffsets = new double[5, 2]
+        private readonly double[,] m_extrusionOffsets = new double[5, 2]
         {
             { -0.9, 6.77 },
             { 0, -0.18 },
@@ -60,22 +60,22 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         /// <summary>
         ///     the extrusion array
         /// </summary>
-        private Extrusion[] extrusions;
+        private Extrusion[] m_extrusions;
 
         /// <summary>
         ///     the factory to creaate extrusions and connectors
         /// </summary>
-        private FamilyItemFactory f;
+        private FamilyItemFactory m_f;
 
         /// <summary>
         ///     the flow of the connector
         /// </summary>
-        private readonly double flow = 547;
+        private readonly double m_flow = 547;
 
         /// <summary>
         ///     whether the extrusion is solid
         /// </summary>
-        private readonly bool[] isSolid = new bool[5] { true, false, false, true, true };
+        private readonly bool[] m_isSolid = new bool[5] { true, false, false, true, true };
 
         /// <summary>
         ///     The list of all the elements to be combined in the air handler system
@@ -90,7 +90,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         /// <summary>
         ///     Data to create extrusions and connectors
         /// </summary>
-        private readonly XYZ[,] profileData = new XYZ[5, 4]
+        private readonly XYZ[,] m_profileData = new XYZ[5, 4]
         {
             // In Array 0 to 2, the data is the points that defines the edges of the profile
             {
@@ -129,7 +129,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         /// <summary>
         ///     the normal and origin of the sketch plane
         /// </summary>
-        private readonly XYZ[,] sketchPlaneData = new XYZ[5, 2]
+        private readonly XYZ[,] m_sketchPlaneData = new XYZ[5, 2]
         {
             { new XYZ(0, 0, 1), new XYZ(0, 0, 0.9) },
             { new XYZ(1, 0, 0), new XYZ(-0.57, 0, 0) },
@@ -143,17 +143,17 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         {
             // set out default result to failure.
             var retRes = Result.Failed;
-            m_application = commandData.Application.Application;
-            m_document = commandData.Application.ActiveUIDocument.Document;
-            f = m_document.FamilyCreate;
-            extrusions = new Extrusion[5];
+            _application = commandData.Application.Application;
+            _document = commandData.Application.ActiveUIDocument.Document;
+            m_f = _document.FamilyCreate;
+            m_extrusions = new Extrusion[5];
             m_combineElements = new CombinableElementArray();
 
-            m_transaction = new Transaction(m_document, "External Tool");
+            m_transaction = new Transaction(_document, "External Tool");
             m_transaction.Start();
 
-            if (m_document.OwnerFamily.FamilyCategory.Name !=
-                m_document.Settings.Categories.get_Item(BuiltInCategory.OST_MechanicalEquipment)
+            if (_document.OwnerFamily.FamilyCategory.Name !=
+                _document.Settings.Categories.get_Item(BuiltInCategory.OST_MechanicalEquipment)
                     .Name) // FamilyCategory.Name is not "Mechanical Equipment".
             {
                 message = "Please make sure you opened a template of Mechanical Equipment.";
@@ -163,11 +163,11 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
             try
             {
                 CreateExtrusions();
-                m_document.Regenerate();
+                _document.Regenerate();
                 CreateConnectors();
-                m_document.Regenerate();
-                m_document.CombineElements(m_combineElements);
-                m_document.Regenerate();
+                _document.Regenerate();
+                _document.CombineElements(m_combineElements);
+                _document.Regenerate();
             }
             catch (Exception x)
             {
@@ -190,27 +190,27 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         public List<PlanarFace> GetPlanarFaces(Extrusion extrusion)
         {
             // the option to get geometry elements
-            var m_geoOptions = m_application.Create.NewGeometryOptions();
-            m_geoOptions.View = m_document.ActiveView;
-            m_geoOptions.ComputeReferences = true;
+            var geoOptions = _application.Create.NewGeometryOptions();
+            geoOptions.View = _document.ActiveView;
+            geoOptions.ComputeReferences = true;
 
             // get the planar faces
-            var m_planarFaces = new List<PlanarFace>();
-            var geoElement = extrusion.get_Geometry(m_geoOptions);
+            var planarFaces = new List<PlanarFace>();
+            var geoElement = extrusion.get_Geometry(geoOptions);
             //foreach (GeometryObject geoObject in geoElement.Objects)
-            var Objects = geoElement.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geoElement.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var geoObject = Objects.Current;
+                var geoObject = objects.Current;
 
                 var geoSolid = geoObject as Solid;
                 if (null == geoSolid) continue;
                 foreach (Face geoFace in geoSolid.Faces)
                     if (geoFace is PlanarFace face)
-                        m_planarFaces.Add(face);
+                        planarFaces.Add(face);
             }
 
-            return m_planarFaces;
+            return planarFaces;
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         /// </summary>
         private void CreateExtrusions()
         {
-            var app = m_application.Create;
+            var app = _application.Create;
             CurveArray curves = null;
             CurveArrArray profile = null;
             Plane plane = null;
@@ -228,22 +228,22 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
             {
                 // create the profile
                 curves = app.NewCurveArray();
-                curves.Append(Line.CreateBound(profileData[i, 0], profileData[i, 1]));
-                curves.Append(Line.CreateBound(profileData[i, 1], profileData[i, 2]));
-                curves.Append(Line.CreateBound(profileData[i, 2], profileData[i, 3]));
-                curves.Append(Line.CreateBound(profileData[i, 3], profileData[i, 0]));
+                curves.Append(Line.CreateBound(m_profileData[i, 0], m_profileData[i, 1]));
+                curves.Append(Line.CreateBound(m_profileData[i, 1], m_profileData[i, 2]));
+                curves.Append(Line.CreateBound(m_profileData[i, 2], m_profileData[i, 3]));
+                curves.Append(Line.CreateBound(m_profileData[i, 3], m_profileData[i, 0]));
                 profile = app.NewCurveArrArray();
                 profile.Append(curves);
 
                 // create the sketch plane
-                plane = Plane.CreateByNormalAndOrigin(sketchPlaneData[i, 0], sketchPlaneData[i, 1]);
-                sketchPlane = SketchPlane.Create(m_document, plane);
+                plane = Plane.CreateByNormalAndOrigin(m_sketchPlaneData[i, 0], m_sketchPlaneData[i, 1]);
+                sketchPlane = SketchPlane.Create(_document, plane);
 
                 // create the extrusion
-                extrusions[i] = f.NewExtrusion(isSolid[i], profile, sketchPlane,
-                    extrusionOffsets[i, 1]);
-                extrusions[i].StartOffset = extrusionOffsets[i, 0];
-                m_combineElements.Append(extrusions[i]);
+                m_extrusions[i] = m_f.NewExtrusion(m_isSolid[i], profile, sketchPlane,
+                    m_extrusionOffsets[i, 1]);
+                m_extrusions[i].StartOffset = m_extrusionOffsets[i, 0];
+                m_combineElements.Append(m_extrusions[i]);
             }
 
             for (var i = 3; i <= 4; ++i)
@@ -252,19 +252,19 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
                 profile = app.NewCurveArrArray();
 
                 curves = app.NewCurveArray();
-                plane = Plane.CreateByNormalAndOrigin(profileData[i, 0], profileData[i, 1]);
-                curves.Append(Arc.Create(plane, arcRadius, 0, Math.PI * 2));
+                plane = Plane.CreateByNormalAndOrigin(m_profileData[i, 0], m_profileData[i, 1]);
+                curves.Append(Arc.Create(plane, m_arcRadius, 0, Math.PI * 2));
                 profile.Append(curves);
 
                 // create the sketch plane
-                plane = Plane.CreateByNormalAndOrigin(sketchPlaneData[i, 0], sketchPlaneData[i, 1]);
-                sketchPlane = SketchPlane.Create(m_document, plane);
+                plane = Plane.CreateByNormalAndOrigin(m_sketchPlaneData[i, 0], m_sketchPlaneData[i, 1]);
+                sketchPlane = SketchPlane.Create(_document, plane);
 
                 // create the extrusion
-                extrusions[i] = f.NewExtrusion(isSolid[i], profile, sketchPlane,
-                    extrusionOffsets[i, 1]);
-                extrusions[i].StartOffset = extrusionOffsets[i, 0];
-                m_combineElements.Append(extrusions[i]);
+                m_extrusions[i] = m_f.NewExtrusion(m_isSolid[i], profile, sketchPlane,
+                    m_extrusionOffsets[i, 1]);
+                m_extrusions[i].StartOffset = m_extrusionOffsets[i, 0];
+                m_combineElements.Append(m_extrusions[i]);
             }
         }
 
@@ -274,68 +274,68 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
         private void CreateConnectors()
         {
             // get the planar faces of extrusion1
-            var m_planarFaces = GetPlanarFaces(extrusions[1]);
+            var planarFaces = GetPlanarFaces(m_extrusions[1]);
 
             // create the Supply Air duct connector
             //DuctConnector connSupplyAir = f.NewDuctConnector(m_planarFaces[0].Reference,
             //    DuctSystemType.SupplyAir);
-            var connSupplyAir = ConnectorElement.CreateDuctConnector(m_document, DuctSystemType.SupplyAir,
-                ConnectorProfileType.Rectangular, m_planarFaces[0].Reference);
+            var connSupplyAir = ConnectorElement.CreateDuctConnector(_document, DuctSystemType.SupplyAir,
+                ConnectorProfileType.Rectangular, planarFaces[0].Reference);
             var param = connSupplyAir.get_Parameter(BuiltInParameter.CONNECTOR_HEIGHT);
-            param.Set(connectorDimensions[0, 0]);
+            param.Set(m_connectorDimensions[0, 0]);
             param = connSupplyAir.get_Parameter(BuiltInParameter.CONNECTOR_WIDTH);
-            param.Set(connectorDimensions[0, 1]);
+            param.Set(m_connectorDimensions[0, 1]);
             param = connSupplyAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_DIRECTION_PARAM);
             param.Set(2);
             param = connSupplyAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_CONFIGURATION_PARAM);
             param.Set(1);
             param = connSupplyAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_PARAM);
-            param.Set(flow);
+            param.Set(m_flow);
 
             // get the planar faces of extrusion2
-            m_planarFaces = GetPlanarFaces(extrusions[2]);
+            planarFaces = GetPlanarFaces(m_extrusions[2]);
 
             // create the Return Air duct connector
             //DuctConnector connReturnAir = f.NewDuctConnector(m_planarFaces[0].Reference,
             //    DuctSystemType.ReturnAir);
-            var connReturnAir = ConnectorElement.CreateDuctConnector(m_document, DuctSystemType.ReturnAir,
-                ConnectorProfileType.Rectangular, m_planarFaces[0].Reference);
+            var connReturnAir = ConnectorElement.CreateDuctConnector(_document, DuctSystemType.ReturnAir,
+                ConnectorProfileType.Rectangular, planarFaces[0].Reference);
             param = connReturnAir.get_Parameter(BuiltInParameter.CONNECTOR_HEIGHT);
-            param.Set(connectorDimensions[1, 0]);
+            param.Set(m_connectorDimensions[1, 0]);
             param = connReturnAir.get_Parameter(BuiltInParameter.CONNECTOR_WIDTH);
-            param.Set(connectorDimensions[1, 1]);
+            param.Set(m_connectorDimensions[1, 1]);
             param = connReturnAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_DIRECTION_PARAM);
             param.Set(1);
             param =
                 connReturnAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_CONFIGURATION_PARAM);
             param.Set(1);
             param = connReturnAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_PARAM);
-            param.Set(flow);
+            param.Set(m_flow);
 
             // get the planar faces of extrusion3
-            m_planarFaces = GetPlanarFaces(extrusions[3]);
+            planarFaces = GetPlanarFaces(m_extrusions[3]);
 
             // create the Hydronic Supply pipe connector
             //PipeConnector connSupplyHydronic = f.NewPipeConnector(m_planarFaces[0].Reference,
             //    PipeSystemType.SupplyHydronic);
-            var connSupplyHydronic = ConnectorElement.CreatePipeConnector(m_document, PipeSystemType.SupplyHydronic,
-                m_planarFaces[0].Reference);
+            var connSupplyHydronic = ConnectorElement.CreatePipeConnector(_document, PipeSystemType.SupplyHydronic,
+                planarFaces[0].Reference);
             param = connSupplyHydronic.get_Parameter(BuiltInParameter.CONNECTOR_RADIUS);
-            param.Set(arcRadius);
+            param.Set(m_arcRadius);
             param =
                 connSupplyHydronic.get_Parameter(BuiltInParameter.RBS_PIPE_FLOW_DIRECTION_PARAM);
             param.Set(2);
 
             // get the planar faces of extrusion4
-            m_planarFaces = GetPlanarFaces(extrusions[4]);
+            planarFaces = GetPlanarFaces(m_extrusions[4]);
 
             // create the Hydronic Return pipe connector
             //PipeConnector connReturnHydronic = f.NewPipeConnector(m_planarFaces[0].Reference,
             //    PipeSystemType.ReturnHydronic);
-            var connReturnHydronic = ConnectorElement.CreatePipeConnector(m_document, PipeSystemType.ReturnHydronic,
-                m_planarFaces[0].Reference);
+            var connReturnHydronic = ConnectorElement.CreatePipeConnector(_document, PipeSystemType.ReturnHydronic,
+                planarFaces[0].Reference);
             param = connReturnHydronic.get_Parameter(BuiltInParameter.CONNECTOR_RADIUS);
-            param.Set(arcRadius);
+            param.Set(m_arcRadius);
             param =
                 connReturnHydronic.get_Parameter(BuiltInParameter.RBS_PIPE_FLOW_DIRECTION_PARAM);
             param.Set(1);

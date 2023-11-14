@@ -42,7 +42,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             InitializeInformationGrid();
 
             // Initialize the sketch plane comboBox control
-            BindComboBox(sketchPlaneComboBox, m_dataBuffer.SketchPlaneIDArray);
+            BindComboBox(sketchPlaneComboBox, m_dataBuffer.SketchPlaneIdArray);
             sketchPlaneComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             // Initialize the creation group information
@@ -150,13 +150,13 @@ namespace Revit.SDK.Samples.ModelLines.CS
             switch (type)
             {
                 case LineType.ModelEllipse: // if it is model ellipse
-                    BindComboBox(elementIdComboBox, m_dataBuffer.EllispeIDArray);
+                    BindComboBox(elementIdComboBox, m_dataBuffer.EllispeIdArray);
                     break;
                 case LineType.ModelHermiteSpline: // if it is model hermite spline
-                    BindComboBox(elementIdComboBox, m_dataBuffer.HermiteSplineIDArray);
+                    BindComboBox(elementIdComboBox, m_dataBuffer.HermiteSplineIdArray);
                     break;
                 case LineType.ModelNurbSpline: // if it is model nurb spline
-                    BindComboBox(elementIdComboBox, m_dataBuffer.NurbSplineIDArray);
+                    BindComboBox(elementIdComboBox, m_dataBuffer.NurbSplineIdArray);
                     break;
                 default:
                     return;
@@ -295,7 +295,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             otherInfoLabel.Text = "New ellipse need information:";
 
             // Bing the elementIdComboBox DataSource to EllispeIDArray
-            BindComboBox(elementIdComboBox, m_dataBuffer.EllispeIDArray);
+            BindComboBox(elementIdComboBox, m_dataBuffer.EllispeIdArray);
 
             // Change the panel visible property
             otherPanel.Visible = true; // make the otherPanel visible
@@ -314,7 +314,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             otherInfoLabel.Text = "New hermite spline need information:";
 
             // Bing the elementIdComboBox DataSource to HermiteSplineIDArray
-            BindComboBox(elementIdComboBox, m_dataBuffer.HermiteSplineIDArray);
+            BindComboBox(elementIdComboBox, m_dataBuffer.HermiteSplineIdArray);
 
             // Change the panel visible property
             lineArcPanel.Visible = false; // make the lineArcPanel not visible
@@ -333,7 +333,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             otherInfoLabel.Text = "New nurb spline need information:";
 
             // Bing the elementIdComboBox DataSource to NurbSplineIDArray
-            BindComboBox(elementIdComboBox, m_dataBuffer.NurbSplineIDArray);
+            BindComboBox(elementIdComboBox, m_dataBuffer.NurbSplineIdArray);
 
             // Change the panel visible property
             lineArcPanel.Visible = false; // make the lineArcPanel not visible
@@ -352,7 +352,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             }
 
             // Rebind the data source of the sketchPlaneComboBox to refresh data
-            BindComboBox(sketchPlaneComboBox, m_dataBuffer.SketchPlaneIDArray);
+            BindComboBox(sketchPlaneComboBox, m_dataBuffer.SketchPlaneIdArray);
             // Set the selected Item to be the new created one
             sketchPlaneComboBox.SelectedIndex = sketchPlaneComboBox.Items.Count - 1;
 

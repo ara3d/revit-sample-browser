@@ -27,14 +27,14 @@ namespace SchemaWrapperTools
     public class SchemaDataWrapper
     {
         private string m_applicationId;
-        private List<FieldData> m_DataList;
-        private string m_Documentation;
-        private string m_Name;
+        private List<FieldData> m_dataList;
+        private string m_documentation;
+        private string m_name;
 
-        private AccessLevel m_ReadAccess;
+        private AccessLevel m_readAccess;
         private string m_schemaId;
         private string m_vendorId;
-        private AccessLevel m_WriteAccess;
+        private AccessLevel m_writeAccess;
 
         /// <summary>
         ///     For serialization only -- Do not use.
@@ -71,8 +71,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public List<FieldData> DataList
         {
-            get => m_DataList;
-            set => m_DataList = value;
+            get => m_dataList;
+            set => m_dataList = value;
         }
 
         /// <summary>
@@ -89,8 +89,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public AccessLevel ReadAccess
         {
-            get => m_ReadAccess;
-            set => m_ReadAccess = value;
+            get => m_readAccess;
+            set => m_readAccess = value;
         }
 
         /// <summary>
@@ -98,8 +98,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public AccessLevel WriteAccess
         {
-            get => m_WriteAccess;
-            set => m_WriteAccess = value;
+            get => m_writeAccess;
+            set => m_writeAccess = value;
         }
 
         /// <summary>
@@ -125,8 +125,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public string Documentation
         {
-            get => m_Documentation;
-            set => m_Documentation = value;
+            get => m_documentation;
+            set => m_documentation = value;
         }
 
         /// <summary>
@@ -134,8 +134,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public string Name
         {
-            get => m_Name;
-            set => m_Name = value;
+            get => m_name;
+            set => m_name = value;
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace SchemaWrapperTools
         /// <param name="subSchema">The SchemaWrapper of the field's subSchema, if the field is of type "Entity"</param>
         public void AddData(string name, Type typeIn, ForgeTypeId spec, SchemaWrapper subSchema)
         {
-            m_DataList.Add(new FieldData(name, typeIn.FullName, spec.TypeId, subSchema));
+            m_dataList.Add(new FieldData(name, typeIn.FullName, spec.TypeId, subSchema));
         }
     }
 }

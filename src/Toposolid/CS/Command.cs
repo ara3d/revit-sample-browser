@@ -77,7 +77,7 @@ namespace Revit.SDK.Samples.Toposolid.CS
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    public class ToposolidFromDWG : IExternalCommand
+    public class ToposolidFromDwg : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -265,7 +265,7 @@ namespace Revit.SDK.Samples.Toposolid.CS
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    public class SSEPointVisibility : IExternalCommand
+    public class SsePointVisibility : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

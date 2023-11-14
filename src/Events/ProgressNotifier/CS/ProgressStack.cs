@@ -16,14 +16,14 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// <summary>
         ///     ProgressItem stack
         /// </summary>
-        public readonly Stack<ProgressItem> m_itemStack;
+        public readonly Stack<ProgressItem> ItemStack;
 
         /// <summary>
         ///     Constructor
         /// </summary>
         public ProgressStack()
         {
-            m_itemStack = new Stack<ProgressItem>();
+            ItemStack = new Stack<ProgressItem>();
         }
 
         /// <summary>
@@ -41,13 +41,13 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                 {
                     var pi = new ProgressItem(progressEvent.Caption, progressEvent.LowerRange, progressEvent.UpperRange,
                         progressEvent.Position, progressEvent.Stage);
-                    m_itemStack.Push(pi);
+                    ItemStack.Push(pi);
                     currentProgressItem = pi;
                     break;
                 }
                 case ProgressStage.PositionChanged:
                 {
-                    var pi = m_itemStack.Peek();
+                    var pi = ItemStack.Peek();
                     if (pi.Name != progressEvent.Caption) Debug.WriteLine("Name not matching?");
                     pi.Position = progressEvent.Position;
                     pi.Stage = progressEvent.Stage;
@@ -57,7 +57,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
                 case ProgressStage.RangeChanged:
                 {
-                    var pi = m_itemStack.Peek();
+                    var pi = ItemStack.Peek();
                     pi.Upper = progressEvent.UpperRange;
                     pi.Stage = progressEvent.Stage;
                     currentProgressItem = pi;
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
                 case ProgressStage.Finished:
                 {
-                    var pi = m_itemStack.Pop();
+                    var pi = ItemStack.Pop();
                     pi.IsDone = true;
                     pi.Stage = progressEvent.Stage;
                     currentProgressItem = pi;
@@ -75,7 +75,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
                 case ProgressStage.CaptionChanged:
                 {
-                    var pi = m_itemStack.Peek();
+                    var pi = ItemStack.Peek();
                     pi.Name = progressEvent.Caption;
                     pi.Stage = progressEvent.Stage;
                     Debug.WriteLine("Caption Change at top.");
@@ -95,7 +95,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                     throw new Exception("Unknown stage.");
             }
 
-            if (m_itemStack.Count == 0)
+            if (ItemStack.Count == 0)
                 Debug.WriteLine("Stack empty");
             else
                 Debug.WriteLine(ToString());
@@ -111,7 +111,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         {
             var sb = new StringBuilder();
             sb.AppendLine("-ProgressBar Stack-");
-            foreach (var pi in m_itemStack) sb.AppendLine(pi.ToString());
+            foreach (var pi in ItemStack) sb.AppendLine(pi.ToString());
             return sb.ToString();
         }
 
@@ -126,12 +126,12 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
             if (padDepth != 0)
             {
-                var padding = padDepth - m_itemStack.Count;
+                var padding = padDepth - ItemStack.Count;
 
                 for (var index = 0; index != padding; ++index) itemList.Add("");
             }
 
-            foreach (var pi in m_itemStack) itemList.Add(pi.ToString());
+            foreach (var pi in ItemStack) itemList.Add(pi.ToString());
             return itemList;
         }
     }

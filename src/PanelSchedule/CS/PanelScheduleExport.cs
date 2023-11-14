@@ -24,8 +24,8 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
 
             // get all PanelScheduleView instances in the Revit document.
             var fec = new FilteredElementCollector(doc);
-            var PanelScheduleViewsAreWanted = new ElementClassFilter(typeof(PanelScheduleView));
-            fec.WherePasses(PanelScheduleViewsAreWanted);
+            var panelScheduleViewsAreWanted = new ElementClassFilter(typeof(PanelScheduleView));
+            fec.WherePasses(panelScheduleViewsAreWanted);
             var psViews = fec.ToElements() as List<Element>;
 
             var noPanelScheduleInstance = true;
@@ -43,11 +43,11 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
                 alternativeDlg.MainContent = "Click OK to export in .CSV format, Cancel to export in HTML format.";
                 alternativeDlg.CommonButtons = TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel;
                 alternativeDlg.AllowCancellation = true;
-                var exportToCSV = alternativeDlg.Show();
+                var exportToCsv = alternativeDlg.Show();
 
-                var translator = TaskDialogResult.Cancel == exportToCSV
-                    ? new HTMLTranslator(psView)
-                    : new CSVTranslator(psView) as Translator;
+                var translator = TaskDialogResult.Cancel == exportToCsv
+                    ? new HtmlTranslator(psView)
+                    : new CsvTranslator(psView) as Translator;
                 var exported = translator.Export();
 
                 // open the file if export successfully.

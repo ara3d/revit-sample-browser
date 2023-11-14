@@ -25,58 +25,58 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         /// <summary>
         ///     Minimum length of a fitting
         /// </summary>
-        private const double min1FittingLength = 1;
+        private const double Min1FittingLength = 1;
 
         /// <summary>
         ///     Minimum length of a duct
         /// </summary>
-        private const double minDuctLength = 0.5;
+        private const double MinDuctLength = 0.5;
 
         /// <summary>
         ///     The vertical offset of the highest connector to the trunk ducts
         /// </summary>
-        private const double verticalTrunkOffset = 15;
+        private const double VerticalTrunkOffset = 15;
 
         /// <summary>
         ///     Optional distance from trunk to the boundary of system bounding box
         ///     used when failed to lay out ducts in the region of bounding box
         /// </summary>
-        private const double horizontalOptionalTrunkOffset = 5;
+        private const double HorizontalOptionalTrunkOffset = 5;
 
         /// <summary>
         ///     Minimum length of 2 fittings
         /// </summary>
-        private const double min2FittingsLength = min1FittingLength * 2;
+        private const double Min2FittingsLength = Min1FittingLength * 2;
 
         /// <summary>
         ///     The minimum length of 1 duct with 2 fittings
         /// </summary>
-        private const double min1Duct2FittingsLength = min1FittingLength * 2 + minDuctLength;
+        private const double Min1Duct2FittingsLength = Min1FittingLength * 2 + MinDuctLength;
 
         /// <summary>
         ///     The revit application
         /// </summary>
-        private static Application m_application;
+        private static Application _application;
 
         /// <summary>
         ///     The current document of the application
         /// </summary>
-        private static Document m_document;
+        private static Document _document;
 
         /// <summary>
         ///     The type of the ducts in the system
         /// </summary>
-        private DuctType dtRectangle;
+        private DuctType m_dtRectangle;
 
         /// <summary>
         ///     The type id of the duct
         /// </summary>
-        private readonly ElementId ductTypeId = new ElementId(139191L);
+        private readonly ElementId m_ductTypeId = new ElementId(139191L);
 
         /// <summary>
         ///     The level of the duct
         /// </summary>
-        private Level lvl;
+        private Level m_lvl;
 
         /// <summary>
         ///     The mechanical system that will be created
@@ -86,7 +86,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         /// <summary>
         ///     The system type id of the duct
         /// </summary>
-        private ElementId systemTypeId = ElementId.InvalidElementId;
+        private ElementId m_systemTypeId = ElementId.InvalidElementId;
 
         public Result Execute(ExternalCommandData commandData, ref string message,
             ElementSet elements)
@@ -94,19 +94,19 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             // set out default result to Failed.
             var retRes = Result.Failed;
 
-            m_application = commandData.Application.Application;
-            m_document = commandData.Application.ActiveUIDocument.Document;
+            _application = commandData.Application.Application;
+            _document = commandData.Application.ActiveUIDocument.Document;
             Trace.Listeners.Clear();
             Trace.AutoFlush = true;
 
             //get the system type id of the duct
             var systemTypeFilter = new ElementClassFilter(typeof(MEPSystemType));
-            var C = new FilteredElementCollector(m_document);
-            C.WherePasses(systemTypeFilter);
-            foreach (MEPSystemType type in C)
+            var c = new FilteredElementCollector(_document);
+            c.WherePasses(systemTypeFilter);
+            foreach (MEPSystemType type in c)
                 if (type.SystemClassification == MEPSystemClassification.SupplyAir)
                 {
-                    systemTypeId = type.Id;
+                    m_systemTypeId = type.Id;
                     break;
                 }
 
@@ -116,13 +116,13 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             var listener = new TextWriterTraceListener(outputFileName);
             Trace.Listeners.Add(listener);
 
-            var transaction = new Transaction(m_document, "Sample_AutoRoute");
+            var transaction = new Transaction(_document, "Sample_AutoRoute");
             try
             {
                 transaction.Start();
 
                 //set the level of the duct            
-                lvl = Level.Create(m_document, 0.0);
+                m_lvl = Level.Create(_document, 0.0);
 
                 //Lists to temporarily record the created elements
                 var ducts = new List<Duct>();
@@ -144,7 +144,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 ConnectorSetIterator csi = null;
                 for (var i = 0; i < ids.Count; ++i)
                 {
-                    var element = m_document.GetElement(ids[i]);
+                    var element = _document.GetElement(ids[i]);
                     if (null == element)
                     {
                         message = "Element " + ids[i] + " can't be found.";
@@ -155,7 +155,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                     csi = ConnectorInfo.GetConnectors(ids[i]).ForwardIterator();
                     csi.MoveNext();
                     conns[i] = csi.Current as Connector;
-                    boxes[i] = instances[i].get_BoundingBox(m_document.ActiveView);
+                    boxes[i] = instances[i].get_BoundingBox(_document.ActiveView);
                 }
 
                 //Find the "Out" and "SupplyAir" connector on the base equipment
@@ -210,52 +210,52 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 var baseYValues = new double[3] { midY, (minY + midY) / 2, (maxY + midY) / 2 };
 
                 //Get the duct type for the ducts to be created
-                dtRectangle = m_document.GetElement(ductTypeId) as DuctType;
+                m_dtRectangle = _document.GetElement(m_ductTypeId) as DuctType;
 
                 //Create the ducts and elbows that connect the base mechanical equipment
                 var connectorDirection = conns[0].CoordinateSystem.BasisZ;
 
                 if (0 == connectorDirection.DistanceTo(new GXYZ(-1, 0, 0)))
                 {
-                    points.Add(new GXYZ(conns[0].Origin.X - min1FittingLength, conns[0].Origin.Y, conns[0].Origin.Z));
-                    points.Add(new GXYZ(conns[0].Origin.X - min2FittingsLength, conns[0].Origin.Y,
-                        conns[0].Origin.Z + min1FittingLength));
-                    points.Add(new GXYZ(conns[0].Origin.X - min2FittingsLength, conns[0].Origin.Y,
-                        maxZ + verticalTrunkOffset - min1FittingLength));
+                    points.Add(new GXYZ(conns[0].Origin.X - Min1FittingLength, conns[0].Origin.Y, conns[0].Origin.Z));
+                    points.Add(new GXYZ(conns[0].Origin.X - Min2FittingsLength, conns[0].Origin.Y,
+                        conns[0].Origin.Z + Min1FittingLength));
+                    points.Add(new GXYZ(conns[0].Origin.X - Min2FittingsLength, conns[0].Origin.Y,
+                        maxZ + VerticalTrunkOffset - Min1FittingLength));
                 }
                 else if (0 == connectorDirection.DistanceTo(new GXYZ(1, 0, 0)))
                 {
-                    points.Add(new GXYZ(conns[0].Origin.X + min1FittingLength, conns[0].Origin.Y, conns[0].Origin.Z));
-                    points.Add(new GXYZ(conns[0].Origin.X + min2FittingsLength, conns[0].Origin.Y,
-                        conns[0].Origin.Z + min1FittingLength));
-                    points.Add(new GXYZ(conns[0].Origin.X + min2FittingsLength, conns[0].Origin.Y,
-                        maxZ + verticalTrunkOffset - min1FittingLength));
+                    points.Add(new GXYZ(conns[0].Origin.X + Min1FittingLength, conns[0].Origin.Y, conns[0].Origin.Z));
+                    points.Add(new GXYZ(conns[0].Origin.X + Min2FittingsLength, conns[0].Origin.Y,
+                        conns[0].Origin.Z + Min1FittingLength));
+                    points.Add(new GXYZ(conns[0].Origin.X + Min2FittingsLength, conns[0].Origin.Y,
+                        maxZ + VerticalTrunkOffset - Min1FittingLength));
                 }
                 else if (0 == connectorDirection.DistanceTo(new GXYZ(0, -1, 0)))
                 {
-                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y - min1FittingLength, conns[0].Origin.Z));
-                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y - min2FittingsLength,
-                        conns[0].Origin.Z + min1FittingLength));
-                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y - min2FittingsLength,
-                        maxZ + verticalTrunkOffset - min1FittingLength));
+                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y - Min1FittingLength, conns[0].Origin.Z));
+                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y - Min2FittingsLength,
+                        conns[0].Origin.Z + Min1FittingLength));
+                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y - Min2FittingsLength,
+                        maxZ + VerticalTrunkOffset - Min1FittingLength));
                 }
                 else if (0 == connectorDirection.DistanceTo(new GXYZ(0, 1, 0)))
                 {
-                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y + min1FittingLength, conns[0].Origin.Z));
-                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y + min2FittingsLength,
-                        conns[0].Origin.Z + min1FittingLength));
-                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y + min2FittingsLength,
-                        maxZ + verticalTrunkOffset - min1FittingLength));
+                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y + Min1FittingLength, conns[0].Origin.Z));
+                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y + Min2FittingsLength,
+                        conns[0].Origin.Z + Min1FittingLength));
+                    points.Add(new GXYZ(conns[0].Origin.X, conns[0].Origin.Y + Min2FittingsLength,
+                        maxZ + VerticalTrunkOffset - Min1FittingLength));
                 }
 
-                ducts.Add(Duct.Create(m_document, ductTypeId, lvl.Id, conns[0], points[0]));
+                ducts.Add(Duct.Create(_document, m_ductTypeId, m_lvl.Id, conns[0], points[0]));
 
-                ducts.Add(Duct.Create(m_document, systemTypeId, ductTypeId, lvl.Id, points[1], points[2]));
+                ducts.Add(Duct.Create(_document, m_systemTypeId, m_ductTypeId, m_lvl.Id, points[1], points[2]));
                 connectors.Add(ConnectorInfo.GetConnector(ducts[0].Id, points[0]));
                 connectors.Add(ConnectorInfo.GetConnector(ducts[1].Id, points[1]));
                 connectors.Add(ConnectorInfo.GetConnector(ducts[1].Id, points[2]));
                 connectors[0].ConnectTo(connectors[1]);
-                m_document.Create.NewElbowFitting(connectors[0], connectors[1]);
+                _document.Create.NewElbowFitting(connectors[0], connectors[1]);
                 baseConnectors.Add(connectors[2]);
 
                 //Create the vertical ducts for terminals
@@ -263,11 +263,11 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 ducts.Clear();
 
                 points.Add(new GXYZ(conns[1].Origin.X, conns[1].Origin.Y,
-                    maxZ + verticalTrunkOffset - min1FittingLength));
+                    maxZ + VerticalTrunkOffset - Min1FittingLength));
                 points.Add(new GXYZ(conns[2].Origin.X, conns[2].Origin.Y,
-                    maxZ + verticalTrunkOffset - min1FittingLength));
-                ducts.Add(Duct.Create(m_document, ductTypeId, lvl.Id, conns[1], points[0]));
-                ducts.Add(Duct.Create(m_document, ductTypeId, lvl.Id, conns[2], points[1]));
+                    maxZ + VerticalTrunkOffset - Min1FittingLength));
+                ducts.Add(Duct.Create(_document, m_ductTypeId, m_lvl.Id, conns[1], points[0]));
+                ducts.Add(Duct.Create(_document, m_ductTypeId, m_lvl.Id, conns[2], points[1]));
                 baseConnectors.Add(ConnectorInfo.GetConnector(ducts[0].Id, points[0]));
                 baseConnectors.Add(ConnectorInfo.GetConnector(ducts[1].Id, points[1]));
 
@@ -290,14 +290,14 @@ namespace Revit.SDK.Samples.AutoRoute.CS
 
                 //If all the cases fail to route the system, try the trunks out of the bounding box
                 SortConnectorsByX(baseConnectors);
-                if (ConnectSystemOnXAxis(baseConnectors, maxY + horizontalOptionalTrunkOffset))
+                if (ConnectSystemOnXAxis(baseConnectors, maxY + HorizontalOptionalTrunkOffset))
                 {
                     LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
                     return Result.Succeeded;
                 }
 
                 SortConnectorsByY(baseConnectors);
-                if (ConnectSystemOnYAxis(baseConnectors, maxX + horizontalOptionalTrunkOffset))
+                if (ConnectSystemOnYAxis(baseConnectors, maxX + HorizontalOptionalTrunkOffset))
                 {
                     LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
                     return Result.Succeeded;
@@ -307,15 +307,15 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 connectors.Clear();
                 SortConnectorsByX(baseConnectors);
                 connectors.AddRange(CreateDuct(
-                    new GXYZ(baseConnectors[0].Origin.X + min1FittingLength, baseYValues[0],
-                        maxZ + verticalTrunkOffset),
-                    new GXYZ(baseConnectors[1].Origin.X - min1FittingLength, baseYValues[0],
-                        maxZ + verticalTrunkOffset)));
+                    new GXYZ(baseConnectors[0].Origin.X + Min1FittingLength, baseYValues[0],
+                        maxZ + VerticalTrunkOffset),
+                    new GXYZ(baseConnectors[1].Origin.X - Min1FittingLength, baseYValues[0],
+                        maxZ + VerticalTrunkOffset)));
                 connectors.AddRange(CreateDuct(
-                    new GXYZ(baseConnectors[1].Origin.X + min1FittingLength, baseYValues[0],
-                        maxZ + verticalTrunkOffset),
-                    new GXYZ(baseConnectors[2].Origin.X - min1FittingLength, baseYValues[0],
-                        maxZ + verticalTrunkOffset)));
+                    new GXYZ(baseConnectors[1].Origin.X + Min1FittingLength, baseYValues[0],
+                        maxZ + VerticalTrunkOffset),
+                    new GXYZ(baseConnectors[2].Origin.X - Min1FittingLength, baseYValues[0],
+                        maxZ + VerticalTrunkOffset)));
                 ConnectWithElbowFittingOnXAxis(baseConnectors[0], connectors[0]);
                 ConnectWithElbowFittingOnXAxis(baseConnectors[2], connectors[3]);
                 ConnectWithTeeFittingOnXAxis(baseConnectors[1], connectors[1], connectors[2], false);
@@ -358,17 +358,17 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             {
                 //Check the distance of the connector from the trunk
                 if (baseConnectors[i].Origin.Y != baseY &&
-                    Math.Abs(baseConnectors[i].Origin.Y - baseY) < min1Duct2FittingsLength) return false;
+                    Math.Abs(baseConnectors[i].Origin.Y - baseY) < Min1Duct2FittingsLength) return false;
                 //Check the distance of the connectors on X axis
                 for (var j = i + 1; j < baseConnectors.Count; ++j)
                     if (baseConnectors[j].Origin.X != baseConnectors[i].Origin.X &&
-                        baseConnectors[j].Origin.X - baseConnectors[i].Origin.X < min2FittingsLength)
+                        baseConnectors[j].Origin.X - baseConnectors[i].Origin.X < Min2FittingsLength)
                         return false;
             }
 
             try
             {
-                var baseZ = baseConnectors[0].Origin.Z + min1FittingLength;
+                var baseZ = baseConnectors[0].Origin.Z + Min1FittingLength;
                 //Create the ducts and elbow fittings to connect the vertical ducts and the trunk ducts
                 var connectors = new List<Connector>();
 
@@ -385,8 +385,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                         1) return false;
 
                     //Create the trunk
-                    connectors = CreateDuct(new GXYZ(baseConnectors[0].Origin.X + min1FittingLength, baseY, baseZ),
-                        new GXYZ(baseConnectors[2].Origin.X - min1FittingLength, baseY, baseZ));
+                    connectors = CreateDuct(new GXYZ(baseConnectors[0].Origin.X + Min1FittingLength, baseY, baseZ),
+                        new GXYZ(baseConnectors[2].Origin.X - Min1FittingLength, baseY, baseZ));
 
                     //Create a tee fitting connecting the 1st and 2nd base connectors to the trunk
                     ConnectWithTeeFittingOnXAxis(baseConnectors[0], baseConnectors[1], connectors[0], true);
@@ -397,8 +397,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 else
                 {
                     //Create the segment of duct on the trunk to be connected to the 1st base connector
-                    connectors = CreateDuct(new GXYZ(baseConnectors[0].Origin.X + min1FittingLength, baseY, baseZ),
-                        new GXYZ(baseConnectors[1].Origin.X - min1FittingLength, baseY, baseZ));
+                    connectors = CreateDuct(new GXYZ(baseConnectors[0].Origin.X + Min1FittingLength, baseY, baseZ),
+                        new GXYZ(baseConnectors[1].Origin.X - Min1FittingLength, baseY, baseZ));
 
                     //Create an elbow fitting connection the 1st base connector with the trunk
                     ConnectWithElbowFittingOnXAxis(baseConnectors[0], connectors[0]);
@@ -414,8 +414,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                     else
                     {
                         connectors.AddRange(CreateDuct(
-                            new GXYZ(baseConnectors[1].Origin.X + min1FittingLength, baseY, baseZ),
-                            new GXYZ(baseConnectors[2].Origin.X - min1FittingLength, baseY, baseZ)));
+                            new GXYZ(baseConnectors[1].Origin.X + Min1FittingLength, baseY, baseZ),
+                            new GXYZ(baseConnectors[2].Origin.X - Min1FittingLength, baseY, baseZ)));
                         //Create a tee fitting connecting the 2nd base connector to the trunk
                         ConnectWithTeeFittingOnXAxis(baseConnectors[1], connectors[1], connectors[2], false);
                         //Create an elbow fitting connection the 3rd base connector to the trunk
@@ -443,21 +443,21 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             var connectors = new List<Connector>();
 
             //If the distance of the two connectors on the Y axis is greater than 2, create a duct on the Y axis and then connect it to the 2 connectors with elbow fittings
-            if (Math.Abs(baseConn.Origin.Y - baseY) > min1Duct2FittingsLength)
+            if (Math.Abs(baseConn.Origin.Y - baseY) > Min1Duct2FittingsLength)
             {
                 connectors.AddRange(CreateDuct(
                     new GXYZ(baseConn.Origin.X, baseConn.Origin.Y - Math.Sign(baseConn.Origin.Y - baseY), baseZ),
                     new GXYZ(baseConn.Origin.X, baseY + Math.Sign(baseConn.Origin.Y - baseY), baseZ)));
                 connectors[0].ConnectTo(baseConn);
-                m_document.Create.NewElbowFitting(connectors[0], baseConn);
+                _document.Create.NewElbowFitting(connectors[0], baseConn);
                 connectors[1].ConnectTo(conn);
-                m_document.Create.NewElbowFitting(connectors[1], conn);
+                _document.Create.NewElbowFitting(connectors[1], conn);
             }
             //If the distance of the two connectors on the Y axis is less than 2, connect them with an elbow fitting
             else
             {
                 baseConn.ConnectTo(conn);
-                m_document.Create.NewElbowFitting(baseConn, conn);
+                _document.Create.NewElbowFitting(baseConn, conn);
             }
         }
 
@@ -493,38 +493,38 @@ namespace Revit.SDK.Samples.AutoRoute.CS
 
                 connectors[0].ConnectTo(baseConn1);
                 connectors[2].ConnectTo(baseConn2);
-                m_document.Create.NewElbowFitting(connectors[0], baseConn1);
-                m_document.Create.NewElbowFitting(connectors[2], baseConn2);
+                _document.Create.NewElbowFitting(connectors[0], baseConn1);
+                _document.Create.NewElbowFitting(connectors[2], baseConn2);
 
                 connectors[1].ConnectTo(connectors[3]);
                 connectors[1].ConnectTo(conn);
                 connectors[3].ConnectTo(conn);
-                m_document.Create.NewTeeFitting(connectors[1], connectors[3], conn);
+                _document.Create.NewTeeFitting(connectors[1], connectors[3], conn);
             }
             //Connect a base connector to two connectors on the trunk
             else
             {
                 var baseConn = conn1;
 
-                if (Math.Abs(baseConn.Origin.Y - baseY) > min1Duct2FittingsLength)
+                if (Math.Abs(baseConn.Origin.Y - baseY) > Min1Duct2FittingsLength)
                 {
                     connectors.AddRange(CreateDuct(
                         new GXYZ(baseConn.Origin.X, baseConn.Origin.Y - Math.Sign(baseConn.Origin.Y - baseY), baseZ),
                         new GXYZ(baseConn.Origin.X, baseY + Math.Sign(baseConn.Origin.Y - baseY), baseZ)));
                     baseConn.ConnectTo(connectors[0]);
-                    m_document.Create.NewElbowFitting(connectors[0], baseConn);
+                    _document.Create.NewElbowFitting(connectors[0], baseConn);
 
                     connectors[1].ConnectTo(conn2);
                     connectors[1].ConnectTo(conn3);
                     conn2.ConnectTo(conn3);
-                    m_document.Create.NewTeeFitting(conn2, conn3, connectors[1]);
+                    _document.Create.NewTeeFitting(conn2, conn3, connectors[1]);
                 }
                 else
                 {
                     baseConn.ConnectTo(conn2);
                     baseConn.ConnectTo(conn3);
                     conn2.ConnectTo(conn3);
-                    m_document.Create.NewTeeFitting(conn2, conn3, baseConn);
+                    _document.Create.NewTeeFitting(conn2, conn3, baseConn);
                 }
             }
         }
@@ -572,17 +572,17 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             {
                 //Check the distance of the connector from the trunk
                 if (baseConnectors[i].Origin.X != baseX &&
-                    Math.Abs(baseConnectors[i].Origin.X - baseX) < min1Duct2FittingsLength) return false;
+                    Math.Abs(baseConnectors[i].Origin.X - baseX) < Min1Duct2FittingsLength) return false;
                 //Check the distance of the connectors on Y axis
                 for (var j = i + 1; j < baseConnectors.Count; ++j)
                     if (baseConnectors[j].Origin.Y != baseConnectors[i].Origin.Y &&
-                        baseConnectors[j].Origin.Y - baseConnectors[i].Origin.Y < min2FittingsLength)
+                        baseConnectors[j].Origin.Y - baseConnectors[i].Origin.Y < Min2FittingsLength)
                         return false;
             }
 
             try
             {
-                var baseZ = baseConnectors[0].Origin.Z + min1FittingLength;
+                var baseZ = baseConnectors[0].Origin.Z + Min1FittingLength;
                 //Create the ducts and elbow fittings to connect the vertical ducts and the trunk ducts
                 var connectors = new List<Connector>();
 
@@ -599,8 +599,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                         1) return false;
 
                     //Create the trunk
-                    connectors = CreateDuct(new GXYZ(baseX, baseConnectors[0].Origin.Y + min1FittingLength, baseZ),
-                        new GXYZ(baseX, baseConnectors[2].Origin.Y - min1FittingLength, baseZ));
+                    connectors = CreateDuct(new GXYZ(baseX, baseConnectors[0].Origin.Y + Min1FittingLength, baseZ),
+                        new GXYZ(baseX, baseConnectors[2].Origin.Y - Min1FittingLength, baseZ));
 
                     //Create a tee fitting connecting the 1st and 2nd base connectors to the trunk
                     ConnectWithTeeFittingOnYAxis(baseConnectors[0], baseConnectors[1], connectors[0], true);
@@ -611,8 +611,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 else
                 {
                     //Create the segment of duct on the trunk to be connected to the 1st base connector
-                    connectors = CreateDuct(new GXYZ(baseX, baseConnectors[0].Origin.Y + min1FittingLength, baseZ),
-                        new GXYZ(baseX, baseConnectors[1].Origin.Y - min1FittingLength, baseZ));
+                    connectors = CreateDuct(new GXYZ(baseX, baseConnectors[0].Origin.Y + Min1FittingLength, baseZ),
+                        new GXYZ(baseX, baseConnectors[1].Origin.Y - Min1FittingLength, baseZ));
 
                     //Create an elbow fitting connection the 1st base connector with the trunk
                     ConnectWithElbowFittingOnYAxis(baseConnectors[0], connectors[0]);
@@ -628,8 +628,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                     else
                     {
                         connectors.AddRange(CreateDuct(
-                            new GXYZ(baseX, baseConnectors[1].Origin.Y + min1FittingLength, baseZ),
-                            new GXYZ(baseX, baseConnectors[2].Origin.Y - min1FittingLength, baseZ)));
+                            new GXYZ(baseX, baseConnectors[1].Origin.Y + Min1FittingLength, baseZ),
+                            new GXYZ(baseX, baseConnectors[2].Origin.Y - Min1FittingLength, baseZ)));
                         //Create a tee fitting connecting the 2nd base connector to the trunk
                         ConnectWithTeeFittingOnYAxis(baseConnectors[1], connectors[1], connectors[2], false);
                         //Create an elbow fitting connection the 3rd base connector to the trunk
@@ -657,21 +657,21 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             var connectors = new List<Connector>();
 
             //If the distance of the two connectors on the X axis is greater than 2, create a duct on the X axis and then connect it to the 2 connectors with elbow fittings
-            if (Math.Abs(baseConn.Origin.X - baseX) > min1Duct2FittingsLength)
+            if (Math.Abs(baseConn.Origin.X - baseX) > Min1Duct2FittingsLength)
             {
                 connectors.AddRange(CreateDuct(
                     new GXYZ(baseConn.Origin.X - Math.Sign(baseConn.Origin.X - baseX), baseConn.Origin.Y, baseZ),
                     new GXYZ(baseX + Math.Sign(baseConn.Origin.X - baseX), baseConn.Origin.Y, baseZ)));
                 connectors[0].ConnectTo(baseConn);
-                m_document.Create.NewElbowFitting(connectors[0], baseConn);
+                _document.Create.NewElbowFitting(connectors[0], baseConn);
                 connectors[1].ConnectTo(conn);
-                m_document.Create.NewElbowFitting(connectors[1], conn);
+                _document.Create.NewElbowFitting(connectors[1], conn);
             }
             //If the distance of the two connectors on the X axis is less than 2, connect them with an elbow fitting
             else
             {
                 baseConn.ConnectTo(conn);
-                m_document.Create.NewElbowFitting(baseConn, conn);
+                _document.Create.NewElbowFitting(baseConn, conn);
             }
         }
 
@@ -707,38 +707,38 @@ namespace Revit.SDK.Samples.AutoRoute.CS
 
                 connectors[0].ConnectTo(baseConn1);
                 connectors[2].ConnectTo(baseConn2);
-                m_document.Create.NewElbowFitting(connectors[0], baseConn1);
-                m_document.Create.NewElbowFitting(connectors[2], baseConn2);
+                _document.Create.NewElbowFitting(connectors[0], baseConn1);
+                _document.Create.NewElbowFitting(connectors[2], baseConn2);
 
                 connectors[1].ConnectTo(connectors[3]);
                 connectors[1].ConnectTo(conn);
                 connectors[3].ConnectTo(conn);
-                m_document.Create.NewTeeFitting(connectors[1], connectors[3], conn);
+                _document.Create.NewTeeFitting(connectors[1], connectors[3], conn);
             }
             //Connect a base connector to two connectors on the trunk
             else
             {
                 var baseConn = conn1;
 
-                if (Math.Abs(baseConn.Origin.X - baseX) > min1Duct2FittingsLength)
+                if (Math.Abs(baseConn.Origin.X - baseX) > Min1Duct2FittingsLength)
                 {
                     connectors.AddRange(CreateDuct(
                         new GXYZ(baseConn.Origin.X - Math.Sign(baseConn.Origin.X - baseX), baseConn.Origin.Y, baseZ),
                         new GXYZ(baseX + Math.Sign(baseConn.Origin.X - baseX), baseConn.Origin.Y, baseZ)));
                     baseConn.ConnectTo(connectors[0]);
-                    m_document.Create.NewElbowFitting(connectors[0], baseConn);
+                    _document.Create.NewElbowFitting(connectors[0], baseConn);
 
                     connectors[1].ConnectTo(conn2);
                     connectors[1].ConnectTo(conn3);
                     conn2.ConnectTo(conn3);
-                    m_document.Create.NewTeeFitting(conn2, conn3, connectors[1]);
+                    _document.Create.NewTeeFitting(conn2, conn3, connectors[1]);
                 }
                 else
                 {
                     baseConn.ConnectTo(conn2);
                     baseConn.ConnectTo(conn3);
                     conn2.ConnectTo(conn3);
-                    m_document.Create.NewTeeFitting(conn2, conn3, baseConn);
+                    _document.Create.NewTeeFitting(conn2, conn3, baseConn);
                 }
             }
         }
@@ -776,7 +776,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         {
             var connectors = new List<Connector>();
 
-            var duct = Duct.Create(m_document, systemTypeId, ductTypeId, lvl.Id, point1, point2);
+            var duct = Duct.Create(_document, m_systemTypeId, m_ductTypeId, m_lvl.Id, point1, point2);
 
             connectors.Add(ConnectorInfo.GetConnector(duct.Id, point1));
             connectors.Add(ConnectorInfo.GetConnector(duct.Id, point2));
@@ -802,7 +802,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             }
 
             var mechanicalSystem =
-                m_document.Create.NewMechanicalSystem(baseConnector == null ? null : baseConnector.Connector, cset,
+                _document.Create.NewMechanicalSystem(baseConnector == null ? null : baseConnector.Connector, cset,
                     systemType);
             return mechanicalSystem;
         }
@@ -905,7 +905,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             /// <returns>the connector set which includes all the connectors found</returns>
             public static ConnectorSet GetConnectors(ElementId ownerId)
             {
-                var element = m_document.GetElement(ownerId);
+                var element = _document.GetElement(ownerId);
                 return GetConnectors(element);
             }
 
@@ -1034,7 +1034,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             }
 
             Trace.Unindent();
-            WriteMEPSystem(system);
+            WriteMepSystem(system);
         }
 
         /// <summary>
@@ -1052,7 +1052,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         ///     Write the information of a MEPSystem to the log file.
         /// </summary>
         /// <param name="system">the MEP system whose information is to be written</param>
-        public static void WriteMEPSystem(MEPSystem system)
+        public static void WriteMepSystem(MEPSystem system)
         {
             WriteElement(system.BaseEquipment);
             Trace.Unindent();

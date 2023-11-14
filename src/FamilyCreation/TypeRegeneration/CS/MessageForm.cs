@@ -14,7 +14,7 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         /// <summary>
         ///     new a Timer,set the interval 2 seconds
         /// </summary>
-        private readonly Timer timer = new Timer(2000);
+        private readonly Timer m_timer = new Timer(2000);
 
         /// <summary>
         ///     construction of MessageForm
@@ -24,8 +24,8 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
             InitializeComponent();
             Text = "Type Regeneration Message Form";
             //set the timer elapsed event
-            timer.Elapsed += onTimeOut; //Set the executed event when time is out          
-            timer.Enabled = false;
+            m_timer.Elapsed += OnTimeOut; //Set the executed event when time is out          
+            m_timer.Enabled = false;
             CheckForIllegalCrossThreadCalls = false;
         }
 
@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         public void AddMessage(string message, bool enableTimer)
         {
             messageRichTextBox.AppendText(message);
-            timer.Enabled = enableTimer;
+            m_timer.Enabled = enableTimer;
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e">time elapsed event args</param>
-        private void onTimeOut(object source, ElapsedEventArgs e)
+        private void OnTimeOut(object source, ElapsedEventArgs e)
         {
-            timer.Enabled = false;
+            m_timer.Enabled = false;
             Close();
         }
     }

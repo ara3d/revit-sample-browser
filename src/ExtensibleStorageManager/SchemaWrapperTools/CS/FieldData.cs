@@ -23,11 +23,11 @@ namespace SchemaWrapperTools
     [Serializable]
     public class FieldData
     {
-        private string m_Name;
-        private string m_Spec;
+        private string m_name;
+        private string m_spec;
 
-        private SchemaWrapper m_SubSchema;
-        private string m_Type;
+        private SchemaWrapper m_subSchema;
+        private string m_type;
 
         /// <summary>
         ///     For serialization only -- Do not use.
@@ -55,10 +55,10 @@ namespace SchemaWrapperTools
         /// <param name="subSchema">The SchemaWrapper of the field's subSchema, if the field is of type "Entity"</param>
         public FieldData(string name, string typeIn, string spec, SchemaWrapper subSchema)
         {
-            m_Name = name;
-            m_Type = typeIn;
-            m_Spec = spec;
-            m_SubSchema = subSchema;
+            m_name = name;
+            m_type = typeIn;
+            m_spec = spec;
+            m_subSchema = subSchema;
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public string Name
         {
-            get => m_Name;
-            set => m_Name = value;
+            get => m_name;
+            set => m_name = value;
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public string Type
         {
-            get => m_Type;
-            set => m_Type = value;
+            get => m_type;
+            set => m_type = value;
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public string Spec
         {
-            get => m_Spec;
-            set => m_Spec = value;
+            get => m_spec;
+            set => m_spec = value;
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public SchemaWrapper SubSchema
         {
-            get => m_SubSchema;
-            set => m_SubSchema = value;
+            get => m_subSchema;
+            set => m_subSchema = value;
         }
 
         public override string ToString()

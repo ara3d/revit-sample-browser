@@ -10,10 +10,10 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
     ///     The helper class which give some operation about point and vector.
     ///     The point and vector are both presented by Autodesk.Revit.DB.XYZ structure.
     /// </summary>
-    public class XYZMath
+    public class XyzMath
     {
         // Private Members
-        private const double PRECISION = 0.0000000001; // Define a precision of double data
+        private const double Precision = 0.0000000001; // Define a precision of double data
 
         // Methods
         /// <summary>
@@ -156,8 +156,8 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 var endPoint = curve.GetEndPoint(1);
                 var distanceX = startPoint.X - endPoint.X;
                 var distanceY = startPoint.Y - endPoint.Y;
-                if (-PRECISION > distanceX || PRECISION < distanceX
-                                           || -PRECISION > distanceY || PRECISION < distanceY)
+                if (-Precision > distanceX || Precision < distanceX
+                                           || -Precision > distanceY || Precision < distanceY)
                 {
                     var first = new XYZ(startPoint.X, startPoint.Y, 0);
                     var second = new XYZ(endPoint.X, endPoint.Y, 0);

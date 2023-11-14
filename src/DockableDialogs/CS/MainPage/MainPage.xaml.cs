@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         private UIApplication m_application;
         private int m_bottom = 1;
         private readonly ExternalEvent m_exEvent;
-        private readonly APIExternalEventHandler m_handler = new APIExternalEventHandler();
+        private readonly ApiExternalEventHandler m_handler = new ApiExternalEventHandler();
         private int m_left = 1;
         private DockPosition m_position = DockPosition.Bottom;
         private int m_right = 1;
@@ -32,7 +32,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         {
             InitializeComponent();
             m_exEvent = ExternalEvent.Create(m_handler);
-            m_textWriter = new StandardIORouter(tb_output);
+            m_textWriter = new StandardIoRouter(tb_output);
             Console.SetOut(m_textWriter); //Send all standard output to the text rerouter.
         }
 
@@ -67,7 +67,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             }
 
             Log.Message("***Intial docking parameters***");
-            Log.Message(APIUtility.GetDockStateSummary(data.InitialState));
+            Log.Message(ApiUtility.GetDockStateSummary(data.InitialState));
         }
 
         private void DozeOff()
@@ -85,7 +85,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             EnableCommands(true);
         }
 
-        public void UpdateUI(ModelessCommandData data)
+        public void UpdateUi(ModelessCommandData data)
         {
             switch (data.CommandType)
             {
@@ -105,17 +105,17 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             }
         }
 
-        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        private TChildItem FindVisualChild<TChildItem>(DependencyObject obj) where TChildItem : DependencyObject
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
                 var child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is childItem item)
+                if (child != null && child is TChildItem item)
                 {
                     return item;
                 }
 
-                var childOfChild = FindVisualChild<childItem>(child);
+                var childOfChild = FindVisualChild<TChildItem>(child);
                 if (childOfChild != null) return childOfChild;
             }
 
@@ -137,7 +137,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             {
                 CommandType = ModelessCommandType.PrintMainPageStatistics
             };
-            ThisApplication.thisApp.GetDockableAPIUtility().RunModelessCommand(data);
+            ThisApplication.ThisApp.GetDockableApiUtility().RunModelessCommand(data);
             m_exEvent.Raise();
         }
 
@@ -148,7 +148,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
                 CommandType = ModelessCommandType.PrintSelectedPageStatistics,
                 SelectedPaneId = guid
             };
-            ThisApplication.thisApp.GetDockableAPIUtility().RunModelessCommand(data);
+            ThisApplication.ThisApp.GetDockableApiUtility().RunModelessCommand(data);
             m_exEvent.Raise();
         }
 
@@ -176,7 +176,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         private void wpf_stats_Click(object sender, RoutedEventArgs e)
         {
             Log.Message("***Main Pane WPF info***");
-            Log.Message(ThisApplication.thisApp.GetMainWindow().GetPageWpfData());
+            Log.Message(ThisApplication.ThisApp.GetMainWindow().GetPageWpfData());
         }
 
         private void btn_getById_Click(object sender, RoutedEventArgs e)
@@ -190,7 +190,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         private void btn_listTabs_Click(object sender, RoutedEventArgs e)
         {
             Log.Message("***Dockable dialogs***");
-            Log.Message(" Main dialog: " + Globals.sm_UserDockablePaneId.Guid);
+            Log.Message(" Main dialog: " + Globals.SmUserDockablePaneId.Guid);
             Log.Message(" Element View: " + DockablePanes.BuiltInDockablePanes.ElementView.Guid);
             Log.Message(" System Navigator: " + DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid);
             Log.Message(" Link Navigator: " + DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid);

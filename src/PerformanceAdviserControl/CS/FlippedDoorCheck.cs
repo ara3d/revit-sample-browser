@@ -14,20 +14,9 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
     public class FlippedDoorCheck : IPerformanceAdviserRule
     {
         /// <summary>
-        ///     The rule ID for this rule;
-        /// </summary>
-        private static readonly PerformanceAdviserRuleId m_Id =
-            new PerformanceAdviserRuleId(new Guid("BC38854474284491BD03795675AC7386"));
-
-        /// <summary>
         ///     A short description of the rule
         /// </summary>
         private readonly string m_description;
-
-        /// <summary>
-        ///     The failure definition for our API-based door flip check rule
-        /// </summary>
-        private FailureDefinition m_doorWarning;
 
         /// <summary>
         ///     The ID of the failure definition for our API-based door flip check rule
@@ -37,7 +26,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// <summary>
         ///     A list of all family instances in the document that have the FaceFlipped property set to true;
         /// </summary>
-        private List<ElementId> m_FlippedDoors;
+        private List<ElementId> m_flippedDoors;
 
         /// <summary>
         ///     A short name for the rule
@@ -52,14 +41,15 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             m_name = "Flipped Door Check";
             m_description = "An API-based rule to search for and return any doors that are face-flipped";
             m_doorWarningId = new FailureDefinitionId(new Guid("25570B8FD4AD42baBD78469ED60FB9A3"));
-            m_doorWarning = FailureDefinition.CreateFailureDefinition(m_doorWarningId, FailureSeverity.Warning,
+            FailureDefinition.CreateFailureDefinition(m_doorWarningId, FailureSeverity.Warning,
                 "Some doors in this project are face-flipped.");
         }
 
         /// <summary>
         ///     The rule ID for this rule;
         /// </summary>
-        public static PerformanceAdviserRuleId Id => m_Id;
+        public static PerformanceAdviserRuleId Id { get; } 
+            = new PerformanceAdviserRuleId(new Guid("BC38854474284491BD03795675AC7386"));
 
         /// <summary>
         ///     Does some preliminary work before executing tests on elements.  In this case,
@@ -68,10 +58,10 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// <param name="document">The document being checked</param>
         public void InitCheck(Document document)
         {
-            if (m_FlippedDoors == null)
-                m_FlippedDoors = new List<ElementId>();
+            if (m_flippedDoors == null)
+                m_flippedDoors = new List<ElementId>();
             else
-                m_FlippedDoors.Clear();
+                m_flippedDoors.Clear();
         }
 
         /// <summary>
@@ -89,7 +79,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             if (element is FamilyInstance doorCurrent)
             {
                 if (doorCurrent.FacingFlipped)
-                    m_FlippedDoors.Add(doorCurrent.Id);
+                    m_flippedDoors.Add(doorCurrent.Id);
             }
         }
 
@@ -103,7 +93,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// <param name="document">The active document</param>
         public void FinalizeCheck(Document document)
         {
-            if (m_FlippedDoors.Count == 0)
+            if (m_flippedDoors.Count == 0)
             {
                 Debug.WriteLine("No doors were flipped.  Test passed.");
             }
@@ -112,12 +102,12 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             {
                 //Pass the element IDs of the flipped doors to the revit failure reporting APIs.
                 var fm = new FailureMessage(m_doorWarningId);
-                fm.SetFailingElements(m_FlippedDoors);
+                fm.SetFailingElements(m_flippedDoors);
                 var failureReportingTransaction = new Transaction(document, "Failure reporting transaction");
                 failureReportingTransaction.Start();
                 PerformanceAdviser.GetPerformanceAdviser().PostWarning(fm);
                 failureReportingTransaction.Commit();
-                m_FlippedDoors.Clear();
+                m_flippedDoors.Clear();
             }
         }
 
@@ -165,7 +155,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         ///     in the application easier.
         /// </summary>
         /// <returns>The Rule ID of this rule</returns>
-        public PerformanceAdviserRuleId getRuleId()
+        public PerformanceAdviserRuleId GetRuleId()
         {
             return Id;
         }

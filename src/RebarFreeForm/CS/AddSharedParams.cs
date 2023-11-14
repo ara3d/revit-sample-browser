@@ -16,12 +16,12 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// <summary>
         ///     Updated: is used to start the regeneration
         /// </summary>
-        public static readonly string m_paramName = "Updated";
+        public static readonly string ParamName = "Updated";
 
         /// <summary>
         ///     CurveElementId: is used to store the id of a model curve
         /// </summary>
-        public static readonly string m_CurveIdName = "CurveElementId";
+        public static readonly string CurveIdName = "CurveElementId";
 
         /// <summary>
         ///     Add two shared parameters to the rebar category instance elements:
@@ -42,8 +42,8 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                     // Add Shared parameters:
                     //   Update is a simple boolean.
                     //   CurveElementId is an ElementId, which is a 64-bit Entity, so stringify it to keep data intact. 
-                    var paramsAdded = AddSharedTestParameter(commandData, m_paramName, SpecTypeId.Boolean.YesNo, false);
-                    paramsAdded &= AddSharedTestParameter(commandData, m_CurveIdName, SpecTypeId.String.Text, true);
+                    var paramsAdded = AddSharedTestParameter(commandData, ParamName, SpecTypeId.Boolean.YesNo, false);
+                    paramsAdded &= AddSharedTestParameter(commandData, CurveIdName, SpecTypeId.String.Text, true);
                     if (paramsAdded)
                     {
                         tran.Commit();
@@ -89,11 +89,11 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                 var apiGroup = parafile.Groups.Create("RebarTestParamGroup");
 
                 // create a visible param 
-                var ExtDefinitionCreationOptions = new ExternalDefinitionCreationOptions(paramName, paramType);
-                ExtDefinitionCreationOptions.HideWhenNoValue =
+                var extDefinitionCreationOptions = new ExternalDefinitionCreationOptions(paramName, paramType);
+                extDefinitionCreationOptions.HideWhenNoValue =
                     true; //used this to show the parameter only in some rebar instances that will use it
-                ExtDefinitionCreationOptions.UserModifiable = userModifiable; //  set if users need to modify this
-                var rebarSharedParamDef = apiGroup.Definitions.Create(ExtDefinitionCreationOptions);
+                extDefinitionCreationOptions.UserModifiable = userModifiable; //  set if users need to modify this
+                var rebarSharedParamDef = apiGroup.Definitions.Create(extDefinitionCreationOptions);
 
                 // get rebar category
                 var rebarCat =

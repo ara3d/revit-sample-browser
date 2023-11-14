@@ -13,7 +13,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Provide a dialog which provides the options of lower priority information for exporting image
     /// </summary>
-    public partial class ExportIMGOptionsForm : Form
+    public partial class ExportImgOptionsForm : Form
     {
         /// <summary>
         ///     Data class object of ExportDataWithViews
@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         ///     Constructor
         /// </summary>
         /// <param name="exportData">Data class object</param>
-        public ExportIMGOptionsForm(ExportDataWithViews exportData)
+        public ExportImgOptionsForm(ExportDataWithViews exportData)
         {
             m_exportOptions = new ImageExportOptions();
             InitializeComponent();

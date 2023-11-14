@@ -40,58 +40,58 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// <summary>
     ///     Abstract class use as base class of all draw tool class
     /// </summary>
-    public abstract class ITool
+    public abstract class Tool
     {
         /// <summary>
         ///     Background pen used to erase the preview line
         /// </summary>
-        protected readonly Pen m_backGroundPen;
+        protected readonly Pen BackGroundPen;
 
         /// <summary>
         ///     Foreground pen used to draw lines
         /// </summary>
-        protected readonly Pen m_foreGroundPen;
+        protected readonly Pen ForeGroundPen;
 
         /// <summary>
         ///     Field used to store lines
         /// </summary>
-        protected readonly List<List<Point>> m_lines = new List<List<Point>>();
+        protected readonly List<List<Point>> Lines = new List<List<Point>>();
 
         /// <summary>
         ///     Field used to store points of a line
         /// </summary>
-        protected readonly List<Point> m_points = new List<Point>();
+        protected readonly List<Point> Points = new List<Point>();
 
         /// <summary>
         ///     Store the mouse position when mouse move in pictureBox
         /// </summary>
-        protected Point m_preMovePoint;
+        protected Point PreMovePoint;
 
         /// <summary>
         ///     ToolType is enum type indicate draw tools.
         /// </summary>
-        protected ToolType m_type;
+        protected ToolType Type;
 
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public ITool()
+        public Tool()
         {
-            m_backGroundPen = Pens.White;
-            m_foreGroundPen = Pens.Red;
+            BackGroundPen = Pens.White;
+            ForeGroundPen = Pens.Red;
         }
 
         /// <summary>
         ///     Get the tool type
         /// </summary>
-        public ToolType ToolType => m_type;
+        public ToolType ToolType => Type;
 
         /// <summary>
         ///     Get all lines drawn in pictureBox
         /// </summary>
         public List<List<Point>> GetLines()
         {
-            return m_lines;
+            return Lines;
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e">Mouse event argument</param>
         public virtual void OnMidMouseDown(Graphics graphic, MouseEventArgs e)
         {
-            m_points.Clear();
+            Points.Clear();
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
             var groupHelper = new GroupHelper();
             Group selectedModelGroup;
 
-            if (!groupHelper.getSelectedModelGroup(uiDoc, out selectedModelGroup, out message)) return Result.Cancelled;
+            if (!groupHelper.GetSelectedModelGroup(uiDoc, out selectedModelGroup, out message)) return Result.Cancelled;
 
             groupHelper.HideAllAttachedDetailGroups(selectedModelGroup, doc, activeView);
             return Result.Succeeded;

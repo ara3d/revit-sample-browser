@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <returns></returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            SiteUIUtils.ChangeSubregionAndPointsElevation(commandData.Application.ActiveUIDocument, 3);
+            SiteUiUtils.ChangeSubregionAndPointsElevation(commandData.Application.ActiveUIDocument, 3);
 
             return Result.Succeeded;
         }

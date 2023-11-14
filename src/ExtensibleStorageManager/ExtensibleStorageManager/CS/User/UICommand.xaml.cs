@@ -15,27 +15,27 @@ namespace ExtensibleStorageManager
     /// <summary>
     ///     The main user dialog class for issuing sample commands to the a SchemaWrapper
     /// </summary>
-    public partial class UICommand : Window
+    public partial class UiCommand : Window
     {
         /// <summary>
         ///     The object that provides high level serialization access to an Autodesk.Revit.DB.ExtensibleStorage.Schema
         /// </summary>
-        private SchemaWrapper m_SchemaWrapper;
+        private SchemaWrapper m_schemaWrapper;
 
         /// <summary>
         ///     Create a new dialog object and store a reference to the active document and applicationID of this addin.
         /// </summary>
-        public UICommand(Document doc, string applicationId)
+        public UiCommand(Document doc, string applicationId)
         {
             InitializeComponent();
             Closing += UICommand_Closing;
             Document = doc;
 
             //Create a new empty schemaWrapper.
-            m_SchemaWrapper = SchemaWrapper.NewSchema(Guid.Empty, AccessLevel.Public, AccessLevel.Public, "adsk",
+            m_schemaWrapper = SchemaWrapper.NewSchema(Guid.Empty, AccessLevel.Public, AccessLevel.Public, "adsk",
                 applicationId, "schemaName", "Schema documentation");
             m_label_applicationAppId.Content = applicationId;
-            UpdateUI();
+            UpdateUi();
         }
 
         /// <summary>
@@ -55,18 +55,18 @@ namespace ExtensibleStorageManager
         /// <summary>
         ///     Synchronize all UI controls in the dialog with the data in m_SchemaWrapper.
         /// </summary>
-        private void UpdateUI()
+        private void UpdateUi()
         {
-            m_textBox_SchemaApplicationId.Text = m_SchemaWrapper.Data.ApplicationId;
-            m_textBox_SchemaVendorId.Text = m_SchemaWrapper.Data.VendorId;
-            m_textBox_SchemaPath.Content = m_SchemaWrapper.GetXmlPath();
-            m_textBox_SchemaName.Text = m_SchemaWrapper.Data.Name;
-            m_textBox_SchemaDocumentation.Text = m_SchemaWrapper.Data.Documentation;
-            m_textBox_SchemaId.Text = m_SchemaWrapper.Data.SchemaId;
+            m_textBox_SchemaApplicationId.Text = m_schemaWrapper.Data.ApplicationId;
+            m_textBox_SchemaVendorId.Text = m_schemaWrapper.Data.VendorId;
+            m_textBox_SchemaPath.Content = m_schemaWrapper.GetXmlPath();
+            m_textBox_SchemaName.Text = m_schemaWrapper.Data.Name;
+            m_textBox_SchemaDocumentation.Text = m_schemaWrapper.Data.Documentation;
+            m_textBox_SchemaId.Text = m_schemaWrapper.Data.SchemaId;
             if (m_textBox_SchemaId.Text == Guid.Empty.ToString())
                 m_textBox_SchemaId.Text = Application.LastGuid;
 
-            switch (m_SchemaWrapper.Data.ReadAccess)
+            switch (m_schemaWrapper.Data.ReadAccess)
             {
                 case AccessLevel.Application:
                 {
@@ -85,7 +85,7 @@ namespace ExtensibleStorageManager
                 }
             }
 
-            switch (m_SchemaWrapper.Data.WriteAccess)
+            switch (m_schemaWrapper.Data.WriteAccess)
             {
                 case AccessLevel.Application:
                 {
@@ -108,7 +108,7 @@ namespace ExtensibleStorageManager
         /// <summary>
         ///     Retrieve AccessLevel enums for read and write permissions from the UI
         /// </summary>
-        private void GetUIAccessLevels(out AccessLevel read, out AccessLevel write)
+        private void GetUiAccessLevels(out AccessLevel read, out AccessLevel write)
         {
             read = AccessLevel.Public;
             write = AccessLevel.Public;
@@ -186,7 +186,7 @@ namespace ExtensibleStorageManager
             //Get read-write access levels and schema and application Ids from the active dialog
             AccessLevel read;
             AccessLevel write;
-            GetUIAccessLevels(out read, out write);
+            GetUiAccessLevels(out read, out write);
             if (!ValidateGuids())
             {
                 TaskDialog.Show("ExtensibleStorage Manager", "Invalid Schema or ApplicationId Guid.");
@@ -210,7 +210,7 @@ namespace ExtensibleStorageManager
                 try
                 {
                     //Create a new sample SchemaWrapper, schema, and Entity and store it in the current document's ProjectInformation element.
-                    m_SchemaWrapper = StorageCommand.CreateSetAndExport(Document.ProjectInformation, sfd.FileName,
+                    m_schemaWrapper = StorageCommand.CreateSetAndExport(Document.ProjectInformation, sfd.FileName,
                         new Guid(m_textBox_SchemaId.Text), read, write, m_textBox_SchemaVendorId.Text,
                         m_textBox_SchemaApplicationId.Text, m_textBox_SchemaName.Text,
                         m_textBox_SchemaDocumentation.Text, schemaComplexity);
@@ -221,14 +221,14 @@ namespace ExtensibleStorageManager
                     return;
                 }
 
-                UpdateUI();
+                UpdateUi();
 
                 //Display the schema fields and sample data we just created in a dialog.
-                var dataDialog = new UIData();
-                var schemaData = m_SchemaWrapper.ToString();
+                var dataDialog = new UiData();
+                var schemaData = m_schemaWrapper.ToString();
                 var entityData =
-                    m_SchemaWrapper.GetSchemaEntityData(
-                        Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
+                    m_schemaWrapper.GetSchemaEntityData(
+                        Document.ProjectInformation.GetEntity(m_schemaWrapper.GetSchema()));
                 var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine +
                               Environment.NewLine + "Entity" + Environment.NewLine + entityData;
                 dataDialog.SetData(allData);
@@ -245,8 +245,8 @@ namespace ExtensibleStorageManager
             {
                 //Given a Guid that corresponds to a schema that already exists in a document, create a SchemaWrapper
                 //from it and display its top-level data in the dialog.
-                StorageCommand.CreateWrapperFromSchema(new Guid(m_textBox_SchemaId.Text), out m_SchemaWrapper);
-                UpdateUI();
+                StorageCommand.CreateWrapperFromSchema(new Guid(m_textBox_SchemaId.Text), out m_schemaWrapper);
+                UpdateUi();
             }
 
             catch (Exception ex)
@@ -256,8 +256,8 @@ namespace ExtensibleStorageManager
             }
 
             //Display all of the schema's field data in a separate dialog.
-            var dataDialog = new UIData();
-            dataDialog.SetData(m_SchemaWrapper.ToString());
+            var dataDialog = new UiData();
+            dataDialog.SetData(m_schemaWrapper.ToString());
             dataDialog.ShowDialog();
         }
 
@@ -271,7 +271,7 @@ namespace ExtensibleStorageManager
                 //Given a Guid that corresponds to a schema that already exists in a document, create a SchemaWrapper
                 //from it and display its top-level data in the dialog.
                 StorageCommand.LookupAndExtractData(Document.ProjectInformation, new Guid(m_textBox_SchemaId.Text),
-                    out m_SchemaWrapper);
+                    out m_schemaWrapper);
             }
             catch (Exception ex)
             {
@@ -279,13 +279,13 @@ namespace ExtensibleStorageManager
                 return;
             }
 
-            UpdateUI();
-            var dataDialog = new UIData();
+            UpdateUi();
+            var dataDialog = new UiData();
 
             //Get and display the schema field data and the actual entity data in a separate dialog.
-            var schemaData = m_SchemaWrapper.ToString();
+            var schemaData = m_schemaWrapper.ToString();
             var entityData =
-                m_SchemaWrapper.GetSchemaEntityData(Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
+                m_schemaWrapper.GetSchemaEntityData(Document.ProjectInformation.GetEntity(m_schemaWrapper.GetSchema()));
             var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine + Environment.NewLine +
                           "Entity" + Environment.NewLine + entityData;
 
@@ -312,7 +312,7 @@ namespace ExtensibleStorageManager
                 try
                 {
                     //Given an xml file containing schema data, create a new SchemaWrapper object
-                    StorageCommand.ImportSchemaFromXml(ofd.FileName, out m_SchemaWrapper);
+                    StorageCommand.ImportSchemaFromXml(ofd.FileName, out m_schemaWrapper);
                 }
 
                 catch (Exception ex)
@@ -322,11 +322,11 @@ namespace ExtensibleStorageManager
                 }
 
                 //Display the top level schema data in the dialog.
-                UpdateUI();
+                UpdateUi();
 
                 //Display the field data of the schema in a separate dialog.
-                var dataDialog = new UIData();
-                dataDialog.SetData(m_SchemaWrapper.ToString());
+                var dataDialog = new UiData();
+                dataDialog.SetData(m_schemaWrapper.ToString());
                 dataDialog.ShowDialog();
             }
         }
@@ -341,7 +341,7 @@ namespace ExtensibleStorageManager
                 ///Given a guid corresponding to a Schema with Entity data in the current document's ProjectInformation element,
                 ///change the entity data to new data, (assuming that the schemas and schema guids are identical).
                 StorageCommand.EditExistingData(Document.ProjectInformation, new Guid(m_textBox_SchemaId.Text),
-                    out m_SchemaWrapper);
+                    out m_schemaWrapper);
             }
             catch (Exception ex)
             {
@@ -349,13 +349,13 @@ namespace ExtensibleStorageManager
                 return;
             }
 
-            UpdateUI();
+            UpdateUi();
 
             ///Display the schema fields and new data in a separate dialog.
-            var dataDialog = new UIData();
-            var schemaData = m_SchemaWrapper.ToString();
+            var dataDialog = new UiData();
+            var schemaData = m_schemaWrapper.ToString();
             var entityData =
-                m_SchemaWrapper.GetSchemaEntityData(Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
+                m_schemaWrapper.GetSchemaEntityData(Document.ProjectInformation.GetEntity(m_schemaWrapper.GetSchema()));
             var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine + Environment.NewLine +
                           "Entity" + Environment.NewLine + entityData;
 

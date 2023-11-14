@@ -76,14 +76,14 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Building Construction")]
         [TypeConverter(typeof(WrapperConverter))]
         [RevitVersion(ProductType.MEP)]
-        public MEPBuildingConstructionWrapper BuildingConstruction
+        public MepBuildingConstructionWrapper BuildingConstruction
         {
             get
             {
                 var eid = EnergyDataSettings.GetBuildingConstructionSetElementId(m_document);
                 //MEPBuildingConstruction mEPBuildingConstruction = RevitStartInfo.GetElement(m_energyDataSettings.ConstructionSetElementId) as MEPBuildingConstruction;
-                return RevitStartInfo.GetElement(eid) is MEPBuildingConstruction mEPBuildingConstruction
-                    ? new MEPBuildingConstructionWrapper(mEPBuildingConstruction)
+                return RevitStartInfo.GetElement(eid) is MEPBuildingConstruction mEpBuildingConstruction
+                    ? new MepBuildingConstructionWrapper(mEpBuildingConstruction)
                     : null;
             }
         }
@@ -93,7 +93,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Building Infiltration Class")]
-        [TypeConverter(typeof(HVACLoadConstructionClassConverter))]
+        [TypeConverter(typeof(HvacLoadConstructionClassConverter))]
         [RevitVersion(ProductType.MEP)]
         public HVACLoadConstructionClass BuildingConstructionClass
         {
@@ -153,7 +153,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// </summary>
         [Category("Detailed Model")]
         [DisplayName("Report Type")]
-        [TypeConverter(typeof(HVACLoadLoadsReportTypeConverter))]
+        [TypeConverter(typeof(HvacLoadLoadsReportTypeConverter))]
         [RevitVersion(ProductType.MEP)]
         public HVACLoadLoadsReportType ProjectReportType
         {

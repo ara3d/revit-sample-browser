@@ -13,7 +13,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         {
             m_model = analysisModel;
             InitializeComponent();
-            InitializeOptionsUI();
+            InitializeOptionsUi();
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
@@ -35,7 +35,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         /// <summary>
         ///     Set default Tier as SecondLevelBoundaries
         /// </summary>
-        private void InitializeOptionsUI()
+        private void InitializeOptionsUi()
         {
             comboBoxTier.SelectedIndex = 3;
         }

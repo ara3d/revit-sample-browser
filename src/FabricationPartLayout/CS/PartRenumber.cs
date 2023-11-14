@@ -157,8 +157,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
         {
             if (fabPart != null)
             {
-                var CID = fabPart.ItemCustomId;
-                if (CID == 522 || CID == 1522 || CID == 2522 || CID == 3522 || CID == 1112) return true;
+                var cid = fabPart.ItemCustomId;
+                if (cid == 522 || cid == 1522 || cid == 2522 || cid == 3522 || cid == 1112) return true;
             }
 
             return false;

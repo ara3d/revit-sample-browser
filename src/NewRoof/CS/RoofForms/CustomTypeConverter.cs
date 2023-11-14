@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         ///     To store the levels element
         /// </summary>
-        private static readonly Dictionary<string, Level> m_levels = new Dictionary<string, Level>();
+        private static readonly Dictionary<string, Level> Levels = new Dictionary<string, Level>();
 
         /// <summary>
         ///     Initialize the levels data.
@@ -27,8 +27,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="levels"></param>
         public static void SetStandardValues(ReadOnlyCollection<Level> levels)
         {
-            m_levels.Clear();
-            foreach (var level in levels) m_levels.Add(level.Id.ToString(), level);
+            Levels.Clear();
+            foreach (var level in levels) Levels.Add(level.Id.ToString(), level);
         }
 
         /// <summary>
@@ -36,9 +36,9 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// </summary>
         /// <param name="id">The id of the level</param>
         /// <returns>Returns a level which id equals the specified id.</returns>
-        public static Level GetLevelByID(ElementId id)
+        public static Level GetLevelById(ElementId id)
         {
-            return m_levels[id.ToString()];
+            return Levels[id.ToString()];
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
 
                     var idString = levelString.Substring(leftBracket + 1, rightBracket - leftBracket - 1);
 
-                    return m_levels[idString];
+                    return Levels[idString];
                 }
                 catch (Exception ex)
                 {
@@ -127,7 +127,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            return new StandardValuesCollection(m_levels.Values);
+            return new StandardValuesCollection(Levels.Values);
         }
     }
 
@@ -138,7 +138,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
     public class FootPrintRoofLineConverter : ExpandableObjectConverter
     {
         // To store the FootPrintRoofLines data.
-        private static readonly Dictionary<string, FootPrintRoofLine> m_footPrintLines =
+        private static readonly Dictionary<string, FootPrintRoofLine> FootPrintLines =
             new Dictionary<string, FootPrintRoofLine>();
 
         /// <summary>
@@ -147,12 +147,12 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="footPrintRoofLines"></param>
         public static void SetStandardValues(List<FootPrintRoofLine> footPrintRoofLines)
         {
-            m_footPrintLines.Clear();
+            FootPrintLines.Clear();
             foreach (var footPrintLine in footPrintRoofLines)
             {
-                if (m_footPrintLines.ContainsKey(footPrintLine.Id.ToString()))
+                if (FootPrintLines.ContainsKey(footPrintLine.Id.ToString()))
                     continue;
-                m_footPrintLines.Add(footPrintLine.Id.ToString(), footPrintLine);
+                FootPrintLines.Add(footPrintLine.Id.ToString(), footPrintLine);
             }
         }
 
@@ -215,7 +215,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
 
                     var idString = footPrintLineString.Substring(leftBracket + 1, rightBracket - leftBracket - 1);
 
-                    return m_footPrintLines[idString];
+                    return FootPrintLines[idString];
                 }
                 catch (Exception ex)
                 {
@@ -242,7 +242,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            return new StandardValuesCollection(m_footPrintLines.Values);
+            return new StandardValuesCollection(FootPrintLines.Values);
         }
     }
 }

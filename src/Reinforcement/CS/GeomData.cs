@@ -182,7 +182,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
     /// <summary>
     ///     A comparer for XYZ, and give a method to sort all the Autodesk.Revit.DB.XYZ points in a array
     /// </summary>
-    public class XYZHeightComparer : IComparer<XYZ>
+    public class XyzHeightComparer : IComparer<XYZ>
     {
         int IComparer<XYZ>.Compare(XYZ first, XYZ second)
         {

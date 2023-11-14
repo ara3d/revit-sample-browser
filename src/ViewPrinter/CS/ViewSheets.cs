@@ -9,10 +9,10 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 {
     public enum VisibleType
     {
-        VT_ViewOnly,
-        VT_SheetOnly,
-        VT_BothViewAndSheet,
-        VT_None
+        VtViewOnly,
+        VtSheetOnly,
+        VtBothViewAndSheet,
+        VtNone
     }
 
     public interface ISettingNameOperation
@@ -166,17 +166,17 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public List<View> AvailableViewSheetSet(VisibleType visibleType)
         {
-            if (visibleType == VisibleType.VT_None)
+            if (visibleType == VisibleType.VtNone)
                 return null;
 
             var views = new List<View>();
             foreach (View view in m_viewSheetSetting.AvailableViews)
             {
                 if (view.ViewType == ViewType.DrawingSheet
-                    && visibleType == VisibleType.VT_ViewOnly)
+                    && visibleType == VisibleType.VtViewOnly)
                     continue; // filter out sheets.
                 if (view.ViewType != ViewType.DrawingSheet
-                    && visibleType == VisibleType.VT_SheetOnly)
+                    && visibleType == VisibleType.VtSheetOnly)
                     continue; // filter out views.
 
                 views.Add(view);

@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             get
             {
-                var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
+                var filteredElementCollector = new FilteredElementCollector(RvtDoc);
                 filteredElementCollector.OfClass(typeof(FasciaType));
                 return filteredElementCollector;
             }
@@ -56,11 +56,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 if (m_roofFasciaEdges == null)
                 {
                     m_roofFasciaEdges = new Dictionary<Element, List<Edge>>();
-                    var collector = new FilteredElementCollector(m_rvtDoc);
+                    var collector = new FilteredElementCollector(RvtDoc);
                     collector.OfClass(typeof(FootPrintRoof));
                     var elements = collector.ToElements();
 
-                    collector = new FilteredElementCollector(m_rvtDoc);
+                    collector = new FilteredElementCollector(RvtDoc);
                     collector.OfClass(typeof(ExtrusionRoof));
                     foreach (var elem in collector) elements.Add(elem);
 
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                             if (solid != null)
                             {
                                 m_roofFasciaEdges.Add(elem, new List<Edge>());
-                                m_elemGeom.Add(elem, solid);
+                                ElemGeom.Add(elem, solid);
                                 FilterEdgesForFascia(elem);
                             }
                         }
@@ -94,10 +94,10 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             // In the future, API may not allow to create such Fascia with 
             // no references, invoke this methods like this may throw exception.
             // 
-            var fascia = m_rvtDoc.Create.NewFascia(null, new ReferenceArray());
+            var fascia = RvtDoc.Create.NewFascia(null, new ReferenceArray());
 
             var roofEdges = m_roofFasciaEdges[elem];
-            foreach (var edge in m_elemGeom[elem].EdgeBindingDic.Keys)
+            foreach (var edge in ElemGeom[elem].EdgeBindingDic.Keys)
             {
                 if (edge.Reference == null) continue;
                 try
@@ -113,7 +113,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             }
 
             // Delete this element, because we just use it to filter the edges.
-            m_rvtDoc.Delete(fascia.Id);
+            RvtDoc.Delete(fascia.Id);
 
             transaction.RollBack();
         }
@@ -126,7 +126,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <returns>Created Fascia</returns>
         protected override HostedSweep CreateHostedSweep(ElementType symbol, ReferenceArray refArr)
         {
-            var fascia = m_rvtDoc.Create.NewFascia(symbol as FasciaType, refArr);
+            var fascia = RvtDoc.Create.NewFascia(symbol as FasciaType, refArr);
 
             return fascia;
         }

@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
 
         // Options for Energy Analysis process
         // revit document
-        private readonly Document RevitDoc;
+        private readonly Document m_revitDoc;
         private EnergyAnalysisDetailModelOptions m_options;
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         /// <param name="doc">Revit Document</param>
         public EnergyAnalysisModel(Document doc)
         {
-            RevitDoc = doc;
+            m_revitDoc = doc;
             Options = new EnergyAnalysisDetailModelOptions();
         }
 
@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         public void Initialize()
         {
             // create the model with a document and options.
-            m_energyAnalysisDetailModel = EnergyAnalysisDetailModel.Create(RevitDoc, Options);
+            m_energyAnalysisDetailModel = EnergyAnalysisDetailModel.Create(m_revitDoc, Options);
             m_energyAnalysisDetailModel.TransformModel();
         }
 

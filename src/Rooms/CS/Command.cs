@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.Rooms.CS
                 var data = new RoomsData(commandData);
 
                 // create a form to display the information of rooms
-                using (var infoForm = new roomsInformationForm(data))
+                using (var infoForm = new RoomsInformationForm(data))
                 {
                     infoForm.ShowDialog();
                 }

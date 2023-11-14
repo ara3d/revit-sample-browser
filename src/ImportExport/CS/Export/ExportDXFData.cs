@@ -11,7 +11,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores the main information for exporting dxf format
     /// </summary>
-    public class ExportDXFData : ExportDataWithViews
+    public class ExportDxfData : ExportDataWithViews
     {
         /// <summary>
         ///     List of Autodesk.Revit.DB.ACADVersion defined in Revit
@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
-        public ExportDXFData(ExternalCommandData commandData, ExportFormat exportFormat)
+        public ExportDxfData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
             m_exportOptionsData = new ExportBaseOptionsData();
@@ -92,8 +92,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             var tmp = new StringBuilder();
             foreach (var version in m_fileVersion) tmp.Append(version + "|*.dxf|");
-            m_filter = tmp.ToString().TrimEnd('|');
-            m_title = "Export DXF";
+            Filter = tmp.ToString().TrimEnd('|');
+            Title = "Export DXF";
         }
 
         /// <summary>
@@ -106,10 +106,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             //parameter :  views
             IList<ElementId> views = new List<ElementId>();
-            if (m_currentViewOnly)
-                views.Add(m_activeDoc.ActiveView.Id);
+            if (CurrentViewOnly)
+                views.Add(ActiveDocument.ActiveView.Id);
             else
-                foreach (View view in m_selectViewsData.SelectedViews)
+                foreach (View view in SelectViewsData.SelectedViews)
                     views.Add(view.Id);
             // Default values
             m_exportFileVersion = ACADVersion.R2010;
@@ -126,7 +126,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             dxfExportOptions.TargetUnit = m_exportOptionsData.ExportUnit;
 
             //Export
-            var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, dxfExportOptions);
+            var exported = ActiveDocument.Export(ExportFolder, ExportFileName, views, dxfExportOptions);
 
             return exported;
         }

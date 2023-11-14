@@ -17,8 +17,8 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         private readonly Profile m_profile; //save the profile date (ProfileFloor or ProfileWall)
         private Matrix4 m_scaleMatrix; //save the matrix use to scale
         private readonly Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
-        private ITool m_tool; //current using tool
-        private readonly Queue<ITool> m_tools = new Queue<ITool>(); //all tool can use in pictureBox       
+        private Tool m_tool; //current using tool
+        private readonly Queue<Tool> m_tools = new Queue<Tool>(); //all tool can use in pictureBox       
 
         /// <summary>
         ///     default constructor

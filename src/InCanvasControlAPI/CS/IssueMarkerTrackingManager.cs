@@ -24,9 +24,9 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
     /// </summary>
     public class IssueMarkerTrackingManager
     {
-        private static IssueMarkerTrackingManager manager;
+        private static IssueMarkerTrackingManager _manager;
 
-        private readonly HashSet<IssueMarkerTracking> trackings = new HashSet<IssueMarkerTracking>();
+        private readonly HashSet<IssueMarkerTracking> m_trackings = new HashSet<IssueMarkerTracking>();
 
         private IssueMarkerTrackingManager()
         {
@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns>An instance of IssueMarkerTrackingManager</returns>
         public static IssueMarkerTrackingManager GetInstance()
         {
-            return manager ?? (manager = new IssueMarkerTrackingManager());
+            return _manager ?? (_manager = new IssueMarkerTrackingManager());
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns>A corresponding instance of IssueMarkerTracking</returns>
         public IssueMarkerTracking GetTracking(Document doc)
         {
-            if (trackings.Where(track => track.Document.Equals(doc)).FirstOrDefault() is IssueMarkerTracking tracking)
+            if (m_trackings.Where(track => track.Document.Equals(doc)).FirstOrDefault() is IssueMarkerTracking tracking)
                 return tracking;
             return null;
         }
@@ -59,8 +59,8 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <param name="doc">A Revit document</param>
         public void AddTracking(Document doc)
         {
-            if (!trackings.Any(track => track.Document.Equals(doc)))
-                trackings.Add(new IssueMarkerTracking(doc));
+            if (!m_trackings.Any(track => track.Document.Equals(doc)))
+                m_trackings.Add(new IssueMarkerTracking(doc));
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <param name="guid">A GUID of the tracking</param>
         public void DeleteTracking(Guid guid)
         {
-            trackings.RemoveWhere(track => track.Id == guid);
+            m_trackings.RemoveWhere(track => track.Id == guid);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// </summary>
         public void ClearTrackings()
         {
-            trackings.Clear();
+            m_trackings.Clear();
         }
     }
 }

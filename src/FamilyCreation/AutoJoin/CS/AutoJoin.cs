@@ -138,7 +138,7 @@ namespace Revit.SDK.Samples.AutoJoin.CS
         {
             if (elementA.Id == elementB.Id) return false;
 
-            var geOptions = Command.s_appCreation.NewGeometryOptions();
+            var geOptions = Command.SAppCreation.NewGeometryOptions();
             return Intersection.IsOverlapped(elementA.get_Geometry(geOptions), elementB.get_Geometry(geOptions));
         }
     }

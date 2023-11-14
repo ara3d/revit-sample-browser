@@ -92,14 +92,14 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                 var tempLine1 = lines[i * 2];
                 var scaledLine1 = GeomUtil.GetScaledLine(tempLine1, scale);
                 var distance1 = scale / 2 * width;
-                var movedLine1 = GeomUtil.GetXYParallelLine(scaledLine1, distance1);
+                var movedLine1 = GeomUtil.GetXyParallelLine(scaledLine1, distance1);
                 lines.Add(movedLine1);
 
                 //width line
                 var tempLine2 = lines[i * 2 + 1];
                 var scaledLine2 = GeomUtil.GetScaledLine(tempLine2, scale);
                 var distance2 = scale / 2 * length;
-                var movedLine2 = GeomUtil.GetXYParallelLine(scaledLine2, distance2);
+                var movedLine2 = GeomUtil.GetXyParallelLine(scaledLine2, distance2);
                 lines.Add(movedLine2);
             }
 

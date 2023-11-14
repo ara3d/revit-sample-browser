@@ -2,7 +2,7 @@
 
 namespace Revit.SDK.Samples.Rooms.CS
 {
-   partial class roomsInformationForm
+   partial class RoomsInformationForm
    {
       /// <summary>
       /// Required designer variable.
@@ -217,7 +217,7 @@ namespace Revit.SDK.Samples.Rooms.CS
           this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
           this.MaximizeBox = false;
           this.MinimizeBox = false;
-          this.Name = "roomsInformationForm";
+          this.Name = "RoomsInformationForm";
           this.ShowInTaskbar = false;
           this.Text = "Rooms information";
           this.Load += new System.EventHandler(this.RoomInfoForm_Load);

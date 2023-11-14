@@ -22,7 +22,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <returns>
         ///     Target value
         /// </returns>
-        public static double CovertFromAPI(ForgeTypeId to, double value)
+        public static double CovertFromApi(ForgeTypeId to, double value)
         {
             return value *= ImperialDutRatio(to);
         }
@@ -39,7 +39,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <returns>
         ///     Target value
         /// </returns>
-        public static double CovertToAPI(double value, ForgeTypeId from)
+        public static double CovertToApi(double value, ForgeTypeId from)
         {
             return value /= ImperialDutRatio(from);
         }

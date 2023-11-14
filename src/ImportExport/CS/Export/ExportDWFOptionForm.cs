@@ -9,18 +9,18 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores information of lower priority for exporting DWF(x) format.
     /// </summary>
-    public partial class ExportDWFOptionForm : Form
+    public partial class ExportDwfOptionForm : Form
     {
         /// <summary>
         ///     ExportDWFData object
         /// </summary>
-        private readonly ExportDWFData m_data;
+        private readonly ExportDwfData m_data;
 
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="data">Data class object</param>
-        public ExportDWFOptionForm(ExportDWFData data)
+        public ExportDwfOptionForm(ExportDwfData data)
         {
             m_data = data;
             InitializeComponent();

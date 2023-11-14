@@ -81,7 +81,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                         {
                             // selection is a beam or brace
                             var returnValue = FindParameter(AngleDefinitionName, familyComponent);
-                            displayForm.rotationTextBox.Text = returnValue;
+                            displayForm.RotationTextBox.Text = returnValue;
                             break;
                         }
                         case StructuralType.Column:
@@ -91,7 +91,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                             var pointLocation = columnLocation as LocationPoint;
                             var temp = pointLocation.Rotation;
                             var output = Math.Round(temp * 180 / Math.PI, 3).ToString();
-                            displayForm.rotationTextBox.Text = output;
+                            displayForm.RotationTextBox.Text = output;
                             break;
                         }
                         default:

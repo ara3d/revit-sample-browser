@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.Loads.CS
             Name = combination.Name;
             Type = combination.Type.ToString();
             State = combination.State.ToString();
-            var m_document = combination.Document;
+            var document = combination.Document;
 
             // Generate the formula field.
             var formulaString = new StringBuilder();
@@ -28,7 +28,7 @@ namespace Revit.SDK.Samples.Loads.CS
             {
                 formulaString.Append(component.Factor);
                 formulaString.Append("*");
-                formulaString.Append(m_document.GetElement(component.LoadCaseOrCombinationId).Name);
+                formulaString.Append(document.GetElement(component.LoadCaseOrCombinationId).Name);
 
                 if (components.IndexOf(component) < components.Count - 1) formulaString.Append(" + ");
             }
@@ -40,8 +40,8 @@ namespace Revit.SDK.Samples.Loads.CS
             var usageIds = combination.GetUsageIds();
             foreach (var id in usageIds)
             {
-                m_document.GetElement(id);
-                usageString.Append(m_document.GetElement(id).Name);
+                document.GetElement(id);
+                usageString.Append(document.GetElement(id).Name);
 
                 if (usageIds.IndexOf(id) < usageIds.Count - 1) usageString.Append(";");
             }

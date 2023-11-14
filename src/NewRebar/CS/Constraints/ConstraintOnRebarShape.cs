@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     A wrapper of RebarShapeDefinition.
         /// </summary>
-        protected readonly RebarShapeDef m_shapeDef;
+        protected readonly RebarShapeDef ShapeDef;
 
         /// <summary>
         ///     Constructor, initialize fields.
@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="def">RebarShapeDef object</param>
         protected ConstraintOnRebarShape(RebarShapeDef def)
         {
-            m_shapeDef = def;
+            ShapeDef = def;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         protected void UpdateParameterTypeConverter()
         {
-            TypeConverterRebarShapeParameter.RebarShapeParameters = m_shapeDef.Parameters;
+            TypeConverterRebarShapeParameter.RebarShapeParameters = ShapeDef.Parameters;
         }
 
         /// <summary>

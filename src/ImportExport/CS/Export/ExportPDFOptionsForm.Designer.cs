@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 namespace Revit.SDK.Samples.ImportExport.CS
 {
-   partial class ExportPDFOptionsForm
+   partial class ExportPdfOptionsForm
    {
       /// <summary>
       /// Required designer variable.
@@ -80,7 +80,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
          this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
          this.MaximizeBox = false;
          this.MinimizeBox = false;
-         this.Name = "ExportPDFOptionsForm";
+         this.Name = "ExportPdfOptionsForm";
          this.ShowIcon = false;
          this.ShowInTaskbar = false;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

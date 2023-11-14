@@ -12,14 +12,14 @@ namespace Revit.SDK.Samples.Rooms.CS
     /// <summary>
     ///     UI to display the rooms information
     /// </summary>
-    public partial class roomsInformationForm : Form
+    public partial class RoomsInformationForm : Form
     {
         private readonly RoomsData m_data; // Room's data for current active document
 
         /// <summary>
         ///     constructor
         /// </summary>
-        public roomsInformationForm()
+        public RoomsInformationForm()
         {
             InitializeComponent();
         }
@@ -28,7 +28,7 @@ namespace Revit.SDK.Samples.Rooms.CS
         ///     Overload the constructor
         /// </summary>
         /// <param name="data">an instance of Data class</param>
-        public roomsInformationForm(RoomsData data)
+        public RoomsInformationForm(RoomsData data)
         {
             m_data = data;
             InitializeComponent();

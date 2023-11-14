@@ -18,9 +18,9 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private readonly SortedList levels = new SortedList(); //list of list sorted by their elevations
+        private readonly SortedList m_levels = new SortedList(); //list of list sorted by their elevations
 
-        private UV[,] m_matrixUV; //2D coordinates of matrix
+        private UV[,] m_matrixUv; //2D coordinates of matrix
         private UIApplication m_revit;
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             try
             {
                 //if initialize failed return Result.Failed
-                var initializeOK = Initialize();
-                if (!initializeOK)
+                var initializeOk = Initialize();
+                if (!initializeOk)
                 {
                     tran.RollBack();
                     return Result.Failed;
@@ -86,7 +86,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         public bool AddInstance(object columnObject, object beamObject, object braceObject, int floorNumber)
         {
             //whether floor number less than levels number
-            if (floorNumber >= levels.Count)
+            if (floorNumber >= m_levels.Count)
             {
                 TaskDialog.Show("Revit", "The number of levels must be added.");
                 return false;
@@ -99,11 +99,11 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             {
                 for (var k = 0; k < floorNumber; k++) //iterate levels from lower one to higher
                 {
-                    var baseLevel = levels.GetByIndex(k) as Level;
-                    var topLevel = levels.GetByIndex(k + 1) as Level;
+                    var baseLevel = m_levels.GetByIndex(k) as Level;
+                    var topLevel = m_levels.GetByIndex(k + 1) as Level;
 
-                    var matrixXSize = m_matrixUV.GetLength(0); //length of matrix's x range
-                    var matrixYSize = m_matrixUV.GetLength(1); //length of matrix's y range
+                    var matrixXSize = m_matrixUv.GetLength(0); //length of matrix's x range
+                    var matrixYSize = m_matrixUv.GetLength(1); //length of matrix's y range
 
                     //iterate coordinate both in x direction and y direction and create beams and braces
                     for (var j = 0; j < matrixYSize; j++)
@@ -111,10 +111,10 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                     {
                         //create beams and braces in x direction
                         if (i != matrixXSize - 1)
-                            PlaceBrace(m_matrixUV[i, j], m_matrixUV[i + 1, j], baseLevel, topLevel, braceSymbol, true);
+                            PlaceBrace(m_matrixUv[i, j], m_matrixUv[i + 1, j], baseLevel, topLevel, braceSymbol, true);
                         //create beams and braces in y direction
                         if (j != matrixYSize - 1)
-                            PlaceBrace(m_matrixUV[i, j], m_matrixUV[i, j + 1], baseLevel, topLevel, braceSymbol, false);
+                            PlaceBrace(m_matrixUv[i, j], m_matrixUv[i, j + 1], baseLevel, topLevel, braceSymbol, false);
                     }
 
                     for (var j = 0; j < matrixYSize; j++)
@@ -122,14 +122,14 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                     {
                         //create beams and braces in x direction
                         if (i != matrixXSize - 1)
-                            PlaceBeam(m_matrixUV[i, j], m_matrixUV[i + 1, j], baseLevel, topLevel, beamSymbol);
+                            PlaceBeam(m_matrixUv[i, j], m_matrixUv[i + 1, j], baseLevel, topLevel, beamSymbol);
                         //create beams and braces in y direction
                         if (j != matrixYSize - 1)
-                            PlaceBeam(m_matrixUV[i, j], m_matrixUV[i, j + 1], baseLevel, topLevel, beamSymbol);
+                            PlaceBeam(m_matrixUv[i, j], m_matrixUv[i, j + 1], baseLevel, topLevel, beamSymbol);
                     }
 
                     //place column of this level
-                    foreach (var point2D in m_matrixUV) PlaceColumn(point2D, columnSymbol, baseLevel, topLevel);
+                    foreach (var point2D in m_matrixUv) PlaceColumn(point2D, columnSymbol, baseLevel, topLevel);
                 }
             }
             catch
@@ -148,11 +148,11 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <param name="distance">Distance between columns</param>
         public void CreateMatrix(int xNumber, int yNumber, double distance)
         {
-            m_matrixUV = new UV[xNumber, yNumber];
+            m_matrixUv = new UV[xNumber, yNumber];
 
             for (var i = 0; i < xNumber; i++)
             for (var j = 0; j < yNumber; j++)
-                m_matrixUV[i, j] = new UV(i * distance, j * distance);
+                m_matrixUv[i, j] = new UV(i * distance, j * distance);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 while (i.MoveNext())
                 {
                     //add level to list
-                    if (i.Current is Level level) levels.Add(level.Elevation, level);
+                    if (i.Current is Level level) m_levels.Add(level.Elevation, level);
                 }
 
                 i = new FilteredElementCollector(m_revit.ActiveUIDocument.Document).OfClass(typeof(Family))

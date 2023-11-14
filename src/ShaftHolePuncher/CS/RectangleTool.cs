@@ -20,9 +20,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             if (1 == m_points.Count)
             {
-                DrawRect(graphic, m_backGroundPen, m_points[0], m_preMovePoint);
-                m_preMovePoint = e.Location;
-                DrawRect(graphic, m_foreGroundPen, m_points[0], m_preMovePoint);
+                DrawRect(graphic, BackGroundPen, m_points[0], PreMovePoint);
+                PreMovePoint = e.Location;
+                DrawRect(graphic, ForeGroundPen, m_points[0], PreMovePoint);
             }
         }
 
@@ -33,9 +33,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         public override void OnMouseDown(MouseEventArgs e)
         {
             if (MouseButtons.Left == e.Button && !m_finished
-                                              && GetDistance(m_preDownPoint, e.Location) > 2)
+                                              && GetDistance(PreDownPoint, e.Location) > 2)
             {
-                m_preDownPoint = e.Location;
+                PreDownPoint = e.Location;
                 m_points.Add(e.Location);
                 if (2 == m_points.Count) m_finished = true;
             }
@@ -47,7 +47,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <param name="graphic">Graphics object, use to draw geometry</param>
         public override void Draw(Graphics graphic)
         {
-            if (2 == m_points.Count) DrawRect(graphic, m_foreGroundPen, m_points[0], m_points[1]);
+            if (2 == m_points.Count) DrawRect(graphic, ForeGroundPen, m_points[0], m_points[1]);
         }
 
         /// <summary>

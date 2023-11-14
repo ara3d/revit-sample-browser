@@ -5,15 +5,15 @@ using Revit.SDK.Samples.DockableDialogs.CS;
 
 namespace Revit.SDK.Samples.DockableDiagnostics.CS
 {
-    internal class MacroAPIExternalEventHandler : IExternalEventHandler
+    internal class MacroApiExternalEventHandler : IExternalEventHandler
     {
         public void Execute(UIApplication app)
         {
-            var data = ThisApplication.thisApp.GetDockableAPIUtility().ModelessCommand.Take();
-            ThisApplication.thisApp.GetDockableAPIUtility().RunModelessCommand(data);
-            ThisApplication.thisApp.GetMainWindow()
-                .UpdateUI(ThisApplication.thisApp.GetDockableAPIUtility().ModelessCommand.Take());
-            ThisApplication.thisApp.GetMainWindow().WakeUp();
+            var data = ThisApplication.ThisApp.GetDockableApiUtility().ModelessCommand.Take();
+            ThisApplication.ThisApp.GetDockableApiUtility().RunModelessCommand(data);
+            ThisApplication.ThisApp.GetMainWindow()
+                .UpdateUi(ThisApplication.ThisApp.GetDockableApiUtility().ModelessCommand.Take());
+            ThisApplication.ThisApp.GetMainWindow().WakeUp();
         }
 
         public string GetName()

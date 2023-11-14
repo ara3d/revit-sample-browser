@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <param name="to">ForgeTypeId indicates unit of target value</param>
         /// <param name="value">value get from RevitAPI</param>
         /// <returns>Target value</returns>
-        public static double CovertFromAPI(ForgeTypeId to, double value)
+        public static double CovertFromApi(ForgeTypeId to, double value)
         {
             return value *= ImperialDutRatio(to);
         }
@@ -26,7 +26,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <param name="value">Value to be converted</param>
         /// <param name="from">ForgeTypeId indicates the unit of the value to be converted</param>
         /// <returns>Target value</returns>
-        public static double CovertToAPI(double value, ForgeTypeId from)
+        public static double CovertToApi(double value, ForgeTypeId from)
         {
             return value /= ImperialDutRatio(from);
         }

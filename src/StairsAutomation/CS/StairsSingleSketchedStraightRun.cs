@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         public StairsSingleSketchedStraightRun(Stairs stairs, Level bottomLevel)
         {
             var stairsType = stairs.Document.GetElement(stairs.GetTypeId()) as StairsType;
-            m_runConfigurations.Add(new SketchedStraightStairsRunComponent(stairs.DesiredRisersNumber,
+            RunConfigurations.Add(new SketchedStraightStairsRunComponent(stairs.DesiredRisersNumber,
                 bottomLevel.Elevation,
                 stairsType.MinTreadDepth, stairsType.MinRunWidth));
         }
@@ -32,7 +32,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         public StairsSingleSketchedStraightRun(Stairs stairs, Level bottomLevel, Transform transform)
         {
             var stairsType = stairs.Document.GetElement(stairs.GetTypeId()) as StairsType;
-            m_runConfigurations.Add(new SketchedStraightStairsRunComponent(stairs.DesiredRisersNumber,
+            RunConfigurations.Add(new SketchedStraightStairsRunComponent(stairs.DesiredRisersNumber,
                 bottomLevel.Elevation,
                 stairsType.MinTreadDepth, stairsType.MinRunWidth,
                 transform));

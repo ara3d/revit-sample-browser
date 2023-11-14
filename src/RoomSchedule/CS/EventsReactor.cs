@@ -241,7 +241,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             // create a connection and update values of spread sheet
             var updatedRows = 0; // number of rows which were updated
             var newRows = 0; // number of rows which were added into spread sheet
-            var dbConnector = new XlsDBConnector(mappedXlsAndTable.FileName);
+            var dbConnector = new XlsDbConnector(mappedXlsAndTable.FileName);
 
             // check whether there is room table. 
             // get all available rooms in current document once more
@@ -281,7 +281,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                     // create update SQL clause, 
                     // when filtering row to be updated, use Room.Id if "External Room ID" is null.
                     var updateStr =
-                        $"Update [{mappedXlsAndTable.SheetName}$] SET [{RoomsData.RoomName}] = '{room.Name}', [{RoomsData.RoomNumber}] = '{room.Number}', [{RoomsData.RoomComments}] = '{comments}', [{RoomsData.RoomArea}] = '{roomArea:N3}' Where [{RoomsData.RoomID}] = {(string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId)}";
+                        $"Update [{mappedXlsAndTable.SheetName}$] SET [{RoomsData.RoomName}] = '{room.Name}', [{RoomsData.RoomNumber}] = '{room.Number}', [{RoomsData.RoomComments}] = '{comments}', [{RoomsData.RoomArea}] = '{roomArea:N3}' Where [{RoomsData.RoomId}] = {(string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId)}";
 
                     // execute the command and check the size of updated rows 
                     var afftectedRows = dbConnector.ExecuteCommnand(updateStr);
@@ -311,7 +311,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                         //    else, use constant string: "<Added from Revit>" for Comments column in spreadsheet.
 
                         var insertStr =
-                            $"Insert Into [{mappedXlsAndTable.SheetName}$] ([{RoomsData.RoomID}], [{RoomsData.RoomComments}], [{RoomsData.RoomName}], [{RoomsData.RoomNumber}], [{RoomsData.RoomArea}]) Values('{(string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId)}', '{(bCommnetIsNull || string.IsNullOrEmpty(comments) ? "<Added from Revit>" : comments)}', '{room.Name}', '{room.Number}', '{roomArea:N3}')";
+                            $"Insert Into [{mappedXlsAndTable.SheetName}$] ([{RoomsData.RoomId}], [{RoomsData.RoomComments}], [{RoomsData.RoomName}], [{RoomsData.RoomNumber}], [{RoomsData.RoomArea}]) Values('{(string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId)}', '{(bCommnetIsNull || string.IsNullOrEmpty(comments) ? "<Added from Revit>" : comments)}', '{room.Name}', '{room.Number}', '{roomArea:N3}')";
 
                         // try to insert it 
                         afftectedRows = dbConnector.ExecuteCommnand(insertStr);

@@ -83,10 +83,10 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
             opt.ComputeReferences = true;
             var geomElem = familyInstance.get_Geometry(opt);
             //foreach (GeometryObject geomObject1 in geomElem.Objects)
-            var Objects = geomElem.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geomElem.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var geomObject1 = Objects.Current;
+                var geomObject1 = objects.Current;
 
                 Solid solid = null;
                 switch (geomObject1)
@@ -103,10 +103,10 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
                     case GeometryInstance geomInst:
                     {
                         //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
-                        var Objects1 = geomInst.SymbolGeometry.GetEnumerator();
-                        while (Objects1.MoveNext())
+                        var objects1 = geomInst.SymbolGeometry.GetEnumerator();
+                        while (objects1.MoveNext())
                         {
-                            object geomObj = Objects1.Current;
+                            object geomObj = objects1.Current;
 
                             solid = geomObj as Solid;
                             if (solid != null)
@@ -135,27 +135,27 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
         /// </summary>
         /// <param name="edge_ar">The edges of the curtain panel</param>
         /// <param name="instParams">The parameters which records the length and angle data</param>
-        private void SetParams(EdgeArray edge_ar, InstParameters instParams)
+        private void SetParams(EdgeArray edgeAr, InstParameters instParams)
         {
             var length4 = 0d;
             var angle3 = 0d;
             var angle4 = 0d;
-            var edge1 = edge_ar.get_Item(0);
-            var edge2 = edge_ar.get_Item(1);
-            var edge3 = edge_ar.get_Item(2);
+            var edge1 = edgeAr.get_Item(0);
+            var edge2 = edgeAr.get_Item(1);
+            var edge3 = edgeAr.get_Item(2);
             var length1 = edge1.ApproximateLength;
             var length2 = edge2.ApproximateLength;
             var length3 = edge3.ApproximateLength;
             var angle1 = AngleBetweenEdges(edge1, edge2);
             var angle2 = AngleBetweenEdges(edge2, edge3);
 
-            if (edge_ar.Size == 3)
+            if (edgeAr.Size == 3)
             {
                 angle3 = AngleBetweenEdges(edge3, edge1);
             }
-            else if (edge_ar.Size > 3)
+            else if (edgeAr.Size > 3)
             {
-                var edge4 = edge_ar.get_Item(3);
+                var edge4 = edgeAr.get_Item(3);
                 length4 = edge4.ApproximateLength;
                 angle3 = AngleBetweenEdges(edge3, edge4);
                 angle4 = AngleBetweenEdges(edge4, edge1);
@@ -183,32 +183,32 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
             XYZ vectorB = null;
 
             // find coincident vertices
-            var A_0 = edgeA.Evaluate(0);
-            var A_1 = edgeA.Evaluate(1);
-            var B_0 = edgeB.Evaluate(0);
-            var B_1 = edgeB.Evaluate(1);
-            if (A_0.IsAlmostEqualTo(B_0))
+            var a0 = edgeA.Evaluate(0);
+            var a1 = edgeA.Evaluate(1);
+            var b0 = edgeB.Evaluate(0);
+            var b1 = edgeB.Evaluate(1);
+            if (a0.IsAlmostEqualTo(b0))
             {
                 vectorA = edgeA.ComputeDerivatives(0).BasisX.Normalize();
                 vectorB = edgeA.ComputeDerivatives(0).BasisX.Normalize();
             }
-            else if (A_0.IsAlmostEqualTo(B_1))
+            else if (a0.IsAlmostEqualTo(b1))
             {
                 vectorA = edgeA.ComputeDerivatives(0).BasisX.Normalize();
                 vectorB = edgeB.ComputeDerivatives(1).BasisX.Normalize();
             }
-            else if (A_1.IsAlmostEqualTo(B_0))
+            else if (a1.IsAlmostEqualTo(b0))
             {
                 vectorA = edgeA.ComputeDerivatives(1).BasisX.Normalize();
                 vectorB = edgeB.ComputeDerivatives(0).BasisX.Normalize();
             }
-            else if (A_1.IsAlmostEqualTo(B_1))
+            else if (a1.IsAlmostEqualTo(b1))
             {
                 vectorA = edgeA.ComputeDerivatives(1).BasisX.Normalize();
                 vectorB = edgeB.ComputeDerivatives(1).BasisX.Normalize();
             }
 
-            if (A_1.IsAlmostEqualTo(B_0) || A_0.IsAlmostEqualTo(B_1)) vectorA = vectorA.Negate();
+            if (a1.IsAlmostEqualTo(b0) || a0.IsAlmostEqualTo(b1)) vectorA = vectorA.Negate();
 
             if (null == vectorA || null == vectorB) return 0d;
             var angle = Math.Acos(vectorA.DotProduct(vectorB));
@@ -223,17 +223,17 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
         private InstParameters GetParams(FamilyInstance familyInstance)
         {
             var iParams = new InstParameters();
-            var L1 = familyInstance.LookupParameter("Length1");
-            var L2 = familyInstance.LookupParameter("Length2");
-            var L3 = familyInstance.LookupParameter("Length3");
-            var L4 = familyInstance.LookupParameter("Length4");
-            var A1 = familyInstance.LookupParameter("Angle1");
-            var A2 = familyInstance.LookupParameter("Angle2");
-            var A3 = familyInstance.LookupParameter("Angle3");
-            var A4 = familyInstance.LookupParameter("Angle4");
+            var l1 = familyInstance.LookupParameter("Length1");
+            var l2 = familyInstance.LookupParameter("Length2");
+            var l3 = familyInstance.LookupParameter("Length3");
+            var l4 = familyInstance.LookupParameter("Length4");
+            var a1 = familyInstance.LookupParameter("Angle1");
+            var a2 = familyInstance.LookupParameter("Angle2");
+            var a3 = familyInstance.LookupParameter("Angle3");
+            var a4 = familyInstance.LookupParameter("Angle4");
 
-            if (L1 == null || L2 == null || L3 == null || L4 == null || A1 == null || A2 == null || A3 == null ||
-                A4 == null)
+            if (l1 == null || l2 == null || l3 == null || l4 == null || a1 == null || a2 == null || a3 == null ||
+                a4 == null)
             {
                 var errorstring = "Panel family: " + familyInstance.Id + " '" + familyInstance.Symbol.Family.Name +
                                   "' must have instance parameters Length1, Length2, Length3, Length4, Angle1, Angle2, Angle3, and Angle4";
@@ -241,14 +241,14 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
                 //   throw new ArgumentException(errorstring);
             }
 
-            iParams["Length1"] = L1;
-            iParams["Length2"] = L2;
-            iParams["Length3"] = L3;
-            iParams["Length4"] = L4;
-            iParams["Angle1"] = A1;
-            iParams["Angle2"] = A2;
-            iParams["Angle3"] = A3;
-            iParams["Angle4"] = A4;
+            iParams["Length1"] = l1;
+            iParams["Length2"] = l2;
+            iParams["Length3"] = l3;
+            iParams["Length4"] = l4;
+            iParams["Angle1"] = a1;
+            iParams["Angle2"] = a2;
+            iParams["Angle3"] = a3;
+            iParams["Angle4"] = a4;
 
             return iParams;
         }

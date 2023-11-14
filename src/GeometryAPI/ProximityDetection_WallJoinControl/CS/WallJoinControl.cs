@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// <summary>
         ///     The singleton instance of WallJoinControl
         /// </summary>
-        private static WallJoinControl Instance;
+        private static WallJoinControl _instance;
 
         /// <summary>
         ///     revit application
@@ -47,11 +47,11 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// <param name="app">Revit application</param>
         /// <param name="doc">Revit document</param>
         /// <returns>The singleton instance of WallJoinControl</returns>
-        public static WallJoinControl getInstance(
+        public static WallJoinControl GetInstance(
             Application app,
             Document doc)
         {
-            return Instance ?? (Instance = new WallJoinControl(app, doc));
+            return _instance ?? (_instance = new WallJoinControl(app, doc));
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// </summary>
         /// <param name="walls">The walls to be checked</param>
         /// <returns>The check result</returns>
-        public XElement checkJoinedWalls(IEnumerable<Wall> walls)
+        public XElement CheckJoinedWalls(IEnumerable<Wall> walls)
         {
             // create a node that place all walls.
             var wallsNode = new XElement("Walls", new XAttribute("Name", "Walls"));
@@ -82,11 +82,11 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                     {
                         // start
                         var endNode = new XElement("Start", new XAttribute("Name", "Start"));
-                        wallNode.Add(checkWallEnd(wall, locationCurve, 0, endNode));
+                        wallNode.Add(CheckWallEnd(wall, locationCurve, 0, endNode));
 
                         // end
                         endNode = new XElement("End", new XAttribute("Name", "End"));
-                        wallNode.Add(checkWallEnd(wall, locationCurve, 1, endNode));
+                        wallNode.Add(CheckWallEnd(wall, locationCurve, 1, endNode));
                     }
 
                     wallsNode.Add(wallNode);
@@ -109,7 +109,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// <param name="end">The index indicates the start or end of this wall</param>
         /// <param name="endnode">Result XML node</param>
         /// <returns>The check result</returns>
-        private XElement checkWallEnd(Wall wall, LocationCurve locationCurve, int end, XElement endnode)
+        private XElement CheckWallEnd(Wall wall, LocationCurve locationCurve, int end, XElement endnode)
         {
             // Initial state
             var stateNode = new XElement("Initial", new XAttribute("Name", "Initial"));

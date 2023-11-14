@@ -99,12 +99,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         ///     HVACLoadLoadsReportType and its display string map.
         /// </summary>
-        public static readonly Dictionary<object, string> HVACLoadLoadsReportTypeMap;
+        public static readonly Dictionary<object, string> HvacLoadLoadsReportTypeMap;
 
         /// <summary>
         ///     HVACLoadConstructionClass and its display string map.
         /// </summary>
-        public static readonly Dictionary<object, string> HVACLoadConstructionClassMap;
+        public static readonly Dictionary<object, string> HvacLoadConstructionClassMap;
 
         /// <summary>
         ///     Initialize some static members
@@ -282,7 +282,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                 { gbXMLExportComplexity.SimpleWithShadingSurfaces, "Simple With Shading Surfaces" }
             };
 
-            HVACLoadLoadsReportTypeMap = new Dictionary<object, string>
+            HvacLoadLoadsReportTypeMap = new Dictionary<object, string>
             {
                 { HVACLoadLoadsReportType.DetailedReport, "Detailed" },
                 { HVACLoadLoadsReportType.NoReport, "No" },
@@ -290,7 +290,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                 { HVACLoadLoadsReportType.StandardReport, "Standard" }
             };
 
-            HVACLoadConstructionClassMap = new Dictionary<object, string>
+            HvacLoadConstructionClassMap = new Dictionary<object, string>
             {
                 { HVACLoadConstructionClass.LooseConstruction, "Loose" },
                 { HVACLoadConstructionClass.NoneConstruction, "None" },

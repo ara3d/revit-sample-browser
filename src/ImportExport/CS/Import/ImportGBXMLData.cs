@@ -8,18 +8,18 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores the information for importing GBXML format
     /// </summary>
-    internal class ImportGBXMLData : ImportData
+    internal class ImportGbxmlData : ImportData
     {
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="importFormat">Format to import</param>
-        public ImportGBXMLData(ExternalCommandData commandData, ImportFormat importFormat)
+        public ImportGbxmlData(ExternalCommandData commandData, ImportFormat importFormat)
             : base(commandData, importFormat)
         {
-            m_filter = "XML Documents (*.xml)|*.xml";
-            m_title = "Import GBXML";
+            Filter = "XML Documents (*.xml)|*.xml";
+            Title = "Import GBXML";
         }
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var options = new GBXMLImportOptions();
 
             //Import
-            var t = new Transaction(m_activeDoc);
+            var t = new Transaction(ActiveDoc);
             t.SetName("Import GBXML");
             t.Start();
-            var imported = m_activeDoc.Import(m_importFileFullName, options);
+            var imported = ActiveDoc.Import(ImportFileFullName, options);
             t.Commit();
 
             return imported;

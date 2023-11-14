@@ -19,17 +19,17 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <summary>
         ///     reserve lines that form the profile
         /// </summary>
-        protected readonly List<ObjectSketch> m_objects = new List<ObjectSketch>();
+        protected readonly List<ObjectSketch> Objects = new List<ObjectSketch>();
 
         /// <summary>
         ///     pen to draw the object
         /// </summary>
-        protected readonly Pen m_pen = new Pen(Color.DarkGreen);
+        protected readonly Pen Pen = new Pen(Color.DarkGreen);
 
         /// <summary>
         ///     defines a local geometric transform
         /// </summary>
-        protected Matrix m_transform;
+        protected Matrix Transform;
 
         /// <summary>
         ///     bounding box of the geometry object

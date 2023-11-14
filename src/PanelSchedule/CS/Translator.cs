@@ -14,7 +14,7 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         /// <summary>
         ///     the panel schedule view instance to be exported.
         /// </summary>
-        protected PanelScheduleView m_psView;
+        protected PanelScheduleView PsView;
 
         public abstract string Export();
 
@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         /// <param name="sectionType">the exporting section of the panel schedule.</param>
         /// <param name="nRows">the number of rows.</param>
         /// <param name="nCols">the number of columns.</param>
-        protected void getNumberOfRowsAndColumns(Document doc, PanelScheduleView psView, SectionType sectionType,
+        protected void GetNumberOfRowsAndColumns(Document doc, PanelScheduleView psView, SectionType sectionType,
             ref int nRows, ref int nCols)
         {
             var openSectionData = new Transaction(doc, "openSectionData");

@@ -25,9 +25,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             m_data = floor;
             var faces = GetFaces(m_data);
-            m_points = GetNeedPoints(faces);
-            m_to2DMatrix = GetTo2DMatrix();
-            m_moveToCenterMatrix = ToCenterMatrix();
+            Points = GetNeedPoints(faces);
+            To2DMatrix = GetTo2DMatrix();
+            MoveToCenterMatrix = ToCenterMatrix();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             // get view which named "Level 2".
             // Skip view templates because they're behind-the-scene and invisible in project browser; also invalid for API.
             var views = from elem in
-                    new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document)
+                    new FilteredElementCollector(CommandData.Application.ActiveUIDocument.Document)
                         .OfClass(typeof(ViewPlan)).ToElements()
                 let view = elem as View
                 where view != null && !view.IsTemplate && "Level 2" == view.Name
@@ -83,7 +83,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             XYZ p1, p2;
             Line curve;
-            var curves = m_appCreator.NewCurveArray();
+            var curves = AppCreator.NewCurveArray();
             for (var i = 0; i < points.Count - 1; i++)
             {
                 p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
@@ -99,7 +99,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             curve = Line.CreateBound(p1, p2);
             curves.Append(curve);
 
-            return m_docCreator.NewOpening(m_data, curves, true);
+            return DocCreator.NewOpening(m_data, curves, true);
         }
     }
 }

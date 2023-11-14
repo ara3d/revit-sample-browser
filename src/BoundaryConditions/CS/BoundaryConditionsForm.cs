@@ -74,23 +74,23 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         private void bCComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // create a BCProperties instance according to current selected BC Id
-            m_dataBuffer.BCProperties = new BCProperties(m_dataBuffer.BCs[ElementId.Parse(bCComboBox.Text)]);
+            m_dataBuffer.BcProperties = new BcProperties(m_dataBuffer.BCs[ElementId.Parse(bCComboBox.Text)]);
 
             // set the display object
-            bCPropertyGrid.SelectedObject = m_dataBuffer.BCProperties;
+            bCPropertyGrid.SelectedObject = m_dataBuffer.BcProperties;
 
             // set the browsable attributes of the property grid
             Attribute[] attributes = null;
-            switch (m_dataBuffer.BCProperties.BoundaryConditionsType)
+            switch (m_dataBuffer.BcProperties.BoundaryConditionsType)
             {
-                case BCType.Point:
-                    attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Point }) };
+                case BcType.Point:
+                    attributes = new Attribute[] { new BcTypeAttribute(new[] { BcType.Point }) };
                     break;
-                case BCType.Line:
-                    attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Line }) };
+                case BcType.Line:
+                    attributes = new Attribute[] { new BcTypeAttribute(new[] { BcType.Line }) };
                     break;
-                case BCType.Area:
-                    attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Area }) };
+                case BcType.Area:
+                    attributes = new Attribute[] { new BcTypeAttribute(new[] { BcType.Area }) };
                     break;
             }
 
@@ -109,9 +109,9 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 // invoke SetSpringModulus method in BCProperties class to
                 // let user enter a positive number as the SpringModulus 
                 // when set any Translation/Rotation parameter to Spring 
-                var value = (BCTranslationRotation)e.ChangedItem.Value;
-                if (BCTranslationRotation.Spring == value)
-                    m_dataBuffer.BCProperties.SetSpringModulus(e.ChangedItem.Label);
+                var value = (BcTranslationRotation)e.ChangedItem.Value;
+                if (BcTranslationRotation.Spring == value)
+                    m_dataBuffer.BcProperties.SetSpringModulus(e.ChangedItem.Label);
             }
         }
 

@@ -270,10 +270,10 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
 
             //GeometryObjectArray objectarray = geoElement.Objects;
             //foreach (GeometryObject obj in objectarray)
-            var Objects = geoElement.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geoElement.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var obj = Objects.Current;
+                var obj = objects.Current;
 
                 var solid = obj as Solid;
 
@@ -297,10 +297,10 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             FamilyInstance resultMass = null;
 
             // check whether a mass was selected before launching this sample
-            var selection = m_mydocument.UIDocument.Selection;
+            var selection = m_mydocument.UiDocument.Selection;
             var elementSet = new ElementSet();
             foreach (var elementId in selection.GetElementIds())
-                elementSet.Insert(m_mydocument.UIDocument.Document.GetElement(elementId));
+                elementSet.Insert(m_mydocument.UiDocument.Document.GetElement(elementId));
             if (null == selection ||
                 null == elementSet ||
                 elementSet.IsEmpty ||
@@ -310,7 +310,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
 
             foreach (var selElementId in selection.GetElementIds())
             {
-                var selElement = m_mydocument.UIDocument.Document.GetElement(selElementId);
+                var selElement = m_mydocument.UiDocument.Document.GetElement(selElementId);
                 if (selElement is FamilyInstance inst &&
                     "Mass" == inst.Category.Name)
                 {

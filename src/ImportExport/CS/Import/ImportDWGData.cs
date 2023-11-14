@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores the information for importing dwg format
     /// </summary>
-    public class ImportDWGData : ImportData
+    public class ImportDwgData : ImportData
     {
         /// <summary>
         ///     ColorMode for import
@@ -107,7 +107,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="format">Format to import</param>
-        public ImportDWGData(ExternalCommandData commandData, ImportFormat format)
+        public ImportDwgData(ExternalCommandData commandData, ImportFormat format)
             : base(commandData, format)
         {
             Initialize();
@@ -262,17 +262,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
             if (!m_importThisViewOnly)
                 view = m_importView;
             else
-                view = m_activeDoc.ActiveView;
+                view = ActiveDoc.ActiveView;
             dwgImportOption.Unit = m_importUnit;
             dwgImportOption.VisibleLayersOnly = m_importVisibleLayersOnly;
 
             //parameter: ElementId
 
             //Import
-            var t = new Transaction(m_activeDoc);
+            var t = new Transaction(ActiveDoc);
             t.SetName("Import");
             t.Start();
-            var imported = m_activeDoc.Import(m_importFileFullName, dwgImportOption, view, out _);
+            var imported = ActiveDoc.Import(ImportFileFullName, dwgImportOption, view, out _);
             t.Commit();
 
             return imported;
@@ -331,7 +331,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             //Whether active view is 3D
             m_is3DView = false;
-            if (m_activeDoc.ActiveView.ViewType == ViewType.ThreeD) m_is3DView = true;
+            if (ActiveDoc.ActiveView.ViewType == ViewType.ThreeD) m_is3DView = true;
 
             //Views
             m_views = new ViewSet();
@@ -341,13 +341,13 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_importOrientToView = true;
             m_importUnit = ImportUnit.Default;
             m_importThisViewOnly = false;
-            m_importView = m_activeDoc.ActiveView;
+            m_importView = ActiveDoc.ActiveView;
             m_importColorMode = ImportColorMode.Inverted;
             m_importPlacement = ImportPlacement.Centered;
             m_importVisibleLayersOnly = false;
 
-            m_filter = "DWG Files (*.dwg)|*.dwg";
-            m_title = "Import DWG";
+            Filter = "DWG Files (*.dwg)|*.dwg";
+            Title = "Import DWG";
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         private void GetViews()
         {
-            var collector = new FilteredElementCollector(m_activeDoc);
+            var collector = new FilteredElementCollector(ActiveDoc);
             var itor = collector.OfClass(typeof(View)).GetElementIterator();
             itor.Reset();
             var views = new ViewSet();
@@ -390,7 +390,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 if (engineeringPlan.Name == engineeringPlan.GenLevel.Name)
                     views.Insert(engineeringPlan);
 
-            var activeView = m_activeDoc.ActiveView;
+            var activeView = ActiveDoc.ActiveView;
             var viewType = activeView.ViewType;
             switch (viewType)
             {

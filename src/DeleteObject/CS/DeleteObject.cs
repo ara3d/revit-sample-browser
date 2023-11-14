@@ -39,12 +39,12 @@ namespace Revit.SDK.Samples.DeleteObject.CS
 
                 // delete selection
                 var e = collection.GetEnumerator();
-                var MoreValue = e.MoveNext();
-                while (MoreValue)
+                var moreValue = e.MoveNext();
+                while (moreValue)
                 {
                     var component = e.Current as Element;
                     revit.ActiveUIDocument.Document.Delete(component.Id);
-                    MoreValue = e.MoveNext();
+                    moreValue = e.MoveNext();
                 }
 
                 error = false;

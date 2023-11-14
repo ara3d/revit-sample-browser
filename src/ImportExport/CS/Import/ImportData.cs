@@ -16,37 +16,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         ///     Active document
         /// </summary>
-        protected readonly Document m_activeDoc;
-
-        /// <summary>
-        ///     Revit command data
-        /// </summary>
-        protected readonly ExternalCommandData m_commandData;
-
-        /// <summary>
-        ///     The filter which will be used in file saving dialog
-        /// </summary>
-        protected string m_filter;
-
-        /// <summary>
-        ///     File Name or Prefix to be used
-        /// </summary>
-        protected string m_importFileFullName;
-
-        /// <summary>
-        ///     Directory where to import the file
-        /// </summary>
-        protected string m_importFolder;
-
-        /// <summary>
-        ///     The format to be exported
-        /// </summary>
-        protected ImportFormat m_importFormat;
-
-        /// <summary>
-        ///     The title of importing dialog
-        /// </summary>
-        protected string m_title;
+        protected readonly Document ActiveDoc;
 
         /// <summary>
         ///     Constructor
@@ -55,54 +25,36 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="importFormat">Format to import</param>
         public ImportData(ExternalCommandData commandData, ImportFormat importFormat)
         {
-            m_commandData = commandData;
-            m_activeDoc = commandData.Application.ActiveUIDocument.Document;
-            m_importFormat = importFormat;
-            m_filter = string.Empty;
+            CommandData = commandData;
+            ActiveDoc = commandData.Application.ActiveUIDocument.Document;
+            Filter = string.Empty;
             Initialize();
         }
 
         /// <summary>
         ///     Revit command data
         /// </summary>
-        public ExternalCommandData CommandData => m_commandData;
+        public ExternalCommandData CommandData { get; }
 
         /// <summary>
         ///     File Name or Prefix to be used
         /// </summary>
-        public string ImportFileFullName
-        {
-            get => m_importFileFullName;
-            set => m_importFileFullName = value;
-        }
-
-        /// <summary>
-        ///     The format to be imported
-        /// </summary>
-        public ImportFormat ImportFormat
-        {
-            get => m_importFormat;
-            set => m_importFormat = value;
-        }
+        public string ImportFileFullName { get; set; }
 
         /// <summary>
         ///     The filter which will be used in file saving dialog
         /// </summary>
-        public string Filter => m_filter;
+        public string Filter { get; protected set; }
 
         /// <summary>
         ///     Directory where to import the file
         /// </summary>
-        public string ImportFolder
-        {
-            get => m_importFolder;
-            set => m_importFolder = value;
-        }
+        public string ImportFolder { get; private set; }
 
         /// <summary>
         ///     The title of importing dialog
         /// </summary>
-        public string Title => m_title;
+        public string Title { get; protected set; }
 
         /// <summary>
         ///     Initialize the variables
@@ -111,8 +63,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             //The directory into which the file will be imported
             var dllFilePath = Assembly.GetExecutingAssembly().Location;
-            m_importFolder = Path.GetDirectoryName(dllFilePath);
-            m_importFileFullName = string.Empty;
+            ImportFolder = Path.GetDirectoryName(dllFilePath);
+            ImportFileFullName = string.Empty;
         }
 
         /// <summary>
@@ -121,7 +73,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <returns></returns>
         public virtual bool Import()
         {
-            if (m_importFileFullName == null) throw new NullReferenceException();
+            if (ImportFileFullName == null) throw new NullReferenceException();
 
             return true;
         }

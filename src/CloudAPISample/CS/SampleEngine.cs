@@ -22,14 +22,14 @@ namespace Revit.SDK.Samples.CloudAPISample.CS
 {
     internal class SampleEngine : IDisposable
     {
-        private readonly List<SampleContext> allContext = new List<SampleContext>();
-        private readonly UIApplication application;
-        private ViewSamplePortal viewPortal;
+        private readonly List<SampleContext> m_allContext = new List<SampleContext>();
+        private readonly UIApplication m_application;
+        private ViewSamplePortal m_viewPortal;
 
         public SampleEngine(UIApplication app)
         {
-            application = app;
-            viewPortal = new ViewSamplePortal(app);
+            m_application = app;
+            m_viewPortal = new ViewSamplePortal(app);
 
             CoroutineScheduler.Run();
         }
@@ -37,30 +37,30 @@ namespace Revit.SDK.Samples.CloudAPISample.CS
         /// <inheritdoc />
         public void Dispose()
         {
-            foreach (var context in allContext)
+            foreach (var context in m_allContext)
             {
                 context.Terminate();
                 context.Application = null;
             }
 
-            allContext.Clear();
-            viewPortal?.Close();
-            viewPortal = null;
+            m_allContext.Clear();
+            m_viewPortal?.Close();
+            m_viewPortal = null;
 
             CoroutineScheduler.Stop();
         }
 
         public void RegisterSample(string name, SampleContext sampleContext)
         {
-            sampleContext.Application = application;
-            allContext.Add(sampleContext);
+            sampleContext.Application = m_application;
+            m_allContext.Add(sampleContext);
 
-            viewPortal.AddTab(name, sampleContext.View);
+            m_viewPortal.AddTab(name, sampleContext.View);
         }
 
         public void Run()
         {
-            viewPortal.ShowDialog();
+            m_viewPortal.ShowDialog();
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         /// <param name="e">The event argument used by DocumentSaving event. </param>
         private void application_DocumentSaving(object sender, DocumentSavingEventArgs e)
         {
-            validateParameters(e.Document);
+            ValidateParameters(e.Document);
         }
 
         /// <summary>
@@ -83,14 +83,14 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         /// <param name="e">The event argument used by DocumentSavingAs event.</param>
         private void application_DocumentSavingAs(object sender, DocumentSavingAsEventArgs e)
         {
-            validateParameters(e.Document);
+            ValidateParameters(e.Document);
         }
 
         /// <summary>
         ///     The method is to validate parameters via FamilyParameter and FamilyType
         /// </summary>
         /// <param name="doc">the document which need to validate parameters</param>
-        private void validateParameters(Document doc)
+        private void ValidateParameters(Document doc)
         {
             var errorInfo = new List<string>();
             if (doc.IsFamilyDocument)

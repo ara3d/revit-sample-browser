@@ -12,29 +12,24 @@ namespace Revit.SDK.Samples.Openings.CS
     public abstract class ObjectSketch
     {
         /// <summary>
-        ///     bounding box of the geometry object
-        /// </summary>
-        protected RectangleF m_boundingBox = new RectangleF();
-
-        /// <summary>
         ///     reserve lines that form the profile
         /// </summary>
-        protected readonly List<ObjectSketch> m_objects = new List<ObjectSketch>();
+        protected readonly List<ObjectSketch> Objects = new List<ObjectSketch>();
 
         /// <summary>
         ///     pen to draw the object
         /// </summary>
-        protected readonly Pen m_pen = new Pen(Color.DarkGreen);
+        protected readonly Pen Pen = new Pen(Color.DarkGreen);
 
         /// <summary>
         ///     defines a local geometric transform
         /// </summary>
-        protected Matrix m_transform;
+        protected Matrix Transform;
 
         /// <summary>
         ///     bounding box of the geometry object
         /// </summary>
-        public RectangleF BoundingBox => m_boundingBox;
+        public RectangleF BoundingBox { get; protected set; }
 
         /// <summary>
         ///     geometric object draw itself

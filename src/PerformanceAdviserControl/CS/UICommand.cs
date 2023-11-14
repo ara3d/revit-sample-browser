@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    internal class UICommand : IExternalCommand
+    internal class UiCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -23,17 +23,17 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             var performanceAdviser = PerformanceAdviser.GetPerformanceAdviser();
 
             ICollection<PerformanceAdviserRuleId> allIds = performanceAdviser.GetAllRuleIds();
-            foreach (var ruleID in allIds)
+            foreach (var ruleId in allIds)
             {
-                var ruleName = performanceAdviser.GetRuleName(ruleID);
-                var ruleDescription = performanceAdviser.GetRuleDescription(ruleID);
-                var isEnabled = performanceAdviser.IsRuleEnabled(ruleID);
+                var ruleName = performanceAdviser.GetRuleName(ruleId);
+                var ruleDescription = performanceAdviser.GetRuleDescription(ruleId);
+                var isEnabled = performanceAdviser.IsRuleEnabled(ruleId);
 
                 //We want to mark user-defined (API) rules, so we check to see if the current rule ID is
                 //equal to the rule ID we created.
-                var isOurRule = ruleID == FlippedDoorCheck.Id;
+                var isOurRule = ruleId == FlippedDoorCheck.Id;
 
-                var oneRule = new RuleInfo(ruleID, isOurRule, ruleName, ruleDescription, isEnabled);
+                var oneRule = new RuleInfo(ruleId, isOurRule, ruleName, ruleDescription, isEnabled);
                 ruleInfoList.Add(oneRule);
             }
 

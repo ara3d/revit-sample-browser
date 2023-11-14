@@ -26,19 +26,19 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
     [Transaction(TransactionMode.Manual)]
     internal class DisplacementStructureModelAnimatorCommandStepByStep : IExternalCommand
     {
-        public static DisplacementStructureModelAnimator m_displacementstructuremodelAnimator;
+        public static DisplacementStructureModelAnimator DisplacementstructuremodelAnimator;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            if (m_displacementstructuremodelAnimator == null)
+            if (DisplacementstructuremodelAnimator == null)
             {
-                m_displacementstructuremodelAnimator =
+                DisplacementstructuremodelAnimator =
                     new DisplacementStructureModelAnimator(commandData.Application, false);
-                m_displacementstructuremodelAnimator.StartAnimation();
+                DisplacementstructuremodelAnimator.StartAnimation();
             }
             else
             {
-                m_displacementstructuremodelAnimator.AnimateNextStep();
+                DisplacementstructuremodelAnimator.AnimateNextStep();
             }
 
             return Result.Succeeded;

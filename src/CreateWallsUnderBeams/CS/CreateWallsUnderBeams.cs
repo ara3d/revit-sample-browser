@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class CreateWallsUnderBeams : IExternalCommand
     {
-        private const double PRECISION = 0.0000000001; // Define a precision of double data
+        private const double Precision = 0.0000000001; // Define a precision of double data
 
         // Private Members
         private readonly ArrayList m_beamCollection; // Store the selection of beams in Revit
@@ -182,8 +182,8 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
                     return false;
                 }
 
-                if (PRECISION <= beamCurve.GetEndPoint(0).Z - beamCurve.GetEndPoint(1).Z
-                    || -PRECISION >= beamCurve.GetEndPoint(0).Z - beamCurve.GetEndPoint(1).Z)
+                if (Precision <= beamCurve.GetEndPoint(0).Z - beamCurve.GetEndPoint(1).Z
+                    || -Precision >= beamCurve.GetEndPoint(0).Z - beamCurve.GetEndPoint(1).Z)
                 {
                     m_errorInformation = "Please only select horizontal beams.";
                     return false;

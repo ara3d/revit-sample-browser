@@ -39,7 +39,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             get
             {
-                var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
+                var filteredElementCollector = new FilteredElementCollector(RvtDoc);
                 filteredElementCollector.OfClass(typeof(SlabEdgeType));
                 return filteredElementCollector;
             }
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 {
                     m_floorSlabEdges = new Dictionary<Element, List<Edge>>();
 
-                    var collector = new FilteredElementCollector(m_rvtDoc);
+                    var collector = new FilteredElementCollector(RvtDoc);
                     collector.OfClass(typeof(Floor));
                     foreach (var elem in collector.ToElements())
                         if (elem is Floor)
@@ -65,7 +65,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                             if (solid != null)
                             {
                                 m_floorSlabEdges.Add(elem, new List<Edge>());
-                                m_elemGeom.Add(elem, solid);
+                                ElemGeom.Add(elem, solid);
                                 FilterEdgesForSlabEdge(elem);
                             }
                         }
@@ -88,10 +88,10 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             // In the future, API may not allow to create such SlabEdge with 
             // no references, invoke this methods like this may throw exception.
             // 
-            var slabEdge = m_rvtDoc.Create.NewSlabEdge(null, new ReferenceArray());
+            var slabEdge = RvtDoc.Create.NewSlabEdge(null, new ReferenceArray());
 
             var floorEdges = m_floorSlabEdges[elem];
-            foreach (var edge in m_elemGeom[elem].EdgeBindingDic.Keys)
+            foreach (var edge in ElemGeom[elem].EdgeBindingDic.Keys)
             {
                 if (edge.Reference == null) continue;
                 try
@@ -107,7 +107,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             }
 
             // Delete this element, because we just use it to filter the edges.
-            m_rvtDoc.Delete(slabEdge.Id);
+            RvtDoc.Delete(slabEdge.Id);
 
             transaction.RollBack();
         }
@@ -120,7 +120,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <returns>Created SlabEdge</returns>
         protected override HostedSweep CreateHostedSweep(ElementType symbol, ReferenceArray refArr)
         {
-            var slabEdge = m_rvtDoc.Create.NewSlabEdge(symbol as SlabEdgeType, refArr);
+            var slabEdge = RvtDoc.Create.NewSlabEdge(symbol as SlabEdgeType, refArr);
             slabEdge?.HorizontalFlip();
             return slabEdge;
         }

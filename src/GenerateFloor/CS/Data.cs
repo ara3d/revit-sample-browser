@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
     /// </summary>
     public class Data
     {
-        private const double PRECISION = 0.00000001;
+        private const double Precision = 0.00000001;
         private Application m_creApp;
         private Document m_document;
         private Hashtable m_floorTypes;
@@ -236,8 +236,8 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             {
                 temCurve = GetNext(lines, temp, temCurve);
 
-                if (Math.Abs(temp.X - temCurve.GetEndPoint(0).X) < PRECISION
-                    && Math.Abs(temp.Y - temCurve.GetEndPoint(0).Y) < PRECISION)
+                if (Math.Abs(temp.X - temCurve.GetEndPoint(0).X) < Precision
+                    && Math.Abs(temp.Y - temCurve.GetEndPoint(0).Y) < Precision)
                     temp = temCurve.GetEndPoint(1);
                 else
                     temp = temCurve.GetEndPoint(0);
@@ -245,9 +245,9 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
                 Profile.Append(temCurve);
             }
 
-            if (Math.Abs(temp.X - lines.get_Item(0).GetEndPoint(0).X) > PRECISION
-                || Math.Abs(temp.Y - lines.get_Item(0).GetEndPoint(0).Y) > PRECISION
-                || Math.Abs(temp.Z - lines.get_Item(0).GetEndPoint(0).Z) > PRECISION)
+            if (Math.Abs(temp.X - lines.get_Item(0).GetEndPoint(0).X) > Precision
+                || Math.Abs(temp.Y - lines.get_Item(0).GetEndPoint(0).Y) > Precision
+                || Math.Abs(temp.Z - lines.get_Item(0).GetEndPoint(0).Z) > Precision)
                 throw new InvalidOperationException("The selected walls should be closed.");
         }
 
@@ -263,22 +263,22 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             foreach (Curve c in profile)
             {
                 if (c.Equals(line)) continue;
-                if (Math.Abs(c.GetEndPoint(0).X - line.GetEndPoint(1).X) < PRECISION &&
-                    Math.Abs(c.GetEndPoint(0).Y - line.GetEndPoint(1).Y) < PRECISION &&
-                    Math.Abs(c.GetEndPoint(0).Z - line.GetEndPoint(1).Z) < PRECISION
-                    && Math.Abs(c.GetEndPoint(1).X - line.GetEndPoint(0).X) < PRECISION &&
-                    Math.Abs(c.GetEndPoint(1).Y - line.GetEndPoint(0).Y) < PRECISION &&
-                    Math.Abs(c.GetEndPoint(1).Z - line.GetEndPoint(0).Z) < PRECISION
+                if (Math.Abs(c.GetEndPoint(0).X - line.GetEndPoint(1).X) < Precision &&
+                    Math.Abs(c.GetEndPoint(0).Y - line.GetEndPoint(1).Y) < Precision &&
+                    Math.Abs(c.GetEndPoint(0).Z - line.GetEndPoint(1).Z) < Precision
+                    && Math.Abs(c.GetEndPoint(1).X - line.GetEndPoint(0).X) < Precision &&
+                    Math.Abs(c.GetEndPoint(1).Y - line.GetEndPoint(0).Y) < Precision &&
+                    Math.Abs(c.GetEndPoint(1).Z - line.GetEndPoint(0).Z) < Precision
                     && 2 != profile.Size)
                     continue;
 
-                if (Math.Abs(c.GetEndPoint(0).X - connected.X) < PRECISION &&
-                    Math.Abs(c.GetEndPoint(0).Y - connected.Y) < PRECISION &&
-                    Math.Abs(c.GetEndPoint(0).Z - connected.Z) < PRECISION) return c;
+                if (Math.Abs(c.GetEndPoint(0).X - connected.X) < Precision &&
+                    Math.Abs(c.GetEndPoint(0).Y - connected.Y) < Precision &&
+                    Math.Abs(c.GetEndPoint(0).Z - connected.Z) < Precision) return c;
 
-                if (Math.Abs(c.GetEndPoint(1).X - connected.X) < PRECISION &&
-                    Math.Abs(c.GetEndPoint(1).Y - connected.Y) < PRECISION &&
-                    Math.Abs(c.GetEndPoint(1).Z - connected.Z) < PRECISION)
+                if (Math.Abs(c.GetEndPoint(1).X - connected.X) < Precision &&
+                    Math.Abs(c.GetEndPoint(1).Y - connected.Y) < Precision &&
+                    Math.Abs(c.GetEndPoint(1).Z - connected.Z) < Precision)
                 {
                     switch (c.GetType().Name)
                     {

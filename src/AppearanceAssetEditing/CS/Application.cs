@@ -17,21 +17,21 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
     public class Application : IExternalApplication
     {
         // class instance
-        internal static Application thisApp;
+        internal static Application ThisApp;
         private ElementId m_currentAppearanceAssetElementId;
         private Material m_currentMaterial;
         private Document m_document;
 
         // ModelessForm instance
-        private AppearanceAssetEditingForm m_MyForm;
+        private AppearanceAssetEditingForm m_myForm;
         private UIApplication m_revit;
 
         public Result OnShutdown(UIControlledApplication application)
         {
-            if (m_MyForm != null && !m_MyForm.IsDisposed)
+            if (m_myForm != null && !m_myForm.IsDisposed)
             {
-                m_MyForm.Dispose();
-                m_MyForm = null;
+                m_myForm.Dispose();
+                m_myForm = null;
 
                 // if we've had a dialog, we had subscribed
                 application.Idling -= IdlingHandler;
@@ -42,8 +42,8 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            m_MyForm = null; // no dialog needed yet; the command will bring it
-            thisApp = this; // static access to this application instance
+            m_myForm = null; // no dialog needed yet; the command will bring it
+            ThisApp = this; // static access to this application instance
 
             return Result.Succeeded;
         }
@@ -60,10 +60,10 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
             m_document = uiapp.ActiveUIDocument.Document;
 
             // If we do not have a dialog yet, create and show it
-            if (m_MyForm == null || m_MyForm.IsDisposed)
+            if (m_myForm == null || m_myForm.IsDisposed)
             {
-                m_MyForm = new AppearanceAssetEditingForm();
-                m_MyForm.Show();
+                m_myForm = new AppearanceAssetEditingForm();
+                m_myForm.Show();
 
                 // if we have a dialog, we need Idling too
                 uiapp.Idling += IdlingHandler;
@@ -228,7 +228,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
         {
             var uiapp = sender as UIApplication;
 
-            if (m_MyForm.IsDisposed)
+            if (m_myForm.IsDisposed)
             {
                 uiapp.Idling -= IdlingHandler;
                 return;
@@ -236,7 +236,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
 
             // dialog still exists
             // fetch the request from the dialog           
-            var requestId = m_MyForm.Request.Take();
+            var requestId = m_myForm.Request.Take();
             if (requestId != RequestId.None)
                 try
                 {
@@ -248,7 +248,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
                 {
                     // The dialog may be in its waiting state;
                     // make sure we wake it up even if we get an exception.    
-                    m_MyForm.EnableButtons(IsLighterEnabled(), IsDarkerEnabled());
+                    m_myForm.EnableButtons(IsLighterEnabled(), IsDarkerEnabled());
                 }
         }
 
@@ -332,23 +332,23 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
         /// </summary>
         private class IsPaintedFaceSelectionFilter : ISelectionFilter
         {
-            private Document selectedDocument;
+            private Document m_selectedDocument;
 
             public bool AllowElement(Element element)
             {
-                selectedDocument = element.Document;
+                m_selectedDocument = element.Document;
                 return true;
             }
 
             public bool AllowReference(Reference refer, XYZ point)
             {
-                if (selectedDocument == null)
+                if (m_selectedDocument == null)
                     throw new Exception("AllowElement was never called for this reference...");
 
-                var element = selectedDocument.GetElement(refer);
+                var element = m_selectedDocument.GetElement(refer);
                 var face = element.GetGeometryObjectFromReference(refer) as Face;
 
-                return selectedDocument.IsPainted(element.Id, face);
+                return m_selectedDocument.IsPainted(element.Id, face);
             }
         }
     }

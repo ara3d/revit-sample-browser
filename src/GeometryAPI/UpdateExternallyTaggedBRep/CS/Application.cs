@@ -30,7 +30,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        private static readonly string m_addinAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddinAssemblyPath = typeof(Application).Assembly.Location;
 
         /// <summary>
         ///     Implements the OnShutdown event.
@@ -55,7 +55,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
         /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
-            createRibbonButtons(application);
+            CreateRibbonButtons(application);
             return Result.Succeeded;
         }
 
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
         ///     An object that is passed to the external application
         ///     which contains the controlled application.
         /// </param>
-        private void createRibbonButtons(UIControlledApplication application)
+        private void CreateRibbonButtons(UIControlledApplication application)
         {
             // Create and add the new ribbon "Create ExternallyTaggedBRep".
             application.CreateRibbonTab("Create ExternallyTaggedBRep");
@@ -75,26 +75,26 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
 
             // Create and add the new ribbon button "Create tagged BRep".
             var pbd1 = new PushButtonData("CreateTaggedBRep", "Create tagged BRep",
-                m_addinAssemblyPath,
+                AddinAssemblyPath,
                 "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.CreateBRep")
             {
-                LargeImage = convertFromBitmap(Resources.large_shape),
-                Image = convertFromBitmap(Resources.small_shape)
+                LargeImage = ConvertFromBitmap(Resources.large_shape),
+                Image = ConvertFromBitmap(Resources.small_shape)
             };
             _ = rp.AddItem(pbd1) as PushButton;
 
             // Create and add the new ribbon button "Update tagged BRep".
             var pbd2 = new PushButtonData("UpdateTaggedBRep", "Update tagged BRep",
-                m_addinAssemblyPath,
+                AddinAssemblyPath,
                 "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.UpdateBRep")
             {
-                LargeImage = convertFromBitmap(Resources.large_shape),
-                Image = convertFromBitmap(Resources.small_shape)
+                LargeImage = ConvertFromBitmap(Resources.large_shape),
+                Image = ConvertFromBitmap(Resources.small_shape)
             };
             _ = rp.AddItem(pbd2) as PushButton;
         }
 
-        private BitmapSource convertFromBitmap(Bitmap bitmap)
+        private BitmapSource ConvertFromBitmap(Bitmap bitmap)
         {
             return Imaging.CreateBitmapSourceFromHBitmap(
                 bitmap.GetHbitmap(),

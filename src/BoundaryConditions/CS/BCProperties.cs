@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     /// <summary>
     ///     BoundaryConditions Type Enumeration
     /// </summary>
-    public enum BCType
+    public enum BcType
     {
         /// <summary>
         ///     Point BC
@@ -31,7 +31,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     /// <summary>
     ///     BoundaryConditions State Enumeration
     /// </summary>
-    public enum BCState
+    public enum BcState
     {
         /// <summary>
         ///     the state of current BC is fixed
@@ -57,7 +57,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     /// <summary>
     ///     BoundaryConditions Translation/Rotation Enumeration
     /// </summary>
-    public enum BCTranslationRotation
+    public enum BcTranslationRotation
     {
         /// <summary>
         ///     the BC is fixed, can used when any  BCState
@@ -80,24 +80,24 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     ///     A custom attribute to allow a target to have a pet.
     ///     this attribute is about the BoundaryConditions Type Enumeration
     /// </summary>
-    public sealed class BCTypeAttribute : Attribute
+    public sealed class BcTypeAttribute : Attribute
     {
-        private BCType[] m_bcType;
+        private BcType[] m_bcType;
         // Keep a variable internally ...
 
         /// <summary>
         ///     The constructor is called when the attribute is set.
         /// </summary>
         /// <param name="bcTypes"></param>
-        public BCTypeAttribute(BCType[] bcTypes)
+        public BcTypeAttribute(BcType[] bcTypes)
         {
-            BCType = bcTypes;
+            BcType = bcTypes;
         }
 
         /// <summary>
         ///     property get or set internal variable m_bcTypes
         /// </summary>
-        public BCType[] BCType
+        public BcType[] BcType
         {
             get => m_bcType;
             set => m_bcType = value;
@@ -110,10 +110,10 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if (!(obj is BCTypeAttribute temp)) return false;
+            if (!(obj is BcTypeAttribute temp)) return false;
 
-            foreach (var t1 in temp.BCType)
-            foreach (var t2 in BCType)
+            foreach (var t1 in temp.BcType)
+            foreach (var t2 in BcType)
                 if (t1 == t2)
                     return true;
 
@@ -133,7 +133,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     /// <summary>
     ///     use to create instance as the display object of the PropertyGrid
     /// </summary>
-    public class BCProperties
+    public class BcProperties
     {
         // the boundary conditions of which the information will displayed in the UI grid
         private readonly Autodesk.Revit.DB.Structure.BoundaryConditions m_bC;
@@ -144,7 +144,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <param name="bC">
         ///     the boundary conditions of which the information will displayed in the UI grid
         /// </param>
-        public BCProperties(Autodesk.Revit.DB.Structure.BoundaryConditions bC)
+        public BcProperties(Autodesk.Revit.DB.Structure.BoundaryConditions bC)
         {
             m_bC = bC;
         }
@@ -155,10 +155,10 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         [Category("Structural Analysis")]
         [ReadOnly(true)]
-        [BCType(new[] { BCType.Point, BCType.Line, BCType.Area })]
-        public BCType BoundaryConditionsType
+        [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
+        public BcType BoundaryConditionsType
         {
-            get => (BCType)GetParameterValue("Boundary Conditions Type", GroupTypeId.StructuralAnalysis);
+            get => (BcType)GetParameterValue("Boundary Conditions Type", GroupTypeId.StructuralAnalysis);
             set => SetParameterValue("Boundary Conditions Type", GroupTypeId.StructuralAnalysis, value);
         }
 
@@ -166,10 +166,10 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         ///     BoundaryConditions State
         /// </summary>
         [Category("Structural Analysis")]
-        [BCType(new[] { BCType.Point, BCType.Line, BCType.Area })]
-        public BCState State
+        [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
+        public BcState State
         {
-            get => (BCState)GetParameterValue("State", GroupTypeId.StructuralAnalysis);
+            get => (BcState)GetParameterValue("State", GroupTypeId.StructuralAnalysis);
             // Point BC includes Fixed, Pinned, Roller and User four different State; 
             // Line BC includes Fixed, Pinned and User; 
             // while the Area BC includes Pinned and User.
@@ -177,15 +177,15 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             {
                 switch (BoundaryConditionsType)
                 {
-                    case BCType.Area:
+                    case BcType.Area:
                     {
-                        if (BCState.Fixed != value && BCState.Roller != value)
+                        if (BcState.Fixed != value && BcState.Roller != value)
                             SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
                         break;
                     }
-                    case BCType.Line:
+                    case BcType.Line:
                     {
-                        if (BCState.Roller != value)
+                        if (BcState.Roller != value)
                         {
                             SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
                             ;
@@ -193,14 +193,14 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
 
                         break;
                     }
-                    case BCType.Point:
+                    case BcType.Point:
                         SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
                         ;
                         break;
                 }
 
                 // other parameters do corresponding change when the State is changed.
-                MatchBCValuesRule();
+                MatchBcValuesRule();
             }
         }
 
@@ -209,13 +209,13 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Translation in")]
-        [BCType(new[] { BCType.Point, BCType.Line, BCType.Area })]
-        public BCTranslationRotation XTranslation
+        [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
+        public BcTranslationRotation XTranslation
         {
-            get => (BCTranslationRotation)GetParameterValue("X Translation", GroupTypeId.TranslationIn);
+            get => (BcTranslationRotation)GetParameterValue("X Translation", GroupTypeId.TranslationIn);
             set
             {
-                if (BCState.User == State) SetParameterValue("X Translation", GroupTypeId.TranslationIn, value);
+                if (BcState.User == State) SetParameterValue("X Translation", GroupTypeId.TranslationIn, value);
             }
         }
 
@@ -234,13 +234,13 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Translation in")]
-        [BCType(new[] { BCType.Point, BCType.Line, BCType.Area })]
-        public BCTranslationRotation YTranslation
+        [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
+        public BcTranslationRotation YTranslation
         {
-            get => (BCTranslationRotation)GetParameterValue("Y Translation", GroupTypeId.TranslationIn);
+            get => (BcTranslationRotation)GetParameterValue("Y Translation", GroupTypeId.TranslationIn);
             set
             {
-                if (BCState.User == State) SetParameterValue("Y Translation", GroupTypeId.TranslationIn, value);
+                if (BcState.User == State) SetParameterValue("Y Translation", GroupTypeId.TranslationIn, value);
             }
         }
 
@@ -259,13 +259,13 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Translation in")]
-        [BCType(new[] { BCType.Point, BCType.Line, BCType.Area })]
-        public BCTranslationRotation ZTranslation
+        [BcType(new[] { BcType.Point, BcType.Line, BcType.Area })]
+        public BcTranslationRotation ZTranslation
         {
-            get => (BCTranslationRotation)GetParameterValue("Z Translation", GroupTypeId.TranslationIn);
+            get => (BcTranslationRotation)GetParameterValue("Z Translation", GroupTypeId.TranslationIn);
             set
             {
-                if (BCState.User == State) SetParameterValue("Z Translation", GroupTypeId.TranslationIn, value);
+                if (BcState.User == State) SetParameterValue("Z Translation", GroupTypeId.TranslationIn, value);
             }
         }
 
@@ -285,13 +285,13 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Rotation about")]
-        [BCType(new[] { BCType.Point, BCType.Line })]
-        public BCTranslationRotation XRotation
+        [BcType(new[] { BcType.Point, BcType.Line })]
+        public BcTranslationRotation XRotation
         {
-            get => (BCTranslationRotation)GetParameterValue("X Rotation", GroupTypeId.RotationAbout);
+            get => (BcTranslationRotation)GetParameterValue("X Rotation", GroupTypeId.RotationAbout);
             set
             {
-                if (BCState.User == State) SetParameterValue("X Rotation", GroupTypeId.RotationAbout, value);
+                if (BcState.User == State) SetParameterValue("X Rotation", GroupTypeId.RotationAbout, value);
             }
         }
 
@@ -311,13 +311,13 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Rotation about")]
-        [BCType(new[] { BCType.Point })]
-        public BCTranslationRotation YRotation
+        [BcType(new[] { BcType.Point })]
+        public BcTranslationRotation YRotation
         {
-            get => (BCTranslationRotation)GetParameterValue("Y Rotation", GroupTypeId.RotationAbout);
+            get => (BcTranslationRotation)GetParameterValue("Y Rotation", GroupTypeId.RotationAbout);
             set
             {
-                if (BCState.User == State) SetParameterValue("Y Rotation", GroupTypeId.RotationAbout, value);
+                if (BcState.User == State) SetParameterValue("Y Rotation", GroupTypeId.RotationAbout, value);
             }
         }
 
@@ -336,13 +336,13 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         [Description("This value can be edit under User state")]
         [Category("Rotation about")]
-        [BCType(new[] { BCType.Point })]
-        public BCTranslationRotation ZRotation
+        [BcType(new[] { BcType.Point })]
+        public BcTranslationRotation ZRotation
         {
-            get => (BCTranslationRotation)GetParameterValue("Z Rotation", GroupTypeId.RotationAbout);
+            get => (BcTranslationRotation)GetParameterValue("Z Rotation", GroupTypeId.RotationAbout);
             set
             {
-                if (BCState.User == State) SetParameterValue("Z Rotation", GroupTypeId.RotationAbout, value);
+                if (BcState.User == State) SetParameterValue("Z Rotation", GroupTypeId.RotationAbout, value);
             }
         }
 
@@ -371,25 +371,25 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 switch (BoundaryConditionsType)
                 {
                     // judge current conversion rule between the display value and inside value
-                    case BCType.Point when gridItemLabel.Contains("Translation"):
+                    case BcType.Point when gridItemLabel.Contains("Translation"):
                         springModulusForm.Conversion = UnitConversion.UnitDictionary["PTSpringModulusConver"];
                         break;
-                    case BCType.Point:
+                    case BcType.Point:
                     {
                         if (gridItemLabel.Contains("Rotation"))
                             springModulusForm.Conversion = UnitConversion.UnitDictionary["PRSpringModulusConver"];
                         break;
                     }
-                    case BCType.Line when gridItemLabel.Contains("Translation"):
+                    case BcType.Line when gridItemLabel.Contains("Translation"):
                         springModulusForm.Conversion = UnitConversion.UnitDictionary["LTSpringModulusConver"];
                         break;
-                    case BCType.Line:
+                    case BcType.Line:
                     {
                         if (gridItemLabel.Contains("Rotation"))
                             springModulusForm.Conversion = UnitConversion.UnitDictionary["LRSpringModulusConver"];
                         break;
                     }
-                    case BCType.Area when gridItemLabel.Contains("Translation"):
+                    case BcType.Area when gridItemLabel.Contains("Translation"):
                         springModulusForm.Conversion = UnitConversion.UnitDictionary["ATSpringModulusConver"];
                         break;
                 }
@@ -513,8 +513,8 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                         parameter.Set((int)value);
                         break;
                     case StorageType.ElementId:
-                        var Id = (ElementId)value;
-                        parameter.Set(Id);
+                        var id = (ElementId)value;
+                        parameter.Set(id);
                         break;
                     case StorageType.String:
                         parameter.Set(value as string);
@@ -530,33 +530,33 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         ///     the BC parameter values rules according to the Revit main program.
         ///     For example, when the State is Fixed all the Translation/Rotation parameters are Fixed too.
         /// </summary>
-        private void MatchBCValuesRule()
+        private void MatchBcValuesRule()
         {
             switch (State)
             {
-                case BCState.Fixed:
-                    XTranslation = BCTranslationRotation.Fixed;
-                    YTranslation = BCTranslationRotation.Fixed;
-                    ZTranslation = BCTranslationRotation.Fixed;
-                    XRotation = BCTranslationRotation.Fixed;
-                    YRotation = BCTranslationRotation.Fixed;
-                    ZRotation = BCTranslationRotation.Fixed;
+                case BcState.Fixed:
+                    XTranslation = BcTranslationRotation.Fixed;
+                    YTranslation = BcTranslationRotation.Fixed;
+                    ZTranslation = BcTranslationRotation.Fixed;
+                    XRotation = BcTranslationRotation.Fixed;
+                    YRotation = BcTranslationRotation.Fixed;
+                    ZRotation = BcTranslationRotation.Fixed;
                     break;
-                case BCState.Pinned:
-                    XTranslation = BCTranslationRotation.Fixed;
-                    YTranslation = BCTranslationRotation.Fixed;
-                    ZTranslation = BCTranslationRotation.Fixed;
-                    ZRotation = BCTranslationRotation.Released;
-                    YRotation = BCTranslationRotation.Released;
-                    ZRotation = BCTranslationRotation.Released;
+                case BcState.Pinned:
+                    XTranslation = BcTranslationRotation.Fixed;
+                    YTranslation = BcTranslationRotation.Fixed;
+                    ZTranslation = BcTranslationRotation.Fixed;
+                    ZRotation = BcTranslationRotation.Released;
+                    YRotation = BcTranslationRotation.Released;
+                    ZRotation = BcTranslationRotation.Released;
                     break;
-                case BCState.Roller:
-                    XTranslation = BCTranslationRotation.Released;
-                    YTranslation = BCTranslationRotation.Released;
-                    ZTranslation = BCTranslationRotation.Fixed;
-                    XRotation = BCTranslationRotation.Released;
-                    YRotation = BCTranslationRotation.Released;
-                    ZRotation = BCTranslationRotation.Released;
+                case BcState.Roller:
+                    XTranslation = BcTranslationRotation.Released;
+                    YTranslation = BcTranslationRotation.Released;
+                    ZTranslation = BcTranslationRotation.Fixed;
+                    XRotation = BcTranslationRotation.Released;
+                    YRotation = BcTranslationRotation.Released;
+                    ZRotation = BcTranslationRotation.Released;
                     break;
             }
         }

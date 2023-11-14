@@ -51,14 +51,14 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
 
             var group = parameterFile.Groups.get_Item(groupName) ?? parameterFile.Groups.Create(groupName);
 
-            if (!(group.Definitions.get_Item(name) is ExternalDefinition Bdef))
+            if (!(group.Definitions.get_Item(name) is ExternalDefinition bdef))
             {
                 var externalDefinitionCreationOptions =
                     new ExternalDefinitionCreationOptions(name, SpecTypeId.ReinforcementLength);
-                Bdef = group.Definitions.Create(externalDefinitionCreationOptions) as ExternalDefinition;
+                bdef = group.Definitions.Create(externalDefinitionCreationOptions) as ExternalDefinition;
             }
 
-            return Bdef;
+            return bdef;
         }
 
         /// <summary>

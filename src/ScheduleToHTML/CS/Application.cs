@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <summary>
         ///     The path to this add-in assembly.
         /// </summary>
-        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -42,7 +42,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            CreateScheduleToHTMLPanel(application);
+            CreateScheduleToHtmlPanel(application);
 
             return Result.Succeeded;
         }
@@ -50,19 +50,19 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <summary>
         ///     Sets up the add-in panel for this sample.
         /// </summary>
-        private void CreateScheduleToHTMLPanel(UIControlledApplication application)
+        private void CreateScheduleToHtmlPanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("Schedule To HTML");
 
             var pbd = new PushButtonData("ScheduleToHTML", "Export to HTML",
-                addAssemblyPath,
-                typeof(ScheduleHTMLExportCommand).FullName)
+                AddAssemblyPath,
+                typeof(ScheduleHtmlExportCommand).FullName)
             {
                 LongDescription = "Export the active schedule to HTML."
             };
 
-            var duplicateAllPB = rp.AddItem(pbd) as PushButton;
-            SetIconsForPushButton(duplicateAllPB, Resources.ScheduleExport);
+            var duplicateAllPb = rp.AddItem(pbd) as PushButton;
+            SetIconsForPushButton(duplicateAllPb, Resources.ScheduleExport);
         }
 
         /// <summary>

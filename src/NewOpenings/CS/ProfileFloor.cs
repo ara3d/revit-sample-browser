@@ -57,7 +57,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             XYZ p1, p2;
             Line curve;
-            var curves = m_appCreator.NewCurveArray();
+            var curves = AppCreator.NewCurveArray();
             for (var i = 0; i < points.Count - 1; i++)
             {
                 p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             curve = Line.CreateBound(p1, p2);
             curves.Append(curve);
 
-            m_docCreator.NewOpening(m_data, curves, true);
+            DocCreator.NewOpening(m_data, curves, true);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="points">Points use to create Opening</param>
         private void DrawCircleOpening(List<Vector4> points)
         {
-            var curves = m_appCreator.NewCurveArray();
+            var curves = AppCreator.NewCurveArray();
             var p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
             var p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
             var p3 = new XYZ(points[2].X, points[2].Y, points[2].Z);
@@ -90,7 +90,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             var arc2 = Arc.Create(p1, p3, p4);
             curves.Append(arc);
             curves.Append(arc2);
-            m_docCreator.NewOpening(m_data, curves, true);
+            DocCreator.NewOpening(m_data, curves, true);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="points">Points use to create Opening</param>
         private void DrawArcOpening(List<Vector4> points)
         {
-            var curves = m_appCreator.NewCurveArray();
+            var curves = AppCreator.NewCurveArray();
             var p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
             var p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
             var p3 = new XYZ(points[2].X, points[2].Y, points[2].Z);
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 curves.Append(arc);
             }
 
-            m_docCreator.NewOpening(m_data, curves, true);
+            DocCreator.NewOpening(m_data, curves, true);
         }
     }
 }

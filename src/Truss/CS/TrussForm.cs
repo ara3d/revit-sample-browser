@@ -23,8 +23,8 @@ namespace Revit.SDK.Samples.Truss.CS
     public partial class TrussForm : Form
     {
         private const string NoAssociatedLevel = "<not associated>"; //when select truss doesn't have associate level
-        private FamilyInstance column1; //one of 2 columns which truss build on
-        private FamilyInstance column2; //one of 2 columns which truss build on
+        private FamilyInstance m_column1; //one of 2 columns which truss build on
+        private FamilyInstance m_column2; //one of 2 columns which truss build on
         private readonly UIDocument m_activeDocument; //active document in Revit
         private IEnumerable<FamilySymbol> m_beamTypes; //stores all the beam types (FamilySymbol)
         private bool m_bottomChord; //draw bottom chord when it's true, otherwise forbids to do it.
@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.Truss.CS
         private Autodesk.Revit.DB.Structure.Truss m_truss; //store the truss created by this sample
         private readonly ArrayList m_trussTypes; //stores all the truss types
         private IEnumerable<ViewPlan> m_views; //stores all the ViewPlan use to create truss
-        private TrussGeometry trussGeometry; //TrussGeometry object store geometry info of Truss
+        private TrussGeometry m_trussGeometry; //TrussGeometry object store geometry info of Truss
 
         /// <summary>
         ///     constructor
@@ -86,10 +86,10 @@ namespace Revit.SDK.Samples.Truss.CS
                         return false;
                     case FamilyInstance familyInstance when StructuralType.Column == familyInstance.StructuralType:
                     {
-                        if (null == column1)
-                            column1 = familyInstance;
+                        if (null == m_column1)
+                            m_column1 = familyInstance;
                         else
-                            column2 = familyInstance;
+                            m_column2 = familyInstance;
                         break;
                     }
                     case FamilyInstance familyInstance:
@@ -98,7 +98,7 @@ namespace Revit.SDK.Samples.Truss.CS
                         return false;
                 }
 
-            return null != m_truss || (null != column1 && null != column2);
+            return null != m_truss || (null != m_column1 && null != m_column2);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Revit.SDK.Samples.Truss.CS
                 TrussTypeComboBox.Enabled = false;
                 CreateButton.Enabled = false;
                 ViewComboBox.Enabled = false;
-                trussGeometry = new TrussGeometry(m_truss, m_commandData);
+                m_trussGeometry = new TrussGeometry(m_truss, m_commandData);
                 TrussGraphicsTabControl.SelectedIndex = 1;
             }
         }
@@ -232,7 +232,7 @@ namespace Revit.SDK.Samples.Truss.CS
                 m_truss = CreateTruss();
                 m_truss.Location.Move(new XYZ(0, 0, m_selectedView.GenLevel.Elevation));
                 transaction.Commit();
-                trussGeometry = new TrussGeometry(m_truss, m_commandData);
+                m_trussGeometry = new TrussGeometry(m_truss, m_commandData);
                 TrussGraphicsTabControl.SelectedIndex = 1;
             }
             catch (Exception ex)
@@ -261,8 +261,8 @@ namespace Revit.SDK.Samples.Truss.CS
             //new base Line
             Curve frame1Curve = null;
             Curve frame2Curve = null;
-            if (column1.Location is LocationCurve curve) frame1Curve = curve.Curve;
-            if (column2.Location is LocationCurve locationCurve) frame2Curve = locationCurve.Curve;
+            if (m_column1.Location is LocationCurve curve) frame1Curve = curve.Curve;
+            if (m_column2.Location is LocationCurve locationCurve) frame2Curve = locationCurve.Curve;
 
             var centerPoint1 = (frame1Curve as Line).GetEndPoint(0);
 
@@ -292,7 +292,7 @@ namespace Revit.SDK.Samples.Truss.CS
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            trussGeometry?.Draw2D(e.Graphics, Pens.Blue);
+            m_trussGeometry?.Draw2D(e.Graphics, Pens.Blue);
 
             var font = new Font("Verdana", 10, FontStyle.Regular);
             var indicator = "Draw Top Chord and Bottom Chord here:";
@@ -308,9 +308,9 @@ namespace Revit.SDK.Samples.Truss.CS
         {
             // draw top chord line
             if (m_topChord)
-                trussGeometry.AddTopChordPoint(e.X, e.Y);
+                m_trussGeometry.AddTopChordPoint(e.X, e.Y);
             // draw bottom chord line
-            else if (m_bottomChord) trussGeometry.AddBottomChordPoint(e.X, e.Y);
+            else if (m_bottomChord) m_trussGeometry.AddBottomChordPoint(e.X, e.Y);
 
             ProfileEditPictureBox.Refresh();
         }
@@ -323,8 +323,8 @@ namespace Revit.SDK.Samples.Truss.CS
         private void ProfileEditPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             if (m_topChord)
-                trussGeometry.AddTopChordMovePoint(e.X, e.Y);
-            else if (m_bottomChord) trussGeometry.AddBottomChordMovePoint(e.X, e.Y);
+                m_trussGeometry.AddTopChordMovePoint(e.X, e.Y);
+            else if (m_bottomChord) m_trussGeometry.AddBottomChordMovePoint(e.X, e.Y);
 
             ProfileEditPictureBox.Refresh();
         }
@@ -365,7 +365,7 @@ namespace Revit.SDK.Samples.Truss.CS
             var transaction = new Transaction(m_activeDocument.Document, "SetProfile");
             transaction.Start();
             //update the truss
-            trussGeometry.SetProfile(m_commandData);
+            m_trussGeometry.SetProfile(m_commandData);
             transaction.Commit();
             ProfileEditPictureBox.Refresh();
         }
@@ -380,7 +380,7 @@ namespace Revit.SDK.Samples.Truss.CS
             var transaction = new Transaction(m_activeDocument.Document, "RemoveProfile");
             transaction.Start();
             // restore the profile
-            trussGeometry.RemoveProfile();
+            m_trussGeometry.RemoveProfile();
             transaction.Commit();
             ProfileEditPictureBox.Refresh();
         }
@@ -392,7 +392,7 @@ namespace Revit.SDK.Samples.Truss.CS
         /// <param name="e">event args</param>
         private void CleanChordbutton_Click(object sender, EventArgs e)
         {
-            trussGeometry.ClearChords();
+            m_trussGeometry.ClearChords();
             m_topChord = false;
             m_bottomChord = false;
             ProfileEditPictureBox.Cursor = Cursors.Default;
@@ -408,7 +408,7 @@ namespace Revit.SDK.Samples.Truss.CS
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            trussGeometry?.Draw2D(e.Graphics, Pens.Blue);
+            m_trussGeometry?.Draw2D(e.Graphics, Pens.Blue);
 
             var font = new Font("Verdana", 10, FontStyle.Regular);
             var indicator = "Select a beam from the truss:";
@@ -424,7 +424,7 @@ namespace Revit.SDK.Samples.Truss.CS
         {
             // indicates whether the mouse moves over or hovers on one beam
             // if true, paints the beam to red
-            m_selectMemberIndex = trussGeometry.SelectTrussMember(e.X, e.Y);
+            m_selectMemberIndex = m_trussGeometry.SelectTrussMember(e.X, e.Y);
             TrussMembersPictureBox.Refresh();
         }
 
@@ -444,7 +444,7 @@ namespace Revit.SDK.Samples.Truss.CS
             }
 
             // clicks in the canvas and selects a beam
-            m_selecedtBeam = trussGeometry.GetSelectedBeam(m_commandData);
+            m_selecedtBeam = m_trussGeometry.GetSelectedBeam(m_commandData);
             if (null != m_selecedtBeam)
             {
                 var symbol = m_selecedtBeam.Symbol;
@@ -514,7 +514,7 @@ namespace Revit.SDK.Samples.Truss.CS
                 m_topChord = false;
                 m_bottomChord = false;
                 ProfileEditPictureBox.Cursor = Cursors.Default;
-                trussGeometry.ClearMovePoint();
+                m_trussGeometry.ClearMovePoint();
                 ProfileEditPictureBox.Refresh();
             }
         }
@@ -527,13 +527,13 @@ namespace Revit.SDK.Samples.Truss.CS
         private void TrussGraphicsTabControl_Selecting(object sender, TabControlCancelEventArgs e)
         {
             // if no truss is created, locks the tab pages to the 1st tab page
-            if (null == trussGeometry)
+            if (null == m_trussGeometry)
             {
                 TrussGraphicsTabControl.SelectedIndex = 0;
             }
             else
             {
-                trussGeometry.Reset();
+                m_trussGeometry.Reset();
                 m_selecedtBeam = null;
             }
         }

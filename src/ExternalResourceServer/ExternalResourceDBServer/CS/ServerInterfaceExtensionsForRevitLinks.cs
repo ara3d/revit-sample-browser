@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         /// </summary>
         public string GetLocalPathForOpen(ExternalResourceReference desiredReference)
         {
-            return SampleExternalResourceDBServer.GetFullLinkCachedFilePath(desiredReference);
+            return SampleExternalResourceDbServer.GetFullLinkCachedFilePath(desiredReference);
         }
     }
 
@@ -37,8 +37,8 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         /// </summary>
         public void OnLocalLinkSharedCoordinatesSaved(ExternalResourceReference changedReference)
         {
-            var localLinkPath = SampleExternalResourceDBServer.GetFullLinkCachedFilePath(changedReference);
-            var fullServerPath = SampleExternalResourceDBServer.GetFullServerLinkFilePath(changedReference);
+            var localLinkPath = SampleExternalResourceDbServer.GetFullLinkCachedFilePath(changedReference);
+            var fullServerPath = SampleExternalResourceDbServer.GetFullServerLinkFilePath(changedReference);
             var serverDirectoryName = Path.GetDirectoryName(fullServerPath);
             if (!Directory.Exists(serverDirectoryName)) Directory.CreateDirectory(serverDirectoryName);
             File.Copy(localLinkPath, fullServerPath, true); // Overwrite

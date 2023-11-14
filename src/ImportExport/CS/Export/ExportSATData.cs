@@ -11,7 +11,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores the main information for exporting dxf format
     /// </summary>
-    public class ExportSATData : ExportDataWithViews
+    public class ExportSatData : ExportDataWithViews
     {
         /// <summary>
         ///     List of Autodesk.Revit.DB.ACADVersion defined in Revit
@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
-        public ExportSATData(ExternalCommandData commandData, ExportFormat exportFormat)
+        public ExportSatData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
             Initialize();
@@ -76,8 +76,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             var tmp = new StringBuilder();
             foreach (var version in m_fileVersion) tmp.Append(version + "|*.sat|");
-            m_filter = tmp.ToString().TrimEnd('|');
-            m_title = "Export SAT";
+            Filter = tmp.ToString().TrimEnd('|');
+            Title = "Export SAT";
         }
 
         /// <summary>
@@ -90,10 +90,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             //parameter : ViewSet views
             var views = new ViewSet();
-            if (m_currentViewOnly)
-                views.Insert(m_activeDoc.ActiveView);
+            if (CurrentViewOnly)
+                views.Insert(ActiveDocument.ActiveView);
             else
-                views = m_selectViewsData.SelectedViews;
+                views = SelectViewsData.SelectedViews;
 
             ICollection<ElementId> viewIds = new List<ElementId>();
             foreach (View view in views) viewIds.Add(view.Id);
@@ -102,7 +102,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var satExportOptions = new SATExportOptions();
 
             //Export
-            var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, viewIds, satExportOptions);
+            var exported = ActiveDocument.Export(ExportFolder, ExportFileName, viewIds, satExportOptions);
 
             return exported;
         }

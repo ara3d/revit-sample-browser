@@ -23,8 +23,8 @@ namespace Revit.SDK.Samples.SinePlotter.CS
     /// </summary>
     internal class FamilyInstancePlotter
     {
-        private readonly Document document;
-        private readonly FamilySymbol familySymbol;
+        private readonly Document m_document;
+        private readonly FamilySymbol m_familySymbol;
 
         /// <summary>
         ///     The constructor for the FamilyInstancePlotter Class.
@@ -33,8 +33,8 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// <param name="doc">The active Revit document.</param>
         public FamilyInstancePlotter(FamilySymbol fs, Document doc)
         {
-            familySymbol = fs;
-            document = doc;
+            m_familySymbol = fs;
+            m_document = doc;
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// <param name="location">A point XYZ signifying the location for a family instance to be placed.</param>
         private void PlaceAtLocation(XYZ location)
         {
-            var t = new Transaction(document, "Place family instance");
+            var t = new Transaction(m_document, "Place family instance");
             t.Start();
-            document.Create.NewFamilyInstance(location, familySymbol,
+            m_document.Create.NewFamilyInstance(location, m_familySymbol,
                 StructuralType.NonStructural);
             t.Commit();
         }
@@ -67,7 +67,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             //Given the number of partitions compute the angle increment. 
             var theta = 2 * Math.PI / partitions;
 
-            var transGroup = new TransactionGroup(document, "Place All Instances");
+            var transGroup = new TransactionGroup(m_document, "Place All Instances");
             transGroup.Start();
             //Calculates the sine of an angle. This function expects the values of the angle parameter to be
             //provided in radians (values from 0 to 6.28). Values are returned in the range -1 to 1. The theta 

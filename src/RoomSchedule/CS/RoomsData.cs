@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <summary>
         ///     Constant name for RoomID, this column must exist in first row.
         /// </summary>
-        public const string RoomID = "ID";
+        public const string RoomId = "ID";
 
         /// <summary>
         ///     Constant name for room area, this column must exist in first row

@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.DistanceToPanels.CS
             var es = new ElementSet();
             foreach (var elementId in m_uiDoc.Selection.GetElementIds())
                 es.Insert(m_uiDoc.Document.GetElement(elementId));
-            var targetPoint = getTargetPoint(es);
+            var targetPoint = GetTargetPoint(es);
 
             // get all the divided surfaces in the Revit document
             var dsList = GetElements<DividedSurface>();
@@ -99,7 +99,7 @@ namespace Revit.SDK.Samples.DistanceToPanels.CS
         /// </summary>
         /// <param name="collection">Selected elements</param>
         /// <returns>the Autodesk.Revit.DB.XYZ point of the selected target element</returns>
-        private XYZ getTargetPoint(ElementSet collection)
+        private XYZ GetTargetPoint(ElementSet collection)
         {
             FamilyInstance targetElement = null;
             if (collection.Size != 1)

@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
             ElementInformation = StoreInformationInDataTable(selectedElements);
 
             // show UI
-            var displayForm = new AnalyticalSupportData_InfoForm(this);
+            var displayForm = new AnalyticalSupportDataInfoForm(this);
             displayForm.ShowDialog();
 
             return Result.Succeeded;

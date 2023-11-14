@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
         /// <param name="args"></param>
         public void SortLoadedFamiliesParams(object obj, DocumentOpenedEventArgs args)
         {
-            if (!Command.m_SortDialogIsOpened)
+            if (!Command.SortDialogIsOpened)
                 return;
 
             using (var sortForm = new SortLoadedFamiliesParamsForm(args.Document))

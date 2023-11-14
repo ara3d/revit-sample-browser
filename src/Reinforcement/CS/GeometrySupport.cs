@@ -17,27 +17,27 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <summary>
         ///     the extend or sweep path of the beam or column
         /// </summary>
-        protected readonly Line m_drivingLine;
+        protected readonly Line DrivingLine;
 
         /// <summary>
         ///     the director vector of beam or column
         /// </summary>
-        protected readonly XYZ m_drivingVector;
+        protected readonly XYZ DrivingVector;
 
         /// <summary>
         ///     a list to store the edges
         /// </summary>
-        protected List<Line> m_edges = new List<Line>();
+        protected List<Line> Edges = new List<Line>();
 
         /// <summary>
         ///     a list to store the point
         /// </summary>
-        protected readonly List<XYZ> m_points = new List<XYZ>();
+        protected readonly List<XYZ> Points = new List<XYZ>();
 
         /// <summary>
         ///     store the solid of beam or column
         /// </summary>
-        protected Solid m_solid;
+        protected Solid Solid;
 
         /// <summary>
         ///     the transform value of the solid
@@ -53,8 +53,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         {
             // get the geometry element of the selected element
             var geoElement = element.get_Geometry(new Options());
-            var Objects = geoElement.GetEnumerator();
-            if (null == geoElement || !Objects.MoveNext())
+            var objects = geoElement.GetEnumerator();
+            if (null == geoElement || !objects.MoveNext())
                 throw new Exception("Can't get the geometry of selected element.");
 
             var swProfile = element.GetSweptProfile();
@@ -65,26 +65,26 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             var line = swProfile.GetDrivingCurve() as Line;
             if (null != line)
             {
-                m_drivingLine = line; // driving path
-                m_drivingVector = GeomUtil.SubXYZ(line.GetEndPoint(1), line.GetEndPoint(0));
+                DrivingLine = line; // driving path
+                DrivingVector = GeomUtil.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
             }
 
             //get the geometry object
-            Objects.Reset();
+            objects.Reset();
             //foreach (GeometryObject geoObject in geoElement.Objects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geoObject = Objects.Current;
+                var geoObject = objects.Current;
 
                 //get the geometry instance which contain the geometry information
                 var instance = geoObject as GeoInstance;
                 if (null != instance)
                 {
                     //foreach (GeometryObject o in instance.SymbolGeometry.Objects)
-                    var Objects1 = instance.SymbolGeometry.GetEnumerator();
-                    while (Objects1.MoveNext())
+                    var objects1 = instance.SymbolGeometry.GetEnumerator();
+                    while (objects1.MoveNext())
                     {
-                        var o = Objects1.Current;
+                        var o = objects1.Current;
 
                         // get the solid of beam of column
                         var solid = o as Solid;
@@ -93,7 +93,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
                         if (null == solid) continue;
                         if (0 == solid.Faces.Size || 0 == solid.Edges.Size) continue;
 
-                        m_solid = solid;
+                        Solid = solid;
                         //get the transform value of instance
                         m_transform = instance.Transform;
 
@@ -105,8 +105,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             }
 
             // do some checks about profile curves information
-            if (null == m_edges) throw new Exception("Can't get the geometry edge information.");
-            if (4 != m_points.Count) throw new Exception("The sample only work for rectangular beams or columns.");
+            if (null == Edges) throw new Exception("Can't get the geometry edge information.");
+            if (4 != Points.Count) throw new Exception("The sample only work for rectangular beams or columns.");
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <returns>the length of the driving line</returns>
         protected double GetDrivingLineLength()
         {
-            return GeomUtil.GetLength(m_drivingVector);
+            return GeomUtil.GetLength(DrivingVector);
         }
 
         /// <summary>
@@ -142,17 +142,17 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
             // Get all the edge which contain this point.
             // And get the vector from this point to another point
-            foreach (var line in m_edges)
+            foreach (var line in Edges)
             {
                 if (GeomUtil.IsEqual(point, line.GetEndPoint(0)))
                 {
-                    var vector = GeomUtil.SubXYZ(line.GetEndPoint(1), line.GetEndPoint(0));
+                    var vector = GeomUtil.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
                     vectors.Add(vector);
                 }
 
                 if (GeomUtil.IsEqual(point, line.GetEndPoint(1)))
                 {
-                    var vector = GeomUtil.SubXYZ(line.GetEndPoint(0), line.GetEndPoint(1));
+                    var vector = GeomUtil.SubXyz(line.GetEndPoint(0), line.GetEndPoint(1));
                     vectors.Add(vector);
                 }
             }
@@ -174,7 +174,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             var points = new List<XYZ>();
 
             // Get all points of the swept profile, and offset it in two related direction
-            foreach (var point in m_points)
+            foreach (var point in Points)
             {
                 // Get two related directions
                 var directions = GetRelatedVectors(point);
@@ -206,13 +206,13 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             if (null == sweptFace || 1 != sweptFace.EdgeLoops.Size) return false;
 
             // get the points of the swept face
-            foreach (var point in sweptFace.Triangulate().Vertices) m_points.Add(Transform(point));
+            foreach (var point in sweptFace.Triangulate().Vertices) Points.Add(Transform(point));
 
             // get the edges of the swept face
-            m_edges = ChangeEdgeToLine(sweptFace.EdgeLoops.get_Item(0));
+            Edges = ChangeEdgeToLine(sweptFace.EdgeLoops.get_Item(0));
 
             // do some checks
-            return null != m_edges;
+            return null != Edges;
         }
 
         /// <summary>
@@ -236,14 +236,14 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
                 // some edges should be parallelled with the driving line,
                 // and the start point of that edge should be the wanted point
-                var edgeVector = GeomUtil.SubXYZ(second, first);
-                if (GeomUtil.IsSameDirection(edgeVector, m_drivingVector))
+                var edgeVector = GeomUtil.SubXyz(second, first);
+                if (GeomUtil.IsSameDirection(edgeVector, DrivingVector))
                 {
                     refPoint = first;
                     break;
                 }
 
-                if (GeomUtil.IsOppositeDirection(edgeVector, m_drivingVector))
+                if (GeomUtil.IsOppositeDirection(edgeVector, DrivingVector))
                 {
                     refPoint = second;
                     break;
@@ -256,7 +256,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             {
                 if (null != sweptFace) break;
                 // the swept face should be perpendicular with the driving line
-                if (!GeomUtil.IsVertical(face, m_drivingLine, m_transform, null)) continue;
+                if (!GeomUtil.IsVertical(face, DrivingLine, m_transform, null)) continue;
                 // use the gotted point to get the swept face
                 foreach (var point in face.Triangulate().Vertices)
                 {

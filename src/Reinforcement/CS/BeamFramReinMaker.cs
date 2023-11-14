@@ -219,12 +219,12 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             // get the top start hook orient
             if (TopRebarLocation.Start == location)
             {
-                var curveVec = GeomUtil.SubXYZ(rebarLine.GetEndPoint(1), rebarLine.GetEndPoint(0));
+                var curveVec = GeomUtil.SubXyz(rebarLine.GetEndPoint(1), rebarLine.GetEndPoint(0));
                 return GeomUtil.GetHookOrient(curveVec, normal, hookVec);
             }
             else // get the top end hook orient
             {
-                var curveVec = GeomUtil.SubXYZ(rebarLine.GetEndPoint(0), rebarLine.GetEndPoint(1));
+                var curveVec = GeomUtil.SubXyz(rebarLine.GetEndPoint(0), rebarLine.GetEndPoint(1));
                 return GeomUtil.GetHookOrient(curveVec, normal, hookVec);
             }
         }

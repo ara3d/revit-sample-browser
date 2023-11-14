@@ -9,22 +9,22 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.BRepBuilderExample.CS
 {
     [Transaction(TransactionMode.Manual)]
-    public class CreateNURBS : IExternalCommand
+    public class CreateNurbs : IExternalCommand
     {
-        private Document _dbdocument;
+        private Document m_dbdocument;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            _dbdocument = commandData.Application.ActiveUIDocument.Document;
+            m_dbdocument = commandData.Application.ActiveUIDocument.Document;
 
             try
             {
-                using (var tr = new Transaction(_dbdocument, "CreateNURBS"))
+                using (var tr = new Transaction(m_dbdocument, "CreateNURBS"))
                 {
                     tr.Start();
 
                     var myDirectShape =
-                        DirectShape.CreateElement(_dbdocument, new ElementId(BuiltInCategory.OST_GenericModel));
+                        DirectShape.CreateElement(m_dbdocument, new ElementId(BuiltInCategory.OST_GenericModel));
                     myDirectShape.ApplicationId = "TestCreateNURBS";
                     myDirectShape.ApplicationDataId = "NURBS";
 

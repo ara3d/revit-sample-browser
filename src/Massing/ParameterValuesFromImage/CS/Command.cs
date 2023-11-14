@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.ParameterValuesFromImage.CS
     [Regeneration(RegenerationOption.Manual)]
     public class SetParameterValueWithImageData : IExternalCommand
     {
-        private static AddInId appId = new AddInId(new Guid("9F405E24-3799-4b56-828F-14842ABE4802"));
+        private static AddInId _appId = new AddInId(new Guid("9F405E24-3799-4b56-828F-14842ABE4802"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

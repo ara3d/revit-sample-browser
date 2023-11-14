@@ -8,7 +8,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
     /// <summary>
     ///     UI which display the information
     /// </summary>
-    public partial class AnalyticalSupportData_InfoForm : Form
+    public partial class AnalyticalSupportDataInfoForm : Form
     {
         // an instance of Command class which is prepared the displayed data.
         private readonly Command m_dataBuffer;
@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
         /// <summary>
         ///     Default constructor
         /// </summary>
-        private AnalyticalSupportData_InfoForm()
+        private AnalyticalSupportDataInfoForm()
         {
             InitializeComponent();
         }
@@ -25,7 +25,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
         ///     constructor
         /// </summary>
         /// <param name="dataBuffer"></param>
-        public AnalyticalSupportData_InfoForm(Command dataBuffer) : this()
+        public AnalyticalSupportDataInfoForm(Command dataBuffer) : this()
         {
             m_dataBuffer = dataBuffer;
             // display the elements information, which is prepared by Command class, in a grid.

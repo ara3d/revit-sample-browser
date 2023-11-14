@@ -19,27 +19,27 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <summary>
         ///     Application creator
         /// </summary>
-        protected readonly Application m_appCreator;
+        protected readonly Application AppCreator;
 
         /// <summary>
         ///     command data
         /// </summary>
-        protected readonly ExternalCommandData m_commandData;
+        protected readonly ExternalCommandData CommandData;
 
         /// <summary>
         ///     Wall or Floor element
         /// </summary>
-        protected readonly Element m_dataProfile;
+        protected readonly Element DataProfile;
 
         /// <summary>
         ///     Document creator
         /// </summary>
-        protected readonly Document m_docCreator;
+        protected readonly Document DocCreator;
 
         /// <summary>
         ///     geometry object [face]
         /// </summary>
-        protected readonly List<Edge> m_face;
+        protected readonly List<Edge> Face;
 
         /// <summary>
         ///     Constructor
@@ -48,13 +48,13 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="commandData">ExternalCommandData</param>
         public Profile(Element elem, ExternalCommandData commandData)
         {
-            m_dataProfile = elem;
-            m_commandData = commandData;
-            m_appCreator = m_commandData.Application.Application.Create;
-            m_docCreator = m_commandData.Application.ActiveUIDocument.Document.Create;
+            DataProfile = elem;
+            CommandData = commandData;
+            AppCreator = CommandData.Application.Application.Create;
+            DocCreator = CommandData.Application.ActiveUIDocument.Document.Create;
 
-            var faces = GetFaces(m_dataProfile);
-            m_face = GetNeedFace(faces);
+            var faces = GetFaces(DataProfile);
+            Face = GetNeedFace(faces);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// >
         public void Draw2D(Graphics graphics, Pen pen, Matrix4 matrix4)
         {
-            foreach (var edge in m_face)
+            foreach (var edge in Face)
             {
                 var points = edge.Tessellate() as List<XYZ>;
                 for (var i = 0; i < points.Count - 1; i++)
@@ -97,17 +97,17 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         public List<List<Edge>> GetFaces(Element elem)
         {
             var faceEdges = new List<List<Edge>>();
-            var options = m_appCreator.NewGeometryOptions();
+            var options = AppCreator.NewGeometryOptions();
             options.DetailLevel = ViewDetailLevel.Medium;
             options.ComputeReferences = true;
             var geoElem = elem.get_Geometry(options);
 
             //GeometryObjectArray gObjects = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //foreach (GeometryObject geo in gObjects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geo = Objects.Current;
+                var geo = objects.Current;
 
                 var solid = geo as Solid;
                 if (solid != null)
@@ -165,7 +165,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="faces">edges in all faces</param>
         private List<Edge> GetNeedFace(List<List<Edge>> faces)
         {
-            return m_dataProfile is Wall ? GetWallFace(faces) : faces[0];
+            return DataProfile is Wall ? GetWallFace(faces) : faces[0];
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// </summary>
         public Matrix4 To2DMatrix()
         {
-            if (m_dataProfile is Wall) return WallMatrix();
-            var eg0 = m_face[0].Tessellate() as List<XYZ>;
-            var eg1 = m_face[1].Tessellate() as List<XYZ>;
+            if (DataProfile is Wall) return WallMatrix();
+            var eg0 = Face[0].Tessellate() as List<XYZ>;
+            var eg1 = Face[1].Tessellate() as List<XYZ>;
 
             var v1 = new Vector4((float)eg0[0].X,
                 (float)eg0[0].Y, (float)eg0[0].Z);
@@ -210,7 +210,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         public Matrix4 WallMatrix()
         {
             //get the location curve
-            var location = m_dataProfile.Location as LocationCurve;
+            var location = DataProfile.Location as LocationCurve;
             var xAxis = new Vector4(1, 0, 0);
             var yAxis = new Vector4(0, 1, 0);
             var zAxis = new Vector4(0, 0, 1);
@@ -244,7 +244,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <returns></returns>
         private List<Edge> GetWallFace(List<List<Edge>> faces)
         {
-            var location = m_dataProfile.Location as LocationCurve;
+            var location = DataProfile.Location as LocationCurve;
             var curve = location.Curve;
             var xyzs = curve.Tessellate() as List<XYZ>;
             var zAxis = new Vector4(0, 0, 1);
@@ -289,7 +289,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             var inverseMatrix = matrix.Inverse();
             float minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
-            foreach (var edge in m_face)
+            foreach (var edge in Face)
             {
                 var points = edge.Tessellate() as List<XYZ>;
 

@@ -203,11 +203,11 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             option.DetailLevel = ViewDetailLevel.Fine;
             var geoElem = m_pathRein.get_Geometry(option);
             //GeometryObjectArray geoArray = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //foreach (GeometryObject geo in geoArray)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geo = Objects.Current;
+                var geo = objects.Current;
 
                 if (geo is Curve curve)
                 {

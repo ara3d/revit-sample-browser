@@ -19,17 +19,17 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <summary>
         ///     Resource manager
         /// </summary>
-        protected static readonly ResourceManager resManager = Resources.ResourceManager;
+        protected static readonly ResourceManager ResManager = Resources.ResourceManager;
 
         /// <summary>
         ///     Application Creation object to create new elements
         /// </summary>
-        protected Application m_appCreator;
+        protected Application AppCreator;
 
         /// <summary>
         ///     Document Creation object to create new elements
         /// </summary>
-        protected Document m_docCreator;
+        protected Document DocCreator;
 
         /// <summary>
         ///     Array list contains all grid labels in current document
@@ -39,7 +39,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <summary>
         ///     The active document of Revit
         /// </summary>
-        protected readonly Autodesk.Revit.DB.Document m_revitDoc;
+        protected readonly Autodesk.Revit.DB.Document RevitDoc;
 
         /// <summary>
         ///     Current display unit type
@@ -53,9 +53,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <param name="labels">All existing labels in Revit's document</param>
         public CreateGridsData(UIApplication application, ArrayList labels)
         {
-            m_revitDoc = application.ActiveUIDocument.Document;
-            m_appCreator = application.Application.Create;
-            m_docCreator = application.ActiveUIDocument.Document.Create;
+            RevitDoc = application.ActiveUIDocument.Document;
+            AppCreator = application.Application.Create;
+            DocCreator = application.ActiveUIDocument.Document.Create;
             m_labelsList = labels;
         }
 
@@ -67,9 +67,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <param name="unit">Current length display unit type</param>
         public CreateGridsData(UIApplication application, ArrayList labels, ForgeTypeId unit)
         {
-            m_revitDoc = application.ActiveUIDocument.Document;
-            m_appCreator = application.Application.Create;
-            m_docCreator = application.ActiveUIDocument.Document.Create;
+            RevitDoc = application.ActiveUIDocument.Document;
+            AppCreator = application.Application.Create;
+            DocCreator = application.ActiveUIDocument.Document.Create;
             m_labelsList = labels;
             m_unit = unit;
         }
@@ -138,8 +138,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 {
                     // Handle the case that the arc is clockwise
                     case true when startDegree > 0 && endDegree > 0:
-                        startDegree = 2 * Values.PI - startDegree;
-                        endDegree = 2 * Values.PI - endDegree;
+                        startDegree = 2 * Values.Pi - startDegree;
+                        endDegree = 2 * Values.Pi - endDegree;
                         break;
                     case true when startDegree < 0:
                     {
@@ -151,9 +151,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 }
 
                 var sumDegree = (startDegree + endDegree) / 2;
-                while (sumDegree > 2 * Values.PI) sumDegree -= 2 * Values.PI;
+                while (sumDegree > 2 * Values.Pi) sumDegree -= 2 * Values.Pi;
 
-                while (sumDegree < -2 * Values.PI) sumDegree += 2 * Values.PI;
+                while (sumDegree < -2 * Values.Pi) sumDegree += 2 * Values.Pi;
 
                 var midPoint = new XYZ(arc.Center.X + arc.Radius * Math.Cos(sumDegree),
                     arc.Center.Y + arc.Radius * Math.Sin(sumDegree), 0);
@@ -204,19 +204,19 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             var center = arc.Center;
             var radius = arc.Radius;
-            var XRightPoint = new XYZ(center.X + radius, center.Y, 0);
-            var XLeftPoint = new XYZ(center.X - radius, center.Y, 0);
-            var YUpperPoint = new XYZ(center.X, center.Y + radius, 0);
-            var YLowerPoint = new XYZ(center.X, center.Y - radius, 0);
+            var xRightPoint = new XYZ(center.X + radius, center.Y, 0);
+            var xLeftPoint = new XYZ(center.X - radius, center.Y, 0);
+            var yUpperPoint = new XYZ(center.X, center.Y + radius, 0);
+            var yLowerPoint = new XYZ(center.X, center.Y - radius, 0);
             if (bubLoc == BubbleLocation.StartPoint)
             {
-                upperArc = Arc.Create(XRightPoint, XLeftPoint, YUpperPoint);
-                lowerArc = Arc.Create(XLeftPoint, XRightPoint, YLowerPoint);
+                upperArc = Arc.Create(xRightPoint, xLeftPoint, yUpperPoint);
+                lowerArc = Arc.Create(xLeftPoint, xRightPoint, yLowerPoint);
             }
             else
             {
-                upperArc = Arc.Create(XLeftPoint, XRightPoint, YUpperPoint);
-                lowerArc = Arc.Create(XRightPoint, XLeftPoint, YLowerPoint);
+                upperArc = Arc.Create(xLeftPoint, xRightPoint, yUpperPoint);
+                lowerArc = Arc.Create(xRightPoint, xLeftPoint, yLowerPoint);
             }
         }
 
@@ -238,7 +238,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <returns>Newly created grid</returns>
         protected Grid NewGrid(Line line)
         {
-            return Grid.Create(m_revitDoc, line);
+            return Grid.Create(RevitDoc, line);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <returns>Newly created grid</returns>
         protected Grid NewGrid(Arc arc)
         {
-            return Grid.Create(m_revitDoc, arc);
+            return Grid.Create(RevitDoc, arc);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <returns>The newly created grid</returns>
         protected Grid CreateLinearGrid(Line line)
         {
-            return Grid.Create(m_revitDoc, line);
+            return Grid.Create(RevitDoc, line);
         }
 
         /// <summary>
@@ -272,9 +272,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 var line = c as Line;
                 var arc = c as Arc;
 
-                if (line != null) Grid.Create(m_revitDoc, line);
+                if (line != null) Grid.Create(RevitDoc, line);
 
-                if (arc != null) Grid.Create(m_revitDoc, arc);
+                if (arc != null) Grid.Create(RevitDoc, arc);
             }
         }
 

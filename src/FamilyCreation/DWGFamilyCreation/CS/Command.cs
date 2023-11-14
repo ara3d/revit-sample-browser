@@ -58,9 +58,9 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
                 }
 
                 // The dwg file which will be imported
-                var AssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var DWGFile = "Desk.dwg";
-                var DWGFullPath = Path.Combine(AssemblyDirectory, DWGFile);
+                var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var dwgFile = "Desk.dwg";
+                var dwgFullPath = Path.Combine(assemblyDirectory, dwgFile);
 
                 var transaction = new Transaction(m_doc, "DWGFamilyCreation");
                 transaction.Start();
@@ -68,10 +68,10 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
                 var options = new DWGImportOptions();
                 options.Placement = ImportPlacement.Origin;
                 options.OrientToView = true;
-                m_doc.Import(DWGFullPath, options, view, out _);
+                m_doc.Import(dwgFullPath, options, view, out _);
 
                 // Add type parameters to the family
-                AddParameters(DWGFile);
+                AddParameters(dwgFile);
                 transaction.Commit();
             }
             catch (Exception ex)
@@ -86,8 +86,8 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
         /// <summary>
         ///     Add type parameters to the family
         /// </summary>
-        /// <param name="DWGFileName">Name of imported dwg file</param>
-        private void AddParameters(string DWGFileName)
+        /// <param name="dwgFileName">Name of imported dwg file</param>
+        private void AddParameters(string dwgFileName)
         {
             // Get the family manager
             var familyMgr = m_doc.FamilyManager;
@@ -96,7 +96,7 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
             familyMgr.NewType("DWGFamilyCreation");
             var paraFileName = familyMgr.AddParameter("DWGFileName", new ForgeTypeId(),
                 SpecTypeId.String.Text, false);
-            familyMgr.Set(paraFileName, DWGFileName);
+            familyMgr.Set(paraFileName, dwgFileName);
 
             // Add parameter 2: ImportTime
             var time = DateTime.Now.ToString("yyyy-MM-dd");

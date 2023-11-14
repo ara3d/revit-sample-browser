@@ -26,12 +26,12 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
     [Regeneration(RegenerationOption.Manual)]
     public class ThisApplication : IExternalApplication
     {
-        internal static ThisApplication thisApp;
-        private APIUtility m_APIUtility;
+        internal static ThisApplication ThisApp;
+        private ApiUtility m_apiUtility;
 
         private MainPage m_mainPage;
 
-        public DockablePaneId MainPageDockablePaneId => Globals.sm_UserDockablePaneId;
+        public DockablePaneId MainPageDockablePaneId => Globals.SmUserDockablePaneId;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -43,8 +43,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         /// </summary>
         public Result OnStartup(UIControlledApplication application)
         {
-            thisApp = this;
-            m_APIUtility = new APIUtility();
+            ThisApp = this;
+            m_apiUtility = new ApiUtility();
 
             application.CreateRibbonTab(Globals.DiagnosticsTabName);
             var panel = application.CreateRibbonPanel(Globals.DiagnosticsTabName, Globals.DiagnosticsPanelName);
@@ -83,9 +83,9 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         /// </summary>
         public void RegisterDockableWindow(UIApplication application, Guid mainPageGuid)
         {
-            Globals.sm_UserDockablePaneId = new DockablePaneId(mainPageGuid);
-            application.RegisterDockablePane(Globals.sm_UserDockablePaneId, Globals.ApplicationName,
-                thisApp.GetMainWindow());
+            Globals.SmUserDockablePaneId = new DockablePaneId(mainPageGuid);
+            application.RegisterDockablePane(Globals.SmUserDockablePaneId, Globals.ApplicationName,
+                ThisApp.GetMainWindow());
         }
 
         /// <summary>
@@ -93,9 +93,9 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         /// </summary>
         public void RegisterDockableWindow(UIControlledApplication application, Guid mainPageGuid)
         {
-            Globals.sm_UserDockablePaneId = new DockablePaneId(mainPageGuid);
-            application.RegisterDockablePane(Globals.sm_UserDockablePaneId, Globals.ApplicationName,
-                thisApp.GetMainWindow());
+            Globals.SmUserDockablePaneId = new DockablePaneId(mainPageGuid);
+            application.RegisterDockablePane(Globals.SmUserDockablePaneId, Globals.ApplicationName,
+                ThisApp.GetMainWindow());
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         /// </summary>
         public void SetWindowVisibility(UIApplication application, bool state)
         {
-            var pane = application.GetDockablePane(Globals.sm_UserDockablePaneId);
+            var pane = application.GetDockablePane(Globals.SmUserDockablePaneId);
             if (pane != null)
             {
                 if (state)
@@ -145,9 +145,9 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             return m_mainPage;
         }
 
-        public APIUtility GetDockableAPIUtility()
+        public ApiUtility GetDockableApiUtility()
         {
-            return m_APIUtility;
+            return m_apiUtility;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
-    public partial class APIUtility
+    public partial class ApiUtility
     {
         /// <summary>
         ///     A method to examine an incoming command and start the process of executing
@@ -14,7 +14,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             {
                 case ModelessCommandType.PrintMainPageStatistics:
                 {
-                    command.WindowSummaryData = GetPaneSummary(ThisApplication.thisApp.MainPageDockablePaneId);
+                    command.WindowSummaryData = GetPaneSummary(ThisApplication.ThisApp.MainPageDockablePaneId);
                     ModelessCommand.Make(command);
                     break;
                 }

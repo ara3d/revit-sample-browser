@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw arc.
     /// </summary>
-    internal class ArcTool : ITool
+    internal class ArcTool : Tool
     {
         private bool m_isFinished;
 
@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// </summary>
         public ArcTool()
         {
-            m_type = ToolType.Arc;
+            Type = ToolType.Arc;
         }
 
         /// <summary>
@@ -28,18 +28,18 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="graphic">Graphics object</param>
         public override void Draw(Graphics graphic)
         {
-            foreach (var line in m_lines)
+            foreach (var line in Lines)
             {
                 var count = line.Count;
                 if (count == 3)
                 {
-                    DrawArc(graphic, m_foreGroundPen, line[0], line[1], line[3]);
+                    DrawArc(graphic, ForeGroundPen, line[0], line[1], line[3]);
                 }
                 else if (count > 3)
                 {
-                    DrawArc(graphic, m_foreGroundPen, line[0], line[1], line[2]);
+                    DrawArc(graphic, ForeGroundPen, line[0], line[1], line[2]);
                     for (var i = 1; i < count - 3; i += 2)
-                        DrawArc(graphic, m_foreGroundPen, line[i], line[i + 2], line[i + 3]);
+                        DrawArc(graphic, ForeGroundPen, line[i], line[i + 2], line[i + 3]);
                 }
             }
         }
@@ -53,20 +53,20 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             if (MouseButtons.Left == e.Button)
             {
-                m_points.Add(e.Location);
-                m_preMovePoint = e.Location;
+                Points.Add(e.Location);
+                PreMovePoint = e.Location;
 
-                if (m_points.Count >= 4 && m_points.Count % 2 == 0)
-                    graphic.DrawLine(m_backGroundPen,
-                        m_points[m_points.Count - 3], m_preMovePoint);
+                if (Points.Count >= 4 && Points.Count % 2 == 0)
+                    graphic.DrawLine(BackGroundPen,
+                        Points[Points.Count - 3], PreMovePoint);
                 Draw(graphic);
 
                 if (m_isFinished)
                 {
                     m_isFinished = false;
-                    var line = new List<Point>(m_points);
-                    m_lines.Add(line);
-                    m_points.Clear();
+                    var line = new List<Point>(Points);
+                    Lines.Add(line);
+                    Points.Clear();
                 }
             }
         }
@@ -78,25 +78,25 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
-            if (2 == m_points.Count)
+            if (2 == Points.Count)
             {
-                DrawArc(graphic, m_backGroundPen, m_points[0], m_points[1], m_preMovePoint);
-                m_preMovePoint = e.Location;
-                DrawArc(graphic, m_foreGroundPen, m_points[0], m_points[1], e.Location);
+                DrawArc(graphic, BackGroundPen, Points[0], Points[1], PreMovePoint);
+                PreMovePoint = e.Location;
+                DrawArc(graphic, ForeGroundPen, Points[0], Points[1], e.Location);
             }
-            else if (m_points.Count > 2 && m_points.Count % 2 == 0)
+            else if (Points.Count > 2 && Points.Count % 2 == 0)
             {
-                DrawArc(graphic, m_backGroundPen, m_points[m_points.Count - 3],
-                    m_points[m_points.Count - 1], m_preMovePoint);
-                m_preMovePoint = e.Location;
-                DrawArc(graphic, m_foreGroundPen, m_points[m_points.Count - 3],
-                    m_points[m_points.Count - 1], e.Location);
+                DrawArc(graphic, BackGroundPen, Points[Points.Count - 3],
+                    Points[Points.Count - 1], PreMovePoint);
+                PreMovePoint = e.Location;
+                DrawArc(graphic, ForeGroundPen, Points[Points.Count - 3],
+                    Points[Points.Count - 1], e.Location);
             }
-            else if (!m_isFinished && m_points.Count > 2 && m_points.Count % 2 == 1)
+            else if (!m_isFinished && Points.Count > 2 && Points.Count % 2 == 1)
             {
-                graphic.DrawLine(m_backGroundPen, m_points[m_points.Count - 2], m_preMovePoint);
-                m_preMovePoint = e.Location;
-                graphic.DrawLine(m_foreGroundPen, m_points[m_points.Count - 2], e.Location);
+                graphic.DrawLine(BackGroundPen, Points[Points.Count - 2], PreMovePoint);
+                PreMovePoint = e.Location;
+                graphic.DrawLine(ForeGroundPen, Points[Points.Count - 2], e.Location);
             }
         }
 
@@ -107,11 +107,11 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e">Mouse event argument</param>
         public override void OnRightMouseClick(Graphics graphic, MouseEventArgs e)
         {
-            if (!m_isFinished && e.Button == MouseButtons.Right && m_points.Count > 0)
+            if (!m_isFinished && e.Button == MouseButtons.Right && Points.Count > 0)
             {
                 m_isFinished = true;
-                m_points.Add(m_points[0]);
-                graphic.DrawLine(m_backGroundPen, m_points[m_points.Count - 3], e.Location);
+                Points.Add(Points[0]);
+                graphic.DrawLine(BackGroundPen, Points[Points.Count - 3], e.Location);
             }
         }
 

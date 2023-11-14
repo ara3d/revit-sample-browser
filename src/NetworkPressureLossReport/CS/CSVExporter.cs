@@ -7,12 +7,12 @@ using ArgumentException = Autodesk.Revit.Exceptions.ArgumentException;
 
 namespace Revit.SDK.Samples.NetworkPressureLossReport
 {
-    public class CSVExporter : IDisposable
+    public class CsvExporter : IDisposable
     {
         private ConnectorDomainType m_connType;
         private Document m_doc;
 
-        public CSVExporter(string csvFilePath, bool? isItemized)
+        public CsvExporter(string csvFilePath, bool? isItemized)
         {
             if (!string.IsNullOrEmpty(csvFilePath)) Writer = new StreamWriter(csvFilePath, false, Encoding.Unicode);
             IsItemized = isItemized;
@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             GC.SuppressFinalize(this);
         }
 
-        ~CSVExporter()
+        ~CsvExporter()
         {
             Dispose(false);
         }

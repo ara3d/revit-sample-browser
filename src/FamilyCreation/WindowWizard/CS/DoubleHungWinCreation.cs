@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///     store the glass material ID
         /// </summary>
-        private ElementId m_glassMatID;
+        private ElementId m_glassMatId;
 
         /// <summary>
         ///     store the height parameter of wall
@@ -76,7 +76,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///     store the sash material ID
         /// </summary>
-        private ElementId m_sashMatID;
+        private ElementId m_sashMatId;
 
         /// <summary>
         ///     store the sash referenceplane
@@ -347,7 +347,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 sash2.Subcategory = m_frameCat;
             }
 
-            var id = m_sashMatID;
+            var id = m_sashMatId;
             sash1.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(id);
             sash2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(id);
             subTransaction.Commit();
@@ -413,7 +413,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 glass2.Subcategory = m_glassCat;
             }
 
-            var id = m_glassMatID;
+            var id = m_glassMatId;
 
             glass1.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(id);
             glass2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(id);
@@ -435,9 +435,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             foreach (var materialElement in materials)
             {
                 var material = materialElement as Material;
-                if (0 == material.Name.CompareTo(m_para.SashMat)) m_sashMatID = material.Id;
+                if (0 == material.Name.CompareTo(Para.SashMat)) m_sashMatId = material.Id;
 
-                if (0 == material.Name.CompareTo(m_para.GlassMat)) m_glassMatID = material.Id;
+                if (0 == material.Name.CompareTo(Para.GlassMat)) m_glassMatId = material.Id;
             }
 
             subTransaction.Commit();
@@ -450,11 +450,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             var subTransaction = new SubTransaction(m_document);
             subTransaction.Start();
-            foreach (string type in m_para.WinParaTab.Keys)
+            foreach (string type in Para.WinParaTab.Keys)
             {
-                var para = m_para.WinParaTab[type] as WindowParameter;
+                var para = Para.WinParaTab[type] as WindowParameter;
 
-                newFamilyType(para);
+                NewFamilyType(para);
             }
 
             subTransaction.Commit();
@@ -492,13 +492,13 @@ namespace Revit.SDK.Samples.WindowWizard.CS
 
             try
             {
-                if (File.Exists(m_para.PathName))
-                    File.Delete(m_para.PathName);
-                m_document.SaveAs(m_para.PathName);
+                if (File.Exists(Para.PathName))
+                    File.Delete(Para.PathName);
+                m_document.SaveAs(Para.PathName);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Write to " + m_para.PathName + " Failed");
+                Debug.WriteLine("Write to " + Para.PathName + " Failed");
                 Debug.WriteLine(e.Message);
             }
 
@@ -574,8 +574,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             foreach (var materialElement in materials)
             {
                 var material = materialElement as Material;
-                m_para.GlassMaterials.Add(material.Name);
-                m_para.FrameMaterials.Add(material.Name);
+                Para.GlassMaterials.Add(material.Name);
+                Para.FrameMaterials.Add(material.Name);
             }
 
             //get categories
@@ -618,7 +618,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="para">WindowParameter</param>
         /// <returns>indicate whether the NewType is successful</returns>
         private bool
-            newFamilyType(WindowParameter para) //string typeName, double height, double width, double sillHeight)
+            NewFamilyType(WindowParameter para) //string typeName, double height, double width, double sillHeight)
         {
             var dbhungPara = para as DoubleHungWinPara;
             var typeName = dbhungPara.Type;

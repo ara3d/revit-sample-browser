@@ -6,13 +6,13 @@ using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
 {
-    public partial class viewSheetSetForm : Form
+    public partial class ViewSheetSetForm : Form
     {
         private bool m_stopUpdateFlag;
 
         private readonly ViewSheets m_viewSheets;
 
-        public viewSheetSetForm(ViewSheets viewSheets)
+        public ViewSheetSetForm(ViewSheets viewSheets)
         {
             InitializeComponent();
 
@@ -37,16 +37,16 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             switch (showSheetsCheckBox.Checked)
             {
                 case true when showViewsCheckBox.Checked:
-                    vt = VisibleType.VT_BothViewAndSheet;
+                    vt = VisibleType.VtBothViewAndSheet;
                     break;
                 case true when !showViewsCheckBox.Checked:
-                    vt = VisibleType.VT_SheetOnly;
+                    vt = VisibleType.VtSheetOnly;
                     break;
                 case false when showViewsCheckBox.Checked:
-                    vt = VisibleType.VT_ViewOnly;
+                    vt = VisibleType.VtViewOnly;
                     break;
                 default:
-                    vt = VisibleType.VT_None;
+                    vt = VisibleType.VtNone;
                     break;
             }
 

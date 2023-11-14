@@ -15,39 +15,24 @@ namespace Revit.SDK.Samples.NewRebar.CS
     public class GeometrySupport
     {
         /// <summary>
-        ///     Driving length field
-        /// </summary>
-        private readonly double m_drivingLength;
-
-        /// <summary>
         ///     the extend or sweep path of the beam or column
         /// </summary>
-        protected readonly Line m_drivingLine;
+        private readonly Line m_drivingLine;
 
         /// <summary>
         ///     the director vector of beam or column
         /// </summary>
-        protected readonly XYZ m_drivingVector;
+        private readonly XYZ m_drivingVector;
 
         /// <summary>
         ///     a list to store the edges
         /// </summary>
-        protected List<Line> m_edges = new List<Line>();
-
-        /// <summary>
-        ///     a list to store the point
-        /// </summary>
-        private List<XYZ> m_points = new List<XYZ>();
-
-        /// <summary>
-        ///     store the solid of beam or column
-        /// </summary>
-        protected Solid m_solid;
+        private List<Line> m_edges = new List<Line>();
 
         /// <summary>
         ///     the transform value of the solid
         /// </summary>
-        protected readonly Transform m_transform;
+        private readonly Transform m_transform;
 
         /// <summary>
         ///     constructor
@@ -57,41 +42,38 @@ namespace Revit.SDK.Samples.NewRebar.CS
         {
             // get the geometry element of the selected element
             var geoElement = element.get_Geometry(new Options());
-            var Objects = geoElement.GetEnumerator();
-            //if (null == geoElement || 0 == geoElement.Objects.Size)
-            if (null == geoElement || !Objects.MoveNext())
-                throw new Exception("Can't get the geometry of selected element.");
-
-            var swProfile = element.GetSweptProfile();
-            if (swProfile == null || !(swProfile.GetDrivingCurve() is Line))
-                throw new Exception("The selected element driving curve is not a line.");
-
-            // get the driving path and vector of the beam or column
-            var line = swProfile.GetDrivingCurve() as Line;
-            if (null != line)
+            using (var objects = geoElement.GetEnumerator())
             {
-                m_drivingLine = line; // driving path
-                m_drivingVector = GeomUtil.SubXYZ(line.GetEndPoint(1), line.GetEndPoint(0));
-                m_drivingLength = m_drivingVector.GetLength();
-            }
+                //if (null == geoElement || 0 == geoElement.Objects.Size)
+                if (null == geoElement || !objects.MoveNext())
+                    throw new Exception("Can't get the geometry of selected element.");
 
-            //get the geometry object
-            //foreach (GeometryObject geoObject in geoElement.Objects)
-            Objects.Reset();
-            while (Objects.MoveNext())
-            {
-                var geoObject = Objects.Current;
+                var swProfile = element.GetSweptProfile();
+                if (swProfile == null || !(swProfile.GetDrivingCurve() is Line))
+                    throw new Exception("The selected element driving curve is not a line.");
 
-                //get the geometry instance which contains the geometry information
-                var instance = geoObject as GeoInstance;
-                if (null != instance)
+                // get the driving path and vector of the beam or column
+                var line = swProfile.GetDrivingCurve() as Line;
+                if (null != line)
                 {
-                    //foreach (GeometryObject o in instance.SymbolGeometry.Objects)
-                    var Objects1 = instance.SymbolGeometry.GetEnumerator();
-                    while (Objects1.MoveNext())
-                    {
-                        var o = Objects1.Current;
+                    m_drivingLine = line; // driving path
+                    m_drivingVector = GeomUtil.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
+                    DrivingLength = m_drivingVector.GetLength();
+                }
 
+                //get the geometry object
+                //foreach (GeometryObject geoObject in geoElement.Objects)
+                objects.Reset();
+                while (objects.MoveNext())
+                {
+                    var geoObject = objects.Current;
+
+                    //get the geometry instance which contains the geometry information
+                    var instance = geoObject as GeoInstance;
+                    if (null == instance) continue;
+                    
+                    foreach (GeometryObject o in instance.SymbolGeometry)
+                    {
                         // get the solid of beam of column
                         var solid = o as Solid;
 
@@ -99,7 +81,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
                         if (null == solid) continue;
                         if (0 == solid.Faces.Size || 0 == solid.Edges.Size) continue;
 
-                        m_solid = solid;
                         //get the transform value of instance
                         m_transform = instance.Transform;
 
@@ -112,41 +93,28 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
             // do some checks about profile curves information
             if (null == m_edges) throw new Exception("Can't get the geometry edge information.");
-            if (4 != m_points.Count) throw new Exception("The sample only works for rectangle beam or column.");
+            if (4 != ProfilePoints.Count) throw new Exception("The sample only works for rectangle beam or column.");
         }
 
         /// <summary>
         ///     Return profile points
         /// </summary>
-        public List<XYZ> ProfilePoints
-        {
-            get => m_points;
-            set => m_points = value;
-        }
+        public List<XYZ> ProfilePoints { get; set; } = new List<XYZ>();
 
         /// <summary>
         ///     Return driving length
         /// </summary>
-        public double DrivingLength => m_drivingLength;
+        public double DrivingLength { get; }
 
         /// <summary>
         ///     Transform the point to new coordinates
         /// </summary>
         /// <param name="point">The point need to transform</param>
         /// <returns>The changed point</returns>
-        protected XYZ Transform(XYZ point)
+        private XYZ Transform(XYZ point)
         {
             // only invoke the TransformPoint() method.
             return GeomUtil.TransformPoint(point, m_transform);
-        }
-
-        /// <summary>
-        ///     Get the length of driving line
-        /// </summary>
-        /// <returns>The length of the driving line</returns>
-        protected double GetDrivingLineLength()
-        {
-            return GeomUtil.GetLength(m_drivingVector);
         }
 
         /// <summary>
@@ -155,7 +123,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         /// <param name="point">A point of the swept profile</param>
         /// <returns>Two vectors indicate edge direction</returns>
-        protected List<XYZ> GetRelatedVectors(XYZ point)
+        private List<XYZ> GetRelatedVectors(XYZ point)
         {
             // Initialize the return vector list.
             var vectors = new List<XYZ>();
@@ -166,13 +134,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
             {
                 if (GeomUtil.IsEqual(point, line.GetEndPoint(0)))
                 {
-                    var vector = GeomUtil.SubXYZ(line.GetEndPoint(1), line.GetEndPoint(0));
+                    var vector = GeomUtil.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
                     vectors.Add(vector);
                 }
 
                 if (GeomUtil.IsEqual(point, line.GetEndPoint(1)))
                 {
-                    var vector = GeomUtil.SubXYZ(line.GetEndPoint(0), line.GetEndPoint(1));
+                    var vector = GeomUtil.SubXyz(line.GetEndPoint(0), line.GetEndPoint(1));
                     vectors.Add(vector);
                 }
             }
@@ -194,7 +162,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
             var points = new List<XYZ>();
 
             // Get all points of the swept profile, and offset it in two related directions
-            foreach (var point in m_points)
+            foreach (var point in ProfilePoints)
             {
                 // Get two related directions
                 var directions = GetRelatedVectors(point);
@@ -226,7 +194,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
             if (null == sweptFace || 1 != sweptFace.EdgeLoops.Size) return false;
 
             // get the points of the swept face
-            foreach (var point in sweptFace.Triangulate().Vertices) m_points.Add(Transform(point));
+            foreach (var point in sweptFace.Triangulate().Vertices) ProfilePoints.Add(Transform(point));
 
             // get the edges of the swept face
             m_edges = ChangeEdgeToLine(sweptFace.EdgeLoops.get_Item(0));
@@ -256,7 +224,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 // some edges should be paralleled with the driving line,
                 // and the start point of that edge should be the wanted point
-                var edgeVector = GeomUtil.SubXYZ(second, first);
+                var edgeVector = GeomUtil.SubXyz(second, first);
                 if (GeomUtil.IsSameDirection(edgeVector, m_drivingVector))
                 {
                     refPoint = first;

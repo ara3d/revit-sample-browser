@@ -38,9 +38,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
             labelYCoordUnit.Text = unit;
 
             // Set length values
-            textBoxArcSpacing.Text = Unit.CovertFromAPI(m_data.Unit, 10).ToString();
+            textBoxArcSpacing.Text = Unit.CovertFromApi(m_data.Unit, 10).ToString();
             textBoxArcFirstRadius.Text = textBoxArcSpacing.Text;
-            textBoxLineFirstDistance.Text = Unit.CovertFromAPI(m_data.Unit, 8).ToString();
+            textBoxLineFirstDistance.Text = Unit.CovertFromApi(m_data.Unit, 8).ToString();
 
             radioButton360.Checked = true;
             radioButtonCustomize.Checked = false;
@@ -54,11 +54,11 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
         private void radioButtonCustomize_CheckedChanged(object sender, EventArgs e)
         {
-            var IsCustomize = radioButtonCustomize.Checked;
-            labelStartDegree.Enabled = IsCustomize;
-            textBoxStartDegree.Enabled = IsCustomize;
-            labelEndDegree.Enabled = IsCustomize;
-            textBoxEndDegree.Enabled = IsCustomize;
+            var isCustomize = radioButtonCustomize.Checked;
+            labelStartDegree.Enabled = isCustomize;
+            textBoxStartDegree.Enabled = isCustomize;
+            labelEndDegree.Enabled = isCustomize;
+            textBoxEndDegree.Enabled = isCustomize;
         }
 
         private void radioButton360_MouseClick(object sender, MouseEventArgs e)
@@ -81,18 +81,18 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         private void SetData()
         {
-            m_data.XOrigin = Unit.CovertToAPI(Convert.ToDouble(textBoxXCoord.Text), m_data.Unit);
-            m_data.YOrigin = Unit.CovertToAPI(Convert.ToDouble(textBoxYCoord.Text), m_data.Unit);
+            m_data.XOrigin = Unit.CovertToApi(Convert.ToDouble(textBoxXCoord.Text), m_data.Unit);
+            m_data.YOrigin = Unit.CovertToApi(Convert.ToDouble(textBoxYCoord.Text), m_data.Unit);
 
             if (radioButton360.Checked)
             {
                 m_data.StartDegree = 0;
-                m_data.EndDegree = 2 * Values.PI;
+                m_data.EndDegree = 2 * Values.Pi;
             }
             else
             {
-                m_data.StartDegree = Convert.ToDouble(textBoxStartDegree.Text) * Values.DEGTORAD;
-                m_data.EndDegree = Convert.ToDouble(textBoxEndDegree.Text) * Values.DEGTORAD;
+                m_data.StartDegree = Convert.ToDouble(textBoxStartDegree.Text) * Values.Degtorad;
+                m_data.EndDegree = Convert.ToDouble(textBoxEndDegree.Text) * Values.Degtorad;
             }
 
             m_data.ArcNumber = Convert.ToUInt32(textBoxArcNumber.Text);
@@ -100,8 +100,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             if (Convert.ToUInt32(textBoxArcNumber.Text) != 0)
             {
-                m_data.ArcSpacing = Unit.CovertToAPI(Convert.ToDouble(textBoxArcSpacing.Text), m_data.Unit);
-                m_data.ArcFirstRadius = Unit.CovertToAPI(Convert.ToDouble(textBoxArcFirstRadius.Text), m_data.Unit);
+                m_data.ArcSpacing = Unit.CovertToApi(Convert.ToDouble(textBoxArcSpacing.Text), m_data.Unit);
+                m_data.ArcFirstRadius = Unit.CovertToApi(Convert.ToDouble(textBoxArcFirstRadius.Text), m_data.Unit);
                 m_data.ArcFirstBubbleLoc = (BubbleLocation)comboBoxArcBubbleLocation.SelectedIndex;
                 m_data.ArcFirstLabel = textBoxArcFirstLabel.Text;
             }
@@ -109,7 +109,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             if (Convert.ToUInt32(textBoxLineNumber.Text) != 0)
             {
                 m_data.LineFirstDistance =
-                    Unit.CovertToAPI(Convert.ToDouble(textBoxLineFirstDistance.Text), m_data.Unit);
+                    Unit.CovertToApi(Convert.ToDouble(textBoxLineFirstDistance.Text), m_data.Unit);
                 m_data.LineFirstBubbleLoc = (BubbleLocation)comboBoxLineBubbleLocation.SelectedIndex;
                 m_data.LineFirstLabel = textBoxLineFirstLabel.Text;
             }

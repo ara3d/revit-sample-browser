@@ -22,22 +22,22 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
     public class Application : IExternalApplication
     {
         // class instance
-        internal static Application thisApp;
+        internal static Application ThisApp;
 
         // ModelessForm instance
-        private ModelessForm m_MyForm;
+        private ModelessForm m_myForm;
 
         public Result OnShutdown(UIControlledApplication application)
         {
-            if (m_MyForm != null && m_MyForm.Visible) m_MyForm.Close();
+            if (m_myForm != null && m_myForm.Visible) m_myForm.Close();
 
             return Result.Succeeded;
         }
 
         public Result OnStartup(UIControlledApplication application)
         {
-            m_MyForm = null; // no dialog needed yet; the command will bring it
-            thisApp = this; // static access to this application instance
+            m_myForm = null; // no dialog needed yet; the command will bring it
+            ThisApp = this; // static access to this application instance
 
             return Result.Succeeded;
         }
@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         public void ShowForm(UIApplication uiapp)
         {
             // If we do not have a dialog yet, create and show it
-            if (m_MyForm == null || m_MyForm.IsDisposed)
+            if (m_myForm == null || m_myForm.IsDisposed)
             {
                 // A new handler to handle request posting by the dialog
                 var handler = new RequestHandler();
@@ -61,8 +61,8 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
 
                 // We give the objects to the new dialog;
                 // The dialog becomes the owner responsible fore disposing them, eventually.
-                m_MyForm = new ModelessForm(exEvent, handler);
-                m_MyForm.Show();
+                m_myForm = new ModelessForm(exEvent, handler);
+                m_myForm.Show();
             }
         }
 
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         /// </summary>
         public void WakeFormUp()
         {
-            m_MyForm?.WakeUp();
+            m_myForm?.WakeUp();
         }
     }
 }

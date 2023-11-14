@@ -23,8 +23,8 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
             InitializeComponent();
 
             radioButtonFace.Checked = true;
-            FIPlacementOptions = new PromptForFamilyInstancePlacementOptions();
-            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
+            FiPlacementOptions = new PromptForFamilyInstancePlacementOptions();
+            FiPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();
@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <summary>
         ///     The family instance placement options for placement.
         /// </summary>
-        public PromptForFamilyInstancePlacementOptions FIPlacementOptions { get; }
+        public PromptForFamilyInstancePlacementOptions FiPlacementOptions { get; }
 
         /// <summary>
         ///     The family symbol for placement.
@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonDefault_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.Default;
+            FiPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.Default;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonFace_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
+            FiPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonVF_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnVerticalFace;
+            FiPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnVerticalFace;
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonWP_CheckedChanged(object sender, EventArgs e)
         {
-            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnWorkPlane;
+            FiPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnWorkPlane;
         }
 
         /// <summary>

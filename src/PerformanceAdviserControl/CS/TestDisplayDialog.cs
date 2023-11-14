@@ -11,7 +11,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
     public partial class TestDisplayDialog : Form
     {
         private readonly Document m_document;
-        private readonly PerformanceAdviser m_PerformanceAdviser;
+        private readonly PerformanceAdviser m_performanceAdviser;
 
         /// <summary>
         ///     Basic setup -- stores references to the active document and PerformanceAdviser for later use
@@ -20,7 +20,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// <param name="document">The active document</param>
         public TestDisplayDialog(PerformanceAdviser performanceAdviser, Document document)
         {
-            m_PerformanceAdviser = performanceAdviser;
+            m_performanceAdviser = performanceAdviser;
             m_document = document;
             InitializeComponent();
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -41,14 +41,14 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             foreach (DataGridViewRow row in testData.Rows)
             {
                 var isEnabled = (bool)row.Cells[0].Value;
-                m_PerformanceAdviser.SetRuleEnabled(testIndex, isEnabled);
-                Debug.WriteLine("Test Name: " + m_PerformanceAdviser.GetRuleName(testIndex) + " Enabled? " +
-                                !m_PerformanceAdviser.IsRuleEnabled(testIndex));
+                m_performanceAdviser.SetRuleEnabled(testIndex, isEnabled);
+                Debug.WriteLine("Test Name: " + m_performanceAdviser.GetRuleName(testIndex) + " Enabled? " +
+                                !m_performanceAdviser.IsRuleEnabled(testIndex));
                 testIndex++;
             }
 
             //Run all rules that are currently enabled and report errors
-            var failures = m_PerformanceAdviser.ExecuteAllRules(m_document);
+            var failures = m_performanceAdviser.ExecuteAllRules(m_document);
             foreach (var fm in failures)
             {
                 var tFailure = new Transaction(m_document, "Failure Reporting Transaction");

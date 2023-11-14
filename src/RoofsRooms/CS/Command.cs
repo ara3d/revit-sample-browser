@@ -50,13 +50,13 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                 if (0 == commandData.JournalData.Count) TaskDialog.Show("Roofs Rooms", message);
 
                 // Insert result to journal data for regression purpose.
-                const string DataKey = "Results";
-                if (!commandData.JournalData.ContainsKey(DataKey))
+                const string dataKey = "Results";
+                if (!commandData.JournalData.ContainsKey(dataKey))
                     // In normal/recording mode 
-                    commandData.JournalData.Add(DataKey, message);
+                    commandData.JournalData.Add(dataKey, message);
                 else
                     // In regression/replaying mode
-                    commandData.JournalData[DataKey] = message;
+                    commandData.JournalData[dataKey] = message;
 
                 return Result.Succeeded;
             }

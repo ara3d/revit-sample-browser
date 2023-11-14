@@ -15,18 +15,18 @@ namespace Revit.SDK.Samples.UIAPI.CS
     /// </summary>
     public partial class UserControl3 : UserControl
     {
-        private readonly string _name;
+        private readonly string m_name;
 
         public UserControl3(string name)
         {
             InitializeComponent();
 
-            _name = name;
+            m_name = name;
 
-            image1.Source = getBitmapAsImageSource(Properties.Resources.autodesk);
+            image1.Source = GetBitmapAsImageSource(Properties.Resources.autodesk);
         }
 
-        public static ImageSource getBitmapAsImageSource(Bitmap bitmap)
+        public static ImageSource GetBitmapAsImageSource(Bitmap bitmap)
         {
             var hBitmap = bitmap.GetHbitmap();
             return Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty,
@@ -35,17 +35,17 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
         public void OnOK()
         {
-            TaskDialog.Show("OK", _name);
+            TaskDialog.Show("OK", m_name);
         }
 
         public void OnCancel()
         {
-            TaskDialog.Show("OnCancel", _name);
+            TaskDialog.Show("OnCancel", m_name);
         }
 
         public void OnRestoreDefaults()
         {
-            TaskDialog.Show("OnRestoreDefaults", _name);
+            TaskDialog.Show("OnRestoreDefaults", m_name);
         }
     }
 }

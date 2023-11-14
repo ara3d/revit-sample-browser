@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         public const string ShowPage = "Show Page";
         public const string HidePage = "Hide Page";
 
-        public static DockablePaneId sm_UserDockablePaneId =
+        public static DockablePaneId SmUserDockablePaneId =
             new DockablePaneId(new Guid("{3BAFCF52-AC5C-4CF8-B1CB-D0B1D0E90237}"));
     }
 }

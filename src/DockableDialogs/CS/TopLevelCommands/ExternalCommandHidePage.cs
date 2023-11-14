@@ -16,8 +16,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         {
             try
             {
-                ThisApplication.thisApp.GetDockableAPIUtility().Initialize(commandData.Application);
-                ThisApplication.thisApp.SetWindowVisibility(commandData.Application, false);
+                ThisApplication.ThisApp.GetDockableApiUtility().Initialize(commandData.Application);
+                ThisApplication.ThisApp.SetWindowVisibility(commandData.Application, false);
             }
             catch (Exception)
             {

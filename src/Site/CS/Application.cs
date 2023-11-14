@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <summary>
         ///     The path to this add-in assembly.
         /// </summary>
-        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -50,35 +50,35 @@ namespace Revit.SDK.Samples.Site.CS
         {
             var rp = application.CreateRibbonPanel("Site");
             var addPond = new PushButtonData("Site_Add_Pond", "Add Pond",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(SiteAddRetainingPondCommand).FullName);
             SetIconsForPushButtonData(addPond, Resources.AddPond);
             _ = rp.AddItem(addPond) as PushButton;
 
             var moveRegion = new PushButtonData("Site_Move_Region", "Move Region",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(SiteMoveRegionAndPointsCommand).FullName);
             SetIconsForPushButtonData(moveRegion, Resources.MoveRegion);
 
             var deleteRegion = new PushButtonData("Site_Delete_Region", "Delete Region",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(SiteDeleteRegionAndPointsCommand).FullName);
             SetIconsForPushButtonData(deleteRegion, Resources.DeleteRegion);
 
             rp.AddStackedItems(moveRegion, deleteRegion);
 
             var raiseTerrain = new PushButtonData("Site_Raise_Terrain", "Raise Terrain",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(SiteRaiseTerrainInRegionCommand).FullName);
             SetIconsForPushButtonData(raiseTerrain, Resources.RaiseTerrain);
 
             var lowerTerrain = new PushButtonData("Site_Lower_Terrain", "Lower Terrain",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(SiteLowerTerrainInRegionCommand).FullName);
             SetIconsForPushButtonData(lowerTerrain, Resources.LowerTerrain);
 
             var normalizeTerrain = new PushButtonData("Site_Normalize_Terrain", "Normalize Terrain",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(SiteNormalizeTerrainInRegionCommand).FullName);
             SetIconsForPushButtonData(normalizeTerrain, Resources.SiteNormalize);
 

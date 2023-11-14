@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.SlabProperties.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private const double PI = 3.1415926535879;
+        private const double Pi = 3.1415926535879;
         private const int Degree = 180;
         private const int ToMillimeter = 1000;
         private const double ToMetricThickness = 0.3048; // unit for changing inch to meter
@@ -219,7 +219,7 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         {
             var spanDirectionDegree =
                 // Change "radian" to "degree".
-                spanDirection / PI * Degree;
+                spanDirection / Pi * Degree;
 
             // If the absolute value very small, we consider it to be zero
             if (Math.Abs(spanDirectionDegree) < 1E-12) spanDirectionDegree = 0.0;

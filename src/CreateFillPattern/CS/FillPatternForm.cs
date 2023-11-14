@@ -17,20 +17,20 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
         /// <summary>
         ///     Current revit document
         /// </summary>
-        private readonly Document doc;
+        private readonly Document m_doc;
 
         /// <summary>
         ///     Current UI document
         /// </summary>
-        private readonly UIDocument docUI;
+        private readonly UIDocument m_docUi;
 
         /// <summary>
         ///     Constructor
         /// </summary>
         public PatternForm(ExternalCommandData commandData)
         {
-            docUI = commandData.Application.ActiveUIDocument;
-            doc = commandData.Application.ActiveUIDocument.Document;
+            m_docUi = commandData.Application.ActiveUIDocument;
+            m_doc = commandData.Application.ActiveUIDocument.Document;
             InitializeComponent();
 
             IniTreeView();
@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
         private List<T> GetAllElements<T>()
         {
             var elementFilter = new ElementClassFilter(typeof(T));
-            var collector = new FilteredElementCollector(doc);
+            var collector = new FilteredElementCollector(m_doc);
             collector = collector.WherePasses(elementFilter);
             return collector.Cast<T>().ToList();
         }
@@ -101,7 +101,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
         private FillPatternElement GetOrCreateFacePattern(string patternName)
         {
             var target = FillPatternTarget.Model;
-            var fillPatternElement = FillPatternElement.GetFillPatternElementByName(doc, target, patternName);
+            var fillPatternElement = FillPatternElement.GetFillPatternElementByName(m_doc, target, patternName);
 
             if (fillPatternElement == null)
             {
@@ -109,9 +109,9 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
                 var fillPattern = new FillPattern(patternName, target,
                     FillPatternHostOrientation.ToView, 0.5, 0.5, 0.5);
 
-                var trans = new Transaction(doc);
+                var trans = new Transaction(m_doc);
                 trans.Start("Create a fillpattern element");
-                fillPatternElement = FillPatternElement.Create(doc, fillPattern);
+                fillPatternElement = FillPatternElement.Create(m_doc, fillPattern);
                 trans.Commit();
             }
 
@@ -126,7 +126,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
         private FillPatternElement GetOrCreateComplexFacePattern(string patternName)
         {
             var target = FillPatternTarget.Model;
-            var fillPatternElement = FillPatternElement.GetFillPatternElementByName(doc, target, patternName);
+            var fillPatternElement = FillPatternElement.GetFillPatternElementByName(m_doc, target, patternName);
 
             if (fillPatternElement == null)
             {
@@ -148,9 +148,9 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
                 fillPattern.SetFillGrids(grids);
 
                 // Create the fill pattern element. Now document is modified; transaction is needed
-                var t = new Transaction(doc, "Create fill pattern");
+                var t = new Transaction(m_doc, "Create fill pattern");
                 t.Start();
-                fillPatternElement = FillPatternElement.Create(doc, fillPattern);
+                fillPatternElement = FillPatternElement.Create(m_doc, fillPattern);
 
                 t.Commit();
             }
@@ -205,9 +205,9 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             var linePattern = new LinePattern(patternName);
             linePattern.SetSegments(lstSegments);
 
-            var trans = new Transaction(doc);
+            var trans = new Transaction(m_doc);
             trans.Start("Create a linepattern element");
-            var linePatternElement = LinePatternElement.Create(doc, linePattern);
+            var linePatternElement = LinePatternElement.Create(m_doc, linePattern);
             trans.Commit();
             return linePatternElement;
         }
@@ -229,8 +229,8 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             }
 
             var mySurfacePattern = GetOrCreateFacePattern("MySurfacePattern");
-            var targetMaterial = doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
-            var trans = new Transaction(doc);
+            var targetMaterial = m_doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
+            var trans = new Transaction(m_doc);
             trans.Start("Apply fillpattern to surface");
             targetMaterial.SurfaceForegroundPatternId = mySurfacePattern.Id;
             trans.Commit();
@@ -257,7 +257,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             var myLinePatternElement = CreateLinePatternElement("MyLinePattern");
             foreach (var typeId in lstGridTypeIds)
             {
-                var gridType = doc.GetElement(typeId);
+                var gridType = m_doc.GetElement(typeId);
                 //set the parameter value of End Segment Pattern
                 SetParameter("End Segment Pattern", myLinePatternElement.Id, gridType);
             }
@@ -276,7 +276,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             foreach (Parameter param in elem.Parameters)
                 if (param.Definition.Name == paramName)
                 {
-                    var trans = new Transaction(doc);
+                    var trans = new Transaction(m_doc);
                     trans.Start("Set parameter value");
                     param.Set(eid);
                     trans.Commit();
@@ -309,8 +309,8 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
 
             var lstPatterns = GetAllElements<FillPatternElement>();
             var patternIndex = int.Parse(treeViewFillPattern.SelectedNode.Name);
-            var targetMaterial = doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
-            var trans = new Transaction(doc);
+            var targetMaterial = m_doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
+            var trans = new Transaction(m_doc);
             trans.Start("Apply fillpattern to surface");
             targetMaterial.SurfaceForegroundPatternId = lstPatterns[patternIndex].Id;
             trans.Commit();
@@ -325,9 +325,9 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
         private Wall GetSelectedWall()
         {
             Wall wall = null;
-            foreach (var elemId in docUI.Selection.GetElementIds())
+            foreach (var elemId in m_docUi.Selection.GetElementIds())
             {
-                var elem = doc.GetElement(elemId);
+                var elem = m_doc.GetElement(elemId);
                 wall = elem as Wall;
                 if (wall != null)
                     return wall;
@@ -361,9 +361,9 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
 
             var lstPatterns = GetAllElements<FillPatternElement>();
             var patternIndex = int.Parse(treeViewFillPattern.SelectedNode.Name);
-            var targetMaterial = doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
+            var targetMaterial = m_doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
 
-            var trans = new Transaction(doc);
+            var trans = new Transaction(m_doc);
             trans.Start("Apply fillpattern to cutting surface");
             targetMaterial.CutForegroundPatternId = lstPatterns[patternIndex].Id;
             trans.Commit();
@@ -398,7 +398,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             var eid = ElementId.Parse(treeViewLinePattern.SelectedNode.Name);
             foreach (var typeId in lstGridTypeIds)
             {
-                var gridType = doc.GetElement(typeId);
+                var gridType = m_doc.GetElement(typeId);
                 //set the parameter value of End Segment Pattern
                 SetParameter("End Segment Pattern", eid, gridType);
             }
@@ -412,9 +412,9 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
         /// <param name="lstGridTypeIds">Selected GridType Ids</param>
         private void GetSelectedGridTypeIds(List<ElementId> lstGridTypeIds)
         {
-            foreach (var elemId in docUI.Selection.GetElementIds())
+            foreach (var elemId in m_docUi.Selection.GetElementIds())
             {
-                var elem = doc.GetElement(elemId);
+                var elem = m_doc.GetElement(elemId);
                 if (elem is Grid grid)
                 {
                     var gridTypeId = grid.GetTypeId();
@@ -441,8 +441,8 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             }
 
             var mySurfacePattern = GetOrCreateComplexFacePattern("MyComplexPattern");
-            var targetMaterial = doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
-            var trans = new Transaction(doc);
+            var targetMaterial = m_doc.GetElement(targetWall.GetMaterialIds(false).First()) as Material;
+            var trans = new Transaction(m_doc);
             trans.Start("Apply complex fillpattern to surface");
             targetMaterial.SurfaceForegroundPatternId = mySurfacePattern.Id;
             trans.Commit();

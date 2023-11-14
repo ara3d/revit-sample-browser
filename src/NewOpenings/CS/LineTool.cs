@@ -9,14 +9,14 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw line
     /// </summary>
-    public class LineTool : ITool
+    public class LineTool : Tool
     {
         /// <summary>
         ///     Default constructor
         /// </summary>
         public LineTool()
         {
-            m_type = ToolType.Line;
+            Type = ToolType.Line;
         }
 
         /// <summary>
@@ -26,11 +26,11 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
-            if (m_points.Count != 0)
+            if (Points.Count != 0)
             {
-                graphic.DrawLine(m_backGroundPen, m_points[m_points.Count - 1], m_preMovePoint);
-                m_preMovePoint = e.Location;
-                graphic.DrawLine(m_foreGroundPen, m_points[m_points.Count - 1], e.Location);
+                graphic.DrawLine(BackGroundPen, Points[Points.Count - 1], PreMovePoint);
+                PreMovePoint = e.Location;
+                graphic.DrawLine(ForeGroundPen, Points[Points.Count - 1], e.Location);
             }
         }
 
@@ -43,12 +43,12 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             if (e.Button == MouseButtons.Left)
             {
-                m_preMovePoint = e.Location;
-                m_points.Add(e.Location);
+                PreMovePoint = e.Location;
+                Points.Add(e.Location);
 
-                if (m_points.Count >= 2)
-                    graphic.DrawLine(m_foreGroundPen, m_points[m_points.Count - 2],
-                        m_points[m_points.Count - 1]);
+                if (Points.Count >= 2)
+                    graphic.DrawLine(ForeGroundPen, Points[Points.Count - 2],
+                        Points[Points.Count - 1]);
             }
         }
 
@@ -59,14 +59,14 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e">Mouse event argument</param>
         public override void OnRightMouseClick(Graphics graphic, MouseEventArgs e)
         {
-            if (MouseButtons.Right == e.Button && m_points.Count > 2)
+            if (MouseButtons.Right == e.Button && Points.Count > 2)
             {
-                var line = new List<Point>(m_points);
-                m_lines.Add(line);
+                var line = new List<Point>(Points);
+                Lines.Add(line);
 
-                graphic.DrawLine(m_foreGroundPen, m_points[m_points.Count - 1], m_points[0]);
-                graphic.DrawLine(m_backGroundPen, m_points[m_points.Count - 1], m_preMovePoint);
-                m_points.Clear();
+                graphic.DrawLine(ForeGroundPen, Points[Points.Count - 1], Points[0]);
+                graphic.DrawLine(BackGroundPen, Points[Points.Count - 1], PreMovePoint);
+                Points.Clear();
             }
         }
 
@@ -76,11 +76,11 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         public override void Draw(Graphics graphic)
         {
-            foreach (var line in m_lines)
+            foreach (var line in Lines)
             {
-                for (var i = 0; i < line.Count - 1; i++) graphic.DrawLine(m_foreGroundPen, line[i], line[i + 1]);
+                for (var i = 0; i < line.Count - 1; i++) graphic.DrawLine(ForeGroundPen, line[i], line[i + 1]);
                 //close the line
-                graphic.DrawLine(m_foreGroundPen, line[line.Count - 1], line[0]);
+                graphic.DrawLine(ForeGroundPen, line[line.Count - 1], line[0]);
             }
         }
     }

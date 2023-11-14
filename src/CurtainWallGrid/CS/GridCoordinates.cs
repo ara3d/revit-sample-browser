@@ -184,7 +184,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             var resultPoints = new List<PointF>();
 
             //get the max and min point on the face
-            foreach (var point in Drawing.Geometry.GridVertexesXYZ)
+            foreach (var point in Drawing.Geometry.GridVertexesXyz)
             {
                 var v = new Vector4(point);
                 var v1 = inverseMatrix.Transform(v);
@@ -220,9 +220,9 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </returns>
         private Matrix4 GetTo2DMatrix()
         {
-            var startXYZ = m_myDocument.WallGeometry.StartXYZ;
-            var endXYZ = m_myDocument.WallGeometry.EndXYZ;
-            var sub = endXYZ - startXYZ;
+            var startXyz = m_myDocument.WallGeometry.StartXyz;
+            var endXyz = m_myDocument.WallGeometry.EndXyz;
+            var sub = endXyz - startXyz;
             var xAxis = new Vector4(new XYZ(sub.X, sub.Y, sub.Z));
             xAxis.Normalize();
             //because in the windows UI, Y axis is downward
@@ -230,7 +230,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             yAxis.Normalize();
             var zAxis = Vector4.CrossProduct(xAxis, yAxis);
             zAxis.Normalize();
-            var origin = new Vector4(Drawing.Geometry.GridVertexesXYZ[0]);
+            var origin = new Vector4(Drawing.Geometry.GridVertexesXyz[0]);
 
             return new Matrix4(xAxis, yAxis, zAxis, origin);
         }

@@ -91,17 +91,17 @@ namespace Revit.SDK.Samples.GridCreation.CS
             var failureReasons = new ArrayList();
             if (CreateXGrids(ref failureReasons) + CreateYGrids(ref failureReasons) != 0)
             {
-                var failureReason = resManager.GetString("FailedToCreateGrids");
+                var failureReason = ResManager.GetString("FailedToCreateGrids");
                 if (failureReasons.Count != 0)
                 {
-                    failureReason += resManager.GetString("Reasons") + "\r";
+                    failureReason += ResManager.GetString("Reasons") + "\r";
                     failureReason += "\r";
                     foreach (string reason in failureReasons) failureReason += reason + "\r";
                 }
 
-                failureReason += "\r" + resManager.GetString("AjustValues");
+                failureReason += "\r" + ResManager.GetString("AjustValues");
 
-                ShowMessage(failureReason, resManager.GetString("FailureCaptionCreateGrids"));
+                ShowMessage(failureReason, ResManager.GetString("FailureCaptionCreateGrids"));
             }
         }
 
@@ -148,7 +148,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                     }
                     catch (ArgumentException)
                     {
-                        var failureReason = resManager.GetString("SpacingsTooSmall");
+                        var failureReason = ResManager.GetString("SpacingsTooSmall");
                         if (!failureReasons.Contains(failureReason)) failureReasons.Add(failureReason);
                         errorCount++;
                         continue;
@@ -167,8 +167,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         }
                         catch (ArgumentException)
                         {
-                            ShowMessage(resManager.GetString("FailedToSetLabel") + XFirstLabel + "!",
-                                resManager.GetString("FailureCaptionSetLabel"));
+                            ShowMessage(ResManager.GetString("FailedToSetLabel") + XFirstLabel + "!",
+                                ResManager.GetString("FailureCaptionSetLabel"));
                         }
                     }
                     else
@@ -231,7 +231,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                     }
                     catch (ArgumentException)
                     {
-                        var failureReason = resManager.GetString("SpacingsTooSmall");
+                        var failureReason = ResManager.GetString("SpacingsTooSmall");
                         if (!failureReasons.Contains(failureReason)) failureReasons.Add(failureReason);
                         errorCount++;
                         continue;
@@ -250,8 +250,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         }
                         catch (ArgumentException)
                         {
-                            ShowMessage(resManager.GetString("FailedToSetLabel") + YFirstLabel + "!",
-                                resManager.GetString("FailureCaptionSetLabel"));
+                            ShowMessage(ResManager.GetString("FailedToSetLabel") + YFirstLabel + "!",
+                                ResManager.GetString("FailureCaptionSetLabel"));
                         }
                     }
                     else

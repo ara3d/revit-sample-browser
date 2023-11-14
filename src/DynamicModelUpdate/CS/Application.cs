@@ -20,12 +20,12 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
     public class AssociativeSectionUpdater : IExternalCommand
     {
         // application's private data
-        private static SectionUpdater m_sectionUpdater;
+        private static SectionUpdater _sectionUpdater;
 
-        private static readonly List<ElementId> idsToWatch = new List<ElementId>();
-        private static ElementId m_oldSectionId = ElementId.InvalidElementId;
+        private static readonly List<ElementId> IdsToWatch = new List<ElementId>();
+        private static ElementId _oldSectionId = ElementId.InvalidElementId;
         private Document m_document;
-        private UIDocument m_documentUI;
+        private UIDocument m_documentUi;
         private AddInId m_thisAppId;
 
         Result IExternalCommand.Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -33,17 +33,17 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
             try
             {
                 m_document = commandData.Application.ActiveUIDocument.Document;
-                m_documentUI = commandData.Application.ActiveUIDocument;
+                m_documentUi = commandData.Application.ActiveUIDocument;
                 m_thisAppId = commandData.Application.ActiveAddInId;
 
                 // creating and registering the updater for the document.
-                if (m_sectionUpdater == null)
+                if (_sectionUpdater == null)
                     using (var tran = new Transaction(m_document, "Register Section Updater"))
                     {
                         tran.Start();
 
-                        m_sectionUpdater = new SectionUpdater(m_thisAppId);
-                        m_sectionUpdater.Register(m_document);
+                        _sectionUpdater = new SectionUpdater(m_thisAppId);
+                        _sectionUpdater.Register(m_document);
 
                         tran.Commit();
                     }
@@ -55,14 +55,14 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                 try
                 {
                     var referSection =
-                        m_documentUI.Selection.PickObject(ObjectType.Element, "Please select a section view.");
+                        m_documentUi.Selection.PickObject(ObjectType.Element, "Please select a section view.");
                     if (referSection != null)
                     {
                         var sectionElem = m_document.GetElement(referSection);
                         if (sectionElem != null) sectionElement = sectionElem;
                     }
 
-                    var referModel = m_documentUI.Selection.PickObject(ObjectType.Element,
+                    var referModel = m_documentUi.Selection.PickObject(ObjectType.Element,
                         "Please select a window to associated with the section view.");
                     if (referModel != null)
                     {
@@ -102,13 +102,13 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                 var sectionId = sectionViews[0].Id;
 
                 // Associated the section view to the window, and add a trigger for it.
-                if (!idsToWatch.Contains(modelId) || m_oldSectionId != sectionId)
+                if (!IdsToWatch.Contains(modelId) || _oldSectionId != sectionId)
                 {
-                    idsToWatch.Clear();
-                    idsToWatch.Add(modelId);
-                    m_oldSectionId = sectionId;
-                    UpdaterRegistry.RemoveAllTriggers(m_sectionUpdater.GetUpdaterId());
-                    m_sectionUpdater.AddTriggerForUpdater(m_document, idsToWatch, sectionId, sectionElement);
+                    IdsToWatch.Clear();
+                    IdsToWatch.Add(modelId);
+                    _oldSectionId = sectionId;
+                    UpdaterRegistry.RemoveAllTriggers(_sectionUpdater.GetUpdaterId());
+                    _sectionUpdater.AddTriggerForUpdater(m_document, IdsToWatch, sectionId, sectionElement);
                     TaskDialog.Show("Message",
                         "The ViewSection id: " + sectionId + " has been associated to the window id: " + modelId +
                         "\n You can try to move or modify the window to see how the updater works.");
@@ -136,13 +136,13 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
         /// <param name="args">The DocumentClosing event args.</param>
         private void UnregisterSectionUpdaterOnClose(object source, DocumentClosingEventArgs args)
         {
-            idsToWatch.Clear();
-            m_oldSectionId = ElementId.InvalidElementId;
+            IdsToWatch.Clear();
+            _oldSectionId = ElementId.InvalidElementId;
 
-            if (m_sectionUpdater != null)
+            if (_sectionUpdater != null)
             {
-                UpdaterRegistry.UnregisterUpdater(m_sectionUpdater.GetUpdaterId());
-                m_sectionUpdater = null;
+                UpdaterRegistry.UnregisterUpdater(_sectionUpdater.GetUpdaterId());
+                _sectionUpdater = null;
             }
         }
     }

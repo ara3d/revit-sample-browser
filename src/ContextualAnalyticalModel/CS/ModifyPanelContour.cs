@@ -38,7 +38,7 @@ namespace ContextualAnalyticalModel
                 var document = commandData.Application.ActiveUIDocument.Document;
 
                 //create analytical panel
-                var analyticalPanel = CreateAnalyticalPanel.CreateAMPanel(document);
+                var analyticalPanel = CreateAnalyticalPanel.CreateAmPanel(document);
                 if (analyticalPanel != null)
                 {
                     // Start a sketch edit scope

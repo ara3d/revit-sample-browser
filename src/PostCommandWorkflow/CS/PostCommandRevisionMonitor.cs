@@ -28,22 +28,22 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <summary>
         ///     The binding to the revision command.
         /// </summary>
-        private AddInCommandBinding binding;
+        private AddInCommandBinding m_binding;
 
         /// <summary>
         ///     The document.
         /// </summary>
-        private readonly Document document;
+        private readonly Document m_document;
 
         /// <summary>
         ///     The handle to the external event instance to be invoked after the revision editing completes.
         /// </summary>
-        private ExternalEvent externalEvent;
+        private ExternalEvent m_externalEvent;
 
         /// <summary>
         ///     Storage to remember the number of revisions when last checked.
         /// </summary>
-        private int storedRevisionCount;
+        private int m_storedRevisionCount;
 
         /// <summary>
         ///     Constructs a new revision monitor for the given document.
@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <param name="doc">The document.</param>
         public PostCommandRevisionMonitor(Document doc)
         {
-            document = doc;
+            m_document = doc;
         }
 
         /// <summary>
@@ -60,10 +60,10 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         public void Activate()
         {
             // Save the number of revisions as an initial count.
-            storedRevisionCount = GetRevisionCount(document);
+            m_storedRevisionCount = GetRevisionCount(m_document);
 
             // Setup event for saving.
-            document.DocumentSaving += OnSavingPromptForRevisions;
+            m_document.DocumentSaving += OnSavingPromptForRevisions;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         public void Deactivate()
         {
             // Remove the event for saving.
-            document.DocumentSaving -= OnSavingPromptForRevisions;
+            m_document.DocumentSaving -= OnSavingPromptForRevisions;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             {
                 // Compare number of revisions with saved count
                 var revisionCount = GetRevisionCount(doc);
-                if (revisionCount <= storedRevisionCount)
+                if (revisionCount <= m_storedRevisionCount)
                 {
                     // Show dialog with explanation and options
                     var td = new TaskDialog("Revisions not created.");
@@ -136,7 +136,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
                 }
                 else
                 {
-                    storedRevisionCount = revisionCount;
+                    m_storedRevisionCount = revisionCount;
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <param name="args"></param>
         private void ReactToRevisionsAndSchedulesCommand(object sender, BeforeExecutedEventArgs args)
         {
-            externalEvent?.Raise();
+            m_externalEvent?.Raise();
         }
 
         /// <summary>
@@ -170,12 +170,12 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         private void PromptToEditRevisionsAndResave(UIApplication application)
         {
             // Setup external event to be notified when activity is done
-            externalEvent = ExternalEvent.Create(new PostCommandRevisionMonitorEvent(this));
+            m_externalEvent = ExternalEvent.Create(new PostCommandRevisionMonitorEvent(this));
 
             // Setup event to be notified when revisions command starts (this is a good place to raise this external event)
             var id = RevitCommandId.LookupPostableCommandId(PostableCommand.SheetIssuesOrRevisions);
-            if (binding == null) binding = application.CreateAddInCommandBinding(id);
-            binding.BeforeExecuted += ReactToRevisionsAndSchedulesCommand;
+            if (m_binding == null) m_binding = application.CreateAddInCommandBinding(id);
+            m_binding.BeforeExecuted += ReactToRevisionsAndSchedulesCommand;
 
             // Post the revision editing command
             application.PostCommand(id);
@@ -191,9 +191,9 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             // Remove dialog box showing
             uiApp.DialogBoxShowing -= HideDocumentNotSaved;
 
-            if (binding != null)
-                binding.BeforeExecuted -= ReactToRevisionsAndSchedulesCommand;
-            externalEvent = null;
+            if (m_binding != null)
+                m_binding.BeforeExecuted -= ReactToRevisionsAndSchedulesCommand;
+            m_externalEvent = null;
 
             // Repost the save command
             uiApp.PostCommand(RevitCommandId.LookupPostableCommandId(PostableCommand.Save));
@@ -221,7 +221,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             /// <summary>
             ///     Handle to the revision monitor.
             /// </summary>
-            private readonly PostCommandRevisionMonitor monitor;
+            private readonly PostCommandRevisionMonitor m_monitor;
 
             /// <summary>
             ///     The constructor for the event instance.
@@ -229,7 +229,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             /// <param name="monitor">The instance of the command.</param>
             public PostCommandRevisionMonitorEvent(PostCommandRevisionMonitor monitor)
             {
-                this.monitor = monitor;
+                this.m_monitor = monitor;
             }
 
             /// <summary>
@@ -238,7 +238,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             /// <param name="app"></param>
             public void Execute(UIApplication app)
             {
-                monitor.CleanupAfterRevisionEdit(app);
+                m_monitor.CleanupAfterRevisionEdit(app);
             }
 
             /// <summary>

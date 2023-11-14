@@ -68,7 +68,7 @@ namespace Revit.SDK.Samples.Journaling.CS
             }
             else // if it doesn't have journal data
             {
-                if (!DisplayUI()) // display a form to collect some necessary data
+                if (!DisplayUi()) // display a form to collect some necessary data
                     return; // if the user cancels the form, only return
 
                 CreateWall(); // create a wall using the collected data
@@ -153,11 +153,11 @@ namespace Revit.SDK.Samples.Journaling.CS
 
             // Get the start point information from the journal
             dataValue = GetSpecialData(dataMap, "Start Point");
-            m_startPoint = StirngToXYZ(dataValue);
+            m_startPoint = StirngToXyz(dataValue);
 
             // Get the end point information from the journal
             dataValue = GetSpecialData(dataMap, "End Point");
-            m_endPoint = StirngToXYZ(dataValue);
+            m_endPoint = StirngToXyz(dataValue);
 
             // Create wall don't allow the start point equals end point
             if (m_startPoint.Equals(m_endPoint)) throw new InvalidDataException("Start point is equal to end point.");
@@ -168,7 +168,7 @@ namespace Revit.SDK.Samples.Journaling.CS
         ///     The information will be write into the journal
         /// </summary>
         /// <returns></returns>
-        private bool DisplayUI()
+        private bool DisplayUi()
         {
             // Display the form and allow the user to input some information for wall creation
             using (var displayForm = new JournalingForm(this))
@@ -212,8 +212,8 @@ namespace Revit.SDK.Samples.Journaling.CS
             // Begin to add the support data
             dataMap.Add("Wall Type Name", m_createType.Name); // add wall type name
             dataMap.Add("Level Id", m_createlevel.Id.ToString()); // add level id
-            dataMap.Add("Start Point", XYZToString(m_startPoint)); // add start point
-            dataMap.Add("End Point", XYZToString(m_endPoint)); // add end point
+            dataMap.Add("Start Point", XyzToString(m_startPoint)); // add start point
+            dataMap.Add("End Point", XyzToString(m_endPoint)); // add end point
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Revit.SDK.Samples.Journaling.CS
         /// </summary>
         /// <param name="pointString">a format string</param>
         /// <returns>the converted Autodesk.Revit.DB.XYZ point</returns>
-        private static XYZ StirngToXYZ(string pointString)
+        private static XYZ StirngToXyz(string pointString)
         {
             // Define some temporary data
             double x = 0; // Store the temporary x coordinate
@@ -256,7 +256,7 @@ namespace Revit.SDK.Samples.Journaling.CS
         /// </summary>
         /// <param name="point">A Autodesk.Revit.DB.XYZ point</param>
         /// <returns>The format string which store the information of the point</returns>
-        private static string XYZToString(XYZ point)
+        private static string XyzToString(XYZ point)
         {
             var pointString = "(" + point.X + "," + point.Y + ","
                               + point.Z + ")";

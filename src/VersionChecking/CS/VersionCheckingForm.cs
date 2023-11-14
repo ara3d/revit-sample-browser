@@ -9,7 +9,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
     /// <summary>
     ///     UI that display the version information
     /// </summary>
-    public partial class versionCheckingForm : Form
+    public partial class VersionCheckingForm : Form
     {
         // a instance of Command class
         private readonly Command m_dataBuffer;
@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
         ///     constructor
         /// </summary>
         /// <param name="dataBuffer">a instance of Command class</param>
-        public versionCheckingForm(Command dataBuffer)
+        public VersionCheckingForm(Command dataBuffer)
         {
             InitializeComponent();
             m_dataBuffer = dataBuffer;

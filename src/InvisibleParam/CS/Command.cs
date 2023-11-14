@@ -56,19 +56,19 @@ namespace Revit.SDK.Samples.InvisibleParam.CS
                 var apiGroup = parafile.Groups.Create("APIGroup");
 
                 //Create a visible "VisibleParam" of text type.
-                var ExternalDefinitionCreationOptions1 =
+                var externalDefinitionCreationOptions1 =
                     new ExternalDefinitionCreationOptions("VisibleParam", SpecTypeId.String.Text);
                 var visibleParamDef = apiGroup.Definitions.Create
-                    (ExternalDefinitionCreationOptions1);
+                    (externalDefinitionCreationOptions1);
                 ;
                 var bindingMap = commandData.Application.ActiveUIDocument.Document.ParameterBindings;
                 bindingMap.Insert(visibleParamDef, binding);
 
                 //Create a invisible "InvisibleParam" of text type.
-                var ExternalDefinitionCreationOptions2 =
+                var externalDefinitionCreationOptions2 =
                     new ExternalDefinitionCreationOptions("InvisibleParam", SpecTypeId.String.Text);
                 var invisibleParamDef = apiGroup.Definitions.Create
-                    (ExternalDefinitionCreationOptions2);
+                    (externalDefinitionCreationOptions2);
                 bindingMap.Insert(invisibleParamDef, binding);
             }
             catch (Exception e)

@@ -77,7 +77,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// <summary>
         ///     A switch indicates whether to support DMU(dynamic model update).
         /// </summary>
-        public bool DMU => dmuCheckBox.Checked;
+        public bool Dmu => dmuCheckBox.Checked;
 
         /// <summary>
         ///     A switch to control the sketch drawing of winder stairs.

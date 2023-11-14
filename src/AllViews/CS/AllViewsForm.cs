@@ -15,21 +15,21 @@ namespace Revit.SDK.Samples.AllViews.CS
     /// </summary>
     public partial class AllViewsForm : Form
     {
-        public bool invalidViewport = true;
+        public bool InvalidViewport = true;
 
-        public XYZ m_getBoxCenter;
-        public double m_getLabelLineLength;
+        public XYZ GetBoxCenter;
+        public double GetLabelLineLength;
 
-        public XYZ m_getLabelLineOffset;
-        public XYZ m_getMaxBoxOutline;
-        public XYZ m_getMaxLabelOutline;
+        public XYZ GetLabelLineOffset;
+        public XYZ GetMaxBoxOutline;
+        public XYZ GetMaxLabelOutline;
 
-        public XYZ m_getMinBoxOutline;
+        public XYZ GetMinBoxOutline;
 
-        public XYZ m_getMinLabelOutline;
-        public ViewportRotation m_getOrientation;
+        public XYZ GetMinLabelOutline;
+        public ViewportRotation GetOrientation;
 
-        public ViewportRotation m_setRotation = ViewportRotation.None;
+        public ViewportRotation SetRotation = ViewportRotation.None;
 
         /// <summary>
         ///     constructor
@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.AllViews.CS
 
         public void UpdateControls()
         {
-            if (invalidViewport)
+            if (InvalidViewport)
             {
                 setRotationButton.Enabled = false;
                 setLabelOffsetButton.Enabled = false;
@@ -86,22 +86,22 @@ namespace Revit.SDK.Samples.AllViews.CS
                 setLabelLineLengthTextBox.Enabled = true;
 
                 //BoxOutline
-                getMinBoxOutlineTextBox.Text = "(" + m_getMinBoxOutline.X + ", " + m_getMinBoxOutline.Y + ")";
-                getMaxBoxOutlineTextBox.Text = "(" + m_getMaxBoxOutline.X + ", " + m_getMaxBoxOutline.Y + ")";
+                getMinBoxOutlineTextBox.Text = "(" + GetMinBoxOutline.X + ", " + GetMinBoxOutline.Y + ")";
+                getMaxBoxOutlineTextBox.Text = "(" + GetMaxBoxOutline.X + ", " + GetMaxBoxOutline.Y + ")";
 
                 //LabelOutline
-                getMinLabelOutlineTextBox.Text = "(" + m_getMinLabelOutline.X + ", " + m_getMinLabelOutline.Y + ")";
-                getMaxLabelOutlineTextBox.Text = "(" + m_getMaxLabelOutline.X + ", " + m_getMaxLabelOutline.Y + ")";
+                getMinLabelOutlineTextBox.Text = "(" + GetMinLabelOutline.X + ", " + GetMinLabelOutline.Y + ")";
+                getMaxLabelOutlineTextBox.Text = "(" + GetMaxLabelOutline.X + ", " + GetMaxLabelOutline.Y + ")";
 
                 //LabelLineOffset
-                getLabelLineOffsetTextBox.Text = "(" + m_getLabelLineOffset.X + ", " + m_getLabelLineOffset.Y + ")";
+                getLabelLineOffsetTextBox.Text = "(" + GetLabelLineOffset.X + ", " + GetLabelLineOffset.Y + ")";
 
                 //LabelLineLength
-                getLabelLineLengthTextBox.Text = m_getLabelLineLength.ToString();
+                getLabelLineLengthTextBox.Text = GetLabelLineLength.ToString();
 
                 //Others
-                getBoxCenterTextBox.Text = "(" + m_getBoxCenter.X + ", " + m_getBoxCenter.Y + ")";
-                getOrientationTtextBox.Text = m_getOrientation.ToString();
+                getBoxCenterTextBox.Text = "(" + GetBoxCenter.X + ", " + GetBoxCenter.Y + ")";
+                getOrientationTtextBox.Text = GetOrientation.ToString();
             }
         }
 
@@ -174,7 +174,7 @@ namespace Revit.SDK.Samples.AllViews.CS
 
         private void setRotationButton_Click(object sender, EventArgs e)
         {
-            m_data.SetRotation(this, m_setRotation);
+            m_data.SetRotation(this, SetRotation);
             UpdateControls();
         }
 
@@ -200,29 +200,29 @@ namespace Revit.SDK.Samples.AllViews.CS
 
         private void selectViewportNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            invalidViewport = true;
+            InvalidViewport = true;
             UpdateControls();
         }
 
         private void selectSheetNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            invalidViewport = true;
+            InvalidViewport = true;
             UpdateControls();
         }
 
         private void noneRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            m_setRotation = ViewportRotation.None;
+            SetRotation = ViewportRotation.None;
         }
 
         private void clockWiseRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            m_setRotation = ViewportRotation.Clockwise;
+            SetRotation = ViewportRotation.Clockwise;
         }
 
         private void counterClockWiseRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            m_setRotation = ViewportRotation.Counterclockwise;
+            SetRotation = ViewportRotation.Counterclockwise;
         }
     }
 }

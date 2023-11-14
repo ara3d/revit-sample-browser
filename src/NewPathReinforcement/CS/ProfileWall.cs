@@ -26,8 +26,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         {
             m_data = wall;
             var faces = GetFaces(m_data);
-            m_points = GetNeedPoints(faces);
-            m_to2DMatrix = GetTo2DMatrix();
+            Points = GetNeedPoints(faces);
+            To2DMatrix = GetTo2DMatrix();
         }
 
         /// <summary>
@@ -132,10 +132,10 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             }
 
             //draw PathReinforcement on wall
-            var pathReinforcementTypeId = PathReinforcementType.CreateDefaultPathReinforcementType(m_document);
-            var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(m_document);
-            var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(m_document);
-            return Autodesk.Revit.DB.Structure.PathReinforcement.Create(m_document, m_data, curves, flip,
+            var pathReinforcementTypeId = PathReinforcementType.CreateDefaultPathReinforcementType(Document);
+            var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(Document);
+            var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(Document);
+            return Autodesk.Revit.DB.Structure.PathReinforcement.Create(Document, m_data, curves, flip,
                 pathReinforcementTypeId, rebarBarTypeId, rebarHookTypeId, rebarHookTypeId);
         }
     }

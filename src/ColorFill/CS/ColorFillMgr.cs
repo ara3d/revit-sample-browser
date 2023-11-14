@@ -13,13 +13,13 @@ namespace Revit.SDK.Samples.ColorFill.CS
     /// </summary>
     public class ColorFillMgr
     {
-        private readonly Document document;
-        private readonly ExternalCommandData externalCommandData;
-        private readonly FilteredElementCollector fec;
-        private List<ElementId> fillPatternIds = new List<ElementId>();
-        private readonly List<ElementId> levelIds = new List<ElementId>();
-        private List<ElementId> parameterDefinitions = new List<ElementId>();
-        private readonly ElementId schemeCategoryId;
+        private readonly Document m_document;
+        private readonly ExternalCommandData m_externalCommandData;
+        private readonly FilteredElementCollector m_fec;
+        private List<ElementId> m_fillPatternIds = new List<ElementId>();
+        private readonly List<ElementId> m_levelIds = new List<ElementId>();
+        private List<ElementId> m_parameterDefinitions = new List<ElementId>();
+        private readonly ElementId m_schemeCategoryId;
 
         /// <summary>
         ///     Construction
@@ -28,10 +28,10 @@ namespace Revit.SDK.Samples.ColorFill.CS
         /// <param name="commandData"></param>
         public ColorFillMgr(Document doc, ExternalCommandData commandData)
         {
-            document = doc;
-            fec = new FilteredElementCollector(document);
-            schemeCategoryId = new ElementId(BuiltInCategory.OST_Rooms);
-            externalCommandData = commandData;
+            m_document = doc;
+            m_fec = new FilteredElementCollector(m_document);
+            m_schemeCategoryId = new ElementId(BuiltInCategory.OST_Rooms);
+            m_externalCommandData = commandData;
         }
 
         /// <summary>
@@ -49,17 +49,17 @@ namespace Revit.SDK.Samples.ColorFill.CS
         /// </summary>
         public void RetrieveData()
         {
-            RoomSchemes = fec.OfClass(typeof(ColorFillScheme))
+            RoomSchemes = m_fec.OfClass(typeof(ColorFillScheme))
                 .OfType<ColorFillScheme>()
-                .Where(s => s.CategoryId == schemeCategoryId).ToList();
-            fillPatternIds = new FilteredElementCollector(document)
+                .Where(s => s.CategoryId == m_schemeCategoryId).ToList();
+            m_fillPatternIds = new FilteredElementCollector(m_document)
                 .OfClass(typeof(FillPatternElement))
                 .OfType<FillPatternElement>()
                 .Where(fp => fp.GetFillPattern().Target == FillPatternTarget.Drafting)
                 .Select(f => f.Id)
                 .ToList();
             //Select all floor views and elevation views.
-            Views = new FilteredElementCollector(document)
+            Views = new FilteredElementCollector(m_document)
                 .OfClass(typeof(View))
                 .OfType<View>().Where(v => !v.IsTemplate &&
                                            (v.ViewType == ViewType.FloorPlan || v.ViewType == ViewType.Elevation))
@@ -76,14 +76,14 @@ namespace Revit.SDK.Samples.ColorFill.CS
         public void DuplicateScheme(ColorFillScheme scheme, string schemeName, string schemeTitle)
         {
             var parameterId = new ElementId(BuiltInParameter.AREA_SCHEME_NAME);
-            using (var tr = new Transaction(document))
+            using (var tr = new Transaction(m_document))
             {
                 tr.Start("CopyScheme");
                 var newSchemeId = scheme.Duplicate(schemeName);
                 var newScheme = scheme.Document.GetElement(newSchemeId) as ColorFillScheme;
                 newScheme.Title = schemeTitle;
-                parameterDefinitions = newScheme.GetSupportedParameterIds().ToList();
-                if (parameterDefinitions.Contains(parameterId))
+                m_parameterDefinitions = newScheme.GetSupportedParameterIds().ToList();
+                if (m_parameterDefinitions.Contains(parameterId))
                     newScheme.ParameterDefinition = parameterId;
                 tr.Commit();
             }
@@ -96,15 +96,15 @@ namespace Revit.SDK.Samples.ColorFill.CS
         /// <param name="view"></param>
         public void CreateAndPlaceLegend(ColorFillScheme scheme, View view)
         {
-            using (var transaction = new Transaction(document))
+            using (var transaction = new Transaction(m_document))
             {
                 transaction.Start("Create legend");
                 var origin = view.Origin.Add(view.UpDirection.Multiply(20));
 
-                if (view.CanApplyColorFillScheme(schemeCategoryId, scheme.Id))
+                if (view.CanApplyColorFillScheme(m_schemeCategoryId, scheme.Id))
                 {
-                    view.SetColorFillSchemeId(schemeCategoryId, scheme.Id);
-                    var legend = ColorFillLegend.Create(document, view.Id, schemeCategoryId, origin);
+                    view.SetColorFillSchemeId(m_schemeCategoryId, scheme.Id);
+                    var legend = ColorFillLegend.Create(m_document, view.Id, m_schemeCategoryId, origin);
                     legend.Height = legend.Height / 2;
                     transaction.Commit();
                 }
@@ -149,14 +149,14 @@ namespace Revit.SDK.Samples.ColorFill.CS
                 newEntries.Add(newEntry);
             }
 
-            using (var tr = new Transaction(document))
+            using (var tr = new Transaction(m_document))
             {
                 tr.Start("update entries");
                 scheme.SetEntries(newEntries);
                 tr.Commit();
             }
 
-            externalCommandData.Application.ActiveUIDocument.RefreshActiveView();
+            m_externalCommandData.Application.ActiveUIDocument.RefreshActiveView();
         }
 
         private Color GenerateRandomColor(int seed)
@@ -199,11 +199,11 @@ namespace Revit.SDK.Samples.ColorFill.CS
                     entry.SetIntegerValue(intValue);
                     break;
                 case StorageType.ElementId:
-                    var level = new FilteredElementCollector(document)
+                    var level = new FilteredElementCollector(m_document)
                         .OfClass(typeof(Level))
-                        .Where(lv => !levelIds.Contains(lv.Id) && lv.Name != "Level 1")
+                        .Where(lv => !m_levelIds.Contains(lv.Id) && lv.Name != "Level 1")
                         .FirstOrDefault();
-                    levelIds.Add(level.Id);
+                    m_levelIds.Add(level.Id);
                     entry.SetElementIdValue(level.Id);
                     break;
                 default:

@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// <summary>
         ///     The singleton instance of ProximityDetection
         /// </summary>
-        private static ProximityDetection Instance;
+        private static ProximityDetection _instance;
 
         /// <summary>
         ///     revit application
@@ -48,11 +48,11 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// <param name="app">Revit application</param>
         /// <param name="doc">Revit document</param>
         /// <returns>The singleton instance of ProximityDetection</returns>
-        public static ProximityDetection getInstance(
+        public static ProximityDetection GetInstance(
             Application app,
             Document doc)
         {
-            return Instance ?? (Instance = new ProximityDetection(app, doc));
+            return _instance ?? (_instance = new ProximityDetection(app, doc));
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// </summary>
         /// <param name="walls">The walls to be detected</param>
         /// <returns>The detection result</returns>
-        public XElement findColumnsInWall(IEnumerable<Wall> walls)
+        public XElement FindColumnsInWall(IEnumerable<Wall> walls)
         {
             // create a node that place all walls.
             var wallsNode = new XElement("Walls", new XAttribute("Name", "Walls"));
@@ -110,7 +110,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// </summary>
         /// <param name="egresses">The egresses to be detected</param>
         /// <returns>The detection result</returns>
-        public XElement findBlockingElements(ICollection<Element> egresses)
+        public XElement FindBlockingElements(ICollection<Element> egresses)
         {
             // create a node that place all egresses.
             var egressesNode = new XElement("Egresses", new XAttribute("Name", "Egresses"));
@@ -124,16 +124,16 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                         new XAttribute("Name", egressElement.Name));
 
                     var count = 1;
-                    var Objects = egressElement.get_Geometry(new Options()).GetEnumerator();
-                    Objects.MoveNext();
-                    var gi = Objects.Current as GeometryInstance;
-                    var Objects1 = gi.GetInstanceGeometry().GetEnumerator();
+                    var objects = egressElement.get_Geometry(new Options()).GetEnumerator();
+                    objects.MoveNext();
+                    var gi = objects.Current as GeometryInstance;
+                    var objects1 = gi.GetInstanceGeometry().GetEnumerator();
 
                     //foreach (GeometryObject egressGObj in 
                     //   (egressElement.get_Geometry(new Autodesk.Revit.DB.Options()).Objects.get_Item(0) as GeometryInstance).GetInstanceGeometry().Objects)
-                    while (Objects1.MoveNext())
+                    while (objects1.MoveNext())
                     {
-                        var egressGObj = Objects1.Current;
+                        var egressGObj = objects1.Current;
 
                         if (egressGObj is Solid egressVolume)
                         {
@@ -184,7 +184,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// </summary>
         /// <param name="walls">The walls to be detected</param>
         /// <returns>The detection result</returns>
-        public XElement findNearbyWalls(IEnumerable<Wall> walls)
+        public XElement FindNearbyWalls(IEnumerable<Wall> walls)
         {
             // create a node that place all walls.
             var wallsNode = new XElement("Walls", new XAttribute("Name", "Walls"));
@@ -201,7 +201,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                     var wallEndPoint = (wall.Location as LocationCurve).Curve.GetEndPoint(0);
                     var wallHeight = wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble();
 
-                    var collector = nearbyWallsFilter(wallEndPoint, wallHeight, 10.0); // 10 ft
+                    var collector = NearbyWallsFilter(wallEndPoint, wallHeight, 10.0); // 10 ft
 
                     // Exclude the wall itself
                     var exclusions = new List<ElementId> { wall.Id };
@@ -224,7 +224,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
 
                     wallEndPoint = (wall.Location as LocationCurve).Curve.GetEndPoint(1);
 
-                    collector = nearbyWallsFilter(wallEndPoint, wallHeight, 10.0);
+                    collector = NearbyWallsFilter(wallEndPoint, wallHeight, 10.0);
 
                     // Exclude the wall itself
                     exclusions = new List<ElementId> { wall.Id };
@@ -261,7 +261,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         /// <param name="height">The given height</param>
         /// <param name="radius">The radius in which walls can be detected</param>
         /// <returns>The detection result</returns>
-        private FilteredElementCollector nearbyWallsFilter(XYZ point, double height, double radius)
+        private FilteredElementCollector NearbyWallsFilter(XYZ point, double height, double radius)
         {
             // build cylindrical shape around wall endpoint
             var curveloops = new List<CurveLoop>();

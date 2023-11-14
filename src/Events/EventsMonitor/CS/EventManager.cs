@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// <summary>
         ///     This list is used to store what user select last time.
         /// </summary>
-        private readonly List<string> historySelection;
+        private readonly List<string> m_historySelection;
 
         /// <summary>
         ///     Revit application
@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         public EventManager(UIControlledApplication app)
         {
             m_app = app;
-            historySelection = new List<string>();
+            m_historySelection = new List<string>();
         }
 
         /// <summary>
@@ -51,19 +51,19 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         {
             // If event has been in history list and not in current selection,
             // it means user doesn't select this event again, and it should be move.
-            foreach (var eventname in historySelection)
+            foreach (var eventname in m_historySelection)
                 if (!selection.Contains(eventname))
-                    subtractEvents(eventname);
+                    SubtractEvents(eventname);
 
             // Contrarily,if event has been in current selection and not in history list,
             // it means this event should be subscribed.
             foreach (var eventname in selection)
-                if (!historySelection.Contains(eventname))
-                    addEvents(eventname);
+                if (!m_historySelection.Contains(eventname))
+                    AddEvents(eventname);
 
             // generate the history list.
-            historySelection.Clear();
-            foreach (var eventname in selection) historySelection.Add(eventname);
+            m_historySelection.Clear();
+            foreach (var eventname in selection) m_historySelection.Add(eventname);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         ///     The generic handler app_eventsHandlerMethod will be subscribed to this event.
         /// </summary>
         /// <param name="eventName"></param>
-        private void addEvents(string eventName)
+        private void AddEvents(string eventName)
         {
             switch (eventName)
             {
@@ -154,7 +154,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         ///     Remove registered event by its name.
         /// </summary>
         /// <param name="eventName">Event name to be subtracted.</param>
-        private void subtractEvents(string eventName)
+        private void SubtractEvents(string eventName)
         {
             switch (eventName)
             {

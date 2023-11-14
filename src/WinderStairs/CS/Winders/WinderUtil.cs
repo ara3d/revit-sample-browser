@@ -104,16 +104,16 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 var bisectDir = (dir2 - dir1).Normalize();
 
                 // Calculate the step direction of the fist line.
-                var stepInside1stDir = new XYZ(-dir1.Y, dir1.X, 0.0);
-                if (stepInside1stDir.DotProduct(bisectDir) < 0.0)
-                    stepInside1stDir = stepInside1stDir.Negate();
+                var stepInside1StDir = new XYZ(-dir1.Y, dir1.X, 0.0);
+                if (stepInside1StDir.DotProduct(bisectDir) < 0.0)
+                    stepInside1StDir = stepInside1StDir.Negate();
 
-                if (i == 1) innerPnts.Add(controlPoints[i - 1] + stepInside1stDir * offset);
+                if (i == 1) innerPnts.Add(controlPoints[i - 1] + stepInside1StDir * offset);
 
                 // Calculate the step direction of the second line.
-                var stepInside2ndDir = new XYZ(-dir2.Y, dir2.X, 0.0);
-                if (stepInside2ndDir.DotProduct(bisectDir) < 0.0)
-                    stepInside2ndDir = stepInside2ndDir.Negate();
+                var stepInside2NdDir = new XYZ(-dir2.Y, dir2.X, 0.0);
+                if (stepInside2NdDir.DotProduct(bisectDir) < 0.0)
+                    stepInside2NdDir = stepInside2NdDir.Negate();
 
                 var semiAngle = bisectDir.AngleTo(dir2);
                 var slopDist = offset / Math.Sin(semiAngle);
@@ -123,7 +123,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
 
                 innerPnts.Add(innerCornerPnt);
 
-                if (i == controlPoints.Count - 2) innerPnts.Add(controlPoints[i + 1] + stepInside2ndDir * offset);
+                if (i == controlPoints.Count - 2) innerPnts.Add(controlPoints[i + 1] + stepInside2NdDir * offset);
             }
 
             return innerPnts;

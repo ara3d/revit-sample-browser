@@ -86,7 +86,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
         {
             get
             {
-                var typeAL = new ArrayList
+                var typeAl = new ArrayList
                 {
                     "Undefined",
                     "Basic",
@@ -98,7 +98,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                     "Gas",
                     "Plastic"
                 };
-                return typeAL;
+                return typeAl;
             }
         }
 

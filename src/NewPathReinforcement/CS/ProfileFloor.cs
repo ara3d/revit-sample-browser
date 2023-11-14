@@ -26,8 +26,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         {
             m_data = floor;
             var faces = GetFaces(m_data);
-            m_points = GetNeedPoints(faces);
-            m_to2DMatrix = GetTo2DMatrix();
+            Points = GetNeedPoints(faces);
+            To2DMatrix = GetTo2DMatrix();
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             // Once use the View type to filterrrr the element ,please skip the view templates 
             // because they're behind-the-scene and invisible in project browser; also invalid for API.
             var views = from elem in
-                    new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document)
+                    new FilteredElementCollector(CommandData.Application.ActiveUIDocument.Document)
                         .OfClass(typeof(ViewPlan)).ToElements()
                 let view = elem as View
                 where view != null && !view.IsTemplate && view.Name == "Level 2"
@@ -91,10 +91,10 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 curves.Add(curve);
             }
 
-            var pathReinforcementTypeId = PathReinforcementType.CreateDefaultPathReinforcementType(m_document);
-            var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(m_document);
-            var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(m_document);
-            return Autodesk.Revit.DB.Structure.PathReinforcement.Create(m_document, m_data, curves, flip,
+            var pathReinforcementTypeId = PathReinforcementType.CreateDefaultPathReinforcementType(Document);
+            var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(Document);
+            var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(Document);
+            return Autodesk.Revit.DB.Structure.PathReinforcement.Create(Document, m_data, curves, flip,
                 pathReinforcementTypeId, rebarBarTypeId, rebarHookTypeId, rebarHookTypeId);
         }
     }

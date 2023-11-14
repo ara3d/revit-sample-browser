@@ -31,22 +31,22 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <summary>
         ///     a list to store all the hook types
         /// </summary>
-        protected List<RebarHookType> m_hookTypes = new List<RebarHookType>();
+        private List<RebarHookType> m_hookTypes = new List<RebarHookType>();
 
         /// <summary>
         ///     the family instance to places rebar on
         /// </summary>
-        protected readonly FamilyInstance m_hostObject;
+        private readonly FamilyInstance m_hostObject;
 
         /// <summary>
         ///     a set to store all the rebar types
         /// </summary>
-        protected List<RebarBarType> m_rebarTypes = new List<RebarBarType>();
+        private List<RebarBarType> m_rebarTypes = new List<RebarBarType>();
 
         /// <summary>
         ///     the API create handle
         /// </summary>
-        protected readonly Document m_revitDoc;
+        private readonly Document m_revitDoc;
 
         /// <summary>
         ///     The constructor of FramReinMaker

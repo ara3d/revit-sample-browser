@@ -17,7 +17,7 @@ namespace Revit.Samples.MaterialQuantities
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private static AddInId appId = new AddInId(new Guid("7E5CAC0D-F3D8-4040-89D6-0828D681561B"));
+        private static AddInId _appId = new AddInId(new Guid("7E5CAC0D-F3D8-4040-89D6-0828D681561B"));
 
         private Document m_doc;
 
@@ -88,8 +88,8 @@ namespace Revit.Samples.MaterialQuantities
         protected override void CollectElements()
         {
             // filter for non-symbols that match the desired category so that inplace elements will also be found
-            var collector = new FilteredElementCollector(m_doc);
-            m_elementsToProcess = collector.OfCategory(BuiltInCategory.OST_Walls).WhereElementIsNotElementType()
+            var collector = new FilteredElementCollector(Doc);
+            ElementsToProcess = collector.OfCategory(BuiltInCategory.OST_Walls).WhereElementIsNotElementType()
                 .ToElements();
         }
 
@@ -106,8 +106,8 @@ namespace Revit.Samples.MaterialQuantities
     {
         protected override void CollectElements()
         {
-            var collector = new FilteredElementCollector(m_doc);
-            m_elementsToProcess = collector.OfCategory(BuiltInCategory.OST_Floors).WhereElementIsNotElementType()
+            var collector = new FilteredElementCollector(Doc);
+            ElementsToProcess = collector.OfCategory(BuiltInCategory.OST_Floors).WhereElementIsNotElementType()
                 .ToElements();
         }
 
@@ -124,8 +124,8 @@ namespace Revit.Samples.MaterialQuantities
     {
         protected override void CollectElements()
         {
-            var collector = new FilteredElementCollector(m_doc);
-            m_elementsToProcess = collector.OfCategory(BuiltInCategory.OST_Roofs).WhereElementIsNotElementType()
+            var collector = new FilteredElementCollector(Doc);
+            ElementsToProcess = collector.OfCategory(BuiltInCategory.OST_Roofs).WhereElementIsNotElementType()
                 .ToElements();
         }
 
@@ -145,12 +145,12 @@ namespace Revit.Samples.MaterialQuantities
         /// </summary>
         private bool m_calculatingGrossQuantities;
 
-        protected Document m_doc;
+        protected Document Doc;
 
         /// <summary>
         ///     The list of elements for material quantity extraction.
         /// </summary>
-        protected IList<Element> m_elementsToProcess;
+        protected IList<Element> ElementsToProcess;
 
         /// <summary>
         ///     A storage of material quantities per individual element.
@@ -184,7 +184,7 @@ namespace Revit.Samples.MaterialQuantities
         /// </summary>
         public void SetDocument(Document d)
         {
-            m_doc = d;
+            Doc = d;
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Revit.Samples.MaterialQuantities
         /// </summary>
         private void CalculateNetMaterialQuantities()
         {
-            foreach (var e in m_elementsToProcess) CalculateMaterialQuantitiesOfElement(e);
+            foreach (var e in ElementsToProcess) CalculateMaterialQuantitiesOfElement(e);
         }
 
         /// <summary>
@@ -212,12 +212,12 @@ namespace Revit.Samples.MaterialQuantities
         private void CalculateGrossMaterialQuantities()
         {
             m_calculatingGrossQuantities = true;
-            var t = new Transaction(m_doc);
+            var t = new Transaction(Doc);
             t.SetName("Delete Cutting Elements");
             t.Start();
             DeleteAllCuttingElements();
-            m_doc.Regenerate();
-            foreach (var e in m_elementsToProcess) CalculateMaterialQuantitiesOfElement(e);
+            Doc.Regenerate();
+            foreach (var e in ElementsToProcess) CalculateMaterialQuantitiesOfElement(e);
             t.RollBack();
         }
 
@@ -227,7 +227,7 @@ namespace Revit.Samples.MaterialQuantities
         private void DeleteAllCuttingElements()
         {
             new List<ElementFilter>();
-            var collector = new FilteredElementCollector(m_doc);
+            var collector = new FilteredElementCollector(Doc);
 
             // (Type == FamilyInstance && (Category == Door || Category == Window) || Type == Opening
             var filterFamilyInstance = new ElementClassFilter(typeof(FamilyInstance));
@@ -255,7 +255,7 @@ namespace Revit.Samples.MaterialQuantities
                             continue;
                     }
 
-                    var deletedElements = m_doc.Delete(e.Id);
+                    var deletedElements = Doc.Delete(e.Id);
 
                     // Log failed deletion attempts to the output.  (These may be other situations where deletion is not possible but 
                     // the failure doesn't really affect the results.
@@ -372,7 +372,7 @@ namespace Revit.Samples.MaterialQuantities
             foreach (var keyId in m_quantitiesPerElement.Keys)
             {
                 var id = keyId;
-                var e = m_doc.GetElement(id);
+                var e = Doc.GetElement(id);
 
                 writer.WriteLine();
                 writer.WriteLine("Totals for {0} element {1} (id {2}),{3}", GetElementTypeName(),
@@ -396,7 +396,7 @@ namespace Revit.Samples.MaterialQuantities
                 var materialId = keyMaterialId;
                 var quantity = quantities[materialId];
 
-                var material = m_doc.GetElement(materialId) as Material;
+                var material = Doc.GetElement(materialId) as Material;
 
                 //writer.WriteLine(String.Format("   {0} Net: [{1:F2} cubic ft {2:F2} sq. ft]  Gross: [{3:F2} cubic ft {4:F2} sq. ft]", material.Name, quantity.NetVolume, quantity.NetArea, quantity.GrossVolume, quantity.GrossArea));
                 writer.WriteLine("{0},{3:F2},{1:F2},{4:F2},{2:F2}", material.Name.Replace(',', ':'), quantity.NetVolume,

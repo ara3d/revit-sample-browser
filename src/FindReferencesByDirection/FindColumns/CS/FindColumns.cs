@@ -23,7 +23,7 @@ namespace Revit.SDK.Samples.FindColumns.CS
         /// <summary>
         ///     This is a slight offset to ensure that the ray-trace occurs just outside the extents of the wall.
         /// </summary>
-        private static readonly double WALL_EPSILON = 1.0 / 8.0 / 12.0; // 1/8"
+        private static readonly double WallEpsilon = 1.0 / 8.0 / 12.0; // 1/8"
 
         /// <summary>
         ///     ElementId list for columns which are on walls
@@ -263,8 +263,8 @@ namespace Revit.SDK.Samples.FindColumns.CS
 
             // The LocationCurve is always the wall centerline, regardless of the setting for the wall Location Line.
             // So the delta to place the ray just outside the wall extents is always 1/2 the wall width + a little extra.
-            var wallDelta = new XYZ(wallNormal.X * wallWidth / 2 + WALL_EPSILON,
-                wallNormal.Y * wallWidth / 2 + WALL_EPSILON, 0);
+            var wallDelta = new XYZ(wallNormal.X * wallWidth / 2 + WallEpsilon,
+                wallNormal.Y * wallWidth / 2 + WallEpsilon, 0);
 
             return wallDelta;
         }
@@ -357,8 +357,8 @@ namespace Revit.SDK.Samples.FindColumns.CS
         {
             Debug.WriteLine("Wall curve is line: ");
 
-            Debug.WriteLine("Start point: " + XYZToString(wallCurve.GetEndPoint(0)));
-            Debug.WriteLine("End point: " + XYZToString(wallCurve.GetEndPoint(1)));
+            Debug.WriteLine("Start point: " + XyzToString(wallCurve.GetEndPoint(0)));
+            Debug.WriteLine("End point: " + XyzToString(wallCurve.GetEndPoint(1)));
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Revit.SDK.Samples.FindColumns.CS
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        private string XYZToString(XYZ point)
+        private string XyzToString(XYZ point)
         {
             return "( " + point.X + ", " + point.Y + ", " + point.Z + ")";
         }

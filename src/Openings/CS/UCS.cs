@@ -7,7 +7,7 @@ namespace Revit.SDK.Samples.Openings.CS
     /// <summary>
     ///     This class stand for user coordinate system
     /// </summary>
-    public class UCS
+    public class Ucs
     {
         private Vector m_origin = new Vector(0.0, 0.0, 0.0);
         private Vector m_xAxis = new Vector(1.0, 0.0, 0.0);
@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <summary>
         ///     The default constructor,
         /// </summary>
-        public UCS(Vector origin, Vector xAxis, Vector yAxis)
+        public Ucs(Vector origin, Vector xAxis, Vector yAxis)
             : this(origin, xAxis, yAxis, true)
         {
         }
@@ -30,7 +30,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <param name="xAxis">xAxis of user coordinate system</param>
         /// <param name="yAxis">yAxis of user coordinate system</param>
         /// <param name="flag">select left handness or right handness</param>
-        public UCS(Vector origin, Vector xAxis, Vector yAxis, bool flag)
+        public Ucs(Vector origin, Vector xAxis, Vector yAxis, bool flag)
         {
             var x2 = xAxis / ~xAxis;
             var y2 = yAxis / ~yAxis;
@@ -69,7 +69,7 @@ namespace Revit.SDK.Samples.Openings.CS
         ///     Transform local coordinate to global coordinate
         /// </summary>
         /// <param name="arg">a vector which need to transform</param>
-        public Vector LC2GC(Vector arg)
+        public Vector Lc2Gc(Vector arg)
         {
             var result = new Vector
             {
@@ -84,10 +84,10 @@ namespace Revit.SDK.Samples.Openings.CS
         ///     Transform global coordinate to local coordinate
         /// </summary>
         /// <param name="line">a line which need to transform</param>
-        public Line3D GC2LC(Line3D line)
+        public Line3D Gc2Lc(Line3D line)
         {
-            var startPnt = GC2LC(line.StartPoint);
-            var endPnt = GC2LC(line.EndPoint);
+            var startPnt = Gc2Lc(line.StartPoint);
+            var endPnt = Gc2Lc(line.EndPoint);
             return new Line3D(startPnt, endPnt);
         }
 
@@ -95,7 +95,7 @@ namespace Revit.SDK.Samples.Openings.CS
         ///     Transform global coordinate to local coordinate
         /// </summary>
         /// <param name="arg">a vector which need to transform</param>
-        public Vector GC2LC(Vector arg)
+        public Vector Gc2Lc(Vector arg)
         {
             var result = new Vector();
             arg = arg - m_origin;

@@ -78,10 +78,10 @@ namespace Revit.Samples.DirectionCalculation
             var geomElem = window.get_Geometry(options);
 
             //foreach (GeometryObject geomObj in geomElem.Objects)
-            var Objects = geomElem.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geomElem.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var geomObj = Objects.Current;
+                var geomObj = objects.Current;
 
                 // We expect there to be one main Instance in each window.  Ignore the rest of the geometry.
                 var instance = geomObj as GeometryInstance;

@@ -54,9 +54,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
                 if (null == basalOpening)
                 {
-                    var ExternalDefinitionCreationOptions1 =
+                    var externalDefinitionCreationOptions1 =
                         new ExternalDefinitionCreationOptions("BasalOpening", SpecTypeId.String.Text);
-                    basalOpening = defGroup.Definitions.Create(ExternalDefinitionCreationOptions1);
+                    basalOpening = defGroup.Definitions.Create(externalDefinitionCreationOptions1);
                 }
 
                 // Add the binding and definition to the document.
@@ -71,9 +71,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
                 if (null == instanceOpening)
                 {
-                    var ExternalDefinitionCreationOptions2 =
+                    var externalDefinitionCreationOptions2 =
                         new ExternalDefinitionCreationOptions("InstanceOpening", SpecTypeId.String.Text);
-                    instanceOpening = defGroup.Definitions.Create(ExternalDefinitionCreationOptions2);
+                    instanceOpening = defGroup.Definitions.Create(externalDefinitionCreationOptions2);
                 }
 
                 // Add the binding and definition to the document.
@@ -87,9 +87,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
                 if (null == internalDoorFlag)
                 {
-                    var ExternalDefinitionCreationOptions3 =
+                    var externalDefinitionCreationOptions3 =
                         new ExternalDefinitionCreationOptions("Internal Door", SpecTypeId.Boolean.YesNo);
-                    internalDoorFlag = defGroup.Definitions.Create(ExternalDefinitionCreationOptions3);
+                    internalDoorFlag = defGroup.Definitions.Create(externalDefinitionCreationOptions3);
                 }
 
                 // Add the binding and definition to the document.

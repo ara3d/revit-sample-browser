@@ -10,14 +10,10 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
     {
         private double m_maxFlow; // The maximum flow value of any segment on the entire network.
         private readonly IDictionary<int, SectionInfo> m_sections;
-        private readonly Document m_document;
-        private string m_name;
-        private string m_flowDisplay;
-        private ConnectorDomainType m_domainType;
 
         public NetworkInfo(Document doc)
         {
-            m_document = doc;
+            Document = doc;
             m_maxFlow = 0.0;
             FlowDisplay = null;
             DomainType = ConnectorDomainType.Undefined;
@@ -26,25 +22,13 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
 
         public int NumberOfSections => m_sections.Count;
 
-        public Document Document => m_document;
+        public Document Document { get; }
 
-        private string Name
-        {
-            get => m_name;
-            set => m_name = value;
-        }
+        private string Name { get; set; }
 
-        public string FlowDisplay
-        {
-            get => m_flowDisplay;
-            private set => m_flowDisplay = value;
-        }
+        public string FlowDisplay { get; private set; }
 
-        public ConnectorDomainType DomainType
-        {
-            get => m_domainType;
-            set => m_domainType = value;
-        }
+        public ConnectorDomainType DomainType { get; set; }
 
         public static IList<NetworkInfo> FindValidNetworks(Document doc)
         {
@@ -208,7 +192,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             FlowDisplay = UnitFormatUtils.Format(Document.GetUnits(), specId, m_maxFlow, false);
         }
 
-        public void ExportCSV(CSVExporter ex)
+        public void ExportCsv(CsvExporter ex)
         {
             // Export the header line.
             var str = string.Format(
@@ -216,7 +200,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
                 ex.GetFlowUnitSymbol(), ex.GetSizeUnitSymbol(), ex.GetVelocityUnitSymbol(), ex.GetPressureUnitSymbol(),
                 ex.GetLengthUnitSymbol(), ex.GetFrictionUnitSymbol());
             ex.Writer.WriteLine(str);
-            foreach (var item in m_sections) item.Value.ExportCSV(ex, item.Key);
+            foreach (var item in m_sections) item.Value.ExportCsv(ex, item.Key);
             // Critical path if available
             var dCriticalLoss = 0.0;
             string path = null;
@@ -233,7 +217,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             ex.Writer.WriteLine("Critical Pressure Loss: {0}, {1}", path, dCriticalLoss);
         }
 
-        public void UpdateView(AVFViewer viewer)
+        public void UpdateView(AvfViewer viewer)
         {
             var points = new List<XYZ>();
             var valList = new List<VectorAtPoint>();

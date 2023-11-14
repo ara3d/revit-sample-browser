@@ -19,10 +19,10 @@ namespace ContextualAnalyticalModel
                 var document = commandData.Application.ActiveUIDocument.Document;
 
                 //create analytical panel
-                var analyticalPanel = CreateAMPanel(document);
+                var analyticalPanel = CreateAmPanel(document);
                 if (analyticalPanel != null)
                     //create analytical opening on the panel we've just created
-                    CreateAMOpening(document, analyticalPanel.Id);
+                    CreateAmOpening(document, analyticalPanel.Id);
 
                 return Result.Succeeded;
             }
@@ -38,7 +38,7 @@ namespace ContextualAnalyticalModel
         /// </summary>
         /// <param name="revitDoc">Revit documenr</param>
         /// <returns></returns>
-        public static AnalyticalPanel CreateAMPanel(Document revitDoc)
+        public static AnalyticalPanel CreateAmPanel(Document revitDoc)
         {
             AnalyticalPanel analyticalPanel = null;
             using (var transaction = new Transaction(revitDoc, "Create Analytical Panel"))
@@ -72,7 +72,7 @@ namespace ContextualAnalyticalModel
         ///     creates an AnalyticalOpening element which will be placed on the AnalyticalPanel
         ///     with id = panelId
         /// </summary>
-        public static AnalyticalOpening CreateAMOpening(Document revitDoc, ElementId panelId)
+        public static AnalyticalOpening CreateAmOpening(Document revitDoc, ElementId panelId)
         {
             if (panelId == ElementId.InvalidElementId)
                 return null;

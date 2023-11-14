@@ -13,15 +13,15 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
     /// <summary>
     ///     Translate the panel schedule view data from Revit to HTML table.
     /// </summary>
-    internal class HTMLTranslator : Translator
+    internal class HtmlTranslator : Translator
     {
         /// <summary>
         ///     create a Translator instance for a PanelScheduleView instance.
         /// </summary>
         /// <param name="psView">the exporting panel schedule view instance.</param>
-        public HTMLTranslator(PanelScheduleView psView)
+        public HtmlTranslator(PanelScheduleView psView)
         {
-            m_psView = psView;
+            PsView = psView;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
             }
 
             var panelScheduleFile =
-                asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(m_psView.Name) + ".html");
+                asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(PsView.Name) + ".html");
 
             var doc = new XmlDocument();
             var tw = new XmlTextWriter(panelScheduleFile, null);
@@ -65,10 +65,10 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         /// <param name="doc"></param>
         private void DumpPanelScheduleData(XmlNode panelScheduleDataNode, XmlDocument doc)
         {
-            DumpSectionData(panelScheduleDataNode, doc, m_psView, SectionType.Header);
-            DumpSectionData(panelScheduleDataNode, doc, m_psView, SectionType.Body);
-            DumpSectionData(panelScheduleDataNode, doc, m_psView, SectionType.Summary);
-            DumpSectionData(panelScheduleDataNode, doc, m_psView, SectionType.Footer);
+            DumpSectionData(panelScheduleDataNode, doc, PsView, SectionType.Header);
+            DumpSectionData(panelScheduleDataNode, doc, PsView, SectionType.Body);
+            DumpSectionData(panelScheduleDataNode, doc, PsView, SectionType.Summary);
+            DumpSectionData(panelScheduleDataNode, doc, PsView, SectionType.Footer);
         }
 
         /// <summary>
@@ -81,24 +81,24 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         private void DumpSectionData(XmlNode panelScheduleDataNode, XmlDocument doc, PanelScheduleView psView,
             SectionType sectionType)
         {
-            var nRows_Section = 0;
-            var nCols_Section = 0;
-            getNumberOfRowsAndColumns(m_psView.Document, m_psView, sectionType, ref nRows_Section, ref nCols_Section);
+            var nRowsSection = 0;
+            var nColsSection = 0;
+            GetNumberOfRowsAndColumns(PsView.Document, PsView, sectionType, ref nRowsSection, ref nColsSection);
 
-            for (var ii = 0; ii < nRows_Section; ++ii)
+            for (var ii = 0; ii < nRowsSection; ++ii)
             {
                 // add a <tr> node for each row
                 var trNode = doc.CreateElement("tr");
                 panelScheduleDataNode.AppendChild(trNode);
 
-                for (var jj = 0; jj < nCols_Section; ++jj)
+                for (var jj = 0; jj < nColsSection; ++jj)
                 {
                     // add <td> node for each cell
                     var tdNode = doc.CreateElement("td");
 
                     try
                     {
-                        tdNode.InnerText = m_psView.GetCellText(sectionType, ii, jj);
+                        tdNode.InnerText = PsView.GetCellText(sectionType, ii, jj);
                     }
                     catch (Exception)
                     {

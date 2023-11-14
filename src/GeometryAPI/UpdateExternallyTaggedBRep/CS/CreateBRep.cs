@@ -52,7 +52,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
 
             try
             {
-                if (Result.Succeeded != HelperMethods.executeCreateBRepCommand(dbDocument))
+                if (Result.Succeeded != HelperMethods.ExecuteCreateBRepCommand(dbDocument))
                     return Result.Failed;
             }
             catch (Exception ex)

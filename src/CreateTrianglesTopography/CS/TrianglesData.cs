@@ -28,13 +28,13 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
             var assemblyFileFolder = Path.GetDirectoryName(typeof(TrianglesData).Assembly.Location);
             var emmfilePath = Path.Combine(assemblyFileFolder, "TrianglesData.json");
             var emmfileContent = File.ReadAllText(emmfilePath);
-            return JSONParse(emmfileContent);
+            return JsonParse(emmfileContent);
         }
 
-        private static TrianglesData JSONParse(string jsonString)
+        private static TrianglesData JsonParse(string jsonString)
         {
             var serializer = new JavaScriptSerializer();
-            serializer.RegisterConverters(new JavaScriptConverter[] { new XYZConverter() });
+            serializer.RegisterConverters(new JavaScriptConverter[] { new XyzConverter() });
 
             return serializer.Deserialize(jsonString, typeof(TrianglesData)) as TrianglesData;
         }
@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
     /// <summary>
     ///     The converter for Revit XYZ.
     /// </summary>
-    public class XYZConverter : JavaScriptConverter
+    public class XyzConverter : JavaScriptConverter
     {
         /// <summary>
         ///     gets a collection of the supported types

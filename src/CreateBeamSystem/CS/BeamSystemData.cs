@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         ///     all beam types loaded in current Revit project
         ///     it is declared as static only because of PropertyGrid
         /// </summary>
-        private static readonly Dictionary<string, FamilySymbol> m_beamTypes = new Dictionary<string, FamilySymbol>();
+        private static readonly Dictionary<string, FamilySymbol> BeamTypes = new Dictionary<string, FamilySymbol>();
 
         /// <summary>
         ///     a number of beams that intersect end to end
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             InitializeProfile(m_beams);
 
             m_param = BeamSystemParam.CreateInstance(LayoutMethod.ClearSpacing);
-            var beamTypes = new List<FamilySymbol>(m_beamTypes.Values);
+            var beamTypes = new List<FamilySymbol>(BeamTypes.Values);
             m_param.BeamType = beamTypes[0];
             m_param.LayoutRuleChanged += LayoutRuleChanged;
         }
@@ -98,7 +98,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns></returns>
         public static Dictionary<string, FamilySymbol> GetBeamTypes()
         {
-            var beamTypes = new Dictionary<string, FamilySymbol>(m_beamTypes);
+            var beamTypes = new Dictionary<string, FamilySymbol>(BeamTypes);
             return beamTypes;
         }
 
@@ -108,7 +108,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         private void PrepareData()
         {
             var doc = m_commandData.Application.ActiveUIDocument;
-            m_beamTypes.Clear();
+            BeamTypes.Clear();
 
             // iterate all selected beams
             foreach (var elementId in doc.Selection.GetElementIds())
@@ -139,13 +139,13 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                     // add symbols to lists according to category name
                     var categoryName = symbol.Category.Name;
                     if ("Structural Framing" == categoryName)
-                        m_beamTypes.Add(symbol.Family.Name + ":" + symbol.Name, symbol);
+                        BeamTypes.Add(symbol.Family.Name + ":" + symbol.Name, symbol);
                 }
             }
 
             if (m_beams.Count == 0) throw new ErrorMessageException("Please select beams.");
 
-            if (m_beamTypes.Count == 0)
+            if (BeamTypes.Count == 0)
                 throw new ErrorMessageException("There is no Beam families loaded in current project.");
         }
 

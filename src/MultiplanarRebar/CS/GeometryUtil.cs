@@ -251,20 +251,20 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var gelem = element.get_Geometry(goption);
             Solid resultSolid = null;
             //foreach (GeometryObject gobj in gelem.Objects)
-            var Objects = gelem.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = gelem.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var gobj = Objects.Current;
+                var gobj = objects.Current;
 
                 var gIns = gobj as GeometryInstance;
                 if (gIns != null)
                 {
                     var finalGeom = gIns.GetInstanceGeometry();
                     //foreach (GeometryObject gobj2 in finalGeom.Objects)
-                    var Objects1 = finalGeom.GetEnumerator();
-                    while (Objects1.MoveNext())
+                    var objects1 = finalGeom.GetEnumerator();
+                    while (objects1.MoveNext())
                     {
-                        var gobj2 = Objects1.Current;
+                        var gobj2 = objects1.Current;
 
                         var tSolid = gobj2 as Solid;
                         if (tSolid != null && tSolid.Faces.Size > 0 && tSolid.Volume > 0)
@@ -310,8 +310,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         /// <returns>Distance of the two planar faces</returns>
         private static double GetDistance(PlanarFace face1, PlanarFace face2)
         {
-            var boxUV = face2.GetBoundingBox();
-            var center = (boxUV.Max + boxUV.Min) * 0.5;
+            var boxUv = face2.GetBoundingBox();
+            var center = (boxUv.Max + boxUv.Min) * 0.5;
             var centerPt = face2.Evaluate(center);
             face1.Project(centerPt);
             return face1.Project(centerPt).Distance;

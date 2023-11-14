@@ -15,12 +15,12 @@ namespace Revit.SDK.Samples.SpanDirection.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        public Document m_docment;
+        public Document Docment;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var application = commandData.Application;
-            m_docment = application.ActiveUIDocument.Document;
+            Docment = application.ActiveUIDocument.Document;
             try
             {
                 // user should select one slab firstly. 
@@ -71,8 +71,8 @@ namespace Revit.SDK.Samples.SpanDirection.CS
                 //while (symbolIter.MoveNext())
                 foreach (var eid in symbolArray)
                 {
-                    var elem = m_docment.GetElement(eid);
-                    if (elem != null) symbols += (m_docment.GetElement(elem.GetTypeId()) as ElementType).Name + "\r\n";
+                    var elem = Docment.GetElement(eid);
+                    if (elem != null) symbols += (Docment.GetElement(elem.GetTypeId()) as ElementType).Name + "\r\n";
                 }
 
                 TaskDialog.Show("Revit Direction", spanDirAngle + symbols, TaskDialogCommonButtons.Ok);

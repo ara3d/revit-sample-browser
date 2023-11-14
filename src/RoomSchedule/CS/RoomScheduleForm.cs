@@ -128,9 +128,9 @@ namespace Revit.SDK.Samples.RoomSchedule
                 var apiGroup = parafile.Groups.Create("SDKSampleRoomScheduleGroup");
 
                 // create a visible "External Room ID" of text type.
-                var ExternalDefinitionCreationOptions =
+                var externalDefinitionCreationOptions =
                     new ExternalDefinitionCreationOptions(RoomsData.SharedParam, SpecTypeId.String.Text);
-                var roomSharedParamDef = apiGroup.Definitions.Create(ExternalDefinitionCreationOptions);
+                var roomSharedParamDef = apiGroup.Definitions.Create(externalDefinitionCreationOptions);
 
                 // get Rooms category
                 var roomCat =
@@ -258,7 +258,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 for (var row = 0; row < m_spreadRoomsTable.Rows.Count; row++)
                 {
                     // get the ID column value and use it to check whether this spreadsheet room is mapped by Revit room.
-                    var externaId = m_spreadRoomsTable.Rows[row][RoomsData.RoomID].ToString();
+                    var externaId = m_spreadRoomsTable.Rows[row][RoomsData.RoomId].ToString();
                     if (existingRooms.ContainsValue(externaId))
                         // skip the spreadsheet room creation if it's mapped by Revit room
                         continue;
@@ -345,7 +345,7 @@ namespace Revit.SDK.Samples.RoomSchedule
 
             // create Revit rooms by using spread sheet based rooms
             // add "ID" data of spread sheet to Room element's share parameter: "External Room ID"
-            var column = m_spreadRoomsTable.Columns[RoomsData.RoomID];
+            var column = m_spreadRoomsTable.Columns[RoomsData.RoomId];
             if (column == null)
             {
                 MyMessageBox("Failed to get ID data of spread sheet rooms.", MessageBoxIcon.Warning);
@@ -426,7 +426,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                     {
                         // create xls data source connector and retrieve data from it
                         m_dataBaseName = sfdlg.FileName;
-                        var xlsCon = new XlsDBConnector(m_dataBaseName);
+                        var xlsCon = new XlsDbConnector(m_dataBaseName);
 
                         // bind table data to grid view and ComboBox control
                         tablesComboBox.DataSource = xlsCon.RetrieveAllTables();
@@ -453,13 +453,13 @@ namespace Revit.SDK.Samples.RoomSchedule
             // update spread sheet based rooms
             sheetDataGridView.DataSource = null;
             m_roomTableName = tablesComboBox.SelectedValue as string;
-            XlsDBConnector xlsCon = null;
+            XlsDbConnector xlsCon = null;
             try
             {
                 m_spreadRoomsTable?.Clear();
 
                 // get all rooms table then close this connection immediately
-                xlsCon = new XlsDBConnector(m_dataBaseName);
+                xlsCon = new XlsDbConnector(m_dataBaseName);
 
                 // generate room data table from room work sheet.
                 m_spreadRoomsTable = xlsCon.GenDataTable(m_roomTableName);

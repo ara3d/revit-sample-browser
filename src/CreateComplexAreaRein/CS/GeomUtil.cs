@@ -13,7 +13,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
     /// </summary>
     internal class GeomUtil
     {
-        private const double PRECISION = 0.00001; //precision when judge whether two doubles are equal
+        private const double Precision = 0.00001; //precision when judge whether two doubles are equal
 
         /// <summary>
         ///     get all faces that compose the geometry solid of given element
@@ -29,11 +29,11 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 
             var geoElem = elem.get_Geometry(geoOptions);
             //GeometryObjectArray geoElems = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //foreach (object o in geoElems)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                object o = Objects.Current;
+                object o = objects.Current;
 
                 var geoSolid = o as GeoSolid;
                 if (null == geoSolid) continue;
@@ -52,9 +52,9 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         public static List<XYZ> GetPoints(Face face)
         {
             var points = new List<XYZ>();
-            var XYZs = face.Triangulate().Vertices as List<XYZ>;
+            var xyZs = face.Triangulate().Vertices as List<XYZ>;
 
-            foreach (var point in XYZs) points.Add(point);
+            foreach (var point in xyZs) points.Add(point);
 
             return points;
         }
@@ -88,14 +88,14 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         public static bool IsParallel(Face face, Line line)
         {
             var points = GetPoints(face);
-            var vector1 = SubXYZ(points[0], points[1]);
-            var vector2 = SubXYZ(points[1], points[2]);
-            var refer = SubXYZ(line.GetEndPoint(0), line.GetEndPoint(1));
+            var vector1 = SubXyz(points[0], points[1]);
+            var vector2 = SubXyz(points[1], points[2]);
+            var refer = SubXyz(line.GetEndPoint(0), line.GetEndPoint(1));
 
             var cross = CrossMatrix(vector1, vector2);
             var result = DotMatrix(cross, refer);
 
-            return result < PRECISION;
+            return result < Precision;
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <returns>length</returns>
         public static double GetLength(Line line)
         {
-            var sub = SubXYZ(line.GetEndPoint(0), line.GetEndPoint(1));
+            var sub = SubXyz(line.GetEndPoint(0), line.GetEndPoint(1));
             var length = Math.Sqrt(sub.X * sub.X + sub.Y * sub.Y + sub.Z * sub.Z);
             return length;
         }
@@ -152,17 +152,17 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <param name="inLine">given line</param>
         /// <param name="distance">distance from given line</param>
         /// <returns>paralleled line</returns>
-        public static Line GetXYParallelLine(Line inLine, double distance)
+        public static Line GetXyParallelLine(Line inLine, double distance)
         {
-            var direct = SubXYZ(inLine.GetEndPoint(1), inLine.GetEndPoint(0));
+            var direct = SubXyz(inLine.GetEndPoint(1), inLine.GetEndPoint(0));
             var length = Math.Sqrt(-direct.Y * -direct.Y + direct.X * direct.X);
             var temp = distance / length;
 
             var dPerp = new XYZ(-direct.Y * temp,
                 direct.X * temp, 0.0);
 
-            var startPoint = AddXYZ(inLine.GetEndPoint(0), dPerp);
-            var endPoint = AddXYZ(inLine.GetEndPoint(1), dPerp);
+            var startPoint = AddXyz(inLine.GetEndPoint(0), dPerp);
+            var endPoint = AddXyz(inLine.GetEndPoint(1), dPerp);
             var outLine = Line.CreateBound(startPoint, endPoint);
             //Line outLine = new Line(ref startPoint, ref endPoint);
 
@@ -180,10 +180,10 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             var startPoint = inLine.GetEndPoint(0);
             var endPoint = inLine.GetEndPoint(1);
 
-            var temp1 = SubXYZ(endPoint, startPoint);
-            var temp2 = MultiXYZ(temp1, (scale - 1) / 2);
-            var startPoint2 = SubXYZ(startPoint, temp2);
-            var endPoint2 = AddXYZ(endPoint, temp2);
+            var temp1 = SubXyz(endPoint, startPoint);
+            var temp2 = MultiXyz(temp1, (scale - 1) / 2);
+            var startPoint2 = SubXyz(startPoint, temp2);
+            var endPoint2 = AddXyz(endPoint, temp2);
 
             var outLine = Line.CreateBound(startPoint2, endPoint2);
             //Line outLine = new Line(ref startPoint2, ref endPoint2);
@@ -198,12 +198,12 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <returns></returns>
         private static bool IsVertical(Line line1, Line line2)
         {
-            var vector1 = SubXYZ(line1.GetEndPoint(0), line1.GetEndPoint(1));
-            var vector2 = SubXYZ(line2.GetEndPoint(0), line2.GetEndPoint(1));
+            var vector1 = SubXyz(line1.GetEndPoint(0), line1.GetEndPoint(1));
+            var vector2 = SubXyz(line2.GetEndPoint(0), line2.GetEndPoint(1));
 
             var result = DotMatrix(vector1, vector2);
 
-            return Math.Abs(result) < PRECISION;
+            return Math.Abs(result) < Precision;
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static XYZ SubXYZ(XYZ p1, XYZ p2)
+        private static XYZ SubXyz(XYZ p1, XYZ p2)
         {
             var x = p1.X - p2.X;
             var y = p1.Y - p2.Y;
@@ -228,7 +228,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static XYZ AddXYZ(XYZ p1, XYZ p2)
+        private static XYZ AddXyz(XYZ p1, XYZ p2)
         {
             var x = p1.X + p2.X;
             var y = p1.Y + p2.Y;
@@ -244,7 +244,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <param name="p1"></param>
         /// <param name="para"></param>
         /// <returns></returns>
-        private static XYZ MultiXYZ(XYZ p1, double para)
+        private static XYZ MultiXyz(XYZ p1, double para)
         {
             var x = p1.X * para;
             var y = p1.Y * para;
@@ -308,7 +308,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         private static bool IsEqual(double d1, double d2)
         {
             var diff = Math.Abs(d1 - d2);
-            return diff < PRECISION;
+            return diff < Precision;
         }
     }
 }

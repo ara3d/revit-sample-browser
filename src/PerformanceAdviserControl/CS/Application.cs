@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// <summary>
         ///     The custom API rule we are registering with PerformanceAdviser
         /// </summary>
-        private FlippedDoorCheck m_FlippedDoorApiRule;
+        private FlippedDoorCheck m_flippedDoorApiRule;
 
         /// <summary>
         ///     Basic construction
@@ -55,8 +55,8 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             var largeImage = new BitmapImage(uriImage);
             pb.LargeImage = largeImage;
 
-            m_FlippedDoorApiRule = new FlippedDoorCheck();
-            PerformanceAdviser.GetPerformanceAdviser().AddRule(m_FlippedDoorApiRule.getRuleId(), m_FlippedDoorApiRule);
+            m_flippedDoorApiRule = new FlippedDoorCheck();
+            PerformanceAdviser.GetPerformanceAdviser().AddRule(m_flippedDoorApiRule.GetRuleId(), m_flippedDoorApiRule);
 
             return Result.Succeeded;
         }
@@ -81,8 +81,8 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// </returns>
         public Result OnShutdown(UIControlledApplication application)
         {
-            PerformanceAdviser.GetPerformanceAdviser().DeleteRule(m_FlippedDoorApiRule.getRuleId());
-            m_FlippedDoorApiRule = null;
+            PerformanceAdviser.GetPerformanceAdviser().DeleteRule(m_flippedDoorApiRule.GetRuleId());
+            m_flippedDoorApiRule = null;
 
             return Result.Succeeded;
         }

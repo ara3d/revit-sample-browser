@@ -17,32 +17,27 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <summary>
         ///     the extend or sweep path of the beam or column
         /// </summary>
-        protected readonly Line m_drivingLine;
+        protected readonly Line DrivingLine;
 
         /// <summary>
         ///     the director vector of beam or column
         /// </summary>
-        protected readonly XYZ m_drivingVector;
+        protected readonly XYZ DrivingVector;
 
         /// <summary>
         ///     a list to store the edges
         /// </summary>
-        protected List<Line> m_edges = new List<Line>();
+        private List<Line> m_edges = new List<Line>();
 
         /// <summary>
         ///     a list to store the point
         /// </summary>
-        protected readonly List<XYZ> m_points = new List<XYZ>();
-
-        /// <summary>
-        ///     store the solid of beam or column
-        /// </summary>
-        protected Solid m_solid;
+        protected readonly List<XYZ> Points = new List<XYZ>();
 
         /// <summary>
         ///     the transform value of the solid
         /// </summary>
-        protected readonly Transform m_transform;
+        private readonly Transform m_transform;
 
         /// <summary>
         ///     constructor
@@ -53,8 +48,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         {
             // get the geometry element of the selected element
             var geoElement = element.get_Geometry(new Options());
-            var Objects = geoElement.GetEnumerator();
-            if (null == geoElement || !Objects.MoveNext())
+            var objects = geoElement.GetEnumerator();
+            if (null == geoElement || !objects.MoveNext())
                 throw new Exception("Can't get the geometry of selected element.");
 
             var swProfile = element.GetSweptProfile();
@@ -65,26 +60,26 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var line = swProfile.GetDrivingCurve() as Line;
             if (null != line)
             {
-                m_drivingLine = line; // driving path
-                m_drivingVector = GeomUtil.SubXYZ(line.GetEndPoint(1), line.GetEndPoint(0));
+                DrivingLine = line; // driving path
+                DrivingVector = GeomUtil.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
             }
 
             //get the geometry object
-            Objects.Reset();
+            objects.Reset();
             //foreach (GeometryObject geoObject in geoElement.Objects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geoObject = Objects.Current;
+                var geoObject = objects.Current;
 
                 //get the geometry instance which contain the geometry information
                 var instance = geoObject as GeoInstance;
                 if (null != instance)
                 {
                     //foreach (GeometryObject o in instance.SymbolGeometry.Objects)
-                    var Objects1 = instance.SymbolGeometry.GetEnumerator();
-                    while (Objects1.MoveNext())
+                    var objects1 = instance.SymbolGeometry.GetEnumerator();
+                    while (objects1.MoveNext())
                     {
-                        var o = Objects1.Current;
+                        var o = objects1.Current;
 
                         // get the solid of beam of column
                         var solid = o as Solid;
@@ -93,7 +88,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
                         if (null == solid) continue;
                         if (0 == solid.Faces.Size || 0 == solid.Edges.Size) continue;
 
-                        m_solid = solid;
                         //get the transform value of instance
                         m_transform = instance.Transform;
 
@@ -106,7 +100,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             // do some checks about profile curves information
             if (null == m_edges) throw new Exception("Can't get the geometry edge information.");
-            if (4 != m_points.Count) throw new Exception("The sample only work for rectangular beams or columns.");
+            if (4 != Points.Count) throw new Exception("The sample only work for rectangular beams or columns.");
         }
 
         /// <summary>
@@ -114,7 +108,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// </summary>
         /// <param name="point">the point need to transform</param>
         /// <returns>the changed point</returns>
-        protected XYZ Transform(XYZ point)
+        private XYZ Transform(XYZ point)
         {
             // only invoke the TransformPoint() method.
             return GeomUtil.TransformPoint(point, m_transform);
@@ -126,7 +120,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <returns>the length of the driving line</returns>
         protected double GetDrivingLineLength()
         {
-            return GeomUtil.GetLength(m_drivingVector);
+            return GeomUtil.GetLength(DrivingVector);
         }
 
         /// <summary>
@@ -146,13 +140,13 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             {
                 if (GeomUtil.IsEqual(point, line.GetEndPoint(0)))
                 {
-                    var vector = GeomUtil.SubXYZ(line.GetEndPoint(1), line.GetEndPoint(0));
+                    var vector = GeomUtil.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
                     vectors.Add(vector);
                 }
 
                 if (GeomUtil.IsEqual(point, line.GetEndPoint(1)))
                 {
-                    var vector = GeomUtil.SubXYZ(line.GetEndPoint(0), line.GetEndPoint(1));
+                    var vector = GeomUtil.SubXyz(line.GetEndPoint(0), line.GetEndPoint(1));
                     vectors.Add(vector);
                 }
             }
@@ -174,7 +168,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var points = new List<XYZ>();
 
             // Get all points of the swept profile, and offset it in two related direction
-            foreach (var point in m_points)
+            foreach (var point in Points)
             {
                 // Get two related directions
                 var directions = GetRelatedVectors(point);
@@ -206,7 +200,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             if (null == sweptFace || 1 != sweptFace.EdgeLoops.Size) return false;
 
             // get the points of the swept face
-            foreach (var point in sweptFace.Triangulate().Vertices) m_points.Add(Transform(point));
+            foreach (var point in sweptFace.Triangulate().Vertices) Points.Add(Transform(point));
 
             // get the edges of the swept face
             m_edges = ChangeEdgeToLine(sweptFace.EdgeLoops.get_Item(0));
@@ -236,14 +230,14 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
                 // some edges should be paralleled with the driving line,
                 // and the start point of that edge should be the wanted point
-                var edgeVector = GeomUtil.SubXYZ(second, first);
-                if (GeomUtil.IsSameDirection(edgeVector, m_drivingVector))
+                var edgeVector = GeomUtil.SubXyz(second, first);
+                if (GeomUtil.IsSameDirection(edgeVector, DrivingVector))
                 {
                     refPoint = first;
                     break;
                 }
 
-                if (GeomUtil.IsOppositeDirection(edgeVector, m_drivingVector))
+                if (GeomUtil.IsOppositeDirection(edgeVector, DrivingVector))
                 {
                     refPoint = second;
                     break;
@@ -256,7 +250,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             {
                 if (null != sweptFace) break;
                 // the swept face should be perpendicular with the driving line
-                if (!GeomUtil.IsVertical(face, m_drivingLine, m_transform, null)) continue;
+                if (!GeomUtil.IsVertical(face, DrivingLine, m_transform, null)) continue;
                 // use the got point to get the swept face
                 foreach (var point in face.Triangulate().Vertices)
                 {

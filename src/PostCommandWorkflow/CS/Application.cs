@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <summary>
         ///     The path to this add-in assembly.
         /// </summary>
-        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -42,7 +42,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            CreateUIPanel(application);
+            CreateUiPanel(application);
             return Result.Succeeded;
         }
 
@@ -50,18 +50,18 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         ///     Creates the ribbon panel for this add-in.
         /// </summary>
         /// <param name="application">The application.</param>
-        private void CreateUIPanel(UIControlledApplication application)
+        private void CreateUiPanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("UI");
             var setupMonitor = new PushButtonData("Setup_Revision_Monitor", "Setup Revision Monitor",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(PostCommandRevisionMonitorCommand).FullName);
-            var setupMonitorPB = rp.AddItem(setupMonitor) as PushButton;
+            var setupMonitorPb = rp.AddItem(setupMonitor) as PushButton;
 
-            SetIconsForPushButton(setupMonitorPB, Resources.RevisionIcon);
+            SetIconsForPushButton(setupMonitorPb, Resources.RevisionIcon);
 
             // Pass the pushbutton handle to the command class, so that the text can be changed when pressed
-            PostCommandRevisionMonitorCommand.SetPushButton(setupMonitorPB);
+            PostCommandRevisionMonitorCommand.SetPushButton(setupMonitorPb);
         }
 
         /// <summary>

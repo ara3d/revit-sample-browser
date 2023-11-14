@@ -1764,7 +1764,7 @@
     </Compile>
     <Compile Include="Selections\CS\SelectionManager.cs" />
     <Compile Include="ShaftHolePuncher\CS\Command.cs" />
-    <Compile Include="ShaftHolePuncher\CS\ITool.cs" />
+    <Compile Include="ShaftHolePuncher\CS\Tool.cs" />
     <Compile Include="ShaftHolePuncher\CS\LineTool.cs" />
     <Compile Include="ShaftHolePuncher\CS\MathTools.cs" />
     <Compile Include="ShaftHolePuncher\CS\Profile.cs" />

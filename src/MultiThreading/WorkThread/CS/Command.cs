@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 {
                     // Start the analysis for the picked wall surface
                     case Result.Succeeded:
-                        Application.thisApp.RunAnalyzer(commandData.Application, sref);
+                        Application.ThisApp.RunAnalyzer(commandData.Application, sref);
                         break;
                     case Result.Failed:
                         message = "Did not picked a face on a Wall or FaceWall element!";

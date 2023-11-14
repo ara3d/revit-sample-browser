@@ -207,7 +207,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                     return false;
                 var tempTrf = Transform.Identity;
                 double dfOffset = 0;
-                if (!getOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0, out dfOffset))
+                if (!GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0, out dfOffset))
                     return false;
 
                 switch ((BarHandle)constraint.GetCustomHandleTag())
@@ -237,14 +237,14 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
             if (firstFace.Face == null || secondFace.Face == null || thirdFace.Face == null)
                 return false;
 
-            var thisBar = getCurrentRebar(data.GetRebarUpdateCurvesData());
+            var thisBar = GetCurrentRebar(data.GetRebarUpdateCurvesData());
             var selectedCurve =
                 //if a curve elem is selected, we override the geometry we get from the intersections and use the selected curve to create our bar geometries
-                getSelectedCurveElement(thisBar, data.GetRebarUpdateCurvesData());
+                GetSelectedCurveElement(thisBar, data.GetRebarUpdateCurvesData());
             //used to store the resulting curves
             var curves = new List<Curve>();
             Curve originalBar = null;
-            var singleBar = getOffsetCurveAtIntersection(firstFace, secondFace);
+            var singleBar = GetOffsetCurveAtIntersection(firstFace, secondFace);
             if (selectedCurve != null)
             {
                 var trf = Transform.CreateTranslation(singleBar.GetEndPoint(0) -
@@ -271,11 +271,11 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                 case RebarLayoutRule.MaximumSpacing:
                 case RebarLayoutRule.MinimumClearSpacing:
                     curves.Add(singleBar);
-                    var lastBar = getOffsetCurveAtIntersection(firstFace, thirdFace); // create last bar
+                    var lastBar = GetOffsetCurveAtIntersection(firstFace, thirdFace); // create last bar
 
                     // keep the curves pointing in the same direction
                     var firstBar = selectedCurve != null ? originalBar : singleBar;
-                    if (lastBar == null || !alignBars(ref firstBar, ref lastBar))
+                    if (lastBar == null || !AlignBars(ref firstBar, ref lastBar))
                         return false;
                     if (selectedCurve != null)
                     {
@@ -284,7 +284,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                         lastBar = selectedCurve.GeometryCurve.CreateTransformed(trf);
                     }
 
-                    if (!generateSet(singleBar, lastBar, layout,
+                    if (!GenerateSet(singleBar, lastBar, layout,
                             data.GetRebarUpdateCurvesData().GetBarsNumber(),
                             data.GetRebarUpdateCurvesData().Spacing, ref curves,
                             selectedCurve == null ? null : selectedCurve.GeometryCurve))
@@ -317,7 +317,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                 // so they need to be recalculated then.
                 for (var i = 0; i < 2; i++)
                 {
-                    var normal = computeNormal(curves[ii], firstFace, i);
+                    var normal = ComputeNormal(curves[ii], firstFace, i);
                     if (normal != null && !normal.IsZeroLength())
                         data.GetRebarUpdateCurvesData().SetHookPlaneNormalForBarIdx(i, ii, normal);
                 }
@@ -349,7 +349,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// <returns> true if execution was completed successfully, false otherwise</returns>
         public bool TrimExtendCurves(RebarTrimExtendData data)
         {
-            if (getSelectedCurveElement(getCurrentRebar(data.GetRebarUpdateCurvesData()),
+            if (GetSelectedCurveElement(GetCurrentRebar(data.GetRebarUpdateCurvesData()),
                     data.GetRebarUpdateCurvesData()) != null)
                 return true;
 
@@ -382,12 +382,12 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                             .get_Geometry(geomOptions);
                         if (elemGeometry == null)
                             return false;
-                        hostFaces = getFacesFromElement(elemGeometry);
+                        hostFaces = GetFacesFromElement(elemGeometry);
                     }
 
                     // for each bar try to find the closest face that intersects with it, or its extension, at the specified end
                     foreach (var bar in allbars)
-                        faces.Add(searchForFace(bar, hostFaces, iBarEnd));
+                        faces.Add(SearchForFace(bar, hostFaces, iBarEnd));
 
                     // gather valid references for constraint creation
                     var refs = new List<Reference>();
@@ -413,7 +413,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                         if (constrainedFace == null)
                             continue;
                         double dfOffset;
-                        if (getOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0,
+                        if (GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0,
                                 out dfOffset))
                             faces.Add(new TargetFace { Face = constrainedFace, Transform = trf, Offset = dfOffset });
                     }
@@ -430,8 +430,8 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                     var tangent = Line.CreateUnbound(barCurve.GetEndPoint(iBarEnd),
                         barCurve.ComputeDerivatives(iBarEnd, true).BasisX.Normalize() * (iBarEnd == 0 ? -1 : 1));
                     var dfOffset = 0.0;
-                    if (getIntersection(tangent, faces, out intersection, out dfOffset) ||
-                        getIntersection(barCurve, faces, out intersection, out dfOffset))
+                    if (GetIntersection(tangent, faces, out intersection, out dfOffset) ||
+                        GetIntersection(barCurve, faces, out intersection, out dfOffset))
                     {
                         Curve newCurve = null;
                         try
@@ -461,7 +461,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                 {
                     var tempTrf = Transform.Identity;
                     double dfOffset;
-                    if (!getOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0, out dfOffset))
+                    if (!GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0, out dfOffset))
                         return false;
                     firstFace = new TargetFace
                     {
@@ -480,7 +480,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                 // set the hook normals for each bar that was modified
                 for (var i = 0; i < 2; i++)
                 {
-                    var normal = computeNormal(allbars[ii], firstFace, i);
+                    var normal = ComputeNormal(allbars[ii], firstFace, i);
                     if (normal != null && !normal.IsZeroLength())
                         data.GetRebarUpdateCurvesData().SetHookPlaneNormalForBarIdx(i, ii, normal);
                 }
@@ -494,16 +494,16 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// </summary>
         /// <param name="data"> data used to pass or get information regarding constraints cover</param>
         /// <returns>Current rebar element being regenerated</returns>
-        private Rebar getCurrentRebar(RebarUpdateCurvesData data)
+        private Rebar GetCurrentRebar(RebarUpdateCurvesData data)
         {
             var rebarId = data.GetRebarId();
             return data.GetDocument().GetElement(rebarId) as Rebar;
         }
 
-        private CurveElement getSelectedCurveElement(Rebar bar, RebarUpdateCurvesData data)
+        private CurveElement GetSelectedCurveElement(Rebar bar, RebarUpdateCurvesData data)
         {
             bar.GetFreeFormAccessor();
-            var paramCurveId = bar.LookupParameter(AddSharedParams.m_CurveIdName);
+            var paramCurveId = bar.LookupParameter(AddSharedParams.CurveIdName);
             if (paramCurveId == null)
                 return null;
             var id = ElementId.Parse(paramCurveId.AsString());
@@ -518,7 +518,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// <param name="targetIdx">index of target in constraint</param>
         /// <param name="offset"> output value </param>
         /// <returns></returns>
-        public static bool getOffsetFromConstraintAtTarget(RebarUpdateCurvesData updateData, RebarConstraint constraint,
+        public static bool GetOffsetFromConstraintAtTarget(RebarUpdateCurvesData updateData, RebarConstraint constraint,
             int targetIdx, out double offset)
         {
             offset = 0.0;
@@ -563,7 +563,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         ///     input parameter specifying the curve end for wich the search is taking place
         /// </param>
         /// <returns> the FaceTrf that is closest to the curve end</returns>
-        private TargetFace searchForFace(Curve curve, List<TargetFace> faces, int iEnd)
+        private TargetFace SearchForFace(Curve curve, List<TargetFace> faces, int iEnd)
         {
             var bestFace = new TargetFace();
             var minDistance = double.MaxValue;
@@ -623,7 +623,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         ///     specifies the end at which the hook normal to be calculated
         /// </param>
         /// <returns> the plane normal that was calculated</returns>
-        private XYZ computeNormal(Curve curve, TargetFace face, int iEnd)
+        private XYZ ComputeNormal(Curve curve, TargetFace face, int iEnd)
         {
             var curveTangent = curve.ComputeDerivatives(iEnd, true).BasisX.Normalize();
             var refPoint = curve.GetEndPoint(iEnd);
@@ -651,7 +651,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         ///     output parameter to return the offset value stored in Targetface that was used for intersection
         /// </param>
         /// <returns> true if an intersection was found, false otherwise</returns>
-        private bool getIntersection(Curve curve, List<TargetFace> faces, out XYZ intersection,
+        private bool GetIntersection(Curve curve, List<TargetFace> faces, out XYZ intersection,
             out double offsetFromFace)
         {
             intersection = new XYZ();
@@ -686,7 +686,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// <param name="curves"></param>
         /// <param name="overrideCurve"></param>
         /// <returns></returns>
-        private bool generateSet(Curve firstCurve, Curve lastCurve, RebarLayoutRule layout, int nbOfBars,
+        private bool GenerateSet(Curve firstCurve, Curve lastCurve, RebarLayoutRule layout, int nbOfBars,
             double spacing, ref List<Curve> curves, Curve overrideCurve)
         {
             try
@@ -731,7 +731,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// <param name="firstBar">bar that stays put, e.g. gives the wanted direction</param>
         /// <param name="secondBar">bar that flips if it's direction is not the same as the first</param>
         /// <returns></returns>
-        private bool alignBars(ref Curve firstBar, ref Curve secondBar)
+        private bool AlignBars(ref Curve firstBar, ref Curve secondBar)
         {
             try
             {
@@ -753,7 +753,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// <param name="firstFace"></param>
         /// <param name="secondFace"></param>
         /// <returns></returns>
-        private Curve getOffsetCurveAtIntersection(TargetFace firstFace, TargetFace secondFace)
+        private Curve GetOffsetCurveAtIntersection(TargetFace firstFace, TargetFace secondFace)
         {
             Curve firstCurve;
             var result = firstFace.Face.Intersect(secondFace.Face, out firstCurve);
@@ -761,10 +761,10 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
             if (result == FaceIntersectionFaceResult.NonIntersecting || !(firstCurve is Line))
                 return null;
             var pointOnCurve = firstCurve.Evaluate(0, true);
-            var FirstOffsetVec = firstFace.Face.ComputeNormal(firstFace.Face.Project(pointOnCurve).UVPoint).Normalize();
-            var SecondOffsetVec = secondFace.Face.ComputeNormal(secondFace.Face.Project(pointOnCurve).UVPoint)
+            var firstOffsetVec = firstFace.Face.ComputeNormal(firstFace.Face.Project(pointOnCurve).UVPoint).Normalize();
+            var secondOffsetVec = secondFace.Face.ComputeNormal(secondFace.Face.Project(pointOnCurve).UVPoint)
                 .Normalize();
-            var offsetVec = FirstOffsetVec * firstFace.Offset + SecondOffsetVec * secondFace.Offset;
+            var offsetVec = firstOffsetVec * firstFace.Offset + secondOffsetVec * secondFace.Offset;
             var offsetTrf = Transform.CreateTranslation(offsetVec);
             return firstCurve.CreateTransformed(offsetTrf.Multiply(firstFace.Transform));
         }
@@ -781,7 +781,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         ///     this is applicable for geometries that come from familyInstance
         /// </param>
         /// <returns> list of faces that make up the provided element </returns>
-        private List<TargetFace> getFacesFromElement(GeometryElement geometryElement, Transform trf = null)
+        private List<TargetFace> GetFacesFromElement(GeometryElement geometryElement, Transform trf = null)
         {
             var result = new List<TargetFace>();
             if (geometryElement != null)
@@ -794,7 +794,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                         if (geometryInstance != null)
                         {
                             var transform = geometryInstance.Transform;
-                            var nestedFaces = getFacesFromElement(geometryInstance.SymbolGeometry, transform);
+                            var nestedFaces = GetFacesFromElement(geometryInstance.SymbolGeometry, transform);
                             if (nestedFaces == null)
                                 return null;
                             foreach (var nestedFace in nestedFaces)

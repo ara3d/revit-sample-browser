@@ -140,7 +140,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
                     list = curve.Tessellate();
                 }
 
-                Utilities.addTo(m_points, list);
+                Utilities.AddTo(m_points, list);
                 return RenderNodeAction.Skip;
             }
 
@@ -154,7 +154,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
             {
                 var pLine = node.GetPolyline();
                 var list = pLine.GetCoordinates();
-                Utilities.addTo(m_points, list);
+                Utilities.AddTo(m_points, list);
                 return RenderNodeAction.Skip;
             }
 
@@ -212,13 +212,13 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
             IList<XYZ> list = new List<XYZ>();
             list.Add(segmentStart);
             list.Add(segmentEnd);
-            Utilities.addTo(m_points, list);
+            Utilities.AddTo(m_points, list);
         }
 
         public void OnPolylineSegments(PolylineSegments segments)
         {
             var segPoints = segments.GetVertices();
-            Utilities.addTo(m_points, segPoints);
+            Utilities.AddTo(m_points, segPoints);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Revit.SDK.Samples.CreateDuctworkStiffener.CS
         /// <summary>
         ///     The current document of the application
         /// </summary>
-        private static Document m_document;
+        private static Document _document;
 
         /// <summary>
         ///     The distance from ductwork start point to stiffener position
@@ -35,15 +35,15 @@ namespace Revit.SDK.Samples.CreateDuctworkStiffener.CS
         public Result Execute(ExternalCommandData commandData, ref string message,
             ElementSet elements)
         {
-            m_document = commandData.Application.ActiveUIDocument.Document;
-            if (m_document.IsFamilyDocument)
+            _document = commandData.Application.ActiveUIDocument.Document;
+            if (_document.IsFamilyDocument)
             {
                 message = "Cannot create ductwork stiffener in family document";
                 return Result.Failed;
             }
 
             //Get the ductwork in current project
-            var ductCollector = new FilteredElementCollector(m_document);
+            var ductCollector = new FilteredElementCollector(_document);
             ductCollector.OfCategory(BuiltInCategory.OST_FabricationDuctwork).OfClass(typeof(FabricationPart));
             if (ductCollector.GetElementCount() == 0)
             {
@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.CreateDuctworkStiffener.CS
             m_ductwork = ductCollector.FirstElement() as FabricationPart;
 
             //Get the ductwork stiffener type
-            var stiffenerTypeCollector = new FilteredElementCollector(m_document);
+            var stiffenerTypeCollector = new FilteredElementCollector(_document);
             stiffenerTypeCollector.OfCategory(BuiltInCategory.OST_FabricationDuctworkStiffeners)
                 .OfClass(typeof(FamilySymbol));
             if (stiffenerTypeCollector.GetElementCount() == 0)
@@ -87,16 +87,16 @@ namespace Revit.SDK.Samples.CreateDuctworkStiffener.CS
 
             try
             {
-                using (var transaction = new Transaction(m_document, "Sample_CreateDuctworkStiffener"))
+                using (var transaction = new Transaction(_document, "Sample_CreateDuctworkStiffener"))
                 {
                     transaction.Start();
                     if (!m_stiffenerType.IsActive)
                     {
                         m_stiffenerType.Activate();
-                        m_document.Regenerate();
+                        _document.Regenerate();
                     }
 
-                    MEPSupportUtils.CreateDuctworkStiffener(m_document, m_stiffenerType.Id, m_ductwork.Id,
+                    MEPSupportUtils.CreateDuctworkStiffener(_document, m_stiffenerType.Id, m_ductwork.Id,
                         m_distanceToHostEnd);
                     transaction.Commit();
                 }

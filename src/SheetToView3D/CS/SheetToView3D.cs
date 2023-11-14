@@ -38,10 +38,10 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
     /// </summary>
     public class MakeView3D
     {
-        private static readonly double CLICK_TOLERANCE = 0.0001;
+        private static readonly double ClickTolerance = 0.0001;
 
-        private static readonly double RANDOM_X_SCALE = 5631;
-        private static readonly double RANDOM_Y_SCALE = 4369;
+        private static readonly double RandomXScale = 5631;
+        private static readonly double RandomYScale = 4369;
 
         /// <summary>
         ///     Makes a View3D from a click on a viewport on a sheet.
@@ -140,7 +140,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
 
             foreach (var vpId in viewSheet.GetAllViewports())
             {
-                if (doc.GetElement(vpId) is Viewport viewport && viewport.GetBoxOutline().Contains(click, CLICK_TOLERANCE))
+                if (doc.GetElement(vpId) is Viewport viewport && viewport.GetBoxOutline().Contains(click, ClickTolerance))
                     // Click is within the viewport
                     return viewport;
             }
@@ -209,7 +209,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
             // Create a very long bounded line that starts at projectedPoint and runs 
             // along the plane's surface.
             var veryLongLine = Line.CreateBound(projectedPoint,
-                projectedPoint + RANDOM_X_SCALE * plane.XVec + RANDOM_Y_SCALE * plane.YVec);
+                projectedPoint + RandomXScale * plane.XVec + RandomYScale * plane.YVec);
 
             // Count how many edges of curveloop intersect veryLongLine.
             var intersectionCount = 0;

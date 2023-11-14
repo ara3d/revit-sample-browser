@@ -26,7 +26,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
     ///         IExternalApplication, and NOT an IExternalDBApplication.
     ///     </para>
     /// </summary>
-    internal class UIServerApplication : IExternalApplication
+    internal class UiServerApplication : IExternalApplication
     {
         /// <summary>
         ///     Registers an instance of a SampleExternalResourceUIServer with the ExternalService
@@ -42,14 +42,14 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
         /// </returns>
         public Result OnStartup(UIControlledApplication application)
         {
-            var externalResourceUIService =
+            var externalResourceUiService =
                 ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.ExternalResourceUIService);
-            if (externalResourceUIService == null)
+            if (externalResourceUiService == null)
                 return Result.Failed;
 
             // Create an instance of your IExternalResourceUIServer and register it with the ExternalResourceUIService.
-            IExternalResourceUIServer sampleUIServer = new SampleExternalResourceUIServer();
-            externalResourceUIService.AddServer(sampleUIServer);
+            IExternalResourceUIServer sampleUiServer = new SampleExternalResourceUiServer();
+            externalResourceUiService.AddServer(sampleUiServer);
             return Result.Succeeded;
         }
 

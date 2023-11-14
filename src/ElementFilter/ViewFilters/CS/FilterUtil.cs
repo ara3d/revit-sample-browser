@@ -95,7 +95,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 case FilterStringEndsWith _:
                     return isInverseRule ? RuleCriteraNames.NotEndsWith : RuleCriteraNames.EndsWith;
                 case FilterStringEquals _:
-                    return isInverseRule ? RuleCriteraNames.NotEquals : RuleCriteraNames.Equals_;
+                    return isInverseRule ? RuleCriteraNames.NotEquals : RuleCriteraNames.Equals;
                 case FilterStringGreater _:
                     return isInverseRule ? RuleCriteraNames.LessOrEqual : RuleCriteraNames.Greater;
                 case FilterStringGreaterOrEqual _:
@@ -125,7 +125,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             switch (fsre)
             {
                 case FilterNumericEquals _:
-                    return isInverseRule ? RuleCriteraNames.NotEquals : RuleCriteraNames.Equals_;
+                    return isInverseRule ? RuleCriteraNames.NotEquals : RuleCriteraNames.Equals;
                 case FilterNumericGreater _:
                     return isInverseRule ? RuleCriteraNames.LessOrEqual : RuleCriteraNames.Greater;
                 case FilterNumericGreaterOrEqual _:

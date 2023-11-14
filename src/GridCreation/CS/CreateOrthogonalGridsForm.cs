@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             labelYCoordUnit.Text = unit;
 
             // Set spacing values
-            textBoxXSpacing.Text = Unit.CovertFromAPI(m_data.Unit, 10).ToString();
+            textBoxXSpacing.Text = Unit.CovertFromApi(m_data.Unit, 10).ToString();
             textBoxYSpacing.Text = textBoxXSpacing.Text;
 
             // Set bubble locations to end point
@@ -63,21 +63,21 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         private void SetData()
         {
-            m_data.XOrigin = Unit.CovertToAPI(Convert.ToDouble(textBoxXCoord.Text), m_data.Unit);
-            m_data.YOrigin = Unit.CovertToAPI(Convert.ToDouble(textBoxYCoord.Text), m_data.Unit);
+            m_data.XOrigin = Unit.CovertToApi(Convert.ToDouble(textBoxXCoord.Text), m_data.Unit);
+            m_data.YOrigin = Unit.CovertToApi(Convert.ToDouble(textBoxYCoord.Text), m_data.Unit);
             m_data.XNumber = Convert.ToUInt32(textBoxXNumber.Text);
             m_data.YNumber = Convert.ToUInt32(textBoxYNumber.Text);
 
             if (Convert.ToUInt32(textBoxXNumber.Text) != 0)
             {
-                m_data.XSpacing = Unit.CovertToAPI(Convert.ToDouble(textBoxXSpacing.Text), m_data.Unit);
+                m_data.XSpacing = Unit.CovertToApi(Convert.ToDouble(textBoxXSpacing.Text), m_data.Unit);
                 m_data.XBubbleLoc = (BubbleLocation)comboBoxXBubbleLocation.SelectedIndex;
                 m_data.XFirstLabel = textBoxXFirstLabel.Text;
             }
 
             if (Convert.ToUInt32(textBoxYNumber.Text) != 0)
             {
-                m_data.YSpacing = Unit.CovertToAPI(Convert.ToDouble(textBoxYSpacing.Text), m_data.Unit);
+                m_data.YSpacing = Unit.CovertToApi(Convert.ToDouble(textBoxYSpacing.Text), m_data.Unit);
                 m_data.YBubbleLoc = (BubbleLocation)comboBoxYBubbleLocation.SelectedIndex;
                 m_data.YFirstLabel = textBoxYFirstLabel.Text;
             }

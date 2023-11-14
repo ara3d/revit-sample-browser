@@ -63,7 +63,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                                     CenterOffsetE = options.CenterOffsetE,
                                     CenterOffsetF = options.CenterOffsetF
                                 };
-                                var activeid = options.DMU ? commandData.Application.ActiveAddInId : null;
+                                var activeid = options.Dmu ? commandData.Application.ActiveAddInId : null;
                                 new WinderUpdater(lwinder,
                                     selectedIds, rvtDoc, activeid, options.Sketch);
                             }
@@ -102,7 +102,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                                     CenterOffsetE2 = options.CenterOffsetE2,
                                     CenterOffsetF2 = options.CenterOffsetF2
                                 };
-                                var activeid = options.DMU ? commandData.Application.ActiveAddInId : null;
+                                var activeid = options.Dmu ? commandData.Application.ActiveAddInId : null;
                                 new WinderUpdater(uwinder,
                                     selectedIds, rvtDoc, activeid, options.Sketch);
                             }

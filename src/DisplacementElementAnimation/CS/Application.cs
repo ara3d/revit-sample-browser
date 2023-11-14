@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <summary>
         ///     The path to this add-in assembly.
         /// </summary>
-        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -54,11 +54,11 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         {
             var rp = application.CreateRibbonPanel("Displacement");
             var setupMonitor = new PushButtonData("Displacement_Animiation", "Displacement Animation",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(DisplacementStructureModelAnimatorCommand).FullName);
-            var setupMonitorPB = rp.AddItem(setupMonitor) as PushButton;
+            var setupMonitorPb = rp.AddItem(setupMonitor) as PushButton;
 
-            SetIconsForPushButton(setupMonitorPB, Resources.DisplacementPlay);
+            SetIconsForPushButton(setupMonitorPb, Resources.DisplacementPlay);
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
-    partial class ExportIMGOptionsForm
+    partial class ExportImgOptionsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -394,7 +394,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             this.Controls.Add(this.exportRangeGroupBox);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ExportIMGOptionsForm";
+            this.Name = "ExportImgOptionsForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Export Image";

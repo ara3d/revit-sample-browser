@@ -19,12 +19,12 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         ///     Const name for invalid parameter
         /// </summary>
-        private const string m_noneParam = "(none)";
+        private const string NoneParam = "(none)";
 
         /// <summary>
         ///     Sample custom rule name prefix, filter rules will be displayed with this name + #(1, 2, ...)
         /// </summary>
-        private const string m_ruleNamePrefix = "Filter Rule ";
+        private const string RuleNamePrefix = "Filter Rule ";
 
         /// <summary>
         ///     Indicates if categories were changed by programming,
@@ -269,7 +269,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         {
             // Get criteria for selected parameter and reset rule criteria and rule values
             var selectItem = paramerComboBox.SelectedItem.ToString();
-            var isNone = selectItem == m_noneParam;
+            var isNone = selectItem == NoneParam;
             criteriaComboBox.Enabled = ruleValueComboBox.Enabled = newRuleButton.Enabled = !isNone;
             if (isNone) // is (none) selected
             {
@@ -315,7 +315,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="e"></param>
         private void newRuleButton_Click(object sender, EventArgs e)
         {
-            if (!HasFilterData() || paramerComboBox.SelectedText == m_noneParam)
+            if (!HasFilterData() || paramerComboBox.SelectedText == NoneParam)
                 return;
             //
             // check if rule value is specified or exist
@@ -333,7 +333,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             // 
             // Create and reserve this rule and reset controls
             m_currentFilterData.RuleData.Add(newRule);
-            var ruleName = $"{m_ruleNamePrefix} {rulesListBox.Items.Count + 1}";
+            var ruleName = $"{RuleNamePrefix} {rulesListBox.Items.Count + 1}";
             rulesListBox.Items.Add(ruleName);
             rulesListBox.SelectedIndex = rulesListBox.Items.Count - 1;
             rulesListBox.Enabled = true;
@@ -398,7 +398,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             {
                 updateButton.Enabled = deleRuleButton.Enabled = false;
                 if (!HasFilterData() || null == paramerComboBox.SelectedItem ||
-                    paramerComboBox.SelectedItem as string == m_noneParam)
+                    paramerComboBox.SelectedItem as string == NoneParam)
                     newRuleButton.Enabled = false;
                 else
                     newRuleButton.Enabled = true;
@@ -690,7 +690,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             // Reset filter rules controls and select 1st by default(if have)
             rulesListBox.Items.Clear();
             var ruleData = m_currentFilterData.RuleData;
-            for (var ii = 1; ii <= ruleData.Count; ii++) rulesListBox.Items.Add(m_ruleNamePrefix + ii);
+            for (var ii = 1; ii <= ruleData.Count; ii++) rulesListBox.Items.Add(RuleNamePrefix + ii);
             if (rulesListBox.Items.Count > 0)
                 rulesListBox.SetSelected(0, true);
             else
@@ -776,7 +776,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 paramerComboBox.Items.Add(EnumParseUtility<BuiltInParameter>.Parse((BuiltInParameter)paramId.Value));
             //
             // always added one (none) 
-            paramerComboBox.Items.Add(m_noneParam);
+            paramerComboBox.Items.Add(NoneParam);
             paramerComboBox.SelectedIndex = 0;
         }
 

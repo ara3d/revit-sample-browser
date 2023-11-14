@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
                 if (null == CreateBRep.CreatedDirectShape ||
                     !CreateBRep.CreatedDirectShape.IsValidObject ||
                     !CreateBRep.CreatedDirectShape.Document.Equals(dbDocument))
-                    if (Result.Succeeded != HelperMethods.executeCreateBRepCommand(dbDocument))
+                    if (Result.Succeeded != HelperMethods.ExecuteCreateBRepCommand(dbDocument))
                         return Result.Failed;
 
                 using (var transaction = new Transaction(dbDocument, "UpdateExternallyTaggedBRep"))
@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
                     transaction.Start();
 
                     // Create BRep with other dimensions than CreateBRep command creates and update the geometry in the DirectShape.
-                    var resizedTaggedBRep = HelperMethods.createExternallyTaggedPodium(120.0, 20.0, 60.0);
+                    var resizedTaggedBRep = HelperMethods.CreateExternallyTaggedPodium(120.0, 20.0, 60.0);
                     if (null == resizedTaggedBRep)
                         return Result.Failed;
 

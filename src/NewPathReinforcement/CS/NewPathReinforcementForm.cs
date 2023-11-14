@@ -304,11 +304,11 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             var geoElem = pathRein.get_Geometry(options);
             var curvesList = new List<Curve>();
             //GeometryObjectArray gObjects = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //foreach (GeometryObject geo in gObjects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geo = Objects.Current;
+                var geo = objects.Current;
 
                 var curve = geo as Curve;
                 curvesList.Add(curve);

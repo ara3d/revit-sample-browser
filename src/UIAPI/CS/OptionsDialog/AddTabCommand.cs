@@ -8,16 +8,16 @@ namespace Revit.SDK.Samples.UIAPI.CS
 {
     public class AddTabCommand
     {
-        private readonly UIControlledApplication _application;
+        private readonly UIControlledApplication m_application;
 
         public AddTabCommand(UIControlledApplication application)
         {
-            _application = application;
+            m_application = application;
         }
 
         public bool AddTabToOptionsDialog()
         {
-            _application.DisplayingOptionsDialog +=
+            m_application.DisplayingOptionsDialog +=
                 Command_DisplayingOptionDialog;
             return true;
         }

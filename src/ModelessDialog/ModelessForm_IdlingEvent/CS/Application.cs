@@ -23,17 +23,17 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
     public class Application : IExternalApplication
     {
         // class instance
-        internal static Application thisApp;
+        internal static Application ThisApp;
 
         // ModelessForm instance
-        private ModelessForm m_MyForm;
+        private ModelessForm m_myForm;
 
         public Result OnShutdown(UIControlledApplication application)
         {
-            if (m_MyForm != null && !m_MyForm.IsDisposed)
+            if (m_myForm != null && !m_myForm.IsDisposed)
             {
-                m_MyForm.Dispose();
-                m_MyForm = null;
+                m_myForm.Dispose();
+                m_myForm = null;
 
                 // if we've had a dialog, we had subscribed
                 application.Idling -= IdlingHandler;
@@ -44,8 +44,8 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            m_MyForm = null; // no dialog needed yet; the command will bring it
-            thisApp = this; // static access to this application instance
+            m_myForm = null; // no dialog needed yet; the command will bring it
+            ThisApp = this; // static access to this application instance
 
             return Result.Succeeded;
         }
@@ -59,10 +59,10 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         public void ShowForm(UIApplication uiapp)
         {
             // If we do not have a dialog yet, create and show it
-            if (m_MyForm == null || m_MyForm.IsDisposed)
+            if (m_myForm == null || m_myForm.IsDisposed)
             {
-                m_MyForm = new ModelessForm();
-                m_MyForm.Show();
+                m_myForm = new ModelessForm();
+                m_myForm.Show();
 
                 // if we have a dialog, we need Idling too
                 uiapp.Idling += IdlingHandler;
@@ -83,7 +83,7 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         {
             var uiapp = sender as UIApplication;
 
-            if (m_MyForm.IsDisposed)
+            if (m_myForm.IsDisposed)
             {
                 uiapp.Idling -= IdlingHandler;
                 return;
@@ -91,7 +91,7 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             // dialog still exists
             // fetch the request from the dialog
 
-            var request = m_MyForm.Request.Take();
+            var request = m_myForm.Request.Take();
 
             if (request != RequestId.None)
                 try
@@ -104,7 +104,7 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
                 {
                     // The dialog may be in its waiting state;
                     // make sure we wake it up even if we get an exception.
-                    m_MyForm.WakeUp();
+                    m_myForm.WakeUp();
                 }
         }
     }

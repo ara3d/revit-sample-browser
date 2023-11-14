@@ -20,10 +20,10 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                 var document = commandData.Application.ActiveUIDocument.Document;
 
                 // Create an object that is responsible for proximity detection
-                var proximityDetection = ProximityDetection.getInstance(application, document);
+                var proximityDetection = ProximityDetection.GetInstance(application, document);
 
                 // Create an object that is responsible for controlling the joint of walls
-                var walljoinControl = WallJoinControl.getInstance(application, document);
+                var walljoinControl = WallJoinControl.GetInstance(application, document);
 
                 // Create the UI for users select operation and view the results.
                 using (var form =

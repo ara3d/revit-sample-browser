@@ -10,13 +10,13 @@ namespace Revit.SDK.Samples.UIAPI.CS
     [Transaction(TransactionMode.Manual)]
     public class PreviewCommand : IExternalCommand
     {
-        private Document _dbdocument;
+        private Document m_dbdocument;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            _dbdocument = commandData.Application.ActiveUIDocument.Document;
+            m_dbdocument = commandData.Application.ActiveUIDocument.Document;
 
-            var outerGroup = new TransactionGroup(_dbdocument, "preview control");
+            var outerGroup = new TransactionGroup(m_dbdocument, "preview control");
             outerGroup.Start();
 
             try

@@ -24,25 +24,25 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
         ///     If the trigger point is from API, user can register it to application
         ///     which can retrieve from ExternalCommand.
         /// </summary>
-        private static ControlledApplication m_CtrlApp;
+        private static ControlledApplication _ctrlApp;
 
         /// <summary>
         ///     data table for information windows.
         /// </summary>
-        private static DataTable m_ChangesInfoTable;
+        private static DataTable _changesInfoTable;
 
         /// <summary>
         ///     The window is used to show changes' information.
         /// </summary>
-        private static ChangesInformationForm m_InfoForm;
+        private static ChangesInformationForm _infoForm;
 
         /// <summary>
         ///     Property to get and set private member variables of changes log information.
         /// </summary>
         public static DataTable ChangesInfoTable
         {
-            get => m_ChangesInfoTable;
-            set => m_ChangesInfoTable = value;
+            get => _changesInfoTable;
+            set => _changesInfoTable = value;
         }
 
         /// <summary>
@@ -50,8 +50,8 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
         /// </summary>
         public static ChangesInformationForm InfoForm
         {
-            get => m_InfoForm;
-            set => m_InfoForm = value;
+            get => _infoForm;
+            set => _infoForm = value;
         }
 
         /// <summary>
@@ -73,24 +73,24 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
         public Result OnStartup(UIControlledApplication application)
         {
             // initialize member variables.
-            m_CtrlApp = application.ControlledApplication;
-            m_ChangesInfoTable = CreateChangeInfoTable();
-            m_InfoForm = new ChangesInformationForm(ChangesInfoTable);
+            _ctrlApp = application.ControlledApplication;
+            _changesInfoTable = CreateChangeInfoTable();
+            _infoForm = new ChangesInformationForm(ChangesInfoTable);
 
             // register the DocumentChanged event
-            m_CtrlApp.DocumentChanged += CtrlApp_DocumentChanged;
+            _ctrlApp.DocumentChanged += CtrlApp_DocumentChanged;
 
             // show dialog
-            m_InfoForm.Show();
+            _infoForm.Show();
 
             return Result.Succeeded;
         }
 
         public Result OnShutdown(UIControlledApplication application)
         {
-            m_CtrlApp.DocumentChanged -= CtrlApp_DocumentChanged;
-            m_InfoForm = null;
-            m_ChangesInfoTable = null;
+            _ctrlApp.DocumentChanged -= CtrlApp_DocumentChanged;
+            _infoForm = null;
+            _changesInfoTable = null;
             return Result.Succeeded;
         }
 
@@ -126,7 +126,7 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             // retrieve the changed element
             var elem = doc.GetElement(id);
 
-            var newRow = m_ChangesInfoTable.NewRow();
+            var newRow = _changesInfoTable.NewRow();
 
             // set the relative information of this event into the table.
             if (elem == null)
@@ -147,7 +147,7 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
                 newRow["Document"] = doc.Title;
             }
 
-            m_ChangesInfoTable.Rows.Add(newRow);
+            _changesInfoTable.Rows.Add(newRow);
         }
 
         /// <summary>

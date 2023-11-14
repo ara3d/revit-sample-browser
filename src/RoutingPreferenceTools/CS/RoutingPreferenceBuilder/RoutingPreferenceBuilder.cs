@@ -122,7 +122,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             foreach (var xpipeSegment in pipeSegments)
                 try
                 {
-                    ParsePipeSegmentFromXML(xpipeSegment);
+                    ParsePipeSegmentFromXml(xpipeSegment);
                 }
                 catch (Exception ex)
                 {
@@ -141,7 +141,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             foreach (var xroutingPreferenceManager in routingPreferenceManagers)
                 try
                 {
-                    ParseRoutingPreferenceManagerFromXML(xroutingPreferenceManager);
+                    ParseRoutingPreferenceManagerFromXml(xroutingPreferenceManager);
                 }
                 catch (Exception ex)
                 {
@@ -315,7 +315,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         ///     Create a PipeSegment from XML
         /// </summary>
         /// <param name="segmentXElement"></param>
-        private void ParsePipeSegmentFromXML(XElement segmentXElement)
+        private void ParsePipeSegmentFromXml(XElement segmentXElement)
         {
             var xaMaterial = segmentXElement.Attribute(XName.Get("materialName"));
             var xaSchedule = segmentXElement.Attribute(XName.Get("pipeScheduleTypeName"));
@@ -352,7 +352,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             foreach (var sizeNode in segmentXElement.Nodes())
                 if (sizeNode is XElement node)
                 {
-                    var newSize = ParseMEPSizeFromXml(node, m_document);
+                    var newSize = ParseMepSizeFromXml(node, m_document);
                     sizes.Add(newSize);
                 }
 
@@ -377,7 +377,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             xPipeSegment.Add(new XAttribute(XName.Get("roughness"), roughnessInDocumentUnits.ToString("r")));
 
             foreach (var size in pipeSegment.GetSizes())
-                xPipeSegment.Add(CreateXmlFromMEPSize(size, m_document));
+                xPipeSegment.Add(CreateXmlFromMepSize(size, m_document));
 
             return xPipeSegment;
         }
@@ -388,7 +388,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// <param name="sizeXElement"></param>
         /// <param name="document"></param>
         /// <returns></returns>
-        private static MEPSize ParseMEPSizeFromXml(XElement sizeXElement, Document document)
+        private static MEPSize ParseMepSizeFromXml(XElement sizeXElement, Document document)
         {
             var xaNominal = sizeXElement.Attribute(XName.Get("nominalDiameter"));
             var xaInner = sizeXElement.Attribute(XName.Get("innerDiameter"));
@@ -433,26 +433,26 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// <param name="size"></param>
         /// <param name="document"></param>
         /// <returns></returns>
-        private static XElement CreateXmlFromMEPSize(MEPSize size, Document document)
+        private static XElement CreateXmlFromMepSize(MEPSize size, Document document)
         {
-            var xMEPSize = new XElement(XName.Get("MEPSize"));
+            var xMepSize = new XElement(XName.Get("MEPSize"));
 
-            xMEPSize.Add(new XAttribute(XName.Get("innerDiameter"),
+            xMepSize.Add(new XAttribute(XName.Get("innerDiameter"),
                 Convert.ConvertValueDocumentUnits(size.InnerDiameter, document).ToString()));
-            xMEPSize.Add(new XAttribute(XName.Get("nominalDiameter"),
+            xMepSize.Add(new XAttribute(XName.Get("nominalDiameter"),
                 Convert.ConvertValueDocumentUnits(size.NominalDiameter, document).ToString()));
-            xMEPSize.Add(new XAttribute(XName.Get("outerDiameter"),
+            xMepSize.Add(new XAttribute(XName.Get("outerDiameter"),
                 Convert.ConvertValueDocumentUnits(size.OuterDiameter, document).ToString()));
-            xMEPSize.Add(new XAttribute(XName.Get("usedInSizeLists"), size.UsedInSizeLists));
-            xMEPSize.Add(new XAttribute(XName.Get("usedInSizing"), size.UsedInSizing));
-            return xMEPSize;
+            xMepSize.Add(new XAttribute(XName.Get("usedInSizeLists"), size.UsedInSizeLists));
+            xMepSize.Add(new XAttribute(XName.Get("usedInSizing"), size.UsedInSizing));
+            return xMepSize;
         }
 
         /// <summary>
         ///     Populate a routing preference manager from Xml
         /// </summary>
         /// <param name="routingPreferenceManagerXElement"></param>
-        private void ParseRoutingPreferenceManagerFromXML(XElement routingPreferenceManagerXElement)
+        private void ParseRoutingPreferenceManagerFromXml(XElement routingPreferenceManagerXElement)
         {
             var xaPipeTypeName = routingPreferenceManagerXElement.Attribute(XName.Get("pipeTypeName"));
             var xaPreferredJunctionType =
@@ -479,7 +479,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 if (xRule is XElement element)
                 {
                     RoutingPreferenceRuleGroupType groupType;
-                    var rule = ParseRoutingPreferenceRuleFromXML(element, out groupType);
+                    var rule = ParseRoutingPreferenceRuleFromXml(element, out groupType);
                     routingPreferenceManager.AddRule(groupType, rule);
                 }
         }
@@ -502,28 +502,28 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             for (var indexCrosses = 0;
                  indexCrosses != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Crosses);
                  indexCrosses++)
-                xRoutingPreferenceManager.Add(createXmlFromRoutingPreferenceRule(
+                xRoutingPreferenceManager.Add(CreateXmlFromRoutingPreferenceRule(
                     routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Crosses, indexCrosses),
                     RoutingPreferenceRuleGroupType.Crosses));
 
             for (var indexElbows = 0;
                  indexElbows != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Elbows);
                  indexElbows++)
-                xRoutingPreferenceManager.Add(createXmlFromRoutingPreferenceRule(
+                xRoutingPreferenceManager.Add(CreateXmlFromRoutingPreferenceRule(
                     routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Elbows, indexElbows),
                     RoutingPreferenceRuleGroupType.Elbows));
 
             for (var indexSegments = 0;
                  indexSegments != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Segments);
                  indexSegments++)
-                xRoutingPreferenceManager.Add(createXmlFromRoutingPreferenceRule(
+                xRoutingPreferenceManager.Add(CreateXmlFromRoutingPreferenceRule(
                     routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Segments, indexSegments),
                     RoutingPreferenceRuleGroupType.Segments));
 
             for (var indexJunctions = 0;
                  indexJunctions != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Junctions);
                  indexJunctions++)
-                xRoutingPreferenceManager.Add(createXmlFromRoutingPreferenceRule(
+                xRoutingPreferenceManager.Add(CreateXmlFromRoutingPreferenceRule(
                     routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Junctions, indexJunctions),
                     RoutingPreferenceRuleGroupType.Junctions));
 
@@ -531,14 +531,14 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                  indexTransitions !=
                  routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Transitions);
                  indexTransitions++)
-                xRoutingPreferenceManager.Add(createXmlFromRoutingPreferenceRule(
+                xRoutingPreferenceManager.Add(CreateXmlFromRoutingPreferenceRule(
                     routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Transitions, indexTransitions),
                     RoutingPreferenceRuleGroupType.Transitions));
 
             for (var indexUnions = 0;
                  indexUnions != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Unions);
                  indexUnions++)
-                xRoutingPreferenceManager.Add(createXmlFromRoutingPreferenceRule(
+                xRoutingPreferenceManager.Add(CreateXmlFromRoutingPreferenceRule(
                     routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Unions, indexUnions),
                     RoutingPreferenceRuleGroupType.Unions));
 
@@ -546,7 +546,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                  indexMechanicalJoints !=
                  routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.MechanicalJoints);
                  indexMechanicalJoints++)
-                xRoutingPreferenceManager.Add(createXmlFromRoutingPreferenceRule(
+                xRoutingPreferenceManager.Add(CreateXmlFromRoutingPreferenceRule(
                     routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.MechanicalJoints,
                         indexMechanicalJoints), RoutingPreferenceRuleGroupType.MechanicalJoints));
 
@@ -559,7 +559,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// <param name="ruleXElement"></param>
         /// <param name="groupType"></param>
         /// <returns></returns>
-        private RoutingPreferenceRule ParseRoutingPreferenceRuleFromXML(XElement ruleXElement,
+        private RoutingPreferenceRule ParseRoutingPreferenceRuleFromXml(XElement ruleXElement,
             out RoutingPreferenceRuleGroupType groupType)
         {
             XAttribute xaMaxSize = null;
@@ -634,7 +634,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// <param name="rule"></param>
         /// <param name="groupType"></param>
         /// <returns></returns>
-        private XElement createXmlFromRoutingPreferenceRule(RoutingPreferenceRule rule,
+        private XElement CreateXmlFromRoutingPreferenceRule(RoutingPreferenceRule rule,
             RoutingPreferenceRuleGroupType groupType)
         {
             var xRoutingPreferenceRule = new XElement(XName.Get("RoutingPreferenceRule"));

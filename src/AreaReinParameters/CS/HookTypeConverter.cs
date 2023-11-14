@@ -16,14 +16,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         /// <summary>
         ///     hash table save
         /// </summary>
-        protected Hashtable m_hash;
+        protected Hashtable Hash;
 
         /// <summary>
         ///     initialize m_hash
         /// </summary>
         protected ParameterConverter()
         {
-            m_hash = new Hashtable();
+            Hash = new Hashtable();
             GetConvertHash();
         }
 
@@ -50,11 +50,11 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         public override StandardValuesCollection GetStandardValues(
             ITypeDescriptorContext context)
         {
-            var Ids = new ElementId[m_hash.Values.Count];
+            var ids = new ElementId[Hash.Values.Count];
             var i = 0;
 
-            foreach (DictionaryEntry de in m_hash) Ids[i++] = (ElementId)de.Value;
-            var standardValues = new StandardValuesCollection(Ids);
+            foreach (DictionaryEntry de in Hash) ids[i++] = (ElementId)de.Value;
+            var standardValues = new StandardValuesCollection(ids);
 
             return standardValues;
         }
@@ -81,7 +81,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             CultureInfo culture, object v)
         {
             if (v is string)
-                foreach (DictionaryEntry de in m_hash)
+                foreach (DictionaryEntry de in Hash)
                     if (de.Key.Equals(v.ToString()))
                         return de.Value;
 
@@ -101,7 +101,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         {
             if (destinationType == typeof(string))
             {
-                foreach (DictionaryEntry de in m_hash)
+                foreach (DictionaryEntry de in Hash)
                 {
                     var tmpId = (ElementId)de.Value;
                     var cmpId = (ElementId)v;
@@ -133,10 +133,10 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
     {
         public override void GetConvertHash()
         {
-            m_hash = Command.HookTypes;
+            Hash = Command.HookTypes;
             var id = ElementId.InvalidElementId;
 
-            if (!m_hash.ContainsKey("None")) m_hash.Add("None", id);
+            if (!Hash.ContainsKey("None")) Hash.Add("None", id);
         }
     }
 
@@ -147,7 +147,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
     {
         public override void GetConvertHash()
         {
-            m_hash = Command.BarTypes;
+            Hash = Command.BarTypes;
         }
     }
 }

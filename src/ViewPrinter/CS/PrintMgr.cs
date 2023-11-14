@@ -224,7 +224,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         public void ChangePrintSetup()
         {
             using (var dlg = new PrintSetupForm(
-                       new PrintSTP(m_printMgr, m_commandData)))
+                       new PrintStp(m_printMgr, m_commandData)))
             {
                 dlg.ShowDialog();
             }
@@ -232,7 +232,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public void SelectViewSheetSet()
         {
-            using (var dlg = new viewSheetSetForm(
+            using (var dlg = new ViewSheetSetForm(
                        new ViewSheets(m_commandData.Application.ActiveUIDocument.Document)))
             {
                 dlg.ShowDialog();

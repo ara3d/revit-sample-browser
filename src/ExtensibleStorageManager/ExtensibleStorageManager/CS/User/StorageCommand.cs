@@ -24,33 +24,33 @@ namespace ExtensibleStorageManager
     public static class StorageCommand
     {
         //A counter field used to assist in creating pseudorandom Guids
-        private static int s_counter = DateTime.Now.Second;
+        private static int _sCounter = DateTime.Now.Second;
 
         //Field names and schema guids used in sample schemas
-        private static readonly string int0Name = "int0Name";
-        private static readonly string double0Name = "double0Name";
-        private static readonly string bool0Name = "bool0Name";
-        private static readonly string string0Name = "string0Name";
-        private static readonly string id0Name = "id0Name";
-        private static readonly string point0Name = "point0Name";
-        private static readonly string uv0Name = "uv0Name";
-        private static readonly string float0Name = "float0Name";
-        private static readonly string short0Name = "short0Name";
-        private static readonly string guid0Name = "guid0Name";
-        private static readonly string map0Name = "map0Name";
-        private static readonly string array0Name = "array0Name";
+        private static readonly string Int0Name = "int0Name";
+        private static readonly string Double0Name = "double0Name";
+        private static readonly string Bool0Name = "bool0Name";
+        private static readonly string String0Name = "string0Name";
+        private static readonly string Id0Name = "id0Name";
+        private static readonly string Point0Name = "point0Name";
+        private static readonly string Uv0Name = "uv0Name";
+        private static readonly string Float0Name = "float0Name";
+        private static readonly string Short0Name = "short0Name";
+        private static readonly string Guid0Name = "guid0Name";
+        private static readonly string Map0Name = "map0Name";
+        private static readonly string Array0Name = "array0Name";
 
-        private static readonly Guid subEntityGuid0 = NewGuid();
-        private static readonly string entity0Name = "entity0Name";
+        private static readonly Guid SubEntityGuid0 = NewGuid();
+        private static readonly string Entity0Name = "entity0Name";
 
-        private static readonly Guid subEntityGuid_Map1 = NewGuid();
-        private static readonly string entity1Name_Map = "entity1Name_Map";
+        private static readonly Guid SubEntityGuidMap1 = NewGuid();
+        private static readonly string Entity1NameMap = "entity1Name_Map";
 
-        private static readonly Guid subEntityGuid_Array2 = NewGuid();
-        private static readonly string entity2Name_Array = "entity2Name_Array";
+        private static readonly Guid SubEntityGuidArray2 = NewGuid();
+        private static readonly string Entity2NameArray = "entity2Name_Array";
 
-        private static readonly string array1Name = entity2Name_Array;
-        private static readonly string map1Name = entity1Name_Map;
+        private static readonly string Array1Name = Entity2NameArray;
+        private static readonly string Map1Name = Entity1NameMap;
 
         /// <summary>
         ///     Creates a new sample Schema, creates an instance of that Schema (an Entity) in the given element,
@@ -103,23 +103,23 @@ namespace ExtensibleStorageManager
         private static void SimpleSchemaAndData(SchemaWrapper mySchemaWrapper, out Entity storageElementEntityWrite)
         {
             //Create some sample fields.
-            mySchemaWrapper.AddField<int>(int0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<short>(short0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<double>(double0Name, SpecTypeId.Length, null);
-            mySchemaWrapper.AddField<float>(float0Name, SpecTypeId.Length, null);
-            mySchemaWrapper.AddField<bool>(bool0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<string>(string0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<int>(Int0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<short>(Short0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<double>(Double0Name, SpecTypeId.Length, null);
+            mySchemaWrapper.AddField<float>(Float0Name, SpecTypeId.Length, null);
+            mySchemaWrapper.AddField<bool>(Bool0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<string>(String0Name, new ForgeTypeId(), null);
 
             //Generate the Autodesk.Revit.DB.ExtensibleStorage.Schema.
             mySchemaWrapper.FinishSchema();
 
             //Get the  fields
-            var fieldInt0 = mySchemaWrapper.GetSchema().GetField(int0Name);
-            var fieldShort0 = mySchemaWrapper.GetSchema().GetField(short0Name);
-            var fieldDouble0 = mySchemaWrapper.GetSchema().GetField(double0Name);
-            var fieldFloat0 = mySchemaWrapper.GetSchema().GetField(float0Name);
-            var fieldBool0 = mySchemaWrapper.GetSchema().GetField(bool0Name);
-            var fieldString0 = mySchemaWrapper.GetSchema().GetField(string0Name);
+            var fieldInt0 = mySchemaWrapper.GetSchema().GetField(Int0Name);
+            var fieldShort0 = mySchemaWrapper.GetSchema().GetField(Short0Name);
+            var fieldDouble0 = mySchemaWrapper.GetSchema().GetField(Double0Name);
+            var fieldFloat0 = mySchemaWrapper.GetSchema().GetField(Float0Name);
+            var fieldBool0 = mySchemaWrapper.GetSchema().GetField(Bool0Name);
+            var fieldString0 = mySchemaWrapper.GetSchema().GetField(String0Name);
 
             storageElementEntityWrite = null;
             //Create a new entity of the given Schema
@@ -141,61 +141,61 @@ namespace ExtensibleStorageManager
             string xmlPathOut, Guid schemaId, AccessLevel readAccess, AccessLevel writeAccess, string vendorId,
             string applicationId, string name, string documentation, out Entity storageElementEntityWrite)
         {
-            mySchemaWrapper.AddField<int>(int0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<short>(short0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<double>(double0Name, SpecTypeId.Length, null);
-            mySchemaWrapper.AddField<float>(float0Name, SpecTypeId.Length, null);
-            mySchemaWrapper.AddField<bool>(bool0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<string>(string0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<ElementId>(id0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<XYZ>(point0Name, SpecTypeId.Length, null);
-            mySchemaWrapper.AddField<UV>(uv0Name, SpecTypeId.Length, null);
-            mySchemaWrapper.AddField<Guid>(guid0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<int>(Int0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<short>(Short0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<double>(Double0Name, SpecTypeId.Length, null);
+            mySchemaWrapper.AddField<float>(Float0Name, SpecTypeId.Length, null);
+            mySchemaWrapper.AddField<bool>(Bool0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<string>(String0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<ElementId>(Id0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<XYZ>(Point0Name, SpecTypeId.Length, null);
+            mySchemaWrapper.AddField<UV>(Uv0Name, SpecTypeId.Length, null);
+            mySchemaWrapper.AddField<Guid>(Guid0Name, new ForgeTypeId(), null);
 
             //Note that we use IDictionary<> for map types and IList<> for array types
-            mySchemaWrapper.AddField<IDictionary<string, string>>(map0Name, new ForgeTypeId(), null);
-            mySchemaWrapper.AddField<IList<bool>>(array0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<IDictionary<string, string>>(Map0Name, new ForgeTypeId(), null);
+            mySchemaWrapper.AddField<IList<bool>>(Array0Name, new ForgeTypeId(), null);
 
             //Create a sample subEntity
-            var mySubSchemaWrapper0 = SchemaWrapper.NewSchema(subEntityGuid0, readAccess, writeAccess, vendorId,
-                applicationId, entity0Name, "A sub entity");
+            var mySubSchemaWrapper0 = SchemaWrapper.NewSchema(SubEntityGuid0, readAccess, writeAccess, vendorId,
+                applicationId, Entity0Name, "A sub entity");
             mySubSchemaWrapper0.AddField<int>("subInt0", new ForgeTypeId(), null);
             mySubSchemaWrapper0.FinishSchema();
             var subEnt0 = new Entity(mySubSchemaWrapper0.GetSchema());
             subEnt0.Set(mySubSchemaWrapper0.GetSchema().GetField("subInt0"), 11);
-            mySchemaWrapper.AddField<Entity>(entity0Name, new ForgeTypeId(), mySubSchemaWrapper0);
+            mySchemaWrapper.AddField<Entity>(Entity0Name, new ForgeTypeId(), mySubSchemaWrapper0);
 
             //
             //Create a sample map of subEntities (An IDictionary<> with key type "int" and value type "Entity")
             //
             //Create a new sample schema.
-            var mySubSchemaWrapper1_Map = SchemaWrapper.NewSchema(subEntityGuid_Map1, readAccess, writeAccess, vendorId,
-                applicationId, map1Name, "A map of int to Entity");
-            mySubSchemaWrapper1_Map.AddField<int>("subInt1", new ForgeTypeId(), null);
-            mySubSchemaWrapper1_Map.FinishSchema();
+            var mySubSchemaWrapper1Map = SchemaWrapper.NewSchema(SubEntityGuidMap1, readAccess, writeAccess, vendorId,
+                applicationId, Map1Name, "A map of int to Entity");
+            mySubSchemaWrapper1Map.AddField<int>("subInt1", new ForgeTypeId(), null);
+            mySubSchemaWrapper1Map.FinishSchema();
             //Create a new sample Entity.
-            var subEnt1 = new Entity(mySubSchemaWrapper1_Map.GetSchema());
+            var subEnt1 = new Entity(mySubSchemaWrapper1Map.GetSchema());
             //Set data in that entity.
-            subEnt1.Set(mySubSchemaWrapper1_Map.GetSchema().GetField("subInt1"), 22);
+            subEnt1.Set(mySubSchemaWrapper1Map.GetSchema().GetField("subInt1"), 22);
             //Add a new map field to the top-level Schema.  We will add the entity we just created after all top-level
             //fields are created.
-            mySchemaWrapper.AddField<IDictionary<int, Entity>>(map1Name, new ForgeTypeId(), mySubSchemaWrapper1_Map);
+            mySchemaWrapper.AddField<IDictionary<int, Entity>>(Map1Name, new ForgeTypeId(), mySubSchemaWrapper1Map);
 
             //
             //Create a sample array of subentities (An IList<> of type "Entity")
             //
             //Create a new sample schema
-            var mySubSchemaWrapper2_Array = SchemaWrapper.NewSchema(subEntityGuid_Array2, readAccess, writeAccess,
-                vendorId, applicationId, array1Name, "An array of Entities");
-            mySubSchemaWrapper2_Array.AddField<int>("subInt2", new ForgeTypeId(), null);
-            mySubSchemaWrapper2_Array.FinishSchema();
+            var mySubSchemaWrapper2Array = SchemaWrapper.NewSchema(SubEntityGuidArray2, readAccess, writeAccess,
+                vendorId, applicationId, Array1Name, "An array of Entities");
+            mySubSchemaWrapper2Array.AddField<int>("subInt2", new ForgeTypeId(), null);
+            mySubSchemaWrapper2Array.FinishSchema();
             //Create a new sample Entity.
-            var subEnt2 = new Entity(mySubSchemaWrapper2_Array.GetSchema());
+            var subEnt2 = new Entity(mySubSchemaWrapper2Array.GetSchema());
             //Set the data in that Entity.
-            subEnt2.Set(mySubSchemaWrapper2_Array.GetSchema().GetField("subInt2"), 33);
+            subEnt2.Set(mySubSchemaWrapper2Array.GetSchema().GetField("subInt2"), 33);
             //Add a new array field to the top-level Schema We will add the entity we just crated after all top-level fields
             //are created.
-            mySchemaWrapper.AddField<IList<Entity>>(array1Name, new ForgeTypeId(), mySubSchemaWrapper2_Array);
+            mySchemaWrapper.AddField<IList<Entity>>(Array1Name, new ForgeTypeId(), mySubSchemaWrapper2Array);
 
             mySchemaWrapper.FinishSchema();
 
@@ -203,26 +203,26 @@ namespace ExtensibleStorageManager
 
             storageElementEntityWrite = new Entity(mySchemaWrapper.GetSchema());
 
-            var fieldInt0 = mySchemaWrapper.GetSchema().GetField(int0Name);
-            var fieldShort0 = mySchemaWrapper.GetSchema().GetField(short0Name);
-            var fieldDouble0 = mySchemaWrapper.GetSchema().GetField(double0Name);
-            var fieldFloat0 = mySchemaWrapper.GetSchema().GetField(float0Name);
+            var fieldInt0 = mySchemaWrapper.GetSchema().GetField(Int0Name);
+            var fieldShort0 = mySchemaWrapper.GetSchema().GetField(Short0Name);
+            var fieldDouble0 = mySchemaWrapper.GetSchema().GetField(Double0Name);
+            var fieldFloat0 = mySchemaWrapper.GetSchema().GetField(Float0Name);
 
-            var fieldBool0 = mySchemaWrapper.GetSchema().GetField(bool0Name);
-            var fieldString0 = mySchemaWrapper.GetSchema().GetField(string0Name);
+            var fieldBool0 = mySchemaWrapper.GetSchema().GetField(Bool0Name);
+            var fieldString0 = mySchemaWrapper.GetSchema().GetField(String0Name);
 
-            var fieldId0 = mySchemaWrapper.GetSchema().GetField(id0Name);
-            var fieldPoint0 = mySchemaWrapper.GetSchema().GetField(point0Name);
-            var fieldUv0 = mySchemaWrapper.GetSchema().GetField(uv0Name);
-            var fieldGuid0 = mySchemaWrapper.GetSchema().GetField(guid0Name);
+            var fieldId0 = mySchemaWrapper.GetSchema().GetField(Id0Name);
+            var fieldPoint0 = mySchemaWrapper.GetSchema().GetField(Point0Name);
+            var fieldUv0 = mySchemaWrapper.GetSchema().GetField(Uv0Name);
+            var fieldGuid0 = mySchemaWrapper.GetSchema().GetField(Guid0Name);
 
-            var fieldMap0 = mySchemaWrapper.GetSchema().GetField(map0Name);
-            var fieldArray0 = mySchemaWrapper.GetSchema().GetField(array0Name);
+            var fieldMap0 = mySchemaWrapper.GetSchema().GetField(Map0Name);
+            var fieldArray0 = mySchemaWrapper.GetSchema().GetField(Array0Name);
 
-            var fieldEntity0 = mySchemaWrapper.GetSchema().GetField(entity0Name);
+            var fieldEntity0 = mySchemaWrapper.GetSchema().GetField(Entity0Name);
 
-            var fieldMap1 = mySchemaWrapper.GetSchema().GetField(map1Name);
-            var fieldArray1 = mySchemaWrapper.GetSchema().GetField(array1Name);
+            var fieldMap1 = mySchemaWrapper.GetSchema().GetField(Map1Name);
+            var fieldArray1 = mySchemaWrapper.GetSchema().GetField(Array1Name);
 
             storageElementEntityWrite.Set(fieldInt0, 5);
             storageElementEntityWrite.Set<short>(fieldShort0, 2);
@@ -300,12 +300,12 @@ namespace ExtensibleStorageManager
             if (storageElementEntityWrite == null) throw new Exception("Entity of given Schema not found.");
 
             //Get the fields of the schema
-            var fieldInt0 = schemaWrapper.GetSchema().GetField(int0Name);
-            var fieldShort0 = schemaWrapper.GetSchema().GetField(short0Name);
-            var fieldDouble0 = schemaWrapper.GetSchema().GetField(double0Name);
-            var fieldFloat0 = schemaWrapper.GetSchema().GetField(float0Name);
-            var fieldBool0 = schemaWrapper.GetSchema().GetField(bool0Name);
-            var fieldString0 = schemaWrapper.GetSchema().GetField(string0Name);
+            var fieldInt0 = schemaWrapper.GetSchema().GetField(Int0Name);
+            var fieldShort0 = schemaWrapper.GetSchema().GetField(Short0Name);
+            var fieldDouble0 = schemaWrapper.GetSchema().GetField(Double0Name);
+            var fieldFloat0 = schemaWrapper.GetSchema().GetField(Float0Name);
+            var fieldBool0 = schemaWrapper.GetSchema().GetField(Bool0Name);
+            var fieldString0 = schemaWrapper.GetSchema().GetField(String0Name);
 
             //Edit the fields.
             var tStore = new Transaction(storageElement.Document, "tStore");
@@ -358,9 +358,9 @@ namespace ExtensibleStorageManager
         public static Guid NewGuid()
         {
             var guidBytes = new byte[16];
-            var randomGuidBytes = new Random(s_counter);
+            var randomGuidBytes = new Random(_sCounter);
             randomGuidBytes.NextBytes(guidBytes);
-            s_counter++;
+            _sCounter++;
             return new Guid(guidBytes);
         }
     }

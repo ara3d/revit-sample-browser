@@ -101,16 +101,16 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                           "\r\n";
 
                     // Poisson Modulus
-                    var PoissonRatio = new double[3];
+                    var poissonRatio = new double[3];
 
-                    PoissonRatio[0] = materialElement.get_Parameter(
+                    poissonRatio[0] = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_POISSON_MOD1).AsDouble();
-                    PoissonRatio[1] = materialElement.get_Parameter(
+                    poissonRatio[1] = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_POISSON_MOD2).AsDouble();
-                    PoissonRatio[2] = materialElement.get_Parameter(
+                    poissonRatio[2] = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_POISSON_MOD3).AsDouble();
-                    str = str + "Poisson modulus: " + PoissonRatio[0] +
-                          "," + PoissonRatio[1] + "," + PoissonRatio[2] +
+                    str = str + "Poisson modulus: " + poissonRatio[0] +
+                          "," + poissonRatio[1] + "," + poissonRatio[2] +
                           "\r\n";
 
                     // Shear Modulus

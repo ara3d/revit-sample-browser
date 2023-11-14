@@ -20,20 +20,20 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
     [Regeneration(RegenerationOption.Manual)]
     public class MultithreadedCalculation : IExternalCommand
     {
-        private static UpdaterId s_updaterId;
-        private static int s_spatialFieldId;
-        private static int s_oldSpatialFieldId;
-        private static string s_docName;
+        private static UpdaterId _sUpdaterId;
+        private static int _sSpatialFieldId;
+        private static int _sOldSpatialFieldId;
+        private static string _sDocName;
 
-        private static ElementId s_oldViewId;
-        private static ElementId s_activeViewId;
+        private static ElementId _sOldViewId;
+        private static ElementId _sActiveViewId;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var uiApp = commandData.Application;
             var uiDoc = uiApp.ActiveUIDocument;
             var doc = uiDoc.Document;
-            s_docName = doc.PathName;
+            _sDocName = doc.PathName;
 
             Element element = null;
             try
@@ -48,13 +48,13 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             }
 
             // Set up SpatialFieldManager to hold results
-            s_activeViewId = doc.ActiveView.Id;
+            _sActiveViewId = doc.ActiveView.Id;
             SpatialFieldManager oldSfm = null;
             View oldView = null;
-            if (s_oldViewId != null) oldView = doc.GetElement(s_oldViewId) as View;
+            if (_sOldViewId != null) oldView = doc.GetElement(_sOldViewId) as View;
             if (oldView != null) oldSfm = SpatialFieldManager.GetSpatialFieldManager(oldView);
             // If a previous SFM was being managed, delete it
-            oldSfm?.RemoveSpatialFieldPrimitive(s_oldSpatialFieldId);
+            oldSfm?.RemoveSpatialFieldPrimitive(_sOldSpatialFieldId);
 
             // Setup container object for executing the calculation
             var container = CreateContainer(element);
@@ -65,7 +65,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
                 UpdaterRegistry.RegisterUpdater(updater, doc);
             IList<ElementId> idCollection = new List<ElementId>();
             idCollection.Add(element.Id);
-            UpdaterRegistry.RemoveAllTriggers(s_updaterId);
+            UpdaterRegistry.RemoveAllTriggers(_sUpdaterId);
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), doc, idCollection, Element.GetChangeTypeGeometry());
 
             // Register idling event
@@ -86,7 +86,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
         public static MultithreadedCalculationContainer CreateContainer(Element element)
         {
             var doc = element.Document;
-            var activeView = doc.GetElement(s_activeViewId) as View;
+            var activeView = doc.GetElement(_sActiveViewId) as View;
 
             // Figure out which is the largest face facing the user
             var viewDirection = activeView.ViewDirection.Normalize();
@@ -96,7 +96,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             var sfm = SpatialFieldManager.GetSpatialFieldManager(activeView) ?? SpatialFieldManager.CreateSpatialFieldManager(activeView, 1);
 
             // Reference the target face
-            s_spatialFieldId = sfm.AddSpatialFieldPrimitive(biggestFace.Reference);
+            _sSpatialFieldId = sfm.AddSpatialFieldPrimitive(biggestFace.Reference);
 
             // Compute the range of U and V for the calculation
             var bbox = biggestFace.GetBoundingBox();
@@ -186,12 +186,12 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
         public class SpatialFieldUpdater : IUpdater
         {
             // The old container object.
-            private MultithreadedCalculationContainer containerOld;
+            private MultithreadedCalculationContainer m_containerOld;
 
-            public SpatialFieldUpdater(MultithreadedCalculationContainer _container, AddInId addinId)
+            public SpatialFieldUpdater(MultithreadedCalculationContainer container, AddInId addinId)
             {
-                containerOld = _container;
-                s_updaterId = new UpdaterId(addinId, new Guid("FBF2F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
+                m_containerOld = container;
+                _sUpdaterId = new UpdaterId(addinId, new Guid("FBF2F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
             }
 
             // Execution method for the updater
@@ -199,19 +199,19 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             {
                 // Remove old idling event callback
                 var uiApp = new UIApplication(data.GetDocument().Application);
-                uiApp.Idling -= containerOld.UpdateWhileIdling;
-                containerOld.Stop();
+                uiApp.Idling -= m_containerOld.UpdateWhileIdling;
+                m_containerOld.Stop();
 
                 // Clear the current AVF results
                 var doc = data.GetDocument();
-                var activeView = doc.GetElement(s_activeViewId) as View;
+                var activeView = doc.GetElement(_sActiveViewId) as View;
                 var sfm = SpatialFieldManager.GetSpatialFieldManager(activeView);
                 sfm.Clear();
 
                 // Restart the multithread calculation with a new container
                 var modifiedElem = doc.GetElement(data.GetModifiedElementIds().First());
                 var container = CreateContainer(modifiedElem);
-                containerOld = container;
+                m_containerOld = container;
 
                 // Setup the new idling callback
                 uiApp.Idling += container.UpdateWhileIdling;
@@ -233,7 +233,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
 
             public UpdaterId GetUpdaterId()
             {
-                return s_updaterId;
+                return _sUpdaterId;
             }
 
             public string GetUpdaterName()
@@ -247,8 +247,8 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
         /// </summary>
         public class MultithreadedCalculationContainer
         {
-            private const int numberOfUPnts = 10;
-            private const int numberOfVPnts = 5;
+            private const int NumberOfUPnts = 10;
+            private const int NumberOfVPnts = 5;
 
             private readonly string m_docName;
             private readonly UV m_max;
@@ -256,15 +256,15 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             private volatile bool m_stop;
             private IList<UV> m_uvToCalculate = new List<UV>();
             private int m_uvToCalculateCount;
-            private readonly IList<ResultsData> results = new List<ResultsData>();
-            private readonly IList<UV> uvPts = new List<UV>();
-            private readonly IList<ValueAtPoint> valList = new List<ValueAtPoint>();
+            private readonly IList<ResultsData> m_results = new List<ResultsData>();
+            private readonly IList<UV> m_uvPts = new List<UV>();
+            private readonly IList<ValueAtPoint> m_valList = new List<ValueAtPoint>();
 
-            public MultithreadedCalculationContainer(string _docName, UV _min, UV _max)
+            public MultithreadedCalculationContainer(string docName, UV min, UV max)
             {
-                m_docName = _docName;
-                m_min = _min;
-                m_max = _max;
+                m_docName = docName;
+                m_min = min;
+                m_max = max;
             }
 
             public void Run()
@@ -301,9 +301,9 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
                 // If stopping, clear results and unset event.
                 if (m_stop)
                 {
-                    lock (results)
+                    lock (m_results)
                     {
-                        results.Clear();
+                        m_results.Clear();
                     }
 
                     uiApp.Idling -= UpdateWhileIdling;
@@ -313,39 +313,39 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
                 // If document was closed and new document opened, do not run the update.
                 if (uiApp.ActiveUIDocument.Document.PathName == m_docName)
                     // Lock access to current calculated results
-                    lock (results)
+                    lock (m_results)
                     {
-                        if (results.Count == 0) return;
+                        if (m_results.Count == 0) return;
 
                         // Turn each result to an AVF ValueAtPoint
-                        foreach (var rData in results)
+                        foreach (var rData in m_results)
                         {
-                            uvPts.Add(new UV(rData.UV.U, rData.UV.V));
+                            m_uvPts.Add(new UV(rData.Uv.U, rData.Uv.V));
                             IList<double> doubleList = new List<double>();
                             doubleList.Add(rData.Value);
-                            valList.Add(new ValueAtPoint(doubleList));
+                            m_valList.Add(new ValueAtPoint(doubleList));
                         }
 
-                        var pntsByUV = new FieldDomainPointsByUV(uvPts);
-                        var fieldValues = new FieldValues(valList);
+                        var pntsByUv = new FieldDomainPointsByUV(m_uvPts);
+                        var fieldValues = new FieldValues(m_valList);
 
                         // Update with calculated values
                         var t = new Transaction(uiApp.ActiveUIDocument.Document);
                         t.SetName("AVF");
                         t.Start();
                         if (!m_stop)
-                            sfm.UpdateSpatialFieldPrimitive(s_spatialFieldId, pntsByUV, fieldValues, schemaIndex);
+                            sfm.UpdateSpatialFieldPrimitive(_sSpatialFieldId, pntsByUv, fieldValues, schemaIndex);
                         t.Commit();
 
                         // Clear results already processed.
-                        results.Clear();
+                        m_results.Clear();
 
                         // If no more results to process, remove the idling event
                         if (m_uvToCalculateCount == 0)
                         {
                             uiApp.Idling -= UpdateWhileIdling;
-                            s_oldViewId = s_activeViewId;
-                            s_oldSpatialFieldId = s_spatialFieldId;
+                            _sOldViewId = _sActiveViewId;
+                            _sOldSpatialFieldId = _sSpatialFieldId;
                         }
                     }
             }
@@ -362,9 +362,9 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
                     }
 
                     // Lock access to results while the data is added
-                    lock (results)
+                    lock (m_results)
                     {
-                        results.Add(new ResultsData(uv, 1000 * Math.Sin(Math.Abs(uv.U * uv.V))));
+                        m_results.Add(new ResultsData(uv, 1000 * Math.Sin(Math.Abs(uv.U * uv.V))));
                         Thread.Sleep(500); // to simulate the effect of a complex computation
                         m_uvToCalculateCount--;
                     }
@@ -376,8 +376,8 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             {
                 IList<UV> uvList = new List<UV>();
                 var upnt = m_min.U;
-                var incrementU = (m_max.U - m_min.U) / (numberOfUPnts - 1);
-                var incrementV = (m_max.V - m_min.V) / (numberOfVPnts - 1);
+                var incrementU = (m_max.U - m_min.U) / (NumberOfUPnts - 1);
+                var incrementV = (m_max.V - m_min.V) / (NumberOfVPnts - 1);
                 while (upnt <= m_max.U)
                 {
                     var vpnt = m_min.V;
@@ -397,12 +397,12 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
         // Represents a set of results for the calculation
         public class ResultsData
         {
-            public readonly UV UV;
+            public readonly UV Uv;
             public readonly double Value;
 
             public ResultsData(UV uv, double value)
             {
-                UV = uv;
+                Uv = uv;
                 Value = value;
             }
         }

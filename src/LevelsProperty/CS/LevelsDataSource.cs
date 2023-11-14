@@ -22,6 +22,6 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         /// <summary>
         ///     Record Level's ID
         /// </summary>
-        public ElementId LevelIDValue { get; set; }
+        public ElementId LevelIdValue { get; set; }
     }
 }

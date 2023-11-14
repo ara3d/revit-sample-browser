@@ -106,7 +106,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
 
             var resultsSummary = new ResultsSummary
             {
-                numDoors = 1
+                NumDoors = 1
             };
 
             var stopwatch = Stopwatch.StartNew();
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             GeneratePathsOfTravelForOneRoomOneDoor(doc, viewPlan, room, endPoint, resultsSummary);
 
             stopwatch.Stop();
-            resultsSummary.elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+            resultsSummary.ElapsedMilliseconds = stopwatch.ElapsedMilliseconds;
 
             ShowResults(resultsSummary);
         }
@@ -270,7 +270,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
                 endPoints.Add(trf.Origin);
             }
 
-            resultsSummary.numDoors = endPoints.Count;
+            resultsSummary.NumDoors = endPoints.Count;
 
             using (var group = new TransactionGroup(doc, "Generate all paths of travel"))
             {
@@ -309,7 +309,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             //                allSourcePoints.Add(roomPoint);
             //            }
 
-            resultsSummary.numSourcePoints += allSourcePoints.Count;
+            resultsSummary.NumSourcePoints += allSourcePoints.Count;
 
             List<XYZ> inputStartPoints = null;
             List<XYZ> inputEndPoints = null;
@@ -372,12 +372,12 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
                 {
                     if (pathOfTravel == null)
                     {
-                        resultsSummary.numFailures++;
-                        resultsSummary.failuresFound.Add(statuses[i]);
+                        resultsSummary.NumFailures++;
+                        resultsSummary.FailuresFound.Add(statuses[i]);
                     }
                     else
                     {
-                        resultsSummary.numSuccesses++;
+                        resultsSummary.NumSuccesses++;
                     }
 
                     i++;
@@ -387,7 +387,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             }
 
             stopwatch.Stop();
-            resultsSummary.elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+            resultsSummary.ElapsedMilliseconds = stopwatch.ElapsedMilliseconds;
         }
 
         /// <summary>
@@ -402,7 +402,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             List<XYZ> endPoints, ResultsSummary resultsSummary)
         {
             var sourcePoints = GetRoomNearCornerPoints(room);
-            resultsSummary.numSourcePoints += sourcePoints.Count;
+            resultsSummary.NumSourcePoints += sourcePoints.Count;
 
             // generate paths
 
@@ -411,9 +411,9 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
                 t.Start();
                 var pathsOfTravel = PathOfTravel.CreateMapped(viewPlan, sourcePoints, endPoints, out _);
 
-                foreach (var pOT in pathsOfTravel)
-                    if (pOT == null) resultsSummary.numFailures++;
-                    else resultsSummary.numSuccesses++;
+                foreach (var pOt in pathsOfTravel)
+                    if (pOt == null) resultsSummary.NumFailures++;
+                    else resultsSummary.NumSuccesses++;
                 t.Commit();
             }
         }
@@ -441,9 +441,9 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
         {
             var ci = new CultureInfo("en-us");
 
-            var numOfPathsToCreate = resultsSummary.numSourcePoints * resultsSummary.numDoors;
+            var numOfPathsToCreate = resultsSummary.NumSourcePoints * resultsSummary.NumDoors;
 
-            var successRatePercent = resultsSummary.numSuccesses / (double)numOfPathsToCreate;
+            var successRatePercent = resultsSummary.NumSuccesses / (double)numOfPathsToCreate;
 
             var td = new TaskDialog("Results of PathOfTravel creation");
             td.MainInstruction =
@@ -452,9 +452,9 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
                 "There were {0} room source points found in room analysis (via offsetting boundaries). " +
                 "They would be connected to {2} door target points. {1} failed to generate a Path of Travel out of {4}  " +
                 "Processing took {3} milliseconds.",
-                resultsSummary.numSourcePoints, resultsSummary.numFailures, resultsSummary.numDoors,
-                resultsSummary.elapsedMilliseconds, numOfPathsToCreate);
-            if (resultsSummary.numFailures > 0)
+                resultsSummary.NumSourcePoints, resultsSummary.NumFailures, resultsSummary.NumDoors,
+                resultsSummary.ElapsedMilliseconds, numOfPathsToCreate);
+            if (resultsSummary.NumFailures > 0)
                 details += "  Most likely reason for failures is an obstacle on or nearby to the source point.";
             td.MainContent = details;
 
@@ -498,49 +498,20 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
         /// </summary>
         private class ResultsSummary
         {
-            private int m_numSourcePoints;
-            private int m_numDoors;
-            private int m_numSuccesses;
-            private int m_numFailures;
-            private long m_elapsedMilliseconds;
-            private readonly List<PathOfTravelCalculationStatus> m_failuresFound;
+            private readonly List<PathOfTravelCalculationStatus> m_failuresFound =
+                new List<PathOfTravelCalculationStatus>();
 
-            public ResultsSummary()
-            {
-                m_failuresFound = new List<PathOfTravelCalculationStatus>();
-            }
+            public int NumSourcePoints { get; set; }
 
-            public int numSourcePoints
-            {
-                get => m_numSourcePoints;
-                set => m_numSourcePoints = value;
-            }
+            public int NumDoors { get; set; }
 
-            public int numDoors
-            {
-                get => m_numDoors;
-                set => m_numDoors = value;
-            }
+            public int NumSuccesses { get; set; }
 
-            public int numSuccesses
-            {
-                get => m_numSuccesses;
-                set => m_numSuccesses = value;
-            }
+            public int NumFailures { get; set; }
 
-            public int numFailures
-            {
-                get => m_numFailures;
-                set => m_numFailures = value;
-            }
+            public long ElapsedMilliseconds { get; set; }
 
-            public long elapsedMilliseconds
-            {
-                get => m_elapsedMilliseconds;
-                set => m_elapsedMilliseconds = value;
-            }
-
-            public List<PathOfTravelCalculationStatus> failuresFound => m_failuresFound;
+            public List<PathOfTravelCalculationStatus> FailuresFound => m_failuresFound;
         }
     }
 }

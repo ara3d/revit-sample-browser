@@ -81,7 +81,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
             this.okButton.TabIndex = 3;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButtonClick);
+            this.okButton.Click += new System.EventHandler(this.OkButtonClick);
             // 
             // button2
             // 

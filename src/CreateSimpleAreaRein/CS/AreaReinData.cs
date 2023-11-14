@@ -24,8 +24,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// </summary>
         [Category("Construction")]
         [DefaultValue(
-            LayoutRules.Maximum_Spacing)]
-        public LayoutRules LayoutRule { get; set; } = LayoutRules.Maximum_Spacing;
+            LayoutRules.MaximumSpacing)]
+        public LayoutRules LayoutRule { get; set; } = LayoutRules.MaximumSpacing;
 
         /// <summary>
         ///     set the parameters to given AreaReinforcement

@@ -123,8 +123,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         protected override bool FillWithBars()
         {
             //create Rebar Container
-            var conTypeId = RebarContainerType.CreateDefaultRebarContainerType(m_revitDoc);
-            var cont = RebarContainer.Create(m_revitDoc, m_hostObject, conTypeId);
+            var conTypeId = RebarContainerType.CreateDefaultRebarContainerType(RevitDoc);
+            var cont = RebarContainer.Create(RevitDoc, HostObject, conTypeId);
 
             // create the top items
             var flag = FillTopItems(cont);
@@ -224,12 +224,12 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             // get the top start hook orient
             if (TopRebarLocation.Start == location)
             {
-                var curveVec = GeomUtil.SubXYZ(rebarLine.GetEndPoint(0), rebarLine.GetEndPoint(1));
+                var curveVec = GeomUtil.SubXyz(rebarLine.GetEndPoint(0), rebarLine.GetEndPoint(1));
                 return GeomUtil.GetHookOrient(curveVec, normal, hookVec);
             }
             else // get the top end hook orient
             {
-                var curveVec = GeomUtil.SubXYZ(rebarLine.GetEndPoint(0), rebarLine.GetEndPoint(1));
+                var curveVec = GeomUtil.SubXyz(rebarLine.GetEndPoint(0), rebarLine.GetEndPoint(1));
                 return GeomUtil.GetHookOrient(curveVec, normal, hookVec);
             }
         }

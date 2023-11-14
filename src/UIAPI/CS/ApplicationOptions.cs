@@ -9,12 +9,12 @@ namespace Revit.SDK.Samples.UIAPI.CS
         Always,
         ArchitectureDiscipline,
         StructuralAnalysis,
-        MEP
+        Mep
     }
 
     public class ApplicationOptions
     {
-        private static ApplicationOptions s_options;
+        private static ApplicationOptions _sOptions;
         private ExternalApp m_eApplication;
 
         private ApplicationOptions()
@@ -26,7 +26,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
         public static void Initialize(ExternalApp application)
         {
-            s_options = new ApplicationOptions
+            _sOptions = new ApplicationOptions
             {
                 m_eApplication = application
             };
@@ -34,10 +34,10 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
         public static ApplicationOptions Get()
         {
-            if (s_options == null)
+            if (_sOptions == null)
                 throw new Exception("Static options was not initialized");
 
-            return s_options;
+            return _sOptions;
         }
     }
 }

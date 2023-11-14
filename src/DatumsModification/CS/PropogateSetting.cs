@@ -12,7 +12,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
         public PropogateSetting()
         {
             InitializeComponent();
-            foreach (var name in DatumPropagation.viewDic.Keys) propagationViewList.Items.Add(name);
+            foreach (var name in DatumPropagation.ViewDic.Keys) propagationViewList.Items.Add(name);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
     /// </summary>
     public class Coroutine
     {
-        private readonly IEnumerator innerEnumerator;
+        private readonly IEnumerator m_innerEnumerator;
 
         /// <summary>
         ///     Create a coroutine with a enumerator
@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
         /// <param name="coroutine"></param>
         public Coroutine(IEnumerator coroutine)
         {
-            innerEnumerator = coroutine;
+            m_innerEnumerator = coroutine;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
         /// <returns></returns>
         public bool ExecuteOnStep()
         {
-            return innerEnumerator.MoveNext();
+            return m_innerEnumerator.MoveNext();
         }
     }
 }

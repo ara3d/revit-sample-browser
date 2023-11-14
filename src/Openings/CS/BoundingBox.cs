@@ -27,11 +27,11 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <summary>
         ///     The default constructor
         /// </summary>
-        /// <param name="boundBoxXYZ">The reference of the application in revit</param>
-        public BoundingBox(BoundingBoxXYZ boundBoxXYZ)
+        /// <param name="boundBoxXyz">The reference of the application in revit</param>
+        public BoundingBox(BoundingBoxXYZ boundBoxXyz)
         {
-            Min = boundBoxXYZ.Min;
-            Max = boundBoxXYZ.Max;
+            Min = boundBoxXyz.Min;
+            Max = boundBoxXyz.Max;
 
             GetCorners();
         }

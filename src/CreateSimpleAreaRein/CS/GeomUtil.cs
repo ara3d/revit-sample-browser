@@ -13,7 +13,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
     /// </summary>
     internal class GeomUtil
     {
-        private const double PRECISION = 0.00001; //precision when judge whether two doubles are equal
+        private const double Precision = 0.00001; //precision when judge whether two doubles are equal
 
         /// <summary>
         ///     get all faces that compose the geometry solid of given element
@@ -30,11 +30,11 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 
             var geoElem = elem.get_Geometry(geoOptions);
             //GeometryObjectArray geoElems = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //foreach (object o in geoElems)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                object o = Objects.Current;
+                object o = objects.Current;
 
                 var geoSolid = o as GeoSolid;
                 if (null == geoSolid) continue;
@@ -53,9 +53,9 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         public static List<XYZ> GetPoints(Face face)
         {
             var points = new List<XYZ>();
-            var XYZs = face.Triangulate().Vertices as List<XYZ>;
+            var xyZs = face.Triangulate().Vertices as List<XYZ>;
 
-            foreach (var point in XYZs) points.Add(point);
+            foreach (var point in xyZs) points.Add(point);
 
             return points;
         }
@@ -89,14 +89,14 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         public static bool IsParallel(Face face, Line line)
         {
             var points = GetPoints(face);
-            var vector1 = SubXYZ(points[0], points[1]);
-            var vector2 = SubXYZ(points[1], points[2]);
-            var refer = SubXYZ(line.GetEndPoint(0), line.GetEndPoint(1));
+            var vector1 = SubXyz(points[0], points[1]);
+            var vector2 = SubXyz(points[1], points[2]);
+            var refer = SubXyz(line.GetEndPoint(0), line.GetEndPoint(1));
 
             var cross = CrossMatrix(vector1, vector2);
             var result = DotMatrix(cross, refer);
 
-            return result < PRECISION;
+            return result < Precision;
         }
 
         /// <summary>
@@ -143,12 +143,12 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <returns></returns>
         private static bool IsVertical(Line line1, Line line2)
         {
-            var vector1 = SubXYZ(line1.GetEndPoint(0), line1.GetEndPoint(1));
-            var vector2 = SubXYZ(line2.GetEndPoint(0), line2.GetEndPoint(1));
+            var vector1 = SubXyz(line1.GetEndPoint(0), line1.GetEndPoint(1));
+            var vector2 = SubXyz(line2.GetEndPoint(0), line2.GetEndPoint(1));
 
             var result = DotMatrix(vector1, vector2);
 
-            return Math.Abs(result) < PRECISION;
+            return Math.Abs(result) < Precision;
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static XYZ SubXYZ(XYZ p1, XYZ p2)
+        private static XYZ SubXyz(XYZ p1, XYZ p2)
         {
             var x = p1.X - p2.X;
             var y = p1.Y - p2.Y;
@@ -222,7 +222,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         private static bool IsEqual(double d1, double d2)
         {
             var diff = Math.Abs(d1 - d2);
-            return diff < PRECISION;
+            return diff < Precision;
         }
     }
 }

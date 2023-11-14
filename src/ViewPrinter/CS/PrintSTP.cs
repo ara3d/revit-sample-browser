@@ -14,12 +14,12 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
     ///     like the Print Setup Dialog (File->Print Setup...) in UI such as Printer name,
     ///     paper, zoom, options, etc.
     /// </summary>
-    public class PrintSTP : ISettingNameOperation
+    public class PrintStp : ISettingNameOperation
     {
         private readonly ExternalCommandData m_commandData;
         private readonly PrintManager m_printMgr;
 
-        public PrintSTP(PrintManager printMgr
+        public PrintStp(PrintManager printMgr
             , ExternalCommandData commandData)
         {
             m_commandData = commandData;

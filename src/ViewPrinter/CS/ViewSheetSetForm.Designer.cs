@@ -2,7 +2,7 @@
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
 {
-    partial class viewSheetSetForm
+    partial class ViewSheetSetForm
     {
         /// <summary>
         /// Required designer variable.
@@ -228,7 +228,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "viewSheetSetForm";
+            this.Name = "ViewSheetSetForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "View/Sheet Set";

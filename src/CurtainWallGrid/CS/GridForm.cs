@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         public GridForm(MyDocument myDoc)
         {
             m_myDocument = myDoc;
-            if (null == m_myDocument.UIDocument) Close();
+            if (null == m_myDocument.UiDocument) Close();
 
             InitializeComponent();
             InitializeCustomComponent();

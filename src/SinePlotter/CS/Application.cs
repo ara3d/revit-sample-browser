@@ -29,19 +29,19 @@ namespace Revit.SDK.Samples.SinePlotter.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        private static double periodVal = 0.2;
-        private static double cyclesVal = 10;
-        private static double amplitudeVal = 3;
-        private static double partitionsVal = 3;
-        private static ComboBox prismComboBox;
-        private TextBox amplitudeBox;
-        private string assemblyName;
-        private string assemblyPath;
-        private TextBox cyclesBox;
-        private string imageFolder;
-        private TextBox partitionsBox;
+        private static double _periodVal = 0.2;
+        private static double _cyclesVal = 10;
+        private static double _amplitudeVal = 3;
+        private static double _partitionsVal = 3;
+        private static ComboBox _prismComboBox;
+        private TextBox m_amplitudeBox;
+        private string m_assemblyName;
+        private string m_assemblyPath;
+        private TextBox m_cyclesBox;
+        private string m_imageFolder;
+        private TextBox m_partitionsBox;
 
-        private TextBox periodBox;
+        private TextBox m_periodBox;
 
         /// <summary>
         ///     Implements the OnShutdown event
@@ -60,9 +60,9 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// <returns>Indicates if the application completes its work successfully.</returns>
         public Result OnStartup(UIControlledApplication application)
         {
-            assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            assemblyName = Assembly.GetExecutingAssembly().GetName().Name + ".dll";
-            imageFolder = GetProjectDirectory() + "/Resources/";
+            m_assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            m_assemblyName = Assembly.GetExecutingAssembly().GetName().Name + ".dll";
+            m_imageFolder = GetProjectDirectory() + "/Resources/";
 
             //add a panel to go on the Add-In tab
             var panel = application.CreateRibbonPanel("ArrayPrismsOnASineCurve");
@@ -86,7 +86,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// <returns>A string representing the name of the currently selected family symbol</returns>
         public static string GetFamilySymbolName()
         {
-            return prismComboBox.Current.Name;
+            return _prismComboBox.Current.Name;
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// </returns>
         public static double GetPeriod()
         {
-            return periodVal;
+            return _periodVal;
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// </returns>
         public static double GetNumberOfCycles()
         {
-            return cyclesVal;
+            return _cyclesVal;
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// </returns>
         public static double GetAplitude()
         {
-            return amplitudeVal;
+            return _amplitudeVal;
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// </returns>
         public static double GetNumberOfPartitions()
         {
-            return partitionsVal;
+            return _partitionsVal;
         }
 
         /// <summary>
@@ -157,12 +157,12 @@ namespace Revit.SDK.Samples.SinePlotter.CS
 
             //make a combo box group group 
             var comboBxData = new ComboBoxData("ComboBox");
-            prismComboBox = panel.AddItem(comboBxData) as ComboBox;
-            prismComboBox.ToolTip = "select a prism to array on a curve";
-            prismComboBox.AddItem(comboBoxMemberData1);
-            prismComboBox.AddItem(comboBoxMemberData2);
-            prismComboBox.AddItem(comboBoxMemberData3);
-            prismComboBox.AddItem(comboBoxMemberData4);
+            _prismComboBox = panel.AddItem(comboBxData) as ComboBox;
+            _prismComboBox.ToolTip = "select a prism to array on a curve";
+            _prismComboBox.AddItem(comboBoxMemberData1);
+            _prismComboBox.AddItem(comboBoxMemberData2);
+            _prismComboBox.AddItem(comboBoxMemberData3);
+            _prismComboBox.AddItem(comboBoxMemberData4);
         }
 
         /// <summary>
@@ -194,17 +194,17 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             //Stack them horizontally
             var textBoxList = panel.AddStackedItems(periodBoxData, cyclesBoxData, amplitudeBoxData);
 
-            periodBox = (TextBox)textBoxList[0];
-            cyclesBox = (TextBox)textBoxList[1];
-            amplitudeBox = (TextBox)textBoxList[2];
+            m_periodBox = (TextBox)textBoxList[0];
+            m_cyclesBox = (TextBox)textBoxList[1];
+            m_amplitudeBox = (TextBox)textBoxList[2];
 
             //Call method to customize the text boxes and make them active
-            CustomizeTextBox(panel, periodBox,
-                "Define the period of the sine curve", "" + periodVal, periodVal, true, 50);
-            CustomizeTextBox(panel, cyclesBox,
-                "Define the number of cycles of the sine curve", "" + cyclesVal, cyclesVal, true, 50);
-            CustomizeTextBox(panel, amplitudeBox,
-                "Define the amplitude of the sine curve", "" + amplitudeVal, amplitudeVal, true, 50);
+            CustomizeTextBox(panel, m_periodBox,
+                "Define the period of the sine curve", "" + _periodVal, _periodVal, true, 50);
+            CustomizeTextBox(panel, m_cyclesBox,
+                "Define the number of cycles of the sine curve", "" + _cyclesVal, _cyclesVal, true, 50);
+            CustomizeTextBox(panel, m_amplitudeBox,
+                "Define the amplitude of the sine curve", "" + _amplitudeVal, _amplitudeVal, true, 50);
         }
 
         /// <summary>
@@ -220,8 +220,8 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             CustomizeTextBox(panel, partitionsFieldBox, null, "number of partitions:", 0, false, 130);
             //Call method to customize the text box and set it as active
             var partitionsBoxData = new TextBoxData("curve partitions box");
-            partitionsBox = panel.AddItem(partitionsBoxData) as TextBox;
-            CustomizeTextBox(panel, partitionsBox, "Define the number of partitions", "" + partitionsVal, partitionsVal,
+            m_partitionsBox = panel.AddItem(partitionsBoxData) as TextBox;
+            CustomizeTextBox(panel, m_partitionsBox, "Define the number of partitions", "" + _partitionsVal, _partitionsVal,
                 true, 50);
         }
 
@@ -233,9 +233,9 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         private void AddRunButton(RibbonPanel panel)
         {
             var pushButtonData = new PushButtonData("arrayPrisms", "run",
-                assemblyPath + "\\" + assemblyName, "Revit.SDK.Samples.SinePlotter.CS.Command")
+                m_assemblyPath + "\\" + m_assemblyName, "Revit.SDK.Samples.SinePlotter.CS.Command")
             {
-                LargeImage = new BitmapImage(new Uri(imageFolder + "Start.png"))
+                LargeImage = new BitmapImage(new Uri(m_imageFolder + "Start.png"))
             };
             _ = panel.AddItem(pushButtonData) as PushButton;
         }
@@ -268,33 +268,33 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             double value;
             if (double.TryParse(textBox.Value.ToString(), out value))
             {
-                if (textBox.Name.Equals(periodBox.Name))
+                if (textBox.Name.Equals(m_periodBox.Name))
                 {
                     if (value < 0.1 || value > 3)
                         TaskDialog.Show("TextBox Input",
                             "The input value for " + textBox.Name + " has to be between 0.1 and 3.0");
-                    else periodVal = value;
+                    else _periodVal = value;
                 }
-                else if (textBox.Name.Equals(cyclesBox.Name))
+                else if (textBox.Name.Equals(m_cyclesBox.Name))
                 {
                     if (value <= 0)
                         TaskDialog.Show("TextBox Input",
                             "The input value for " + textBox.Name + " has to be greater than zero.");
-                    else cyclesVal = value;
+                    else _cyclesVal = value;
                 }
-                else if (textBox.Name.Equals(amplitudeBox.Name))
+                else if (textBox.Name.Equals(m_amplitudeBox.Name))
                 {
                     if (value < -4 || value > 4)
                         TaskDialog.Show("TextBox Input",
                             "The input value for " + textBox.Name + " has to be between -4.0 and 4.0");
-                    else amplitudeVal = value;
+                    else _amplitudeVal = value;
                 }
                 else
                 {
                     if (value <= 0)
                         TaskDialog.Show("TextBox Input",
                             "The input value for " + textBox.Name + " has to be greater than zero.");
-                    else partitionsVal = value;
+                    else _partitionsVal = value;
                 }
             }
             else

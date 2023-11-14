@@ -67,14 +67,14 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                         var options = new Options();
                         options.DetailLevel = ViewDetailLevel.Coarse;
 
-                        var main = getMeshes(part.get_Geometry(options));
-                        var ins = getMeshes(part.GetInsulationLiningGeometry());
+                        var main = GetMeshes(part.get_Geometry(options));
+                        var ins = GetMeshes(part.GetInsulationLiningGeometry());
 
                         var mlp = 0;
                         foreach (var mesh in main)
                         {
                             var file = string.Concat(filename, partcount.ToString(), "-main-", (++mlp).ToString(), ext);
-                            if (exportMesh(file, mesh))
+                            if (ExportMesh(file, mesh))
                                 exported++;
                         }
 
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                         foreach (var mesh in ins)
                         {
                             var file = string.Concat(filename, partcount.ToString(), "-ins-", (++ilp).ToString(), ext);
-                            if (exportMesh(file, mesh))
+                            if (ExportMesh(file, mesh))
                                 exported++;
                         }
                     }
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             }
         }
 
-        private IList<Mesh> getMeshes(GeometryElement ge)
+        private IList<Mesh> GetMeshes(GeometryElement ge)
         {
             IList<Mesh> rv = new List<Mesh>();
             if (ge != null)
@@ -125,7 +125,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                     {
                         var ge2 = i.GetInstanceGeometry();
                         if (ge2 != null)
-                            rv = rv.Concat(getMeshes(ge2)).ToList();
+                            rv = rv.Concat(GetMeshes(ge2)).ToList();
                     }
                     else
                     {
@@ -138,7 +138,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             return rv;
         }
 
-        private bool exportMesh(string filename, Mesh mesh)
+        private bool ExportMesh(string filename, Mesh mesh)
         {
             var bSaved = false;
 

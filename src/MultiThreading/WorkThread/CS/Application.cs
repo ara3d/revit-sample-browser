@@ -28,7 +28,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
     public class Application : IExternalApplication
     {
         // instance of class Application
-        internal static Application thisApp;
+        internal static Application ThisApp;
 
         // instance of class FaceAnalyzer
         private FaceAnalyzer m_analyzer;
@@ -50,7 +50,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            thisApp = this;
+            ThisApp = this;
             return Result.Succeeded;
         }
 

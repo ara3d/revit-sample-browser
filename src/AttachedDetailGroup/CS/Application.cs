@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
         /// <summary>
         ///     The path to this add-in assembly.
         /// </summary>
-        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -57,7 +57,7 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
 
             // Create the show all detail groups pushbutton.
             var pbdShowAllDetailGroups = new PushButtonData("ShowAttachedDetailGroups", "Show Attached\nDetail Groups",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(AttachedDetailGroupShowAllCommand).FullName)
             {
                 LongDescription = "Show all of the selected element group's attached detail groups that are compatible with the current view."
@@ -68,7 +68,7 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
 
             // Create the hide all detail groups pushbutton.
             var pbdHideAllDetailGroups = new PushButtonData("HideAttachedDetailGroups", "Hide Attached\nDetail Groups",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(AttachedDetailGroupHideAllCommand).FullName)
             {
                 LongDescription = "Hide all of the selected element group's attached detail groups that are compatible with the current view."

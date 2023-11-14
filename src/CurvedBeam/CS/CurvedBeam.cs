@@ -38,8 +38,8 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             tran.Start();
 
             // if initialize failed return Result.Failed
-            var initializeOK = Initialize();
-            if (!initializeOK) return Result.Failed;
+            var initializeOk = Initialize();
+            if (!initializeOk) return Result.Failed;
 
             // pop up new beam form
             var displayForm = new CurvedBeamForm(this);

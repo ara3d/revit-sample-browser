@@ -22,7 +22,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
     /// </summary>
     public class ResourceProvider
     {
-        private static ResourceProvider provider;
+        private static ResourceProvider _provider;
 
         private ResourceProvider()
         {
@@ -47,7 +47,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns>Instance of the provider</returns>
         public static ResourceProvider GetInstance()
         {
-            return provider ?? (provider = new ResourceProvider());
+            return _provider ?? (_provider = new ResourceProvider());
         }
     }
 }

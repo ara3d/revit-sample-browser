@@ -52,7 +52,7 @@ namespace Revit.SDK.Samples.Selections.CS
         /// <summary>
         ///     For basic creation.
         /// </summary>
-        private ItemFactoryBase m_CreationBase;
+        private ItemFactoryBase m_creationBase;
 
         /// <summary>
         ///     store the document
@@ -77,9 +77,9 @@ namespace Revit.SDK.Samples.Selections.CS
             m_document = m_application.ActiveUIDocument;
 
             if (m_document.Document.IsFamilyDocument)
-                m_CreationBase = m_document.Document.FamilyCreate;
+                m_creationBase = m_document.Document.FamilyCreate;
             else
-                m_CreationBase = m_document.Document.Create;
+                m_creationBase = m_document.Document.Create;
         }
 
         /// <summary>

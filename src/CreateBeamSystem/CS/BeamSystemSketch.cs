@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <param name="translate">translation matrix to canvas coordinates</param>
         public override void Draw(Graphics g, Matrix translate)
         {
-            foreach (LineSketch sketch in m_objects) sketch.Draw(g, m_transform);
+            foreach (LineSketch sketch in Objects) sketch.Draw(g, Transform);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         {
             var g = e.Graphics;
             g.Clear(Color.White);
-            Draw(g, m_transform);
+            Draw(g, Transform);
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         private void CalculateTransform()
         {
             var plgpts = CalculateCanvasRegion();
-            m_transform = new Matrix(BoundingBox, plgpts);
-            m_inverse = m_transform.Clone();
+            Transform = new Matrix(BoundingBox, plgpts);
+            m_inverse = Transform.Clone();
 
             if (m_inverse.IsInvertible) m_inverse.Invert();
         }
@@ -108,18 +108,18 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         private void Initialize(IList<Line> profile)
         {
             // deal with first line in profile
-            m_objects.Clear();
+            Objects.Clear();
             var firstSketch = new LineSketch(GetLine2D(profile[0]));
             m_boundingBox = firstSketch.BoundingBox;
             firstSketch.IsDirection = true;
-            m_objects.Add(firstSketch);
+            Objects.Add(firstSketch);
 
             // all other lines
             for (var i = 1; i < profile.Count; i++)
             {
                 var sketch = new LineSketch(GetLine2D(profile[i]));
                 m_boundingBox = RectangleF.Union(BoundingBox, sketch.BoundingBox);
-                m_objects.Add(sketch);
+                Objects.Add(sketch);
             }
         }
 

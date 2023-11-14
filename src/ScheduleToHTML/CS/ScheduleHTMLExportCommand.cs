@@ -9,7 +9,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
     ///     The external command exporting the active schedule to HTML.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class ScheduleHTMLExportCommand : IExternalCommand
+    internal class ScheduleHtmlExportCommand : IExternalCommand
     {
         /// <summary>
         ///     The implementation of the command.
@@ -24,10 +24,10 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
 
             if (activeView is ViewSchedule view)
             {
-                var exporter = new ScheduleHTMLExporter(view);
+                var exporter = new ScheduleHtmlExporter(view);
                 var revitApplication = commandData.Application.Application;
                 var bInteractive = revitApplication.IsJournalPlaying() ? false : true;
-                return exporter.ExportToHTML(bInteractive, ref message) ? Result.Succeeded : Result.Cancelled;
+                return exporter.ExportToHtml(bInteractive, ref message) ? Result.Succeeded : Result.Cancelled;
             }
 
             message = "Unable to proceed: Active view must be a schedule.";

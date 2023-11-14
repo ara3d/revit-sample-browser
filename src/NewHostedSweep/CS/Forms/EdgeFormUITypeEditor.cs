@@ -11,7 +11,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
     /// <summary>
     ///     This class is intent to provide a model dialog in property grid control.
     /// </summary>
-    internal class EdgeFormUITypeEditor : UITypeEditor
+    internal class EdgeFormUiTypeEditor : UITypeEditor
     {
         /// <summary>
         ///     Return the Modal style.

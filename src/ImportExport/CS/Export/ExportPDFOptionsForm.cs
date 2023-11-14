@@ -8,17 +8,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores information of lower priority for exporting PDF format.
     /// </summary>
-    public partial class ExportPDFOptionsForm : Form
+    public partial class ExportPdfOptionsForm : Form
     {
         /// <summary>
         ///     ExportPDFData object
         /// </summary>
-        private readonly ExportPDFData m_data;
+        private readonly ExportPdfData m_data;
 
         /// <summary>
         ///     ExportPDFOptionsForm constructor
         /// </summary>
-        public ExportPDFOptionsForm(ExportPDFData data)
+        public ExportPdfOptionsForm(ExportPdfData data)
         {
             m_data = data;
             InitializeComponent();

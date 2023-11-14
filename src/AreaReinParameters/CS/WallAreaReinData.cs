@@ -36,7 +36,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         private Parameter m_layoutRule;
 
         [Category("Construction")]
-        public LayoutRules Layout_Rule
+        public LayoutRules LayoutRule
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Exterior Major Layers")]
         [TypeConverter(typeof(BarTypeItem))]
-        public ElementId Exterior_Major_Bar_Type
+        public ElementId ExteriorMajorBarType
         {
             get => m_exteriorMajorBarType.AsElementId();
             set => m_exteriorMajorBarType.Set(value);
@@ -60,14 +60,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Exterior Major Layers")]
         [TypeConverter(typeof(HookTypeItem))]
-        public ElementId Exterior_Major_Hook_Type
+        public ElementId ExteriorMajorHookType
         {
             get => m_exteriorMajorHookType.AsElementId();
             set => m_exteriorMajorHookType.Set(value);
         }
 
         [Category("Exterior Major Layers")]
-        public WallHookOrientations Exterior_Major_Hook_Orientation
+        public WallHookOrientations ExteriorMajorHookOrientation
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Exterior Minor Layers")]
         [TypeConverter(typeof(BarTypeItem))]
-        public ElementId Exterior_Minor_Bar_Type
+        public ElementId ExteriorMinorBarType
         {
             get => m_exteriorMinorBarType.AsElementId();
             set => m_exteriorMinorBarType.Set(value);
@@ -91,14 +91,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Exterior Minor Layers")]
         [TypeConverter(typeof(HookTypeItem))]
-        public ElementId Exterior_Minor_Hook_Type
+        public ElementId ExteriorMinorHookType
         {
             get => m_exteriorMinorHookType.AsElementId();
             set => m_exteriorMinorHookType.Set(value);
         }
 
         [Category("Exterior Minor Layers")]
-        public WallHookOrientations Exterior_Minor_Hook_Orientation
+        public WallHookOrientations ExteriorMinorHookOrientation
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Interior Major Layers")]
         [TypeConverter(typeof(BarTypeItem))]
-        public ElementId Interior_Major_Bar_Type
+        public ElementId InteriorMajorBarType
         {
             get => m_interiorMajorBarType.AsElementId();
             set => m_interiorMajorBarType.Set(value);
@@ -122,14 +122,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Interior Major Layers")]
         [TypeConverter(typeof(HookTypeItem))]
-        public ElementId Interior_Major_Hook_Type
+        public ElementId InteriorMajorHookType
         {
             get => m_interiorMajorHookType.AsElementId();
             set => m_interiorMajorHookType.Set(value);
         }
 
         [Category("Interior Major Layers")]
-        public WallHookOrientations Interior_Major_Hook_Orientation
+        public WallHookOrientations InteriorMajorHookOrientation
         {
             get
             {
@@ -145,7 +145,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Interior Minor Layers")]
         [TypeConverter(typeof(BarTypeItem))]
-        public ElementId Interior_Minor_Bar_Type
+        public ElementId InteriorMinorBarType
         {
             get => m_interiorMinorBarType.AsElementId();
             set => m_interiorMinorBarType.Set(value);
@@ -153,14 +153,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         [Category("Interior Minor Layers")]
         [TypeConverter(typeof(HookTypeItem))]
-        public ElementId Interior_Minor_Hook_Type
+        public ElementId InteriorMinorHookType
         {
             get => m_interiorMinorHookType.AsElementId();
             set => m_interiorMinorHookType.Set(value);
         }
 
         [Category("Interior Minor Layers")]
-        public WallHookOrientations Interior_Minor_Hook_Orientation
+        public WallHookOrientations InteriorMinorHookOrientation
         {
             get
             {

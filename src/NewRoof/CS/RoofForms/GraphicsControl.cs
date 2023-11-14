@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         private readonly Pen m_displayPen;
 
         // To store the draw center location of the PictureBox control, it is the origin of the drawing.
-        public PointF m_drawCenter;
+        public PointF DrawCenter;
 
         // A reference to FootPrintRoofWrapper, It constrains the DrawFootPrint() method to 
         // draw footprint roof lines in the PictureBox control.
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             picturebox.Paint += picturebox_Paint;
 
             // initialize the draw center and scale value
-            m_drawCenter = new PointF(picturebox.Size.Width / 2, picturebox.Size.Height / 2);
+            DrawCenter = new PointF(picturebox.Size.Width / 2, picturebox.Size.Height / 2);
 
             var size = m_footPrintRoofWrapper.Boundingbox.Max - m_footPrintRoofWrapper.Boundingbox.Min;
             var tempscale1 = (float)(0.9 * picturebox.Width / size.X);
@@ -100,7 +100,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         {
             var graphics = e.Graphics;
             graphics.Clear(Color.White);
-            graphics.TranslateTransform(m_drawCenter.X, m_drawCenter.Y);
+            graphics.TranslateTransform(DrawCenter.X, DrawCenter.Y);
             graphics.ScaleTransform(m_scale, m_scale);
             graphics.PageUnit = GraphicsUnit.Pixel;
             m_footPrintRoofWrapper.DrawFootPrint(graphics, m_displayPen, m_highLightPen);

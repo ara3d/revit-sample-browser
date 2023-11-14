@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        private const double precision = 0.0000001; //store the precision   
+        private const double Precision = 0.0000001; //store the precision   
         private string m_errorMessage = " "; // store error message
         private ExternalCommandData m_revit; //store external command
         private readonly ArrayList m_walls = new ArrayList(); //store the wall of selected
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
         /// <summary>
         ///     find out the wall, insert it into a array list
         /// </summary>
-        private bool initialize()
+        private bool Initialize()
         {
             var selections = new ElementSet();
             foreach (var elementId in m_revit.Application.ActiveUIDocument.Selection.GetElementIds())
@@ -94,7 +94,7 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
         /// <returns>if add successfully, true will be returned, else false will be returned</returns>
         public bool AddDimension()
         {
-            if (!initialize()) return false;
+            if (!Initialize()) return false;
 
             var transaction = new Transaction(m_revit.Application.ActiveUIDocument.Document, "Add Dimensions");
             transaction.Start();

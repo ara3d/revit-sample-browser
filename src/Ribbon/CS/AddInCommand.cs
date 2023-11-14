@@ -148,13 +148,13 @@ namespace Revit.SDK.Samples.Ribbon.CS
         protected List<Curve> GetRectangleWallShape(Application creApp)
         {
             //calculate size of Structural and NonStructural walls
-            var WallsSize = CreatedWalls.Size + CreatedWalls.Size;
+            var wallsSize = CreatedWalls.Size + CreatedWalls.Size;
             var curves = new List<Curve>();
             //15: distance from each wall, 60: wall length , 60: wall width 
-            var line1 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 0), new XYZ(WallsSize * 15, 60, 0));
-            var line2 = Line.CreateBound(new XYZ(WallsSize * 15, 60, 0), new XYZ(WallsSize * 15, 60, 40));
-            var line3 = Line.CreateBound(new XYZ(WallsSize * 15, 60, 40), new XYZ(WallsSize * 15, 0, 40));
-            var line4 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 40), new XYZ(WallsSize * 15, 0, 0));
+            var line1 = Line.CreateBound(new XYZ(wallsSize * 15, 0, 0), new XYZ(wallsSize * 15, 60, 0));
+            var line2 = Line.CreateBound(new XYZ(wallsSize * 15, 60, 0), new XYZ(wallsSize * 15, 60, 40));
+            var line3 = Line.CreateBound(new XYZ(wallsSize * 15, 60, 40), new XYZ(wallsSize * 15, 0, 40));
+            var line4 = Line.CreateBound(new XYZ(wallsSize * 15, 0, 40), new XYZ(wallsSize * 15, 0, 0));
             curves.Add(line1);
             curves.Add(line2);
             curves.Add(line3);
@@ -165,13 +165,13 @@ namespace Revit.SDK.Samples.Ribbon.CS
         protected List<Curve> GetSquareWallShape(Application creApp)
         {
             //calculate size of Structural and NonStructural walls
-            var WallsSize = CreatedWalls.Size + CreatedWalls.Size;
+            var wallsSize = CreatedWalls.Size + CreatedWalls.Size;
             var curves = new List<Curve>();
             //15: distance from each wall, 40: wall length  
-            var line1 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 0), new XYZ(WallsSize * 15, 40, 0));
-            var line2 = Line.CreateBound(new XYZ(WallsSize * 15, 40, 0), new XYZ(WallsSize * 15, 40, 40));
-            var line3 = Line.CreateBound(new XYZ(WallsSize * 15, 40, 40), new XYZ(WallsSize * 15, 0, 40));
-            var line4 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 40), new XYZ(WallsSize * 15, 0, 0));
+            var line1 = Line.CreateBound(new XYZ(wallsSize * 15, 0, 0), new XYZ(wallsSize * 15, 40, 0));
+            var line2 = Line.CreateBound(new XYZ(wallsSize * 15, 40, 0), new XYZ(wallsSize * 15, 40, 40));
+            var line3 = Line.CreateBound(new XYZ(wallsSize * 15, 40, 40), new XYZ(wallsSize * 15, 0, 40));
+            var line4 = Line.CreateBound(new XYZ(wallsSize * 15, 0, 40), new XYZ(wallsSize * 15, 0, 0));
             curves.Add(line1);
             curves.Add(line2);
             curves.Add(line3);
@@ -182,13 +182,13 @@ namespace Revit.SDK.Samples.Ribbon.CS
         protected List<Curve> GetCircleWallShape(Application creApp)
         {
             //calculate size of Structural and NonStructural walls
-            var WallsSize = CreatedWalls.Size + CreatedWalls.Size;
+            var wallsSize = CreatedWalls.Size + CreatedWalls.Size;
             var curves = new List<Curve>();
             //15: distance from each wall, 40: diameter of circle  
-            var arc = Arc.Create(new XYZ(WallsSize * 15, 20, 0), new XYZ(WallsSize * 15, 20, 40),
-                new XYZ(WallsSize * 15, 40, 20));
-            var arc2 = Arc.Create(new XYZ(WallsSize * 15, 20, 0), new XYZ(WallsSize * 15, 20, 40),
-                new XYZ(WallsSize * 15, 0, 20));
+            var arc = Arc.Create(new XYZ(wallsSize * 15, 20, 0), new XYZ(wallsSize * 15, 20, 40),
+                new XYZ(wallsSize * 15, 40, 20));
+            var arc2 = Arc.Create(new XYZ(wallsSize * 15, 20, 0), new XYZ(wallsSize * 15, 20, 40),
+                new XYZ(wallsSize * 15, 0, 20));
             curves.Add(arc);
             curves.Add(arc2);
             return curves;
@@ -197,12 +197,12 @@ namespace Revit.SDK.Samples.Ribbon.CS
         protected List<Curve> GetTriangleWallShape(Application creApp)
         {
             //calculate size of Structural and NonStructural walls
-            var WallsSize = CreatedWalls.Size + CreatedWalls.Size;
+            var wallsSize = CreatedWalls.Size + CreatedWalls.Size;
             var curves = new List<Curve>();
             //15: distance from each wall, 40: height of triangle  
-            var line1 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 0), new XYZ(WallsSize * 15, 40, 0));
-            var line2 = Line.CreateBound(new XYZ(WallsSize * 15, 40, 0), new XYZ(WallsSize * 15, 20, 40));
-            var line3 = Line.CreateBound(new XYZ(WallsSize * 15, 20, 40), new XYZ(WallsSize * 15, 0, 0));
+            var line1 = Line.CreateBound(new XYZ(wallsSize * 15, 0, 0), new XYZ(wallsSize * 15, 40, 0));
+            var line2 = Line.CreateBound(new XYZ(wallsSize * 15, 40, 0), new XYZ(wallsSize * 15, 20, 40));
+            var line3 = Line.CreateBound(new XYZ(wallsSize * 15, 20, 40), new XYZ(wallsSize * 15, 0, 0));
             curves.Add(line1);
             curves.Add(line2);
             curves.Add(line3);

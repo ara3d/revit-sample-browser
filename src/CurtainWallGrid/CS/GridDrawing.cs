@@ -453,7 +453,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 var vec = new Vector4(xyz);
                 vec = Coordinates.RestoreMatrix.Transform(vec);
                 offset = vec.Z - Geometry.LineToBeMoved.FullCurve.GetEndPoint(0).Z;
-                offset = Unit.CovertFromAPI(m_myDocument.LengthUnit, offset);
+                offset = Unit.CovertFromApi(m_myDocument.LengthUnit, offset);
 
                 // showing the move offset
                 DrawObject.Text = "Offset: " + Math.Round(offset, 1) + Unit.GetUnitLabel(m_myDocument.LengthUnit);
@@ -480,7 +480,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 var vec = new Vector4(xyz);
                 vec = Coordinates.RestoreMatrix.Transform(vec);
                 offset = vec.X - Geometry.LineToBeMoved.FullCurve.GetEndPoint(0).X;
-                offset = Unit.CovertFromAPI(m_myDocument.LengthUnit, offset);
+                offset = Unit.CovertFromApi(m_myDocument.LengthUnit, offset);
 
                 // showing the move offset
                 DrawObject.Text = "Offset: " + Math.Round(offset, 1) + Unit.GetUnitLabel(m_myDocument.LengthUnit);
@@ -1056,20 +1056,20 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         private void GetBoundLines2D()
         {
-            for (var i = 0; i < Geometry.GridVertexesXYZ.Count; i += 1)
+            for (var i = 0; i < Geometry.GridVertexesXyz.Count; i += 1)
             {
                 XYZ point1, point2;
 
                 // connect the last point with the first point as a boundary line
-                if (i == Geometry.GridVertexesXYZ.Count - 1)
+                if (i == Geometry.GridVertexesXyz.Count - 1)
                 {
-                    point1 = Geometry.GridVertexesXYZ[i];
-                    point2 = Geometry.GridVertexesXYZ[0];
+                    point1 = Geometry.GridVertexesXyz[i];
+                    point2 = Geometry.GridVertexesXyz[0];
                 }
                 else
                 {
-                    point1 = Geometry.GridVertexesXYZ[i];
-                    point2 = Geometry.GridVertexesXYZ[i + 1];
+                    point1 = Geometry.GridVertexesXyz[i];
+                    point2 = Geometry.GridVertexesXyz[i + 1];
                 }
 
                 var v1 = new Vector4(point1);

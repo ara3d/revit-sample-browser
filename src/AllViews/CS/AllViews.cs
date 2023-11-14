@@ -47,7 +47,7 @@ namespace Revit.SDK.Samples.AllViews.CS
     /// </summary>
     public class ViewsMgr
     {
-        private readonly double GOLDENSECTION = 0.618;
+        private readonly double m_goldensection = 0.618;
         private IList<Element> m_allTitleBlocks = new List<Element>();
         private readonly ViewSet m_allViews = new ViewSet();
 
@@ -56,9 +56,9 @@ namespace Revit.SDK.Samples.AllViews.CS
         private readonly ViewSet m_selectedViews = new ViewSet();
         private FamilySymbol m_titleBlock;
 
-        private Viewport m_VP;
+        private Viewport m_vp;
 
-        private readonly double TITLEBAR = 0.2;
+        private readonly double m_titlebar = 0.2;
 
         /// <summary>
         ///     Constructor of views object.
@@ -92,17 +92,17 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <param name="form">The Form to be updated.</param>
         public void UpdateViewportProperties(AllViewsForm form)
         {
-            form.m_getMinBoxOutline = m_VP.GetBoxOutline().MinimumPoint;
-            form.m_getMaxBoxOutline = m_VP.GetBoxOutline().MaximumPoint;
+            form.GetMinBoxOutline = m_vp.GetBoxOutline().MinimumPoint;
+            form.GetMaxBoxOutline = m_vp.GetBoxOutline().MaximumPoint;
 
-            form.m_getMinLabelOutline = m_VP.GetLabelOutline().MinimumPoint;
-            form.m_getMaxLabelOutline = m_VP.GetLabelOutline().MaximumPoint;
+            form.GetMinLabelOutline = m_vp.GetLabelOutline().MinimumPoint;
+            form.GetMaxLabelOutline = m_vp.GetLabelOutline().MaximumPoint;
 
-            form.m_getLabelLineOffset = m_VP.LabelOffset;
-            form.m_getLabelLineLength = m_VP.LabelLineLength;
+            form.GetLabelLineOffset = m_vp.LabelOffset;
+            form.GetLabelLineLength = m_vp.LabelLineLength;
 
-            form.m_getBoxCenter = m_VP.GetBoxCenter();
-            form.m_getOrientation = m_VP.Rotation;
+            form.GetBoxCenter = m_vp.GetBoxCenter();
+            form.GetOrientation = m_vp.Rotation;
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <param name="selectAssociatedViewName">Associated view name.</param>
         public bool SelectViewport(AllViewsForm form, string selectSheetName, string selectAssociatedViewName)
         {
-            m_VP = null;
-            form.invalidViewport = true;
+            m_vp = null;
+            form.InvalidViewport = true;
 
             var fec = new FilteredElementCollector(m_doc);
             fec.OfClass(typeof(View));
@@ -124,23 +124,23 @@ namespace Revit.SDK.Samples.AllViews.CS
                 if (view.Name.Equals(selectSheetName))
                 {
                     var viewSheet = (ViewSheet)view;
-                    foreach (var vp in viewSheet.GetAllViewports())
+                    foreach (var vpId in viewSheet.GetAllViewports())
                     {
-                        var VP = (Viewport)m_doc.GetElement(vp);
+                        var vp = (Viewport)m_doc.GetElement(vpId);
 
-                        var associatedView = m_doc.GetElement(VP.ViewId) as View;
+                        var associatedView = m_doc.GetElement(vp.ViewId) as View;
 
                         if (associatedView.Name.Equals(selectAssociatedViewName))
                         {
-                            m_VP = VP;
+                            m_vp = vp;
                             break;
                         }
                     }
                 }
 
-            if (m_VP == null) throw new InvalidOperationException("Viewport not found.");
+            if (m_vp == null) throw new InvalidOperationException("Viewport not found.");
 
-            form.invalidViewport = false;
+            form.InvalidViewport = false;
             UpdateViewportProperties(form);
             return true;
         }
@@ -158,7 +158,7 @@ namespace Revit.SDK.Samples.AllViews.CS
             {
                 t.Start();
 
-                m_VP.LabelOffset = new XYZ(labelOffsetX, labelOffsetY, 0.0);
+                m_vp.LabelOffset = new XYZ(labelOffsetX, labelOffsetY, 0.0);
 
                 t.Commit();
 
@@ -177,7 +177,7 @@ namespace Revit.SDK.Samples.AllViews.CS
             {
                 t.Start();
 
-                m_VP.LabelLineLength = labelLineLength;
+                m_vp.LabelLineLength = labelLineLength;
 
                 t.Commit();
 
@@ -196,7 +196,7 @@ namespace Revit.SDK.Samples.AllViews.CS
             {
                 t.Start();
 
-                m_VP.Rotation = rotation;
+                m_vp.Rotation = rotation;
 
                 t.Commit();
 
@@ -386,7 +386,7 @@ namespace Revit.SDK.Samples.AllViews.CS
 
                 if (0 != n++ % m_rows)
                 {
-                    tempU = tempU + xDistance * (1 - TITLEBAR);
+                    tempU = tempU + xDistance * (1 - m_titlebar);
                 }
                 else
                 {
@@ -405,7 +405,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <returns></returns>
         private UV GetOffSet(BoundingBoxUV bBox, double x, double y)
         {
-            return new UV(bBox.Min.U + x * GOLDENSECTION, bBox.Min.V + y * GOLDENSECTION);
+            return new UV(bBox.Min.U + x * m_goldensection, bBox.Min.V + y * m_goldensection);
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <param name="y">Distance in y axis between each view</param>
         private void CalculateDistance(BoundingBoxUV bBox, int amount, ref double x, ref double y)
         {
-            var xLength = (bBox.Max.U - bBox.Min.U) * (1 - TITLEBAR);
+            var xLength = (bBox.Max.U - bBox.Min.U) * (1 - m_titlebar);
             var yLength = bBox.Max.V - bBox.Min.V;
 
             //calculate appropriate rows numbers.
@@ -435,13 +435,13 @@ namespace Revit.SDK.Samples.AllViews.CS
             //calculate appropriate distance between the views.
             if (bBox.Max.U > bBox.Max.V)
             {
-                x = Math.Sqrt(area / GOLDENSECTION);
-                y = GOLDENSECTION * x;
+                x = Math.Sqrt(area / m_goldensection);
+                y = m_goldensection * x;
             }
             else
             {
-                y = Math.Sqrt(area / GOLDENSECTION);
-                x = GOLDENSECTION * y;
+                y = Math.Sqrt(area / m_goldensection);
+                x = m_goldensection * y;
             }
         }
 
@@ -453,16 +453,16 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <param name="y">Distance in y axis between each view</param>
         private static void Rescale(View view, double x, double y)
         {
-            double Rescale = 2;
+            double rescale = 2;
             var outline = new UV(view.Outline.Max.U - view.Outline.Min.U,
                 view.Outline.Max.V - view.Outline.Min.V);
 
             if (outline.U > outline.V)
-                Rescale = outline.U / x * Rescale;
+                rescale = outline.U / x * rescale;
             else
-                Rescale = outline.V / y * Rescale;
+                rescale = outline.V / y * rescale;
 
-            if (1 != view.Scale && 0 != Rescale) view.Scale = (int)(view.Scale * Rescale);
+            if (1 != view.Scale && 0 != rescale) view.Scale = (int)(view.Scale * rescale);
         }
     }
 }

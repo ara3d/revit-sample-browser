@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 tree.Traverse();
                 var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                     "traversal.xml");
-                tree.DumpIntoXML(fileName);
+                tree.DumpIntoXml(fileName);
 
                 return Result.Succeeded;
             }

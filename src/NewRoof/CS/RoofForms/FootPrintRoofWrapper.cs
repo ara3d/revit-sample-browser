@@ -18,14 +18,14 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         ///     Translate a Revit 3D point to a windows 2D point according the boundingbox.
         /// </summary>
-        /// <param name="pointXYZ">A Revit 3D point</param>
+        /// <param name="pointXyz">A Revit 3D point</param>
         /// <param name="boundingbox">The boundingbox of the roof whose footprint lines will be displayed in GDI.</param>
         /// <returns>A windows 2D point.</returns>
-        public static PointF Translate(XYZ pointXYZ, BoundingBoxXYZ boundingbox)
+        public static PointF Translate(XYZ pointXyz, BoundingBoxXYZ boundingbox)
         {
             var centerX = (boundingbox.Min.X + boundingbox.Max.X) / 2;
             var centerY = (boundingbox.Min.Y + boundingbox.Max.Y) / 2;
-            return new PointF((float)(pointXYZ.X - centerX), -(float)(pointXYZ.Y - centerY));
+            return new PointF((float)(pointXyz.X - centerX), -(float)(pointXyz.Y - centerY));
         }
     }
 
@@ -213,7 +213,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             get
             {
                 var para = m_roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
-                return LevelConverter.GetLevelByID(para.AsElementId());
+                return LevelConverter.GetLevelById(para.AsElementId());
             }
             set
             {

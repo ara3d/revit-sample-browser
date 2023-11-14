@@ -21,7 +21,7 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            using (var _transaction_ = new Transaction(doc))
+            using (var transaction = new Transaction(doc))
             {
                 // Get the element selection of current document.
                 var selectedIds = uidoc.Selection.GetElementIds();
@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
                             var dimLine = dim.Curve as Line;
                             if (dimLine != null)
                             {
-                                _transaction_.Start("Set leader end position.");
+                                transaction.Start("Set leader end position.");
                                 try
                                 {
                                     var dir = dimLine.Direction;
@@ -55,12 +55,12 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
                                         }
                                     }
 
-                                    _transaction_.Commit();
+                                    transaction.Commit();
                                 }
                                 catch (Exception ex)
                                 {
                                     TaskDialog.Show("Can't set dimension leader end point: {0}", ex.Message);
-                                    _transaction_.RollBack();
+                                    transaction.RollBack();
                                 }
                             }
                         }
@@ -89,7 +89,7 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
             // Get the handle of current document.
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
-            using (var _transaction_ = new Transaction(doc))
+            using (var transaction = new Transaction(doc))
             {
                 // Get the element selection of current document.
                 var selection = uidoc.Selection;
@@ -104,7 +104,7 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
                         if (doc.GetElement(id) is Dimension dim)
                         {
                             var startPoint = selection.PickPoint(ObjectSnapTypes.None, "Pick start");
-                            _transaction_.Start("Set leader end point");
+                            transaction.Start("Set leader end point");
                             try
                             {
                                 if (dim.Segments.IsEmpty)
@@ -123,12 +123,12 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
                                     }
                                 }
 
-                                _transaction_.Commit();
+                                transaction.Commit();
                             }
                             catch (Exception ex)
                             {
                                 TaskDialog.Show("Can't set dimension leader end point: {0}", ex.Message);
-                                _transaction_.RollBack();
+                                transaction.RollBack();
                             }
                         }
                     }

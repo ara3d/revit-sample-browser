@@ -43,9 +43,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             var result = 0;
             m_para = new WizardParameter
             {
-                m_template = "DoubleHung"
+                Template = "DoubleHung"
             };
-            if (m_para.m_template == "DoubleHung") m_winCreator = new DoubleHungWinCreation(m_para, m_commandData);
+            if (m_para.Template == "DoubleHung") m_winCreator = new DoubleHungWinCreation(m_para, m_commandData);
             using (var form = new WizardForm(m_para))
             {
                 switch (form.ShowDialog())

@@ -31,7 +31,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         ///     The formatter used by the command when updating the schedule.
         ///     Created upon first use.
         /// </summary>
-        private ScheduleFormatter theFormatter;
+        private ScheduleFormatter m_theFormatter;
 
         /// <summary>
         ///     The command implementation.
@@ -48,9 +48,9 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             var schema = GetOrCreateSchema();
 
             // Setup formatter for the schedule, if not setup. 
-            if (theFormatter == null)
+            if (m_theFormatter == null)
             {
-                theFormatter = new ScheduleFormatter
+                m_theFormatter = new ScheduleFormatter
                 {
                     Schema = schema,
                     AddInId = commandData.Application.ActiveAddInId
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             {
                 t.Start();
                 // Make formatting changes
-                theFormatter.FormatScheduleColumns(viewSchedule);
+                m_theFormatter.FormatScheduleColumns(viewSchedule);
 
                 // Mark schedule to be formatted
                 AddMarkerEntity(viewSchedule, schema);
@@ -69,7 +69,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             }
 
             // Add updater to listen to further changes
-            AddUpdater(theFormatter);
+            AddUpdater(m_theFormatter);
 
             return Result.Succeeded;
         }

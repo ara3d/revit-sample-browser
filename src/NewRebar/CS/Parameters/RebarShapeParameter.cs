@@ -13,19 +13,9 @@ namespace Revit.SDK.Samples.NewRebar.CS
     public abstract class RebarShapeParameter
     {
         /// <summary>
-        ///     Parameter name string.
-        /// </summary>
-        protected readonly string m_name;
-
-        /// <summary>
-        ///     Parameter id. It is the result of commit.
-        /// </summary>
-        protected ElementId m_parameterId;
-
-        /// <summary>
         ///     RebarShape definition proxy object.
         /// </summary>
-        protected readonly RebarShapeDef m_rebarShapeDef;
+        protected readonly RebarShapeDef RebarShapeDef;
 
         /// <summary>
         ///     Constructor.
@@ -34,21 +24,21 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="name">Parameter name</param>
         protected RebarShapeParameter(RebarShapeDef shapeDef, string name)
         {
-            m_rebarShapeDef = shapeDef;
-            m_name = name;
-            m_parameterId = null;
+            RebarShapeDef = shapeDef;
+            Name = name;
+            Parameter = null;
         }
 
         /// <summary>
         ///     Parameter, it is the result of commit.
         /// </summary>
         [Browsable(false)]
-        public ElementId Parameter => m_parameterId;
+        public ElementId Parameter { get; protected set; }
 
         /// <summary>
         ///     Parameter name string.
         /// </summary>
-        public string Name => m_name;
+        public string Name { get; }
 
         /// <summary>
         ///     Get a external definition if there exists one, otherwise create a new one.
@@ -57,14 +47,14 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <returns>External definition</returns>
         protected ExternalDefinition GetOrCreateDef(DefinitionGroup group)
         {
-            if (!(group.Definitions.get_Item(m_name) is ExternalDefinition Bdef))
+            if (!(group.Definitions.get_Item(Name) is ExternalDefinition bdef))
             {
-                var ExternalDefinitionCreationOptions =
-                    new ExternalDefinitionCreationOptions(m_name, SpecTypeId.ReinforcementLength);
-                Bdef = group.Definitions.Create(ExternalDefinitionCreationOptions) as ExternalDefinition;
+                var externalDefinitionCreationOptions =
+                    new ExternalDefinitionCreationOptions(Name, SpecTypeId.ReinforcementLength);
+                bdef = group.Definitions.Create(externalDefinitionCreationOptions) as ExternalDefinition;
             }
 
-            return Bdef;
+            return bdef;
         }
 
         /// <summary>

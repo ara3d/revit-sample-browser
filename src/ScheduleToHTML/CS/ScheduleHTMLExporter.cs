@@ -11,42 +11,42 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
     /// <summary>
     ///     A class that can export a schedule to HTML.
     /// </summary>
-    internal class ScheduleHTMLExporter
+    internal class ScheduleHtmlExporter
     {
         /// <summary>
         ///     The body section of the table.
         /// </summary>
-        private TableSectionData bodySection;
+        private TableSectionData m_bodySection;
 
         /// <summary>
         ///     The header section of the table.
         /// </summary>
-        private TableSectionData headerSection;
+        private TableSectionData m_headerSection;
 
         /// <summary>
         ///     The schedule being exported.
         /// </summary>
-        private readonly ViewSchedule theSchedule;
+        private readonly ViewSchedule m_theSchedule;
 
         /// <summary>
         ///     The writer for the HTML file.
         /// </summary>
-        private HtmlTextWriter writer;
+        private HtmlTextWriter m_writer;
 
         /// <summary>
         ///     A collection of cells which have already been output.  This is needed to deal with
         ///     cell merging - each cell should be written only once even as all the cells are iterated in
         ///     order.
         /// </summary>
-        private readonly List<Tuple<int, int>> writtenCells = new List<Tuple<int, int>>();
+        private readonly List<Tuple<int, int>> m_writtenCells = new List<Tuple<int, int>>();
 
         /// <summary>
         ///     Constructs a new instance of the schedule exporter operating on the input schedule.
         /// </summary>
         /// <param name="input">The schedule to be exported.</param>
-        public ScheduleHTMLExporter(ViewSchedule input)
+        public ScheduleHtmlExporter(ViewSchedule input)
         {
-            theSchedule = input;
+            m_theSchedule = input;
         }
 
         /// <summary>
@@ -65,11 +65,11 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <param name="bInteractive">true if the export is being run interactively, false for journal playback.</param>
         /// <param name="errMessage">String to contain message to display if the export fails.</param>
         /// <returns>true if HTML exported without error, false otherswise.</returns>
-        public bool ExportToHTML(bool bInteractive, ref string errMessage)
+        public bool ExportToHtml(bool bInteractive, ref string errMessage)
         {
             // Setup file location in temp directory
             var folder = Environment.GetEnvironmentVariable("TEMP");
-            var htmlFile = Path.Combine(folder, ReplaceIllegalCharacters(theSchedule.Name) + ".html");
+            var htmlFile = Path.Combine(folder, ReplaceIllegalCharacters(m_theSchedule.Name) + ".html");
 
             // Initialize StringWriter instance, but handle any io exceptions and close as appropriate. 
             StreamWriter stringWriter = null;
@@ -78,10 +78,10 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
                 stringWriter = new StreamWriter(htmlFile);
 
                 // Put HtmlTextWriter in using block because it needs to call Dispose.
-                using (writer = new HtmlTextWriter(stringWriter))
+                using (m_writer = new HtmlTextWriter(stringWriter))
                 {
-                    writer.AddAttribute(HtmlTextWriterAttribute.Align, "center");
-                    writer.RenderBeginTag(HtmlTextWriterTag.Div);
+                    m_writer.AddAttribute(HtmlTextWriterAttribute.Align, "center");
+                    m_writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
                     //Write schedule header
                     WriteHeader();
@@ -89,7 +89,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
                     //Write schedule body
                     WriteBody();
 
-                    writer.RenderEndTag();
+                    m_writer.RenderEndTag();
                 }
             }
             catch (IOException e)
@@ -115,22 +115,22 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         private void WriteHeader()
         {
             // Clear written cells
-            writtenCells.Clear();
+            m_writtenCells.Clear();
 
             // Start table to represent the header
-            writer.AddAttribute(HtmlTextWriterAttribute.Border, "1");
-            writer.RenderBeginTag(HtmlTextWriterTag.Table);
+            m_writer.AddAttribute(HtmlTextWriterAttribute.Border, "1");
+            m_writer.RenderBeginTag(HtmlTextWriterTag.Table);
 
             // Get header section and write each cell
-            headerSection = theSchedule.GetTableData().GetSectionData(SectionType.Header);
-            var numberOfRows = headerSection.NumberOfRows;
-            var numberOfColumns = headerSection.NumberOfColumns;
+            m_headerSection = m_theSchedule.GetTableData().GetSectionData(SectionType.Header);
+            var numberOfRows = m_headerSection.NumberOfRows;
+            var numberOfColumns = m_headerSection.NumberOfColumns;
 
-            for (var iRow = headerSection.FirstRowNumber; iRow < numberOfRows; iRow++)
+            for (var iRow = m_headerSection.FirstRowNumber; iRow < numberOfRows; iRow++)
                 WriteHeaderSectionRow(iRow, numberOfColumns);
 
             // Close header table
-            writer.RenderEndTag();
+            m_writer.RenderEndTag();
         }
 
         /// <summary>
@@ -139,22 +139,22 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         private void WriteBody()
         {
             // Clear written cells
-            writtenCells.Clear();
+            m_writtenCells.Clear();
 
             // Write the start of the body table
-            writer.AddAttribute(HtmlTextWriterAttribute.Border, "1");
-            writer.RenderBeginTag(HtmlTextWriterTag.Table);
+            m_writer.AddAttribute(HtmlTextWriterAttribute.Border, "1");
+            m_writer.RenderBeginTag(HtmlTextWriterTag.Table);
 
             // Get body section and write contents
-            bodySection = theSchedule.GetTableData().GetSectionData(SectionType.Body);
-            var numberOfRows = bodySection.NumberOfRows;
-            var numberOfColumns = bodySection.NumberOfColumns;
+            m_bodySection = m_theSchedule.GetTableData().GetSectionData(SectionType.Body);
+            var numberOfRows = m_bodySection.NumberOfRows;
+            var numberOfColumns = m_bodySection.NumberOfColumns;
 
-            for (var iRow = bodySection.FirstRowNumber; iRow < numberOfRows; iRow++)
+            for (var iRow = m_bodySection.FirstRowNumber; iRow < numberOfRows; iRow++)
                 WriteBodySectionRow(iRow, numberOfColumns);
 
             // Close the table
-            writer.RenderEndTag();
+            m_writer.RenderEndTag();
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <param name="numberOfColumns">The number of columns to write.</param>
         private void WriteHeaderSectionRow(int iRow, int numberOfColumns)
         {
-            WriteSectionRow(SectionType.Header, headerSection, iRow, numberOfColumns);
+            WriteSectionRow(SectionType.Header, m_headerSection, iRow, numberOfColumns);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <param name="numberOfColumns">The number of columns to write.</param>
         private void WriteBodySectionRow(int iRow, int numberOfColumns)
         {
-            WriteSectionRow(SectionType.Body, bodySection, iRow, numberOfColumns);
+            WriteSectionRow(SectionType.Body, m_bodySection, iRow, numberOfColumns);
         }
 
         /// <summary>
@@ -229,13 +229,13 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         private void WriteSectionRow(SectionType secType, TableSectionData data, int iRow, int numberOfColumns)
         {
             // Start the table row tag.
-            writer.RenderBeginTag(HtmlTextWriterTag.Tr);
+            m_writer.RenderBeginTag(HtmlTextWriterTag.Tr);
 
             // Loop over the table section row.
             for (var iCol = data.FirstColumnNumber; iCol < numberOfColumns; iCol++)
             {
                 // Skip already written cells
-                if (writtenCells.Contains(new Tuple<int, int>(iRow, iCol)))
+                if (m_writtenCells.Contains(new Tuple<int, int>(iRow, iCol)))
                     continue;
 
                 // Get style
@@ -247,65 +247,65 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
 
                 // If merged cell spans multiple columns
                 if (mergedCell.Left != mergedCell.Right)
-                    writer.AddAttribute(HtmlTextWriterAttribute.Colspan,
+                    m_writer.AddAttribute(HtmlTextWriterAttribute.Colspan,
                         (mergedCell.Right - mergedCell.Left + 1).ToString());
 
                 // If merged cell spans multiple rows
                 if (mergedCell.Top != mergedCell.Bottom)
-                    writer.AddAttribute(HtmlTextWriterAttribute.Rowspan,
+                    m_writer.AddAttribute(HtmlTextWriterAttribute.Rowspan,
                         (mergedCell.Bottom - mergedCell.Top + 1).ToString());
 
                 // Remember all written cells related to the merge 
                 for (var iMergedRow = mergedCell.Top; iMergedRow <= mergedCell.Bottom; iMergedRow++)
                 for (var iMergedCol = mergedCell.Left; iMergedCol <= mergedCell.Right; iMergedCol++)
-                    writtenCells.Add(new Tuple<int, int>(iMergedRow, iMergedCol));
+                    m_writtenCells.Add(new Tuple<int, int>(iMergedRow, iMergedCol));
 
                 // Write formatting attributes for the upcoming cell
                 // Background color
                 if (!ColorsEqual(style.BackgroundColor, White))
-                    writer.AddAttribute(HtmlTextWriterAttribute.Bgcolor, GetColorHtmlString(style.BackgroundColor));
+                    m_writer.AddAttribute(HtmlTextWriterAttribute.Bgcolor, GetColorHtmlString(style.BackgroundColor));
 
                 // Horizontal alignment
-                writer.AddAttribute(HtmlTextWriterAttribute.Align, GetAlignString(style.FontHorizontalAlignment));
+                m_writer.AddAttribute(HtmlTextWriterAttribute.Align, GetAlignString(style.FontHorizontalAlignment));
 
                 // Write cell tag
-                writer.RenderBeginTag(HtmlTextWriterTag.Td);
+                m_writer.RenderBeginTag(HtmlTextWriterTag.Td);
 
                 // Write subtags for the cell
                 // Underline
                 if (style.IsFontUnderline)
                 {
-                    writer.RenderBeginTag(HtmlTextWriterTag.U);
+                    m_writer.RenderBeginTag(HtmlTextWriterTag.U);
                     numberOfStyleTags++;
                 }
 
                 //Italic
                 if (style.IsFontItalic)
                 {
-                    writer.RenderBeginTag(HtmlTextWriterTag.I);
+                    m_writer.RenderBeginTag(HtmlTextWriterTag.I);
                     numberOfStyleTags++;
                 }
 
                 //Bold
                 if (style.IsFontBold)
                 {
-                    writer.RenderBeginTag(HtmlTextWriterTag.B);
+                    m_writer.RenderBeginTag(HtmlTextWriterTag.B);
                     numberOfStyleTags++;
                 }
 
                 // Write cell text
-                var cellText = theSchedule.GetCellText(secType, iRow, iCol);
+                var cellText = m_theSchedule.GetCellText(secType, iRow, iCol);
                 if (cellText.Length > 0)
-                    writer.Write(cellText);
+                    m_writer.Write(cellText);
                 else
-                    writer.Write("&nbsp;");
+                    m_writer.Write("&nbsp;");
 
                 // Close open style tags & cell tag
-                for (var i = 0; i < numberOfStyleTags; i++) writer.RenderEndTag();
+                for (var i = 0; i < numberOfStyleTags; i++) m_writer.RenderEndTag();
             }
 
             // Close row tag
-            writer.RenderEndTag();
+            m_writer.RenderEndTag();
         }
 
         /// <summary>

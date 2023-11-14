@@ -49,15 +49,15 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="bottom">the bottom value</param>
         /// <param name="y_coordinate">the y_coordinate value</param>
         /// <returns>CurveArray</returns>
-        public CurveArray CreateRectangle(double left, double right, double top, double bottom, double y_coordinate)
+        public CurveArray CreateRectangle(double left, double right, double top, double bottom, double yCoordinate)
         {
             var curveArray = m_appCreator.NewCurveArray();
             try
             {
-                var p0 = new XYZ(left, y_coordinate, top);
-                var p1 = new XYZ(right, y_coordinate, top);
-                var p2 = new XYZ(right, y_coordinate, bottom);
-                var p3 = new XYZ(left, y_coordinate, bottom);
+                var p0 = new XYZ(left, yCoordinate, top);
+                var p1 = new XYZ(right, yCoordinate, top);
+                var p2 = new XYZ(right, yCoordinate, bottom);
+                var p3 = new XYZ(left, yCoordinate, bottom);
                 var line1 = Line.CreateBound(p0, p1);
                 var line2 = Line.CreateBound(p1, p2);
                 var line3 = Line.CreateBound(p2, p3);

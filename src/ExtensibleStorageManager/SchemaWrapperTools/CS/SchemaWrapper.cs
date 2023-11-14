@@ -32,13 +32,13 @@ namespace SchemaWrapperTools
     [Serializable]
     public class SchemaWrapper
     {
-        [NonSerialized] private Assembly m_Assembly;
+        [NonSerialized] private Assembly m_assembly;
 
-        [NonSerialized] private Schema m_Schema;
+        [NonSerialized] private Schema m_schema;
 
-        [NonSerialized] private SchemaBuilder m_SchemaBuilder;
+        [NonSerialized] private SchemaBuilder m_schemaBuilder;
 
-        private SchemaDataWrapper m_SchemaDataWrapper;
+        private SchemaDataWrapper m_schemaDataWrapper;
 
         [NonSerialized] private string m_xmlPath;
 
@@ -55,7 +55,7 @@ namespace SchemaWrapperTools
         private SchemaWrapper(Guid schemaId, AccessLevel readAccess, AccessLevel writeAccess, string vendorId,
             string applicationId, string schemaName, string schemaDescription)
         {
-            m_SchemaDataWrapper = new SchemaDataWrapper(schemaId, readAccess, writeAccess, vendorId, applicationId,
+            m_schemaDataWrapper = new SchemaDataWrapper(schemaId, readAccess, writeAccess, vendorId, applicationId,
                 schemaName, schemaDescription);
             SetRevitAssembly();
         }
@@ -71,8 +71,8 @@ namespace SchemaWrapperTools
         /// </summary>
         public SchemaDataWrapper Data
         {
-            get => m_SchemaDataWrapper;
-            set => m_SchemaDataWrapper = value;
+            get => m_schemaDataWrapper;
+            set => m_schemaDataWrapper = value;
         }
 
         /// <summary>
@@ -185,16 +185,16 @@ namespace SchemaWrapperTools
         /// <summary>
         ///     Adds a new field to the SchemaWrapper
         /// </summary>
-        /// <typeparam name="TypeName">
+        /// <typeparam name="TYpeName">
         ///     Currently supported types:  int, short, float, double, bool, string, ElementId, XYZ, UV, Guid, Entity, IDictionary<>,
         ///     IList<>.  IDictionary<> does not support floating point types, XYZ, UV, or Entity as Key parameters.
         /// </typeparam>
         /// <param name="name">The name of the field</param>
         /// <param name="spec">The unit type of the field.  Defintion required for floating point, XYZ, and UV types</param>
         /// <param name="subSchema">A subSchemaWrapper, if the field is of type Entity</param>
-        public void AddField<TypeName>(string name, ForgeTypeId spec, SchemaWrapper subSchema)
+        public void AddField<TYpeName>(string name, ForgeTypeId spec, SchemaWrapper subSchema)
         {
-            m_SchemaDataWrapper.AddData(name, typeof(TypeName), spec, subSchema);
+            m_schemaDataWrapper.AddData(name, typeof(TYpeName), spec, subSchema);
         }
 
         /// <summary>
@@ -204,10 +204,10 @@ namespace SchemaWrapperTools
         public void FinishSchema()
         {
             //Create the Autodesk.Revit.DB.ExtensibleStorage.SchemaBuilder that actually builds the schema
-            m_SchemaBuilder = new SchemaBuilder(new Guid(m_SchemaDataWrapper.SchemaId));
+            m_schemaBuilder = new SchemaBuilder(new Guid(m_schemaDataWrapper.SchemaId));
 
             //We will add a new field to our schema from each FieldData object in our SchemaWrapper
-            foreach (var currentFieldData in m_SchemaDataWrapper.DataList)
+            foreach (var currentFieldData in m_schemaDataWrapper.DataList)
             {
                 //If the current field's type is a supported system type (int, string, etc...),
                 //we can instantiate it with Type.GetType().  If the current field's type is a supported Revit API type
@@ -224,7 +224,7 @@ namespace SchemaWrapperTools
                     try
                     {
                         //Get the field from the Revit API assembly.
-                        fieldType = m_Assembly.GetType(currentFieldData.Type);
+                        fieldType = m_assembly.GetType(currentFieldData.Type);
                     }
 
                     catch (Exception exx)
@@ -260,17 +260,17 @@ namespace SchemaWrapperTools
                     if (tGeneric == iDictionaryType)
                         //Pass the key and value type of our dictionary type to AddMapField.
                         currentFieldBuilder =
-                            m_SchemaBuilder.AddMapField(currentFieldData.Name, genericParams[0], genericParams[1]);
+                            m_schemaBuilder.AddMapField(currentFieldData.Name, genericParams[0], genericParams[1]);
                     else if (tGeneric == iListType)
                         //Pass the value type of our list type to AddArrayField.
-                        currentFieldBuilder = m_SchemaBuilder.AddArrayField(currentFieldData.Name, genericParams[0]);
+                        currentFieldBuilder = m_schemaBuilder.AddArrayField(currentFieldData.Name, genericParams[0]);
                     else
                         throw new Exception("Generic type is neither IList<> nor IDictionary<>, cannot process.");
                 }
                 else
                     //The simpler case -- just add field using a name and a System.Type.
                 {
-                    currentFieldBuilder = m_SchemaBuilder.AddSimpleField(currentFieldData.Name, fieldType);
+                    currentFieldBuilder = m_schemaBuilder.AddSimpleField(currentFieldData.Name, fieldType);
                 }
 
                 if ( //if we're dealing with an Entity as a simple field, map field, or list field and need to do recursion...
@@ -289,15 +289,15 @@ namespace SchemaWrapperTools
             }
 
             //Set all the top level data in the schema we are generating.
-            m_SchemaBuilder.SetReadAccessLevel(Data.ReadAccess);
-            m_SchemaBuilder.SetWriteAccessLevel(Data.WriteAccess);
-            m_SchemaBuilder.SetVendorId(Data.VendorId);
-            m_SchemaBuilder.SetApplicationGUID(new Guid(Data.ApplicationId));
-            m_SchemaBuilder.SetDocumentation(Data.Documentation);
-            m_SchemaBuilder.SetSchemaName(Data.Name);
+            m_schemaBuilder.SetReadAccessLevel(Data.ReadAccess);
+            m_schemaBuilder.SetWriteAccessLevel(Data.WriteAccess);
+            m_schemaBuilder.SetVendorId(Data.VendorId);
+            m_schemaBuilder.SetApplicationGUID(new Guid(Data.ApplicationId));
+            m_schemaBuilder.SetDocumentation(Data.Documentation);
+            m_schemaBuilder.SetSchemaName(Data.Name);
 
             //Actually finish creating the Autodesk.Revit.DB.ExtensibleStorage.Schema.
-            m_Schema = m_SchemaBuilder.Finish();
+            m_schema = m_schemaBuilder.Finish();
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace SchemaWrapperTools
         /// <param name="storageEntity">The entity to query</param>
         /// <param name="schema">The schema of the Entity</param>
         /// <param name="strBuilder">The StringBuilder to append entity data to</param>
-        private void DumpAllSchemaEntityData<EntityType>(EntityType storageEntity, Schema schema,
+        private void DumpAllSchemaEntityData<TEntityType>(TEntityType storageEntity, Schema schema,
             StringBuilder strBuilder)
         {
             strBuilder.AppendLine("Schema/Entity Name: " + "" + ", Description: " + schema.Documentation + ", Id: " +
@@ -404,7 +404,7 @@ namespace SchemaWrapperTools
         /// <param name="field">The field to query</param>
         /// <param name="entity">The entity to query</param>
         /// <param name="strBuilder">The StringBuilder to append entity data to</param>
-        private void GetFieldDataAsString<KeyType, FieldType>(Field field, Entity entity, StringBuilder strBuilder)
+        private void GetFieldDataAsString<TKeyType, TFieldType>(Field field, Entity entity, StringBuilder strBuilder)
         {
             var fieldType = field.ValueType;
             var fieldUnit = field.GetSpecTypeId();
@@ -447,7 +447,7 @@ namespace SchemaWrapperTools
             {
                 case ContainerType.Simple:
                 {
-                    var retval = (FieldType)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                    var retval = (TFieldType)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
                     if (fieldType == typeof(Entity))
                     {
                         var subSchema = Schema.Lookup(field.SubSchemaGUID);
@@ -467,7 +467,7 @@ namespace SchemaWrapperTools
                 }
                 case ContainerType.Array:
                 {
-                    var listRetval = (IList<FieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                    var listRetval = (IList<TFieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
                     if (fieldType == typeof(Entity))
                     {
                         strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
@@ -497,7 +497,7 @@ namespace SchemaWrapperTools
                                           " {Map} " + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
                                           field.ContainerType);
                     var mapRetval =
-                        (IDictionary<KeyType, FieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                        (IDictionary<TKeyType, TFieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
                     if (fieldType == typeof(Entity))
                     {
                         strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
@@ -528,7 +528,7 @@ namespace SchemaWrapperTools
         /// </summary>
         private void SetRevitAssembly()
         {
-            m_Assembly = Assembly.GetAssembly(typeof(XYZ));
+            m_assembly = Assembly.GetAssembly(typeof(XYZ));
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace SchemaWrapperTools
         /// <returns>An Autodesk.Revit.DB.ExtensibleStorage.Schema</returns>
         public Schema GetSchema()
         {
-            return m_Schema;
+            return m_schema;
         }
 
         /// <summary>
@@ -546,7 +546,7 @@ namespace SchemaWrapperTools
         /// <param name="schema">An Autodesk.Revit.DB.ExtensibleStorage.Schema</param>
         public void SetSchema(Schema schema)
         {
-            m_Schema = schema;
+            m_schema = schema;
         }
 
         /// <summary>

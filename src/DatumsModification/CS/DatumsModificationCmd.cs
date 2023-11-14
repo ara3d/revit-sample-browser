@@ -17,27 +17,27 @@ namespace Revit.SDK.Samples.DatumsModification.CS
     {
         /// <summary>
         /// </summary>
-        public static bool showLeftBubble = false;
+        public static bool ShowLeftBubble = false;
 
         /// <summary>
         /// </summary>
-        public static bool showRightBubble = false;
+        public static bool ShowRightBubble = false;
 
         /// <summary>
         /// </summary>
-        public static bool addLeftElbow = false;
+        public static bool AddLeftElbow = false;
 
         /// <summary>
         /// </summary>
-        public static bool addRightElbow = false;
+        public static bool AddRightElbow = false;
 
         /// <summary>
         /// </summary>
-        public static bool changeLeftEnd2D = false;
+        public static bool ChangeLeftEnd2D = false;
 
         /// <summary>
         /// </summary>
-        public static bool changeRightEnd2D = false;
+        public static bool ChangeRightEnd2D = false;
 
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
@@ -59,41 +59,41 @@ namespace Revit.SDK.Samples.DatumsModification.CS
                             foreach (var datumRef in datums)
                             {
                                 var datum = document.GetElement(datumRef) as DatumPlane;
-                                if (showLeftBubble)
+                                if (ShowLeftBubble)
                                     datum.ShowBubbleInView(DatumEnds.End0, view);
                                 else
                                     datum.HideBubbleInView(DatumEnds.End0, view);
-                                if (showRightBubble)
+                                if (ShowRightBubble)
                                     datum.ShowBubbleInView(DatumEnds.End1, view);
                                 else
                                     datum.HideBubbleInView(DatumEnds.End1, view);
-                                if (changeLeftEnd2D)
+                                if (ChangeLeftEnd2D)
                                     datum.SetDatumExtentType(DatumEnds.End0, view, DatumExtentType.ViewSpecific);
                                 else
                                     datum.SetDatumExtentType(DatumEnds.End0, view, DatumExtentType.Model);
-                                if (changeRightEnd2D)
+                                if (ChangeRightEnd2D)
                                     datum.SetDatumExtentType(DatumEnds.End1, view, DatumExtentType.ViewSpecific);
                                 else
                                     datum.SetDatumExtentType(DatumEnds.End1, view, DatumExtentType.Model);
-                                if (addLeftElbow && datum.GetLeader(DatumEnds.End0, view) == null)
+                                if (AddLeftElbow && datum.GetLeader(DatumEnds.End0, view) == null)
                                 {
                                     datum.AddLeader(DatumEnds.End0, view);
                                 }
                                 else if (datum.GetLeader(DatumEnds.End0, view) != null)
                                 {
                                     var leader = datum.GetLeader(DatumEnds.End0, view);
-                                    leader = CalculateLeader(leader, addLeftElbow);
+                                    leader = CalculateLeader(leader, AddLeftElbow);
                                     datum.SetLeader(DatumEnds.End0, view, leader);
                                 }
 
-                                if (addRightElbow && datum.GetLeader(DatumEnds.End1, view) == null)
+                                if (AddRightElbow && datum.GetLeader(DatumEnds.End1, view) == null)
                                 {
                                     datum.AddLeader(DatumEnds.End1, view);
                                 }
                                 else if (datum.GetLeader(DatumEnds.End1, view) != null)
                                 {
                                     var leader = datum.GetLeader(DatumEnds.End1, view);
-                                    leader = CalculateLeader(leader, addRightElbow);
+                                    leader = CalculateLeader(leader, AddRightElbow);
                                     datum.SetLeader(DatumEnds.End1, view, leader);
                                 }
                             }
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
         private Leader CalculateLeader(Leader leader, bool addLeader)
         {
             XYZ elbow = null;
-            if (addLeftElbow)
+            if (AddLeftElbow)
                 elbow = new XYZ(leader.Anchor.X + (leader.End.X - leader.Anchor.X) / 2,
                     leader.Anchor.Y + (leader.End.Y - leader.Anchor.Y) / 2,
                     leader.Anchor.Z + (leader.End.Z - leader.Anchor.Z) / 2);
@@ -132,7 +132,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
     {
         /// <summary>
         /// </summary>
-        public static readonly Dictionary<string, DatumPlane> datumDic = new Dictionary<string, DatumPlane>();
+        public static readonly Dictionary<string, DatumPlane> DatumDic = new Dictionary<string, DatumPlane>();
 
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
@@ -141,7 +141,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
                 var view = commandData.Application.ActiveUIDocument.ActiveView;
-                datumDic.Clear();
+                DatumDic.Clear();
                 var datums = commandData.Application.ActiveUIDocument.Selection.GetElementIds();
                 if (datums == null || datums.Count == 0)
                     return Result.Cancelled;
@@ -149,7 +149,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
                 foreach (var datumRef in datums)
                 {
                     var datum = document.GetElement(datumRef) as DatumPlane;
-                    if (!datumDic.Keys.Contains(datum.Name)) datumDic.Add(datum.Name, datum);
+                    if (!DatumDic.Keys.Contains(datum.Name)) DatumDic.Add(datum.Name, datum);
                 }
 
                 //// Show UI                
@@ -157,7 +157,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
                 {
                     if (settingForm.ShowDialog() == DialogResult.OK)
                     {
-                        var selectedDatum = datumDic[settingForm.datumList.SelectedItem.ToString()];
+                        var selectedDatum = DatumDic[settingForm.datumList.SelectedItem.ToString()];
                         var baseCurve = selectedDatum.GetCurvesInView(DatumExtentType.ViewSpecific, view).ElementAt(0);
                         var baseLine = baseCurve as Line;
                         var baseDirect = baseLine.Direction;
@@ -166,7 +166,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
                         {
                             tran.Start();
 
-                            foreach (var datum in datumDic.Values)
+                            foreach (var datum in DatumDic.Values)
                             {
                                 var curve = datum
                                     .GetCurvesInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view), view)
@@ -216,7 +216,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
     {
         /// <summary>
         /// </summary>
-        public static readonly Dictionary<string, ElementId> viewDic = new Dictionary<string, ElementId>();
+        public static readonly Dictionary<string, ElementId> ViewDic = new Dictionary<string, ElementId>();
 
         /// <summary>
         ///     Implement this method as an external command for Revit.
@@ -249,7 +249,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
                 var view = commandData.Application.ActiveUIDocument.ActiveView;
-                viewDic.Clear();
+                ViewDic.Clear();
                 var datumRef = commandData.Application.ActiveUIDocument.Selection.GetElementIds().First();
                 if (datumRef == null)
                     return Result.Cancelled;
@@ -259,8 +259,8 @@ namespace Revit.SDK.Samples.DatumsModification.CS
                 foreach (var id in viewList)
                 {
                     var pView = document.GetElement(id) as View;
-                    if (!viewDic.Keys.Contains(pView.ViewType + " : " + pView.Name))
-                        viewDic.Add(pView.ViewType + " : " + pView.Name, id);
+                    if (!ViewDic.Keys.Contains(pView.ViewType + " : " + pView.Name))
+                        ViewDic.Add(pView.ViewType + " : " + pView.Name, id);
                 }
 
                 //// Show UI                
@@ -271,7 +271,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
                         var pViewList = new List<ElementId>() as ISet<ElementId>;
                         foreach (var item in settingForm.propagationViewList.CheckedItems)
                         {
-                            var selectedView = viewDic[item.ToString()];
+                            var selectedView = ViewDic[item.ToString()];
                             pViewList.Add(selectedView);
                         }
 

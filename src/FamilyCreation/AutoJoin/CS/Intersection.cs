@@ -53,10 +53,10 @@ namespace Revit.SDK.Samples.AutoJoin.CS
         private static void GetAllFaces(GeometryElement geoElement, List<Face> faces)
         {
             //foreach (GeometryObject geObject in geoElement.Objects)
-            var Objects = geoElement.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geoElement.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var geObject = Objects.Current;
+                var geObject = objects.Current;
 
                 GetAllFaces(geObject, faces);
             }
@@ -83,10 +83,10 @@ namespace Revit.SDK.Samples.AutoJoin.CS
         private static void GetAllCurves(GeometryElement geoElement, List<Curve> curves)
         {
             //foreach (GeometryObject geObject in geoElement.Objects)
-            var Objects = geoElement.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geoElement.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var geObject = Objects.Current;
+                var geObject = objects.Current;
 
                 GetAllCurves(geObject, curves);
             }

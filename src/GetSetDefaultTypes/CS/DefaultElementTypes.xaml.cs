@@ -16,85 +16,85 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
     public partial class DefaultElementTypes : Page, IDockablePaneProvider
     {
         public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{B6579F42-2F4A-4552-92EF-24B3A897757D}"));
-        private Document _document;
+        private Document m_document;
 
-        private readonly ExternalEvent _event;
-        private readonly IList<ElementTypeGroup> _finishedTypeGroup = new List<ElementTypeGroup>();
-        private readonly DefaultElementTypeCommandHandler _handler;
+        private readonly ExternalEvent m_event;
+        private readonly IList<ElementTypeGroup> m_finishedTypeGroup = new List<ElementTypeGroup>();
+        private readonly DefaultElementTypeCommandHandler m_handler;
 
         public DefaultElementTypes()
         {
             InitializeComponent();
 
-            _handler = new DefaultElementTypeCommandHandler();
-            _event = ExternalEvent.Create(_handler);
+            m_handler = new DefaultElementTypeCommandHandler();
+            m_event = ExternalEvent.Create(m_handler);
 
             //TODO: add enums that validators have been correctly set up to the array
             //this will be removed when all enums have been done
-            _finishedTypeGroup.Add(ElementTypeGroup.RadialDimensionType);
-            _finishedTypeGroup.Add(ElementTypeGroup.LinearDimensionType);
-            _finishedTypeGroup.Add(ElementTypeGroup.AngularDimensionType);
-            _finishedTypeGroup.Add(ElementTypeGroup.ArcLengthDimensionType);
-            _finishedTypeGroup.Add(ElementTypeGroup.DiameterDimensionType);
-            _finishedTypeGroup.Add(ElementTypeGroup.SpotElevationType);
-            _finishedTypeGroup.Add(ElementTypeGroup.SpotCoordinateType);
-            _finishedTypeGroup.Add(ElementTypeGroup.SpotSlopeType);
-            _finishedTypeGroup.Add(ElementTypeGroup.LevelType);
-            _finishedTypeGroup.Add(ElementTypeGroup.GridType);
-            _finishedTypeGroup.Add(ElementTypeGroup.FasciaType);
-            _finishedTypeGroup.Add(ElementTypeGroup.GutterType);
-            _finishedTypeGroup.Add(ElementTypeGroup.EdgeSlabType);
-            _finishedTypeGroup.Add(ElementTypeGroup.WallType);
-            _finishedTypeGroup.Add(ElementTypeGroup.RoofType);
-            _finishedTypeGroup.Add(ElementTypeGroup.RoofSoffitType);
-            _finishedTypeGroup.Add(ElementTypeGroup.TagNoteType);
-            _finishedTypeGroup.Add(ElementTypeGroup.TextNoteType);
-            _finishedTypeGroup.Add(ElementTypeGroup.ModelTextType);
-            _finishedTypeGroup.Add(ElementTypeGroup.MultiReferenceAnnotationType);
-            _finishedTypeGroup.Add(ElementTypeGroup.FilledRegionType);
-            _finishedTypeGroup.Add(ElementTypeGroup.ColorFillType);
-            _finishedTypeGroup.Add(ElementTypeGroup.DetailGroupType);
-            _finishedTypeGroup.Add(ElementTypeGroup.AttachedDetailGroupType);
-            _finishedTypeGroup.Add(ElementTypeGroup.LineLoadType);
-            _finishedTypeGroup.Add(ElementTypeGroup.AreaLoadType);
-            _finishedTypeGroup.Add(ElementTypeGroup.PointLoadType);
-            _finishedTypeGroup.Add(ElementTypeGroup.StairsBySketchType);
-            _finishedTypeGroup.Add(ElementTypeGroup.RailingsTypeForStairs);
-            _finishedTypeGroup.Add(ElementTypeGroup.RailingsTypeForRamps);
-            _finishedTypeGroup.Add(ElementTypeGroup.RampType);
-            _finishedTypeGroup.Add(ElementTypeGroup.StairsRailingType);
-            _finishedTypeGroup.Add(ElementTypeGroup.StairsType);
-            _finishedTypeGroup.Add(ElementTypeGroup.PipeType);
-            _finishedTypeGroup.Add(ElementTypeGroup.FlexPipeType);
-            _finishedTypeGroup.Add(ElementTypeGroup.PipeInsulationType);
-            _finishedTypeGroup.Add(ElementTypeGroup.WireType);
-            _finishedTypeGroup.Add(ElementTypeGroup.RebarBarType);
-            _finishedTypeGroup.Add(ElementTypeGroup.AreaReinforcementType);
-            _finishedTypeGroup.Add(ElementTypeGroup.PathReinforcementType);
-            _finishedTypeGroup.Add(ElementTypeGroup.FabricAreaType);
-            _finishedTypeGroup.Add(ElementTypeGroup.FabricSheetType);
-            _finishedTypeGroup.Add(ElementTypeGroup.DuctType);
-            _finishedTypeGroup.Add(ElementTypeGroup.FlexDuctType);
-            _finishedTypeGroup.Add(ElementTypeGroup.DuctInsulationType);
-            _finishedTypeGroup.Add(ElementTypeGroup.DuctLiningType);
-            _finishedTypeGroup.Add(ElementTypeGroup.CableTrayType);
-            _finishedTypeGroup.Add(ElementTypeGroup.ConduitType);
-            _finishedTypeGroup.Add(ElementTypeGroup.CeilingType);
-            _finishedTypeGroup.Add(ElementTypeGroup.CorniceType);
-            _finishedTypeGroup.Add(ElementTypeGroup.RevealType);
-            _finishedTypeGroup.Add(ElementTypeGroup.CurtainSystemType);
-            _finishedTypeGroup.Add(ElementTypeGroup.AnalyticalLinkType);
-            _finishedTypeGroup.Add(ElementTypeGroup.FloorType);
-            _finishedTypeGroup.Add(ElementTypeGroup.FootingSlabType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RadialDimensionType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.LinearDimensionType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.AngularDimensionType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.ArcLengthDimensionType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.DiameterDimensionType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.SpotElevationType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.SpotCoordinateType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.SpotSlopeType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.LevelType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.GridType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.FasciaType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.GutterType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.EdgeSlabType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.WallType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RoofType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RoofSoffitType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.TagNoteType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.TextNoteType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.ModelTextType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.MultiReferenceAnnotationType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.FilledRegionType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.ColorFillType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.DetailGroupType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.AttachedDetailGroupType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.LineLoadType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.AreaLoadType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.PointLoadType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.StairsBySketchType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RailingsTypeForStairs);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RailingsTypeForRamps);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RampType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.StairsRailingType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.StairsType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.PipeType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.FlexPipeType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.PipeInsulationType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.WireType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RebarBarType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.AreaReinforcementType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.PathReinforcementType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.FabricAreaType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.FabricSheetType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.DuctType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.FlexDuctType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.DuctInsulationType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.DuctLiningType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.CableTrayType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.ConduitType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.CeilingType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.CorniceType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RevealType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.CurtainSystemType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.AnalyticalLinkType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.FloorType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.FootingSlabType);
             //_finishedTypeGroup.Add(ElementTypeGroup.ContFootingType);
-            _finishedTypeGroup.Add(ElementTypeGroup.ModelGroupType);
-            _finishedTypeGroup.Add(ElementTypeGroup.BuildingPadType);
-            _finishedTypeGroup.Add(ElementTypeGroup.ContourLabelingType);
-            _finishedTypeGroup.Add(ElementTypeGroup.ReferenceViewerType);
-            _finishedTypeGroup.Add(ElementTypeGroup.RepeatingDetailType);
-            _finishedTypeGroup.Add(ElementTypeGroup.DecalType);
-            _finishedTypeGroup.Add(ElementTypeGroup.BeamSystemType);
-            _finishedTypeGroup.Add(ElementTypeGroup.ViewportType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.ModelGroupType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.BuildingPadType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.ContourLabelingType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.ReferenceViewerType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.RepeatingDetailType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.DecalType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.BeamSystemType);
+            m_finishedTypeGroup.Add(ElementTypeGroup.ViewportType);
         }
 
         public void SetupDockablePane(DockablePaneProviderData data)
@@ -111,16 +111,16 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
         /// </summary>
         public void SetDocument(Document document)
         {
-            if (_document == document)
+            if (m_document == document)
                 return;
 
-            _document = document;
+            m_document = document;
 
             _dataGrid_DefaultElementTypes.Items.Clear();
 
             foreach (ElementTypeGroup etg in Enum.GetValues(typeof(ElementTypeGroup)))
             {
-                if (_finishedTypeGroup.IndexOf(etg) == -1)
+                if (m_finishedTypeGroup.IndexOf(etg) == -1)
                     continue;
 
                 var record = new ElementTypeRecord
@@ -128,13 +128,13 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
                     ElementTypeGroupName = Enum.GetName(typeof(ElementTypeGroup), etg)
                 };
 
-                var collector = new FilteredElementCollector(_document);
+                var collector = new FilteredElementCollector(m_document);
                 collector = collector.OfClass(typeof(ElementType));
                 var query = from ElementType et in collector
-                    where _document.IsDefaultElementTypeIdValid(etg, et.Id)
+                    where m_document.IsDefaultElementTypeIdValid(etg, et.Id)
                     select et; // Linq query  
 
-                var defaultElementTypeId = _document.GetDefaultElementTypeId(etg);
+                var defaultElementTypeId = m_document.GetDefaultElementTypeId(etg);
 
                 var defaultElementTypeCandidates = new List<DefaultElementTypeCandidate>();
                 foreach (var t in query)
@@ -170,8 +170,8 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
                 if (!(e.AddedItems[0] is DefaultElementTypeCandidate item))
                     return;
 
-                _handler.SetData(item.ElementTypeGroup, item.Id);
-                _event.Raise();
+                m_handler.SetData(item.ElementTypeGroup, item.Id);
+                m_event.Raise();
             }
         }
     }
@@ -228,8 +228,8 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
     /// </summary>
     public class DefaultElementTypeCommandHandler : IExternalEventHandler
     {
-        private ElementId _defaultTypeId;
-        private ElementTypeGroup _elementTypeGroup;
+        private ElementId m_defaultTypeId;
+        private ElementTypeGroup m_elementTypeGroup;
 
         public string GetName()
         {
@@ -239,18 +239,18 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
         public void Execute(UIApplication revitApp)
         {
             using (var tran = new Transaction(revitApp.ActiveUIDocument.Document,
-                       "Set Default element type to " + _defaultTypeId))
+                       "Set Default element type to " + m_defaultTypeId))
             {
                 tran.Start();
-                revitApp.ActiveUIDocument.Document.SetDefaultElementTypeId(_elementTypeGroup, _defaultTypeId);
+                revitApp.ActiveUIDocument.Document.SetDefaultElementTypeId(m_elementTypeGroup, m_defaultTypeId);
                 tran.Commit();
             }
         }
 
         public void SetData(ElementTypeGroup elementTypeGroup, ElementId typeId)
         {
-            _elementTypeGroup = elementTypeGroup;
-            _defaultTypeId = typeId;
+            m_elementTypeGroup = elementTypeGroup;
+            m_defaultTypeId = typeId;
         }
     } // class CommandHandler
 }

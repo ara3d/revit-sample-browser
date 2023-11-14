@@ -27,35 +27,35 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         ///     to Application or Document according to what level it is in. But then,
         ///     the syntax is the same in these three cases.
         /// </summary>
-        private static UIControlledApplication m_ctrlApp;
+        private static UIControlledApplication _ctrlApp;
 
         /// <summary>
         ///     A common object used to write the log file and generate the data table
         ///     for event information.
         /// </summary>
-        private static LogManager m_logManager;
+        private static LogManager _logManager;
 
         /// <summary>
         ///     The window is used to show events' information.
         /// </summary>
-        private static EventsInfoWindows m_infWindows;
+        private static EventsInfoWindows _infWindows;
 
         /// <summary>
         ///     The window is used to choose what event to be subscribed.
         /// </summary>
-        private static EventsSettingForm m_settingDialog;
+        private static EventsSettingForm _settingDialog;
 
         /// <summary>
         ///     This list is used to store what user selected.
         ///     It can be got from the selectionDialog.
         /// </summary>
-        private static List<string> m_appEventsSelection;
+        private static List<string> _appEventsSelection;
 
         /// <summary>
         ///     This object is used to manager the events in application level.
         ///     It can be updated according to what user select.
         /// </summary>
-        private static EventManager m_appEventMgr;
+        private static EventManager _appEventMgr;
 
         // These #if directives within file are used to compile project in different purpose:
         // . Build project with Release mode for regression test,
@@ -76,36 +76,36 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         public static EventsInfoWindows InfoWindows
         {
-            get => m_infWindows ?? (m_infWindows = new EventsInfoWindows(EventLogManager));
-            set => m_infWindows = value;
+            get => _infWindows ?? (_infWindows = new EventsInfoWindows(EventLogManager));
+            set => _infWindows = value;
         }
 
         /// <summary>
         ///     Property to get private member variable of SeletionDialog
         /// </summary>
         public static EventsSettingForm SettingDialog 
-            => m_settingDialog ?? (m_settingDialog = new EventsSettingForm());
+            => _settingDialog ?? (_settingDialog = new EventsSettingForm());
 
         /// <summary>
         ///     Property to get and set private member variable of log data
         /// </summary>
         public static LogManager EventLogManager 
-            => m_logManager ?? (m_logManager = new LogManager());
+            => _logManager ?? (_logManager = new LogManager());
 
         /// <summary>
         ///     Property to get and set private member variable of application events selection.
         /// </summary>
         public static List<string> ApplicationEvents
         {
-            get => m_appEventsSelection ?? (m_appEventsSelection = new List<string>());
-            set => m_appEventsSelection = value;
+            get => _appEventsSelection ?? (_appEventsSelection = new List<string>());
+            set => _appEventsSelection = value;
         }
 
         /// <summary>
         ///     Property to get private member variable of application events manager.
         /// </summary>
         public static EventManager AppEventMgr 
-            => m_appEventMgr ?? (m_appEventMgr = new EventManager(m_ctrlApp));
+            => _appEventMgr ?? (_appEventMgr = new EventManager(_ctrlApp));
 
 #if !(Debug || DEBUG)
         /// <summary>
@@ -143,12 +143,12 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         public Result OnStartup(UIControlledApplication application)
         {
             // initialize member variables.
-            m_ctrlApp = application;
-            m_logManager = new LogManager();
-            m_infWindows = new EventsInfoWindows(m_logManager);
-            m_settingDialog = new EventsSettingForm();
-            m_appEventsSelection = new List<string>();
-            m_appEventMgr = new EventManager(m_ctrlApp);
+            _ctrlApp = application;
+            _logManager = new LogManager();
+            _infWindows = new EventsInfoWindows(_logManager);
+            _settingDialog = new EventsSettingForm();
+            _appEventsSelection = new List<string>();
+            _appEventMgr = new EventManager(_ctrlApp);
 
 #if !(Debug || DEBUG)
             m_journalProcessor = new JournalProcessor();
@@ -167,10 +167,10 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                 else
                 {
 #endif
-                m_settingDialog.ShowDialog();
-                if (DialogResult.OK == m_settingDialog.DialogResult)
+                _settingDialog.ShowDialog();
+                if (DialogResult.OK == _settingDialog.DialogResult)
                     //get what user select.
-                    m_appEventsSelection = m_settingDialog.AppSelectionList;
+                    _appEventsSelection = _settingDialog.AppSelectionList;
 
 #if !(Debug || DEBUG)
                     // dump what user select to a file in order to autotesting.
@@ -179,10 +179,10 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
 #endif
 
                 // update the events according to the selection.
-                m_appEventMgr.Update(m_appEventsSelection);
+                _appEventMgr.Update(_appEventsSelection);
 
                 // track the selected events by showing the information in the information windows.
-                m_infWindows.Show();
+                _infWindows.Show();
 
                 // add menu item in Revit menu bar to provide an approach to 
                 // retrieve events setting form. User can change his choices 
@@ -209,21 +209,21 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         public static void Dispose()
         {
-            if (m_infWindows != null)
+            if (_infWindows != null)
             {
-                m_infWindows.Close();
-                m_infWindows = null;
+                _infWindows.Close();
+                _infWindows = null;
             }
 
-            if (m_settingDialog != null)
+            if (_settingDialog != null)
             {
-                m_settingDialog.Close();
-                m_settingDialog = null;
+                _settingDialog.Close();
+                _settingDialog = null;
             }
 
-            m_appEventMgr = null;
-            m_logManager.CloseLogFile();
-            m_logManager = null;
+            _appEventMgr = null;
+            _logManager.CloseLogFile();
+            _logManager = null;
         }
 
         /// <summary>

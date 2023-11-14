@@ -89,7 +89,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
             }
             finally
             {
-                Application.thisApp.WakeFormUp();
+                Application.ThisApp.WakeFormUp();
             }
         }
 

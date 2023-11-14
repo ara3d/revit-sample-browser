@@ -75,13 +75,13 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             // For NumSteps > 0:
             //
             // Generate the outer boundary line.
-            var runwidth_2 = runWidth * 0.5;
+            var runwidth2 = runWidth * 0.5;
             var outBounary = Line.CreateBound(StartPoint, EndPoint);
             outerBoundary.Add(outBounary);
 
             // Generate the middle walk path line.
             var middleStart = StartPoint + OffsetDirection * runWidth * 0.5;
-            var middleEnd = EndPoint + OffsetDirection * runwidth_2;
+            var middleEnd = EndPoint + OffsetDirection * runwidth2;
             walkPath.Add(Line.CreateBound(middleStart, middleEnd));
 
             // Generate the inner boundary line.
@@ -96,8 +96,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             var deltaStep = dir * treadDepth;
             for (var i = 0; i <= NumSteps; i++)
             {
-                var xOuter = currentStep - OffsetDirection * runwidth_2;
-                var xInner = currentStep + OffsetDirection * runwidth_2;
+                var xOuter = currentStep - OffsetDirection * runwidth2;
+                var xInner = currentStep + OffsetDirection * runwidth2;
                 riserLines.Add(Line.CreateBound(xOuter, xInner));
                 currentStep = currentStep + deltaStep;
             }

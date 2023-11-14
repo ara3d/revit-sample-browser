@@ -21,14 +21,14 @@ namespace Revit.SDK.Samples.Openings.CS
 
             //get parameters which need to show
             Name = opening.Name;
-            ElementID = opening.Id.ToString();
+            ElementId = opening.Id.ToString();
 
             if (null != opening.Host)
             {
                 if (null != opening.Host.Category)
                     HostName = opening.Host.Category.Name;
 
-                HostElementID = opening.Host.Id.ToString();
+                HostElementId = opening.Host.Id.ToString();
             }
 
             if (null != opening.Category)
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         [Description("ElementId of current diaplayed Opening")]
         [Category("Opening Property")]
-        public string ElementID { get; } = "";
+        public string ElementId { get; } = "";
 
         /// <summary>
         ///     host name
@@ -62,7 +62,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         [Description("ElementId of Host")]
         [Category("Opening Property")]
-        public string HostElementID { get; } = "";
+        public string HostElementId { get; } = "";
 
         /// <summary>
         ///     shaft opening

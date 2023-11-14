@@ -82,9 +82,9 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 
             if (null == information)
             {
-                var ExternalDefinitionCreationOptions =
+                var externalDefinitionCreationOptions =
                     new ExternalDefinitionCreationOptions("Unique ID", SpecTypeId.String.Text);
-                informationCollection.Definitions.Create(ExternalDefinitionCreationOptions);
+                informationCollection.Definitions.Create(externalDefinitionCreationOptions);
                 information = informationCollection.Definitions.get_Item("Unique ID");
             }
 
@@ -110,7 +110,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         /// <summary>
         ///     Set value(uuid) to Unique ID parameter
         /// </summary>
-        public void SetValueToUniqueIDParameter()
+        public void SetValueToUniqueIdParameter()
         {
             var beamClassFilter = new ElementClassFilter(typeof(FamilyInstance));
             var slabClassFilter = new ElementClassFilter(typeof(Floor));
@@ -217,8 +217,8 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         ///     found the element which using the GUID
         ///     that was assigned to the shared parameter in the shared parameters file.
         /// </summary>
-        /// <param name="UniqueIdValue"></param>
-        public void FindElement(string UniqueIdValue)
+        /// <param name="uniqueIdValue"></param>
+        public void FindElement(string uniqueIdValue)
         {
             var seleElements = new ElementSet();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
@@ -269,7 +269,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                         // compare if the parameter's value is the same as the selected value.
                         // Clear the SelElementSet and add the found element into it. 
                         // So this element will highlight in Revit UI
-                        if (UniqueIdValue == attribute.AsString())
+                        if (uniqueIdValue == attribute.AsString())
                         {
                             seleElements.Clear();
                             seleElements.Insert(component);

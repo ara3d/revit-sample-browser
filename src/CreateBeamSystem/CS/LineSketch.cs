@@ -13,12 +13,12 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <summary>
         ///     the rate of direction tag's distance to the line
         /// </summary>
-        private const float DirectionTag_Distance_Ratio = 0.02f;
+        private const float DirectionTagDistanceRatio = 0.02f;
 
         /// <summary>
         ///     the rate of direction tag's length to the line
         /// </summary>
-        private const float DirectionTag_Length_Ratio = 0.1f;
+        private const float DirectionTagLengthRatio = 0.1f;
 
         private readonly Line2D m_line = new Line2D(); // geometry line to draw
 
@@ -30,8 +30,8 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         {
             m_line = line;
             m_boundingBox = line.BoundingBox;
-            m_pen.Color = Color.DarkGreen;
-            m_pen.Width = 1f;
+            Pen.Color = Color.DarkGreen;
+            Pen.Width = 1f;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             if (IsDirection) DrawDirectionTag(path);
 
             path.Transform(translate);
-            g.DrawPath(m_pen, path);
+            g.DrawPath(Pen, path);
         }
 
         /// <summary>
@@ -63,10 +63,10 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         {
             var leftLine = m_line.Clone();
             var rightLine = m_line.Clone();
-            leftLine.Scale(DirectionTag_Length_Ratio);
-            leftLine.Shift(DirectionTag_Distance_Ratio * m_line.Length);
-            rightLine.Scale(DirectionTag_Length_Ratio);
-            rightLine.Shift(-DirectionTag_Distance_Ratio * m_line.Length);
+            leftLine.Scale(DirectionTagLengthRatio);
+            leftLine.Shift(DirectionTagDistanceRatio * m_line.Length);
+            rightLine.Scale(DirectionTagLengthRatio);
+            rightLine.Shift(-DirectionTagDistanceRatio * m_line.Length);
             var leftPath = new GraphicsPath();
             leftPath.AddLine(leftLine.StartPnt, leftLine.EndPnt);
             var rightPath = new GraphicsPath();

@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
             BuildNumner = revitApplication.VersionBuild;
 
             //Show forms dialog which is a UI
-            using (var displayForm = new versionCheckingForm(this))
+            using (var displayForm = new VersionCheckingForm(this))
             {
                 displayForm.ShowDialog();
             }

@@ -194,21 +194,21 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             var p1 = line1.StartPnt;
             var d1 = MathUtil.Multiply(line1.Length, line1.Normal);
 
-            var E = MathUtil.Subtract(p1, p0);
+            var e = MathUtil.Subtract(p1, p0);
             var kross = d0.X * d1.Y - d0.Y * d1.X;
             var sqrKross = kross * kross;
             var sqrLen0 = d0.X * d0.X + d0.Y * d0.Y;
             var sqrLen1 = d1.X * d1.X + d1.Y * d1.Y;
 
             // lines of the segments are not parallel
-            if (sqrKross > MathUtil.Float_Epsilon * sqrLen0 * sqrLen1)
+            if (sqrKross > MathUtil.FloatEpsilon * sqrLen0 * sqrLen1)
             {
-                var s = (E.X * d1.Y - E.Y * d1.X) / kross;
+                var s = (e.X * d1.Y - e.Y * d1.X) / kross;
                 if (s < 0 || s > 1)
                     // intersection of lines is not point on segment p0 + s * d0
                     return 0;
 
-                var t = (E.X * d0.Y - E.Y * d0.X) / kross;
+                var t = (e.X * d0.Y - e.Y * d0.X) / kross;
                 if (t < 0 || t > 1)
                     // intersection of lines is not a point on segment p1 + t * d1
                     return 0;
@@ -218,15 +218,15 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             }
 
             // lines of the segments are paralled
-            var sqrLenE = E.X * E.X + E.Y * E.Y;
-            var kross2 = E.X * d0.Y - E.Y * d0.X;
+            var sqrLenE = e.X * e.X + e.Y * e.Y;
+            var kross2 = e.X * d0.Y - e.Y * d0.X;
             var sqrKross2 = kross2 * kross2;
-            if (sqrKross2 > MathUtil.Float_Epsilon * sqrLen0 * sqrLenE)
+            if (sqrKross2 > MathUtil.FloatEpsilon * sqrLen0 * sqrLenE)
                 // lines of the segments are different
                 return 0;
 
             // lines of the segments are the same. need to test for overlap of segments
-            var s0 = MathUtil.Dot(d0, E) / sqrLen0;
+            var s0 = MathUtil.Dot(d0, e) / sqrLen0;
             var s1 = s0 + MathUtil.Dot(d0, d1) / sqrLen0;
             var smin = MathUtil.GetMin(s0, s1);
             var smax = MathUtil.GetMax(s0, s1);

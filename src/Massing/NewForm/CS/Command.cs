@@ -24,27 +24,27 @@ namespace Revit.SDK.Samples.NewForm.CS
             transaction.Start();
 
             // Create one profile
-            var ref_ar = new ReferenceArray();
+            var refAr = new ReferenceArray();
 
             var ptA = new XYZ(10, 10, 0);
             var ptB = new XYZ(90, 10, 0);
             var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(90, 10, 0);
             ptB = new XYZ(10, 90, 0);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(10, 90, 0);
             ptB = new XYZ(10, 10, 0);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             // The extrusion form direction
             var direction = new XYZ(0, 0, 50);
 
-            doc.FamilyCreate.NewExtrusionForm(true, ref_ar, direction);
+            doc.FamilyCreate.NewExtrusionForm(true, refAr, direction);
 
             transaction.Commit();
 
@@ -68,25 +68,25 @@ namespace Revit.SDK.Samples.NewForm.CS
             transaction.Start();
 
             // Create one profile
-            var ref_ar = new ReferenceArray();
+            var refAr = new ReferenceArray();
 
             var ptA = new XYZ(10, 10, 0);
             var ptB = new XYZ(100, 10, 0);
             Line.CreateBound(ptA, ptB);
             var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(100, 10, 0);
             ptB = new XYZ(50, 50, 0);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(50, 50, 0);
             ptB = new XYZ(10, 10, 0);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
-            doc.FamilyCreate.NewFormByCap(true, ref_ar);
+            doc.FamilyCreate.NewFormByCap(true, refAr);
 
             transaction.Commit();
 
@@ -110,23 +110,23 @@ namespace Revit.SDK.Samples.NewForm.CS
             transaction.Start();
 
             // Create one profile
-            var ref_ar = new ReferenceArray();
+            var refAr = new ReferenceArray();
             var norm = XYZ.BasisZ;
 
             var ptA = new XYZ(0, 0, 10);
             var ptB = new XYZ(100, 0, 10);
             var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(100, 0, 10);
             ptB = new XYZ(100, 100, 10);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(100, 100, 10);
             ptB = new XYZ(0, 0, 10);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             // Create axis for revolve form
             ptA = new XYZ(-5, 0, 10);
@@ -134,7 +134,7 @@ namespace Revit.SDK.Samples.NewForm.CS
             var axis = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
             axis.ChangeToReferenceLine();
 
-            doc.FamilyCreate.NewRevolveForms(true, ref_ar, axis.GeometryCurve.Reference, 0, Math.PI / 4);
+            doc.FamilyCreate.NewRevolveForms(true, refAr, axis.GeometryCurve.Reference, 0, Math.PI / 4);
 
             transaction.Commit();
 
@@ -158,43 +158,43 @@ namespace Revit.SDK.Samples.NewForm.CS
             transaction.Start();
 
             // Create first profile
-            var ref_ar = new ReferenceArray();
+            var refAr = new ReferenceArray();
             var ptA = new XYZ(10, 10, 0);
             var ptB = new XYZ(50, 10, 0);
             var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(50, 10, 0);
             ptB = new XYZ(10, 50, 0);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(10, 50, 0);
             ptB = new XYZ(10, 10, 0);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
 
             // Create second profile
-            var ref_ar2 = new ReferenceArray();
+            var refAr2 = new ReferenceArray();
             ptA = new XYZ(10, 10, 90);
             ptB = new XYZ(80, 10, 90);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar2.Append(modelcurve.GeometryCurve.Reference);
+            refAr2.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(80, 10, 90);
             ptB = new XYZ(10, 50, 90);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar2.Append(modelcurve.GeometryCurve.Reference);
+            refAr2.Append(modelcurve.GeometryCurve.Reference);
 
             ptA = new XYZ(10, 50, 90);
             ptB = new XYZ(10, 10, 90);
             modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
-            ref_ar2.Append(modelcurve.GeometryCurve.Reference);
+            refAr2.Append(modelcurve.GeometryCurve.Reference);
 
             // Add profiles
             var profiles = new ReferenceArrayArray();
-            profiles.Append(ref_ar);
-            profiles.Append(ref_ar2);
+            profiles.Append(refAr);
+            profiles.Append(refAr2);
 
             // Create path for swept blend form
             var path = new ReferenceArray();
@@ -227,10 +227,10 @@ namespace Revit.SDK.Samples.NewForm.CS
             transaction.Start();
 
             // Create profiles array
-            var ref_ar_ar = new ReferenceArrayArray();
+            var refArAr = new ReferenceArrayArray();
 
             // Create first profile
-            var ref_ar = new ReferenceArray();
+            var refAr = new ReferenceArray();
 
             var y = 100;
             var x = 50;
@@ -238,45 +238,45 @@ namespace Revit.SDK.Samples.NewForm.CS
             var ptB = new XYZ(x, y, 0);
             var ptC = new XYZ(0, y + 10, 10);
             var modelcurve = FormUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
-            ref_ar_ar.Append(ref_ar);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
+            refArAr.Append(refAr);
 
             // Create second profile
-            ref_ar = new ReferenceArray();
+            refAr = new ReferenceArray();
 
             y = 40;
             ptA = new XYZ(-x, y, 5);
             ptB = new XYZ(x, y, 5);
             ptC = new XYZ(0, y, 25);
             modelcurve = FormUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
-            ref_ar_ar.Append(ref_ar);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
+            refArAr.Append(refAr);
 
             // Create third profile
-            ref_ar = new ReferenceArray();
+            refAr = new ReferenceArray();
 
             y = -20;
             ptA = new XYZ(-x, y, 0);
             ptB = new XYZ(x, y, 0);
             ptC = new XYZ(0, y, 15);
             modelcurve = FormUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
-            ref_ar_ar.Append(ref_ar);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
+            refArAr.Append(refAr);
 
             // Create fourth profile
-            ref_ar = new ReferenceArray();
+            refAr = new ReferenceArray();
 
             y = -60;
             ptA = new XYZ(-x, y, 0);
             ptB = new XYZ(x, y, 0);
             ptC = new XYZ(0, y + 10, 20);
             modelcurve = FormUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
-            ref_ar.Append(modelcurve.GeometryCurve.Reference);
-            ref_ar_ar.Append(ref_ar);
-            ref_ar = new ReferenceArray();
-            ref_ar_ar.Append(ref_ar);
+            refAr.Append(modelcurve.GeometryCurve.Reference);
+            refArAr.Append(refAr);
+            refAr = new ReferenceArray();
+            refArAr.Append(refAr);
 
-            doc.FamilyCreate.NewLoftForm(true, ref_ar_ar);
+            doc.FamilyCreate.NewLoftForm(true, refArAr);
 
             transaction.Commit();
 

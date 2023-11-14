@@ -26,7 +26,7 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
         /// </summary>
         private void CreateAddInManifestButton_Click(object sender, EventArgs e)
         {
-            var Manifest = new RevitAddInManifest();
+            var manifest = new RevitAddInManifest();
 
             var fileInfo = new FileInfo("..\\ExternalCommandRegistration\\ExternalCommandRegistration.dll");
 
@@ -71,13 +71,13 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
             command2.LongDescription += " And this command will be disabled if the active view is not a 3D view. ";
 
             //add both applications and commands into addin manifest
-            Manifest.AddInApplications.Add(application1);
-            Manifest.AddInCommands.Add(command1);
-            Manifest.AddInCommands.Add(command2);
+            manifest.AddInApplications.Add(application1);
+            manifest.AddInCommands.Add(command1);
+            manifest.AddInCommands.Add(command2);
 
             //save addin manifest in same place with RevitAddInUtilitySample.exe
             fileInfo = new FileInfo("ExteranlCommand.Sample.addin");
-            Manifest.SaveAs(fileInfo.FullName);
+            manifest.SaveAs(fileInfo.FullName);
             AddInsInfoButton_Click(null, null); //show addins information in the tree view
             AddInsInfoButton.Enabled = true;
             OpenAddInFileButton.Enabled = true;

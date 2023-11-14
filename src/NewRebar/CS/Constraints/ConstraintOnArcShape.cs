@@ -13,9 +13,9 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     Dimension to constrain the arc shape.
         /// </summary>
-        protected RebarShapeParameter m_rebarShapeParameter;
+        private RebarShapeParameter m_rebarShapeParameter;
 
-        public ConstraintOnArcShape(RebarShapeDefByArc def)
+        protected ConstraintOnArcShape(RebarShapeDefByArc def)
             : base(def)
         {
         }
@@ -26,22 +26,20 @@ namespace Revit.SDK.Samples.NewRebar.CS
         [DisplayName("RebarShape parameter")]
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         [ReadOnly(false)]
-        public RebarShapeParameter RebarShapeParameter
+        protected RebarShapeParameter RebarShapeParameter
         {
             get
             {
                 UpdateParameterTypeConverter();
-
                 return m_rebarShapeParameter;
             }
-            set => m_rebarShapeParameter = value;
         }
 
         /// <summary>
         ///     Get RebarShapeDefinitionByArc object.
         /// </summary>
         protected RebarShapeDefinitionByArc GetRebarShapeDefinitionByArc =>
-            m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionByArc;
+            ShapeDef.RebarshapeDefinition as RebarShapeDefinitionByArc;
     }
 
     /// <summary>
@@ -89,25 +87,16 @@ namespace Revit.SDK.Samples.NewRebar.CS
     /// </summary>
     internal class ConstraintCircumference : ConstraintOnArcShape
     {
-        /// <summary>
-        ///     Arc reference type.
-        /// </summary>
-        private RebarShapeArcReferenceType m_arcReferenceType;
-
         public ConstraintCircumference(RebarShapeDefByArc def)
             : base(def)
         {
-            m_arcReferenceType = RebarShapeArcReferenceType.External;
+            ArcReferenceType = RebarShapeArcReferenceType.External;
         }
 
         /// <summary>
         ///     Arc reference type.
         /// </summary>
-        public RebarShapeArcReferenceType ArcReferenceType
-        {
-            get => m_arcReferenceType;
-            set => m_arcReferenceType = value;
-        }
+        private RebarShapeArcReferenceType ArcReferenceType { get; }
 
         /// <summary>
         ///     Add dimension to constrain the arc circumference.
@@ -124,25 +113,16 @@ namespace Revit.SDK.Samples.NewRebar.CS
     /// </summary>
     internal class ConstraintDiameter : ConstraintOnArcShape
     {
-        /// <summary>
-        ///     Arc reference type.
-        /// </summary>
-        private RebarShapeArcReferenceType m_arcReferenceType;
-
         public ConstraintDiameter(RebarShapeDefByArc def)
             : base(def)
         {
-            m_arcReferenceType = RebarShapeArcReferenceType.External;
+            ArcReferenceType = RebarShapeArcReferenceType.External;
         }
 
         /// <summary>
         ///     Arc reference type.
         /// </summary>
-        public RebarShapeArcReferenceType ArcReferenceType
-        {
-            get => m_arcReferenceType;
-            set => m_arcReferenceType = value;
-        }
+        private RebarShapeArcReferenceType ArcReferenceType { get; }
 
         /// <summary>
         ///     Add dimension to constrain arc diameter.
@@ -159,25 +139,16 @@ namespace Revit.SDK.Samples.NewRebar.CS
     /// </summary>
     internal class ConstraintRadius : ConstraintOnArcShape
     {
-        /// <summary>
-        ///     Arc reference type.
-        /// </summary>
-        private RebarShapeArcReferenceType m_arcReferenceType;
-
         public ConstraintRadius(RebarShapeDefByArc def)
             : base(def)
         {
-            m_arcReferenceType = RebarShapeArcReferenceType.External;
+            ArcReferenceType = RebarShapeArcReferenceType.External;
         }
 
         /// <summary>
         ///     Arc reference type.
         /// </summary>
-        public RebarShapeArcReferenceType ArcReferenceType
-        {
-            get => m_arcReferenceType;
-            set => m_arcReferenceType = value;
-        }
+        private RebarShapeArcReferenceType ArcReferenceType { get; }
 
         /// <summary>
         ///     Add dimension to constrain the radius of arc.

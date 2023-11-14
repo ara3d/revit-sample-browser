@@ -20,12 +20,12 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
         /// <summary>
         ///     The failure definition id for warning
         /// </summary>
-        public static FailureDefinitionId m_idWarning;
+        public static FailureDefinitionId IdWarning;
 
         /// <summary>
         ///     The failure definition id for error
         /// </summary>
-        public static FailureDefinitionId m_idError;
+        public static FailureDefinitionId IdError;
 
         /// <summary>
         ///     The active document
@@ -60,14 +60,14 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                 var guid1 = new Guid("0C3F66B5-3E26-4d24-A228-7A8358C76D39");
                 var guid2 = new Guid("93382A45-89A9-4cfe-8B94-E0B0D9542D34");
                 new Guid("A16D08E2-7D06-4bca-96B0-C4E4CC0512F8");
-                m_idWarning = new FailureDefinitionId(guid1);
-                m_idError = new FailureDefinitionId(guid2);
+                IdWarning = new FailureDefinitionId(guid1);
+                IdError = new FailureDefinitionId(guid2);
 
                 // Create failure definitions and add resolutions
                 m_fdWarning =
-                    FailureDefinition.CreateFailureDefinition(m_idWarning, FailureSeverity.Warning,
+                    FailureDefinition.CreateFailureDefinition(IdWarning, FailureSeverity.Warning,
                         "I am the warning.");
-                m_fdError = FailureDefinition.CreateFailureDefinition(m_idError, FailureSeverity.Error,
+                m_fdError = FailureDefinition.CreateFailureDefinition(IdError, FailureSeverity.Error,
                     "I am the error");
 
                 m_fdWarning.AddResolutionType(FailureResolutionType.MoveElements, "MoveElements",
@@ -111,7 +111,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                     options.SetFailuresPreprocessor(preproccessor);
                     transaction.SetFailureHandlingOptions(options);
                     transaction.Start();
-                    var fm = new FailureMessage(m_idWarning);
+                    var fm = new FailureMessage(IdWarning);
                     m_doc.PostFailure(fm);
                     transaction.Commit();
                 }
@@ -157,7 +157,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                     var wall = Wall.Create(m_doc, line, level1.Id, false);
                     m_doc.Regenerate();
 
-                    var fm = new FailureMessage(m_idError);
+                    var fm = new FailureMessage(IdError);
                     var fr = DeleteElements.Create(m_doc, wall.Id);
                     fm.AddResolution(FailureResolutionType.DeleteElements, fr);
                     m_doc.PostFailure(fm);
@@ -182,7 +182,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                     var wall = Wall.Create(m_doc, line, level1.Id, false);
                     m_doc.Regenerate();
 
-                    var fm = new FailureMessage(m_idError);
+                    var fm = new FailureMessage(IdError);
                     var fr = DeleteElements.Create(m_doc, wall.Id);
                     fm.AddResolution(FailureResolutionType.DeleteElements, fr);
                     m_doc.PostFailure(fm);
@@ -221,7 +221,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                 foreach (var fma in fmas)
                 {
                     var id = fma.GetFailureDefinitionId();
-                    if (id == m_idError) failuresAccessor.ResolveFailure(fma);
+                    if (id == IdError) failuresAccessor.ResolveFailure(fma);
                 }
 
                 e.SetProcessingResult(FailureProcessingResult.ProceedWithCommit);
@@ -275,7 +275,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                     foreach (var fma in fmas)
                     {
                         var id = fma.GetFailureDefinitionId();
-                        if (id == Command.m_idWarning) failuresAccessor.DeleteWarning(fma);
+                        if (id == Command.IdWarning) failuresAccessor.DeleteWarning(fma);
                     }
 
                     return FailureProcessingResult.ProceedWithCommit;
@@ -326,7 +326,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                 foreach (var fma in fmas)
                 {
                     var id = fma.GetFailureDefinitionId();
-                    if (id == Command.m_idError) failuresAccessor.ResolveFailure(fma);
+                    if (id == Command.IdError) failuresAccessor.ResolveFailure(fma);
                 }
 
                 return FailureProcessingResult.ProceedWithCommit;

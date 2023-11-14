@@ -215,7 +215,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                             createWallForm.ShowDialog();
                             if (DialogResult.OK == createWallForm.DialogResult)
                             {
-                                updateModel(true); // immediately update the view to see the changes
+                                UpdateModel(true); // immediately update the view to see the changes
 
                                 if (subTransaction.Commit() == TransactionStatus.Committed)
                                 {
@@ -262,7 +262,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                     {
                         var translationVec = new XYZ(10, 10, 0);
                         ElementTransformUtils.MoveElement(m_document, m_lastCreatedWall.Id, translationVec);
-                        updateModel(true); // immediately update the view to see the changes
+                        UpdateModel(true); // immediately update the view to see the changes
 
                         if (subTransaction.Commit() == TransactionStatus.Committed)
                         {
@@ -307,7 +307,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                     if (subTransaction.Start() == TransactionStatus.Started)
                     {
                         m_document.Delete(m_lastCreatedWall.Id);
-                        updateModel(false); // immediately update the view to see the changes
+                        UpdateModel(false); // immediately update the view to see the changes
 
                         if (subTransaction.Commit() == TransactionStatus.Committed)
                         {
@@ -706,7 +706,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         ///     Updates the model and refreshes the active view
         /// </summary>
         /// <param name="autoJoin">Whether to also perform auto-join or not</param>
-        private void updateModel(bool autoJoin)
+        private void UpdateModel(bool autoJoin)
         {
             // in order to be able to see changes to the model before 
             // the current transaction is committed, we have to regenerate

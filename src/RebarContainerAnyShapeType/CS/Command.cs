@@ -34,7 +34,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
                 // Invoke work() method to create corresponding FrameReinMaker,
                 // and create the reinforcement rebars
-                factory.work();
+                factory.Work();
 
                 // if everything goes well, return succeeded.
                 return Result.Succeeded;

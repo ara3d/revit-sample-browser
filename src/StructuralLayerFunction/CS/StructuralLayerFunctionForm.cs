@@ -11,10 +11,10 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
     /// </summary>
     public class StructuralLayerFunctionForm : Form
     {
-        private readonly Container components = null;
-        private GroupBox functionGroupBox;
-        private ListBox functionListBox;
-        private Button okButton;
+        private readonly Container m_components = null;
+        private GroupBox m_functionGroupBox;
+        private ListBox m_functionListBox;
+        private Button m_okButton;
 
         /// <summary>
         ///     Constructor of StructuralLayerFunctionForm
@@ -26,7 +26,7 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
             InitializeComponent();
 
             // Set the data source of the ListBox control
-            functionListBox.DataSource = dataBuffer.Functions;
+            m_functionListBox.DataSource = dataBuffer.Functions;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
         {
             if (disposing)
             {
-                components?.Dispose();
+                m_components?.Dispose();
             }
 
             base.Dispose(disposing);
@@ -48,53 +48,53 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
         /// </summary>
         private void InitializeComponent()
         {
-            functionListBox = new ListBox();
-            functionGroupBox = new GroupBox();
-            okButton = new Button();
-            functionGroupBox.SuspendLayout();
+            m_functionListBox = new ListBox();
+            m_functionGroupBox = new GroupBox();
+            m_okButton = new Button();
+            m_functionGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // functionListBox
             // 
-            functionListBox.Location = new Point(6, 24);
-            functionListBox.Name = "functionListBox";
-            functionListBox.Size = new Size(189, 147);
-            functionListBox.TabIndex = 0;
+            m_functionListBox.Location = new Point(6, 24);
+            m_functionListBox.Name = "m_functionListBox";
+            m_functionListBox.Size = new Size(189, 147);
+            m_functionListBox.TabIndex = 0;
             // 
             // functionGroupBox
             // 
-            functionGroupBox.Controls.Add(functionListBox);
-            functionGroupBox.Location = new Point(12, 12);
-            functionGroupBox.Name = "functionGroupBox";
-            functionGroupBox.Size = new Size(201, 184);
-            functionGroupBox.TabIndex = 1;
-            functionGroupBox.TabStop = false;
-            functionGroupBox.Text = "Layers Functions List";
+            m_functionGroupBox.Controls.Add(m_functionListBox);
+            m_functionGroupBox.Location = new Point(12, 12);
+            m_functionGroupBox.Name = "m_functionGroupBox";
+            m_functionGroupBox.Size = new Size(201, 184);
+            m_functionGroupBox.TabIndex = 1;
+            m_functionGroupBox.TabStop = false;
+            m_functionGroupBox.Text = "Layers Functions List";
             // 
             // okButton
             // 
-            okButton.DialogResult = DialogResult.OK;
-            okButton.Location = new Point(138, 202);
-            okButton.Name = "okButton";
-            okButton.Size = new Size(75, 23);
-            okButton.TabIndex = 2;
-            okButton.Text = "OK";
+            m_okButton.DialogResult = DialogResult.OK;
+            m_okButton.Location = new Point(138, 202);
+            m_okButton.Name = "m_okButton";
+            m_okButton.Size = new Size(75, 23);
+            m_okButton.TabIndex = 2;
+            m_okButton.Text = "OK";
             // 
             // StructuralLayerFunctionForm
             // 
-            AcceptButton = okButton;
+            AcceptButton = m_okButton;
             AutoScaleBaseSize = new Size(5, 13);
-            CancelButton = okButton;
+            CancelButton = m_okButton;
             ClientSize = new Size(225, 236);
-            Controls.Add(okButton);
-            Controls.Add(functionGroupBox);
+            Controls.Add(m_okButton);
+            Controls.Add(m_functionGroupBox);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "StructuralLayerFunctionForm";
             ShowInTaskbar = false;
             Text = "Structure Layers Function";
-            functionGroupBox.ResumeLayout(false);
+            m_functionGroupBox.ResumeLayout(false);
             ResumeLayout(false);
         }
     }

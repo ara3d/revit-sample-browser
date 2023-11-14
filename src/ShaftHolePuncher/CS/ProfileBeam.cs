@@ -24,8 +24,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         //by the Transform get from Instance object anymore.
         private bool m_haveOpening;
         private bool m_isZaxis = true; //decide whether to create opening on Zaxis of beam or Yaixs of beam
-        private Matrix4 m_MatrixYaxis; //transform points to plane whose normal is Yaxis of beam
-        private Matrix4 m_MatrixZaxis; //transform points to plane whose normal is Zaxis of beam
+        private Matrix4 m_matrixYaxis; //transform points to plane whose normal is Yaxis of beam
+        private Matrix4 m_matrixZaxis; //transform points to plane whose normal is Zaxis of beam
 
         /// <summary>
         ///     constructor
@@ -37,9 +37,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             m_data = beam;
             var faces = GetFaces(m_data);
-            m_points = GetNeedPoints(faces);
-            m_to2DMatrix = GetTo2DMatrix();
-            m_moveToCenterMatrix = ToCenterMatrix();
+            Points = GetNeedPoints(faces);
+            To2DMatrix = GetTo2DMatrix();
+            MoveToCenterMatrix = ToCenterMatrix();
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                     for (var j = 0; j < edgexyzs.Count; j++)
                     {
                         var xyz = edgexyzs[j];
-                        var transformedXYZ = m_beamTransform.OfPoint(xyz);
-                        transformedPoints.Add(transformedXYZ);
+                        var transformedXyz = m_beamTransform.OfPoint(xyz);
+                        transformedPoints.Add(transformedXyz);
                     }
 
                     edgexyzs = transformedPoints;
@@ -79,13 +79,13 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <returns>points array stores the bound of the face</returns>
         public override PointF[] GetFaceBounds()
         {
-            var matrix = m_to2DMatrix;
+            var matrix = To2DMatrix;
             var inverseMatrix = matrix.Inverse();
             float minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
 
             //get the max and min point on the face
-            foreach (var points in m_points)
+            foreach (var points in Points)
             {
                 foreach (var point in points)
                 {
@@ -134,9 +134,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             var zAxis = yAxis.CrossProduct(xAxis);
             zAxis.Normalize();
 
-            var vOrigin = new Vector4(m_points[0][0]);
+            var vOrigin = new Vector4(Points[0][0]);
             var result = new Matrix4(xAxis, yAxis, zAxis, vOrigin);
-            m_MatrixZaxis = result;
+            m_matrixZaxis = result;
 
             //get transform used to transform points to plane whose normal is Yaxis of beam
             xAxis = new Vector4(m_data.HandOrientation);
@@ -146,8 +146,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             yAxis = xAxis.CrossProduct(zAxis) * -1;
             yAxis.Normalize();
             result = new Matrix4(xAxis, yAxis, zAxis, vOrigin);
-            m_MatrixYaxis = result;
-            return m_MatrixZaxis;
+            m_matrixYaxis = result;
+            return m_matrixZaxis;
         }
 
         /// <summary>
@@ -158,18 +158,18 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         public override List<List<Edge>> GetFaces(Element elem)
         {
             var faceEdges = new List<List<Edge>>();
-            var options = m_appCreator.NewGeometryOptions();
+            var options = AppCreator.NewGeometryOptions();
             options.DetailLevel = ViewDetailLevel.Medium;
             //make sure references to geometric objects are computed.
             options.ComputeReferences = true;
             var geoElem = elem.get_Geometry(options);
             //GeometryObjectArray gObjects = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //get all the edges in the Geometry object
             //foreach (GeometryObject geo in gObjects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geo = Objects.Current;
+                var geo = objects.Current;
 
                 switch (geo)
                 {
@@ -180,11 +180,11 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                         m_beamTransform = instance.Transform;
                         var elemGeo = instance.SymbolGeometry;
                         //GeometryObjectArray objectsGeo = elemGeo.Objects;
-                        var Objects1 = elemGeo.GetEnumerator();
+                        var objects1 = elemGeo.GetEnumerator();
                         //foreach (GeometryObject objGeo in objectsGeo)
-                        while (Objects1.MoveNext())
+                        while (objects1.MoveNext())
                         {
-                            var objGeo = Objects1.Current;
+                            var objGeo = objects1.Current;
 
                             var solid = objGeo as Solid;
                             if (null != solid)
@@ -239,7 +239,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             XYZ p1, p2;
             Line curve;
-            var curves = m_appCreator.NewCurveArray();
+            var curves = AppCreator.NewCurveArray();
             for (var i = 0; i < points.Count - 1; i++)
             {
                 p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
@@ -254,7 +254,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             curve = Line.CreateBound(p1, p2);
             curves.Append(curve);
 
-            return m_docCreator.NewOpening(m_data, curves, false == m_isZaxis ? eRefFace.CenterY : eRefFace.CenterZ);
+            return DocCreator.NewOpening(m_data, curves, false == m_isZaxis ? eRefFace.CenterY : eRefFace.CenterZ);
         }
 
         /// <summary>
@@ -269,11 +269,11 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             m_isZaxis = isZaxis;
             if (isZaxis)
-                m_to2DMatrix = m_MatrixZaxis;
+                To2DMatrix = m_matrixZaxis;
             else
-                m_to2DMatrix = m_MatrixYaxis;
+                To2DMatrix = m_matrixYaxis;
             //re-calculate matrix used to move points to center
-            m_moveToCenterMatrix = ToCenterMatrix();
+            MoveToCenterMatrix = ToCenterMatrix();
         }
     }
 }

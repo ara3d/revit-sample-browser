@@ -47,31 +47,31 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <summary>
         ///     space between beams; buffer for subclass
         /// </summary>
-        protected double m_fixedSpacing;
+        protected double FixedSpacing;
 
         /// <summary>
         ///     justify type; buffer for subclass
         /// </summary>
-        protected BeamSystemJustifyType m_justifyType;
+        protected BeamSystemJustifyType JustifyType;
 
         /// <summary>
         ///     layout method
         /// </summary>
-        protected LayoutMethod m_layoutType;
+        protected LayoutMethod LayoutType;
 
         /// <summary>
         ///     number of beams
         /// </summary>
-        protected int m_numberOfLines;
+        protected int NumberOfLines;
 
         /// <summary>
         ///     initial general members for its subclass
         /// </summary>
         protected BeamSystemParam()
         {
-            m_fixedSpacing = 2000.0;
-            m_justifyType = BeamSystemJustifyType.Center;
-            m_numberOfLines = 6;
+            FixedSpacing = 2000.0;
+            JustifyType = BeamSystemJustifyType.Center;
+            NumberOfLines = 6;
         }
 
         /// <summary>
@@ -87,10 +87,10 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         [Description("Specify the layout rule")]
         public LayoutMethod LayoutRuleMethod
         {
-            get => m_layoutType;
+            get => LayoutType;
             set
             {
-                if (m_layoutType != value)
+                if (LayoutType != value)
                     // invokes the delegate
                     LayoutRuleChanged(ref value);
             }
@@ -148,9 +148,9 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         {
             // create a BeamSystemParam instance and set its properties
             var param = CreateInstance(layoutType);
-            param.m_fixedSpacing = m_fixedSpacing;
-            param.m_justifyType = m_justifyType;
-            param.m_numberOfLines = m_numberOfLines;
+            param.FixedSpacing = FixedSpacing;
+            param.JustifyType = JustifyType;
+            param.NumberOfLines = NumberOfLines;
             param.BeamType = BeamType;
             return param;
         }
@@ -168,8 +168,8 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             /// </summary>
             public ClearSpacingParam()
             {
-                m_layout = new LayoutRuleClearSpacing(m_fixedSpacing, m_justifyType);
-                m_layoutType = LayoutMethod.ClearSpacing;
+                m_layout = new LayoutRuleClearSpacing(FixedSpacing, base.JustifyType);
+                LayoutType = LayoutMethod.ClearSpacing;
             }
 
             /// <summary>
@@ -184,13 +184,13 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             [Description("representing the distance between each beam")]
             public double ClearSpacing
             {
-                get => m_fixedSpacing;
+                get => FixedSpacing;
                 set
                 {
                     try
                     {
                         m_layout.Spacing = value;
-                        m_fixedSpacing = value;
+                        FixedSpacing = value;
                     }
                     catch
                     {
@@ -206,11 +206,11 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                          + " and each subsequent beam is spaced a fixed distance from it.")]
             public BeamSystemJustifyType JustifyType
             {
-                get => m_justifyType;
+                get => base.JustifyType;
                 set
                 {
                     m_layout.JustifyType = value;
-                    m_justifyType = value;
+                    base.JustifyType = value;
                 }
             }
         }
@@ -228,8 +228,8 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             /// </summary>
             public FixedDistanceParam()
             {
-                m_layout = new LayoutRuleFixedDistance(m_fixedSpacing, m_justifyType);
-                m_layoutType = LayoutMethod.FixedDistance;
+                m_layout = new LayoutRuleFixedDistance(base.FixedSpacing, base.JustifyType);
+                LayoutType = LayoutMethod.FixedDistance;
             }
 
             /// <summary>
@@ -245,13 +245,13 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                          + " based on the justification you specify.")]
             public double FixedSpacing
             {
-                get => m_fixedSpacing;
+                get => base.FixedSpacing;
                 set
                 {
                     try
                     {
                         m_layout.Spacing = value;
-                        m_fixedSpacing = value;
+                        base.FixedSpacing = value;
                     }
                     catch
                     {
@@ -267,11 +267,11 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                          + " and each subsequent beam is spaced a fixed distance from that point.")]
             public BeamSystemJustifyType JustifyType
             {
-                get => m_justifyType;
+                get => base.JustifyType;
                 set
                 {
                     m_layout.JustifyType = value;
-                    m_justifyType = value;
+                    base.JustifyType = value;
                 }
             }
         }
@@ -289,8 +289,8 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             /// </summary>
             public FixedNumberParam()
             {
-                m_layout = new LayoutRuleFixedNumber(m_numberOfLines);
-                m_layoutType = LayoutMethod.FixedNumber;
+                m_layout = new LayoutRuleFixedNumber(base.NumberOfLines);
+                LayoutType = LayoutMethod.FixedNumber;
             }
 
             /// <summary>
@@ -300,13 +300,13 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             [Description("allows you to specify the number of beams within the beam system.")]
             public int NumberOfLines
             {
-                get => m_numberOfLines;
+                get => base.NumberOfLines;
                 set
                 {
                     try
                     {
                         m_layout.NumberOfLines = value;
-                        m_numberOfLines = value;
+                        base.NumberOfLines = value;
                     }
                     catch
                     {
@@ -333,8 +333,8 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             /// </summary>
             public MaximumSpacingParam()
             {
-                m_layout = new LayoutRuleMaximumSpacing(m_fixedSpacing);
-                m_layoutType = LayoutMethod.MaximumSpacing;
+                m_layout = new LayoutRuleMaximumSpacing(FixedSpacing);
+                LayoutType = LayoutMethod.MaximumSpacing;
             }
 
             /// <summary>
@@ -344,13 +344,13 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             [Description("allows you to specify the maximum distance between beams.")]
             public double MaximumSpacing
             {
-                get => m_fixedSpacing;
+                get => FixedSpacing;
                 set
                 {
                     try
                     {
                         m_layout.Spacing = value;
-                        m_fixedSpacing = value;
+                        FixedSpacing = value;
                     }
                     catch
                     {

@@ -19,10 +19,10 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             m_doc = doc;
             InitializeComponent();
 
-            refreshNetworkList();
+            RefreshNetworkList();
         }
 
-        private void refreshNetworkList()
+        private void RefreshNetworkList()
         {
             m_networks = NetworkInfo.FindValidNetworks(m_doc);
 
@@ -44,8 +44,8 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             {
                 tran.Start("Create Analysis View");
 
-                var viewer = new AVFViewer(m_doc.ActiveView, ChxItemized.IsChecked);
-                viewer.InitAVF();
+                var viewer = new AvfViewer(m_doc.ActiveView, ChxItemized.IsChecked);
+                viewer.InitAvf();
 
                 foreach (var item in NetworkList.SelectedItems)
                 {
@@ -76,13 +76,13 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             saveFileDialog1.RestoreDirectory = true;
 
             if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                using (var ex = new CSVExporter(saveFileDialog1.FileName, ChxItemized.IsChecked))
+                using (var ex = new CsvExporter(saveFileDialog1.FileName, ChxItemized.IsChecked))
                 {
                     // Pass over the document and domain type to the exporter.
                     var netInfo = m_networks[idx];
                     ex.Document = netInfo.Document;
                     ex.DomainType = netInfo.DomainType;
-                    netInfo.ExportCSV(ex);
+                    netInfo.ExportCsv(ex);
                 }
         }
     }

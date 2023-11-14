@@ -2,7 +2,7 @@
 
 namespace Revit.SDK.Samples.VersionChecking.CS
 {
-    partial class versionCheckingForm
+    partial class VersionCheckingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -77,7 +77,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "versionCheckingForm";
+            this.Name = "VersionCheckingForm";
             this.ShowInTaskbar = false;
             this.Text = "About Revit";
             this.Load += new System.EventHandler(this.VersionCheckingForm_Load);

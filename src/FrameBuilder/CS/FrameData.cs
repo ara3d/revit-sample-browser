@@ -274,9 +274,9 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         public void UpdateLevels()
         {
             var baseElevation = Levels.Values[Levels.Count - 1].Elevation;
-            var m_Doc = CommandData.Application.ActiveUIDocument.Document;
+            var doc = CommandData.Application.ActiveUIDocument.Document;
 
-            var collector = new FilteredElementCollector(m_Doc);
+            var collector = new FilteredElementCollector(doc);
             var viewFamilyTypes = collector.OfClass(typeof(ViewFamilyType)).ToElements();
             var floorPlanId = ElementId.InvalidElementId;
             foreach (var e in viewFamilyTypes)
@@ -296,7 +296,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                 var elevation = baseElevation + m_levelHeight * (ii + 1);
                 var newLevel = Level.Create(CommandData.Application.ActiveUIDocument.Document, elevation);
                 //createDoc.NewViewPlan(newLevel.Name, newLevel, Autodesk.Revit.DB.ViewPlanType.FloorPlan);
-                var viewPlan = ViewPlan.Create(m_Doc, floorPlanId, newLevel.Id);
+                var viewPlan = ViewPlan.Create(doc, floorPlanId, newLevel.Id);
                 viewPlan.Name = newLevel.Name;
                 Levels.Add(elevation, newLevel);
             }

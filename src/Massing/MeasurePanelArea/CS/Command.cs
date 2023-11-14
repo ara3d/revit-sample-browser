@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            using (var form = new frmPanelArea(commandData))
+            using (var form = new FrmPanelArea(commandData))
             {
                 // The form is created successfully
                 if (null != form && !form.IsDisposed) form.ShowDialog();

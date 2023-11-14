@@ -141,38 +141,38 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// <summary>
     ///     Converter for HVACLoadLoadsReportType
     /// </summary>
-    public class HVACLoadLoadsReportTypeConverter : RevitEnumConverter
+    public class HvacLoadLoadsReportTypeConverter : RevitEnumConverter
     {
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="type">enumeration type</param>
-        public HVACLoadLoadsReportTypeConverter(Type type) : base(type)
+        public HvacLoadLoadsReportTypeConverter(Type type) : base(type)
         {
         }
 
         /// <summary>
         ///     Gets the enum-string map
         /// </summary>
-        protected override Dictionary<object, string> EnumMap => RevitStartInfo.HVACLoadLoadsReportTypeMap;
+        protected override Dictionary<object, string> EnumMap => RevitStartInfo.HvacLoadLoadsReportTypeMap;
     }
 
     /// <summary>
     ///     Converter for HVACLoadConstructionClass
     /// </summary>
-    public class HVACLoadConstructionClassConverter : RevitEnumConverter
+    public class HvacLoadConstructionClassConverter : RevitEnumConverter
     {
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="type">enumeration type</param>
-        public HVACLoadConstructionClassConverter(Type type) : base(type)
+        public HvacLoadConstructionClassConverter(Type type) : base(type)
         {
         }
 
         /// <summary>
         ///     Gets the enum-string map
         /// </summary>
-        protected override Dictionary<object, string> EnumMap => RevitStartInfo.HVACLoadConstructionClassMap;
+        protected override Dictionary<object, string> EnumMap => RevitStartInfo.HvacLoadConstructionClassMap;
     }
 }

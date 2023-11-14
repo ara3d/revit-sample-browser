@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
     /// </summary>
     internal class StructuralConnectionSelectionFilter : ISelectionFilter
     {
-        private readonly LogicalOrFilter _filter;
+        private readonly LogicalOrFilter m_filter;
 
         /// <summary>
         ///     Initialize the filter with the accepted element types.
@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         /// <returns></returns>
         public StructuralConnectionSelectionFilter(LogicalOrFilter elemTypesAllowed)
         {
-            _filter = elemTypesAllowed;
+            m_filter = elemTypesAllowed;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         /// <returns>Return true to allow the user to select this candidate element.</returns>
         public bool AllowElement(Element element)
         {
-            return _filter.PassesFilter(element);
+            return m_filter.PassesFilter(element);
         }
 
         /// <summary>

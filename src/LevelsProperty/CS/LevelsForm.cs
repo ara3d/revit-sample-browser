@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         //Record changed item
         private int[] m_changedItemsFlag;
 
-        private readonly ElementId[] m_deleteExistLevelIDValue;
+        private readonly ElementId[] m_deleteExistLevelIdValue;
         private int m_deleteExistLevelTotal;
 
         //Class Command's object reference
@@ -73,7 +73,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
             m_changedItemsFlag = new int[m_systemLevelsTotal];
 
             //Record deleted items
-            m_deleteExistLevelIDValue = new ElementId[m_systemLevelsTotal];
+            m_deleteExistLevelIdValue = new ElementId[m_systemLevelsTotal];
             m_deleteExistLevelTotal = 0;
         }
 
@@ -98,7 +98,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                 var lastLevelName = lastItem.Name;
                 var lastLevelElevation = lastItem.Elevation;
                 newLevelName = lastLevelName + "'";
-                newLevelElevation = lastLevelElevation + Unit.CovertFromAPI(m_objectReference.UnitTypeId, 10);
+                newLevelElevation = lastLevelElevation + Unit.CovertFromApi(m_objectReference.UnitTypeId, 10);
             }
             else
             {
@@ -137,7 +137,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
             if (bindingSource1.Position <= m_systemLevelsTotal - 1 && bindingSource1.Position >= 0)
             {
                 var aRow = bindingSource1.Current as LevelsDataSource;
-                m_deleteExistLevelIDValue[m_deleteExistLevelTotal] = aRow.LevelIDValue;
+                m_deleteExistLevelIdValue[m_deleteExistLevelTotal] = aRow.LevelIdValue;
                 m_deleteExistLevelTotal++;
 
                 bindingSource1.RemoveCurrent();
@@ -231,7 +231,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         {
             //Delete existed Levels
             for (var i = 0; i < m_deleteExistLevelTotal; i++)
-                m_objectReference.DeleteLevel(m_deleteExistLevelIDValue[i]);
+                m_objectReference.DeleteLevel(m_deleteExistLevelIdValue[i]);
 
             var tempLevels = new List<LevelsDataSource>();
 
@@ -243,19 +243,19 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                         bindingSource1.Position = i;
                         var changeItem = bindingSource1.Current as LevelsDataSource;
 
-                        if (false == m_objectReference.SetLevel(changeItem.LevelIDValue, changeItem.Name,
+                        if (false == m_objectReference.SetLevel(changeItem.LevelIdValue, changeItem.Name,
                                 changeItem.Elevation))
                         {
                             changeItem.Name = "TempName" + changeItem.Name;
                             tempLevels.Add(changeItem);
-                            m_objectReference.SetLevel(changeItem.LevelIDValue, changeItem.Name, changeItem.Elevation);
+                            m_objectReference.SetLevel(changeItem.LevelIdValue, changeItem.Name, changeItem.Elevation);
                         }
                     }
 
             foreach (var item in tempLevels)
             {
                 item.Name = item.Name.Remove(0, 8); // Remove the "TempName" string
-                m_objectReference.SetLevel(item.LevelIDValue, item.Name, item.Elevation);
+                m_objectReference.SetLevel(item.LevelIdValue, item.Name, item.Elevation);
             }
 
             //Create new Levels

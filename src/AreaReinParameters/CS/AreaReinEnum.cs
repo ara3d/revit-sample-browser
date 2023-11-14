@@ -7,8 +7,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
     /// </summary>
     public enum LayoutRules
     {
-        Fixed_Number = 2,
-        Maximum_Spacing = 3
+        FixedNumber = 2,
+        MaximumSpacing = 3
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
     /// </summary>
     public enum WallHookOrientations
     {
-        Towards_Exterior = 0,
-        Towards_Interior = 2
+        TowardsExterior = 0,
+        TowardsInterior = 2
     }
 }

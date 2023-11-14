@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
                     return revitApplication.IsArchitectureEnabled;
                 case ApplicationAvailablity.StructuralAnalysis:
                     return revitApplication.IsStructuralAnalysisEnabled;
-                case ApplicationAvailablity.MEP:
+                case ApplicationAvailablity.Mep:
                     return revitApplication.IsSystemsEnabled;
             }
 

@@ -19,27 +19,17 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <summary>
         ///     used to create new instances of utility objects.
         /// </summary>
-        protected readonly Application m_appCreator;
-
-        /// <summary>
-        ///     object which contains reference to Revit Application
-        /// </summary>
-        protected readonly ExternalCommandData m_commandData;
+        protected readonly Application AppCreator;
 
         /// <summary>
         ///     Revit DB document
         /// </summary>
-        protected readonly Document m_document;
+        protected readonly Document Document;
 
         /// <summary>
         ///     store all the points on the needed face
         /// </summary>
-        protected List<List<XYZ>> m_points;
-
-        /// <summary>
-        ///     store the Matrix used to transform 3D points to 2D
-        /// </summary>
-        protected Matrix4 m_to2DMatrix = null;
+        protected List<List<XYZ>> Points;
 
         /// <summary>
         ///     constructor
@@ -47,20 +37,20 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <param name="commandData">object which contains reference to Revit Application</param>
         protected Profile(ExternalCommandData commandData)
         {
-            m_commandData = commandData;
-            m_appCreator = m_commandData.Application.Application.Create;
-            m_document = m_commandData.Application.ActiveUIDocument.Document;
+            CommandData = commandData;
+            AppCreator = CommandData.Application.Application.Create;
+            Document = CommandData.Application.ActiveUIDocument.Document;
         }
 
         /// <summary>
         ///     CommandData property get object which contains reference to Revit Application
         /// </summary>
-        public ExternalCommandData CommandData => m_commandData;
+        public ExternalCommandData CommandData { get; }
 
         /// <summary>
         ///     To2DMatrix property to get Matrix used to transform 3D points to 2D
         /// </summary>
-        public Matrix4 To2DMatrix => m_to2DMatrix;
+        public Matrix4 To2DMatrix { get; protected set; }
 
         /// <summary>
         ///     abstract method to create PathReinforcement
@@ -94,7 +84,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// </param>
         public void Draw2D(Graphics graphics, Pen pen, Matrix4 matrix4)
         {
-            foreach (var points in m_points)
+            foreach (var points in Points)
             {
                 for (var j = 0; j < points.Count - 1; j++)
                 {
@@ -120,17 +110,17 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         public List<List<Edge>> GetFaces(Element elem)
         {
             var faceEdges = new List<List<Edge>>();
-            var options = m_appCreator.NewGeometryOptions();
+            var options = AppCreator.NewGeometryOptions();
             options.DetailLevel = ViewDetailLevel.Medium;
             options.ComputeReferences = true; //make sure references to geometric objects are computed.
             var geoElem = elem.get_Geometry(options);
             //GeometryObjectArray gObjects = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //get all the edges in the Geometry object
             //foreach (GeometryObject geo in gObjects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geo = Objects.Current;
+                var geo = objects.Current;
 
                 var solid = geo as Solid;
                 if (solid != null)
@@ -205,13 +195,13 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <returns>points array store the bound of the face</returns>
         public PointF[] GetFaceBounds()
         {
-            var matrix = m_to2DMatrix;
+            var matrix = To2DMatrix;
             var inverseMatrix = matrix.Inverse();
             float minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
 
             //get the max and min point on the face
-            foreach (var points in m_points)
+            foreach (var points in Points)
             {
                 foreach (var point in points)
                 {

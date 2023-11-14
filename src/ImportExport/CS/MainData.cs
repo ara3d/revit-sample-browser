@@ -16,42 +16,42 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         ///     DWG format
         /// </summary>
-        DWG,
+        Dwg,
 
         /// <summary>
         ///     DXF format
         /// </summary>
-        DXF,
+        Dxf,
 
         /// <summary>
         ///     SAT format
         /// </summary>
-        SAT,
+        Sat,
 
         /// <summary>
         ///     DWF format
         /// </summary>
-        DWF,
+        Dwf,
 
         /// <summary>
         ///     DWFx format
         /// </summary>
-        DWFx,
+        DwFx,
 
         /// <summary>
         ///     GBXML format
         /// </summary>
-        GBXML,
+        Gbxml,
 
         /// <summary>
         ///     FBX format
         /// </summary>
-        FBX,
+        Fbx,
 
         /// <summary>
         ///     DGN format
         /// </summary>
-        DGN,
+        Dgn,
 
         /// <summary>
         ///     IMG format
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         ///     PDF format
         /// </summary>
-        PDF
+        Pdf
     }
 
     /// <summary>
@@ -72,17 +72,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         ///     DWF format
         /// </summary>
-        DWG,
+        Dwg,
 
         /// <summary>
         ///     IMAGE format
         /// </summary>
-        IMAGE,
+        Image,
 
         /// <summary>
         ///     GBXML format
         /// </summary>
-        GBXML,
+        Gbxml,
 
         /// <summary>
         ///     Inventor format
@@ -130,38 +130,38 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <returns>The format to export</returns>
         private static ExportFormat GetSelectedExportFormat(string selectedFormat)
         {
-            var format = ExportFormat.DWG;
+            var format = ExportFormat.Dwg;
             switch (selectedFormat)
             {
                 case "DWG":
-                    format = ExportFormat.DWG;
+                    format = ExportFormat.Dwg;
                     break;
                 case "DXF":
-                    format = ExportFormat.DXF;
+                    format = ExportFormat.Dxf;
                     break;
                 case "SAT":
-                    format = ExportFormat.SAT;
+                    format = ExportFormat.Sat;
                     break;
                 case "DWF":
-                    format = ExportFormat.DWF;
+                    format = ExportFormat.Dwf;
                     break;
                 case "DWFx":
-                    format = ExportFormat.DWFx;
+                    format = ExportFormat.DwFx;
                     break;
                 case "GBXML":
-                    format = ExportFormat.GBXML;
+                    format = ExportFormat.Gbxml;
                     break;
                 case "FBX":
-                    format = ExportFormat.FBX;
+                    format = ExportFormat.Fbx;
                     break;
                 case "DGN":
-                    format = ExportFormat.DGN;
+                    format = ExportFormat.Dgn;
                     break;
                 case "IMAGE":
                     format = ExportFormat.Image;
                     break;
                 case "PDF":
-                    format = ExportFormat.PDF;
+                    format = ExportFormat.Pdf;
                     break;
             }
 
@@ -181,66 +181,66 @@ namespace Revit.SDK.Samples.ImportExport.CS
             {
                 switch (format)
                 {
-                    case ExportFormat.DWG:
-                        var exportDWGData = new ExportDWGData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportDWGData))
+                    case ExportFormat.Dwg:
+                        var exportDwgData = new ExportDwgData(CommandData, format);
+                        using (var exportForm = new ExportWithViewsForm(exportDwgData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
-                    case ExportFormat.DXF:
-                        var exportDXFData = new ExportDXFData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportDXFData))
+                    case ExportFormat.Dxf:
+                        var exportDxfData = new ExportDxfData(CommandData, format);
+                        using (var exportForm = new ExportWithViewsForm(exportDxfData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
-                    case ExportFormat.SAT:
-                        var exportSATData = new ExportSATData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportSATData))
+                    case ExportFormat.Sat:
+                        var exportSatData = new ExportSatData(CommandData, format);
+                        using (var exportForm = new ExportWithViewsForm(exportSatData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
-                    case ExportFormat.DWF:
-                    case ExportFormat.DWFx:
-                        var exportDWFData = new ExportDWFData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportDWFData))
+                    case ExportFormat.Dwf:
+                    case ExportFormat.DwFx:
+                        var exportDwfData = new ExportDwfData(CommandData, format);
+                        using (var exportForm = new ExportWithViewsForm(exportDwfData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
-                    case ExportFormat.GBXML:
-                        var exportGBXMLData = new ExportGBXMLData(CommandData, format);
-                        dialogResult = Export(exportGBXMLData);
+                    case ExportFormat.Gbxml:
+                        var exportGbxmlData = new ExportGbxmlData(CommandData, format);
+                        dialogResult = Export(exportGbxmlData);
                         break;
-                    case ExportFormat.FBX:
-                        var exportFBXData = new ExportFBXData(CommandData, format);
-                        dialogResult = Export(exportFBXData);
+                    case ExportFormat.Fbx:
+                        var exportFbxData = new ExportFbxData(CommandData, format);
+                        dialogResult = Export(exportFbxData);
                         break;
-                    case ExportFormat.DGN:
-                        var exportDGNData = new ExportDGNData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportDGNData))
+                    case ExportFormat.Dgn:
+                        var exportDgnData = new ExportDgnData(CommandData, format);
+                        using (var exportForm = new ExportWithViewsForm(exportDgnData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
 
                         break;
                     case ExportFormat.Image:
-                        var exportIMGdata = new ExportIMGData(CommandData, format);
-                        using (new ExportWithViewsForm(exportIMGdata))
+                        var exportImGdata = new ExportImgData(CommandData, format);
+                        using (new ExportWithViewsForm(exportImGdata))
                         {
                             dialogResult = DialogResult.OK;
                         }
 
                         break;
-                    case ExportFormat.PDF:
-                        var exportPDFData = new ExportPDFData(CommandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportPDFData))
+                    case ExportFormat.Pdf:
+                        var exportPdfData = new ExportPdfData(CommandData, format);
+                        using (var exportForm = new ExportWithViewsForm(exportPdfData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
@@ -317,17 +317,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <returns>The format to import</returns>
         private static ImportFormat GetSelectedImportFormat(string selectedFormat)
         {
-            var format = ImportFormat.DWG;
+            var format = ImportFormat.Dwg;
             switch (selectedFormat)
             {
                 case "DWG":
-                    format = ImportFormat.DWG;
+                    format = ImportFormat.Dwg;
                     break;
                 case "IMAGE":
-                    format = ImportFormat.IMAGE;
+                    format = ImportFormat.Image;
                     break;
                 case "GBXML":
-                    format = ImportFormat.GBXML;
+                    format = ImportFormat.Gbxml;
                     break;
                 case "Inventor":
                     format = ImportFormat.Inventor;
@@ -351,21 +351,21 @@ namespace Revit.SDK.Samples.ImportExport.CS
             {
                 switch (format)
                 {
-                    case ImportFormat.DWG:
-                        var importDWGData = new ImportDWGData(CommandData, format);
-                        using (var importForm = new ImportDWGForm(importDWGData))
+                    case ImportFormat.Dwg:
+                        var importDwgData = new ImportDwgData(CommandData, format);
+                        using (var importForm = new ImportDwgForm(importDwgData))
                         {
                             dialogResult = importForm.ShowDialog();
                         }
 
                         break;
-                    case ImportFormat.IMAGE:
-                        var importIMAGEData = new ImportImageData(CommandData, format);
-                        dialogResult = Import(importIMAGEData);
+                    case ImportFormat.Image:
+                        var importImageData = new ImportImageData(CommandData, format);
+                        dialogResult = Import(importImageData);
                         break;
-                    case ImportFormat.GBXML:
-                        var importGBXMLData = new ImportGBXMLData(CommandData, format);
-                        dialogResult = Import(importGBXMLData);
+                    case ImportFormat.Gbxml:
+                        var importGbxmlData = new ImportGbxmlData(CommandData, format);
+                        dialogResult = Import(importGbxmlData);
                         break;
                 }
             }

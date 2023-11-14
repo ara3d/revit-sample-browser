@@ -21,17 +21,17 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         ///     Dictionary to store element's geometry which this creator can be used.
         /// </summary>
-        protected readonly Dictionary<Element, ElementGeometry> m_elemGeom;
+        protected readonly Dictionary<Element, ElementGeometry> ElemGeom;
 
         /// <summary>
         ///     Revit active document.
         /// </summary>
-        protected readonly Document m_rvtDoc;
+        protected readonly Document RvtDoc;
 
         /// <summary>
         ///     Revit UI document.
         /// </summary>
-        protected readonly UIDocument m_rvtUIDoc;
+        protected readonly UIDocument RvtUiDoc;
 
         /// <summary>
         ///     Constructor which takes a Revit.Document as parameter.
@@ -39,9 +39,9 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <param name="rvtDoc">Revit.Document parameter</param>
         protected HostedSweepCreator(UIDocument rvtDoc)
         {
-            m_rvtUIDoc = rvtDoc;
-            m_rvtDoc = rvtDoc.Document;
-            m_elemGeom = new Dictionary<Element, ElementGeometry>();
+            RvtUiDoc = rvtDoc;
+            RvtDoc = rvtDoc.Document;
+            ElemGeom = new Dictionary<Element, ElementGeometry>();
             m_createdHostedSweeps = new List<ModificationData>();
         }
 
@@ -63,7 +63,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         ///     A dictionary stores all the element=>geometry which hosted-sweep can be created on.
         /// </summary>
-        public Dictionary<Element, ElementGeometry> ElemGeomDic => m_elemGeom;
+        public Dictionary<Element, ElementGeometry> ElemGeomDic => ElemGeom;
 
         /// <summary>
         ///     A list to store all the created hosted-sweep by this creator.
@@ -73,12 +73,12 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         ///     Revit active document.
         /// </summary>
-        public Document RvtDocument => m_rvtDoc;
+        public Document RvtDocument => RvtDoc;
 
         /// <summary>
         ///     Revit UI document.
         /// </summary>
-        public UIDocument RvtUIDocument => m_rvtUIDoc;
+        public UIDocument RvtUiDocument => RvtUiDoc;
 
         /// <summary>
         ///     Create a hosted-sweep according to the CreationData parameter.
@@ -91,7 +91,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             foreach (var edge in creationData.EdgesForHostedSweep) refArr.Append(edge.Reference);
 
             ModificationData modificationData = null;
-            var transaction = new Transaction(m_rvtDoc, "CreateHostedSweep");
+            var transaction = new Transaction(RvtDoc, "CreateHostedSweep");
             try
             {
                 transaction.Start();
@@ -99,7 +99,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
 
                 if (transaction.Commit() == TransactionStatus.Committed)
                 {
-                    m_rvtUIDoc.ShowElements(createdHostedSweep);
+                    RvtUiDoc.ShowElements(createdHostedSweep);
 
                     // just only end transaction return true, we will create the hosted sweep.                    
                     modificationData =
@@ -135,10 +135,10 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             options.ComputeReferences = true;
             var gElement = elem.get_Geometry(options);
             //foreach (GeometryObject gObj in gElement.Objects)
-            var Objects = gElement.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = gElement.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var gObj = Objects.Current;
+                var gObj = objects.Current;
 
                 result = gObj as Solid;
                 if (result != null && result.Faces.Size > 0)

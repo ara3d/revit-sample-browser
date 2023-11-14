@@ -7,7 +7,7 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Revit.SDK.Samples.NetworkPressureLossReport
 {
-    public class AVFViewer
+    public class AvfViewer
     {
         private const string DisplayStyleName = "NetworkFlowDisplayStyle";
         private const string SchemaName = "NetworkFlowSchema";
@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
         private readonly SpatialFieldManager m_sfm;
         private readonly View m_view;
 
-        public AVFViewer(View view, bool? isItemized)
+        public AvfViewer(View view, bool? isItemized)
         {
             m_view = view;
             m_isItemzied = isItemized;
@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
 
         public bool IsItemized => m_isItemzied == true;
 
-        public void InitAVF()
+        public void InitAvf()
         {
             m_view.EnableTemporaryViewPropertiesMode(m_view.Id);
             m_view.TemporaryViewModes.RemoveCustomization();
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             m_maxCorner = new XYZ(xx, yy, zz);
         }
 
-        private AnalysisDisplayStyle getStyleByName(string name)
+        private AnalysisDisplayStyle GetStyleByName(string name)
         {
             var collector = new FilteredElementCollector(Document);
             ICollection<Element> collection = collector.OfClass(typeof(AnalysisDisplayStyle)).ToElements();
@@ -79,7 +79,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             // set the legend to the top right corner so it is close to the AVF display
             m_sfm.LegendPosition = m_maxCorner;
 
-            var analysisDisplayStyle = getStyleByName(DisplayStyleName);
+            var analysisDisplayStyle = GetStyleByName(DisplayStyleName);
 
             // If display style does not already exist in the document, create it
             var colorSettings = new AnalysisDisplayColorSettings();

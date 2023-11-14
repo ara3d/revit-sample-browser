@@ -13,7 +13,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    public class ExportToPCF : IExternalCommand
+    public class ExportToPcf : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)

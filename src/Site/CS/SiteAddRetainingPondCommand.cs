@@ -64,12 +64,12 @@ namespace Revit.SDK.Samples.Site.CS
             // If there is only on surface, use it.  If there is more than one, let the user select the target.
             TopographySurface targetSurface = null;
             if (count > 1) // tmp
-                targetSurface = SiteUIUtils.PickTopographySurface(uiDoc);
+                targetSurface = SiteUiUtils.PickTopographySurface(uiDoc);
             else
                 targetSurface = tsEnumerable.First();
 
             // Pick point and project to plane at toposurface average elevation
-            var point = SiteUIUtils.PickPointNearToposurface(uiDoc, targetSurface, "Pick point for center of pond.");
+            var point = SiteUiUtils.PickPointNearToposurface(uiDoc, targetSurface, "Pick point for center of pond.");
             var elevation = point.Z;
 
             // Add subregion first, so that any previously existing points can be removed to avoid distorting the new region

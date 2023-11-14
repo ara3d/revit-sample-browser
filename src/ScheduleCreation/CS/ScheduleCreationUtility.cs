@@ -24,7 +24,7 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
     /// </summary>
     internal class ScheduleCreationUtility
     {
-        private static readonly BuiltInParameter[] s_skipParameters = { BuiltInParameter.ALL_MODEL_MARK };
+        private static readonly BuiltInParameter[] SSkipParameters = { BuiltInParameter.ALL_MODEL_MARK };
 
         /// <summary>
         ///     Create view schedule(s) and add them to sheet.
@@ -180,7 +180,7 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
         /// <returns>Return true if parameterId should be skipped.</returns>
         private bool ShouldSkip(ElementId parameterId)
         {
-            foreach (var bip in s_skipParameters)
+            foreach (var bip in SSkipParameters)
                 if (new ElementId(bip) == parameterId)
                     return true;
             return false;

@@ -10,32 +10,32 @@ namespace Revit.SDK.Samples.UIAPI.CS
     /// </summary>
     public partial class UserControl2 : UserControl
     {
-        private readonly string _name;
+        private readonly string m_name;
 
         public UserControl2(string name)
         {
             InitializeComponent();
-            _name = name;
+            m_name = name;
         }
 
         private void onbtn_click(object sender, RoutedEventArgs e)
         {
-            TaskDialog.Show("Hello", _name);
+            TaskDialog.Show("Hello", m_name);
         }
 
         public void OnOK()
         {
-            TaskDialog.Show("OK", _name);
+            TaskDialog.Show("OK", m_name);
         }
 
         public void OnCancel()
         {
-            TaskDialog.Show("OnCancel", _name);
+            TaskDialog.Show("OnCancel", m_name);
         }
 
         public void OnRestoreDefaults()
         {
-            TaskDialog.Show("OnRestoreDefaults", _name);
+            TaskDialog.Show("OnRestoreDefaults", m_name);
         }
     }
 }

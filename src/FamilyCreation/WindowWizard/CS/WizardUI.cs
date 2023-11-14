@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///     store the bindSource
         /// </summary>
-        private readonly BindingSource bindSource = new BindingSource();
+        private readonly BindingSource m_bindSource = new BindingSource();
 
         /// <summary>
         ///     store the copy type button tooltip
@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///     store DoubleHungWinPara list
         /// </summary>
-        private readonly BindingList<DoubleHungWinPara> paraList = new BindingList<DoubleHungWinPara>();
+        private readonly BindingList<DoubleHungWinPara> m_paraList = new BindingList<DoubleHungWinPara>();
 
         /// <summary>
         ///     constructor of WizardForm
@@ -92,7 +92,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             }
             else if (panel2.Visible)
             {
-                transforData();
+                TransforData();
                 SetPanelVisibility(3);
             }
             else if (panel3.Visible)
@@ -184,9 +184,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///     transfer data
         /// </summary>
-        private void transforData()
+        private void TransforData()
         {
-            if (m_para.m_template == "DoubleHung")
+            if (m_para.Template == "DoubleHung")
             {
                 var dbhungPara = new DoubleHungWinPara(m_para.Validator.IsMetric)
                 {
@@ -227,7 +227,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 m_para.WinParaTab[dbhungPara.Type] = dbhungPara;
             }
 
-            bindSource.DataSource = m_types;
+            m_bindSource.DataSource = m_types;
             m_comboType.Items.Add(m_para.CurrentPara.Type);
             m_comboType.SelectedIndex = 0;
             m_glassMat.DataSource = m_para.GlassMaterials;
@@ -243,7 +243,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="e">EventArgs</param>
         private void button_newType_Click(object sender, EventArgs e)
         {
-            transforData();
+            TransforData();
             var newPara = new DoubleHungWinPara(m_para.Validator.IsMetric);
             SetParaText(newPara);
             m_comboType.Focus();
@@ -256,7 +256,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="e">EventArgs</param>
         private void button_duplicateType_Click(object sender, EventArgs e)
         {
-            transforData();
+            TransforData();
             var copyPara = new DoubleHungWinPara((DoubleHungWinPara)m_para.CurrentPara);
             SetParaText(copyPara);
             m_comboType.Focus();
@@ -281,14 +281,14 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         private void SetGridData()
         {
-            paraList.Clear();
+            m_paraList.Clear();
             foreach (string key in m_para.WinParaTab.Keys)
             {
                 if (!(m_para.WinParaTab[key] is DoubleHungWinPara para)) continue;
-                paraList.Add(para);
+                m_paraList.Add(para);
             }
 
-            dataGridView1.DataSource = paraList;
+            dataGridView1.DataSource = m_paraList;
         }
 
         /// <summary>

@@ -12,12 +12,12 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// <summary>
         ///     The singleton instance of AnalysisVisualizationFramework
         /// </summary>
-        private static AnalysisVisualizationFramework Instance;
+        private static AnalysisVisualizationFramework _instance;
 
         /// <summary>
         ///     The ID of schema which SpatialFieldManager register
         /// </summary>
-        private static int SchemaId = -1;
+        private static int _schemaId = -1;
 
         /// <summary>
         ///     revit document
@@ -27,7 +27,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// <summary>
         ///     The created view list
         /// </summary>
-        private readonly List<string> viewNameList = new List<string>();
+        private readonly List<string> m_viewNameList = new List<string>();
 
         /// <summary>
         ///     Constructor
@@ -43,9 +43,9 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// </summary>
         /// <param name="doc">Revit document</param>
         /// <returns>The singleton instance of AnalysisVisualizationFramework</returns>
-        public static AnalysisVisualizationFramework getInstance(Document doc)
+        public static AnalysisVisualizationFramework GetInstance(Document doc)
         {
-            return Instance ?? (Instance = new AnalysisVisualizationFramework(doc));
+            return _instance ?? (_instance = new AnalysisVisualizationFramework(doc));
         }
 
         /// <summary>
@@ -56,21 +56,21 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         public void PaintSolid(Solid s, string viewName)
         {
             View view;
-            if (!viewNameList.Contains(viewName))
+            if (!m_viewNameList.Contains(viewName))
             {
                 var viewFamilyTypes = new FilteredElementCollector(m_doc).OfClass(typeof(ViewFamilyType)).ToElements();
-                var View3DId = ElementId.InvalidElementId;
+                var view3DId = ElementId.InvalidElementId;
                 foreach (var e in viewFamilyTypes)
                     if (e.Name == "3D View")
-                        View3DId = e.Id;
+                        view3DId = e.Id;
 
                 //view = m_doc.Create.NewView3D(new XYZ(1, 1, 1));
-                view = View3D.CreateIsometric(m_doc, View3DId);
+                view = View3D.CreateIsometric(m_doc, view3DId);
                 var viewOrientation3D = new ViewOrientation3D(new XYZ(1, -1, -1), new XYZ(1, 1, 1), new XYZ(1, 1, -2));
                 (view as View3D).SetOrientation(viewOrientation3D);
                 (view as View3D).SaveOrientation();
                 view.Name = viewName;
-                viewNameList.Add(viewName);
+                m_viewNameList.Add(viewName);
             }
             else
             {
@@ -80,14 +80,14 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
 
             var sfm = SpatialFieldManager.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 1);
 
-            if (SchemaId != -1)
+            if (_schemaId != -1)
             {
                 var results = sfm.GetRegisteredResults();
 
-                if (!results.Contains(SchemaId)) SchemaId = -1;
+                if (!results.Contains(_schemaId)) _schemaId = -1;
             }
 
-            if (SchemaId == -1)
+            if (_schemaId == -1)
             {
                 var resultSchema1 = new AnalysisResultSchema("PaintedSolid" + viewName, "Description");
 
@@ -100,7 +100,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
 
                 resultSchema1.AnalysisDisplayStyleId = displayStyle.Id;
 
-                SchemaId = sfm.RegisterResult(resultSchema1);
+                _schemaId = sfm.RegisterResult(resultSchema1);
             }
 
             var faces = s.Faces;
@@ -118,7 +118,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
 
                 var vals = new FieldValues(valList);
 
-                sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, SchemaId);
+                sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, _schemaId);
             }
         }
 
@@ -141,10 +141,10 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
             {
                 var uvPnt = new UV(u, v);
                 uvPts.Add(uvPnt);
-                var faceXYZ = face.Evaluate(uvPnt);
+                var faceXyz = face.Evaluate(uvPnt);
                 // Specify three values for each point
                 for (var ii = 1; ii <= measurementNo; ii++)
-                    doubleList.Add(faceXYZ.DistanceTo(XYZ.Zero) * ii);
+                    doubleList.Add(faceXyz.DistanceTo(XYZ.Zero) * ii);
                 valList.Add(new ValueAtPoint(doubleList));
                 doubleList.Clear();
             }

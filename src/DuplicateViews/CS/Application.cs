@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
         /// <summary>
         ///     The path to this add-in assembly.
         /// </summary>
-        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+        private static readonly string AddAssemblyPath = typeof(Application).Assembly.Location;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -52,14 +52,14 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
             var rp = application.CreateRibbonPanel("CopyPaste");
 
             var pbd2 = new PushButtonData("DuplicateAll", "Duplicate across documents",
-                addAssemblyPath,
+                AddAssemblyPath,
                 typeof(DuplicateAcrossDocumentsCommand).FullName)
             {
                 LongDescription = "Duplicate all duplicatable drafting views and schedules."
             };
 
-            var duplicateAllPB = rp.AddItem(pbd2) as PushButton;
-            SetIconsForPushButton(duplicateAllPB, Resources.ViewCopyAcrossFiles);
+            var duplicateAllPb = rp.AddItem(pbd2) as PushButton;
+            SetIconsForPushButton(duplicateAllPb, Resources.ViewCopyAcrossFiles);
         }
 
         /// <summary>

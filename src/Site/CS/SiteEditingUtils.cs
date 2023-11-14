@@ -31,7 +31,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="input">The input.</param>
         /// <param name="elevation">The elevation.</param>
         /// <returns>The new point.</returns>
-        public static XYZ MoveXYZToElevation(XYZ input, double elevation)
+        public static XYZ MoveXyzToElevation(XYZ input, double elevation)
         {
             return input + XYZ.BasisZ * (elevation - input.Z);
         }

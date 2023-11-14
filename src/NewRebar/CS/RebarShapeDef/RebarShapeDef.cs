@@ -13,45 +13,30 @@ namespace Revit.SDK.Samples.NewRebar.CS
     public abstract class RebarShapeDef
     {
         /// <summary>
-        ///     All the dimensions will be added to RebarShapeDefinition.
-        /// </summary>
-        protected readonly List<ConstraintOnRebarShape> m_constraints;
-
-        /// <summary>
-        ///     All the parameters will be added to RebarShapeDefinition.
-        /// </summary>
-        protected readonly List<RebarShapeParameter> m_parameters;
-
-        /// <summary>
-        ///     RebarShape definition, the real object to be wrapped.
-        /// </summary>
-        protected readonly RebarShapeDefinition m_rebarshapeDefinition;
-
-        /// <summary>
         ///     Constructor, initialize the fields.
         /// </summary>
         /// <param name="shapeDef">RebarShapeDefinition object to be wrapped</param>
         public RebarShapeDef(RebarShapeDefinition shapeDef)
         {
-            m_rebarshapeDefinition = shapeDef;
-            m_parameters = new List<RebarShapeParameter>();
-            m_constraints = new List<ConstraintOnRebarShape>();
+            RebarshapeDefinition = shapeDef;
+            Parameters = new List<RebarShapeParameter>();
+            Constraints = new List<ConstraintOnRebarShape>();
         }
 
         /// <summary>
         ///     Return the real object RebarShapeDefinition.
         /// </summary>
-        public RebarShapeDefinition RebarshapeDefinition => m_rebarshapeDefinition;
+        public RebarShapeDefinition RebarshapeDefinition { get; }
 
         /// <summary>
         ///     Return all the parameters.
         /// </summary>
-        public List<RebarShapeParameter> Parameters => m_parameters;
+        public List<RebarShapeParameter> Parameters { get; }
 
         /// <summary>
         ///     Return all the dimensions.
         /// </summary>
-        public List<ConstraintOnRebarShape> Constraints => m_constraints;
+        public List<ConstraintOnRebarShape> Constraints { get; }
 
         /// <summary>
         ///     Add a parameter to RebarShapeDefinition.
@@ -67,7 +52,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         {
             var param =
                 Activator.CreateInstance(parameterType, this, name, value) as RebarShapeParameter;
-            m_parameters.Add(param);
+            Parameters.Add(param);
             return param;
         }
 
@@ -83,7 +68,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         {
             var constraintIns =
                 Activator.CreateInstance(constraintType, this) as ConstraintOnRebarShape;
-            m_constraints.Add(constraintIns);
+            Constraints.Add(constraintIns);
             return constraintIns;
         }
 
@@ -96,14 +81,14 @@ namespace Revit.SDK.Samples.NewRebar.CS
         public void Commit(Document rvtDoc, DefinitionGroup defGroup)
         {
             // Submit all the parameters.
-            foreach (var param in m_parameters) param.Commit(rvtDoc, defGroup);
+            foreach (var param in Parameters) param.Commit(rvtDoc, defGroup);
 
             // Submit all the constraints.
-            foreach (var constraint in m_constraints) constraint.Commit();
+            foreach (var constraint in Constraints) constraint.Commit();
 
             // Submit the RebarShape.
-            if (m_rebarshapeDefinition.Complete)
-                m_rebarshapeDefinition.CheckDefaultParameterValues(0, 0);
+            if (RebarshapeDefinition.Complete)
+                RebarshapeDefinition.CheckDefaultParameterValues(0, 0);
             else
                 throw new Exception("The Rebar shape definition is not completed.");
         }

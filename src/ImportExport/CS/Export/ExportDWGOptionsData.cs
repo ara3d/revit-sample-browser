@@ -9,7 +9,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores lower priority information for exporting dwg format
     /// </summary>
-    public class ExportDWGOptionsData
+    public class ExportDwgOptionsData
     {
         /// <summary>
         ///     String list of Coordinate system basis
@@ -109,7 +109,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         ///     Constructor
         /// </summary>
-        public ExportDWGOptionsData()
+        public ExportDwgOptionsData()
         {
             Initialize();
         }

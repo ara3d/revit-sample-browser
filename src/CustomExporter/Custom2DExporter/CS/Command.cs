@@ -22,7 +22,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
             {
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var activeView = uiDoc.ActiveView;
-                if (!isExportableView(activeView))
+                if (!IsExportableView(activeView))
                 {
                     var td = new TaskDialog("Cannot export view.");
                     td.MainInstruction = "Only plans, elevations and sections can be exported.";
@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
                             out points,
                             out resSummary);
 
-                        Utilities.displayExport(activeView, points);
+                        Utilities.DisplayExport(activeView, points);
 
                         ShowResults(resSummary);
                     }
@@ -79,7 +79,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
             };
         }
 
-        private bool isExportableView(View view)
+        private bool IsExportableView(View view)
         {
             if (!view.CanBePrinted || view.IsTemplate)
                 return false;
@@ -107,9 +107,9 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
 
             resultsSummary = new ResultsSummary
             {
-                numElements = context.NumElements,
-                numTexts = context.NumTexts,
-                texts = context.Texts
+                NumElements = context.NumElements,
+                NumTexts = context.NumTexts,
+                Texts = context.Texts
             };
         }
 
@@ -120,11 +120,11 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         private static void ShowResults(ResultsSummary resultsSummary)
         {
             var td = new TaskDialog("Results of 2D export");
-            td.MainInstruction = $"2D exporter exported {resultsSummary.numElements} elements";
-            var details = $"There were {resultsSummary.numTexts} text nodes exported.\n\n";
+            td.MainInstruction = $"2D exporter exported {resultsSummary.NumElements} elements";
+            var details = $"There were {resultsSummary.NumTexts} text nodes exported.\n\n";
 
-            if (resultsSummary.numTexts > 0 && resultsSummary.texts.Length > 0)
-                details += "Exported text nodes:\n" + resultsSummary.texts;
+            if (resultsSummary.NumTexts > 0 && resultsSummary.Texts.Length > 0)
+                details += "Exported text nodes:\n" + resultsSummary.Texts;
 
             td.MainContent = details;
 
@@ -136,11 +136,11 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         /// </summary>
         private class ResultsSummary
         {
-            public int numElements { get; set; }
+            public int NumElements { get; set; }
 
-            public int numTexts { get; set; }
+            public int NumTexts { get; set; }
 
-            public string texts { get; set; }
+            public string Texts { get; set; }
         }
     }
 }

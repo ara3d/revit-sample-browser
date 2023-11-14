@@ -9,14 +9,14 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw rectangle
     /// </summary>
-    internal class RectTool : ITool
+    internal class RectTool : Tool
     {
         /// <summary>
         ///     Default constructor
         /// </summary>
         public RectTool()
         {
-            m_type = ToolType.Rectangle;
+            Type = ToolType.Rectangle;
         }
 
         /// <summary>
@@ -26,11 +26,11 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
-            if (m_points.Count == 1)
+            if (Points.Count == 1)
             {
-                DrawRect(graphic, m_backGroundPen, m_points[0], m_preMovePoint);
-                m_preMovePoint = e.Location;
-                DrawRect(graphic, m_foreGroundPen, m_points[0], m_preMovePoint);
+                DrawRect(graphic, BackGroundPen, Points[0], PreMovePoint);
+                PreMovePoint = e.Location;
+                DrawRect(graphic, ForeGroundPen, Points[0], PreMovePoint);
             }
         }
 
@@ -43,10 +43,10 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             if (e.Button == MouseButtons.Left)
             {
-                m_preMovePoint = e.Location;
-                m_points.Add(e.Location);
+                PreMovePoint = e.Location;
+                Points.Add(e.Location);
 
-                if (m_points.Count == 2) DrawRect(graphic, m_foreGroundPen, m_points[0], m_points[1]);
+                if (Points.Count == 2) DrawRect(graphic, ForeGroundPen, Points[0], Points[1]);
             }
 
             ;
@@ -59,11 +59,11 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e">Mouse event argument</param>
         public override void OnMouseUp(Graphics graphic, MouseEventArgs e)
         {
-            if (m_points.Count == 2)
+            if (Points.Count == 2)
             {
-                var line = new List<Point>(m_points);
-                m_lines.Add(line);
-                m_points.Clear();
+                var line = new List<Point>(Points);
+                Lines.Add(line);
+                Points.Clear();
             }
         }
 
@@ -73,7 +73,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="graphic">Graphics object,used to draw geometry </param>
         public override void Draw(Graphics graphic)
         {
-            foreach (var line in m_lines) DrawRect(graphic, m_foreGroundPen, line[0], line[1]);
+            foreach (var line in Lines) DrawRect(graphic, ForeGroundPen, line[0], line[1]);
         }
 
         /// <summary>

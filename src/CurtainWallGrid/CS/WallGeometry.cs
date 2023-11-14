@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         ///     Get start point of baseline
         /// </summary>
-        public XYZ StartXYZ { get; set; }
+        public XYZ StartXyz { get; set; }
 
         /// <summary>
         ///     store the end point of baseline (in PointD format)
@@ -86,7 +86,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         ///     Get end point of baseline
         /// </summary>
-        public XYZ EndXYZ { get; set; }
+        public XYZ EndXyz { get; set; }
 
         /// <summary>
         ///     create the curtain wall to the active document of Revit
@@ -100,12 +100,12 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
             //baseline
             //new baseline and transform coordinate on windows UI to Revit UI
-            StartXYZ = new XYZ(m_startPointD.X, m_startPointD.Y, 0);
-            EndXYZ = new XYZ(m_endPointD.X, m_endPointD.Y, 0);
+            StartXyz = new XYZ(m_startPointD.X, m_startPointD.Y, 0);
+            EndXyz = new XYZ(m_endPointD.X, m_endPointD.Y, 0);
             Line baseline = null;
             try
             {
-                baseline = Line.CreateBound(StartXYZ, EndXYZ);
+                baseline = Line.CreateBound(StartXyz, EndXyz);
             }
             catch (ArgumentException)
             {
@@ -120,7 +120,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             act.Commit();
             var act2 = new Transaction(MyDocument.Document);
             act2.Start(Guid.NewGuid().GetHashCode().ToString());
-            MyDocument.UIDocument.ShowElements(wall);
+            MyDocument.UiDocument.ShowElements(wall);
             act2.Commit();
             return wall;
         }

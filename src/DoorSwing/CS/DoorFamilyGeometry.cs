@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// <summary>
         ///     BoundingBox of the 2D geometry.
         /// </summary>
-        public RectangleF BBOX2D =>
+        public RectangleF Bbox2D =>
             new RectangleF((float)m_bbox.Min.X, (float)m_bbox.Min.Y,
                 (float)(m_bbox.Max.X - m_bbox.Min.X), (float)(m_bbox.Max.Y - m_bbox.Min.Y));
 
@@ -88,13 +88,13 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         {
             // get all geometric primitives contained in the Geometry Element
             //GeometryObjectArray geoObjArray = geoEle.Objects;
-            var Objects = geoEle.GetEnumerator();
+            var objects = geoEle.GetEnumerator();
 
             // iterate each Geometry Object and generate data accordingly.
             //foreach (GeometryObject geoObj in geoObjArray)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geoObj = Objects.Current;
+                var geoObj = objects.Current;
 
                 switch (geoObj)
                 {

@@ -83,9 +83,9 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
             // form two vectors from the face and a vector stand for the line
             // Use SubXYZ() method to get the vectors
-            var vector1 = SubXYZ(first, second); // first vector of face
-            var vector2 = SubXYZ(first, third); // second vector of face
-            var vector3 = SubXYZ(lineStart, lineEnd); // line vector
+            var vector1 = SubXyz(first, second); // first vector of face
+            var vector2 = SubXyz(first, third); // second vector of face
+            var vector3 = SubXyz(lineStart, lineEnd); // line vector
 
             // get two dot products of the face vectors and line vector
             var result1 = DotMatrix(vector1, vector3);
@@ -165,7 +165,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="p1">The first point(vector)</param>
         /// <param name="p2">The second point(vector)</param>
         /// <returns>Return a new vector from point p2 to p1</returns>
-        public static XYZ SubXYZ(XYZ p1, XYZ p2)
+        public static XYZ SubXyz(XYZ p1, XYZ p2)
         {
             var x = p1.X - p2.X;
             var y = p1.Y - p2.Y;
@@ -180,7 +180,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="p1">The first point(vector)</param>
         /// <param name="p2">The first point(vector)</param>
         /// <returns>A new vector(point)</returns>
-        public static XYZ AddXYZ(XYZ p1, XYZ p2)
+        public static XYZ AddXyz(XYZ p1, XYZ p2)
         {
             var x = p1.X + p2.X;
             var y = p1.Y + p2.Y;
@@ -242,7 +242,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         {
             var directUnit = UnitVector(direction);
             var offsetVect = MultiplyVector(directUnit, offset);
-            return AddXYZ(point, offsetVect);
+            return AddXyz(point, offsetVect);
         }
 
         /// <summary>

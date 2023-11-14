@@ -9,7 +9,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Data class which stores the information for exporting 2D DWF format
     /// </summary>
-    public class ExportDWFData : ExportDataWithViews
+    public class ExportDwfData : ExportDataWithViews
     {
         /// <summary>
         ///     Selected image format for DWF export
@@ -39,14 +39,14 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         ///     List of image quality for DWF export
         /// </summary>
-        private List<DWFImageQuality> m_ImageQualities;
+        private List<DWFImageQuality> m_imageQualities;
 
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
-        public ExportDWFData(ExternalCommandData commandData, ExportFormat exportFormat)
+        public ExportDwfData(ExternalCommandData commandData, ExportFormat exportFormat)
             : base(commandData, exportFormat)
         {
             Initialize();
@@ -102,8 +102,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public List<DWFImageQuality> ImageQualities
         {
-            get => m_ImageQualities;
-            set => m_ImageQualities = value;
+            get => m_imageQualities;
+            set => m_imageQualities = value;
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_exportObjectData = true;
             m_exportAreas = false;
             m_exportMergeFiles = true;
-            m_ImageQualities = new List<DWFImageQuality>
+            m_imageQualities = new List<DWFImageQuality>
             {
                 DWFImageQuality.Low,
                 DWFImageQuality.Medium,
@@ -122,16 +122,16 @@ namespace Revit.SDK.Samples.ImportExport.CS
             };
 
             // Export DWF
-            if (m_exportFormat == ExportFormat.DWF)
+            if (ExportFormat == CS.ExportFormat.Dwf)
             {
-                m_filter = "DWF Files |*.dwf";
-                m_title = "Export DWF";
+                Filter = "DWF Files |*.dwf";
+                Title = "Export DWF";
             }
             // Export DWFx
             else
             {
-                m_filter = "DWFx Files |*.dwfx";
-                m_title = "Export DWFx";
+                Filter = "DWFx Files |*.dwfx";
+                Title = "Export DWFx";
             }
         }
 
@@ -141,20 +141,20 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <returns></returns>
         public override bool Export()
         {
-            var transaction = new Transaction(m_activeDoc, "Export_To_DWF");
+            var transaction = new Transaction(ActiveDocument, "Export_To_DWF");
             transaction.Start();
             var exported = false;
             base.Export();
 
             //parameter : ViewSet views
             var views = new ViewSet();
-            if (m_currentViewOnly)
-                views.Insert(m_activeDoc.ActiveView);
+            if (CurrentViewOnly)
+                views.Insert(ActiveDocument.ActiveView);
             else
-                views = m_selectViewsData.SelectedViews;
+                views = SelectViewsData.SelectedViews;
 
             // Export DWFx
-            if (m_exportFormat == ExportFormat.DWFx)
+            if (ExportFormat == CS.ExportFormat.DwFx)
             {
                 var options = new DWFXExportOptions
                 {
@@ -164,7 +164,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     ImageFormat = m_dwfImageFormat,
                     ImageQuality = m_dwfImageQuality
                 };
-                exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, options);
+                exported = ActiveDocument.Export(ExportFolder, ExportFileName, views, options);
             }
             // Export DWF
             else
@@ -177,7 +177,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     ImageFormat = m_dwfImageFormat,
                     ImageQuality = m_dwfImageQuality
                 };
-                exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, options);
+                exported = ActiveDocument.Export(ExportFolder, ExportFileName, views, options);
             }
 
             transaction.Commit();

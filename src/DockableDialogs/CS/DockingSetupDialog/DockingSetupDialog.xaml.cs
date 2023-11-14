@@ -35,7 +35,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         public DockingSetupDialog()
         {
             InitializeComponent();
-            tb_newGuid.Text = Globals.sm_UserDockablePaneId.Guid.ToString();
+            tb_newGuid.Text = Globals.SmUserDockablePaneId.Guid.ToString();
         }
 
         public int FloatLeft => m_left;

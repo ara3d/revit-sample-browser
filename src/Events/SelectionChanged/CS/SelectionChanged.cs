@@ -22,12 +22,12 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
         ///     to Application or Document according to what level it is in. But then,
         ///     the syntax is the same in these three cases.
         /// </summary>
-        private static UIControlledApplication m_ctrlApp;
+        private static UIControlledApplication _ctrlApp;
 
         /// <summary>
         ///     The window is used to show SelectionChanged event information.
         /// </summary>
-        private static InfoWindow m_infoWindow;
+        private static InfoWindow _infoWindow;
 
         private static readonly string AddInPath = typeof(SelectionChanged).Assembly.Location;
 
@@ -44,9 +44,9 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
         /// <returns>The status of the external application</returns>
         public Result OnStartup(UIControlledApplication application)
         {
-            m_ctrlApp = application;
+            _ctrlApp = application;
 
-            var ribbonPanel = m_ctrlApp.CreateRibbonPanel("SelectionChanged Event");
+            var ribbonPanel = _ctrlApp.CreateRibbonPanel("SelectionChanged Event");
             var showInfoWindowButton = new PushButtonData("showInfoWindow", "Show Event Info", AddInPath,
                 "Revit.SDK.Samples.SelectionChanged.CS.Command")
             {
@@ -74,10 +74,10 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
             // finalize the log file.
             LogManager.LogFinalize();
 
-            if (m_infoWindow != null)
+            if (_infoWindow != null)
             {
-                m_infoWindow.Close();
-                m_infoWindow = null;
+                _infoWindow.Close();
+                _infoWindow = null;
             }
 
             return Result.Succeeded;

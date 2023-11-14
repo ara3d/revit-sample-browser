@@ -128,12 +128,12 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         protected override bool FillWithBars()
         {
             //create Rebar Container
-            var conTypeId = RebarContainerType.CreateDefaultRebarContainerType(m_revitDoc);
-            var hostId = m_hostObject.Id;
-            var host = m_revitDoc.GetElement(hostId);
+            var conTypeId = RebarContainerType.CreateDefaultRebarContainerType(RevitDoc);
+            var hostId = HostObject.Id;
+            var host = RevitDoc.GetElement(hostId);
             if (null != host)
             {
-                var cont = RebarContainer.Create(m_revitDoc, host, conTypeId);
+                var cont = RebarContainer.Create(RevitDoc, host, conTypeId);
                 var flag = FillTransverseItems(cont);
                 flag = flag && FillVerticalItems(cont);
             }

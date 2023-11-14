@@ -12,7 +12,7 @@ namespace Revit.Samples.DirectionCalculation
     [Journaling(JournalingMode.NoCommandData)]
     public class FindSouthFacingWallsWithoutProjectLocation : FindSouthFacingWalls, IExternalCommand
     {
-        private static AddInId m_appId = new AddInId(new Guid("8B29D56B-7B9A-4c79-8A38-B1C13B921877"));
+        private static AddInId _appId = new AddInId(new Guid("8B29D56B-7B9A-4c79-8A38-B1C13B921877"));
 
         /// <summary>
         ///     The top level command.
@@ -58,7 +58,7 @@ namespace Revit.Samples.DirectionCalculation
     [Regeneration(RegenerationOption.Manual)]
     public class FindSouthFacingWallsWithProjectLocation : FindSouthFacingWalls, IExternalCommand
     {
-        private static AddInId m_appId = new AddInId(new Guid("6CADE602-7F32-496c-AA37-CEE4B0EE6087"));
+        private static AddInId _appId = new AddInId(new Guid("6CADE602-7F32-496c-AA37-CEE4B0EE6087"));
 
         /// <summary>
         ///     The top level command.
@@ -104,7 +104,7 @@ namespace Revit.Samples.DirectionCalculation
     [Regeneration(RegenerationOption.Manual)]
     public class FindSouthFacingWindowsWithoutProjectLocation : FindSouthFacingWindows, IExternalCommand
     {
-        private static AddInId m_appId = new AddInId(new Guid("AB3588F5-1CD1-4693-9DF0-C0890C811B21"));
+        private static AddInId _appId = new AddInId(new Guid("AB3588F5-1CD1-4693-9DF0-C0890C811B21"));
 
         /// <summary>
         ///     The top level command.
@@ -150,7 +150,7 @@ namespace Revit.Samples.DirectionCalculation
     [Regeneration(RegenerationOption.Manual)]
     public class FindSouthFacingWindowsWithProjectLocation : FindSouthFacingWindows, IExternalCommand
     {
-        private static AddInId m_appId = new AddInId(new Guid("BFECDEA2-C384-4bcc-965E-EA302BA309AA"));
+        private static AddInId _appId = new AddInId(new Guid("BFECDEA2-C384-4bcc-965E-EA302BA309AA"));
 
         /// <summary>
         ///     The top level command.

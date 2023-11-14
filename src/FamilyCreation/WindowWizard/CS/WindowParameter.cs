@@ -109,7 +109,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///     store the glass material list
         /// </summary>
-        private List<string> m_GlassMats = new List<string>();
+        private List<string> m_glassMats = new List<string>();
 
         /// <summary>
         ///     store the temp path
@@ -125,7 +125,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///     store the template name
         /// </summary>
-        public string m_template = string.Empty;
+        public string Template = string.Empty;
 
         /// <summary>
         ///     store the ValidateWindowParameter
@@ -160,8 +160,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         public List<string> GlassMaterials
         {
-            set => m_GlassMats = value;
-            get => m_GlassMats;
+            set => m_glassMats = value;
+            get => m_glassMats;
         }
 
         /// <summary>

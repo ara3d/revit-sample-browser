@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///     The parameter of Window wizard
         /// </summary>
-        public readonly WizardParameter m_para;
+        public readonly WizardParameter Para;
 
         /// <summary>
         ///     The constructor of WindowCreation
@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="parameter">WizardParameter</param>
         protected WindowCreation(WizardParameter parameter)
         {
-            m_para = parameter;
+            Para = parameter;
         }
 
         /// <summary>

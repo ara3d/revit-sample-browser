@@ -9,8 +9,8 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
     /// </summary>
     public enum LayoutRules
     {
-        Fixed_Number = 2,
-        Maximum_Spacing = 3
+        FixedNumber = 2,
+        MaximumSpacing = 3
     }
 
     /// <summary>

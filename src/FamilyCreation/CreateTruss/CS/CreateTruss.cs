@@ -24,12 +24,12 @@ namespace Revit.SDK.Samples.CreateTruss.CS
         /// <summary>
         ///     The Revit application
         /// </summary>
-        private static Application m_application;
+        private static Application _application;
 
         /// <summary>
         ///     The current document of the application
         /// </summary>
-        private static Document m_document;
+        private static Document _document;
 
         /// <summary>
         ///     The Application Creation object is used to create new instances of utility objects.
@@ -45,21 +45,21 @@ namespace Revit.SDK.Samples.CreateTruss.CS
         {
             try
             {
-                m_application = revit.Application.Application;
-                m_document = revit.Application.ActiveUIDocument.Document;
+                _application = revit.Application.Application;
+                _document = revit.Application.ActiveUIDocument.Document;
 
                 // it can support in truss family document only
-                if (!m_document.IsFamilyDocument
-                    || m_document.OwnerFamily.FamilyCategory.BuiltInCategory != BuiltInCategory.OST_Truss)
+                if (!_document.IsFamilyDocument
+                    || _document.OwnerFamily.FamilyCategory.BuiltInCategory != BuiltInCategory.OST_Truss)
                 {
                     message = "Cannot execute truss creation in non-truss family document";
                     return Result.Failed;
                 }
 
-                m_appCreator = m_application.Create;
-                m_familyCreator = m_document.FamilyCreate;
+                m_appCreator = _application.Create;
+                m_familyCreator = _document.FamilyCreate;
 
-                var newTran = new Transaction(m_document);
+                var newTran = new Transaction(_document);
                 newTran.Start("NewTrussCurve");
 
                 // Start the truss creation
@@ -95,7 +95,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
             var refPlaneFilter = new ElementClassFilter(typeof(Autodesk.Revit.DB.ReferencePlane));
             var viewFilter = new ElementClassFilter(typeof(View));
             var filter = new LogicalOrFilter(refPlaneFilter, viewFilter);
-            var collector = new FilteredElementCollector(m_document);
+            var collector = new FilteredElementCollector(_document);
             elements.AddRange(collector.WherePasses(filter).ToElements());
             foreach (var e in elements)
             {
@@ -221,7 +221,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
             var line = Line.CreateBound(start, end);
             var trussCurve = m_familyCreator.NewModelCurve(line, sketchPlane);
             trussCurve.TrussCurveType = type;
-            m_document.Regenerate();
+            _document.Regenerate();
 
             return trussCurve;
         }

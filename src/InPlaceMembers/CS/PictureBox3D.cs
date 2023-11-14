@@ -112,12 +112,12 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         private PointF[] GetDisplayRegion()
         {
             var rec = m_sourceData.Region;
-            const float MARGIN = 8.0f;
+            const float margin = 8.0f;
 
-            var realWidth = Width - MARGIN * 2;
-            var realHeight = Height - MARGIN * 2;
-            var minX = MARGIN;
-            var minY = MARGIN;
+            var realWidth = Width - margin * 2;
+            var realHeight = Height - margin * 2;
+            var minX = margin;
+            var minY = margin;
             var ratioRec = rec.Height / rec.Width;
             var ratioBox = realHeight / realWidth;
 
@@ -134,8 +134,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 minY = (temp - realHeight) / 2.0f;
             }
 
-            if (rec.Width < GraphicsDataBase.MINEDGElENGTH + 1 &&
-                rec.Height < GraphicsDataBase.MINEDGElENGTH + 1)
+            if (rec.Width < GraphicsDataBase.MinedgElEngth + 1 &&
+                rec.Height < GraphicsDataBase.MinedgElEngth + 1)
             {
                 minX = realWidth / 2.0f;
                 minY = realHeight / 2.0f;

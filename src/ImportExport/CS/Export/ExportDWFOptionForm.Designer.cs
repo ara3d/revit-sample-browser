@@ -6,7 +6,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// Provide a dialog which provides the options of lower priority information 
     /// for export DWF format
     /// </summary>
-    partial class ExportDWFOptionForm
+    partial class ExportDwfOptionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -180,7 +180,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ExportDWFOptionForm";
+            this.Name = "ExportDwfOptionForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

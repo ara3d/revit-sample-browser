@@ -16,14 +16,14 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <summary>
         ///     hash table
         /// </summary>
-        protected Hashtable m_hash;
+        protected Hashtable Hash;
 
         /// <summary>
         ///     initialize m_hash
         /// </summary>
         public BartypeConverter()
         {
-            m_hash = new Hashtable();
+            Hash = new Hashtable();
             GetConvertHash();
         }
 
@@ -32,7 +32,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         public void GetConvertHash()
         {
-            m_hash = Command.BarTypes;
+            Hash = Command.BarTypes;
         }
 
         /// <summary>
@@ -52,11 +52,11 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <returns></returns>
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            var Ids = new ElementId[m_hash.Values.Count];
+            var ids = new ElementId[Hash.Values.Count];
             var i = 0;
 
-            foreach (DictionaryEntry de in m_hash) Ids[i++] = (ElementId)de.Value;
-            var standardValues = new StandardValuesCollection(Ids);
+            foreach (DictionaryEntry de in Hash) ids[i++] = (ElementId)de.Value;
+            var standardValues = new StandardValuesCollection(ids);
 
             return standardValues;
         }
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object v)
         {
             if (v is string)
-                foreach (DictionaryEntry de in m_hash)
+                foreach (DictionaryEntry de in Hash)
                     if (de.Key.Equals(v.ToString()))
                         return de.Value;
             return base.ConvertFrom(context, culture, v);
@@ -101,7 +101,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         {
             if (destinationType == typeof(string))
             {
-                foreach (DictionaryEntry de in m_hash)
+                foreach (DictionaryEntry de in Hash)
                 {
                     var tmpId = (ElementId)de.Value;
                     var cmpId = (ElementId)v;

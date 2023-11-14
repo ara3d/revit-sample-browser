@@ -9,11 +9,11 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
 {
     internal partial class CorbelReinforcementOptionsForm : Form
     {
-        private readonly CorbelReinforcementOptions CorbelReinforcementOptions;
+        private readonly CorbelReinforcementOptions m_corbelReinforcementOptions;
 
         public CorbelReinforcementOptionsForm(CorbelReinforcementOptions options)
         {
-            CorbelReinforcementOptions = options;
+            m_corbelReinforcementOptions = options;
 
             InitializeComponent();
 
@@ -22,19 +22,19 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
 
         private void Initialize()
         {
-            var bartypes4 = new List<RebarBarType>(CorbelReinforcementOptions.RebarBarTypes);
+            var bartypes4 = new List<RebarBarType>(m_corbelReinforcementOptions.RebarBarTypes);
             columnBarTypeComboBox.DataSource = bartypes4;
             columnBarTypeComboBox.ValueMember = "Name";
 
-            var bartypes1 = new List<RebarBarType>(CorbelReinforcementOptions.RebarBarTypes);
+            var bartypes1 = new List<RebarBarType>(m_corbelReinforcementOptions.RebarBarTypes);
             topBarTypeComboBox.DataSource = bartypes1;
             topBarTypeComboBox.ValueMember = "Name";
 
-            var bartypes2 = new List<RebarBarType>(CorbelReinforcementOptions.RebarBarTypes);
+            var bartypes2 = new List<RebarBarType>(m_corbelReinforcementOptions.RebarBarTypes);
             stirrupBarTypeComboBox.DataSource = bartypes2;
             stirrupBarTypeComboBox.ValueMember = "Name";
 
-            var bartypes3 = new List<RebarBarType>(CorbelReinforcementOptions.RebarBarTypes);
+            var bartypes3 = new List<RebarBarType>(m_corbelReinforcementOptions.RebarBarTypes);
             multiplanarBarTypeComboBox.DataSource = bartypes3;
             multiplanarBarTypeComboBox.ValueMember = "Name";
 
@@ -44,28 +44,28 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
 
         private void topBarTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CorbelReinforcementOptions.TopBarType = topBarTypeComboBox.SelectedItem as RebarBarType;
+            m_corbelReinforcementOptions.TopBarType = topBarTypeComboBox.SelectedItem as RebarBarType;
         }
 
         private void stirrupBarTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CorbelReinforcementOptions.StirrupBarType = stirrupBarTypeComboBox.SelectedItem as RebarBarType;
+            m_corbelReinforcementOptions.StirrupBarType = stirrupBarTypeComboBox.SelectedItem as RebarBarType;
         }
 
         private void multiplanarBarTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CorbelReinforcementOptions.MultiplanarBarType = multiplanarBarTypeComboBox.SelectedItem as RebarBarType;
+            m_corbelReinforcementOptions.MultiplanarBarType = multiplanarBarTypeComboBox.SelectedItem as RebarBarType;
         }
 
         private void columnBarTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CorbelReinforcementOptions.HostStraightBarType = columnBarTypeComboBox.SelectedItem as RebarBarType;
+            m_corbelReinforcementOptions.HostStraightBarType = columnBarTypeComboBox.SelectedItem as RebarBarType;
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            CorbelReinforcementOptions.TopBarCount = int.Parse(topBarCountTextBox.Text);
-            CorbelReinforcementOptions.StirrupBarCount = int.Parse(stirrupBarCountTextBox.Text);
+            m_corbelReinforcementOptions.TopBarCount = int.Parse(topBarCountTextBox.Text);
+            m_corbelReinforcementOptions.StirrupBarCount = int.Parse(stirrupBarCountTextBox.Text);
 
             DialogResult = DialogResult.OK;
         }

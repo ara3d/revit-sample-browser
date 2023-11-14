@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         private int m_schemaId = -1;
 
         // SpatialFieldManager
-        private SpatialFieldManager m_SFManager;
+        private SpatialFieldManager m_sfManager;
 
         // string representation of reference object
         private readonly string m_sreference;
@@ -109,20 +109,20 @@ namespace Revit.SDK.Samples.WorkThread.CS
         {
             // create of get field manager for the view
 
-            m_SFManager = SpatialFieldManager.GetSpatialFieldManager(m_view) 
+            m_sfManager = SpatialFieldManager.GetSpatialFieldManager(m_view) 
                           ?? SpatialFieldManager.CreateSpatialFieldManager(m_view, 1);
 
             // For the sake of simplicity, we remove any previous results
-            m_SFManager.Clear();
+            m_sfManager.Clear();
 
             // register schema for the results
 
             var schema = new AnalysisResultSchema("E4623E91-8044-4721-86EA-2893642F13A9", "SDK2014-AL, Sample Schema");
-            m_schemaId = m_SFManager.RegisterResult(schema);
+            m_schemaId = m_sfManager.RegisterResult(schema);
 
             // Add a spatial field for our face reference
 
-            m_fieldId = m_SFManager.AddSpatialFieldPrimitive(GetReference());
+            m_fieldId = m_sfManager.AddSpatialFieldPrimitive(GetReference());
 
             m_needInitialization = false;
         }
@@ -163,7 +163,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
             {
                 var fieldPoints = new FieldDomainPointsByUV(points);
                 var fieldValues = new FieldValues(values);
-                m_SFManager.UpdateSpatialFieldPrimitive(m_fieldId, fieldPoints, fieldValues, m_schemaId);
+                m_sfManager.UpdateSpatialFieldPrimitive(m_fieldId, fieldPoints, fieldValues, m_schemaId);
             }
 
             // if the thread is not around anymore to result more data,

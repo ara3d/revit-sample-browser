@@ -22,7 +22,7 @@ namespace Revit.SDK.Samples.Site.CS
     /// <summary>
     ///     User interface utilities for site editing commands.
     /// </summary>
-    internal class SiteUIUtils
+    internal class SiteUiUtils
     {
         /// <summary>
         ///     Changes the elevation of all points in the subregion by a designated delta.

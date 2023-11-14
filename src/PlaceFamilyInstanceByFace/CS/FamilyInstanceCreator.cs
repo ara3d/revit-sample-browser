@@ -233,17 +233,17 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
 
             var maxP = new XYZ(double.MinValue, double.MinValue, double.MinValue);
             var minP = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
-            foreach (var tempXYZ in mesh.Vertices)
+            foreach (var tempXyz in mesh.Vertices)
             {
                 minP = new XYZ(
-                    Math.Min(minP.X, tempXYZ.X),
-                    Math.Min(minP.Y, tempXYZ.Y),
-                    Math.Min(minP.Z, tempXYZ.Z));
+                    Math.Min(minP.X, tempXyz.X),
+                    Math.Min(minP.Y, tempXyz.Y),
+                    Math.Min(minP.Z, tempXyz.Z));
 
                 maxP = new XYZ(
-                    Math.Max(maxP.X, tempXYZ.X),
-                    Math.Max(maxP.Y, tempXYZ.Y),
-                    Math.Max(maxP.Z, tempXYZ.Z));
+                    Math.Max(maxP.X, tempXyz.X),
+                    Math.Max(maxP.Y, tempXyz.Y),
+                    Math.Max(maxP.Z, tempXyz.Z));
             }
 
             var retBounding = new BoundingBoxXYZ();
@@ -281,9 +281,9 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             if (null == geoElement || null == elem) return false;
 
             //GeometryObjectArray geoArray = null;
-            var Objects = geoElement.GetEnumerator();
+            var objects = geoElement.GetEnumerator();
             //if (null != geoElement && null != geoElement.Objects)
-            if (null != geoElement && Objects.MoveNext())
+            if (null != geoElement && objects.MoveNext())
             {
                 //geoArray = geoElement.Objects;
             }
@@ -292,11 +292,11 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                 return false;
             }
 
-            Objects.Reset();
+            objects.Reset();
             //foreach (GeometryObject obj in geoArray)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var obj = Objects.Current;
+                var obj = objects.Current;
 
                 if (obj is GeoInstance instance)
                 {

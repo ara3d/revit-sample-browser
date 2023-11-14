@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         private static readonly string ButtonIconsFolder = Path.GetDirectoryName(AddInPath);
 
         // uiApplication
-        private static UIApplication uiApplication;
+        private static UIApplication _uiApplication;
 
         /// <summary>
         ///     Implement this method to implement the external application which should be called when
@@ -242,12 +242,12 @@ namespace Revit.SDK.Samples.Ribbon.CS
         /// <param name="evnetArgs">Autodesk.Revit.DB.Events.DocumentCreatedEventArgs</param>
         public void DocumentCreated(object sender, DocumentCreatedEventArgs e)
         {
-            uiApplication = new UIApplication(e.Document.Application);
-            var myPanels = uiApplication.GetRibbonPanels();
+            _uiApplication = new UIApplication(e.Document.Application);
+            var myPanels = _uiApplication.GetRibbonPanels();
 
             var comboboxLevel = (ComboBox)myPanels[0].GetItems()[2];
             if (null == comboboxLevel) return;
-            var collector = new FilteredElementCollector(uiApplication.ActiveUIDocument.Document);
+            var collector = new FilteredElementCollector(_uiApplication.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Level)).ToElements();
             foreach (var elem in founds)
             {
@@ -269,7 +269,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         public void AddNewLevels(object sender, ComboBoxDropDownOpenedEventArgs args)
         {
             if (!(sender is ComboBox comboboxLevel)) return;
-            var collector = new FilteredElementCollector(uiApplication.ActiveUIDocument.Document);
+            var collector = new FilteredElementCollector(_uiApplication.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Level)).ToElements();
             foreach (var elem in founds)
             {

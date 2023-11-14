@@ -21,9 +21,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         /// <param name="wall">the wall</param>
         /// <param name="view">the options view</param>
-        /// <param name="ExtOrInt">if true indicate that get exterior wall face, else false get the interior wall face</param>
+        /// <param name="extOrInt">if true indicate that get exterior wall face, else false get the interior wall face</param>
         /// <returns>the face</returns>
-        public static Face GetWallFace(Wall wall, View view, bool ExtOrInt)
+        public static Face GetWallFace(Wall wall, View view, bool extOrInt)
         {
             FaceArray faces = null;
             Face face = null;
@@ -33,11 +33,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             if (wall != null)
             {
                 //GeometryObjectArray geoArr = wall.get_Geometry(options).Objects;
-                var Objects = wall.get_Geometry(options).GetEnumerator();
+                var objects = wall.get_Geometry(options).GetEnumerator();
                 //foreach (GeometryObject geoObj in geoArr)
-                while (Objects.MoveNext())
+                while (objects.MoveNext())
                 {
-                    var geoObj = Objects.Current;
+                    var geoObj = objects.Current;
 
                     if (geoObj is Solid obj)
                     {
@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 }
             }
 
-            if (ExtOrInt)
+            if (extOrInt)
                 face = GetExteriorFace(faces);
             else
                 face = GetInteriorFace(faces);
@@ -58,9 +58,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         /// <param name="extrusion">the extrusion</param>
         /// <param name="view">options view</param>
-        /// <param name="ExtOrInt">If true indicate getting exterior extrusion face, else getting interior extrusion face</param>
+        /// <param name="extOrInt">If true indicate getting exterior extrusion face, else getting interior extrusion face</param>
         /// <returns>the face</returns>
-        public static Face GetExtrusionFace(Extrusion extrusion, View view, bool ExtOrInt)
+        public static Face GetExtrusionFace(Extrusion extrusion, View view, bool extOrInt)
         {
             Face face = null;
             FaceArray faces = null;
@@ -70,11 +70,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 options.ComputeReferences = true;
                 options.View = view;
                 //GeometryObjectArray geoArr = extrusion.get_Geometry(options).Objects;
-                var Objects = extrusion.get_Geometry(options).GetEnumerator();
+                var objects = extrusion.get_Geometry(options).GetEnumerator();
                 //foreach (GeometryObject geoObj in geoArr)
-                while (Objects.MoveNext())
+                while (objects.MoveNext())
                 {
-                    var geoObj = Objects.Current;
+                    var geoObj = objects.Current;
 
                     if (geoObj is Solid obj)
                     {
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                     }
                 }
 
-                if (ExtOrInt)
+                if (extOrInt)
                     face = GetExteriorFace(faces);
                 else
                     face = GetInteriorFace(faces);

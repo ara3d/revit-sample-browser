@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <summary>
         ///     The events reactor for this application.
         /// </summary>
-        private static EventsReactor m_eventReactor;
+        private static EventsReactor _eventReactor;
 
         /// <summary>
         ///     Access the event reactor instance
@@ -28,11 +28,11 @@ namespace Revit.SDK.Samples.RoomSchedule
         {
             get
             {
-                if (null == m_eventReactor)
+                if (null == _eventReactor)
                     throw new ArgumentException(
                         "External application was not loaded yet, please make sure you register external application by correct full path of dll.",
                         "EventReactor");
-                return m_eventReactor;
+                return _eventReactor;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         {
             // specify the log
             var assemblyName = GetType().Assembly.Location;
-            m_eventReactor = new EventsReactor(assemblyName.Replace(".dll", ".log"));
+            _eventReactor = new EventsReactor(assemblyName.Replace(".dll", ".log"));
             //
             // subscribe events
             application.ControlledApplication.DocumentSaving += EventReactor.DocumentSaving;
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
-            m_eventReactor.Dispose();
+            _eventReactor.Dispose();
             application.ControlledApplication.DocumentSaving -= EventReactor.DocumentSaving;
             application.ControlledApplication.DocumentSavingAs -= EventReactor.DocumentSavingAs;
             application.ControlledApplication.DocumentClosed -= EventReactor.DocumentClosed;

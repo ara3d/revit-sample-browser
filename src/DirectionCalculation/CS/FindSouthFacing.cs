@@ -75,7 +75,7 @@ namespace Revit.Samples.DirectionCalculation
             var start = curve.GetEndPoint(0);
             var end = curve.GetEndPoint(1);
 
-            m_writer.WriteLine(label + " {0} {1}", XYZToString(start), XYZToString(end));
+            m_writer.WriteLine(label + " {0} {1}", XyzToString(start), XyzToString(end));
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Revit.Samples.DirectionCalculation
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        private string XYZToString(XYZ point)
+        private string XyzToString(XYZ point)
         {
             return "( " + point.X + ", " + point.Y + ", " + point.Z + ")";
         }

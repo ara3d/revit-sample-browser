@@ -78,7 +78,7 @@ namespace RvtSamples
             /// <summary>
             ///     Menu for MEP category
             /// </summary>
-            MEP,
+            Mep,
 
             /// <summary>
             ///     Menu for Structure category
@@ -104,27 +104,27 @@ namespace RvtSamples
         /// <summary>
         ///     Name of file which contains information required for menu items
         /// </summary>
-        public const string m_fileNameStem = "RvtSamples.txt";
+        public const string FileNameStem = "RvtSamples.txt";
 
         /// <summary>
         ///     Separator of category for samples have more than one category
         /// </summary>
-        private static readonly char[] s_charSeparatorOfCategory = { ',' };
+        private static readonly char[] SCharSeparatorOfCategory = { ',' };
 
         /// <summary>
         ///     chars which will be trimmed in the file to include extra sample list files
         /// </summary>
-        private static readonly char[] s_trimChars = { ' ', '"', '\'', '<', '>' };
+        private static readonly char[] STrimChars = { ' ', '"', '\'', '<', '>' };
 
         /// <summary>
         ///     The start symbol of lines to include extra sample list files
         /// </summary>
-        private static readonly string s_includeSymbol = "#include";
+        private static readonly string SIncludeSymbol = "#include";
 
         /// <summary>
         ///     Assembly directory
         /// </summary>
-        private static readonly string s_assemblyDirectory =
+        private static readonly string SAssemblyDirectory =
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         /// <summary>
@@ -183,10 +183,10 @@ namespace RvtSamples
             {
                 // Check whether the file contains samples' list exists
                 // If not, return failure
-                var filename = m_fileNameStem;
+                var filename = FileNameStem;
                 if (!GetFilepath(ref filename))
                 {
-                    ErrorMsg(m_fileNameStem + " not found.");
+                    ErrorMsg(FileNameStem + " not found.");
                     return rc;
                 }
 
@@ -226,7 +226,7 @@ namespace RvtSamples
                             var enumName = GetEnumNameByDisplayName(name);
                             var button = item as PulldownButton;
                             button.Image = new BitmapImage(
-                                new Uri(Path.Combine(s_assemblyDirectory, "Icons\\" + enumName + ".ico"),
+                                new Uri(Path.Combine(SAssemblyDirectory, "Icons\\" + enumName + ".ico"),
                                     UriKind.Absolute));
                             button.ToolTip = Resource.ResourceManager.GetString(enumName);
                             m_pulldownButtons.Add(name, button);
@@ -331,23 +331,23 @@ namespace RvtSamples
             var lines = File.ReadAllLines(filename);
 
             var n = lines.GetLength(0);
-            var all_lines = new ArrayList(n);
+            var allLines = new ArrayList(n);
             foreach (var line in lines)
             {
                 var s = line.TrimStart();
-                if (s.ToLower().StartsWith(s_includeSymbol))
+                if (s.ToLower().StartsWith(SIncludeSymbol))
                 {
-                    var filename2 = s.Substring(s_includeSymbol.Length);
-                    filename2 = filename2.Trim(s_trimChars);
-                    all_lines.AddRange(ReadAllLinesWithInclude(filename2));
+                    var filename2 = s.Substring(SIncludeSymbol.Length);
+                    filename2 = filename2.Trim(STrimChars);
+                    allLines.AddRange(ReadAllLinesWithInclude(filename2));
                 }
                 else
                 {
-                    all_lines.Add(line);
+                    allLines.Add(line);
                 }
             }
 
-            return all_lines.ToArray(typeof(string)) as string[];
+            return allLines.ToArray(typeof(string)) as string[];
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace RvtSamples
         /// <returns>True if found, false otherwise.</returns>
         private bool GetFilepath(ref string filename)
         {
-            var path = Path.Combine(s_assemblyDirectory, filename);
+            var path = Path.Combine(SAssemblyDirectory, filename);
             var rc = File.Exists(path);
 
             // Get full path of the file
@@ -403,7 +403,7 @@ namespace RvtSamples
         private void AddSample(string[] lines, int n, ref int i)
         {
             if (n < i + 6)
-                throw new Exception($"Incomplete record at line {i} of {m_fileNameStem}");
+                throw new Exception($"Incomplete record at line {i} of {FileNameStem}");
 
             var categories = lines[i++].Trim();
             var displayName = lines[i++].Trim();
@@ -414,7 +414,7 @@ namespace RvtSamples
             var className = lines[i++].Trim();
 
             if (!File.Exists(assembly)) // jeremy
-                ErrorMsg($"Assembly '{assembly}' specified in line {i} of {m_fileNameStem} not found");
+                ErrorMsg($"Assembly '{assembly}' specified in line {i} of {FileNameStem} not found");
 
             var testClassName = false; // jeremy
             if (testClassName)
@@ -437,7 +437,7 @@ namespace RvtSamples
 
                     if (null == a)
                     {
-                        ErrorMsg($"Unable to load assembly '{assembly}' specified in line {i} of {m_fileNameStem}");
+                        ErrorMsg($"Unable to load assembly '{assembly}' specified in line {i} of {FileNameStem}");
                     }
                     else
                     {
@@ -446,7 +446,7 @@ namespace RvtSamples
                         if (null == t)
                         {
                             ErrorMsg(
-                                $"External command class {className} in assembly '{assembly}' specified in line {i} of {m_fileNameStem} not found");
+                                $"External command class {className} in assembly '{assembly}' specified in line {i} of {FileNameStem} not found");
                         }
                         else
                         {
@@ -454,14 +454,14 @@ namespace RvtSamples
                             var m = t.GetMethod("Execute");
                             if (null == m)
                                 ErrorMsg(
-                                    $"External command class {className} in assembly '{assembly}' specified in line {i} of {m_fileNameStem} does not define an Execute method");
+                                    $"External command class {className} in assembly '{assembly}' specified in line {i} of {FileNameStem} does not define an Execute method");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     ErrorMsg(
-                        $"Exception '{ex.Message}' \ntesting assembly '{assembly}' \nspecified in line {i} of {m_fileNameStem}");
+                        $"Exception '{ex.Message}' \ntesting assembly '{assembly}' \nspecified in line {i} of {FileNameStem}");
                 }
             }
 
@@ -469,7 +469,7 @@ namespace RvtSamples
             // If sample belongs to default category, add the sample item to the sample list of the default category
             // If not, store the information for adding to RvtSamples panel later
             //
-            var entries = categories.Split(s_charSeparatorOfCategory, StringSplitOptions.RemoveEmptyEntries);
+            var entries = categories.Split(SCharSeparatorOfCategory, StringSplitOptions.RemoveEmptyEntries);
             foreach (var value in entries)
             {
                 var category = value.Trim();

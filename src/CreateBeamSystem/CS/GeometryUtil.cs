@@ -24,7 +24,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <param name="pnt1">first XYZ</param>
         /// <param name="pnt2">second XYZ</param>
         /// <returns>is equal</returns>
-        public static bool CompareXYZ(XYZ pnt1, XYZ pnt2)
+        public static bool CompareXyz(XYZ pnt1, XYZ pnt2)
         {
             return MathUtil.CompareDouble(pnt1.X, pnt2.X) &&
                    MathUtil.CompareDouble(pnt1.Y, pnt2.Y) &&
@@ -55,7 +55,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             {
                 if (null == lines[j]) continue;
 
-                if (CompareXYZ(lines[j].GetEndPoint(0), intersectPnt))
+                if (CompareXyz(lines[j].GetEndPoint(0), intersectPnt))
                 {
                     result.Add(lines[j]);
                     intersectPnt = lines[j].GetEndPoint(1);
@@ -63,7 +63,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                     break;
                 }
 
-                if (CompareXYZ(lines[j].GetEndPoint(1), intersectPnt))
+                if (CompareXyz(lines[j].GetEndPoint(1), intersectPnt))
                 {
                     var startPnt = lines[j].GetEndPoint(1);
                     var endPnt = lines[j].GetEndPoint(0);
@@ -79,7 +79,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             if (result.Count != lines.Count) return null;
 
             // the last point in the sorted loop is same to the firs point
-            if (!CompareXYZ(intersectPnt, result[0].GetEndPoint(0))) return null;
+            if (!CompareXyz(intersectPnt, result[0].GetEndPoint(0))) return null;
 
             // make sure there is only one closed region enclosed by the closed loop
             for (var i = 0; i < result.Count - 2; i++)
@@ -135,12 +135,12 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <summary>
         ///     the minimum double used to compare
         /// </summary>
-        public const double Double_Epsilon = 0.00001;
+        public const double DoubleEpsilon = 0.00001;
 
         /// <summary>
         ///     the minimum positive float used to compare to as zero
         /// </summary>
-        public const float Float_Epsilon = 0.00001f;
+        public const float FloatEpsilon = 0.00001f;
 
         /// <summary>
         ///     forbidden default constructor
@@ -157,7 +157,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns>is Equal</returns>
         public static bool CompareDouble(double d1, double d2)
         {
-            return Math.Abs(d1 - d2) < Double_Epsilon;
+            return Math.Abs(d1 - d2) < DoubleEpsilon;
         }
 
         /// <summary>

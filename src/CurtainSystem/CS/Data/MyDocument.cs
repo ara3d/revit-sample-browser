@@ -40,8 +40,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         public MyDocument(ExternalCommandData commandData)
         {
             CommandData = commandData;
-            UIDocument = CommandData.Application.ActiveUIDocument;
-            Document = UIDocument.Document;
+            UiDocument = CommandData.Application.ActiveUIDocument;
+            Document = UiDocument.Document;
 
             // initialize the curtain system data
             SystemData = new SystemData(this);
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         /// <summary>
         ///     the active document of Revit
         /// </summary>
-        public UIDocument UIDocument { get; }
+        public UIDocument UiDocument { get; }
 
         public Document Document { get; }
 

@@ -17,19 +17,19 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         private const double ToFractionalInches = 0.08333333; //const number to convert number to FractionalInches
 
         private static readonly List<string>
-            s_elevationOrigin = new List<string>(); //list store information about Elevation origin
+            SElevationOrigin = new List<string>(); //list store information about Elevation origin
 
         private static readonly List<string>
-            s_textOrientation = new List<string>(); //list store information about Text Orientation
+            STextOrientation = new List<string>(); //list store information about Text Orientation
 
         private static readonly List<string>
-            s_indicator = new List<string>(); //list store information about s_indicator
+            SIndicator = new List<string>(); //list store information about s_indicator
 
         private static readonly List<string>
-            s_topBottomValue = new List<string>(); //list store information about Top and Bottom Value
+            STopBottomValue = new List<string>(); //list store information about Top and Bottom Value
 
         private static readonly List<string>
-            s_textBackground = new List<string>(); //list store information about Text background
+            STextBackground = new List<string>(); //list store information about Text background
 
         private readonly Document m_document; //a reference to Revit's document
 
@@ -39,22 +39,22 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         static SpotDimensionParams()
         {
             //add string elements to lists
-            s_elevationOrigin.Add("Project");
-            s_elevationOrigin.Add("Shared");
-            s_elevationOrigin.Add("Relative");
+            SElevationOrigin.Add("Project");
+            SElevationOrigin.Add("Shared");
+            SElevationOrigin.Add("Relative");
 
-            s_textOrientation.Add("Horizontal Above");
-            s_textOrientation.Add("Horizontal Below");
+            STextOrientation.Add("Horizontal Above");
+            STextOrientation.Add("Horizontal Below");
 
-            s_indicator.Add("Prefix");
-            s_indicator.Add("Suffix");
+            SIndicator.Add("Prefix");
+            SIndicator.Add("Suffix");
 
-            s_topBottomValue.Add("None");
-            s_topBottomValue.Add("North / South");
-            s_topBottomValue.Add("East / West");
+            STopBottomValue.Add("None");
+            STopBottomValue.Add("North / South");
+            STopBottomValue.Add("East / West");
 
-            s_textBackground.Add("Opaque");
-            s_textBackground.Add("Transparent");
+            STextBackground.Add("Opaque");
+            STextBackground.Add("Transparent");
         }
 
         /// <summary>
@@ -157,13 +157,13 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                     //Top Value
                     temporaryParam =
                         dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_TOP_VALUE);
-                    temporaryValue = s_topBottomValue[temporaryParam.AsInteger()];
+                    temporaryValue = STopBottomValue[temporaryParam.AsInteger()];
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                     //Bottom Value
                     temporaryParam =
                         dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_BOT_VALUE);
-                    temporaryValue = s_topBottomValue[temporaryParam.AsInteger()];
+                    temporaryValue = STopBottomValue[temporaryParam.AsInteger()];
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                     //North / South s_indicator
@@ -189,7 +189,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
 
                     //Elevation Origin
                     temporaryParam = dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_BASE);
-                    temporaryValue = s_elevationOrigin[temporaryParam.AsInteger()];
+                    temporaryValue = SElevationOrigin[temporaryParam.AsInteger()];
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                     //Elevation s_indicator
@@ -202,12 +202,12 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 //Text Orientation
                 temporaryParam =
                     dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_TEXT_ORIENTATION);
-                temporaryValue = s_textOrientation[temporaryParam.AsInteger()];
+                temporaryValue = STextOrientation[temporaryParam.AsInteger()];
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //s_indicator as Prefix / Suffix
                 temporaryParam = dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_IND_TYPE);
-                temporaryValue = s_indicator[temporaryParam.AsInteger()];
+                temporaryValue = SIndicator[temporaryParam.AsInteger()];
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //Text Font
@@ -217,7 +217,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
 
                 //Text Background
                 temporaryParam = dimensionType.get_Parameter(BuiltInParameter.DIM_TEXT_BACKGROUND);
-                temporaryValue = s_textBackground[temporaryParam.AsInteger()];
+                temporaryValue = STextBackground[temporaryParam.AsInteger()];
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 return parameterTable;
@@ -262,13 +262,13 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         ///     add one row to datatable
         /// </summary>
         /// <param name="parameterName">name of parameter</param>
-        /// <param name="Value">value of parameter</param>
+        /// <param name="value">value of parameter</param>
         /// <param name="parameterTable">datatable to be added row</param>
-        private void AddDataRow(string parameterName, string Value, DataTable parameterTable)
+        private void AddDataRow(string parameterName, string value, DataTable parameterTable)
         {
             var newRow = parameterTable.NewRow();
             newRow["Parameter"] = parameterName;
-            newRow["Value"] = Value;
+            newRow["Value"] = value;
             parameterTable.Rows.Add(newRow);
         }
     }

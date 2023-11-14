@@ -13,8 +13,8 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
     /// </summary>
     public class PointCloudCellStorage
     {
-        private const int s_maxNumberOfPoints = 1000000;
-        private const float s_delta = 0.1f;
+        private const int SMaxNumberOfPoints = 1000000;
+        private const float SDelta = 0.1f;
 
         private readonly int m_color;
         private readonly Random m_random = new Random();
@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             m_color = color;
             m_randomize = randomize;
 
-            PointsBuffer = new CloudPoint[s_maxNumberOfPoints];
+            PointsBuffer = new CloudPoint[SMaxNumberOfPoints];
             NumberOfPoints = 0;
         }
 
@@ -47,12 +47,12 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <param name="rootElement">The XML element representing the cell.</param>
         public PointCloudCellStorage(XElement rootElement)
         {
-            LowerLeft = XmlUtils.GetXYZ(rootElement.Element("LowerLeft"));
-            UpperRight = XmlUtils.GetXYZ(rootElement.Element("UpperRight"));
+            LowerLeft = XmlUtils.GetXyz(rootElement.Element("LowerLeft"));
+            UpperRight = XmlUtils.GetXyz(rootElement.Element("UpperRight"));
             m_color = XmlUtils.GetColor(rootElement.Element("Color"));
             m_randomize = XmlUtils.GetBoolean(rootElement.Element("Randomize"));
 
-            PointsBuffer = new CloudPoint[s_maxNumberOfPoints];
+            PointsBuffer = new CloudPoint[SMaxNumberOfPoints];
             NumberOfPoints = 0;
         }
 
@@ -120,7 +120,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             while (deltaX < distance)
             {
                 AddPoints(startPoint + direction * deltaX, directions);
-                deltaX += s_delta;
+                deltaX += SDelta;
             }
 
             return totalRead;
@@ -128,15 +128,15 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
 
         private void AddModifiedPoint(XYZ point, XYZ modification, double transverseDelta, int pointNumber)
         {
-            var cloudPointXYZ = point + modification * Math.Pow(transverseDelta * pointNumber, 4.0);
-            var cp = new CloudPoint((float)cloudPointXYZ.X, (float)cloudPointXYZ.Y, (float)cloudPointXYZ.Z, m_color);
+            var cloudPointXyz = point + modification * Math.Pow(transverseDelta * pointNumber, 4.0);
+            var cp = new CloudPoint((float)cloudPointXyz.X, (float)cloudPointXyz.Y, (float)cloudPointXyz.Z, m_color);
             PointsBuffer[NumberOfPoints] = cp;
             NumberOfPoints++;
-            if (NumberOfPoints == s_maxNumberOfPoints)
+            if (NumberOfPoints == SMaxNumberOfPoints)
             {
                 TaskDialog.Show("Point  cloud engine",
                     "A single cell is requiring more than the maximum hardcoded number of points for one cell: " +
-                    s_maxNumberOfPoints);
+                    SMaxNumberOfPoints);
                 throw new Exception("Reached maximum number of points.");
             }
         }

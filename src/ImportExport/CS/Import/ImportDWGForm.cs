@@ -12,18 +12,18 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     It contains a dialog which provides the options of importing dwg format
     /// </summary>
-    public partial class ImportDWGForm : Form
+    public partial class ImportDwgForm : Form
     {
         /// <summary>
         ///     Data class
         /// </summary>
-        private readonly ImportDWGData m_importData;
+        private readonly ImportDwgData m_importData;
 
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="importData"></param>
-        public ImportDWGForm(ImportDWGData importData)
+        public ImportDwgForm(ImportDwgData importData)
         {
             InitializeComponent();
             m_importData = importData;

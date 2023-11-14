@@ -39,13 +39,13 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                     var systemLevel = element as Level;
                     var levelsDataSourceRow = new LevelsDataSource
                     {
-                        LevelIDValue = systemLevel.Id,
+                        LevelIdValue = systemLevel.Id,
                         Name = systemLevel.Name
                     };
 
                     var elevationPara = systemLevel.get_Parameter(BuiltInParameter.LEVEL_ELEV);
 
-                    var temValue = Unit.CovertFromAPI(UnitTypeId, elevationPara.AsDouble());
+                    var temValue = Unit.CovertFromApi(UnitTypeId, elevationPara.AsDouble());
                     var temValue2 = double.Parse(temValue.ToString("#.0"));
 
                     levelsDataSourceRow.Elevation = temValue2;
@@ -72,15 +72,15 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         /// <summary>
         ///     Set Level
         /// </summary>
-        /// <param name="levelID">Pass a Level's ID value</param>
+        /// <param name="levelId">Pass a Level's ID value</param>
         /// <param name="levelName">Pass a Level's Name</param>
         /// <param name="levelElevation">Pass a Level's Elevation</param>
         /// <returns>True if succeed, else return false</returns>
-        public bool SetLevel(ElementId levelID, string levelName, double levelElevation)
+        public bool SetLevel(ElementId levelId, string levelName, double levelElevation)
         {
             try
             {
-                var systemLevel = m_revit.Application.ActiveUIDocument.Document.GetElement(levelID) as Level;
+                var systemLevel = m_revit.Application.ActiveUIDocument.Document.GetElement(levelId) as Level;
 
                 var elevationPara = systemLevel.get_Parameter(BuiltInParameter.LEVEL_ELEV);
                 elevationPara.SetValueString(levelElevation.ToString());
@@ -111,10 +111,10 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         /// <summary>
         ///     Delete a Level.
         /// </summary>
-        /// <param name="IDOfLevel">A Level's ID value</param>
-        public void DeleteLevel(ElementId IDOfLevel)
+        /// <param name="idOfLevel">A Level's ID value</param>
+        public void DeleteLevel(ElementId idOfLevel)
         {
-            m_revit.Application.ActiveUIDocument.Document.Delete(IDOfLevel);
+            m_revit.Application.ActiveUIDocument.Document.Delete(idOfLevel);
         }
     }
 }

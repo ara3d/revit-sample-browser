@@ -18,34 +18,34 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     public abstract class Profile
     {
         // used to create new instances of utility objects. 
-        protected readonly Application m_appCreator;
+        protected readonly Application AppCreator;
 
         // object which contains reference to Revit Application
-        protected readonly ExternalCommandData m_commandData;
+        protected readonly ExternalCommandData CommandData;
 
         // used to create new instances of elements
-        protected readonly Document m_docCreator;
+        protected readonly Document DocCreator;
 
         // store the Matrix used to move points to center
-        protected Matrix4 m_moveToCenterMatrix = null;
+        protected Matrix4 MoveToCenterMatrix = null;
 
         // store all the points on the needed face
-        protected List<List<XYZ>> m_points;
+        protected List<List<XYZ>> Points;
 
         // store the Matrix used to transform window UI coordinate to Revit
-        protected Matrix4 m_restoreMatrix = null;
+        protected Matrix4 RestoreMatrix = null;
 
         // store the Matrix used to scale profile fit to pictureBox
-        protected Matrix4 m_scaleMatrix;
+        protected Matrix4 ScaleMatrix;
 
         // store the size of pictureBox in UI
-        protected Size m_sizePictureBox;
+        protected Size SizePictureBox;
 
         // store the Matrix used to transform 3D points to 2D
-        protected Matrix4 m_to2DMatrix = null;
+        protected Matrix4 To2DMatrix = null;
 
         // store the Matrix used to transform Revit coordinate to window UI
-        protected Matrix4 m_transformMatrix;
+        protected Matrix4 TransformMatrix;
 
         /// <summary>
         ///     constructor
@@ -53,9 +53,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <param name="commandData">object which contains reference to Revit Application</param>
         protected Profile(ExternalCommandData commandData)
         {
-            m_commandData = commandData;
-            m_appCreator = m_commandData.Application.Application.Create;
-            m_docCreator = m_commandData.Application.ActiveUIDocument.Document.Create;
+            CommandData = commandData;
+            AppCreator = CommandData.Application.Application.Create;
+            DocCreator = CommandData.Application.ActiveUIDocument.Document.Create;
         }
 
         /// <summary>
@@ -96,10 +96,10 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             //move the gdi origin to the picture center
             graphics.Transform = new Matrix(
-                1, 0, 0, 1, m_sizePictureBox.Width / 2, m_sizePictureBox.Height / 2);
+                1, 0, 0, 1, SizePictureBox.Width / 2, SizePictureBox.Height / 2);
 
             //draw profile
-            foreach (var points in m_points)
+            foreach (var points in Points)
             {
                 for (var j = 0; j < points.Count - 1; j++)
                 {
@@ -125,18 +125,18 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         public virtual List<List<Edge>> GetFaces(Element elem)
         {
             var faceEdges = new List<List<Edge>>();
-            var options = m_appCreator.NewGeometryOptions();
+            var options = AppCreator.NewGeometryOptions();
             options.DetailLevel = ViewDetailLevel.Medium;
             //make sure references to geometric objects are computed.
             options.ComputeReferences = true;
             var geoElem = elem.get_Geometry(options);
             //GeometryObjectArray gObjects = geoElem.Objects;
-            var Objects = geoElem.GetEnumerator();
+            var objects = geoElem.GetEnumerator();
             //get all the edges in the Geometry object
             //foreach (GeometryObject geo in gObjects)
-            while (Objects.MoveNext())
+            while (objects.MoveNext())
             {
-                var geo = Objects.Current;
+                var geo = objects.Current;
 
                 var solid = geo as Solid;
                 if (solid != null)
@@ -211,13 +211,13 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <returns>points array stores the bound of the face</returns>
         public virtual PointF[] GetFaceBounds()
         {
-            var matrix = m_to2DMatrix;
+            var matrix = To2DMatrix;
             var inverseMatrix = matrix.Inverse();
             float minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
 
             //get the max and min point on the face
-            foreach (var points in m_points)
+            foreach (var points in Points)
             {
                 foreach (var point in points)
                 {
@@ -258,14 +258,14 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <returns>maxtrix is use to scale the profile</returns>
         public virtual Matrix4 ComputeScaleMatrix(Size size)
         {
-            m_sizePictureBox = size;
+            SizePictureBox = size;
             var boundPoints = GetFaceBounds();
             var width = size.Width / (boundPoints[1].X - boundPoints[0].X);
             var hight = size.Height / (boundPoints[1].Y - boundPoints[0].Y);
             var factor = width <= hight ? width : hight;
             //leave some margin, so multiply factor by 0.85
-            m_scaleMatrix = new Matrix4((float)(factor * 0.85));
-            return m_scaleMatrix;
+            ScaleMatrix = new Matrix4((float)(factor * 0.85));
+            return ScaleMatrix;
         }
 
         /// <summary>
@@ -275,9 +275,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         public virtual Matrix4 Compute3DTo2DMatrix()
         {
             var result = Matrix4.Multiply(
-                m_to2DMatrix.Inverse(), m_moveToCenterMatrix.Inverse());
-            m_transformMatrix = Matrix4.Multiply(result, m_scaleMatrix);
-            return m_transformMatrix;
+                To2DMatrix.Inverse(), MoveToCenterMatrix.Inverse());
+            TransformMatrix = Matrix4.Multiply(result, ScaleMatrix);
+            return TransformMatrix;
         }
 
         /// <summary>
@@ -290,8 +290,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             var result = new List<Vector4>();
             TransformPoints(ps);
             var transformMatrix = Matrix4.Multiply(
-                m_scaleMatrix.Inverse(), m_moveToCenterMatrix);
-            transformMatrix = Matrix4.Multiply(transformMatrix, m_to2DMatrix);
+                ScaleMatrix.Inverse(), MoveToCenterMatrix);
+            transformMatrix = Matrix4.Multiply(transformMatrix, To2DMatrix);
             foreach (var point in ps)
             {
                 var v = new Vector4(point.X, point.Y, 0);
@@ -309,7 +309,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         private void TransformPoints(Point[] pts)
         {
             var matrix = new Matrix(
-                1, 0, 0, 1, m_sizePictureBox.Width / 2, m_sizePictureBox.Height / 2);
+                1, 0, 0, 1, SizePictureBox.Width / 2, SizePictureBox.Height / 2);
             matrix.Invert();
             matrix.TransformPoints(pts);
         }

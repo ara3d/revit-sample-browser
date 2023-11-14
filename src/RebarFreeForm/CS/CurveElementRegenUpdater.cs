@@ -11,13 +11,13 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
     /// </summary>
     internal class CurveElementRegenUpdater : IUpdater
     {
-        private static AddInId m_appId;
-        private static UpdaterId m_updaterId;
+        private static AddInId _appId;
+        private static UpdaterId _updaterId;
 
         public CurveElementRegenUpdater(AddInId id)
         {
-            m_appId = id;
-            m_updaterId = new UpdaterId(m_appId, new Guid("0935FACA-29B6-468A-95E1-D121BEE58B62"));
+            _appId = id;
+            _updaterId = new UpdaterId(_appId, new Guid("0935FACA-29B6-468A-95E1-D121BEE58B62"));
         }
 
         public void Execute(UpdaterData data)
@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                         if (!barAccess.GetServerGUID()
                                 .Equals(RebarUpdateServer.SampleGuid)) // only use our custom FreeForm
                             continue;
-                        var paramCurveId = bar.LookupParameter(AddSharedParams.m_CurveIdName);
+                        var paramCurveId = bar.LookupParameter(AddSharedParams.CurveIdName);
                         if (paramCurveId == null)
                             continue;
                         var id = ElementId.Parse(paramCurveId.AsString());
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                             continue;
                         if (modifiedIds.Contains(id)) // if id of line is in the rebar, then trigger regen
                         {
-                            var param = bar.LookupParameter(AddSharedParams.m_paramName);
+                            var param = bar.LookupParameter(AddSharedParams.ParamName);
                             param.Set(param.AsInteger() == 0
                                 ? 1
                                 : 0); // just flip the value to register a change that will trigger the regeneration of that rebar on commit.
@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
 
         public UpdaterId GetUpdaterId()
         {
-            return m_updaterId;
+            return _updaterId;
         }
 
         public string GetUpdaterName()

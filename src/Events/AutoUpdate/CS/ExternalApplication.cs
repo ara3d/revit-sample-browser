@@ -25,12 +25,12 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
         /// <summary>
         ///     get assembly path.
         /// </summary>
-        private static readonly string m_directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static readonly string Directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         /// <summary>
         ///     create the temp file name.
         /// </summary>
-        private readonly string m_tempFile = Path.Combine(m_directory, "temp.log");
+        private readonly string m_tempFile = Path.Combine(Directory, "temp.log");
 
         /// <summary>
         ///     This listener is used to monitor the events arguments and the result of the sample.
@@ -150,7 +150,7 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
             m_txtListener.Close();
 
             // copy temp file to log file and delete the temp file.
-            var logFile = Path.Combine(m_directory, "AutoUpdate.log");
+            var logFile = Path.Combine(Directory, "AutoUpdate.log");
             if (File.Exists(logFile)) File.Delete(logFile);
             File.Copy(m_tempFile, logFile);
             File.Delete(m_tempFile);

@@ -13,7 +13,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
     /// <summary>
     ///     The window designed for interactive operations
     /// </summary>
-    public partial class frmPanelArea : Form
+    public partial class FrmPanelArea : Form
     {
         /// <summary>
         ///     Store all the divided surface selected by user or store all the divided surface in the document if user selects
@@ -87,7 +87,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
         ///     which contains data related to the command,
         ///     such as the application object and active view.
         /// </param>
-        public frmPanelArea(ExternalCommandData commandData)
+        public FrmPanelArea(ExternalCommandData commandData)
         {
             m_uiApp = commandData.Application;
             m_uiDoc = m_uiApp.ActiveUIDocument;
@@ -109,7 +109,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
             m_minValue = Convert.ToDouble(txtMin.Text);
             m_maxValue = Convert.ToDouble(txtMax.Text);
 
-            SetPanelTypesFromUI();
+            SetPanelTypesFromUi();
 
             var assemblyName = Assembly.GetExecutingAssembly().Location;
             var assemblyDirectory = Path.GetDirectoryName(assemblyName);
@@ -158,7 +158,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
         /// <summary>
         ///     Analyse the panel types set by UI operation
         /// </summary>
-        private void SetPanelTypesFromUI()
+        private void SetPanelTypesFromUi()
         {
             //Set the min, mid, and max panel types based on user selections in the UI
             var minFamilyAndType = Convert.ToString(cboxMin.Text);
@@ -211,10 +211,10 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
             opt.ComputeReferences = true;
             var geomElem = familyinstance.get_Geometry(opt);
             //foreach (GeometryObject geomObject1 in geomElem.Objects)
-            var Objects = geomElem.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geomElem.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var geomObject1 = Objects.Current;
+                var geomObject1 = objects.Current;
 
                 Solid solid = null;
                 switch (geomObject1)
@@ -230,10 +230,10 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
                     case GeometryInstance geomInst:
                     {
                         //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
-                        var Objects1 = geomInst.SymbolGeometry.GetEnumerator();
-                        while (Objects1.MoveNext())
+                        var objects1 = geomInst.SymbolGeometry.GetEnumerator();
+                        while (objects1.MoveNext())
                         {
-                            object geomObj = Objects1.Current;
+                            object geomObj = objects1.Current;
 
                             solid = geomObj as Solid;
                             if (solid != null)
@@ -267,18 +267,18 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
         private void ExamineDividedSurface(DividedSurface ds)
         {
             var sym = ds.Document.GetElement(ds.GetTypeId()) as ElementType;
-            FamilySymbol fs_min = null;
-            FamilySymbol fs_max = null;
-            FamilySymbol fs_mid = null;
+            FamilySymbol fsMin = null;
+            FamilySymbol fsMax = null;
+            FamilySymbol fsMid = null;
 
             // get the panel types which are used to identify the panels in the divided surface
             var fs = sym as FamilySymbol;
             foreach (var symbolId in fs.Family.GetFamilySymbolIds())
             {
                 var symbol = (FamilySymbol)m_uiDoc.Document.GetElement(symbolId);
-                if (symbol.Name == m_maxType) fs_max = symbol;
-                if (symbol.Name == m_minType) fs_min = symbol;
-                if (symbol.Name == m_midType) fs_mid = symbol;
+                if (symbol.Name == m_maxType) fsMax = symbol;
+                if (symbol.Name == m_minType) fsMin = symbol;
+                if (symbol.Name == m_midType) fsMid = symbol;
             }
 
             // find all the panels areas and compare with the range
@@ -295,17 +295,17 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
                     // identify the panels drop in different ranges with different types
                     if (panelArea > m_maxValue)
                     {
-                        familyinstance.Symbol = fs_max;
+                        familyinstance.Symbol = fsMax;
                         m_maxCounter++;
                     }
                     else if (panelArea < m_minValue)
                     {
-                        familyinstance.Symbol = fs_min;
+                        familyinstance.Symbol = fsMin;
                         m_minCounter++;
                     }
                     else
                     {
-                        familyinstance.Symbol = fs_mid;
+                        familyinstance.Symbol = fsMid;
                         m_okCounter++;
                     }
                 }

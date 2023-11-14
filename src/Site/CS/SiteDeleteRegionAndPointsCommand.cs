@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.Site.CS
             var doc = uiDoc.Document;
 
             // Select subregion
-            var subregion = SiteUIUtils.PickSubregion(uiDoc);
+            var subregion = SiteUiUtils.PickSubregion(uiDoc);
             var toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
             var points = SiteEditingUtils.GetNonBoundaryPoints(subregion);
 

@@ -123,9 +123,9 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
             m_referencePlanes.Columns.Add(column);
 
             // Make the ID column the primary key column.
-            var PrimaryKeyColumns = new DataColumn[1];
-            PrimaryKeyColumns[0] = m_referencePlanes.Columns["ID"];
-            m_referencePlanes.PrimaryKey = PrimaryKeyColumns;
+            var primaryKeyColumns = new DataColumn[1];
+            primaryKeyColumns[0] = m_referencePlanes.Columns["ID"];
+            m_referencePlanes.PrimaryKey = primaryKeyColumns;
         }
 
         /// <summary>
@@ -259,10 +259,10 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
             Face buttomFace = null;
 
             //foreach (GeometryObject go in geometry.Objects)
-            var Objects = geometry.GetEnumerator();
-            while (Objects.MoveNext())
+            var objects = geometry.GetEnumerator();
+            while (objects.MoveNext())
             {
-                var go = Objects.Current;
+                var go = objects.Current;
 
                 var solid = go as Solid;
                 if (null == solid)

@@ -13,19 +13,19 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         ///     The landing configurations.
         /// </summary>
-        protected readonly List<IStairsLandingComponent> m_landingConfigurations = new List<IStairsLandingComponent>();
+        protected readonly List<IStairsLandingComponent> LandingConfigurations = new List<IStairsLandingComponent>();
 
         /// <summary>
         ///     The run configurations.
         /// </summary>
-        protected readonly List<IStairsRunComponent> m_runConfigurations = new List<IStairsRunComponent>();
+        protected readonly List<IStairsRunComponent> RunConfigurations = new List<IStairsRunComponent>();
 
         /// <summary>
         ///     Implements the interface method.
         /// </summary>
         public int GetNumberOfRuns()
         {
-            return m_runConfigurations.Count;
+            return RunConfigurations.Count;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         public void CreateStairsRun(Document document, ElementId stairsElementId, int runIndex)
         {
-            m_runConfigurations[runIndex].CreateStairsRun(document, stairsElementId);
+            RunConfigurations[runIndex].CreateStairsRun(document, stairsElementId);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         public int GetNumberOfLandings()
         {
-            return m_landingConfigurations.Count;
+            return LandingConfigurations.Count;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         public void CreateLanding(Document document, ElementId stairsElementId, int landingIndex)
         {
-            m_landingConfigurations[landingIndex].CreateLanding(document, stairsElementId);
+            LandingConfigurations[landingIndex].CreateLanding(document, stairsElementId);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         public void SetRunWidth(double width)
         {
-            foreach (var config in m_runConfigurations) config.Width = width;
+            foreach (var config in RunConfigurations) config.Width = width;
         }
     }
 }

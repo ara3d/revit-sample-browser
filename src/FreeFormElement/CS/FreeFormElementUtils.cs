@@ -216,7 +216,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
         /// </summary>
         /// <param name="curve">The curve.</param>
         /// <returns>True if the curve lies in an XY plane, false otherwise.</returns>
-        public static bool IsCurveInXYPlane(Curve curve)
+        public static bool IsCurveInXyPlane(Curve curve)
         {
             // quick reject - are endpoints at same Z
             var zDelta = curve.GetEndPoint(1).Z - curve.GetEndPoint(0).Z;

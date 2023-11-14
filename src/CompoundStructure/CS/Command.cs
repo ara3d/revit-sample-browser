@@ -83,15 +83,15 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
 
             var wallType = wall.WallType;
             //wallType.Name = wallType.Name + "_WithNewCompoundStructure";
-            var wallCS = wallType.GetCompoundStructure();
+            var wallCs = wallType.GetCompoundStructure();
             // Get material for CompoundStructureLayer
 
-            var masonry_Brick = CreateSampleBrickMaterial();
+            var masonryBrick = CreateSampleBrickMaterial();
             var concrete = CreateSampleConcreteMaterial();
 
             // Create CompoundStructureLayers and add the materials created above to them.
             var csLayers = new List<CompoundStructureLayer>();
-            var finish1Layer = new CompoundStructureLayer(0.2, MaterialFunctionAssignment.Finish1, masonry_Brick.Id);
+            var finish1Layer = new CompoundStructureLayer(0.2, MaterialFunctionAssignment.Finish1, masonryBrick.Id);
             var substrateLayer =
                 new CompoundStructureLayer(0.1, MaterialFunctionAssignment.Substrate, ElementId.InvalidElementId);
             var structureLayer = new CompoundStructureLayer(0.5, MaterialFunctionAssignment.Structure, concrete.Id);
@@ -105,52 +105,52 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             csLayers.Add(finish2Layer);
 
             // Set the created layers to CompoundStructureLayer
-            wallCS.SetLayers(csLayers);
+            wallCs.SetLayers(csLayers);
 
             //Set which layer is used for structural analysis
-            wallCS.StructuralMaterialIndex = 2;
+            wallCs.StructuralMaterialIndex = 2;
 
             // Set shell layers and wrapping.
-            wallCS.SetNumberOfShellLayers(ShellLayerType.Interior, 2);
-            wallCS.SetNumberOfShellLayers(ShellLayerType.Exterior, 1);
-            wallCS.SetParticipatesInWrapping(0, false);
+            wallCs.SetNumberOfShellLayers(ShellLayerType.Interior, 2);
+            wallCs.SetNumberOfShellLayers(ShellLayerType.Exterior, 1);
+            wallCs.SetParticipatesInWrapping(0, false);
 
             // Points for adding wall sweep and reveal.
             var sweepPoint = UV.Zero;
             var revealPoint = UV.Zero;
 
             // split the region containing segment 0.
-            var segId = wallCS.GetSegmentIds()[0];
-            foreach (var regionId in wallCS.GetAdjacentRegions(segId))
+            var segId = wallCs.GetSegmentIds()[0];
+            foreach (var regionId in wallCs.GetAdjacentRegions(segId))
             {
                 // Get the end points of segment 0.
                 var endPoint1 = UV.Zero;
                 var endPoint2 = UV.Zero;
-                wallCS.GetSegmentEndPoints(segId, regionId, out endPoint1, out endPoint2);
+                wallCs.GetSegmentEndPoints(segId, regionId, out endPoint1, out endPoint2);
 
                 // Split a new region in split point and orientation.
                 var splitOrientation =
-                    (RectangularGridSegmentOrientation)(((int)wallCS.GetSegmentOrientation(segId) + 1) % 2);
-                var splitUV = (endPoint1 + endPoint2) / 2.0;
-                var newRegionId = wallCS.SplitRegion(splitUV, splitOrientation);
-                wallCS.IsValidRegionId(newRegionId);
+                    (RectangularGridSegmentOrientation)(((int)wallCs.GetSegmentOrientation(segId) + 1) % 2);
+                var splitUv = (endPoint1 + endPoint2) / 2.0;
+                var newRegionId = wallCs.SplitRegion(splitUv, splitOrientation);
+                wallCs.IsValidRegionId(newRegionId);
 
                 // Find the enclosing region and the two segments intersected by a line through the split point
                 int segId1;
                 int segId2;
                 var findRegionId =
-                    wallCS.FindEnclosingRegionAndSegments(splitUV, splitOrientation, out segId1, out segId2);
+                    wallCs.FindEnclosingRegionAndSegments(splitUv, splitOrientation, out segId1, out segId2);
 
                 // Get the end points of finding segment 1 and compute the wall sweep point.
                 var eP1 = UV.Zero;
                 var eP2 = UV.Zero;
-                wallCS.GetSegmentEndPoints(segId1, findRegionId, out eP1, out eP2);
+                wallCs.GetSegmentEndPoints(segId1, findRegionId, out eP1, out eP2);
                 sweepPoint = (eP1 + eP2) / 4.0;
 
                 // Get the end points of finding segment 2 and compute the wall reveal point.
                 var ep3 = UV.Zero;
                 var ep4 = UV.Zero;
-                wallCS.GetSegmentEndPoints(segId2, findRegionId, out ep3, out ep4);
+                wallCs.GetSegmentEndPoints(segId2, findRegionId, out ep3, out ep4);
                 revealPoint = (ep3 + ep4) / 2.0;
             }
 
@@ -160,16 +160,16 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             // Set sweep profile: Sill-Precast : 8" Wide
             sweepInfo.ProfileId = GetProfile("8\" Wide").Id;
             sweepInfo.Id = 101;
-            wallCS.AddWallSweep(sweepInfo);
+            wallCs.AddWallSweep(sweepInfo);
 
             // Create a WallSweepInfo for wall reveal
             var revealInfo = new WallSweepInfo(true, WallSweepType.Reveal);
             PrepareWallSweepInfo(revealInfo, revealPoint.U);
             revealInfo.Id = 102;
-            wallCS.AddWallSweep(revealInfo);
+            wallCs.AddWallSweep(revealInfo);
 
             // Set the new wall CompoundStructure to the type of wall.
-            wallType.SetCompoundStructure(wallCS);
+            wallType.SetCompoundStructure(wallCs);
         }
 
         /// <summary>
@@ -195,13 +195,13 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         {
             var collector = new FilteredElementCollector(m_document.Document);
             collector.WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_Materials));
-            var MaterialElement = from element in collector
+            var materialElement = from element in collector
                 where element.Name == name
                 select element;
 
-            if (!MaterialElement.Any())
+            if (!materialElement.Any())
                 return null;
-            return MaterialElement.First() as Material;
+            return materialElement.First() as Material;
         }
 
         /// <summary>
@@ -215,11 +215,11 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             Material materialNew = null;
 
             //Try to copy an existing material.  If it is not available, create a new one.
-            var masonry_Brick = GetMaterial("Brick, Common");
-            if (masonry_Brick != null)
+            var masonryBrick = GetMaterial("Brick, Common");
+            if (masonryBrick != null)
             {
-                materialNew = masonry_Brick.Duplicate(masonry_Brick.Name + "_new");
-                Debug.WriteLine(masonry_Brick.MaterialClass);
+                materialNew = masonryBrick.Duplicate(masonryBrick.Name + "_new");
+                Debug.WriteLine(masonryBrick.MaterialClass);
                 materialNew.MaterialClass = "Brick";
             }
             else
@@ -269,10 +269,10 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         {
             Material materialNew = null;
             //Try to copy an existing material.  If it is not available, create a new one.
-            var masonry_Concrete = GetMaterial("Concrete, Lightweight");
-            if (masonry_Concrete != null)
+            var masonryConcrete = GetMaterial("Concrete, Lightweight");
+            if (masonryConcrete != null)
             {
-                materialNew = masonry_Concrete.Duplicate(masonry_Concrete.Name + "_new");
+                materialNew = masonryConcrete.Duplicate(masonryConcrete.Name + "_new");
                 materialNew.MaterialClass = "Concrete";
             }
             else
@@ -313,10 +313,10 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         {
             var profiles = new FilteredElementCollector(m_document.Document);
             profiles.OfCategory(BuiltInCategory.OST_ProfileFamilies);
-            var MaterialElement = from element in profiles
+            var materialElement = from element in profiles
                 where element.Name == name
                 select element;
-            return MaterialElement.First() as FamilySymbol;
+            return materialElement.First() as FamilySymbol;
         }
     }
 }

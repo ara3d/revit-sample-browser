@@ -15,32 +15,32 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
     /// </summary>
     public class CreateBeamsColumnsBracesForm : Form
     {
-        private ComboBox beamComboBox;
-        private Label beamLabel;
-        private ComboBox braceComboBox;
-        private Label braceLabel;
-        private Button cancelButton;
-        private ComboBox columnComboBox;
-        private Label columnLabel;
+        private ComboBox m_beamComboBox;
+        private Label m_beamLabel;
+        private ComboBox m_braceComboBox;
+        private Label m_braceLabel;
+        private Button m_cancelButton;
+        private ComboBox m_columnComboBox;
+        private Label m_columnLabel;
 
         /// <summary>
         ///     Required designer variable.
         /// </summary>
-        private readonly Container components = null;
+        private readonly Container m_components = null;
 
-        private Label DistanceLabel;
-        private TextBox DistanceTextBox;
-        private Label floornumberLabel;
-        private TextBox floornumberTextBox;
+        private Label m_distanceLabel;
+        private TextBox m_distanceTextBox;
+        private Label m_floornumberLabel;
+        private TextBox m_floornumberTextBox;
 
         // To store the datas
         private readonly Command m_dataBuffer;
-        private Button OKButton;
-        private Label unitLabel;
-        private Label XLabel;
-        private TextBox XTextBox;
-        private Label YLabel;
-        private TextBox YTextBox;
+        private Button m_okButton;
+        private Label m_unitLabel;
+        private Label m_xLabel;
+        private TextBox m_xTextBox;
+        private Label m_yLabel;
+        private TextBox m_yTextBox;
 
         /// <summary>
         ///     constructor
@@ -63,7 +63,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         {
             if (disposing)
             {
-                components?.Dispose();
+                m_components?.Dispose();
             }
 
             base.Dispose(disposing);
@@ -75,189 +75,189 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// </summary>
         private void InitializeComponent()
         {
-            OKButton = new Button();
-            XTextBox = new TextBox();
-            YTextBox = new TextBox();
-            DistanceTextBox = new TextBox();
-            columnComboBox = new ComboBox();
-            beamComboBox = new ComboBox();
-            braceComboBox = new ComboBox();
-            columnLabel = new Label();
-            beamLabel = new Label();
-            braceLabel = new Label();
-            floornumberTextBox = new TextBox();
-            DistanceLabel = new Label();
-            YLabel = new Label();
-            XLabel = new Label();
-            floornumberLabel = new Label();
-            cancelButton = new Button();
-            unitLabel = new Label();
+            m_okButton = new Button();
+            m_xTextBox = new TextBox();
+            m_yTextBox = new TextBox();
+            m_distanceTextBox = new TextBox();
+            m_columnComboBox = new ComboBox();
+            m_beamComboBox = new ComboBox();
+            m_braceComboBox = new ComboBox();
+            m_columnLabel = new Label();
+            m_beamLabel = new Label();
+            m_braceLabel = new Label();
+            m_floornumberTextBox = new TextBox();
+            m_distanceLabel = new Label();
+            m_yLabel = new Label();
+            m_xLabel = new Label();
+            m_floornumberLabel = new Label();
+            m_cancelButton = new Button();
+            m_unitLabel = new Label();
             SuspendLayout();
             // 
             // OKButton
             // 
-            OKButton.Location = new Point(296, 208);
-            OKButton.Name = "OKButton";
-            OKButton.TabIndex = 8;
-            OKButton.Text = "&OK";
-            OKButton.Click += OKButton_Click;
+            m_okButton.Location = new Point(296, 208);
+            m_okButton.Name = "m_okButton";
+            m_okButton.TabIndex = 8;
+            m_okButton.Text = "&OK";
+            m_okButton.Click += OKButton_Click;
             // 
             // XTextBox
             // 
-            XTextBox.Location = new Point(16, 96);
-            XTextBox.Name = "XTextBox";
-            XTextBox.Size = new Size(136, 20);
-            XTextBox.TabIndex = 2;
-            XTextBox.Text = "";
-            XTextBox.Validating += XTextBox_Validating;
+            m_xTextBox.Location = new Point(16, 96);
+            m_xTextBox.Name = "m_xTextBox";
+            m_xTextBox.Size = new Size(136, 20);
+            m_xTextBox.TabIndex = 2;
+            m_xTextBox.Text = "";
+            m_xTextBox.Validating += XTextBox_Validating;
             // 
             // YTextBox
             // 
-            YTextBox.Location = new Point(16, 152);
-            YTextBox.Name = "YTextBox";
-            YTextBox.Size = new Size(136, 20);
-            YTextBox.TabIndex = 3;
-            YTextBox.Text = "";
-            YTextBox.Validating += YTextBox_Validating;
+            m_yTextBox.Location = new Point(16, 152);
+            m_yTextBox.Name = "m_yTextBox";
+            m_yTextBox.Size = new Size(136, 20);
+            m_yTextBox.TabIndex = 3;
+            m_yTextBox.Text = "";
+            m_yTextBox.Validating += YTextBox_Validating;
             // 
             // DistanceTextBox
             // 
-            DistanceTextBox.Location = new Point(16, 40);
-            DistanceTextBox.Name = "DistanceTextBox";
-            DistanceTextBox.Size = new Size(112, 20);
-            DistanceTextBox.TabIndex = 1;
-            DistanceTextBox.Text = "";
-            DistanceTextBox.Validating += DistanceTextBox_Validating;
+            m_distanceTextBox.Location = new Point(16, 40);
+            m_distanceTextBox.Name = "m_distanceTextBox";
+            m_distanceTextBox.Size = new Size(112, 20);
+            m_distanceTextBox.TabIndex = 1;
+            m_distanceTextBox.Text = "";
+            m_distanceTextBox.Validating += DistanceTextBox_Validating;
             // 
             // columnComboBox
             // 
-            columnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            columnComboBox.Location = new Point(240, 40);
-            columnComboBox.Name = "columnComboBox";
-            columnComboBox.Size = new Size(288, 21);
-            columnComboBox.TabIndex = 5;
+            m_columnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            m_columnComboBox.Location = new Point(240, 40);
+            m_columnComboBox.Name = "m_columnComboBox";
+            m_columnComboBox.Size = new Size(288, 21);
+            m_columnComboBox.TabIndex = 5;
             // 
             // beamComboBox
             // 
-            beamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            beamComboBox.Location = new Point(240, 96);
-            beamComboBox.Name = "beamComboBox";
-            beamComboBox.Size = new Size(288, 21);
-            beamComboBox.TabIndex = 6;
+            m_beamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            m_beamComboBox.Location = new Point(240, 96);
+            m_beamComboBox.Name = "m_beamComboBox";
+            m_beamComboBox.Size = new Size(288, 21);
+            m_beamComboBox.TabIndex = 6;
             // 
             // braceComboBox
             // 
-            braceComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            braceComboBox.Location = new Point(240, 152);
-            braceComboBox.Name = "braceComboBox";
-            braceComboBox.Size = new Size(288, 21);
-            braceComboBox.TabIndex = 7;
+            m_braceComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            m_braceComboBox.Location = new Point(240, 152);
+            m_braceComboBox.Name = "m_braceComboBox";
+            m_braceComboBox.Size = new Size(288, 21);
+            m_braceComboBox.TabIndex = 7;
             // 
             // columnLabel
             // 
-            columnLabel.Location = new Point(240, 16);
-            columnLabel.Name = "columnLabel";
-            columnLabel.Size = new Size(120, 23);
-            columnLabel.TabIndex = 10;
-            columnLabel.Text = "Type of Columns:";
+            m_columnLabel.Location = new Point(240, 16);
+            m_columnLabel.Name = "m_columnLabel";
+            m_columnLabel.Size = new Size(120, 23);
+            m_columnLabel.TabIndex = 10;
+            m_columnLabel.Text = "Type of Columns:";
             // 
             // beamLabel
             // 
-            beamLabel.Location = new Point(240, 72);
-            beamLabel.Name = "beamLabel";
-            beamLabel.Size = new Size(120, 23);
-            beamLabel.TabIndex = 11;
-            beamLabel.Text = "Type of Beams:";
+            m_beamLabel.Location = new Point(240, 72);
+            m_beamLabel.Name = "m_beamLabel";
+            m_beamLabel.Size = new Size(120, 23);
+            m_beamLabel.TabIndex = 11;
+            m_beamLabel.Text = "Type of Beams:";
             // 
             // braceLabel
             // 
-            braceLabel.Location = new Point(240, 128);
-            braceLabel.Name = "braceLabel";
-            braceLabel.Size = new Size(120, 23);
-            braceLabel.TabIndex = 12;
-            braceLabel.Text = "Type of Braces:";
+            m_braceLabel.Location = new Point(240, 128);
+            m_braceLabel.Name = "m_braceLabel";
+            m_braceLabel.Size = new Size(120, 23);
+            m_braceLabel.TabIndex = 12;
+            m_braceLabel.Text = "Type of Braces:";
             // 
             // floornumberTextBox
             // 
-            floornumberTextBox.Location = new Point(16, 208);
-            floornumberTextBox.Name = "floornumberTextBox";
-            floornumberTextBox.Size = new Size(112, 20);
-            floornumberTextBox.TabIndex = 4;
-            floornumberTextBox.Text = "";
-            floornumberTextBox.Validating += floornumberTextBox_Validating;
+            m_floornumberTextBox.Location = new Point(16, 208);
+            m_floornumberTextBox.Name = "m_floornumberTextBox";
+            m_floornumberTextBox.Size = new Size(112, 20);
+            m_floornumberTextBox.TabIndex = 4;
+            m_floornumberTextBox.Text = "";
+            m_floornumberTextBox.Validating += floornumberTextBox_Validating;
             // 
             // DistanceLabel
             // 
-            DistanceLabel.Location = new Point(16, 16);
-            DistanceLabel.Name = "DistanceLabel";
-            DistanceLabel.Size = new Size(152, 23);
-            DistanceLabel.TabIndex = 14;
-            DistanceLabel.Text = "Distance between Columns:";
+            m_distanceLabel.Location = new Point(16, 16);
+            m_distanceLabel.Name = "m_distanceLabel";
+            m_distanceLabel.Size = new Size(152, 23);
+            m_distanceLabel.TabIndex = 14;
+            m_distanceLabel.Text = "Distance between Columns:";
             // 
             // YLabel
             // 
-            YLabel.Location = new Point(16, 128);
-            YLabel.Name = "YLabel";
-            YLabel.Size = new Size(200, 23);
-            YLabel.TabIndex = 15;
-            YLabel.Text = "Number of Columns in the Y Direction:";
+            m_yLabel.Location = new Point(16, 128);
+            m_yLabel.Name = "m_yLabel";
+            m_yLabel.Size = new Size(200, 23);
+            m_yLabel.TabIndex = 15;
+            m_yLabel.Text = "Number of Columns in the Y Direction:";
             // 
             // XLabel
             // 
-            XLabel.Location = new Point(16, 72);
-            XLabel.Name = "XLabel";
-            XLabel.Size = new Size(200, 23);
-            XLabel.TabIndex = 16;
-            XLabel.Text = "Number of Columns in the X Direction:";
+            m_xLabel.Location = new Point(16, 72);
+            m_xLabel.Name = "m_xLabel";
+            m_xLabel.Size = new Size(200, 23);
+            m_xLabel.TabIndex = 16;
+            m_xLabel.Text = "Number of Columns in the X Direction:";
             // 
             // floornumberLabel
             // 
-            floornumberLabel.Location = new Point(16, 184);
-            floornumberLabel.Name = "floornumberLabel";
-            floornumberLabel.Size = new Size(144, 23);
-            floornumberLabel.TabIndex = 17;
-            floornumberLabel.Text = "Number of Floors:";
+            m_floornumberLabel.Location = new Point(16, 184);
+            m_floornumberLabel.Name = "m_floornumberLabel";
+            m_floornumberLabel.Size = new Size(144, 23);
+            m_floornumberLabel.TabIndex = 17;
+            m_floornumberLabel.Text = "Number of Floors:";
             // 
             // cancelButton
             // 
-            cancelButton.DialogResult = DialogResult.Cancel;
-            cancelButton.Location = new Point(392, 208);
-            cancelButton.Name = "cancelButton";
-            cancelButton.TabIndex = 9;
-            cancelButton.Text = "&Cancel";
-            cancelButton.Click += cancelButton_Click;
+            m_cancelButton.DialogResult = DialogResult.Cancel;
+            m_cancelButton.Location = new Point(392, 208);
+            m_cancelButton.Name = "m_cancelButton";
+            m_cancelButton.TabIndex = 9;
+            m_cancelButton.Text = "&Cancel";
+            m_cancelButton.Click += cancelButton_Click;
             // 
             // unitLabel
             // 
-            unitLabel.Location = new Point(136, 42);
-            unitLabel.Name = "unitLabel";
-            unitLabel.Size = new Size(32, 23);
-            unitLabel.TabIndex = 18;
-            unitLabel.Text = "feet";
+            m_unitLabel.Location = new Point(136, 42);
+            m_unitLabel.Name = "m_unitLabel";
+            m_unitLabel.Size = new Size(32, 23);
+            m_unitLabel.TabIndex = 18;
+            m_unitLabel.Text = "feet";
             // 
             // CreateBeamsColumnsBracesForm
             // 
-            AcceptButton = OKButton;
+            AcceptButton = m_okButton;
             AutoScaleBaseSize = new Size(5, 13);
-            CancelButton = cancelButton;
+            CancelButton = m_cancelButton;
             ClientSize = new Size(546, 246);
-            Controls.Add(unitLabel);
-            Controls.Add(cancelButton);
-            Controls.Add(floornumberLabel);
-            Controls.Add(XLabel);
-            Controls.Add(YLabel);
-            Controls.Add(DistanceLabel);
-            Controls.Add(floornumberTextBox);
-            Controls.Add(DistanceTextBox);
-            Controls.Add(YTextBox);
-            Controls.Add(XTextBox);
-            Controls.Add(braceLabel);
-            Controls.Add(beamLabel);
-            Controls.Add(columnLabel);
-            Controls.Add(braceComboBox);
-            Controls.Add(beamComboBox);
-            Controls.Add(columnComboBox);
-            Controls.Add(OKButton);
+            Controls.Add(m_unitLabel);
+            Controls.Add(m_cancelButton);
+            Controls.Add(m_floornumberLabel);
+            Controls.Add(m_xLabel);
+            Controls.Add(m_yLabel);
+            Controls.Add(m_distanceLabel);
+            Controls.Add(m_floornumberTextBox);
+            Controls.Add(m_distanceTextBox);
+            Controls.Add(m_yTextBox);
+            Controls.Add(m_xTextBox);
+            Controls.Add(m_braceLabel);
+            Controls.Add(m_beamLabel);
+            Controls.Add(m_columnLabel);
+            Controls.Add(m_braceComboBox);
+            Controls.Add(m_beamComboBox);
+            Controls.Add(m_columnComboBox);
+            Controls.Add(m_okButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -274,10 +274,10 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// </summary>
         private void TextBoxRefresh()
         {
-            XTextBox.Text = "2";
-            YTextBox.Text = "2";
-            DistanceTextBox.Text = 20.0.ToString("0.0");
-            floornumberTextBox.Text = "1";
+            m_xTextBox.Text = "2";
+            m_yTextBox.Text = "2";
+            m_distanceTextBox.Text = 20.0.ToString("0.0");
+            m_floornumberTextBox.Text = "1";
         }
 
         private void CreateBeamsColumnsBracesForm_Load(object sender, EventArgs e)
@@ -306,17 +306,17 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 return;
             }
 
-            columnComboBox.DataSource = m_dataBuffer.ColumnMaps;
-            columnComboBox.DisplayMember = "SymbolName";
-            columnComboBox.ValueMember = "ElementType";
+            m_columnComboBox.DataSource = m_dataBuffer.ColumnMaps;
+            m_columnComboBox.DisplayMember = "SymbolName";
+            m_columnComboBox.ValueMember = "ElementType";
 
-            beamComboBox.DataSource = m_dataBuffer.BeamMaps;
-            beamComboBox.DisplayMember = "SymbolName";
-            beamComboBox.ValueMember = "ElementType";
+            m_beamComboBox.DataSource = m_dataBuffer.BeamMaps;
+            m_beamComboBox.DisplayMember = "SymbolName";
+            m_beamComboBox.ValueMember = "ElementType";
 
-            braceComboBox.DataSource = m_dataBuffer.BraceMaps;
-            braceComboBox.DisplayMember = "SymbolName";
-            braceComboBox.ValueMember = "ElementType";
+            m_braceComboBox.DataSource = m_dataBuffer.BraceMaps;
+            m_braceComboBox.DisplayMember = "SymbolName";
+            m_braceComboBox.ValueMember = "ElementType";
         }
 
         /// <summary>
@@ -329,13 +329,13 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             //check whether the input is correct and create elements
             try
             {
-                var xNumber = int.Parse(XTextBox.Text);
-                var yNumber = int.Parse(YTextBox.Text);
-                var distance = double.Parse(DistanceTextBox.Text);
-                var columnType = columnComboBox.SelectedValue;
-                var beamType = beamComboBox.SelectedValue;
-                var braceType = braceComboBox.SelectedValue;
-                var floorNumber = int.Parse(floornumberTextBox.Text);
+                var xNumber = int.Parse(m_xTextBox.Text);
+                var yNumber = int.Parse(m_yTextBox.Text);
+                var distance = double.Parse(m_distanceTextBox.Text);
+                var columnType = m_columnComboBox.SelectedValue;
+                var beamType = m_beamComboBox.SelectedValue;
+                var braceType = m_braceComboBox.SelectedValue;
+                var floorNumber = int.Parse(m_floornumberTextBox.Text);
 
                 m_dataBuffer.CreateMatrix(xNumber, yNumber, distance);
                 m_dataBuffer.AddInstance(columnType, beamType, braceType, floorNumber);
@@ -370,29 +370,29 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var distance = 0.1;
             try
             {
-                distance = double.Parse(DistanceTextBox.Text);
+                distance = double.Parse(m_distanceTextBox.Text);
             }
             catch (Exception)
             {
                 TaskDialog.Show("Revit", "Please enter a value larger than 5 and less than 30000.");
-                DistanceTextBox.Text = "";
-                DistanceTextBox.Focus();
+                m_distanceTextBox.Text = "";
+                m_distanceTextBox.Focus();
                 return;
             }
 
             if (distance <= 5)
             {
                 TaskDialog.Show("Revit", "Please enter a value larger than 5.");
-                DistanceTextBox.Text = "";
-                DistanceTextBox.Focus();
+                m_distanceTextBox.Text = "";
+                m_distanceTextBox.Focus();
                 return;
             }
 
             if (distance > 30000)
             {
                 TaskDialog.Show("Revit", "Please enter a value less than 30000.");
-                DistanceTextBox.Text = "";
-                DistanceTextBox.Focus();
+                m_distanceTextBox.Text = "";
+                m_distanceTextBox.Focus();
             }
         }
 
@@ -406,18 +406,18 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var xNumber = 1;
             try
             {
-                xNumber = int.Parse(XTextBox.Text);
+                xNumber = int.Parse(m_xTextBox.Text);
             }
             catch (Exception)
             {
                 TaskDialog.Show("Revit", "Please input an integer for X direction between 1 to 20.");
-                XTextBox.Text = "";
+                m_xTextBox.Text = "";
             }
 
             if (xNumber < 1 || xNumber > 20)
             {
                 TaskDialog.Show("Revit", "Please input an integer for X direction between 1 to 20.");
-                XTextBox.Text = "";
+                m_xTextBox.Text = "";
             }
         }
 
@@ -431,18 +431,18 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var yNumber = 1;
             try
             {
-                yNumber = int.Parse(YTextBox.Text);
+                yNumber = int.Parse(m_yTextBox.Text);
             }
             catch (Exception)
             {
                 TaskDialog.Show("Revit", "Please input an integer for Y direction between 1 to 20.");
-                YTextBox.Text = "";
+                m_yTextBox.Text = "";
             }
 
             if (yNumber < 1 || yNumber > 20)
             {
                 TaskDialog.Show("Revit", "Please input an integer for Y direction between 1 to 20.");
-                YTextBox.Text = "";
+                m_yTextBox.Text = "";
             }
         }
 
@@ -456,18 +456,18 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var floorNumber = 1;
             try
             {
-                floorNumber = int.Parse(floornumberTextBox.Text);
+                floorNumber = int.Parse(m_floornumberTextBox.Text);
             }
             catch (Exception)
             {
                 TaskDialog.Show("Revit", "Please input an integer for the number of floors between 1 to 10.");
-                floornumberTextBox.Text = "";
+                m_floornumberTextBox.Text = "";
             }
 
             if (floorNumber < 1 || floorNumber > 10)
             {
                 TaskDialog.Show("Revit", "Please input an integer for the number of floors between 1 to 10.");
-                floornumberTextBox.Text = "";
+                m_floornumberTextBox.Text = "";
             }
         }
     }

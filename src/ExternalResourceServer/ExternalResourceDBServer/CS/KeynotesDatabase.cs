@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         ///     True, if the specified 'key' corresponds to a valid set of keynote data in the
         ///     'database,' else False.
         /// </returns>
-        public static bool IsValidDBKey(string key)
+        public static bool IsValidDbKey(string key)
         {
             return key == "1" || key == "2" || key == "3" || key == "4";
         }
@@ -49,7 +49,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         /// <returns></returns>
         public static void LoadKeynoteEntries(string key, ref KeyBasedTreeEntriesLoadContent kdrlc)
         {
-            if (!IsValidDBKey(key))
+            if (!IsValidDbKey(key))
                 throw new ArgumentOutOfRangeException(nameof(key), key, "The specified key cannot be found in the database");
 
             if (kdrlc == null)

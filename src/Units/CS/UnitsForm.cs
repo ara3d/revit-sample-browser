@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.Units.CS
             DigitGroupingSymbolComboBox.SelectedItem =
                 Enum.GetName(typeof(DigitGroupingSymbol), m_units.DigitGroupingSymbol);
 
-            DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
+            DecimalSymbolAndGroupingtextBox.Text = GetDecimalSymbolAndGroupingstring();
 
             DigitGroupingSymbolComboBox.SelectedIndexChanged += DigitGroupingSymbolComboBox_SelectedIndexChanged;
             DigitGroupingAmountComboBox.SelectedIndexChanged += DigitGroupingAmountComboBox_SelectedIndexChanged;
@@ -118,7 +118,7 @@ namespace Revit.SDK.Samples.Units.CS
             }
         }
 
-        private string getDecimalSymbolAndGroupingstring()
+        private string GetDecimalSymbolAndGroupingstring()
         {
             var formatvalueoptions = new FormatValueOptions();
             formatvalueoptions.AppendUnitSymbol = false;
@@ -144,7 +144,7 @@ namespace Revit.SDK.Samples.Units.CS
             try
             {
                 m_units.DecimalSymbol = (DecimalSymbol)DecimalSymbolComboBox.SelectedItem;
-                DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
+                DecimalSymbolAndGroupingtextBox.Text = GetDecimalSymbolAndGroupingstring();
             }
             catch
             {
@@ -157,7 +157,7 @@ namespace Revit.SDK.Samples.Units.CS
             try
             {
                 m_units.DigitGroupingAmount = (DigitGroupingAmount)DigitGroupingAmountComboBox.SelectedItem;
-                DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
+                DecimalSymbolAndGroupingtextBox.Text = GetDecimalSymbolAndGroupingstring();
             }
             catch
             {
@@ -171,7 +171,7 @@ namespace Revit.SDK.Samples.Units.CS
             {
                 m_units.DigitGroupingSymbol = (DigitGroupingSymbol)Enum.Parse(typeof(DigitGroupingSymbol),
                     (string)DigitGroupingSymbolComboBox.SelectedItem);
-                DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
+                DecimalSymbolAndGroupingtextBox.Text = GetDecimalSymbolAndGroupingstring();
             }
             catch
             {

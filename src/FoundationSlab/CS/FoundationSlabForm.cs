@@ -10,15 +10,15 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
     /// </summary>
     public partial class FoundationSlabForm : Form
     {
-        private readonly DataGridViewTextBoxColumn levelNameColumn = new DataGridViewTextBoxColumn();
+        private readonly DataGridViewTextBoxColumn m_levelNameColumn = new DataGridViewTextBoxColumn();
 
         // Revit datas for UI to display and operate.
         private readonly SlabData m_datas;
-        private readonly DataGridViewTextBoxColumn markColumn = new DataGridViewTextBoxColumn();
+        private readonly DataGridViewTextBoxColumn m_markColumn = new DataGridViewTextBoxColumn();
 
         // The columns of DataGridView.
-        private readonly DataGridViewCheckBoxColumn selectedColumn = new DataGridViewCheckBoxColumn();
-        private readonly DataGridViewTextBoxColumn slabTypeNameColumn = new DataGridViewTextBoxColumn();
+        private readonly DataGridViewCheckBoxColumn m_selectedColumn = new DataGridViewCheckBoxColumn();
+        private readonly DataGridViewTextBoxColumn m_slabTypeNameColumn = new DataGridViewTextBoxColumn();
 
         /// <summary>
         ///     Constructor.
@@ -36,39 +36,39 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         {
             // Edit the columns of the dataGridView.
             dataGridView.AutoGenerateColumns = false;
-            dataGridView.Columns.AddRange(selectedColumn, markColumn, levelNameColumn, slabTypeNameColumn);
+            dataGridView.Columns.AddRange(m_selectedColumn, m_markColumn, m_levelNameColumn, m_slabTypeNameColumn);
             dataGridView.DataSource = m_datas.BaseSlabList;
 
             // Select
-            selectedColumn.DataPropertyName = "Selected";
-            selectedColumn.HeaderText = "Select";
-            selectedColumn.Name = "SelectedColumn";
-            selectedColumn.ReadOnly = false;
-            selectedColumn.Width = dataGridView.Width / 8;
+            m_selectedColumn.DataPropertyName = "Selected";
+            m_selectedColumn.HeaderText = "Select";
+            m_selectedColumn.Name = "SelectedColumn";
+            m_selectedColumn.ReadOnly = false;
+            m_selectedColumn.Width = dataGridView.Width / 8;
 
             // Mark
-            markColumn.DataPropertyName = "Mark";
-            markColumn.HeaderText = "Mark";
-            markColumn.Name = "MarkColumn";
-            markColumn.ReadOnly = true;
-            markColumn.Width = dataGridView.Width / 9;
+            m_markColumn.DataPropertyName = "Mark";
+            m_markColumn.HeaderText = "Mark";
+            m_markColumn.Name = "MarkColumn";
+            m_markColumn.ReadOnly = true;
+            m_markColumn.Width = dataGridView.Width / 9;
 
-            var remainWidth = dataGridView.Width - dataGridView.RowHeadersWidth - selectedColumn.Width -
-                              markColumn.Width;
+            var remainWidth = dataGridView.Width - dataGridView.RowHeadersWidth - m_selectedColumn.Width -
+                              m_markColumn.Width;
 
             // Level
-            levelNameColumn.DataPropertyName = "LevelName";
-            levelNameColumn.HeaderText = "Level";
-            levelNameColumn.Name = "levelNameColumn";
-            levelNameColumn.ReadOnly = true;
-            levelNameColumn.Width = remainWidth / 2 - 2;
+            m_levelNameColumn.DataPropertyName = "LevelName";
+            m_levelNameColumn.HeaderText = "Level";
+            m_levelNameColumn.Name = "levelNameColumn";
+            m_levelNameColumn.ReadOnly = true;
+            m_levelNameColumn.Width = remainWidth / 2 - 2;
 
             // Slab Type
-            slabTypeNameColumn.DataPropertyName = "SlabTypeName";
-            slabTypeNameColumn.HeaderText = "Slab Type";
-            slabTypeNameColumn.Name = "SlabTypeNameColumn";
-            slabTypeNameColumn.ReadOnly = true;
-            slabTypeNameColumn.Width = remainWidth / 2;
+            m_slabTypeNameColumn.DataPropertyName = "SlabTypeName";
+            m_slabTypeNameColumn.HeaderText = "Slab Type";
+            m_slabTypeNameColumn.Name = "SlabTypeNameColumn";
+            m_slabTypeNameColumn.ReadOnly = true;
+            m_slabTypeNameColumn.Width = remainWidth / 2;
         }
 
         /// <summary>
@@ -143,8 +143,8 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         /// <param name="e">A object contains the event data.</param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            var IsSuccess = m_datas.CreateFoundationSlabs();
-            if (IsSuccess)
+            var isSuccess = m_datas.CreateFoundationSlabs();
+            if (isSuccess)
                 DialogResult = DialogResult.OK;
             else
                 DialogResult = DialogResult.Cancel;

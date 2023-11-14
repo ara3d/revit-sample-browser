@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         private bool m_completed;
 
         // Last read number
-        private int m_NumberWhenLastRead;
+        private int m_numberWhenLastRead;
 
         // List of UV points
         private readonly IList<UV> m_points = new List<UV>();
@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         private readonly IList<ValueAtPoint> m_values = new List<ValueAtPoint>();
 
         // lock object
-        private readonly object mylock = new object();
+        private readonly object m_mylock = new object();
 
         /// <summary>
         ///     Signaling no more results are needed
@@ -52,7 +52,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         /// </remarks>
         public void SetCompleted()
         {
-            lock (mylock)
+            lock (m_mylock)
             {
                 m_completed = true;
             }
@@ -71,15 +71,15 @@ namespace Revit.SDK.Samples.WorkThread.CS
             points = null;
             values = null;
 
-            lock (mylock) // lock the access
+            lock (m_mylock) // lock the access
             {
-                hasMoreResults = m_values.Count != m_NumberWhenLastRead;
+                hasMoreResults = m_values.Count != m_numberWhenLastRead;
 
                 if (hasMoreResults)
                 {
                     points = m_points;
                     values = m_values;
-                    m_NumberWhenLastRead = m_values.Count;
+                    m_numberWhenLastRead = m_values.Count;
                 }
             }
 
@@ -100,7 +100,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         {
             var accepted = false;
 
-            lock (mylock) // lock the access
+            lock (m_mylock) // lock the access
             {
                 // do nothing if reading has been completed
                 if (!m_completed)

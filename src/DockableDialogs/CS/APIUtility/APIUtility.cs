@@ -9,7 +9,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
     /// <summary>
     ///     A simple class to manage an interface into the Revit API.
     /// </summary>
-    public partial class APIUtility
+    public partial class ApiUtility
     {
         private UIApplication m_uiApplication;
 

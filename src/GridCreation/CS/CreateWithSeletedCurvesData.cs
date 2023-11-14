@@ -76,8 +76,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             }
                             catch (ArgumentException)
                             {
-                                ShowMessage(resManager.GetString("FailedToSetLabel") + FirstLabel + "!",
-                                    resManager.GetString("FailureCaptionSetLabel"));
+                                ShowMessage(ResManager.GetString("FailedToSetLabel") + FirstLabel + "!",
+                                    ResManager.GetString("FailureCaptionSetLabel"));
                             }
                         }
                         else
@@ -107,8 +107,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                     }
                                     catch (ArgumentException)
                                     {
-                                        ShowMessage(resManager.GetString("FailedToSetLabel") + FirstLabel + "!",
-                                            resManager.GetString("FailureCaptionSetLabel"));
+                                        ShowMessage(ResManager.GetString("FailedToSetLabel") + FirstLabel + "!",
+                                            ResManager.GetString("FailureCaptionSetLabel"));
                                     }
                                 }
                                 else
@@ -140,8 +140,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                     }
                                     catch (ArgumentException)
                                     {
-                                        ShowMessage(resManager.GetString("FailedToSetLabel") + FirstLabel + "!",
-                                            resManager.GetString("FailureCaptionSetLabel"));
+                                        ShowMessage(ResManager.GetString("FailedToSetLabel") + FirstLabel + "!",
+                                            ResManager.GetString("FailureCaptionSetLabel"));
                                     }
 
                                     AddCurveForBatchCreation(ref curves, lowerArc);
@@ -170,17 +170,17 @@ namespace Revit.SDK.Samples.GridCreation.CS
             if (DeleteSelectedElements)
                 try
                 {
-                    foreach (Element e in Command.GetSelectedModelLinesAndArcs(m_revitDoc)) m_revitDoc.Delete(e.Id);
+                    foreach (Element e in Command.GetSelectedModelLinesAndArcs(RevitDoc)) RevitDoc.Delete(e.Id);
                 }
                 catch (Exception)
                 {
-                    ShowMessage(resManager.GetString("FailedToDeletedLinesOrArcs"),
-                        resManager.GetString("FailureCaptionDeletedLinesOrArcs"));
+                    ShowMessage(ResManager.GetString("FailedToDeletedLinesOrArcs"),
+                        ResManager.GetString("FailureCaptionDeletedLinesOrArcs"));
                 }
 
             if (errorCount != 0)
-                ShowMessage(resManager.GetString("FailedToCreateGrids"),
-                    resManager.GetString("FailureCaptionCreateGrids"));
+                ShowMessage(ResManager.GetString("FailedToCreateGrids"),
+                    ResManager.GetString("FailureCaptionCreateGrids"));
         }
     }
 }

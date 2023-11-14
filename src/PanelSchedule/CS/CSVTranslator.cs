@@ -12,15 +12,15 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
     /// <summary>
     ///     Translate the panel schedule view data from Revit to CSV.
     /// </summary>
-    internal class CSVTranslator : Translator
+    internal class CsvTranslator : Translator
     {
         /// <summary>
         ///     create a CSVTranslator instance for a PanelScheduleView instance.
         /// </summary>
         /// <param name="psView">the exporting panel schedule view instance.</param>
-        public CSVTranslator(PanelScheduleView psView)
+        public CsvTranslator(PanelScheduleView psView)
         {
-            m_psView = psView;
+            PsView = psView;
         }
 
         /// <summary>
@@ -31,19 +31,19 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         {
             var asemblyName = Assembly.GetExecutingAssembly().Location;
 
-            var panelScheduleCSVFile =
-                asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(m_psView.Name) + ".csv");
+            var panelScheduleCsvFile =
+                asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(PsView.Name) + ".csv");
 
-            if (File.Exists(panelScheduleCSVFile)) File.Delete(panelScheduleCSVFile);
+            if (File.Exists(panelScheduleCsvFile)) File.Delete(panelScheduleCsvFile);
 
-            using (var sw = File.CreateText(panelScheduleCSVFile))
+            using (var sw = File.CreateText(panelScheduleCsvFile))
             {
                 //sw.WriteLine("This is my file.");
                 DumpPanelScheduleData(sw);
                 sw.Close();
             }
 
-            return panelScheduleCSVFile;
+            return panelScheduleCsvFile;
         }
 
         /// <summary>
@@ -52,10 +52,10 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         /// <param name="sw"></param>
         private void DumpPanelScheduleData(StreamWriter sw)
         {
-            DumpSectionData(sw, m_psView, SectionType.Header);
-            DumpSectionData(sw, m_psView, SectionType.Body);
-            DumpSectionData(sw, m_psView, SectionType.Summary);
-            DumpSectionData(sw, m_psView, SectionType.Footer);
+            DumpSectionData(sw, PsView, SectionType.Header);
+            DumpSectionData(sw, PsView, SectionType.Body);
+            DumpSectionData(sw, PsView, SectionType.Summary);
+            DumpSectionData(sw, PsView, SectionType.Footer);
         }
 
         /// <summary>
@@ -66,17 +66,17 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         /// <param name="sectionType">which section is exporting, it can be Header, Body, Summary or Footer.</param>
         private void DumpSectionData(StreamWriter sw, PanelScheduleView psView, SectionType sectionType)
         {
-            var nRows_Section = 0;
-            var nCols_Section = 0;
-            getNumberOfRowsAndColumns(m_psView.Document, m_psView, sectionType, ref nRows_Section, ref nCols_Section);
+            var nRowsSection = 0;
+            var nColsSection = 0;
+            GetNumberOfRowsAndColumns(PsView.Document, PsView, sectionType, ref nRowsSection, ref nColsSection);
 
-            for (var ii = 0; ii < nRows_Section; ++ii)
+            for (var ii = 0; ii < nRowsSection; ++ii)
             {
                 var oneRow = new StringBuilder();
-                for (var jj = 0; jj < nCols_Section; ++jj)
+                for (var jj = 0; jj < nColsSection; ++jj)
                     try
                     {
-                        oneRow.AppendFormat("{0},", m_psView.GetCellText(sectionType, ii, jj));
+                        oneRow.AppendFormat("{0},", PsView.GetCellText(sectionType, ii, jj));
                     }
                     catch (Exception)
                     {

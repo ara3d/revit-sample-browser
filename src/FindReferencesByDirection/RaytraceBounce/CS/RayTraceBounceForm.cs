@@ -31,17 +31,17 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
         /// <summary>
         ///     current assembly directory
         /// </summary>
-        private static string AssemblyDirectory = Path.GetDirectoryName(AssemblyName);
+        private static string _assemblyDirectory = Path.GetDirectoryName(AssemblyName);
 
         /// <summary>
         ///     epsilon limit
         /// </summary>
-        private static readonly double epsilon = 0.00000001;
+        private static readonly double Epsilon = 0.00000001;
 
         /// <summary>
         ///     how many bounces to run
         /// </summary>
-        private static readonly int rayLimit = 100;
+        private static readonly int RayLimit = 100;
 
         /// <summary>
         ///     revit application
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
         /// <summary>
         ///     the count of line between origin/intersection and ray/intersection
         /// </summary>
-        private int m_LineCount;
+        private int m_lineCount;
 
         /// <summary>
         ///     ray start from here
@@ -81,7 +81,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
         /// <summary>
         ///     the count of ray between origin/intersection and ray/intersection
         /// </summary>
-        private int m_RayCount;
+        private int m_rayCount;
 
         /// <summary>
         ///     closet geometry reference between origin/intersection and ray/intersection
@@ -138,12 +138,12 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             m_stopWatch.Start();
             var transaction = new Transaction(m_doc, "RayTraceBounce");
             transaction.Start();
-            m_LineCount = 0;
-            m_RayCount = 0;
+            m_lineCount = 0;
+            m_rayCount = 0;
             // Start Find References By Direction
             var startpt = m_origin;
             m_outputInfo.Add("Start Find References By Direction: ");
-            for (var ctr = 1; ctr <= rayLimit; ctr++)
+            for (var ctr = 1; ctr <= RayLimit; ctr++)
             {
                 var referenceIntersector = new ReferenceIntersector(m_view);
                 var references = referenceIntersector.Find(startpt, m_direction);
@@ -170,7 +170,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
 
                 {
                     MakeLine(startpt, endpt, m_direction, "bounce");
-                    m_RayCount = m_RayCount + 1;
+                    m_rayCount = m_rayCount + 1;
                     var info = "Intersected Element Type: [" + referenceElement.GetType() + "] ElementId: [" +
                                referenceElement.Id;
                     m_face = referenceObject as Face;
@@ -187,16 +187,16 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
 
                     info += "]";
                     m_outputInfo.Add(info);
-                    var endptUV = reference.UVPoint;
-                    var FaceNormal = m_face.ComputeDerivatives(endptUV).BasisZ; // face normal where ray hits
-                    FaceNormal =
+                    var endptUv = reference.UVPoint;
+                    var faceNormal = m_face.ComputeDerivatives(endptUv).BasisZ; // face normal where ray hits
+                    faceNormal =
                         m_rClosest.GetInstanceTransform()
                             .OfVector(
-                                FaceNormal); // transformation to get it in terms of document coordinates instead of the parent symbol
+                                faceNormal); // transformation to get it in terms of document coordinates instead of the parent symbol
                     var directionMirrored =
                         m_direction -
-                        2 * m_direction.DotProduct(FaceNormal) *
-                        FaceNormal; //http://www.fvastro.org/presentations/ray_tracing.htm
+                        2 * m_direction.DotProduct(faceNormal) *
+                        faceNormal; //http://www.fvastro.org/presentations/ray_tracing.htm
                     m_direction = directionMirrored; // get ready to shoot the next ray
                     startpt = endpt;
                 }
@@ -207,7 +207,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             var ts = m_stopWatch.Elapsed;
             var elapsedTime = string.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds,
                 ts.Milliseconds / 10);
-            m_outputInfo.Add(elapsedTime + "\n" + "Lines = " + m_LineCount + "\n" + "Rays = " + m_RayCount);
+            m_outputInfo.Add(elapsedTime + "\n" + "Lines = " + m_lineCount + "\n" + "Rays = " + m_rayCount);
             m_stopWatch.Reset();
             OutputInformation();
         }
@@ -291,8 +291,8 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
         /// <returns></returns>
         public ReferenceWithContext FindClosestReference(IList<ReferenceWithContext> references)
         {
-            var face_prox = double.PositiveInfinity;
-            var edge_prox = double.PositiveInfinity;
+            var faceProx = double.PositiveInfinity;
+            var edgeProx = double.PositiveInfinity;
             foreach (var r in references)
             {
                 var reference = r.GetReference();
@@ -303,19 +303,19 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
                 var edge = referenceGeometryObject as Edge;
                 if (m_face != null)
                 {
-                    if (r.Proximity < face_prox && r.Proximity > epsilon)
+                    if (r.Proximity < faceProx && r.Proximity > Epsilon)
                     {
                         m_rClosest = r;
-                        face_prox = Math.Abs(r.Proximity);
+                        faceProx = Math.Abs(r.Proximity);
                     }
                 }
                 else if (edge != null)
                 {
-                    if (r.Proximity < edge_prox && r.Proximity > epsilon) edge_prox = Math.Abs(r.Proximity);
+                    if (r.Proximity < edgeProx && r.Proximity > Epsilon) edgeProx = Math.Abs(r.Proximity);
                 }
             }
 
-            if (edge_prox <= face_prox)
+            if (edgeProx <= faceProx)
             {
                 // stop bouncing if there is an edge at least as close as the nearest face - there is no single angle of reflection for a ray striking a line
                 m_outputInfo.Add(
@@ -337,7 +337,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
         {
             try
             {
-                m_LineCount = m_LineCount + 1;
+                m_lineCount = m_lineCount + 1;
                 var line = Line.CreateBound(startpt, endpt);
                 // Line must lie in the sketch plane.  Use the direction of the line to construct a plane that hosts the target line.
                 var rotatedDirection = XYZ.BasisX;

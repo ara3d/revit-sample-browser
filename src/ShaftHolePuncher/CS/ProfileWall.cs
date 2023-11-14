@@ -25,9 +25,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             m_data = wall;
             var faces = GetFaces(m_data);
-            m_points = GetNeedPoints(faces);
-            m_to2DMatrix = GetTo2DMatrix();
-            m_moveToCenterMatrix = ToCenterMatrix();
+            Points = GetNeedPoints(faces);
+            To2DMatrix = GetTo2DMatrix();
+            MoveToCenterMatrix = ToCenterMatrix();
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             //create Opening on wall
             var p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
             var p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
-            return m_docCreator.NewOpening(m_data, p1, p2);
+            return DocCreator.NewOpening(m_data, p1, p2);
         }
     }
 }

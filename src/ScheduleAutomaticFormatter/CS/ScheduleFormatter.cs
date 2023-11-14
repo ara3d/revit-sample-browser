@@ -45,7 +45,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// <summary>
         ///     GUID of the updater.
         /// </summary>
-        private static Guid UpdaterGUID => new Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
+        private static Guid UpdaterGuid => new Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
 
         /// <summary>
         ///     Implements IUpdater.Execute()
@@ -85,7 +85,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// <returns></returns>
         public UpdaterId GetUpdaterId()
         {
-            return new UpdaterId(AddInId, UpdaterGUID);
+            return new UpdaterId(AddInId, UpdaterGuid);
         }
 
         /// <summary>

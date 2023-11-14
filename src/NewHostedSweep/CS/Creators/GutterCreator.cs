@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             get
             {
-                var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
+                var filteredElementCollector = new FilteredElementCollector(RvtDoc);
                 filteredElementCollector.OfClass(typeof(GutterType));
                 return filteredElementCollector;
             }
@@ -57,11 +57,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 {
                     m_roofGutterEdges = new Dictionary<Element, List<Edge>>();
 
-                    var collector = new FilteredElementCollector(m_rvtDoc);
+                    var collector = new FilteredElementCollector(RvtDoc);
                     collector.OfClass(typeof(FootPrintRoof));
                     var elements = collector.ToElements();
 
-                    collector = new FilteredElementCollector(m_rvtDoc);
+                    collector = new FilteredElementCollector(RvtDoc);
                     collector.OfClass(typeof(ExtrusionRoof));
                     foreach (var elem in collector) elements.Add(elem);
 
@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                             if (solid != null)
                             {
                                 m_roofGutterEdges.Add(elem, new List<Edge>());
-                                m_elemGeom.Add(elem, solid);
+                                ElemGeom.Add(elem, solid);
                                 FilterEdgesForGutter(elem);
                             }
                         }
@@ -95,10 +95,10 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             // In the future, API may not allow to create such Gutter with 
             // no references, invoke this methods like this may throw exception.
             // 
-            var gutter = m_rvtDoc.Create.NewGutter(null, new ReferenceArray());
+            var gutter = RvtDoc.Create.NewGutter(null, new ReferenceArray());
 
             var roofEdges = m_roofGutterEdges[elem];
-            foreach (var edge in m_elemGeom[elem].EdgeBindingDic.Keys)
+            foreach (var edge in ElemGeom[elem].EdgeBindingDic.Keys)
             {
                 if (edge.Reference == null) continue;
                 try
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             }
 
             // Delete this element, because we just use it to filter the edges.
-            m_rvtDoc.Delete(gutter.Id);
+            RvtDoc.Delete(gutter.Id);
 
             transaction.RollBack();
         }
@@ -127,7 +127,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <returns>Created Gutter</returns>
         protected override HostedSweep CreateHostedSweep(ElementType symbol, ReferenceArray refArr)
         {
-            var gutter = m_rvtDoc.Create.NewGutter(symbol as GutterType, refArr);
+            var gutter = RvtDoc.Create.NewGutter(symbol as GutterType, refArr);
             return gutter;
         }
     }

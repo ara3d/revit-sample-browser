@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 namespace Revit.SDK.Samples.MeasurePanelArea.CS
 {
-    partial class frmPanelArea
+    partial class FrmPanelArea
     {
         /// <summary>
         /// Required designer variable.
@@ -192,7 +192,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
            this.MaximizeBox = false;
            this.MinimizeBox = false;
-           this.Name = "frmPanelArea";
+           this.Name = "FrmPanelArea";
            this.ShowIcon = false;
            this.ShowInTaskbar = false;
            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

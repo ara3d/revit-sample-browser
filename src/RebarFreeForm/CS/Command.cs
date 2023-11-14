@@ -103,8 +103,8 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                     try
                     {
                         //here we add a value to the shared parameter and add it to the regeneration dependencies
-                        var newSharedParam = rebar.LookupParameter(AddSharedParams.m_paramName);
-                        var newSharedParam2 = rebar.LookupParameter(AddSharedParams.m_CurveIdName);
+                        var newSharedParam = rebar.LookupParameter(AddSharedParams.ParamName);
+                        var newSharedParam2 = rebar.LookupParameter(AddSharedParams.CurveIdName);
                         if (newSharedParam != null && newSharedParam2 != null)
                         {
                             newSharedParam.Set(0);

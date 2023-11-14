@@ -102,7 +102,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         ///     Get all of the walls
         /// </summary>
         /// <returns>All walls' set</returns>
-        private IEnumerable<Wall> getAllWalls()
+        private IEnumerable<Wall> GetAllWalls()
         {
             var wallCollector = new FilteredElementCollector(m_doc);
             wallCollector.OfClass(typeof(Wall));
@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         ///     Get all of the egresses
         /// </summary>
         /// <returns>All egresses' set</returns>
-        private ICollection<Element> getAllEgresses()
+        private ICollection<Element> GetAllEgresses()
         {
             var collector = new FilteredElementCollector(m_doc);
             var filterFamilyInstance = new ElementClassFilter(typeof(FamilyInstance));
@@ -157,16 +157,16 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
             tran.Start();
 
             if (radioButtonFindColumnsInWall.Checked)
-                RefreshTreeviewData("Find columns in wall", m_proximityDetection.findColumnsInWall(getAllWalls()));
+                RefreshTreeviewData("Find columns in wall", m_proximityDetection.FindColumnsInWall(GetAllWalls()));
             else if (radioButtonFindBlockingElements.Checked)
                 RefreshTreeviewData("Find elements blocking egress",
-                    m_proximityDetection.findBlockingElements(getAllEgresses()));
+                    m_proximityDetection.FindBlockingElements(GetAllEgresses()));
             else if (radioButtonFindNearbyWalls.Checked)
                 RefreshTreeviewData("Find walls (nearly joined to) end of walls",
-                    m_proximityDetection.findNearbyWalls(getAllWalls()));
+                    m_proximityDetection.FindNearbyWalls(GetAllWalls()));
             else
                 RefreshTreeviewData("Check walls join/disjoin states",
-                    m_walljoinControl.checkJoinedWalls(getAllWalls()));
+                    m_walljoinControl.CheckJoinedWalls(GetAllWalls()));
 
             // expand all child
             treeViewResults.ExpandAll();

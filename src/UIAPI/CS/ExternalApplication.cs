@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 {
     public class ExternalApp : IExternalApplication
     {
-        private static readonly string addinAssmeblyPath = typeof(ExternalApp).Assembly.Location;
+        private static readonly string AddinAssmeblyPath = typeof(ExternalApp).Assembly.Location;
         private UIControlledApplication m_uiControlledApplication;
 
         public Result OnShutdown(UIControlledApplication application)
@@ -29,8 +29,8 @@ namespace Revit.SDK.Samples.UIAPI.CS
         {
             ApplicationOptions.Initialize(this);
 
-            createCommandBinding(application);
-            createRibbonButton(application);
+            CreateCommandBinding(application);
+            CreateRibbonButton(application);
 
             // add custom tabs to options dialog.
             var addTabCommand = new AddTabCommand(application);
@@ -45,7 +45,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
         ///     An object that is passed to the external application
         ///     which contains the controlled application.
         /// </param>
-        private void createCommandBinding(UIControlledApplication application)
+        private void CreateCommandBinding(UIControlledApplication application)
         {
             var wallCreate = RevitCommandId.LookupCommandId("ID_NEW_REVIT_DESIGN_MODEL");
             var binding = application.CreateAddInCommandBinding(wallCreate);
@@ -53,7 +53,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             binding.CanExecute += binding_CanExecute;
         }
 
-        private BitmapSource convertFromBitmap(Bitmap bitmap)
+        private BitmapSource ConvertFromBitmap(Bitmap bitmap)
         {
             return Imaging.CreateBitmapSourceFromHBitmap(
                 bitmap.GetHbitmap(),
@@ -62,66 +62,66 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
-        private void createRibbonButton(UIControlledApplication application)
+        private void CreateRibbonButton(UIControlledApplication application)
         {
             application.CreateRibbonTab("AddIn Integration");
             var rp = application.CreateRibbonPanel("AddIn Integration", "Testing");
 
             var pbd = new PushButtonData("Wall", "Goto WikiHelp for wall creation",
-                addinAssmeblyPath,
+                AddinAssmeblyPath,
                 "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
             var ch = new ContextualHelp(ContextualHelpType.ContextId, "HID_OBJECTS_WALL");
             pbd.SetContextualHelp(ch);
             pbd.LongDescription = "We redirect the wiki help for this button to Wall creation.";
-            pbd.LargeImage = convertFromBitmap(Resources.StrcturalWall);
-            pbd.Image = convertFromBitmap(Resources.StrcturalWall_S);
+            pbd.LargeImage = ConvertFromBitmap(Resources.StrcturalWall);
+            pbd.Image = ConvertFromBitmap(Resources.StrcturalWall_S);
 
             var pb = rp.AddItem(pbd) as PushButton;
             pb.Enabled = true;
             pb.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
             var pbd1 = new PushButtonData("GotoGoogle", "Go to Google",
-                addinAssmeblyPath,
+                AddinAssmeblyPath,
                 "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
             var ch1 = new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
             pbd1.SetContextualHelp(ch1);
             pbd1.LongDescription = "Go to google.";
-            pbd1.LargeImage = convertFromBitmap(Resources.StrcturalWall);
-            pbd1.Image = convertFromBitmap(Resources.StrcturalWall_S);
+            pbd1.LargeImage = ConvertFromBitmap(Resources.StrcturalWall);
+            pbd1.Image = ConvertFromBitmap(Resources.StrcturalWall_S);
             var pb1 = rp.AddItem(pbd1) as PushButton;
             pb1.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
             var pbd2 = new PushButtonData("GotoRevitAddInUtilityHelpFile", "Go to Revit Add-In Utility",
-                addinAssmeblyPath,
+                AddinAssmeblyPath,
                 "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
 
             var ch2 = new ContextualHelp(ContextualHelpType.ChmFile,
-                Path.GetDirectoryName(addinAssmeblyPath) + @"\RevitAddInUtility.chm")
+                Path.GetDirectoryName(AddinAssmeblyPath) + @"\RevitAddInUtility.chm")
             {
                 HelpTopicUrl = @"html/3374f8f0-dccc-e1df-d269-229ed8c60e93.htm"
             };
             pbd2.SetContextualHelp(ch2);
             pbd2.LongDescription = "Go to Revit Add-In Utility.";
-            pbd2.LargeImage = convertFromBitmap(Resources.StrcturalWall);
-            pbd2.Image = convertFromBitmap(Resources.StrcturalWall_S);
+            pbd2.LargeImage = ConvertFromBitmap(Resources.StrcturalWall);
+            pbd2.Image = ConvertFromBitmap(Resources.StrcturalWall_S);
             var pb2 = rp.AddItem(pbd2) as PushButton;
             pb2.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
             var pbd3 = new PushButtonData("PreviewControl", "Preview all views",
-                addinAssmeblyPath,
+                AddinAssmeblyPath,
                 "Revit.SDK.Samples.UIAPI.CS.PreviewCommand")
             {
-                LargeImage = convertFromBitmap(Resources.StrcturalWall),
-                Image = convertFromBitmap(Resources.StrcturalWall_S)
+                LargeImage = ConvertFromBitmap(Resources.StrcturalWall),
+                Image = ConvertFromBitmap(Resources.StrcturalWall_S)
             };
             var pb3 = rp.AddItem(pbd3) as PushButton;
             pb3.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
-            var pbd5 = new PushButtonData("Drag_And_Drop", "Drag and Drop", addinAssmeblyPath,
+            var pbd5 = new PushButtonData("Drag_And_Drop", "Drag and Drop", AddinAssmeblyPath,
                 "Revit.SDK.Samples.UIAPI.CS.DragAndDropCommand")
             {
-                LargeImage = convertFromBitmap(Resources.StrcturalWall),
-                Image = convertFromBitmap(Resources.StrcturalWall_S)
+                LargeImage = ConvertFromBitmap(Resources.StrcturalWall),
+                Image = ConvertFromBitmap(Resources.StrcturalWall_S)
             };
             var pb5 = rp.AddItem(pbd5) as PushButton;
             pb5.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";

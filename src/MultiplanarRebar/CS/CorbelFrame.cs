@@ -187,16 +187,16 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var shapedef = new RebarShapeDefinitionBySegments(revitDoc, 2);
 
             // Define parameters for the dimension.
-            var B = SharedParameterUtil.GetOrCreateDef("B", revitDoc);
-            var H = SharedParameterUtil.GetOrCreateDef("H", revitDoc);
-            var K = SharedParameterUtil.GetOrCreateDef("K", revitDoc);
-            var MM = SharedParameterUtil.GetOrCreateDef("MM", revitDoc);
+            var b = SharedParameterUtil.GetOrCreateDef("B", revitDoc);
+            var h = SharedParameterUtil.GetOrCreateDef("H", revitDoc);
+            var k = SharedParameterUtil.GetOrCreateDef("K", revitDoc);
+            var mm = SharedParameterUtil.GetOrCreateDef("MM", revitDoc);
 
             // Set parameters default values according to the size Trapezoid shape. 
-            shapedef.AddParameter(B, Top.Length);
-            shapedef.AddParameter(H, Bottom.Length - Top.Length);
-            shapedef.AddParameter(K, Vertical.Length);
-            shapedef.AddParameter(MM, 15);
+            shapedef.AddParameter(b, Top.Length);
+            shapedef.AddParameter(h, Bottom.Length - Top.Length);
+            shapedef.AddParameter(k, Vertical.Length);
+            shapedef.AddParameter(mm, 15);
 
             // Rebar shape geometry curves consist of Line S0 and Line S1.
             // 
@@ -213,16 +213,16 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             // S0's direction is fixed in positive X Axis.
             shapedef.SetSegmentFixedDirection(0, 1, 0);
             // S0's length is determined by parameter B
-            shapedef.AddConstraintParallelToSegment(0, B, false, false);
+            shapedef.AddConstraintParallelToSegment(0, b, false, false);
 
             // Define Segment 1 (S1)
             //
             // Fix S1's direction.
             shapedef.SetSegmentFixedDirection(1, Bottom.Length - Top.Length, -Vertical.Length);
             // S1's length in positive X Axis is parameter H.            
-            shapedef.AddConstraintToSegment(1, H, 1, 0, 1, false, false);
+            shapedef.AddConstraintToSegment(1, h, 1, 0, 1, false, false);
             // S1's length in negative Y Axis is parameter K.
-            shapedef.AddConstraintToSegment(1, K, 0, -1, 1, false, false);
+            shapedef.AddConstraintToSegment(1, k, 0, -1, 1, false, false);
 
             // Define Vertex 1 (V1)
             //
@@ -237,7 +237,7 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
 
             // Define multi-planar definition
             var multiPlanarDef = new RebarShapeMultiplanarDefinition(bendDiameter);
-            multiPlanarDef.DepthParamId = MM;
+            multiPlanarDef.DepthParamId = mm;
 
             // Realize the Rebar shape with creation static method.
             // The RebarStype is stirrupTie, and it will attach to the top cover.

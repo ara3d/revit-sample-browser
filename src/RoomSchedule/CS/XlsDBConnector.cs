@@ -11,7 +11,7 @@ namespace Revit.SDK.Samples.RoomSchedule
     /// <summary>
     ///     An integrated class to connect .xls data source, retrieve / update data
     /// </summary>
-    internal class XlsDBConnector : IDisposable
+    internal class XlsDbConnector : IDisposable
     {
         // One command for this connection
         private OleDbCommand m_command;
@@ -32,7 +32,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         ///     The .xls file to be connected.
         ///     This file should exist and it can be writable.
         /// </param>
-        public XlsDBConnector(string strXlsFile)
+        public XlsDbConnector(string strXlsFile)
         {
             // Validate the specified
             if (!ValidateFile(strXlsFile))
@@ -65,7 +65,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         ///     Finalizer, we need to ensure the connection was closed
         ///     This destructor will run only if the Dispose method does not get called.
         /// </summary>
-        ~XlsDBConnector()
+        ~XlsDbConnector()
         {
             Dispose();
         }
@@ -113,7 +113,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 // five constant columns which must exist and to be checked
                 string[] constantNames =
                 {
-                    RoomsData.RoomID, RoomsData.RoomName,
+                    RoomsData.RoomId, RoomsData.RoomName,
                     RoomsData.RoomNumber, RoomsData.RoomArea, RoomsData.RoomComments
                 };
 

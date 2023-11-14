@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
         /// <summary>
         ///     Used to disable SortLoadedFamiliesParamsForm opened when document is opened.
         /// </summary>
-        public static bool m_SortDialogIsOpened = true;
+        public static bool SortDialogIsOpened = true;
 
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
@@ -25,9 +25,9 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
                 // Show UI
                 using (var form = new SortFamilyFilesParamsForm(commandData.Application))
                 {
-                    m_SortDialogIsOpened = false;
+                    SortDialogIsOpened = false;
                     form.ShowDialog();
-                    m_SortDialogIsOpened = true;
+                    SortDialogIsOpened = true;
                     return Result.Succeeded;
                 }
             }

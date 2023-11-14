@@ -42,37 +42,37 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <summary>
         ///     minimum value of the region box's edge
         /// </summary>
-        public const float MINEDGElENGTH = 1.0f;
+        public const float MinedgElEngth = 1.0f;
 
         /// <summary>
         ///     default angle when rotate around X,Y,Z axis
         /// </summary>
-        public const double ROTATEANGLE = Math.PI / 90;
+        public const double Rotateangle = Math.PI / 90;
 
         /// <summary>
         ///     origin define
         /// </summary>
-        protected double[,] m_origin = { { 1.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 1.0 } };
+        protected double[,] Origin = { { 1.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /// <summary>
         ///     origin max define
         /// </summary>
-        protected XYZ m_originMax = new XYZ(double.MinValue, double.MinValue, double.MinValue);
+        protected XYZ OriginMax = new XYZ(double.MinValue, double.MinValue, double.MinValue);
 
         /// <summary>
         ///     origin min define
         /// </summary>
-        protected XYZ m_originMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
+        protected XYZ OriginMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
 
         /// <summary>
         ///     3D max point after transfered
         /// </summary>
-        protected XYZ m_transferedMax;
+        protected XYZ TransferedMax;
 
         /// <summary>
         ///     3D min point after transfered
         /// </summary>
-        protected XYZ m_transferedMin;
+        protected XYZ TransferedMin;
 
         /// <summary>
         ///     constructor
@@ -100,8 +100,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         {
             get
             {
-                var width = (float)(m_transferedMax.X - m_transferedMin.X);
-                var height = (float)(m_transferedMax.Y - m_transferedMin.Y);
+                var width = (float)(TransferedMax.X - TransferedMin.X);
+                var height = (float)(TransferedMax.Y - TransferedMin.Y);
 
                 var minX = -(width / 2);
                 var minY = -(height / 2);
@@ -119,12 +119,12 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// </summary>
         protected void Initialize()
         {
-            var INITANGLE = Math.PI / 4;
+            var initangle = Math.PI / 4;
 
-            RotateX(ref m_origin, INITANGLE);
-            RotateY(ref m_origin, INITANGLE);
-            m_transferedMax = new XYZ(double.MinValue, double.MinValue, double.MinValue);
-            m_transferedMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
+            RotateX(ref Origin, initangle);
+            RotateY(ref Origin, initangle);
+            TransferedMax = new XYZ(double.MinValue, double.MinValue, double.MinValue);
+            TransferedMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
         }
 
         /// <summary>
@@ -141,10 +141,10 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <param name="direction">minus or positive angle</param>
         public void RotateZ(bool direction)
         {
-            var angle = ROTATEANGLE;
-            if (!direction) angle = -ROTATEANGLE;
+            var angle = Rotateangle;
+            if (!direction) angle = -Rotateangle;
 
-            RotateZ(ref m_origin, angle);
+            RotateZ(ref Origin, angle);
             UpdataData();
         }
 
@@ -159,7 +159,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             var cos = Math.Cos(angle);
 
             double[,] rotate = { { cos, sin, 0.0 }, { -sin, cos, 0.0 }, { 0.0, 0.0, 1.0 } };
-            origin = MatrixArith.MultiCross(m_origin, rotate);
+            origin = MatrixArith.MultiCross(Origin, rotate);
         }
 
         /// <summary>
@@ -168,10 +168,10 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <param name="direction">minus or positive angle</param>
         public void RotateY(bool direction)
         {
-            var angle = ROTATEANGLE;
-            if (!direction) angle = -ROTATEANGLE;
+            var angle = Rotateangle;
+            if (!direction) angle = -Rotateangle;
 
-            RotateY(ref m_origin, angle);
+            RotateY(ref Origin, angle);
             UpdataData();
         }
 
@@ -186,7 +186,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             var cos = Math.Cos(angle);
 
             double[,] rotate = { { cos, 0.0, -sin }, { 0.0, 1.0, 0.0 }, { sin, 0.0, cos } };
-            origin = MatrixArith.MultiCross(m_origin, rotate);
+            origin = MatrixArith.MultiCross(Origin, rotate);
         }
 
         /// <summary>
@@ -195,10 +195,10 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <param name="direction">minus or positive angle</param>
         public void RotateX(bool direction)
         {
-            var angle = ROTATEANGLE;
-            if (!direction) angle = -ROTATEANGLE;
+            var angle = Rotateangle;
+            if (!direction) angle = -Rotateangle;
 
-            RotateX(ref m_origin, angle);
+            RotateX(ref Origin, angle);
             UpdataData();
         }
 
@@ -213,7 +213,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             var cos = Math.Cos(angle);
 
             double[,] rotate = { { 1.0, 0.0, 0.0 }, { 0.0, cos, sin }, { 0.0, -sin, cos } };
-            origin = MatrixArith.MultiCross(m_origin, rotate);
+            origin = MatrixArith.MultiCross(Origin, rotate);
         }
     }
 
@@ -259,8 +259,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             m_originCurves.Add(points);
             foreach (var point in points)
             {
-                m_originMin = UpdateMinRange(point);
-                m_originMax = UpdateMaxRange(point);
+                OriginMin = UpdateMinRange(point);
+                OriginMax = UpdateMaxRange(point);
             }
         }
 
@@ -269,8 +269,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// </summary>
         public override void UpdataData()
         {
-            m_transferedMin = TransferRotate(m_originMin);
-            m_transferedMax = TransferRotate(m_originMax);
+            TransferedMin = TransferRotate(OriginMin);
+            TransferedMax = TransferRotate(OriginMax);
 
             m_transferedCurves.Clear();
             m_curves2D.Clear();
@@ -304,17 +304,17 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         private XYZ UpdateMaxRange(XYZ pnt)
         {
             return new XYZ(
-                pnt.X > m_originMax.X ? pnt.X : m_originMax.X,
-                pnt.Y > m_originMax.Y ? pnt.Y : m_originMax.Y,
-                pnt.Z > m_originMax.Z ? pnt.Z : m_originMax.Z);
+                pnt.X > OriginMax.X ? pnt.X : OriginMax.X,
+                pnt.Y > OriginMax.Y ? pnt.Y : OriginMax.Y,
+                pnt.Z > OriginMax.Z ? pnt.Z : OriginMax.Z);
         }
 
         private XYZ UpdateMinRange(XYZ pnt)
         {
             return new XYZ(
-                pnt.X < m_originMin.X ? pnt.X : m_originMin.X,
-                pnt.Y < m_originMin.Y ? pnt.Y : m_originMin.Y,
-                pnt.Z < m_originMin.Z ? pnt.Z : m_originMin.Z);
+                pnt.X < OriginMin.X ? pnt.X : OriginMin.X,
+                pnt.Y < OriginMin.Y ? pnt.Y : OriginMin.Y,
+                pnt.Z < OriginMin.Z ? pnt.Z : OriginMin.Z);
         }
 
         /// <summary>
@@ -329,9 +329,9 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             var z = point.Z;
 
             return new XYZ(
-                x * m_origin[0, 0] + y * m_origin[0, 1] + z * m_origin[0, 2],
-                x * m_origin[1, 0] + y * m_origin[1, 1] + z * m_origin[1, 2],
-                x * m_origin[2, 0] + y * m_origin[2, 1] + z * m_origin[2, 2]);
+                x * Origin[0, 0] + y * Origin[0, 1] + z * Origin[0, 2],
+                x * Origin[1, 0] + y * Origin[1, 1] + z * Origin[1, 2],
+                x * Origin[2, 0] + y * Origin[2, 1] + z * Origin[2, 2]);
         }
 
         /// <summary>
@@ -344,9 +344,9 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             //transform the origin of the old coordinate system in the new coordinate system
 
             return new XYZ(
-                point.X - (m_transferedMax.X + m_transferedMin.X) / 2,
-                point.Y - (m_transferedMax.Y + m_transferedMin.Y) / 2,
-                point.Z - (m_transferedMax.Z + m_transferedMin.Z) / 2);
+                point.X - (TransferedMax.X + TransferedMin.X) / 2,
+                point.Y - (TransferedMax.Y + TransferedMin.Y) / 2,
+                point.Z - (TransferedMax.Z + TransferedMin.Z) / 2);
         }
     }
 

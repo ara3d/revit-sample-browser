@@ -35,7 +35,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         ///     Get RebarShapeDefinitionBySegments object.
         /// </summary>
         protected RebarShapeDefinitionBySegments GetRebarShapeDefinitionBySegments =>
-            m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionBySegments;
+            ShapeDef.RebarshapeDefinition as RebarShapeDefinitionBySegments;
 
         /// <summary>
         ///     Update list value for property grid.

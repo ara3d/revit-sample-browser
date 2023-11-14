@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <summary>
         ///     hashtable of FamilySymbol and its Name
         /// </summary>
-        protected Dictionary<string, FamilySymbol> m_hash;
+        protected Dictionary<string, FamilySymbol> Hash;
 
         /// <summary>
         ///     constructor initialize m_hash
@@ -53,7 +53,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns>collection of FamilySymbol</returns>
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            return new StandardValuesCollection(m_hash.Values);
+            return new StandardValuesCollection(Hash.Values);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns>an FamilySymbol object</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            return m_hash[value.ToString()];
+            return Hash[value.ToString()];
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             {
                 if (!(v is FamilySymbol symbol)) return "";
 
-                foreach (var kvp in m_hash)
+                foreach (var kvp in Hash)
                     if (kvp.Value.Id == symbol.Id)
                         return kvp.Key;
                 return "";
@@ -127,7 +127,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// </summary>
         public override void GetConvertHash()
         {
-            m_hash = BeamSystemData.GetBeamTypes();
+            Hash = BeamSystemData.GetBeamTypes();
         }
     }
 }

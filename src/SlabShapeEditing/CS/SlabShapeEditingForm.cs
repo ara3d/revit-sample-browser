@@ -19,9 +19,9 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
     /// </summary>
     public partial class SlabShapeEditingForm : Form
     {
-        private const string justNumber = "Please input numbers in textbox!"; //error message
-        private const string selectFirst = "Please select a Vertex (or Crease) first!"; //error message
-        private EditorState editorState; //state of user's operation
+        private const string JustNumber = "Please input numbers in textbox!"; //error message
+        private const string SelectFirst = "Please select a Vertex (or Crease) first!"; //error message
+        private EditorState m_editorState; //state of user's operation
         private int m_clickedIndex; //index of crease and vertex which mouse clicked.
 
         private readonly ExternalCommandData m_commandData; //object which contains reference of Revit Application
@@ -53,7 +53,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             m_slabShapeEditor = floor.GetSlabShapeEditor();
             m_lineTool = new LineTool();
             m_pointTool = new LineTool();
-            editorState = EditorState.AddVertex;
+            m_editorState = EditorState.AddVertex;
             m_graphicsPaths = new ArrayList();
             m_createdVertices = new ArrayList();
             m_createCreases = new ArrayList();
@@ -75,7 +75,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
 
             m_slabProfile.Draw2D(e.Graphics, m_profilePen);
 
-            if (EditorState.Rotate != editorState)
+            if (EditorState.Rotate != m_editorState)
             {
                 m_lineTool.Draw2D(e.Graphics, m_toolPen);
                 m_pointTool.DrawRectangle(e.Graphics, m_toolPen);
@@ -122,7 +122,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         private void SlabShapePictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             var pointF = new PointF(e.X, e.Y);
-            if (EditorState.AddCrease == editorState && 1 == m_lineTool.Points.Count % 2)
+            if (EditorState.AddCrease == m_editorState && 1 == m_lineTool.Points.Count % 2)
                 m_lineTool.MovePoint = pointF;
             else
                 m_lineTool.MovePoint = PointF.Empty;
@@ -134,7 +134,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                 m_slabProfile.RotateFloor(moveY / 500, moveX / 500);
                 m_mouseRightDownLocation = e.Location;
             }
-            else if (EditorState.Select == editorState)
+            else if (EditorState.Select == m_editorState)
             {
                 for (var i = 0; i < m_graphicsPaths.Count; i++)
                 {
@@ -162,7 +162,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             if (MouseButtons.Right == e.Button)
             {
                 m_mouseRightDownLocation = e.Location;
-                editorState = EditorState.Rotate;
+                m_editorState = EditorState.Rotate;
                 m_clickedIndex = m_selectIndex = -1;
             }
         }
@@ -174,7 +174,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void SlabShapePictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-            switch (editorState)
+            switch (m_editorState)
             {
                 case EditorState.AddCrease when !m_slabProfile.CanCreateVertex(new PointF(e.X, e.Y)):
                     return;
@@ -235,7 +235,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void PointButton_Click(object sender, EventArgs e)
         {
-            editorState = EditorState.AddVertex;
+            m_editorState = EditorState.AddVertex;
             m_slabProfile.ClearRotateMatrix();
             SlabShapePictureBox.Cursor = Cursors.Cross;
         }
@@ -247,7 +247,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void LineButton_Click(object sender, EventArgs e)
         {
-            editorState = EditorState.AddCrease;
+            m_editorState = EditorState.AddCrease;
             m_slabProfile.ClearRotateMatrix();
             SlabShapePictureBox.Cursor = Cursors.Cross;
         }
@@ -259,7 +259,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void MoveButton_Click(object sender, EventArgs e)
         {
-            editorState = EditorState.Select;
+            m_editorState = EditorState.Select;
             m_slabProfile.ClearRotateMatrix();
             SlabShapePictureBox.Cursor = Cursors.Arrow;
         }
@@ -273,7 +273,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         {
             if (-1 == m_clickedIndex)
             {
-                TaskDialog.Show("Revit", selectFirst);
+                TaskDialog.Show("Revit", SelectFirst);
                 return;
             }
 
@@ -284,7 +284,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             }
             catch (Exception)
             {
-                TaskDialog.Show("Revit", justNumber);
+                TaskDialog.Show("Revit", JustNumber);
                 return;
             }
 
@@ -371,7 +371,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void SlabShapePictureBox_MouseHover(object sender, EventArgs e)
         {
-            switch (editorState)
+            switch (m_editorState)
             {
                 case EditorState.AddVertex:
                     SlabShapePictureBox.Cursor = Cursors.Cross;

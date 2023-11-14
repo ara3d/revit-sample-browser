@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         ///     the host object type, and invoke Run() method to create reinforcement rebars
         /// </summary>
         /// <returns>true if the creation is successful, otherwise false</returns>
-        public bool work()
+        public bool Work()
         {
             // define an IFrameReinMaker interface to create reinforcement rebars
             IFrameReinMaker maker = null;

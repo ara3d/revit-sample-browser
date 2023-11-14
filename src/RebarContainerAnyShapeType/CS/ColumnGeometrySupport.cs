@@ -46,8 +46,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         public RebarGeometry GetTransverseRebar(TransverseRebarLocation location, double spacing)
         {
             // sort the points of the swept profile
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
             // the offset from the column surface to the reinforcement
             var offset = ColumnRebarData.TransverseOffset;
@@ -55,7 +55,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             double rebarLength = 0;
 
             // get the origin and normal parameter for reinforcement creation
-            var normal = m_drivingVector;
+            var normal = DrivingVector;
             double curveOffset = 0;
 
             //set reinforcement length and origin according to the location of reinforcement
@@ -83,7 +83,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             var translatedPoints = new List<XYZ>();
             foreach (var point in movedPoints)
-                translatedPoints.Add(GeomUtil.OffsetPoint(point, m_drivingVector, curveOffset));
+                translatedPoints.Add(GeomUtil.OffsetPoint(point, DrivingVector, curveOffset));
 
             IList<Curve> curves = new List<Curve>(); //the profile of the transverse reinforcement
             var first = translatedPoints[0];
@@ -108,15 +108,15 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         public RebarGeometry GetVerticalRebar(VerticalRebarLocation location, int rebarNumber)
         {
             // sort the points of the swept profile
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
             // Get the offset and reinforcement length
             var offset = ColumnRebarData.VerticalOffset;
             var rebarLength = m_columnHeight + 3; //the length of reinforcement
 
             // Get the start point of the vertical reinforcement curve
-            var startPoint = m_drivingLine.GetEndPoint(0);
+            var startPoint = DrivingLine.GetEndPoint(0);
 
             var movedPoints = OffsetPoints(offset);
             movedPoints.Sort(comparer);
@@ -149,7 +149,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             }
 
             var spacing = rebarOffset / rebarNumber; //spacing value of the reinforcement
-            var endPoint = GeomUtil.OffsetPoint(startPoint, m_drivingVector, rebarLength);
+            var endPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, rebarLength);
 
             IList<Curve> curves = new List<Curve>(); //profile of the reinforcement
             curves.Add(Line.CreateBound(startPoint, endPoint));
@@ -164,10 +164,10 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <returns>the length data</returns>
         private double GetColumnLength()
         {
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
-            var refPoint = m_points[0];
+            var refPoint = Points[0];
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 
@@ -180,10 +180,10 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <returns>the width data</returns>
         private double GetColumnWidth()
         {
-            var comparer = new XYZHeightComparer();
-            m_points.Sort(comparer);
+            var comparer = new XyzHeightComparer();
+            Points.Sort(comparer);
 
-            var refPoint = m_points[0];
+            var refPoint = Points[0];
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 

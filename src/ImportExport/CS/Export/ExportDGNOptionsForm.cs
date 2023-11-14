@@ -11,18 +11,18 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     ///     Provide a dialog which provides the options for exporting dgn format
     /// </summary>
-    public partial class ExportDGNOptionsForm : Form
+    public partial class ExportDgnOptionsForm : Form
     {
         /// <summary>
         ///     data class
         /// </summary>
-        private readonly ExportDGNData m_data;
+        private readonly ExportDgnData m_data;
 
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="data">Data class object</param>
-        public ExportDGNOptionsForm(ExportDGNData data)
+        public ExportDgnOptionsForm(ExportDgnData data)
         {
             m_data = data;
             InitializeComponent();
@@ -108,9 +108,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             var mainModule = Process.GetCurrentProcess().MainModule;
             var folderRevit = Path.GetDirectoryName(mainModule.FileName);
-            var folderACADInterop = Path.Combine(folderRevit, "ACADInterop");
+            var folderAcadInterop = Path.Combine(folderRevit, "ACADInterop");
             var initialDirectory = folderRevit;
-            if (Directory.Exists(folderACADInterop)) initialDirectory = folderACADInterop;
+            if (Directory.Exists(folderAcadInterop)) initialDirectory = folderAcadInterop;
 
             using (var openFileDialog = new OpenFileDialog())
             {

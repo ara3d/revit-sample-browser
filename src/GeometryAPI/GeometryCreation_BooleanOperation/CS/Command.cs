@@ -25,13 +25,13 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
                 tran.Start();
 
                 // Create an object that is responsible for creating the solids
-                var geometryCreation = GeometryCreation.getInstance(commandData.Application.Application);
+                var geometryCreation = GeometryCreation.GetInstance(commandData.Application.Application);
 
                 // Create an object that is responsible for displaying the solids
-                var AVF = AnalysisVisualizationFramework.getInstance(document);
+                var avf = AnalysisVisualizationFramework.GetInstance(document);
 
                 // Create a CSG tree solid
-                CSGTree(geometryCreation, AVF);
+                CsgTree(geometryCreation, avf);
 
                 tran.Commit();
 
@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// </summary>
         /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
         /// <returns>The solids materials list</returns>
-        private List<Solid> prepareSolids(GeometryCreation geometrycreation)
+        private List<Solid> PrepareSolids(GeometryCreation geometrycreation)
         {
             var resultSolids = new List<Solid>
             {
@@ -78,22 +78,22 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// </summary>
         /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
         /// <param name="avf">The object that is responsible for displaying the solids</param>
-        private void CSGTree(GeometryCreation geometrycreation, AnalysisVisualizationFramework avf)
+        private void CsgTree(GeometryCreation geometrycreation, AnalysisVisualizationFramework avf)
         {
-            var materialSolids = prepareSolids(geometrycreation);
+            var materialSolids = PrepareSolids(geometrycreation);
 
             // Operation 1 : Intersect
-            var CSGTree_solid1 = BooleanOperation.BooleanOperation_Intersect(materialSolids[0], materialSolids[1]);
+            var csgTreeSolid1 = BooleanOperation.BooleanOperation_Intersect(materialSolids[0], materialSolids[1]);
 
             // Operation 2 : Union
-            var CSGTree_solid2 = BooleanOperation.BooleanOperation_Union(materialSolids[2], materialSolids[3]);
+            var csgTreeSolid2 = BooleanOperation.BooleanOperation_Union(materialSolids[2], materialSolids[3]);
             // Operation 3 : Union
-            BooleanOperation.BooleanOperation_Union(ref CSGTree_solid2, materialSolids[4]);
+            BooleanOperation.BooleanOperation_Union(ref csgTreeSolid2, materialSolids[4]);
 
             // Operation 4 : Difference
-            BooleanOperation.BooleanOperation_Difference(ref CSGTree_solid1, CSGTree_solid2);
+            BooleanOperation.BooleanOperation_Difference(ref csgTreeSolid1, csgTreeSolid2);
 
-            avf.PaintSolid(CSGTree_solid1, "CSGTree");
+            avf.PaintSolid(csgTreeSolid1, "CSGTree");
         }
     }
 }

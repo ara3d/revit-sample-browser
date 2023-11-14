@@ -132,7 +132,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                             return PFRF.CreateContainsRule(paramId, RuleValue);
                         case RuleCriteraNames.EndsWith:
                             return PFRF.CreateEndsWithRule(paramId, RuleValue);
-                        case RuleCriteraNames.Equals_:
+                        case RuleCriteraNames.Equals:
                             return PFRF.CreateEqualsRule(paramId, RuleValue);
                         case RuleCriteraNames.Greater:
                             return PFRF.CreateGreaterRule(paramId, RuleValue);
@@ -156,7 +156,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 case StorageType.Double:
                     switch (RuleCriteria)
                     {
-                        case RuleCriteraNames.Equals_:
+                        case RuleCriteraNames.Equals:
                             return PFRF.CreateEqualsRule(paramId, double.Parse(RuleValue), Epsilon);
                         case RuleCriteraNames.Greater:
                             return PFRF.CreateGreaterRule(paramId, double.Parse(RuleValue), Epsilon);
@@ -174,7 +174,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 case StorageType.Integer:
                     switch (RuleCriteria)
                     {
-                        case RuleCriteraNames.Equals_:
+                        case RuleCriteraNames.Equals:
                             return PFRF.CreateEqualsRule(paramId, int.Parse(RuleValue));
                         case RuleCriteraNames.Greater:
                             return PFRF.CreateGreaterRule(paramId, int.Parse(RuleValue));
@@ -192,7 +192,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 case StorageType.ElementId:
                     switch (RuleCriteria)
                     {
-                        case RuleCriteraNames.Equals_:
+                        case RuleCriteraNames.Equals:
                             return PFRF.CreateEqualsRule(paramId, ElementId.Parse(RuleValue));
                         case RuleCriteraNames.Greater:
                             return PFRF.CreateGreaterRule(paramId, ElementId.Parse(RuleValue));
@@ -360,7 +360,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         ///     String represents Equals criteria
         /// </summary>
-        public const string Equals_ = "equals";
+        public const string Equals = "equals";
 
         /// <summary>
         ///     String represents GreaterThan criteria
@@ -424,7 +424,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             ICollection<string> returns = new List<string>();
             //
             // all parameter supports following criteria
-            returns.Add(Equals_);
+            returns.Add(Equals);
             returns.Add(Greater);
             returns.Add(GreaterOrEqual);
             returns.Add(LessOrEqual);

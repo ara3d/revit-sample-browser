@@ -30,8 +30,8 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
 
             // get all PanelScheduleView instances in the Revit document.
             var fec = new FilteredElementCollector(doc);
-            var PanelScheduleViewsAreWanted = new ElementClassFilter(typeof(PanelScheduleView));
-            fec.WherePasses(PanelScheduleViewsAreWanted);
+            var panelScheduleViewsAreWanted = new ElementClassFilter(typeof(PanelScheduleView));
+            fec.WherePasses(panelScheduleViewsAreWanted);
             var psViews = fec.ToElements() as List<Element>;
 
             var placePanelScheduleOnSheet = new Transaction(doc, "placePanelScheduleOnSheet");

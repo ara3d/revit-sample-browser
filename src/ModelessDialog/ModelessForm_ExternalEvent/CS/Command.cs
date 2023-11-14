@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         {
             try
             {
-                Application.thisApp.ShowForm(commandData.Application);
+                Application.ThisApp.ShowForm(commandData.Application);
 
                 return Result.Succeeded;
             }

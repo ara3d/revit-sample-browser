@@ -14,7 +14,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 {
     public partial class FurnitureFamilyDragAndDropForm : Form
     {
-        private static FurnitureFamilyDragAndDropForm s_form;
+        private static FurnitureFamilyDragAndDropForm _sForm;
 
         private readonly Document m_document;
 
@@ -34,9 +34,9 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
         public static FurnitureFamilyDragAndDropForm GetTheForm(Document document)
         {
-            if (s_form == null) s_form = new FurnitureFamilyDragAndDropForm(document);
-            s_form.UpdateLoadedFamilies();
-            return s_form;
+            if (_sForm == null) _sForm = new FurnitureFamilyDragAndDropForm(document);
+            _sForm.UpdateLoadedFamilies();
+            return _sForm;
         }
 
         private void UpdateFamilyFileList()
@@ -124,7 +124,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
         private void FurnitureFamilyDragAndDropForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            s_form = null;
+            _sForm = null;
         }
 
         /// <summary>

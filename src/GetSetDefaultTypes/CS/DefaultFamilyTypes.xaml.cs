@@ -36,17 +36,17 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
     public partial class DefaultFamilyTypes : Page, IDockablePaneProvider
     {
         public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{DF0F08C3-447C-4615-B9B9-4843D821012E}"));
-        private Document _document;
+        private Document m_document;
 
-        private readonly ExternalEvent _event;
-        private readonly DefaultFamilyTypeCommandHandler _handler;
+        private readonly ExternalEvent m_event;
+        private readonly DefaultFamilyTypeCommandHandler m_handler;
 
         public DefaultFamilyTypes()
         {
             InitializeComponent();
 
-            _handler = new DefaultFamilyTypeCommandHandler();
-            _event = ExternalEvent.Create(_handler);
+            m_handler = new DefaultFamilyTypeCommandHandler();
+            m_event = ExternalEvent.Create(m_handler);
         }
 
         public void SetupDockablePane(DockablePaneProviderData data)
@@ -63,14 +63,14 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
         /// </summary>
         public void SetDocument(Document document)
         {
-            if (_document == document)
+            if (m_document == document)
                 return;
 
-            _document = document;
+            m_document = document;
 
             _dataGrid_DefaultFamilyTypes.Items.Clear();
 
-            var categories = GetAllFamilyCateogries(_document);
+            var categories = GetAllFamilyCateogries(m_document);
             if (categories.Count < 1)
                 return;
 
@@ -82,13 +82,13 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
                 };
 
                 //RLog.WriteComment(String.Format("The valid default family type candidates of {0} are:", Enum.GetName(typeof(BuiltInCategory), cid)));
-                var collector = new FilteredElementCollector(_document);
+                var collector = new FilteredElementCollector(m_document);
                 collector = collector.OfClass(typeof(FamilySymbol));
                 var query = from FamilySymbol et in collector
                     where et.IsValidDefaultFamilyType(new ElementId(cid))
                     select et; // Linq query  
 
-                var defaultFamilyTypeId = _document.GetDefaultFamilyTypeId(new ElementId(cid));
+                var defaultFamilyTypeId = m_document.GetDefaultFamilyTypeId(new ElementId(cid));
 
                 var defaultFamilyTypeCandidates = new List<DefaultFamilyTypeCandidate>();
                 foreach (var t in query)
@@ -145,8 +145,8 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
                 if (!(e.AddedItems[0] is DefaultFamilyTypeCandidate item))
                     return;
 
-                _handler.SetData(item.CateogryId, item.Id);
-                _event.Raise();
+                m_handler.SetData(item.CateogryId, item.Id);
+                m_event.Raise();
             }
         }
     }
@@ -203,8 +203,8 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
     /// </summary>
     public class DefaultFamilyTypeCommandHandler : IExternalEventHandler
     {
-        private ElementId _builtInCategory;
-        private ElementId _defaultTypeId;
+        private ElementId m_builtInCategory;
+        private ElementId m_defaultTypeId;
 
         public string GetName()
         {
@@ -214,18 +214,18 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
         public void Execute(UIApplication revitApp)
         {
             using (var tran = new Transaction(revitApp.ActiveUIDocument.Document,
-                       "Set Default family type to " + _defaultTypeId))
+                       "Set Default family type to " + m_defaultTypeId))
             {
                 tran.Start();
-                revitApp.ActiveUIDocument.Document.SetDefaultFamilyTypeId(_builtInCategory, _defaultTypeId);
+                revitApp.ActiveUIDocument.Document.SetDefaultFamilyTypeId(m_builtInCategory, m_defaultTypeId);
                 tran.Commit();
             }
         }
 
         public void SetData(ElementId categoryId, ElementId typeId)
         {
-            _builtInCategory = categoryId;
-            _defaultTypeId = typeId;
+            m_builtInCategory = categoryId;
+            m_defaultTypeId = typeId;
         }
     } // class CommandHandler
 }
