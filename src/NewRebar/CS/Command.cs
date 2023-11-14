@@ -4,9 +4,6 @@ using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using GElement = Autodesk.Revit.DB.GeometryElement;
-using CElement = Autodesk.Revit.DB.Element;
-using GInstance = Autodesk.Revit.DB.Instance;
 
 
 namespace Revit.SDK.Samples.NewRebar.CS

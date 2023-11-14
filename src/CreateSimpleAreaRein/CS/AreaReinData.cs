@@ -7,9 +7,6 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
-    using GeoElement = GeometryElement;
-
-
     /// <summary>
     ///     data of the AreaReinforcement
     /// </summary>

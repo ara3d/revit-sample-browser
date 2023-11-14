@@ -6,7 +6,6 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using GeoElement = GeometryElement;
     using GeoSolid = Solid;
 
 

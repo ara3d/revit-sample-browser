@@ -3,8 +3,6 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
-using RvtUpdaterId = Autodesk.Revit.DB.UpdaterId;
-using RvtAddinId = Autodesk.Revit.DB.AddInId;
 
 namespace Revit.SDK.Samples.RebarFreeForm.CS
 {

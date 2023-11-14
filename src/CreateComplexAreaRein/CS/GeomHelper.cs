@@ -7,9 +7,6 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using GeoElement = GeometryElement;
-
-
     /// <summary>
     ///     provide utility method to get geometry data for
     ///     creating AreaReinforcement on wall or floor

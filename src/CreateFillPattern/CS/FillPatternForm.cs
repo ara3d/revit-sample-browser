@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
-using RvtView = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.CreateFillPattern.CS
 {

@@ -11,9 +11,6 @@ using Document = Autodesk.Revit.Creation.Document;
 
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using DocCreator = Document;
-
-
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

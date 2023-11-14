@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using ELEMENT = Autodesk.Revit.DB.Element;
 using STRUCTURALTYPE = Autodesk.Revit.DB.Structure.StructuralType;
 
 namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS

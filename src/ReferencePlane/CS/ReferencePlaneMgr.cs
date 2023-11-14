@@ -6,7 +6,6 @@ using System.Data;
 using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using GElement = Autodesk.Revit.DB.GeometryElement;
 
 namespace Revit.SDK.Samples.ReferencePlane.CS
 {

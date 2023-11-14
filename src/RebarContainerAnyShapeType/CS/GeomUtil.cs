@@ -8,9 +8,6 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 {
-    using GeoElement = GeometryElement;
-
-
     /// <summary>
     ///     The class which give the base geometry operation, it is a static class.
     /// </summary>

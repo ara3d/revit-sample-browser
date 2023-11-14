@@ -5,9 +5,6 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using GeoElement = GeometryElement;
-
-
     /// <summary>
     ///     data and data manager of the AreaReinforcement
     /// </summary>

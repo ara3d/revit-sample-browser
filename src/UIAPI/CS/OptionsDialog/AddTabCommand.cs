@@ -4,7 +4,6 @@
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Revit.SDK.Samples.UIAPI.CS.OptionsDialog;
-using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {

@@ -5,7 +5,6 @@ using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
 
 namespace Revit.SDK.Samples.UIAPI.CS

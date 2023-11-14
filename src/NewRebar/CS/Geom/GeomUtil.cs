@@ -7,10 +7,6 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
-    using GeoElement = GeometryElement;
-    using GeoSolid = Solid;
-
-
     /// <summary>
     ///     The class which gives the base geometry operation, it is a static class.
     /// </summary>

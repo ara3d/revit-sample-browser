@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using Autodesk.Revit.UI;
-using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {

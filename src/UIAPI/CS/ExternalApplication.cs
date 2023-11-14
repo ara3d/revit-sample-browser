@@ -13,7 +13,6 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Revit.SDK.Samples.UIAPI.CS.Properties;
-using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {

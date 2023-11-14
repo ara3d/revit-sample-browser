@@ -5,8 +5,6 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.AreaReinCurve.CS
 {
-    using GeoElement = GeometryElement;
-
     /// <summary>
     ///     provide some common geometry judgement and calculate method
     /// </summary>

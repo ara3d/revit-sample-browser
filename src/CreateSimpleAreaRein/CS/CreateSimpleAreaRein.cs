@@ -11,9 +11,6 @@ using Document = Autodesk.Revit.Creation.Document;
 
 namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
-    using DocCreator = Document;
-
-
     /// <summary>
     ///     main class to create simple AreaReinforcement on selected wall or floor
     /// </summary>

@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
-using AppCreation = Autodesk.Revit.Creation.Application;
 
 namespace Revit.SDK.Samples.AutoJoin.CS
 {

@@ -4,8 +4,6 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
-    using GeoElement = GeometryElement;
-
     /// <summary>
     ///     enum of AreaReinforcement's parameter Layout Rules
     /// </summary>

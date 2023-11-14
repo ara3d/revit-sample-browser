@@ -7,7 +7,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
-using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
 
 namespace Revit.SDK.Samples.UIAPI.CS
