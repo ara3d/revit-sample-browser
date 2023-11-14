@@ -10,8 +10,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{4FFA90CA-2621-44DD-AFF6-BB4BCADB88EA}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
+		help.txt = help.txt
 		..\README.md = ..\README.md
 		..\LICENSE.txt = ..\LICENSE.txt
+		rtf-files.txt = rtf-files.txt
 	EndProjectSection
 EndProject
 Global
@@ -32,8 +34,8 @@ Global
 		{EF12A6B4-ADE7-438D-A469-6A590548C266}.Release|x64.Build.0 = Release|x64
 		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Debug|x64.Build.0 = Debug|Any CPU
+		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Debug|x64.ActiveCfg = Debug|x64
+		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Debug|x64.Build.0 = Debug|x64
 		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Release|Any CPU.Build.0 = Release|Any CPU
 		{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}.Release|x64.ActiveCfg = Release|Any CPU

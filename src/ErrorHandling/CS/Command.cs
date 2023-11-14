@@ -48,21 +48,11 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
         /// </summary>
         private Application m_revitApp;
 
-        /// <summary>
-        ///     Implements the OnShutdown event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Implements the OnStartup event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
             try
@@ -214,11 +204,6 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Implements the FailuresProcessing event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void FailuresProcessing(object sender, FailuresProcessingEventArgs e)
         {
             var failuresAccessor = e.GetFailuresAccessor();
@@ -270,9 +255,6 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the interface IFailuresPreprocessor
-    /// </summary>
     public class FailurePreproccessor : IFailuresPreprocessor
     {
         /// <summary>

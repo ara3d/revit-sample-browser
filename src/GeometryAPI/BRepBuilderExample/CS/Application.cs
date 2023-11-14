@@ -32,21 +32,11 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
     {
         private static readonly string addinAssmeblyPath = typeof(Application).Assembly.Location;
 
-        /// <summary>
-        ///     Implements the OnShutdown event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Implements the OnStartup event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
             createRibbonButtons(application);

@@ -36,11 +36,6 @@ namespace Revit.SDK.Samples.DisableCommand.CS
         /// </summary>
         private static RevitCommandId s_commandId;
 
-        /// <summary>
-        ///     Implements the OnStartup event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
             // Lookup the desired command by name
@@ -73,11 +68,6 @@ namespace Revit.SDK.Samples.DisableCommand.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Implements the OnShutdown event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             // Remove the command binding on shutdown

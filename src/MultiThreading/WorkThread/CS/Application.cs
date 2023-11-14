@@ -39,11 +39,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
         // event handler of idling
         private EventHandler<IdlingEventArgs> m_hIdling;
 
-        /// <summary>
-        ///     Implements the OnShutdown event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             if (m_analyzer != null) m_analyzer.StopCalculation();
@@ -53,11 +48,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Implements the OnStartup event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
             thisApp = this;

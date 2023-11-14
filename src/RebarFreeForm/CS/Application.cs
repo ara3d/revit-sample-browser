@@ -17,21 +17,11 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         private readonly RebarUpdateServer m_server = new RebarUpdateServer();
 
 
-        /// <summary>
-        ///     Implements the OnShutdown event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
         }
 
-        /// <summary>
-        ///     Implements the OnStartup event
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
             // Register CurveElement updater with revit to trigger regen in rebar for selected lines
