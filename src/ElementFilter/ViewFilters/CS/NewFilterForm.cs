@@ -28,28 +28,23 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.ViewFilters.CS
 {
     /// <summary>
-    /// Form used to create new filter
+    ///     Form used to create new filter
     /// </summary>
     public partial class NewFilterForm : Form
     {
-                /// <summary>
-        /// In-use filter names
-        /// </summary>
-        ICollection<string> m_inUseFilterNames;
-
         /// <summary>
-        /// New filter name 
+        ///     New filter name
         /// </summary>
         private string m_filterName;
 
         /// <summary>
-        /// Get new filter name
+        ///     In-use filter names
         /// </summary>
-        public string FilterName => m_filterName;
+        private readonly ICollection<string> m_inUseFilterNames;
 
-        
+
         /// <summary>
-        /// Show form for new filter name
+        ///     Show form for new filter name
         /// </summary>
         /// <param name="inUseNames">Filter names should be excluded.</param>
         public NewFilterForm(ICollection<string> inUseNames)
@@ -59,7 +54,12 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         }
 
         /// <summary>
-        /// Check if input name is valid for new filter, the name should be unique
+        ///     Get new filter name
+        /// </summary>
+        public string FilterName => m_filterName;
+
+        /// <summary>
+        ///     Check if input name is valid for new filter, the name should be unique
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -73,18 +73,18 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 newFilterNameTextBox.Focus();
                 return;
             }
+
             //
             // Check if filter name contains invalid characters
             // These character are different from Path.GetInvalidFileNameChars()
             char[] invalidFileChars = { '\\', ':', '{', '}', '[', ']', '|', ';', '<', '>', '?', '\'', '~' };
             foreach (var invalidChr in invalidFileChars)
-            {
                 if (newName.Contains(invalidChr))
                 {
                     ViewFiltersForm.MyMessageBox("Filter name contains invalid character: " + invalidChr);
                     return;
                 }
-            }
+
             // 
             // Check if name is used
             // check if name is already used by other filters
@@ -95,6 +95,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 newFilterNameTextBox.Focus();
                 return;
             }
+
             m_filterName = newName;
             Close();
             DialogResult = DialogResult.OK;

@@ -23,27 +23,26 @@
 
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.TransactionControl.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
-        ref string message, Autodesk.Revit.DB.ElementSet elements)
+            ref string message, ElementSet elements)
         {
             try
             {
                 // process data from Revit and show dialog
                 using (var transactionFrm = new TransactionForm(commandData))
                 {
-                    if (transactionFrm.ShowDialog() == DialogResult.OK)
-                    {
-                        return Result.Succeeded;
-                    }
+                    if (transactionFrm.ShowDialog() == DialogResult.OK) return Result.Succeeded;
                 }
             }
             catch (Exception ex)
@@ -51,6 +50,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 message = ex.Message;
                 return Result.Failed;
             }
+
             return Result.Cancelled;
         }
     }

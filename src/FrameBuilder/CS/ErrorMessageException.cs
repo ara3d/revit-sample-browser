@@ -20,25 +20,24 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System;
+
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System;
-
     /// <summary>
-    /// pass error message to UI or back to internal error messagebox by Execute method in IExternalCommand
+    ///     pass error message to UI or back to internal error messagebox by Execute method in IExternalCommand
     /// </summary>
-    class ErrorMessageException : ApplicationException
+    internal class ErrorMessageException : ApplicationException
     {
         /// <summary>
-        /// constructor entirely using baseclass'
+        ///     constructor entirely using baseclass'
         /// </summary>
         public ErrorMessageException()
-            : base()
         {
         }
 
         /// <summary>
-        /// constructor entirely using baseclass'
+        ///     constructor entirely using baseclass'
         /// </summary>
         /// <param name="message">error message</param>
         public ErrorMessageException(string message)

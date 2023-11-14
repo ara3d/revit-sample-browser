@@ -22,46 +22,43 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.GenerateFloor.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-           var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Generate Floor");
-           tran.Start();
+            var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Generate Floor");
+            tran.Start();
 
             try
             {
-                if (null == commandData)
-                {
-                    throw new ArgumentNullException("commandData");
-                }
+                if (null == commandData) throw new ArgumentNullException("commandData");
 
                 var data = new Data();
                 data.ObtainData(commandData);
 
                 var dlg = new GenerateFloorForm(data);
 
-                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     CreateFloor(data, commandData.Application.ActiveUIDocument.Document);
 
                     tran.Commit();
                     return Result.Succeeded;
                 }
-                else
-                {
-                   tran.RollBack();
-                    return Result.Cancelled;
-                }                
+
+                tran.RollBack();
+                return Result.Cancelled;
             }
             catch (Exception e)
             {
@@ -71,19 +68,16 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             }
         }
 
-        
+
         /// <summary>
-        /// create a floor by the data obtain from revit.
+        ///     create a floor by the data obtain from revit.
         /// </summary>
         /// <param name="data">Data including the profile, level etc, which is need for create a floor.</param>
         /// <param name="doc">Retrieves an object that represents the currently active project.</param>
-        static public void CreateFloor(Data data, Document doc)
+        public static void CreateFloor(Data data, Document doc)
         {
             var loop = new CurveLoop();
-            foreach (Curve curve in data.Profile)
-            {
-                loop.Append(curve);
-            }
+            foreach (Curve curve in data.Profile) loop.Append(curve);
 
             var floorLoops = new List<CurveLoop> { loop };
 

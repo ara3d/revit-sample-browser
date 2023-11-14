@@ -21,17 +21,17 @@
 //
 
 
+using System;
+using System.Windows.Forms;
+
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using System;
-    using System.Windows.Forms;
-
     public partial class AreaReinParametersForm : Form
     {
-        IAreaReinData m_data;
+        private readonly IAreaReinData m_data;
 
         /// <summary>
-        /// initialize datasource
+        ///     initialize datasource
         /// </summary>
         /// <param name="data"></param>
         public AreaReinParametersForm(IAreaReinData data)
@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         }
 
         /// <summary>
-        /// form load
+        ///     form load
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         }
 
         /// <summary>
-        /// make changes
+        ///     make changes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -62,7 +62,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         }
 
         /// <summary>
-        /// cancel command
+        ///     cancel command
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

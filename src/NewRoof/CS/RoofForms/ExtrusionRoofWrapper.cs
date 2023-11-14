@@ -26,18 +26,17 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
 {
-    
     /// <summary>
-    /// The ExtrusionRoofWrapper class is use to edit a extrusion roof in a PropertyGrid.
-    /// It contains a extrusion roof.
+    ///     The ExtrusionRoofWrapper class is use to edit a extrusion roof in a PropertyGrid.
+    ///     It contains a extrusion roof.
     /// </summary>
     public class ExtrusionRoofWrapper
     {
         // To store the extrusion roof which will be edited in a PropertyGrid.
-        private ExtrusionRoof m_roof;
-      
+        private readonly ExtrusionRoof m_roof;
+
         /// <summary>
-        /// The construct of the ExtrusionRoofWrapper class.
+        ///     The construct of the ExtrusionRoofWrapper class.
         /// </summary>
         /// <param name="roof">The extrusion roof which will be edited in a PropertyGrid.</param>
         public ExtrusionRoofWrapper(ExtrusionRoof roof)
@@ -45,8 +44,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             m_roof = roof;
         }
 
-                /// <summary>
-        /// The reference plane of the extrusion roof.
+        /// <summary>
+        ///     The reference plane of the extrusion roof.
         /// </summary>
         [Category("Constrains")]
         [Description("The reference plane of the extrusion roof.")]
@@ -60,11 +59,12 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         }
 
         /// <summary>
-        /// The extrusion start point of the extrusion roof.
+        ///     The extrusion start point of the extrusion roof.
         /// </summary>
         [Category("Constrains")]
         [DisplayName("Extrusion Start")]
-        [Description("The extrusion of a roof can extend in either direction along the reference plane. If the extrusion extends away from the plane, the start and end points are positive values. If the extrusion extends toward the plane, the start and end points are negative.")]
+        [Description(
+            "The extrusion of a roof can extend in either direction along the reference plane. If the extrusion extends away from the plane, the start and end points are positive values. If the extrusion extends toward the plane, the start and end points are negative.")]
         public string ExtrusionStart
         {
             get
@@ -75,19 +75,17 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             set
             {
                 var para = m_roof.get_Parameter(BuiltInParameter.EXTRUSION_START_PARAM);
-                if (para.SetValueString(value) == false)
-                {
-                    throw new Exception("Invalid Input");
-                }
+                if (para.SetValueString(value) == false) throw new Exception("Invalid Input");
             }
         }
 
         /// <summary>
-        /// The extrusion end point of the extrusion roof.
+        ///     The extrusion end point of the extrusion roof.
         /// </summary>
         [Category("Constrains")]
         [DisplayName("Extrusion End")]
-        [Description("The extrusion of a roof can extend in either direction along the reference plane. If the extrusion extends away from the plane, the start and end points are positive values. If the extrusion extends toward the plane, the start and end points are negative.")]
+        [Description(
+            "The extrusion of a roof can extend in either direction along the reference plane. If the extrusion extends away from the plane, the start and end points are positive values. If the extrusion extends toward the plane, the start and end points are negative.")]
         public string ExtrusionEnd
         {
             get
@@ -98,17 +96,15 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             set
             {
                 var para = m_roof.get_Parameter(BuiltInParameter.EXTRUSION_END_PARAM);
-                if (para.SetValueString(value) == false)
-                {
-                    throw new Exception("Invalid Input");
-                }
+                if (para.SetValueString(value) == false) throw new Exception("Invalid Input");
             }
         }
 
         /// <summary>
-        /// The reference level of the extrusion roof.
+        ///     The reference level of the extrusion roof.
         /// </summary>
-        [TypeConverterAttribute(typeof(LevelConverter)), Category("Constrains")]
+        [TypeConverterAttribute(typeof(LevelConverter))]
+        [Category("Constrains")]
         [DisplayName("Reference Level")]
         [Description("The reference level of the extrusion roof.")]
         public Level ReferenceLevel
@@ -127,7 +123,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         }
 
         /// <summary>
-        /// The offset from the reference level of the extrusion roof.
+        ///     The offset from the reference level of the extrusion roof.
         /// </summary>
         [Category("Constrains")]
         [DisplayName("Level Offset")]
@@ -142,11 +138,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             set
             {
                 var para = m_roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_OFFSET_PARAM);
-                if (para.SetValueString(value) == false)
-                {
-                    throw new Exception("Invalid Input");
-                }
+                if (para.SetValueString(value) == false) throw new Exception("Invalid Input");
             }
         }
-            }
+    }
 }

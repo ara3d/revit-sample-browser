@@ -20,20 +20,30 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.PostCommandWorkflow.CS
 {
     /// <summary>
-    /// The external command to set up the revision monitor and execute tasks related to it.
+    ///     The external command to set up the revision monitor and execute tasks related to it.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+    [Transaction(TransactionMode.Manual)]
     public class PostCommandRevisionMonitorCommand : IExternalCommand
     {
-        
         /// <summary>
-        /// The external command callback.
+        ///     The monitor.
+        /// </summary>
+        private static PostCommandRevisionMonitor monitor;
+
+        /// <summary>
+        ///     The handle to the command's PushButton.
+        /// </summary>
+        private static PushButton commandButton;
+
+        /// <summary>
+        ///     The external command callback.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
@@ -49,7 +59,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
                 commandButton.ItemText = "Remove Revision Monitor";
             }
             else
-            { 
+            {
                 monitor.Deactivate();
                 monitor = null;
                 commandButton.ItemText = "Setup Revision Monitor";
@@ -58,25 +68,14 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             return Result.Succeeded;
         }
 
-        
+
         /// <summary>
-        /// Sets the handle to the command's pushbutton.
+        ///     Sets the handle to the command's pushbutton.
         /// </summary>
         /// <param name="pushButton"></param>
         public static void SetPushButton(PushButton pushButton)
         {
             commandButton = pushButton;
         }
-
-        /// <summary>
-        /// The monitor.
-        /// </summary>
-        private static PostCommandRevisionMonitor monitor;
-
-        /// <summary>
-        /// The handle to the command's PushButton.
-        /// </summary>
-        private static PushButton commandButton;
     }
-       
 }

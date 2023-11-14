@@ -20,22 +20,20 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.Site.CS
 {
     /// <summary>
-    /// User interface utilities for site editing commands.
+    ///     User interface utilities for site editing commands.
     /// </summary>
-    class SiteUIUtils
+    internal class SiteUIUtils
     {
         /// <summary>
-        /// Changes the elevation of all points in the subregion by a designated delta.
+        ///     Changes the elevation of all points in the subregion by a designated delta.
         /// </summary>
         /// <param name="uiDoc">The document.</param>
         /// <param name="elevationDelta">The change in elevation.</param>
@@ -74,37 +72,37 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Prompts the user to pick a subregion.
+        ///     Prompts the user to pick a subregion.
         /// </summary>
         /// <param name="uiDoc">The document.</param>
         /// <returns>The selected subregion.</returns>
         public static TopographySurface PickSubregion(UIDocument uiDoc)
         {
             var subregRef = uiDoc.Selection.PickObject(ObjectType.Element,
-                                                             new SubRegionSelectionFilter(),
-                                                             "Select subregion");
+                new SubRegionSelectionFilter(),
+                "Select subregion");
 
             var subregion = uiDoc.Document.GetElement(subregRef) as TopographySurface;
             return subregion;
         }
 
         /// <summary>
-        /// Prompts the user to pick a TopographySurface (non-subregion).
+        ///     Prompts the user to pick a TopographySurface (non-subregion).
         /// </summary>
         /// <param name="uiDoc">The document.</param>
         /// <returns>The selected TopographySurface.</returns>
         public static TopographySurface PickTopographySurface(UIDocument uiDoc)
         {
             var toposurfRef = uiDoc.Selection.PickObject(ObjectType.Element,
-                                                             new TopographySurfaceSelectionFilter(),
-                                                             "Select topography surface");
+                new TopographySurfaceSelectionFilter(),
+                "Select topography surface");
 
             var toposurface = uiDoc.Document.GetElement(toposurfRef) as TopographySurface;
             return toposurface;
         }
 
         /// <summary>
-        /// Prompts the user to select a point, and returns a point near to the associated TopographySurface.
+        ///     Prompts the user to select a point, and returns a point near to the associated TopographySurface.
         /// </summary>
         /// <param name="uiDoc">The document.</param>
         /// <param name="toposurface">The target topography surface.</param>
@@ -128,12 +126,12 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// A selection filter that passes subregions.
+        ///     A selection filter that passes subregions.
         /// </summary>
-        class SubRegionSelectionFilter : ISelectionFilter
+        private class SubRegionSelectionFilter : ISelectionFilter
         {
             /// <summary>
-            /// Implementation of the filter method.
+            ///     Implementation of the filter method.
             /// </summary>
             /// <param name="element"></param>
             /// <returns></returns>
@@ -145,7 +143,7 @@ namespace Revit.SDK.Samples.Site.CS
             }
 
             /// <summary>
-            /// Implementation of the filter method.  
+            ///     Implementation of the filter method.
             /// </summary>
             /// <param name="refer"></param>
             /// <param name="point"></param>
@@ -157,12 +155,12 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// A selection filter to pass topography surfaces which don't represent subregions.
+        ///     A selection filter to pass topography surfaces which don't represent subregions.
         /// </summary>
-        class TopographySurfaceSelectionFilter : ISelectionFilter
+        private class TopographySurfaceSelectionFilter : ISelectionFilter
         {
             /// <summary>
-            /// Implementation of the filter method.
+            ///     Implementation of the filter method.
             /// </summary>
             /// <param name="element"></param>
             /// <returns></returns>
@@ -174,7 +172,7 @@ namespace Revit.SDK.Samples.Site.CS
             }
 
             /// <summary>
-            /// Implementation of the filter method.
+            ///     Implementation of the filter method.
             /// </summary>
             /// <param name="refer"></param>
             /// <param name="point"></param>

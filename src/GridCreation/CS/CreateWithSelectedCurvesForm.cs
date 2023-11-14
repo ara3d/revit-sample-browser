@@ -26,15 +26,15 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.GridCreation.CS
 {
     /// <summary>
-    /// The dialog which provides the options of creating grids with selected lines/arcs
+    ///     The dialog which provides the options of creating grids with selected lines/arcs
     /// </summary>
     public partial class CreateWithSelectedCurvesForm : Form
     {
         // data class object
-        private CreateWithSelectedCurvesData m_data;
+        private readonly CreateWithSelectedCurvesData m_data;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="data">Data class object</param>
         public CreateWithSelectedCurvesForm(CreateWithSelectedCurvesData data)
@@ -43,11 +43,11 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             InitializeComponent();
             // Set state of controls
-            InitializeControls(); 
+            InitializeControls();
         }
 
         /// <summary>
-        /// Set state of controls
+        ///     Set state of controls
         /// </summary>
         private void InitializeControls()
         {
@@ -58,27 +58,23 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             // Check if input are validated
             if (ValidateValues())
-            {
                 // Transfer data back into data class
                 SetData();
-            }
             else
-            {
                 DialogResult = DialogResult.None;
-            }
         }
 
         /// <summary>
-        /// Check if input are validated
+        ///     Check if input are validated
         /// </summary>
-        /// <returns>Whether input is validated</returns>        
+        /// <returns>Whether input is validated</returns>
         private bool ValidateValues()
         {
             return Validation.ValidateLabel(textBoxFirstLabel, m_data.LabelsList);
         }
 
         /// <summary>
-        /// Transfer data back into data class
+        ///     Transfer data back into data class
         /// </summary>
         private void SetData()
         {

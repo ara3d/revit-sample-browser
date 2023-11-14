@@ -19,38 +19,30 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
+
 using System.Collections;
+using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
 
 namespace Revit.SDK.Samples.DoorSwing.CS
 {
     /// <summary>
-    /// Stores all the needed data and operates RevitAPI.
+    ///     Stores all the needed data and operates RevitAPI.
     /// </summary>
     public class DoorSwingData
     {
-        
         // store door-opening types: user to decide how he wants to identify 
         // the Left, Right or others information.
         public static List<string> OpeningTypes = new List<string>();
 
         // store current project's door families.
 
-        UIApplication m_app;
+        private readonly UIApplication m_app;
 
-        
-        
-        // retrieves door families.
-        public List<DoorFamily> DoorFamilies { get; } = new List<DoorFamily>();
 
-        
-        
         /// <summary>
-        /// fill OpeningTypes static member variable.
+        ///     fill OpeningTypes static member variable.
         /// </summary>
         static DoorSwingData()
         {
@@ -69,7 +61,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         }
 
         /// <summary>
-        /// constructor.
+        ///     constructor.
         /// </summary>
         /// <param name="app"> Revit application</param>
         public DoorSwingData(UIApplication app)
@@ -84,27 +76,31 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             DoorSharedParameters.AddSharedParameters(app);
         }
 
+
+        // retrieves door families.
+        public List<DoorFamily> DoorFamilies { get; } = new List<DoorFamily>();
+
         /// <summary>
-        /// update door instances information: Left/Right information, related rooms information.
+        ///     update door instances information: Left/Right information, related rooms information.
         /// </summary>
         /// <param name="creFilter">One element filter utility object.</param>
         /// <param name="doc">Revit project.</param>
         /// <param name="onlyUpdateSelect">
-        /// true means only update selected doors' information otherwise false.
+        ///     true means only update selected doors' information otherwise false.
         /// </param>
         /// <param name="showUpdateResultMessage">
-        /// this parameter is used for invoking this method in Application's events (document save and document saveAs).
-        /// update door infos in Application level events should not show unnecessary messageBox.
+        ///     this parameter is used for invoking this method in Application's events (document save and document saveAs).
+        ///     update door infos in Application level events should not show unnecessary messageBox.
         /// </param>
         public static Result UpdateDoorsInfo(Document doc, bool onlyUpdateSelect,
-                                           bool showUpdateResultMessage, ref string message)
+            bool showUpdateResultMessage, ref string message)
         {
-            if ((!AssignedAllRooms(doc)) && showUpdateResultMessage)
+            if (!AssignedAllRooms(doc) && showUpdateResultMessage)
             {
                 var dialogResult = TaskDialog.Show("Door Swing", "One or more eligible areas of this level " +
                                                                  "have no assigned room(s). Doors bounding these areas " +
                                                                  "will be designated as external doors. Proceed anyway?",
-                                           TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No);
+                    TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No);
 
                 if (TaskDialogResult.No == dialogResult)
                 {
@@ -123,9 +119,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 var newUIdoc = new UIDocument(doc);
                 var es = new ElementSet();
                 foreach (var elementId in newUIdoc.Selection.GetElementIds())
-                {
-                   es.Insert(newUIdoc.Document.GetElement(elementId));
-                }
+                    es.Insert(newUIdoc.Document.GetElement(elementId));
                 iter = es.GetEnumerator();
             }
             else // update all doors in current Revit project.
@@ -144,20 +138,11 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
                 if (onlyUpdateSelect)
                 {
-                    if (null == door)
-                    {
-                        continue;
-                    }
+                    if (null == door) continue;
 
-                    if (null == door.Category)
-                    {
-                        continue;
-                    }
+                    if (null == door.Category) continue;
 
-                    if (!door.Category.Name.Equals("Doors"))
-                    {
-                        continue;
-                    }
+                    if (!door.Category.Name.Equals("Doors")) continue;
                 }
 
                 // check if has needed parameters.
@@ -193,30 +178,25 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
             if (showUpdateResultMessage)
             {
-
                 if (onlyUpdateSelect)
-                {
                     TaskDialog.Show("Door Swing", "Updated all selected doors of " + doc.Title +
-                                                         " (" + doorCount + " doors).\r\n (Selection may " +
-                                                         "include miscellaneous elements.)");
-                }
+                                                  " (" + doorCount + " doors).\r\n (Selection may " +
+                                                  "include miscellaneous elements.)");
                 else
-                {
                     TaskDialog.Show("Door Swing", "Updated all doors of " + doc.Title + " (" +
-                                                         doorCount + " doors).");
-                }
+                                                  doorCount + " doors).");
             }
 
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Doors related rooms: update doors' geometry according to its To/From room information.
+        ///     Doors related rooms: update doors' geometry according to its To/From room information.
         /// </summary>
         /// <param name="creFilter">One element filter utility object.</param>
         /// <param name="doc">Revit project.</param>
         /// <param name="onlyUpdateSelect">
-        /// true means only update selected doors' information else false.
+        ///     true means only update selected doors' information else false.
         /// </param>
         public static void UpdateDoorsGeometry(Document doc, bool onlyUpdateSelect)
         {
@@ -228,9 +208,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 var newUIdoc = new UIDocument(doc);
                 var es = new ElementSet();
                 foreach (var elementId in newUIdoc.Selection.GetElementIds())
-                {
-                   es.Insert(newUIdoc.Document.GetElement(elementId));
-                }
+                    es.Insert(newUIdoc.Document.GetElement(elementId));
                 iter = es.GetEnumerator();
             }
             else // update all doors in current Revit document
@@ -249,20 +227,11 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
                 if (onlyUpdateSelect)
                 {
-                    if (null == door)
-                    {
-                        continue;
-                    }
+                    if (null == door) continue;
 
-                    if (null == door.Category)
-                    {
-                        continue;
-                    }
+                    if (null == door.Category) continue;
 
-                    if (!door.Category.Name.Equals("Doors"))
-                    {
-                        continue;
-                    }
+                    if (!door.Category.Name.Equals("Doors")) continue;
                 }
 
                 // find one door.
@@ -274,19 +243,15 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             }
 
             if (onlyUpdateSelect)
-            {
                 TaskDialog.Show("Door Swing", "Updated all selected doors (" + doorCount +
-                                                     " doors).\r\n (Selection may include miscellaneous elements.)");
-            }
+                                              " doors).\r\n (Selection may include miscellaneous elements.)");
             else
-            {
                 TaskDialog.Show("Door Swing", "Updated all doors of this project (" +
-                                                     doorCount + " doors).");
-            }
+                                              doorCount + " doors).");
         }
 
         /// <summary>
-        /// Update doors' Left/Right information.
+        ///     Update doors' Left/Right information.
         /// </summary>
         /// <param name="door">one door instance.</param>
         private static Result UpdateOpeningFeatureOfOneDoor(FamilyInstance door)
@@ -297,10 +262,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             // When the door is being mirrored once, the door switches its direction; 
             // When the door is being flipped once, the door switches its direction.
             // When the door is being mirrored and flipped, the door's direction remains the same.
-            if (door.FacingFlipped ^ door.HandFlipped)
-            {
-                switchesOpeningValueFlag = true;
-            }
+            if (door.FacingFlipped ^ door.HandFlipped) switchesOpeningValueFlag = true;
 
             // get door's Opening parameter which indicates whether the door is Left or Right.
             var openingParam = door.ParametersMap.get_Item("InstanceOpening");
@@ -312,44 +274,26 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             if (switchesOpeningValueFlag)
             {
                 if (DoorSwingResource.LeftDoor.Equals(basalOpeningValue))
-                {
                     rightOpeningValue = DoorSwingResource.RightDoor;
-                }
                 else if (DoorSwingResource.RightDoor.Equals(basalOpeningValue))
-                {
                     rightOpeningValue = DoorSwingResource.LeftDoor;
-                }
                 else if (DoorSwingResource.TwoLeafActiveLeafLeft.Equals(basalOpeningValue))
-                {
                     rightOpeningValue = DoorSwingResource.TwoLeafActiveLeafRight;
-                }
                 else if (DoorSwingResource.TwoLeafActiveLeafRight.Equals(basalOpeningValue))
-                {
                     rightOpeningValue = DoorSwingResource.TwoLeafActiveLeafLeft;
-                }
                 else if (DoorSwingResource.TwoLeaf.Equals(basalOpeningValue))
-                {
                     rightOpeningValue = DoorSwingResource.TwoLeaf;
-                }
                 else if (DoorSwingResource.Undefined.Equals(basalOpeningValue))
-                {
                     rightOpeningValue = DoorSwingResource.Undefined;
-                }
                 else
-                {
                     return Result.Failed;
-                }
             }
             else
             {
                 if (OpeningTypes.Contains(basalOpeningValue))
-                {
                     rightOpeningValue = basalOpeningValue;
-                }
                 else
-                {
                     return Result.Failed;
-                }
             }
 
             // update door's Opening param.
@@ -358,7 +302,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         }
 
         /// <summary>
-        /// Update one door's internalDoor flag which indicates the door is internal door or external door.
+        ///     Update one door's internalDoor flag which indicates the door is internal door or external door.
         /// </summary>
         /// <param name="door">one door instance.</param>
         private static void UpdateInternalDoorFlagFeatureofOneDoor(FamilyInstance door)
@@ -369,32 +313,25 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             // "Internal Door" is decided based on whether door's ToRoom and FromRoom properties both have values.
             // 1 means internal door, 0 means external door.
             if (null != door.ToRoom && null != door.FromRoom) // considered as internal door.
-            {
                 internalDoorFlagParam.Set(1);
-            }
             else
-            {
                 internalDoorFlagParam.Set(0); // considered as external door.
-            }
         }
 
         /// <summary>
-        /// Doors related rooms: update one door's To/From room information or geometry.
+        ///     Doors related rooms: update one door's To/From room information or geometry.
         /// </summary>
         /// <param name="door">one door instance.</param>
         /// <param name="updateGeo">
-        /// true means update geometry else update To/From room information.
+        ///     true means update geometry else update To/From room information.
         /// </param>
         private static void UpdateFromToRoomofOneDoor(FamilyInstance door, bool updateGeo)
         {
-            if (null == door.ToRoom && null == door.FromRoom)
-            {
-                return;
-            }
+            if (null == door.ToRoom && null == door.FromRoom) return;
 
             // update the door's geometry according to door's To/From room info.
             // standard: door.ToRoom should keep consistent with door.Room else need update.
-            if ((null == door.Room) && (null == door.FromRoom))
+            if (null == door.Room && null == door.FromRoom)
             {
                 // only external door may have this status.
                 // door.Room are consistent with door.FromRoom, so need update.
@@ -408,7 +345,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                     door.FlipFromToRoom();
                 }
             }
-            else if ((null != door.Room) && (null != door.FromRoom))
+            else if (null != door.Room && null != door.FromRoom)
             {
                 // door.Room are consistent with door.FromRoom, so need update.
                 if (door.Room.Id == door.FromRoom.Id)
@@ -427,7 +364,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         }
 
         /// <summary>
-        /// Iterate through plan topology to determine if all plan circuits have assigned rooms.
+        ///     Iterate through plan topology to determine if all plan circuits have assigned rooms.
         /// </summary>
         /// <param name="doc">Revit project.</param>
         /// <returns> true means all plan circuits have assigned rooms else not.</returns>
@@ -446,10 +383,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                     var locatedRoom = circuit.IsRoomLocated;
 
                     if (!locatedRoom)
-                    {
                         // If any circuit isn't assigned room, then method return false.
                         return locatedRoom;
-                    }
                 }
             }
 
@@ -457,51 +392,43 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         }
 
         /// <summary>
-        /// Do Door symbols' Opening set based on family's basic geometry and country's standard.
+        ///     Do Door symbols' Opening set based on family's basic geometry and country's standard.
         /// </summary>
         public void UpdateDoorFamiliesOpeningFeature()
         {
-            for (var i = 0; i < DoorFamilies.Count; i++)
-            {
-                DoorFamilies[i].UpdateOpeningFeature();
-            }
+            for (var i = 0; i < DoorFamilies.Count; i++) DoorFamilies[i].UpdateOpeningFeature();
         }
 
         /// <summary>
-        /// Delete temporarily created door instances which are used to retrieve geometry. Retrieved 
-        /// geometry will shown to users. So they can initialize door opening parameter more visually. 
+        ///     Delete temporarily created door instances which are used to retrieve geometry. Retrieved
+        ///     geometry will shown to users. So they can initialize door opening parameter more visually.
         /// </summary>
         public void DeleteTempDoorInstances()
         {
-            for (var i = 0; i < DoorFamilies.Count; i++)
-            {
-                DoorFamilies[i].DeleteTempDoorInstance();
-            }
+            for (var i = 0; i < DoorFamilies.Count; i++) DoorFamilies[i].DeleteTempDoorInstance();
         }
 
         /// <summary>
-        /// get all the door families in the project. 
-        /// And store them in two lists separately based on opening parameter.
+        ///     get all the door families in the project.
+        ///     And store them in two lists separately based on opening parameter.
         /// </summary>
         private void PrepareDoorFamilies()
         {
             // prepare DoorFamilies
-            var familyIter = new FilteredElementCollector(m_app.ActiveUIDocument.Document).OfClass(typeof(Family)).GetElementIterator();
+            var familyIter = new FilteredElementCollector(m_app.ActiveUIDocument.Document).OfClass(typeof(Family))
+                .GetElementIterator();
 
             while (familyIter.MoveNext())
             {
                 var doorFamily = familyIter.Current as Family;
 
                 if (null == doorFamily.FamilyCategory) // some family.FamilyCategory is null
-                {
                     continue;
-                }
 
                 if (doorFamily.FamilyCategory.Name !=
-                    m_app.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Doors).Name) // FamilyCategory.Name is not 'Doors'
-                {
+                    m_app.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Doors)
+                        .Name) // FamilyCategory.Name is not 'Doors'
                     continue;
-                }
                 // create one instance of self class DoorFamily.
                 var tempDoorFamily = new DoorFamily(doorFamily, m_app);
 
@@ -509,6 +436,5 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 DoorFamilies.Add(tempDoorFamily);
             }
         }
-
-            }
+    }
 }

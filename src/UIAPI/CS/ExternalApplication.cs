@@ -22,118 +22,44 @@
 
 
 using System;
-using System.Linq;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Events;
+using Revit.SDK.Samples.UIAPI.CS.Properties;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
-namespace Revit.SDK.Samples.UIAPI.CS 
+namespace Revit.SDK.Samples.UIAPI.CS
 {
-   public class ExternalApp : IExternalApplication
+    public class ExternalApp : IExternalApplication
     {
+        private static readonly string addinAssmeblyPath = typeof(ExternalApp).Assembly.Location;
 
-        static string addinAssmeblyPath = typeof(ExternalApp).Assembly.Location;
-
-        /// <summary>
-        /// Loads the default Mass template automatically rather than showing UI.
-        /// </summary>
-        /// <param name="application">An object that is passed to the external application 
-        /// which contains the controlled application.</param>
-        void createCommandBinding(UIControlledApplication application)
-        {
-           var wallCreate = RevitCommandId.LookupCommandId("ID_NEW_REVIT_DESIGN_MODEL");
-           var binding = application.CreateAddInCommandBinding(wallCreate);
-           binding.Executed += new EventHandler<Autodesk.Revit.UI.Events.ExecutedEventArgs>(binding_Executed);
-           binding.CanExecute += new EventHandler<Autodesk.Revit.UI.Events.CanExecuteEventArgs>(binding_CanExecute);
-        }
-
-
-        BitmapSource convertFromBitmap(System.Drawing.Bitmap bitmap)
-        {
-            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                bitmap.GetHbitmap(),
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions());
-        }
-
-        void createRibbonButton(UIControlledApplication application)
-        {
-            application.CreateRibbonTab("AddIn Integration");
-            var rp = application.CreateRibbonPanel("AddIn Integration", "Testing");
-
-            var pbd = new PushButtonData("Wall", "Goto WikiHelp for wall creation",
-                    addinAssmeblyPath,
-                    "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
-            var ch = new ContextualHelp(ContextualHelpType.ContextId, "HID_OBJECTS_WALL");
-            pbd.SetContextualHelp(ch);
-            pbd.LongDescription = "We redirect the wiki help for this button to Wall creation.";
-            pbd.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
-            pbd.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
-            
-            var pb = rp.AddItem(pbd) as PushButton;
-            pb.Enabled = true;
-            pb.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
-
-            var pbd1 = new PushButtonData("GotoGoogle", "Go to Google",
-                    addinAssmeblyPath,
-                    "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
-            var ch1 = new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
-            pbd1.SetContextualHelp(ch1);
-            pbd1.LongDescription = "Go to google.";
-            pbd1.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
-            pbd1.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
-            var pb1 = rp.AddItem(pbd1) as PushButton;
-            pb1.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
-
-            var pbd2 = new PushButtonData("GotoRevitAddInUtilityHelpFile", "Go to Revit Add-In Utility",
-                addinAssmeblyPath,
-                "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
-
-            var ch2 = new ContextualHelp(ContextualHelpType.ChmFile, Path.GetDirectoryName(addinAssmeblyPath) + @"\RevitAddInUtility.chm");
-            ch2.HelpTopicUrl = @"html/3374f8f0-dccc-e1df-d269-229ed8c60e93.htm";    
-            pbd2.SetContextualHelp(ch2);
-            pbd2.LongDescription = "Go to Revit Add-In Utility.";
-            pbd2.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
-            pbd2.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
-            var pb2 = rp.AddItem(pbd2) as PushButton;
-            pb2.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
-
-
-            var pbd3 = new PushButtonData("PreviewControl", "Preview all views",
-                addinAssmeblyPath,
-                "Revit.SDK.Samples.UIAPI.CS.PreviewCommand");
-            pbd3.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
-            pbd3.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
-            var pb3 = rp.AddItem(pbd3) as PushButton;
-            pb3.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
-
-
-            var pbd5 = new PushButtonData("Drag_And_Drop", "Drag and Drop", addinAssmeblyPath,
-                                                     "Revit.SDK.Samples.UIAPI.CS.DragAndDropCommand");
-            pbd5.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
-            pbd5.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
-            var pb5 = rp.AddItem(pbd5) as PushButton;
-            pb5.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
-        }
+        public UIControlledApplication UIControlledApplication { get; private set; }
 
 
         /// <summary>
-        /// Implement this method to implement the external application which should be called when 
-        /// Revit is about to exit,Any documents must have been closed before this method is called.
+        ///     Implement this method to implement the external application which should be called when
+        ///     Revit is about to exit,Any documents must have been closed before this method is called.
         /// </summary>
-        /// <param name="application">An object that is passed to the external application 
-        /// which contains the controlled application.</param>
-        /// <returns>Return the status of the external application.
-        /// A result of Succeeded means that the external application successfully shutdown. 
-        /// Cancelled can be used to signify that the user cancelled the external operation at 
-        /// some point.                                                                        
-        /// If false is returned then the Revit user should be warned of the failure of the external 
-        /// application to shut down correctly.</returns> 
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.
+        ///     A result of Succeeded means that the external application successfully shutdown.
+        ///     Cancelled can be used to signify that the user cancelled the external operation at
+        ///     some point.
+        ///     If false is returned then the Revit user should be warned of the failure of the external
+        ///     application to shut down correctly.
+        /// </returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
@@ -142,14 +68,18 @@ namespace Revit.SDK.Samples.UIAPI.CS
         /// Implement this method to implement the external application which should be called when 
         /// Revit starts before a file or default template is actually loaded.
         /// </summary>
-        /// <param name="application">An object that is passed to the external application
-        /// which contains the controlled application.</param>
-        /// <returns>Return the status of the external application.
-        /// A result of Succeeded means that the external application successfully started.
-        /// Cancelled can be used to signify that the user cancelled the external operation at
-        /// some point.
-        /// If false is returned then Revit should inform the user that the external application
-        /// failed to load and the release the internal reference.</returns> 
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.
+        ///     A result of Succeeded means that the external application successfully started.
+        ///     Cancelled can be used to signify that the user cancelled the external operation at
+        ///     some point.
+        ///     If false is returned then Revit should inform the user that the external application
+        ///     failed to load and the release the internal reference.
+        /// </returns>
         public Result OnStartup(UIControlledApplication application)
         {
             UIControlledApplication = application;
@@ -157,84 +87,167 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
             createCommandBinding(application);
             createRibbonButton(application);
-            
+
             // add custom tabs to options dialog.
             var addTabCommand = new AddTabCommand(application);
             addTabCommand.AddTabToOptionsDialog();
             return Result.Succeeded;
         }
 
-        public UIControlledApplication UIControlledApplication { get; private set; }
+        /// <summary>
+        ///     Loads the default Mass template automatically rather than showing UI.
+        /// </summary>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        private void createCommandBinding(UIControlledApplication application)
+        {
+            var wallCreate = RevitCommandId.LookupCommandId("ID_NEW_REVIT_DESIGN_MODEL");
+            var binding = application.CreateAddInCommandBinding(wallCreate);
+            binding.Executed += binding_Executed;
+            binding.CanExecute += binding_CanExecute;
+        }
 
-        void binding_CanExecute(object sender, Autodesk.Revit.UI.Events.CanExecuteEventArgs e)
+
+        private BitmapSource convertFromBitmap(Bitmap bitmap)
+        {
+            return Imaging.CreateBitmapSourceFromHBitmap(
+                bitmap.GetHbitmap(),
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        private void createRibbonButton(UIControlledApplication application)
+        {
+            application.CreateRibbonTab("AddIn Integration");
+            var rp = application.CreateRibbonPanel("AddIn Integration", "Testing");
+
+            var pbd = new PushButtonData("Wall", "Goto WikiHelp for wall creation",
+                addinAssmeblyPath,
+                "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
+            var ch = new ContextualHelp(ContextualHelpType.ContextId, "HID_OBJECTS_WALL");
+            pbd.SetContextualHelp(ch);
+            pbd.LongDescription = "We redirect the wiki help for this button to Wall creation.";
+            pbd.LargeImage = convertFromBitmap(Resources.StrcturalWall);
+            pbd.Image = convertFromBitmap(Resources.StrcturalWall_S);
+
+            var pb = rp.AddItem(pbd) as PushButton;
+            pb.Enabled = true;
+            pb.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
+
+            var pbd1 = new PushButtonData("GotoGoogle", "Go to Google",
+                addinAssmeblyPath,
+                "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
+            var ch1 = new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
+            pbd1.SetContextualHelp(ch1);
+            pbd1.LongDescription = "Go to google.";
+            pbd1.LargeImage = convertFromBitmap(Resources.StrcturalWall);
+            pbd1.Image = convertFromBitmap(Resources.StrcturalWall_S);
+            var pb1 = rp.AddItem(pbd1) as PushButton;
+            pb1.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
+
+            var pbd2 = new PushButtonData("GotoRevitAddInUtilityHelpFile", "Go to Revit Add-In Utility",
+                addinAssmeblyPath,
+                "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
+
+            var ch2 = new ContextualHelp(ContextualHelpType.ChmFile,
+                Path.GetDirectoryName(addinAssmeblyPath) + @"\RevitAddInUtility.chm");
+            ch2.HelpTopicUrl = @"html/3374f8f0-dccc-e1df-d269-229ed8c60e93.htm";
+            pbd2.SetContextualHelp(ch2);
+            pbd2.LongDescription = "Go to Revit Add-In Utility.";
+            pbd2.LargeImage = convertFromBitmap(Resources.StrcturalWall);
+            pbd2.Image = convertFromBitmap(Resources.StrcturalWall_S);
+            var pb2 = rp.AddItem(pbd2) as PushButton;
+            pb2.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
+
+
+            var pbd3 = new PushButtonData("PreviewControl", "Preview all views",
+                addinAssmeblyPath,
+                "Revit.SDK.Samples.UIAPI.CS.PreviewCommand");
+            pbd3.LargeImage = convertFromBitmap(Resources.StrcturalWall);
+            pbd3.Image = convertFromBitmap(Resources.StrcturalWall_S);
+            var pb3 = rp.AddItem(pbd3) as PushButton;
+            pb3.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
+
+
+            var pbd5 = new PushButtonData("Drag_And_Drop", "Drag and Drop", addinAssmeblyPath,
+                "Revit.SDK.Samples.UIAPI.CS.DragAndDropCommand");
+            pbd5.LargeImage = convertFromBitmap(Resources.StrcturalWall);
+            pbd5.Image = convertFromBitmap(Resources.StrcturalWall_S);
+            var pb5 = rp.AddItem(pbd5) as PushButton;
+            pb5.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
+        }
+
+        private void binding_CanExecute(object sender, CanExecuteEventArgs e)
         {
             e.CanExecute = true;
         }
 
-        void binding_Executed(object sender, Autodesk.Revit.UI.Events.ExecutedEventArgs e)
+        private void binding_Executed(object sender, ExecutedEventArgs e)
         {
-           var uiApp = sender as UIApplication;
-           if (uiApp == null)
-              return;
+            var uiApp = sender as UIApplication;
+            if (uiApp == null)
+                return;
 
-           var famTemplatePath = uiApp.Application.FamilyTemplatePath;
-           var conceptualmassTemplatePath = famTemplatePath + @"\Conceptual Mass\Mass.rft";
-           if (File.Exists(conceptualmassTemplatePath))
-           {
-              //uiApp.OpenAndActivateDocument(conceptualmassTemplatePath);
-              var familyDocument = uiApp.Application.NewFamilyDocument(conceptualmassTemplatePath);
-              if (null == familyDocument)
-              {
-                 throw new Exception("Cannot open family document");
-              }
+            var famTemplatePath = uiApp.Application.FamilyTemplatePath;
+            var conceptualmassTemplatePath = famTemplatePath + @"\Conceptual Mass\Mass.rft";
+            if (File.Exists(conceptualmassTemplatePath))
+            {
+                //uiApp.OpenAndActivateDocument(conceptualmassTemplatePath);
+                var familyDocument = uiApp.Application.NewFamilyDocument(conceptualmassTemplatePath);
+                if (null == familyDocument) throw new Exception("Cannot open family document");
 
-              var fileName = Guid.NewGuid().ToString() + ".rfa";
-              familyDocument.SaveAs(fileName);
-              familyDocument.Close();
+                var fileName = Guid.NewGuid() + ".rfa";
+                familyDocument.SaveAs(fileName);
+                familyDocument.Close();
 
-              uiApp.OpenAndActivateDocument(fileName);
+                uiApp.OpenAndActivateDocument(fileName);
 
-              var collector = new FilteredElementCollector(uiApp.ActiveUIDocument.Document);
-              collector = collector.OfClass(typeof(View3D));
+                var collector = new FilteredElementCollector(uiApp.ActiveUIDocument.Document);
+                collector = collector.OfClass(typeof(View3D));
 
-              var query = from element in collector
+                var query = from element in collector
+                    where element.Name == "{3D}"
+                    select element; // Linq query  
 
-                          where element.Name == "{3D}"
+                var views = query.ToList();
 
-                          select element; // Linq query  
-
-              var views = query.ToList<Element>();
-
-              var view3D = views[0] as View3D;
-              if(view3D != null)
-               uiApp.ActiveUIDocument.ActiveView = view3D;
-
-
-
-           }
+                var view3D = views[0] as View3D;
+                if (view3D != null)
+                    uiApp.ActiveUIDocument.ActiveView = view3D;
+            }
         }
     }
 
-   /// <summary>
-   /// Implement this method as an external command for Revit.
-   /// </summary>
-   /// <param name="commandData">An object that is passed to the external application
-   /// which contains data related to the command,
-   /// such as the application object and active view.</param>
-   /// <param name="message">A message that can be set by the external application
-   /// which will be displayed if a failure or cancellation is returned by
-   /// the external command.</param>
-   /// <param name="elements">A set of elements to which the external application
-   /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-   /// <returns>Return the status of the external command.
-   /// A result of Succeeded means that the API external method functioned as expected.
-   /// Cancelled can be used to signify that the user cancelled the external operation 
-   /// at some point. Failure should be returned if the application is unable to proceed with
-   /// the operation.</returns>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+    /// <summary>
+    ///     Implement this method as an external command for Revit.
+    /// </summary>
+    /// <param name="commandData">
+    ///     An object that is passed to the external application
+    ///     which contains data related to the command,
+    ///     such as the application object and active view.
+    /// </param>
+    /// <param name="message">
+    ///     A message that can be set by the external application
+    ///     which will be displayed if a failure or cancellation is returned by
+    ///     the external command.
+    /// </param>
+    /// <param name="elements">
+    ///     A set of elements to which the external application
+    ///     can add elements that are to be highlighted in case of failure or cancellation.
+    /// </param>
+    /// <returns>
+    ///     Return the status of the external command.
+    ///     A result of Succeeded means that the API external method functioned as expected.
+    ///     Cancelled can be used to signify that the user cancelled the external operation
+    ///     at some point. Failure should be returned if the application is unable to proceed with
+    ///     the operation.
+    /// </returns>
+    [Transaction(TransactionMode.Manual)]
     public class CalcCommand : IExternalCommand
     {
-
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             TaskDialog.Show("Dummy command", "This is a dummy command for buttons associated to contextual help.");

@@ -23,18 +23,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
     /// <summary>
-    /// Tool used to draw circle
+    ///     Tool used to draw circle
     /// </summary>
-    class CircleTool:ITool
+    internal class CircleTool : ITool
     {
         /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
         public CircleTool()
         {
@@ -42,19 +42,16 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Draw circles contained in the tool
+        ///     Draw circles contained in the tool
         /// </summary>
         /// <param name="graphic"></param>
         public override void Draw(Graphics graphic)
         {
-            foreach (var line in m_lines)
-            {
-                DrawCircle(graphic, m_foreGroundPen, line[0], line[1]);
-            }            
+            foreach (var line in m_lines) DrawCircle(graphic, m_foreGroundPen, line[0], line[1]);
         }
 
         /// <summary>
-        /// Mouse down event handler
+        ///     Mouse down event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
@@ -66,22 +63,19 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 m_preMovePoint = e.Location;
                 m_points.Add(e.Location);
 
-                if (2 == m_points.Count)
-                {
-                    DrawCircle(graphic, m_foreGroundPen, m_points[0], m_points[1]);
-                }
+                if (2 == m_points.Count) DrawCircle(graphic, m_foreGroundPen, m_points[0], m_points[1]);
             }
         }
 
         /// <summary>
-        /// Mouse move event handler
+        ///     Mouse move event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
             base.OnMouseMove(graphic, e);
-            
+
             if (1 == m_points.Count)
             {
                 DrawCircle(graphic, m_backGroundPen, m_points[0], m_preMovePoint);
@@ -91,7 +85,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Mouse up event handler
+        ///     Mouse up event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
@@ -108,19 +102,19 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Draw circle with center and one point on circle
+        ///     Draw circle with center and one point on circle
         /// </summary>
         /// <param name="graphics">Graphics object, used  to draw geometry</param>
         /// <param name="pen">Pen used to set drawing color</param>
         /// <param name="pCenter">Circle center</param>
         /// <param name="pBound">One point on circle</param>
-        private void DrawCircle(Graphics graphics,Pen pen, Point pCenter, Point pBound)
+        private void DrawCircle(Graphics graphics, Pen pen, Point pCenter, Point pBound)
         {
             var radius = (int)Math.Sqrt((pBound.X - pCenter.X) * (pBound.X - pCenter.X)
                                         + (pBound.Y - pCenter.Y) * (pBound.Y - pCenter.Y));
             var radiusSize = new Size(radius, radius);
             var uperLeft = pCenter - radiusSize;
             graphics.DrawEllipse(pen, uperLeft.X, uperLeft.Y, 2 * radius, 2 * radius);
-        }        
+        }
     }
 }

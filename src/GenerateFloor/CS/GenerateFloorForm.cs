@@ -27,40 +27,42 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.GenerateFloor.CS
 {
     /// <summary>
-    /// User interface.
+    ///     User interface.
     /// </summary>
     public partial class GenerateFloorForm : Form
     {
         /// <summary>
-        /// the data get/set with revit. 
+        ///     the data get/set with revit.
         /// </summary>
-        private Data m_data;
+        private readonly Data m_data;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="data"></param>
         public GenerateFloorForm(Data data)
         {
             m_data = data;
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         /// <summary>
-        /// paint the floor's profile.
+        ///     paint the floor's profile.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void previewPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            double maxLength = previewPictureBox.Width > previewPictureBox.Height ? previewPictureBox.Width : previewPictureBox.Height;
+            double maxLength = previewPictureBox.Width > previewPictureBox.Height
+                ? previewPictureBox.Width
+                : previewPictureBox.Height;
             var scale = (float)(maxLength / m_data.MaxLength * 0.8);
             e.Graphics.ScaleTransform(scale, scale);
             e.Graphics.DrawLines(new Pen(Color.Red, 1), m_data.Points);
         }
 
         /// <summary>
-        /// initialize the data binding with revit.
+        ///     initialize the data binding with revit.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -71,7 +73,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
         }
 
         /// <summary>
-        /// set the floor type to be create.
+        ///     set the floor type to be create.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -81,7 +83,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
         }
 
         /// <summary>
-        /// set if the floor to be create is structural.
+        ///     set if the floor to be create is structural.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

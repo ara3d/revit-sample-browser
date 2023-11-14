@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
@@ -28,12 +29,12 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.PanelSchedule.CS
 {
     /// <summary>
-    /// Import the panel scheduel view to place on a sheet view.
+    ///     Import the panel scheduel view to place on a sheet view.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    class SheetImport : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    internal class SheetImport : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
@@ -62,10 +63,8 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
             {
                 var psView = element as PanelScheduleView;
                 if (psView.IsPanelScheduleTemplate())
-                {
                     // ignore the PanelScheduleView instance which is a template.
                     continue;
-                }
 
                 var onSheet = PanelScheduleSheetInstance.Create(doc, psView.Id, sheet);
                 onSheet.Origin = nextOrigin;
@@ -77,7 +76,6 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
             placePanelScheduleOnSheet.Commit();
 
             return Result.Succeeded;
-
         }
     }
 }

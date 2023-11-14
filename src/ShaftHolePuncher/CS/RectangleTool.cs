@@ -20,22 +20,22 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 {
     /// <summary>
-    /// tool used to draw line
+    ///     tool used to draw line
     /// </summary>
-    public class RectangleTool : ITool
+    public class RectangleTool : Tool
     {
         /// <summary>
-        /// draw a line from end point of tool to the location where mouse move
+        ///     draw a line from end point of tool to the location where mouse move
         /// </summary>
         /// <param name="graphic">graphic object,used to draw geometry</param>
         /// <param name="e">mouse event args</param>
-        public override void OnMouseMove(Graphics graphic, 
+        public override void OnMouseMove(Graphics graphic,
             MouseEventArgs e)
         {
             if (1 == m_points.Count)
@@ -47,37 +47,31 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// record the location point where mouse clicked
+        ///     record the location point where mouse clicked
         /// </summary>
         /// <param name="e">mouse event args</param>
         public override void OnMouseDown(MouseEventArgs e)
         {
-            if (MouseButtons.Left == e.Button && !m_finished 
-                && GetDistance(m_preDownPoint, e.Location) > 2)
+            if (MouseButtons.Left == e.Button && !m_finished
+                                              && GetDistance(m_preDownPoint, e.Location) > 2)
             {
                 m_preDownPoint = e.Location;
                 m_points.Add(e.Location);
-                if (2 == m_points.Count)
-                {
-                    m_finished = true;
-                }
+                if (2 == m_points.Count) m_finished = true;
             }
         }
 
         /// <summary>
-        /// draw a rectangle
+        ///     draw a rectangle
         /// </summary>
         /// <param name="graphic">Graphics object, use to draw geometry</param>
         public override void Draw(Graphics graphic)
         {
-            if (2 == m_points.Count)
-            {
-                DrawRect(graphic, m_foreGroundPen, m_points[0], m_points[1]);
-            }
+            if (2 == m_points.Count) DrawRect(graphic, m_foreGroundPen, m_points[0], m_points[1]);
         }
 
         /// <summary>
-        /// draw rectangle use the given two points p1 and p2
+        ///     draw rectangle use the given two points p1 and p2
         /// </summary>
         /// <param name="graphic">Graphics object,used to draw geometry</param>
         /// <param name="pen">Pen used to set color</param>
@@ -85,8 +79,11 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <param name="p2">opposite corner of p1</param>
         private void DrawRect(Graphics graphic, Pen pen, Point p1, Point p2)
         {
-            var points = new Point[5] { p1, new Point(p1.X, p2.Y), 
-                p2, new Point(p2.X, p1.Y), p1 };
+            var points = new Point[5]
+            {
+                p1, new Point(p1.X, p2.Y),
+                p2, new Point(p2.X, p1.Y), p1
+            };
             graphic.DrawLines(pen, points);
         }
     }

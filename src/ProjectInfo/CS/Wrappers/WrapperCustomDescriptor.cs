@@ -26,59 +26,26 @@ using System.ComponentModel;
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
-    /// 
     /// </summary>
     public class WrapperCustomDescriptor : ICustomTypeDescriptor, IWrapper
     {
-                /// <summary>
-        /// Handle object
+        /// <summary>
+        ///     Handle object
         /// </summary>
-        object m_handle; 
-        
-                /// <summary>
-        /// Initializes handle object
+        private readonly object m_handle;
+
+        /// <summary>
+        ///     Initializes handle object
         /// </summary>
         /// <param name="handle">Handle object</param>
         public WrapperCustomDescriptor(object handle)
         {
             m_handle = handle;
-        } 
-        
-        
-        /// <summary>
-        /// Gets handle object
-        /// </summary>
-        public object Handle => m_handle;
-
-        /// <summary>
-        /// Gets the name of the handle object if it has the Name property,
-        /// otherwise returns Handle.ToString().
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                var mi = Handle.GetType().GetMethod("get_Name", new Type[0]);
-                if (mi != null)
-                {
-                    var name = mi.Invoke(Handle, new object[0]);
-                    if (name != null)
-                    {
-                        return name.ToString();
-                    }
-                    else
-                    {
-                        return string.Empty;
-                    }
-                }
-                return Handle.ToString();
-            }
         }
 
-        
-                
+
         /// <summary>
-        /// Returns a collection of custom attributes for this instance of a component.
+        ///     Returns a collection of custom attributes for this instance of a component.
         /// </summary>
         /// <returns>Handle's attributes</returns>
         public AttributeCollection GetAttributes()
@@ -87,7 +54,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns the class name of this instance of a component.
+        ///     Returns the class name of this instance of a component.
         /// </summary>
         /// <returns>Handle's class name</returns>
         public string GetClassName()
@@ -96,7 +63,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns the name of this instance of a component.
+        ///     Returns the name of this instance of a component.
         /// </summary>
         /// <returns>The name of handle object</returns>
         public string GetComponentName()
@@ -105,7 +72,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns a type converter for this instance of a component.
+        ///     Returns a type converter for this instance of a component.
         /// </summary>
         /// <returns>The converter of the handle</returns>
         public TypeConverter GetConverter()
@@ -114,38 +81,44 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns the default event for this instance of a component.
+        ///     Returns the default event for this instance of a component.
         /// </summary>
-        /// <returns>An EventDescriptor that represents the default event for this object, 
-        /// or null if this object does not have events.</returns>
+        /// <returns>
+        ///     An EventDescriptor that represents the default event for this object,
+        ///     or null if this object does not have events.
+        /// </returns>
         public EventDescriptor GetDefaultEvent()
         {
             return TypeDescriptor.GetDefaultEvent(m_handle, false);
         }
 
         /// <summary>
-        /// Returns the default property for this instance of a component.
+        ///     Returns the default property for this instance of a component.
         /// </summary>
-        /// <returns>A PropertyDescriptor that represents the default property for this object, 
-        /// or null if this object does not have properties.</returns>
+        /// <returns>
+        ///     A PropertyDescriptor that represents the default property for this object,
+        ///     or null if this object does not have properties.
+        /// </returns>
         public PropertyDescriptor GetDefaultProperty()
         {
             return TypeDescriptor.GetDefaultProperty(m_handle, false);
         }
 
         /// <summary>
-        /// Returns an editor of the specified type for this instance of a component.
+        ///     Returns an editor of the specified type for this instance of a component.
         /// </summary>
         /// <param name="editorBaseType">A Type that represents the editor for this object. </param>
-        /// <returns>An Object of the specified type that is the editor for this object, 
-        /// or null if the editor cannot be found.</returns>
+        /// <returns>
+        ///     An Object of the specified type that is the editor for this object,
+        ///     or null if the editor cannot be found.
+        /// </returns>
         public object GetEditor(Type editorBaseType)
         {
             return TypeDescriptor.GetEditor(m_handle, editorBaseType, false);
         }
 
         /// <summary>
-        /// Returns the events for this instance of a component using the specified attribute array as a filter.
+        ///     Returns the events for this instance of a component using the specified attribute array as a filter.
         /// </summary>
         /// <param name="attributes">An array of type Attribute that is used as a filter. </param>
         /// <returns>An EventDescriptorCollection that represents the filtered events for this component instance.</returns>
@@ -155,7 +128,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns the events for this instance of a component.
+        ///     Returns the events for this instance of a component.
         /// </summary>
         /// <returns>An EventDescriptorCollection that represents the events for this component instance.</returns>
         public EventDescriptorCollection GetEvents()
@@ -164,11 +137,13 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns the properties for this instance of a component using the attribute array as a filter.
+        ///     Returns the properties for this instance of a component using the attribute array as a filter.
         /// </summary>
         /// <param name="attributes">An array of type Attribute that is used as a filter.</param>
-        /// <returns>A PropertyDescriptorCollection that 
-        /// represents the filtered properties for this component instance.</returns>
+        /// <returns>
+        ///     A PropertyDescriptorCollection that
+        ///     represents the filtered properties for this component instance.
+        /// </returns>
         public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
             // get handle's properties
@@ -192,24 +167,28 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                         break;
                     }
                 }
+
                 if (matchRevitVersion)
                     collection2.Add(pd);
             }
+
             return collection2;
         }
 
         /// <summary>
-        /// Returns the properties for this instance of a component.
+        ///     Returns the properties for this instance of a component.
         /// </summary>
-        /// <returns>A PropertyDescriptorCollection that represents the properties 
-        /// for this component instance.</returns>
+        /// <returns>
+        ///     A PropertyDescriptorCollection that represents the properties
+        ///     for this component instance.
+        /// </returns>
         public PropertyDescriptorCollection GetProperties()
         {
             return TypeDescriptor.GetProperties(m_handle, false);
         }
 
         /// <summary>
-        /// Returns an object that contains the property described by the specified property descriptor.
+        ///     Returns an object that contains the property described by the specified property descriptor.
         /// </summary>
         /// <param name="pd">A PropertyDescriptor that represents the property whose owner is to be found. </param>
         /// <returns>Handle object</returns>
@@ -218,14 +197,41 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             return m_handle;
         }
 
-        
+
         /// <summary>
-        /// overrides ToString method
+        ///     Gets handle object
+        /// </summary>
+        public object Handle => m_handle;
+
+        /// <summary>
+        ///     Gets the name of the handle object if it has the Name property,
+        ///     otherwise returns Handle.ToString().
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                var mi = Handle.GetType().GetMethod("get_Name", new Type[0]);
+                if (mi != null)
+                {
+                    var name = mi.Invoke(Handle, new object[0]);
+                    if (name != null)
+                        return name.ToString();
+                    return string.Empty;
+                }
+
+                return Handle.ToString();
+            }
+        }
+
+
+        /// <summary>
+        ///     overrides ToString method
         /// </summary>
         /// <returns>The name of the handle object</returns>
         public override string ToString()
         {
             return Name;
-        } 
-            }
+        }
+    }
 }

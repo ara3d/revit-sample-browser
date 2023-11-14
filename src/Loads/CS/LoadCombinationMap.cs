@@ -21,46 +21,18 @@
 //
 
 
-using System;
 using System.Text;
 using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.Loads.CS
 {
     /// <summary>
-    /// A class to store Load Combination and it's properties.
+    ///     A class to store Load Combination and it's properties.
     /// </summary>
     public class LoadCombinationMap
     {
-        // Private Members
-
         /// <summary>
-        /// Name property of LoadCombinationMap
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Formula property of LoadCombinationMap
-        /// </summary>
-        public string Formula { get; }
-
-        /// <summary>
-        /// Type property of LoadCombinationMap
-        /// </summary>
-        public string Type { get; }
-
-        /// <summary>
-        /// State property of LoadCombinationMap
-        /// </summary>
-        public string State { get; }
-
-        /// <summary>
-        /// Usage property of LoadCombinationMap
-        /// </summary>
-        public string Usage { get; set; }
-
-        /// <summary>
-        /// Default constructor of LoadCombinationMap
+        ///     Default constructor of LoadCombinationMap
         /// </summary>
         /// <param name="combination">the reference of LoadCombination</param>
         public LoadCombinationMap(LoadCombination combination)
@@ -79,14 +51,11 @@ namespace Revit.SDK.Samples.Loads.CS
                 formulaString.Append("*");
                 formulaString.Append(m_document.GetElement(component.LoadCaseOrCombinationId).Name);
 
-                if (components.IndexOf(component) < components.Count - 1)
-                {
-                    formulaString.Append(" + ");
-                }
+                if (components.IndexOf(component) < components.Count - 1) formulaString.Append(" + ");
             }
 
             Formula = formulaString.ToString();
-            
+
             // Generate the usage field.
             var usageString = new StringBuilder();
             var usageIds = combination.GetUsageIds();
@@ -95,13 +64,36 @@ namespace Revit.SDK.Samples.Loads.CS
                 m_document.GetElement(id);
                 usageString.Append(m_document.GetElement(id).Name);
 
-                if (usageIds.IndexOf(id) < usageIds.Count - 1)
-                {
-                    usageString.Append(";");
-                }
+                if (usageIds.IndexOf(id) < usageIds.Count - 1) usageString.Append(";");
             }
 
             Usage = usageString.ToString();
         }
+        // Private Members
+
+        /// <summary>
+        ///     Name property of LoadCombinationMap
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        ///     Formula property of LoadCombinationMap
+        /// </summary>
+        public string Formula { get; }
+
+        /// <summary>
+        ///     Type property of LoadCombinationMap
+        /// </summary>
+        public string Type { get; }
+
+        /// <summary>
+        ///     State property of LoadCombinationMap
+        /// </summary>
+        public string State { get; }
+
+        /// <summary>
+        ///     Usage property of LoadCombinationMap
+        /// </summary>
+        public string Usage { get; set; }
     }
 }

@@ -19,24 +19,27 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
+
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// To add an external command to Autodesk Revit 
-    /// the developer should implement an object that 
-    /// supports the IExternalCommand interface.
+    ///     To add an external command to Autodesk Revit
+    ///     the developer should implement an object that
+    ///     supports the IExternalCommand interface.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
-        ref string message, Autodesk.Revit.DB.ElementSet elements)
+            ref string message, ElementSet elements)
         {
             try
             {
@@ -46,15 +49,12 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     message = "Active view is null.";
                     return Result.Failed;
                 }
-                
+
                 var mainData = new MainData(commandData);
                 // Show the dialog
                 using (var mainForm = new MainForm(mainData))
                 {
-                    if (mainForm.ShowDialog() == DialogResult.Cancel)
-                    {
-                        return Result.Cancelled;
-                    }
+                    if (mainForm.ShowDialog() == DialogResult.Cancel) return Result.Cancelled;
                 }
             }
             catch (Exception ex)

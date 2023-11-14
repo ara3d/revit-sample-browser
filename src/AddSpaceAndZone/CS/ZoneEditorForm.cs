@@ -21,17 +21,18 @@
 // 
 
 using System;
+using System.Windows.Forms;
 using Autodesk.Revit.DB.Mechanical;
 
 namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 {
     /// <summary>
-    /// The ZoneEditorForm Class the user interface to edit a Zone element.
+    ///     The ZoneEditorForm Class the user interface to edit a Zone element.
     /// </summary>
-    public partial class ZoneEditorForm : System.Windows.Forms.Form
+    public partial class ZoneEditorForm : Form
     {
         /// <summary>
-        /// The default constructor of ZoneEditorForm class.
+        ///     The default constructor of ZoneEditorForm class.
         /// </summary>
         private ZoneEditorForm()
         {
@@ -39,7 +40,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// The constructor of ZoneEditorForm class.
+        ///     The constructor of ZoneEditorForm class.
         /// </summary>
         /// <param name="dataManager"></param>
         /// <param name="zoneNode"></param>
@@ -52,18 +53,15 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// When the addSpace Button is clicked, the selected spaces will be added to the
-        /// current Zone element.
+        ///     When the addSpace Button is clicked, the selected spaces will be added to the
+        ///     current Zone element.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void addSpaceButton_Click(object sender, EventArgs e)
         {
             var set = new SpaceSet();
-            foreach (SpaceItem item in availableSpacesListView.SelectedItems)
-            {
-                set.Insert(item.Space);
-            }
+            foreach (SpaceItem item in availableSpacesListView.SelectedItems) set.Insert(item.Space);
 
             m_zone.AddSpaces(set);
 
@@ -72,25 +70,22 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 
 
         /// <summary>
-        /// When the removeSpace Button is clicked, the selected spaces will be removed from the
-        /// current Zone element.
+        ///     When the removeSpace Button is clicked, the selected spaces will be removed from the
+        ///     current Zone element.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void removeSpaceButton_Click(object sender, EventArgs e)
         {
             var set = new SpaceSet();
-            foreach (SpaceItem item in currentSpacesListView.SelectedItems)
-            {
-                set.Insert(item.Space);
-            }
+            foreach (SpaceItem item in currentSpacesListView.SelectedItems) set.Insert(item.Space);
 
             m_zone.RemoveSpaces(set);
             UpdateSpaceList();
         }
 
         /// <summary>
-        /// When the ZoneEditorForm is loaded, update the AvailableSpacesListView and CurrentSpacesListView
+        ///     When the ZoneEditorForm is loaded, update the AvailableSpacesListView and CurrentSpacesListView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -101,34 +96,27 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// Update the AvailableSpacesListView and CurrentSpacesListView 
+        ///     Update the AvailableSpacesListView and CurrentSpacesListView
         /// </summary>
         private void UpdateSpaceList()
         {
             availableSpacesListView.Items.Clear();
             currentSpacesListView.Items.Clear();
-           
+
             // AvailableSpacesListView
             foreach (var space in m_dataManager.GetSpaces())
-            {
                 if (m_zone.Spaces.Contains(space) == false)
-                {
                     availableSpacesListView.Items.Add(new SpaceItem(space));
-                }
-            }
 
             // CurrentSpacesListView
-            foreach (Space space in m_zone.Spaces)
-            {
-                currentSpacesListView.Items.Add(new SpaceItem(space));
-            }
+            foreach (Space space in m_zone.Spaces) currentSpacesListView.Items.Add(new SpaceItem(space));
 
             availableSpacesListView.Update();
             currentSpacesListView.Update();
         }
 
         /// <summary>
-        /// When OK button is clicked, close the ZoneEditorForm.
+        ///     When OK button is clicked, close the ZoneEditorForm.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

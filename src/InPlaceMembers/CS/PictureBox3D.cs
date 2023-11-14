@@ -28,25 +28,41 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.InPlaceMembers.CS
 {
     /// <summary>
-    /// picturebox wich can display 3D geometry outline
+    ///     picturebox wich can display 3D geometry outline
     /// </summary>
     public class PictureBox3D : Button
     {
-        IGraphicsData m_sourceData;        //datasource
-        Matrix m_transform;                //transform matrix between origin data and display data
+        private IGraphicsData m_sourceData; //datasource
+        private Matrix m_transform; //transform matrix between origin data and display data
 
         /// <summary>
-        /// paint outline
+        ///     datasource which can be any class inherited from IGraphicsData
+        /// </summary>
+        public IGraphicsData DataSource
+        {
+            get => m_sourceData;
+            set
+            {
+                if (null != value)
+                {
+                    m_sourceData = value;
+                    var rec = m_sourceData.Region;
+                    var plgpts = GetDisplayRegion();
+                    m_transform = new Matrix(rec, plgpts);
+                    m_sourceData.UpdateViewEvent += Invalidate;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     paint outline
         /// </summary>
         /// <param name="pe"></param>
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
-            
-            if (null == m_sourceData)
-            {
-                return;
-            }
+
+            if (null == m_sourceData) return;
 
             //prepare data
             var g = pe.Graphics;
@@ -66,83 +82,52 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// scale the view by default value
+        ///     scale the view by default value
         /// </summary>
         /// <param name="zoomIn">zomme in or zoom out</param>
         public void Scale(bool zoomIn)
         {
             var ratio = 1.0f;
-            if(zoomIn)
-            {
-                ratio = 10.0f/11.0f;
-            }
+            if (zoomIn)
+                ratio = 10.0f / 11.0f;
             else
-            {
-                ratio = 11.0f/10.0f;
-            }
+                ratio = 11.0f / 10.0f;
             m_transform.Scale(ratio, ratio, MatrixOrder.Append);
             Invalidate();
         }
 
         /// <summary>
-        /// move view in horizontal direction
+        ///     move view in horizontal direction
         /// </summary>
         /// <param name="left">left or right</param>
         public void MoveX(bool left)
         {
             var len = 0.0f;
             if (left)
-            {
                 len = -5.0f;
-            }
             else
-            {
                 len = 5.0f;
-            }
             m_transform.Translate(len, 0, MatrixOrder.Append);
             Invalidate();
         }
 
         /// <summary>
-        /// move view in vertical direction
+        ///     move view in vertical direction
         /// </summary>
         /// <param name="up">up or down</param>
         public void MoveY(bool up)
         {
             var len = 0.0f;
             if (up)
-            {
                 len = 5.0f;
-            }
             else
-            {
                 len = -5.0f;
-            }
             m_transform.Translate(0, len, MatrixOrder.Append);
             Invalidate();
         }
 
         /// <summary>
-        /// datasource which can be any class inherited from IGraphicsData
-        /// </summary>
-        public IGraphicsData DataSource
-        {
-            get => m_sourceData;
-            set
-            {
-                if (null != value)
-                {
-                    m_sourceData = value;
-                    var rec = m_sourceData.Region;
-                    var plgpts = GetDisplayRegion();
-                    m_transform = new Matrix(rec, plgpts);
-                    m_sourceData.UpdateViewEvent += new UpdateViewDelegate(Invalidate);
-                }
-            }
-        }
-
-        /// <summary>
-        /// get the display region, adjust the proportion and location
+        ///     get the display region, adjust the proportion and location
         /// </summary>
         /// <returns></returns>
         private PointF[] GetDisplayRegion()
@@ -150,8 +135,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             var rec = m_sourceData.Region;
             const float MARGIN = 8.0f;
 
-            var realWidth = Width - MARGIN *2;
-            var realHeight = Height - MARGIN*2;
+            var realWidth = Width - MARGIN * 2;
+            var realHeight = Height - MARGIN * 2;
             var minX = MARGIN;
             var minY = MARGIN;
             var ratioRec = rec.Height / rec.Width;
@@ -160,18 +145,18 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             if (ratioRec > ratioBox)
             {
                 var temp = realWidth;
-                realWidth = realHeight * rec.Width /rec.Height;
-                minX = (temp - realWidth)/2.0f;
+                realWidth = realHeight * rec.Width / rec.Height;
+                minX = (temp - realWidth) / 2.0f;
             }
             else
             {
                 var temp = realHeight;
-                realHeight = realWidth * rec.Height/rec.Width;
-                minY = (temp - realHeight) / 2.0f;    
+                realHeight = realWidth * rec.Height / rec.Width;
+                minY = (temp - realHeight) / 2.0f;
             }
 
-            if (rec.Width < (GraphicsDataBase.MINEDGElENGTH + 1) && 
-                rec.Height < (GraphicsDataBase.MINEDGElENGTH + 1))
+            if (rec.Width < GraphicsDataBase.MINEDGElENGTH + 1 &&
+                rec.Height < GraphicsDataBase.MINEDGElENGTH + 1)
             {
                 minX = realWidth / 2.0f;
                 minY = realHeight / 2.0f;

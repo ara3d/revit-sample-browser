@@ -21,54 +21,22 @@
 //
 
 
-using System;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Loads.CS
 {
     /// <summary>
-    /// The map class which store the data and display in usageDataGridView
+    ///     The map class which store the data and display in usageDataGridView
     /// </summary>
     public class UsageMap
     {
         // Private Members
-        Loads m_dataBuffer; // A reference of Loads
-        string m_name;      // Indicate the name column of Usage DataGridView control
+        private readonly Loads m_dataBuffer; // A reference of Loads
+        private string m_name; // Indicate the name column of Usage DataGridView control
 
         /// <summary>
-        /// is selected in Usage DataGridView control
-        /// </summary>
-        public bool Set { get; set; }
-
-        /// <summary>
-        /// usage name
-        /// </summary>
-        public string Name
-        {
-            get => m_name;
-            set
-            {
-                if (null == value)
-                {
-                    TaskDialog.Show("Revit", "The usage name should not be null.");
-                    return;
-                }
-                if (null == m_name)
-                {
-                    m_name = value;
-                    return;
-                }
-                var canModify = m_dataBuffer.ModifyUsageName(m_name, value);
-                if (canModify)
-                {
-                    m_name = value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Constructor with Set = false, Name="",
-        /// This should not be called.
+        ///     Constructor with Set = false, Name="",
+        ///     This should not be called.
         /// </summary>
         /// <param name="dataBuffer">The reference of Loads</param>
         public UsageMap(Loads dataBuffer)
@@ -77,7 +45,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// constructor with Set = false
+        ///     constructor with Set = false
         /// </summary>
         /// <param name="dataBuffer">The reference of Loads</param>
         /// <param name="name">The value set to Name property</param>
@@ -89,7 +57,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="dataBuffer">The reference of Loads</param>
         /// <param name="set">The value set to Set property</param>
@@ -99,6 +67,36 @@ namespace Revit.SDK.Samples.Loads.CS
             m_dataBuffer = dataBuffer;
             Set = set;
             m_name = name;
+        }
+
+        /// <summary>
+        ///     is selected in Usage DataGridView control
+        /// </summary>
+        public bool Set { get; set; }
+
+        /// <summary>
+        ///     usage name
+        /// </summary>
+        public string Name
+        {
+            get => m_name;
+            set
+            {
+                if (null == value)
+                {
+                    TaskDialog.Show("Revit", "The usage name should not be null.");
+                    return;
+                }
+
+                if (null == m_name)
+                {
+                    m_name = value;
+                    return;
+                }
+
+                var canModify = m_dataBuffer.ModifyUsageName(m_name, value);
+                if (canModify) m_name = value;
+            }
         }
     }
 }

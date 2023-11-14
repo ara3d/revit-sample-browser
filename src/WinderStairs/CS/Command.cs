@@ -21,17 +21,18 @@
 //
 
 using System;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -42,9 +43,10 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 var selectionIds = commandData.Application.ActiveUIDocument.Selection.GetElementIds();
                 if (selectionIds.Count != 2 && selectionIds.Count != 3)
                 {
-                    message += "Please select two (or three) connected line elements. E.g. two (or three) connected straight Walls or Model Lines.";
+                    message +=
+                        "Please select two (or three) connected line elements. E.g. two (or three) connected straight Walls or Model Lines.";
                     return Result.Cancelled;
-                } 
+                }
 
                 var selectedIds = new List<ElementId>();
                 selectedIds.AddRange(selectionIds);
@@ -57,7 +59,6 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 uint numStepsInCorner = 3;
                 var centerOffset = 0.0;
                 if (selectionIds.Count == 2)
-                {
                     // Create L-Winder
                     using (var options = new LWinderOptions())
                     {
@@ -82,9 +83,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                                 selectedIds, rvtDoc, activeid, options.Sketch);
                         }
                     }
-                }
                 else if (selectionIds.Count == 3)
-                {
                     // Create U-Winder
                     using (var options = new UWinderOptions())
                     {
@@ -117,7 +116,6 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                                 selectedIds, rvtDoc, activeid, options.Sketch);
                         }
                     }
-                }
 
                 return Result.Succeeded;
             }
@@ -129,7 +127,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Retrieve the system default stairs data, like run width and tread depth.
+        ///     Retrieve the system default stairs data, like run width and tread depth.
         /// </summary>
         /// <param name="rvtDoc">Revit Document</param>
         /// <param name="runWidth">Stairs run width</param>
@@ -138,10 +136,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         {
             var filterLevels = new FilteredElementCollector(rvtDoc);
             var levels = filterLevels.OfClass(typeof(Level)).ToElements();
-            if (levels.Count < 2)
-            {
-                throw new InvalidOperationException("Need two Levels to create Stairs.");
-            }
+            if (levels.Count < 2) throw new InvalidOperationException("Need two Levels to create Stairs.");
             var levelList = new List<Element>();
             levelList.AddRange(levels);
             levelList.Sort((a, b) => { return ((Level)a).Elevation.CompareTo(((Level)b).Elevation); });
@@ -156,4 +151,3 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
     }
 }
-

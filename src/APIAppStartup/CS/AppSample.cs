@@ -20,34 +20,34 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using System.Threading;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
 namespace APIAppStartup
 {
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   public class AppSample : IExternalApplication
-   {
-      
-      public Result OnShutdown(UIControlledApplication application)
-      {
-         TaskDialog.Show("Revit", "Quit External Application!");
-         return Result.Succeeded;
-      }
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class AppSample : IExternalApplication
+    {
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            TaskDialog.Show("Revit", "Quit External Application!");
+            return Result.Succeeded;
+        }
 
-       public Result OnStartup(UIControlledApplication application)
-      {
-         var version = application.ControlledApplication.VersionName;
+        public Result OnStartup(UIControlledApplication application)
+        {
+            var version = application.ControlledApplication.VersionName;
 
-         //display splash window for 10 seconds
-         SplashWindow.StartSplash();
-         SplashWindow.ShowVersion(version);
-         System.Threading.Thread.Sleep(10000);
-         SplashWindow.StopSplash();
+            //display splash window for 10 seconds
+            SplashWindow.StartSplash();
+            SplashWindow.ShowVersion(version);
+            Thread.Sleep(10000);
+            SplashWindow.StopSplash();
 
-         return Result.Succeeded;
-      }
-
-         }
+            return Result.Succeeded;
+        }
+    }
 }

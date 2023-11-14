@@ -23,24 +23,17 @@
 
 using System;
 using System.Windows.Forms;
-
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SpotDimension.CS
 {
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.UI;
     /// <summary>
-    /// spot dimension form to display information
+    ///     spot dimension form to display information
     /// </summary>
-    public partial class SpotDimensionInfoDlg : System.Windows.Forms.Form
+    public partial class SpotDimensionInfoDlg : Form
     {
         /// <summary>
-        /// Get the last selected spot dimension
-        /// </summary>
-        public SpotDimension SelectedSpotDimension { get; private set; }
-
-        /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
         public SpotDimensionInfoDlg()
         {
@@ -48,7 +41,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         }
 
         /// <summary>
-        /// Overload constructor
+        ///     Overload constructor
         /// </summary>
         /// <param name="data"></param>
         public SpotDimensionInfoDlg(ExternalCommandData data)
@@ -58,17 +51,19 @@ namespace Revit.SDK.Samples.SpotDimension.CS
             InitializeComponent();
             InitializeCustomComponent();
         }
-       
+
         /// <summary>
-        /// Initialize custom component
+        ///     Get the last selected spot dimension
+        /// </summary>
+        public Autodesk.Revit.DB.SpotDimension SelectedSpotDimension { get; private set; }
+
+        /// <summary>
+        ///     Initialize custom component
         /// </summary>
         private void InitializeCustomComponent()
         {
             viewsComboBox.DataSource = m_data.Views;
-            if (viewsComboBox.Items.Count > 0)
-            {
-                viewsComboBox.SelectedIndex = 0;
-            }
+            if (viewsComboBox.Items.Count > 0) viewsComboBox.SelectedIndex = 0;
 
             typeParamsDataGridView.ScrollBars = ScrollBars.Both;
             typeParamsDataGridView.AllowUserToResizeColumns = false;
@@ -77,34 +72,31 @@ namespace Revit.SDK.Samples.SpotDimension.CS
             typeParamsDataGridView.AllowUserToResizeRows = false;
             typeParamsDataGridView.AllowUserToOrderColumns = false;
             typeParamsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            
         }
 
         /// <summary>
-        /// Display all the spot dimensions in the selected view 
+        ///     Display all the spot dimensions in the selected view
         /// </summary>
         /// <param name="viewName"></param>
         private void DisplaySpotDimensionInfos(string viewName)
         {
             spotDimensionsListView.Items.Clear();
-            
+
             //add SpotDimensions to the listview
             foreach (var tmpSpotDimension in m_data.SpotDimensions)
-            {
                 if (tmpSpotDimension.View.Name == viewName)
                 {
-                     //create a list view Item
+                    //create a list view Item
                     var tmpItem = new ListViewItem(tmpSpotDimension.Id.ToString());
                     tmpItem.Tag = tmpSpotDimension;
 
                     //add the item to the listview
                     spotDimensionsListView.Items.Add(tmpItem);
                 }
-            }
         }
 
         /// <summary>
-        /// When selected another spot dimension then update the DataGridView.
+        ///     When selected another spot dimension then update the DataGridView.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -112,13 +104,14 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         {
             if (spotDimensionsListView.FocusedItem != null)
             {
-                SelectedSpotDimension = spotDimensionsListView.FocusedItem.Tag as SpotDimension;
+                SelectedSpotDimension = spotDimensionsListView.FocusedItem.Tag as Autodesk.Revit.DB.SpotDimension;
                 typeParamsDataGridView.DataSource
                     = m_typeParamsData.GetParameterTable(SelectedSpotDimension);
 
                 typeParamsDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
 
-                if (typeParamsDataGridView.Columns[0].Width + typeParamsDataGridView.Columns[1].Width < typeParamsDataGridView.Width)
+                if (typeParamsDataGridView.Columns[0].Width + typeParamsDataGridView.Columns[1].Width <
+                    typeParamsDataGridView.Width)
                 {
                     typeParamsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     typeParamsDataGridView.AutoResizeColumns();
@@ -127,17 +120,14 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         }
 
         /// <summary>
-        /// When selected view changed, then update the list box to show the spot dimensions in that view.
+        ///     When selected view changed, then update the list box to show the spot dimensions in that view.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void viewsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectViewName = viewsComboBox.SelectedItem as string;
-            if (selectViewName != null)
-            {
-                DisplaySpotDimensionInfos(selectViewName);
-            }
+            if (selectViewName != null) DisplaySpotDimensionInfos(selectViewName);
         }
     }
 }

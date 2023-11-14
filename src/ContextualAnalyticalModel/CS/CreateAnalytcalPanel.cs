@@ -21,113 +21,110 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace ContextualAnalyticalModel
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class CreateAnalyticalPanel : IExternalCommand
-   {
-      public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-      {
-         try
-         {
-            var document = commandData.Application.ActiveUIDocument.Document;
-
-            //create analytical panel
-            var analyticalPanel = CreateAMPanel(document);
-            if(analyticalPanel != null)
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class CreateAnalyticalPanel : IExternalCommand
+    {
+        public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            try
             {
-               //create analytical opening on the panel we've just created
-               CreateAMOpening(document, analyticalPanel.Id);
+                var document = commandData.Application.ActiveUIDocument.Document;
+
+                //create analytical panel
+                var analyticalPanel = CreateAMPanel(document);
+                if (analyticalPanel != null)
+                    //create analytical opening on the panel we've just created
+                    CreateAMOpening(document, analyticalPanel.Id);
+
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+
+        /// <summary>
+        ///     Creates an Analytiocal Panel
+        /// </summary>
+        /// <param name="revitDoc">Revit documenr</param>
+        /// <returns></returns>
+        public static AnalyticalPanel CreateAMPanel(Document revitDoc)
+        {
+            AnalyticalPanel analyticalPanel = null;
+            using (var transaction = new Transaction(revitDoc, "Create Analytical Panel"))
+            {
+                transaction.Start();
+
+                //create curveloop which will be assigned to the analytical panel
+                var profileloop = new CurveLoop();
+                profileloop.Append(Line.CreateBound(
+                    new XYZ(0, 0, 0), new XYZ(5, 0, 0)));
+                profileloop.Append(Line.CreateBound(
+                    new XYZ(5, 0, 0), new XYZ(5, 5, 0)));
+                profileloop.Append(Line.CreateBound(
+                    new XYZ(5, 5, 0), new XYZ(0, 5, 0)));
+                profileloop.Append(Line.CreateBound(
+                    new XYZ(0, 5, 0), new XYZ(0, 0, 0)));
+
+                //create the AnalyticalPanel
+                analyticalPanel = AnalyticalPanel.Create(revitDoc, profileloop);
+
+                analyticalPanel.StructuralRole = AnalyticalStructuralRole.StructuralRoleFloor;
+                analyticalPanel.AnalyzeAs = AnalyzeAs.SlabOneWay;
+
+                transaction.Commit();
             }
 
-            return Result.Succeeded;
-         }
-         catch (Exception ex)
-         {
-            message = ex.Message;
-            return Result.Failed;
-         }
-      }
+            return analyticalPanel;
+        }
 
-      /// <summary>
-      /// Creates an Analytiocal Panel
-      /// </summary>
-      /// <param name="revitDoc">Revit documenr</param>
-      /// <returns></returns>
-      public static AnalyticalPanel CreateAMPanel(Document revitDoc)
-      {
-         AnalyticalPanel analyticalPanel = null;
-         using (var transaction = new Transaction(revitDoc, "Create Analytical Panel"))
-         {
-            transaction.Start();
+        /// <summary>
+        ///     creates an AnalyticalOpening element which will be placed on the AnalyticalPanel
+        ///     with id = panelId
+        /// </summary>
+        public static AnalyticalOpening CreateAMOpening(Document revitDoc, ElementId panelId)
+        {
+            if (panelId == ElementId.InvalidElementId)
+                return null;
 
-            //create curveloop which will be assigned to the analytical panel
-            var profileloop = new CurveLoop();
-            profileloop.Append(Line.CreateBound(
-               new XYZ(0, 0, 0), new XYZ(5, 0, 0)));
-            profileloop.Append(Line.CreateBound(
-               new XYZ(5, 0, 0), new XYZ(5, 5, 0)));
-            profileloop.Append(Line.CreateBound(
-               new XYZ(5, 5, 0), new XYZ(0, 5, 0)));
-            profileloop.Append(Line.CreateBound(
-               new XYZ(0, 5, 0), new XYZ(0, 0, 0)));
+            AnalyticalOpening opening = null;
 
-            //create the AnalyticalPanel
-            analyticalPanel = AnalyticalPanel.Create(revitDoc, profileloop);
+            using (var transaction = new Transaction(revitDoc, "Create Analytical Opening"))
+            {
+                transaction.Start();
 
-            analyticalPanel.StructuralRole = AnalyticalStructuralRole.StructuralRoleFloor;
-            analyticalPanel.AnalyzeAs = AnalyzeAs.SlabOneWay;
+                //create the curveLoop for the AnalyticalOpening element
+                var profileloop = new CurveLoop();
+                profileloop.Append(Line.CreateBound(
+                    new XYZ(1, 1, 0), new XYZ(2, 1, 0)));
+                profileloop.Append(Line.CreateBound(
+                    new XYZ(2, 1, 0), new XYZ(2, 2, 0)));
+                profileloop.Append(Line.CreateBound(
+                    new XYZ(2, 2, 0), new XYZ(-1, 2, 0)));
+                profileloop.Append(Line.CreateBound(
+                    new XYZ(-1, 2, 0), new XYZ(1, 1, 0)));
 
-            transaction.Commit();
-         }
+                if (AnalyticalOpening.IsCurveLoopValidForAnalyticalOpening(profileloop, revitDoc, panelId))
+                    //create the AnalyticalOpening
+                    opening = AnalyticalOpening.Create(revitDoc, profileloop, panelId);
 
-         return analyticalPanel;
-      }
-
-      /// <summary>
-      /// creates an AnalyticalOpening element which will be placed on the AnalyticalPanel
-      /// with id = panelId
-      /// </summary>
-      public static AnalyticalOpening CreateAMOpening(Document revitDoc, ElementId panelId)
-      {
-         if (panelId == ElementId.InvalidElementId)
-            return null;
-
-         AnalyticalOpening opening = null;
-
-         using (var transaction = new Transaction(revitDoc, "Create Analytical Opening"))
-         {
-            transaction.Start();
-
-            //create the curveLoop for the AnalyticalOpening element
-            var profileloop = new CurveLoop();
-            profileloop.Append(Line.CreateBound(
-               new XYZ(1, 1, 0), new XYZ(2, 1, 0)));
-            profileloop.Append(Line.CreateBound(
-               new XYZ(2, 1, 0), new XYZ(2, 2, 0)));
-            profileloop.Append(Line.CreateBound(
-               new XYZ(2, 2, 0), new XYZ(-1, 2, 0)));
-            profileloop.Append(Line.CreateBound(
-               new XYZ(-1, 2, 0), new XYZ(1, 1, 0)));
-
-            if (AnalyticalOpening.IsCurveLoopValidForAnalyticalOpening(profileloop, revitDoc, panelId))
-            {             
-               //create the AnalyticalOpening
-               opening = AnalyticalOpening.Create(revitDoc, profileloop, panelId);
+                transaction.Commit();
             }
 
-            transaction.Commit();
-         }
-         return opening;
-      }
-   }
+            return opening;
+        }
+    }
 }
-

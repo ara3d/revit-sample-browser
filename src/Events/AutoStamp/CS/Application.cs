@@ -21,29 +21,29 @@
 //
 
 
-using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.AutoStamp.CS
 {
     /// <summary>
-    /// This class implements the methods of interface IExternalApplication and register View Print related events.
-    /// OnStartUp method will register ViewPrinting and ViewPrinted events and unregister them in OnShutDown method.
-    /// The registered events will help implement the sample functionalities. 
+    ///     This class implements the methods of interface IExternalApplication and register View Print related events.
+    ///     OnStartUp method will register ViewPrinting and ViewPrinted events and unregister them in OnShutDown method.
+    ///     The registered events will help implement the sample functionalities.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Application : IExternalApplication
     {
-                /// <summary>
-        /// Events reactor for ViewPrint related events
+        /// <summary>
+        ///     Events reactor for ViewPrint related events
         /// </summary>
-        EventsReactor m_eventsReactor;
-        
+        private EventsReactor m_eventsReactor;
 
-                /// <summary>
-        /// Implements the OnStartup method to register events when Revit starts.
+
+        /// <summary>
+        ///     Implements the OnStartup method to register events when Revit starts.
         /// </summary>
         /// <param name="application">Controlled application of to be loaded to Revit process.</param>
         /// <returns>Return the status of the external application.</returns>
@@ -51,13 +51,13 @@ namespace Revit.SDK.Samples.AutoStamp.CS
         {
             // Register related events
             m_eventsReactor = new EventsReactor();
-            application.ControlledApplication.ViewPrinting += new EventHandler<Autodesk.Revit.DB.Events.ViewPrintingEventArgs>(m_eventsReactor.AppViewPrinting);
-            application.ControlledApplication.ViewPrinted += new EventHandler<Autodesk.Revit.DB.Events.ViewPrintedEventArgs>(m_eventsReactor.AppViewPrinted);
+            application.ControlledApplication.ViewPrinting += m_eventsReactor.AppViewPrinting;
+            application.ControlledApplication.ViewPrinted += m_eventsReactor.AppViewPrinted;
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Implements this method to unregister the subscribed events when Revit exits.
+        ///     Implements this method to unregister the subscribed events when Revit exits.
         /// </summary>
         /// <param name="application">Controlled application to be shutdown.</param>
         /// <returns>Return the status of the external application.</returns>
@@ -67,9 +67,9 @@ namespace Revit.SDK.Samples.AutoStamp.CS
             m_eventsReactor.CloseLogFiles();
             //
             // unregister events
-            application.ControlledApplication.ViewPrinting -= new EventHandler<Autodesk.Revit.DB.Events.ViewPrintingEventArgs>(m_eventsReactor.AppViewPrinting);
-            application.ControlledApplication.ViewPrinted -= new EventHandler<Autodesk.Revit.DB.Events.ViewPrintedEventArgs>(m_eventsReactor.AppViewPrinted);
+            application.ControlledApplication.ViewPrinting -= m_eventsReactor.AppViewPrinting;
+            application.ControlledApplication.ViewPrinted -= m_eventsReactor.AppViewPrinted;
             return Result.Succeeded;
         }
-            }
+    }
 }

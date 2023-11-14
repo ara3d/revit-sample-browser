@@ -21,29 +21,28 @@
 //
 
 
-using System;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.FreeFormElement.CS
 {
     /// <summary>
-    /// A command to create a new family block representing a negative of a selected element. 
+    ///     A command to create a new family block representing a negative of a selected element.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class CreateNegativeBlockCommand : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class CreateNegativeBlockCommand : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var uiDoc = commandData.Application.ActiveUIDocument;
             var doc = uiDoc.Document;
-			
+
             // Select target element
             var target = uiDoc.Selection.PickObject(ObjectType.Element,
-                                                          new TargetElementSelectionFilter(),
-                                                          "Select target");
+                new TargetElementSelectionFilter(),
+                "Select target");
             var targetElement = doc.GetElement(target);
 
             // Get height for block based on target element.
@@ -51,17 +50,18 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
 
             // Select boundaries
             var boundaries = uiDoc.Selection.PickObjects(ObjectType.Element,
-                                                                      new BoundarySelectionFilter(),
-                                                                      "Select boundary");
-			var familyPath = FreeFormElementUtils.FindGenericModelTemplate(doc.Application.FamilyTemplatePath);
+                new BoundarySelectionFilter(),
+                "Select boundary");
+            var familyPath = FreeFormElementUtils.FindGenericModelTemplate(doc.Application.FamilyTemplatePath);
 
             if (string.IsNullOrEmpty(familyPath))
             {
-				message = "Unable to find a template named 'GenericModel.rft' in family template path.";
-				return Result.Failed;
+                message = "Unable to find a template named 'GenericModel.rft' in family template path.";
+                return Result.Failed;
             }
 
-            var condition = FreeFormElementUtils.CreateNegativeBlock(targetElement, boundaries, UIDocument.GetRevitUIFamilyLoadOptions(), familyPath);
+            var condition = FreeFormElementUtils.CreateNegativeBlock(targetElement, boundaries,
+                UIDocument.GetRevitUIFamilyLoadOptions(), familyPath);
 
             // Show error message for failure condition
             if (condition != FreeFormElementUtils.FailureCondition.Success)
@@ -69,7 +69,8 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
                 switch (condition)
                 {
                     case FreeFormElementUtils.FailureCondition.CurvesNotContigous:
-                        message = "Could not create the block as the boundary curves do not make a contiguous closed boundary.";
+                        message =
+                            "Could not create the block as the boundary curves do not make a contiguous closed boundary.";
                         break;
                     case FreeFormElementUtils.FailureCondition.CurveLoopAboveTarget:
                         message = "Could not create the block as the boundary curves lie above their target element.";
@@ -78,18 +79,18 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
                         message = "Could not create the block as the curves and the target element does not intersect.";
                         break;
                 }
+
                 return Result.Failed;
             }
 
             return Result.Succeeded;
         }
-
-            }
+    }
 
     /// <summary>
-    /// Selection filter for selection of a target object to use as a template for the negative block.
+    ///     Selection filter for selection of a target object to use as a template for the negative block.
     /// </summary>
-    class TargetElementSelectionFilter : ISelectionFilter
+    internal class TargetElementSelectionFilter : ISelectionFilter
     {
         public bool AllowElement(Element element)
         {
@@ -106,9 +107,9 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
     }
 
     /// <summary>
-    /// Selection filter for selection of the boundary curves for the block extents.
+    ///     Selection filter for selection of the boundary curves for the block extents.
     /// </summary>
-    class BoundarySelectionFilter : ISelectionFilter
+    internal class BoundarySelectionFilter : ISelectionFilter
     {
         public bool AllowElement(Element element)
         {

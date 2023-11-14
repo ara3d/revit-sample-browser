@@ -22,16 +22,15 @@
 
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-
 namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+    [Transaction(TransactionMode.Manual)]
     public class Command : IExternalCommand
     {
-        
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
@@ -47,16 +46,13 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                 var walljoinControl = WallJoinControl.getInstance(application, document);
 
                 // Create the UI for users select operation and view the results.
-                using (var form = 
-                   new ProximityDetectionAndWallJoinControlForm(document, proximityDetection, walljoinControl))
+                using (var form =
+                       new ProximityDetectionAndWallJoinControlForm(document, proximityDetection, walljoinControl))
                 {
-                   // show dialog to browser operations and results
-                   if (DialogResult.OK != form.ShowDialog())
-                   {
-                      return Result.Cancelled;
-                   }
+                    // show dialog to browser operations and results
+                    if (DialogResult.OK != form.ShowDialog()) return Result.Cancelled;
                 }
-                
+
                 return Result.Succeeded;
             }
             catch (Exception ex)
@@ -67,4 +63,3 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
         }
     }
 }
-

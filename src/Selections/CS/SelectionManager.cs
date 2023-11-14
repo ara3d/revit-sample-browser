@@ -20,91 +20,74 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
-using Exceptions = Autodesk.Revit.Exceptions;
+using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.Selections.CS
 {
     /// <summary>
-    /// A enum class for specific selection type.
+    ///     A enum class for specific selection type.
     /// </summary>
     public enum SelectionType
     {
         /// <summary>
-        /// type for select element.
+        ///     type for select element.
         /// </summary>
         Element,
+
         /// <summary>
-        /// type for select face.
+        ///     type for select face.
         /// </summary>
         Face,
+
         /// <summary>
-        /// type for select edge.
+        ///     type for select edge.
         /// </summary>
         Edge,
+
         /// <summary>
-        /// type for select point.
+        ///     type for select point.
         /// </summary>
         Point
     }
 
     /// <summary>
-    /// A class for object selection and storage.
+    ///     A class for object selection and storage.
     /// </summary>
     public class SelectionManager
     {
         /// <summary>
-        /// To store a reference to the commandData.
+        ///     store the application
         /// </summary>
-        ExternalCommandData m_commandData;
-        /// <summary>
-        /// store the application
-        /// </summary>
-        UIApplication m_application;
-        /// <summary>
-        /// store the document
-        /// </summary>
-        UIDocument m_document;
-        /// <summary>
-        /// For basic creation.
-        /// </summary>
-        Autodesk.Revit.Creation.ItemFactoryBase m_CreationBase;
-        /// <summary>
-        /// The picked point of element.
-        /// </summary>
-        XYZ m_elemPickedPoint;
+        private readonly UIApplication m_application;
 
         /// <summary>
-        /// For specific selection type.
+        ///     To store a reference to the commandData.
         /// </summary>
-        public SelectionType SelectionType { get; set; } = SelectionType.Element;
+        private readonly ExternalCommandData m_commandData;
 
         /// <summary>
-        /// Store the selected element.
+        ///     For basic creation.
         /// </summary>
-        public Element SelectedElement { get; set; }
-
-        XYZ m_selectedPoint;
-        /// <summary>
-        /// Store the selected point. 
-        /// When the point is picked, move the element to the point.
-        /// </summary>
-        public XYZ SelectedPoint
-        {
-            get => m_selectedPoint;
-            set 
-            { 
-                m_selectedPoint = value; 
-                if (SelectedElement != null && m_selectedPoint != null)
-                {
-                    MoveElement(SelectedElement, m_selectedPoint);
-                }
-            }
-        }       
+        private ItemFactoryBase m_CreationBase;
 
         /// <summary>
-        /// constructor of SelectionManager
+        ///     store the document
+        /// </summary>
+        private readonly UIDocument m_document;
+
+        /// <summary>
+        ///     The picked point of element.
+        /// </summary>
+        private XYZ m_elemPickedPoint;
+
+        private XYZ m_selectedPoint;
+
+        /// <summary>
+        ///     constructor of SelectionManager
         /// </summary>
         /// <param name="commandData"></param>
         public SelectionManager(ExternalCommandData commandData)
@@ -114,17 +97,37 @@ namespace Revit.SDK.Samples.Selections.CS
             m_document = m_application.ActiveUIDocument;
 
             if (m_document.Document.IsFamilyDocument)
-            {
                 m_CreationBase = m_document.Document.FamilyCreate;
-            }
             else
-            {
                 m_CreationBase = m_document.Document.Create;
+        }
+
+        /// <summary>
+        ///     For specific selection type.
+        /// </summary>
+        public SelectionType SelectionType { get; set; } = SelectionType.Element;
+
+        /// <summary>
+        ///     Store the selected element.
+        /// </summary>
+        public Element SelectedElement { get; set; }
+
+        /// <summary>
+        ///     Store the selected point.
+        ///     When the point is picked, move the element to the point.
+        /// </summary>
+        public XYZ SelectedPoint
+        {
+            get => m_selectedPoint;
+            set
+            {
+                m_selectedPoint = value;
+                if (SelectedElement != null && m_selectedPoint != null) MoveElement(SelectedElement, m_selectedPoint);
             }
         }
 
         /// <summary>
-        /// Select objects according to the selection type.
+        ///     Select objects according to the selection type.
         /// </summary>
         public void SelectObjects()
         {
@@ -144,21 +147,21 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Pick the element from UI.
+        ///     Pick the element from UI.
         /// </summary>
         internal void PickElement()
         {
             try
             {
                 // Pick an element.
-                var eRef = m_document.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element, "Please pick an element.");
+                var eRef = m_document.Selection.PickObject(ObjectType.Element, "Please pick an element.");
                 if (eRef != null && eRef.ElementId != ElementId.InvalidElementId)
                 {
                     SelectedElement = m_document.Document.GetElement(eRef);
                     m_elemPickedPoint = eRef.GlobalPoint;
                 }
             }
-            catch (Exceptions.OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 // Element selection cancelled.
                 SelectedElement = null;
@@ -166,7 +169,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Pick the point from UI.
+        ///     Pick the point from UI.
         /// </summary>
         internal void PickPoint()
         {
@@ -176,7 +179,7 @@ namespace Revit.SDK.Samples.Selections.CS
                 var targetPoint = m_document.Selection.PickPoint("Please pick a point.");
                 SelectedPoint = targetPoint;
             }
-            catch (Exceptions.OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 // Point selection cancelled.
                 SelectedPoint = null;
@@ -184,7 +187,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Move an element to the point.
+        ///     Move an element to the point.
         /// </summary>
         /// <param name="elem">The element to be moved.</param>
         /// <param name="targetPoint">The location element to be moved.</param>
@@ -192,7 +195,7 @@ namespace Revit.SDK.Samples.Selections.CS
         {
             var vecToMove = targetPoint - m_elemPickedPoint;
             m_elemPickedPoint = targetPoint;
-            ElementTransformUtils.MoveElement(m_document.Document,elem.Id, vecToMove);
+            ElementTransformUtils.MoveElement(m_document.Document, elem.Id, vecToMove);
         }
     }
 }

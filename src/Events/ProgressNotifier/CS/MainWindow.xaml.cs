@@ -21,45 +21,58 @@
 //
 
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
+using Microsoft.Win32;
+using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.ProgressNotifier.CS
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly Application m_application;
+        private bool m_cancel;
+        private ProgressItem m_previousEvent;
+        private readonly ProgressStack m_progressStack;
+
+        private bool m_receivedCancelEvent;
+
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="application"></param>
-        public MainWindow(Autodesk.Revit.ApplicationServices.Application application)
+        public MainWindow(Application application)
         {
             InitializeComponent();
             m_application = application;
             m_progressStack = new ProgressStack();
-            m_application.ProgressChanged += new EventHandler<Autodesk.Revit.DB.Events.ProgressChangedEventArgs>(RevitApp_ProgressChanged);
-            m_application.DocumentOpened += new EventHandler<Autodesk.Revit.DB.Events.DocumentOpenedEventArgs>(RevitApp_DocumentOpened);
+            m_application.ProgressChanged += RevitApp_ProgressChanged;
+            m_application.DocumentOpened += RevitApp_DocumentOpened;
             m_cancel = false;
             m_receivedCancelEvent = false;
             m_previousEvent = null;
         }
 
-                void RevitApp_DocumentOpened(object sender, Autodesk.Revit.DB.Events.DocumentOpenedEventArgs e)
+        private void RevitApp_DocumentOpened(object sender, DocumentOpenedEventArgs e)
         {
-            textBox_log.Text += "RevitApp_DocumentOpened: Cancellable:" + e.Cancellable.ToString() + " , IsCancelled: " + e.IsCancelled().ToString() + " , Status:" + e.Status.ToString() + Environment.NewLine;
-            m_receivedCancelEvent = (e.Status == Autodesk.Revit.DB.Events.RevitAPIEventStatus.Cancelled);
+            textBox_log.Text += "RevitApp_DocumentOpened: Cancellable:" + e.Cancellable + " , IsCancelled: " +
+                                e.IsCancelled() + " , Status:" + e.Status + Environment.NewLine;
+            m_receivedCancelEvent = e.Status == RevitAPIEventStatus.Cancelled;
         }
-        void RevitApp_ProgressChanged(object sender, Autodesk.Revit.DB.Events.ProgressChangedEventArgs e)
-        {
 
-           if ((e.Stage == Autodesk.Revit.DB.Events.ProgressStage.Unchanged) || ((e.Stage == Autodesk.Revit.DB.Events.ProgressStage.PositionChanged) && e.Cancellable))
-              button_Cancel.IsEnabled = true;
-           else
-              button_Cancel.IsEnabled = false;
+        private void RevitApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.Stage == ProgressStage.Unchanged || (e.Stage == ProgressStage.PositionChanged && e.Cancellable))
+                button_Cancel.IsEnabled = true;
+            else
+                button_Cancel.IsEnabled = false;
 
             System.Windows.Forms.Application.DoEvents();
 
@@ -76,9 +89,9 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                 }
                 catch (Exception ex)
                 {
-                    textBox_log.Text += ("Exception: " + ex.ToString() + Environment.NewLine + "'  Cancelable' value: " + shouldCancel + Environment.NewLine);
+                    textBox_log.Text += "Exception: " + ex + Environment.NewLine + "'  Cancelable' value: " +
+                                        shouldCancel + Environment.NewLine;
                 }
-
             }
 
 
@@ -90,34 +103,26 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
             {
                 var tbProgressItem = new TextBox();
                 tbProgressItem.Text = progressItem;
-               if (tbProgressItem.Text.Contains("<None>"))
-               {
-                  tbProgressItem.Foreground = Brushes.LightSlateGray;
-               }
+                if (tbProgressItem.Text.Contains("<None>")) tbProgressItem.Foreground = Brushes.LightSlateGray;
                 stackPanel_ProgressData.Children.Add(tbProgressItem);
             }
 
 
-            if ((itemReturn.Stage == Autodesk.Revit.DB.Events.ProgressStage.RangeChanged) || (itemReturn.Stage == Autodesk.Revit.DB.Events.ProgressStage.Unchanged))
-            {
+            if (itemReturn.Stage == ProgressStage.RangeChanged || itemReturn.Stage == ProgressStage.Unchanged)
                 if (m_previousEvent != null)
                 {
                 }
 
-                //   textBox_log.Text += "Previous: "+  previousEventData + Environment.NewLine + "Current: " + itemReturn.ToString() + Environment.NewLine;
-            }
-
+            //   textBox_log.Text += "Previous: "+  previousEventData + Environment.NewLine + "Current: " + itemReturn.ToString() + Environment.NewLine;
             System.Windows.Forms.Application.DoEvents();
 
             m_previousEvent = itemReturn;
-
-
         }
-        
 
-                private void Button_Open_Click(object sender, RoutedEventArgs e)
+
+        private void Button_Open_Click(object sender, RoutedEventArgs e)
         {
-            var ofd = new Microsoft.Win32.OpenFileDialog();
+            var ofd = new OpenFileDialog();
 
             ofd.DefaultExt = ".rvt";
             ofd.Filter = "rvt files (*.rvt)|*.rvt|All files (*.*)|*.*";
@@ -125,12 +130,12 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
             ofd.Title = "Open revit documents.";
 
             ofd.ShowDialog();
-            if (!System.IO.File.Exists(ofd.FileName))
+            if (!File.Exists(ofd.FileName))
                 return;
 
             label_FileName.Content = ofd.FileName;
             System.Windows.Forms.Application.DoEvents();
-            Autodesk.Revit.DB.Document document = null;
+            Document document = null;
             try
             {
                 document = m_application.OpenDocumentFile(ofd.FileName);
@@ -147,31 +152,21 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                         isNull = " is not null.";
 
                     textBox_log.Text += "Open Document has thrown an exception." + Environment.NewLine;
-                    textBox_log.Text += "We just got a cancel event, so this exception is likely from 'Open' being canceled. Returned document" + isNull + Environment.NewLine;
+                    textBox_log.Text +=
+                        "We just got a cancel event, so this exception is likely from 'Open' being canceled. Returned document" +
+                        isNull + Environment.NewLine;
                     m_receivedCancelEvent = false;
                 }
                 else
-                    textBox_log.Text += ex.ToString() + Environment.NewLine;
+                {
+                    textBox_log.Text += ex + Environment.NewLine;
+                }
             }
-
-
-
         }
 
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             m_cancel = true;
         }
-        
-                Autodesk.Revit.ApplicationServices.Application m_application;
-        ProgressStack m_progressStack;
-        bool m_cancel;
-
-        private bool m_receivedCancelEvent;
-        private ProgressItem m_previousEvent;
-        
-
-
-
     }
 }

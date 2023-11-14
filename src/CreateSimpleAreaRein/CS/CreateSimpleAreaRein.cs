@@ -20,33 +20,40 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using Document = Autodesk.Revit.Creation.Document;
 
 namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Windows.Forms;
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.DB.Structure;
-
-    using DocCreator = Autodesk.Revit.Creation.Document;
+    using DocCreator = Document;
 
 
     /// <summary>
-    /// main class to create simple AreaReinforcement on selected wall or floor
+    ///     main class to create simple AreaReinforcement on selected wall or floor
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         private UIDocument m_currentDoc;
 
+        /// <summary>
+        ///     ExternalCommandData
+        /// </summary>
+        public static ExternalCommandData CommandData { get; private set; }
+
         public Result Execute(ExternalCommandData revit,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.CreateSimpleAreaRein");
+            var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
+                "Revit.SDK.Samples.CreateSimpleAreaRein");
             trans.Start();
             //initialize necessary data
             CommandData = revit;
@@ -73,26 +80,20 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
                 trans.RollBack();
                 return Result.Failed;
             }
+
             trans.RollBack();
             return Result.Cancelled;
         }
 
         /// <summary>
-        /// ExternalCommandData
-        /// </summary>
-        public static ExternalCommandData CommandData { get; private set; }
-
-        /// <summary>
-        /// create simple AreaReinforcement on selected wall or floor
+        ///     create simple AreaReinforcement on selected wall or floor
         /// </summary>
         /// <returns></returns>
         private bool Create()
         {
-           var elems = new ElementSet();
+            var elems = new ElementSet();
             foreach (var elementId in m_currentDoc.Selection.GetElementIds())
-            {
-               elems.Insert(m_currentDoc.Document.GetElement(elementId));
-            }
+                elems.Insert(m_currentDoc.Document.GetElement(elementId));
 
             //selected 0 or more than 1 element
             if (elems.Size != 1)
@@ -100,6 +101,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
                 TaskDialog.Show("Error", "Please select exactly one wall or floor.");
                 return false;
             }
+
             foreach (var o in elems)
             {
                 //create on floor
@@ -121,11 +123,12 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
                 //selected element is neither wall nor floor
                 TaskDialog.Show("Error", "Please select exactly one wall or floor.");
             }
+
             return false;
         }
 
         /// <summary>
-        /// create simple AreaReinforcement on horizontal floor
+        ///     create simple AreaReinforcement on horizontal floor
         /// </summary>
         /// <param name="floor"></param>
         /// <returns>is successful</returns>
@@ -153,27 +156,33 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
             {
                 //define the Major Direction of AreaReinforcement,
                 //we get direction of first Line on the Floor as the Major Direction
-                var firstLine = (Line)(curves[0]);
+                var firstLine = (Line)curves[0];
                 var majorDirection = new XYZ(
                     firstLine.GetEndPoint(1).X - firstLine.GetEndPoint(0).X,
                     firstLine.GetEndPoint(1).Y - firstLine.GetEndPoint(0).Y,
                     firstLine.GetEndPoint(1).Z - firstLine.GetEndPoint(0).Z);
 
                 //Create AreaReinforcement
-                var areaReinforcementTypeId = AreaReinforcementType.CreateDefaultAreaReinforcementType(CommandData.Application.ActiveUIDocument.Document);
-                var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(CommandData.Application.ActiveUIDocument.Document);
-                var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(CommandData.Application.ActiveUIDocument.Document);
-                var areaRein = AreaReinforcement.Create(CommandData.Application.ActiveUIDocument.Document, floor, curves, majorDirection, areaReinforcementTypeId, rebarBarTypeId, rebarHookTypeId);
+                var areaReinforcementTypeId =
+                    AreaReinforcementType.CreateDefaultAreaReinforcementType(CommandData.Application.ActiveUIDocument
+                        .Document);
+                var rebarBarTypeId =
+                    RebarBarType.CreateDefaultRebarBarType(CommandData.Application.ActiveUIDocument.Document);
+                var rebarHookTypeId =
+                    RebarHookType.CreateDefaultRebarHookType(CommandData.Application.ActiveUIDocument.Document);
+                var areaRein = AreaReinforcement.Create(CommandData.Application.ActiveUIDocument.Document, floor,
+                    curves, majorDirection, areaReinforcementTypeId, rebarBarTypeId, rebarHookTypeId);
 
                 //set AreaReinforcement and it's AreaReinforcementCurves parameters
                 dataOnFloor.FillIn(areaRein);
                 return true;
             }
+
             return false;
         }
 
         /// <summary>
-        /// create simple AreaReinforcement on vertical straight rectangular wall
+        ///     create simple AreaReinforcement on vertical straight rectangular wall
         /// </summary>
         /// <param name="wall"></param>
         /// <returns>is successful</returns>
@@ -206,7 +215,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
             {
                 //define the Major Direction of AreaReinforcement,
                 //we get direction of first Line on the Floor as the Major Direction
-                var firstLine = (Line)(curves[0]);
+                var firstLine = (Line)curves[0];
                 var majorDirection = new XYZ(
                     firstLine.GetEndPoint(1).X - firstLine.GetEndPoint(0).X,
                     firstLine.GetEndPoint(1).Y - firstLine.GetEndPoint(0).Y,
@@ -214,17 +223,20 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 
                 //create AreaReinforcement
                 IList<Curve> curveList = new List<Curve>();
-                foreach (var curve in curves)
-                {
-                    curveList.Add(curve);
-                }
-                var areaReinforcementTypeId = AreaReinforcementType.CreateDefaultAreaReinforcementType(CommandData.Application.ActiveUIDocument.Document);
-                var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(CommandData.Application.ActiveUIDocument.Document);
-                var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(CommandData.Application.ActiveUIDocument.Document);
-                var areaRein = AreaReinforcement.Create(CommandData.Application.ActiveUIDocument.Document, wall, curveList, majorDirection, areaReinforcementTypeId, rebarBarTypeId, rebarHookTypeId);
+                foreach (var curve in curves) curveList.Add(curve);
+                var areaReinforcementTypeId =
+                    AreaReinforcementType.CreateDefaultAreaReinforcementType(CommandData.Application.ActiveUIDocument
+                        .Document);
+                var rebarBarTypeId =
+                    RebarBarType.CreateDefaultRebarBarType(CommandData.Application.ActiveUIDocument.Document);
+                var rebarHookTypeId =
+                    RebarHookType.CreateDefaultRebarHookType(CommandData.Application.ActiveUIDocument.Document);
+                var areaRein = AreaReinforcement.Create(CommandData.Application.ActiveUIDocument.Document, wall,
+                    curveList, majorDirection, areaReinforcementTypeId, rebarBarTypeId, rebarHookTypeId);
                 dataOnWall.FillIn(areaRein);
                 return true;
             }
+
             return false;
         }
     }

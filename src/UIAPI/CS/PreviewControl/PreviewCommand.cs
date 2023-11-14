@@ -22,6 +22,7 @@
 
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
@@ -29,36 +30,34 @@ using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   public class PreviewCommand : IExternalCommand
-   {
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-      {
-         _dbdocument = commandData.Application.ActiveUIDocument.Document;
+    [Transaction(TransactionMode.Manual)]
+    public class PreviewCommand : IExternalCommand
+    {
+        private Document _dbdocument;
+
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            _dbdocument = commandData.Application.ActiveUIDocument.Document;
 
 
-         var outerGroup = new TransactionGroup(_dbdocument, "preview control");
-         outerGroup.Start();
+            var outerGroup = new TransactionGroup(_dbdocument, "preview control");
+            outerGroup.Start();
 
-         try
-         {
-            var form = new PreviewModel(commandData.Application.Application, ElementId.InvalidElementId);
-            form.ShowDialog();
-         }
-         catch (Exception e)
-         {
-            throw e;
-         }
-         finally
-         {
-            outerGroup.RollBack();
-         }
+            try
+            {
+                var form = new PreviewModel(commandData.Application.Application, ElementId.InvalidElementId);
+                form.ShowDialog();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                outerGroup.RollBack();
+            }
 
-         return Result.Succeeded;
-      }
-
-
-      private Document _dbdocument;
-   }
-
+            return Result.Succeeded;
+        }
+    }
 }

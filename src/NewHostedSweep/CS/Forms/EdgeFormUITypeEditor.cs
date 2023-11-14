@@ -21,50 +21,52 @@
 //
 
 using System;
+using System.ComponentModel;
 using System.Drawing.Design;
+using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This class is intent to provide a model dialog in property grid control.
+    ///     This class is intent to provide a model dialog in property grid control.
     /// </summary>
-    class EdgeFormUITypeEditor : UITypeEditor
+    internal class EdgeFormUITypeEditor : UITypeEditor
     {
         /// <summary>
-        /// Return the Modal style.
+        ///     Return the Modal style.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
         public override UITypeEditorEditStyle GetEditStyle(
-            System.ComponentModel.ITypeDescriptorContext context)
+            ITypeDescriptorContext context)
         {
             return UITypeEditorEditStyle.Modal;
         }
 
         /// <summary>
-        /// Show a form to add or remove edges from hosted sweep, and also can change the 
-        /// type of hosted sweep.
+        ///     Show a form to add or remove edges from hosted sweep, and also can change the
+        ///     type of hosted sweep.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="provider"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override object EditValue(System.ComponentModel.ITypeDescriptorContext context,
+        public override object EditValue(ITypeDescriptorContext context,
             IServiceProvider provider, object value)
         {
-            var winSrv = (IWindowsFormsEditorService)provider.
-                GetService(typeof(IWindowsFormsEditorService));
+            var winSrv = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
 
             var creationData = value as CreationData;
             creationData.BackUp();
             using (var form = new EdgeFetchForm(creationData))
             {
-                if (winSrv.ShowDialog(form) == System.Windows.Forms.DialogResult.OK)
+                if (winSrv.ShowDialog(form) == DialogResult.OK)
                     creationData.Update();
                 else
-                    creationData.Restore();                
+                    creationData.Restore();
             }
+
             return creationData;
         }
     }

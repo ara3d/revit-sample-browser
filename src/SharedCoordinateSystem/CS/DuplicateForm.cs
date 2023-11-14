@@ -22,29 +22,28 @@
 
 using System;
 using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 {
     /// <summary>
-    /// dupliate coordiante data form
+    ///     dupliate coordiante data form
     /// </summary>
     public partial class DuplicateForm : Form
     {
-        CoordinateSystemData m_data; //the reference of the CoordinateSystemData class 
-        CoordinateSystemDataForm m_dataForm; //the reference of the CoordinateSystemDataForm class
-        string m_locationName; //the name of  selected location
+        private readonly CoordinateSystemData m_data; //the reference of the CoordinateSystemData class 
+        private readonly CoordinateSystemDataForm m_dataForm; //the reference of the CoordinateSystemDataForm class
+        private readonly string m_locationName; //the name of  selected location
 
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="data"></param>
         /// <param name="coorinateForm"></param>
         /// <param name="locationName"></param>
         public DuplicateForm(CoordinateSystemData data, CoordinateSystemDataForm coorinateForm,
-                                               string locationName)
+            string locationName)
         {
             m_data = data;
             m_dataForm = coorinateForm;
@@ -53,7 +52,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// duplicate a new project location
+        ///     duplicate a new project location
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -61,13 +60,12 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         {
             //check whether the name has been used
             foreach (var name in m_data.LocationNames)
-            {
                 if (name == newNameTextBox.Text)
                 {
-                    TaskDialog.Show("Revit", "The name entered is already in use. Enter a unique name.", TaskDialogCommonButtons.Ok);
+                    TaskDialog.Show("Revit", "The name entered is already in use. Enter a unique name.",
+                        TaskDialogCommonButtons.Ok);
                     return;
                 }
-            }
 
             try
             {
@@ -80,23 +78,23 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                 return;
             }
 
-            DialogResult = DialogResult.OK;    // set dialog result
-            Close();                           // close the form
+            DialogResult = DialogResult.OK; // set dialog result
+            Close(); // close the form
         }
 
         /// <summary>
-        /// cancel the command
+        ///     cancel the command
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;// set dialog result
-            Close();                           // close the form
+            DialogResult = DialogResult.Cancel; // set dialog result
+            Close(); // close the form
         }
 
         /// <summary>
-        /// invoked while the form was been loaded
+        ///     invoked while the form was been loaded
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

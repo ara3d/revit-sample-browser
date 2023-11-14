@@ -21,15 +21,16 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-
+using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 namespace Revit.SDK.Samples.WorkThread.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -40,10 +41,8 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 var uidoc = commandData.Application.ActiveUIDocument;
 
                 if (uidoc == null)
-                {
                     // we can continue only if there is a document open
                     return Result.Cancelled;
-                }
 
                 // we ask the end-user to pick a face
 
@@ -51,14 +50,9 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 var result = PickWallFace(uidoc, out sref);
 
                 if (result == Result.Succeeded)
-                {
                     // Start the analysis for the picked wall surface
                     Application.thisApp.RunAnalyzer(commandData.Application, sref);
-                }
-                else if (result == Result.Failed)
-                {
-                    message = "Did not picked a face on a Wall or FaceWall element!";
-                }
+                else if (result == Result.Failed) message = "Did not picked a face on a Wall or FaceWall element!";
 
                 return Result.Succeeded;
             }
@@ -70,12 +64,12 @@ namespace Revit.SDK.Samples.WorkThread.CS
         }
 
         /// <summary>
-        ///   Prompting the user to pick a wall face
+        ///     Prompting the user to pick a wall face
         /// </summary>
         /// <returns>
-        ///   Returns 'Cancelled' if the end-user escapes from face picking.
-        ///   Otherwise returns Succeeded or Failed depending on whether
-        ///   a face on a wall or face-wall was picked as expected
+        ///     Returns 'Cancelled' if the end-user escapes from face picking.
+        ///     Otherwise returns Succeeded or Failed depending on whether
+        ///     a face on a wall or face-wall was picked as expected
         /// </returns>
         private Result PickWallFace(UIDocument uidoc, out string sref)
         {
@@ -86,7 +80,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
             {
                 faceref = uidoc.Selection.PickObject(ObjectType.Face, "Pick a face on a wall or face-wall element.");
             }
-            catch (Autodesk.Revit.Exceptions.OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 return Result.Cancelled;
             }
@@ -101,10 +95,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
                 // in this particular example, we accepts faces on wall elements only
 
-                if ((aswall == null) && (asfacewall == null))
-                {
-                    return Result.Failed;
-                }
+                if (aswall == null && asfacewall == null) return Result.Failed;
             }
 
             // we convert the reference object to a more stable string
@@ -116,4 +107,3 @@ namespace Revit.SDK.Samples.WorkThread.CS
         }
     }
 }
-

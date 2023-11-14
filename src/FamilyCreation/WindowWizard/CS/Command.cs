@@ -20,59 +20,55 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
 {
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// this class controls the class which subscribes handle events and the events' information UI.
-    /// like a bridge between them.
+    ///     A class inherits IExternalCommand interface.
+    ///     this class controls the class which subscribes handle events and the events' information UI.
+    ///     like a bridge between them.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData,
-                                             ref string message,
-                                             ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message,
+            ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
             //only a family document  can retrieve family manager
             if (doc.IsFamilyDocument)
             {
-                if (null != doc.OwnerFamily && null != doc.OwnerFamily.FamilyCategory 
-                    && doc.OwnerFamily.FamilyCategory.Name != doc.Settings.Categories.get_Item(BuiltInCategory.OST_Windows).Name)
+                if (null != doc.OwnerFamily && null != doc.OwnerFamily.FamilyCategory
+                                            && doc.OwnerFamily.FamilyCategory.Name != doc.Settings.Categories
+                                                .get_Item(BuiltInCategory.OST_Windows).Name)
                     // FamilyCategory.Name is not "Windows".
                 {
                     message = "Please make sure you opened a template of Window.";
-                    return Result.Failed;                   
+                    return Result.Failed;
                 }
+
                 var wizard = new WindowWizard(commandData);
                 var result = wizard.RunWizard();
-                if (1 == result)
-                {
-                    return Result.Succeeded;
-                }
-                else if (0 == result)
+                if (1 == result) return Result.Succeeded;
+
+                if (0 == result)
                 {
                     message = "Window Creation was cancelled.";
                     return Result.Cancelled;
                 }
-                else
-                {
-                    message = "Window Creation failed, please check your template and inputs then try again.";
-                    return Result.Failed;
-                }              
-            }
-            else
-            {
-                message = "please make sure you have opened a family document!";
+
+                message = "Window Creation failed, please check your template and inputs then try again.";
                 return Result.Failed;
             }
-        }
-            }
-}
 
+            message = "please make sure you have opened a family document!";
+            return Result.Failed;
+        }
+    }
+}

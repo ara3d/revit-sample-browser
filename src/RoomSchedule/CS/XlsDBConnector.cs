@@ -29,38 +29,39 @@ using System.IO;
 namespace Revit.SDK.Samples.RoomSchedule
 {
     /// <summary>
-    /// An integrated class to connect .xls data source, retrieve / update data
+    ///     An integrated class to connect .xls data source, retrieve / update data
     /// </summary>
-    class XlsDBConnector : IDisposable
+    internal class XlsDBConnector : IDisposable
     {
-                // The connection created
-        private OleDbConnection m_objConn;
-
         // One command for this connection
         private OleDbCommand m_command;
 
         // The connection string
-        private string m_connectStr;
+        private readonly string m_connectStr;
+
+        // The connection created
+        private OleDbConnection m_objConn;
 
         // All available tables(work sheets) in xls data source
-        private List<string> m_tables = new List<string>();
-        
+        private readonly List<string> m_tables = new List<string>();
 
-                /// <summary>
-        /// Class constructor, to retrieve data from .xls data source 
+
+        /// <summary>
+        ///     Class constructor, to retrieve data from .xls data source
         /// </summary>
-        /// <param name="strXlsFile">The .xls file to be connected. 
-        /// This file should exist and it can be writable.</param>
+        /// <param name="strXlsFile">
+        ///     The .xls file to be connected.
+        ///     This file should exist and it can be writable.
+        /// </param>
         public XlsDBConnector(string strXlsFile)
         {
             // Validate the specified
-            if (!ValidateFile(strXlsFile)) {
+            if (!ValidateFile(strXlsFile))
                 throw new ArgumentException("The specified file doesn't exists or has readonly attribute.", strXlsFile);
-            }
 
             // establish a connection to the data source.
             m_connectStr = "Provider = Microsoft.Jet.OLEDB.4.0; Data Source = \"" + strXlsFile +
-                "\"; Extended Properties = \"Excel 8.0;HDR=YES;\"";
+                           "\"; Extended Properties = \"Excel 8.0;HDR=YES;\"";
 
             // create the .xls connection
             m_objConn = new OleDbConnection(m_connectStr);
@@ -68,7 +69,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         }
 
         /// <summary>
-        /// Close the OleDb connection
+        ///     Close the OleDb connection
         /// </summary>
         public void Dispose()
         {
@@ -80,19 +81,19 @@ namespace Revit.SDK.Samples.RoomSchedule
                 GC.SuppressFinalize(this);
             }
         }
-        
+
         /// <summary>
-        /// Finalizer, we need to ensure the connection was closed
-        /// This destructor will run only if the Dispose method does not get called.
+        ///     Finalizer, we need to ensure the connection was closed
+        ///     This destructor will run only if the Dispose method does not get called.
         /// </summary>
         ~XlsDBConnector()
         {
             Dispose();
         }
-        
 
-                /// <summary>
-        /// Get all available table names from .xls data source
+
+        /// <summary>
+        ///     Get all available table names from .xls data source
         /// </summary>
         public List<string> RetrieveAllTables()
         {
@@ -103,9 +104,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             var schemaTable = m_objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables,
                 new object[] { null, null, null, "TABLE" });
             for (var i = 0; i < schemaTable.Rows.Count; i++)
-            {
                 m_tables.Add(schemaTable.Rows[i].ItemArray[2].ToString().TrimEnd('$'));
-            }
 
 
             return m_tables;
@@ -113,7 +112,7 @@ namespace Revit.SDK.Samples.RoomSchedule
 
 
         /// <summary>
-        /// Generate a DataTable data from xls data source, by a specified table name 
+        ///     Generate a DataTable data from xls data source, by a specified table name
         /// </summary>
         /// <param name="tableName">Table name to be retrieved </param>
         /// <returns>The generated DataTable from work sheet</returns>
@@ -132,15 +131,18 @@ namespace Revit.SDK.Samples.RoomSchedule
 
                 // define a flag variable to remember whether column is found
                 // duplicate column is not allowed in spreadsheet
-                var bHasColumn = new bool[5]; 
+                var bHasColumn = new bool[5];
                 Array.Clear(bHasColumn, 0, 5); // clear the variable to false
 
                 // five constant columns which must exist and to be checked
-                string[] constantNames = { RoomsData.RoomID, RoomsData.RoomName, 
-                    RoomsData.RoomNumber, RoomsData.RoomArea, RoomsData.RoomComments };
+                string[] constantNames =
+                {
+                    RoomsData.RoomID, RoomsData.RoomName,
+                    RoomsData.RoomNumber, RoomsData.RoomArea, RoomsData.RoomComments
+                };
 
                 // remember all duplicate columns, used to pop up error message
-                var duplicateColumns = string.Empty; 
+                var duplicateColumns = string.Empty;
                 for (var i = 0; i < myDataSet.Tables[0].Columns.Count; i++)
                 {
                     // get each column and check it
@@ -153,14 +155,10 @@ namespace Revit.SDK.Samples.RoomSchedule
                         if (bDupliate)
                         {
                             if (false == bHasColumn[col])
-                            {
                                 bHasColumn[col] = true;
-                            }
                             else
-                            {
                                 // this column is duplicate, reserve it
-                                duplicateColumns += string.Format("[{0}], ", constantNames[col]); 
-                            }
+                                duplicateColumns += string.Format("[{0}], ", constantNames[col]);
                         }
                     }
                 }
@@ -169,7 +167,8 @@ namespace Revit.SDK.Samples.RoomSchedule
                 if (duplicateColumns.Length > 0)
                 {
                     // duplicate columns are not allowed
-                    var message = string.Format("There are duplicate column(s) in the spread sheet: {0}.", duplicateColumns);
+                    var message = string.Format("There are duplicate column(s) in the spread sheet: {0}.",
+                        duplicateColumns);
                     throw new Exception(message);
                 }
 
@@ -177,12 +176,8 @@ namespace Revit.SDK.Samples.RoomSchedule
                 // check whether all required columns are there.
                 var missingColumns = string.Empty; // reserve all column names which are missing.
                 for (var col = 0; col < bHasColumn.Length; col++)
-                {
                     if (bHasColumn[col] == false)
-                    {
                         missingColumns += string.Format("[{0}], ", constantNames[col]);
-                    }
-                }
 
                 // check to see whether any required columns are missing.
                 if (missingColumns.Length != 0)
@@ -204,7 +199,7 @@ namespace Revit.SDK.Samples.RoomSchedule
 
 
         /// <summary>
-        /// Execute SQL command, such as: update and insert
+        ///     Execute SQL command, such as: update and insert
         /// </summary>
         /// <param name="strCmd">command to be executed</param>
         /// <returns>the number of rows affected by this command</returns>
@@ -212,40 +207,36 @@ namespace Revit.SDK.Samples.RoomSchedule
         {
             try
             {
-                if (null == m_command)
-                {
-                    m_command = m_objConn.CreateCommand();
-                }
+                if (null == m_command) m_command = m_objConn.CreateCommand();
                 m_command.CommandText = strCmd;
                 return m_command.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString() + strCmd);
+                throw new Exception(ex + strCmd);
             }
         }
-        
 
-                /// <summary>
-        /// This method will validate and update attributes the specified file.
-        /// The file should exist and it should have writable attribute.
-        /// If it's readonly, this method will try to set the attribute to writable.
+
+        /// <summary>
+        ///     This method will validate and update attributes the specified file.
+        ///     The file should exist and it should have writable attribute.
+        ///     If it's readonly, this method will try to set the attribute to writable.
         /// </summary>
         /// <param name="strFile"></param>
         /// <returns></returns>
         private bool ValidateFile(string strFile)
         {
             // exists check
-            if(!File.Exists(strFile)) {
-                return false;
-            }
+            if (!File.Exists(strFile)) return false;
             //
             // writable attribute set
             File.SetAttributes(strFile, FileAttributes.Normal);
-            return (FileAttributes.Normal == File.GetAttributes(strFile));
+            return FileAttributes.Normal == File.GetAttributes(strFile);
         }
+
         /// <summary>
-        /// Check if two columns names are the same
+        ///     Check if two columns names are the same
         /// </summary>
         /// <param name="baseName">first name</param>
         /// <param name="compName">second name</param>
@@ -253,13 +244,8 @@ namespace Revit.SDK.Samples.RoomSchedule
         private static bool CheckSameColName(string baseName, string compName)
         {
             if (string.Compare(baseName, compName) == 0)
-            {
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
-            };
+    }
 }

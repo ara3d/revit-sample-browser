@@ -20,51 +20,47 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System.Diagnostics;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
 using AppCreation = Autodesk.Revit.Creation.Application;
 
 namespace Revit.SDK.Samples.AutoJoin.CS
 {
     /// <summary>
-    /// This sample demonstrates how to automatically join geometry 
-    /// between multiple generic forms for use in family modeling and massing. 
+    ///     This sample demonstrates how to automatically join geometry
+    ///     between multiple generic forms for use in family modeling and massing.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        
         public static AppCreation s_appCreation;
 
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.AutoJoin");
+            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                "Revit.SDK.Samples.AutoJoin");
             trans.Start();
             if (null == s_appCreation)
-            {
                 // share for class Intersection.
-                s_appCreation = commandData.Application.Application.Create;                
-            }
-            
+                s_appCreation = commandData.Application.Application.Create;
+
             var doc = commandData.Application.ActiveUIDocument;
             var solids
                 = new CombinableElementArray();
 
             var es = new ElementSet();
-            foreach (ElementId elemId in es)
-            {
-               es.Insert(doc.Document.GetElement(elemId));
-            }
+            foreach (ElementId elemId in es) es.Insert(doc.Document.GetElement(elemId));
             if (0 < es.Size)
             {
                 foreach (var elementId in doc.Selection.GetElementIds())
                 {
-                   var element = doc.Document.GetElement(elementId);
-                    System.Diagnostics.Trace.WriteLine(element.GetType().ToString());
+                    var element = doc.Document.GetElement(elementId);
+                    Trace.WriteLine(element.GetType().ToString());
 
                     var gf = element as GenericForm;
                     if (null != gf && !gf.IsSolid)
@@ -86,7 +82,7 @@ namespace Revit.SDK.Samples.AutoJoin.CS
 
                 //The selected generic forms are joined, whether or not they overlap.
                 trans.Commit();
-                return Result.Succeeded;                
+                return Result.Succeeded;
             }
 
             var autojoin = new AutoJoin();
@@ -95,5 +91,5 @@ namespace Revit.SDK.Samples.AutoJoin.CS
             trans.Commit();
             return Result.Succeeded;
         }
-    }    
+    }
 }

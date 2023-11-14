@@ -21,33 +21,34 @@
 //
 
 using System;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.PowerCircuit.CS
 {
     /// <summary>
-    /// The dialog which provides the options of selecting and showing circuit
+    ///     The dialog which provides the options of selecting and showing circuit
     /// </summary>
-    public partial class SelectCircuitForm : System.Windows.Forms.Form
+    public partial class SelectCircuitForm : Form
     {
         /// <summary>
-        /// Data class object
+        ///     Data class object
         /// </summary>
-        CircuitOperationData m_optionData;
+        private readonly CircuitOperationData m_optionData;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="optionData">Data class object</param>
         public SelectCircuitForm(CircuitOperationData optionData)
         {
             m_optionData = optionData;
 
-            InitializeComponent();          
-            InitializeElectricalSystems(); 
+            InitializeComponent();
+            InitializeElectricalSystems();
         }
 
         /// <summary>
-        /// Initialize the list of circuits to display
+        ///     Initialize the list of circuits to display
         /// </summary>
         private void InitializeElectricalSystems()
         {

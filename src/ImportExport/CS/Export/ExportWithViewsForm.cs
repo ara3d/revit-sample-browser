@@ -21,23 +21,22 @@
 // 
 
 using System;
-using System.Windows.Forms;
 using System.IO;
-
+using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// It contains a dialog which provides the options of common information for export
+    ///     It contains a dialog which provides the options of common information for export
     /// </summary>
     public partial class ExportWithViewsForm : Form
     {
         // Data class object of ExportDataWithViews
-        private ExportDataWithViews m_exportData;
+        private readonly ExportDataWithViews m_exportData;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="data"></param>
         public ExportWithViewsForm(ExportDataWithViews data)
@@ -48,7 +47,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize values and status of controls
+        ///     Initialize values and status of controls
         /// </summary>
         private void InitializeControls()
         {
@@ -69,12 +68,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 {
                     exportOptionsForm.ShowDialog();
                 }
-
             }
         }
 
         /// <summary>
-        /// Provide the export option dialog
+        ///     Provide the export option dialog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -87,22 +85,16 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
                 if (radioButtonCurrentView.Checked)
                 {
-                    if (m_exportData.Is3DView)
-                    {
-                        contain3DView = true;
-                    }
+                    if (m_exportData.Is3DView) contain3DView = true;
                 }
                 else
                 {
-                    if (m_exportData.SelectViewsData.Contain3DView)
-                    {
-                        contain3DView = true;
-                    }
+                    if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
                 }
 
                 var exportDWGData = m_exportData as ExportDWGData;
                 using (var exportOptionsForm = new ExportBaseOptionsForm(exportDWGData.ExportOptionsData,
-                    contain3DView, "DWG"))
+                           contain3DView, "DWG"))
                 {
                     exportOptionsForm.ShowDialog();
                 }
@@ -114,27 +106,20 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
                 if (radioButtonCurrentView.Checked)
                 {
-                    if (m_exportData.Is3DView)
-                    {
-                        contain3DView = true;
-                    }
+                    if (m_exportData.Is3DView) contain3DView = true;
                 }
                 else
                 {
-                    if (m_exportData.SelectViewsData.Contain3DView)
-                    {
-                        contain3DView = true;
-                    }
+                    if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
                 }
 
                 var exportDXFData = m_exportData as ExportDXFData;
 
                 using (var exportOptionsForm = new ExportBaseOptionsForm(exportDXFData.ExportOptionsData,
-                    contain3DView, "DXF"))
+                           contain3DView, "DXF"))
                 {
                     exportOptionsForm.ShowDialog();
                 }
-
             }
             // Export dgn
             else if (m_exportData.ExportFormat == ExportFormat.DGN)
@@ -148,11 +133,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
             // Export PDF
             else if (m_exportData.ExportFormat == ExportFormat.PDF)
             {
-               var exportPDFData = m_exportData as ExportPDFData;
-               using (var exportOptionsForm = new ExportPDFOptionsForm(exportPDFData))
-               {
-                  exportOptionsForm.ShowDialog();
-               }
+                var exportPDFData = m_exportData as ExportPDFData;
+                using (var exportOptionsForm = new ExportPDFOptionsForm(exportPDFData))
+                {
+                    exportOptionsForm.ShowDialog();
+                }
             }
 
             // Export DWF
@@ -167,7 +152,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Provide the views selecting dialog
+        ///     Provide the views selecting dialog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -178,18 +163,14 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 m_exportData.SelectViewsData.SelectedViews.Clear();
                 selectViewsForm.ShowDialog();
                 if (m_exportData.SelectViewsData.SelectedViews.Size == 0)
-                {
                     radioButtonCurrentView.Checked = true;
-                }
                 else
-                {
                     radioButtonCurrentView.Checked = false;
-                }
             }
         }
 
         /// <summary>
-        /// Specify a file to export into
+        ///     Specify a file to export into
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -211,13 +192,12 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 {
                     var exportDXFData = m_exportData as ExportDXFData;
                     exportDXFData.ExportFileVersion = exportDXFData.EnumFileVersion[filterIndex - 1];
-
                 }
             }
         }
 
         /// <summary>
-        /// Change the status of buttonSelectViews according to the selection
+        ///     Change the status of buttonSelectViews according to the selection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -227,7 +207,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Transfer information back to ExportData class and execute EXPORT operation
+        ///     Transfer information back to ExportData class and execute EXPORT operation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -241,10 +221,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 {
                     var exported = m_exportData.Export();
                     if (!exported)
-                    {
                         TaskDialog.Show("Export", "This project cannot be exported to " + m_exportData.ExportFileName +
-                        " in current settings.", TaskDialogCommonButtons.Ok);
-                    }
+                                                  " in current settings.", TaskDialogCommonButtons.Ok);
                 }
                 catch (Exception ex)
                 {
@@ -257,7 +235,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Check whether the folder specified is valid
+        ///     Check whether the folder specified is valid
         /// </summary>
         /// <returns></returns>
         private bool ValidateExportFolder()
@@ -293,6 +271,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             return true;
         }
-
     }
 }

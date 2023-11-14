@@ -235,7 +235,6 @@
   <ItemGroup>
     <None Include="AddSpaceAndZone\CS\AddSpaceAndZone.addin" />
     <None Include="AddSpaceAndZone\CS\ReadMe_AddSpaceAndZone.rtf" />
-    <None Include="AddSpaceAndZone\CS\~%24adMe_AddSpaceAndZone.rtf" />
     <None Include="AllViews\CS\AllViews.addin" />
     <None Include="AllViews\CS\ReadMe_AllViews.rtf" />
     <None Include="AnalysisVisualizationFramework\DistanceToSurfaces\CS\DistanceToSurfaces.addin" />

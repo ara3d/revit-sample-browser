@@ -19,106 +19,90 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
 
+using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
-    ///   A class with methods to execute requests made by the dialog user.
+    ///     A class with methods to execute requests made by the dialog user.
     /// </summary>
-    /// 
     public static class RequestHandler
     {
-        // A trivial delegate, but handy
-        private delegate void DoorOperation(FamilyInstance e);
-
-
         /// <summary>
-        ///   The top function that distributes requests to individual methods. 
+        ///     The top function that distributes requests to individual methods.
         /// </summary>
-        /// 
         public static void Execute(UIApplication uiapp, RequestId reqest)
         {
             switch (reqest)
             {
                 case RequestId.None:
-                    {
-                        return;  // no request at this time -> we can leave immediately
-                    }
+                {
+                    return; // no request at this time -> we can leave immediately
+                }
                 case RequestId.Delete:
-                    {
-                        ModifySelectedDoors(uiapp, "Delete doors", e => e.Document.Delete(e.Id));
-                        break;
-                    }
+                {
+                    ModifySelectedDoors(uiapp, "Delete doors", e => e.Document.Delete(e.Id));
+                    break;
+                }
                 case RequestId.FlipLeftRight:
-                    {
-                        ModifySelectedDoors(uiapp, "Flip door Hand", e => e.flipHand());
-                        break;
-                    }
+                {
+                    ModifySelectedDoors(uiapp, "Flip door Hand", e => e.flipHand());
+                    break;
+                }
                 case RequestId.FlipInOut:
-                    {
-                        ModifySelectedDoors(uiapp, "Flip door Facing", e => e.flipFacing());
-                        break;
-                    }
+                {
+                    ModifySelectedDoors(uiapp, "Flip door Facing", e => e.flipFacing());
+                    break;
+                }
                 case RequestId.MakeLeft:
-                    {
-                        ModifySelectedDoors(uiapp, "Make door Left", MakeLeft);
-                        break;
-                    }
+                {
+                    ModifySelectedDoors(uiapp, "Make door Left", MakeLeft);
+                    break;
+                }
                 case RequestId.MakeRight:
-                    {
-                        ModifySelectedDoors(uiapp, "Make door Right", MakeRight);
-                        break;
-                    }
+                {
+                    ModifySelectedDoors(uiapp, "Make door Right", MakeRight);
+                    break;
+                }
                 case RequestId.TurnOut:
-                    {
-                        ModifySelectedDoors(uiapp, "Place door Out", TurnOut);
-                        break;
-                    }
+                {
+                    ModifySelectedDoors(uiapp, "Place door Out", TurnOut);
+                    break;
+                }
                 case RequestId.TurnIn:
-                    {
-                        ModifySelectedDoors(uiapp, "Place door In", TurnIn);
-                        break;
-                    }
+                {
+                    ModifySelectedDoors(uiapp, "Place door In", TurnIn);
+                    break;
+                }
                 case RequestId.Rotate:
-                    {
-                        ModifySelectedDoors(uiapp, "Rotate door", FlipHandAndFace);
-                        break;
-                    }
-                default:
-                    {
-                        // some kind of a warning here should
-                        // notify us about an unexpected request 
-                        break;
-                    }
+                {
+                    ModifySelectedDoors(uiapp, "Rotate door", FlipHandAndFace);
+                    break;
+                }
             }
-
-            return;
         }
 
 
         /// <summary>
-        ///   The main door-modification subroutine - called from every request 
+        ///     The main door-modification subroutine - called from every request
         /// </summary>
         /// <remarks>
-        ///   It searches the current selection for all doors
-        ///   and if it finds any it applies the requested operation to them
+        ///     It searches the current selection for all doors
+        ///     and if it finds any it applies the requested operation to them
         /// </remarks>
         /// <param name="uiapp">The Revit application object</param>
         /// <param name="text">Caption of the transaction for the operation.</param>
         /// <param name="operation">A delegate to perform the operation on an instance of a door.</param>
-        /// 
         private static void ModifySelectedDoors(UIApplication uiapp, string text, DoorOperation operation)
         {
             var uidoc = uiapp.ActiveUIDocument;
 
             // check if there is anything selected in the active document
 
-            if ((uidoc != null) && (uidoc.Selection != null))
+            if (uidoc != null && uidoc.Selection != null)
             {
                 var selElements = uidoc.Selection.GetElementIds();
                 if (selElements.Count > 0)
@@ -129,26 +113,19 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
                     ICollection<Element> doorset = collector.OfCategory(BuiltInCategory.OST_Doors).ToElements();
 
                     if (doorset != null)
-                    {
                         // Since we'll modify the document, we need a transaction
                         // It's best if a transaction is scoped by a 'using' block
                         using (var trans = new Transaction(uidoc.Document))
                         {
                             // The name of the transaction was given as an argument
-
                             if (trans.Start(text) == TransactionStatus.Started)
                             {
                                 // apply the requested operation to every door
-
-                                foreach (FamilyInstance door in doorset)
-                                {
-                                    operation(door);
-                                }
+                                foreach (FamilyInstance door in doorset) operation(door);
 
                                 trans.Commit();
                             }
                         }
-                    }
                 }
             }
         }
@@ -160,7 +137,8 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
 
         private static void FlipHandAndFace(FamilyInstance e)
         {
-            e.flipFacing(); e.flipHand();
+            e.flipFacing();
+            e.flipHand();
         }
 
         // Note: The door orientation [left/right] is according the common
@@ -195,6 +173,7 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             if (e.FacingFlipped) e.flipFacing();
         }
 
-    }  // class
-
-}  // namespace
+        // A trivial delegate, but handy
+        private delegate void DoorOperation(FamilyInstance e);
+    } // class
+} // namespace

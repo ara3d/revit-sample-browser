@@ -22,19 +22,18 @@
 
 using System;
 using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
     /// <summary>
-    /// This form is used to collect parameters for LWinder creation. It also validates the input
-    /// parameters and will warn if there is any invalid parameters when trying to submit the form.
+    ///     This form is used to collect parameters for LWinder creation. It also validates the input
+    ///     parameters and will warn if there is any invalid parameters when trying to submit the form.
     /// </summary>
-    partial class LWinderOptions : Form
+    internal partial class LWinderOptions : Form
     {
         /// <summary>
-        /// Default constructor.
+        ///     Default constructor.
         /// </summary>
         public LWinderOptions()
         {
@@ -42,7 +41,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Number of straight steps at start.
+        ///     Number of straight steps at start.
         /// </summary>
         public uint NumStepsAtStart
         {
@@ -51,7 +50,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Number of straight steps in winder corner.
+        ///     Number of straight steps in winder corner.
         /// </summary>
         public uint NumStepsInCorner
         {
@@ -60,7 +59,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Number of straight steps at end.
+        ///     Number of straight steps at end.
         /// </summary>
         public uint NumStepsAtEnd
         {
@@ -69,7 +68,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Winder stairs run width.
+        ///     Winder stairs run width.
         /// </summary>
         public double RunWidth
         {
@@ -78,7 +77,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Center point offset distance from internal boundary.
+        ///     Center point offset distance from internal boundary.
         /// </summary>
         public double CenterOffsetE
         {
@@ -87,7 +86,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Center point offset distance from internal boundary.
+        ///     Center point offset distance from internal boundary.
         /// </summary>
         public double CenterOffsetF
         {
@@ -96,17 +95,17 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// A switch indicates whether to support DMU(dynamic model update).
+        ///     A switch indicates whether to support DMU(dynamic model update).
         /// </summary>
         public bool DMU => dmuCheckBox.Checked;
 
         /// <summary>
-        /// A switch to control the sketch drawing of winder stairs.
+        ///     A switch to control the sketch drawing of winder stairs.
         /// </summary>
         public bool Sketch => sketchCheckBox.Checked;
 
         /// <summary>
-        /// Validate the UI input and it will warn if there are invalid user inputs.
+        ///     Validate the UI input and it will warn if there are invalid user inputs.
         /// </summary>
         /// <returns>true if all input is fine.</returns>
         private bool ValidateInput()
@@ -122,7 +121,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
 
             if (!uint.TryParse(numAtStartTextBox.Text, out _))
             {
-                TaskDialog.Show("L-Winder Warning", "Start steps should be unsigned integer", TaskDialogCommonButtons.Ok);
+                TaskDialog.Show("L-Winder Warning", "Start steps should be unsigned integer",
+                    TaskDialogCommonButtons.Ok);
                 numAtStartTextBox.Focus();
                 numAtStartTextBox.SelectAll();
                 return false;
@@ -139,7 +139,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             uint numInCorner;
             if (!uint.TryParse(numInCornerTextBox.Text, out numInCorner) || numInCorner < 1)
             {
-                TaskDialog.Show("L-Winder Warning", "Corner steps should be unsigned integer and >= 1", TaskDialogCommonButtons.Ok);
+                TaskDialog.Show("L-Winder Warning", "Corner steps should be unsigned integer and >= 1",
+                    TaskDialogCommonButtons.Ok);
                 numInCornerTextBox.Focus();
                 numInCornerTextBox.SelectAll();
                 return false;
@@ -148,7 +149,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             double offsetE;
             if (!double.TryParse(centerOffsetETextBox.Text, out offsetE) || offsetE < 0.0)
             {
-                TaskDialog.Show("L-Winder Warning", "Center offset (E) should be non-negative double", TaskDialogCommonButtons.Ok);
+                TaskDialog.Show("L-Winder Warning", "Center offset (E) should be non-negative double",
+                    TaskDialogCommonButtons.Ok);
                 centerOffsetETextBox.Focus();
                 centerOffsetETextBox.SelectAll();
                 return false;
@@ -157,7 +159,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             double offsetF;
             if (!double.TryParse(centerOffsetFTextBox.Text, out offsetF) || offsetF < 0.0)
             {
-                TaskDialog.Show("L-Winder Warning", "Center offset (F) should be non-negative double", TaskDialogCommonButtons.Ok);
+                TaskDialog.Show("L-Winder Warning", "Center offset (F) should be non-negative double",
+                    TaskDialogCommonButtons.Ok);
                 centerOffsetFTextBox.Focus();
                 centerOffsetFTextBox.SelectAll();
                 return false;
@@ -167,7 +170,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Submit the UI input.
+        ///     Submit the UI input.
         /// </summary>
         private void okButton_Click(object sender, EventArgs e)
         {
@@ -179,7 +182,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Cancel the UI input.
+        ///     Cancel the UI input.
         /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {

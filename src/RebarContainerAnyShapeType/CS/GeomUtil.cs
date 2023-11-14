@@ -32,15 +32,15 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
 
     /// <summary>
-    /// The class which give the base geometry operation, it is a static class.
+    ///     The class which give the base geometry operation, it is a static class.
     /// </summary>
-    static class GeomUtil
+    internal static class GeomUtil
     {
         // Private members
-        const double Precision = 0.00001;    //precision when judge whether two doubles are equal
+        private const double Precision = 0.00001; //precision when judge whether two doubles are equal
 
         /// <summary>
-        /// Judge whether the two double data are equal
+        ///     Judge whether the two double data are equal
         /// </summary>
         /// <param name="d1">The first double data</param>
         /// <param name="d2">The second double data</param>
@@ -53,7 +53,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         }
 
         /// <summary>
-        /// Judge whether the two Autodesk.Revit.DB.XYZ point are equal
+        ///     Judge whether the two Autodesk.Revit.DB.XYZ point are equal
         /// </summary>
         /// <param name="first">The first Autodesk.Revit.DB.XYZ point</param>
         /// <param name="second">The second Autodesk.Revit.DB.XYZ point</param>
@@ -70,10 +70,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <param name="face"></param>
         /// <param name="line"></param>
         /// <returns>return true when line is perpendicular to the face</returns>
-
-
         /// <summary>
-        /// Judge whether the line is perpendicular to the face
+        ///     Judge whether the line is perpendicular to the face
         /// </summary>
         /// <param name="face">the face reference</param>
         /// <param name="line">the line reference</param>
@@ -81,14 +79,12 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <param name="lineTrans">the transform for the line</param>
         /// <returns>true if line is perpendicular to the face, otherwise false</returns>
         public static bool IsVertical(Face face, Line line,
-                                                Transform faceTrans, Transform lineTrans)
+            Transform faceTrans, Transform lineTrans)
         {
             //get points which the face contains
             var points = face.Triangulate().Vertices as List<XYZ>;
-            if (3 > points.Count)    // face's point number should be above 2
-            {
+            if (3 > points.Count) // face's point number should be above 2
                 return false;
-            }
 
             // get three points from the face points
             var first = points[0];
@@ -116,20 +112,20 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             // form two vectors from the face and a vector stand for the line
             // Use SubXYZ() method to get the vectors
-            var vector1 = SubXYZ(first, second);    // first vector of face
-            var vector2 = SubXYZ(first, third);     // second vector of face
-            var vector3 = SubXYZ(lineStart, lineEnd);   // line vector
+            var vector1 = SubXYZ(first, second); // first vector of face
+            var vector2 = SubXYZ(first, third); // second vector of face
+            var vector3 = SubXYZ(lineStart, lineEnd); // line vector
 
             // get two dot products of the face vectors and line vector
             var result1 = DotMatrix(vector1, vector3);
             var result2 = DotMatrix(vector2, vector3);
 
             // if two dot products are all zero, the line is perpendicular to the face
-            return (IsEqual(result1, 0) && IsEqual(result2, 0));
+            return IsEqual(result1, 0) && IsEqual(result2, 0);
         }
 
         /// <summary>
-        /// judge whether the two vectors have the same direction
+        ///     judge whether the two vectors have the same direction
         /// </summary>
         /// <param name="firstVec">the first vector</param>
         /// <param name="secondVec">the second vector</param>
@@ -142,11 +138,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             // if the dot product of two unit vectors is equal to 1, return true
             var dot = DotMatrix(first, second);
-            return (IsEqual(dot, 1));
+            return IsEqual(dot, 1);
         }
 
         /// <summary>
-        /// Judge whether the two vectors have the opposite direction
+        ///     Judge whether the two vectors have the opposite direction
         /// </summary>
         /// <param name="firstVec">the first vector</param>
         /// <param name="secondVec">the second vector</param>
@@ -159,11 +155,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             // if the dot product of two unit vectors is equal to -1, return true
             var dot = DotMatrix(first, second);
-            return (IsEqual(dot, -1));
+            return IsEqual(dot, -1);
         }
 
         /// <summary>
-        /// multiplication cross of two Autodesk.Revit.DB.XYZ as Matrix
+        ///     multiplication cross of two Autodesk.Revit.DB.XYZ as Matrix
         /// </summary>
         /// <param name="p1">The first XYZ</param>
         /// <param name="p2">The second XYZ</param>
@@ -183,14 +179,12 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var y = v1 * u3 - v3 * u1;
             var z = v2 * u1 - v1 * u2;
 
-            return new XYZ (x, y, z);
+            return new XYZ(x, y, z);
         }
 
 
-
-
         /// <summary>
-        /// Set the vector into unit length
+        ///     Set the vector into unit length
         /// </summary>
         /// <param name="vector">the input vector</param>
         /// <returns>the vector in unit length</returns>
@@ -203,11 +197,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var x = vector.X / length;
             var y = vector.Y / length;
             var z = vector.Z / length;
-            return new XYZ (x, y, z);
+            return new XYZ(x, y, z);
         }
 
         /// <summary>
-        /// calculate the distance from grid origin to the XYZ(vector length)
+        ///     calculate the distance from grid origin to the XYZ(vector length)
         /// </summary>
         /// <param name="vector">the input vector</param>
         /// <returns>the length of the vector</returns>
@@ -220,7 +214,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         }
 
         /// <summary>
-        /// Subtraction of two points(or vectors), get a new vector 
+        ///     Subtraction of two points(or vectors), get a new vector
         /// </summary>
         /// <param name="p1">the first point(vector)</param>
         /// <param name="p2">the second point(vector)</param>
@@ -231,11 +225,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var y = p1.Y - p2.Y;
             var z = p1.Z - p2.Z;
 
-            return new XYZ (x, y, z);
+            return new XYZ(x, y, z);
         }
 
         /// <summary>
-        /// Add of two points(or vectors), get a new point(vector) 
+        ///     Add of two points(or vectors), get a new point(vector)
         /// </summary>
         /// <param name="p1">the first point(vector)</param>
         /// <param name="p2">the first point(vector)</param>
@@ -246,11 +240,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var y = p1.Y + p2.Y;
             var z = p1.Z + p2.Z;
 
-            return new XYZ (x, y, z);
+            return new XYZ(x, y, z);
         }
 
         /// <summary>
-        /// Multiply a vector with a number
+        ///     Multiply a vector with a number
         /// </summary>
         /// <param name="vector">a vector</param>
         /// <param name="rate">the rate number</param>
@@ -261,11 +255,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var y = vector.Y * rate;
             var z = vector.Z * rate;
 
-            return new XYZ (x, y, z);
+            return new XYZ(x, y, z);
         }
 
         /// <summary>
-        /// Transform old coordinate system in the new coordinate system 
+        ///     Transform old coordinate system in the new coordinate system
         /// </summary>
         /// <param name="point">the Autodesk.Revit.DB.XYZ which need to be transformed</param>
         /// <param name="transform">the value of the coordinate system to be transformed</param>
@@ -288,11 +282,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var yTemp = x * b0.Y + y * b1.Y + z * b2.Y + origin.Y;
             var zTemp = x * b0.Z + y * b1.Z + z * b2.Z + origin.Z;
 
-            return new XYZ (xTemp, yTemp, zTemp);
+            return new XYZ(xTemp, yTemp, zTemp);
         }
 
         /// <summary>
-        /// Move a point a give offset along a given direction
+        ///     Move a point a give offset along a given direction
         /// </summary>
         /// <param name="point">the point need to move</param>
         /// <param name="direction">the direction the point move to</param>
@@ -306,7 +300,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         }
 
         /// <summary>
-        /// get the orient of hook according to curve direction, reinforcement normal and hook direction
+        ///     get the orient of hook according to curve direction, reinforcement normal and hook direction
         /// </summary>
         /// <param name="curveVec">the curve direction</param>
         /// <param name="normal">rebar normal direction</param>
@@ -322,13 +316,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
                 if (IsSameDirection(tempVec, hookVec))
                 {
                     if (i == 0)
-                    {
                         return RebarHookOrientation.Right;
-                    }
-                    else if (i == 2)
-                    {
-                        return RebarHookOrientation.Left;
-                    }
+                    if (i == 2) return RebarHookOrientation.Left;
                 }
             }
 
@@ -336,7 +325,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         }
 
         /// <summary>
-        /// Judge the vector is in right or left direction
+        ///     Judge the vector is in right or left direction
         /// </summary>
         /// <param name="normal">The unit vector need to be judged its direction</param>
         /// <returns>if in right dircetion return true, otherwise return false</returns>
@@ -346,15 +335,16 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             if (Math.Abs(normal.X) <= eps)
             {
                 if (normal.Y > 0) return false;
-                else return true;
+                return true;
             }
+
             if (normal.X > 0) return true;
             if (normal.X < 0) return false;
             return true;
         }
 
         /// <summary>
-        /// dot product of two Autodesk.Revit.DB.XYZ as Matrix
+        ///     dot product of two Autodesk.Revit.DB.XYZ as Matrix
         /// </summary>
         /// <param name="p1">The first XYZ</param>
         /// <param name="p2">The second XYZ</param>

@@ -26,66 +26,51 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This class contains the data for hosted sweep creation.
+    ///     This class contains the data for hosted sweep creation.
     /// </summary>
     public class CreationData
     {
         /// <summary>
-        /// Represents the method that will handle the EdgeAdded or EdgeRemoved events
-        /// of CreationData
+        ///     Represents the method that will handle the EdgeAdded or EdgeRemoved events
+        ///     of CreationData
         /// </summary>
         /// <param name="edge">Edge</param>
         public delegate void EdgeEventHandler(Edge edge);
 
         /// <summary>
-        /// Represents the method that will handle the SymbolChanged events
-        /// of CreationData
+        ///     Represents the method that will handle the SymbolChanged events
+        ///     of CreationData
         /// </summary>
         /// <param name="sym">Symbol</param>
         public delegate void SymbolChangedEventHandler(ElementType sym);
 
         /// <summary>
-        /// Edge is added to HostedSweep.
+        ///     Back up of Edges.
         /// </summary>
-        public event EdgeEventHandler EdgeAdded;
+        private readonly List<Edge> m_backUpEdges = new List<Edge>();
 
         /// <summary>
-        /// Edge is removed from HostedSweep.
-        /// </summary>
-        public event EdgeEventHandler EdgeRemoved;
-
-        /// <summary>
-        /// HostedSweep symbol is changed.
-        /// </summary>
-        public event SymbolChangedEventHandler SymbolChanged;
-
-        /// <summary>
-        /// Creator contains the necessary data to fetch the edges and get the symbol.
-        /// </summary>
-        private HostedSweepCreator m_creator;
-
-        /// <summary>
-        /// Symbol for HostedSweep creation.
-        /// </summary>
-        private ElementType m_symbol;
-
-        /// <summary>
-        /// Edges which contains references for HostedSweep creation.
-        /// </summary>
-        private List<Edge> m_edgesForHostedSweep = new List<Edge>();
-
-        /// <summary>
-        /// Back up of Symbol.
+        ///     Back up of Symbol.
         /// </summary>
         private ElementType m_backUpSymbol;
 
         /// <summary>
-        /// Back up of Edges.
+        ///     Creator contains the necessary data to fetch the edges and get the symbol.
         /// </summary>
-        private List<Edge> m_backUpEdges = new List<Edge>();
+        private readonly HostedSweepCreator m_creator;
 
         /// <summary>
-        /// Constructor.
+        ///     Edges which contains references for HostedSweep creation.
+        /// </summary>
+        private readonly List<Edge> m_edgesForHostedSweep = new List<Edge>();
+
+        /// <summary>
+        ///     Symbol for HostedSweep creation.
+        /// </summary>
+        private ElementType m_symbol;
+
+        /// <summary>
+        ///     Constructor.
         /// </summary>
         /// <param name="creator">HostedSweepCreator</param>
         public CreationData(HostedSweepCreator creator)
@@ -94,17 +79,51 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Back up the Symbol and Edges.
+        ///     Creator contains the necessary data to fetch the edges and get the symbol.
+        /// </summary>
+        public HostedSweepCreator Creator => m_creator;
+
+        /// <summary>
+        ///     Symbol for HostedSweep creation.
+        /// </summary>
+        public ElementType Symbol
+        {
+            get => m_symbol;
+            set => m_symbol = value;
+        }
+
+        /// <summary>
+        ///     Edges which contains references for HostedSweep creation.
+        /// </summary>
+        public List<Edge> EdgesForHostedSweep => m_edgesForHostedSweep;
+
+        /// <summary>
+        ///     Edge is added to HostedSweep.
+        /// </summary>
+        public event EdgeEventHandler EdgeAdded;
+
+        /// <summary>
+        ///     Edge is removed from HostedSweep.
+        /// </summary>
+        public event EdgeEventHandler EdgeRemoved;
+
+        /// <summary>
+        ///     HostedSweep symbol is changed.
+        /// </summary>
+        public event SymbolChangedEventHandler SymbolChanged;
+
+        /// <summary>
+        ///     Back up the Symbol and Edges.
         /// </summary>
         public void BackUp()
         {
             m_backUpSymbol = m_symbol;
             m_backUpEdges.Clear();
-            m_backUpEdges.AddRange(m_edgesForHostedSweep);            
+            m_backUpEdges.AddRange(m_edgesForHostedSweep);
         }
 
         /// <summary>
-        /// Restore the Symbol and Edges.
+        ///     Restore the Symbol and Edges.
         /// </summary>
         public void Restore()
         {
@@ -114,7 +133,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// If CreationData changed, notify its observers.
+        ///     If CreationData changed, notify its observers.
         /// </summary>
         public void Update()
         {
@@ -123,45 +142,14 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 SymbolChanged(m_symbol);
 
             if (EdgeRemoved != null)
-            {
                 foreach (var edge in m_backUpEdges)
-                {
                     if (m_edgesForHostedSweep.IndexOf(edge) == -1)
-                    {
                         EdgeRemoved(edge);
-                    }
-                }
-            }
 
-            if(EdgeAdded != null)
-            {
+            if (EdgeAdded != null)
                 foreach (var edge in m_edgesForHostedSweep)
-                {
                     if (m_backUpEdges.IndexOf(edge) == -1)
-                    {
                         EdgeAdded(edge);
-                    }
-                }
-            }
         }
-
-        /// <summary>
-        /// Creator contains the necessary data to fetch the edges and get the symbol.
-        /// </summary>
-        public HostedSweepCreator Creator => m_creator;
-
-        /// <summary>
-        /// Symbol for HostedSweep creation.
-        /// </summary>
-        public ElementType Symbol
-        {
-            get => m_symbol;
-            set => m_symbol = value;
-        }        
-
-        /// <summary>
-        /// Edges which contains references for HostedSweep creation.
-        /// </summary>
-        public List<Edge> EdgesForHostedSweep => m_edgesForHostedSweep;
     }
 }

@@ -26,21 +26,22 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.FoundationSlab.CS
 {
     /// <summary>
-    /// A class to show properties and profiles of the foundation slabs.
+    ///     A class to show properties and profiles of the foundation slabs.
     /// </summary>
     public partial class FoundationSlabForm : Form
     {
+        private readonly DataGridViewTextBoxColumn levelNameColumn = new DataGridViewTextBoxColumn();
+
         // Revit datas for UI to display and operate.
-        SlabData m_datas;
+        private readonly SlabData m_datas;
+        private readonly DataGridViewTextBoxColumn markColumn = new DataGridViewTextBoxColumn();
 
         // The columns of DataGridView.
-        DataGridViewCheckBoxColumn selectedColumn = new DataGridViewCheckBoxColumn();
-        DataGridViewTextBoxColumn markColumn = new DataGridViewTextBoxColumn();
-        DataGridViewTextBoxColumn levelNameColumn = new DataGridViewTextBoxColumn();
-        DataGridViewTextBoxColumn slabTypeNameColumn = new DataGridViewTextBoxColumn();
+        private readonly DataGridViewCheckBoxColumn selectedColumn = new DataGridViewCheckBoxColumn();
+        private readonly DataGridViewTextBoxColumn slabTypeNameColumn = new DataGridViewTextBoxColumn();
 
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
         /// <param name="datas">The object contains floors' datas.</param>
         public FoundationSlabForm(SlabData datas)
@@ -55,7 +56,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         {
             // Edit the columns of the dataGridView.
             dataGridView.AutoGenerateColumns = false;
-            dataGridView.Columns.AddRange(new DataGridViewColumn[] { selectedColumn, markColumn, levelNameColumn, slabTypeNameColumn });
+            dataGridView.Columns.AddRange(selectedColumn, markColumn, levelNameColumn, slabTypeNameColumn);
             dataGridView.DataSource = m_datas.BaseSlabList;
 
             // Select
@@ -72,7 +73,8 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             markColumn.ReadOnly = true;
             markColumn.Width = dataGridView.Width / 9;
 
-            var remainWidth = dataGridView.Width - dataGridView.RowHeadersWidth - selectedColumn.Width - markColumn.Width;
+            var remainWidth = dataGridView.Width - dataGridView.RowHeadersWidth - selectedColumn.Width -
+                              markColumn.Width;
 
             // Level
             levelNameColumn.DataPropertyName = "LevelName";
@@ -90,7 +92,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         }
 
         /// <summary>
-        /// Form load.
+        ///     Form load.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
@@ -108,7 +110,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         }
 
         /// <summary>
-        /// Cell value changed.
+        ///     Cell value changed.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
@@ -119,14 +121,14 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         }
 
         /// <summary>
-        /// Cell click.
+        ///     Cell click.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Click on CheckBoxes.
-            if ((e.ColumnIndex >= 0) && ("CheckBoxes" == dataGridView.Columns[e.ColumnIndex].Name))
+            if (e.ColumnIndex >= 0 && "CheckBoxes" == dataGridView.Columns[e.ColumnIndex].Name)
             {
                 var newE = new EventArgs();
                 dataGridView_CurrentCellDirtyStateChanged(this, newE);
@@ -134,30 +136,28 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         }
 
         /// <summary>
-        /// Current Cell Dirty State Changed.
+        ///     Current Cell Dirty State Changed.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
         private void dataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (dataGridView.IsCurrentCellDirty)
-            {
                 dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit); // Commit dataGridView.
-            }
         }
 
         /// <summary>
-        /// Paint.
+        ///     Paint.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            Sketch.DrawProfile(e.Graphics, pictureBox.DisplayRectangle, m_datas.BaseSlabList);   // Draw profiles.
+            Sketch.DrawProfile(e.Graphics, pictureBox.DisplayRectangle, m_datas.BaseSlabList); // Draw profiles.
         }
 
         /// <summary>
-        /// Click ok button.
+        ///     Click ok button.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
@@ -172,7 +172,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         }
 
         /// <summary>
-        /// Click cancel button.
+        ///     Click cancel button.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
@@ -182,7 +182,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         }
 
         /// <summary>
-        /// Select type.
+        ///     Select type.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
@@ -192,7 +192,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         }
 
         /// <summary>
-        /// Click selectAllButton.
+        ///     Click selectAllButton.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
@@ -205,7 +205,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         }
 
         /// <summary>
-        /// Click clearAllButton.
+        ///     Click clearAllButton.
         /// </summary>
         /// <param name="sender">This object.</param>
         /// <param name="e">A object contains the event data.</param>
@@ -216,6 +216,5 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             okButton.Enabled = false;
             pictureBox.Refresh();
         }
-
     }
 }

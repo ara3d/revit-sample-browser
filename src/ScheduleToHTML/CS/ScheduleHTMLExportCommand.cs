@@ -1,17 +1,17 @@
-﻿using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ScheduleToHTML.CS
 {
     /// <summary>
-    /// The external command exporting the active schedule to HTML.
+    ///     The external command exporting the active schedule to HTML.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class ScheduleHTMLExportCommand : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class ScheduleHTMLExportCommand : IExternalCommand
     {
-        
         /// <summary>
-        /// The implementation of the command.
+        ///     The implementation of the command.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
@@ -28,11 +28,9 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
                 var bInteractive = revitApplication.IsJournalPlaying() ? false : true;
                 return exporter.ExportToHTML(bInteractive, ref message) ? Result.Succeeded : Result.Cancelled;
             }
-            
+
             message = "Unable to proceed: Active view must be a schedule.";
             return Result.Cancelled;
         }
-
-            }
+    }
 }
-

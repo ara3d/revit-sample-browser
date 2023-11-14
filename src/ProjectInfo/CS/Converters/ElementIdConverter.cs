@@ -1,19 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
-    /// Convert ElementIds with string
+    ///     Convert ElementIds with string
     /// </summary>
     /// <typeparam name="T">Element Type</typeparam>
-    public class ElementIdConverter<T> : TypeConverter where T: Element
+    public class ElementIdConverter<T> : TypeConverter where T : Element
     {
         /// <summary>
-        /// Returns whether this object supports a standard set of values that can be
-        /// picked from a list, using the specified context.
+        ///     Returns whether this object supports a standard set of values that can be
+        ///     picked from a list, using the specified context.
         /// </summary>
         /// <returns>true</returns>
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
@@ -22,8 +23,9 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns whether the collection of standard values returned from System.ComponentModel.TypeConverter.GetStandardValues()
-        /// is an exclusive list.
+        ///     Returns whether the collection of standard values returned from
+        ///     System.ComponentModel.TypeConverter.GetStandardValues()
+        ///     is an exclusive list.
         /// </summary>
         /// <returns>true</returns>
         public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
@@ -32,8 +34,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns a collection of standard values from the default context for the
-        /// data type this type converter is designed for.
+        ///     Returns a collection of standard values from the default context for the
+        ///     data type this type converter is designed for.
         /// </summary>
         /// <returns>Element collection retrieved through filtering current Revit document elements</returns>
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
@@ -55,15 +57,16 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Converts from string. 
+        ///     Converts from string.
         /// </summary>
         /// <returns>Converted string</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
+
         /// <summary>
-        /// Converts to string. 
+        ///     Converts to string.
         /// </summary>
         /// <returns>Converted string</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
@@ -72,15 +75,19 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns an element from a string contains its id
+        ///     Returns an element from a string contains its id
         /// </summary>
-        /// <param name="context">An System.ComponentModel.ITypeDescriptorContext 
-        /// that provides a format context.</param>
-        /// <param name="culture">An optional System.Globalization.CultureInfo. 
-        /// If not supplied, the current culture is assumed.</param>
+        /// <param name="context">
+        ///     An System.ComponentModel.ITypeDescriptorContext
+        ///     that provides a format context.
+        /// </param>
+        /// <param name="culture">
+        ///     An optional System.Globalization.CultureInfo.
+        ///     If not supplied, the current culture is assumed.
+        /// </param>
         /// <param name="value">string to be converted to an element</param>
         /// <returns>An element if the element exists, otherwise null</returns>
-        public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var text = value as string;
             if (!string.IsNullOrEmpty(text))
@@ -93,23 +100,23 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                         return element.Id;
                 }
             }
+
             return base.ConvertFrom(context, culture, value);
         }
+
         /// <summary>
-        /// Returns element name.
-        /// returns empty string if value is null or Element.Name throws an exception.
+        ///     Returns element name.
+        ///     returns empty string if value is null or Element.Name throws an exception.
         /// </summary>
         /// <param name="context">An ITypeDescriptorContext that provides a format context. </param>
         /// <param name="culture">A CultureInfo. If null is passed, the current culture is assumed. </param>
         /// <param name="value">The Object to convert. </param>
         /// <param name="destinationType">The Type to convert the value parameter to. </param>
         /// <returns>Converted string</returns>
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            if (destinationType == null) throw new ArgumentNullException("destinationType");
             if (destinationType == typeof(string))
             {
                 if (value == null) return string.Empty;
@@ -127,12 +134,13 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                         catch
                         {
                         }
+
                         return elementName;
                     }
                 }
-                
             }
+
             return base.ConvertTo(context, culture, value, destinationType);
-        } 
-    };
+        }
+    }
 }

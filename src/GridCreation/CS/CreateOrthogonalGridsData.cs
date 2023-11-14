@@ -28,11 +28,21 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.GridCreation.CS
 {
     /// <summary>
-    /// Data class which stores information for creating orthogonal grids
+    ///     Data class which stores information for creating orthogonal grids
     /// </summary>
     public class CreateOrthogonalGridsData : CreateGridsData
     {
-                // X coordinate of origin
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="application">Application object</param>
+        /// <param name="unit">Current length display unit type</param>
+        /// <param name="labels">All existing labels in Revit's document</param>
+        public CreateOrthogonalGridsData(UIApplication application, ForgeTypeId unit, ArrayList labels)
+            : base(application, labels, unit)
+        {
+        }
+        // X coordinate of origin
         // Y coordinate of origin
         // Spacing between horizontal grids
         // Spacing between vertical grids
@@ -43,71 +53,59 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Label of first horizontal grid
         // Label of first vertical grid
 
-        
-                /// <summary>
-        /// X coordinate of origin
+
+        /// <summary>
+        ///     X coordinate of origin
         /// </summary>
         public double XOrigin { get; set; }
 
         /// <summary>
-        /// Y coordinate of origin
+        ///     Y coordinate of origin
         /// </summary>
         public double YOrigin { get; set; }
 
         /// <summary>
-        /// Spacing between horizontal grids
+        ///     Spacing between horizontal grids
         /// </summary>
         public double XSpacing { get; set; }
 
         /// <summary>
-        /// Spacing between vertical grids
+        ///     Spacing between vertical grids
         /// </summary>
         public double YSpacing { get; set; }
 
         /// <summary>
-        /// Number of horizontal grids
+        ///     Number of horizontal grids
         /// </summary>
         public uint XNumber { get; set; }
 
         /// <summary>
-        /// Number of vertical grids
+        ///     Number of vertical grids
         /// </summary>
         public uint YNumber { get; set; }
 
         /// <summary>
-        /// Bubble location of horizontal grids
+        ///     Bubble location of horizontal grids
         /// </summary>
         public BubbleLocation XBubbleLoc { get; set; }
 
         /// <summary>
-        /// Bubble location of vertical grids
+        ///     Bubble location of vertical grids
         /// </summary>
         public BubbleLocation YBubbleLoc { get; set; }
 
         /// <summary>
-        /// Label of first horizontal grid
+        ///     Label of first horizontal grid
         /// </summary>
         public string XFirstLabel { get; set; }
 
         /// <summary>
-        /// Label of first vertical grid
+        ///     Label of first vertical grid
         /// </summary>
         public string YFirstLabel { get; set; }
 
-        
-                /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="application">Application object</param>
-        /// <param name="unit">Current length display unit type</param>
-        /// <param name="labels">All existing labels in Revit's document</param>
-        public CreateOrthogonalGridsData(UIApplication application, ForgeTypeId unit, ArrayList labels)
-            : base(application, labels, unit)
-        {
-        }
-
         /// <summary>
-        /// Create grids
+        ///     Create grids
         /// </summary>
         public void CreateGrids()
         {
@@ -119,12 +117,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 {
                     failureReason += resManager.GetString("Reasons") + "\r";
                     failureReason += "\r";
-                    foreach (string reason in failureReasons)
-                    {
-                        failureReason += reason + "\r";
-                    }
+                    foreach (string reason in failureReasons) failureReason += reason + "\r";
                 }
-                
+
                 failureReason += "\r" + resManager.GetString("AjustValues");
 
                 ShowMessage(failureReason, resManager.GetString("FailureCaptionCreateGrids"));
@@ -132,7 +127,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Create horizontal grids
+        ///     Create horizontal grids
         /// </summary>
         /// <param name="failureReasons">ArrayList contains failure reasons</param>
         /// <returns>Number of grids failed to create</returns>
@@ -154,35 +149,28 @@ namespace Revit.SDK.Samples.GridCreation.CS
                     if (YNumber != 0)
                     {
                         // Grids will have an extension distance of m_ySpacing / 2
-                        startPoint = new XYZ (XOrigin - YSpacing / 2, YOrigin + i * XSpacing, 0);
-                        endPoint = new XYZ (XOrigin + (YNumber - 1) * YSpacing + YSpacing / 2, YOrigin + i * XSpacing, 0);
+                        startPoint = new XYZ(XOrigin - YSpacing / 2, YOrigin + i * XSpacing, 0);
+                        endPoint = new XYZ(XOrigin + (YNumber - 1) * YSpacing + YSpacing / 2, YOrigin + i * XSpacing,
+                            0);
                     }
                     else
                     {
-                        startPoint = new XYZ (XOrigin, YOrigin + i * XSpacing, 0);
-                        endPoint = new XYZ (XOrigin + XSpacing / 2, YOrigin + i * XSpacing, 0);
-
+                        startPoint = new XYZ(XOrigin, YOrigin + i * XSpacing, 0);
+                        endPoint = new XYZ(XOrigin + XSpacing / 2, YOrigin + i * XSpacing, 0);
                     }
 
                     try
                     {
                         // Create a line according to the bubble location
                         if (XBubbleLoc == BubbleLocation.StartPoint)
-                        {
                             line = NewLine(startPoint, endPoint);
-                        }
                         else
-                        {
                             line = NewLine(endPoint, startPoint);
-                        }
                     }
                     catch (ArgumentException)
                     {
                         var failureReason = resManager.GetString("SpacingsTooSmall");
-                        if (!failureReasons.Contains(failureReason))
-                        {
-                            failureReasons.Add(failureReason);
-                        }
+                        if (!failureReasons.Contains(failureReason)) failureReasons.Add(failureReason);
                         errorCount++;
                         continue;
                     }
@@ -201,7 +189,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         catch (ArgumentException)
                         {
                             ShowMessage(resManager.GetString("FailedToSetLabel") + XFirstLabel + "!",
-                                        resManager.GetString("FailureCaptionSetLabel"));
+                                resManager.GetString("FailureCaptionSetLabel"));
                         }
                     }
                     else
@@ -213,8 +201,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 catch (Exception)
                 {
                     ++errorCount;
-                    continue;
-                }                
+                }
             }
 
             // Create grids with curve array
@@ -224,7 +211,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Create vertical grids
+        ///     Create vertical grids
         /// </summary>
         /// <param name="failureReasons">ArrayList contains failure reasons</param>
         /// <returns>Number of grids failed to create</returns>
@@ -245,34 +232,28 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 {
                     if (XNumber != 0)
                     {
-                        startPoint = new XYZ (XOrigin + j * YSpacing, YOrigin - XSpacing / 2, 0);
-                        endPoint = new XYZ (XOrigin + j * YSpacing, YOrigin + (XNumber - 1) * XSpacing + XSpacing / 2, 0);
+                        startPoint = new XYZ(XOrigin + j * YSpacing, YOrigin - XSpacing / 2, 0);
+                        endPoint = new XYZ(XOrigin + j * YSpacing, YOrigin + (XNumber - 1) * XSpacing + XSpacing / 2,
+                            0);
                     }
                     else
                     {
-                        startPoint = new XYZ (XOrigin + j * YSpacing, YOrigin, 0);
-                        endPoint = new XYZ (XOrigin + j * YSpacing, YOrigin + YSpacing / 2, 0);
+                        startPoint = new XYZ(XOrigin + j * YSpacing, YOrigin, 0);
+                        endPoint = new XYZ(XOrigin + j * YSpacing, YOrigin + YSpacing / 2, 0);
                     }
 
                     try
                     {
                         // Create a line according to the bubble location
                         if (YBubbleLoc == BubbleLocation.StartPoint)
-                        {
                             line = NewLine(startPoint, endPoint);
-                        }
                         else
-                        {
                             line = NewLine(endPoint, startPoint);
-                        }
                     }
                     catch (ArgumentException)
                     {
                         var failureReason = resManager.GetString("SpacingsTooSmall");
-                        if (!failureReasons.Contains(failureReason))
-                        {
-                            failureReasons.Add(failureReason);
-                        }
+                        if (!failureReasons.Contains(failureReason)) failureReasons.Add(failureReason);
                         errorCount++;
                         continue;
                     }
@@ -291,7 +272,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         catch (ArgumentException)
                         {
                             ShowMessage(resManager.GetString("FailedToSetLabel") + YFirstLabel + "!",
-                                        resManager.GetString("FailureCaptionSetLabel"));
+                                resManager.GetString("FailureCaptionSetLabel"));
                         }
                     }
                     else
@@ -303,7 +284,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 catch (Exception)
                 {
                     ++errorCount;
-                    continue;
                 }
             }
 
@@ -312,5 +292,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             return errorCount;
         }
-            }
+    }
 }

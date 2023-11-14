@@ -22,21 +22,22 @@
 
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
     /// <summary>
-    /// The entrance of this example, implement the Execute method of IExternalCommand
-    /// Show how to create Opening in Revit by RevitAPI
+    ///     The entrance of this example, implement the Execute method of IExternalCommand
+    ///     Show how to create Opening in Revit by RevitAPI
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    public class Command:IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData, 
+        public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
@@ -46,10 +47,8 @@ namespace Revit.SDK.Samples.NewOpenings.CS
 
                 var elems = new ElementSet();
                 foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
-                {
-                   elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
-                }
-                                //if user have some wrong selection, give user an error message
+                    elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                //if user have some wrong selection, give user an error message
                 if (1 != elems.Size)
                 {
                     message = "please selected one Object (Floor or Wall) to create Opening.";
@@ -57,17 +56,15 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 }
 
                 Element selectElem = null;
-                foreach (Element e in elems)
-                {
-                    selectElem = e;
-                }
+                foreach (Element e in elems) selectElem = e;
 
                 if (!(selectElem is Wall) && !(selectElem is Floor))
                 {
                     message = "please selected one Object (Floor or Wall) to create Opening.";
                     return Result.Cancelled;
                 }
-                                try
+
+                try
                 {
                     if (selectElem is Wall)
                     {
@@ -90,7 +87,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                     return Result.Cancelled;
                 }
 
-                return Result.Succeeded; 
+                return Result.Succeeded;
             }
             catch (Exception e)
             {
@@ -102,5 +99,5 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 transaction.Commit();
             }
         }
-            }
+    }
 }

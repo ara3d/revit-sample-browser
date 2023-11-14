@@ -23,22 +23,25 @@
 using System;
 using System.IO;
 using System.Windows.Media.Imaging;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DatumsModification.CS
 {
     /// <summary>
-    /// Implements the Revit add-in interface IExternalApplication
+    ///     Implements the Revit add-in interface IExternalApplication
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class DatumsModificationApp : IExternalApplication
     {
-        static string AddInPath = typeof(DatumsModificationApp).Assembly.Location;
+        private static readonly string AddInPath = typeof(DatumsModificationApp).Assembly.Location;
+
         // Button icons directory
-        static string ButtonIconsFolder = Path.GetDirectoryName(AddInPath);
-                /// <summary>
-        /// Implements the OnShutdown event
+        private static readonly string ButtonIconsFolder = Path.GetDirectoryName(AddInPath);
+
+        /// <summary>
+        ///     Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -48,26 +51,33 @@ namespace Revit.SDK.Samples.DatumsModification.CS
         }
 
         /// <summary>
-        /// Implements the OnStartup event
+        ///     Implements the OnStartup event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
-           var ribbonPanel = application.CreateRibbonPanel("DatumModification");
-           var styleSettingButton = new PushButtonData("DatumStyle", "Datum Style", AddInPath, "Revit.SDK.Samples.DatumsModification.CS.DatumStyleModification");
-           styleSettingButton.LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Style.png"), UriKind.Absolute)); ;
-           var alignSettingButton = new PushButtonData("AlignDatum", "Align Datums", AddInPath, "Revit.SDK.Samples.DatumsModification.CS.DatumAlignment");
-           alignSettingButton.LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Align.png"), UriKind.Absolute)); ;
-           var propagateButton = new PushButtonData("PropagateDatum", "Propagate Extents", AddInPath, "Revit.SDK.Samples.DatumsModification.CS.DatumPropagation");
-           propagateButton.LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Propagate.png"), UriKind.Absolute)); ;         
-           
-           ribbonPanel.AddItem(styleSettingButton);
-           ribbonPanel.AddItem(alignSettingButton);
-           ribbonPanel.AddItem(propagateButton);
-           return Result.Succeeded;
+            var ribbonPanel = application.CreateRibbonPanel("DatumModification");
+            var styleSettingButton = new PushButtonData("DatumStyle", "Datum Style", AddInPath,
+                "Revit.SDK.Samples.DatumsModification.CS.DatumStyleModification");
+            styleSettingButton.LargeImage =
+                new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Style.png"), UriKind.Absolute));
+            ;
+            var alignSettingButton = new PushButtonData("AlignDatum", "Align Datums", AddInPath,
+                "Revit.SDK.Samples.DatumsModification.CS.DatumAlignment");
+            alignSettingButton.LargeImage =
+                new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Align.png"), UriKind.Absolute));
+            ;
+            var propagateButton = new PushButtonData("PropagateDatum", "Propagate Extents", AddInPath,
+                "Revit.SDK.Samples.DatumsModification.CS.DatumPropagation");
+            propagateButton.LargeImage =
+                new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Propagate.png"), UriKind.Absolute));
+            ;
+
+            ribbonPanel.AddItem(styleSettingButton);
+            ribbonPanel.AddItem(alignSettingButton);
+            ribbonPanel.AddItem(propagateButton);
+            return Result.Succeeded;
         }
-
-            }
+    }
 }
-

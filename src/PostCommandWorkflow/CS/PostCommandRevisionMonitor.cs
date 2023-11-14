@@ -20,21 +20,42 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
+using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
 namespace Revit.SDK.Samples.PostCommandWorkflow.CS
 {
     /// <summary>
-    /// This class has the capabilities to monitor when a document is saved, and prompt the user to 
-    /// add a revision before save takes place.
+    ///     This class has the capabilities to monitor when a document is saved, and prompt the user to
+    ///     add a revision before save takes place.
     /// </summary>
-    class PostCommandRevisionMonitor
+    internal class PostCommandRevisionMonitor
     {
         /// <summary>
-        /// Constructs a new revision monitor for the given document.
+        ///     The binding to the revision command.
+        /// </summary>
+        private AddInCommandBinding binding;
+
+        /// <summary>
+        ///     The document.
+        /// </summary>
+        private readonly Document document;
+
+        /// <summary>
+        ///     The handle to the external event instance to be invoked after the revision editing completes.
+        /// </summary>
+        private ExternalEvent externalEvent;
+
+
+        /// <summary>
+        ///     Storage to remember the number of revisions when last checked.
+        /// </summary>
+        private int storedRevisionCount;
+
+        /// <summary>
+        ///     Constructs a new revision monitor for the given document.
         /// </summary>
         /// <param name="doc">The document.</param>
         public PostCommandRevisionMonitor(Document doc)
@@ -43,7 +64,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         }
 
         /// <summary>
-        /// Activates the revision monitor for the stored document.
+        ///     Activates the revision monitor for the stored document.
         /// </summary>
         public void Activate()
         {
@@ -55,7 +76,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         }
 
         /// <summary>
-        /// Deactivates the revision monitor for the stored document.
+        ///     Deactivates the revision monitor for the stored document.
         /// </summary>
         public void Deactivate()
         {
@@ -63,10 +84,10 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             document.DocumentSaving -= OnSavingPromptForRevisions;
         }
 
-        
+
         /// <summary>
-        /// The DocumentSaving callback.  This callback checks if at least one new revision has been added, and if not
-        /// shows instructions to the user to deal with the situation.
+        ///     The DocumentSaving callback.  This callback checks if at least one new revision has been added, and if not
+        ///     shows instructions to the user to deal with the situation.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -84,9 +105,11 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
                     // Show dialog with explanation and options
                     var td = new TaskDialog("Revisions not created.");
                     td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-                    td.MainInstruction = "Changes have been made to this document, but no new revision has been created.";
-                    td.ExpandedContent = "Because the document has been released, it is typically required to issue a new " +
-                                    "revision number with any change.";
+                    td.MainInstruction =
+                        "Changes have been made to this document, but no new revision has been created.";
+                    td.ExpandedContent =
+                        "Because the document has been released, it is typically required to issue a new " +
+                        "revision number with any change.";
                     td.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Add revision now");
                     td.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Cancel save");
                     td.AddCommandLink(TaskDialogCommandLinkId.CommandLink3, "Proceed with save (not recommended).");
@@ -96,29 +119,29 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
 
                     switch (result)
                     {
-                        case TaskDialogResult.CommandLink1:  // Add revision now
-                            {
-                                // cancel first save
-                                args.Cancel();
+                        case TaskDialogResult.CommandLink1: // Add revision now
+                        {
+                            // cancel first save
+                            args.Cancel();
 
-                                // add event to hide the default "Document not saved" dialog
-                                uiApp.DialogBoxShowing += HideDocumentNotSaved;
+                            // add event to hide the default "Document not saved" dialog
+                            uiApp.DialogBoxShowing += HideDocumentNotSaved;
 
-                                // post command for editing revisions
-                                PromptToEditRevisionsAndResave(uiApp);
-                                break;
-                            }
-                        case TaskDialogResult.CommandLink2:  // Cancel save
-                            {
-                                // cancel saving only
-                                args.Cancel();
-                                break;
-                            }
-                        case TaskDialogResult.CommandLink3:  // Proceed with save
-                            {
-                                // do nothing
-                                break;
-                            }
+                            // post command for editing revisions
+                            PromptToEditRevisionsAndResave(uiApp);
+                            break;
+                        }
+                        case TaskDialogResult.CommandLink2: // Cancel save
+                        {
+                            // cancel saving only
+                            args.Cancel();
+                            break;
+                        }
+                        case TaskDialogResult.CommandLink3: // Proceed with save
+                        {
+                            // do nothing
+                            break;
+                        }
                     }
                 }
                 else
@@ -129,7 +152,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         }
 
         /// <summary>
-        /// The DialogBoxShowing callback to cancel display of the "Document not saved" message when saving is cancelled.
+        ///     The DialogBoxShowing callback to cancel display of the "Document not saved" message when saving is cancelled.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -142,7 +165,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         }
 
         /// <summary>
-        /// The BeforeExecuted callback for the command, to setup the post action after the revision command is run.
+        ///     The BeforeExecuted callback for the command, to setup the post action after the revision command is run.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -152,50 +175,9 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
                 externalEvent.Raise();
         }
 
+
         /// <summary>
-        /// The external event raised to finalize the workflow after the user has been prompted to enter the 
-        /// Sheet Revisions/Issues command.
-        /// </summary>
-        class PostCommandRevisionMonitorEvent : IExternalEventHandler
-        {
-            
-            /// <summary>
-            /// The external event callback to finalize the workflow.
-            /// </summary>
-            /// <param name="app"></param>
-            public void Execute(UIApplication app)
-            {
-                monitor.CleanupAfterRevisionEdit(app);
-            }
-
-            /// <summary>
-            /// The external event name.
-            /// </summary>
-            /// <returns></returns>
-            public string GetName()
-            {
-                return "PostCommandRevisionMonitorEvent";
-            }
-
-            /// <summary>
-            /// The constructor for the event instance.
-            /// </summary>
-            /// <param name="monitor">The instance of the command.</param>
-            public PostCommandRevisionMonitorEvent(PostCommandRevisionMonitor monitor)
-            {
-                this.monitor = monitor;
-            }
-
-            /// <summary>
-            /// Handle to the revision monitor.
-            /// </summary>
-            private PostCommandRevisionMonitor monitor;
-
-                    }
-
-        
-        /// <summary>
-        /// Prompts to edit the revision and resave.
+        ///     Prompts to edit the revision and resave.
         /// </summary>
         /// <param name="application"></param>
         private void PromptToEditRevisionsAndResave(UIApplication application)
@@ -205,10 +187,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
 
             // Setup event to be notified when revisions command starts (this is a good place to raise this external event)
             var id = RevitCommandId.LookupPostableCommandId(PostableCommand.SheetIssuesOrRevisions);
-            if (binding == null)
-            {
-                binding = application.CreateAddInCommandBinding(id);
-            }
+            if (binding == null) binding = application.CreateAddInCommandBinding(id);
             binding.BeforeExecuted += ReactToRevisionsAndSchedulesCommand;
 
             // Post the revision editing command
@@ -216,8 +195,8 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         }
 
         /// <summary>
-        /// The function that is called to finish the execution of the workflow.  Cleans up subscribed events,
-        /// and posts the save command.
+        ///     The function that is called to finish the execution of the workflow.  Cleans up subscribed events,
+        ///     and posts the save command.
         /// </summary>
         /// <param name="uiApp"></param>
         private void CleanupAfterRevisionEdit(UIApplication uiApp)
@@ -233,29 +212,8 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             uiApp.PostCommand(RevitCommandId.LookupPostableCommandId(PostableCommand.Save));
         }
 
-
         /// <summary>
-        /// Storage to remember the number of revisions when last checked.
-        /// </summary>
-        private int storedRevisionCount;
-
-        /// <summary>
-        /// The handle to the external event instance to be invoked after the revision editing completes.
-        /// </summary>
-        private ExternalEvent externalEvent;
-
-        /// <summary>
-        /// The binding to the revision command.
-        /// </summary>
-        private AddInCommandBinding binding;
-
-        /// <summary>
-        /// The document.
-        /// </summary>
-        private Document document;
-
-        /// <summary>
-        /// Counts the number of revision elements in the document.
+        ///     Counts the number of revision elements in the document.
         /// </summary>
         /// <param name="doc">The document.</param>
         /// <returns>The number of elements found.</returns>
@@ -265,6 +223,45 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             var collector = new FilteredElementCollector(doc);
             collector.OfCategory(BuiltInCategory.OST_Revisions);
             return collector.ToElementIds().Count;
+        }
+
+        /// <summary>
+        ///     The external event raised to finalize the workflow after the user has been prompted to enter the
+        ///     Sheet Revisions/Issues command.
+        /// </summary>
+        private class PostCommandRevisionMonitorEvent : IExternalEventHandler
+        {
+            /// <summary>
+            ///     Handle to the revision monitor.
+            /// </summary>
+            private readonly PostCommandRevisionMonitor monitor;
+
+            /// <summary>
+            ///     The constructor for the event instance.
+            /// </summary>
+            /// <param name="monitor">The instance of the command.</param>
+            public PostCommandRevisionMonitorEvent(PostCommandRevisionMonitor monitor)
+            {
+                this.monitor = monitor;
+            }
+
+            /// <summary>
+            ///     The external event callback to finalize the workflow.
+            /// </summary>
+            /// <param name="app"></param>
+            public void Execute(UIApplication app)
+            {
+                monitor.CleanupAfterRevisionEdit(app);
+            }
+
+            /// <summary>
+            ///     The external event name.
+            /// </summary>
+            /// <returns></returns>
+            public string GetName()
+            {
+                return "PostCommandRevisionMonitorEvent";
+            }
         }
     }
 }

@@ -21,21 +21,23 @@
 //
 
 using System;
+using System.Windows.Forms;
+using Revit.SDK.Samples.PowerCircuit.CS.Properties;
 
 namespace Revit.SDK.Samples.PowerCircuit.CS
 {
     /// <summary>
-    /// The dialog which provides the options of editing circuit
+    ///     The dialog which provides the options of editing circuit
     /// </summary>
-    public partial class EditCircuitForm : System.Windows.Forms.Form
+    public partial class EditCircuitForm : Form
     {
         /// <summary>
-        /// data class object
+        ///     data class object
         /// </summary>
-        private CircuitOperationData m_data;
+        private readonly CircuitOperationData m_data;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="data">Data class object</param>
         public EditCircuitForm(CircuitOperationData data)
@@ -48,11 +50,11 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Add tool tips
+        ///     Add tool tips
         /// </summary>
         private void AddToolTips()
         {
-            var rsm = Properties.Resources.ResourceManager;
+            var rsm = Resources.ResourceManager;
             toolTip.SetToolTip(buttonAdd, rsm.GetString("tipAddToCircuit"));
             toolTip.SetToolTip(buttonRemove, rsm.GetString("tipRemoveFromCircuit"));
             toolTip.SetToolTip(buttonSelectPanel, rsm.GetString("tipSelectPanel"));
@@ -62,7 +64,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             m_data.EditOption = EditOption.Add;
-            Close();           
+            Close();
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)

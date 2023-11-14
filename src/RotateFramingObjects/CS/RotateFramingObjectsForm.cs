@@ -22,174 +22,162 @@
 
 
 using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace Revit.SDK.Samples.RotateFramingObjects.CS
 {
     /// <summary>
-    /// Summary description for PutDialog.
+    ///     Summary description for PutDialog.
     /// </summary>
     public class RotateFramingObjectsForm : Form
     {
-        
-        private RotateFramingObjects m_instance;
-        private System.ComponentModel.Container m_components = null;
-        private Button cancelButton;
-        private Button okButton;
         public RadioButton absoluteRadio;
+        private Button cancelButton;
+        private readonly Container m_components = null;
+
+        private readonly RotateFramingObjects m_instance;
+        private Button okButton;
         private RadioButton relativeRadio;
         private Label rotationLabel;
-        public System.Windows.Forms.TextBox rotationTextBox;
+        public TextBox rotationTextBox;
 
         /// <summary>
-        /// 
-        /// </summary>
-        public bool IsReset { get; set; }
-
-        /// <summary>
-        /// new form, retrieve relevant data from instance
+        ///     new form, retrieve relevant data from instance
         /// </summary>
         /// <param name="Inst">RotateFramingObjects instance</param>
         public RotateFramingObjectsForm(RotateFramingObjects Inst)
         {
             IsReset = false;
             m_instance = Inst;
-            if (null == m_instance)
-            {
-                TaskDialog.Show("Revit", "Load Application Failed");
-            }    
+            if (null == m_instance) TaskDialog.Show("Revit", "Load Application Failed");
             InitializeComponent();
             //this.rotationTextBox.Text = "Value";
         }
 
         /// <summary>
-        /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        public bool IsReset { get; set; }
+
+        /// <summary>
+        ///     Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
-            {
-                if(m_components != null)
-                {
+            if (disposing)
+                if (m_components != null)
                     m_components.Dispose();
-                }
-            }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
-                /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// <summary>
+        ///     Required method for Designer support - do not modify
+        ///     the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.absoluteRadio = new System.Windows.Forms.RadioButton();
-            this.relativeRadio = new System.Windows.Forms.RadioButton();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.okButton = new System.Windows.Forms.Button();
-            this.rotationLabel = new System.Windows.Forms.Label();
-            this.rotationTextBox = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
+            absoluteRadio = new RadioButton();
+            relativeRadio = new RadioButton();
+            cancelButton = new Button();
+            okButton = new Button();
+            rotationLabel = new Label();
+            rotationTextBox = new TextBox();
+            SuspendLayout();
             // 
             // absoluteRadio
             // 
-            this.absoluteRadio.Location = new System.Drawing.Point(85, 35);
-            this.absoluteRadio.Name = "absoluteRadio";
-            this.absoluteRadio.Size = new System.Drawing.Size(72, 24);
-            this.absoluteRadio.TabIndex = 0;
-            this.absoluteRadio.Text = "Absolute";
-            this.absoluteRadio.CheckedChanged += new System.EventHandler(this.allRadio_CheckedChanged);
+            absoluteRadio.Location = new Point(85, 35);
+            absoluteRadio.Name = "absoluteRadio";
+            absoluteRadio.Size = new Size(72, 24);
+            absoluteRadio.TabIndex = 0;
+            absoluteRadio.Text = "Absolute";
+            absoluteRadio.CheckedChanged += allRadio_CheckedChanged;
             // 
             // relativeRadio
             // 
-            this.relativeRadio.Checked = true;
-            this.relativeRadio.Location = new System.Drawing.Point(15, 35);
-            this.relativeRadio.Name = "relativeRadio";
-            this.relativeRadio.Size = new System.Drawing.Size(64, 24);
-            this.relativeRadio.TabIndex = 1;
-            this.relativeRadio.TabStop = true;
-            this.relativeRadio.Text = "Relative";
-            this.relativeRadio.CheckedChanged += new System.EventHandler(this.singleRadio_CheckedChanged);
+            relativeRadio.Checked = true;
+            relativeRadio.Location = new Point(15, 35);
+            relativeRadio.Name = "relativeRadio";
+            relativeRadio.Size = new Size(64, 24);
+            relativeRadio.TabIndex = 1;
+            relativeRadio.TabStop = true;
+            relativeRadio.Text = "Relative";
+            relativeRadio.CheckedChanged += singleRadio_CheckedChanged;
             // 
             // cancelButton
             // 
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(93, 65);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 6;
-            this.cancelButton.Text = "&Cancel";
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            cancelButton.DialogResult = DialogResult.Cancel;
+            cancelButton.Location = new Point(93, 65);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(75, 23);
+            cancelButton.TabIndex = 6;
+            cancelButton.Text = "&Cancel";
+            cancelButton.Click += cancelButton_Click;
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(15, 65);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 8;
-            this.okButton.Text = "&OK";
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            okButton.Location = new Point(15, 65);
+            okButton.Name = "okButton";
+            okButton.Size = new Size(75, 23);
+            okButton.TabIndex = 8;
+            okButton.Text = "&OK";
+            okButton.Click += okButton_Click;
             // 
             // rotationLabel
             // 
-            this.rotationLabel.Location = new System.Drawing.Point(12, 12);
-            this.rotationLabel.Name = "rotationLabel";
-            this.rotationLabel.Size = new System.Drawing.Size(50, 16);
-            this.rotationLabel.TabIndex = 10;
-            this.rotationLabel.Text = "Rotation";
+            rotationLabel.Location = new Point(12, 12);
+            rotationLabel.Name = "rotationLabel";
+            rotationLabel.Size = new Size(50, 16);
+            rotationLabel.TabIndex = 10;
+            rotationLabel.Text = "Rotation";
             // 
             // rotationTextBox
             // 
-            this.rotationTextBox.Location = new System.Drawing.Point(68, 9);
-            this.rotationTextBox.Name = "rotationTextBox";
-            this.rotationTextBox.Size = new System.Drawing.Size(100, 20);
-            this.rotationTextBox.TabIndex = 1;
-            this.rotationTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rotationTextBox_KeyPress);
-            this.rotationTextBox.TextChanged += new System.EventHandler(this.rotationTextBox_TextChanged);
+            rotationTextBox.Location = new Point(68, 9);
+            rotationTextBox.Name = "rotationTextBox";
+            rotationTextBox.Size = new Size(100, 20);
+            rotationTextBox.TabIndex = 1;
+            rotationTextBox.KeyPress += rotationTextBox_KeyPress;
+            rotationTextBox.TextChanged += rotationTextBox_TextChanged;
             // 
             // RotateFramingObjectsForm
             // 
-            this.AcceptButton = this.okButton;
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(185, 101);
-            this.Controls.Add(this.rotationTextBox);
-            this.Controls.Add(this.relativeRadio);
-            this.Controls.Add(this.rotationLabel);
-            this.Controls.Add(this.okButton);
-            this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.absoluteRadio);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "RotateFramingObjectsForm";
-            this.ShowInTaskbar = false;
-            this.Text = "Rotate Framing Objects";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AcceptButton = okButton;
+            AutoScaleBaseSize = new Size(5, 13);
+            CancelButton = cancelButton;
+            ClientSize = new Size(185, 101);
+            Controls.Add(rotationTextBox);
+            Controls.Add(relativeRadio);
+            Controls.Add(rotationLabel);
+            Controls.Add(okButton);
+            Controls.Add(cancelButton);
+            Controls.Add(absoluteRadio);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "RotateFramingObjectsForm";
+            ShowInTaskbar = false;
+            Text = "Rotate Framing Objects";
+            ResumeLayout(false);
+            PerformLayout();
         }
-        
+
         private void okButton_Click(object sender, EventArgs e)
         {
-            if(IsReset)
-            {
-                m_instance.RotateElement();
-                
-            }
-            DialogResult=DialogResult.OK;
+            if (IsReset) m_instance.RotateElement();
+            DialogResult = DialogResult.OK;
             Close();
-
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult=DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
             Close();
-        
         }
+
         private void singleRadio_CheckedChanged(object sender, EventArgs e)
         {
             IsReset = true;
@@ -204,8 +192,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
 
         private void rotationTextBox_TextChanged(object sender, EventArgs e)
         {
-            if("" != rotationTextBox.Text)
-            {
+            if ("" != rotationTextBox.Text)
                 try
                 {
                     m_instance.ReceiveRotationTextBox = Convert.ToDouble(rotationTextBox.Text);
@@ -216,23 +203,18 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                     TaskDialog.Show("Revit", "Please input number.");
                     rotationTextBox.Clear();
                 }
-
-            }
-            else 
-            {
+            else
                 m_instance.ReceiveRotationTextBox = 0;
-            }
-            IsReset = true;    
+
+            IsReset = true;
         }
 
         private void rotationTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (13 == e.KeyChar)
-            {
-                okButton_Click(sender,e);
-            }
+                okButton_Click(sender, e);
             else
-                rotationTextBox_TextChanged(sender,e);
+                rotationTextBox_TextChanged(sender, e);
         }
     }
 }

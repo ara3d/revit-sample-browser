@@ -1,45 +1,46 @@
 ﻿using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace ContextualAnalyticalModel
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   class CreateAnalyticalCurvedPanel : IExternalCommand
-   {
-      public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-      {
-         try
-         {
-            var revitDoc = commandData.Application.ActiveUIDocument.Document;
-           
-            using (var transaction = new Transaction(revitDoc, "Create Analytical Curved Panel"))
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    internal class CreateAnalyticalCurvedPanel : IExternalCommand
+    {
+        public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            try
             {
-               transaction.Start();
+                var revitDoc = commandData.Application.ActiveUIDocument.Document;
 
-               var arc = Arc.Create(new XYZ(10, 10, 0), new XYZ(0, 0, 0), new XYZ(15, 10, 0));
+                using (var transaction = new Transaction(revitDoc, "Create Analytical Curved Panel"))
+                {
+                    transaction.Start();
 
-               //create a curved AnalyticalPanel
-               var analyticalCrvPanel = AnalyticalPanel.Create(revitDoc, arc, new XYZ(0, 0, 1));
+                    var arc = Arc.Create(new XYZ(10, 10, 0), new XYZ(0, 0, 0), new XYZ(15, 10, 0));
 
-               analyticalCrvPanel.StructuralRole = AnalyticalStructuralRole.StructuralRoleFloor;
-               analyticalCrvPanel.AnalyzeAs = AnalyzeAs.SlabOneWay;
+                    //create a curved AnalyticalPanel
+                    var analyticalCrvPanel = AnalyticalPanel.Create(revitDoc, arc, new XYZ(0, 0, 1));
 
-               transaction.Commit();
+                    analyticalCrvPanel.StructuralRole = AnalyticalStructuralRole.StructuralRoleFloor;
+                    analyticalCrvPanel.AnalyzeAs = AnalyzeAs.SlabOneWay;
+
+                    transaction.Commit();
+                }
+
+                return Result.Succeeded;
             }
-
-            return Result.Succeeded;
-         }
-         catch (Exception ex)
-         {
-            message = ex.Message;
-            return Result.Failed;
-         }
-      }
-   }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+    }
 }

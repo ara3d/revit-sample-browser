@@ -26,13 +26,13 @@ using Autodesk.Revit.DB.Architecture;
 namespace Revit.SDK.Samples.StairsAutomation.CS
 {
     /// <summary>
-    /// A stairs configuration that represents a single curved run (which will be made in Revit as a sketched run).
+    ///     A stairs configuration that represents a single curved run (which will be made in Revit as a sketched run).
     /// </summary>
     /// <remarks>Because this is a sketched run, a included angle of greater than 360 degrees will not succeed.</remarks>
-    class StairsSingleSketchedCurvedRun : StairsConfiguration
+    internal class StairsSingleSketchedCurvedRun : StairsConfiguration
     {
         /// <summary>
-        /// Creates a new instance of StairsSingleSketchedCurvedRun at the default location and orientation.
+        ///     Creates a new instance of StairsSingleSketchedCurvedRun at the default location and orientation.
         /// </summary>
         /// <param name="stairs">The stairs element.</param>
         /// <param name="bottomLevel">The bottom level of the configuration.</param>
@@ -40,13 +40,14 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         public StairsSingleSketchedCurvedRun(Stairs stairs, Level bottomLevel, double innerRadius)
         {
             var stairsType = stairs.Document.GetElement(stairs.GetTypeId()) as StairsType;
-            m_runConfigurations.Add(new SketchedCurvedStairsRunComponent(stairs.DesiredRisersNumber, bottomLevel.Elevation, 
-                                                                             stairsType.MinTreadDepth, stairsType.MinRunWidth,
-                                                                             innerRadius, stairs.Document.Application.Create));
+            m_runConfigurations.Add(new SketchedCurvedStairsRunComponent(stairs.DesiredRisersNumber,
+                bottomLevel.Elevation,
+                stairsType.MinTreadDepth, stairsType.MinRunWidth,
+                innerRadius, stairs.Document.Application.Create));
         }
 
         /// <summary>
-        /// Creates a new instance of StairsSingleSketchedCurvedRun at a specified location and orientation.
+        ///     Creates a new instance of StairsSingleSketchedCurvedRun at a specified location and orientation.
         /// </summary>
         /// <param name="stairs">The stairs element.</param>
         /// <param name="bottomLevel">The bottom level of the configuration.</param>
@@ -55,12 +56,11 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         public StairsSingleSketchedCurvedRun(Stairs stairs, Level bottomLevel, double innerRadius, Transform transform)
         {
             var stairsType = stairs.Document.GetElement(stairs.GetTypeId()) as StairsType;
-            m_runConfigurations.Add(new SketchedCurvedStairsRunComponent(stairs.DesiredRisersNumber, 
-                                                                            bottomLevel.Elevation, stairsType.MinTreadDepth,
-                                                                    		stairsType.MinRunWidth, innerRadius, 
-                                                                    		stairs.Document.Application.Create,
-                                                                    		transform));
+            m_runConfigurations.Add(new SketchedCurvedStairsRunComponent(stairs.DesiredRisersNumber,
+                bottomLevel.Elevation, stairsType.MinTreadDepth,
+                stairsType.MinRunWidth, innerRadius,
+                stairs.Document.Application.Create,
+                transform));
         }
     }
 }
-

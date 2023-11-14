@@ -26,19 +26,27 @@ using Autodesk.Revit.DB.Architecture;
 namespace Revit.SDK.Samples.StairsAutomation.CS
 {
     /// <summary>
-    /// A configuration for creation of a landing with a fixed cross section.
+    ///     A configuration for creation of a landing with a fixed cross section.
     /// </summary>
     public class StairsRectangleLandingComponent : IStairsLandingComponent
     {
+        private readonly double m_elevation;
+        private readonly XYZ m_runDirection;
+
+        private readonly Line m_stairsRunBoundary1;
+        private readonly Line m_stairsRunBoundary2;
+        private readonly double m_width;
+
         /// <summary>
-        /// Creates a new StairsRectangleLandingConfiguration.
+        ///     Creates a new StairsRectangleLandingConfiguration.
         /// </summary>
         /// <param name="stairsRunBoundary1">The end curve of the lower stair run.</param>
         /// <param name="stairsRunBoundary2">The start curve of the higher stair run.</param>
         /// <param name="runDirection">A vector representing the direction of the lower stair run.</param>
         /// <param name="elevation">The elevation of the landing.</param>
         /// <param name="width">The width of the landing.</param>
-        public StairsRectangleLandingComponent(Line stairsRunBoundary1, Line stairsRunBoundary2, XYZ runDirection, double elevation, double width)
+        public StairsRectangleLandingComponent(Line stairsRunBoundary1, Line stairsRunBoundary2, XYZ runDirection,
+            double elevation, double width)
         {
             // offset to base elevation
             m_stairsRunBoundary1 = LandingComponentUtils.ProjectCurveToElevation(stairsRunBoundary1, elevation) as Line;
@@ -49,23 +57,19 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             m_elevation = elevation;
         }
 
-        private Line m_stairsRunBoundary1;
-        private Line m_stairsRunBoundary2;
-        private XYZ m_runDirection;
-        private double m_width;
-        private double m_elevation;
 
-        
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
         public CurveLoop GetLandingBoundary()
         {
             // TODO : What if not collinear 
-            var boundaryLine = LandingComponentUtils.FindLongestEndpointConnection(m_stairsRunBoundary1, m_stairsRunBoundary2);
-    
+            var boundaryLine =
+                LandingComponentUtils.FindLongestEndpointConnection(m_stairsRunBoundary1, m_stairsRunBoundary2);
+
             // offset by 1/2 of width
-            var centerCurve = boundaryLine.CreateTransformed(Transform.CreateTranslation(m_runDirection * (m_width / 2.0)));
+            var centerCurve =
+                boundaryLine.CreateTransformed(Transform.CreateTranslation(m_runDirection * (m_width / 2.0)));
 
             // Create by Thicken
             var curveLoop = CurveLoop.CreateViaThicken(centerCurve, m_width, XYZ.BasisZ);
@@ -74,7 +78,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
         public double GetLandingBaseElevation()
         {
@@ -82,12 +86,12 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
-		public StairsLanding CreateLanding(Document document, ElementId stairsElementId)
-		{
-			return StairsLanding.CreateSketchedLanding(document, stairsElementId, GetLandingBoundary(), GetLandingBaseElevation());
+        public StairsLanding CreateLanding(Document document, ElementId stairsElementId)
+        {
+            return StairsLanding.CreateSketchedLanding(document, stairsElementId, GetLandingBoundary(),
+                GetLandingBaseElevation());
         }
-
-            }
+    }
 }

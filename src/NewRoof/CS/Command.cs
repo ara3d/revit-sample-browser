@@ -22,28 +22,29 @@
 
 using System;
 using System.Windows.Forms;
-
-using Revit.SDK.Samples.NewRoof.RoofForms.CS;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Revit.SDK.Samples.NewRoof.RoofForms.CS;
+using View = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.NewRoof.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         // internal buffer
 
         /// <summary>
-        /// singleton in the external application
+        ///     singleton in the external application
         /// </summary>
-        public static Autodesk.Revit.DB.View ActiveView { get; private set; }
+        public static View ActiveView { get; private set; }
 
         public Result Execute(ExternalCommandData commandData,
-                                               ref string message,
-                                               ElementSet elements)
+            ref string message,
+            ElementSet elements)
         {
             try
             {
@@ -57,11 +58,8 @@ namespace Revit.SDK.Samples.NewRoof.CS
                 var result = DialogResult.None;
                 while (result == DialogResult.None || result == DialogResult.Retry)
                 {
-                    if (result == DialogResult.Retry)
-                    {
-                        roofsManager.WindowSelect();
-                    }
-                    
+                    if (result == DialogResult.Retry) roofsManager.WindowSelect();
+
                     using (var mainForm = new RoofForm(roofsManager))
                     {
                         result = mainForm.ShowDialog();
@@ -69,13 +67,8 @@ namespace Revit.SDK.Samples.NewRoof.CS
                 }
 
                 if (result == DialogResult.OK)
-                {
                     return Result.Succeeded;
-                }
-                else
-                {
-                    return Result.Cancelled;
-                }
+                return Result.Cancelled;
             }
             catch (Exception ex)
             {

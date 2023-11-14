@@ -21,12 +21,12 @@
 //
 
 
+using Autodesk.Revit.DB;
+
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using Autodesk.Revit.DB;
-
     /// <summary>
-    /// contain utility methods find or set certain parameter
+    ///     contain utility methods find or set certain parameter
     /// </summary>
     public class ParameterUtil
     {
@@ -35,7 +35,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         }
 
         /// <summary>
-        /// find certain parameter in a set
+        ///     find certain parameter in a set
         /// </summary>
         /// <param name="paras"></param>
         /// <param name="name">find by name</param>
@@ -45,10 +45,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             var paras = elem.Parameters;
             var findPara = FindParaByName(paras, paraName);
 
-            if (null == findPara)
-            {
-                return false;
-            }
+            if (null == findPara) return false;
 
             if (!findPara.IsReadOnly)
             {
@@ -60,7 +57,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         }
 
         /// <summary>
-        /// find certain parameter in a set
+        ///     find certain parameter in a set
         /// </summary>
         /// <param name="paras"></param>
         /// <param name="name">find by name</param>
@@ -70,18 +67,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             Parameter findPara = null;
 
             foreach (Parameter para in paras)
-            {
                 if (para.Definition.Name == name)
-                {
                     findPara = para;
-                }
-            }
 
             return findPara;
         }
 
         /// <summary>
-        /// set certain parameter of given element to int value
+        ///     set certain parameter of given element to int value
         /// </summary>
         /// <param name="elem">given element</param>
         /// <param name="paraIndex">BuiltInParameter</param>
@@ -90,10 +83,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         public static bool SetParaInt(Element elem, BuiltInParameter paraIndex, int value)
         {
             var para = elem.get_Parameter(paraIndex);
-            if (null == para)
-            {
-                return false;
-            }
+            if (null == para) return false;
 
             if (!para.IsReadOnly)
             {
@@ -105,7 +95,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         }
 
         /// <summary>
-        /// set certain parameter of given element to int value
+        ///     set certain parameter of given element to int value
         /// </summary>
         /// <param name="elem">given element</param>
         /// <param name="paraIndex">BuiltInParameter</param>
@@ -113,13 +103,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         /// <returns></returns>
         public static bool SetParaNullId(Parameter para)
         {
-            var id =  ElementId.InvalidElementId;
+            var id = ElementId.InvalidElementId;
 
             if (!para.IsReadOnly)
             {
                 para.Set(id);
                 return true;
             }
+
             return false;
         }
     }

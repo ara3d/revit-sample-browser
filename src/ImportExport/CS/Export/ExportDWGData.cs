@@ -20,70 +20,41 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Data class which stores the main information for exporting dwg format
+    ///     Data class which stores the main information for exporting dwg format
     /// </summary>
     public class ExportDWGData : ExportDataWithViews
     {
-                /// <summary>
-        /// Data class ExportOptionsData
-        /// </summary>
-        private ExportBaseOptionsData m_exportOptionsData;
-
         /// <summary>
-        /// String list of AutoCAD versions
-        /// </summary>
-        private List<string> m_fileVersion;
-
-        /// <summary>
-        /// List of Autodesk.Revit.DB.ACADVersion defined in Revit
+        ///     List of Autodesk.Revit.DB.ACADVersion defined in Revit
         /// </summary>
         private List<ACADVersion> m_enumFileVersion;
 
         /// <summary>
-        /// File version option to export
+        ///     File version option to export
         /// </summary>
         private ACADVersion m_exportFileVersion;
-        
-                /// <summary>
-        /// Data class ExportOptionsData
-        /// </summary>
-        public ExportBaseOptionsData ExportOptionsData
-        {
-            get => m_exportOptionsData;
-            set => m_exportOptionsData = value;
-        }
-  
-        /// <summary>
-        /// String collection of AutoCAD versions
-        /// </summary>
-        public ReadOnlyCollection<string> FileVersion => new ReadOnlyCollection<string>(m_fileVersion);
 
         /// <summary>
-        /// Collection of Autodesk.Revit.DB.ACADVersion defined in Revit
+        ///     Data class ExportOptionsData
         /// </summary>
-        public ReadOnlyCollection<ACADVersion> EnumFileVersion => new ReadOnlyCollection<ACADVersion>(m_enumFileVersion);
+        private ExportBaseOptionsData m_exportOptionsData;
 
         /// <summary>
-        /// File version option to export
+        ///     String list of AutoCAD versions
         /// </summary>
-        public ACADVersion ExportFileVersion
-        {
-            get => m_exportFileVersion;
-            set => m_exportFileVersion = value;
-        }        
-        
-                /// <summary>
-        /// Constructor
+        private List<string> m_fileVersion;
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
@@ -96,7 +67,36 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize the variables
+        ///     Data class ExportOptionsData
+        /// </summary>
+        public ExportBaseOptionsData ExportOptionsData
+        {
+            get => m_exportOptionsData;
+            set => m_exportOptionsData = value;
+        }
+
+        /// <summary>
+        ///     String collection of AutoCAD versions
+        /// </summary>
+        public ReadOnlyCollection<string> FileVersion => new ReadOnlyCollection<string>(m_fileVersion);
+
+        /// <summary>
+        ///     Collection of Autodesk.Revit.DB.ACADVersion defined in Revit
+        /// </summary>
+        public ReadOnlyCollection<ACADVersion> EnumFileVersion =>
+            new ReadOnlyCollection<ACADVersion>(m_enumFileVersion);
+
+        /// <summary>
+        ///     File version option to export
+        /// </summary>
+        public ACADVersion ExportFileVersion
+        {
+            get => m_exportFileVersion;
+            set => m_exportFileVersion = value;
+        }
+
+        /// <summary>
+        ///     Initialize the variables
         /// </summary>
         private void Initialize()
         {
@@ -112,16 +112,13 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
 
             var tmp = new StringBuilder();
-            foreach (var version in m_fileVersion)
-            {
-                tmp.Append(version + "|*.dwg|");
-            }
+            foreach (var version in m_fileVersion) tmp.Append(version + "|*.dwg|");
             m_filter = tmp.ToString().TrimEnd('|');
             m_title = "Export DWG";
         }
 
         /// <summary>
-        /// Collect the parameters and export
+        ///     Collect the parameters and export
         /// </summary>
         /// <returns></returns>
         public override bool Export()
@@ -131,16 +128,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
             //parameter :  views
             IList<ElementId> views = new List<ElementId>();
             if (m_currentViewOnly)
-            {
                 views.Add(m_activeDoc.ActiveView.Id);
-            }
             else
-            {
                 foreach (View view in m_selectViewsData.SelectedViews)
-                {
                     views.Add(view.Id);
-                }
-            }
 
             // Default values
             m_exportFileVersion = ACADVersion.R2010;
@@ -161,5 +152,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             return exported;
         }
-            }
+    }
 }

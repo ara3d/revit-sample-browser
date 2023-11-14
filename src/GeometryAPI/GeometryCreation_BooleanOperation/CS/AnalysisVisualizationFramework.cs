@@ -20,7 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
@@ -28,30 +27,30 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
 {
-    class AnalysisVisualizationFramework
+    internal class AnalysisVisualizationFramework
     {
         /// <summary>
-        /// The singleton instance of AnalysisVisualizationFramework
+        ///     The singleton instance of AnalysisVisualizationFramework
         /// </summary>
         private static AnalysisVisualizationFramework Instance;
 
         /// <summary>
-        /// revit document
-        /// </summary>
-        private Document m_doc;
-
-        /// <summary>
-        /// The created view list
-        /// </summary>
-        private List<string> viewNameList = new List<string>();
-
-        /// <summary>
-        /// The ID of schema which SpatialFieldManager register
+        ///     The ID of schema which SpatialFieldManager register
         /// </summary>
         private static int SchemaId = -1;
 
         /// <summary>
-        /// Constructor
+        ///     revit document
+        /// </summary>
+        private readonly Document m_doc;
+
+        /// <summary>
+        ///     The created view list
+        /// </summary>
+        private readonly List<string> viewNameList = new List<string>();
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         /// <param name="doc">Revit document</param>
         private AnalysisVisualizationFramework(Document doc)
@@ -60,21 +59,18 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         }
 
         /// <summary>
-        /// Get the singleton instance of AnalysisVisualizationFramework
+        ///     Get the singleton instance of AnalysisVisualizationFramework
         /// </summary>
         /// <param name="doc">Revit document</param>
         /// <returns>The singleton instance of AnalysisVisualizationFramework</returns>
         public static AnalysisVisualizationFramework getInstance(Document doc)
         {
-            if (Instance == null)
-            {
-                Instance = new AnalysisVisualizationFramework(doc);
-            }
+            if (Instance == null) Instance = new AnalysisVisualizationFramework(doc);
             return Instance;
         }
 
         /// <summary>
-        /// Paint a solid in a new named view
+        ///     Paint a solid in a new named view
         /// </summary>
         /// <param name="s">solid</param>
         /// <param name="viewName">Given the name of view</param>
@@ -86,12 +82,8 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
                 var viewFamilyTypes = new FilteredElementCollector(m_doc).OfClass(typeof(ViewFamilyType)).ToElements();
                 var View3DId = ElementId.InvalidElementId;
                 foreach (var e in viewFamilyTypes)
-                {
                     if (e.Name == "3D View")
-                    {
                         View3DId = e.Id;
-                    }
-                }
 
                 //view = m_doc.Create.NewView3D(new XYZ(1, 1, 1));
                 view = View3D.CreateIsometric(m_doc, View3DId);
@@ -103,9 +95,8 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
             }
             else
             {
-                view = (((new FilteredElementCollector(m_doc).
-                   OfClass(typeof(View))).Cast<View>()).
-                   Where(e => e.Name == viewName)).First<View>();
+                view = new FilteredElementCollector(m_doc).OfClass(typeof(View)).Cast<View>()
+                    .Where(e => e.Name == viewName).First();
             }
 
             var sfm = SpatialFieldManager.GetSpatialFieldManager(view);
@@ -115,10 +106,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
             {
                 var results = sfm.GetRegisteredResults();
 
-                if (!results.Contains(SchemaId))
-                {
-                    SchemaId = -1;
-                }
+                if (!results.Contains(SchemaId)) SchemaId = -1;
             }
 
             if (SchemaId == -1)
@@ -126,11 +114,11 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
                 var resultSchema1 = new AnalysisResultSchema("PaintedSolid" + viewName, "Description");
 
                 var displayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(
-                   m_doc,
-                   "Real_Color_Surface" + viewName,
-                   new AnalysisDisplayColoredSurfaceSettings(),
-                   new AnalysisDisplayColorSettings(),
-                   new AnalysisDisplayLegendSettings());
+                    m_doc,
+                    "Real_Color_Surface" + viewName,
+                    new AnalysisDisplayColoredSurfaceSettings(),
+                    new AnalysisDisplayColorSettings(),
+                    new AnalysisDisplayLegendSettings());
 
                 resultSchema1.AnalysisDisplayStyleId = displayStyle.Id;
 
@@ -157,31 +145,30 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         }
 
         /// <summary>
-        /// Compute the value of face on specific point
+        ///     Compute the value of face on specific point
         /// </summary>
         /// <param name="face"></param>
         /// <param name="uvPts"></param>
         /// <param name="valList"></param>
         /// <param name="measurementNo"></param>
-        private static void ComputeValueAtPointForFace(Face face, out IList<UV> uvPts, out IList<ValueAtPoint> valList, int measurementNo)
+        private static void ComputeValueAtPointForFace(Face face, out IList<UV> uvPts, out IList<ValueAtPoint> valList,
+            int measurementNo)
         {
             var doubleList = new List<double>();
             uvPts = new List<UV>();
             valList = new List<ValueAtPoint>();
             var bb = face.GetBoundingBox();
             for (var u = bb.Min.U; u < bb.Max.U + 0.0000001; u = u + (bb.Max.U - bb.Min.U) / 1)
+            for (var v = bb.Min.V; v < bb.Max.V + 0.0000001; v = v + (bb.Max.V - bb.Min.V) / 1)
             {
-                for (var v = bb.Min.V; v < bb.Max.V + 0.0000001; v = v + (bb.Max.V - bb.Min.V) / 1)
-                {
-                    var uvPnt = new UV(u, v);
-                    uvPts.Add(uvPnt);
-                    var faceXYZ = face.Evaluate(uvPnt);
-                    // Specify three values for each point
-                    for (var ii = 1; ii <= measurementNo; ii++)
-                        doubleList.Add(faceXYZ.DistanceTo(XYZ.Zero) * ii);
-                    valList.Add(new ValueAtPoint(doubleList));
-                    doubleList.Clear();
-                }
+                var uvPnt = new UV(u, v);
+                uvPts.Add(uvPnt);
+                var faceXYZ = face.Evaluate(uvPnt);
+                // Specify three values for each point
+                for (var ii = 1; ii <= measurementNo; ii++)
+                    doubleList.Add(faceXYZ.DistanceTo(XYZ.Zero) * ii);
+                valList.Add(new ValueAtPoint(doubleList));
+                doubleList.Clear();
             }
         }
     }

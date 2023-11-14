@@ -26,23 +26,23 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This is the main form. It is the entry to create a new hosted sweep or to modify
-    /// a created hosted sweep.
+    ///     This is the main form. It is the entry to create a new hosted sweep or to modify
+    ///     a created hosted sweep.
     /// </summary>
     public partial class MainForm : Form
     {
         /// <summary>
-        /// Encapsulates the data source for a form.
+        ///     Encapsulates the data source for a form.
         /// </summary>
-        BindingSource m_binding;
+        private readonly BindingSource m_binding;
 
         /// <summary>
-        /// Creation manager, which collects all the creators.
+        ///     Creation manager, which collects all the creators.
         /// </summary>
-        private CreationMgr m_creationMgr;
+        private readonly CreationMgr m_creationMgr;
 
         /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
         public MainForm()
         {
@@ -50,24 +50,24 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Customize constructor.
+        ///     Customize constructor.
         /// </summary>
         /// <param name="mgr"></param>
-        public MainForm(CreationMgr mgr): this()
+        public MainForm(CreationMgr mgr) : this()
         {
             m_creationMgr = mgr;
             m_binding = new BindingSource();
         }
 
         /// <summary>
-        /// Show a form to fetch edges for hosted-sweep creation, and then create 
-        /// the hosted-sweep.
+        ///     Show a form to fetch edges for hosted-sweep creation, and then create
+        ///     the hosted-sweep.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonCreate_Click(object sender, EventArgs e)
         {
-            var creator = 
+            var creator =
                 comboBoxHostedSweepType.SelectedItem as HostedSweepCreator;
 
             var creationData = new CreationData(creator);
@@ -79,11 +79,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     creator.Create(creationData);
                     RefreshListBox();
                 }
-            } 
+            }
         }
 
         /// <summary>
-        /// Show a form to modify the created hosted-sweep.
+        ///     Show a form to modify the created hosted-sweep.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -91,18 +91,18 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             var modificationData = listBoxCreatedHostedSweeps.SelectedItem as ModificationData;
 
-            using(var modifyForm = new HostedSweepModifyForm(modificationData))
+            using (var modifyForm = new HostedSweepModifyForm(modificationData))
             {
                 modifyForm.ShowDialog();
             }
         }
 
         /// <summary>
-        /// Refresh list box data source.
+        ///     Refresh list box data source.
         /// </summary>
         private void RefreshListBox()
         {
-            var creator = 
+            var creator =
                 comboBoxHostedSweepType.SelectedItem as HostedSweepCreator;
             m_binding.DataSource = creator.CreatedHostedSweeps;
             listBoxCreatedHostedSweeps.DataSource = m_binding;
@@ -111,7 +111,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Initialize combobox data source.
+        ///     Initialize combobox data source.
         /// </summary>
         private void InitializeComboBox()
         {
@@ -124,7 +124,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Initialize combo-box.
+        ///     Initialize combo-box.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,7 +134,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Close this form.
+        ///     Close this form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -145,7 +145,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Update "Modify" button status according to the list-box selection item.
+        ///     Update "Modify" button status according to the list-box selection item.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -158,7 +158,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Update the list-box data source according to the combobox selection.
+        ///     Update the list-box data source according to the combobox selection.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -21,25 +21,25 @@
 //
 
 
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.ObjectModel;
 
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// WireFrame class for generate the model lines and fit the picture box's size to display
+    ///     WireFrame class for generate the model lines and fit the picture box's size to display
     /// </summary>
     public class WireFrame : ObjectSketch
     {
         /// <summary>
-        /// ratio of margin to canvas width
+        ///     ratio of margin to canvas width
         /// </summary>
         private const float MARGINRATIO = 0.1f;
 
         //construct function
         /// <summary>
-        /// The default constructor
+        ///     The default constructor
         /// </summary>
         /// <param name="line3Ds">a list contain all the line in WireFrame</param>
         public WireFrame(ReadOnlyCollection<Line3D> line3Ds)
@@ -48,24 +48,22 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// draw the line contain in m_lines in 2d Preview
+        ///     draw the line contain in m_lines in 2d Preview
         /// </summary>
         /// <param name="previewWidth">Width of Preview</param>
         /// <param name="previewHeigh">Heigh of Preview</param>
-        /// /// <param name="graphics">Graphics to draw</param>
+        /// ///
+        /// <param name="graphics">Graphics to draw</param>
         /// <returns></returns>
         public void Draw2D(float previewWidth, float previewHeigh, Graphics graphics)
         {
             graphics.Clear(Color.Black);
             CalculateTransform(previewWidth, previewHeigh);
-            foreach (var sketch in m_objects)
-            {
-                sketch.Draw(graphics, m_transform);
-            }
+            foreach (var sketch in m_objects) sketch.Draw(graphics, m_transform);
         }
 
         /// <summary>
-        /// draw override method
+        ///     draw override method
         /// </summary>
         /// <param name="g">graphics object</param>
         /// <param name="translate">matrix use to transform points or vectors</param>
@@ -74,7 +72,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// calculate the transform between canvas and geometry objects
+        ///     calculate the transform between canvas and geometry objects
         /// </summary>
         private void CalculateTransform(float previewWidth, float previewHeigh)
         {
@@ -83,7 +81,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get the display region, adjust the proportion and location
+        ///     get the display region, adjust the proportion and location
         /// </summary>
         /// <returns>upper-left, upper-right, and lower-left corners of the rectangle </returns>
         private PointF[] CalculateCanvasRegion(float previewWidth, float previewHeigh)
@@ -113,15 +111,15 @@ namespace Revit.SDK.Samples.Openings.CS
             }
 
             var plgpts = new PointF[3];
-            plgpts[0] = new PointF(minX, realHeight + minY);                // upper-left point    
-            plgpts[1] = new PointF(realWidth + minX, realHeight + minY);    // upper-right point
-            plgpts[2] = new PointF(minX, minY);                                // lower-left point
+            plgpts[0] = new PointF(minX, realHeight + minY); // upper-left point    
+            plgpts[1] = new PointF(realWidth + minX, realHeight + minY); // upper-right point
+            plgpts[2] = new PointF(minX, minY); // lower-left point
 
             return plgpts;
         }
 
         /// <summary>
-        /// transform 3d point to 2d (if all points in the same plane)
+        ///     transform 3d point to 2d (if all points in the same plane)
         /// </summary>
         private void Frame3DTo2D(ReadOnlyCollection<Line3D> line3Ds)
         {
@@ -143,24 +141,19 @@ namespace Revit.SDK.Samples.Openings.CS
                     break;
                 }
             }
-            if (index == 0)
-            {
-                return;
-            }
+
+            if (index == 0) return;
             // to find the last points to form the second line
             for (var j = index + 1; j < line3Ds.Count; j++)
             {
                 vector1 = line3Ds[j].StartPoint - line3Ds[index].StartPoint;
                 var angle = Vector.GetAngleOf2Vectors(vector0, vector1, true);
-                if (vector1.GetLength() > LengthEpsilon && angle > AngleEpsilon)
-                {
-                    break;
-                }
+                if (vector1.GetLength() > LengthEpsilon && angle > AngleEpsilon) break;
             }
 
             // find the local coordinate system in which the profile of opening is horizontal
             var zAxis = (vector0 & vector1).GetNormal();
-            var xAxis = zAxis & (new Vector(0.0, 1.0, 0.0));
+            var xAxis = zAxis & new Vector(0.0, 1.0, 0.0);
             var yAxis = zAxis & xAxis;
             var origin = new Vector(0.0, 0.0, 0.0);
             var ucs = new UCS(origin, xAxis, yAxis);
@@ -183,6 +176,7 @@ namespace Revit.SDK.Samples.Openings.CS
                 {
                     m_boundingBox = RectangleF.Union(m_boundingBox, aLineSketch.BoundingBox);
                 }
+
                 m_objects.Add(aLineSketch);
             }
         }

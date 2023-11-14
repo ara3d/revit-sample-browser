@@ -26,13 +26,13 @@ using Autodesk.Revit.UI.Selection;
 namespace Revit.SDK.Samples.Selections.CS
 {
     /// <summary>
-    /// A default filter.
-    /// All objects are allowed to be picked.
+    ///     A default filter.
+    ///     All objects are allowed to be picked.
     /// </summary>
     public class DefaultElementsFilter : ISelectionFilter
     {
         /// <summary>
-        /// Allow all the element to be selected
+        ///     Allow all the element to be selected
         /// </summary>
         /// <param name="element">A candidate element in selection operation.</param>
         /// <returns>Return true to allow the user to select this candidate element.</returns>
@@ -42,7 +42,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Allow all the reference to be selected
+        ///     Allow all the reference to be selected
         /// </summary>
         /// <param name="refer">A candidate reference in selection operation.</param>
         /// <param name="point">The 3D position of the mouse on the candidate reference.</param>
@@ -54,16 +54,16 @@ namespace Revit.SDK.Samples.Selections.CS
     }
 
     /// <summary>
-    /// A Filter for Wall Face.
-    /// Only wall faces are allowed to be picked.
+    ///     A Filter for Wall Face.
+    ///     Only wall faces are allowed to be picked.
     /// </summary>
     public class WallFaceFilter : ISelectionFilter
     {
         // Revit document.
-        Document m_doc;
+        private readonly Document m_doc;
 
         /// <summary>
-        /// Constructor the filter and initialize the document.
+        ///     Constructor the filter and initialize the document.
         /// </summary>
         /// <param name="doc">The document.</param>
         public WallFaceFilter(Document doc)
@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Allow wall to be selected
+        ///     Allow wall to be selected
         /// </summary>
         /// <param name="element">A candidate element in selection operation.</param>
         /// <returns>Return true for wall. Return false for non wall element.</returns>
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Allow face reference to be selected
+        ///     Allow face reference to be selected
         /// </summary>
         /// <param name="refer">A candidate reference in selection operation.</param>
         /// <param name="point">The 3D position of the mouse on the candidate reference.</param>
@@ -95,16 +95,16 @@ namespace Revit.SDK.Samples.Selections.CS
     }
 
     /// <summary>
-    /// A Filter for planar face.
-    /// Only planar faces are allowed to be picked.
+    ///     A Filter for planar face.
+    ///     Only planar faces are allowed to be picked.
     /// </summary>
     public class PlanarFaceFilter : ISelectionFilter
     {
         // Revit document.
-        Document m_doc;
+        private readonly Document m_doc;
 
         /// <summary>
-        /// Constructor the filter and initialize the document.
+        ///     Constructor the filter and initialize the document.
         /// </summary>
         /// <param name="doc">The document.</param>
         public PlanarFaceFilter(Document doc)
@@ -113,7 +113,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Allow all the element to be selected
+        ///     Allow all the element to be selected
         /// </summary>
         /// <param name="element">A candidate element in selection operation.</param>
         /// <returns>Return true to allow the user to select this candidate element.</returns>
@@ -123,7 +123,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Allow planar face reference to be selected
+        ///     Allow planar face reference to be selected
         /// </summary>
         /// <param name="refer">A candidate reference in selection operation.</param>
         /// <param name="point">The 3D position of the mouse on the candidate reference.</param>

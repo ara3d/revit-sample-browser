@@ -20,48 +20,47 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Architecture;
-using System.Drawing.Design;
 using System.ComponentModel;
+using System.Drawing.Design;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This class contains the data for hosted sweep modification.
+    ///     This class contains the data for hosted sweep modification.
     /// </summary>
     public class ModificationData
     {
         /// <summary>
-        /// Element to modify.
+        ///     Creation data can be modified.
         /// </summary>
-        private HostedSweep m_elemToModify;
+        private readonly CreationData m_creationData;
 
         /// <summary>
-        /// Creation data can be modified.
+        ///     Element to modify.
         /// </summary>
-        private CreationData m_creationData;
+        private readonly HostedSweep m_elemToModify;
 
         /// <summary>
-        /// Revit active document.
+        ///     Revit active document.
         /// </summary>
-        private Document m_rvtDoc;
+        private readonly Document m_rvtDoc;
 
         /// <summary>
-        /// Revit UI document.
+        ///     Revit UI document.
         /// </summary>
-        private UIDocument m_rvtUIDoc;
+        private readonly UIDocument m_rvtUIDoc;
 
         /// <summary>
-        /// Sub transaction
+        ///     Sub transaction
         /// </summary>
-        Transaction m_transaction;
+        private readonly Transaction m_transaction;
 
 
         /// <summary>
-        /// Constructor with HostedSweep and CreationData as parameters.
+        ///     Constructor with HostedSweep and CreationData as parameters.
         /// </summary>
         /// <param name="elem">Element to modify</param>
         /// <param name="creationData">CreationData</param>
@@ -75,116 +74,33 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             m_transaction = new Transaction(m_rvtDoc, "External Tool");
 
             m_creationData.EdgeAdded +=
-                new CreationData.EdgeEventHandler(m_creationData_EdgeAdded);
-            m_creationData.EdgeRemoved += 
-                new CreationData.EdgeEventHandler(m_creationData_EdgeRemoved);
-            m_creationData.SymbolChanged += 
-                new CreationData.SymbolChangedEventHandler(m_creationData_SymbolChanged);
+                m_creationData_EdgeAdded;
+            m_creationData.EdgeRemoved +=
+                m_creationData_EdgeRemoved;
+            m_creationData.SymbolChanged +=
+                m_creationData_SymbolChanged;
         }
 
         /// <summary>
-        /// Name of the Creator.
+        ///     Name of the Creator.
         /// </summary>
         public string CreatorName => m_creationData.Creator.Name;
 
         /// <summary>
-        /// Change the symbol of the HostedSweep.
-        /// </summary>
-        /// <param name="sym"></param>
-        private void m_creationData_SymbolChanged(ElementType sym)
-        {
-            try
-            {
-                StartTransaction();
-                m_elemToModify.ChangeTypeId(sym.Id);
-                CommitTransaction();
-            }
-            catch
-            {
-                RollbackTransaction();
-            }
-
-        }
-
-        /// <summary>
-        /// Remove the edge from the HostedSweep.
-        /// </summary>
-        /// <param name="edge"></param>
-        private void m_creationData_EdgeRemoved(Edge edge)
-        {
-            try
-            {
-                StartTransaction();
-                m_elemToModify.RemoveSegment(edge.Reference);
-                CommitTransaction();
-            }
-            catch
-            {
-                RollbackTransaction();
-            }
-        }
-
-        /// <summary>
-        /// Add the edge to the HostedSweep.
-        /// </summary>
-        /// <param name="edge"></param>
-        private void m_creationData_EdgeAdded(Edge edge)
-        {
-            try
-            {    
-                StartTransaction();
-                if (m_elemToModify is Fascia)
-                {
-                    (m_elemToModify as Fascia).AddSegment(edge.Reference);
-                }
-                else if (m_elemToModify is Gutter)
-                {
-                    (m_elemToModify as Gutter).AddSegment(edge.Reference);
-                }
-                else if (m_elemToModify is SlabEdge)
-                {
-                    (m_elemToModify as SlabEdge).AddSegment(edge.Reference);
-                }
-                CommitTransaction();
-            }
-            catch
-            {
-                RollbackTransaction();
-            }
-        }
-
-        /// <summary>
-        /// Show the element in a good view.
-        /// </summary>
-        public void ShowElement()
-        {
-            try
-            {
-                StartTransaction();
-                m_rvtUIDoc.ShowElements(m_elemToModify);
-                CommitTransaction();
-            }
-            catch
-            {
-                RollbackTransaction();
-            }
-        }
-
-        /// <summary>
-        /// Name will be displayed in property grid.
+        ///     Name will be displayed in property grid.
         /// </summary>
         [Category("Identity Data")]
         public string Name
         {
             get
             {
-                var result = "[Id:" + m_elemToModify.Id.ToString() + "] ";
+                var result = "[Id:" + m_elemToModify.Id + "] ";
                 return result + m_elemToModify.Name;
             }
         }
 
         /// <summary>
-        /// HostedSweep Angle property.
+        ///     HostedSweep Angle property.
         /// </summary>
         [Category("Profile")]
         public string Angle
@@ -194,8 +110,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 var angle = GetParameter("Angle");
                 if (angle != null)
                     return angle.AsValueString();
-                else
-                    return m_elemToModify.Angle.ToString();
+                return m_elemToModify.Angle.ToString();
             }
             set
             {
@@ -217,41 +132,41 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// HostedSweep profiles edges, the edges can be removed or added in the 
-        /// pop up dialog.
+        ///     HostedSweep profiles edges, the edges can be removed or added in the
+        ///     pop up dialog.
         /// </summary>
-        [TypeConverter(typeof(CreationDataTypeConverter)),
-        Editor(typeof(EdgeFormUITypeEditor), typeof(UITypeEditor)),
-        Category("Profile"), DisplayName("Profile Edges")]
+        [TypeConverter(typeof(CreationDataTypeConverter))]
+        [Editor(typeof(EdgeFormUITypeEditor), typeof(UITypeEditor))]
+        [Category("Profile")]
+        [DisplayName("Profile Edges")]
         public CreationData AddOrRemoveSegments => m_creationData;
 
         /// <summary>
-        /// HostedSweep Length property.
+        ///     HostedSweep Length property.
         /// </summary>
         [Category("Dimensions")]
         public string Length
-        {            
+        {
             get
             {
                 var length = GetParameter("Length");
                 if (length != null)
                     return length.AsValueString();
-                else
-                    return m_elemToModify.Length.ToString();
+                return m_elemToModify.Length.ToString();
             }
         }
 
         /// <summary>
-        /// HostedSweep HorizontalFlipped property.
+        ///     HostedSweep HorizontalFlipped property.
         /// </summary>
-        [Category("Constraints"), DisplayName("Horizontal Profile Flipped")]
+        [Category("Constraints")]
+        [DisplayName("Horizontal Profile Flipped")]
         public bool HorizontalFlipped
         {
             get => m_elemToModify.HorizontalFlipped;
             set
             {
                 if (value != m_elemToModify.HorizontalFlipped)
-                {
                     try
                     {
                         StartTransaction();
@@ -262,14 +177,14 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     {
                         RollbackTransaction();
                     }
-                }
             }
         }
 
         /// <summary>
-        /// HostedSweep HorizontalOffset property.
+        ///     HostedSweep HorizontalOffset property.
         /// </summary>
-        [Category("Constraints"), DisplayName("Horizontal Profile Offset")]
+        [Category("Constraints")]
+        [DisplayName("Horizontal Profile Offset")]
         public string HorizontalOffset
         {
             get
@@ -277,8 +192,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 var horiOff = GetParameter("Horizontal Profile Offset");
                 if (horiOff != null)
                     return horiOff.AsValueString();
-                else
-                    return m_elemToModify.HorizontalOffset.ToString(); 
+                return m_elemToModify.HorizontalOffset.ToString();
             }
             set
             {
@@ -289,7 +203,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     if (horiOff != null)
                         horiOff.SetValueString(value);
                     else
-                        m_elemToModify.HorizontalOffset = double.Parse(value); 
+                        m_elemToModify.HorizontalOffset = double.Parse(value);
                     CommitTransaction();
                 }
                 catch
@@ -300,16 +214,16 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// HostedSweep VerticalFlipped property.
+        ///     HostedSweep VerticalFlipped property.
         /// </summary>
-        [Category("Constraints"), DisplayName("Vertical Profile Flipped")]
+        [Category("Constraints")]
+        [DisplayName("Vertical Profile Flipped")]
         public bool VerticalFlipped
         {
             get => m_elemToModify.VerticalFlipped;
             set
             {
                 if (value != m_elemToModify.VerticalFlipped)
-                {
                     try
                     {
                         StartTransaction();
@@ -320,14 +234,14 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     {
                         RollbackTransaction();
                     }
-                }
             }
         }
 
         /// <summary>
-        /// HostedSweep VerticalOffset property.
+        ///     HostedSweep VerticalOffset property.
         /// </summary>
-        [Category("Constraints"), DisplayName("Vertical Profile Offset")]
+        [Category("Constraints")]
+        [DisplayName("Vertical Profile Offset")]
         public string VerticalOffset
         {
             get
@@ -335,10 +249,9 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 var vertOff = GetParameter("Vertical Profile Offset");
                 if (vertOff != null)
                     return vertOff.AsValueString();
-                else
-                    return m_elemToModify.VerticalOffset.ToString(); 
+                return m_elemToModify.VerticalOffset.ToString();
             }
-            set 
+            set
             {
                 try
                 {
@@ -346,8 +259,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     var vertOff = GetParameter("Vertical Profile Offset");
                     if (vertOff != null)
                         vertOff.SetValueString(value);
-                    else 
-                        m_elemToModify.VerticalOffset = double.Parse(value); 
+                    else
+                        m_elemToModify.VerticalOffset = double.Parse(value);
                     CommitTransaction();
                 }
                 catch
@@ -358,7 +271,82 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Get parameter by given name.
+        ///     Change the symbol of the HostedSweep.
+        /// </summary>
+        /// <param name="sym"></param>
+        private void m_creationData_SymbolChanged(ElementType sym)
+        {
+            try
+            {
+                StartTransaction();
+                m_elemToModify.ChangeTypeId(sym.Id);
+                CommitTransaction();
+            }
+            catch
+            {
+                RollbackTransaction();
+            }
+        }
+
+        /// <summary>
+        ///     Remove the edge from the HostedSweep.
+        /// </summary>
+        /// <param name="edge"></param>
+        private void m_creationData_EdgeRemoved(Edge edge)
+        {
+            try
+            {
+                StartTransaction();
+                m_elemToModify.RemoveSegment(edge.Reference);
+                CommitTransaction();
+            }
+            catch
+            {
+                RollbackTransaction();
+            }
+        }
+
+        /// <summary>
+        ///     Add the edge to the HostedSweep.
+        /// </summary>
+        /// <param name="edge"></param>
+        private void m_creationData_EdgeAdded(Edge edge)
+        {
+            try
+            {
+                StartTransaction();
+                if (m_elemToModify is Fascia)
+                    (m_elemToModify as Fascia).AddSegment(edge.Reference);
+                else if (m_elemToModify is Gutter)
+                    (m_elemToModify as Gutter).AddSegment(edge.Reference);
+                else if (m_elemToModify is SlabEdge) (m_elemToModify as SlabEdge).AddSegment(edge.Reference);
+                CommitTransaction();
+            }
+            catch
+            {
+                RollbackTransaction();
+            }
+        }
+
+        /// <summary>
+        ///     Show the element in a good view.
+        /// </summary>
+        public void ShowElement()
+        {
+            try
+            {
+                StartTransaction();
+                m_rvtUIDoc.ShowElements(m_elemToModify);
+                CommitTransaction();
+            }
+            catch
+            {
+                RollbackTransaction();
+            }
+        }
+
+        /// <summary>
+        ///     Get parameter by given name.
         /// </summary>
         /// <param name="name">name of parameter</param>
         /// <returns>parameter whose definition name is the given name.</returns>

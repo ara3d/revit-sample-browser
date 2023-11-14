@@ -21,33 +21,32 @@
 //
 
 using System;
-
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ViewTemplateCreation.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   public class Command : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
-               var document = commandData.Application.ActiveUIDocument.Document;
-               var form = new ViewTemplateCreationForm(document);
-               form.ShowDialog();
-                  
-               return Result.Succeeded;
+                var document = commandData.Application.ActiveUIDocument.Document;
+                var form = new ViewTemplateCreationForm(document);
+                form.ShowDialog();
+
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
-               Utils.ShowWarningMessageBox(ex.ToString());
-               return Result.Failed;
+                Utils.ShowWarningMessageBox(ex.ToString());
+                return Result.Failed;
             }
         }
     }
 }
-

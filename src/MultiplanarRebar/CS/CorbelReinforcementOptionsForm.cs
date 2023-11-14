@@ -6,9 +6,9 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.MultiplanarRebar.CS
 {
-    partial class CorbelReinforcementOptionsForm : Form
+    internal partial class CorbelReinforcementOptionsForm : Form
     {
-        private CorbelReinforcementOptions CorbelReinforcementOptions;
+        private readonly CorbelReinforcementOptions CorbelReinforcementOptions;
 
         public CorbelReinforcementOptionsForm(CorbelReinforcementOptions options)
         {
@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             Initialize();
         }
 
-        void Initialize()
+        private void Initialize()
         {
             var bartypes4 = new List<RebarBarType>(CorbelReinforcementOptions.RebarBarTypes);
             columnBarTypeComboBox.DataSource = bartypes4;
@@ -72,19 +72,13 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         private void topBarCountTextBox_Validating(object sender, CancelEventArgs e)
         {
             var count = 0;
-            if (!int.TryParse(topBarCountTextBox.Text, out count) || count < 2)
-            {
-                e.Cancel = true;
-            }
+            if (!int.TryParse(topBarCountTextBox.Text, out count) || count < 2) e.Cancel = true;
         }
 
         private void stirrupBarCountTextBox_Validating(object sender, CancelEventArgs e)
         {
             var count = 0;
-            if (!int.TryParse(stirrupBarCountTextBox.Text, out count) || count < 2)
-            {
-                e.Cancel = true;
-            }
+            if (!int.TryParse(stirrupBarCountTextBox.Text, out count) || count < 2) e.Cancel = true;
         }
     }
 }

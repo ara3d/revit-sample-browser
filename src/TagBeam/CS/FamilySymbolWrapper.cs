@@ -25,27 +25,27 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.TagBeam.CS
 {
     /// <summary>
-    /// A wrapper of family symbol
+    ///     A wrapper of family symbol
     /// </summary>
     public class FamilySymbolWrapper
     {
         /// <summary>
-        /// Family symbol
-        /// </summary>
-        public FamilySymbol FamilySymbol { get; }
-
-        /// <summary>
-        /// Display name
-        /// </summary>
-        public string Name => FamilySymbol.Family.Name + " : " + FamilySymbol.Name;
-
-        /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="tagSymbol"></param>
         public FamilySymbolWrapper(FamilySymbol familySymbol)
         {
             FamilySymbol = familySymbol;
         }
-    };
+
+        /// <summary>
+        ///     Family symbol
+        /// </summary>
+        public FamilySymbol FamilySymbol { get; }
+
+        /// <summary>
+        ///     Display name
+        /// </summary>
+        public string Name => FamilySymbol.Family.Name + " : " + FamilySymbol.Name;
+    }
 }

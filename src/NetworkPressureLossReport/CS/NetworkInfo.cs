@@ -5,245 +5,228 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Revit.SDK.Samples.NetworkPressureLossReport
 {
-   public class NetworkInfo
-   {
-       private double m_maxFlow;     // The maximum flow value of any segment on the entire network.
-       private IDictionary<int, SectionInfo> m_sections;
+    public class NetworkInfo
+    {
+        private double m_maxFlow; // The maximum flow value of any segment on the entire network.
+        private readonly IDictionary<int, SectionInfo> m_sections;
 
-      public NetworkInfo(Document doc)
-      {
-         Document = doc;
-         m_maxFlow = 0.0;
-         FlowDisplay = null;
-         DomainType = ConnectorDomainType.Undefined;
-         m_sections = new SortedDictionary<int, SectionInfo>();
-      }
-      public int NumberOfSections => m_sections.Count;
+        public NetworkInfo(Document doc)
+        {
+            Document = doc;
+            m_maxFlow = 0.0;
+            FlowDisplay = null;
+            DomainType = ConnectorDomainType.Undefined;
+            m_sections = new SortedDictionary<int, SectionInfo>();
+        }
 
-      public Document Document { get; }
+        public int NumberOfSections => m_sections.Count;
 
-      public string Name { get; set; }
+        public Document Document { get; }
 
-      public string FlowDisplay { get; private set; }
+        public string Name { get; set; }
 
-      public ConnectorDomainType DomainType { get; set; }
+        public string FlowDisplay { get; private set; }
 
-      public static IList<NetworkInfo> FindValidNetworks(Document doc)
-      {
-         IList<NetworkInfo> validNetworks = new List<NetworkInfo>();
+        public ConnectorDomainType DomainType { get; set; }
 
-         var visitedSegments = new HashSet<MEPNetworkSegmentId>(new CompareNetworkSegmentId());
+        public static IList<NetworkInfo> FindValidNetworks(Document doc)
+        {
+            IList<NetworkInfo> validNetworks = new List<NetworkInfo>();
 
-         // Find all elements that may drive the pipe or duct flow calculations.
-         var categories = new List<BuiltInCategory>();
-         categories.Add(BuiltInCategory.OST_MechanicalEquipment);
-         categories.Add(BuiltInCategory.OST_PlumbingEquipment);
-         categories.Add(BuiltInCategory.OST_DuctTerminal);
+            var visitedSegments = new HashSet<MEPNetworkSegmentId>(new CompareNetworkSegmentId());
 
-         var multiCatFilter = new ElementMulticategoryFilter(categories);
-         var elemCollector = new FilteredElementCollector(doc).WherePasses(multiCatFilter).WhereElementIsNotElementType();
-         foreach (var elem in elemCollector.ToElements())
-         {
-            var data = MEPAnalyticalModelData.GetMEPAnalyticalModelData(elem);
-            if (data == null)
-               continue;
+            // Find all elements that may drive the pipe or duct flow calculations.
+            var categories = new List<BuiltInCategory>();
+            categories.Add(BuiltInCategory.OST_MechanicalEquipment);
+            categories.Add(BuiltInCategory.OST_PlumbingEquipment);
+            categories.Add(BuiltInCategory.OST_DuctTerminal);
 
-            var nSeg = data.GetNumberOfSegments();
-            for (var ii = 0; ii < nSeg; ii++)
+            var multiCatFilter = new ElementMulticategoryFilter(categories);
+            var elemCollector = new FilteredElementCollector(doc).WherePasses(multiCatFilter)
+                .WhereElementIsNotElementType();
+            foreach (var elem in elemCollector.ToElements())
             {
-               var seg = data.GetSegmentByIndex(ii);
-               var idSegment = new MEPNetworkSegmentId(elem.Id, seg.Id);
-               if (visitedSegments.Contains(idSegment))
-                  continue;
+                var data = MEPAnalyticalModelData.GetMEPAnalyticalModelData(elem);
+                if (data == null)
+                    continue;
 
-               // Start from this analytical segment to traverse the entire network.
-               var newNetwork = new NetworkInfo(doc);
-               newNetwork.DomainType = seg.DomainType;
+                var nSeg = data.GetNumberOfSegments();
+                for (var ii = 0; ii < nSeg; ii++)
+                {
+                    var seg = data.GetSegmentByIndex(ii);
+                    var idSegment = new MEPNetworkSegmentId(elem.Id, seg.Id);
+                    if (visitedSegments.Contains(idSegment))
+                        continue;
 
-               // First start from the side of the start node.
-               var startNode = data.GetNodeById(seg.StartNode);
-               var iter = new MEPNetworkIterator(doc, startNode, seg);
-               for (iter.Start(); !iter.End(); iter.Next())
-               {
-                  var currentSegment = iter.GetAnalyticalSegment();
-                  if (currentSegment == null)
-                     continue;
+                    // Start from this analytical segment to traverse the entire network.
+                    var newNetwork = new NetworkInfo(doc);
+                    newNetwork.DomainType = seg.DomainType;
 
-                  var currentModelData = iter.GetAnalyticalModelData();
-                  if (currentModelData == null)
-                     continue;
+                    // First start from the side of the start node.
+                    var startNode = data.GetNodeById(seg.StartNode);
+                    var iter = new MEPNetworkIterator(doc, startNode, seg);
+                    for (iter.Start(); !iter.End(); iter.Next())
+                    {
+                        var currentSegment = iter.GetAnalyticalSegment();
+                        if (currentSegment == null)
+                            continue;
 
-                  // Mark this segment so not to create the duplicate network.
-                  var currentSegmentId = new MEPNetworkSegmentId(currentSegment.RevitElementId, currentSegment.Id);
-                  visitedSegments.Add(currentSegmentId);
+                        var currentModelData = iter.GetAnalyticalModelData();
+                        if (currentModelData == null)
+                            continue;
 
-                  var segFlowData = currentModelData.GetSegmentData(currentSegment.Id);
-                  // Grow the network information by filling in one segment.
-                  newNetwork.AddSegment(currentSegment, segFlowData);
+                        // Mark this segment so not to create the duplicate network.
+                        var currentSegmentId =
+                            new MEPNetworkSegmentId(currentSegment.RevitElementId, currentSegment.Id);
+                        visitedSegments.Add(currentSegmentId);
 
-                  // Refine the network name based on the straight segments.
-                  if (currentSegment.SegmentType == MEPAnalyticalSegmentType.Segment)
-                     newNetwork.RefineName(currentSegment.RevitElementId);
-               }
+                        var segFlowData = currentModelData.GetSegmentData(currentSegment.Id);
+                        // Grow the network information by filling in one segment.
+                        newNetwork.AddSegment(currentSegment, segFlowData);
 
-               // If this is not a close loop, we must include the other side as well!
-               var endNode = data.GetNodeById(seg.EndNode);
-               iter = new MEPNetworkIterator(doc, endNode, seg);
-               for (iter.Start(); !iter.End(); iter.Next())
-               {
-                  var currentSegment = iter.GetAnalyticalSegment();
-                  if (currentSegment == null)
-                     continue;
-                  var currentSegmentId = new MEPNetworkSegmentId(currentSegment.RevitElementId, currentSegment.Id);
-                  // Check if the segment was already visited.
-                  if (visitedSegments.Contains(currentSegmentId))
-                     continue;
-                  visitedSegments.Add(currentSegmentId);
+                        // Refine the network name based on the straight segments.
+                        if (currentSegment.SegmentType == MEPAnalyticalSegmentType.Segment)
+                            newNetwork.RefineName(currentSegment.RevitElementId);
+                    }
 
-                  var currentModelData = iter.GetAnalyticalModelData();
-                  if (currentModelData == null)
-                     continue;
-                  var segFlowData = currentModelData.GetSegmentData(currentSegment.Id);
-                  newNetwork.AddSegment(currentSegment, segFlowData);
-                  if (currentSegment.SegmentType == MEPAnalyticalSegmentType.Segment)
-                     newNetwork.RefineName(currentSegment.RevitElementId);
-               }
+                    // If this is not a close loop, we must include the other side as well!
+                    var endNode = data.GetNodeById(seg.EndNode);
+                    iter = new MEPNetworkIterator(doc, endNode, seg);
+                    for (iter.Start(); !iter.End(); iter.Next())
+                    {
+                        var currentSegment = iter.GetAnalyticalSegment();
+                        if (currentSegment == null)
+                            continue;
+                        var currentSegmentId =
+                            new MEPNetworkSegmentId(currentSegment.RevitElementId, currentSegment.Id);
+                        // Check if the segment was already visited.
+                        if (visitedSegments.Contains(currentSegmentId))
+                            continue;
+                        visitedSegments.Add(currentSegmentId);
 
-               // Collect this new network
-               if (newNetwork.NumberOfSections > 0)
-               {
-                  newNetwork.ResetFlowDisplay();
-                  validNetworks.Add(newNetwork);
-               }
+                        var currentModelData = iter.GetAnalyticalModelData();
+                        if (currentModelData == null)
+                            continue;
+                        var segFlowData = currentModelData.GetSegmentData(currentSegment.Id);
+                        newNetwork.AddSegment(currentSegment, segFlowData);
+                        if (currentSegment.SegmentType == MEPAnalyticalSegmentType.Segment)
+                            newNetwork.RefineName(currentSegment.RevitElementId);
+                    }
+
+                    // Collect this new network
+                    if (newNetwork.NumberOfSections > 0)
+                    {
+                        newNetwork.ResetFlowDisplay();
+                        validNetworks.Add(newNetwork);
+                    }
+                }
             }
-         }
-         return validNetworks;
-      }
 
-      public void AddSegment(MEPAnalyticalSegment segment, MEPNetworkSegmentData segmentData)
-      {
-         var sectionNumber = segmentData.SectionNumber;
-         // The equipment segment may not belong to any section. Skip those?!
-         if (sectionNumber < 0)
-            return;
+            return validNetworks;
+        }
 
-         var segmentFlow = Math.Abs(segmentData.Flow);
-         if (segmentFlow > m_maxFlow)
-            m_maxFlow = segmentFlow;
+        public void AddSegment(MEPAnalyticalSegment segment, MEPNetworkSegmentData segmentData)
+        {
+            var sectionNumber = segmentData.SectionNumber;
+            // The equipment segment may not belong to any section. Skip those?!
+            if (sectionNumber < 0)
+                return;
 
-         if (!m_sections.ContainsKey(sectionNumber))
-         {
-            m_sections.Add(sectionNumber, new SectionInfo());
-         }
-         m_sections[sectionNumber].AddSegment(Document, segment, segmentData);
-      }
+            var segmentFlow = Math.Abs(segmentData.Flow);
+            if (segmentFlow > m_maxFlow)
+                m_maxFlow = segmentFlow;
 
-      private void RefineName(ElementId idElem)
-      {
-         var elem = Document.GetElement(idElem);
-         var aCurve = elem as MEPCurve;
-         if (aCurve != null)
-         {
-            var sys = aCurve.MEPSystem;
-            if (sys != null)
+            if (!m_sections.ContainsKey(sectionNumber)) m_sections.Add(sectionNumber, new SectionInfo());
+            m_sections[sectionNumber].AddSegment(Document, segment, segmentData);
+        }
+
+        private void RefineName(ElementId idElem)
+        {
+            var elem = Document.GetElement(idElem);
+            var aCurve = elem as MEPCurve;
+            if (aCurve != null)
             {
-               AppendName(sys.Name);
+                var sys = aCurve.MEPSystem;
+                if (sys != null) AppendName(sys.Name);
             }
-         }
-         else
-         {
-            var aPart = elem as FabricationPart;
-            if (aPart != null)
+            else
             {
-               var serviceName = aPart.ServiceName;
-               // Get the full name of fabrication service by its id.
-               var fabConfig = FabricationConfiguration.GetFabricationConfiguration(Document);
-               if (fabConfig != null)
-               {
-                  var fabService = fabConfig.GetService(aPart.ServiceId);
-                  if (fabService != null)
-                  {
-                     serviceName = fabService.Name;
-                  }
-               }
-               AppendName(serviceName);
-            }
-         }
-      }
+                var aPart = elem as FabricationPart;
+                if (aPart != null)
+                {
+                    var serviceName = aPart.ServiceName;
+                    // Get the full name of fabrication service by its id.
+                    var fabConfig = FabricationConfiguration.GetFabricationConfiguration(Document);
+                    if (fabConfig != null)
+                    {
+                        var fabService = fabConfig.GetService(aPart.ServiceId);
+                        if (fabService != null) serviceName = fabService.Name;
+                    }
 
-      private void AppendName(string name)
-      {
-         if (string.IsNullOrEmpty(Name))
-         {
-            Name = name;
-         }
-         else
-         {
-            if (!Name.Contains(name))
+                    AppendName(serviceName);
+                }
+            }
+        }
+
+        private void AppendName(string name)
+        {
+            if (string.IsNullOrEmpty(Name))
             {
-               Name += " + " + name;
+                Name = name;
             }
-         }
-      }
-      private void ResetFlowDisplay()
-      {
-         var specId = SpecTypeId.Flow;
-         if (DomainType == ConnectorDomainType.Hvac)
-            specId = SpecTypeId.AirFlow;
-
-         // Reset the flow display value based on the maximum number after adding all segments.
-         FlowDisplay = UnitFormatUtils.Format(Document.GetUnits(), specId, m_maxFlow, false);
-      }
-
-      public void ExportCSV(CSVExporter ex)
-      {
-         // Export the header line.
-         var str = string.Format("Section, Type/No, Element, Flow ({0}), Size/Hydraulic Diameter ({1}), Velocity ({2}), Velocity Pressure ({3}), Length ({4}), Coefficients, Friction ({5}), Pressure Loss ({3}), Section Pressure Loss ({3})", 
-            ex.GetFlowUnitSymbol(), ex.GetSizeUnitSymbol(), ex.GetVelocityUnitSymbol(), ex.GetPressureUnitSymbol(), ex.GetLengthUnitSymbol(), ex.GetFrictionUnitSymbol());
-         ex.Writer.WriteLine(str);
-         foreach (var item in m_sections)
-         {
-            item.Value.ExportCSV(ex, item.Key);
-         }
-         // Critical path if available
-         var dCriticalLoss = 0.0;
-         string path = null;
-         foreach(var item in m_sections)
-         {
-            if(item.Value.IsCriticalPath)
+            else
             {
-               dCriticalLoss += item.Value.TotalPressureLoss;
-               if(string.IsNullOrEmpty(path))
-               {
-                  path = item.Key.ToString();
-               }
-               else
-               {
-                  path += @" - " + item.Key.ToString();
-               }
+                if (!Name.Contains(name)) Name += " + " + name;
             }
-         }
-         ex.Writer.WriteLine(string.Format("Critical Pressure Loss: {0}, {1}", path, dCriticalLoss));
-      }
-      public void UpdateView(AVFViewer viewer)
-      {
-         var points = new List<XYZ>();
-         var valList = new List<VectorAtPoint>();
+        }
 
-         // Safety check.
-         if (m_maxFlow < 0.0000001)
-            return;
+        private void ResetFlowDisplay()
+        {
+            var specId = SpecTypeId.Flow;
+            if (DomainType == ConnectorDomainType.Hvac)
+                specId = SpecTypeId.AirFlow;
 
-         foreach (var item in m_sections)
-         {
-             item.Value.UpdateView(viewer, points, valList, m_maxFlow);
-         }
+            // Reset the flow display value based on the maximum number after adding all segments.
+            FlowDisplay = UnitFormatUtils.Format(Document.GetUnits(), specId, m_maxFlow, false);
+        }
 
-         if(points.Count > 0)
-         {
-            viewer.AddData(points, valList);
-         }
+        public void ExportCSV(CSVExporter ex)
+        {
+            // Export the header line.
+            var str = string.Format(
+                "Section, Type/No, Element, Flow ({0}), Size/Hydraulic Diameter ({1}), Velocity ({2}), Velocity Pressure ({3}), Length ({4}), Coefficients, Friction ({5}), Pressure Loss ({3}), Section Pressure Loss ({3})",
+                ex.GetFlowUnitSymbol(), ex.GetSizeUnitSymbol(), ex.GetVelocityUnitSymbol(), ex.GetPressureUnitSymbol(),
+                ex.GetLengthUnitSymbol(), ex.GetFrictionUnitSymbol());
+            ex.Writer.WriteLine(str);
+            foreach (var item in m_sections) item.Value.ExportCSV(ex, item.Key);
+            // Critical path if available
+            var dCriticalLoss = 0.0;
+            string path = null;
+            foreach (var item in m_sections)
+                if (item.Value.IsCriticalPath)
+                {
+                    dCriticalLoss += item.Value.TotalPressureLoss;
+                    if (string.IsNullOrEmpty(path))
+                        path = item.Key.ToString();
+                    else
+                        path += @" - " + item.Key;
+                }
 
-      }
-   }
+            ex.Writer.WriteLine("Critical Pressure Loss: {0}, {1}", path, dCriticalLoss);
+        }
+
+        public void UpdateView(AVFViewer viewer)
+        {
+            var points = new List<XYZ>();
+            var valList = new List<VectorAtPoint>();
+
+            // Safety check.
+            if (m_maxFlow < 0.0000001)
+                return;
+
+            foreach (var item in m_sections) item.Value.UpdateView(viewer, points, valList, m_maxFlow);
+
+            if (points.Count > 0) viewer.AddData(points, valList);
+        }
+    }
 }

@@ -28,37 +28,37 @@ using System.Drawing.Drawing2D;
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// base class of sketch object to draw 2D geometry object
+    ///     base class of sketch object to draw 2D geometry object
     /// </summary>
     public abstract class ObjectSketch
     {
         /// <summary>
-        /// bounding box of the geometry object 
+        ///     bounding box of the geometry object
         /// </summary>
         protected RectangleF m_boundingBox = new RectangleF();
 
         /// <summary>
-        /// pen to draw the object
-        /// </summary>
-        protected Pen m_pen = new Pen(Color.DarkGreen);
-
-        /// <summary>
-        /// defines a local geometric transform
-        /// </summary>
-        protected Matrix m_transform;
-
-        /// <summary>
-        /// reserve lines that form the profile
+        ///     reserve lines that form the profile
         /// </summary>
         protected List<ObjectSketch> m_objects = new List<ObjectSketch>();
 
         /// <summary>
-        /// bounding box of the geometry object 
+        ///     pen to draw the object
+        /// </summary>
+        protected Pen m_pen = new Pen(Color.DarkGreen);
+
+        /// <summary>
+        ///     defines a local geometric transform
+        /// </summary>
+        protected Matrix m_transform;
+
+        /// <summary>
+        ///     bounding box of the geometry object
         /// </summary>
         public RectangleF BoundingBox => m_boundingBox;
 
         /// <summary>
-        /// geometric object draw itself
+        ///     geometric object draw itself
         /// </summary>
         /// <param name="g"></param>
         /// <param name="translate"></param>

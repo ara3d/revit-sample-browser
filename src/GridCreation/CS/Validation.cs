@@ -21,39 +21,36 @@
 //
 
 using System;
-using System.Windows.Forms;
-using System.Resources;
 using System.Collections;
-
+using System.Resources;
+using System.Windows.Forms;
 using Autodesk.Revit.UI;
+using Revit.SDK.Samples.GridCreation.CS.Properties;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
     /// <summary>
-    /// Class to validate input data before creating grids
+    ///     Class to validate input data before creating grids
     /// </summary>
     public static class Validation
     {
         // Get the resource contains strings
-        static ResourceManager resManager = Properties.Resources.ResourceManager;
+        private static readonly ResourceManager resManager = Resources.ResourceManager;
 
         /// <summary>
-        /// Validate numbers in UI
+        ///     Validate numbers in UI
         /// </summary>
         /// <param name="number1Ctrl">Control contains number information</param>
         /// <param name="number2Ctrl">Control contains another number information</param>
         /// <returns>Whether the numbers are validated</returns>
         public static bool ValidateNumbers(Control number1Ctrl, Control number2Ctrl)
         {
-            if (!ValidateNumber(number1Ctrl) || !ValidateNumber(number2Ctrl))
-            {
-                return false;
-            }
+            if (!ValidateNumber(number1Ctrl) || !ValidateNumber(number2Ctrl)) return false;
 
             if (Convert.ToUInt32(number1Ctrl.Text) == 0 && Convert.ToUInt32(number2Ctrl.Text) == 0)
             {
                 ShowWarningMessage(resManager.GetString("NumbersCannotBeBothZero"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 number1Ctrl.Focus();
                 return false;
             }
@@ -62,16 +59,13 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Validate number value
+        ///     Validate number value
         /// </summary>
         /// <param name="numberCtrl">Control contains number information</param>
         /// <returns>Whether the number value is validated</returns>
         public static bool ValidateNumber(Control numberCtrl)
         {
-            if (!ValidateNotNull(numberCtrl, "Number"))
-            {
-                return false;
-            }
+            if (!ValidateNotNull(numberCtrl, "Number")) return false;
 
             try
             {
@@ -79,7 +73,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 if (number > 200)
                 {
                     ShowWarningMessage(resManager.GetString("NumberBetween0And200"),
-                                       Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                        Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     numberCtrl.Focus();
                     return false;
                 }
@@ -87,14 +81,14 @@ namespace Revit.SDK.Samples.GridCreation.CS
             catch (OverflowException)
             {
                 ShowWarningMessage(resManager.GetString("NumberBetween0And200"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 numberCtrl.Focus();
                 return false;
             }
             catch (Exception)
             {
                 ShowWarningMessage(resManager.GetString("NumberFormatWrong"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 numberCtrl.Focus();
                 return false;
             }
@@ -103,7 +97,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Validate length value
+        ///     Validate length value
         /// </summary>
         /// <param name="lengthCtrl">Control contains length information</param>
         /// <param name="typeName">Type of length</param>
@@ -111,10 +105,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <returns>Whether the length value is validated</returns>
         public static bool ValidateLength(Control lengthCtrl, string typeName, bool canBeZero)
         {
-            if (!ValidateNotNull(lengthCtrl, typeName))
-            {
-                return false;
-            }
+            if (!ValidateNotNull(lengthCtrl, typeName)) return false;
 
             try
             {
@@ -122,14 +113,15 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 if (length <= 0 && !canBeZero)
                 {
                     ShowWarningMessage(resManager.GetString(typeName + "CannotBeNegativeOrZero"),
-                                       Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                        Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     lengthCtrl.Focus();
                     return false;
                 }
-                else if (length < 0 && canBeZero)
+
+                if (length < 0 && canBeZero)
                 {
                     ShowWarningMessage(resManager.GetString(typeName + "CannotBeNegative"),
-                                       Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                        Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     lengthCtrl.Focus();
                     return false;
                 }
@@ -137,7 +129,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             catch (Exception)
             {
                 ShowWarningMessage(resManager.GetString(typeName + "FormatWrong"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 lengthCtrl.Focus();
                 return false;
             }
@@ -146,16 +138,13 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Validate coordinate value
+        ///     Validate coordinate value
         /// </summary>
         /// <param name="coordCtrl">Control contains coordinate information</param>
         /// <returns>Whether the coordinate value is validated</returns>
         public static bool ValidateCoord(Control coordCtrl)
         {
-            if (!ValidateNotNull(coordCtrl, "Coordinate"))
-            {
-                return false;
-            }
+            if (!ValidateNotNull(coordCtrl, "Coordinate")) return false;
 
             try
             {
@@ -164,7 +153,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             catch (Exception)
             {
                 ShowWarningMessage(resManager.GetString("CoordinateFormatWrong"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 coordCtrl.Focus();
                 return false;
             }
@@ -173,22 +162,19 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Validate start degree and end degree
+        ///     Validate start degree and end degree
         /// </summary>
         /// <param name="startDegree">Control contains start degree information</param>
         /// <param name="endDegree">Control contains end degree information</param>
         /// <returns>Whether the degree values are validated</returns>
         public static bool ValidateDegrees(Control startDegree, Control endDegree)
         {
-            if (!ValidateDegree(startDegree) || !ValidateDegree(endDegree))
-            {
-                return false;
-            }
+            if (!ValidateDegree(startDegree) || !ValidateDegree(endDegree)) return false;
 
             if (Math.Abs(Convert.ToDouble(startDegree.Text) - Convert.ToDouble(endDegree.Text)) <= double.Epsilon)
             {
                 ShowWarningMessage(resManager.GetString("DegreesAreTooClose"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 startDegree.Focus();
                 return false;
             }
@@ -196,7 +182,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             if (Convert.ToDouble(startDegree.Text) >= Convert.ToDouble(endDegree.Text))
             {
                 ShowWarningMessage(resManager.GetString("StartDegreeShouldBeLessThanEndDegree"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 startDegree.Focus();
                 return false;
             }
@@ -205,16 +191,13 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Validate degree value
+        ///     Validate degree value
         /// </summary>
         /// <param name="degreeCtrl">Control contains degree information</param>
         /// <returns>Whether the degree value is validated</returns>
         public static bool ValidateDegree(Control degreeCtrl)
         {
-            if (!ValidateNotNull(degreeCtrl, "Degree"))
-            {
-                return false;
-            }
+            if (!ValidateNotNull(degreeCtrl, "Degree")) return false;
 
             try
             {
@@ -222,7 +205,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 if (startDegree < 0 || startDegree > 360)
                 {
                     ShowWarningMessage(resManager.GetString("DegreeWithin0To360"),
-                                       Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                        Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     degreeCtrl.Focus();
                     return false;
                 }
@@ -230,7 +213,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             catch (Exception)
             {
                 ShowWarningMessage(resManager.GetString("DegreeFormatWrong"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 degreeCtrl.Focus();
                 return false;
             }
@@ -239,35 +222,30 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Validate label
+        ///     Validate label
         /// </summary>
         /// <param name="labelCtrl">Control contains label information</param>
         /// <param name="allLabels">List contains all labels in Revit document</param>
         /// <returns>Whether the label value is validated</returns>
         public static bool ValidateLabel(Control labelCtrl, ArrayList allLabels)
         {
-            if (!ValidateNotNull(labelCtrl, "Label"))
-            {
-                return false;
-            }
+            if (!ValidateNotNull(labelCtrl, "Label")) return false;
 
             var labelToBeValidated = labelCtrl.Text;
             foreach (string label in allLabels)
-            {
                 if (label == labelToBeValidated)
                 {
                     ShowWarningMessage(resManager.GetString("LabelExisted"),
-                                       Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                        Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     labelCtrl.Focus();
                     return false;
                 }
-            }
 
             return true;
         }
 
         /// <summary>
-        /// Assure value is not null
+        ///     Assure value is not null
         /// </summary>
         /// <param name="control">Control contains information needs to be checked</param>
         /// <param name="typeName">Type of information</param>
@@ -277,7 +255,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             if (string.IsNullOrEmpty(control.Text.TrimStart(' ').TrimEnd(' ')))
             {
                 ShowWarningMessage(resManager.GetString(typeName + "CannotBeNull"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 control.Focus();
                 return false;
             }
@@ -286,7 +264,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Assure two labels are not same
+        ///     Assure two labels are not same
         /// </summary>
         /// <param name="label1Ctrl">Control contains label information</param>
         /// <param name="label2Ctrl">Control contains label information</param>
@@ -296,7 +274,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             if (label1Ctrl.Text.TrimStart(' ').TrimEnd(' ') == label2Ctrl.Text.TrimStart(' ').TrimEnd(' '))
             {
                 ShowWarningMessage(resManager.GetString("LabelsCannotBeSame"),
-                                   Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
+                    Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 label1Ctrl.Focus();
                 return false;
             }
@@ -305,7 +283,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Show a warning message box
+        ///     Show a warning message box
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="caption">title of message box</param>

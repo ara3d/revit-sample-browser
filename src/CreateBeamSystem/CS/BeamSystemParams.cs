@@ -21,103 +21,72 @@
 //
 
 
+using System.ComponentModel;
+using System.Diagnostics;
+using Autodesk.Revit.DB;
+
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
-    using System.Diagnostics;
-    using System.ComponentModel;
-    using Autodesk.Revit.DB;
-
     /// <summary>
-    /// describes the type of beam layout method in beam system
+    ///     describes the type of beam layout method in beam system
     /// </summary>
     public enum LayoutMethod
     {
         /// <summary>
-        /// the beam's layout method in beam System is clear the spacing among beams
+        ///     the beam's layout method in beam System is clear the spacing among beams
         /// </summary>
         ClearSpacing,
 
         /// <summary>
-        /// maximum the space among beams
+        ///     maximum the space among beams
         /// </summary>
         MaximumSpacing,
 
         /// <summary>
-        /// has fixed beams number and user appoint the number
+        ///     has fixed beams number and user appoint the number
         /// </summary>
         FixedNumber,
 
         /// <summary>
-        /// has fixed distance among beams and user appoint this distance
+        ///     has fixed distance among beams and user appoint this distance
         /// </summary>
         FixedDistance
     }
 
     /// <summary>
-    /// declares a delegate for a method that takes in a LayoutMethod
+    ///     declares a delegate for a method that takes in a LayoutMethod
     /// </summary>
     /// <param name="layoutMethod"></param>
     public delegate void LayoutRuleChangedHandler(ref LayoutMethod layoutMethod);
 
     /// <summary>
-    /// the properties of beam system;
-    /// can be displayed in PropertyGrid
+    ///     the properties of beam system;
+    ///     can be displayed in PropertyGrid
     /// </summary>
     public abstract class BeamSystemParam
     {
         /// <summary>
-        /// layout method
+        ///     space between beams; buffer for subclass
+        /// </summary>
+        protected double m_fixedSpacing;
+
+        /// <summary>
+        ///     justify type; buffer for subclass
+        /// </summary>
+        protected BeamSystemJustifyType m_justifyType;
+
+        /// <summary>
+        ///     layout method
         /// </summary>
         protected LayoutMethod m_layoutType;
 
         /// <summary>
-        /// space between beams; buffer for subclass
-        /// </summary>
-        protected double m_fixedSpacing;
-        
-        /// <summary>
-        /// justify type; buffer for subclass
-        /// </summary>
-        protected BeamSystemJustifyType m_justifyType;    
-        
-        /// <summary>
-        /// number of beams
+        ///     number of beams
         /// </summary>
         protected int m_numberOfLines;
 
         /// <summary>
-        /// layout method of beam system is changed
-        /// </summary>
-        [Browsable(false)]
-        public LayoutRuleChangedHandler LayoutRuleChanged { get; set; }
-
-        /// <summary>
-        /// kind of layout rule
-        /// </summary>
-        [Category("Pattern"),
-        Description("Specify the layout rule")]
-        public LayoutMethod LayoutRuleMethod
-        {
-            get => m_layoutType;
-            set
-            {
-                if (m_layoutType != value)
-                {
-                    // invokes the delegate
-                    LayoutRuleChanged(ref value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// type of beam used to create beam system
-        /// </summary>
-        [Category("Pattern"), TypeConverter(typeof(BeamTypeItem)),
-        Description("Select a value for the Beam Type used in the beam system")]
-        public FamilySymbol BeamType { get; set; }
-
-        /// <summary>
-        /// initial general members for its subclass
+        ///     initial general members for its subclass
         /// </summary>
         protected BeamSystemParam()
         {
@@ -127,7 +96,43 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         }
 
         /// <summary>
-        /// create BeamSystemParam's subclass according to LayoutMethod
+        ///     layout method of beam system is changed
+        /// </summary>
+        [Browsable(false)]
+        public LayoutRuleChangedHandler LayoutRuleChanged { get; set; }
+
+        /// <summary>
+        ///     kind of layout rule
+        /// </summary>
+        [Category("Pattern")]
+        [Description("Specify the layout rule")]
+        public LayoutMethod LayoutRuleMethod
+        {
+            get => m_layoutType;
+            set
+            {
+                if (m_layoutType != value)
+                    // invokes the delegate
+                    LayoutRuleChanged(ref value);
+            }
+        }
+
+        /// <summary>
+        ///     type of beam used to create beam system
+        /// </summary>
+        [Category("Pattern")]
+        [TypeConverter(typeof(BeamTypeItem))]
+        [Description("Select a value for the Beam Type used in the beam system")]
+        public FamilySymbol BeamType { get; set; }
+
+        /// <summary>
+        ///     subclass of LayoutRule
+        /// </summary>
+        [Browsable(false)]
+        public abstract LayoutRule Layout { get; }
+
+        /// <summary>
+        ///     create BeamSystemParam's subclass according to LayoutMethod
         /// </summary>
         /// <param name="layoutType">LayoutMethod</param>
         /// <returns>created BeamSystemParam's subclass</returns>
@@ -148,16 +153,15 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                 case LayoutMethod.MaximumSpacing:
                     param = new MaximumSpacingParam();
                     break;
-                default:
-                    break;
             }
+
             // it is absolutely impossible unless layoutType is wrong
             Debug.Assert(null != param);
             return param;
         }
 
         /// <summary>
-        /// clone BeamSystemParam to one of its subclass according to LayoutMethod
+        ///     clone BeamSystemParam to one of its subclass according to LayoutMethod
         /// </summary>
         /// <param name="layoutType">LayoutMethod</param>
         /// <returns>cloned BeamSystemParam's subclass</returns>
@@ -165,40 +169,40 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         {
             // create a BeamSystemParam instance and set its properties
             var param = CreateInstance(layoutType);
-            param.m_fixedSpacing  = m_fixedSpacing;
-            param.m_justifyType   = m_justifyType;
+            param.m_fixedSpacing = m_fixedSpacing;
+            param.m_justifyType = m_justifyType;
             param.m_numberOfLines = m_numberOfLines;
-            param.BeamType      = BeamType;
-            return param;            
+            param.BeamType = BeamType;
+            return param;
         }
 
         /// <summary>
-        /// subclass of LayoutRule
+        ///     properties related to LayoutRule when it's clear spacing
+        ///     only visible for class BeamSystemParam
         /// </summary>
-        [Browsable(false)]
-        public abstract LayoutRule Layout
+        private class ClearSpacingParam : BeamSystemParam
         {
-            get;
-        }
-
-        /// <summary>
-        /// properties related to LayoutRule when it's clear spacing
-        /// only visible for class BeamSystemParam
-        /// </summary>
-        class ClearSpacingParam : BeamSystemParam
-        {
-            protected LayoutRuleClearSpacing m_layout;
+            protected readonly LayoutRuleClearSpacing m_layout;
 
             /// <summary>
-            /// wrapped LayoutRuleClearSpacing object
+            ///     constructor
+            /// </summary>
+            public ClearSpacingParam()
+            {
+                m_layout = new LayoutRuleClearSpacing(m_fixedSpacing, m_justifyType);
+                m_layoutType = LayoutMethod.ClearSpacing;
+            }
+
+            /// <summary>
+            ///     wrapped LayoutRuleClearSpacing object
             /// </summary>
             public override LayoutRule Layout => m_layout;
 
             /// <summary>
-            /// FixedSpacing value of beam system
+            ///     FixedSpacing value of beam system
             /// </summary>
-            [Category("Pattern"),
-            Description("representing the distance between each beam")]
+            [Category("Pattern")]
+            [Description("representing the distance between each beam")]
             public double ClearSpacing
             {
                 get => m_fixedSpacing;
@@ -207,70 +211,59 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                     try
                     {
                         m_layout.Spacing = value;
-                        m_fixedSpacing   = value;
+                        m_fixedSpacing = value;
                     }
                     catch
-                    {        
+                    {
                     }
                 }
             }
 
             /// <summary>
-            /// JustifyType value of beam system
+            ///     JustifyType value of beam system
             /// </summary>
-            [Category("Pattern"),
-            Description("This value determines the placement of the first beam"
-            + " and each subsequent beam is spaced a fixed distance from it.")]
+            [Category("Pattern")]
+            [Description("This value determines the placement of the first beam"
+                         + " and each subsequent beam is spaced a fixed distance from it.")]
             public BeamSystemJustifyType JustifyType
             {
                 get => m_justifyType;
                 set
                 {
                     m_layout.JustifyType = value;
-                    m_justifyType        = value;
+                    m_justifyType = value;
                 }
-            }
-
-            /// <summary>
-            /// constructor
-            /// </summary>
-            public ClearSpacingParam()
-                : base()
-            {
-                m_layout     = new LayoutRuleClearSpacing(m_fixedSpacing, m_justifyType);
-                m_layoutType = LayoutMethod.ClearSpacing;
             }
         }
 
         /// <summary>
-        /// properties related to LayoutRule when it's fixed distance
-        /// only visible for class BeamSystemParam
+        ///     properties related to LayoutRule when it's fixed distance
+        ///     only visible for class BeamSystemParam
         /// </summary>
-        class FixedDistanceParam : BeamSystemParam
+        private class FixedDistanceParam : BeamSystemParam
         {
-            protected LayoutRuleFixedDistance m_layout;
+            protected readonly LayoutRuleFixedDistance m_layout;
 
             /// <summary>
-            /// wrapped LayoutRuleFixedDistance object
-            /// </summary>
-            public override LayoutRule Layout => m_layout;
-
-            /// <summary>
-            /// constructor
+            ///     constructor
             /// </summary>
             public FixedDistanceParam()
-                : base()
             {
-                m_layout     = new LayoutRuleFixedDistance(m_fixedSpacing, m_justifyType);
+                m_layout = new LayoutRuleFixedDistance(m_fixedSpacing, m_justifyType);
                 m_layoutType = LayoutMethod.FixedDistance;
             }
 
             /// <summary>
-            /// FixedSpacing value of beam system
+            ///     wrapped LayoutRuleFixedDistance object
             /// </summary>
-            [Category("Pattern"),
-            Description("allows you to specify the distance between beams"
-            + " based on the justification you specify.")]
+            public override LayoutRule Layout => m_layout;
+
+            /// <summary>
+            ///     FixedSpacing value of beam system
+            /// </summary>
+            [Category("Pattern")]
+            [Description("allows you to specify the distance between beams"
+                         + " based on the justification you specify.")]
             public double FixedSpacing
             {
                 get => m_fixedSpacing;
@@ -279,7 +272,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                     try
                     {
                         m_layout.Spacing = value;
-                        m_fixedSpacing   = value;
+                        m_fixedSpacing = value;
                     }
                     catch
                     {
@@ -288,35 +281,44 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             }
 
             /// <summary>
-            /// JustifyType value of beam system
+            ///     JustifyType value of beam system
             /// </summary>
-            [Category("Pattern"),
-            Description("determines the placement of the first beam in the system"
-            + " and each subsequent beam is spaced a fixed distance from that point.")]
+            [Category("Pattern")]
+            [Description("determines the placement of the first beam in the system"
+                         + " and each subsequent beam is spaced a fixed distance from that point.")]
             public BeamSystemJustifyType JustifyType
             {
                 get => m_justifyType;
                 set
                 {
                     m_layout.JustifyType = value;
-                    m_justifyType        = value;
+                    m_justifyType = value;
                 }
             }
         }
 
         /// <summary>
-        /// properties related to LayoutRule when it's fixed number
-        /// only visible for class BeamSystemParam
+        ///     properties related to LayoutRule when it's fixed number
+        ///     only visible for class BeamSystemParam
         /// </summary>
-        class FixedNumberParam : BeamSystemParam
+        private class FixedNumberParam : BeamSystemParam
         {
-            protected LayoutRuleFixedNumber m_layout;
+            protected readonly LayoutRuleFixedNumber m_layout;
 
             /// <summary>
-            /// NumberOfLines value of beam system
+            ///     constructor
             /// </summary>
-            [Category("Pattern"),
-            Description("allows you to specify the number of beams within the beam system.")]
+            public FixedNumberParam()
+            {
+                m_layout = new LayoutRuleFixedNumber(m_numberOfLines);
+                m_layoutType = LayoutMethod.FixedNumber;
+            }
+
+            /// <summary>
+            ///     NumberOfLines value of beam system
+            /// </summary>
+            [Category("Pattern")]
+            [Description("allows you to specify the number of beams within the beam system.")]
             public int NumberOfLines
             {
                 get => m_numberOfLines;
@@ -325,7 +327,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                     try
                     {
                         m_layout.NumberOfLines = value;
-                        m_numberOfLines        = value;
+                        m_numberOfLines = value;
                     }
                     catch
                     {
@@ -334,34 +336,33 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             }
 
             /// <summary>
-            /// wrapped LayoutRuleFixedNumber object
+            ///     wrapped LayoutRuleFixedNumber object
             /// </summary>
             public override LayoutRule Layout => m_layout;
-
-            /// <summary>
-            /// constructor
-            /// </summary>
-            public FixedNumberParam()
-                : base()
-            {
-                m_layout     = new LayoutRuleFixedNumber(m_numberOfLines);
-                m_layoutType = LayoutMethod.FixedNumber;
-            }
         }
 
         /// <summary>
-        /// properties related to LayoutRule when it's maximum spacing
-        /// only visible for class BeamSystemParam
+        ///     properties related to LayoutRule when it's maximum spacing
+        ///     only visible for class BeamSystemParam
         /// </summary>
-        class MaximumSpacingParam : BeamSystemParam
+        private class MaximumSpacingParam : BeamSystemParam
         {
-            protected LayoutRuleMaximumSpacing m_layout;
+            protected readonly LayoutRuleMaximumSpacing m_layout;
 
             /// <summary>
-            /// FixedSpacing value of beam system
+            ///     constructor
             /// </summary>
-            [Category("Pattern"), 
-            Description("allows you to specify the maximum distance between beams.")]
+            public MaximumSpacingParam()
+            {
+                m_layout = new LayoutRuleMaximumSpacing(m_fixedSpacing);
+                m_layoutType = LayoutMethod.MaximumSpacing;
+            }
+
+            /// <summary>
+            ///     FixedSpacing value of beam system
+            /// </summary>
+            [Category("Pattern")]
+            [Description("allows you to specify the maximum distance between beams.")]
             public double MaximumSpacing
             {
                 get => m_fixedSpacing;
@@ -370,28 +371,18 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                     try
                     {
                         m_layout.Spacing = value;
-                        m_fixedSpacing   = value;
+                        m_fixedSpacing = value;
                     }
-                    catch 
+                    catch
                     {
                     }
                 }
             }
 
             /// <summary>
-            /// wrapped LayoutRuleMaximumSpacing object
+            ///     wrapped LayoutRuleMaximumSpacing object
             /// </summary>
             public override LayoutRule Layout => m_layout;
-
-            /// <summary>
-            /// constructor
-            /// </summary>
-            public MaximumSpacingParam()
-                : base()
-            {
-                m_layout     = new LayoutRuleMaximumSpacing(m_fixedSpacing);
-                m_layoutType = LayoutMethod.MaximumSpacing;
-            }
         }
     }
 }

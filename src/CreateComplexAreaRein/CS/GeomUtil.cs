@@ -19,25 +19,26 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
+using System;
+using System.Collections.Generic;
+using Autodesk.Revit.DB;
+
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using Autodesk.Revit.DB;
-    using GeoElement = Autodesk.Revit.DB.GeometryElement;
-    using GeoSolid = Autodesk.Revit.DB.Solid;
-    using Element = Autodesk.Revit.DB.Element;
+    using GeoElement = GeometryElement;
+    using GeoSolid = Solid;
 
 
     /// <summary>
-    /// provide some common geometry judgement and calculate method
+    ///     provide some common geometry judgement and calculate method
     /// </summary>
-    class GeomUtil
+    internal class GeomUtil
     {
-        const double PRECISION = 0.00001;    //precision when judge whether two doubles are equal
+        private const double PRECISION = 0.00001; //precision when judge whether two doubles are equal
 
         /// <summary>
-        /// get all faces that compose the geometry solid of given element
+        ///     get all faces that compose the geometry solid of given element
         /// </summary>
         /// <param name="elem">element to be calculated</param>
         /// <returns>all faces</returns>
@@ -57,10 +58,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                 object o = Objects.Current;
 
                 var geoSolid = o as GeoSolid;
-                if (null == geoSolid)
-                {
-                    continue;
-                }
+                if (null == geoSolid) continue;
 
                 return geoSolid.Faces;
             }
@@ -69,7 +67,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// get all points proximate to the given face
+        ///     get all points proximate to the given face
         /// </summary>
         /// <param name="face">face to be calculated</param>
         /// <returns></returns>
@@ -79,17 +77,13 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             var XYZs = face.Triangulate().Vertices as List<XYZ>;
 
 
-
-            foreach (var point in XYZs)
-            {
-                points.Add(point);
-            }
+            foreach (var point in XYZs) points.Add(point);
 
             return points;
         }
 
         /// <summary>
-        /// judge whether the given face is horizontal
+        ///     judge whether the given face is horizontal
         /// </summary>
         /// <param name="face">face to be judged</param>
         /// <returns>is horizontal</returns>
@@ -109,7 +103,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// judge whether a face and a line are parallel
+        ///     judge whether a face and a line are parallel
         /// </summary>
         /// <param name="face"></param>
         /// <param name="line"></param>
@@ -124,33 +118,24 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             var cross = CrossMatrix(vector1, vector2);
             var result = DotMatrix(cross, refer);
 
-            if (result < PRECISION)
-            {
-                return true;
-            }
+            if (result < PRECISION) return true;
             return false;
         }
 
         /// <summary>
-        /// judge whether given 4 lines can form a rectangular
+        ///     judge whether given 4 lines can form a rectangular
         /// </summary>
         /// <param name="lines"></param>
         /// <returns>is rectangular</returns>
         public static bool IsRectangular(IList<Curve> curves)
         {
             //make sure the CurveArray contains 4 line
-            if (curves.Count != 4)
-            {
-                return false;
-            }
+            if (curves.Count != 4) return false;
             var lines = new Line[4];
             for (var i = 0; i < 4; i++)
             {
                 lines[i] = curves[i] as Line;
-                if (null == lines[i])
-                {
-                    return false;
-                }
+                if (null == lines[i]) return false;
             }
 
             //make sure the first line is vertical to 2 lines and parallel to another line
@@ -158,7 +143,6 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             Line paraLine = null;
             var index = 0;
             for (var i = 1; i < 4; i++)
-            {
                 if (IsVertical(lines[0], lines[i]))
                 {
                     verticalLines[index] = lines[i];
@@ -168,17 +152,14 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                 {
                     paraLine = lines[i];
                 }
-            }
-            if (index != 2)
-            {
-                return false;
-            }
+
+            if (index != 2) return false;
             var flag = IsVertical(paraLine, verticalLines[0]);
             return flag;
         }
 
         /// <summary>
-        /// get the length of the given line
+        ///     get the length of the given line
         /// </summary>
         /// <param name="line"></param>
         /// <returns>length</returns>
@@ -190,7 +171,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// get parallel line with give distance with given line in XY plane
+        ///     get parallel line with give distance with given line in XY plane
         /// </summary>
         /// <param name="inLine">given line</param>
         /// <param name="distance">distance from given line</param>
@@ -198,7 +179,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         public static Line GetXYParallelLine(Line inLine, double distance)
         {
             var direct = SubXYZ(inLine.GetEndPoint(1), inLine.GetEndPoint(0));
-            var length = Math.Sqrt((-direct.Y) * (-direct.Y) + direct.X * direct.X);
+            var length = Math.Sqrt(-direct.Y * -direct.Y + direct.X * direct.X);
             var temp = distance / length;
 
             var dPerp = new XYZ(-direct.Y * temp,
@@ -213,7 +194,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// Get scaled line which has both the same center and direction with give line
+        ///     Get scaled line which has both the same center and direction with give line
         /// </summary>
         /// <param name="inLine">given line</param>
         /// <param name="scale">scale value</param>
@@ -234,7 +215,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// judge whether two lines are vertical
+        ///     judge whether two lines are vertical
         /// </summary>
         /// <param name="line1"></param>
         /// <param name="line2"></param>
@@ -246,15 +227,12 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 
             var result = DotMatrix(vector1, vector2);
 
-            if (Math.Abs(result) < PRECISION)
-            {
-                return true;
-            }
+            if (Math.Abs(result) < PRECISION) return true;
             return false;
         }
 
         /// <summary>
-        /// subtraction of two Autodesk.Revit.DB.XYZ as Matrix
+        ///     subtraction of two Autodesk.Revit.DB.XYZ as Matrix
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
@@ -270,7 +248,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// add two XYZ
+        ///     add two XYZ
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
@@ -286,7 +264,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// multiply Autodesk.Revit.DB.XYZ with a double
+        ///     multiply Autodesk.Revit.DB.XYZ with a double
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="para"></param>
@@ -302,7 +280,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// multiplication cross of two Autodesk.Revit.DB.XYZ as Matrix
+        ///     multiplication cross of two Autodesk.Revit.DB.XYZ as Matrix
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
@@ -326,7 +304,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// dot product of two Autodesk.Revit.DB.XYZ as Matrix
+        ///     dot product of two Autodesk.Revit.DB.XYZ as Matrix
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
@@ -347,7 +325,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// judge whether the subtraction of two doubles is less than the internal decided precision
+        ///     judge whether the subtraction of two doubles is less than the internal decided precision
         /// </summary>
         /// <param name="d1"></param>
         /// <param name="d2"></param>
@@ -355,10 +333,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         private static bool IsEqual(double d1, double d2)
         {
             var diff = Math.Abs(d1 - d2);
-            if (diff < PRECISION)
-            {
-                return true;
-            }
+            if (diff < PRECISION) return true;
             return false;
         }
     }

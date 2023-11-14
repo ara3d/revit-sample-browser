@@ -22,15 +22,15 @@
 
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-
 namespace Revit.SDK.Samples.Units.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -44,20 +44,16 @@ namespace Revit.SDK.Samples.Units.CS
                 // show UI
                 using (var displayForm = new UnitsForm(units))
                 {
-                   var result = displayForm.ShowDialog();
-                   if (DialogResult.OK == result)
-                   {
-                      using (var tran = new Transaction(document, "SetUnits"))
-                      {
-                         tran.Start();
-                         document.SetUnits(units);
-                         tran.Commit();
-                      }
-                   }
-                   else
-                   {
-                      return Result.Cancelled;
-                   }
+                    var result = displayForm.ShowDialog();
+                    if (DialogResult.OK == result)
+                        using (var tran = new Transaction(document, "SetUnits"))
+                        {
+                            tran.Start();
+                            document.SetUnits(units);
+                            tran.Commit();
+                        }
+                    else
+                        return Result.Cancelled;
                 }
 
                 return Result.Succeeded;
@@ -70,4 +66,3 @@ namespace Revit.SDK.Samples.Units.CS
         }
     }
 }
-

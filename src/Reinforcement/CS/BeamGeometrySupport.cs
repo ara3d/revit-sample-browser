@@ -29,18 +29,19 @@ using Autodesk.Revit.DB.Structure;
 namespace Revit.SDK.Samples.Reinforcement.CS
 {
     /// <summary>
-    /// The geometry support for reinforcement creation on beam.
-    /// It can prepare the geometry information for top rebar, bottom and transverse rebar creation
+    ///     The geometry support for reinforcement creation on beam.
+    ///     It can prepare the geometry information for top rebar, bottom and transverse rebar creation
     /// </summary>
     public class BeamGeometrySupport : GeometrySupport
     {
+        private double m_beamHeight; //the height of the beam
+
         // Private members
-        double m_beamLength; //the length of the beam
-        double m_beamWidth;  //the width of the beam
-        double m_beamHeight; //the height of the beam
+        private readonly double m_beamLength; //the length of the beam
+        private readonly double m_beamWidth; //the width of the beam
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="element">the beam which the rebars are placed on</param>
         /// <param name="geoOptions">the geometry option</param>
@@ -49,9 +50,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         {
             // assert the host element is a beam
             if (!element.StructuralType.Equals(StructuralType.Beam))
-            {
                 throw new Exception("BeamGeometrySupport can only work for beam instance.");
-            }
 
             // Get the length, width and height of the beam.
             m_beamLength = GetDrivingLineLength();
@@ -60,7 +59,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         }
 
         /// <summary>
-        /// Get the geometry information for top rebar
+        ///     Get the geometry information for top rebar
         /// </summary>
         /// <param name="location">indicate where top rebar is placed</param>
         /// <returns>the gotten geometry information</returns>
@@ -75,23 +74,23 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             directions.Sort(comparer);
             var normal = directions[1];
 
-            double offset = 0;      //the offset from the beam surface to the rebar
-            double startPointOffset = 0;    // the offset of start point from swept profile
+            double offset = 0; //the offset from the beam surface to the rebar
+            double startPointOffset = 0; // the offset of start point from swept profile
             var rebarLength = m_beamLength / 3; //the length of the rebar
             var rebarNumber = BeamRebarData.TopRebarNumber; //the number of the rebar
 
             // set offset and startPointOffset according to the location of rebar
             switch (location)
             {
-                case TopRebarLocation.Start:    // top start rebar
+                case TopRebarLocation.Start: // top start rebar
                     offset = BeamRebarData.TopEndOffset;
                     break;
-                case TopRebarLocation.Center:   // top center rebar
+                case TopRebarLocation.Center: // top center rebar
                     offset = BeamRebarData.TopCenterOffset;
                     startPointOffset = m_beamLength / 3 - 0.5;
                     rebarLength = m_beamLength / 3 + 1;
                     break;
-                case TopRebarLocation.End:      // top end rebar
+                case TopRebarLocation.End: // top end rebar
                     offset = BeamRebarData.TopEndOffset;
                     startPointOffset = m_beamLength * 2 / 3;
                     break;
@@ -118,7 +117,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         }
 
         /// <summary>
-        /// Get the geometry information of bottom rebar
+        ///     Get the geometry information of bottom rebar
         /// </summary>
         /// <returns>the gotten geometry information</returns>
         public RebarGeometry GetBottomRebar()
@@ -132,7 +131,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             directions.Sort(comparer);
             var normal = directions[0];
 
-            var offset = BeamRebarData.BottomOffset;     //offset value of the rebar
+            var offset = BeamRebarData.BottomOffset; //offset value of the rebar
             var rebarNumber = BeamRebarData.BottomRebarNumber; //the number of the rebar
             // the spacing of the rebar
             var spacing = (m_beamWidth - 2 * offset) / (rebarNumber - 1);
@@ -151,7 +150,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         }
 
         /// <summary>
-        /// Get the geometry information of transverse rebar
+        ///     Get the geometry information of transverse rebar
         /// </summary>
         /// <param name="location">indicate which part of transverse rebar</param>
         /// <param name="spacing">the spacing of the rebar</param>
@@ -180,15 +179,15 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             //judge the coordinate of transverse rebar according to the location
             switch (location)
             {
-                case TransverseRebarLocation.Start:     // start transverse rebar
+                case TransverseRebarLocation.Start: // start transverse rebar
                     curveOffset = endOffset;
                     break;
-                case TransverseRebarLocation.Center:    // center transverse rebar
+                case TransverseRebarLocation.Center: // center transverse rebar
                     curveOffset = endOffset + rebarLength + betweenOffset;
-                    curveOffset = curveOffset + (rebarLength % spacing) / 2;
+                    curveOffset = curveOffset + rebarLength % spacing / 2;
                     break;
-                case TransverseRebarLocation.End:       // end transverse rebar
-                    curveOffset = m_beamLength - endOffset - rebarLength + (rebarLength % spacing);
+                case TransverseRebarLocation.End: // end transverse rebar
+                    curveOffset = m_beamLength - endOffset - rebarLength + rebarLength % spacing;
                     break;
                 default:
                     throw new Exception("The program should never go here.");
@@ -198,11 +197,9 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             var movedPoints = OffsetPoints(offset);
 
             // Translate curves points
-            var translatedPoints = new List<XYZ >();
+            var translatedPoints = new List<XYZ>();
             foreach (var point in movedPoints)
-            {
                 translatedPoints.Add(GeomUtil.OffsetPoint(point, m_drivingVector, curveOffset));
-            }
 
             IList<Curve> curves = new List<Curve>();
             var first = translatedPoints[0];
@@ -221,7 +218,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
 
         /// <summary>
-        /// Get the down direction, which stand for the top hook direction
+        ///     Get the down direction, which stand for the top hook direction
         /// </summary>
         /// <returns>the down direction</returns>
         public XYZ GetDownDirection()
@@ -238,7 +235,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
 
         /// <summary>
-        /// Get the width of the beam
+        ///     Get the width of the beam
         /// </summary>
         /// <returns>the width data</returns>
         private double GetBeamWidth()
@@ -255,7 +252,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
 
         /// <summary>
-        /// Get the height of the beam
+        ///     Get the height of the beam
         /// </summary>
         /// <returns>the height data</returns>
         private double GetBeamHeight()

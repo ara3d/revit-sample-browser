@@ -22,23 +22,25 @@
 
 using System;
 using System.IO;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
 namespace Revit.Samples.DirectionCalculation
 {
     /// <summary>
-    /// Base class for "Find South Facing..." utilities.
+    ///     Base class for "Find South Facing..." utilities.
     /// </summary>
     public class FindSouthFacingBase
     {
-                protected Autodesk.Revit.ApplicationServices.Application Application { get; set; }
+        private TextWriter m_writer;
+        protected Application Application { get; set; }
 
         protected Document Document { get; set; }
 
-        
+
         /// <summary>
-        /// Identifies if a particular direction is "south-facing".  This means within a range of -45 degrees to 45 degrees 
-        /// to the south vector (the negative Y axis).
+        ///     Identifies if a particular direction is "south-facing".  This means within a range of -45 degrees to 45 degrees
+        ///     to the south vector (the negative Y axis).
         /// </summary>
         /// <param name="direction">The normalized direction to test.</param>
         /// <returns>True if the vector is in the designated range.</returns>
@@ -50,7 +52,7 @@ namespace Revit.Samples.DirectionCalculation
         }
 
         /// <summary>
-        /// Transform a direction vector by the rotation angle of the ActiveProjectLocation.
+        ///     Transform a direction vector by the rotation angle of the ActiveProjectLocation.
         /// </summary>
         /// <param name="direction">The normalized direction.</param>
         /// <returns>The transformed location.</returns>
@@ -79,8 +81,8 @@ namespace Revit.Samples.DirectionCalculation
             return rotatedDirection;
         }
 
-                /// <summary>
-        /// Debugging aid.
+        /// <summary>
+        ///     Debugging aid.
         /// </summary>
         /// <param name="label"></param>
         /// <param name="curve"></param>
@@ -91,11 +93,11 @@ namespace Revit.Samples.DirectionCalculation
             var start = curve.GetEndPoint(0);
             var end = curve.GetEndPoint(1);
 
-            m_writer.WriteLine(string.Format(label + " {0} {1}", XYZToString(start), XYZToString(end)));
+            m_writer.WriteLine(label + " {0} {1}", XYZToString(start), XYZToString(end));
         }
 
         /// <summary>
-        /// Debugging aid.
+        ///     Debugging aid.
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
@@ -105,14 +107,12 @@ namespace Revit.Samples.DirectionCalculation
         }
 
         /// <summary>
-        /// Debugging aid.
+        ///     Debugging aid.
         /// </summary>
         protected void CloseFile()
         {
             if (m_writer != null)
                 m_writer.Close();
         }
-        
-        private TextWriter m_writer;
     }
 }

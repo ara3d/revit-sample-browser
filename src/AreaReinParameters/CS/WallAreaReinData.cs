@@ -21,91 +21,40 @@
 //
 
 
+using System.ComponentModel;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using System.ComponentModel;
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.DB.Structure;
-
-
     /// <summary>
-    /// can be the datasource of propertygrid
+    ///     can be the datasource of propertygrid
     /// </summary>
-    class WallAreaReinData : IAreaReinData
+    internal class WallAreaReinData : IAreaReinData
     {
-        //member
-        Parameter m_layoutRule;
         //exterior major layer
-        Parameter m_exteriorMajorBarType;
-        Parameter m_exteriorMajorHookType;
-        Parameter m_exteriorMajorHookOrientation;
+        private Parameter m_exteriorMajorBarType;
+        private Parameter m_exteriorMajorHookOrientation;
+        private Parameter m_exteriorMajorHookType;
 
         //exterior minor layer
-        Parameter m_exteriorMinorBarType;
-        Parameter m_exteriorMinorHookType;
-        Parameter m_exteriorMinorHookOrientation;
+        private Parameter m_exteriorMinorBarType;
+        private Parameter m_exteriorMinorHookOrientation;
+        private Parameter m_exteriorMinorHookType;
 
         //interior major layer
-        Parameter m_interiorMajorBarType;
-        Parameter m_interiorMajorHookType;
-        Parameter m_interiorMajorHookOrientation;
+        private Parameter m_interiorMajorBarType;
+        private Parameter m_interiorMajorHookOrientation;
+        private Parameter m_interiorMajorHookType;
 
         //interior minor layer
-        Parameter m_interiorMinorBarType;
-        Parameter m_interiorMinorHookType;
-        Parameter m_interiorMinorHookOrientation;
+        private Parameter m_interiorMinorBarType;
+        private Parameter m_interiorMinorHookOrientation;
 
-        public bool FillInData(AreaReinforcement areaRein)
-        {
-            //member
-            m_layoutRule = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE);
-            var flag = (m_layoutRule != null);
+        private Parameter m_interiorMinorHookType;
 
-            var paras = areaRein.Parameters;
-
-            //exterior major layer
-            m_exteriorMajorBarType = ParameterUtil.FindParaByName(paras, 
-                "Exterior Major Bar Type");
-            m_exteriorMajorHookType = ParameterUtil.FindParaByName(paras, 
-                "Exterior Major Hook Type");
-            m_exteriorMajorHookOrientation = ParameterUtil.FindParaByName(paras, 
-                "Exterior Major Hook Orientation");
-            flag &= (m_exteriorMajorBarType != null) && (m_exteriorMajorHookOrientation != null)
-                && (m_exteriorMajorHookType != null);
-
-            //exterior minor layer
-            m_exteriorMinorBarType = ParameterUtil.FindParaByName(paras, 
-                "Exterior Minor Bar Type");
-            m_exteriorMinorHookType = ParameterUtil.FindParaByName(paras, 
-                "Exterior Minor Hook Type");
-            m_exteriorMinorHookOrientation = ParameterUtil.FindParaByName(paras, 
-                "Exterior Minor Hook Orientation");
-            flag &= (m_exteriorMinorBarType != null) && (m_exteriorMinorHookOrientation != null)
-                && (m_exteriorMinorHookType != null);
-
-            //interior major layer
-            m_interiorMajorBarType = ParameterUtil.FindParaByName(paras, 
-                "Interior Major Bar Type");
-            m_interiorMajorHookType = ParameterUtil.FindParaByName(paras, 
-                "Interior Major Hook Type");
-            m_interiorMajorHookOrientation = ParameterUtil.FindParaByName(paras, 
-                "Interior Major Hook Orientation");
-            flag &= (m_interiorMajorBarType != null) && (m_interiorMajorHookOrientation != null)
-                && (m_interiorMajorHookType != null);
-
-            //interior minor layer
-            m_interiorMinorBarType = ParameterUtil.FindParaByName(paras, 
-                "Interior Minor Bar Type");
-            m_interiorMinorHookType = ParameterUtil.FindParaByName(paras, 
-                "Interior Minor Hook Type");
-            m_interiorMinorHookOrientation = ParameterUtil.FindParaByName(paras, 
-                "Interior Minor Hook Orientation");
-            flag &= (m_interiorMinorBarType != null) && (m_interiorMinorHookOrientation != null)
-                && (m_interiorMinorHookType != null);
-
-            return flag;
-        }
+        //member
+        private Parameter m_layoutRule;
 
         [Category("Construction")]
         public LayoutRules Layout_Rule
@@ -122,14 +71,16 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-                [CategoryAttribute("Exterior Major Layers"), TypeConverter(typeof(BarTypeItem))]
+        [CategoryAttribute("Exterior Major Layers")]
+        [TypeConverter(typeof(BarTypeItem))]
         public ElementId Exterior_Major_Bar_Type
         {
             get => m_exteriorMajorBarType.AsElementId();
             set => m_exteriorMajorBarType.Set(value);
         }
 
-        [CategoryAttribute("Exterior Major Layers"), TypeConverter(typeof(HookTypeItem))]
+        [CategoryAttribute("Exterior Major Layers")]
+        [TypeConverter(typeof(HookTypeItem))]
         public ElementId Exterior_Major_Hook_Type
         {
             get => m_exteriorMajorHookType.AsElementId();
@@ -150,15 +101,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_exteriorMajorHookOrientation.Set(index);
             }
         }
-        
-                [CategoryAttribute("Exterior Minor Layers"), TypeConverter(typeof(BarTypeItem))]
+
+        [CategoryAttribute("Exterior Minor Layers")]
+        [TypeConverter(typeof(BarTypeItem))]
         public ElementId Exterior_Minor_Bar_Type
         {
             get => m_exteriorMinorBarType.AsElementId();
             set => m_exteriorMinorBarType.Set(value);
         }
 
-        [CategoryAttribute("Exterior Minor Layers"), TypeConverter(typeof(HookTypeItem))]
+        [CategoryAttribute("Exterior Minor Layers")]
+        [TypeConverter(typeof(HookTypeItem))]
         public ElementId Exterior_Minor_Hook_Type
         {
             get => m_exteriorMinorHookType.AsElementId();
@@ -179,15 +132,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_exteriorMinorHookOrientation.Set(index);
             }
         }
-        
-                [CategoryAttribute("Interior Major Layers"), TypeConverter(typeof(BarTypeItem))]
+
+        [CategoryAttribute("Interior Major Layers")]
+        [TypeConverter(typeof(BarTypeItem))]
         public ElementId Interior_Major_Bar_Type
         {
             get => m_interiorMajorBarType.AsElementId();
             set => m_interiorMajorBarType.Set(value);
         }
 
-        [CategoryAttribute("Interior Major Layers"), TypeConverter(typeof(HookTypeItem))]
+        [CategoryAttribute("Interior Major Layers")]
+        [TypeConverter(typeof(HookTypeItem))]
         public ElementId Interior_Major_Hook_Type
         {
             get => m_interiorMajorHookType.AsElementId();
@@ -208,22 +163,24 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_interiorMajorHookOrientation.Set(index);
             }
         }
-        
-                [CategoryAttribute("Interior Minor Layers"), TypeConverter(typeof(BarTypeItem))]
+
+        [CategoryAttribute("Interior Minor Layers")]
+        [TypeConverter(typeof(BarTypeItem))]
         public ElementId Interior_Minor_Bar_Type
         {
             get => m_interiorMinorBarType.AsElementId();
             set => m_interiorMinorBarType.Set(value);
         }
 
-        [CategoryAttribute("Interior Minor Layers"), TypeConverter(typeof(HookTypeItem))]
+        [CategoryAttribute("Interior Minor Layers")]
+        [TypeConverter(typeof(HookTypeItem))]
         public ElementId Interior_Minor_Hook_Type
         {
             get => m_interiorMinorHookType.AsElementId();
             set => m_interiorMinorHookType.Set(value);
         }
 
-        [CategoryAttribute("Interior Minor Layers"),]
+        [CategoryAttribute("Interior Minor Layers")]
         public WallHookOrientations Interior_Minor_Hook_Orientation
         {
             get
@@ -237,6 +194,57 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_interiorMinorHookOrientation.Set(index);
             }
         }
-        
+
+        public bool FillInData(AreaReinforcement areaRein)
+        {
+            //member
+            m_layoutRule = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE);
+            var flag = m_layoutRule != null;
+
+            var paras = areaRein.Parameters;
+
+            //exterior major layer
+            m_exteriorMajorBarType = ParameterUtil.FindParaByName(paras,
+                "Exterior Major Bar Type");
+            m_exteriorMajorHookType = ParameterUtil.FindParaByName(paras,
+                "Exterior Major Hook Type");
+            m_exteriorMajorHookOrientation = ParameterUtil.FindParaByName(paras,
+                "Exterior Major Hook Orientation");
+            flag &= m_exteriorMajorBarType != null && m_exteriorMajorHookOrientation != null
+                                                   && m_exteriorMajorHookType != null;
+
+            //exterior minor layer
+            m_exteriorMinorBarType = ParameterUtil.FindParaByName(paras,
+                "Exterior Minor Bar Type");
+            m_exteriorMinorHookType = ParameterUtil.FindParaByName(paras,
+                "Exterior Minor Hook Type");
+            m_exteriorMinorHookOrientation = ParameterUtil.FindParaByName(paras,
+                "Exterior Minor Hook Orientation");
+            flag &= m_exteriorMinorBarType != null && m_exteriorMinorHookOrientation != null
+                                                   && m_exteriorMinorHookType != null;
+
+            //interior major layer
+            m_interiorMajorBarType = ParameterUtil.FindParaByName(paras,
+                "Interior Major Bar Type");
+            m_interiorMajorHookType = ParameterUtil.FindParaByName(paras,
+                "Interior Major Hook Type");
+            m_interiorMajorHookOrientation = ParameterUtil.FindParaByName(paras,
+                "Interior Major Hook Orientation");
+            flag &= m_interiorMajorBarType != null && m_interiorMajorHookOrientation != null
+                                                   && m_interiorMajorHookType != null;
+
+            //interior minor layer
+            m_interiorMinorBarType = ParameterUtil.FindParaByName(paras,
+                "Interior Minor Bar Type");
+            m_interiorMinorHookType = ParameterUtil.FindParaByName(paras,
+                "Interior Minor Hook Type");
+            m_interiorMinorHookOrientation = ParameterUtil.FindParaByName(paras,
+                "Interior Minor Hook Orientation");
+            flag &= m_interiorMinorBarType != null && m_interiorMinorHookOrientation != null
+                                                   && m_interiorMinorHookType != null;
+
+            return flag;
+        }
     }
 }

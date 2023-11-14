@@ -23,23 +23,26 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using ComboBox = System.Windows.Forms.ComboBox;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
-    /// The main UI for creating family instance by face
+    ///     The main UI for creating family instance by face
     /// </summary>
-    public partial class PlaceFamilyInstanceForm : System.Windows.Forms.Form
+    public partial class PlaceFamilyInstanceForm : Form
     {
-        // the creator
-        private FamilyInstanceCreator m_creator;
         // the base type
-        private BasedType m_baseType = BasedType.Point;
+        private readonly BasedType m_baseType = BasedType.Point;
+
+        // the creator
+        private readonly FamilyInstanceCreator m_creator;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="creator">the family instance creator</param>
         /// <param name="type">based-type</param>
@@ -51,29 +54,16 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             InitializeComponent();
 
             // set the face name list and the default value
-            foreach (var name in creator.FaceNameList)
-            {
-                comboBoxFace.Items.Add(name);
-            }
-            if (comboBoxFace.Items.Count > 0)
-            {
-                SetFaceIndex(0);
-            }
+            foreach (var name in creator.FaceNameList) comboBoxFace.Items.Add(name);
+            if (comboBoxFace.Items.Count > 0) SetFaceIndex(0);
 
             // set the family name list and the default value
-            foreach (var symbolName in m_creator.FamilySymbolNameList)
-            {
-                comboBoxFamily.Items.Add(symbolName);
-            }
+            foreach (var symbolName in m_creator.FamilySymbolNameList) comboBoxFamily.Items.Add(symbolName);
             if (m_creator.DefaultFamilySymbolIndex < 0)
-            {
                 comboBoxFamily.SelectedItem = m_creator.FamilySymbolNameList[0];
-            }
             else
-            {
                 comboBoxFamily.SelectedItem =
                     m_creator.FamilySymbolNameList[m_creator.DefaultFamilySymbolIndex];
-            }
 
             // set UI display according to baseType
             switch (m_baseType)
@@ -90,15 +80,14 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                     labelFirst.Text = "Start Point :";
                     labelSecond.Text = "End Point :";
                     break;
-                default:
-                    break;
             }
+
             AdjustComboBoxDropDownListWidth(comboBoxFace);
             AdjustComboBoxDropDownListWidth(comboBoxFamily);
         }
 
         /// <summary>
-        /// Get face information when the selected face is changed
+        ///     Get face information when the selected face is changed
         /// </summary>
         /// <param name="index">the index of the new selected face</param>
         private void SetFaceIndex(int index)
@@ -117,13 +106,11 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                     PointControlFirst.SetPointData(boundingBox.Min);
                     PointControlSecond.SetPointData(boundingBox.Max);
                     break;
-                default:
-                    break;
             }
         }
 
         /// <summary>
-        /// Create a family instance according the selected options by user
+        ///     Create a family instance according the selected options by user
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -149,20 +136,19 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                             , comboBoxFace.SelectedIndex
                             , comboBoxFamily.SelectedIndex);
                         break;
-
-                    default:
-                        break;
                 }
+
                 transaction.Commit();
             }
             catch (ApplicationException)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Revit", "Failed in creating family instance, maybe because the family symbol is wrong type, please check and choose again.");
+                TaskDialog.Show("Revit",
+                    "Failed in creating family instance, maybe because the family symbol is wrong type, please check and choose again.");
                 return;
             }
             catch (Exception ee)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Revit", ee.Message);
+                TaskDialog.Show("Revit", ee.Message);
                 return;
             }
 
@@ -173,12 +159,12 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             }
             else
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Revit", "The line is perpendicular to this face, please input the position again.");
+                TaskDialog.Show("Revit", "The line is perpendicular to this face, please input the position again.");
             }
         }
 
         /// <summary>
-        /// Process the SelectedIndexChanged event of comboBoxFace
+        ///     Process the SelectedIndexChanged event of comboBoxFace
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -188,7 +174,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         }
 
         /// <summary>
-        /// Adjust the comboBox dropDownList width
+        ///     Adjust the comboBox dropDownList width
         /// </summary>
         /// <param name="senderComboBox">the comboBox</param>
         private void AdjustComboBoxDropDownListWidth(ComboBox senderComboBox)
@@ -203,31 +189,27 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                 // checks if a scrollbar will be displayed.
                 // if yes, then get its width to adjust the size of the drop down list.
                 var vertScrollBarWidth =
-                    (senderComboBox.Items.Count > senderComboBox.MaxDropDownItems)
-                    ? SystemInformation.VerticalScrollBarWidth : 0;
+                    senderComboBox.Items.Count > senderComboBox.MaxDropDownItems
+                        ? SystemInformation.VerticalScrollBarWidth
+                        : 0;
 
-                foreach (var s in senderComboBox.Items)  //Loop through list items and check size of each items.
-                {
+                foreach (var s in senderComboBox.Items) //Loop through list items and check size of each items.
                     if (s != null)
                     {
                         var newWidth = (int)g.MeasureString(s.ToString().Trim(), font).Width
                                        + vertScrollBarWidth;
                         if (width < newWidth)
-                        {
-                            width = newWidth;   //set the width of the drop down list to the width of the largest item.
-                        }
+                            width = newWidth; //set the width of the drop down list to the width of the largest item.
                     }
-                }
+
                 senderComboBox.DropDownWidth = width;
             }
             catch
-            { }
+            {
+            }
             finally
             {
-                if (g != null)
-                {
-                    g.Dispose();
-                }
+                if (g != null) g.Dispose();
             }
         }
     }

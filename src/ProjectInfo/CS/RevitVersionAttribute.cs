@@ -28,28 +28,28 @@ using Autodesk.Revit.ApplicationServices;
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
-    /// Attribute which designates Revit version names
+    ///     Attribute which designates Revit version names
     /// </summary>
     public sealed class RevitVersionAttribute : Attribute
     {
-                /// <summary>
-        /// Revit version name array
+        /// <summary>
+        ///     Revit version name array
         /// </summary>
-        List<ProductType> m_products = new List<ProductType>(); 
-        
-                /// <summary>
-        /// Gets Revit version names
-        /// </summary>
-        public ReadOnlyCollection<ProductType> Names => m_products.AsReadOnly();
+        private readonly List<ProductType> m_products = new List<ProductType>();
 
-        
-                /// <summary>
-        /// Initializes Revit version name array
+
+        /// <summary>
+        ///     Initializes Revit version name array
         /// </summary>
         /// <param name="names"></param>
         public RevitVersionAttribute(params ProductType[] names)
         {
             m_products.AddRange(names);
-        } 
-            };
+        }
+
+        /// <summary>
+        ///     Gets Revit version names
+        /// </summary>
+        public ReadOnlyCollection<ProductType> Names => m_products.AsReadOnly();
+    }
 }

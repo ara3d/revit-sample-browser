@@ -22,41 +22,45 @@
 
 using Autodesk.Revit.DB.Events;
 
-
 namespace Revit.SDK.Samples.ProgressNotifier.CS
 {
     /// <summary>
-    /// An object containing a progress event name, position, and status.
+    ///     An object containing a progress event name, position, and status.
     /// </summary>
     public class ProgressItem
     {
         /// <summary>
-        /// Flag of progress
+        ///     Flag of progress
         /// </summary>
         private bool m_done;
-        /// <summary>
-        /// Name
-        /// </summary>
-        private string m_name;
-        /// <summary>
-        /// Lower
-        /// </summary>
-        private int m_lower;
-        /// <summary>
-        /// Upper
-        /// </summary>
-        private int m_upper;
-        /// <summary>
-        /// Position
-        /// </summary>
-        private int m_position;
-        /// <summary>
-        /// Progress stage
-        /// </summary>
-        ProgressStage m_stage;
 
         /// <summary>
-        /// Constructor
+        ///     Lower
+        /// </summary>
+        private int m_lower;
+
+        /// <summary>
+        ///     Name
+        /// </summary>
+        private string m_name;
+
+        /// <summary>
+        ///     Position
+        /// </summary>
+        private int m_position;
+
+        /// <summary>
+        ///     Progress stage
+        /// </summary>
+        private ProgressStage m_stage;
+
+        /// <summary>
+        ///     Upper
+        /// </summary>
+        private int m_upper;
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         /// <param name="name"></param>
         /// <param name="lower"></param>
@@ -74,22 +78,21 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         }
 
         /// <summary>
-        /// Name property
+        ///     Name property
         /// </summary>
         public string Name
         {
             get
             {
-                if (string.IsNullOrEmpty(m_name) || (m_name == " "))
+                if (string.IsNullOrEmpty(m_name) || m_name == " ")
                     return "<None>";
-                else
-                    return m_name;
+                return m_name;
             }
             set => m_name = value;
         }
 
         /// <summary>
-        /// IsDone property
+        ///     IsDone property
         /// </summary>
         public bool IsDone
         {
@@ -98,7 +101,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         }
 
         /// <summary>
-        /// Lower property
+        ///     Lower property
         /// </summary>
         public int Lower
         {
@@ -107,7 +110,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         }
 
         /// <summary>
-        /// Upper property
+        ///     Upper property
         /// </summary>
         public int Upper
         {
@@ -116,7 +119,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         }
 
         /// <summary>
-        /// Position property
+        ///     Position property
         /// </summary>
         public int Position
         {
@@ -125,7 +128,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         }
 
         /// <summary>
-        /// progress stage property
+        ///     progress stage property
         /// </summary>
         public ProgressStage Stage
         {
@@ -134,21 +137,22 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         }
 
         /// <summary>
-        /// percent of progress
+        ///     percent of progress
         /// </summary>
         /// <returns></returns>
         public double PercentDone()
         {
-            return ((double)m_position / (double)(m_upper - m_lower)) * 100;
+            return m_position / (double)(m_upper - m_lower) * 100;
         }
 
         /// <summary>
-        /// ToString
+        ///     ToString
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return "Name: " + Name + ", Stage: " + m_stage.ToString() + ", Percent Done: " + PercentDone().ToString("F") + ", Upper: " + m_upper + ", Position: " + m_position;
+            return "Name: " + Name + ", Stage: " + m_stage + ", Percent Done: " + PercentDone().ToString("F") +
+                   ", Upper: " + m_upper + ", Position: " + m_position;
         }
     }
 }

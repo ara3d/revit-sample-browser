@@ -20,155 +20,150 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-
 namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class MoveHorizontally : IExternalCommand
-   {
-      private double m_delta = -10;
-     public virtual Result Execute(ExternalCommandData commandData
-          , ref string message, ElementSet elements)
-      {
-         // Get the handle of current document.
-         var uidoc = commandData.Application.ActiveUIDocument;
-         var doc = uidoc.Document;
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class MoveHorizontally : IExternalCommand
+    {
+        private readonly double m_delta = -10;
 
-         using (var _transaction_ = new Transaction(doc))
-         {
-            // Get the element selection of current document.
-            var selectedIds = uidoc.Selection.GetElementIds();
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            // Get the handle of current document.
+            var uidoc = commandData.Application.ActiveUIDocument;
+            var doc = uidoc.Document;
 
-            if (0 == selectedIds.Count)
+            using (var _transaction_ = new Transaction(doc))
             {
-               // If no elements selected.
-               TaskDialog.Show("Revit", "You haven't selected any elements.");
+                // Get the element selection of current document.
+                var selectedIds = uidoc.Selection.GetElementIds();
+
+                if (0 == selectedIds.Count)
+                    // If no elements selected.
+                    TaskDialog.Show("Revit", "You haven't selected any elements.");
+                else
+                    foreach (var id in selectedIds)
+                    {
+                        var dim = doc.GetElement(id) as Dimension;
+
+                        if (null != dim)
+                        {
+                            var dimLine = dim.Curve as Line;
+                            if (dimLine != null)
+                            {
+                                _transaction_.Start("Set leader end position.");
+                                try
+                                {
+                                    var dir = dimLine.Direction;
+                                    if (dim.Segments.IsEmpty)
+                                    {
+                                        var leaderPos = ComputeLeaderPosition(dir, dim.Origin);
+                                        dim.LeaderEndPosition = leaderPos;
+                                    }
+                                    else
+                                    {
+                                        foreach (DimensionSegment ds in dim.Segments)
+                                        {
+                                            var leaderPos = ComputeLeaderPosition(dir, ds.Origin);
+                                            ds.LeaderEndPosition = leaderPos;
+                                        }
+                                    }
+
+                                    _transaction_.Commit();
+                                }
+                                catch (Exception ex)
+                                {
+                                    TaskDialog.Show("Can't set dimension leader end point: {0}", ex.Message);
+                                    _transaction_.RollBack();
+                                }
+                            }
+                        }
+                    }
+
+                return Result.Succeeded;
             }
-            else
+        }
+
+        private XYZ ComputeLeaderPosition(XYZ dir, XYZ origin)
+        {
+            var leaderPos = new XYZ();
+            leaderPos = dir * m_delta;
+            leaderPos = leaderPos.Add(origin);
+            return leaderPos;
+        }
+    }
+
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class MoveToPickedPoint : IExternalCommand
+    {
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            // Get the handle of current document.
+            var uidoc = commandData.Application.ActiveUIDocument;
+            var doc = uidoc.Document;
+            using (var _transaction_ = new Transaction(doc))
             {
-               foreach (var id in selectedIds)
-               {
-                  var dim = doc.GetElement(id) as Dimension;
+                // Get the element selection of current document.
+                var selection = uidoc.Selection;
+                var selectedIds = uidoc.Selection.GetElementIds();
 
-                  if (null != dim)
-                  {
-                     var dimLine = dim.Curve as Line;
-                     if (dimLine != null)
-                     {
-                        _transaction_.Start("Set leader end position.");
-                        try
+                if (0 == selectedIds.Count)
+                    // If no elements selected.
+                    TaskDialog.Show("Revit", "You haven't selected any elements.");
+                else
+                    foreach (var id in selectedIds)
+                    {
+                        var dim = doc.GetElement(id) as Dimension;
+                        if (null != dim)
                         {
-                           var dir = dimLine.Direction;
-                           if (dim.Segments.IsEmpty)
-                           {
-                              var leaderPos = ComputeLeaderPosition(dir, dim.Origin);
-                              dim.LeaderEndPosition = leaderPos;
-                           }
-                           else
-                           {
-                              foreach (DimensionSegment ds in dim.Segments)
-                              {
-                                 var leaderPos = ComputeLeaderPosition(dir, ds.Origin);
-                                 ds.LeaderEndPosition = leaderPos;
-                              }
-                           }
-                           _transaction_.Commit();
+                            var startPoint = selection.PickPoint(ObjectSnapTypes.None, "Pick start");
+                            _transaction_.Start("Set leader end point");
+                            try
+                            {
+                                if (dim.Segments.IsEmpty)
+                                {
+                                    dim.LeaderEndPosition = startPoint;
+                                }
+                                else
+                                {
+                                    var deltaVec = dim.Segments.get_Item(1).Origin
+                                        .Subtract(dim.Segments.get_Item(0).Origin);
+                                    var offset = new XYZ();
+                                    foreach (DimensionSegment ds in dim.Segments)
+                                    {
+                                        ds.LeaderEndPosition = startPoint.Add(offset);
+                                        offset = offset.Add(deltaVec);
+                                    }
+                                }
+
+                                _transaction_.Commit();
+                            }
+                            catch (Exception ex)
+                            {
+                                TaskDialog.Show("Can't set dimension leader end point: {0}", ex.Message);
+                                _transaction_.RollBack();
+                            }
                         }
-                        catch (System.Exception ex)
-                        {
-                           TaskDialog.Show("Can't set dimension leader end point: {0}", ex.Message);
-                           _transaction_.RollBack();
-                        }
-                     }
-                  }
-               }
+                    }
+
+                return Result.Succeeded;
             }
-
-            return Result.Succeeded;
-         }
-      }
-
-      private XYZ ComputeLeaderPosition(XYZ dir, XYZ origin)
-      {
-         var leaderPos = new XYZ();
-         leaderPos = dir * m_delta;
-         leaderPos = leaderPos.Add(origin);
-         return leaderPos;
-      }
-   }
-
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class MoveToPickedPoint : IExternalCommand
-   {
-       public virtual Result Execute(ExternalCommandData commandData
-          , ref string message, ElementSet elements)
-      {
-         // Get the handle of current document.
-         var uidoc = commandData.Application.ActiveUIDocument;
-         var doc = uidoc.Document;
-         using (var _transaction_ = new Transaction(doc))
-         {
-
-            // Get the element selection of current document.
-            var selection = uidoc.Selection;
-            var selectedIds = uidoc.Selection.GetElementIds();
-
-            if (0 == selectedIds.Count)
-            {
-               // If no elements selected.
-               TaskDialog.Show("Revit", "You haven't selected any elements.");
-            }
-            else
-            {
-               foreach (var id in selectedIds)
-               {
-                  var dim = doc.GetElement(id) as Dimension;
-                  if (null != dim)
-                  {
-                     var startPoint = selection.PickPoint(ObjectSnapTypes.None, "Pick start");
-                      _transaction_.Start("Set leader end point");
-                     try
-                     {
-                        if (dim.Segments.IsEmpty)
-                        {
-                           dim.LeaderEndPosition = startPoint;
-                        }
-                        else
-                        {
-                           var deltaVec = dim.Segments.get_Item(1).Origin.Subtract(dim.Segments.get_Item(0).Origin);
-                           var offset = new XYZ();
-                           foreach (DimensionSegment ds in dim.Segments)
-                           {
-                              ds.LeaderEndPosition = startPoint.Add(offset);
-                              offset = offset.Add(deltaVec);
-                           }
-                        }
-                        _transaction_.Commit();
-                     }
-                     catch (System.Exception ex)
-                     {
-                        TaskDialog.Show("Can't set dimension leader end point: {0}", ex.Message);
-                        _transaction_.RollBack();
-                     }
-                  }
-               }
-            }
-
-            return Result.Succeeded;
-         }
-      }
-   }
+        }
+    }
 }
-

@@ -20,23 +20,18 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System;
+using System.Windows.Forms;
+
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System;
-    using System.Windows.Forms;
-
     /// <summary>
-    /// form to edit Type's name
+    ///     form to edit Type's name
     /// </summary>
     public partial class EditTypeNameForm : Form
     {
         /// <summary>
-        /// Type name to be edited
-        /// </summary>
-        public string TypeName => typeNameTextBox.Text;
-
-        /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="typeName">original Type name</param>
         public EditTypeNameForm(string typeName)
@@ -47,7 +42,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// constructor without constructor is forbidden
+        ///     constructor without constructor is forbidden
         /// </summary>
         private EditTypeNameForm()
         {
@@ -55,7 +50,12 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// return with OK
+        ///     Type name to be edited
+        /// </summary>
+        public string TypeName => typeNameTextBox.Text;
+
+        /// <summary>
+        ///     return with OK
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// return with Cancel
+        ///     return with Cancel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

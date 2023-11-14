@@ -27,33 +27,28 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.VisibilityControl.CS
 {
     /// <summary>
-    /// the user interface form
+    ///     the user interface form
     /// </summary>
     public partial class VisibilityCtrlForm : Form
     {
         // an object control visibility by category
-        private VisibilityCtrl m_visibilityCtrl;
+        private readonly VisibilityCtrl m_visibilityCtrl;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="visibilityCtrl">an object control visibility by category</param>
         public VisibilityCtrlForm(VisibilityCtrl visibilityCtrl)
         {
             if (null == visibilityCtrl)
-            {
                 throw new ArgumentNullException("visibilityCtrl");
-            }
-            else
-            {
-                m_visibilityCtrl = visibilityCtrl;
-            }
+            m_visibilityCtrl = visibilityCtrl;
 
             InitializeComponent();
         }
 
         /// <summary>
-        /// initializes allCategoriesListView
+        ///     initializes allCategoriesListView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -72,11 +67,11 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
             allCategoriesListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
             // append the ItemCheck event handler method
-            allCategoriesListView.ItemCheck += new ItemCheckEventHandler(allCategoriesListView_ItemCheck);
+            allCategoriesListView.ItemCheck += allCategoriesListView_ItemCheck;
         }
 
         /// <summary>
-        /// change the visibility of the category
+        ///     change the visibility of the category
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -87,13 +82,11 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
 
             // change the visibility of the category
             if (!m_visibilityCtrl.SetVisibility(visible, name))
-            {
                 TaskDialog.Show("Revit", "This category can not change visible in the active view.");
-            }
         }
 
         /// <summary>
-        /// isolate the selected elements
+        ///     isolate the selected elements
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -101,17 +94,11 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
         {
             // set the IsolateMode
             if (pickOneRadioButton.Checked)
-            {
                 m_visibilityCtrl.IsolateMode = IsolateMode.PickOne;
-            }
             else if (windowSelectRadioButton.Checked)
-            {
                 m_visibilityCtrl.IsolateMode = IsolateMode.WindowSelect;
-            }
             else
-            {
                 m_visibilityCtrl.IsolateMode = IsolateMode.None;
-            }
 
             // close the form
             Close();
@@ -119,18 +106,12 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
 
         private void checkAllButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in allCategoriesListView.Items)
-            {
-                item.Checked = true;
-            }
+            foreach (ListViewItem item in allCategoriesListView.Items) item.Checked = true;
         }
 
         private void checkNoneButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in allCategoriesListView.Items)
-            {
-                item.Checked = false;
-            }
+            foreach (ListViewItem item in allCategoriesListView.Items) item.Checked = false;
         }
     }
 }

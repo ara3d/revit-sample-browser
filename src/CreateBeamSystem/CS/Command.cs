@@ -21,25 +21,25 @@
 //
 
 
+using System;
+using System.Diagnostics;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
-    using System;
-    using System.Windows.Forms;
-    using System.Diagnostics;
-    using Autodesk.Revit.UI;
-    using Autodesk.Revit.DB;
-
     /// <summary>
-    /// external applications' only entry point class that supports the IExternalCommand interface
+    ///     external applications' only entry point class that supports the IExternalCommand interface
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
             var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "CreateBeamSystem");
             tran.Start();
 
@@ -70,7 +70,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
                 tran.RollBack();
                 return Result.Failed;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // unchecked exception cause command failed
                 message = "Command is failed for unexpected reason.";

@@ -21,15 +21,15 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-
 namespace Revit.SDK.Samples.CreateFillPattern.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -41,6 +41,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
                 {
                     patternForm.ShowDialog();
                 }
+
                 return Result.Succeeded;
             }
             catch (Exception ex)
@@ -48,7 +49,6 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
                 message = ex.Message;
                 return Result.Failed;
             }
-        }       
+        }
     }
 }
-

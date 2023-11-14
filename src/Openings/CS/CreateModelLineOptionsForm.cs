@@ -23,16 +23,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// create model line options form
+    ///     create model line options form
     /// </summary>
-    public partial class CreateModelLineOptionsForm : System.Windows.Forms.Form
+    public partial class CreateModelLineOptionsForm : Form
     {
+        private readonly List<OpeningInfo> m_openingInfos; //store all the OpeningInfo class
+        private readonly OpeningInfo m_selectedOpeningInfo; //current displayed (in preview) OpeningInfo
+
         /// <summary>
-        /// The default constructor
+        ///     The default constructor
         /// </summary>
         public CreateModelLineOptionsForm()
         {
@@ -40,11 +44,12 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// constructor of CreateModelLineOptionsForm
+        ///     constructor of CreateModelLineOptionsForm
         /// </summary>
         /// <param name="openingInfos">a list of OpeningInfo</param>
-        /// /// <param name="selectOpening">current displayed (in preview) Opening</param>
-        public CreateModelLineOptionsForm(List<OpeningInfo> openingInfos, 
+        /// ///
+        /// <param name="selectOpening">current displayed (in preview) Opening</param>
+        public CreateModelLineOptionsForm(List<OpeningInfo> openingInfos,
             OpeningInfo selectOpening)
         {
             InitializeComponent();
@@ -53,32 +58,17 @@ namespace Revit.SDK.Samples.Openings.CS
             m_selectedOpeningInfo = selectOpening;
         }
 
-        private List<OpeningInfo> m_openingInfos; //store all the OpeningInfo class
-        private OpeningInfo m_selectedOpeningInfo; //current displayed (in preview) OpeningInfo
-
         private void CreateButton_Click(object sender, EventArgs e)
         {
             if (CreateDisplayRadioButton.Checked)
-            {
                 m_selectedOpeningInfo.BoundingBox.CreateLines(m_selectedOpeningInfo.Revit);
-            }
             else if (CreateAllRadioButton.Checked)
-            {
                 foreach (var openingInfo in m_openingInfos)
-                {
                     openingInfo.BoundingBox.CreateLines(m_selectedOpeningInfo.Revit);
-                }
-            }
             else if (CreateShaftRadioButton.Checked)
-            {
                 foreach (var openingInfo in m_openingInfos)
-                {
                     if (openingInfo.IsShaft)
-                    {
                         openingInfo.BoundingBox.CreateLines(m_selectedOpeningInfo.Revit);
-                    }
-                }
-            }
 
             Close();
         }

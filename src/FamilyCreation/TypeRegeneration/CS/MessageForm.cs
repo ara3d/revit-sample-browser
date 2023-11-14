@@ -20,51 +20,55 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System.Timers;
+using System.Windows.Forms;
+using Timer = System.Timers.Timer;
+
 namespace Revit.SDK.Samples.TypeRegeneration.CS
 {
     /// <summary>
-    /// The form is used to show the result
+    ///     The form is used to show the result
     /// </summary>
-    public partial class MessageForm : System.Windows.Forms.Form
-    {        
+    public partial class MessageForm : Form
+    {
         /// <summary>
-        /// new a Timer,set the interval 2 seconds
+        ///     new a Timer,set the interval 2 seconds
         /// </summary>
-        System.Timers.Timer timer = new System.Timers.Timer(2000);
-        
+        private readonly Timer timer = new Timer(2000);
+
         /// <summary>
-        /// construction of MessageForm
+        ///     construction of MessageForm
         /// </summary>
         public MessageForm()
         {
             InitializeComponent();
             Text = "Type Regeneration Message Form";
             //set the timer elapsed event
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(onTimeOut);//Set the executed event when time is out          
+            timer.Elapsed += onTimeOut; //Set the executed event when time is out          
             timer.Enabled = false;
             CheckForIllegalCrossThreadCalls = false;
         }
 
         /// <summary>
-        /// add text to the richtextbox and set time enable is true, then timer starts timing
+        ///     add text to the richtextbox and set time enable is true, then timer starts timing
         /// </summary>
         /// <param name="message">message from the regeneration</param>
         /// <param name="enableTimer">enable or disable the timer elapsed event</param>
-        public void AddMessage(string message,bool enableTimer)
+        public void AddMessage(string message, bool enableTimer)
         {
             messageRichTextBox.AppendText(message);
             timer.Enabled = enableTimer;
         }
 
         /// <summary>
-        /// the method is executed when time is out, and set the timer enabled false,then timer stop timing
+        ///     the method is executed when time is out, and set the timer enabled false,then timer stop timing
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e">time elapsed event args</param>
-        private void onTimeOut(object source, System.Timers.ElapsedEventArgs e)
-        {            
+        private void onTimeOut(object source, ElapsedEventArgs e)
+        {
             timer.Enabled = false;
             Close();
-        }        
+        }
     }
 }

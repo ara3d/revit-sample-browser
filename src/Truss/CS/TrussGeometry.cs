@@ -19,63 +19,66 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 
 namespace Revit.SDK.Samples.Truss.CS
 {
     /// <summary>
-    /// TrussGeometry class contains Geometry information of new created Truss,
-    /// and contains methods used to Edit profile of truss.
+    ///     TrussGeometry class contains Geometry information of new created Truss,
+    ///     and contains methods used to Edit profile of truss.
     /// </summary>
-    class TrussGeometry
+    internal class TrussGeometry
     {
-        
-        Autodesk.Revit.DB.Structure.Truss m_truss; //object of truss in Revit
+        private XYZ endLocation; //store the end point of truss location
 
-        LineTool m_topChord; //line tool used to draw top chord
+        private Matrix4
+            m_2DToTrussProfileMatrix; //store matrix use to transform point on pictureBox to truss (profile) plane
 
-        LineTool m_bottomChord; //line tool used to draw top chord
+        private readonly LineTool m_bottomChord; //line tool used to draw top chord
 
-        ArrayList m_graphicsPaths; //store all the GraphicsPath objects of each curve in truss.
+        private XYZ[] m_boundPoints; // store array store bound point of truss
 
-        int m_selectMemberIndex = -1; // index of selected truss member (beam), -1 when nothing selected.
+        private int m_clickMemberIndex = -1; // index of clicked truss member (beam), -1 when nothing clicked.
 
-        int m_clickMemberIndex = -1; // index of clicked truss member (beam), -1 when nothing clicked.
+        private readonly ExternalCommandData m_commandData; //object which contains reference of Revit Application
 
-        List<XYZ> m_points; // store all the points on the needed face
+        private readonly ArrayList m_graphicsPaths; //store all the GraphicsPath objects of each curve in truss.
 
-        XYZ[] m_boundPoints; // store array store bound point of truss
+        private Matrix4 m_moveToCenterMatrix; // store the Matrix used to move points to center
 
-        Matrix4 m_to2DMatrix; // store the Matrix used to transform 3D points to 2D
+        private Vector4 m_origin; //base point of truss
 
-        Matrix4 m_moveToCenterMatrix; // store the Matrix used to move points to center
+        private List<XYZ> m_points; // store all the points on the needed face
 
-        Matrix4 m_scaleMatrix; // store the Matrix used to scale profile fit to pictureBox
+        private Matrix4 m_restoreMatrix; // store the Matrix used to transform window UI coordinate to Revit
 
-        Matrix4 m_transformMatrix; // store the Matrix used to transform Revit coordinate to window UI
+        private Matrix4 m_scaleMatrix; // store the Matrix used to scale profile fit to pictureBox
 
-        Matrix4 m_restoreMatrix; // store the Matrix used to transform window UI coordinate to Revit
+        private int m_selectMemberIndex = -1; // index of selected truss member (beam), -1 when nothing selected.
 
-        Matrix4 m_2DToTrussProfileMatrix; //store matrix use to transform point on pictureBox to truss (profile) plane
+        private Matrix4 m_to2DMatrix; // store the Matrix used to transform 3D points to 2D
 
-        Vector4 m_origin; //base point of truss
+        private readonly LineTool m_topChord; //line tool used to draw top chord
 
-        ExternalCommandData m_commandData; //object which contains reference of Revit Application
+        private Matrix4 m_transformMatrix; // store the Matrix used to transform Revit coordinate to window UI
 
-        XYZ startLocation; //store the start point of truss location
+        private readonly Autodesk.Revit.DB.Structure.Truss m_truss; //object of truss in Revit
 
-        XYZ endLocation; //store the end point of truss location
+        private XYZ startLocation; //store the start point of truss location
 
-        
+
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="truss">new created truss object in Revit</param>
         public TrussGeometry(Autodesk.Revit.DB.Structure.Truss truss, ExternalCommandData commandData)
@@ -89,7 +92,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// Calculate geometry info for truss
+        ///     Calculate geometry info for truss
         /// </summary>
         private void GetTrussGeometryInfo()
         {
@@ -113,47 +116,47 @@ namespace Revit.SDK.Samples.Truss.CS
             CreateGraphicsPath();
         }
 
-      /// <summary>
-      /// Get points of the truss
-      /// </summary>
-      /// <returns>points array stores all the points on truss</returns>
-      public List<XYZ> GetTrussPoints()
-      {
-         var xyzArray = new List<XYZ>();
-         try
-         {
-            IEnumerator iter = m_truss.Members.GetEnumerator();
-            iter.Reset();
-            while (iter.MoveNext())
+        /// <summary>
+        ///     Get points of the truss
+        /// </summary>
+        /// <returns>points array stores all the points on truss</returns>
+        public List<XYZ> GetTrussPoints()
+        {
+            var xyzArray = new List<XYZ>();
+            try
             {
-               var id = (ElementId)(iter.Current);
-               var elem =
-                   m_commandData.Application.ActiveUIDocument.Document.GetElement(id);
-               var familyInstace = (FamilyInstance)(elem);
-               Curve frame1Curve = null;
-               
-               if (familyInstace.Location is LocationCurve)
-               {
-                  frame1Curve = (familyInstace.Location as LocationCurve).Curve;
-               }
+                IEnumerator iter = m_truss.Members.GetEnumerator();
+                iter.Reset();
+                while (iter.MoveNext())
+                {
+                    var id = (ElementId)iter.Current;
+                    var elem =
+                        m_commandData.Application.ActiveUIDocument.Document.GetElement(id);
+                    var familyInstace = (FamilyInstance)elem;
+                    Curve frame1Curve = null;
 
-               var line = (Line)(frame1Curve);
-               xyzArray.Add(line.GetEndPoint(0));
-               xyzArray.Add(line.GetEndPoint(1));
+                    if (familyInstace.Location is LocationCurve)
+                        frame1Curve = (familyInstace.Location as LocationCurve).Curve;
+
+                    var line = (Line)frame1Curve;
+                    xyzArray.Add(line.GetEndPoint(0));
+                    xyzArray.Add(line.GetEndPoint(1));
+                }
             }
-         }
-         catch (ArgumentException)
-         {
-            TaskDialog.Show("Revit", "The start point and the end point of the line are too close, please re-draw it.");
-         }
-         return xyzArray;
-      }
+            catch (ArgumentException)
+            {
+                TaskDialog.Show("Revit",
+                    "The start point and the end point of the line are too close, please re-draw it.");
+            }
 
-      /// <summary>
-      /// Get a matrix which can transform points to 2D
-      /// </summary>
-      /// <returns>matrix which can transform points to 2D</returns>
-      public Matrix4 GetTo2DMatrix()
+            return xyzArray;
+        }
+
+        /// <summary>
+        ///     Get a matrix which can transform points to 2D
+        /// </summary>
+        /// <returns>matrix which can transform points to 2D</returns>
+        public Matrix4 GetTo2DMatrix()
         {
             var trussLocation = (m_truss.Location as LocationCurve).Curve as Line;
             startLocation = trussLocation.GetEndPoint(0);
@@ -175,7 +178,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// calculate the matrix use to scale
+        ///     calculate the matrix use to scale
         /// </summary>
         /// <returns>maxtrix is use to scale the profile</returns>
         public Matrix4 GetScaleMatrix()
@@ -183,11 +186,11 @@ namespace Revit.SDK.Samples.Truss.CS
             var xScale = 384 / (m_boundPoints[1].X - m_boundPoints[0].X);
             var yScale = 275 / (m_boundPoints[1].Y - m_boundPoints[0].Y);
             var factor = xScale <= yScale ? xScale : yScale;
-            return new Matrix4((double)(factor * 0.85));
+            return new Matrix4(factor * 0.85);
         }
 
         /// <summary>
-        /// Get a matrix which can move points to center
+        ///     Get a matrix which can move points to center
         /// </summary>
         /// <returns>matrix used to move point to center of graphics</returns>
         public Matrix4 GetMoveToCenterMatrix()
@@ -201,7 +204,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// calculate the matrix used to transform 3D to 2D
+        ///     calculate the matrix used to transform 3D to 2D
         /// </summary>
         /// <returns>maxtrix is use to transform 3d points to 2d</returns>
         public Matrix4 Get3DTo2DMatrix()
@@ -213,7 +216,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// calculate the matrix used to transform 2D to 3D
+        ///     calculate the matrix used to transform 2D to 3D
         /// </summary>
         /// <returns>maxtrix is use to transform 2d points to 3d</returns>
         public Matrix4 Get2DTo3DMatrix()
@@ -225,8 +228,8 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// calculate the matrix used to transform 2d points (on pictureBox) to the plane of truss
-        /// which use to set profile
+        ///     calculate the matrix used to transform 2d points (on pictureBox) to the plane of truss
+        ///     which use to set profile
         /// </summary>
         /// <returns>maxtrix is use to transform 2d points to the plane of truss</returns>
         public Matrix4 Get2DToTrussProfileMatrix()
@@ -242,7 +245,7 @@ namespace Revit.SDK.Samples.Truss.CS
 
 
         /// <summary>
-        /// Get max and min coordinates of all points
+        ///     Get max and min coordinates of all points
         /// </summary>
         /// <returns>points array stores the bound of all points</returns>
         public XYZ[] GetBoundsPoints()
@@ -266,21 +269,26 @@ namespace Revit.SDK.Samples.Truss.CS
                 }
                 else
                 {
-                    if (v1.X < minX) { minX = v1.X; }
-                    else if (v1.X > maxX) { maxX = v1.X; }
+                    if (v1.X < minX)
+                        minX = v1.X;
+                    else if (v1.X > maxX) maxX = v1.X;
 
-                    if (v1.Y < minY) { minY = v1.Y; }
-                    else if (v1.Y > maxY) { maxY = v1.Y; }
+                    if (v1.Y < minY)
+                        minY = v1.Y;
+                    else if (v1.Y > maxY) maxY = v1.Y;
                 }
             }
+
             //return an array with max and min value of all points
-            var resultPoints = new XYZ[2] { 
-                new XYZ (minX, minY, 0), new XYZ (maxX, maxY, 0) };
+            var resultPoints = new XYZ[2]
+            {
+                new XYZ(minX, minY, 0), new XYZ(maxX, maxY, 0)
+            };
             return resultPoints;
         }
 
         /// <summary>
-        /// draw profile of truss in pictureBox
+        ///     draw profile of truss in pictureBox
         /// </summary>
         /// <param name="graphics">form graphic</param>
         /// <param name="pen">pen used to draw line in pictureBox</param>
@@ -300,6 +308,7 @@ namespace Revit.SDK.Samples.Truss.CS
                 graphics.DrawLine(pen, new Point((int)v1.X, (int)v1.Y),
                     new Point((int)v2.X, (int)v2.Y));
             }
+
             //draw selected beam (line) by red pen
             DrawSelectedLineRed(graphics);
 
@@ -309,15 +318,22 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// Set profile of truss
+        ///     Set profile of truss
         /// </summary>
         /// <param name="commandData">object which contains reference of Revit Application</param>
         public void SetProfile(ExternalCommandData commandData)
         {
             if (m_topChord.Points.Count < 2)
-            { TaskDialog.Show("Truss API", "Haven't drawn top chord"); return; }
-            else if (m_bottomChord.Points.Count < 2)
-            { TaskDialog.Show("Truss API", "Haven't drawn bottom chord"); return; }
+            {
+                TaskDialog.Show("Truss API", "Haven't drawn top chord");
+                return;
+            }
+
+            if (m_bottomChord.Points.Count < 2)
+            {
+                TaskDialog.Show("Truss API", "Haven't drawn bottom chord");
+                return;
+            }
 
             var createApp = commandData.Application.Application.Create;
             var curvesTop = createApp.NewCurveArray();
@@ -340,7 +356,7 @@ namespace Revit.SDK.Samples.Truss.CS
             ClearChords();
         }
 
-        private void GetChordPoints(LineTool chord, CurveArray curves, Autodesk.Revit.Creation.Application createApp)
+        private void GetChordPoints(LineTool chord, CurveArray curves, Application createApp)
         {
             //get coordinates of top chord from lineTool
             for (var i = 0; i < chord.Points.Count - 1; i++)
@@ -360,7 +376,7 @@ namespace Revit.SDK.Samples.Truss.CS
                 try
                 {
                     var line = Line.CreateBound(
-                         new XYZ(v1.X, v1.Y, v1.Z), new XYZ(v2.X, v2.Y, v2.Z));
+                        new XYZ(v1.X, v1.Y, v1.Z), new XYZ(v2.X, v2.Y, v2.Z));
                     curves.Append(line);
                 }
                 catch (ArgumentException)
@@ -373,7 +389,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// restores truss profile to original
+        ///     restores truss profile to original
         /// </summary>
         public void RemoveProfile()
         {
@@ -383,7 +399,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// add new point to line tool which used to draw top chord
+        ///     add new point to line tool which used to draw top chord
         /// </summary>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
@@ -395,17 +411,14 @@ namespace Revit.SDK.Samples.Truss.CS
                 var lastPoint = (Point)m_topChord.Points[m_topChord.Points.Count - 1];
                 if (Math.Abs(lastPoint.X - x) < 1 ||
                     Math.Abs(lastPoint.Y - y) < 1)
-                {
                     return;
-                }
             }
 
             m_topChord.Points.Add(new Point(x, y));
-
         }
 
         /// <summary>
-        /// add new point to line tool which used to draw bottom chord
+        ///     add new point to line tool which used to draw bottom chord
         /// </summary>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
@@ -417,16 +430,14 @@ namespace Revit.SDK.Samples.Truss.CS
                 var lastPoint = (Point)m_topChord.Points[m_topChord.Points.Count - 1];
                 if (Math.Abs(lastPoint.X - x) < 1 ||
                     Math.Abs(lastPoint.Y - y) < 1)
-                {
                     return;
-                }
             }
 
             m_bottomChord.Points.Add(new Point(x, y));
         }
 
         /// <summary>
-        /// add move point to line tool of top chord
+        ///     add move point to line tool of top chord
         /// </summary>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
@@ -437,7 +448,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// add move point to line tool of bottom chord
+        ///     add move point to line tool of bottom chord
         /// </summary>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
@@ -454,7 +465,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// clear points of top chord and bottom chord
+        ///     clear points of top chord and bottom chord
         /// </summary>
         public void ClearChords()
         {
@@ -463,7 +474,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// Create GraphicsPath object for each curves of truss
+        ///     Create GraphicsPath object for each curves of truss
         /// </summary>
         public void CreateGraphicsPath()
         {
@@ -487,7 +498,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// Judge which truss member has been selected via location of mouse
+        ///     Judge which truss member has been selected via location of mouse
         /// </summary>
         /// <param name="x">X coordinate of mouse location</param>
         /// <param name="y">Y coordinate of mouse location</param>
@@ -504,37 +515,39 @@ namespace Revit.SDK.Samples.Truss.CS
                     return m_selectMemberIndex;
                 }
             }
+
             m_selectMemberIndex = -1;
             return m_selectMemberIndex;
         }
 
         /// <summary>
-        /// Draw selected line (beam) by red pen
+        ///     Draw selected line (beam) by red pen
         /// </summary>
         /// <param name="graphics">graphics of picture box</param>
         public void DrawSelectedLineRed(Graphics graphics)
         {
-            var redPen = new Pen(System.Drawing.Color.Red, (float)2.0);
+            var redPen = new Pen(Color.Red, (float)2.0);
             //draw the selected beam as red line
             if (m_selectMemberIndex != -1)
             {
-                var selectPath = (GraphicsPath)(m_graphicsPaths[m_selectMemberIndex]);
-                var startPointOfSelectedLine = (PointF)(selectPath.PathPoints.GetValue(0));
-                var endPointOfSelectedLine = (PointF)(selectPath.PathPoints.GetValue(1));
+                var selectPath = (GraphicsPath)m_graphicsPaths[m_selectMemberIndex];
+                var startPointOfSelectedLine = (PointF)selectPath.PathPoints.GetValue(0);
+                var endPointOfSelectedLine = (PointF)selectPath.PathPoints.GetValue(1);
                 graphics.DrawLine(redPen, startPointOfSelectedLine, endPointOfSelectedLine);
             }
+
             //draw clicked beam red
             if (m_clickMemberIndex != -1)
             {
-                var selectPath = (GraphicsPath)(m_graphicsPaths[m_clickMemberIndex]);
-                var startPointOfSelectedLine = (PointF)(selectPath.PathPoints.GetValue(0));
-                var endPointOfSelectedLine = (PointF)(selectPath.PathPoints.GetValue(1));
+                var selectPath = (GraphicsPath)m_graphicsPaths[m_clickMemberIndex];
+                var startPointOfSelectedLine = (PointF)selectPath.PathPoints.GetValue(0);
+                var endPointOfSelectedLine = (PointF)selectPath.PathPoints.GetValue(1);
                 graphics.DrawLine(redPen, startPointOfSelectedLine, endPointOfSelectedLine);
             }
         }
 
         /// <summary>
-        /// Get selected beam (truss member) by select index
+        ///     Get selected beam (truss member) by select index
         /// </summary>
         /// <param name="commandData">object which contains reference of Revit Application</param>
         /// <returns>index of selected member</returns>
@@ -553,13 +566,15 @@ namespace Revit.SDK.Samples.Truss.CS
                     id = iter.Current as ElementId;
                     break;
                 }
+
                 i++;
             }
+
             return (FamilyInstance)commandData.Application.ActiveUIDocument.Document.GetElement(id);
         }
 
         /// <summary>
-        /// Reset index and clear line tool
+        ///     Reset index and clear line tool
         /// </summary>
         public void Reset()
         {

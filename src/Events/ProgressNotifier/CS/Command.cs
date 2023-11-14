@@ -20,13 +20,14 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ProgressNotifier.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class Command : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

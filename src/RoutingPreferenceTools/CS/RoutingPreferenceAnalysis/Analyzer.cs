@@ -30,18 +30,17 @@ using Autodesk.Revit.DB.Plumbing;
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 {
-
     /// <summary>
-    /// Queries all routing preferences and reports potential problems in the form of an XDocument.
+    ///     Queries all routing preferences and reports potential problems in the form of an XDocument.
     /// </summary>
     internal class Analyzer
     {
-                private Document m_document;
-        private RoutingPreferenceManager m_routingPreferenceManager;
-        private double m_mepSize;
-        
-                /// <summary>
-        /// Constructor
+        private readonly Document m_document;
+        private readonly double m_mepSize;
+        private readonly RoutingPreferenceManager m_routingPreferenceManager;
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         /// <param name="routingPreferenceManager"></param>
         /// <param name="document"></param>
@@ -53,7 +52,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         }
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="routingPreferenceManager"></param>
         /// <param name="mepSize"></param>
@@ -68,35 +67,30 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         }
 
         /// <summary>
-        /// Get specific size query
+        ///     Get specific size query
         /// </summary>
         /// <returns></returns>
         public XDocument GetSpecificSizeQuery()
         {
-
             var xReportDoc = new XDocument();
             var xroot = new XElement(XName.Get("RoutingPreferenceAnalysisSizeQuery"));
             xroot.Add(GetHeaderInformation());
 
 
-            foreach (var partId in GetPreferredFittingsAndSegments())
-            {
-                xroot.Add(partId.GetXml(m_document));
-            }
+            foreach (var partId in GetPreferredFittingsAndSegments()) xroot.Add(partId.GetXml(m_document));
 
             xReportDoc.Add(xroot);
             return xReportDoc;
-
         }
 
 
         /// <summary>
-        /// Get all segments from a the currently selected pipe type, get each size from each segment,
-        /// collect, sort, and return.
+        ///     Get all segments from a the currently selected pipe type, get each size from each segment,
+        ///     collect, sort, and return.
         /// </summary>
-        public static List<double> GetAvailableSegmentSizes(RoutingPreferenceManager routingPreferenceManager, Document document)
+        public static List<double> GetAvailableSegmentSizes(RoutingPreferenceManager routingPreferenceManager,
+            Document document)
         {
-
             var sizes = new HashSet<double>();
             var segmentCount = routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Segments);
             for (var index = 0; index != segmentCount; ++index)
@@ -104,11 +98,9 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 var segmentRule = routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Segments, index);
 
                 var segment = document.GetElement(segmentRule.MEPPartId) as Segment;
-                foreach (var size in segment.GetSizes())
-                {
-                    sizes.Add(size.NominalDiameter);
-                }
+                foreach (var size in segment.GetSizes()) sizes.Add(size.NominalDiameter);
             }
+
             var sizesSorted = sizes.ToList();
             sizesSorted.Sort();
             return sizesSorted;
@@ -116,7 +108,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
 
         /// <summary>
-        /// Returns XML data for a variety of potential routing-preference problems.
+        ///     Returns XML data for a variety of potential routing-preference problems.
         /// </summary>
         /// <returns></returns>
         public XDocument GetWarnings()
@@ -127,25 +119,19 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             var xWarnings = new XElement(XName.Get("Warnings"));
 
             //None-range-warnings         
-            foreach (var groupType in Enum.GetValues(typeof(RoutingPreferenceRuleGroupType)).Cast<RoutingPreferenceRuleGroupType>())
-            {
+            foreach (var groupType in Enum.GetValues(typeof(RoutingPreferenceRuleGroupType))
+                         .Cast<RoutingPreferenceRuleGroupType>())
                 if (IsRuleSetToRangeNone(m_routingPreferenceManager, groupType, 0))
                 {
-
                     var xNoRangeSet = new XElement(XName.Get("NoRangeSet"));
                     xNoRangeSet.Add(new XAttribute(XName.Get("groupType"), groupType.ToString()));
 
                     if (IsGroupSetToRangeNone(m_routingPreferenceManager, groupType))
-                    {
                         xNoRangeSet.Add(new XAttribute(XName.Get("rule"), "allRules"));
-                    }
                     else
-                    {
                         xNoRangeSet.Add(new XAttribute(XName.Get("rule"), "firstRule"));
-                    }
                     xWarnings.Add(xNoRangeSet);
                 }
-            }
 
             //tee/tap warnings
 
@@ -157,13 +143,16 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
             //size range warnings for elbow, Junction, and Cross
 
-            var xSegmentElbowWarning = GetSegmentRangeNotCoveredWarning(m_routingPreferenceManager, RoutingPreferenceRuleGroupType.Elbows);
+            var xSegmentElbowWarning =
+                GetSegmentRangeNotCoveredWarning(m_routingPreferenceManager, RoutingPreferenceRuleGroupType.Elbows);
             if (xSegmentElbowWarning != null)
                 xWarnings.Add(xSegmentElbowWarning);
-            var xSegmentTeeWarning = GetSegmentRangeNotCoveredWarning(m_routingPreferenceManager, RoutingPreferenceRuleGroupType.Junctions);
+            var xSegmentTeeWarning =
+                GetSegmentRangeNotCoveredWarning(m_routingPreferenceManager, RoutingPreferenceRuleGroupType.Junctions);
             if (xSegmentTeeWarning != null)
                 xWarnings.Add(xSegmentTeeWarning);
-            var xSegmentCrossWarning = GetSegmentRangeNotCoveredWarning(m_routingPreferenceManager, RoutingPreferenceRuleGroupType.Crosses);
+            var xSegmentCrossWarning =
+                GetSegmentRangeNotCoveredWarning(m_routingPreferenceManager, RoutingPreferenceRuleGroupType.Crosses);
             if (xSegmentCrossWarning != null)
                 xWarnings.Add(xSegmentCrossWarning);
 
@@ -171,10 +160,10 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             xReportDoc.Add(xroot);
             return xReportDoc;
         }
-        
-        
+
+
         /// <summary>
-        /// Get basic information about the PipeType
+        ///     Get basic information about the PipeType
         /// </summary>
         private XElement GetHeaderInformation()
         {
@@ -187,26 +176,33 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         }
 
         /// <summary>
-        /// Checks to see if any segments in the routing preference manager have sizes that cannot be fitted with fittings defined in a rule group type, such as "Elbow."
-        /// For example, if a segment rule defines a segment be used from sizes 2" to 12", and there are three elbows rules defined to be used from ranges
-        /// 2"-4", 4"-7", and 9"-14", this method will return warning information specifying the sizes (8", 8.5", etc...) not covered by elbow fittings.
+        ///     Checks to see if any segments in the routing preference manager have sizes that cannot be fitted with fittings
+        ///     defined in a rule group type, such as "Elbow."
+        ///     For example, if a segment rule defines a segment be used from sizes 2" to 12", and there are three elbows rules
+        ///     defined to be used from ranges
+        ///     2"-4", 4"-7", and 9"-14", this method will return warning information specifying the sizes (8", 8.5", etc...) not
+        ///     covered by elbow fittings.
         /// </summary>
-        private XElement GetSegmentRangeNotCoveredWarning(RoutingPreferenceManager routingPreferenceManager, RoutingPreferenceRuleGroupType groupType)
+        private XElement GetSegmentRangeNotCoveredWarning(RoutingPreferenceManager routingPreferenceManager,
+            RoutingPreferenceRuleGroupType groupType)
         {
-            for (var index = 0; index != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Segments); ++index)
+            for (var index = 0;
+                 index != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Segments);
+                 ++index)
             {
                 var rule = routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Segments, index);
                 if (rule.MEPPartId == ElementId.InvalidElementId)
                     continue;
 
-                if (rule.NumberOfCriteria == 0)  //double check all/none
+                if (rule.NumberOfCriteria == 0) //double check all/none
                     continue;
 
                 var psc = rule.GetCriterion(0) as PrimarySizeCriterion;
 
                 var segment = m_document.GetElement(rule.MEPPartId) as PipeSegment;
                 var sizesNotCovered = new List<double>();
-                var isCovered = CheckSegmentForValidCoverage(routingPreferenceManager, psc.MinimumSize, psc.MaximumSize, rule.MEPPartId, groupType, sizesNotCovered);
+                var isCovered = CheckSegmentForValidCoverage(routingPreferenceManager, psc.MinimumSize, psc.MaximumSize,
+                    rule.MEPPartId, groupType, sizesNotCovered);
                 if (!isCovered)
                 {
                     var xSegmentNotCovered = new XElement(XName.Get("SegmentRangeNotCovered"));
@@ -217,24 +213,28 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                     {
                         var roundedSize = Convert.ConvertValueDocumentUnits(size, m_document);
 
-                        sBuilder.Append(roundedSize.ToString() + " ");
+                        sBuilder.Append(roundedSize + " ");
                     }
+
                     sBuilder.Remove(sBuilder.Length - 1, 1);
                     xSegmentNotCovered.Add(new XAttribute(XName.Get("sizes"), sBuilder.ToString()));
-                    xSegmentNotCovered.Add(new XAttribute(XName.Get("unit"), m_document.GetUnits().GetFormatOptions(SpecTypeId.PipeSize).GetUnitTypeId().TypeId));
+                    xSegmentNotCovered.Add(new XAttribute(XName.Get("unit"),
+                        m_document.GetUnits().GetFormatOptions(SpecTypeId.PipeSize).GetUnitTypeId().TypeId));
                     xSegmentNotCovered.Add(new XAttribute(XName.Get("groupType"), groupType.ToString()));
 
 
                     return xSegmentNotCovered;
                 }
             }
+
             return null;
         }
 
 
-        private bool CheckSegmentForValidCoverage(RoutingPreferenceManager routingPreferenceManager, double lowerBound, double upperBound, ElementId segmentId, RoutingPreferenceRuleGroupType groupType, List<double> sizesNotCovered)
+        private bool CheckSegmentForValidCoverage(RoutingPreferenceManager routingPreferenceManager, double lowerBound,
+            double upperBound, ElementId segmentId, RoutingPreferenceRuleGroupType groupType,
+            List<double> sizesNotCovered)
         {
-
             var retval = true;
             if (segmentId == ElementId.InvalidElementId)
                 throw new Exception("Invalid segment ElementId");
@@ -257,53 +257,41 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                     retval = false;
                 }
             }
+
             return retval;
         }
 
-        private bool IsRuleSetToRangeNone(RoutingPreferenceManager routingPreferenceManager, RoutingPreferenceRuleGroupType groupType, int index)
+        private bool IsRuleSetToRangeNone(RoutingPreferenceManager routingPreferenceManager,
+            RoutingPreferenceRuleGroupType groupType, int index)
         {
-
-            if (routingPreferenceManager.GetNumberOfRules(groupType) == 0)
-            {
-                return false;
-            }
+            if (routingPreferenceManager.GetNumberOfRules(groupType) == 0) return false;
 
             var rule = routingPreferenceManager.GetRule(groupType, index);
-            if (rule.NumberOfCriteria == 0)
-            {
-                return false;
-            }
+            if (rule.NumberOfCriteria == 0) return false;
 
             var psc = rule.GetCriterion(0) as PrimarySizeCriterion;
             if (psc.IsEqual(PrimarySizeCriterion.None()))
-            {
                 return true;
-            }
-            else
-                return false;
+            return false;
         }
 
-        private bool IsGroupSetToRangeNone(RoutingPreferenceManager routingPreferenceManager, RoutingPreferenceRuleGroupType groupType)
+        private bool IsGroupSetToRangeNone(RoutingPreferenceManager routingPreferenceManager,
+            RoutingPreferenceRuleGroupType groupType)
         {
             var retval = true;
 
-            if (routingPreferenceManager.GetNumberOfRules(groupType) == 0)
-            {
-                return false;
-            }
+            if (routingPreferenceManager.GetNumberOfRules(groupType) == 0) return false;
             for (var index = 0; index != routingPreferenceManager.GetNumberOfRules(groupType); ++index)
-            {
-                if (!(IsRuleSetToRangeNone(routingPreferenceManager, groupType, index)))
+                if (!IsRuleSetToRangeNone(routingPreferenceManager, groupType, index))
                     retval = false;
-            }
 
             return retval;
-
         }
+
         /// <summary>
-        /// Check to see if the routing preferences specify a preferred junction type but do not have any
-        /// rules with valid fittings for that type (e.g, "Tee" is the preferred junction type, but only "Tap" fittings
-        /// are specified in junction rules.)
+        ///     Check to see if the routing preferences specify a preferred junction type but do not have any
+        ///     rules with valid fittings for that type (e.g, "Tee" is the preferred junction type, but only "Tap" fittings
+        ///     are specified in junction rules.)
         /// </summary>
         /// <param name="routingPreferenceManager"></param>
         /// <returns></returns>
@@ -316,7 +304,9 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
             var teeDefined = false;
             var tapDefined = false;
-            for (var index = 0; index != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Junctions); ++index)
+            for (var index = 0;
+                 index != routingPreferenceManager.GetNumberOfRules(RoutingPreferenceRuleGroupType.Junctions);
+                 ++index)
             {
                 var rule = routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Junctions, index);
                 if (rule.MEPPartId == ElementId.InvalidElementId)
@@ -330,23 +320,25 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
                 var partType = (PartType)paramPartType.AsInteger();
 
-                if ((partType == PartType.Tee))
+                if (partType == PartType.Tee)
                     teeDefined = true;
                 else if (
-                   (partType == PartType.TapAdjustable) ||
-                   (partType == PartType.TapPerpendicular) ||
-                   (partType == PartType.SpudPerpendicular) ||
-                   (partType == PartType.SpudAdjustable)
-                   )
+                    partType == PartType.TapAdjustable ||
+                    partType == PartType.TapPerpendicular ||
+                    partType == PartType.SpudPerpendicular ||
+                    partType == PartType.SpudAdjustable
+                )
                     tapDefined = true;
             }
-            if ((preferredJunctionType == PreferredJunctionType.Tap) && !tapDefined)
+
+            if (preferredJunctionType == PreferredJunctionType.Tap && !tapDefined)
                 return false;
-            if ((preferredJunctionType == PreferredJunctionType.Tee) && !teeDefined)
+            if (preferredJunctionType == PreferredJunctionType.Tee && !teeDefined)
                 return false;
 
             return true;
         }
+
         private string GetFittingName(ElementId id)
         {
             if (id == ElementId.InvalidElementId)
@@ -354,6 +346,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             var symbol = m_document.GetElement(id) as FamilySymbol;
             return symbol.Family.Name + " " + symbol.Name;
         }
+
         private string GetSegmentName(ElementId id)
         {
             if (id == ElementId.InvalidElementId)
@@ -363,9 +356,9 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         }
 
 
-
         /// <summary>
-        ///Using routing preferences, display found segment and fitting info from the size and pipe type specified in the dialog.
+        ///     Using routing preferences, display found segment and fitting info from the size and pipe type specified in the
+        ///     dialog.
         /// </summary>
         private List<PartIdInfo> GetPreferredFittingsAndSegments()
         {
@@ -387,17 +380,14 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 //those criteria.
 
                 if (groupType != RoutingPreferenceRuleGroupType.Segments)
-                {
                     preferredTypes.Add(preferredType);
-                }
-                else  //Get all segments that support a given size, not just the first segment.
-                {
+                else //Get all segments that support a given size, not just the first segment.
                     preferredTypes = m_routingPreferenceManager.GetSharedSizes(m_mepSize, ConnectorProfileType.Round);
-                }
-                partIdInfoList.Add(new PartIdInfo(groupType, preferredTypes));  //Collect a PartIdInfo object for each group type.
+                partIdInfoList.Add(new PartIdInfo(groupType,
+                    preferredTypes)); //Collect a PartIdInfo object for each group type.
             }
 
             return partIdInfoList;
         }
-            }
+    }
 }

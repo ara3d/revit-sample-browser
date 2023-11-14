@@ -24,7 +24,7 @@
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
     /// <summary>
-    /// Layout Rules possible values of AreaReinforcement
+    ///     Layout Rules possible values of AreaReinforcement
     /// </summary>
     public enum LayoutRules
     {
@@ -33,16 +33,16 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
     }
 
     /// <summary>
-    /// Hook Orientation possible values of AreaReinforcement which is on a floor
+    ///     Hook Orientation possible values of AreaReinforcement which is on a floor
     /// </summary>
     public enum FloorHookOrientations
     {
         Up = 0,
-        Down =2
+        Down = 2
     }
 
     /// <summary>
-    /// Hook Orientation possible values of AreaReinforcement which is on a wall
+    ///     Hook Orientation possible values of AreaReinforcement which is on a wall
     /// </summary>
     public enum WallHookOrientations
     {

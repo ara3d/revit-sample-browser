@@ -20,72 +20,66 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem;
 using Revit.SDK.Samples.CurtainSystem.CS.Data;
+using Revit.SDK.Samples.CurtainSystem.CS.Properties;
+using Revit.SDK.Samples.CurtainSystem.CS.UI;
 
 namespace Revit.SDK.Samples.CurtainSystem.CS
 {
-   /// <summary>
-   /// the entry point of the sample (to launch the sample dialog and allows further operations)
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   class Command : IExternalCommand
-   {
-            public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-      {
-       
-         // data verification
-         if (null == commandData.Application.ActiveUIDocument)
-         {
-            return Result.Failed;
-         }
+    /// <summary>
+    ///     the entry point of the sample (to launch the sample dialog and allows further operations)
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    internal class Command : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            // data verification
+            if (null == commandData.Application.ActiveUIDocument) return Result.Failed;
 
-         var mydocument = new MyDocument(commandData);
+            var mydocument = new MyDocument(commandData);
 
-         
 
-         // check whether the mass is kind of parallelepiped
-         var checker = new CurtainSystem.MassChecker(mydocument);
-         var validMass = checker.CheckSelectedMass();
+            // check whether the mass is kind of parallelepiped
+            var checker = new MassChecker(mydocument);
+            var validMass = checker.CheckSelectedMass();
 
-         if (!validMass)
-         {
-            message = Properties.Resources.MSG_InvalidSelection;
-            return Result.Cancelled;
-         }
-
-         UI.CurtainForm curtainForm = null;
-         var transactionGroup = new TransactionGroup(commandData.Application.ActiveUIDocument.Document);
-         try
-         {
-            transactionGroup.Start("CurtainSystemOperation");
-            curtainForm = new UI.CurtainForm(mydocument);
-            
-            if (null != curtainForm && false == curtainForm.IsDisposed)
+            if (!validMass)
             {
-               curtainForm.ShowDialog();
+                message = Resources.MSG_InvalidSelection;
+                return Result.Cancelled;
             }
 
-            transactionGroup.Commit();
-         }
-         catch (System.Exception ex)
-         {
-         	transactionGroup.RollBack();
-            message = ex.Message;
-            return Result.Failed;
-         }
-         finally
-         {
-            if (null != curtainForm && false == curtainForm.IsDisposed)
+            CurtainForm curtainForm = null;
+            var transactionGroup = new TransactionGroup(commandData.Application.ActiveUIDocument.Document);
+            try
             {
-               curtainForm.Dispose();
-            }
-         }
+                transactionGroup.Start("CurtainSystemOperation");
+                curtainForm = new CurtainForm(mydocument);
 
-         return Result.Succeeded;
-      }
-         }
+                if (null != curtainForm && false == curtainForm.IsDisposed) curtainForm.ShowDialog();
+
+                transactionGroup.Commit();
+            }
+            catch (Exception ex)
+            {
+                transactionGroup.RollBack();
+                message = ex.Message;
+                return Result.Failed;
+            }
+            finally
+            {
+                if (null != curtainForm && false == curtainForm.IsDisposed) curtainForm.Dispose();
+            }
+
+            return Result.Succeeded;
+        }
+    }
 }

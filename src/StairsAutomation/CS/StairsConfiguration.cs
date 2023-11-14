@@ -21,26 +21,27 @@
 //
 
 using System.Collections.Generic;
+using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.StairsAutomation.CS
 {
-	/// <summary>
-	/// A specific implementation of IStairsConfiguration with some default storage included.
-	/// </summary>
-	public class StairsConfiguration : IStairsConfiguration
-	{
-	    /// <summary>
-	    /// The run configurations.
-	    /// </summary>
-		protected List<IStairsRunComponent> m_runConfigurations = new List<IStairsRunComponent>();
+    /// <summary>
+    ///     A specific implementation of IStairsConfiguration with some default storage included.
+    /// </summary>
+    public class StairsConfiguration : IStairsConfiguration
+    {
+        /// <summary>
+        ///     The landing configurations.
+        /// </summary>
+        protected List<IStairsLandingComponent> m_landingConfigurations = new List<IStairsLandingComponent>();
 
         /// <summary>
-        /// The landing configurations.
+        ///     The run configurations.
         /// </summary>
-		protected List<IStairsLandingComponent> m_landingConfigurations = new List<IStairsLandingComponent>();
+        protected List<IStairsRunComponent> m_runConfigurations = new List<IStairsRunComponent>();
 
-                /// <summary>
-        /// Implements the interface method.
+        /// <summary>
+        ///     Implements the interface method.
         /// </summary>
         public int GetNumberOfRuns()
         {
@@ -48,38 +49,35 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
-		public void CreateStairsRun(Autodesk.Revit.DB.Document document, Autodesk.Revit.DB.ElementId stairsElementId, int runIndex)
-		{
-			m_runConfigurations[runIndex].CreateStairsRun(document, stairsElementId);
-		}
+        public void CreateStairsRun(Document document, ElementId stairsElementId, int runIndex)
+        {
+            m_runConfigurations[runIndex].CreateStairsRun(document, stairsElementId);
+        }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
-		public int GetNumberOfLandings()
+        public int GetNumberOfLandings()
         {
             return m_landingConfigurations.Count;
         }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
-		public void CreateLanding(Autodesk.Revit.DB.Document document, Autodesk.Revit.DB.ElementId stairsElementId, int landingIndex)
-		{
-			m_landingConfigurations[landingIndex].CreateLanding(document, stairsElementId);
-		}
+        public void CreateLanding(Document document, ElementId stairsElementId, int landingIndex)
+        {
+            m_landingConfigurations[landingIndex].CreateLanding(document, stairsElementId);
+        }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
-		public void SetRunWidth(double width)
-		{
-			foreach (var config in m_runConfigurations)
-			{
-				config.Width = width;
-			}
+        public void SetRunWidth(double width)
+        {
+            foreach (var config in m_runConfigurations) config.Width = width;
         }
-            }
+    }
 }

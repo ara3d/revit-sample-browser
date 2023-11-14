@@ -26,52 +26,44 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
-    ///  This form class is for user choose a based-type of creating family instance
+    ///     This form class is for user choose a based-type of creating family instance
     /// </summary>
     public partial class BasedTypeForm : Form
     {
-                // based-type
-
-        
-                /// <summary>
-        /// based-type
-        /// </summary>
-        public BasedType BaseType { get; private set; } = BasedType.Point;
-
-        
-                /// <summary>
-        /// Constructor
+        /// <summary>
+        ///     Constructor
         /// </summary>
         public BasedTypeForm()
         {
             InitializeComponent();
         }
-        
-                /// <summary>
-        /// Process the click event of "Next" button
+        // based-type
+
+
+        /// <summary>
+        ///     based-type
+        /// </summary>
+        public BasedType BaseType { get; private set; } = BasedType.Point;
+
+        /// <summary>
+        ///     Process the click event of "Next" button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonNext_Click(object sender, EventArgs e)
         {
             if (radioButtonPoint.Checked)
-            {
                 BaseType = BasedType.Point;
-            }
             else if (radioButtonLine.Checked)
-            {
                 BaseType = BasedType.Line;
-            }
             else
-            {
                 throw new Exception("An error occured in selecting based type.");
-            }
             Close();
             DialogResult = DialogResult.OK;
         }
 
         /// <summary>
-        /// Process the click event of "Cancel" button
+        ///     Process the click event of "Cancel" button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -80,21 +72,21 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             Close();
             DialogResult = DialogResult.Cancel;
         }
-            }
+    }
 
     /// <summary>
-    /// Based-type
+    ///     Based-type
     /// </summary>
     public enum BasedType
     {
         /// <summary>
-        /// Point-based
+        ///     Point-based
         /// </summary>
         Point = 0,
 
         /// <summary>
-        /// Line-based
+        ///     Line-based
         /// </summary>
-        Line,
+        Line
     }
 }

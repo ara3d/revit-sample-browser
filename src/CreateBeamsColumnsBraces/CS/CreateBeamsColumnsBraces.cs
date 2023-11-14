@@ -24,6 +24,7 @@
 using System;
 using System.Collections;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using ELEMENT = Autodesk.Revit.DB.Element;
@@ -32,31 +33,30 @@ using STRUCTURALTYPE = Autodesk.Revit.DB.Structure.StructuralType;
 namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
 {
     /// <summary>
-    /// Create Beams, Columns and Braces according to user's input information
+    ///     Create Beams, Columns and Braces according to user's input information
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        UIApplication m_revit;
+        private readonly SortedList levels = new SortedList(); //list of list sorted by their elevations
 
-        SortedList levels = new SortedList();        //list of list sorted by their elevations
-
-        UV[,] m_matrixUV;        //2D coordinates of matrix
+        private UV[,] m_matrixUV; //2D coordinates of matrix
+        private UIApplication m_revit;
 
         /// <summary>
-        /// list of all type of columns
+        ///     list of all type of columns
         /// </summary>
         public ArrayList ColumnMaps { get; } = new ArrayList();
 
         /// <summary>
-        /// list of all type of beams
+        ///     list of all type of beams
         /// </summary>
         public ArrayList BeamMaps { get; } = new ArrayList();
 
         /// <summary>
-        /// list of all type of braces
+        ///     list of all type of braces
         /// </summary>
         public ArrayList BraceMaps { get; } = new ArrayList();
 
@@ -97,8 +97,8 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         }
 
         /// <summary>
-        /// check the number of floors is less than the number of levels
-        /// create beams, columns and braces according to selected types
+        ///     check the number of floors is less than the number of levels
+        ///     create beams, columns and braces according to selected types
         /// </summary>
         /// <param name="columnObject">type of column</param>
         /// <param name="beamObject">type of beam</param>
@@ -119,59 +119,43 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var braceSymbol = braceObject as FamilySymbol;
 
             //any symbol is null then the command failed
-            if (null == columnSymbol || null == beamSymbol || null == braceSymbol)
-            {
-                return false;
-            }
+            if (null == columnSymbol || null == beamSymbol || null == braceSymbol) return false;
 
             try
             {
-                for (var k = 0; k < floorNumber; k++)    //iterate levels from lower one to higher
+                for (var k = 0; k < floorNumber; k++) //iterate levels from lower one to higher
                 {
                     var baseLevel = levels.GetByIndex(k) as Level;
                     var topLevel = levels.GetByIndex(k + 1) as Level;
 
-                    var matrixXSize = m_matrixUV.GetLength(0);    //length of matrix's x range
-                    var matrixYSize = m_matrixUV.GetLength(1);    //length of matrix's y range
+                    var matrixXSize = m_matrixUV.GetLength(0); //length of matrix's x range
+                    var matrixYSize = m_matrixUV.GetLength(1); //length of matrix's y range
 
                     //iterate coordinate both in x direction and y direction and create beams and braces
                     for (var j = 0; j < matrixYSize; j++)
+                    for (var i = 0; i < matrixXSize; i++)
                     {
-                        for (var i = 0; i < matrixXSize; i++)
-                        {
-                            //create beams and braces in x direction
-                            if (i != (matrixXSize - 1))
-                            {
-                                PlaceBrace(m_matrixUV[i, j], m_matrixUV[i + 1, j], baseLevel, topLevel, braceSymbol, true);
-                            }
-                            //create beams and braces in y direction
-                            if (j != (matrixYSize - 1))
-                            {
-                                PlaceBrace(m_matrixUV[i, j], m_matrixUV[i, j + 1], baseLevel, topLevel, braceSymbol, false);
-                            }
-                        }
+                        //create beams and braces in x direction
+                        if (i != matrixXSize - 1)
+                            PlaceBrace(m_matrixUV[i, j], m_matrixUV[i + 1, j], baseLevel, topLevel, braceSymbol, true);
+                        //create beams and braces in y direction
+                        if (j != matrixYSize - 1)
+                            PlaceBrace(m_matrixUV[i, j], m_matrixUV[i, j + 1], baseLevel, topLevel, braceSymbol, false);
                     }
+
                     for (var j = 0; j < matrixYSize; j++)
+                    for (var i = 0; i < matrixXSize; i++)
                     {
-                        for (var i = 0; i < matrixXSize; i++)
-                        {
-                            //create beams and braces in x direction
-                            if (i != (matrixXSize - 1))
-                            {
-                                PlaceBeam(m_matrixUV[i, j], m_matrixUV[i + 1, j], baseLevel, topLevel, beamSymbol);
-                            }
-                            //create beams and braces in y direction
-                            if (j != (matrixYSize - 1))
-                            {
-                                PlaceBeam(m_matrixUV[i, j], m_matrixUV[i, j + 1], baseLevel, topLevel, beamSymbol);
-                            }
-                        }
+                        //create beams and braces in x direction
+                        if (i != matrixXSize - 1)
+                            PlaceBeam(m_matrixUV[i, j], m_matrixUV[i + 1, j], baseLevel, topLevel, beamSymbol);
+                        //create beams and braces in y direction
+                        if (j != matrixYSize - 1)
+                            PlaceBeam(m_matrixUV[i, j], m_matrixUV[i, j + 1], baseLevel, topLevel, beamSymbol);
                     }
+
                     //place column of this level
-                    foreach (var point2D in m_matrixUV)
-                    {
-                        PlaceColumn(point2D, columnSymbol, baseLevel, topLevel);
-                    }
+                    foreach (var point2D in m_matrixUV) PlaceColumn(point2D, columnSymbol, baseLevel, topLevel);
                 }
             }
             catch
@@ -183,7 +167,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         }
 
         /// <summary>
-        /// generate 2D coordinates of matrix according to parameters
+        ///     generate 2D coordinates of matrix according to parameters
         /// </summary>
         /// <param name="xNumber">Number of Columns in the X direction</param>
         /// <param name="yNumber">Number of Columns in the Y direction</param>
@@ -193,54 +177,40 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             m_matrixUV = new UV[xNumber, yNumber];
 
             for (var i = 0; i < xNumber; i++)
-            {
-                for (var j = 0; j < yNumber; j++)
-                {
-                    m_matrixUV[i, j] = new UV(i * distance, j * distance);
-                }
-            }
+            for (var j = 0; j < yNumber; j++)
+                m_matrixUV[i, j] = new UV(i * distance, j * distance);
         }
 
         /// <summary>
-        /// iterate all the symbols of levels, columns, beams and braces
+        ///     iterate all the symbols of levels, columns, beams and braces
         /// </summary>
         /// <returns>A value that signifies if the initialization was successful for true or failed for false</returns>
         private bool Initialize()
         {
             try
             {
-
-                var i = new FilteredElementCollector(m_revit.ActiveUIDocument.Document).OfClass(typeof(Level)).GetElementIterator();
+                var i = new FilteredElementCollector(m_revit.ActiveUIDocument.Document).OfClass(typeof(Level))
+                    .GetElementIterator();
                 i.Reset();
                 while (i.MoveNext())
                 {
                     //add level to list
                     var level = i.Current as Level;
-                    if (null != level)
-                    {
-                        levels.Add(level.Elevation, level);
-
-                    }
+                    if (null != level) levels.Add(level.Elevation, level);
                 }
 
-                i = new FilteredElementCollector(m_revit.ActiveUIDocument.Document).OfClass(typeof(Family)).GetElementIterator();
+                i = new FilteredElementCollector(m_revit.ActiveUIDocument.Document).OfClass(typeof(Family))
+                    .GetElementIterator();
                 while (i.MoveNext())
                 {
                     var f = i.Current as Family;
                     if (f != null)
-                    {
                         foreach (var elementId in f.GetFamilySymbolIds())
                         {
-                           object symbol = m_revit.ActiveUIDocument.Document.GetElement(elementId);
+                            object symbol = m_revit.ActiveUIDocument.Document.GetElement(elementId);
                             var familyType = symbol as FamilySymbol;
-                            if (null == familyType)
-                            {
-                                continue;
-                            }
-                            if (null == familyType.Category)
-                            {
-                                continue;
-                            }
+                            if (null == familyType) continue;
+                            if (null == familyType.Category) continue;
 
                             //add symbols of beams and braces to lists 
                             var categoryName = familyType.Category.Name;
@@ -254,22 +224,18 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                                 ColumnMaps.Add(new SymbolMap(familyType));
                             }
                         }
-                    }
                 }
-
-
-
-
             }
             catch
             {
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// create column of certain type in certain position
+        ///     create column of certain type in certain position
         /// </summary>
         /// <param name="point2D">2D coordinate of the column</param>
         /// <param name="columnType">type of column</param>
@@ -279,10 +245,11 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         {
             //create column of certain type in certain level and start point 
             var point = new XYZ(point2D.U, point2D.V, 0);
-            var structuralType = Autodesk.Revit.DB.Structure.StructuralType.Column;
+            var structuralType = STRUCTURALTYPE.Column;
             if (!columnType.IsActive)
-               columnType.Activate();
-            var column = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(point, columnType, topLevel, structuralType);
+                columnType.Activate();
+            var column =
+                m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(point, columnType, topLevel, structuralType);
 
             //set base level & top level of the column
             if (null != column)
@@ -304,20 +271,14 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                     topLevelParameter.Set(topLevelId);
                 }
 
-                if (null != topOffsetParameter)
-                {
-                    topOffsetParameter.Set(0.0);
-                }
+                if (null != topOffsetParameter) topOffsetParameter.Set(0.0);
 
-                if (null != baseOffsetParameter)
-                {
-                    baseOffsetParameter.Set(0.0);
-                }
+                if (null != baseOffsetParameter) baseOffsetParameter.Set(0.0);
             }
         }
 
         /// <summary>
-        /// create beam of certain type in certain position
+        ///     create beam of certain type in certain position
         /// </summary>
         /// <param name="point2D1">one point of the location line in 2D</param>
         /// <param name="point2D2">another point of the location line in 2D</param>
@@ -332,14 +293,14 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var endPoint = new XYZ(point2D2.U, point2D2.V, height);
 
             var line = Line.CreateBound(startPoint, endPoint);
-            var structuralType = Autodesk.Revit.DB.Structure.StructuralType.Beam;
+            var structuralType = STRUCTURALTYPE.Beam;
             if (!beamType.IsActive)
-               beamType.Activate();
+                beamType.Activate();
             m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(line, beamType, topLevel, structuralType);
         }
 
         /// <summary>
-        /// create brace of certain type in certain position between two adjacent columns
+        ///     create brace of certain type in certain position between two adjacent columns
         /// </summary>
         /// <param name="point2D1">one point of the location line in 2D</param>
         /// <param name="point2D2">another point of the location line in 2D</param>
@@ -347,7 +308,8 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <param name="topLevel">the top level of the brace</param>
         /// <param name="braceType">type of beam</param>
         /// <param name="isXDirection">whether the location line is in x direction</param>
-        private void PlaceBrace(UV point2D1, UV point2D2, Level baseLevel, Level topLevel, FamilySymbol braceType, bool isXDirection)
+        private void PlaceBrace(UV point2D1, UV point2D2, Level baseLevel, Level topLevel, FamilySymbol braceType,
+            bool isXDirection)
         {
             //get the start points and end points of location lines of two braces
             var topHeight = topLevel.Elevation;
@@ -358,74 +320,63 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             XYZ middlePoint;
 
             if (isXDirection)
-            {
                 middlePoint = new XYZ((point2D1.U + point2D2.U) / 2, point2D2.V, topHeight);
-            }
             else
-            {
                 middlePoint = new XYZ(point2D2.U, (point2D1.V + point2D2.V) / 2, topHeight);
-            }
 
             //create two brace and set their location line
-            var structuralType = Autodesk.Revit.DB.Structure.StructuralType.Brace;
+            var structuralType = STRUCTURALTYPE.Brace;
             var levelId = topLevel.Id;
 
             var line1 = Line.CreateBound(startPoint, middlePoint);
             if (!braceType.IsActive)
-               braceType.Activate();
-            var firstBrace = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(line1, braceType, baseLevel, structuralType);
+                braceType.Activate();
+            var firstBrace =
+                m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(line1, braceType, baseLevel, structuralType);
 
             var referenceLevel1 = firstBrace.get_Parameter(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM);
-            if (null != referenceLevel1)
-            {
-                referenceLevel1.Set(levelId);
-            }
+            if (null != referenceLevel1) referenceLevel1.Set(levelId);
 
             var line2 = Line.CreateBound(endPoint, middlePoint);
-            var secondBrace = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(line2, braceType, baseLevel, structuralType);
+            var secondBrace =
+                m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(line2, braceType, baseLevel, structuralType);
 
             var referenceLevel2 = secondBrace.get_Parameter(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM);
-            if (null != referenceLevel2)
-            {
-                referenceLevel2.Set(levelId);
-            }
+            if (null != referenceLevel2) referenceLevel2.Set(levelId);
         }
     }
 
     /// <summary>
-    /// assistant class contains the symbol and its name.
+    ///     assistant class contains the symbol and its name.
     /// </summary>
     public class SymbolMap
     {
         /// <summary>
-        /// constructor without parameter is forbidden
+        ///     constructor without parameter is forbidden
         /// </summary>
         private SymbolMap()
         {
         }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="symbol">family symbol</param>
         public SymbolMap(FamilySymbol symbol)
         {
             ElementType = symbol;
             var familyName = "";
-            if (null != symbol.Family)
-            {
-                familyName = symbol.Family.Name;
-            }
+            if (null != symbol.Family) familyName = symbol.Family.Name;
             SymbolName = familyName + " : " + symbol.Name;
         }
 
         /// <summary>
-        /// SymbolName property
+        ///     SymbolName property
         /// </summary>
         public string SymbolName { get; } = "";
 
         /// <summary>
-        /// ElementType property
+        ///     ElementType property
         /// </summary>
         public FamilySymbol ElementType { get; }
     }

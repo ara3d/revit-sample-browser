@@ -22,44 +22,55 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.CompoundStructureCreation.CS
 {
-        /// <summary>
-    /// This command allows to create vertical CompoundStructure and applying to walls.
+    /// <summary>
+    ///     This command allows to create vertical CompoundStructure and applying to walls.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class WallCompoundStructure : IExternalCommand
     {
         /// <summary>
-        /// store the application
+        ///     store the application
         /// </summary>
-        UIApplication m_application;
-        /// <summary>
-        /// store the document
-        /// </summary>
-        UIDocument m_document;
+        private UIApplication m_application;
 
         /// <summary>
-        /// Implement this method as an external command for Revit.
+        ///     store the document
         /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
+        private UIDocument m_document;
+
+        /// <summary>
+        ///     Implement this method as an external command for Revit.
+        /// </summary>
+        /// <param name="commandData">
+        ///     An object that is passed to the external application
+        ///     which contains data related to the command,
+        ///     such as the application object and active view.
+        /// </param>
+        /// <param name="message">
+        ///     A message that can be set by the external application
+        ///     which will be displayed if a failure or cancellation is returned by
+        ///     the external command.
+        /// </param>
+        /// <param name="elements">
+        ///     A set of elements to which the external application
+        ///     can add elements that are to be highlighted in case of failure or cancellation.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external command.
+        ///     A result of Succeeded means that the API external method functioned as expected.
+        ///     Cancelled can be used to signify that the user cancelled the external operation
+        ///     at some point. Failure should be returned if the application is unable to proceed with
+        ///     the operation.
+        /// </returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             m_application = commandData.Application;
@@ -70,32 +81,31 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             try
             {
                 // Select at least a wall.
-               var selectedElements = new ElementSet();
+                var selectedElements = new ElementSet();
                 foreach (var elementId in m_document.Selection.GetElementIds())
-                {
-                   selectedElements.Insert(m_document.Document.GetElement(elementId));
-                }
+                    selectedElements.Insert(m_document.Document.GetElement(elementId));
                 if (selectedElements.IsEmpty)
                 {
-                    TaskDialog.Show("Error","Please select one wall at least.");
+                    TaskDialog.Show("Error", "Please select one wall at least.");
                     return Result.Cancelled;
                 }
-                
+
                 // Create the CompoundStructure for wall.
                 transaction.Start();
                 if (selectedElements.IsEmpty)
-                   return Result.Failed;
+                    return Result.Failed;
 
-               
+
                 foreach (Element elem in selectedElements)
                 {
                     var wall = elem as Wall;
                     if (wall != null)
-                    {                      
+                    {
                         CreateCSforWall(wall);
                         break;
                     }
                 }
+
                 transaction.Commit();
 
                 return Result.Succeeded;
@@ -110,7 +120,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         }
 
         /// <summary>
-        /// Create vertical CompoundStructure for wall: new layers, split new region, new sweep and new reveal.
+        ///     Create vertical CompoundStructure for wall: new layers, split new region, new sweep and new reveal.
         /// </summary>
         /// <param name="wall">The wall applying the new CompoundStructure.</param>
         public void CreateCSforWall(Wall wall)
@@ -129,9 +139,11 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             // Create CompoundStructureLayers and add the materials created above to them.
             var csLayers = new List<CompoundStructureLayer>();
             var finish1Layer = new CompoundStructureLayer(0.2, MaterialFunctionAssignment.Finish1, masonry_Brick.Id);
-            var substrateLayer = new CompoundStructureLayer(0.1, MaterialFunctionAssignment.Substrate, ElementId.InvalidElementId);
+            var substrateLayer =
+                new CompoundStructureLayer(0.1, MaterialFunctionAssignment.Substrate, ElementId.InvalidElementId);
             var structureLayer = new CompoundStructureLayer(0.5, MaterialFunctionAssignment.Structure, concrete.Id);
-            var membraneLayer = new CompoundStructureLayer(0, MaterialFunctionAssignment.Membrane, ElementId.InvalidElementId);
+            var membraneLayer =
+                new CompoundStructureLayer(0, MaterialFunctionAssignment.Membrane, ElementId.InvalidElementId);
             var finish2Layer = new CompoundStructureLayer(0.2, MaterialFunctionAssignment.Finish2, concrete.Id);
             csLayers.Add(finish1Layer);
             csLayers.Add(substrateLayer);
@@ -165,7 +177,8 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
                 wallCS.GetSegmentEndPoints(segId, regionId, out endPoint1, out endPoint2);
 
                 // Split a new region in split point and orientation.
-                var splitOrientation = (RectangularGridSegmentOrientation)(((int)(wallCS.GetSegmentOrientation(segId)) + 1) % 2);
+                var splitOrientation =
+                    (RectangularGridSegmentOrientation)(((int)wallCS.GetSegmentOrientation(segId) + 1) % 2);
                 var splitUV = (endPoint1 + endPoint2) / 2.0;
                 var newRegionId = wallCS.SplitRegion(splitUV, splitOrientation);
                 wallCS.IsValidRegionId(newRegionId);
@@ -173,7 +186,8 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
                 // Find the enclosing region and the two segments intersected by a line through the split point
                 int segId1;
                 int segId2;
-                var findRegionId = wallCS.FindEnclosingRegionAndSegments(splitUV, splitOrientation, out segId1, out segId2);
+                var findRegionId =
+                    wallCS.FindEnclosingRegionAndSegments(splitUV, splitOrientation, out segId1, out segId2);
 
                 // Get the end points of finding segment 1 and compute the wall sweep point.
                 var eP1 = UV.Zero;
@@ -192,7 +206,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             var sweepInfo = new WallSweepInfo(true, WallSweepType.Sweep);
             PrepareWallSweepInfo(sweepInfo, sweepPoint.V);
             // Set sweep profile: Sill-Precast : 8" Wide
-            sweepInfo.ProfileId = GetProfile("8\" Wide").Id;  
+            sweepInfo.ProfileId = GetProfile("8\" Wide").Id;
             sweepInfo.Id = 101;
             wallCS.AddWallSweep(sweepInfo);
 
@@ -207,7 +221,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         }
 
         /// <summary>
-        /// Setting the WallSweepInfo for sweep and reveal.
+        ///     Setting the WallSweepInfo for sweep and reveal.
         /// </summary>
         /// <param name="wallSweepInfo">The WallSweepInfo.</param>
         /// <param name="distance">The distance from either the top or base of the wall</param>
@@ -221,7 +235,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         }
 
         /// <summary>
-        /// Getting the specific material by name.
+        ///     Getting the specific material by name.
         /// </summary>
         /// <param name="name">The name of specific material.</param>
         /// <returns>The specific material</returns>
@@ -230,117 +244,119 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             var collector = new FilteredElementCollector(m_document.Document);
             collector.WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_Materials));
             var MaterialElement = from element in collector
-                                where element.Name == name
-                                select element;
+                where element.Name == name
+                select element;
 
             if (MaterialElement.Count() == 0)
-               return null;
-            return MaterialElement.First<Element>() as Material;
+                return null;
+            return MaterialElement.First() as Material;
         }
 
 
         /// <summary>
-        /// Create a new brick material
+        ///     Create a new brick material
         /// </summary>
         /// <returns>The specific material</returns>
         private Material CreateSampleBrickMaterial()
         {
-           var createMaterial = new SubTransaction(m_document.Document);
-           createMaterial.Start();
-           Material materialNew = null;
+            var createMaterial = new SubTransaction(m_document.Document);
+            createMaterial.Start();
+            Material materialNew = null;
 
-           //Try to copy an existing material.  If it is not available, create a new one.
-           var masonry_Brick = GetMaterial("Brick, Common");
-           if (masonry_Brick != null)
-           {
-              materialNew = masonry_Brick.Duplicate(masonry_Brick.Name + "_new");
-              System.Diagnostics.Debug.WriteLine(masonry_Brick.MaterialClass);
-              materialNew.MaterialClass = "Brick";
-           }
-           else
-           {
-              var idNew = Material.Create(m_document.Document, "New Brick Sample");
-              materialNew = m_document.Document.GetElement(idNew) as Material;
-              materialNew.Color = new Color(255, 0, 0);
-           }
-           createMaterial.Commit();
+            //Try to copy an existing material.  If it is not available, create a new one.
+            var masonry_Brick = GetMaterial("Brick, Common");
+            if (masonry_Brick != null)
+            {
+                materialNew = masonry_Brick.Duplicate(masonry_Brick.Name + "_new");
+                Debug.WriteLine(masonry_Brick.MaterialClass);
+                materialNew.MaterialClass = "Brick";
+            }
+            else
+            {
+                var idNew = Material.Create(m_document.Document, "New Brick Sample");
+                materialNew = m_document.Document.GetElement(idNew) as Material;
+                materialNew.Color = new Color(255, 0, 0);
+            }
 
-           var createPropertySets = new SubTransaction(m_document.Document);
-           createPropertySets.Start();
+            createMaterial.Commit();
 
-           //Create a new structural asset and set properties on it.
-           var structuralAsssetBrick = new StructuralAsset("BrickStructuralAsset" , StructuralAssetClass.Generic);
+            var createPropertySets = new SubTransaction(m_document.Document);
+            createPropertySets.Start();
 
-           var pseStructural = PropertySetElement.Create(m_document.Document, structuralAsssetBrick);
+            //Create a new structural asset and set properties on it.
+            var structuralAsssetBrick = new StructuralAsset("BrickStructuralAsset", StructuralAssetClass.Generic);
+
+            var pseStructural = PropertySetElement.Create(m_document.Document, structuralAsssetBrick);
 
 
-           //Create a new thermal asset and set properties on it.
-           var thermalAssetBrick = new ThermalAsset("BrickThermalAsset", ThermalMaterialType.Solid);
-           thermalAssetBrick.Porosity = 0.1;
-           thermalAssetBrick.Permeability = 0.2;
-           thermalAssetBrick.Compressibility = .5;
-           thermalAssetBrick.ThermalConductivity = .5;
+            //Create a new thermal asset and set properties on it.
+            var thermalAssetBrick = new ThermalAsset("BrickThermalAsset", ThermalMaterialType.Solid);
+            thermalAssetBrick.Porosity = 0.1;
+            thermalAssetBrick.Permeability = 0.2;
+            thermalAssetBrick.Compressibility = .5;
+            thermalAssetBrick.ThermalConductivity = .5;
 
-           //Create PropertySets from assets and assign them to the material.
-           var pseThermal = PropertySetElement.Create(m_document.Document, thermalAssetBrick);
-           createPropertySets.Commit();
-           var setPropertySets = new SubTransaction(m_document.Document);
-           setPropertySets.Start();
-           materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Structural, pseStructural.Id);
-           materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Thermal, pseThermal.Id);
-           
-           //also try
-           //materialNew.ThermalAssetId = pseThermal.Id;
+            //Create PropertySets from assets and assign them to the material.
+            var pseThermal = PropertySetElement.Create(m_document.Document, thermalAssetBrick);
+            createPropertySets.Commit();
+            var setPropertySets = new SubTransaction(m_document.Document);
+            setPropertySets.Start();
+            materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Structural, pseStructural.Id);
+            materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Thermal, pseThermal.Id);
 
-           setPropertySets.Commit();
-           return materialNew;
+            //also try
+            //materialNew.ThermalAssetId = pseThermal.Id;
+
+            setPropertySets.Commit();
+            return materialNew;
         }
 
 
         /// <summary>
-        /// Create a new concrete material.
+        ///     Create a new concrete material.
         /// </summary>
         /// <returns>The specific material</returns>
         private Material CreateSampleConcreteMaterial()
         {
-           Material materialNew = null;
-           //Try to copy an existing material.  If it is not available, create a new one.
-           var masonry_Concrete = GetMaterial("Concrete, Lightweight");
-           if (masonry_Concrete != null)
-           {
-              materialNew = masonry_Concrete.Duplicate(masonry_Concrete.Name + "_new");
-              materialNew.MaterialClass = "Concrete";
-           }
-           else
-           {
-              var idNew = Material.Create(m_document.Document, "New Concrete Sample");
-              materialNew = m_document.Document.GetElement(idNew) as Material;
-              materialNew.Color = new Color(130, 150, 120);
-           }
+            Material materialNew = null;
+            //Try to copy an existing material.  If it is not available, create a new one.
+            var masonry_Concrete = GetMaterial("Concrete, Lightweight");
+            if (masonry_Concrete != null)
+            {
+                materialNew = masonry_Concrete.Duplicate(masonry_Concrete.Name + "_new");
+                materialNew.MaterialClass = "Concrete";
+            }
+            else
+            {
+                var idNew = Material.Create(m_document.Document, "New Concrete Sample");
+                materialNew = m_document.Document.GetElement(idNew) as Material;
+                materialNew.Color = new Color(130, 150, 120);
+            }
 
-           //Create a new structural asset and set properties on it.
-           var structuralAsssetConcrete= new StructuralAsset("ConcreteStructuralAsset", StructuralAssetClass.Concrete);
-           structuralAsssetConcrete.ConcreteBendingReinforcement = .5;
+            //Create a new structural asset and set properties on it.
+            var structuralAsssetConcrete =
+                new StructuralAsset("ConcreteStructuralAsset", StructuralAssetClass.Concrete);
+            structuralAsssetConcrete.ConcreteBendingReinforcement = .5;
 
-           //Create a new thermal asset and set properties on it.
-           var thermalAssetConcrete= new ThermalAsset("ConcreteThermalAsset", ThermalMaterialType.Solid);
-           thermalAssetConcrete.Porosity = 0.2;
-           thermalAssetConcrete.Permeability = 0.3;
-           thermalAssetConcrete.Compressibility = .5;
-           thermalAssetConcrete.ThermalConductivity = .5;
+            //Create a new thermal asset and set properties on it.
+            var thermalAssetConcrete = new ThermalAsset("ConcreteThermalAsset", ThermalMaterialType.Solid);
+            thermalAssetConcrete.Porosity = 0.2;
+            thermalAssetConcrete.Permeability = 0.3;
+            thermalAssetConcrete.Compressibility = .5;
+            thermalAssetConcrete.ThermalConductivity = .5;
 
-           //Create PropertySets from assets and assign them to the material.
-           var pseThermal = PropertySetElement.Create(m_document.Document, thermalAssetConcrete);
-           var pseStructural = PropertySetElement.Create(m_document.Document, structuralAsssetConcrete);
+            //Create PropertySets from assets and assign them to the material.
+            var pseThermal = PropertySetElement.Create(m_document.Document, thermalAssetConcrete);
+            var pseStructural = PropertySetElement.Create(m_document.Document, structuralAsssetConcrete);
 
-           materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Structural, pseStructural.Id);
-           materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Thermal, pseThermal.Id);
+            materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Structural, pseStructural.Id);
+            materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Thermal, pseThermal.Id);
 
-           return materialNew;
+            return materialNew;
         }
 
         /// <summary>
-        /// Getting the profile for sweep or reveal.
+        ///     Getting the profile for sweep or reveal.
         /// </summary>
         /// <param name="name">The name of specific profile.</param>
         /// <returns>The specific profile.</returns>
@@ -349,9 +365,9 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             var profiles = new FilteredElementCollector(m_document.Document);
             profiles.OfCategory(BuiltInCategory.OST_ProfileFamilies);
             var MaterialElement = from element in profiles
-                                  where element.Name == name
-                                  select element;
-            return MaterialElement.First<Element>() as FamilySymbol;
+                where element.Name == name
+                select element;
+            return MaterialElement.First() as FamilySymbol;
         }
     }
-    }
+}

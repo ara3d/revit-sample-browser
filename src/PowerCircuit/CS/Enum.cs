@@ -23,48 +23,48 @@
 namespace Revit.SDK.Samples.PowerCircuit.CS
 {
     /// <summary>
-    /// An enumerate type listing the operations
+    ///     An enumerate type listing the operations
     /// </summary>
     public enum Operation
     {
         /// <summary>
-        /// Create a new electrical circuit
+        ///     Create a new electrical circuit
         /// </summary>
         CreateCircuit,
 
         /// <summary>
-        /// Edit circuit
+        ///     Edit circuit
         /// </summary>
         EditCircuit,
 
         /// <summary>
-        /// Set a panel for circuit
+        ///     Set a panel for circuit
         /// </summary>
         SelectPanel,
 
         /// <summary>
-        /// Disconnect the panel from circuit
+        ///     Disconnect the panel from circuit
         /// </summary>
         DisconnectPanel
     }
 
     /// <summary>
-    /// An enumerate type listing the options to edit a circuit
+    ///     An enumerate type listing the options to edit a circuit
     /// </summary>
     public enum EditOption
     {
         /// <summary>
-        /// Add an element to the circuit
+        ///     Add an element to the circuit
         /// </summary>
         Add,
 
         /// <summary>
-        /// Remove an element from the circuit
+        ///     Remove an element from the circuit
         /// </summary>
         Remove,
 
         /// <summary>
-        /// Set a panel for circuit
+        ///     Set a panel for circuit
         /// </summary>
         SelectPanel
     }

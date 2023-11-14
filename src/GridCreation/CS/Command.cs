@@ -21,16 +21,17 @@
 //
 
 using System;
-using System.Windows.Forms;
 using System.Collections;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -48,17 +49,15 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 using (var gridCreationOptForm = new GridCreationOptionForm(gridCreationOption))
                 {
                     var result = gridCreationOptForm.ShowDialog();
-                    if (result == DialogResult.Cancel)
-                    {
-                        return Result.Cancelled;
-                    }
+                    if (result == DialogResult.Cancel) return Result.Cancelled;
 
                     var labels = GetAllLabelsOfGrids(document);
                     var unit = GetLengthUnitType(document);
                     switch (gridCreationOption.CreateGridsMode)
                     {
                         case CreateMode.Select: // Create grids with selected lines/arcs
-                            var data = new CreateWithSelectedCurvesData(commandData.Application, selectedCurves, labels);
+                            var data = new CreateWithSelectedCurvesData(commandData.Application, selectedCurves,
+                                labels);
                             using (var createWithSelected = new CreateWithSelectedCurvesForm(data))
                             {
                                 result = createWithSelected.ShowDialog();
@@ -69,8 +68,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                     transaction.Start();
                                     data.CreateGrids();
                                     transaction.Commit();
-                                }  
+                                }
                             }
+
                             break;
 
                         case CreateMode.Orthogonal: // Create orthogonal grids
@@ -85,8 +85,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                     transaction.Start();
                                     orthogonalData.CreateGrids();
                                     transaction.Commit();
-                                }  
+                                }
                             }
+
                             break;
 
                         case CreateMode.RadialAndArc: // Create radial and arc grids
@@ -101,19 +102,15 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                     transaction.Start();
                                     radArcData.CreateGrids();
                                     transaction.Commit();
-                                }  
+                                }
                             }
+
                             break;
                     }
 
                     if (result == DialogResult.OK)
-                    {
                         return Result.Succeeded;
-                    }
-                    else
-                    {
-                        return Result.Cancelled;
-                    }                    
+                    return Result.Cancelled;
                 }
             }
             catch (Exception ex)
@@ -124,7 +121,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Get all selected lines and arcs
+        ///     Get all selected lines and arcs
         /// </summary>
         /// <param name="document">Revit's document</param>
         /// <returns>CurveArray contains all selected lines and arcs</returns>
@@ -134,36 +131,26 @@ namespace Revit.SDK.Samples.GridCreation.CS
             var newUIdocument = new UIDocument(document);
             var elements = new ElementSet();
             foreach (var elementId in newUIdocument.Selection.GetElementIds())
-            {
-               elements.Insert(newUIdocument.Document.GetElement(elementId));
-            }
+                elements.Insert(newUIdocument.Document.GetElement(elementId));
             foreach (Element element in elements)
-            {
-                if ((element is ModelLine) || (element is ModelArc))
+                if (element is ModelLine || element is ModelArc)
                 {
                     var modelCurve = element as ModelCurve;
                     var curve = modelCurve.GeometryCurve;
-                    if (curve != null)
-                    {
-                        selectedCurves.Append(curve);
-                    }
+                    if (curve != null) selectedCurves.Append(curve);
                 }
-                else if ((element is DetailLine) || (element is DetailArc))
+                else if (element is DetailLine || element is DetailArc)
                 {
                     var detailCurve = element as DetailCurve;
                     var curve = detailCurve.GeometryCurve;
-                    if (curve != null)
-                    {
-                        selectedCurves.Append(curve);
-                    }
+                    if (curve != null) selectedCurves.Append(curve);
                 }
-            }
 
             return selectedCurves;
         }
 
         /// <summary>
-        /// Get all model and detail lines/arcs within selected elements
+        ///     Get all model and detail lines/arcs within selected elements
         /// </summary>
         /// <param name="document">Revit's document</param>
         /// <returns>ElementSet contains all model and detail lines/arcs within selected elements </returns>
@@ -172,23 +159,17 @@ namespace Revit.SDK.Samples.GridCreation.CS
             var newUIdocument = new UIDocument(document);
             var elements = new ElementSet();
             foreach (var elementId in newUIdocument.Selection.GetElementIds())
-            {
-               elements.Insert(newUIdocument.Document.GetElement(elementId));
-            }
+                elements.Insert(newUIdocument.Document.GetElement(elementId));
             var tmpSet = new ElementSet();
             foreach (Element element in elements)
-            {
-                if ((element is ModelLine) || (element is ModelArc) || (element is DetailLine) || (element is DetailArc))
-                {
+                if (element is ModelLine || element is ModelArc || element is DetailLine || element is DetailArc)
                     tmpSet.Insert(element);
-                }
-            }
 
             return tmpSet;
         }
 
         /// <summary>
-        /// Get current length display unit type
+        ///     Get current length display unit type
         /// </summary>
         /// <param name="document">Revit's document</param>
         /// <returns>Current length display unit type</returns>
@@ -208,7 +189,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Get all grid labels in current document
+        ///     Get all grid labels in current document
         /// </summary>
         /// <param name="document">Revit's document</param>
         /// <returns>ArrayList contains all grid labels in current document</returns>
@@ -217,17 +198,13 @@ namespace Revit.SDK.Samples.GridCreation.CS
             var labels = new ArrayList();
             var itor = new FilteredElementCollector(document).OfClass(typeof(Grid)).GetElementIterator();
             itor.Reset();
-            for (; itor.MoveNext(); )
+            for (; itor.MoveNext();)
             {
                 var grid = itor.Current as Grid;
-                if (null != grid)
-                {
-                    labels.Add(grid.Name);
-                }
+                if (null != grid) labels.Add(grid.Name);
             }
 
             return labels;
         }
     }
 }
-

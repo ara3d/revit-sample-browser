@@ -24,36 +24,32 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 {
     /// <summary>
-    /// coordinate system data form
+    ///     coordinate system data form
     /// </summary>
-    public partial class CoordinateSystemDataForm : System.Windows.Forms.Form
+    public partial class CoordinateSystemDataForm : Form
     {
-        CoordinateSystemData m_data; //the reference of the CoordinateSystemData class
-        string m_currentName; //the current project location's name;
-        string m_angle;    //the value of angle
-        string m_eastWest; //the value of the east to west offset
-        string m_northSouth; //the value of the north to south offset
-        string m_elevation; //the value of the elevation from ground level
+        private const int DecimalNumber = 3; //number of decimal
+        private string m_angle; //the value of angle
+        private CityInfo m_currentCityInfo; //current CityInfo
+        private string m_currentName; //the current project location's name;
+        private readonly CoordinateSystemData m_data; //the reference of the CoordinateSystemData class
+        private string m_eastWest; //the value of the east to west offset
+        private string m_elevation; //the value of the elevation from ground level
+        private bool m_isFormLoading = true; //indicate whether called when Form loading
+        private bool m_isLatitudeChanged; //indicate whether user change Latitude value
+        private bool m_isLongitudeChanged; //indicate whether user change Longitude value
+        private string m_northSouth; //the value of the north to south offset
 
-        private PlaceInfo m_placeInfo;           //store all cities' information
-        private SiteLocation m_siteLocation;     //reference to SiteLocation
-        private CityInfo m_currentCityInfo;      //current CityInfo
-        private const int DecimalNumber = 3;     //number of decimal
-        private bool m_isFormLoading = true;     //indicate whether called when Form loading
-        private bool m_isLatitudeChanged;//indicate whether user change Latitude value
-        private bool m_isLongitudeChanged;//indicate whether user change Longitude value
-
-        /// <summary>
-        /// get and set the new location's name
-        /// </summary>
-        public string NewLocationName { get; set; }
+        private readonly PlaceInfo m_placeInfo; //store all cities' information
+        private readonly SiteLocation m_siteLocation; //reference to SiteLocation
 
         /// <summary>
-        /// constructor of form
+        ///     constructor of form
         /// </summary>
         private CoordinateSystemDataForm()
         {
@@ -61,7 +57,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// override constructor
+        ///     override constructor
         /// </summary>
         /// <param name="data">a instance of CoordinateSystemData class</param>
         public CoordinateSystemDataForm(CoordinateSystemData data, CitySet citySet, SiteLocation siteLocation)
@@ -77,14 +73,18 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// display the location information on the form
+        ///     get and set the new location's name
+        /// </summary>
+        public string NewLocationName { get; set; }
+
+        /// <summary>
+        ///     display the location information on the form
         /// </summary>
         private void DisplayInformation()
         {
             //initialize the listbox
             locationListBox.Items.Clear();
             foreach (var itemName in m_data.LocationNames)
-            {
                 if (itemName == m_data.LocationName)
                 {
                     m_currentName = itemName + " (current)"; //indicate the current project location
@@ -94,16 +94,12 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                 {
                     locationListBox.Items.Add(itemName);
                 }
-            }
 
             //set the selected item to current location
             for (var i = 0; i < locationListBox.Items.Count; i++)
             {
                 var itemName = locationListBox.Items[i].ToString();
-                if (itemName.Contains("(current)"))
-                {
-                    locationListBox.SelectedIndex = i;
-                }
+                if (itemName.Contains("(current)")) locationListBox.SelectedIndex = i;
             }
 
             //get the offset values of the selected item 
@@ -138,7 +134,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
 
         /// <summary>
-        /// load the form
+        ///     load the form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -150,22 +146,19 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// display the duplicate form
+        ///     display the duplicate form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void duplicateButton_Click(object sender, EventArgs e)
         {
             using (var duplicateForm = new DuplicateForm(m_data,
-                                                                     this,
-                                                locationListBox.SelectedItem.ToString()))
+                       this,
+                       locationListBox.SelectedItem.ToString()))
             {
-
-                if (DialogResult.OK != duplicateForm.ShowDialog())
-                {
-                    return;
-                }
+                if (DialogResult.OK != duplicateForm.ShowDialog()) return;
             }
+
             //refresh the form
             locationListBox.Items.Clear();
             m_data.GatData();
@@ -173,27 +166,19 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
             //make the new project location is the selected item after it was duplicated
             for (var i = 0; i < locationListBox.Items.Count; i++)
-            {
                 if (NewLocationName == locationListBox.Items[i].ToString())
-                {
                     locationListBox.SelectedIndex = i;
-                }
-            }
         }
 
         /// <summary>
-        /// when the selected item is the current location,make the button to disable
+        ///     when the selected item is the current location,make the button to disable
         /// </summary>
         private void CheckSelecteCurrent()
         {
             if (locationListBox.SelectedItem.ToString() == m_currentName)
-            {
                 makeCurrentButton.Enabled = false;
-            }
             else
-            {
                 makeCurrentButton.Enabled = true;
-            }
             //get the offset values of the selected item 
             var selecteName = locationListBox.SelectedItem.ToString();
             m_data.GetOffset(selecteName);
@@ -201,7 +186,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// show the offset values on the form
+        ///     show the offset values on the form
         /// </summary>
         private void ShowOffsetValue()
         {
@@ -225,7 +210,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
 
         /// <summary>
-        /// the function will be invoked when the selected item changed
+        ///     the function will be invoked when the selected item changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -235,30 +220,27 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// close the form and return true
+        ///     close the form and return true
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            if (!CheckModify())
-            {
-                return;
-            }
+            if (!CheckModify()) return;
             SaveSiteLocation();
-            DialogResult = DialogResult.OK;    // set dialog result
-            Close();                           // close the form
+            DialogResult = DialogResult.OK; // set dialog result
+            Close(); // close the form
         }
 
         /// <summary>
-        /// set the selected item of the listbox to be the current project location
+        ///     set the selected item of the listbox to be the current project location
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void makeCurrentButton_Click(object sender, EventArgs e)
         {
             var selectIndex = locationListBox.SelectedIndex; //get selected index
-            var newCurrentName = locationListBox.SelectedItem.ToString();//get location name
+            var newCurrentName = locationListBox.SelectedItem.ToString(); //get location name
             m_data.ChangeCurrentLocation(newCurrentName);
             //refresh the form
             DisplayInformation();
@@ -266,16 +248,16 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// check whether user modify the offset value
+        ///     check whether user modify the offset value
         /// </summary>
         private bool CheckModify()
         {
             try
             {
                 if (m_angle != angleTextBox.Text ||
-                            m_eastWest != eatWestTextBox.Text ||
-                            m_northSouth != northSouthTextBox.Text ||
-                            m_elevation != elevationTextBox.Text)
+                    m_eastWest != eatWestTextBox.Text ||
+                    m_northSouth != northSouthTextBox.Text ||
+                    m_elevation != elevationTextBox.Text)
                 {
                     var newValue = angleTextBox.Text;
                     var degree = ((char)0xb0).ToString();
@@ -284,6 +266,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                         var index = newValue.IndexOf(degree);
                         newValue = newValue.Substring(0, index);
                     }
+
                     var newAngle = Convert.ToDouble(newValue);
                     var newEast = Convert.ToDouble(eatWestTextBox.Text);
                     var newNorth = Convert.ToDouble(northSouthTextBox.Text);
@@ -304,70 +287,58 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                 TaskDialog.Show("Revit", ex.Message, TaskDialogCommonButtons.Ok);
                 return false;
             }
+
             return true;
         }
 
 
         /// <summary>
-        /// be invoked when SelectedValue of control cityNameComboBox changed 
+        ///     be invoked when SelectedValue of control cityNameComboBox changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void cityNameComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
             //check whether is Focused
-            if (!cityNameComboBox.Focused)
-            {
-                return;
-            }
+            if (!cityNameComboBox.Focused) return;
             DoCityNameChanged();
         }
 
         /// <summary>
-        /// be invoked when SelectValue of control timeZoneComboBox changed
+        ///     be invoked when SelectValue of control timeZoneComboBox changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timeZoneComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
             //check whether is Focused
-            if (!timeZoneComboBox.Focused)
-            {
-                return;
-            }
+            if (!timeZoneComboBox.Focused) return;
             m_currentCityInfo.TimeZone = m_placeInfo.TryGetTimeZoneNumber(
                 timeZoneComboBox.SelectedItem as string);
         }
 
         /// <summary>
-        /// be invoked when text changed in control latitudeTextBox
+        ///     be invoked when text changed in control latitudeTextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void latitudeTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (latitudeTextBox.Focused)
-            {
-                m_isLatitudeChanged = true;
-            }
+            if (latitudeTextBox.Focused) m_isLatitudeChanged = true;
         }
 
         /// <summary>
-        /// be invoked when text changed in control longitudeTextBox
+        ///     be invoked when text changed in control longitudeTextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void longitudeTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (longitudeTextBox.Focused)
-            {
-                m_isLongitudeChanged = true;
-            }
-
+            if (longitudeTextBox.Focused) m_isLongitudeChanged = true;
         }
 
         /// <summary>
-        /// be invoked when focus leave control latitudeTextBox
+        ///     be invoked when focus leave control latitudeTextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -383,7 +354,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// be invoked when focus leave control longitudeTextBox
+        ///     be invoked when focus leave control longitudeTextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -399,7 +370,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// deal with decimal number
+        ///     deal with decimal number
         /// </summary>
         /// <param name="value">string wanted to deal with</param>
         /// <returns>result dealing with</returns>
@@ -417,13 +388,14 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                     return result;
                 }
             }
+
             //try to convert double into string
             result = UnitConversion.DoubleToString(doubleValue, ValueType.Angle);
             return result;
         }
 
         /// <summary>
-        /// call by CitiesNameSelectedChanged,when CitiesName ComboBox selected changed
+        ///     call by CitiesNameSelectedChanged,when CitiesName ComboBox selected changed
         /// </summary>
         private void DoCityNameChanged()
         {
@@ -459,7 +431,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// called by some functions to do same operation
+        ///     called by some functions to do same operation
         /// </summary>
         private void DoTextBoxChanged()
         {
@@ -495,6 +467,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                         cityInfo.TimeZone = m_siteLocation.TimeZone;
                         m_placeInfo.AddCityInfo(cityInfo);
                     }
+
                     cityNameComboBox.SelectedItem = userDefinedCity;
                 }
                 else
@@ -512,7 +485,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// used when city information changed
+        ///     used when city information changed
         /// </summary>
         /// <param name="cityInfoString">city information which changed</param>
         /// <param name="cityName">city name want to get according to information</param>
@@ -550,7 +523,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// used when city name changed
+        ///     used when city name changed
         /// </summary>
         /// <param name="cityName">city name which changed</param>
         /// <param name="cityInfoString">city information want to get according to city name</param>
@@ -581,14 +554,11 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         }
 
         /// <summary>
-        /// save siteLocation to Revit
+        ///     save siteLocation to Revit
         /// </summary>
         private void SaveSiteLocation()
         {
-            if (null == m_siteLocation)
-            {
-                return;
-            }
+            if (null == m_siteLocation) return;
 
             //change SiteLocation of Revit          
             m_siteLocation.Latitude = m_currentCityInfo.Latitude;
@@ -598,7 +568,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
 
         /// <summary>
-        /// check the format of the user's input and add a degree symbol behind the angle value
+        ///     check the format of the user's input and add a degree symbol behind the angle value
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -624,13 +594,11 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             {
                 //angle text boxes should only input number information
                 TaskDialog.Show("Revit", "Please input double number in TextBox.", TaskDialogCommonButtons.Ok);
-                return;
             }
             catch (Exception ex)
             {
                 // if other unexpected error, just show the information
                 TaskDialog.Show("Revit", ex.Message, TaskDialogCommonButtons.Ok);
-                return;
             }
         }
     }

@@ -23,47 +23,47 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.RoomSchedule
 {
     /// <summary>
-    /// Room Schedule form, used to retrieve data from .xls data source and create new rooms.
+    ///     Room Schedule form, used to retrieve data from .xls data source and create new rooms.
     /// </summary>
-    public partial class RoomScheduleForm : System.Windows.Forms.Form
+    public partial class RoomScheduleForm : Form
     {
-        
+        // All levels in Revit document.
+        private readonly List<Level> m_allLevels = new List<Level>();
+
+        // All available phases in Revit document.
+        private readonly List<Phase> m_allPhases = new List<Phase>();
+
+        // Revit external command data
+        private readonly ExternalCommandData m_commandData;
+
         // Reserve name of data source
         private string m_dataBaseName;
 
-        // Revit external command data
-        private ExternalCommandData m_commandData;
-
         // Current active document
-        private Document m_document;
+        private readonly Document m_document;
 
         // Room data information
-        private RoomsData m_roomData;
-
-        // All levels in Revit document.
-        private List<Level> m_allLevels = new List<Level>();
-
-        // All available phases in Revit document.
-        private List<Phase> m_allPhases = new List<Phase>();
+        private readonly RoomsData m_roomData;
 
         // Room work sheet name
         private string m_roomTableName;
 
         // All rooms data from spread sheet
         private DataTable m_spreadRoomsTable;
-        
-                /// <summary>
-        /// Class constructor
+
+        /// <summary>
+        ///     Class constructor
         /// </summary>
         /// <param name="commandData">Revit external command data</param>
         public RoomScheduleForm(ExternalCommandData commandData)
@@ -90,38 +90,29 @@ namespace Revit.SDK.Samples.RoomSchedule
             phaseComboBox.SelectedIndex = 0;
 
             // if there is no phase, newRoomButton will be disabled.
-            if (m_allPhases.Count == 0)
-            {
-                newRoomButton.Enabled = false;
-            }
+            if (m_allPhases.Count == 0) newRoomButton.Enabled = false;
 
             // check to see whether current Revit document was mapped to spreadsheet.
             UpdateRoomMapSheetInfo();
         }
-        
-                /// <summary>
-        /// Get all available levels and phases from current document
+
+        /// <summary>
+        ///     Get all available levels and phases from current document
         /// </summary>
         private void GetAllLevelsAndPhases()
         {
             // get all levels which can place rooms
-            foreach (PlanTopology planTopology in m_document.PlanTopologies)
-            {
-                m_allLevels.Add(planTopology.Level);
-            }
+            foreach (PlanTopology planTopology in m_document.PlanTopologies) m_allLevels.Add(planTopology.Level);
 
             // get all phases by filter type
             var collector = new FilteredElementCollector(m_document);
             ICollection<Element> allPhases = collector.OfClass(typeof(Phase)).ToElements();
-            foreach (Phase phs in allPhases)
-            {
-                m_allPhases.Add(phs);
-            }
+            foreach (Phase phs in allPhases) m_allPhases.Add(phs);
         }
 
 
         /// <summary>
-        /// Create shared parameter for Rooms category
+        ///     Create shared parameter for Rooms category
         /// </summary>
         /// <returns>True, shared parameter exists; false, doesn't exist</returns>
         private bool CreateMyRoomSharedParameter()
@@ -136,18 +127,12 @@ namespace Revit.SDK.Samples.RoomSchedule
             try
             {
                 // check whether shared parameter exists
-                if (ShareParameterExists(RoomsData.SharedParam))
-                {
-                    return true;
-                }
+                if (ShareParameterExists(RoomsData.SharedParam)) return true;
 
                 // create shared parameter file
                 var modulePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var paramFile = modulePath + "\\RoomScheduleSharedParameters.txt";
-                if (File.Exists(paramFile))
-                {
-                    File.Delete(paramFile);
-                }
+                if (File.Exists(paramFile)) File.Delete(paramFile);
                 var fs = File.Create(paramFile);
                 fs.Close();
 
@@ -164,17 +149,21 @@ namespace Revit.SDK.Samples.RoomSchedule
                 var apiGroup = parafile.Groups.Create("SDKSampleRoomScheduleGroup");
 
                 // create a visible "External Room ID" of text type.
-                var ExternalDefinitionCreationOptions = new ExternalDefinitionCreationOptions(RoomsData.SharedParam, SpecTypeId.String.Text);
+                var ExternalDefinitionCreationOptions =
+                    new ExternalDefinitionCreationOptions(RoomsData.SharedParam, SpecTypeId.String.Text);
                 var roomSharedParamDef = apiGroup.Definitions.Create(ExternalDefinitionCreationOptions);
 
                 // get Rooms category
-                var roomCat = m_commandData.Application.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Rooms);
+                var roomCat =
+                    m_commandData.Application.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory
+                        .OST_Rooms);
                 var categories = revitApp.Create.NewCategorySet();
                 categories.Insert(roomCat);
 
                 // insert the new parameter
                 var binding = revitApp.Create.NewInstanceBinding(categories);
-                m_commandData.Application.ActiveUIDocument.Document.ParameterBindings.Insert(roomSharedParamDef, binding);
+                m_commandData.Application.ActiveUIDocument.Document.ParameterBindings.Insert(roomSharedParamDef,
+                    binding);
                 return false;
             }
             catch (Exception ex)
@@ -185,7 +174,7 @@ namespace Revit.SDK.Samples.RoomSchedule
 
 
         /// <summary>
-        /// Test if the Room binds a specified shared parameter
+        ///     Test if the Room binds a specified shared parameter
         /// </summary>
         /// <param name="paramName">Parameter name to be checked</param>
         /// <returns>true, the definition exists, false, doesn't exist.</returns>
@@ -200,24 +189,18 @@ namespace Revit.SDK.Samples.RoomSchedule
                 var tempDefinition = iter.Key;
 
                 // find the definition of which the name is the appointed one
-                if (string.Compare(tempDefinition.Name, paramName) != 0)
-                {
-                    continue;
-                }
+                if (string.Compare(tempDefinition.Name, paramName) != 0) continue;
 
                 // get the category which is bound
                 var binding = bindingMap.get_Item(tempDefinition) as ElementBinding;
                 var bindCategories = binding.Categories;
                 foreach (Category category in bindCategories)
-                {
                     if (category.Name
                         == m_document.Settings.Categories.get_Item(BuiltInCategory.OST_Rooms).Name)
-                    {
                         // the definition with appointed name was bound to Rooms, return true
                         return true;
-                    }
-                }
             }
+
             // 
             // return false if shared parameter doesn't exist
             return false;
@@ -225,7 +208,7 @@ namespace Revit.SDK.Samples.RoomSchedule
 
 
         /// <summary>
-        /// My custom message box 
+        ///     My custom message box
         /// </summary>
         /// <param name="strMsg">message to be popped up</param>
         /// <param name="icon">icon to be displayed</param>
@@ -236,29 +219,22 @@ namespace Revit.SDK.Samples.RoomSchedule
 
 
         /// <summary>
-        /// Update control display of form 
-        /// call this method when create new rooms or switch the room show(show all or show by level)
+        ///     Update control display of form
+        ///     call this method when create new rooms or switch the room show(show all or show by level)
         /// </summary>
         /// <param name="bUpdateAllRooms">whether retrieve all rooms from Revit project once more</param>
         private void UpdateFormDisplay(bool bUpdateAllRooms)
         {
             // update Revit Rooms data when there is room creation
-            if (bUpdateAllRooms)
-            {
-                m_roomData.UpdateRoomsData();
-            }
+            if (bUpdateAllRooms) m_roomData.UpdateRoomsData();
 
             revitRoomDataGridView.DataSource = null;
             if (showAllRoomsCheckBox.Checked)
-            {
                 // show all rooms in Revit project
                 revitRoomDataGridView.DataSource = new DataView(m_roomData.GenRoomsDataTable(null));
-            }
             else
-            {
                 // show all rooms in specified level
                 levelComboBox_SelectedIndexChanged(null, null);
-            }
 
             // update this DataGridView
             revitRoomDataGridView.Update();
@@ -266,21 +242,19 @@ namespace Revit.SDK.Samples.RoomSchedule
 
 
         /// <summary>
-        /// Display current Room sheet information: Excel path
+        ///     Display current Room sheet information: Excel path
         /// </summary>
         private void UpdateRoomMapSheetInfo()
         {
             var hashCode = m_document.GetHashCode();
             var xlsAndTable = new SheetInfo("", "");
             if (CrtlApplication.EventReactor.DocMappedSheetInfo(hashCode, ref xlsAndTable))
-            {
                 roomExcelTextBox.Text = "Mapped Sheet: " + xlsAndTable.FileName + ": " + xlsAndTable.SheetName;
-            }
         }
 
 
         /// <summary>
-        /// Some preparation and check before creating room.
+        ///     Some preparation and check before creating room.
         /// </summary>
         /// <param name="curPhase">Current phase used to create room, all rooms will be created in this phase.</param>
         /// <returns>Number indicates how many new rooms were created.</returns>
@@ -293,34 +267,27 @@ namespace Revit.SDK.Samples.RoomSchedule
             {
                 // Preparation before room creation starts
                 Phase curPhase = null;
-                if (!RoomCreationPreparation(ref curPhase))
-                {
-                    return 0;
-                }
+                if (!RoomCreationPreparation(ref curPhase)) return 0;
 
                 // get all existing rooms which have mapped to spreadsheet rooms.
                 // we should skip the creation for those spreadsheet rooms which have been mapped by Revit rooms.
                 var existingRooms = new Dictionary<ElementId, string>();
                 foreach (var room in m_roomData.Rooms)
                 {
-                   var sharedParameter = room.LookupParameter(RoomsData.SharedParam);
+                    var sharedParameter = room.LookupParameter(RoomsData.SharedParam);
                     if (null != sharedParameter && false == string.IsNullOrEmpty(sharedParameter.AsString()))
-                    {
                         existingRooms.Add(room.Id, sharedParameter.AsString());
-                    }
                 }
 
-                                myTransaction.Start();
+                myTransaction.Start();
                 // create rooms with spread sheet based rooms data
                 for (var row = 0; row < m_spreadRoomsTable.Rows.Count; row++)
                 {
                     // get the ID column value and use it to check whether this spreadsheet room is mapped by Revit room.
                     var externaId = m_spreadRoomsTable.Rows[row][RoomsData.RoomID].ToString();
                     if (existingRooms.ContainsValue(externaId))
-                    {
                         // skip the spreadsheet room creation if it's mapped by Revit room
                         continue;
-                    }
 
                     // create rooms in specified phase, but without placing them.
                     var newRoom = m_document.Create.NewRoom(curPhase);
@@ -342,10 +309,8 @@ namespace Revit.SDK.Samples.RoomSchedule
                         MyMessageBox("Failed to get shared parameter, please try again.", MessageBoxIcon.Warning);
                         return 0;
                     }
-                    else
-                    {
-                        sharedParam.Set(externaId);
-                    }
+
+                    sharedParam.Set(externaId);
 
                     // Update this new room with values of spreadsheet
                     UpdateNewRoom(newRoom, row);
@@ -356,14 +321,11 @@ namespace Revit.SDK.Samples.RoomSchedule
 
                 // end this transaction if create all rooms successfully.
                 myTransaction.Commit();
-                            }
+            }
             catch (Exception ex)
             {
                 // cancel this time transaction when exception occurs
-                if (myTransaction.HasStarted())
-                {
-                    myTransaction.RollBack();
-                }
+                if (myTransaction.HasStarted()) myTransaction.RollBack();
 
                 MyMessageBox(ex.Message, MessageBoxIcon.Warning);
                 return 0;
@@ -373,20 +335,17 @@ namespace Revit.SDK.Samples.RoomSchedule
             var strMessage = string.Empty;
             var nSkippedRooms = m_spreadRoomsTable.Rows.Count - nNewRoomsSize;
             if (nSkippedRooms > 0)
-            {
                 strMessage = string.Format("{0} unplaced {1} created successfully.\r\n{2} skipped, {3}",
-                     nNewRoomsSize,
-                     (nNewRoomsSize > 1) ? ("rooms were") : ("room was"),
-                     nSkippedRooms.ToString() + ((nSkippedRooms > 1) ? (" were") : (" was")),
-                     (nSkippedRooms > 1) ? ("because they were already mapped by Revit rooms.") :
-                     ("because it was already mapped by Revit rooms."));
-            }
+                    nNewRoomsSize,
+                    nNewRoomsSize > 1 ? "rooms were" : "room was",
+                    nSkippedRooms + (nSkippedRooms > 1 ? " were" : " was"),
+                    nSkippedRooms > 1
+                        ? "because they were already mapped by Revit rooms."
+                        : "because it was already mapped by Revit rooms.");
             else
-            {
                 strMessage = string.Format("{0} unplaced {1} created successfully.",
-                     nNewRoomsSize,
-                     (nNewRoomsSize > 1) ? ("rooms were") : ("room was"));
-            }
+                    nNewRoomsSize,
+                    nNewRoomsSize > 1 ? "rooms were" : "room was");
 
             // output creation message 
             MyMessageBox(strMessage, MessageBoxIcon.Information);
@@ -395,7 +354,7 @@ namespace Revit.SDK.Samples.RoomSchedule
 
 
         /// <summary>
-        /// Some preparation and check before creating room.
+        ///     Some preparation and check before creating room.
         /// </summary>
         /// <param name="curPhase">Current phase used to create room, all rooms will be created in this phase.</param>
         /// <returns></returns>
@@ -422,24 +381,24 @@ namespace Revit.SDK.Samples.RoomSchedule
 
             // get phase used to create room
             foreach (var phase in m_allPhases)
-            {
                 if (string.Compare(phase.Name, phaseComboBox.Text) == 0)
                 {
                     curPhase = phase;
                     break;
                 }
-            }
+
             if (null == curPhase)
             {
                 MyMessageBox("No available phase used to create room.", MessageBoxIcon.Warning);
                 return false;
             }
+
             return true;
         }
 
 
         /// <summary>
-        /// Update new room with values in spreadsheet, currently there are three columns need to be set.
+        ///     Update new room with values in spreadsheet, currently there are three columns need to be set.
         /// </summary>
         /// <param name="newRoom">New room to be updated.</param>
         /// <param name="index">The index of row in spreadsheet, use values of this row to update the new room.</param>
@@ -447,16 +406,12 @@ namespace Revit.SDK.Samples.RoomSchedule
         {
             string[] constantColumns = { RoomsData.RoomName, RoomsData.RoomNumber, RoomsData.RoomComments };
             for (var col = 0; col < constantColumns.Length; col++)
-            {
                 // check to see whether the column exists in table
                 if (m_spreadRoomsTable.Columns.IndexOf(constantColumns[col]) != -1)
                 {
                     // if value is not null or empty, set new rooms related parameter.
                     var colValue = m_spreadRoomsTable.Rows[row][constantColumns[col]].ToString();
-                    if (string.IsNullOrEmpty(colValue))
-                    {
-                        continue;
-                    }
+                    if (string.IsNullOrEmpty(colValue)) continue;
 
                     switch (constantColumns[col])
                     {
@@ -468,21 +423,14 @@ namespace Revit.SDK.Samples.RoomSchedule
                             break;
                         case RoomsData.RoomComments:
                             var commentParam = newRoom.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
-                            if (null != commentParam)
-                            {
-                                commentParam.Set(colValue);
-                            }
-                            break;
-                        default:
-                            // no action for other parameter
+                            if (null != commentParam) commentParam.Set(colValue);
                             break;
                     }
                 }
-            }
         }
-        
-                /// <summary>
-        /// Import room spread sheet and display them in form
+
+        /// <summary>
+        ///     Import room spread sheet and display them in form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -499,13 +447,10 @@ namespace Revit.SDK.Samples.RoomSchedule
                 var hashCode = m_document.GetHashCode();
                 var xlsAndTable = new SheetInfo(string.Empty, string.Empty);
                 if (CrtlApplication.EventReactor.DocMappedSheetInfo(hashCode, ref xlsAndTable))
-                {
                     sfdlg.FileName = xlsAndTable.FileName;
-                }
                 //
                 // import the select
                 if (DialogResult.OK == sfdlg.ShowDialog())
-                {
                     try
                     {
                         // create xls data source connector and retrieve data from it
@@ -523,13 +468,12 @@ namespace Revit.SDK.Samples.RoomSchedule
                         tablesComboBox.DataSource = null;
                         MyMessageBox(ex.Message, MessageBoxIcon.Warning);
                     }
-                }
             }
         }
 
         /// <summary>
-        /// Select one table(work sheet) and display its data to DataGridView control.
-        /// after selection, generate data table from data source
+        ///     Select one table(work sheet) and display its data to DataGridView control.
+        ///     after selection, generate data table from data source
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -541,17 +485,14 @@ namespace Revit.SDK.Samples.RoomSchedule
             XlsDBConnector xlsCon = null;
             try
             {
-                if (null != m_spreadRoomsTable)
-                {
-                    m_spreadRoomsTable.Clear();
-                }
+                if (null != m_spreadRoomsTable) m_spreadRoomsTable.Clear();
 
                 // get all rooms table then close this connection immediately
                 xlsCon = new XlsDBConnector(m_dataBaseName);
 
                 // generate room data table from room work sheet.
                 m_spreadRoomsTable = xlsCon.GenDataTable(m_roomTableName);
-                newRoomButton.Enabled = (0 == m_spreadRoomsTable.Rows.Count) ? false : true;
+                newRoomButton.Enabled = 0 == m_spreadRoomsTable.Rows.Count ? false : true;
 
                 // close connection
                 xlsCon.Dispose();
@@ -581,7 +522,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         }
 
         /// <summary>
-        /// Filter rooms by specified level.
+        ///     Filter rooms by specified level.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -590,13 +531,12 @@ namespace Revit.SDK.Samples.RoomSchedule
             // get the selected level, by comparing its name and ComboBox selected item's name
             Level selLevel = null;
             foreach (var level in m_allLevels)
-            {
                 if (0 == string.Compare(level.Name, levelComboBox.Text))
                 {
                     selLevel = level;
                     break;
                 }
-            }
+
             if (selLevel == null)
             {
                 MyMessageBox("There is no available level to get rooms.", MessageBoxIcon.Warning);
@@ -609,7 +549,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         }
 
         /// <summary>
-        /// Create new rooms according to spreadsheet based rooms data and specified phase.
+        ///     Create new rooms according to spreadsheet based rooms data and specified phase.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -626,10 +566,7 @@ namespace Revit.SDK.Samples.RoomSchedule
 
             // Create rooms now
             var nNewRoomsSize = RoomCreationStart();
-            if (nNewRoomsSize <= 0)
-            {
-                return;
-            }
+            if (nNewRoomsSize <= 0) return;
 
             // Reserve this document by its hash code, this document will be updated when it's about to be saved.
             var hashCode = m_document.GetHashCode();
@@ -647,7 +584,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         }
 
         /// <summary>
-        /// Show all rooms in current document
+        ///     Show all rooms in current document
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -661,7 +598,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         }
 
         /// <summary>
-        /// Close the form.
+        ///     Close the form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -671,8 +608,8 @@ namespace Revit.SDK.Samples.RoomSchedule
         }
 
         /// <summary>
-        /// Clear all values of shared parameters
-        /// Allow user to create more unplaced rooms and update map relationships between Revit and spreadsheet rooms.
+        ///     Clear all values of shared parameters
+        ///     Allow user to create more unplaced rooms and update map relationships between Revit and spreadsheet rooms.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -691,10 +628,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
 
             // update Revit rooms display
-            if (nCount > 0)
-            {
-                UpdateFormDisplay(false);
-            }
+            if (nCount > 0) UpdateFormDisplay(false);
         }
-            }
+    }
 }

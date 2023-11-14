@@ -20,7 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
@@ -29,250 +28,103 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Data class which stores the information for importing dwg format
+    ///     Data class which stores the information for importing dwg format
     /// </summary>
     public class ImportDWGData : ImportData
     {
-                /// <summary>
-        /// ThisViewOnly
-        /// </summary>
-        private bool m_importThisViewOnly;
-
         /// <summary>
-        /// All views
-        /// </summary>
-        private ViewSet m_views;
-
-        /// <summary>
-        /// Import view
-        /// </summary>
-        private View m_importView;
-
-        /// <summary>
-        /// ColorMode for import
+        ///     ColorMode for import
         /// </summary>
         private List<string> m_colorMode;
 
         /// <summary>
-        /// All available import color modes
+        ///     All available import color modes
         /// </summary>
         private List<ImportColorMode> m_enumColorMode;
 
         /// <summary>
-        /// Import color mode
-        /// </summary>
-        private ImportColorMode m_importColorMode;
-
-        /// <summary>
-        /// Custom scale for import
-        /// </summary>
-        private double m_importCustomScale;
-
-        /// <summary>
-        /// OrientToView
-        /// </summary>
-        private bool m_importOrientToView;
-
-        /// <summary>
-        /// Placement
-        /// </summary>
-        private List<string> m_placement;
-
-        /// <summary>
-        /// All placement for layers to be imported
+        ///     All placement for layers to be imported
         /// </summary>
         private List<ImportPlacement> m_enumPlacement;
 
         /// <summary>
-        /// Placement for import
-        /// </summary>
-        private ImportPlacement m_importPlacement;
-
-        /// <summary>
-        /// All units for layer to be imported
-        /// </summary>
-        private List<string> m_unit;
-
-        /// <summary>
-        /// All import unit for import layers
+        ///     All import unit for import layers
         /// </summary>
         private List<ImportUnit> m_enumUnit;
 
         /// <summary>
-        /// Import unit
-        /// </summary>
-        private ImportUnit m_importUnit;
-
-        /// <summary>
-        /// All available layers only 
-        /// </summary>
-        private List<string> m_visibleLayersOnly;
-
-        /// <summary>
-        /// All boolean values for available visible layers
+        ///     All boolean values for available visible layers
         /// </summary>
         private List<bool> m_enumVisibleLayersOnly;
 
         /// <summary>
-        /// Whether import visible layer only
+        ///     Import color mode
+        /// </summary>
+        private ImportColorMode m_importColorMode;
+
+        /// <summary>
+        ///     Custom scale for import
+        /// </summary>
+        private double m_importCustomScale;
+
+        /// <summary>
+        ///     OrientToView
+        /// </summary>
+        private bool m_importOrientToView;
+
+        /// <summary>
+        ///     Placement for import
+        /// </summary>
+        private ImportPlacement m_importPlacement;
+
+        /// <summary>
+        ///     ThisViewOnly
+        /// </summary>
+        private bool m_importThisViewOnly;
+
+        /// <summary>
+        ///     Import unit
+        /// </summary>
+        private ImportUnit m_importUnit;
+
+        /// <summary>
+        ///     Import view
+        /// </summary>
+        private View m_importView;
+
+        /// <summary>
+        ///     Whether import visible layer only
         /// </summary>
         private bool m_importVisibleLayersOnly;
 
         /// <summary>
-        /// Whether active view is 3D
+        ///     Whether active view is 3D
         /// </summary>
         private bool m_is3DView;
-        
 
-                /// <summary>
-        /// Get or set whether import this view only
+        /// <summary>
+        ///     Placement
         /// </summary>
-        public bool ImportThisViewOnly
-        {
-            get => m_importThisViewOnly;
-            set => m_importThisViewOnly = value;
-        }
+        private List<string> m_placement;
+
+        /// <summary>
+        ///     All units for layer to be imported
+        /// </summary>
+        private List<string> m_unit;
+
+        /// <summary>
+        ///     All views
+        /// </summary>
+        private ViewSet m_views;
+
+        /// <summary>
+        ///     All available layers only
+        /// </summary>
+        private List<string> m_visibleLayersOnly;
 
 
         /// <summary>
-        /// all views for import
-        /// </summary>
-        public ViewSet Views
-        {
-            get => m_views;
-            set => m_views = value;
-        }
-
-
-        /// <summary>
-        /// Import view
-        /// </summary>
-        public View ImportView
-        {
-            get => m_importView;
-            set => m_importView = value;
-        }
-
-
-        /// <summary>
-        /// All available color modes for import
-        /// </summary>
-        public ReadOnlyCollection<string> ColorMode => new ReadOnlyCollection<string>(m_colorMode);
-
-
-        /// <summary>
-        /// All available import color modes
-        /// </summary>
-        public ReadOnlyCollection<ImportColorMode> EnumColorMode => new ReadOnlyCollection<ImportColorMode>(m_enumColorMode);
-
-
-        /// <summary>
-        /// Import color mode
-        /// </summary>
-        public ImportColorMode ImportColorMode
-        {
-            get => m_importColorMode;
-            set => m_importColorMode = value;
-        }
-
-
-        /// <summary>
-        /// Custom scale for import
-        /// </summary>
-        public double ImportCustomScale
-        {
-            get => m_importCustomScale;
-            set => m_importCustomScale = value;
-        }
-
-
-        /// <summary>
-        /// Whether import orient to view
-        /// </summary>
-        public bool ImportOrientToView
-        {
-            get => m_importOrientToView;
-            set => m_importOrientToView = value;
-        }
-
-
-        /// <summary>
-        /// All placement for layers to be imported
-        /// </summary>
-        public ReadOnlyCollection<string> Placement => new ReadOnlyCollection<string>(m_placement);
-
-
-        /// <summary>
-        /// All ImportPlacements for all layers to be imported
-        /// </summary>
-        public ReadOnlyCollection<ImportPlacement> EnumPlacement => new ReadOnlyCollection<ImportPlacement>(m_enumPlacement);
-
-
-        /// <summary>
-        /// Import placement for import
-        /// </summary>
-        public ImportPlacement ImportPlacement
-        {
-            get => m_importPlacement;
-            set => m_importPlacement = value;
-        }
-
-
-        /// <summary>
-        /// All units for layer to be imported
-        /// </summary>
-        public ReadOnlyCollection<string> Unit => new ReadOnlyCollection<string>(m_unit);
-
-
-        /// <summary>
-        /// All import unit for import layers
-        /// </summary>
-        public ReadOnlyCollection<ImportUnit> EnumUnit => new ReadOnlyCollection<ImportUnit>(m_enumUnit);
-
-
-        /// <summary>
-        /// Get or set import unit
-        /// </summary>
-        public ImportUnit ImportUnit
-        {
-            get => m_importUnit;
-            set => m_importUnit = value;
-        }
-
-
-        /// <summary>
-        /// All available layers only 
-        /// </summary>
-        public ReadOnlyCollection<string> VisibleLayersOnly => new ReadOnlyCollection<string>(m_visibleLayersOnly);
-
-
-        /// <summary>
-        /// All boolean values for available visible layers
-        /// </summary>
-        public ReadOnlyCollection<bool> EnumVisibleLayersOnly => new ReadOnlyCollection<bool>(m_enumVisibleLayersOnly);
-
-
-        /// <summary>
-        /// Whether import visible layer only
-        /// </summary>
-        public bool ImportVisibleLayersOnly
-        {
-            get => m_importVisibleLayersOnly;
-            set => m_importVisibleLayersOnly = value;
-        }
-
-        /// <summary>
-        /// Whether active view is 3D
-        /// </summary>
-        public bool Is3DView
-        {
-            get => m_is3DView;
-            set => m_is3DView = value;
-        }
-        
-
-                /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="format">Format to import</param>
@@ -284,7 +136,156 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
 
         /// <summary>
-        /// Collect the parameters and export
+        ///     Get or set whether import this view only
+        /// </summary>
+        public bool ImportThisViewOnly
+        {
+            get => m_importThisViewOnly;
+            set => m_importThisViewOnly = value;
+        }
+
+
+        /// <summary>
+        ///     all views for import
+        /// </summary>
+        public ViewSet Views
+        {
+            get => m_views;
+            set => m_views = value;
+        }
+
+
+        /// <summary>
+        ///     Import view
+        /// </summary>
+        public View ImportView
+        {
+            get => m_importView;
+            set => m_importView = value;
+        }
+
+
+        /// <summary>
+        ///     All available color modes for import
+        /// </summary>
+        public ReadOnlyCollection<string> ColorMode => new ReadOnlyCollection<string>(m_colorMode);
+
+
+        /// <summary>
+        ///     All available import color modes
+        /// </summary>
+        public ReadOnlyCollection<ImportColorMode> EnumColorMode =>
+            new ReadOnlyCollection<ImportColorMode>(m_enumColorMode);
+
+
+        /// <summary>
+        ///     Import color mode
+        /// </summary>
+        public ImportColorMode ImportColorMode
+        {
+            get => m_importColorMode;
+            set => m_importColorMode = value;
+        }
+
+
+        /// <summary>
+        ///     Custom scale for import
+        /// </summary>
+        public double ImportCustomScale
+        {
+            get => m_importCustomScale;
+            set => m_importCustomScale = value;
+        }
+
+
+        /// <summary>
+        ///     Whether import orient to view
+        /// </summary>
+        public bool ImportOrientToView
+        {
+            get => m_importOrientToView;
+            set => m_importOrientToView = value;
+        }
+
+
+        /// <summary>
+        ///     All placement for layers to be imported
+        /// </summary>
+        public ReadOnlyCollection<string> Placement => new ReadOnlyCollection<string>(m_placement);
+
+
+        /// <summary>
+        ///     All ImportPlacements for all layers to be imported
+        /// </summary>
+        public ReadOnlyCollection<ImportPlacement> EnumPlacement =>
+            new ReadOnlyCollection<ImportPlacement>(m_enumPlacement);
+
+
+        /// <summary>
+        ///     Import placement for import
+        /// </summary>
+        public ImportPlacement ImportPlacement
+        {
+            get => m_importPlacement;
+            set => m_importPlacement = value;
+        }
+
+
+        /// <summary>
+        ///     All units for layer to be imported
+        /// </summary>
+        public ReadOnlyCollection<string> Unit => new ReadOnlyCollection<string>(m_unit);
+
+
+        /// <summary>
+        ///     All import unit for import layers
+        /// </summary>
+        public ReadOnlyCollection<ImportUnit> EnumUnit => new ReadOnlyCollection<ImportUnit>(m_enumUnit);
+
+
+        /// <summary>
+        ///     Get or set import unit
+        /// </summary>
+        public ImportUnit ImportUnit
+        {
+            get => m_importUnit;
+            set => m_importUnit = value;
+        }
+
+
+        /// <summary>
+        ///     All available layers only
+        /// </summary>
+        public ReadOnlyCollection<string> VisibleLayersOnly => new ReadOnlyCollection<string>(m_visibleLayersOnly);
+
+
+        /// <summary>
+        ///     All boolean values for available visible layers
+        /// </summary>
+        public ReadOnlyCollection<bool> EnumVisibleLayersOnly => new ReadOnlyCollection<bool>(m_enumVisibleLayersOnly);
+
+
+        /// <summary>
+        ///     Whether import visible layer only
+        /// </summary>
+        public bool ImportVisibleLayersOnly
+        {
+            get => m_importVisibleLayersOnly;
+            set => m_importVisibleLayersOnly = value;
+        }
+
+        /// <summary>
+        ///     Whether active view is 3D
+        /// </summary>
+        public bool Is3DView
+        {
+            get => m_is3DView;
+            set => m_is3DView = value;
+        }
+
+
+        /// <summary>
+        ///     Collect the parameters and export
         /// </summary>
         /// <returns></returns>
         public override bool Import()
@@ -298,13 +299,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
             dwgImportOption.ThisViewOnly = m_importThisViewOnly;
             View view = null;
             if (!m_importThisViewOnly)
-            {
                 view = m_importView;
-            }
             else
-            {
                 view = m_activeDoc.ActiveView;
-            }
             dwgImportOption.Unit = m_importUnit;
             dwgImportOption.VisibleLayersOnly = m_importVisibleLayersOnly;
 
@@ -319,10 +316,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             return imported;
         }
-        
 
-                /// <summary>
-        /// Initialize the variables
+
+        /// <summary>
+        ///     Initialize the variables
         /// </summary>
         private void Initialize()
         {
@@ -374,10 +371,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             //Whether active view is 3D
             m_is3DView = false;
-            if (m_activeDoc.ActiveView.ViewType == ViewType.ThreeD)
-            {
-                m_is3DView = true;
-            }            
+            if (m_activeDoc.ActiveView.ViewType == ViewType.ThreeD) m_is3DView = true;
 
             //Views
             m_views = new ViewSet();
@@ -398,7 +392,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
 
         /// <summary>
-        /// Get all the views to be displayed
+        ///     Get all the views to be displayed
         /// </summary>
         private void GetViews()
         {
@@ -414,41 +408,22 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 var view = itor.Current as View;
                 // skip view templates because they're invalid for import/export
                 if (view == null || view.IsTemplate)
-                {
                     continue;
-                }
-                else if (view.ViewType == ViewType.FloorPlan)
-                {
+                if (view.ViewType == ViewType.FloorPlan)
                     floorPlans.Insert(view);
-                }
                 else if (view.ViewType == ViewType.CeilingPlan)
-                {
                     ceilingPlans.Insert(view);
-                }
-                else if (view.ViewType == ViewType.EngineeringPlan)
-                {
-                    engineeringPlans.Insert(view);
-                }
+                else if (view.ViewType == ViewType.EngineeringPlan) engineeringPlans.Insert(view);
             }
 
             foreach (View floorPlan in floorPlans)
-            {
-                foreach (View ceilingPlan in ceilingPlans)
-                {
-                    if (floorPlan.Name == ceilingPlan.Name)
-                    {
-                        views.Insert(floorPlan);
-                    }
-                }
-            }
+            foreach (View ceilingPlan in ceilingPlans)
+                if (floorPlan.Name == ceilingPlan.Name)
+                    views.Insert(floorPlan);
 
             foreach (View engineeringPlan in engineeringPlans)
-            {
                 if (engineeringPlan.Name == engineeringPlan.GenLevel.Name)
-                {
                     views.Insert(engineeringPlan);
-                }
-            }
 
             var activeView = m_activeDoc.ActiveView;
             var viewType = activeView.ViewType;
@@ -457,28 +432,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
             {
                 m_views.Insert(activeView);
                 foreach (View view in views)
-                {
                     if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
-                    {
                         m_views.Insert(view);
-                    }
-                }
             }
             else if (viewType == ViewType.EngineeringPlan)
             {
-                if (views.Contains(activeView))
-                {
-                    m_views.Insert(activeView);
-                }
+                if (views.Contains(activeView)) m_views.Insert(activeView);
                 foreach (View view in views)
-                {
                     if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
-                    {
                         m_views.Insert(view);
-                    }
-                }
             }
-            else//Get view of the lowest elevation
+            else //Get view of the lowest elevation
             {
                 var i = 0;
                 double elevation = 0;
@@ -501,8 +465,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
                     i++;
                 }
+
                 m_views.Insert(viewLowestElevation);
             }
         }
-            }
+    }
 }

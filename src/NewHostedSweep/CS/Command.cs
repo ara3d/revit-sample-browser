@@ -21,36 +21,35 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This class is the entrance of this project, it implements IExternalCommand.
+    ///     This class is the entrance of this project, it implements IExternalCommand.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        
-        public Result Execute(ExternalCommandData commandData, 
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             try
             {
                 var mgr = new CreationMgr(commandData.Application.ActiveUIDocument);
                 mgr.Execute();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 message += e.StackTrace;
                 return Result.Cancelled;
-            }            
+            }
 
             return Result.Succeeded;
         }
-
-            }
+    }
 }

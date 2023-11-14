@@ -20,80 +20,73 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 {
-   /// <summary>
-   /// This class manages instances of IssueMarkerTracking on per-document basis. 
-   /// </summary>
-   public class IssueMarkerTrackingManager
-   {
-      
-      private IssueMarkerTrackingManager()
-      {
-      }
+    /// <summary>
+    ///     This class manages instances of IssueMarkerTracking on per-document basis.
+    /// </summary>
+    public class IssueMarkerTrackingManager
+    {
+        private static IssueMarkerTrackingManager manager;
 
-      /// <summary>
-      /// Gets an instance of IssueMarkerTrackingManager.
-      /// </summary>
-      /// <returns>An instance of IssueMarkerTrackingManager</returns>
-      public static IssueMarkerTrackingManager GetInstance()
-      {
-         if(manager == null)
-         {
-            manager = new IssueMarkerTrackingManager();
-         }
-         return manager;
-      }
+        private readonly HashSet<IssueMarkerTracking> trackings = new HashSet<IssueMarkerTracking>();
 
-      /// <summary>
-      /// Gets tracking for specified document
-      /// </summary>
-      /// <param name="doc">A Revit document</param>
-      /// <returns>A corresponding instance of IssueMarkerTracking</returns>
-      public IssueMarkerTracking GetTracking(Document doc) 
-      {
-         if (trackings.Where((track) => track.Document.Equals(doc)).FirstOrDefault() is IssueMarkerTracking tracking)
-            return tracking;
-         return null;
-      }
+        private IssueMarkerTrackingManager()
+        {
+        }
 
-      /// <summary>
-      /// Adds IssueMarkerTracking for the given document
-      /// </summary>
-      /// <param name="doc">A Revit document</param>
-      public void AddTracking(Document doc) 
-      {
-         if(!trackings.Any((track) => track.Document.Equals(doc)))
-            trackings.Add(new IssueMarkerTracking(doc));
-      }
+        /// <summary>
+        ///     Gets an instance of IssueMarkerTrackingManager.
+        /// </summary>
+        /// <returns>An instance of IssueMarkerTrackingManager</returns>
+        public static IssueMarkerTrackingManager GetInstance()
+        {
+            if (manager == null) manager = new IssueMarkerTrackingManager();
+            return manager;
+        }
 
-      /// <summary>
-      /// Removes IssueMarkerTracking from this manager
-      /// </summary>
-      /// <param name="guid">A GUID of the tracking</param>
-      public void DeleteTracking(Guid guid) 
-      {
-         trackings.RemoveWhere((track) => track.Id == guid);
-      }
+        /// <summary>
+        ///     Gets tracking for specified document
+        /// </summary>
+        /// <param name="doc">A Revit document</param>
+        /// <returns>A corresponding instance of IssueMarkerTracking</returns>
+        public IssueMarkerTracking GetTracking(Document doc)
+        {
+            if (trackings.Where(track => track.Document.Equals(doc)).FirstOrDefault() is IssueMarkerTracking tracking)
+                return tracking;
+            return null;
+        }
 
-      /// <summary>
-      /// Clears all trackings
-      /// </summary>
-      public void ClearTrackings()
-      {
-         trackings.Clear();
-      }
+        /// <summary>
+        ///     Adds IssueMarkerTracking for the given document
+        /// </summary>
+        /// <param name="doc">A Revit document</param>
+        public void AddTracking(Document doc)
+        {
+            if (!trackings.Any(track => track.Document.Equals(doc)))
+                trackings.Add(new IssueMarkerTracking(doc));
+        }
 
-      
-      
-      private static IssueMarkerTrackingManager manager;
+        /// <summary>
+        ///     Removes IssueMarkerTracking from this manager
+        /// </summary>
+        /// <param name="guid">A GUID of the tracking</param>
+        public void DeleteTracking(Guid guid)
+        {
+            trackings.RemoveWhere(track => track.Id == guid);
+        }
 
-      private HashSet<IssueMarkerTracking> trackings = new HashSet<IssueMarkerTracking>();
-
-         }
+        /// <summary>
+        ///     Clears all trackings
+        /// </summary>
+        public void ClearTrackings()
+        {
+            trackings.Clear();
+        }
+    }
 }

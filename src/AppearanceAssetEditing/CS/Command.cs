@@ -21,36 +21,34 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   public class Command : IExternalCommand
-   {
-      
-      public virtual Result Execute(ExternalCommandData commandData
-          , ref string message, ElementSet elements)
-      {
-         try
-         {
-            Application.thisApp.ShowForm(commandData.Application);
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
+    {
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            try
+            {
+                Application.thisApp.ShowForm(commandData.Application);
 
-            return Result.Succeeded;
-         }
-         catch (Exception ex)
-         {
-            message = ex.Message;
-            return Result.Failed;
-         }
-      }
-   }
-
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+    }
 }
-

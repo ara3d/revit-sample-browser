@@ -20,22 +20,23 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.HelloRevit.CS
 {
     /// <summary>
-    /// Demonstrate how a basic ExternalCommand can be added to the Revit user interface. 
-    /// And demonstrate how to create a Revit style dialog.
+    ///     Demonstrate how a basic ExternalCommand can be added to the Revit user interface.
+    ///     And demonstrate how to create a Revit style dialog.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+            ref string message, ElementSet elements)
         {
             // NOTES: Anything can be done in this method, such as create a message box, 
             // a task dialog or fetch some information from revit and so on.
@@ -45,7 +46,7 @@ namespace Revit.SDK.Samples.HelloRevit.CS
             var app = commandData.Application.Application;
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-                        // Study how to create a revit style dialog using task dialog API by following
+            // Study how to create a revit style dialog using task dialog API by following
             // code snippet.  
 
             // Creates a Revit task dialog to communicate information to the interactive user.
@@ -58,10 +59,10 @@ namespace Revit.SDK.Samples.HelloRevit.CS
 
             // Add commmandLink to task dialog
             mainDialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink1,
-                                      "View information about the Revit installation");
+                "View information about the Revit installation");
             mainDialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink2,
-                                      "View information about the active document");
-         
+                "View information about the active document");
+
             // Set common buttons and default button. If no CommonButton or CommandLink is added,
             // task dialog will show a Close button by default.
             mainDialog.CommonButtons = TaskDialogCommonButtons.Close;
@@ -85,7 +86,6 @@ namespace Revit.SDK.Samples.HelloRevit.CS
                     + "Revit Version Build is: " + app.VersionBuild;
 
                 dialog_CommandLink1.Show();
-
             }
 
             // If the user clicks the second command link, a simple Task Dialog 
@@ -96,9 +96,8 @@ namespace Revit.SDK.Samples.HelloRevit.CS
                     "Active document: " + activeDoc.Title + "\n"
                     + "Active view name: " + activeDoc.ActiveView.Name);
             }
-            
+
             return Result.Succeeded;
         }
-
-            }
+    }
 }

@@ -28,12 +28,15 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.VersionChecking.CS
 {
     /// <summary>
-    /// UI that display the version information
+    ///     UI that display the version information
     /// </summary>
     public partial class versionCheckingForm : Form
     {
+        // a instance of Command class
+        private readonly Command m_dataBuffer;
+
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="dataBuffer">a instance of Command class</param>
         public versionCheckingForm(Command dataBuffer)
@@ -42,11 +45,8 @@ namespace Revit.SDK.Samples.VersionChecking.CS
             m_dataBuffer = dataBuffer;
         }
 
-        // a instance of Command class
-        Command m_dataBuffer;
-
         /// <summary>
-        /// display the version information in a multiline text box
+        ///     display the version information in a multiline text box
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -54,10 +54,10 @@ namespace Revit.SDK.Samples.VersionChecking.CS
         {
             versionInformationTextBox.ReadOnly = true;
 
-            var productName    = "Product Name:    " + m_dataBuffer.ProductName + "\r\n";
+            var productName = "Product Name:    " + m_dataBuffer.ProductName + "\r\n";
             var productVersion = "Product Version: " + m_dataBuffer.ProductVersion + "\r\n";
-            var buildNumber    = "Build Number:    " + m_dataBuffer.BuildNumner + "\r\n";
-            
+            var buildNumber = "Build Number:    " + m_dataBuffer.BuildNumner + "\r\n";
+
             versionInformationTextBox.AppendText(productName);
             versionInformationTextBox.AppendText(productVersion);
             versionInformationTextBox.AppendText(buildNumber);
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
         }
 
         /// <summary>
-        /// close UI
+        ///     close UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -76,15 +76,15 @@ namespace Revit.SDK.Samples.VersionChecking.CS
         }
 
         /// <summary>
-        /// set dialog's display location.
+        ///     set dialog's display location.
         /// </summary>
         private void SetDialogLocation()
         {
-           // set dialog's display location
-           var left             = (Screen.PrimaryScreen.WorkingArea.Right - Width) / 2;
-           var top              = (Screen.PrimaryScreen.WorkingArea.Bottom - Height) / 2;
-           var windowLocation = new Point(left, top);
-           Location        = windowLocation;
+            // set dialog's display location
+            var left = (Screen.PrimaryScreen.WorkingArea.Right - Width) / 2;
+            var top = (Screen.PrimaryScreen.WorkingArea.Bottom - Height) / 2;
+            var windowLocation = new Point(left, top);
+            Location = windowLocation;
         }
     }
 }

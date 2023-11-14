@@ -21,29 +21,29 @@
 //
 
 
-using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.PrintLog.CS
 {
     /// <summary>
-    /// This class implements the methods of interface IExternalApplication and register Print related events.
-    /// OnStartUp method will register ViewPrint and DocumentPrint events and unregister them in OnShutDown method.
-    /// The registered events will help implements the sample functionalities. 
+    ///     This class implements the methods of interface IExternalApplication and register Print related events.
+    ///     OnStartUp method will register ViewPrint and DocumentPrint events and unregister them in OnShutDown method.
+    ///     The registered events will help implements the sample functionalities.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Application : IExternalApplication
     {
-                /// <summary>
-        /// Events reactor for ViewPrint and DocumentPrint related
+        /// <summary>
+        ///     Events reactor for ViewPrint and DocumentPrint related
         /// </summary>
-        EventsReactor m_eventsReactor;
-        
+        private EventsReactor m_eventsReactor;
 
-                /// <summary>
-        /// Implement the OnStartup method to register events when Revit starts.
+
+        /// <summary>
+        ///     Implement the OnStartup method to register events when Revit starts.
         /// </summary>
         /// <param name="application">Controlled application of to be loaded to Revit process.</param>
         /// <returns>Return the status of the external application.</returns>
@@ -51,15 +51,15 @@ namespace Revit.SDK.Samples.PrintLog.CS
         {
             // Register related events
             m_eventsReactor = new EventsReactor();
-            application.ControlledApplication.ViewPrinting += new EventHandler<Autodesk.Revit.DB.Events.ViewPrintingEventArgs>(m_eventsReactor.AppViewPrinting);
-            application.ControlledApplication.ViewPrinted += new EventHandler<Autodesk.Revit.DB.Events.ViewPrintedEventArgs>(m_eventsReactor.AppViewPrinted);
-            application.ControlledApplication.DocumentPrinting += new EventHandler<Autodesk.Revit.DB.Events.DocumentPrintingEventArgs>(m_eventsReactor.AppDocumentPrinting);
-            application.ControlledApplication.DocumentPrinted += new EventHandler<Autodesk.Revit.DB.Events.DocumentPrintedEventArgs>(m_eventsReactor.AppDocumentPrinted);
+            application.ControlledApplication.ViewPrinting += m_eventsReactor.AppViewPrinting;
+            application.ControlledApplication.ViewPrinted += m_eventsReactor.AppViewPrinted;
+            application.ControlledApplication.DocumentPrinting += m_eventsReactor.AppDocumentPrinting;
+            application.ControlledApplication.DocumentPrinted += m_eventsReactor.AppDocumentPrinted;
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Implement this method to unregister the subscribed events when Revit exits.
+        ///     Implement this method to unregister the subscribed events when Revit exits.
         /// </summary>
         /// <param name="application">Controlled application to be shutdown.</param>
         /// <returns>Return the status of the external application.</returns>
@@ -69,11 +69,11 @@ namespace Revit.SDK.Samples.PrintLog.CS
             m_eventsReactor.CloseLogFiles();
             //
             // unregister events
-            application.ControlledApplication.ViewPrinting -= new EventHandler<Autodesk.Revit.DB.Events.ViewPrintingEventArgs>(m_eventsReactor.AppViewPrinting);
-            application.ControlledApplication.ViewPrinted -= new EventHandler<Autodesk.Revit.DB.Events.ViewPrintedEventArgs>(m_eventsReactor.AppViewPrinted);
-            application.ControlledApplication.DocumentPrinting -= new EventHandler<Autodesk.Revit.DB.Events.DocumentPrintingEventArgs>(m_eventsReactor.AppDocumentPrinting);
-            application.ControlledApplication.DocumentPrinted -= new EventHandler<Autodesk.Revit.DB.Events.DocumentPrintedEventArgs>(m_eventsReactor.AppDocumentPrinted);
+            application.ControlledApplication.ViewPrinting -= m_eventsReactor.AppViewPrinting;
+            application.ControlledApplication.ViewPrinted -= m_eventsReactor.AppViewPrinted;
+            application.ControlledApplication.DocumentPrinting -= m_eventsReactor.AppDocumentPrinting;
+            application.ControlledApplication.DocumentPrinted -= m_eventsReactor.AppDocumentPrinted;
             return Result.Succeeded;
         }
-            }
+    }
 }

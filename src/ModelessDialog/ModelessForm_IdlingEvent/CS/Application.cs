@@ -26,17 +26,18 @@ using Autodesk.Revit.UI.Events;
 namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
-    /// Implements the Revit add-in interface IExternalApplication
+    ///     Implements the Revit add-in interface IExternalApplication
     /// </summary>
     public class Application : IExternalApplication
     {
         // class instance
         internal static Application thisApp;
+
         // ModelessForm instance
         private ModelessForm m_MyForm;
-        
-                /// <summary>
-        /// Implements the OnShutdown event
+
+        /// <summary>
+        ///     Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -55,25 +56,24 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         }
 
         /// <summary>
-        /// Implements the OnStartup event
+        ///     Implements the OnStartup event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
-            m_MyForm = null;   // no dialog needed yet; the command will bring it
-            thisApp = this;  // static access to this application instance
+            m_MyForm = null; // no dialog needed yet; the command will bring it
+            thisApp = this; // static access to this application instance
 
             return Result.Succeeded;
         }
 
         /// <summary>
-        ///   This method creates and shows a modeless dialog, unless it already exists.
+        ///     This method creates and shows a modeless dialog, unless it already exists.
         /// </summary>
         /// <remarks>
-        ///   The external command invokes this on the end-user's request
+        ///     The external command invokes this on the end-user's request
         /// </remarks>
-        /// 
         public void ShowForm(UIApplication uiapp)
         {
             // If we do not have a dialog yet, create and show it
@@ -88,16 +88,15 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         }
 
         /// <summary>
-        ///   A handler for the Idling event.
+        ///     A handler for the Idling event.
         /// </summary>
         /// <remarks>
-        ///   We keep the handler very simple. First we check
-        ///   if we still have the dialog. If not, we unsubscribe from Idling,
-        ///   for we no longer need it and it makes Revit speedier.
-        ///   If we do have the dialog around, we check if it has a request ready
-        ///   and process it accordingly.
+        ///     We keep the handler very simple. First we check
+        ///     if we still have the dialog. If not, we unsubscribe from Idling,
+        ///     for we no longer need it and it makes Revit speedier.
+        ///     If we do have the dialog around, we check if it has a request ready
+        ///     and process it accordingly.
         /// </remarks>
-        /// 
         public void IdlingHandler(object sender, IdlingEventArgs args)
         {
             var uiapp = sender as UIApplication;
@@ -107,33 +106,24 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
                 uiapp.Idling -= IdlingHandler;
                 return;
             }
-            else   // dialog still exists
-            {
-                // fetch the request from the dialog
+            // dialog still exists
+            // fetch the request from the dialog
 
-                var request = m_MyForm.Request.Take();
+            var request = m_MyForm.Request.Take();
 
-                if (request != RequestId.None)
+            if (request != RequestId.None)
+                try
                 {
-                    try
-                    {
-                        // we take the request, if any was made,
-                        // and pass it on to the request executor
-
-                        RequestHandler.Execute(uiapp, request);
-                    }
-                    finally
-                    {
-                        // The dialog may be in its waiting state;
-                        // make sure we wake it up even if we get an exception.
-
-                        m_MyForm.WakeUp();
-                    }
+                    // we take the request, if any was made,
+                    // and pass it on to the request executor
+                    RequestHandler.Execute(uiapp, request);
                 }
-            }
-
-            return;
+                finally
+                {
+                    // The dialog may be in its waiting state;
+                    // make sure we wake it up even if we get an exception.
+                    m_MyForm.WakeUp();
+                }
         }
-
-            }
+    }
 }

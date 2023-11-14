@@ -20,20 +20,23 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
 
 namespace Revit.SDK.Samples.StairsAutomation.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        
+        private static int stairsIndex;
+        private static readonly int[] stairsConfigs = { 0, 3, 4, 1, 2 };
+
         /// <summary>
-        /// The implementation of the automatic stairs creation command.
+        ///     The implementation of the automatic stairs creation command.
         /// </summary>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var activeDocument = commandData.Application.ActiveUIDocument;
             var document = activeDocument.Document;
@@ -50,10 +53,5 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 
             return Result.Succeeded;
         }
-
-        
-        private static int stairsIndex;
-        private static int[] stairsConfigs = { 0, 3, 4, 1, 2 };
     }
 }
-

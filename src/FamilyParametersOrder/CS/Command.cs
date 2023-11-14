@@ -21,46 +21,44 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-
 namespace Revit.SDK.Samples.FamilyParametersOrder.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   public class Command : IExternalCommand
-   {
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
+    {
+        /// <summary>
+        ///     Used to disable SortLoadedFamiliesParamsForm opened when document is opened.
+        /// </summary>
+        public static bool m_SortDialogIsOpened = true;
 
-      /// <summary>
-      /// Used to disable SortLoadedFamiliesParamsForm opened when document is opened. 
-      /// </summary>
-      public static bool m_SortDialogIsOpened = true;
-
-     public virtual Result Execute(ExternalCommandData commandData
-          , ref string message, ElementSet elements)
-      {
-         try
-         {
-            // Show UI
-            using (var form = new SortFamilyFilesParamsForm(commandData.Application))
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            try
             {
-               m_SortDialogIsOpened = false;
-               form.ShowDialog();
-               m_SortDialogIsOpened = true;
-               return Result.Succeeded;
+                // Show UI
+                using (var form = new SortFamilyFilesParamsForm(commandData.Application))
+                {
+                    m_SortDialogIsOpened = false;
+                    form.ShowDialog();
+                    m_SortDialogIsOpened = true;
+                    return Result.Succeeded;
+                }
             }
-         }
-         catch (Exception ex)
-         {
-            message = ex.Message;
-            return Result.Failed;
-         }
-      }
-   }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+    }
 }
-

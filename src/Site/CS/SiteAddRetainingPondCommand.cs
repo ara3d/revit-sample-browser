@@ -23,23 +23,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Site.CS
 {
     /// <summary>
-    /// A command that adds a new circular retaining pond to a TopographySurface where the user selects.
+    ///     A command that adds a new circular retaining pond to a TopographySurface where the user selects.
     /// </summary>
-    /// <remarks>This command demonstrates how the Site API supports creation of standard topography "families" representing
-    /// commonly used landscape structures.</remarks>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SiteAddRetainingPondCommand : IExternalCommand
+    /// <remarks>
+    ///     This command demonstrates how the Site API supports creation of standard topography "families" representing
+    ///     commonly used landscape structures.
+    /// </remarks>
+    [Transaction(TransactionMode.Manual)]
+    internal class SiteAddRetainingPondCommand : IExternalCommand
     {
-        
         /// <summary>
-        /// Implementation of the external command.
+        ///     Implementation of the external command.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
@@ -53,7 +55,7 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Adds a new retaining pond.
+        ///     Adds a new retaining pond.
         /// </summary>
         /// <param name="uiDoc">The document.</param>
         /// <param name="pondRadius">The radius of the pond.</param>
@@ -64,19 +66,15 @@ namespace Revit.SDK.Samples.Site.CS
             // Find toposurfaces
             var tsCollector = new FilteredElementCollector(doc);
             tsCollector.OfClass(typeof(TopographySurface));
-            var tsEnumerable = tsCollector.Cast<TopographySurface>().Where<TopographySurface>(ts => !ts.IsSiteSubRegion);
-            var count = tsEnumerable.Count<TopographySurface>();
+            var tsEnumerable = tsCollector.Cast<TopographySurface>().Where(ts => !ts.IsSiteSubRegion);
+            var count = tsEnumerable.Count();
 
             // If there is only on surface, use it.  If there is more than one, let the user select the target.
             TopographySurface targetSurface = null;
             if (count > 1) // tmp
-            {
                 targetSurface = SiteUIUtils.PickTopographySurface(uiDoc);
-            }
             else
-            {
-                targetSurface = tsEnumerable.First<TopographySurface>();
-            }
+                targetSurface = tsEnumerable.First();
 
             // Pick point and project to plane at toposurface average elevation
             var point = SiteUIUtils.PickPointNearToposurface(uiDoc, targetSurface, "Pick point for center of pond.");
@@ -87,7 +85,7 @@ namespace Revit.SDK.Samples.Site.CS
             // Find material "Water"
             var collector = new FilteredElementCollector(doc);
             collector.OfClass(typeof(Material));
-            var mat = collector.Cast<Material>().FirstOrDefault<Material>(m => m.Name == "Water");
+            var mat = collector.Cast<Material>().FirstOrDefault(m => m.Name == "Water");
 
             // Create subregion curves
             var curves = new List<Curve>();
@@ -109,10 +107,7 @@ namespace Revit.SDK.Samples.Site.CS
                 {
                     t2.Start();
                     var region = SiteSubRegion.Create(doc, curveLoops, targetSurface.Id);
-                    if (mat != null)
-                    {
-                        region.TopographySurface.MaterialId = mat.Id;
-                    }
+                    if (mat != null) region.TopographySurface.MaterialId = mat.Id;
                     t2.Commit();
 
                     // The boundary points for the subregion cannot be deleted, since they are generated
@@ -135,22 +130,21 @@ namespace Revit.SDK.Samples.Site.CS
                         t.Start();
 
                         // Delete existing points first to avoid conflict
-                        if (existingPoints.Count > 0)
-                        {
-                            targetSurface.DeletePoints(existingPoints);
-                        }
+                        if (existingPoints.Count > 0) targetSurface.DeletePoints(existingPoints);
 
                         // Generate list of points to add
-                        var points = SiteEditingUtils.GeneratePondPointsSurrounding(new XYZ(point.X, point.Y, elevation - 3), pondRadius);
+                        var points =
+                            SiteEditingUtils.GeneratePondPointsSurrounding(new XYZ(point.X, point.Y, elevation - 3),
+                                pondRadius);
                         targetSurface.AddPoints(points);
                         t.Commit();
                     }
 
                     editScope.Commit(new TopographyEditFailuresPreprocessor());
                 }
+
                 addGroup.Assimilate();
             }
         }
-
-            }
+    }
 }

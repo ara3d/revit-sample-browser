@@ -27,27 +27,27 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.InPlaceMembers.CS
 {
     /// <summary>
-    /// Main form class, use to diaplay the preview picture box and property grid.
+    ///     Main form class, use to diaplay the preview picture box and property grid.
     /// </summary>
-    public partial class InPlaceMembersForm : Form,IMessageFilter
+    public partial class InPlaceMembersForm : Form, IMessageFilter
     {
         /// <summary>
-        /// Properties instance
-        /// </summary>
-        private Properties m_instanceProperties;
-
-        /// <summary>
-        /// Graphics data
-        /// </summary>
-        private GraphicsData m_graphicsData;
-
-        /// <summary>
-        /// window message key number
+        ///     window message key number
         /// </summary>
         private const int WM_KEYDOWN = 0X0100;
 
         /// <summary>
-        /// constructor 
+        ///     Graphics data
+        /// </summary>
+        private readonly GraphicsData m_graphicsData;
+
+        /// <summary>
+        ///     Properties instance
+        /// </summary>
+        private readonly Properties m_instanceProperties;
+
+        /// <summary>
+        ///     constructor
         /// </summary>
         /// <param name="p"></param>
         /// <param name="graphicsData"></param>
@@ -60,32 +60,19 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// load event handle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void InPlaceMembersForm_Load(object sender, EventArgs e)
-        {
-            instancePropertyGrid.SelectedObject = m_instanceProperties;
-            modelPictureBox.DataSource = m_graphicsData;
-        }
-
-        /// <summary>
-        /// implement IMessageFilter interface
+        ///     implement IMessageFilter interface
         /// </summary>
         /// <param name="m">The message to be dispatched.</param>
-        /// <returns>true to filter the message and stop it from being dispatched; 
-        /// false to allow the message to continue to the next filter or control.</returns>
+        /// <returns>
+        ///     true to filter the message and stop it from being dispatched;
+        ///     false to allow the message to continue to the next filter or control.
+        /// </returns>
         public bool PreFilterMessage(ref Message m)
         {
-            if (!modelPictureBox.Focused)
-            {
-                return false;
-            }
+            if (!modelPictureBox.Focused) return false;
 
             if (m.Msg == WM_KEYDOWN)
             {
-
                 var k = (Keys)(int)m.WParam;
                 var e = new KeyEventArgs(k);
                 switch (e.KeyCode)
@@ -126,16 +113,27 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                     case Keys.End:
                         modelPictureBox.Scale(false);
                         break;
-                    default:
-                        break;
                 }
+
                 return true;
             }
+
             return false;
         }
 
         /// <summary>
-        /// ok button event handler
+        ///     load event handle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InPlaceMembersForm_Load(object sender, EventArgs e)
+        {
+            instancePropertyGrid.SelectedObject = m_instanceProperties;
+            modelPictureBox.DataSource = m_graphicsData;
+        }
+
+        /// <summary>
+        ///     ok button event handler
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -145,7 +143,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// Cancel button event handler.
+        ///     Cancel button event handler.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -153,6 +151,5 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         {
             Close();
         }
-
     }
 }

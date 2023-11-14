@@ -26,37 +26,17 @@ using System;
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// This class stand for user coordinate system
+    ///     This class stand for user coordinate system
     /// </summary>
     public class UCS
     {
-        Vector m_origin = new Vector(0.0, 0.0, 0.0);
-        Vector m_xAxis = new Vector(1.0, 0.0, 0.0);
-        Vector m_yAxis = new Vector(0.0, 1.0, 0.0);
-        Vector m_zAxis = new Vector(0.0, 0.0, 1.0);
+        private Vector m_origin = new Vector(0.0, 0.0, 0.0);
+        private Vector m_xAxis = new Vector(1.0, 0.0, 0.0);
+        private Vector m_yAxis = new Vector(0.0, 1.0, 0.0);
+        private Vector m_zAxis = new Vector(0.0, 0.0, 1.0);
 
         /// <summary>
-        /// Property to get origin of user coordinate system
-        /// </summary>
-        public Vector Origin => m_origin;
-
-        /// <summary>
-        /// Property to get X Axis of user coordinate system
-        /// </summary>
-        public Vector XAxis => m_xAxis;
-
-        /// <summary>
-        /// Property to get Y Axis of user coordinate system
-        /// </summary>
-        public Vector YAxis => m_yAxis;
-
-        /// <summary>
-        /// Property to get Z Axis of user coordinate system
-        /// </summary>
-        public Vector ZAxis => m_zAxis;
-
-        /// <summary>
-        /// The default constructor, 
+        ///     The default constructor,
         /// </summary>
         public UCS(Vector origin, Vector xAxis, Vector yAxis)
             : this(origin, xAxis, yAxis, true)
@@ -64,8 +44,8 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// constructor, 
-        /// get a user coordinate system
+        ///     constructor,
+        ///     get a user coordinate system
         /// </summary>
         /// <param name="origin">origin of user coordinate system</param>
         /// <param name="xAxis">xAxis of user coordinate system</param>
@@ -76,15 +56,9 @@ namespace Revit.SDK.Samples.Openings.CS
             var x2 = xAxis / ~xAxis;
             var y2 = yAxis / ~yAxis;
             var z2 = x2 & y2;
-            if (~z2 < double.Epsilon)
-            {
-                throw new InvalidOperationException();
-            }
+            if (~z2 < double.Epsilon) throw new InvalidOperationException();
 
-            if (!flag)
-            {
-                z2 = -z2;
-            }
+            if (!flag) z2 = -z2;
 
             m_origin = origin;
             m_xAxis = x2;
@@ -93,7 +67,27 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// Transform local coordinate to global coordinate
+        ///     Property to get origin of user coordinate system
+        /// </summary>
+        public Vector Origin => m_origin;
+
+        /// <summary>
+        ///     Property to get X Axis of user coordinate system
+        /// </summary>
+        public Vector XAxis => m_xAxis;
+
+        /// <summary>
+        ///     Property to get Y Axis of user coordinate system
+        /// </summary>
+        public Vector YAxis => m_yAxis;
+
+        /// <summary>
+        ///     Property to get Z Axis of user coordinate system
+        /// </summary>
+        public Vector ZAxis => m_zAxis;
+
+        /// <summary>
+        ///     Transform local coordinate to global coordinate
         /// </summary>
         /// <param name="arg">a vector which need to transform</param>
         public Vector LC2GC(Vector arg)
@@ -109,7 +103,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// Transform global coordinate to local coordinate
+        ///     Transform global coordinate to local coordinate
         /// </summary>
         /// <param name="line">a line which need to transform</param>
         public Line3D GC2LC(Line3D line)
@@ -120,7 +114,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// Transform global coordinate to local coordinate
+        ///     Transform global coordinate to local coordinate
         /// </summary>
         /// <param name="arg">a vector which need to transform</param>
         public Vector GC2LC(Vector arg)

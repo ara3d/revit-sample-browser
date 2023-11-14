@@ -21,26 +21,27 @@
 //
 
 using System.Windows.Forms;
-
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
 {
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// this class controls the class which subscribes handle events and the events' information UI.
-    /// like a bridge between them.
+    ///     A class inherits IExternalCommand interface.
+    ///     this class controls the class which subscribes handle events and the events' information UI.
+    ///     like a bridge between them.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.EnergyAnalysisModel");
+            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                "Revit.SDK.Samples.EnergyAnalysisModel");
             trans.Start();
             // Create an object that is responsible for collecting users inputs and getting analysis data of current model.
             var analysisModel = new EnergyAnalysisModel(commandData.Application.ActiveUIDocument.Document);
@@ -57,9 +58,9 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
                     return Result.Cancelled;
                 }
             }
+
             trans.Commit();
             return Result.Succeeded;
         }
-
-            }
+    }
 }

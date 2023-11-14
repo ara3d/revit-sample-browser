@@ -20,146 +20,156 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Data class which stores lower priority information for exporting dwg format
+    ///     Data class which stores lower priority information for exporting dwg format
     /// </summary>
     public class ExportDWGOptionsData
     {
-                /// <summary>
-        /// String list of Layers and properties used in UI
+        /// <summary>
+        ///     String list of Coordinate system basis
         /// </summary>
-        List<string> m_layersAndProperties;
+        private List<string> m_coorSystem;
 
         /// <summary>
-        /// List of Autodesk.Revit.DB.PropOverrideMode
+        ///     List of values whether to use shared coordinate system
         /// </summary>
-        List<Autodesk.Revit.DB.PropOverrideMode> m_enumLayersAndProperties;
+        private List<bool> m_enumCoorSystem;
 
         /// <summary>
-        /// String list of Layer Settings used in UI
+        ///     String list of layer settings values defined in Revit
         /// </summary>
-        List<string> m_layerMapping;
+        private List<string> m_enumLayerMapping;
 
         /// <summary>
-        /// String list of layer settings values defined in Revit 
+        ///     List of Autodesk.Revit.DB.PropOverrideMode
         /// </summary>
-        List<string> m_enumLayerMapping;
+        private List<PropOverrideMode> m_enumLayersAndProperties;
 
         /// <summary>
-        /// Layer setting option to export
+        ///     List of Autodesk.Revit.DB.LineScaling defined in Revit
         /// </summary>
-        string m_exportLayerMapping;
+        private List<LineScaling> m_enumLineScaling;
 
         /// <summary>
-        /// String list of Linetype scaling used in UI
+        ///     List of Autodesk.Revit.DB.SolidGeometry defined in Revit
         /// </summary>
-        List<string> m_lineScaling;
+        private List<SolidGeometry> m_enumSolids;
 
         /// <summary>
-        /// PropOverrideMode Option to export
+        ///     List of Autodesk.Revit.DB.ExportUnit values defined in Revit
         /// </summary>
-        Autodesk.Revit.DB.PropOverrideMode m_exportLayersAndProperties;
+        private List<ExportUnit> m_enumUnits;
 
         /// <summary>
-        /// List of Autodesk.Revit.DB.LineScaling defined in Revit
+        ///     Coordinate system basis option to export
         /// </summary>
-        List<Autodesk.Revit.DB.LineScaling> m_enumLineScaling;
+        private bool m_exportCoorSystem;
 
         /// <summary>
-        /// Line scaling option to export
+        ///     Layer setting option to export
         /// </summary>
-        Autodesk.Revit.DB.LineScaling m_exportLineScaling;
+        private string m_exportLayerMapping;
 
         /// <summary>
-        /// String list of Coordinate system basis
+        ///     PropOverrideMode Option to export
         /// </summary>
-        List<string> m_coorSystem;
+        private PropOverrideMode m_exportLayersAndProperties;
 
         /// <summary>
-        /// List of values whether to use shared coordinate system
+        ///     Line scaling option to export
         /// </summary>
-        List<bool> m_enumCoorSystem;
+        private LineScaling m_exportLineScaling;
 
         /// <summary>
-        /// Coordinate system basis option to export
+        ///     Whether to create separate files for each view/sheet
         /// </summary>
-        bool m_exportCoorSystem;
+        private bool m_exportMergeFiles;
 
         /// <summary>
-        /// String list of DWG unit
+        ///     Solid geometry option to export
         /// </summary>
-        List<string> m_units;
+        private SolidGeometry m_exportSolid;
 
         /// <summary>
-        /// List of Autodesk.Revit.DB.ExportUnit values defined in Revit
+        ///     Export unit option to export
         /// </summary>
-        List<Autodesk.Revit.DB.ExportUnit> m_enumUnits;
+        private ExportUnit m_exportUnit;
 
         /// <summary>
-        /// Export unit option to export
+        ///     String list of Layer Settings used in UI
         /// </summary>
-        Autodesk.Revit.DB.ExportUnit m_exportUnit;
+        private List<string> m_layerMapping;
 
         /// <summary>
-        /// String list of solid used in UI
+        ///     String list of Layers and properties used in UI
         /// </summary>
-        List<string> m_solids;
+        private List<string> m_layersAndProperties;
 
         /// <summary>
-        /// List of Autodesk.Revit.DB.SolidGeometry defined in Revit
+        ///     String list of Linetype scaling used in UI
         /// </summary>
-        List<Autodesk.Revit.DB.SolidGeometry> m_enumSolids;
+        private List<string> m_lineScaling;
 
         /// <summary>
-        /// Solid geometry option to export
+        ///     String list of solid used in UI
         /// </summary>
-        Autodesk.Revit.DB.SolidGeometry m_exportSolid;
+        private List<string> m_solids;
 
         /// <summary>
-        /// Whether to create separate files for each view/sheet
+        ///     String list of DWG unit
         /// </summary>
-        bool m_exportMergeFiles;
+        private List<string> m_units;
+
+
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        public ExportDWGOptionsData()
+        {
+            Initialize();
+        }
 
         //Export rooms and areas as polylines
 
-        
-                /// <summary>
-        /// String collection of Layers and properties used in UI
+
+        /// <summary>
+        ///     String collection of Layers and properties used in UI
         /// </summary>
         public ReadOnlyCollection<string> LayersAndProperties => new ReadOnlyCollection<string>(m_layersAndProperties);
 
         /// <summary>
-        /// Collection of Autodesk.Revit.DB.PropOverrideMode
+        ///     Collection of Autodesk.Revit.DB.PropOverrideMode
         /// </summary>
-        public ReadOnlyCollection<Autodesk.Revit.DB.PropOverrideMode> EnumLayersAndProperties => new ReadOnlyCollection<Autodesk.Revit.DB.PropOverrideMode>(m_enumLayersAndProperties);
+        public ReadOnlyCollection<PropOverrideMode> EnumLayersAndProperties =>
+            new ReadOnlyCollection<PropOverrideMode>(m_enumLayersAndProperties);
 
         /// <summary>
-        /// PropOverrideMode Option to export
+        ///     PropOverrideMode Option to export
         /// </summary>
-        public Autodesk.Revit.DB.PropOverrideMode ExportLayersAndProperties
+        public PropOverrideMode ExportLayersAndProperties
         {
             get => m_exportLayersAndProperties;
             set => m_exportLayersAndProperties = value;
         }
 
         /// <summary>
-        /// String collection of Layer Settings used in UI
+        ///     String collection of Layer Settings used in UI
         /// </summary>
         public ReadOnlyCollection<string> LayerMapping => new ReadOnlyCollection<string>(m_layerMapping);
 
         /// <summary>
-        /// String collection of layer settings values defined in Revit  
+        ///     String collection of layer settings values defined in Revit
         /// </summary>
         public ReadOnlyCollection<string> EnumLayerMapping => new ReadOnlyCollection<string>(m_enumLayerMapping);
 
         /// <summary>
-        /// Layer setting option to export
+        ///     Layer setting option to export
         /// </summary>
         public string ExportLayerMapping
         {
@@ -168,118 +178,110 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// String collection of Linetype scaling used in UI
+        ///     String collection of Linetype scaling used in UI
         /// </summary>
         public ReadOnlyCollection<string> LineScaling => new ReadOnlyCollection<string>(m_lineScaling);
 
         /// <summary>
-        /// Collection of Autodesk.Revit.DB.LineScaling defined in Revit
+        ///     Collection of Autodesk.Revit.DB.LineScaling defined in Revit
         /// </summary>
-        public ReadOnlyCollection<Autodesk.Revit.DB.LineScaling> EnumLineScaling => new ReadOnlyCollection<Autodesk.Revit.DB.LineScaling>(m_enumLineScaling);
+        public ReadOnlyCollection<LineScaling> EnumLineScaling =>
+            new ReadOnlyCollection<LineScaling>(m_enumLineScaling);
 
         /// <summary>
-        /// Line scaling option to export
+        ///     Line scaling option to export
         /// </summary>
-        public Autodesk.Revit.DB.LineScaling ExportLineScaling
+        public LineScaling ExportLineScaling
         {
             get => m_exportLineScaling;
             set => m_exportLineScaling = value;
         }
 
         /// <summary>
-        /// String collection of Coordinate system basis
+        ///     String collection of Coordinate system basis
         /// </summary>
         public ReadOnlyCollection<string> CoorSystem => new ReadOnlyCollection<string>(m_coorSystem);
 
         /// <summary>
-        /// Collection of values whether to use shared coordinate system
+        ///     Collection of values whether to use shared coordinate system
         /// </summary>
         public ReadOnlyCollection<bool> EnumCoorSystem => new ReadOnlyCollection<bool>(m_enumCoorSystem);
 
         /// <summary>
-        /// Coordinate system basis option to export
+        ///     Coordinate system basis option to export
         /// </summary>
         public bool ExportCoorSystem
         {
             get => m_exportCoorSystem;
             set => m_exportCoorSystem = value;
-        } 
+        }
 
         /// <summary>
-        /// String collection of DWG unit
+        ///     String collection of DWG unit
         /// </summary>
         public ReadOnlyCollection<string> Units => new ReadOnlyCollection<string>(m_units);
 
         /// <summary>
-        /// Collection of Autodesk.Revit.DB.ExportUnit values defined in Revit
+        ///     Collection of Autodesk.Revit.DB.ExportUnit values defined in Revit
         /// </summary>
-        public ReadOnlyCollection<Autodesk.Revit.DB.ExportUnit> EnumUnits => new ReadOnlyCollection<Autodesk.Revit.DB.ExportUnit>(m_enumUnits);
+        public ReadOnlyCollection<ExportUnit> EnumUnits => new ReadOnlyCollection<ExportUnit>(m_enumUnits);
 
         /// <summary>
-        /// Export unit option to export
+        ///     Export unit option to export
         /// </summary>
-        public Autodesk.Revit.DB.ExportUnit ExportUnit
+        public ExportUnit ExportUnit
         {
             get => m_exportUnit;
             set => m_exportUnit = value;
-        }    
+        }
 
         /// <summary>
-        /// String collection of solid used in UI
+        ///     String collection of solid used in UI
         /// </summary>
         public ReadOnlyCollection<string> Solids => new ReadOnlyCollection<string>(m_solids);
 
         /// <summary>
-        /// Collection of Autodesk.Revit.DB.SolidGeometry defined in Revit
+        ///     Collection of Autodesk.Revit.DB.SolidGeometry defined in Revit
         /// </summary>
-        public ReadOnlyCollection<Autodesk.Revit.DB.SolidGeometry> EnumSolids => new ReadOnlyCollection<Autodesk.Revit.DB.SolidGeometry>(m_enumSolids);
+        public ReadOnlyCollection<SolidGeometry> EnumSolids => new ReadOnlyCollection<SolidGeometry>(m_enumSolids);
 
         /// <summary>
-        /// Property of solid geometry option to export
+        ///     Property of solid geometry option to export
         /// </summary>
-        public Autodesk.Revit.DB.SolidGeometry ExportSolid
+        public SolidGeometry ExportSolid
         {
             get => m_exportSolid;
             set => m_exportSolid = value;
         }
 
         /// <summary>
-        /// Export rooms and areas as polylines
+        ///     Export rooms and areas as polylines
         /// </summary>
         public bool ExportAreas { get; set; }
 
         /// <summary>
-        /// Whether to create separate files for each view/sheet
+        ///     Whether to create separate files for each view/sheet
         /// </summary>
         public bool ExportMergeFiles
         {
             get => m_exportMergeFiles;
             set => m_exportMergeFiles = value;
-        } 
-        
-
-                /// <summary>
-        /// Constructor
-        /// </summary>
-        public ExportDWGOptionsData()
-        {
-            Initialize();
         }
 
         /// <summary>
-        /// Initialize values
+        ///     Initialize values
         /// </summary>
-        void Initialize()
+        private void Initialize()
         {
             //Layers and properties:
             m_layersAndProperties = new List<string>();
-            m_enumLayersAndProperties = new List<Autodesk.Revit.DB.PropOverrideMode>();
+            m_enumLayersAndProperties = new List<PropOverrideMode>();
             m_layersAndProperties.Add("Category properties BYLAYER, overrides BYENTITY");
-            m_enumLayersAndProperties.Add(Autodesk.Revit.DB.PropOverrideMode.ByEntity);
+            m_enumLayersAndProperties.Add(PropOverrideMode.ByEntity);
             m_layersAndProperties.Add("All properties BYLAYER, no overrides");
-            m_enumLayersAndProperties.Add(Autodesk.Revit.DB.PropOverrideMode.ByLayer);
+            m_enumLayersAndProperties.Add(PropOverrideMode.ByLayer);
             m_layersAndProperties.Add("All properties BYLAYER, new Layers for overrides");
-            m_enumLayersAndProperties.Add(Autodesk.Revit.DB.PropOverrideMode.NewLayer);
+            m_enumLayersAndProperties.Add(PropOverrideMode.NewLayer);
 
             //Layer Settings:
             m_layerMapping = new List<string>();
@@ -295,7 +297,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             //Linetype scaling:
             m_lineScaling = new List<string>();
-            m_enumLineScaling = new List<Autodesk.Revit.DB.LineScaling>();
+            m_enumLineScaling = new List<LineScaling>();
             m_lineScaling.Add("Scaled Linetype definitions");
             m_enumLineScaling.Add(Autodesk.Revit.DB.LineScaling.ViewScale);
             m_lineScaling.Add("ModelSpace (PSLTSCALE = 0)");
@@ -313,24 +315,24 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             //One DWG unit
             m_units = new List<string>();
-            m_enumUnits = new List<Autodesk.Revit.DB.ExportUnit>();
-            m_units.Add(Autodesk.Revit.DB.ExportUnit.Foot.ToString().ToLower());
-            m_enumUnits.Add(Autodesk.Revit.DB.ExportUnit.Foot);
-            m_units.Add(Autodesk.Revit.DB.ExportUnit.Inch.ToString().ToLower());
-            m_enumUnits.Add(Autodesk.Revit.DB.ExportUnit.Inch);
-            m_units.Add(Autodesk.Revit.DB.ExportUnit.Meter.ToString().ToLower());
-            m_enumUnits.Add(Autodesk.Revit.DB.ExportUnit.Meter);
-            m_units.Add(Autodesk.Revit.DB.ExportUnit.Centimeter.ToString().ToLower());
-            m_enumUnits.Add(Autodesk.Revit.DB.ExportUnit.Centimeter);
-            m_units.Add(Autodesk.Revit.DB.ExportUnit.Millimeter.ToString().ToLower());
-            m_enumUnits.Add(Autodesk.Revit.DB.ExportUnit.Millimeter);
+            m_enumUnits = new List<ExportUnit>();
+            m_units.Add(ExportUnit.Foot.ToString().ToLower());
+            m_enumUnits.Add(ExportUnit.Foot);
+            m_units.Add(ExportUnit.Inch.ToString().ToLower());
+            m_enumUnits.Add(ExportUnit.Inch);
+            m_units.Add(ExportUnit.Meter.ToString().ToLower());
+            m_enumUnits.Add(ExportUnit.Meter);
+            m_units.Add(ExportUnit.Centimeter.ToString().ToLower());
+            m_enumUnits.Add(ExportUnit.Centimeter);
+            m_units.Add(ExportUnit.Millimeter.ToString().ToLower());
+            m_enumUnits.Add(ExportUnit.Millimeter);
 
             m_solids = new List<string>();
-            m_enumSolids = new List<Autodesk.Revit.DB.SolidGeometry>();
+            m_enumSolids = new List<SolidGeometry>();
             m_solids.Add("Export as polymesh");
-            m_enumSolids.Add(Autodesk.Revit.DB.SolidGeometry.Polymesh);
+            m_enumSolids.Add(SolidGeometry.Polymesh);
             m_solids.Add("Export as ACIS solids");
-            m_enumSolids.Add(Autodesk.Revit.DB.SolidGeometry.ACIS);
+            m_enumSolids.Add(SolidGeometry.ACIS);
         }
-            }
+    }
 }

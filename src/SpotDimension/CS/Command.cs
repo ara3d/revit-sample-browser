@@ -22,28 +22,31 @@
 
 
 using System;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SpotDimension.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
-                                               ref string message,
-                                               ElementSet elements)
+            ref string message,
+            ElementSet elements)
         {
             try
             {
-                var documentTransaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
+                var documentTransaction =
+                    new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
                 documentTransaction.Start();
                 using (var infoForm = new SpotDimensionInfoDlg(commandData))
                 {
                     //Highlight the selected spotdimension
-                    if (infoForm.ShowDialog() == System.Windows.Forms.DialogResult.OK 
+                    if (infoForm.ShowDialog() == DialogResult.OK
                         && infoForm.SelectedSpotDimension != null)
                     {
                         elements.Insert(infoForm.SelectedSpotDimension);
@@ -51,14 +54,15 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                         return Result.Failed;
                     }
                 }
+
                 documentTransaction.Commit();
                 return Result.Succeeded;
             }
             catch (Exception ex)
             {
-               // If there are something wrong, give error information and return failed
-               message = ex.Message;
-               return Result.Failed;
+                // If there are something wrong, give error information and return failed
+                message = ex.Message;
+                return Result.Failed;
             }
         }
     }

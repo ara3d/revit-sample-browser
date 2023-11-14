@@ -20,37 +20,39 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System.Windows.Forms;
+
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
-    /// Form used to display project information
+    ///     Form used to display project information
     /// </summary>
-    public partial class ProjectInfoForm : System.Windows.Forms.Form
+    public partial class ProjectInfoForm : Form
     {
-                /// <summary>
-        /// Wrapper for ProjectInfo
+        /// <summary>
+        ///     Wrapper for ProjectInfo
         /// </summary>
-        ProjectInfoWrapper m_projectInfoWrapper; 
-        
-                /// <summary>
-        /// Initialize component
+        private readonly ProjectInfoWrapper m_projectInfoWrapper;
+
+        /// <summary>
+        ///     Initialize component
         /// </summary>
         public ProjectInfoForm()
         {
             InitializeComponent();
-        } 
+        }
 
         /// <summary>
-        /// Initialize PropertyGrid
+        ///     Initialize PropertyGrid
         /// </summary>
         /// <param name="projectInfoWrapper">ProjectInfo wrapper</param>
         public ProjectInfoForm(ProjectInfoWrapper projectInfoWrapper)
-            :this()
+            : this()
         {
             m_projectInfoWrapper = projectInfoWrapper;
 
             // Initialize propertyGrid with CustomDescriptor
             propertyGrid1.SelectedObject = new WrapperCustomDescriptor(m_projectInfoWrapper);
         }
-            }
+    }
 }

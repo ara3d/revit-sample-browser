@@ -26,64 +26,13 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
     /// <summary>
-    /// It represents a winder region used to connect straight runs. For L-shape stairs, there is
-    /// one WinderCorner, For U-shape stairs, there are two such components.
+    ///     It represents a winder region used to connect straight runs. For L-shape stairs, there is
+    ///     one WinderCorner, For U-shape stairs, there are two such components.
     /// </summary>
-    abstract class WinderCorner
+    internal abstract class WinderCorner
     {
-        /*   
-        *   Direction1
-        *    |      
-        *    |
-        *    V    
-        *    |
-        *    |
-        *    |----->---- Direction2
-        * CornerPoint   
-        */
-
         /// <summary>
-        /// Corner point of the winder region.
-        /// </summary>
-        public XYZ CornerPoint { get; private set; }
-
-        /// <summary>
-        /// The enter direction of the winder region.
-        /// </summary>
-        public XYZ Direction1 { get; private set; }
-
-        /// <summary>
-        /// The leave direction of the winder region.
-        /// </summary>
-        public XYZ Direction2 { get; private set; }
-
-        /// <summary>
-        /// Number of steps in the winder region.
-        /// </summary>
-        public uint NumSteps { get; private set; }
-
-        /// <summary>
-        /// The distance from start point to corner point.
-        /// </summary>
-        public double Distance1 { get; protected set; }
-
-        /// <summary>
-        /// The distance from corner point to end point.
-        /// </summary>
-        public double Distance2 { get; protected set; }
-
-        /// <summary>
-        /// Start delimiter of the winder region.
-        /// </summary>
-        public XYZ StartPoint => CornerPoint - Direction1 * Distance1;
-
-        /// <summary>
-        /// End delimiter of the winder region.
-        /// </summary>
-        public XYZ EndPoint => CornerPoint + Direction2 * Distance2;
-
-        /// <summary>
-        /// Constructor to initialize the basic fields of a winder region.
+        ///     Constructor to initialize the basic fields of a winder region.
         /// </summary>
         /// <param name="cornerPnt">Corner Point</param>
         /// <param name="dir1">Enter direction</param>
@@ -96,9 +45,59 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             Direction2 = dir2;
             NumSteps = steps;
         }
+        /*   
+        *   Direction1
+        *    |      
+        *    |
+        *    V    
+        *    |
+        *    |
+        *    |----->---- Direction2
+        * CornerPoint   
+        */
 
         /// <summary>
-        /// Move the whole winder region by the given vector.
+        ///     Corner point of the winder region.
+        /// </summary>
+        public XYZ CornerPoint { get; private set; }
+
+        /// <summary>
+        ///     The enter direction of the winder region.
+        /// </summary>
+        public XYZ Direction1 { get; }
+
+        /// <summary>
+        ///     The leave direction of the winder region.
+        /// </summary>
+        public XYZ Direction2 { get; }
+
+        /// <summary>
+        ///     Number of steps in the winder region.
+        /// </summary>
+        public uint NumSteps { get; }
+
+        /// <summary>
+        ///     The distance from start point to corner point.
+        /// </summary>
+        public double Distance1 { get; protected set; }
+
+        /// <summary>
+        ///     The distance from corner point to end point.
+        /// </summary>
+        public double Distance2 { get; protected set; }
+
+        /// <summary>
+        ///     Start delimiter of the winder region.
+        /// </summary>
+        public XYZ StartPoint => CornerPoint - Direction1 * Distance1;
+
+        /// <summary>
+        ///     End delimiter of the winder region.
+        /// </summary>
+        public XYZ EndPoint => CornerPoint + Direction2 * Distance2;
+
+        /// <summary>
+        ///     Move the whole winder region by the given vector.
         /// </summary>
         /// <param name="vector">Move delta vector</param>
         public virtual void Move(XYZ vector)
@@ -107,9 +106,9 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Generate the sketch in the winder region including the outer boundary, walk path, 
-        /// inner boundary and riser lines. Subclass need to implement this method 
-        /// to fill the input sketch using its winder layout algorithm.
+        ///     Generate the sketch in the winder region including the outer boundary, walk path,
+        ///     inner boundary and riser lines. Subclass need to implement this method
+        ///     to fill the input sketch using its winder layout algorithm.
         /// </summary>
         /// <param name="runWidth">Runwidth</param>
         /// <param name="outerBoundary">Outer boundary</param>

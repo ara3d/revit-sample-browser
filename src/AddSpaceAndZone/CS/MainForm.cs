@@ -24,16 +24,17 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 {
     /// <summary>
-    /// The MainForm Class is the main user interface to manage the Space elements and Zone elements
+    ///     The MainForm Class is the main user interface to manage the Space elements and Zone elements
     /// </summary>
-    public partial class MainForm : System.Windows.Forms.Form
+    public partial class MainForm : Form
     {
         /// <summary>
-        /// The default constructor of MainForm.
+        ///     The default constructor of MainForm.
         /// </summary>
         private MainForm()
         {
@@ -41,7 +42,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// The constructor of MainForm.
+        ///     The constructor of MainForm.
         /// </summary>
         public MainForm(DataManager dataManager)
         {
@@ -50,7 +51,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// When the levelComboBox selected index is changed, update the spacesListView and zonesTreeView.
+        ///     When the levelComboBox selected index is changed, update the spacesListView and zonesTreeView.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -60,7 +61,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// When the MainForm is loaded, initialize related controls.
+        ///     When the MainForm is loaded, initialize related controls.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -76,7 +77,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// When createSpacesButton is clicked, then create spaces and update the spacesListView
+        ///     When createSpacesButton is clicked, then create spaces and update the spacesListView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -87,7 +88,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// When editZoneButton is clicked, show the ZoneEditorForm to edit the selected ZoneNode.
+        ///     When editZoneButton is clicked, show the ZoneEditorForm to edit the selected ZoneNode.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -95,34 +96,29 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         {
             var zoneNode = zonesTreeView.SelectedNode as ZoneNode;
             if (zoneNode != null)
-            {
                 using (var zoneEditorForm = new ZoneEditorForm(m_dataManager, zoneNode))
                 {
                     zoneEditorForm.ShowDialog();
                 }
-            }
 
             Update(levelComboBox.SelectedItem as Level);
-        }   
+        }
 
         /// <summary>
-        /// Update the spacesListView and spacesListView.
+        ///     Update the spacesListView and spacesListView.
         /// </summary>
         /// <param name="level"></param>
         private void Update(Level level)
         {
             spacesListView.Items.Clear();
             zonesTreeView.Nodes.Clear();
-            
+
             // DataManager
             m_dataManager.Update(level);
 
             // spacesListView
             var spaces = m_dataManager.GetSpaces();
-            foreach (var space in spaces)
-            {
-                spacesListView.Items.Add(new SpaceItem(space));
-            }
+            foreach (var space in spaces) spacesListView.Items.Add(new SpaceItem(space));
 
             // zonesTreeView
             var zones = m_dataManager.GetZones();
@@ -130,18 +126,17 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             {
                 var nodeIndex = zonesTreeView.Nodes.Add(new ZoneNode(zone));
                 foreach (Space spaceInZone in zone.Spaces)
-                {
                     zonesTreeView.Nodes[nodeIndex].Nodes.Add(new SpaceNode(spaceInZone));
-                }
             }
+
             zonesTreeView.ExpandAll();
 
             zonesTreeView.Update();
-            spacesListView.Update();          
+            spacesListView.Update();
         }
 
         /// <summary>
-        /// When createZoneButton is clicked, then create a new Zone element.
+        ///     When createZoneButton is clicked, then create a new Zone element.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -154,13 +149,9 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         private void zonesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node is ZoneNode)
-            {
                 editZoneButton.Enabled = true;
-            }
             else
-            {
                 editZoneButton.Enabled = false;
-            }
         }
     }
 }

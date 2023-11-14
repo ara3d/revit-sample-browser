@@ -21,16 +21,16 @@
 //
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-
 namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -56,12 +56,9 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
                 tran.Commit();
 
                 // Set the view which display the solid active
-                commandData.Application.ActiveUIDocument.ActiveView = 
-                   (((new FilteredElementCollector(document).
-                   OfClass(typeof(View))).
-                   Cast<View>()).
-                   Where(e => e.Name == "CSGTree")).
-                   First<View>();
+                commandData.Application.ActiveUIDocument.ActiveView =
+                    new FilteredElementCollector(document).OfClass(typeof(View)).Cast<View>()
+                        .Where(e => e.Name == "CSGTree").First();
 
                 return Result.Succeeded;
             }
@@ -73,55 +70,53 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         }
 
         /// <summary>
-        /// Prepare 5 solids materials for CSG tree
+        ///     Prepare 5 solids materials for CSG tree
         /// </summary>
         /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
         /// <returns>The solids materials list</returns>
         private List<Solid> prepareSolids(GeometryCreation geometrycreation)
         {
-           var resultSolids = new List<Solid>();
+            var resultSolids = new List<Solid>();
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25));
+            resultSolids.Add(geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25));
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedSphere(XYZ.Zero, 20));
+            resultSolids.Add(geometrycreation.CreateCenterbasedSphere(XYZ.Zero, 20));
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, 
-              GeometryCreation.CylinderDirection.BasisX));
+            resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
+                GeometryCreation.CylinderDirection.BasisX));
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, 
-              GeometryCreation.CylinderDirection.BasisY));
+            resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
+                GeometryCreation.CylinderDirection.BasisY));
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, 
-              GeometryCreation.CylinderDirection.BasisZ));
+            resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
+                GeometryCreation.CylinderDirection.BasisZ));
 
-           return resultSolids;
+            return resultSolids;
         }
 
         /// <summary>
-        /// Create a constructive solid geometry - CSG tree
-        /// http://en.wikipedia.org/wiki/Constructive_solid_geometry
-        /// http://en.wikipedia.org/wiki/File:Csg_tree.png
+        ///     Create a constructive solid geometry - CSG tree
+        ///     http://en.wikipedia.org/wiki/Constructive_solid_geometry
+        ///     http://en.wikipedia.org/wiki/File:Csg_tree.png
         /// </summary>
         /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
         /// <param name="avf">The object that is responsible for displaying the solids</param>
         private void CSGTree(GeometryCreation geometrycreation, AnalysisVisualizationFramework avf)
         {
-           var materialSolids = prepareSolids(geometrycreation);
+            var materialSolids = prepareSolids(geometrycreation);
 
-           // Operation 1 : Intersect
-           var CSGTree_solid1 = BooleanOperation.BooleanOperation_Intersect(materialSolids[0], materialSolids[1]);
+            // Operation 1 : Intersect
+            var CSGTree_solid1 = BooleanOperation.BooleanOperation_Intersect(materialSolids[0], materialSolids[1]);
 
-           // Operation 2 : Union
-           var CSGTree_solid2 = BooleanOperation.BooleanOperation_Union(materialSolids[2], materialSolids[3]);
-           // Operation 3 : Union
-           BooleanOperation.BooleanOperation_Union(ref CSGTree_solid2, materialSolids[4]);
+            // Operation 2 : Union
+            var CSGTree_solid2 = BooleanOperation.BooleanOperation_Union(materialSolids[2], materialSolids[3]);
+            // Operation 3 : Union
+            BooleanOperation.BooleanOperation_Union(ref CSGTree_solid2, materialSolids[4]);
 
-           // Operation 4 : Difference
-           BooleanOperation.BooleanOperation_Difference(ref CSGTree_solid1, CSGTree_solid2);
+            // Operation 4 : Difference
+            BooleanOperation.BooleanOperation_Difference(ref CSGTree_solid1, CSGTree_solid2);
 
-           avf.PaintSolid(CSGTree_solid1, "CSGTree");
-
+            avf.PaintSolid(CSGTree_solid1, "CSGTree");
         }
     }
 }
-

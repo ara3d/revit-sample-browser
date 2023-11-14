@@ -20,22 +20,21 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System.Collections.Generic;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Site.CS
 {
     /// <summary>
-    /// A command that moves a subregion and the points it contains to a new location on the host surface.
+    ///     A command that moves a subregion and the points it contains to a new location on the host surface.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SiteMoveRegionAndPointsCommand : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class SiteMoveRegionAndPointsCommand : IExternalCommand
     {
-        
         /// <summary>
-        /// Implementation of the external command.
+        ///     Implementation of the external command.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
@@ -47,9 +46,9 @@ namespace Revit.SDK.Samples.Site.CS
             return Result.Succeeded;
         }
 
-        
+
         /// <summary>
-        /// Moves a subregion and the associated topography to a new user-selected location.
+        ///     Moves a subregion and the associated topography to a new user-selected location.
         /// </summary>
         /// <param name="uiDoc">The document.</param>
         private void MoveSubregionAndPoints(UIDocument uiDoc)
@@ -107,9 +106,7 @@ namespace Revit.SDK.Samples.Site.CS
                         t.Start();
                         // Delete existing points from target region
                         if (existingPointsInNewLocation.Count > 0)
-                        {
                             toposurface.DeletePoints(existingPointsInNewLocation);
-                        }
 
                         // Move points from source region
                         toposurface.MovePoints(points, delta);

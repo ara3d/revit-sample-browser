@@ -21,75 +21,76 @@
 //
 
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Xml.Serialization;
 
 namespace Revit.SDK.Samples.EventsMonitor.CS
 {
     /// <summary>
-    /// This class is implemented to make sample autotest.
-    /// It checks whether the external file exists or not.
-    /// The sample can control the UI's display by this judgement.
-    /// It can dump the seleted event list to file or commandData.Data
-    /// and also can retrieve the list from file and commandData.Data.
+    ///     This class is implemented to make sample autotest.
+    ///     It checks whether the external file exists or not.
+    ///     The sample can control the UI's display by this judgement.
+    ///     It can dump the seleted event list to file or commandData.Data
+    ///     and also can retrieve the list from file and commandData.Data.
     /// </summary>
     public class JournalProcessor
     {
-                /// <summary>
-        /// xml file name.
+        /// <summary>
+        ///     direcotory of xml file.
         /// </summary>
-        private string m_xmlFile;
+        private readonly string m_directory;
 
         /// <summary>
-        /// xml serializer.
-        /// </summary>
-        private XmlSerializer m_xs;
-
-        /// <summary>
-        /// using UI or playing journal.
-        /// </summary>
-        private bool m_isReplay;
-
-        /// <summary>
-        /// events deserialized from xml file.
+        ///     events deserialized from xml file.
         /// </summary>
         private List<string> m_eventsInFile;
 
         /// <summary>
-        /// direcotory of xml file.
+        ///     using UI or playing journal.
         /// </summary>
-        private string m_directory;
-        
-                /// <summary>
-        /// Property to get private member variables to check the stauts is playing or recording.
-        /// </summary>
-        public bool IsReplay => m_isReplay;
+        private readonly bool m_isReplay;
 
         /// <summary>
-        /// Property to get private member variables of Event list.
+        ///     xml file name.
         /// </summary>
-        public List<string> EventsList => m_eventsInFile;
+        private readonly string m_xmlFile;
 
-        
-                /// <summary>
-        /// Constructor without argument.
+        /// <summary>
+        ///     xml serializer.
+        /// </summary>
+        private readonly XmlSerializer m_xs;
+
+
+        /// <summary>
+        ///     Constructor without argument.
         /// </summary>
         public JournalProcessor()
         {
             m_xs = new XmlSerializer(typeof(List<string>));
-            m_directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            m_xmlFile = Path.Combine(m_directory,"Current.xml");
-            
+            m_directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            m_xmlFile = Path.Combine(m_directory, "Current.xml");
+
             // if the external file is exist, it means playing journal now. No Setting Dialog will pop up.
             m_isReplay = CheckFileExistence();
 
             // get event list from xml file.
             GetEventsListFromFile();
         }
-        
-                /// <summary>
-        /// Check whether the xml file is exist or not.
+
+        /// <summary>
+        ///     Property to get private member variables to check the stauts is playing or recording.
+        /// </summary>
+        public bool IsReplay => m_isReplay;
+
+        /// <summary>
+        ///     Property to get private member variables of Event list.
+        /// </summary>
+        public List<string> EventsList => m_eventsInFile;
+
+        /// <summary>
+        ///     Check whether the xml file is exist or not.
         /// </summary>
         /// <returns></returns>
         private bool CheckFileExistence()
@@ -98,8 +99,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         }
 
         /// <summary>
-        /// Get the event list from xml file.
-        /// This method is used in ExternalApplication.
+        ///     Get the event list from xml file.
+        ///     This method is used in ExternalApplication.
         /// </summary>
         private void GetEventsListFromFile()
         {
@@ -116,51 +117,45 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         }
 
         /// <summary>
-        /// Dump the selected event list to xml file.
-        /// This method is used in ExternalApplication.
+        ///     Dump the selected event list to xml file.
+        ///     This method is used in ExternalApplication.
         /// </summary>
         /// <param name="eventList"></param>
         public void DumpEventsListToFile(List<string> eventList)
         {
             if (!m_isReplay)
             {
-                var fileName =  DateTime.Now.ToString("yyyyMMdd") + ".xml";
-                var tempFile =Path.Combine(m_directory ,fileName);
-                Stream stream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+                var fileName = DateTime.Now.ToString("yyyyMMdd") + ".xml";
+                var tempFile = Path.Combine(m_directory, fileName);
+                Stream stream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite,
+                    FileShare.ReadWrite);
                 m_xs.Serialize(stream, eventList);
                 stream.Close();
             }
         }
 
         /// <summary>
-        /// Get event list from commandData.Data.
-        /// This method is used in ExternalCommmand.
+        ///     Get event list from commandData.Data.
+        ///     This method is used in ExternalCommmand.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public List<string> GetEventsListFromJournalData(IDictionary<string, string> data)
         {
             var eventList = new List<string>();
-            foreach (var kvp in data)
-            {
-               eventList.Add(kvp.Key);
-            }
+            foreach (var kvp in data) eventList.Add(kvp.Key);
             return eventList;
         }
 
         /// <summary>
-        /// Dump the selected event list to commandData.Data.
-        /// This method is used in ExternalCommand.
+        ///     Dump the selected event list to commandData.Data.
+        ///     This method is used in ExternalCommand.
         /// </summary>
         /// <param name="eventList"></param>
         /// <param name="data"></param>
         public void DumpEventListToJournalData(List<string> eventList, ref IDictionary<string, string> data)
         {
-            foreach (var eventname in eventList)
-            {
-                data.Add(eventname, "1");
-            }
+            foreach (var eventname in eventList) data.Add(eventname, "1");
         }
-            }
+    }
 }
- 

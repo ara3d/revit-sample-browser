@@ -27,17 +27,17 @@ using Autodesk.Revit.DB.Structure;
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// This class wraps RebarShapeDefinitionBySegments.
+    ///     This class wraps RebarShapeDefinitionBySegments.
     /// </summary>
-    class RebarShapeDefBySegment : RebarShapeDef
+    internal class RebarShapeDefBySegment : RebarShapeDef
     {
         public RebarShapeDefBySegment(RebarShapeDefinitionBySegments segmentShapeDef)
-            :base(segmentShapeDef)
+            : base(segmentShapeDef)
         {
         }
 
         /// <summary>
-        /// Get all the constraints supported by RebarShapeDefinitionBySegments.
+        ///     Get all the constraints supported by RebarShapeDefinitionBySegments.
         /// </summary>
         /// <returns>all the constraints supported by RebarShapeDefinitionBySegments</returns>
         public override List<Type> AllowedConstraintTypes()

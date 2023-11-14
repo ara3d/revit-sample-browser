@@ -26,36 +26,35 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 {
-    
     /// <summary>
-    /// a struct to store the geometry information of the reinforcement
+    ///     a struct to store the geometry information of the reinforcement
     /// </summary>
     public struct RebarGeometry
     {
         // Private members
 
         /// <summary>
-        /// get and set the value of the normal
+        ///     get and set the value of the normal
         /// </summary>
         public XYZ Normal { get; set; }
 
         /// <summary>
-        /// get and set the value of curve array
+        ///     get and set the value of curve array
         /// </summary>
         public IList<Curve> Curves { get; set; }
 
         /// <summary>
-        /// get and set the number of the reinforcement
+        ///     get and set the number of the reinforcement
         /// </summary>
         public int RebarNumber { get; set; }
 
         /// <summary>
-        /// get and set the value of the reinforcement spacing 
+        ///     get and set the value of the reinforcement spacing
         /// </summary>
         public double RebarSpacing { get; set; }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="normal">the normal information</param>
         /// <param name="curves">the profile of the rebars</param>
@@ -72,139 +71,139 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
     }
 
     /// <summary>
-    /// A struct to store the const data which support beam reinforcement creation
+    ///     A struct to store the const data which support beam reinforcement creation
     /// </summary>
     public struct BeamRebarData
     {
         /// <summary>
-       /// offset value of the top end reinforcement
+        ///     offset value of the top end reinforcement
         /// </summary>
         public const double TopEndOffset = 0.2;
 
         /// <summary>
-        ///offset value of the top center reinforcement 
+        ///     offset value of the top center reinforcement
         /// </summary>
         public const double TopCenterOffset = 0.23;
 
         /// <summary>
-        /// offset value of the transverse reinforcement
+        ///     offset value of the transverse reinforcement
         /// </summary>
         public const double TransverseOffset = 0.125;
 
         /// <summary>
-        /// offset value of the end transverse reinforcement
+        ///     offset value of the end transverse reinforcement
         /// </summary>
         public const double TransverseEndOffset = 1.2;
 
         /// <summary>
-        /// the spacing value between end and center transverse reinforcement
+        ///     the spacing value between end and center transverse reinforcement
         /// </summary>
         public const double TransverseSpaceBetween = 1;
 
         /// <summary>
-        ///offset value of bottom reinforcement 
+        ///     offset value of bottom reinforcement
         /// </summary>
         public const double BottomOffset = 0.271;
 
         /// <summary>
-        /// number of bottom reinforcement
+        ///     number of bottom reinforcement
         /// </summary>
         public const int BottomRebarNumber = 5;
 
         /// <summary>
-        /// number of top reinforcement
+        ///     number of top reinforcement
         /// </summary>
         public const int TopRebarNumber = 2;
     }
 
 
     /// <summary>
-    /// A struct to store the const data which support column reinforcement creation
+    ///     A struct to store the const data which support column reinforcement creation
     /// </summary>
     public struct ColumnRebarData
     {
         /// <summary>
-       /// offset value of transverse reinforcement
+        ///     offset value of transverse reinforcement
         /// </summary>
         public const double TransverseOffset = 0.125;
- 
+
         /// <summary>
-        /// offset value of vertical reinforcement
+        ///     offset value of vertical reinforcement
         /// </summary>
         public const double VerticalOffset = 0.234;
     }
 
-    
-        /// <summary>
-    /// Indicate location of top reinforcement
+
+    /// <summary>
+    ///     Indicate location of top reinforcement
     /// </summary>
     public enum TopRebarLocation
     {
         /// <summary>
-        /// locate start
+        ///     locate start
         /// </summary>
         Start,
 
         /// <summary>
-        /// locate center
+        ///     locate center
         /// </summary>
         Center,
 
         /// <summary>
-        /// locate end
+        ///     locate end
         /// </summary>
         End
     }
 
     /// <summary>
-    /// Indicate location of transverse reinforcement
+    ///     Indicate location of transverse reinforcement
     /// </summary>
     public enum TransverseRebarLocation
     {
         /// <summary>
-        /// locate start
+        ///     locate start
         /// </summary>
         Start,
 
         /// <summary>
-        /// locate center
+        ///     locate center
         /// </summary>
         Center,
 
         /// <summary>
-        /// locate end
+        ///     locate end
         /// </summary>
         End
     }
 
     /// <summary>
-    /// Indicate location of vertical reinforcement
+    ///     Indicate location of vertical reinforcement
     /// </summary>
     public enum VerticalRebarLocation
     {
         /// <summary>
-        /// locate north
+        ///     locate north
         /// </summary>
         North,
 
         /// <summary>
-        /// locate east
+        ///     locate east
         /// </summary>
         East,
 
         /// <summary>
-        /// locate south
+        ///     locate south
         /// </summary>
         South,
 
         /// <summary>
-        /// locate west
+        ///     locate west
         /// </summary>
         West
     }
-    
+
     /// <summary>
-    /// A comparer for XYZ, and give a method to sort all the Autodesk.Revit.DB.XYZ points in a array
+    ///     A comparer for XYZ, and give a method to sort all the Autodesk.Revit.DB.XYZ points in a array
     /// </summary>
     public class XYZHeightComparer : IComparer<XYZ>
     {
@@ -215,15 +214,14 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             {
                 if (GeomUtil.IsEqual(first.Y, second.Y))
                 {
-                    if (GeomUtil.IsEqual(first.X, second.X))
-                    {
-                        return 0;
-                    }
-                    return (first.X > second.X) ? 1 : -1;
+                    if (GeomUtil.IsEqual(first.X, second.X)) return 0;
+                    return first.X > second.X ? 1 : -1;
                 }
-                return (first.Y > second.Y) ? 1 : -1;
+
+                return first.Y > second.Y ? 1 : -1;
             }
-            return (first.Z > second.Z) ? 1 : -1;
+
+            return first.Z > second.Z ? 1 : -1;
         }
     }
 }

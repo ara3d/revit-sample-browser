@@ -20,114 +20,119 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
+using Revit.SDK.Samples.AttachedDetailGroup.CS.Properties;
+using Size = System.Drawing.Size;
 
 namespace Revit.SDK.Samples.AttachedDetailGroup.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalApplication
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class Application : IExternalApplication
-   {
-      
-      /// <summary>
-      /// Implements the OnShutdown event
-      /// </summary>
-      /// <param name="application"></param>
-      /// <returns></returns>
-      public Result OnShutdown(UIControlledApplication application)
-      {
-         return Result.Succeeded;
-      }
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalApplication
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class Application : IExternalApplication
+    {
+        /// <summary>
+        ///     The path to this add-in assembly.
+        /// </summary>
+        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
 
-      /// <summary>
-      /// Implements the OnStartup event
-      /// </summary>
-      /// <param name="application"></param>
-      /// <returns></returns>
-      public Result OnStartup(UIControlledApplication application)
-      {
-         CreateAttachedDetailGroupPanel(application);
+        /// <summary>
+        ///     Implements the OnShutdown event
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            return Result.Succeeded;
+        }
 
-         return Result.Succeeded;
-      }
+        /// <summary>
+        ///     Implements the OnStartup event
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public Result OnStartup(UIControlledApplication application)
+        {
+            CreateAttachedDetailGroupPanel(application);
 
-      
-      /// <summary>
-      /// Sets up the add-in panel for this sample.
-      /// </summary>
-      private void CreateAttachedDetailGroupPanel(UIControlledApplication application)
-      {
-         // Create the ribbon panel.
-         var rp = application.CreateRibbonPanel("Attached Detail Group");
+            return Result.Succeeded;
+        }
 
-         // Create the show all detail groups pushbutton.
-         var pbdShowAllDetailGroups = new PushButtonData("ShowAttachedDetailGroups", "Show Attached\nDetail Groups",
-                  addAssemblyPath,
-                  typeof(AttachedDetailGroupShowAllCommand).FullName);
 
-         pbdShowAllDetailGroups.LongDescription = "Show all of the selected element group's attached detail groups that are compatible with the current view.";
+        /// <summary>
+        ///     Sets up the add-in panel for this sample.
+        /// </summary>
+        private void CreateAttachedDetailGroupPanel(UIControlledApplication application)
+        {
+            // Create the ribbon panel.
+            var rp = application.CreateRibbonPanel("Attached Detail Group");
 
-         var pbShowAllDetailGroups = rp.AddItem(pbdShowAllDetailGroups) as PushButton;
-         SetIconsForPushButton(pbShowAllDetailGroups, Properties.Resources.ShowAllDetailGroupsIcon);
+            // Create the show all detail groups pushbutton.
+            var pbdShowAllDetailGroups = new PushButtonData("ShowAttachedDetailGroups", "Show Attached\nDetail Groups",
+                addAssemblyPath,
+                typeof(AttachedDetailGroupShowAllCommand).FullName);
 
-         // Create the hide all detail groups pushbutton.
-         var pbdHideAllDetailGroups = new PushButtonData("HideAttachedDetailGroups", "Hide Attached\nDetail Groups",
-                  addAssemblyPath,
-                  typeof(AttachedDetailGroupHideAllCommand).FullName);
+            pbdShowAllDetailGroups.LongDescription =
+                "Show all of the selected element group's attached detail groups that are compatible with the current view.";
 
-         pbdHideAllDetailGroups.LongDescription = "Hide all of the selected element group's attached detail groups that are compatible with the current view.";
+            var pbShowAllDetailGroups = rp.AddItem(pbdShowAllDetailGroups) as PushButton;
+            SetIconsForPushButton(pbShowAllDetailGroups, Resources.ShowAllDetailGroupsIcon);
 
-         var pbHideAllDetailGroups = rp.AddItem(pbdHideAllDetailGroups) as PushButton;
-         SetIconsForPushButton(pbHideAllDetailGroups, Properties.Resources.HideAllDetailGroupsIcon);
-      }
+            // Create the hide all detail groups pushbutton.
+            var pbdHideAllDetailGroups = new PushButtonData("HideAttachedDetailGroups", "Hide Attached\nDetail Groups",
+                addAssemblyPath,
+                typeof(AttachedDetailGroupHideAllCommand).FullName);
 
-      /// <summary>
-      /// Utility for adding icons to the button.
-      /// </summary>
-      /// <param name="button">The push button.</param>
-      /// <param name="icon">The icon.</param>
-      private static void SetIconsForPushButton(PushButton button, System.Drawing.Icon icon)
-      {
-         button.LargeImage = GetStdIcon(icon);
-         button.Image = GetSmallIcon(icon);
-      }
+            pbdHideAllDetailGroups.LongDescription =
+                "Hide all of the selected element group's attached detail groups that are compatible with the current view.";
 
-      /// <summary>
-      /// Gets the standard sized icon as a BitmapSource.
-      /// </summary>
-      /// <param name="icon">The icon.</param>
-      /// <returns>The BitmapSource.</returns>
-      private static BitmapSource GetStdIcon(System.Drawing.Icon icon)
-      {
-         return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
-               icon.Handle,
-               Int32Rect.Empty,
-               BitmapSizeOptions.FromEmptyOptions());
-      }
+            var pbHideAllDetailGroups = rp.AddItem(pbdHideAllDetailGroups) as PushButton;
+            SetIconsForPushButton(pbHideAllDetailGroups, Resources.HideAllDetailGroupsIcon);
+        }
 
-      /// <summary>
-      /// Gets the small sized icon as a BitmapSource.
-      /// </summary>
-      /// <param name="icon">The icon.</param>
-      /// <returns>The BitmapSource.</returns>
-      private static BitmapSource GetSmallIcon(System.Drawing.Icon icon)
-      {
-         var smallIcon = new System.Drawing.Icon(icon, new System.Drawing.Size(16, 16));
-         return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
-               smallIcon.Handle,
-               Int32Rect.Empty,
-               BitmapSizeOptions.FromEmptyOptions());
-      }
+        /// <summary>
+        ///     Utility for adding icons to the button.
+        /// </summary>
+        /// <param name="button">The push button.</param>
+        /// <param name="icon">The icon.</param>
+        private static void SetIconsForPushButton(PushButton button, Icon icon)
+        {
+            button.LargeImage = GetStdIcon(icon);
+            button.Image = GetSmallIcon(icon);
+        }
 
-      /// <summary>
-      /// The path to this add-in assembly.
-      /// </summary>
-      static string addAssemblyPath = typeof(Application).Assembly.Location;
-   }
+        /// <summary>
+        ///     Gets the standard sized icon as a BitmapSource.
+        /// </summary>
+        /// <param name="icon">The icon.</param>
+        /// <returns>The BitmapSource.</returns>
+        private static BitmapSource GetStdIcon(Icon icon)
+        {
+            return Imaging.CreateBitmapSourceFromHIcon(
+                icon.Handle,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        /// <summary>
+        ///     Gets the small sized icon as a BitmapSource.
+        /// </summary>
+        /// <param name="icon">The icon.</param>
+        /// <returns>The BitmapSource.</returns>
+        private static BitmapSource GetSmallIcon(Icon icon)
+        {
+            var smallIcon = new Icon(icon, new Size(16, 16));
+            return Imaging.CreateBitmapSourceFromHIcon(
+                smallIcon.Handle,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+        }
+    }
 }

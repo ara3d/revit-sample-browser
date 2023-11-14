@@ -21,19 +21,20 @@
 //
 
 using System;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
     /// <summary>
-    /// The dialog which lets user choose the way to create grids
+    ///     The dialog which lets user choose the way to create grids
     /// </summary>
-    public partial class GridCreationOptionForm : System.Windows.Forms.Form
+    public partial class GridCreationOptionForm : Form
     {
         // data class object
-        private GridCreationOptionData m_gridCreationOption;
+        private readonly GridCreationOptionData m_gridCreationOption;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="opt">Data class object</param>
         public GridCreationOptionForm(GridCreationOptionData opt)
@@ -42,11 +43,11 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             InitializeComponent();
             // Set state of controls
-            InitializeControls();            
+            InitializeControls();
         }
 
         /// <summary>
-        /// Set state of controls
+        ///     Set state of controls
         /// </summary>
         private void InitializeControls()
         {
@@ -64,12 +65,12 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Transfer data back into data class
+        ///     Transfer data back into data class
         /// </summary>
         private void SetData()
         {
             m_gridCreationOption.CreateGridsMode = radioButtonSelect.Checked ? CreateMode.Select :
-                (radioButtonOrthogonalGrids.Checked ? CreateMode.Orthogonal : CreateMode.RadialAndArc);
+                radioButtonOrthogonalGrids.Checked ? CreateMode.Orthogonal : CreateMode.RadialAndArc;
         }
     }
 }

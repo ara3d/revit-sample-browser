@@ -21,79 +21,81 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
+using Revit.SDK.Samples.BRepBuilderExample.CS.Properties;
 
 namespace Revit.SDK.Samples.BRepBuilderExample.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalApplication
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class Application : IExternalApplication
-   {
-            static string addinAssmeblyPath = typeof(Application).Assembly.Location;
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalApplication
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class Application : IExternalApplication
+    {
+        private static readonly string addinAssmeblyPath = typeof(Application).Assembly.Location;
 
-      /// <summary>
-      /// Implements the OnShutdown event
-      /// </summary>
-      /// <param name="application"></param>
-      /// <returns></returns>
-      public Result OnShutdown(UIControlledApplication application)
-      {
-         return Result.Succeeded;
-      }
+        /// <summary>
+        ///     Implements the OnShutdown event
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            return Result.Succeeded;
+        }
 
-      /// <summary>
-      /// Implements the OnStartup event
-      /// </summary>
-      /// <param name="application"></param>
-      /// <returns></returns>
-      public Result OnStartup(UIControlledApplication application)
-      {
-         createRibbonButtons(application);
-         return Result.Succeeded;
-      }
+        /// <summary>
+        ///     Implements the OnStartup event
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public Result OnStartup(UIControlledApplication application)
+        {
+            createRibbonButtons(application);
+            return Result.Succeeded;
+        }
 
-      BitmapSource convertFromBitmap(System.Drawing.Bitmap bitmap)
-      {
-         return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-             bitmap.GetHbitmap(),
-             IntPtr.Zero,
-             Int32Rect.Empty,
-             BitmapSizeOptions.FromEmptyOptions());
-      }
+        private BitmapSource convertFromBitmap(Bitmap bitmap)
+        {
+            return Imaging.CreateBitmapSourceFromHBitmap(
+                bitmap.GetHbitmap(),
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+        }
 
-      void createRibbonButtons(UIControlledApplication application)
-      {
-         application.CreateRibbonTab("Create Geometry");
-         var rp = application.CreateRibbonPanel("Create Geometry", "Create Geometry using BRepBuilder");
+        private void createRibbonButtons(UIControlledApplication application)
+        {
+            application.CreateRibbonTab("Create Geometry");
+            var rp = application.CreateRibbonPanel("Create Geometry", "Create Geometry using BRepBuilder");
 
-         var pbd1 = new PushButtonData("CreateCube", "Create Cube",
-             addinAssmeblyPath,
-             "Revit.SDK.Samples.BRepBuilderExample.CS.CreateCube");
-         pbd1.LargeImage = convertFromBitmap(Properties.Resources.large_shape);
-         pbd1.Image = convertFromBitmap(Properties.Resources.small_shape);
-         _ = rp.AddItem(pbd1) as PushButton;
-
-
-         var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
-             addinAssmeblyPath,
-             "Revit.SDK.Samples.BRepBuilderExample.CS.CreateNURBS");
-         pbd2.LargeImage = convertFromBitmap(Properties.Resources.large_shape);
-         pbd2.Image = convertFromBitmap(Properties.Resources.small_shape);
-         _ = rp.AddItem(pbd2) as PushButton;
-
-         var pbd3 = new PushButtonData("CreatePeriodic", "Create Periodic Surface",
-             addinAssmeblyPath,
-             "Revit.SDK.Samples.BRepBuilderExample.CS.CreatePeriodic");
-         pbd3.LargeImage = convertFromBitmap(Properties.Resources.large_shape);
-         pbd3.Image = convertFromBitmap(Properties.Resources.small_shape);
-         _ = rp.AddItem(pbd3) as PushButton;
-      }
+            var pbd1 = new PushButtonData("CreateCube", "Create Cube",
+                addinAssmeblyPath,
+                "Revit.SDK.Samples.BRepBuilderExample.CS.CreateCube");
+            pbd1.LargeImage = convertFromBitmap(Resources.large_shape);
+            pbd1.Image = convertFromBitmap(Resources.small_shape);
+            _ = rp.AddItem(pbd1) as PushButton;
 
 
-         }
+            var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
+                addinAssmeblyPath,
+                "Revit.SDK.Samples.BRepBuilderExample.CS.CreateNURBS");
+            pbd2.LargeImage = convertFromBitmap(Resources.large_shape);
+            pbd2.Image = convertFromBitmap(Resources.small_shape);
+            _ = rp.AddItem(pbd2) as PushButton;
+
+            var pbd3 = new PushButtonData("CreatePeriodic", "Create Periodic Surface",
+                addinAssmeblyPath,
+                "Revit.SDK.Samples.BRepBuilderExample.CS.CreatePeriodic");
+            pbd3.LargeImage = convertFromBitmap(Resources.large_shape);
+            pbd3.Image = convertFromBitmap(Resources.small_shape);
+            _ = rp.AddItem(pbd3) as PushButton;
+        }
+    }
 }

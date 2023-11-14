@@ -25,49 +25,58 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
 {
-   /// <summary>
-   /// <para>Implements the Revit add-in interface IExternalApplication.</para>
-   /// <para>An IExternalResourceUIServer can be registered at any time during a Revit session.
-   /// However, the most straightforward approach is to register during start-up, in the
-   /// OnStartUp method of a Revit external application.  This should be a (UI-level)
-   /// IExternalApplication, and NOT an IExternalDBApplication.</para>
-   /// </summary>
-   class UIServerApplication : IExternalApplication
-   {
-            /// <summary>
-      /// Registers an instance of a SampleExternalResourceUIServer with the ExternalService
-      /// of type ExternalResourceUIService. 
-      /// </summary>
-      /// <param name="application">An object that is passed to the external application
-      /// which contains the controlled application.</param>
-      /// <returns>Return the status of the external application.  A result of Succeeded
-      /// means that the external application was able to register the IExternalResourceUIServer.
-      /// </returns>
-      public Result OnStartup(UIControlledApplication application)
-      {
-         var externalResourceUIService = ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.ExternalResourceUIService);
-         if (externalResourceUIService == null)
-            return Result.Failed;
+    /// <summary>
+    ///     <para>Implements the Revit add-in interface IExternalApplication.</para>
+    ///     <para>
+    ///         An IExternalResourceUIServer can be registered at any time during a Revit session.
+    ///         However, the most straightforward approach is to register during start-up, in the
+    ///         OnStartUp method of a Revit external application.  This should be a (UI-level)
+    ///         IExternalApplication, and NOT an IExternalDBApplication.
+    ///     </para>
+    /// </summary>
+    internal class UIServerApplication : IExternalApplication
+    {
+        /// <summary>
+        ///     Registers an instance of a SampleExternalResourceUIServer with the ExternalService
+        ///     of type ExternalResourceUIService.
+        /// </summary>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.  A result of Succeeded
+        ///     means that the external application was able to register the IExternalResourceUIServer.
+        /// </returns>
+        public Result OnStartup(UIControlledApplication application)
+        {
+            var externalResourceUIService =
+                ExternalServiceRegistry.GetService(ExternalServices.BuiltInExternalServices.ExternalResourceUIService);
+            if (externalResourceUIService == null)
+                return Result.Failed;
 
-         // Create an instance of your IExternalResourceUIServer and register it with the ExternalResourceUIService.
-         IExternalResourceUIServer sampleUIServer = new SampleExternalResourceUIServer();
-         externalResourceUIService.AddServer(sampleUIServer);
-         return Result.Succeeded;
-      }
+            // Create an instance of your IExternalResourceUIServer and register it with the ExternalResourceUIService.
+            IExternalResourceUIServer sampleUIServer = new SampleExternalResourceUIServer();
+            externalResourceUIService.AddServer(sampleUIServer);
+            return Result.Succeeded;
+        }
 
-      /// <summary>
-      /// Implements the OnShutdown event.
-      /// <para>The server implementer may wish to perform clean-up tasks here.  However, in the
-      /// simplest case, no server-related code is required, and the server will be
-      /// destroyed as Revit shuts down.</para>
-      /// </summary>
-      /// <param name="application">An object that is passed to the external application
-      /// which contains the controlled application.</param>
-      /// <returns>Return the status of the external application.</returns>
-      public Result OnShutdown(UIControlledApplication application)
-      {
-         return Result.Succeeded;
-      }
-
-         }
- }
+        /// <summary>
+        ///     Implements the OnShutdown event.
+        ///     <para>
+        ///         The server implementer may wish to perform clean-up tasks here.  However, in the
+        ///         simplest case, no server-related code is required, and the server will be
+        ///         destroyed as Revit shuts down.
+        ///     </para>
+        /// </summary>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>Return the status of the external application.</returns>
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            return Result.Succeeded;
+        }
+    }
+}

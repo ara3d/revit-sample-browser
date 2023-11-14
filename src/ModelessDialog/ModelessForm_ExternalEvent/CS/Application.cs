@@ -25,50 +25,47 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
 {
     /// <summary>
-    /// Implements the Revit add-in interface IExternalApplication
+    ///     Implements the Revit add-in interface IExternalApplication
     /// </summary>
     public class Application : IExternalApplication
     {
         // class instance
         internal static Application thisApp;
+
         // ModelessForm instance
         private ModelessForm m_MyForm;
 
-                /// <summary>
-        /// Implements the OnShutdown event
+        /// <summary>
+        ///     Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
-            if (m_MyForm != null && m_MyForm.Visible)
-            {
-                m_MyForm.Close();
-            }
+            if (m_MyForm != null && m_MyForm.Visible) m_MyForm.Close();
 
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Implements the OnStartup event
+        ///     Implements the OnStartup event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
         public Result OnStartup(UIControlledApplication application)
         {
-            m_MyForm = null;   // no dialog needed yet; the command will bring it
-            thisApp = this;  // static access to this application instance
+            m_MyForm = null; // no dialog needed yet; the command will bring it
+            thisApp = this; // static access to this application instance
 
             return Result.Succeeded;
         }
 
         /// <summary>
-        ///   This method creates and shows a modeless dialog, unless it already exists.
+        ///     This method creates and shows a modeless dialog, unless it already exists.
         /// </summary>
         /// <remarks>
-        ///   The external command invokes this on the end-user's request
+        ///     The external command invokes this on the end-user's request
         /// </remarks>
-        /// 
         public void ShowForm(UIApplication uiapp)
         {
             // If we do not have a dialog yet, create and show it
@@ -89,15 +86,11 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
 
 
         /// <summary>
-        ///   Waking up the dialog from its waiting state.
+        ///     Waking up the dialog from its waiting state.
         /// </summary>
-        /// 
         public void WakeFormUp()
         {
-            if (m_MyForm != null)
-            {
-                m_MyForm.WakeUp();
-            }
+            if (m_MyForm != null) m_MyForm.WakeUp();
         }
-            }
+    }
 }

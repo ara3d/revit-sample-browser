@@ -21,31 +21,30 @@
 //
 
 using System.ComponentModel;
-
 using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// Segment's ends reference enum.
+    ///     Segment's ends reference enum.
     /// </summary>
-    enum EndReference
+    internal enum EndReference
     {
         /// <summary>
-        /// Segment's start reference.
+        ///     Segment's start reference.
         /// </summary>
         Begin = 0,
 
         /// <summary>
-        /// Segment's end reference.
+        ///     Segment's end reference.
         /// </summary>
         End = 1
     }
 
     /// <summary>
-    /// Constraint to be added to RebarShapeDefBySegment.
+    ///     Constraint to be added to RebarShapeDefBySegment.
     /// </summary>
-    abstract class ConstraintOnSegmentShape : ConstraintOnRebarShape
+    internal abstract class ConstraintOnSegmentShape : ConstraintOnRebarShape
     {
         public ConstraintOnSegmentShape(RebarShapeDefBySegment def)
             : base(def)
@@ -53,41 +52,42 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Update list value for property grid.
+        ///     Get RebarShapeDefinitionBySegments object.
+        /// </summary>
+        protected RebarShapeDefinitionBySegments GetRebarShapeDefinitionBySegments =>
+            m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionBySegments;
+
+        /// <summary>
+        ///     Update list value for property grid.
         /// </summary>
         protected void UpdateSegmentIdTypeConverter()
         {
             TypeConverterSegmentId.SegmentCount = GetRebarShapeDefinitionBySegments.NumberOfSegments;
         }
-
-        /// <summary>
-        /// Get RebarShapeDefinitionBySegments object.
-        /// </summary>
-        protected RebarShapeDefinitionBySegments GetRebarShapeDefinitionBySegments => m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionBySegments;
     }
 
     /// <summary>
-    /// Default radius dimension of bend.
+    ///     Default radius dimension of bend.
     /// </summary>
-    class ConstraintBendDefaultRadius : ConstraintOnSegmentShape
+    internal class ConstraintBendDefaultRadius : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Segment to be added constraint on.
-        /// </summary>
-        private int m_segment;
-
-        /// <summary>
-        /// Bend orientation field.
-        /// </summary>
-        private RebarShapeVertexTurn m_turn;
-
-        /// <summary>
-        /// Bend angle field.
+        ///     Bend angle field.
         /// </summary>
         private RebarShapeBendAngle m_bendAngle;
 
         /// <summary>
-        /// Constructor
+        ///     Segment to be added constraint on.
+        /// </summary>
+        private int m_segment;
+
+        /// <summary>
+        ///     Bend orientation field.
+        /// </summary>
+        private RebarShapeVertexTurn m_turn;
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         /// <param name="def"></param>
         public ConstraintBendDefaultRadius(RebarShapeDefBySegment def)
@@ -98,7 +98,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Segment to be added constraint on.
+        ///     Segment to be added constraint on.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment
@@ -113,7 +113,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Bend orientation property.
+        ///     Bend orientation property.
         /// </summary>
         public RebarShapeVertexTurn Turn
         {
@@ -122,7 +122,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Bend angle property.
+        ///     Bend angle property.
         /// </summary>
         public RebarShapeBendAngle BendAngle
         {
@@ -131,7 +131,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add bend default radius constraint to RebarShapeDefinitionBySegments.
+        ///     Add bend default radius constraint to RebarShapeDefinitionBySegments.
         /// </summary>
         public override void Commit()
         {
@@ -141,34 +141,34 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Variable radius dimension of bend.
+    ///     Variable radius dimension of bend.
     /// </summary>
-    class ConstraintBendVariableRadius : ConstraintOnSegmentShape
+    internal class ConstraintBendVariableRadius : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Segment to be added constraint on.
-        /// </summary>
-        private int m_segment;
-
-        /// <summary>
-        /// Bend orientation field.
-        /// </summary>
-        private RebarShapeVertexTurn m_turn;
-
-        /// <summary>
-        /// Bend angle field.
+        ///     Bend angle field.
         /// </summary>
         private RebarShapeBendAngle m_bendAngle;
 
         /// <summary>
-        /// Radius dimension field.
+        ///     Measure length including bar thickness or not.
+        /// </summary>
+        private bool m_measureIncludingBarThickness;
+
+        /// <summary>
+        ///     Radius dimension field.
         /// </summary>
         private RebarShapeParameter m_radiusParameter;
 
         /// <summary>
-        /// Measure length including bar thickness or not.
+        ///     Segment to be added constraint on.
         /// </summary>
-        private bool m_measureIncludingBarThickness;
+        private int m_segment;
+
+        /// <summary>
+        ///     Bend orientation field.
+        /// </summary>
+        private RebarShapeVertexTurn m_turn;
 
         public ConstraintBendVariableRadius(RebarShapeDefBySegment def)
             : base(def)
@@ -179,14 +179,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Segment to be added constraint on.
+        ///     Segment to be added constraint on.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment
         {
             get
             {
-
                 UpdateSegmentIdTypeConverter();
 
                 return m_segment;
@@ -195,7 +194,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Bend orientation property.
+        ///     Bend orientation property.
         /// </summary>
         public RebarShapeVertexTurn Turn
         {
@@ -204,7 +203,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Bend angle property.
+        ///     Bend angle property.
         /// </summary>
         public RebarShapeBendAngle BendAngle
         {
@@ -213,7 +212,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Radius dimension property.
+        ///     Radius dimension property.
         /// </summary>
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         public RebarShapeParameter RadiusParameter
@@ -228,7 +227,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
 
         /// <summary>
-        /// Measure including bar thickness or not.
+        ///     Measure including bar thickness or not.
         /// </summary>
         public bool MeasureIncludingBarThickness
         {
@@ -237,7 +236,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add Dimension to constrain the bend radius.
+        ///     Add Dimension to constrain the bend radius.
         /// </summary>
         public override void Commit()
         {
@@ -248,32 +247,32 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Parallel dimension to segment.
+    ///     Parallel dimension to segment.
     /// </summary>
-    class ConstraintParallelToSegment : ConstraintOnSegmentShape
+    internal class ConstraintParallelToSegment : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Segment to be added constraint on.
-        /// </summary>
-        private int m_segment;
-
-        /// <summary>
-        /// Dimension to constrain the length of segment.
-        /// </summary>
-        private RebarShapeParameter m_parameter;
-
-        /// <summary>
-        /// Measure segment's length to outside of bend 0 or not.
+        ///     Measure segment's length to outside of bend 0 or not.
         /// </summary>
         private bool m_measureToOutsideOfBend0;
 
         /// <summary>
-        /// Measure segment's length to outside of bend 1 or not.
+        ///     Measure segment's length to outside of bend 1 or not.
         /// </summary>
         private bool m_measureToOutsideOfBend1;
 
         /// <summary>
-        /// Constructor
+        ///     Dimension to constrain the length of segment.
+        /// </summary>
+        private RebarShapeParameter m_parameter;
+
+        /// <summary>
+        ///     Segment to be added constraint on.
+        /// </summary>
+        private int m_segment;
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         /// <param name="def"></param>
         public ConstraintParallelToSegment(RebarShapeDefBySegment def)
@@ -284,14 +283,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Segment to be added constraint on.
+        ///     Segment to be added constraint on.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment
         {
             get
             {
-
                 UpdateSegmentIdTypeConverter();
 
                 return m_segment;
@@ -300,7 +298,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Dimension to constrain the length of segment.
+        ///     Dimension to constrain the length of segment.
         /// </summary>
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         public RebarShapeParameter Parameter
@@ -314,7 +312,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Measure segment's length to outside of bend 0 or not.
+        ///     Measure segment's length to outside of bend 0 or not.
         /// </summary>
         public bool MeasureToOutsideOfBend0
         {
@@ -323,7 +321,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Measure segment's length to outside of bend 1 or not.
+        ///     Measure segment's length to outside of bend 1 or not.
         /// </summary>
         public bool MeasureToOutsideOfBend1
         {
@@ -332,7 +330,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add Dimension to constrain the segment length.
+        ///     Add Dimension to constrain the segment length.
         /// </summary>
         public override void Commit()
         {
@@ -343,44 +341,44 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Length dimension of segment in specified direction.
+    ///     Length dimension of segment in specified direction.
     /// </summary>
-    class ConstraintToSegment : ConstraintOnSegmentShape
+    internal class ConstraintToSegment : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Segment to be added constraint on.
-        /// </summary>
-        private int m_segment;
-
-        /// <summary>
-        /// Dimension to constraint the length of segment in specified direction.
-        /// </summary>
-        private RebarShapeParameter m_parameter;
-
-        /// <summary>
-        /// X coordinate of constraint direction. 
+        ///     X coordinate of constraint direction.
         /// </summary>
         private double m_constraintDirCoordX;
 
         /// <summary>
-        /// Y coordinate of constraint direction.
+        ///     Y coordinate of constraint direction.
         /// </summary>
         private double m_constraintDirCoordY;
 
         /// <summary>
-        /// Sign of Z coordinate of cross product of constraint direction by segment direction.
-        /// </summary>
-        private int m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir;
-
-        /// <summary>
-        /// Measure segment's length to outside of bend 0 or not.
+        ///     Measure segment's length to outside of bend 0 or not.
         /// </summary>
         private bool m_measureToOutsideOfBend0;
 
         /// <summary>
-        /// Measure segment's length to outside of bend 1 or not.
+        ///     Measure segment's length to outside of bend 1 or not.
         /// </summary>
         private bool m_measureToOutsideOfBend1;
+
+        /// <summary>
+        ///     Dimension to constraint the length of segment in specified direction.
+        /// </summary>
+        private RebarShapeParameter m_parameter;
+
+        /// <summary>
+        ///     Segment to be added constraint on.
+        /// </summary>
+        private int m_segment;
+
+        /// <summary>
+        ///     Sign of Z coordinate of cross product of constraint direction by segment direction.
+        /// </summary>
+        private int m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir;
 
         public ConstraintToSegment(RebarShapeDefBySegment def)
             : base(def)
@@ -391,14 +389,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Segment to be added constraint on.
+        ///     Segment to be added constraint on.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment
         {
             get
             {
-
                 UpdateSegmentIdTypeConverter();
 
                 return m_segment;
@@ -407,7 +404,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Dimension to constraint the length of segment in specified direction.
+        ///     Dimension to constraint the length of segment in specified direction.
         /// </summary>
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         public RebarShapeParameter Parameter
@@ -421,7 +418,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// X coordinate of constraint direction. 
+        ///     X coordinate of constraint direction.
         /// </summary>
         public double ConstraintDirCoordX
         {
@@ -430,7 +427,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Y coordinate of constraint direction.
+        ///     Y coordinate of constraint direction.
         /// </summary>
         public double ConstraintDirCoordY
         {
@@ -439,7 +436,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Sign of Z coordinate of cross product of constraint direction by segment direction.
+        ///     Sign of Z coordinate of cross product of constraint direction by segment direction.
         /// </summary>
         public int SignOfZCoordOfCrossProductOfConstraintDirBySegmentDir
         {
@@ -448,7 +445,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Measure segment's length to outside of bend 0 or not.
+        ///     Measure segment's length to outside of bend 0 or not.
         /// </summary>
         public bool MeasureToOutsideOfBend0
         {
@@ -457,7 +454,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Measure segment's length to outside of bend 1 or not.
+        ///     Measure segment's length to outside of bend 1 or not.
         /// </summary>
         public bool MeasureToOutsideOfBend1
         {
@@ -466,7 +463,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain the length of segment in the specified direction.
+        ///     Add dimension to constrain the length of segment in the specified direction.
         /// </summary>
         public override void Commit()
         {
@@ -478,44 +475,44 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Listening length dimension between two bends.
+    ///     Listening length dimension between two bends.
     /// </summary>
-    class ListeningDimensionBendToBend : ConstraintOnSegmentShape
+    internal class ListeningDimensionBendToBend : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Dimension to constraint the length of two bends in the specified direction.
-        /// </summary>
-        private RebarShapeParameter m_parameter;
-
-        /// <summary>
-        /// X coordinate of constraint direction. 
+        ///     X coordinate of constraint direction.
         /// </summary>
         private double m_constraintDirCoordX;
 
         /// <summary>
-        /// Y coordinate of constraint direction. 
+        ///     Y coordinate of constraint direction.
         /// </summary>
         private double m_constraintDirCoordY;
 
         /// <summary>
-        /// Reference of segment 0.
-        /// </summary>
-        private int m_segment;
-
-        /// <summary>
-        /// End reference of segment 0.
+        ///     End reference of segment 0.
         /// </summary>
         private EndReference m_end;
 
         /// <summary>
-        /// Reference of segment 1.
-        /// </summary>
-        private int m_segment1;
-
-        /// <summary>
-        /// End reference of segment 1.
+        ///     End reference of segment 1.
         /// </summary>
         private EndReference m_end1;
+
+        /// <summary>
+        ///     Dimension to constraint the length of two bends in the specified direction.
+        /// </summary>
+        private RebarShapeParameter m_parameter;
+
+        /// <summary>
+        ///     Reference of segment 0.
+        /// </summary>
+        private int m_segment;
+
+        /// <summary>
+        ///     Reference of segment 1.
+        /// </summary>
+        private int m_segment1;
 
         public ListeningDimensionBendToBend(RebarShapeDefBySegment def)
             : base(def)
@@ -528,7 +525,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
 
         /// <summary>
-        /// Dimension to constraint the length of two bends in the specified direction.
+        ///     Dimension to constraint the length of two bends in the specified direction.
         /// </summary>
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         public RebarShapeParameter Parameter
@@ -543,7 +540,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// X coordinate of constraint direction. 
+        ///     X coordinate of constraint direction.
         /// </summary>
         public double ConstraintDirCoordX
         {
@@ -552,7 +549,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Y coordinate of constraint direction. 
+        ///     Y coordinate of constraint direction.
         /// </summary>
         public double ConstraintDirCoordY
         {
@@ -561,14 +558,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Reference of segment 0.
+        ///     Reference of segment 0.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment0
         {
             get
             {
-
                 UpdateSegmentIdTypeConverter();
 
                 return m_segment;
@@ -577,7 +573,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// End reference of segment 0.
+        ///     End reference of segment 0.
         /// </summary>
         public EndReference End0
         {
@@ -586,7 +582,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Reference of segment 1.
+        ///     Reference of segment 1.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment1
@@ -601,7 +597,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// End reference of segment 1.
+        ///     End reference of segment 1.
         /// </summary>
         public EndReference End1
         {
@@ -610,7 +606,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add listening dimension to constrain the length of two bend in the specified direction.
+        ///     Add listening dimension to constrain the length of two bend in the specified direction.
         /// </summary>
         public override void Commit()
         {
@@ -621,40 +617,40 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Listening length dimension between a segment and a bend.
+    ///     Listening length dimension between a segment and a bend.
     /// </summary>
-    class ListeningDimensionSegmentToBend : ConstraintOnSegmentShape
+    internal class ListeningDimensionSegmentToBend : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Dimension to constrain the length between a segment and a bend
-        /// in the specified direction.
-        /// </summary>
-        private RebarShapeParameter m_parameter;
-
-        /// <summary>
-        /// X coordinate of constraint direction.
+        ///     X coordinate of constraint direction.
         /// </summary>
         private double m_constraintDirCoordX;
 
         /// <summary>
-        /// Y coordinate of constraint direction.
+        ///     Y coordinate of constraint direction.
         /// </summary>
         private double m_constraintDirCoordY;
 
         /// <summary>
-        /// Reference of segment 0.
+        ///     End reference of segment 1.
+        /// </summary>
+        private EndReference m_end1;
+
+        /// <summary>
+        ///     Dimension to constrain the length between a segment and a bend
+        ///     in the specified direction.
+        /// </summary>
+        private RebarShapeParameter m_parameter;
+
+        /// <summary>
+        ///     Reference of segment 0.
         /// </summary>
         private int m_segment;
 
         /// <summary>
-        /// Reference of segment 1.
+        ///     Reference of segment 1.
         /// </summary>
         private int m_segment1;
-
-        /// <summary>
-        /// End reference of segment 1.
-        /// </summary>
-        private EndReference m_end1;
 
         public ListeningDimensionSegmentToBend(RebarShapeDefBySegment def)
             : base(def)
@@ -665,8 +661,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Dimension to constrain the length between a segment and a bend
-        /// in the specified direction.
+        ///     Dimension to constrain the length between a segment and a bend
+        ///     in the specified direction.
         /// </summary>
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         public RebarShapeParameter Parameter
@@ -680,7 +676,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// X coordinate of constraint direction.
+        ///     X coordinate of constraint direction.
         /// </summary>
         public double ConstraintDirCoordX
         {
@@ -689,7 +685,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Y coordinate of constraint direction.
+        ///     Y coordinate of constraint direction.
         /// </summary>
         public double ConstraintDirCoordY
         {
@@ -698,7 +694,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Reference of segment 0.
+        ///     Reference of segment 0.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment0
@@ -713,7 +709,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Reference of segment 1.
+        ///     Reference of segment 1.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment1
@@ -728,7 +724,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// End reference of segment 1.
+        ///     End reference of segment 1.
         /// </summary>
         public EndReference End1
         {
@@ -737,8 +733,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add listening dimension to constrain the length between a segment and a bend  
-        /// in the specified direction.
+        ///     Add listening dimension to constrain the length between a segment and a bend
+        ///     in the specified direction.
         /// </summary>
         public override void Commit()
         {
@@ -749,33 +745,33 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Listening length dimension between two segments.
+    ///     Listening length dimension between two segments.
     /// </summary>
-    class ListeningDimensionSegmentToSegment : ConstraintOnSegmentShape
+    internal class ListeningDimensionSegmentToSegment : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Dimension to constrain the perpendicular distance between two segment.
-        /// The two segment should be parallel. 
-        /// </summary>
-        private RebarShapeParameter m_parameter;
-
-        /// <summary>
-        /// X coordinate of constraint direction.
+        ///     X coordinate of constraint direction.
         /// </summary>
         private double m_constraintDirCoordX;
 
         /// <summary>
-        /// Y coordinate of constraint direction.
+        ///     Y coordinate of constraint direction.
         /// </summary>
         private double m_constraintDirCoordY;
 
         /// <summary>
-        /// The first segment to be constrained.
+        ///     Dimension to constrain the perpendicular distance between two segment.
+        ///     The two segment should be parallel.
+        /// </summary>
+        private RebarShapeParameter m_parameter;
+
+        /// <summary>
+        ///     The first segment to be constrained.
         /// </summary>
         private int m_segment;
 
         /// <summary>
-        /// The second segment to be constrained.
+        ///     The second segment to be constrained.
         /// </summary>
         private int m_segment1;
 
@@ -787,7 +783,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Dimension to constrain the perpendicular distance between two segment.
+        ///     Dimension to constrain the perpendicular distance between two segment.
         /// </summary>
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         public RebarShapeParameter Parameter
@@ -801,7 +797,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// X coordinate of constraint direction.
+        ///     X coordinate of constraint direction.
         /// </summary>
         public double ConstraintDirCoordX
         {
@@ -810,7 +806,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Y coordinate of constraint direction.
+        ///     Y coordinate of constraint direction.
         /// </summary>
         public double ConstraintDirCoordY
         {
@@ -819,7 +815,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// The second segment to be constrained.
+        ///     The second segment to be constrained.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment0
@@ -833,7 +829,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// The second segment to be constrained.
+        ///     The second segment to be constrained.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment1
@@ -847,7 +843,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain the perpendicular distance between two segment.
+        ///     Add dimension to constrain the perpendicular distance between two segment.
         /// </summary>
         public override void Commit()
         {
@@ -858,19 +854,19 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Remove a dimension from a segment.
+    ///     Remove a dimension from a segment.
     /// </summary>
-    class RemoveParameterFromSegment : ConstraintOnSegmentShape
+    internal class RemoveParameterFromSegment : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Reference of segment.
-        /// </summary>
-        private int m_segment;
-
-        /// <summary>
-        /// Dimension to be removed.
+        ///     Dimension to be removed.
         /// </summary>
         private RebarShapeParameter m_radiusParameter;
+
+        /// <summary>
+        ///     Reference of segment.
+        /// </summary>
+        private int m_segment;
 
         public RemoveParameterFromSegment(RebarShapeDefBySegment def)
             : base(def)
@@ -878,14 +874,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Reference of segment.
+        ///     Reference of segment.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment
         {
             get
             {
-
                 UpdateSegmentIdTypeConverter();
 
                 return m_segment;
@@ -894,7 +889,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Dimension to be removed.
+        ///     Dimension to be removed.
         /// </summary>
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         public RebarShapeParameter RadiusParameter
@@ -908,7 +903,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Remove dimension from Rebar shape.
+        ///     Remove dimension from Rebar shape.
         /// </summary>
         public override void Commit()
         {
@@ -918,24 +913,24 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// A 180 degree bend dimension.
+    ///     A 180 degree bend dimension.
     /// </summary>
-    class SetSegmentAs180DegreeBend : ConstraintOnSegmentShape
+    internal class SetSegmentAs180DegreeBend : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Reference of segment.
+        ///     If measure to outside of bend.
         /// </summary>
-        private int m_segment;
+        private bool m_measureToOutsideOfBend;
 
         /// <summary>
-        /// Dimension to constrain the bend's radius.
+        ///     Dimension to constrain the bend's radius.
         /// </summary>
         private RebarShapeParameter m_radiusParameter;
 
         /// <summary>
-        /// If measure to outside of bend.
+        ///     Reference of segment.
         /// </summary>
-        private bool m_measureToOutsideOfBend;
+        private int m_segment;
 
         public SetSegmentAs180DegreeBend(RebarShapeDefBySegment def)
             : base(def)
@@ -944,14 +939,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Reference of segment.
+        ///     Reference of segment.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment
         {
             get
             {
-
                 UpdateSegmentIdTypeConverter();
 
                 return m_segment;
@@ -960,7 +954,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Dimension to constrain the bend's radius.
+        ///     Dimension to constrain the bend's radius.
         /// </summary>
         [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
         public RebarShapeParameter RadiusParameter
@@ -974,7 +968,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// If measure the length to outside of bend.
+        ///     If measure the length to outside of bend.
         /// </summary>
         public bool MeasureToOutsideOfBend
         {
@@ -983,7 +977,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add a dimension of 180 degree bend for a segment.
+        ///     Add a dimension of 180 degree bend for a segment.
         /// </summary>
         public override void Commit()
         {
@@ -993,22 +987,22 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Length dimension of segment in its parallel direction.
+    ///     Length dimension of segment in its parallel direction.
     /// </summary>
-    class SetSegmentFixedDirection : ConstraintOnSegmentShape
+    internal class SetSegmentFixedDirection : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Reference of segment.
+        ///     Reference of segment.
         /// </summary>
         private int m_segment;
 
         /// <summary>
-        /// X coordinate of constraint direction.
+        ///     X coordinate of constraint direction.
         /// </summary>
         private double m_vecCoordX;
 
         /// <summary>
-        /// Y coordinate of constraint direction.
+        ///     Y coordinate of constraint direction.
         /// </summary>
         private double m_vecCoordY;
 
@@ -1020,14 +1014,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Reference of segment.
+        ///     Reference of segment.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment
         {
             get
             {
-
                 UpdateSegmentIdTypeConverter();
 
                 return m_segment;
@@ -1036,7 +1029,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// X coordinate of constraint direction.
+        ///     X coordinate of constraint direction.
         /// </summary>
         public double VecCoordX
         {
@@ -1045,7 +1038,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Y coordinate of constraint direction.
+        ///     Y coordinate of constraint direction.
         /// </summary>
         public double VecCoordY
         {
@@ -1054,7 +1047,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain the direction of the segment.
+        ///     Add dimension to constrain the direction of the segment.
         /// </summary>
         public override void Commit()
         {
@@ -1064,12 +1057,12 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Remove a dimension from a segment.
+    ///     Remove a dimension from a segment.
     /// </summary>
-    class SetSegmentVariableDirection : ConstraintOnSegmentShape
+    internal class SetSegmentVariableDirection : ConstraintOnSegmentShape
     {
         /// <summary>
-        /// Reference of segment.
+        ///     Reference of segment.
         /// </summary>
         private int m_segment;
 
@@ -1079,14 +1072,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Reference of segment.
+        ///     Reference of segment.
         /// </summary>
         [TypeConverter(typeof(TypeConverterSegmentId))]
         public int Segment
         {
             get
             {
-
                 UpdateSegmentIdTypeConverter();
 
                 return m_segment;
@@ -1095,7 +1087,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Remove the direction dimension of segment.
+        ///     Remove the direction dimension of segment.
         /// </summary>
         public override void Commit()
         {

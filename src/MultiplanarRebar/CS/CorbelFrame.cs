@@ -29,43 +29,14 @@ using Autodesk.Revit.DB.Structure;
 namespace Revit.SDK.Samples.MultiplanarRebar.CS
 {
     /// <summary>
-    /// This class represents the trapezoid wire frame profile of corbel.
-    /// Its two main functionalities are to create a multi-planar rebar shape and
-    /// to calculate the location for rebar creation when reinforcing corbel.  
+    ///     This class represents the trapezoid wire frame profile of corbel.
+    ///     Its two main functionalities are to create a multi-planar rebar shape and
+    ///     to calculate the location for rebar creation when reinforcing corbel.
     /// </summary>
-    class Trapezoid
+    internal class Trapezoid
     {
-        //
-        //             TOP       
-        //         |---------\      
-        // Vertical|          \Slanted
-        //         |   Bottom  \
-        //---------|------------\
-        //              
-        // Top -> Vertical -> Bottom -> Slanted form counter clockwise orientation.
-
         /// <summary>
-        /// Top bound line of this trapezoid.
-        /// </summary>
-        public Line Top { get; set; }
-
-        /// <summary>
-        /// Left vertical bound line of this trapezoid. 
-        /// </summary>
-        public Line Vertical { get; set; }
-
-        /// <summary>
-        /// Bottom bound line of this trapezoid.
-        /// </summary>
-        public Line Bottom { get; set; }
-
-        /// <summary>
-        /// Right slanted bound line of this trapezoid.
-        /// </summary>
-        public Line Slanted { get; set; }
-
-        /// <summary>
-        /// Constructor to initialize the fields.
+        ///     Constructor to initialize the fields.
         /// </summary>
         /// <param name="top">Top Line</param>
         /// <param name="vertical">Left Vertical Line</param>
@@ -78,10 +49,38 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             Bottom = bottom;
             Slanted = slanted;
         }
+        //
+        //             TOP       
+        //         |---------\      
+        // Vertical|          \Slanted
+        //         |   Bottom  \
+        //---------|------------\
+        //              
+        // Top -> Vertical -> Bottom -> Slanted form counter clockwise orientation.
 
         /// <summary>
-        /// Draw the trapezoid wire-frame with Revit Model curves.
-        /// It's for debug use, to help developer see the exact location.
+        ///     Top bound line of this trapezoid.
+        /// </summary>
+        public Line Top { get; set; }
+
+        /// <summary>
+        ///     Left vertical bound line of this trapezoid.
+        /// </summary>
+        public Line Vertical { get; set; }
+
+        /// <summary>
+        ///     Bottom bound line of this trapezoid.
+        /// </summary>
+        public Line Bottom { get; set; }
+
+        /// <summary>
+        ///     Right slanted bound line of this trapezoid.
+        /// </summary>
+        public Line Slanted { get; set; }
+
+        /// <summary>
+        ///     Draw the trapezoid wire-frame with Revit Model curves.
+        ///     It's for debug use, to help developer see the exact location.
         /// </summary>
         /// <param name="revitDoc">Revit DB Document</param>
         public void Draw(Document revitDoc)
@@ -90,7 +89,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var verticalDir = (Vertical.GetEndPoint(0) - Vertical.GetEndPoint(1)).Normalize();
             var normal = topDir.CrossProduct(verticalDir);
 
-            var sketchplane = SketchPlane.Create(revitDoc, Plane.CreateByNormalAndOrigin(normal, Vertical.GetEndPoint(0)));
+            var sketchplane =
+                SketchPlane.Create(revitDoc, Plane.CreateByNormalAndOrigin(normal, Vertical.GetEndPoint(0)));
 
             var curves = new CurveArray();
             curves.Append(Top.Clone());
@@ -101,8 +101,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Offset the top line with given value, if the value is positive,
-        /// the offset direction is outside, otherwise inside.
+        ///     Offset the top line with given value, if the value is positive,
+        ///     the offset direction is outside, otherwise inside.
         /// </summary>
         /// <param name="offset">Offset value</param>
         public void OffsetTop(double offset)
@@ -123,8 +123,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Offset the Left Vertical line with given value, if the value is positive,
-        /// the offset direction is outside, otherwise inside.
+        ///     Offset the Left Vertical line with given value, if the value is positive,
+        ///     the offset direction is outside, otherwise inside.
         /// </summary>
         /// <param name="offset">Offset value</param>
         public void OffsetLeft(double offset)
@@ -141,8 +141,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Offset the bottom line with given value, if the value is positive,
-        /// the offset direction is outside, otherwise inside.
+        ///     Offset the bottom line with given value, if the value is positive,
+        ///     the offset direction is outside, otherwise inside.
         /// </summary>
         /// <param name="offset">Offset value</param>
         public void OffsetBottom(double offset)
@@ -164,8 +164,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Offset the right slanted line with given value, if the value is positive,
-        /// the offset direction is outside, otherwise inside.
+        ///     Offset the right slanted line with given value, if the value is positive,
+        ///     the offset direction is outside, otherwise inside.
         /// </summary>
         /// <param name="offset">Offset value</param>
         public void OffsetRight(double offset)
@@ -182,7 +182,7 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Deep clone, to avoid mess up the original data during offsetting the boundary.
+        ///     Deep clone, to avoid mess up the original data during offsetting the boundary.
         /// </summary>
         /// <returns>Cloned object</returns>
         public Trapezoid Clone()
@@ -195,10 +195,11 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Create the multi-planar Rebar Shape according to the trapezoid wire-frame.
+        ///     Create the multi-planar Rebar Shape according to the trapezoid wire-frame.
         /// </summary>
         /// <param name="revitDoc">Revit DB Document</param>
-        /// /// <param name="bendDiameter">OutOfPlaneBendDiameter for multi-planar shape</param>
+        /// ///
+        /// <param name="bendDiameter">OutOfPlaneBendDiameter for multi-planar shape</param>
         /// <returns>Created multi-planar Rebar Shape</returns>
         public RebarShape ConstructMultiplanarRebarShape(Document revitDoc, double bendDiameter)
         {
@@ -250,16 +251,10 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             shapedef.AddBendDefaultRadius(1, RebarShapeVertexTurn.Right, RebarShapeBendAngle.Acute);
 
             // Check to see if it's full constrained.  
-            if (!shapedef.Complete)
-            {
-                throw new Exception("Shape was not completed.");
-            }
+            if (!shapedef.Complete) throw new Exception("Shape was not completed.");
 
             // Try to solve it to make sure the shape can be resolved with default parameter value.
-            if (!shapedef.CheckDefaultParameterValues(0, 0))
-            {
-                throw new Exception("Can't resolve rebar shape.");
-            }
+            if (!shapedef.CheckDefaultParameterValues(0, 0)) throw new Exception("Can't resolve rebar shape.");
 
             // Define multi-planar definition
             var multiPlanarDef = new RebarShapeMultiplanarDefinition(bendDiameter);
@@ -276,16 +271,13 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
 
             // Make sure we can see the created shape from the browser.
             var curvesForBrowser = newshape.GetCurvesForBrowser();
-            if (curvesForBrowser.Count == 0)
-            {
-                throw new Exception("The Rebar shape is invisible in browser.");
-            }
+            if (curvesForBrowser.Count == 0) throw new Exception("The Rebar shape is invisible in browser.");
 
             return newshape;
         }
 
         /// <summary>
-        /// Calculate the boundary coordinate of the wire-frame.
+        ///     Calculate the boundary coordinate of the wire-frame.
         /// </summary>
         /// <param name="origin">Origin coordinate</param>
         /// <param name="vX">X Vector</param>
@@ -299,43 +291,43 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
     }
 
     /// <summary>
-    /// It represents the frame of Corbel, which is consist of a trapezoid profile and a extrusion line.
-    /// Corbel can be constructed by sweeping a trapezoid profile along the extrusion line.
+    ///     It represents the frame of Corbel, which is consist of a trapezoid profile and a extrusion line.
+    ///     Corbel can be constructed by sweeping a trapezoid profile along the extrusion line.
     /// </summary>
-    class CorbelFrame
+    internal class CorbelFrame
     {
         /// <summary>
-        /// Trapezoid profile of corbel family instance.
+        ///     Corbel family instance.
         /// </summary>
-        private Trapezoid m_profile;
+        private readonly FamilyInstance m_corbel;
 
         /// <summary>
-        /// Extrusion line of corbel family instance.
+        ///     Cover distance of corbel family instance.
         /// </summary>
-        private Line m_extrusionLine;
+        private readonly double m_corbelCoverDistance;
 
         /// <summary>
-        /// Corbel family instance.
+        ///     Extrusion line of corbel family instance.
         /// </summary>
-        private FamilyInstance m_corbel;
+        private readonly Line m_extrusionLine;
 
         /// <summary>
-        /// Depth of corbel host.
+        ///     Cover distance of corbel host.
         /// </summary>
-        private double m_hostDepth;
+        private readonly double m_hostCoverDistance;
 
         /// <summary>
-        /// Cover distance of corbel family instance.
+        ///     Depth of corbel host.
         /// </summary>
-        private double m_corbelCoverDistance;
+        private readonly double m_hostDepth;
 
         /// <summary>
-        /// Cover distance of corbel host.
+        ///     Trapezoid profile of corbel family instance.
         /// </summary>
-        private double m_hostCoverDistance;
+        private readonly Trapezoid m_profile;
 
         /// <summary>
-        /// Constructor to initialize the fields.
+        ///     Constructor to initialize the fields.
         /// </summary>
         /// <param name="corbel">Corbel family instance</param>
         /// <param name="profile">Trapezoid profile</param>
@@ -343,7 +335,7 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         /// <param name="hostDepth">Corbel Host Depth</param>
         /// <param name="hostTopCorverDistance">Corbel Host cover distance</param>
         public CorbelFrame(FamilyInstance corbel, Trapezoid profile,
-                Line path, double hostDepth, double hostTopCorverDistance)
+            Line path, double hostDepth, double hostTopCorverDistance)
         {
             m_profile = profile;
             m_extrusionLine = path;
@@ -357,8 +349,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Parse the geometry of given Corbel and create a CorbelFrame if the corbel is slopped,
-        /// otherwise exception thrown.
+        ///     Parse the geometry of given Corbel and create a CorbelFrame if the corbel is slopped,
+        ///     otherwise exception thrown.
         /// </summary>
         /// <param name="corbel">Corbel to parse</param>
         /// <returns>A created CorbelFrame</returns>
@@ -369,12 +361,12 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Add bars to reinforce the Corbel FamilyInstance with given options.
-        /// The bars including:
-        /// a multi-planar bar, 
-        /// top straight bars, 
-        /// stirrup bars, 
-        /// and host straight bars.
+        ///     Add bars to reinforce the Corbel FamilyInstance with given options.
+        ///     The bars including:
+        ///     a multi-planar bar,
+        ///     top straight bars,
+        ///     stirrup bars,
+        ///     and host straight bars.
         /// </summary>
         /// <param name="rebarOptions">Options for Rebar Creation</param>
         public void Reinforce(CorbelReinforcementOptions rebarOptions)
@@ -389,7 +381,7 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Add straight bars into corbel with given options. 
+        ///     Add straight bars into corbel with given options.
         /// </summary>
         /// <param name="options">Options for Rebar Creation</param>
         private void PlaceStraightBars(CorbelReinforcementOptions options)
@@ -397,11 +389,11 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var profileCopy = m_profile.Clone();
             profileCopy.OffsetTop(-m_corbelCoverDistance);
             profileCopy.OffsetLeft(-m_corbelCoverDistance
-                - options.MultiplanarBarType.BarModelDiameter
-                - options.TopBarType.BarModelDiameter * 0.5);
+                                   - options.MultiplanarBarType.BarModelDiameter
+                                   - options.TopBarType.BarModelDiameter * 0.5);
             profileCopy.OffsetBottom(m_hostDepth - m_hostCoverDistance
-                - options.StirrupBarType.BarModelDiameter
-                - options.HostStraightBarType.BarModelDiameter);
+                                                 - options.StirrupBarType.BarModelDiameter
+                                                 - options.HostStraightBarType.BarModelDiameter);
             profileCopy.OffsetRight(-m_corbelCoverDistance);
 
             //m_profile.Draw(options.RevitDoc);
@@ -428,18 +420,19 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Add a multi-planar bar into corbel with given options.
+        ///     Add a multi-planar bar into corbel with given options.
         /// </summary>
         /// <param name="options">Options for Rebar Creation</param>
         private void PlaceMultiplanarRebar(CorbelReinforcementOptions options)
         {
             var profileCopy = m_profile.Clone();
             profileCopy.OffsetTop(-m_corbelCoverDistance
-                - options.StirrupBarType.BarModelDiameter - 0.5 * options.MultiplanarBarType.BarModelDiameter);
+                                  - options.StirrupBarType.BarModelDiameter -
+                                  0.5 * options.MultiplanarBarType.BarModelDiameter);
             profileCopy.OffsetLeft(-m_corbelCoverDistance - 0.5 * options.MultiplanarBarType.BarModelDiameter);
             profileCopy.OffsetBottom(m_hostDepth - m_hostCoverDistance
-                - options.HostStraightBarType.BarModelDiameter * 4
-                - options.StirrupBarType.BarModelDiameter);
+                                                 - options.HostStraightBarType.BarModelDiameter * 4
+                                                 - options.StirrupBarType.BarModelDiameter);
             profileCopy.OffsetRight(-m_corbelCoverDistance - options.StirrupBarType.BarModelDiameter);
 
             //m_profile.Draw(options.RevitDoc);
@@ -467,23 +460,22 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Add stirrup bars into corbel with given options.
+        ///     Add stirrup bars into corbel with given options.
         /// </summary>
         /// <param name="options">Options for Rebar Creation</param>
         private void PlaceStirrupBars(CorbelReinforcementOptions options)
         {
             var filter = new FilteredElementCollector(options.RevitDoc)
                 .OfClass(typeof(RebarShape)).ToElements().Cast<RebarShape>()
-                .Where<RebarShape>(shape => shape.RebarStyle == RebarStyle.StirrupTie);
+                .Where(shape => shape.RebarStyle == RebarStyle.StirrupTie);
 
             RebarShape stirrupShape = null;
             foreach (var shape in filter)
-            {
                 if (shape.Name.Equals("T1"))
                 {
-                    stirrupShape = shape; break;
+                    stirrupShape = shape;
+                    break;
                 }
-            }
 
             var profileCopy = m_profile.Clone();
             profileCopy.OffsetTop(-m_corbelCoverDistance - 0.5 * options.StirrupBarType.BarModelDiameter);
@@ -499,12 +491,13 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var yAxis = (profileCopy.Vertical.GetEndPoint(1) - profileCopy.Vertical.GetEndPoint(0)).Normalize();
 
             var stirrupBars = Rebar.CreateFromRebarShape(options.RevitDoc, stirrupShape,
-                        options.StirrupBarType, m_corbel, origin, xAxis, yAxis);
+                options.StirrupBarType, m_corbel, origin, xAxis, yAxis);
 
             var xLength = m_extrusionLine.Length - 2 * offset;
             var yLength = profileCopy.Vertical.Length;
 
-            stirrupBars.GetShapeDrivenAccessor().SetLayoutAsFixedNumber(options.StirrupBarCount + 1, profileCopy.Top.Length, false, false, true);
+            stirrupBars.GetShapeDrivenAccessor().SetLayoutAsFixedNumber(options.StirrupBarCount + 1,
+                profileCopy.Top.Length, false, false, true);
             stirrupBars.GetShapeDrivenAccessor().ScaleToBox(origin, xAxis * xLength, yAxis * yLength);
 
             var space = profileCopy.Top.Length / options.StirrupBarCount;
@@ -515,7 +508,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var deltaStep = dirTop * space + dirVertical * step;
 
             origin = profileCopy.Top.GetEndPoint(0) + extruDir * offset;
-            var count = (int)((m_profile.Vertical.Length - m_corbelCoverDistance - 0.5 * options.StirrupBarType.BarModelDiameter) / step);
+            var count = (int)((m_profile.Vertical.Length - m_corbelCoverDistance -
+                               0.5 * options.StirrupBarType.BarModelDiameter) / step);
             for (var i = 1; i <= count; i++)
             {
                 origin += deltaStep;
@@ -527,15 +521,15 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Add straight bars into corbel Host to anchor corbel stirrup bars.
+        ///     Add straight bars into corbel Host to anchor corbel stirrup bars.
         /// </summary>
         /// <param name="options">Options for Rebar Creation</param>
         private void PlaceCorbelHostBars(CorbelReinforcementOptions options)
         {
             var profileCopy = m_profile.Clone();
             profileCopy.OffsetBottom(m_hostDepth - m_hostCoverDistance
-                - options.HostStraightBarType.BarModelDiameter * 0.5
-                - options.StirrupBarType.BarModelDiameter);
+                                                 - options.HostStraightBarType.BarModelDiameter * 0.5
+                                                 - options.StirrupBarType.BarModelDiameter);
 
             //profileCopy.Draw(options.RevitDoc);
 
@@ -556,7 +550,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
                 options.HostStraightBarType, null, null, m_corbel.Host, extruDir, barCurves,
                 RebarHookOrientation.Left, RebarHookOrientation.Left, true, true);
 
-            bars.GetShapeDrivenAccessor().SetLayoutAsFixedNumber(2, m_extrusionLine.Length - 2 * offset, true, true, true);
+            bars.GetShapeDrivenAccessor()
+                .SetLayoutAsFixedNumber(2, m_extrusionLine.Length - 2 * offset, true, true, true);
         }
     }
 }

@@ -26,12 +26,12 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.GridCreation.CS
 {
     /// <summary>
-    /// Provides static functions to convert unit
+    ///     Provides static functions to convert unit
     /// </summary>
-    static class Unit
+    internal static class Unit
     {
-                /// <summary>
-        /// Convert the value get from RevitAPI to the value indicated by ForgeTypeId
+        /// <summary>
+        ///     Convert the value get from RevitAPI to the value indicated by ForgeTypeId
         /// </summary>
         /// <param name="to">ForgeTypeId indicates unit of target value</param>
         /// <param name="value">value get from RevitAPI</param>
@@ -42,22 +42,22 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Convert a value indicated by ForgeTypeId to the value used by RevitAPI
+        ///     Convert a value indicated by ForgeTypeId to the value used by RevitAPI
         /// </summary>
         /// <param name="value">Value to be converted</param>
         /// <param name="from">ForgeTypeId indicates the unit of the value to be converted</param>
         /// <returns>Target value</returns>
-        public static double CovertToAPI(double value, ForgeTypeId from )
+        public static double CovertToAPI(double value, ForgeTypeId from)
         {
             return value /= ImperialDutRatio(from);
         }
 
         /// <summary>
-        /// Get ratio between value in RevitAPI and value to display indicated by ForgeTypeId
+        ///     Get ratio between value in RevitAPI and value to display indicated by ForgeTypeId
         /// </summary>
         /// <param name="unit">ForgeTypeId indicates display unit type</param>
         /// <returns>Ratio </returns>
-        private static double ImperialDutRatio(ForgeTypeId unit) 
+        private static double ImperialDutRatio(ForgeTypeId unit)
         {
             if (unit == UnitTypeId.Feet) return 1;
             if (unit == UnitTypeId.FeetFractionalInches) return 1;
@@ -69,5 +69,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
             if (unit == UnitTypeId.MetersCentimeters) return 0.3048;
             return 1;
         }
-            }
+    }
 }

@@ -24,50 +24,49 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 {
-   /// <summary>
-   /// This class demonstrates marking a marker selected by changing the in-canvas control's image.
-   /// </summary>
-   public class IssueMarkerSelector
-   {
-      
-      /// <summary>
-      /// Changes selected issue marker in given document's tracking
-      /// </summary>
-      /// <param name="document">A Revit document</param>
-      /// <param name="controlIndex">Id of the clicked In-Canvas control</param>
-      public static void SelectMarker(Document document, int controlIndex)
-      {
-         var tempGraphicsManager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document);
-         var issueMarkerTracking = IssueMarkerTrackingManager.GetInstance().GetTracking(document);
-         var provider = ResourceProvider.GetInstance();
+    /// <summary>
+    ///     This class demonstrates marking a marker selected by changing the in-canvas control's image.
+    /// </summary>
+    public class IssueMarkerSelector
+    {
+        /// <summary>
+        ///     Changes selected issue marker in given document's tracking
+        /// </summary>
+        /// <param name="document">A Revit document</param>
+        /// <param name="controlIndex">Id of the clicked In-Canvas control</param>
+        public static void SelectMarker(Document document, int controlIndex)
+        {
+            var tempGraphicsManager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document);
+            var issueMarkerTracking = IssueMarkerTrackingManager.GetInstance().GetTracking(document);
+            var provider = ResourceProvider.GetInstance();
 
-         // Check if the new selection is valid
-         var newSelectedMarker = issueMarkerTracking.GetMarkerByIndex(controlIndex);
-         if (newSelectedMarker == null)
-            return;
+            // Check if the new selection is valid
+            var newSelectedMarker = issueMarkerTracking.GetMarkerByIndex(controlIndex);
+            if (newSelectedMarker == null)
+                return;
 
-         // clear previous selection
-         var selectedMarker = issueMarkerTracking.GetMarkerByIndex(issueMarkerTracking.GetSelected());
-         if (selectedMarker != null)
-         {
-            selectedMarker.InCanvasControlData.ImagePath = provider.IssueImage;
+            // clear previous selection
+            var selectedMarker = issueMarkerTracking.GetMarkerByIndex(issueMarkerTracking.GetSelected());
+            if (selectedMarker != null)
+            {
+                selectedMarker.InCanvasControlData.ImagePath = provider.IssueImage;
 
-            // This is how to set updated data to a control
-            tempGraphicsManager.UpdateControl(selectedMarker.ControlIndex, selectedMarker.InCanvasControlData);
+                // This is how to set updated data to a control
+                tempGraphicsManager.UpdateControl(selectedMarker.ControlIndex, selectedMarker.InCanvasControlData);
 
-            issueMarkerTracking.SetSelected(-1);
-         }
+                issueMarkerTracking.SetSelected(-1);
+            }
 
-         if (newSelectedMarker != selectedMarker)
-         {
-            newSelectedMarker.InCanvasControlData.ImagePath = provider.SelectedIssueImage;
+            if (newSelectedMarker != selectedMarker)
+            {
+                newSelectedMarker.InCanvasControlData.ImagePath = provider.SelectedIssueImage;
 
-            // This is how to set updated data to a control
-            tempGraphicsManager.UpdateControl(newSelectedMarker.ControlIndex, newSelectedMarker.InCanvasControlData);
+                // This is how to set updated data to a control
+                tempGraphicsManager.UpdateControl(newSelectedMarker.ControlIndex,
+                    newSelectedMarker.InCanvasControlData);
 
-            issueMarkerTracking.SetSelected(controlIndex);
-         }
-      }
-      
-         }
+                issueMarkerTracking.SetSelected(controlIndex);
+            }
+        }
+    }
 }

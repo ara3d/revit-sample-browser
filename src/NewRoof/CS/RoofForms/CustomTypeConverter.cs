@@ -22,48 +22,47 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
 {
     /// <summary>
-    /// The LevelConverter class is inherited from the TypeConverter class which is used to
-    /// show the property which returns Level type as like a combo box in the PropertyGrid control.
+    ///     The LevelConverter class is inherited from the TypeConverter class which is used to
+    ///     show the property which returns Level type as like a combo box in the PropertyGrid control.
     /// </summary>
     public class LevelConverter : TypeConverter
     {
         /// <summary>
-        /// To store the levels element
+        ///     To store the levels element
         /// </summary>
-        static private Dictionary<string, Level> m_levels = new Dictionary<string, Level>();
+        private static readonly Dictionary<string, Level> m_levels = new Dictionary<string, Level>();
 
         /// <summary>
-        /// Initialize the levels data.
+        ///     Initialize the levels data.
         /// </summary>
         /// <param name="levels"></param>
-        static public  void SetStandardValues(ReadOnlyCollection<Level> levels)
+        public static void SetStandardValues(ReadOnlyCollection<Level> levels)
         {
             m_levels.Clear();
-            foreach (var level in levels)
-            {
-                m_levels.Add(level.Id.ToString(), level);
-            }
+            foreach (var level in levels) m_levels.Add(level.Id.ToString(), level);
         }
 
         /// <summary>
-        /// Get a level by a level id.
+        ///     Get a level by a level id.
         /// </summary>
         /// <param name="id">The id of the level</param>
         /// <returns>Returns a level which id equals the specified id.</returns>
-        static public Level GetLevelByID(ElementId id)
-        {            
+        public static Level GetLevelByID(ElementId id)
+        {
             return m_levels[id.ToString()];
         }
 
         /// <summary>
-        /// Override the CanConvertTo method.
+        ///     Override the CanConvertTo method.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="destinationType"></param>
@@ -76,25 +75,28 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         }
 
         /// <summary>
-        ///  Override the ConvertTo method, convert a level type value to a string type value for displaying in the PropertyGrid.
+        ///     Override the ConvertTo method, convert a level type value to a string type value for displaying in the
+        ///     PropertyGrid.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="culture"></param>
         /// <param name="value"></param>
         /// <param name="destinationType"></param>
         /// <returns></returns>
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
         {
             if (destinationType == typeof(string) && value is Level)
             {
                 var level = (Level)value;
-                return level.Name + "[" + level.Id.ToString() + "]";
+                return level.Name + "[" + level.Id + "]";
             }
+
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
         /// <summary>
-        /// Override the CanConvertFrom method.
+        ///     Override the CanConvertFrom method.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="sourceType"></param>
@@ -107,16 +109,15 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         }
 
         /// <summary>
-        /// Override the ConvertFrom method, convert a string type value to a level type value.
+        ///     Override the ConvertFrom method, convert a string type value to a level type value.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="culture"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (value is string)
-            {
                 try
                 {
                     var levelString = (string)value;
@@ -130,14 +131,14 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
                 }
                 catch (Exception ex)
                 {
-                    Autodesk.Revit.UI.TaskDialog.Show("Revit", ex.Message);
+                    TaskDialog.Show("Revit", ex.Message);
                 }
-            }
+
             return base.ConvertFrom(context, culture, value);
         }
 
         /// <summary>
-        /// Override the GetStandardValuesSupported method for displaying a level list in the PropertyGrid.
+        ///     Override the GetStandardValuesSupported method for displaying a level list in the PropertyGrid.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -147,7 +148,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         }
 
         /// <summary>
-        /// Override the StandardValuesCollection method for supplying a level list in the PropertyGrid.
+        ///     Override the StandardValuesCollection method for supplying a level list in the PropertyGrid.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -158,19 +159,20 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
     }
 
     /// <summary>
-    /// The FootPrintRoofLineConverter class is inherited from the ExpandableObjectConverter class which is used to
-    /// expand the property which returns FootPrintRoofLine type as like a tree view in the PropertyGrid control.
+    ///     The FootPrintRoofLineConverter class is inherited from the ExpandableObjectConverter class which is used to
+    ///     expand the property which returns FootPrintRoofLine type as like a tree view in the PropertyGrid control.
     /// </summary>
     public class FootPrintRoofLineConverter : ExpandableObjectConverter
     {
         // To store the FootPrintRoofLines data.
-        static private Dictionary<string, FootPrintRoofLine> m_footPrintLines = new Dictionary<string, FootPrintRoofLine>();
-        
+        private static readonly Dictionary<string, FootPrintRoofLine> m_footPrintLines =
+            new Dictionary<string, FootPrintRoofLine>();
+
         /// <summary>
-        /// Initialize the FootPrintRoofLines data. 
+        ///     Initialize the FootPrintRoofLines data.
         /// </summary>
         /// <param name="footPrintRoofLines"></param>
-        static public void SetStandardValues(List<FootPrintRoofLine> footPrintRoofLines)
+        public static void SetStandardValues(List<FootPrintRoofLine> footPrintRoofLines)
         {
             m_footPrintLines.Clear();
             foreach (var footPrintLine in footPrintRoofLines)
@@ -182,7 +184,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         }
 
         /// <summary>
-        /// Override the CanConvertTo method.
+        ///     Override the CanConvertTo method.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="sourceType"></param>
@@ -195,25 +197,28 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         }
 
         /// <summary>
-        ///  Override the ConvertTo method, convert a FootPrintRoofLine type value to a string type value for displaying in the PropertyGrid.
+        ///     Override the ConvertTo method, convert a FootPrintRoofLine type value to a string type value for displaying in the
+        ///     PropertyGrid.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="culture"></param>
         /// <param name="value"></param>
         /// <param name="destinationType"></param>
         /// <returns></returns>
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
         {
             if (destinationType == typeof(string) && value is FootPrintRoofLine)
             {
                 var footPrintLine = (FootPrintRoofLine)value;
-                return footPrintLine.Name + "[" + footPrintLine.Id.ToString() + "]";
+                return footPrintLine.Name + "[" + footPrintLine.Id + "]";
             }
+
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
         /// <summary>
-        /// Override the CanConvertFrom method.
+        ///     Override the CanConvertFrom method.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="sourceType"></param>
@@ -226,16 +231,15 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         }
 
         /// <summary>
-        /// Override the ConvertFrom method, convert a string type value to a FootPrintRoofLine type value.
+        ///     Override the ConvertFrom method, convert a string type value to a FootPrintRoofLine type value.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="culture"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (value is string)
-            {
                 try
                 {
                     var footPrintLineString = (string)value;
@@ -249,25 +253,24 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
                 }
                 catch (Exception ex)
                 {
-                    Autodesk.Revit.UI.TaskDialog.Show("Revit", ex.Message);
+                    TaskDialog.Show("Revit", ex.Message);
                 }
-            }
-            
+
             return base.ConvertFrom(context, culture, value);
         }
 
         /// <summary>
-        /// Override the GetStandardValuesSupported method for displaying a FootPrintRoofLine list in the PropertyGrid.
+        ///     Override the GetStandardValuesSupported method for displaying a FootPrintRoofLine list in the PropertyGrid.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override bool  GetStandardValuesSupported(ITypeDescriptorContext context)
+        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
         {
             return true;
         }
 
         /// <summary>
-        /// Override the StandardValuesCollection method for supplying a FootPrintRoofLine list in the PropertyGrid.
+        ///     Override the StandardValuesCollection method for supplying a FootPrintRoofLine list in the PropertyGrid.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -275,5 +278,5 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         {
             return new StandardValuesCollection(m_footPrintLines.Values);
         }
-    };
+    }
 }

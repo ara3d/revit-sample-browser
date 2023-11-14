@@ -23,41 +23,25 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CancelSave.CS
 {
     /// <summary>
-    /// One log file will be created by this class for tracking events raise.
+    ///     One log file will be created by this class for tracking events raise.
     /// </summary>
     public static class LogManager
     {
         // a trace listener for the output log of CancelSave sample
-        private static TraceListener TxtListener;
+        private static readonly TraceListener TxtListener;
 
         // the directory where this assembly in.
-        private static string AssemblyLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        private static readonly string AssemblyLocation =
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         /// <summary>
-        /// Retrieval if doing regression test now.
-        /// If the ExpectedOutPut.log exists in the assembly folder returns true, else returns false.
-        /// </summary>
-        public static bool RegressionTestNow
-        {
-            get 
-            {
-                var expectedLogFile = Path.Combine(AssemblyLocation, "ExpectedOutPut.log");
-                if (File.Exists(expectedLogFile))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Static constructor which creates a log file.
+        ///     Static constructor which creates a log file.
         /// </summary>
         static LogManager()
         {
@@ -65,10 +49,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
             var actullyLogFile = Path.Combine(AssemblyLocation, "CancelSave.log");
 
             // if already existed, delete it.
-            if (File.Exists(actullyLogFile))
-            {
-                File.Delete(actullyLogFile);
-            }
+            if (File.Exists(actullyLogFile)) File.Delete(actullyLogFile);
 
             TxtListener = new TextWriterTraceListener(actullyLogFile);
             Trace.Listeners.Add(TxtListener);
@@ -76,7 +57,22 @@ namespace Revit.SDK.Samples.CancelSave.CS
         }
 
         /// <summary>
-        /// Finalize and close the output log.
+        ///     Retrieval if doing regression test now.
+        ///     If the ExpectedOutPut.log exists in the assembly folder returns true, else returns false.
+        /// </summary>
+        public static bool RegressionTestNow
+        {
+            get
+            {
+                var expectedLogFile = Path.Combine(AssemblyLocation, "ExpectedOutPut.log");
+                if (File.Exists(expectedLogFile)) return true;
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///     Finalize and close the output log.
         /// </summary>
         public static void LogFinalize()
         {
@@ -87,7 +83,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
         }
 
         /// <summary>
-        /// Write log to file: which event occurred in which document.
+        ///     Write log to file: which event occurred in which document.
         /// </summary>
         /// <param name="args">Event arguments that contains the event data.</param>
         /// <param name="doc">document in which the event is occur.</param>
@@ -98,7 +94,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
         }
 
         /// <summary>
-        /// Write specified message into log file.
+        ///     Write specified message into log file.
         /// </summary>
         /// <param name="message">the message which will be written into the log file. </param>
         public static void WriteLog(string message)
@@ -107,7 +103,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
         }
 
         /// <summary>
-        /// Get event name from its EventArgs, without namespace prefix
+        ///     Get event name from its EventArgs, without namespace prefix
         /// </summary>
         /// <param name="type">Generic event arguments type.</param>
         /// <returns>the event name</returns>
@@ -123,32 +119,24 @@ namespace Revit.SDK.Samples.CancelSave.CS
         }
 
         /// <summary>
-        /// This method will remove the extension name of file name(if have).
-        /// 
-        /// Document.Title will return title of project depends on OS setting:
-        /// If we choose show extension name by IE:Tools\Folder Options, then the title will end with accordingly extension name.
-        /// If we don't show extension, the Document.Title will only return file name without extension.
+        ///     This method will remove the extension name of file name(if have).
+        ///     Document.Title will return title of project depends on OS setting:
+        ///     If we choose show extension name by IE:Tools\Folder Options, then the title will end with accordingly extension
+        ///     name.
+        ///     If we don't show extension, the Document.Title will only return file name without extension.
         /// </summary>
         /// <param name="orgTitle">Origin file name to be revised.</param>
         /// <returns>New file name without extension name.</returns>
         private static string TitleNoExt(string orgTitle)
         {
             // return null directly if it's null
-            if (string.IsNullOrEmpty(orgTitle))
-            {
-                return "";
-            }
+            if (string.IsNullOrEmpty(orgTitle)) return "";
 
             // Remove the extension 
             var pos = orgTitle.LastIndexOf('.');
             if (-1 != pos)
-            {
                 return orgTitle.Remove(pos);
-            }
-            else
-            {
-                return orgTitle;
-            }
+            return orgTitle;
         }
     }
 }

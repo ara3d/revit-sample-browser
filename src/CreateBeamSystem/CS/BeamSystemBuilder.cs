@@ -21,23 +21,23 @@
 //
 
 
+using System.Collections.Generic;
+using Autodesk.Revit.DB;
+
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
-    using System.Collections.Generic;
-    using Autodesk.Revit.DB;
-
     /// <summary>
-    /// is used to create new instances of beam system
+    ///     is used to create new instances of beam system
     /// </summary>
     public class BeamSystemBuilder
     {
         /// <summary>
-        /// the data used to create beam system
+        ///     the data used to create beam system
         /// </summary>
-        private BeamSystemData m_data;
+        private readonly BeamSystemData m_data;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="data">the data used to create beam system</param>
         public BeamSystemBuilder(BeamSystemData data)
@@ -46,17 +46,14 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         }
 
         /// <summary>
-        /// create beam system according to given profile and property
+        ///     create beam system according to given profile and property
         /// </summary>
         public void CreateBeamSystem()
         {
             var document = m_data.CommandData.Application.ActiveUIDocument.Document;
             // create curve array and insert Lines in order
             IList<Curve> curves = new List<Curve>();
-            foreach (var line in m_data.Lines)
-            {
-                curves.Add(line);
-            }
+            foreach (var line in m_data.Lines) curves.Add(line);
             // create beam system takes closed profile consist of lines
             var aBeamSystem = BeamSystem.Create(document, curves, document.ActiveView.SketchPlane, 0);
             // set created beam system's layout rule and beam type property

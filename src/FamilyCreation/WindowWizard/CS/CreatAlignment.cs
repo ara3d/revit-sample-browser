@@ -20,37 +20,39 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
+using Document = Autodesk.Revit.DB.Document;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
 {
     /// <summary>
-    /// The class allows users to create alignment
+    ///     The class allows users to create alignment
     /// </summary>
-    class CreateAlignment
+    internal class CreateAlignment
     {
-                /// <summary>
-        /// store the document
+        /// <summary>
+        ///     store the document
         /// </summary>
-        Document m_document;
-        
+        private readonly Document m_document;
+
         /// <summary>
-        /// store the family item factory of creation
-        /// </summary>        
-        Autodesk.Revit.Creation.FamilyItemFactory m_familyCreator;
-        
+        ///     store the family item factory of creation
+        /// </summary>
+        private readonly FamilyItemFactory m_familyCreator;
+
         /// <summary>
-        /// The constructor of CreateAlignment class
-        /// </summary>        
+        ///     The constructor of CreateAlignment class
+        /// </summary>
         /// <param name="doc">the document</param>
         public CreateAlignment(Document doc)
         {
-            m_document = doc;          
+            m_document = doc;
             m_familyCreator = m_document.FamilyCreate;
         }
 
-                /// <summary>
-        /// The method is used to create alignment between two faces
+        /// <summary>
+        ///     The method is used to create alignment between two faces
         /// </summary>
         /// <param name="view">the view</param>
         /// <param name="face1">face1</param>
@@ -71,5 +73,5 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 subTransaction.Commit();
             }
         }
-            }
+    }
 }

@@ -21,15 +21,15 @@
 // 
 
 
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {
-    class ApplicationAvailabilityClass : IExternalCommandAvailability
+    internal class ApplicationAvailabilityClass : IExternalCommandAvailability
     {
-        public bool IsCommandAvailable(UIApplication applicationData, 
-                                    Autodesk.Revit.DB.CategorySet selectedCategories)
+        public bool IsCommandAvailable(UIApplication applicationData,
+            CategorySet selectedCategories)
         {
             var revitApplication = applicationData.Application;
             var options = ApplicationOptions.Get();
@@ -43,6 +43,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 case ApplicationAvailablity.MEP:
                     return revitApplication.IsSystemsEnabled;
             }
+
             return true;
         }
     }

@@ -23,126 +23,117 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FabricationPartLayout.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class ButtonPaletteExclusions : IExternalCommand
-   {
-       public virtual Result Execute(ExternalCommandData commandData
-          , ref string message, ElementSet elements)
-      {
-         try
-         {
-            var doc = commandData.Application.ActiveUIDocument.Document;
-
-            using (var tr = new Transaction(doc, "Set button and palette exclusions"))
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class ButtonPaletteExclusions : IExternalCommand
+    {
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            try
             {
-               tr.Start();
+                var doc = commandData.Application.ActiveUIDocument.Document;
 
-               var config = FabricationConfiguration.GetFabricationConfiguration(doc);
+                using (var tr = new Transaction(doc, "Set button and palette exclusions"))
+                {
+                    tr.Start();
 
-               if (config == null)
-               {
-                  message = "No fabrication configuration loaded.";
-                  return Result.Failed;
-               }
+                    var config = FabricationConfiguration.GetFabricationConfiguration(doc);
 
-               // get all loaded fabrication services
-               var allLoadedServices = config.GetAllLoadedServices();
-               // get the "ADSK - HVAC:Supply Air" service
-               var serviceName = "ADSK - HVAC: Supply Air";
-               var selectedService = allLoadedServices.FirstOrDefault(x => x.Name == serviceName);
+                    if (config == null)
+                    {
+                        message = "No fabrication configuration loaded.";
+                        return Result.Failed;
+                    }
 
-               if (selectedService == null)
-               {
-                  message = $"Could not find fabrication service {serviceName}";
-                  return Result.Failed;
-               }
+                    // get all loaded fabrication services
+                    var allLoadedServices = config.GetAllLoadedServices();
+                    // get the "ADSK - HVAC:Supply Air" service
+                    var serviceName = "ADSK - HVAC: Supply Air";
+                    var selectedService = allLoadedServices.FirstOrDefault(x => x.Name == serviceName);
 
-               var rectangularPaletteName = "Rectangular";
-               var roundPaletteName = "Round Bought Out";
-               var excludeButtonName = "Square Bend";
+                    if (selectedService == null)
+                    {
+                        message = $"Could not find fabrication service {serviceName}";
+                        return Result.Failed;
+                    }
 
-               var rectangularPaletteIndex = -1;
-               var roundPaletteIndex = -1;
+                    var rectangularPaletteName = "Rectangular";
+                    var roundPaletteName = "Round Bought Out";
+                    var excludeButtonName = "Square Bend";
 
-               // find Rectangular and Round palettes in service
-               for (var i = 0; i < selectedService.PaletteCount; i++)
-               {
-                  if (selectedService.GetPaletteName(i) == rectangularPaletteName)
-                  {
-                     rectangularPaletteIndex = i;
-                  }
+                    var rectangularPaletteIndex = -1;
+                    var roundPaletteIndex = -1;
 
-                  if (selectedService.GetPaletteName(i) == roundPaletteName)
-                  {
-                     roundPaletteIndex = i;
-                  }
+                    // find Rectangular and Round palettes in service
+                    for (var i = 0; i < selectedService.PaletteCount; i++)
+                    {
+                        if (selectedService.GetPaletteName(i) == rectangularPaletteName) rectangularPaletteIndex = i;
 
-                  if (rectangularPaletteIndex > -1 && roundPaletteIndex > -1)
-                  {
-                     break;
-                  }
-               }
+                        if (selectedService.GetPaletteName(i) == roundPaletteName) roundPaletteIndex = i;
 
-               if (rectangularPaletteIndex > -1)
-               {
-                  // exclude square bend in Rectangular palette
-                  for (var i = 0; i < selectedService.GetButtonCount(rectangularPaletteIndex); i++)
-                  {
-                     if (selectedService.GetButton(rectangularPaletteIndex, i).Name == excludeButtonName)
-                     {
-                        selectedService.OverrideServiceButtonExclusion(rectangularPaletteIndex, i, true);
-                        break;
-                     }
-                  }
-               }
-               else
-               {
-                  message = $"Unable to locate {excludeButtonName} button to exclude.";
-                  return Result.Failed;
-               }
+                        if (rectangularPaletteIndex > -1 && roundPaletteIndex > -1) break;
+                    }
 
-               // exclude entire Round Bought Out service palette
-               if (roundPaletteIndex > -1)
-               {
-                  selectedService.SetServicePaletteExclusions(new List<int>() { roundPaletteIndex });
-               }
-               else
-               {
-                  message = $"Unable to locate {roundPaletteName} service palette to exclude.";
-                  return Result.Failed;
-               }
+                    if (rectangularPaletteIndex > -1)
+                    {
+                        // exclude square bend in Rectangular palette
+                        for (var i = 0; i < selectedService.GetButtonCount(rectangularPaletteIndex); i++)
+                            if (selectedService.GetButton(rectangularPaletteIndex, i).Name == excludeButtonName)
+                            {
+                                selectedService.OverrideServiceButtonExclusion(rectangularPaletteIndex, i, true);
+                                break;
+                            }
+                    }
+                    else
+                    {
+                        message = $"Unable to locate {excludeButtonName} button to exclude.";
+                        return Result.Failed;
+                    }
 
-               tr.Commit();
+                    // exclude entire Round Bought Out service palette
+                    if (roundPaletteIndex > -1)
+                    {
+                        selectedService.SetServicePaletteExclusions(new List<int> { roundPaletteIndex });
+                    }
+                    else
+                    {
+                        message = $"Unable to locate {roundPaletteName} service palette to exclude.";
+                        return Result.Failed;
+                    }
 
-               var td = new TaskDialog("Button and Palette Exclsuions")
-               {
-                  MainIcon = TaskDialogIcon.TaskDialogIconInformation,
-                  TitleAutoPrefix = false,
-                  MainInstruction = "Operation Successful",
-                  MainContent = $"Excluded {excludeButtonName} button from {serviceName} {rectangularPaletteName} Palette {Environment.NewLine}"
-                                 + $"Excluded {roundPaletteName} Palette from {serviceName}"
-               };
+                    tr.Commit();
 
-               td.Show();
+                    var td = new TaskDialog("Button and Palette Exclsuions")
+                    {
+                        MainIcon = TaskDialogIcon.TaskDialogIconInformation,
+                        TitleAutoPrefix = false,
+                        MainInstruction = "Operation Successful",
+                        MainContent =
+                            $"Excluded {excludeButtonName} button from {serviceName} {rectangularPaletteName} Palette {Environment.NewLine}"
+                            + $"Excluded {roundPaletteName} Palette from {serviceName}"
+                    };
+
+                    td.Show();
+                }
+
+
+                return Result.Succeeded;
             }
-
-
-            return Result.Succeeded;
-         }
-         catch (Exception ex)
-         {
-            message = ex.Message;
-            return Result.Failed;
-         }
-      }
-   }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+    }
 }

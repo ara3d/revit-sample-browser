@@ -1,4 +1,3 @@
-
 //
 // (C) Copyright 2003-2019 by Autodesk, Inc.
 //
@@ -26,66 +25,66 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
-   /// <summary>
-   /// Data class which stores the information for importing image format
-   /// </summary>
-   class ImportImageData : ImportData
-   {
-      /// <summary>
-      /// Constructor
-      /// </summary>
-      /// <param name="commandData">Revit command data</param>
-      /// <param name="importFormat">Format to import</param>
-      public ImportImageData(ExternalCommandData commandData, ImportFormat importFormat)
-          : base(commandData, importFormat)
-      {
-         m_filter = "All Image Files (*.bmp, *.gif, *.jpg, *.jpeg, *.pdf, *.png, *.tif)|*.bmp;*.gif;*.jpg;*.jpeg;*.pdf;*.png;*.tif";
-         m_title = "Import Image";
-      }
+    /// <summary>
+    ///     Data class which stores the information for importing image format
+    /// </summary>
+    internal class ImportImageData : ImportData
+    {
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="commandData">Revit command data</param>
+        /// <param name="importFormat">Format to import</param>
+        public ImportImageData(ExternalCommandData commandData, ImportFormat importFormat)
+            : base(commandData, importFormat)
+        {
+            m_filter =
+                "All Image Files (*.bmp, *.gif, *.jpg, *.jpeg, *.pdf, *.png, *.tif)|*.bmp;*.gif;*.jpg;*.jpeg;*.pdf;*.png;*.tif";
+            m_title = "Import Image";
+        }
 
-      /// <summary>
-      /// Collect the parameters and export
-      /// </summary>
-      /// <returns></returns>
-      public override bool Import()
-      {
-         using (var t = new Transaction(m_activeDoc))
-         {
-            t.SetName("Import");
-            t.Start();
-
-            // Step 1: Create an ImageType 
-            //ImageTypeOptions specifies the source of the image, and how to create the ImageType.
-            // It can be used to specify:
-            //   - The image file.  Either as a local file path, or as an ExternalResourceRef
-            //   - Whether to store the local file path as an absolute path or a relative path.
-            //   - Whether to create an Import or a Link image.
-            // In addition, if the source is a PDF file, then ImageTypeOptions can be used to specify:
-            //   - which page from the PDF to use
-            //   - the resolution (in dots-per-inch) at which to rasterize the PDF
-            // For other image types the page number should be 1 (the default),
-            // and the resolution is only used to determine the size of the image.
-
-            var typeOptions = new ImageTypeOptions(m_importFileFullName, true, ImageTypeSource.Import);
-            var imageType = ImageType.Create(m_activeDoc, typeOptions);
-
-            // Step 2: Create an ImageInstance, but only if the active view is able to contain images.
-            var view = CommandData.Application.ActiveUIDocument.Document.ActiveView;
-            if (ImageInstance.IsValidView(view))
+        /// <summary>
+        ///     Collect the parameters and export
+        /// </summary>
+        /// <returns></returns>
+        public override bool Import()
+        {
+            using (var t = new Transaction(m_activeDoc))
             {
+                t.SetName("Import");
+                t.Start();
 
-               // ImagePlacementOptions
-               var placementOptions = new ImagePlacementOptions();
-               placementOptions.PlacementPoint = BoxPlacement.TopLeft;
-               placementOptions.Location = new XYZ(1, 1, 1);
+                // Step 1: Create an ImageType 
+                //ImageTypeOptions specifies the source of the image, and how to create the ImageType.
+                // It can be used to specify:
+                //   - The image file.  Either as a local file path, or as an ExternalResourceRef
+                //   - Whether to store the local file path as an absolute path or a relative path.
+                //   - Whether to create an Import or a Link image.
+                // In addition, if the source is a PDF file, then ImageTypeOptions can be used to specify:
+                //   - which page from the PDF to use
+                //   - the resolution (in dots-per-inch) at which to rasterize the PDF
+                // For other image types the page number should be 1 (the default),
+                // and the resolution is only used to determine the size of the image.
 
-               ImageInstance.Create(m_activeDoc, view, imageType.Id, placementOptions);
+                var typeOptions = new ImageTypeOptions(m_importFileFullName, true, ImageTypeSource.Import);
+                var imageType = ImageType.Create(m_activeDoc, typeOptions);
+
+                // Step 2: Create an ImageInstance, but only if the active view is able to contain images.
+                var view = CommandData.Application.ActiveUIDocument.Document.ActiveView;
+                if (ImageInstance.IsValidView(view))
+                {
+                    // ImagePlacementOptions
+                    var placementOptions = new ImagePlacementOptions();
+                    placementOptions.PlacementPoint = BoxPlacement.TopLeft;
+                    placementOptions.Location = new XYZ(1, 1, 1);
+
+                    ImageInstance.Create(m_activeDoc, view, imageType.Id, placementOptions);
+                }
+
+                t.Commit();
             }
 
-            t.Commit();
-         }
-
-         return true;
-      }
-   }
+            return true;
+        }
+    }
 }

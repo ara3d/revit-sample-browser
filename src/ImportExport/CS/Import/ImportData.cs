@@ -21,96 +21,56 @@
 // 
 
 using System;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Base data class which stores the basic information for import
+    ///     Base data class which stores the basic information for import
     /// </summary>
     public class ImportData
     {
-                /// <summary>
-        /// Revit command data
-        /// </summary>
-        protected ExternalCommandData m_commandData;
         /// <summary>
-        /// Active document
+        ///     Active document
         /// </summary>
         protected Document m_activeDoc;
 
         /// <summary>
-        /// Directory where to import the file
+        ///     Revit command data
         /// </summary>
-        protected string m_importFolder;
-        /// <summary>
-        /// File Name or Prefix to be used
-        /// </summary>
-        protected string m_importFileFullName;
+        protected ExternalCommandData m_commandData;
 
         /// <summary>
-        /// The format to be exported
-        /// </summary>
-        protected ImportFormat m_importFormat;
-
-        /// <summary>
-        /// The filter which will be used in file saving dialog
+        ///     The filter which will be used in file saving dialog
         /// </summary>
         protected string m_filter;
 
         /// <summary>
-        /// The title of importing dialog
+        ///     File Name or Prefix to be used
+        /// </summary>
+        protected string m_importFileFullName;
+
+        /// <summary>
+        ///     Directory where to import the file
+        /// </summary>
+        protected string m_importFolder;
+
+        /// <summary>
+        ///     The format to be exported
+        /// </summary>
+        protected ImportFormat m_importFormat;
+
+        /// <summary>
+        ///     The title of importing dialog
         /// </summary>
         protected string m_title;
-        
-                /// <summary>
-        /// Revit command data
-        /// </summary>
-        public ExternalCommandData CommandData => m_commandData;
+
 
         /// <summary>
-        /// File Name or Prefix to be used
-        /// </summary>
-        public string ImportFileFullName
-        {
-            get => m_importFileFullName;
-            set => m_importFileFullName = value;
-        }  
-
-        /// <summary>
-        /// The format to be imported
-        /// </summary>
-        public ImportFormat ImportFormat
-        {
-            get => m_importFormat;
-            set => m_importFormat = value;
-        }
-
-        /// <summary>
-        /// The filter which will be used in file saving dialog
-        /// </summary>
-        public string Filter => m_filter;
-
-        /// <summary>
-        /// Directory where to import the file
-        /// </summary>
-        public string ImportFolder
-        {
-            get => m_importFolder;
-            set => m_importFolder = value;
-        }
-
-        /// <summary>
-        /// The title of importing dialog
-        /// </summary>
-        public string Title => m_title;
-
-        
-                /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="importFormat">Format to import</param>
@@ -124,7 +84,49 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize the variables
+        ///     Revit command data
+        /// </summary>
+        public ExternalCommandData CommandData => m_commandData;
+
+        /// <summary>
+        ///     File Name or Prefix to be used
+        /// </summary>
+        public string ImportFileFullName
+        {
+            get => m_importFileFullName;
+            set => m_importFileFullName = value;
+        }
+
+        /// <summary>
+        ///     The format to be imported
+        /// </summary>
+        public ImportFormat ImportFormat
+        {
+            get => m_importFormat;
+            set => m_importFormat = value;
+        }
+
+        /// <summary>
+        ///     The filter which will be used in file saving dialog
+        /// </summary>
+        public string Filter => m_filter;
+
+        /// <summary>
+        ///     Directory where to import the file
+        /// </summary>
+        public string ImportFolder
+        {
+            get => m_importFolder;
+            set => m_importFolder = value;
+        }
+
+        /// <summary>
+        ///     The title of importing dialog
+        /// </summary>
+        public string Title => m_title;
+
+        /// <summary>
+        ///     Initialize the variables
         /// </summary>
         private void Initialize()
         {
@@ -135,17 +137,14 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Collect the parameters and import
+        ///     Collect the parameters and import
         /// </summary>
         /// <returns></returns>
         public virtual bool Import()
         {
-            if (m_importFileFullName == null)
-            {
-                throw new NullReferenceException();
-            }
+            if (m_importFileFullName == null) throw new NullReferenceException();
 
             return true;
         }
-            }
+    }
 }

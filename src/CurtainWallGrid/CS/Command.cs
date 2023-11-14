@@ -20,34 +20,34 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
 {
-   /// <summary>
-   /// the entry point of the sample (to launch the sample dialog and allows further operations)
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   class Command : IExternalCommand
-   {
-      /// <summary>
-      /// The entrance of this example, implements the Execute method of IExternalCommand
-      /// </summary>
-            public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
-      {
-         var myDoc = new MyDocument(commandData);
+    /// <summary>
+    ///     the entry point of the sample (to launch the sample dialog and allows further operations)
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    internal class Command : IExternalCommand
+    {
+        /// <summary>
+        ///     The entrance of this example, implements the Execute method of IExternalCommand
+        /// </summary>
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            var myDoc = new MyDocument(commandData);
 
-         using (var gridForm = new GridForm(myDoc))
-         {
-            // The form is created successfully
-            if (null != gridForm && false == gridForm.IsDisposed)
+            using (var gridForm = new GridForm(myDoc))
             {
-               gridForm.ShowDialog();
+                // The form is created successfully
+                if (null != gridForm && false == gridForm.IsDisposed) gridForm.ShowDialog();
             }
-         }
-         return Result.Succeeded;
-      }
-         }
+
+            return Result.Succeeded;
+        }
+    }
 }

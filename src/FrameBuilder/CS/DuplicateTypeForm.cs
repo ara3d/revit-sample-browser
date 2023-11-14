@@ -20,25 +20,25 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System;
+using System.Windows.Forms;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
+
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System;
-    using System.Windows.Forms;
-
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.UI;
-
     /// <summary>
-    /// form to duplicate FamilySymbol and edit its name and parameters
+    ///     form to duplicate FamilySymbol and edit its name and parameters
     /// </summary>
-    public partial class DuplicateTypeForm : System.Windows.Forms.Form
+    public partial class DuplicateTypeForm : Form
     {
-        private FamilySymbol m_copiedSymbol;    // FamilySymbol object to be copied
-        private FamilySymbol m_newSymbol;        // duplicate FamilySymbol
-        private FrameTypesMgr m_typesMgr;        // object manage FamilySymbols
+        private readonly FamilySymbol m_copiedSymbol; // FamilySymbol object to be copied
+        private FamilySymbol m_newSymbol; // duplicate FamilySymbol
+        private readonly FrameTypesMgr m_typesMgr; // object manage FamilySymbols
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="obj">FamilySymbol object</param>
         /// <param name="typesMgr">FamilySymbols' manager</param>
@@ -51,9 +51,16 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// hidden subclass' method;
-        /// display EditTypeNameForm to get type name;
-        /// then duplicate FamilySymbol
+        ///     constructor without parameter is forbidden
+        /// </summary>
+        private DuplicateTypeForm()
+        {
+        }
+
+        /// <summary>
+        ///     hidden subclass' method;
+        ///     display EditTypeNameForm to get type name;
+        ///     then duplicate FamilySymbol
         /// </summary>
         public new DialogResult ShowDialog()
         {
@@ -65,10 +72,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                 using (var typeNameFrm = new EditTypeNameForm(initialTypeName))
                 {
                     // cancel the command of duplicate
-                    if (typeNameFrm.ShowDialog() != DialogResult.OK)
-                    {
-                        return DialogResult.Cancel;
-                    }
+                    if (typeNameFrm.ShowDialog() != DialogResult.OK) return DialogResult.Cancel;
 
                     // generate the duplicate one's Name used to create with Name edited in EditTypeNameForm
                     var finalTypeName = m_typesMgr.GenerateSymbolName(typeNameFrm.TypeName);
@@ -82,18 +86,12 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                 TaskDialog.Show("Revit", "Failed to duplicate Type.");
                 return DialogResult.Abort;
             }
+
             return base.ShowDialog();
         }
 
         /// <summary>
-        /// constructor without parameter is forbidden
-        /// </summary>
-        private DuplicateTypeForm()
-        {
-        }
-
-        /// <summary>
-        /// provide UI to edit is parameter
+        ///     provide UI to edit is parameter
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -104,17 +102,13 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             familyTextBox.Text = m_newSymbol.Family.Name;
             var symbolParas = FrameTypeParameters.CreateInstance(m_newSymbol);
             if (null != symbolParas)
-            {
                 typeParameterPropertyGrid.SelectedObject = symbolParas;
-            }
             else
-            {
                 typeParameterPropertyGrid.Enabled = false;
-            }
         }
 
         /// <summary>
-        /// to finish duplicate process
+        ///     to finish duplicate process
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -125,7 +119,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// cancel the duplicate and roll back the command
+        ///     cancel the duplicate and roll back the command
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -133,10 +127,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         {
             // delete the duplicate one
             var result = m_typesMgr.DeleteSymbol(m_newSymbol);
-            if (result == false)
-            {
-                throw new ErrorMessageException("can not delete the new duplicate symbol");
-            }
+            if (result == false) throw new ErrorMessageException("can not delete the new duplicate symbol");
             DialogResult = DialogResult.Cancel;
             Close();
         }

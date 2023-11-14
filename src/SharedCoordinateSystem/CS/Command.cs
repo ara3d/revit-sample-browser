@@ -22,49 +22,50 @@
 
 using System;
 using System.Windows.Forms;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   public class Command : IExternalCommand
-   {
-            public Result Execute(ExternalCommandData commandData,
-                                             ref string message, ElementSet elements)
-      {
-           
-         try
-         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.SharedCoordinateSystem");
-            trans.Start();
-            var Data = new CoordinateSystemData(commandData);
-            Data.GatData();
-
-            using (var displayForm =
-                                    new CoordinateSystemDataForm(Data, commandData.Application.Application.Cities,
-                                                commandData.Application.ActiveUIDocument.Document.SiteLocation))
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
+        {
+            try
             {
-               if (DialogResult.OK != displayForm.ShowDialog())
-               {
-                  trans.RollBack();
-                  return Result.Cancelled;
-               }
-            }
-            trans.Commit();
-            return Result.Succeeded;
-         }
-         catch (Exception ex)
-         {
-            message = ex.Message;            
-            return Result.Failed;
-         }
+                var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                    "Revit.SDK.Samples.SharedCoordinateSystem");
+                trans.Start();
+                var Data = new CoordinateSystemData(commandData);
+                Data.GatData();
 
-     }
-      }
+                using (var displayForm =
+                       new CoordinateSystemDataForm(Data, commandData.Application.Application.Cities,
+                           commandData.Application.ActiveUIDocument.Document.SiteLocation))
+                {
+                    if (DialogResult.OK != displayForm.ShowDialog())
+                    {
+                        trans.RollBack();
+                        return Result.Cancelled;
+                    }
+                }
+
+                trans.Commit();
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+        }
+    }
 }

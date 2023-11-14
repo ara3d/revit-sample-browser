@@ -26,64 +26,56 @@ using System.Collections.Generic;
 namespace Revit.SDK.Samples.BoundaryConditions.CS
 {
     /// <summary>
-    /// a structure about the conversion rule between display value and inside value
+    ///     a structure about the conversion rule between display value and inside value
     /// </summary>
     public struct ConversionValue
     {
         // members
 
         /// <summary>
-        /// constructor, using to initialize the members
+        ///     constructor, using to initialize the members
         /// </summary>
         /// <param name="precision">the precision of the diaplay value</param>
         /// <param name="ratio">the unit of the display value</param>
         /// <param name="unitName">the radio of inside value to display valuea</param>
         public ConversionValue(int precision, double ratio, string unitName)
         {
-
             Precision = precision;
-            Ratio     = ratio;
-            UnitName  = unitName;
+            Ratio = ratio;
+            UnitName = unitName;
         }
 
         /// <summary>
-        /// get the precision of the diaplay value
+        ///     get the precision of the diaplay value
         /// </summary>
         public int Precision { get; }
 
         /// <summary>
-        /// get the unit of the display value
+        ///     get the unit of the display value
         /// </summary>
         public string UnitName { get; }
 
         /// <summary>
-        /// get the radio of inside value to display value
+        ///     get the radio of inside value to display value
         /// </summary>
         public double Ratio { get; }
-    };
+    }
 
     /// <summary>
-    /// value conversion dictionary, in this class the data we gave only fit for Imperial unit
-    /// the relationship about dislay paramete values and inside parameter values
+    ///     value conversion dictionary, in this class the data we gave only fit for Imperial unit
+    ///     the relationship about dislay paramete values and inside parameter values
     /// </summary>
     public static class UnitConversion
     {
-        // member: dictionary
-
         /// <summary>
-        /// get the value dictionary
-        /// </summary>
-        public static Dictionary<string, ConversionValue> UnitDictionary { get; }
-
-        /// <summary>
-        /// static constructor to initialize the value conversion dictionary which we will used 
-        /// according to the difference unit
+        ///     static constructor to initialize the value conversion dictionary which we will used
+        ///     according to the difference unit
         /// </summary>
         static UnitConversion()
         {
             UnitDictionary = new Dictionary<string, ConversionValue>();
 
-                        var degree = (char)0xb0;
+            var degree = (char)0xb0;
             var square = (char)0xB2;
             var cube = (char)0xB3;
 
@@ -101,11 +93,16 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
 
             // about Area BC's translation spring modulus
             AddNewUnit(1, 14593.9029372064, "kip/ft" + cube, "ATSpringModulusConver");
-
-                    }
+        }
+        // member: dictionary
 
         /// <summary>
-        /// add a new unit conversion item
+        ///     get the value dictionary
+        /// </summary>
+        public static Dictionary<string, ConversionValue> UnitDictionary { get; }
+
+        /// <summary>
+        ///     add a new unit conversion item
         /// </summary>
         /// <param name="precision"> the precision of the display value</param>
         /// <param name="ratio"> the radio of inside value to display value about current unit</param>

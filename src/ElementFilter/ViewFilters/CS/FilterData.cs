@@ -28,47 +28,14 @@ using PFRF = Autodesk.Revit.DB.ParameterFilterRuleFactory;
 namespace Revit.SDK.Samples.ViewFilters.CS
 {
     /// <summary>
-    /// Sample custom immutable class used to represents Revit internal FilterRule.
-    /// This class and its variables will help display the contents of UI controls.
-    /// This class can build its data caches to Revit FilterRule object.
+    ///     Sample custom immutable class used to represents Revit internal FilterRule.
+    ///     This class and its variables will help display the contents of UI controls.
+    ///     This class can build its data caches to Revit FilterRule object.
     /// </summary>
     public sealed class FilterRuleBuilder
     {
-                /// <summary>
-        /// Parameter of filter rule
-        /// </summary>
-        public BuiltInParameter Parameter { get; private set; }
-
         /// <summary>
-        /// Filter rule criteria(in String type)
-        /// </summary>
-        public string RuleCriteria { get; private set; }
-
-        /// <summary>
-        /// Rule values in string 
-        /// </summary>
-        public string RuleValue { get; private set; }
-
-        /// <summary>
-        /// Parameter storage type of current FilterRule.
-        /// </summary>
-        public StorageType ParamType { get; private set; }
-
-        /// <summary>
-        /// Tolerance of double comparison, valid only when ParamType is double
-        /// </summary>
-        public double Epsilon { get; private set; }
-
-        
-        
-        /// <summary>
-        /// Get ElementId of current parameter 
-        /// </summary>
-        public ElementId ParamId => new ElementId(Parameter);
-
-        
-                /// <summary>
-        /// Create FilterRuleBuilder for String FilterRule
+        ///     Create FilterRuleBuilder for String FilterRule
         /// </summary>
         /// <param name="param">Parameter of FilterRule.</param>
         /// <param name="ruleCriteria">Rule criteria.</param>
@@ -85,7 +52,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         }
 
         /// <summary>
-        /// Create FilterRuleBuilder for double FilterRule
+        ///     Create FilterRuleBuilder for double FilterRule
         /// </summary>
         /// <param name="param">Parameter of FilterRule.</param>
         /// <param name="ruleCriteria">Rule criteria.</param>
@@ -104,7 +71,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         }
 
         /// <summary>
-        /// Create FilterRuleBuilder for int FilterRule
+        ///     Create FilterRuleBuilder for int FilterRule
         /// </summary>
         /// <param name="param">Parameter of FilterRule.</param>
         /// <param name="ruleCriteria">Rule criteria.</param>
@@ -121,7 +88,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         }
 
         /// <summary>
-        /// Create FilterRuleBuilder for ElementId FilterRule
+        ///     Create FilterRuleBuilder for ElementId FilterRule
         /// </summary>
         /// <param name="param">Parameter of FilterRule.</param>
         /// <param name="ruleCriteria">Rule criteria.</param>
@@ -138,21 +105,51 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         }
 
         /// <summary>
-        /// Create API FilterRule according to sample's FilterRuleBuilder        
+        ///     Parameter of filter rule
+        /// </summary>
+        public BuiltInParameter Parameter { get; private set; }
+
+        /// <summary>
+        ///     Filter rule criteria(in String type)
+        /// </summary>
+        public string RuleCriteria { get; private set; }
+
+        /// <summary>
+        ///     Rule values in string
+        /// </summary>
+        public string RuleValue { get; private set; }
+
+        /// <summary>
+        ///     Parameter storage type of current FilterRule.
+        /// </summary>
+        public StorageType ParamType { get; private set; }
+
+        /// <summary>
+        ///     Tolerance of double comparison, valid only when ParamType is double
+        /// </summary>
+        public double Epsilon { get; private set; }
+
+
+        /// <summary>
+        ///     Get ElementId of current parameter
+        /// </summary>
+        public ElementId ParamId => new ElementId(Parameter);
+
+        /// <summary>
+        ///     Create API FilterRule according to sample's FilterRuleBuilder
         /// </summary>
         /// <returns>API FilterRule converted from current FilterRuleBuilder.</returns>
         public FilterRule AsFilterRule()
         {
             var paramId = new ElementId(Parameter);
             if (ParamType == StorageType.String)
-            {
-                switch(RuleCriteria)
+                switch (RuleCriteria)
                 {
                     case RuleCriteraNames.BeginWith:
                         return PFRF.CreateBeginsWithRule(paramId, RuleValue);
                     case RuleCriteraNames.Contains:
                         return PFRF.CreateContainsRule(paramId, RuleValue);
-                    case RuleCriteraNames.EndsWith: 
+                    case RuleCriteraNames.EndsWith:
                         return PFRF.CreateEndsWithRule(paramId, RuleValue);
                     case RuleCriteraNames.Equals_:
                         return PFRF.CreateEqualsRule(paramId, RuleValue);
@@ -173,10 +170,8 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                     case RuleCriteraNames.NotEquals:
                         return PFRF.CreateNotEqualsRule(paramId, RuleValue);
                 }
-            }
             else if (ParamType == StorageType.Double)
-            {
-                switch(RuleCriteria)
+                switch (RuleCriteria)
                 {
                     case RuleCriteraNames.Equals_:
                         return PFRF.CreateEqualsRule(paramId, double.Parse(RuleValue), Epsilon);
@@ -191,50 +186,46 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                     case RuleCriteraNames.NotEquals:
                         return PFRF.CreateNotEqualsRule(paramId, double.Parse(RuleValue), Epsilon);
                 }
-            }
             else if (ParamType == StorageType.Integer)
-            {
-                 switch(RuleCriteria)
-                 {
-                     case RuleCriteraNames.Equals_:
-                         return PFRF.CreateEqualsRule(paramId, int.Parse(RuleValue));
-                     case RuleCriteraNames.Greater:
-                         return PFRF.CreateGreaterRule(paramId, int.Parse(RuleValue));
-                     case RuleCriteraNames.GreaterOrEqual:
-                         return PFRF.CreateGreaterOrEqualRule(paramId, int.Parse(RuleValue));
-                     case RuleCriteraNames.Less:
-                         return PFRF.CreateLessRule(paramId, int.Parse(RuleValue));
-                     case RuleCriteraNames.LessOrEqual:
-                         return PFRF.CreateLessOrEqualRule(paramId, int.Parse(RuleValue));
-                     case RuleCriteraNames.NotEquals:
-                         return PFRF.CreateNotEqualsRule(paramId, int.Parse(RuleValue));
-                 }
-            }
+                switch (RuleCriteria)
+                {
+                    case RuleCriteraNames.Equals_:
+                        return PFRF.CreateEqualsRule(paramId, int.Parse(RuleValue));
+                    case RuleCriteraNames.Greater:
+                        return PFRF.CreateGreaterRule(paramId, int.Parse(RuleValue));
+                    case RuleCriteraNames.GreaterOrEqual:
+                        return PFRF.CreateGreaterOrEqualRule(paramId, int.Parse(RuleValue));
+                    case RuleCriteraNames.Less:
+                        return PFRF.CreateLessRule(paramId, int.Parse(RuleValue));
+                    case RuleCriteraNames.LessOrEqual:
+                        return PFRF.CreateLessOrEqualRule(paramId, int.Parse(RuleValue));
+                    case RuleCriteraNames.NotEquals:
+                        return PFRF.CreateNotEqualsRule(paramId, int.Parse(RuleValue));
+                }
             else if (ParamType == StorageType.ElementId)
-            {
-                 switch(RuleCriteria)
-                 {
-                     case RuleCriteraNames.Equals_:
-                         return PFRF.CreateEqualsRule(paramId, ElementId.Parse(RuleValue));
-                     case RuleCriteraNames.Greater:
-                         return PFRF.CreateGreaterRule(paramId, ElementId.Parse(RuleValue));
-                     case RuleCriteraNames.GreaterOrEqual:
-                         return PFRF.CreateGreaterOrEqualRule(paramId, ElementId.Parse(RuleValue));
-                     case RuleCriteraNames.Less:
-                         return PFRF.CreateLessRule(paramId, ElementId.Parse(RuleValue));
-                     case RuleCriteraNames.LessOrEqual:
-                         return PFRF.CreateLessOrEqualRule(paramId, ElementId.Parse(RuleValue));
-                     case RuleCriteraNames.NotEquals:
-                         return PFRF.CreateNotEqualsRule(paramId, ElementId.Parse(RuleValue));
-                 }
-            }
+                switch (RuleCriteria)
+                {
+                    case RuleCriteraNames.Equals_:
+                        return PFRF.CreateEqualsRule(paramId, ElementId.Parse(RuleValue));
+                    case RuleCriteraNames.Greater:
+                        return PFRF.CreateGreaterRule(paramId, ElementId.Parse(RuleValue));
+                    case RuleCriteraNames.GreaterOrEqual:
+                        return PFRF.CreateGreaterOrEqualRule(paramId, ElementId.Parse(RuleValue));
+                    case RuleCriteraNames.Less:
+                        return PFRF.CreateLessRule(paramId, ElementId.Parse(RuleValue));
+                    case RuleCriteraNames.LessOrEqual:
+                        return PFRF.CreateLessOrEqualRule(paramId, ElementId.Parse(RuleValue));
+                    case RuleCriteraNames.NotEquals:
+                        return PFRF.CreateNotEqualsRule(paramId, ElementId.Parse(RuleValue));
+                }
+
             //
             // Throw exception for others
             throw new NotImplementedException("This filter rule or criteria is not implemented yet.");
         }
-        
-                /// <summary>
-        /// Make sure all members are initialized with expected values.
+
+        /// <summary>
+        ///     Make sure all members are initialized with expected values.
         /// </summary>
         private void InitializeMemebers()
         {
@@ -244,90 +235,31 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             ParamType = StorageType.None;
             Epsilon = 0.0f;
         }
-            }
+    }
 
     /// <summary>
-    /// This class used to represents data for one API filter.
-    /// It consists of BuiltInCategory and filter rules
+    ///     This class used to represents data for one API filter.
+    ///     It consists of BuiltInCategory and filter rules
     /// </summary>
     public sealed class FilterData
     {
-                /// <summary>
-        /// Reserves current active document
+        /// <summary>
+        ///     Reserves current active document
         /// </summary>
-        Document m_doc;
+        private readonly Document m_doc;
 
         /// <summary>
-        /// BuiltInCategories of filter
+        ///     BuiltInCategories of filter
         /// </summary>
-        List<BuiltInCategory> m_filterCategories;
+        private List<BuiltInCategory> m_filterCategories;
 
         /// <summary>
-        /// Filer rules of filter
+        ///     Filer rules of filter
         /// </summary>
-        List<FilterRuleBuilder> m_filterRules;
-        
-                /// <summary>
-        /// Get BuiltInCategories of filter
-        /// </summary>
-        public List<BuiltInCategory> FilterCategories => m_filterCategories;
+        private readonly List<FilterRuleBuilder> m_filterRules;
 
         /// <summary>
-        /// Get BuiltInCategory Ids of filter
-        /// </summary>
-        public IList<ElementId> GetCategoryIds()
-        {
-            var catIds = new List<ElementId>();
-            foreach (var cat in m_filterCategories)
-                catIds.Add(new ElementId(cat));
-            return catIds;
-        }
-
-        /// <summary>
-        /// Set new categories, this method will possibly update existing criteria 
-        /// </summary>
-        /// <param name="newCatIds">New categories for current filter.</param>
-        /// <returns>true if categories or criteria are changed; otherwise false.</returns>
-        /// <remarks>
-        /// If someone parameter of criteria cannot be supported by new categories, 
-        /// the old criteria will be cleaned and set to empty
-        /// </remarks>
-        public bool SetNewCategories(List<BuiltInCategory> newCats)
-        {
-            // do nothing if new categories are equals to old categories
-            if (ListCompareUtility<BuiltInCategory>.Equals(newCats, m_filterCategories))
-                return false;
-            m_filterCategories = newCats; // update categories
-
-            var newCatIds = new List<ElementId>();
-            foreach (var cat in newCats)
-            {
-                newCatIds.Add(new ElementId(cat));
-            }
-            //
-            // Check if need to update file rules:
-            // . if filer rule is empty, do nothing
-            // . if some parameters of rules cannot be supported by new categories, clean all old rules
-            var supportParams =
-                ParameterFilterUtilities.GetFilterableParametersInCommon(m_doc, newCatIds);
-            foreach (var rule in m_filterRules)
-            {
-                if (!supportParams.Contains(new ElementId(rule.Parameter)))
-                {
-                    m_filterRules.Clear();
-                    break;
-                }
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Get FilterRuleBuilder of API filter's rules
-        /// </summary>
-        public List<FilterRuleBuilder> RuleData => m_filterRules;
-
-        /// <summary>
-        /// Create sample custom FilterData with specified categories and FilterRuleBuilder
+        ///     Create sample custom FilterData with specified categories and FilterRuleBuilder
         /// </summary>
         /// <param name="doc">Revit active document.</param>
         /// <param name="categories">BuilInCategories of filter.</param>
@@ -343,7 +275,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         }
 
         /// <summary>
-        /// Create sample custom FilterData with specified category id and FilterRuleBuilder
+        ///     Create sample custom FilterData with specified category id and FilterRuleBuilder
         /// </summary>
         /// <param name="doc">Revit active document.</param>
         /// <param name="categories">BuilInCategory ids of filter.</param>
@@ -358,85 +290,142 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             m_filterRules = new List<FilterRuleBuilder>();
             m_filterRules.AddRange(filterRules);
         }
-            }
+
+        /// <summary>
+        ///     Get BuiltInCategories of filter
+        /// </summary>
+        public List<BuiltInCategory> FilterCategories => m_filterCategories;
+
+        /// <summary>
+        ///     Get FilterRuleBuilder of API filter's rules
+        /// </summary>
+        public List<FilterRuleBuilder> RuleData => m_filterRules;
+
+        /// <summary>
+        ///     Get BuiltInCategory Ids of filter
+        /// </summary>
+        public IList<ElementId> GetCategoryIds()
+        {
+            var catIds = new List<ElementId>();
+            foreach (var cat in m_filterCategories)
+                catIds.Add(new ElementId(cat));
+            return catIds;
+        }
+
+        /// <summary>
+        ///     Set new categories, this method will possibly update existing criteria
+        /// </summary>
+        /// <param name="newCatIds">New categories for current filter.</param>
+        /// <returns>true if categories or criteria are changed; otherwise false.</returns>
+        /// <remarks>
+        ///     If someone parameter of criteria cannot be supported by new categories,
+        ///     the old criteria will be cleaned and set to empty
+        /// </remarks>
+        public bool SetNewCategories(List<BuiltInCategory> newCats)
+        {
+            // do nothing if new categories are equals to old categories
+            if (ListCompareUtility<BuiltInCategory>.Equals(newCats, m_filterCategories))
+                return false;
+            m_filterCategories = newCats; // update categories
+
+            var newCatIds = new List<ElementId>();
+            foreach (var cat in newCats) newCatIds.Add(new ElementId(cat));
+            //
+            // Check if need to update file rules:
+            // . if filer rule is empty, do nothing
+            // . if some parameters of rules cannot be supported by new categories, clean all old rules
+            var supportParams =
+                ParameterFilterUtilities.GetFilterableParametersInCommon(m_doc, newCatIds);
+            foreach (var rule in m_filterRules)
+                if (!supportParams.Contains(new ElementId(rule.Parameter)))
+                {
+                    m_filterRules.Clear();
+                    break;
+                }
+
+            return true;
+        }
+    }
 
     /// <summary>
-    /// This class define constant strings to map rule criteria
+    ///     This class define constant strings to map rule criteria
     /// </summary>
     public sealed class RuleCriteraNames
     {
-                /// <summary>
-        /// String represents BeginWith criteria
+        /// <summary>
+        ///     String represents BeginWith criteria
         /// </summary>
         public const string BeginWith = "begins with";
 
         /// <summary>
-        /// String represents Contains criteria
+        ///     String represents Contains criteria
         /// </summary>
         public const string Contains = "contains";
 
         /// <summary>
-        /// String represents EndWith criteria
+        ///     String represents EndWith criteria
         /// </summary>
         public const string EndsWith = "ends with";
 
         /// <summary>
-        /// String represents Equals criteria
+        ///     String represents Equals criteria
         /// </summary>
         public const string Equals_ = "equals";
 
         /// <summary>
-        /// String represents GreaterThan criteria
+        ///     String represents GreaterThan criteria
         /// </summary>
         public const string Greater = "is greater than";
 
         /// <summary>
-        /// String represents GreaterOrEqual criteria
+        ///     String represents GreaterOrEqual criteria
         /// </summary>
         public const string GreaterOrEqual = "is greater than or equal to";
 
         /// <summary>
-        /// String represents LessOrEqual criteria
+        ///     String represents LessOrEqual criteria
         /// </summary>
         public const string LessOrEqual = "is less than or equal to";
 
         /// <summary>
-        /// String represents Less criteria
+        ///     String represents Less criteria
         /// </summary>
         public const string Less = "is less than";
 
         /// <summary>
-        /// String represents NotBeginWith criteria
+        ///     String represents NotBeginWith criteria
         /// </summary>
         public const string NotBeginWith = "does not begin with";
 
         /// <summary>
-        /// String represents NotContains criteria
+        ///     String represents NotContains criteria
         /// </summary>
         public const string NotContains = "does not contain";
 
         /// <summary>
-        /// String represents NotEndsWith criteria
+        ///     String represents NotEndsWith criteria
         /// </summary>
         public const string NotEndsWith = "does not end with";
 
         /// <summary>
-        /// String represents NotEquals criteria
+        ///     String represents NotEquals criteria
         /// </summary>
         public const string NotEquals = "does not equal";
 
         /// <summary>
-        /// Invalid criteria 
+        ///     Invalid criteria
         /// </summary>
         public const string Invalid = "n/a";
-                              
-        /// <summary>
-        /// Hide ctor, this class defines only static members, no need to be created
-        /// </summary>
-        private RuleCriteraNames() { }
 
         /// <summary>
-        /// Get all supported criteria(in string) according to StorageType of parameter
+        ///     Hide ctor, this class defines only static members, no need to be created
+        /// </summary>
+        private RuleCriteraNames()
+        {
+        }
+
+        /// <summary>
+        ///     Get all supported criteria(in string) according to StorageType of parameter
         /// </summary>
         /// <param name="paramType">Parameter type.</param>
         /// <returns>String list of criteria supported for specified parameter type.</returns>
@@ -462,6 +451,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 returns.Add(NotContains);
                 returns.Add(NotEndsWith);
             }
+
             return returns;
         }
     }

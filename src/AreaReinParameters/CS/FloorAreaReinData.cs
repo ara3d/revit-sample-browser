@@ -21,97 +21,43 @@
 //
 
 
+using System.ComponentModel;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using System.ComponentModel;
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.DB.Structure;
-
-
     /// <summary>
-    /// can be the datasource of propertygrid
+    ///     can be the datasource of propertygrid
     /// </summary>
-    class FloorAreaReinData : IAreaReinData
+    internal class FloorAreaReinData : IAreaReinData
     {
-        //member
-        Parameter m_layoutRule;
-        //top major layer
-        Parameter m_topMajorBarType;
-        Parameter m_topMajorHookType;
-        Parameter m_topMajorHookOrientation;
-
-        //top minor layer
-        Parameter m_topMinorBarType;
-        Parameter m_topMinorHookType;
-        Parameter m_topMinorHookOrientation;
-
         //bottom major layer
-        Parameter m_bottomMajorBarType;
-        Parameter m_bottomMajorHookType;
-        Parameter m_bottomMajorHookOrientation;
+        private Parameter m_bottomMajorBarType;
+        private Parameter m_bottomMajorHookOrientation;
+        private Parameter m_bottomMajorHookType;
 
         //bottom minor layer
-        Parameter m_bottomMinorBarType;
-        Parameter m_bottomMinorHookType;
-        Parameter m_bottomMinorHookOrientation;
+        private Parameter m_bottomMinorBarType;
+        private Parameter m_bottomMinorHookOrientation;
+
+        private Parameter m_bottomMinorHookType;
+
+        //member
+        private Parameter m_layoutRule;
+
+        //top major layer
+        private Parameter m_topMajorBarType;
+        private Parameter m_topMajorHookOrientation;
+        private Parameter m_topMajorHookType;
+
+        //top minor layer
+        private Parameter m_topMinorBarType;
+        private Parameter m_topMinorHookOrientation;
+        private Parameter m_topMinorHookType;
 
         /// <summary>
-        /// fill in data with given AreaReinforcement
-        /// </summary>
-        /// <param name="areaRein"></param>
-        /// <returns></returns>
-        public bool FillInData(AreaReinforcement areaRein)
-        {
-            //member
-            m_layoutRule = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE);
-            var flag = (m_layoutRule != null);
-
-            //top major layer
-            m_topMajorBarType = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_TOP_DIR_1);
-            m_topMajorHookType = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_TOP_DIR_1);
-            m_topMajorHookOrientation = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_TOP_DIR_1);
-            flag &= (m_topMajorBarType != null) && (m_topMajorHookOrientation != null)
-                && (m_topMajorHookType != null);
-
-            //top minor layer
-            m_topMinorBarType = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_TOP_DIR_2);
-            m_topMinorHookType = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_TOP_DIR_2);
-            m_topMinorHookOrientation = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_TOP_DIR_2);
-            flag &= (m_topMinorBarType != null) && (m_topMinorHookOrientation != null) 
-                && (m_topMinorHookType != null);
-
-            //bottom major layer
-            m_bottomMajorBarType = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_BOTTOM_DIR_1);
-            m_bottomMajorHookType = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_BOTTOM_DIR_1);
-            m_bottomMajorHookOrientation = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_BOTTOM_DIR_1);
-            flag &= (m_bottomMajorBarType != null) && (m_bottomMajorHookOrientation != null)
-                && (m_bottomMajorHookType != null);
-
-            //bottom minor layer
-            m_bottomMinorBarType = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_BOTTOM_DIR_2);
-            m_bottomMinorHookType = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_BOTTOM_DIR_2);
-            m_bottomMinorHookOrientation = areaRein.get_Parameter(
-                BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_BOTTOM_DIR_2);
-            flag &= (m_bottomMinorBarType != null) && (m_bottomMinorHookOrientation != null) 
-                && (m_bottomMinorHookType != null);
-
-            return flag;
-        }
-
-        /// <summary>
-        /// layout rule
+        ///     layout rule
         /// </summary>
         [Category("Construction")]
         public LayoutRules Layout_Rule
@@ -128,14 +74,16 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-                [CategoryAttribute("Top Major Layer"), TypeConverter(typeof(BarTypeItem))]
+        [CategoryAttribute("Top Major Layer")]
+        [TypeConverter(typeof(BarTypeItem))]
         public ElementId Top_Major_Bar_Type
         {
             get => m_topMajorBarType.AsElementId();
             set => m_topMajorBarType.Set(value);
         }
 
-        [CategoryAttribute("Top Major Layer"), TypeConverter(typeof(HookTypeItem))]
+        [CategoryAttribute("Top Major Layer")]
+        [TypeConverter(typeof(HookTypeItem))]
         public ElementId Top_Major_Hook_Type
         {
             get => m_topMajorHookType.AsElementId();
@@ -150,21 +98,23 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 var index = m_topMajorHookOrientation.AsInteger();
                 return (FloorHookOrientations)index;
             }
-            set 
+            set
             {
                 var index = (int)value;
                 m_topMajorHookOrientation.Set(index);
             }
         }
-        
-                [CategoryAttribute("Top Minor Layer"), TypeConverter(typeof(BarTypeItem))]
+
+        [CategoryAttribute("Top Minor Layer")]
+        [TypeConverter(typeof(BarTypeItem))]
         public ElementId Top_Minor_Bar_Type
         {
             get => m_topMinorBarType.AsElementId();
             set => m_topMinorBarType.Set(value);
         }
 
-        [CategoryAttribute("Top Minor Layer"), TypeConverter(typeof(HookTypeItem))]
+        [CategoryAttribute("Top Minor Layer")]
+        [TypeConverter(typeof(HookTypeItem))]
         public ElementId Top_Minor_Hook_Type
         {
             get => m_topMinorHookType.AsElementId();
@@ -185,15 +135,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_topMinorHookOrientation.Set(index);
             }
         }
-        
-                [CategoryAttribute("Bottom Major Layer"), TypeConverter(typeof(BarTypeItem))]
+
+        [CategoryAttribute("Bottom Major Layer")]
+        [TypeConverter(typeof(BarTypeItem))]
         public ElementId Bottom_Major_Bar_Type
         {
             get => m_bottomMajorBarType.AsElementId();
             set => m_bottomMajorBarType.Set(value);
         }
 
-        [CategoryAttribute("Bottom Major Layer"), TypeConverter(typeof(HookTypeItem))]
+        [CategoryAttribute("Bottom Major Layer")]
+        [TypeConverter(typeof(HookTypeItem))]
         public ElementId Bottom_Major_Hook_Type
         {
             get => m_bottomMajorHookType.AsElementId();
@@ -214,15 +166,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_bottomMajorHookOrientation.Set(index);
             }
         }
-        
-                [CategoryAttribute("Bottom Minor Layer"), TypeConverter(typeof(BarTypeItem))]
+
+        [CategoryAttribute("Bottom Minor Layer")]
+        [TypeConverter(typeof(BarTypeItem))]
         public ElementId Bottom_Minor_Bar_Type
         {
             get => m_bottomMinorBarType.AsElementId();
             set => m_bottomMinorBarType.Set(value);
         }
 
-        [CategoryAttribute("Bottom Minor Layer"), TypeConverter(typeof(HookTypeItem))]
+        [CategoryAttribute("Bottom Minor Layer")]
+        [TypeConverter(typeof(HookTypeItem))]
         public ElementId Bottom_Minor_Hook_Type
         {
             get => m_bottomMinorHookType.AsElementId();
@@ -243,6 +197,60 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_bottomMinorHookOrientation.Set(index);
             }
         }
-        
+
+        /// <summary>
+        ///     fill in data with given AreaReinforcement
+        /// </summary>
+        /// <param name="areaRein"></param>
+        /// <returns></returns>
+        public bool FillInData(AreaReinforcement areaRein)
+        {
+            //member
+            m_layoutRule = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE);
+            var flag = m_layoutRule != null;
+
+            //top major layer
+            m_topMajorBarType = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_TOP_DIR_1);
+            m_topMajorHookType = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_TOP_DIR_1);
+            m_topMajorHookOrientation = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_TOP_DIR_1);
+            flag &= m_topMajorBarType != null && m_topMajorHookOrientation != null
+                                              && m_topMajorHookType != null;
+
+            //top minor layer
+            m_topMinorBarType = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_TOP_DIR_2);
+            m_topMinorHookType = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_TOP_DIR_2);
+            m_topMinorHookOrientation = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_TOP_DIR_2);
+            flag &= m_topMinorBarType != null && m_topMinorHookOrientation != null
+                                              && m_topMinorHookType != null;
+
+            //bottom major layer
+            m_bottomMajorBarType = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_BOTTOM_DIR_1);
+            m_bottomMajorHookType = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_BOTTOM_DIR_1);
+            m_bottomMajorHookOrientation = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_BOTTOM_DIR_1);
+            flag &= m_bottomMajorBarType != null && m_bottomMajorHookOrientation != null
+                                                 && m_bottomMajorHookType != null;
+
+            //bottom minor layer
+            m_bottomMinorBarType = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_BAR_TYPE_BOTTOM_DIR_2);
+            m_bottomMinorHookType = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_BOTTOM_DIR_2);
+            m_bottomMinorHookOrientation = areaRein.get_Parameter(
+                BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_BOTTOM_DIR_2);
+            flag &= m_bottomMinorBarType != null && m_bottomMinorHookOrientation != null
+                                                 && m_bottomMinorHookType != null;
+
+            return flag;
+        }
     }
 }

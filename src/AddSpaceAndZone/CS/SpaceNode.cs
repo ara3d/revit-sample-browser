@@ -26,14 +26,14 @@ using Autodesk.Revit.DB.Mechanical;
 namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 {
     /// <summary>
-    /// The SpaceNode class inherit TreeNode Class, it is used
-    /// to display the Spaces is a TreeView, each SpaceNode contains
-    /// a Space element.
+    ///     The SpaceNode class inherit TreeNode Class, it is used
+    ///     to display the Spaces is a TreeView, each SpaceNode contains
+    ///     a Space element.
     /// </summary>
-    class SpaceNode : TreeNode
+    internal class SpaceNode : TreeNode
     {
         /// <summary>
-        /// The constructor of SpaceNode class
+        ///     The constructor of SpaceNode class
         /// </summary>
         /// <param name="space"></param>
         public SpaceNode(Space space)
@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// Get the Zone element in the ZoneNode.
+        ///     Get the Zone element in the ZoneNode.
         /// </summary>
         public Space Space { get; }
     }

@@ -21,182 +21,173 @@
 // 
 
 
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
+using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {
-   public partial class FurnitureFamilyDragAndDropForm : System.Windows.Forms.Form
-   {
-      public static BuiltInCategory FamilyCategory => BuiltInCategory.OST_Furniture;
+    public partial class FurnitureFamilyDragAndDropForm : Form
+    {
+        private static FurnitureFamilyDragAndDropForm s_form;
 
-      private static FurnitureFamilyDragAndDropForm s_form;
-      public static FurnitureFamilyDragAndDropForm GetTheForm(Document document)
-      {
-          if (s_form == null)
-          {
-              s_form = new FurnitureFamilyDragAndDropForm(document);
-          }
-          s_form.UpdateLoadedFamilies();
-          return s_form;
-      }
+        private readonly Document m_document;
 
-      /// <summary>
-      /// Display class for the external family file listbox.
-      /// </summary>
-      private class FamilyListBoxMember
-      {
-         public string FullPath;
-         public string Name;
-         public FamilyListBoxMember(string fullPath, string name)
-         {
-            FullPath = fullPath;
-            Name = name;
-         }
+        /// <summary>
+        ///     Construct and populate the form.
+        /// </summary>
+        /// <param name="document"></param>
+        private FurnitureFamilyDragAndDropForm(Document document)
+        {
+            InitializeComponent();
+            m_document = document;
 
-         public override string ToString()
-         {
-            return Name;
-         }
-      }
+            UpdateFamilyFileList();
+        }
 
-      private Document m_document;
+        public static BuiltInCategory FamilyCategory => BuiltInCategory.OST_Furniture;
 
-      /// <summary>
-      /// Construct and populate the form.
-      /// </summary>
-      /// <param name="document"></param>
-      private FurnitureFamilyDragAndDropForm(Document document)
-      {
-         InitializeComponent();
-         m_document = document;
+        public static FurnitureFamilyDragAndDropForm GetTheForm(Document document)
+        {
+            if (s_form == null) s_form = new FurnitureFamilyDragAndDropForm(document);
+            s_form.UpdateLoadedFamilies();
+            return s_form;
+        }
 
-         UpdateFamilyFileList();
-      }
-
-      private void UpdateFamilyFileList()
-      {
-         // Visit each Revit library looking for Furniture families
-         var libraryPaths = m_document.Application.GetLibraryPaths();
-         foreach (var libraryPath in libraryPaths.Values)
-         {
-             foreach (var directory in Directory.EnumerateDirectories(libraryPath, "*Furniture", SearchOption.AllDirectories))
-             {
-                 foreach (var familyFile in Directory.EnumerateFiles(directory, "*.rfa", SearchOption.AllDirectories))
-                 {
-                     // Add each Furniture family to the listbox
-                     var fileName = Path.GetFileName(familyFile);
-                     var member = new FamilyListBoxMember(familyFile, fileName);
-                     listBox1.Items.Add(member);
-                 }
-             }
-         }
-      }
-
-      private void UpdateLoadedFamilies()
-      {
-         var collection = listView1.Items;
-         collection.Clear();
-
-         // Setup list view with loaded families
-         var imageList = new ImageList();
-         var size = new Size(50, 50);
-         imageList.ImageSize = size;
-
-         var collector = new FilteredElementCollector(m_document);
-         collector.OfCategory(FamilyCategory);
-         collector.OfClass(typeof(FamilySymbol));
-
-         foreach (var familySymbol in collector.Cast<FamilySymbol>())
-         {
-            var item = new ListViewItem();
-            item.Tag = familySymbol.Id;
-            item.Text = familySymbol.Family.Name + "::" + familySymbol.Name;
-            item.ToolTipText = "Drag to place instances of " + item.Text + " in the active document.";
-
-            var bitmap = familySymbol.GetPreviewImage(size);
-
-            if (bitmap != null)
+        private void UpdateFamilyFileList()
+        {
+            // Visit each Revit library looking for Furniture families
+            var libraryPaths = m_document.Application.GetLibraryPaths();
+            foreach (var libraryPath in libraryPaths.Values)
+            foreach (var directory in Directory.EnumerateDirectories(libraryPath, "*Furniture",
+                         SearchOption.AllDirectories))
+            foreach (var familyFile in Directory.EnumerateFiles(directory, "*.rfa", SearchOption.AllDirectories))
             {
-                imageList.Images.Add(bitmap);
-                var index = imageList.Images.Count - 1;
-                item.ImageIndex = index;
+                // Add each Furniture family to the listbox
+                var fileName = Path.GetFileName(familyFile);
+                var member = new FamilyListBoxMember(familyFile, fileName);
+                listBox1.Items.Add(member);
             }
-            
-            collection.Add(item);
-         }
+        }
 
-         listView1.LargeImageList = imageList;
-      }
+        private void UpdateLoadedFamilies()
+        {
+            var collection = listView1.Items;
+            collection.Clear();
 
-      // Drag action from list view
-      private void listView_MouseMove(object sender, MouseEventArgs e)
-      {
-          if (MouseButtons == MouseButtons.Left)
-          {
-              var selectedItem = listView1.SelectedItems.Cast<ListViewItem>().FirstOrDefault<ListViewItem>();
-              
-              if (selectedItem != null)
-              {
-                  // Use custom Revit drag and drop behavior
-                  var myhanlder = new LoadedFamilyDropHandler();
-                  UIApplication.DoDragDrop(selectedItem.Tag, myhanlder);
-              }
-          }
-      }
+            // Setup list view with loaded families
+            var imageList = new ImageList();
+            var size = new Size(50, 50);
+            imageList.ImageSize = size;
 
-      // Drag action from list box
-      private void listBox1_MouseMove(object sender, MouseEventArgs e)
-      {
-          if (MouseButtons == MouseButtons.Left)
-          {
-              var member = (FamilyListBoxMember)listBox1.SelectedItem;
+            var collector = new FilteredElementCollector(m_document);
+            collector.OfCategory(FamilyCategory);
+            collector.OfClass(typeof(FamilySymbol));
 
-              // Use standard Revit drag and drop behavior
-              var data = new List<string>();
-              data.Add(member.FullPath);
-              UIApplication.DoDragDrop(data);
-          }
-      }
-
-      private void FurnitureFamilyDragAndDropForm_FormClosed(object sender, FormClosedEventArgs e)
-      {
-          s_form = null;
-      }
-   }
-
-
-   /// <summary>
-   /// Custom handler for placement of loaded family types
-   /// </summary>
-   public class LoadedFamilyDropHandler : IDropHandler
-   {
-       public void Execute(UIDocument document, object data)
-       {
-         try
-         {
-            var familySymbolId = (ElementId)data;
-
-            var symbol = document.Document.GetElement(familySymbolId) as FamilySymbol;
-
-            if (symbol != null)
+            foreach (var familySymbol in collector.Cast<FamilySymbol>())
             {
-               document.PromptForFamilyInstancePlacement(symbol);
+                var item = new ListViewItem();
+                item.Tag = familySymbol.Id;
+                item.Text = familySymbol.Family.Name + "::" + familySymbol.Name;
+                item.ToolTipText = "Drag to place instances of " + item.Text + " in the active document.";
+
+                var bitmap = familySymbol.GetPreviewImage(size);
+
+                if (bitmap != null)
+                {
+                    imageList.Images.Add(bitmap);
+                    var index = imageList.Images.Count - 1;
+                    item.ImageIndex = index;
+                }
+
+                collection.Add(item);
             }
-         }
-         catch (Autodesk.Revit.Exceptions.OperationCanceledException)
-         {
-            // user canceled the operation
-         }
-       }
-   }
+
+            listView1.LargeImageList = imageList;
+        }
+
+        // Drag action from list view
+        private void listView_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (MouseButtons == MouseButtons.Left)
+            {
+                var selectedItem = listView1.SelectedItems.Cast<ListViewItem>().FirstOrDefault();
+
+                if (selectedItem != null)
+                {
+                    // Use custom Revit drag and drop behavior
+                    var myhanlder = new LoadedFamilyDropHandler();
+                    UIApplication.DoDragDrop(selectedItem.Tag, myhanlder);
+                }
+            }
+        }
+
+        // Drag action from list box
+        private void listBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (MouseButtons == MouseButtons.Left)
+            {
+                var member = (FamilyListBoxMember)listBox1.SelectedItem;
+
+                // Use standard Revit drag and drop behavior
+                var data = new List<string>();
+                data.Add(member.FullPath);
+                UIApplication.DoDragDrop(data);
+            }
+        }
+
+        private void FurnitureFamilyDragAndDropForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            s_form = null;
+        }
+
+        /// <summary>
+        ///     Display class for the external family file listbox.
+        /// </summary>
+        private class FamilyListBoxMember
+        {
+            public readonly string FullPath;
+            public readonly string Name;
+
+            public FamilyListBoxMember(string fullPath, string name)
+            {
+                FullPath = fullPath;
+                Name = name;
+            }
+
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+    }
 
 
+    /// <summary>
+    ///     Custom handler for placement of loaded family types
+    /// </summary>
+    public class LoadedFamilyDropHandler : IDropHandler
+    {
+        public void Execute(UIDocument document, object data)
+        {
+            try
+            {
+                var familySymbolId = (ElementId)data;
+
+                var symbol = document.Document.GetElement(familySymbolId) as FamilySymbol;
+
+                if (symbol != null) document.PromptForFamilyInstancePlacement(symbol);
+            }
+            catch (OperationCanceledException)
+            {
+                // user canceled the operation
+            }
+        }
+    }
 }

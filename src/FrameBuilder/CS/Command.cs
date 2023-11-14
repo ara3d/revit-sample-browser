@@ -19,40 +19,41 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System.Windows.Forms;
-
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
+            // try to initialize necessary data to create framing
+            var data = FrameData.CreateInstance(commandData);
+            // display UI for user's input
+            using (var framingForm = new CreateFrameForm(data))
+            {
+                if (framingForm.ShowDialog() == DialogResult.OK)
+                {
+                    // create framing
+                    var builder = new FrameBuilder(data);
+                    builder.CreateFraming();
+                }
+                else
+                {
+                    // cancel the command
+                    return Result.Cancelled;
+                }
+            }
 
-           // try to initialize necessary data to create framing
-           var data = FrameData.CreateInstance(commandData);
-           // display UI for user's input
-           using (var framingForm = new CreateFrameForm(data))
-           {
-              if (framingForm.ShowDialog() == DialogResult.OK)
-              {
-                 // create framing
-                 var builder = new FrameBuilder(data);
-                 builder.CreateFraming();
-              }
-              else
-              {
-                 // cancel the command
-                 return Result.Cancelled;
-              }
-           }
-            
             return Result.Succeeded;
         }
-            }
+    }
 }

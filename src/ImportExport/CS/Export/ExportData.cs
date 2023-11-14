@@ -21,149 +21,72 @@
 // 
 
 using System;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Base data class which stores the basic information for export
+    ///     Base data class which stores the basic information for export
     /// </summary>
     public class ExportData
     {
-                /// <summary>
-        /// Revit command data
-        /// </summary>
-        protected ExternalCommandData m_commandData;
-
         /// <summary>
-        /// Active document
+        ///     Active document
         /// </summary>
         protected Document m_activeDoc;
 
         /// <summary>
-        /// File Name or Prefix to be used
-        /// </summary>
-        protected string m_exportFileName;
-
-        /// <summary>
-        /// Directory to store the exported file
-        /// </summary>
-        protected string m_exportFolder;
-
-        /// <summary>
-        /// ActiveDocument Name
+        ///     ActiveDocument Name
         /// </summary>
         protected string m_activeDocName;
 
         /// <summary>
-        /// ActiveView Name
+        ///     ActiveView Name
         /// </summary>
         protected string m_activeViewName;
 
-
         /// <summary>
-        /// Whether current view is a 3D view
+        ///     Revit command data
         /// </summary>
-        protected bool m_is3DView;
+        protected ExternalCommandData m_commandData;
 
         /// <summary>
-        /// The format to be exported
+        ///     File Name or Prefix to be used
+        /// </summary>
+        protected string m_exportFileName;
+
+        /// <summary>
+        ///     Directory to store the exported file
+        /// </summary>
+        protected string m_exportFolder;
+
+        /// <summary>
+        ///     The format to be exported
         /// </summary>
         protected ExportFormat m_exportFormat;
 
         /// <summary>
-        /// The filter which will be used in file saving dialog
+        ///     The filter which will be used in file saving dialog
         /// </summary>
         protected string m_filter;
 
+
         /// <summary>
-        /// The title of exporting dialog
+        ///     Whether current view is a 3D view
+        /// </summary>
+        protected bool m_is3DView;
+
+        /// <summary>
+        ///     The title of exporting dialog
         /// </summary>
         protected string m_title;
-        
-                /// <summary>
-        /// Revit command data
-        /// </summary>
-        public ExternalCommandData CommandData => m_commandData;
-
-        /// <summary>
-        /// ActiveDocument
-        /// </summary>
-        public Document ActiveDocument => m_activeDoc;
-
-        /// <summary>
-        /// File Name or Prefix to be used
-        /// </summary>
-        public string ExportFileName
-        {
-            get => m_exportFileName;
-            set => m_exportFileName = value;
-        }  
-
-        /// <summary>
-        /// Directory to store the exported file
-        /// </summary>
-        public string ExportFolder
-        {
-            get => m_exportFolder;
-            set => m_exportFolder = value;
-        }
 
 
         /// <summary>
-        /// ActiveDocument Name
-        /// </summary>
-        public string ActiveDocName
-        {
-            get => m_activeDocName;
-            set => m_activeDocName = value;
-        }
-
-        /// <summary>
-        /// ActiveView Name
-        /// </summary>
-        public string ActiveViewName
-        {
-            get => m_activeViewName;
-            set => m_activeViewName = value;
-        }
-
-
-        /// <summary>
-        /// Whether current view is a 3D view
-        /// </summary>
-        public bool Is3DView
-        {
-            get => m_is3DView;
-            set => m_is3DView = value;
-        }
-
-        /// <summary>
-        /// The format to be exported
-        /// </summary>
-        public ExportFormat ExportFormat
-        {
-            get => m_exportFormat;
-            set => m_exportFormat = value;
-        }
-
-        /// <summary>
-        /// The filter which will be used in file saving dialog
-        /// </summary>
-        public string Filter => m_filter;
-
-        /// <summary>
-        /// The title of exporting dialog
-        /// </summary>
-        public string Title => m_title;
-
-        
-
-                /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
@@ -177,7 +100,83 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize the variables
+        ///     Revit command data
+        /// </summary>
+        public ExternalCommandData CommandData => m_commandData;
+
+        /// <summary>
+        ///     ActiveDocument
+        /// </summary>
+        public Document ActiveDocument => m_activeDoc;
+
+        /// <summary>
+        ///     File Name or Prefix to be used
+        /// </summary>
+        public string ExportFileName
+        {
+            get => m_exportFileName;
+            set => m_exportFileName = value;
+        }
+
+        /// <summary>
+        ///     Directory to store the exported file
+        /// </summary>
+        public string ExportFolder
+        {
+            get => m_exportFolder;
+            set => m_exportFolder = value;
+        }
+
+
+        /// <summary>
+        ///     ActiveDocument Name
+        /// </summary>
+        public string ActiveDocName
+        {
+            get => m_activeDocName;
+            set => m_activeDocName = value;
+        }
+
+        /// <summary>
+        ///     ActiveView Name
+        /// </summary>
+        public string ActiveViewName
+        {
+            get => m_activeViewName;
+            set => m_activeViewName = value;
+        }
+
+
+        /// <summary>
+        ///     Whether current view is a 3D view
+        /// </summary>
+        public bool Is3DView
+        {
+            get => m_is3DView;
+            set => m_is3DView = value;
+        }
+
+        /// <summary>
+        ///     The format to be exported
+        /// </summary>
+        public ExportFormat ExportFormat
+        {
+            get => m_exportFormat;
+            set => m_exportFormat = value;
+        }
+
+        /// <summary>
+        ///     The filter which will be used in file saving dialog
+        /// </summary>
+        public string Filter => m_filter;
+
+        /// <summary>
+        ///     The title of exporting dialog
+        /// </summary>
+        public string Title => m_title;
+
+        /// <summary>
+        ///     Initialize the variables
         /// </summary>
         private void Initialize()
         {
@@ -189,21 +188,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_activeDocName = m_activeDoc.Title;
             m_activeViewName = m_activeDoc.ActiveView.Name;
             var viewType = m_activeDoc.ActiveView.ViewType.ToString();
-            m_exportFileName = m_activeDocName + "-" + viewType + "-" + m_activeViewName + "." + getExtension().ToString();
+            m_exportFileName = m_activeDocName + "-" + viewType + "-" + m_activeViewName + "." + getExtension();
 
             //Whether current active view is 3D view
             if (m_activeDoc.ActiveView.ViewType == ViewType.ThreeD)
-            {
                 m_is3DView = true;
-            }
             else
-            {
                 m_is3DView = false;
-            }
         }
 
         /// <summary>
-        /// Get the extension of the file to export
+        ///     Get the extension of the file to export
         /// </summary>
         /// <returns></returns>
         private string getExtension()
@@ -241,25 +236,20 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 case ExportFormat.PDF:
                     extension = "pdf";
                     break;
-                default:
-                    break;
             }
 
             return extension;
         }
 
         /// <summary>
-        /// Collect the parameters and export
+        ///     Collect the parameters and export
         /// </summary>
         /// <returns></returns>
         public virtual bool Export()
         {
-            if (m_exportFolder == null || m_exportFileName == null)
-            {
-                throw new NullReferenceException();
-            }
+            if (m_exportFolder == null || m_exportFileName == null) throw new NullReferenceException();
 
             return true;
         }
-            }
+    }
 }

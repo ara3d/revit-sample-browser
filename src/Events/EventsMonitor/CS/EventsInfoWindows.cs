@@ -19,7 +19,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
- 
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -27,20 +27,20 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.EventsMonitor.CS
 {
     /// <summary>
-    /// The UI to show the events history logs. This class is not the main one just a assistant
-    /// in this sample. If you just want to learn how to use Revit events,
-    /// please pay more attention to EventManager class.
+    ///     The UI to show the events history logs. This class is not the main one just a assistant
+    ///     in this sample. If you just want to learn how to use Revit events,
+    ///     please pay more attention to EventManager class.
     /// </summary>
     public partial class EventsInfoWindows : Form
     {
-                /// <summary>
-        /// An instance of RevitApplicationEvents class
-        /// Which prepares the informations which is shown in this UI
+        /// <summary>
+        ///     An instance of RevitApplicationEvents class
+        ///     Which prepares the informations which is shown in this UI
         /// </summary>
-        private LogManager m_dataBuffer;
-        
-                /// <summary>
-        /// Constructor without any argument
+        private readonly LogManager m_dataBuffer;
+
+        /// <summary>
+        ///     Constructor without any argument
         /// </summary>
         public EventsInfoWindows()
         {
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         }
 
         /// <summary>
-        /// Constructor with one argument
+        ///     Constructor with one argument
         /// </summary>
         /// <param name="dataBuffer">prepare the informations which is shown in this UI</param>
         public EventsInfoWindows(LogManager dataBuffer)
@@ -57,22 +57,22 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             m_dataBuffer = dataBuffer;
             Initialize();
         }
-        
-                /// <summary>
-        /// Initialize the DataGridView property
+
+        /// <summary>
+        ///     Initialize the DataGridView property
         /// </summary>
         private void Initialize()
-        {            
+        {
             // set dataSource
             appEventsLogDataGridView.AutoGenerateColumns = false;
-            appEventsLogDataGridView.DataSource          = m_dataBuffer.EventsLog;
-            timeColumn.DataPropertyName                  = "Time";
-            eventColumn.DataPropertyName                 = "Event";
-            typeColumn.DataPropertyName                  = "Type";
+            appEventsLogDataGridView.DataSource = m_dataBuffer.EventsLog;
+            timeColumn.DataPropertyName = "Time";
+            eventColumn.DataPropertyName = "Event";
+            typeColumn.DataPropertyName = "Type";
         }
-        
-                /// <summary>
-        /// form closed event handler
+
+        /// <summary>
+        ///     form closed event handler
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -84,27 +84,28 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         }
 
         /// <summary>
-        /// windows shown event handler
+        ///     windows shown event handler
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void applicationEventsInfoWindows_Shown(object sender, EventArgs e)
         {
             // set window's display location
-            var left             = Screen.PrimaryScreen.WorkingArea.Right - Width - 5;
-            var top              = Screen.PrimaryScreen.WorkingArea.Bottom - Height;
+            var left = Screen.PrimaryScreen.WorkingArea.Right - Width - 5;
+            var top = Screen.PrimaryScreen.WorkingArea.Bottom - Height;
             var windowLocation = new Point(left, top);
-            Location        = windowLocation;
+            Location = windowLocation;
         }
 
         /// <summary>
-        /// Scroll to last line when add new log lines
+        ///     Scroll to last line when add new log lines
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void appEventsLogDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            appEventsLogDataGridView.CurrentCell = appEventsLogDataGridView.Rows[appEventsLogDataGridView.Rows.Count - 1].Cells[0];
+            appEventsLogDataGridView.CurrentCell =
+                appEventsLogDataGridView.Rows[appEventsLogDataGridView.Rows.Count - 1].Cells[0];
         }
-            }
+    }
 }

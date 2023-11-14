@@ -23,20 +23,22 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Forms;
 using System.Drawing.Printing;
+using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Control = System.Windows.Forms.Control;
+using PrintRange = Autodesk.Revit.DB.PrintRange;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
 {
     /// <summary>
-    /// Exposes the print interfaces just like the Print Dialog (File->Print...) in UI.
+    ///     Exposes the print interfaces just like the Print Dialog (File->Print...) in UI.
     /// </summary>
     public class PrintMgr
     {
-        private ExternalCommandData m_commandData;
-        private PrintManager m_printMgr;
+        private readonly ExternalCommandData m_commandData;
+        private readonly PrintManager m_printMgr;
 
         public PrintMgr(ExternalCommandData commandData)
         {
@@ -51,21 +53,18 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 try
                 {
                     var printers
-                    = PrinterSettings.InstalledPrinters;
+                        = PrinterSettings.InstalledPrinters;
                     var printerNames = new string[printers.Count];
                     printers.CopyTo(printerNames, 0);
 
                     var names = new List<string>();
-                    foreach (var name in printerNames)
-                    {
-                        names.Add(name);
-                    }
+                    foreach (var name in printerNames) names.Add(name);
 
                     return 0 == names.Count ? null : names;
                 }
                 catch (Exception)
                 {
-                    return null;// can not get installed printer
+                    return null; // can not get installed printer
                 }
             }
         }
@@ -91,8 +90,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             get
             {
                 var setting = m_printMgr.PrintSetup.CurrentPrintSetting;
-                return (setting is PrintSetting) ?
-                    (setting as PrintSetting).Name : ConstData.InSessionName;
+                return setting is PrintSetting ? (setting as PrintSetting).Name : ConstData.InSessionName;
             }
         }
 
@@ -119,57 +117,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public string PrintToFileName => m_printMgr.PrintToFileName;
 
-        public string ChangePrintToFileName()
-        {
-            using (var saveDlg = new SaveFileDialog())
-            {
-                string postfix = null;
-
-                switch (m_printMgr.IsVirtual)
-                {
-                    case VirtualPrinterType.AdobePDF:
-                        saveDlg.Filter = "pdf files (*.pdf)|*.pdf";
-                        postfix = ".pdf";
-                        break;
-                    case VirtualPrinterType.DWFWriter:
-                        saveDlg.Filter = "dwf files (*.dwf)|*.dwf";
-                        postfix = ".dwf";
-                        break;
-                    case VirtualPrinterType.None:
-                        saveDlg.Filter = "prn files (*.prn)|*.prn";
-                        postfix = ".prn";
-                        break;
-                    case VirtualPrinterType.XPSWriter:
-                        saveDlg.Filter = "XPS files (*.xps)|*.xps";
-                        postfix = ".xps";
-                        break;
-                    default:
-                        break;
-                }
-
-                var title = m_commandData.Application.ActiveUIDocument.Document.Title;
-                if (title.Contains(".rvt"))
-                {
-                    saveDlg.FileName = title.Remove(title.LastIndexOf(".")) + postfix;
-                }
-                else
-                {
-                    saveDlg.FileName = title + postfix;
-                }
-
-                if (saveDlg.ShowDialog() == DialogResult.OK)
-                {
-                    return m_printMgr.PrintToFileName
-                        = saveDlg.FileName;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        public Autodesk.Revit.DB.PrintRange PrintRange
+        public PrintRange PrintRange
         {
             get => m_printMgr.PrintRange;
             set
@@ -214,8 +162,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             get
             {
                 var theSet = m_printMgr.ViewSheetSetting.CurrentViewSheetSet;
-                return (theSet is ViewSheetSet) ?
-                    (theSet as ViewSheetSet).Name : ConstData.InSessionName;
+                return theSet is ViewSheetSet ? (theSet as ViewSheetSet).Name : ConstData.InSessionName;
             }
         }
 
@@ -225,13 +172,8 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             {
                 var title = m_commandData.Application.ActiveUIDocument.Document.Title;
                 if (title.Contains(".rvt"))
-                {
                     return title.Remove(title.LastIndexOf(".")) + PostFix;
-                }
-                else
-                {
-                    return title + PostFix;
-                }
+                return title + PostFix;
             }
         }
 
@@ -254,18 +196,55 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                     case VirtualPrinterType.None:
                         postfix = ".prn";
                         break;
-                    default:
-                        break;
                 }
 
                 return postfix;
             }
         }
 
+        public string ChangePrintToFileName()
+        {
+            using (var saveDlg = new SaveFileDialog())
+            {
+                string postfix = null;
+
+                switch (m_printMgr.IsVirtual)
+                {
+                    case VirtualPrinterType.AdobePDF:
+                        saveDlg.Filter = "pdf files (*.pdf)|*.pdf";
+                        postfix = ".pdf";
+                        break;
+                    case VirtualPrinterType.DWFWriter:
+                        saveDlg.Filter = "dwf files (*.dwf)|*.dwf";
+                        postfix = ".dwf";
+                        break;
+                    case VirtualPrinterType.None:
+                        saveDlg.Filter = "prn files (*.prn)|*.prn";
+                        postfix = ".prn";
+                        break;
+                    case VirtualPrinterType.XPSWriter:
+                        saveDlg.Filter = "XPS files (*.xps)|*.xps";
+                        postfix = ".xps";
+                        break;
+                }
+
+                var title = m_commandData.Application.ActiveUIDocument.Document.Title;
+                if (title.Contains(".rvt"))
+                    saveDlg.FileName = title.Remove(title.LastIndexOf(".")) + postfix;
+                else
+                    saveDlg.FileName = title + postfix;
+
+                if (saveDlg.ShowDialog() == DialogResult.OK)
+                    return m_printMgr.PrintToFileName
+                        = saveDlg.FileName;
+                return null;
+            }
+        }
+
         public void ChangePrintSetup()
         {
             using (var dlg = new PrintSetupForm(
-                new PrintSTP(m_printMgr, m_commandData)))
+                       new PrintSTP(m_printMgr, m_commandData)))
             {
                 dlg.ShowDialog();
             }
@@ -274,7 +253,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         public void SelectViewSheetSet()
         {
             using (var dlg = new viewSheetSetForm(
-                new ViewSheets(m_commandData.Application.ActiveUIDocument.Document)))
+                       new ViewSheets(m_commandData.Application.ActiveUIDocument.Document)))
             {
                 dlg.ShowDialog();
             }
@@ -285,7 +264,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             return m_printMgr.SubmitPrint();
         }
 
-        public bool VerifyPrintToFile(System.Windows.Forms.Control controlToEnableOrNot)
+        public bool VerifyPrintToFile(Control controlToEnableOrNot)
         {
             // Enable terms (or):
             // 1. Print to non-virtual printer.
@@ -293,7 +272,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 m_printMgr.IsVirtual == VirtualPrinterType.None ? true : false;
         }
 
-        public bool VerifyCopies(Collection<System.Windows.Forms.Control> controlsToEnableOrNot)
+        public bool VerifyCopies(Collection<Control> controlsToEnableOrNot)
         {
             // Enable terms (or):
             // 1. Print to non-virtual priter (physical printer or OneNote), and 
@@ -312,55 +291,49 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 // Note: SnagIt is an exception
             }
 
-            foreach (var control in controlsToEnableOrNot)
-            {
-                control.Enabled = enableOrNot;
-            }
+            foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
 
             return enableOrNot;
         }
 
-        public bool VerifyPrintToFileName(Collection<System.Windows.Forms.Control> controlsToEnableOrNot)
+        public bool VerifyPrintToFileName(Collection<Control> controlsToEnableOrNot)
         {
             // Enable terms (or):
             // 1. Print to virtual priter (PDF or DWF printer)
             // 2. Print to none-virtual printer (physical printer or OneNote), and the 
             // "Print to file" check box is checked.
-            var enableOrNot = (m_printMgr.IsVirtual != VirtualPrinterType.None)
+            var enableOrNot = m_printMgr.IsVirtual != VirtualPrinterType.None
                               || (m_printMgr.IsVirtual == VirtualPrinterType.None
                                   && m_printMgr.PrintToFile);
 
 
-            foreach (var control in controlsToEnableOrNot)
-            {
-                control.Enabled = enableOrNot;
-            }
+            foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
 
             return enableOrNot;
         }
 
-        public bool VerifyPrintToSingleFile(System.Windows.Forms.Control controlToEnableOrNot)
+        public bool VerifyPrintToSingleFile(Control controlToEnableOrNot)
         {
             // Enable terms (or):
             // 1. Print to virtual priter (PDF or DWF printer)
             return controlToEnableOrNot.Enabled = m_printMgr.IsVirtual != VirtualPrinterType.None;
         }
 
-        public bool VerifyPrintToSeparateFile(System.Windows.Forms.Control controlToEnableOrNot)
+        public bool VerifyPrintToSeparateFile(Control controlToEnableOrNot)
         {
             // Enable terms (or):
             // 1. Print to virtual priter (PDF or DWF printer) and Print range is select.
             // 2. a) Print to none-virtual printer (physical printer or OneNote),  b) the 
             // "Print to file" check box is checked, and c) the Print range is select
 
-            return controlToEnableOrNot.Enabled = ((m_printMgr.IsVirtual != VirtualPrinterType.None
-                && m_printMgr.PrintRange == Autodesk.Revit.DB.PrintRange.Select)
-                || (m_printMgr.IsVirtual == VirtualPrinterType.None
-                && m_printMgr.PrintRange == Autodesk.Revit.DB.PrintRange.Select
-                && m_printMgr.PrintToFile));
+            return controlToEnableOrNot.Enabled = (m_printMgr.IsVirtual != VirtualPrinterType.None
+                                                   && m_printMgr.PrintRange == PrintRange.Select)
+                                                  || (m_printMgr.IsVirtual == VirtualPrinterType.None
+                                                      && m_printMgr.PrintRange == PrintRange.Select
+                                                      && m_printMgr.PrintToFile);
         }
 
-        public bool VerifyCollate(System.Windows.Forms.Control controlToEnableOrNot)
+        public bool VerifyCollate(Control controlToEnableOrNot)
         {
             // Enable terms (or):
             // 1. a) Print range is select b) the copy number is more 1 c) and the Print to file
@@ -375,26 +348,23 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 //The property CopyNumber is not available.
             }
 
-            return controlToEnableOrNot.Enabled = m_printMgr.PrintRange == Autodesk.Revit.DB.PrintRange.Select
-                && !m_printMgr.PrintToFile
-                && cn > 1;
+            return controlToEnableOrNot.Enabled = m_printMgr.PrintRange == PrintRange.Select
+                                                  && !m_printMgr.PrintToFile
+                                                  && cn > 1;
         }
 
-        public bool VerifySelectViewSheetSet(Collection<System.Windows.Forms.Control> controlsToEnableOrNot)
+        public bool VerifySelectViewSheetSet(Collection<Control> controlsToEnableOrNot)
         {
             // Enable terms (or):
             // 1. Print range is select.
-            var enableOrNot = m_printMgr.PrintRange == Autodesk.Revit.DB.PrintRange.Select;
-            foreach (var control in controlsToEnableOrNot)
-            {
-                control.Enabled = enableOrNot;
-            }
+            var enableOrNot = m_printMgr.PrintRange == PrintRange.Select;
+            foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
 
             return enableOrNot;
         }
 
         /// <summary>
-        /// global and consistent for message box with same caption
+        ///     global and consistent for message box with same caption
         /// </summary>
         /// <param name="text">MessageBox's text.</param>
         public static void MyMessageBox(string text)

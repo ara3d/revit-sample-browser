@@ -19,21 +19,21 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
+using System;
+using System.Windows.Forms;
+
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using System;
-    using System.Windows.Forms;
-
-
     /// <summary>
-    /// simple business process of UI
+    ///     simple business process of UI
     /// </summary>
     public partial class CreateComplexAreaReinForm : Form
     {
-        private AreaReinData m_dataBuffer;
+        private readonly AreaReinData m_dataBuffer;
 
         /// <summary>
-        /// constructor; initialize member data
+        ///     constructor; initialize member data
         /// </summary>
         /// <param name="dataBuffer"></param>
         public CreateComplexAreaReinForm(AreaReinData dataBuffer)
@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// bind data to controls
+        ///     bind data to controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -54,19 +54,19 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// to create
+        ///     to create
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            m_dataBuffer.LayoutRule = (LayoutRules)Enum.Parse(typeof(LayoutRules), 
+            m_dataBuffer.LayoutRule = (LayoutRules)Enum.Parse(typeof(LayoutRules),
                 layoutRuleComboBox.SelectedItem.ToString());
             DialogResult = DialogResult.OK;
         }
 
         /// <summary>
-        /// cancel the command
+        ///     cancel the command
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -22,18 +22,18 @@
 
 
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
     /// <summary>
-    /// Tool used to draw rectangle
+    ///     Tool used to draw rectangle
     /// </summary>
-    class RectTool:ITool
+    internal class RectTool : ITool
     {
         /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
         public RectTool()
         {
@@ -41,13 +41,13 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Mouse move event handler
+        ///     Mouse move event handler
         /// </summary>
         /// <param name="graphic">Graphics object,used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
         public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
-            if(m_points.Count == 1)
+            if (m_points.Count == 1)
             {
                 DrawRect(graphic, m_backGroundPen, m_points[0], m_preMovePoint);
                 m_preMovePoint = e.Location;
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Mouse down event handler
+        ///     Mouse down event handler
         /// </summary>
         /// <param name="graphic">Graphics object,used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
@@ -67,21 +67,20 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 m_preMovePoint = e.Location;
                 m_points.Add(e.Location);
 
-                if(m_points.Count == 2)
-                {
-                    DrawRect(graphic, m_foreGroundPen, m_points[0], m_points[1]);
-                }
-            };
+                if (m_points.Count == 2) DrawRect(graphic, m_foreGroundPen, m_points[0], m_points[1]);
+            }
+
+            ;
         }
 
         /// <summary>
-        /// Mouse up event handler
+        ///     Mouse up event handler
         /// </summary>
         /// <param name="graphic">Graphics object,used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
         public override void OnMouseUp(Graphics graphic, MouseEventArgs e)
         {
-            if(m_points.Count == 2  )
+            if (m_points.Count == 2)
             {
                 var line = new List<Point>(m_points);
                 m_lines.Add(line);
@@ -90,36 +89,36 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Draw rectangles 
+        ///     Draw rectangles
         /// </summary>
         /// <param name="graphic">Graphics object,used to draw geometry </param>
         public override void Draw(Graphics graphic)
         {
-            foreach (var line in m_lines)
-            {
-                DrawRect(graphic, m_foreGroundPen, line[0], line[1]);
-            }
+            foreach (var line in m_lines) DrawRect(graphic, m_foreGroundPen, line[0], line[1]);
         }
 
         /// <summary>
-        /// Draw rectangle use the given two opposite point p1 and p2
+        ///     Draw rectangle use the given two opposite point p1 and p2
         /// </summary>
         /// <param name="graphic">Graphics object,used to draw geometry</param>
         /// <param name="pen">Pen used to set color</param>
         /// <param name="p1">Rectangle one corner</param>
         /// <param name="p2">Opposite corner of p1</param>
-        private void DrawRect(Graphics graphic,Pen pen,Point p1, Point p2)
+        private void DrawRect(Graphics graphic, Pen pen, Point p1, Point p2)
         {
             var p = new Size(p2.X - p1.X, p2.Y - p1.Y);
-            if(p.Width >= 0 && p.Height >= 0)
+            if (p.Width >= 0 && p.Height >= 0)
             {
                 graphic.DrawRectangle(pen, p1.X, p1.Y, p.Width, p.Height);
             }
             //draw four lines
             else
             {
-                var points = new Point[5]{p1, new Point(p1.X, p2.Y), 
-                    p2, new Point(p2.X, p1.Y), p1};
+                var points = new Point[5]
+                {
+                    p1, new Point(p1.X, p2.Y),
+                    p2, new Point(p2.X, p1.Y), p1
+                };
                 graphic.DrawLines(pen, points);
             }
         }

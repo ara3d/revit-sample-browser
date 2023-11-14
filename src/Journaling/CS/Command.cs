@@ -22,19 +22,20 @@
 
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Journaling.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.UsingCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.UsingCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData,
-                                               ref string message,
-                                               ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message,
+            ElementSet elements)
         {
             try
             {
@@ -42,7 +43,7 @@ namespace Revit.SDK.Samples.Journaling.CS
                 tran.Start();
                 // Create a real operate class
                 var deal = new Journaling(commandData);
-                deal.Run();     // The main deal operation
+                deal.Run(); // The main deal operation
                 tran.Commit();
 
                 // if everything goes well, return succeeded.
@@ -55,5 +56,5 @@ namespace Revit.SDK.Samples.Journaling.CS
                 return Result.Failed;
             }
         }
-            }
+    }
 }

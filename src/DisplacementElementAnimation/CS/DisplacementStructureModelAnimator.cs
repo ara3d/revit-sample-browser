@@ -1,5 +1,4 @@
-﻿
-//
+﻿//
 // (C) Copyright 2003-2019 by Autodesk, Inc.
 //
 // Permission to use, copy, modify, and distribute this software in
@@ -24,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
@@ -31,12 +31,89 @@ using Autodesk.Revit.UI.Events;
 namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
 {
     /// <summary>
-    /// A class that executes an animation of structural model elements using DisplacementElements.
+    ///     A class that executes an animation of structural model elements using DisplacementElements.
     /// </summary>
-    class DisplacementStructureModelAnimator
+    internal class DisplacementStructureModelAnimator
     {
         /// <summary>
-        /// Starts the animation by creating the needed displacement elements, and setting up the events to allow it proceed.
+        ///     The increment by which the displacement parameter is reduced during animation.
+        /// </summary>
+        private readonly double displacementIncrement = 0.05;
+
+        /// <summary>
+        ///     The displacement parameter (proceeds from 1 -> 0 during the animation)
+        /// </summary>
+        private double displacementParameter = 1.0;
+
+        /// <summary>
+        ///     The initial height for the initial displacement.
+        /// </summary>
+        private readonly double initialHeight = 100;
+
+        /// <summary>
+        ///     The maximum ratio of displacement in XY.
+        /// </summary>
+        private readonly double initialXYRatio = 1.25;
+
+        /// <summary>
+        ///     The index of the current parent element being animated.
+        /// </summary>
+        private int m_currentDisplacementIndex;
+
+
+        /// <summary>
+        ///     The current parent displacement element being animated.
+        /// </summary>
+        private DisplacementElement m_displacementElement;
+
+        /// <summary>
+        ///     The collection of top level displacement elements.
+        /// </summary>
+        private List<DisplacementElement> m_displacementElements;
+
+        /// <summary>
+        ///     The switch for using Idling event.
+        /// </summary>
+        private readonly bool m_isUsingIdling = true;
+
+        /// <summary>
+        ///     The timer that governs the automation.
+        /// </summary>
+        private Timer m_timer;
+
+        /// <summary>
+        ///     The model center.  Currently hardcoded.
+        /// </summary>
+        private readonly XYZ modelCenter = XYZ.Zero;
+
+        /// <summary>
+        ///     The number of milliseconds in between frames.
+        /// </summary>
+        private readonly int timerInterval = 60;
+
+        /// <summary>
+        ///     Signals that the timer has triggered.
+        /// </summary>
+        private bool timerTripped;
+
+        /// <summary>
+        ///     The application.
+        /// </summary>
+        private readonly UIApplication uiApplication;
+
+        /// <summary>
+        ///     Constructs an animator instance.
+        /// </summary>
+        /// <param name="uiApp">The application.</param>
+        /// <param name="isUsingIdling">The switch for using Idling event.</param>
+        public DisplacementStructureModelAnimator(UIApplication uiApp, bool isUsingIdling)
+        {
+            uiApplication = uiApp;
+            m_isUsingIdling = isUsingIdling;
+        }
+
+        /// <summary>
+        ///     Starts the animation by creating the needed displacement elements, and setting up the events to allow it proceed.
         /// </summary>
         public void StartAnimation()
         {
@@ -51,7 +128,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             // Get levels in order of elevation
             var collector = new FilteredElementCollector(doc).OfClass(typeof(Level));
             var idGroupsInOrder = new List<ICollection<ElementId>>();
-            IEnumerable<Level> levels = collector.Cast<Level>().OrderBy<Level, double>(lvl => lvl.Elevation);
+            IEnumerable<Level> levels = collector.Cast<Level>().OrderBy(lvl => lvl.Elevation);
 
             // Create lists of "elements on level" in ascending order:
             // * Foundation
@@ -62,7 +139,8 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             foreach (var level in levels)
             {
                 AddInstancesOnLevelToIdGroupList(idGroupsInOrder, level, BuiltInCategory.OST_StructuralFoundation);
-                AddInstancesOnReferenceLevelToIdGroupList(idGroupsInOrder, level, BuiltInCategory.OST_StructuralFraming);
+                AddInstancesOnReferenceLevelToIdGroupList(idGroupsInOrder, level,
+                    BuiltInCategory.OST_StructuralFraming);
                 AddInstancesOnLevelToIdGroupList(idGroupsInOrder, level, BuiltInCategory.OST_Floors);
                 AddInstancesOnLevelToIdGroupList(idGroupsInOrder, level, BuiltInCategory.OST_Walls);
                 AddInstancesOnLevelToIdGroupList(idGroupsInOrder, level, BuiltInCategory.OST_StructuralColumns);
@@ -72,15 +150,13 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             using (var t = new Transaction(doc, "Start animation"))
             {
                 t.Start();
-                foreach (var idGroups in idGroupsInOrder)
-                {
-                    BuildDisplacementElementGroup(doc, idGroups, view);
-                }
+                foreach (var idGroups in idGroupsInOrder) BuildDisplacementElementGroup(doc, idGroups, view);
                 if (m_displacementElements.Count == 0)
                 {
-                   t.RollBack();
-                   return;
+                    t.RollBack();
+                    return;
                 }
+
                 m_displacementElement = m_displacementElements[0];
                 UnhideDisplacedElements();
                 t.Commit();
@@ -92,9 +168,9 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             {
                 // Register idling for animation frames
                 uiApplication.Idling += IdlingResponse;
-                
+
                 // Register timer for animation framews
-                m_timer = new System.Timers.Timer();
+                m_timer = new Timer();
                 m_timer.Interval = timerInterval;
                 m_timer.Elapsed += TimerElapsed;
                 m_timer.Start();
@@ -102,12 +178,12 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Executes the next step on the animation.
+        ///     Executes the next step on the animation.
         /// </summary>
         public void AnimateNextStep()
         {
-            var groupFinished = false;  // Is the current animation group finished?
-            var allFinished = false;    // Are all animation groups finished?
+            var groupFinished = false; // Is the current animation group finished?
+            var allFinished = false; // Are all animation groups finished?
             if (displacementParameter <= 0)
             {
                 displacementParameter = 1.0;
@@ -126,7 +202,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
 
             // Execute transaction for next animation
             using (var t = new Transaction(uiApplication.ActiveUIDocument.Document,
-                                                   groupFinished ? "Next animation group" : "Animation step"))
+                       groupFinished ? "Next animation group" : "Animation step"))
             {
                 t.Start();
                 if (groupFinished)
@@ -146,12 +222,13 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
                     // Decrement displacement parameter
                     displacementParameter -= displacementIncrement;
                 }
+
                 t.Commit();
             }
         }
 
         /// <summary>
-        /// Unhides the elements in the next displacement group.
+        ///     Unhides the elements in the next displacement group.
         /// </summary>
         private void UnhideDisplacedElements()
         {
@@ -163,13 +240,13 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Find all instances matching category and level, and add to the collection of groups of sorted ids.
+        ///     Find all instances matching category and level, and add to the collection of groups of sorted ids.
         /// </summary>
         /// <param name="idGroupsInOrder">The collection of groups of ids, sorted.</param>
         /// <param name="level">The level to match.</param>
         /// <param name="category">The category to match.</param>
         private static void AddInstancesOnLevelToIdGroupList(List<ICollection<ElementId>> idGroupsInOrder,
-                                                      Level level, BuiltInCategory category)
+            Level level, BuiltInCategory category)
         {
             var collector = new FilteredElementCollector(level.Document);
             collector.WherePasses(new ElementLevelFilter(level.Id));
@@ -183,13 +260,13 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Find all instances matching category and "Reference Level", and add to the collection of groups of sorted ids.
+        ///     Find all instances matching category and "Reference Level", and add to the collection of groups of sorted ids.
         /// </summary>
         /// <param name="idGroupsInOrder">The collection of groups of ids, sorted.</param>
         /// <param name="level">The level to match.</param>
         /// <param name="category">The category to match.</param>
         private static void AddInstancesOnReferenceLevelToIdGroupList(List<ICollection<ElementId>> idGroupsInOrder,
-                                                               Level level, BuiltInCategory category)
+            Level level, BuiltInCategory category)
         {
             var collector = new FilteredElementCollector(level.Document);
             collector.OfCategory(category);
@@ -197,8 +274,9 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
 
             // Use a parameter filter to match the Reference Level parameter
             var rule =
-                ParameterFilterRuleFactory.CreateEqualsRule(new ElementId(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM),
-                                                            level.Id);
+                ParameterFilterRuleFactory.CreateEqualsRule(
+                    new ElementId(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM),
+                    level.Id);
             collector.WherePasses(new ElementParameterFilter(rule));
             var idGroup = collector.ToElementIds();
 
@@ -208,8 +286,8 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Builds a group of displacement elements from a collection of element ids, and 
-        /// sets the displacement to be uniform in Z but vary in XY based on location.
+        ///     Builds a group of displacement elements from a collection of element ids, and
+        ///     sets the displacement to be uniform in Z but vary in XY based on location.
         /// </summary>
         /// <param name="doc">The document.</param>
         /// <param name="ids">The collection of ids.</param>
@@ -219,7 +297,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             // The last element will be in the "parent" displacement element.  (At least one element
             // must remain assigned to the parent, so all child displacements will be relative to the 
             // parent's displacement.)
-            var lastElement = doc.GetElement(ids.Last<ElementId>());
+            var lastElement = doc.GetElement(ids.Last());
             var parentDisplacedLocation = GetDisplacementXYFor(lastElement, XYZ.Zero);
             parentDisplacedLocation = MoveToElevation(parentDisplacedLocation, initialHeight);
 
@@ -229,7 +307,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
 
             var count = ids.Count;
             var childIds = new List<ElementId>();
-            var idsList = ids.ToList<ElementId>();
+            var idsList = ids.ToList();
 
             // Add all elements except the last one to child displacement elements
             for (var index = 0; index < count - 1; index++)
@@ -244,11 +322,12 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
                 childIds.Add(childId);
                 DisplacementElement.Create(doc, childIds, displacedLocation, view, parent);
             }
+
             view.HideElements(ids);
         }
 
         /// <summary>
-        /// Change the displacement location for the current parent element.
+        ///     Change the displacement location for the current parent element.
         /// </summary>
         private void ChangeDisplacementLocationForParent()
         {
@@ -259,7 +338,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Change the displacement location for children elements.
+        ///     Change the displacement location for children elements.
         /// </summary>
         private void ChangeDisplacementLocationsForChildren()
         {
@@ -274,7 +353,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Identifies if the displacement element is a parent or a child.
+        ///     Identifies if the displacement element is a parent or a child.
         /// </summary>
         /// <param name="element"></param>
         /// <returns>True if the element is a child of another element.</returns>
@@ -284,7 +363,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Gets the XY displacement for a given element.
+        ///     Gets the XY displacement for a given element.
         /// </summary>
         /// <param name="element">The displacement element.</param>
         /// <returns>The displacement.</returns>
@@ -299,14 +378,14 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             }
 
             // Assume one element per displacement, use that element to get the displacement needed.
-            var id = element.GetDisplacedElementIds().First<ElementId>();
+            var id = element.GetDisplacedElementIds().First();
             var e = element.Document.GetElement(id);
 
             return GetDisplacementXYFor(e, displacementDueToParent);
         }
 
         /// <summary>
-        /// Gets the XY displacement for a given element relative to a parent displacement.
+        ///     Gets the XY displacement for a given element relative to a parent displacement.
         /// </summary>
         /// <param name="e">The element.</param>
         /// <param name="displacementDueToParent">The parent element displacement.</param>
@@ -315,14 +394,14 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         {
             var displacementDueToParentXY = MoveToElevationZero(displacementDueToParent);
             var location = GetNominalCenterLocation(e);
-            var delta = (location - modelCenter);
+            var delta = location - modelCenter;
             var displacedLocation = delta * GetXYDisplacementRatio() - displacementDueToParentXY;
 
             return displacedLocation;
         }
 
         /// <summary>
-        /// Returns the current XY displacement ratio.
+        ///     Returns the current XY displacement ratio.
         /// </summary>
         /// <returns>The XY displacement ratio.</returns>
         private double GetXYDisplacementRatio()
@@ -333,7 +412,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Gets the current displcement in Z.
+        ///     Gets the current displcement in Z.
         /// </summary>
         /// <returns></returns>
         private double GetHeightDisplacementValue()
@@ -342,17 +421,17 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// The timer callback for the animation.
+        ///     The timer callback for the animation.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
             timerTripped = true;
         }
 
         /// <summary>
-        /// The idling callback for the animation.
+        ///     The idling callback for the animation.
         /// </summary>
         /// <param name="senter"></param>
         /// <param name="e"></param>
@@ -369,18 +448,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Constructs an animator instance. 
-        /// </summary>
-        /// <param name="uiApp">The application.</param>
-        /// <param name="isUsingIdling">The switch for using Idling event.</param>
-        public DisplacementStructureModelAnimator(UIApplication uiApp, bool isUsingIdling)
-        {
-            uiApplication = uiApp;
-            m_isUsingIdling = isUsingIdling;
-        }
-
-        /// <summary>
-        /// Utility to move a point to the Z=0 projection 
+        ///     Utility to move a point to the Z=0 projection
         /// </summary>
         /// <param name="location">The point.</param>
         /// <returns>The point at Z=0 projection.</returns>
@@ -390,7 +458,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Utility to move a point to an arbitrary Z projection 
+        ///     Utility to move a point to an arbitrary Z projection
         /// </summary>
         /// <param name="location">The point.</param>
         /// <param name="z">The elevation to set for the point.</param>
@@ -401,90 +469,18 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         }
 
         /// <summary>
-        /// Utility to get the "center" of the element based on location parameters, projected to Z=0.
+        ///     Utility to get the "center" of the element based on location parameters, projected to Z=0.
         /// </summary>
         /// <param name="e">The element.</param>
         /// <returns>The center location.</returns>
         private static XYZ GetNominalCenterLocation(Element e)
         {
             var lp = e.Location as LocationPoint;
-            if (lp != null)
-            {
-                return MoveToElevationZero(lp.Point);
-            }
+            if (lp != null) return MoveToElevationZero(lp.Point);
 
             var lc = e.Location as LocationCurve;
-            if (lc != null)
-            {
-                return MoveToElevationZero(lc.Curve.Evaluate(0.5, true));
-            }
+            if (lc != null) return MoveToElevationZero(lc.Curve.Evaluate(0.5, true));
             return XYZ.Zero;
         }
-
-        /// <summary>
-        /// The application.
-        /// </summary>
-        private UIApplication uiApplication;
-
-        /// <summary>
-        /// The collection of top level displacement elements.
-        /// </summary>
-        private List<DisplacementElement> m_displacementElements;
-
-
-        /// <summary>
-        /// The current parent displacement element being animated.
-        /// </summary>
-        private DisplacementElement m_displacementElement;
-
-        /// <summary>
-        /// The index of the current parent element being animated.
-        /// </summary>
-        private int m_currentDisplacementIndex;
-
-        /// <summary>
-        /// The displacement parameter (proceeds from 1 -> 0 during the animation)
-        /// </summary>
-        private double displacementParameter = 1.0;
-
-        /// <summary>
-        /// The increment by which the displacement parameter is reduced during animation.
-        /// </summary>
-        private double displacementIncrement = 0.05;
-
-        /// <summary>
-        /// The maximum ratio of displacement in XY.
-        /// </summary>
-        private double initialXYRatio = 1.25;
-
-        /// <summary>
-        /// The initial height for the initial displacement.
-        /// </summary>
-        private double initialHeight = 100;
-
-        /// <summary>
-        /// Signals that the timer has triggered.
-        /// </summary>
-        private bool timerTripped;
-
-        /// <summary>
-        /// The number of milliseconds in between frames.
-        /// </summary>
-        private int timerInterval = 60;
-
-        /// <summary>
-        /// The timer that governs the automation.
-        /// </summary>
-        private System.Timers.Timer m_timer;
-
-        /// <summary>
-        /// The model center.  Currently hardcoded.
-        /// </summary>
-        private XYZ modelCenter = XYZ.Zero;
-
-        /// <summary>
-        /// The switch for using Idling event.
-        /// </summary>
-        private bool m_isUsingIdling = true;
     }
 }

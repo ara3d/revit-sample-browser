@@ -29,12 +29,12 @@ using Autodesk.Revit.DB.Architecture;
 namespace Revit.SDK.Samples.Site.CS
 {
     /// <summary>
-    /// Database level utilities for the site editing commands.
+    ///     Database level utilities for the site editing commands.
     /// </summary>
-    class SiteEditingUtils
+    internal class SiteEditingUtils
     {
         /// <summary>
-        /// Moves an XYZ point to the elevation specified.
+        ///     Moves an XYZ point to the elevation specified.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <param name="elevation">The elevation.</param>
@@ -45,21 +45,18 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Gets the average elevation (z) from a collection of points.
+        ///     Gets the average elevation (z) from a collection of points.
         /// </summary>
         /// <param name="existingPoints">The points.</param>
         /// <returns>The average elevation.</returns>
         public static double GetAverageElevation(IList<XYZ> existingPoints)
         {
-            if (existingPoints.Count == 0)
-            {
-                return 0;
-            }
-            return existingPoints.Average<XYZ>(xyz => xyz.Z);
+            if (existingPoints.Count == 0) return 0;
+            return existingPoints.Average(xyz => xyz.Z);
         }
 
         /// <summary>
-        /// Gets the boundary points for the circular retaining pond surrounding the input point.
+        ///     Gets the boundary points for the circular retaining pond surrounding the input point.
         /// </summary>
         /// <param name="center">The point.  The elevation of this point is assumed to be at the bottom of the pond.</param>
         /// <param name="maxRadius">The outer radius for the pond.</param>
@@ -80,13 +77,14 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Generates the points representing a circular region around the center.
+        ///     Generates the points representing a circular region around the center.
         /// </summary>
         /// <param name="points">The collection of points to which the results are added.</param>
         /// <param name="center">The center.</param>
         /// <param name="deltaElevation">The change in elevation relative to the center.</param>
         /// <param name="radius">The radius of the circular region.</param>
-        private static void GenerateCircleSurrounding(IList<XYZ> points, XYZ center, double deltaElevation, double radius)
+        private static void GenerateCircleSurrounding(IList<XYZ> points, XYZ center, double deltaElevation,
+            double radius)
         {
             for (double theta = 0; theta < 2 * Math.PI; theta += Math.PI / 6.0)
             {
@@ -96,7 +94,7 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Gets the center of the element's bounding box.
+        ///     Gets the center of the element's bounding box.
         /// </summary>
         /// <param name="element">The element.</param>
         /// <returns>The center of the bounding box.</returns>
@@ -108,7 +106,7 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Gets the points from a rectangular outline surrounding the subregion bounding box.
+        ///     Gets the points from a rectangular outline surrounding the subregion bounding box.
         /// </summary>
         /// <param name="subregion">The subregion.</param>
         /// <returns>The points.</returns>
@@ -126,7 +124,7 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Gets the points stored by a subregion.
+        ///     Gets the points stored by a subregion.
         /// </summary>
         /// <param name="subregion">The subregion.</param>
         /// <returns>The points</returns>
@@ -136,7 +134,7 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Gets the TopographySurface host for a subregion.
+        ///     Gets the TopographySurface host for a subregion.
         /// </summary>
         /// <param name="subregion">The subregion.</param>
         /// <returns>The host TopographySurface.</returns>
@@ -147,13 +145,13 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Gets all non-boundary points from a TopographySurface or Subregion.
+        ///     Gets all non-boundary points from a TopographySurface or Subregion.
         /// </summary>
         /// <param name="toposurface">The TopographySurface or Subregion.</param>
         /// <returns>The non-boundary points.</returns>
         public static IList<XYZ> GetNonBoundaryPoints(TopographySurface toposurface)
         {
-           return toposurface.GetInteriorPoints();
+            return toposurface.GetInteriorPoints();
         }
     }
 }

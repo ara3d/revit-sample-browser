@@ -19,6 +19,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
@@ -27,15 +28,15 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 {
     /// <summary>
-    /// ProfileWall class contains the information about profile of a wall,
-    /// and contains method to create Opening on a wall
+    ///     ProfileWall class contains the information about profile of a wall,
+    ///     and contains method to create Opening on a wall
     /// </summary>
     public class ProfileWall : Profile
     {
-        private Wall m_data;
+        private readonly Wall m_data;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="wall">wall to create Opening on</param>
         /// <param name="commandData">object which contains reference of Revit Application</param>
@@ -50,7 +51,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// Get points of first face
+        ///     Get points of first face
         /// </summary>
         /// <param name="faces">edges in all faces</param>
         /// <returns>points of first face</returns>
@@ -64,30 +65,23 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             var zAxis = new Vector4(0, 0, 1);
 
             //if Location curve of wall is line, then return first face
-            if (xyzs.Count == 2)
-            {
-                needFace = faces[0];
-            }
+            if (xyzs.Count == 2) needFace = faces[0];
 
             //else we return the face whose normal is Z axis
             foreach (var face in faces)
+            foreach (var edge in face)
             {
-                foreach (var edge in face)
+                var edgexyzs = edge.Tessellate() as List<XYZ>;
+                if (xyzs.Count == edgexyzs.Count)
                 {
-                    var edgexyzs = edge.Tessellate() as List<XYZ>;
-                    if (xyzs.Count == edgexyzs.Count)
-                    {
-                        //get the normal of face
-                        var normal = GetFaceNormal(face);
-                        var cross = Vector4.CrossProduct(zAxis, normal);
-                        cross.Normalize();
-                        if (cross.Length() == 1)
-                        {
-                            needFace = face;
-                        }
-                    }
+                    //get the normal of face
+                    var normal = GetFaceNormal(face);
+                    var cross = Vector4.CrossProduct(zAxis, normal);
+                    cross.Normalize();
+                    if (cross.Length() == 1) needFace = face;
                 }
             }
+
             needFace = faces[0];
 
             //get points array in edges 
@@ -96,11 +90,12 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                 var edgexyzs = edge.Tessellate() as List<XYZ>;
                 needPoints.Add(edgexyzs);
             }
+
             return needPoints;
         }
 
         /// <summary>
-        /// Get a matrix which can transform points to 2D
+        ///     Get a matrix which can transform points to 2D
         /// </summary>
         /// <returns>matrix which can transform points to 2D</returns>
         public override Matrix4 GetTo2DMatrix()
@@ -115,10 +110,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             {
                 var curve = location.Curve;
 
-                if (!(curve is Line))
-                {
-                    throw new Exception("Opening cannot build on this Wall");
-                }
+                if (!(curve is Line)) throw new Exception("Opening cannot build on this Wall");
 
                 var start = curve.GetEndPoint(0);
                 var end = curve.GetEndPoint(1);
@@ -136,19 +128,20 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                 origin = new Vector4((float)(end.X + start.X) / 2,
                     (float)(end.Y + start.Y) / 2, (float)(end.Z + start.Z) / 2);
             }
+
             return new Matrix4(xAxis, yAxis, zAxis, origin);
         }
 
         /// <summary>
-        /// create Opening on wall
+        ///     create Opening on wall
         /// </summary>
         /// <param name="points">points used to create Opening</param>
         /// <returns>newly created Opening</returns>
         public override Opening CreateOpening(List<Vector4> points)
         {
             //create Opening on wall
-            var p1 = new XYZ (points[0].X, points[0].Y, points[0].Z);
-            var p2 = new XYZ (points[1].X, points[1].Y, points[1].Z);
+            var p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
+            var p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
             return m_docCreator.NewOpening(m_data, p1, p2);
         }
     }

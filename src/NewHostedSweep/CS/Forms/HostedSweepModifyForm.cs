@@ -26,17 +26,17 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This form contains a property grid control to modify the property of hosted sweep.
+    ///     This form contains a property grid control to modify the property of hosted sweep.
     /// </summary>
     public partial class HostedSweepModifyForm : Form
-    {        
+    {
         /// <summary>
-        /// Data for modification.
+        ///     Data for modification.
         /// </summary>
-        private ModificationData m_modificationData;
+        private readonly ModificationData m_modificationData;
 
         /// <summary>
-        /// Default constructor.
+        ///     Default constructor.
         /// </summary>
         public HostedSweepModifyForm()
         {
@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Customize constructor contains a parameter ModificationData.
+        ///     Customize constructor contains a parameter ModificationData.
         /// </summary>
         /// <param name="modificationData"></param>
         public HostedSweepModifyForm(ModificationData modificationData)
@@ -55,7 +55,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// OK button, exit this form with DialogResult.OK.
+        ///     OK button, exit this form with DialogResult.OK.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Load event, set the data source for property-grid.
+        ///     Load event, set the data source for property-grid.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -74,6 +74,6 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             propertyGrid.SelectedObject = m_modificationData;
             m_modificationData.ShowElement();
-        } 
+        }
     }
 }

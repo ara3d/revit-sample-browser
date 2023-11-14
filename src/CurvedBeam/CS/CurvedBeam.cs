@@ -21,39 +21,39 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.CurvedBeam.CS
 {
     /// <summary>
-    /// This class inherits from IExternalCommand interface, and implements the Execute method to create Arc, BSpline beams.
+    ///     This class inherits from IExternalCommand interface, and implements the Execute method to create Arc, BSpline
+    ///     beams.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.UsingCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.UsingCommandData)]
     public class Command : IExternalCommand
     {
-                UIApplication m_revit;
+        private UIApplication m_revit;
 
-        
 
-                /// <summary>
-        /// list of all type of beams
+        /// <summary>
+        ///     list of all type of beams
         /// </summary>
         public ArrayList BeamMaps { get; } = new ArrayList();
 
         /// <summary>
-        /// list of all levels
+        ///     list of all levels
         /// </summary>
         public ArrayList LevelMaps { get; } = new ArrayList();
 
-        
 
-                public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             m_revit = commandData.Application;
             var tran = new Transaction(m_revit.ActiveUIDocument.Document, "CurvedBeam");
@@ -61,10 +61,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
             // if initialize failed return Result.Failed
             var initializeOK = Initialize();
-            if (!initializeOK)
-            {
-                return Result.Failed;
-            }
+            if (!initializeOK) return Result.Failed;
 
             // pop up new beam form
             var displayForm = new CurvedBeamForm(this);
@@ -73,10 +70,10 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
             return Result.Succeeded;
         }
-        
+
 
         /// <summary>
-        /// iterate all the symbols of levels and beams
+        ///     iterate all the symbols of levels and beams
         /// </summary>
         /// <returns>A value that signifies if the initialization was successful for true or failed for false</returns>
         private bool Initialize()
@@ -104,32 +101,21 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
                     // get
                     var f = o as Family;
-                    if (null == f)
-                    {
-                        goto nextLoop;
-                    }
+                    if (null == f) goto nextLoop;
 
                     foreach (var elementId in f.GetFamilySymbolIds())
                     {
-                       object symbol = m_revit.ActiveUIDocument.Document.GetElement(elementId);
+                        object symbol = m_revit.ActiveUIDocument.Document.GetElement(elementId);
                         var familyType = symbol as FamilySymbol;
-                        if (null == familyType)
-                        {
-                            goto nextLoop;
-                        }
-                        if (null == familyType.Category)
-                        {
-                            goto nextLoop;
-                        }
+                        if (null == familyType) goto nextLoop;
+                        if (null == familyType.Category) goto nextLoop;
 
                         // add symbols of beams and braces to lists 
                         var categoryName = familyType.Category.Name;
-                        if ("Structural Framing" == categoryName)
-                        {
-                            BeamMaps.Add(new SymbolMap(familyType));
-                        }
+                        if ("Structural Framing" == categoryName) BeamMaps.Add(new SymbolMap(familyType));
                     }
-                nextLoop:
+
+                    nextLoop:
                     moreElement = i.MoveNext();
                 }
             }
@@ -137,11 +123,12 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             {
                 throw new Exception(ex.ToString());
             }
+
             return true;
         }
 
         /// <summary>
-        /// create an horizontal arc instance with specified z coordinate value
+        ///     create an horizontal arc instance with specified z coordinate value
         /// </summary>
         public Arc CreateArc(double z)
         {
@@ -156,7 +143,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
 
         /// <summary>
-        /// create a horizontal partial ellipse instance with specified z coordinate value
+        ///     create a horizontal partial ellipse instance with specified z coordinate value
         /// </summary>
         public Curve CreateEllipse(double z)
         {
@@ -174,7 +161,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
 
         /// <summary>
-        /// create a horizontal nurbspline instance with specified z coordinate value
+        ///     create a horizontal nurbspline instance with specified z coordinate value
         /// </summary>
         public Curve CreateNurbSpline(double z)
         {
@@ -185,22 +172,31 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             var xyz3 = new XYZ(9.27600019217055, 0.32213521486563046, z);
             var xyz4 = new XYZ(41.887503610431267, 9.0290629129782189, z);
 
-            ctrPoints.Add(xyz1); ctrPoints.Add(xyz2); ctrPoints.Add(xyz3);
+            ctrPoints.Add(xyz1);
+            ctrPoints.Add(xyz2);
+            ctrPoints.Add(xyz3);
             ctrPoints.Add(xyz4);
 
             IList<double> weights = new List<double>();
             double w1 = 1, w2 = 1, w3 = 1, w4 = 1;
-            weights.Add(w1); weights.Add(w2); weights.Add(w3);
+            weights.Add(w1);
+            weights.Add(w2);
+            weights.Add(w3);
             weights.Add(w4);
 
             IList<double> knots = new List<double>();
             double k0 = 0, k1 = 0, k2 = 0, k3 = 0, k4 = 34.425128, k5 = 34.425128, k6 = 34.425128, k7 = 34.425128;
 
-            knots.Add(k0); knots.Add(k1); knots.Add(k2); knots.Add(k3);
-            knots.Add(k4); knots.Add(k5); knots.Add(k6);
+            knots.Add(k0);
+            knots.Add(k1);
+            knots.Add(k2);
+            knots.Add(k3);
+            knots.Add(k4);
+            knots.Add(k5);
+            knots.Add(k6);
             knots.Add(k7);
 
-            var detailNurbSpline = NurbSpline.CreateCurve(3, knots,ctrPoints, weights);
+            var detailNurbSpline = NurbSpline.CreateCurve(3, knots, ctrPoints, weights);
             m_revit.ActiveUIDocument.Document.Regenerate();
 
             return detailNurbSpline;
@@ -208,7 +204,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
 
         /// <summary>
-        /// create a curved beam
+        ///     create a curved beam
         /// </summary>
         /// <param name="fsBeam">beam type</param>
         /// <param name="curve">Curve of this beam.</param>
@@ -218,20 +214,15 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         {
             try
             {
-               if (!fsBeam.IsActive)
-                  fsBeam.Activate();
-                var beam = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(curve, fsBeam, level, StructuralType.Beam);
-                if (null == beam)
-                {
-                    return false;
-                }
+                if (!fsBeam.IsActive)
+                    fsBeam.Activate();
+                var beam = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(curve, fsBeam, level,
+                    StructuralType.Beam);
+                if (null == beam) return false;
 
                 // get beam location curve
                 var beamCurve = beam.Location as LocationCurve;
-                if (null == beamCurve)
-                {
-                    return false;
-                }
+                if (null == beamCurve) return false;
             }
             catch (Exception ex)
             {
@@ -247,15 +238,12 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
 
     /// <summary>
-    /// assistant class contains symbol and it's name
+    ///     assistant class contains symbol and it's name
     /// </summary>
     public class SymbolMap
     {
-        
-        
-
         /// <summary>
-        /// constructor without parameter is forbidden
+        ///     constructor without parameter is forbidden
         /// </summary>
         private SymbolMap()
         {
@@ -264,44 +252,38 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="symbol">family symbol</param>
         public SymbolMap(FamilySymbol symbol)
         {
             ElementType = symbol;
             var familyName = "";
-            if (null != symbol.Family)
-            {
-                familyName = symbol.Family.Name;
-            }
+            if (null != symbol.Family) familyName = symbol.Family.Name;
             SymbolName = familyName + " : " + symbol.Name;
         }
 
 
         /// <summary>
-        /// SymbolName property
+        ///     SymbolName property
         /// </summary>
         public string SymbolName { get; } = "";
 
 
         /// <summary>
-        /// ElementType property
+        ///     ElementType property
         /// </summary>
         public FamilySymbol ElementType { get; }
     }
 
 
     /// <summary>
-    /// assistant class contains level and it's name
+    ///     assistant class contains level and it's name
     /// </summary>
     public class LevelMap
     {
-        
-        
-
-                /// <summary>
-        /// constructor without parameter is forbidden
+        /// <summary>
+        ///     constructor without parameter is forbidden
         /// </summary>
         private LevelMap()
         {
@@ -310,7 +292,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="level">level</param>
         public LevelMap(Level level)
@@ -318,17 +300,16 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             Level = level;
             LevelName = level.Name;
         }
-        
 
-                /// <summary>
-        /// LevelName property
+
+        /// <summary>
+        ///     LevelName property
         /// </summary>
         public string LevelName { get; } = "";
 
         /// <summary>
-        /// Level property
+        ///     Level property
         /// </summary>
         public Level Level { get; }
-
-            }
+    }
 }

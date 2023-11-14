@@ -23,27 +23,27 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
     /// <summary>
-    /// This class implements IUpdater and IExternalEventHandler interfaces. It's mainly
-    /// for winder stairs creation and regeneration when its dependencies are being changed.
+    ///     This class implements IUpdater and IExternalEventHandler interfaces. It's mainly
+    ///     for winder stairs creation and regeneration when its dependencies are being changed.
     /// </summary>
-    class WinderUpdater : IUpdater, IExternalEventHandler
+    internal class WinderUpdater : IUpdater, IExternalEventHandler
     {
-        private UpdaterId m_updaterId;
-        private IList<ElementId> m_curveElements;
-        private ElementId m_winderRunId = ElementId.InvalidElementId;
-        private Winder m_winder;
+        private readonly IList<ElementId> m_curveElements;
+        private readonly bool m_drawSketch;
         private bool m_removeTheUpdater;
-        private bool m_drawSketch;
+        private readonly UpdaterId m_updaterId;
+        private readonly Winder m_winder;
+        private ElementId m_winderRunId = ElementId.InvalidElementId;
 
         /// <summary>
-        /// Constructor to initialize the fields and create the winder stairs.
-        /// It also registers the updater if addinId is not null.
+        ///     Constructor to initialize the fields and create the winder stairs.
+        ///     It also registers the updater if addinId is not null.
         /// </summary>
         /// <param name="winder">Winder to create winder stairs</param>
         /// <param name="crvElements">Curve Elements to control the winder shape</param>
@@ -68,9 +68,9 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 UpdaterRegistry.RegisterUpdater(this, rvtDoc);
 
                 // Add modification triggers
-                UpdaterRegistry.AddTrigger(m_updaterId, rvtDoc, 
+                UpdaterRegistry.AddTrigger(m_updaterId, rvtDoc,
                     m_curveElements, Element.GetChangeTypeAny());
-                
+
                 // Add deletion trigger
                 var deleteParents = new List<ElementId>();
                 deleteParents.AddRange(crvElements);
@@ -82,7 +82,78 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Create the winder stairs in the Document.
+        ///     Implementation of IExternalEventHandler.Execute method.
+        /// </summary>
+        void IExternalEventHandler.Execute(UIApplication app)
+        {
+            try
+            {
+                GenerateWinderStairs(app.ActiveUIDocument.Document);
+            }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("WinderStairs",
+                    "Can't generate the winder layout because " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        ///     Implementation of IExternalEventHandler.GetName method.
+        /// </summary>
+        string IExternalEventHandler.GetName()
+        {
+            return "Revit.SDK.Samples.WinderStairs";
+        }
+
+        /// <summary>
+        ///     Implementation of IUpdater.Execute method.
+        /// </summary>
+        void IUpdater.Execute(UpdaterData data)
+        {
+            // If there is any deleted elements, this updater need to be unregistered.
+            if (data.GetDeletedElementIds().Count != 0)
+                // set the unregistered flag, 
+                // because it's not allowed to remove the executing updater.
+                m_removeTheUpdater = true;
+            // Raise the External Event
+            var exEvent = ExternalEvent.Create(this);
+            exEvent.Raise();
+        }
+
+        /// <summary>
+        ///     Implementation of IUpdater.GetAdditionalInformation method.
+        /// </summary>
+        string IUpdater.GetAdditionalInformation()
+        {
+            return "API SKETCHED WINDER";
+        }
+
+        /// <summary>
+        ///     Implementation of IUpdater.GetChangePriority method.
+        /// </summary>
+        ChangePriority IUpdater.GetChangePriority()
+        {
+            return ChangePriority.GridsLevelsReferencePlanes;
+        }
+
+        /// <summary>
+        ///     Implementation of IUpdater.GetUpdaterId method.
+        /// </summary>
+        UpdaterId IUpdater.GetUpdaterId()
+        {
+            return m_updaterId;
+        }
+
+        /// <summary>
+        ///     Implementation of IUpdater.GetUpdaterName method.
+        /// </summary>
+        string IUpdater.GetUpdaterName()
+        {
+            return "Revit.SDK.Samples.WinderStairs";
+        }
+
+        /// <summary>
+        ///     Create the winder stairs in the Document.
         /// </summary>
         /// <param name="rvtDoc">Revit Document.</param>
         private void GenerateWinderStairs(Document rvtDoc)
@@ -97,79 +168,6 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             // Create the winder
             m_winder.ControlPoints = WinderUtil.CalculateControlPoints(rvtDoc, m_curveElements);
             m_winder.Build(rvtDoc, m_drawSketch, ref m_winderRunId);
-        }
-
-        /// <summary>
-        /// Implementation of IUpdater.Execute method.
-        /// </summary>
-        void IUpdater.Execute(UpdaterData data)
-        {
-            // If there is any deleted elements, this updater need to be unregistered.
-            if (data.GetDeletedElementIds().Count != 0)
-            {
-                // set the unregistered flag, 
-                // because it's not allowed to remove the executing updater.
-                m_removeTheUpdater = true;
-            }
-            // Raise the External Event
-            var exEvent = ExternalEvent.Create(this);
-            exEvent.Raise();
-        }
-
-        /// <summary>
-        /// Implementation of IUpdater.GetAdditionalInformation method.
-        /// </summary>
-        string IUpdater.GetAdditionalInformation()
-        {
-            return "API SKETCHED WINDER";
-        }
-
-        /// <summary>
-        /// Implementation of IUpdater.GetChangePriority method.
-        /// </summary>
-        ChangePriority IUpdater.GetChangePriority()
-        {
-            return ChangePriority.GridsLevelsReferencePlanes;
-        }
-
-        /// <summary>
-        /// Implementation of IUpdater.GetUpdaterId method.
-        /// </summary>
-        UpdaterId IUpdater.GetUpdaterId()
-        {
-            return m_updaterId;
-        }
-
-        /// <summary>
-        /// Implementation of IUpdater.GetUpdaterName method.
-        /// </summary>
-        string IUpdater.GetUpdaterName()
-        {
-            return "Revit.SDK.Samples.WinderStairs";
-        }
-
-        /// <summary>
-        /// Implementation of IExternalEventHandler.Execute method.
-        /// </summary>
-        void IExternalEventHandler.Execute(UIApplication app)
-        {
-            try
-            {
-                GenerateWinderStairs(app.ActiveUIDocument.Document);
-            }
-            catch (Exception ex)
-            {
-                TaskDialog.Show("WinderStairs", 
-                    "Can't generate the winder layout because " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Implementation of IExternalEventHandler.GetName method.
-        /// </summary>
-        string IExternalEventHandler.GetName()
-        {
-            return "Revit.SDK.Samples.WinderStairs";
         }
     }
 }

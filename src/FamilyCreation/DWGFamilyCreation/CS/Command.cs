@@ -19,35 +19,39 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
+
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DWGFamilyCreation.CS
 {
     /// <summary>
-    /// To add an external command to Autodesk Revit 
-    /// the developer should implement an object that 
-    /// supports the IExternalCommand interface.
+    ///     To add an external command to Autodesk Revit
+    ///     the developer should implement an object that
+    ///     supports the IExternalCommand interface.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         /// <summary>
-        /// Revit application
+        ///     Revit application
         /// </summary>
-        UIApplication m_app;
+        private UIApplication m_app;
+
         /// <summary>
-        /// Revit document
+        ///     Revit document
         /// </summary>
-        Document m_doc;
+        private Document m_doc;
 
         public Result Execute(ExternalCommandData commandData,
-        ref string message, ElementSet elements)
+            ref string message, ElementSet elements)
         {
             try
             {
@@ -74,7 +78,7 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
                 }
 
                 // The dwg file which will be imported
-                var AssemblyDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                var AssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var DWGFile = "Desk.dwg";
                 var DWGFullPath = Path.Combine(AssemblyDirectory, DWGFile);
 
@@ -100,7 +104,7 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
         }
 
         /// <summary>
-        /// Add type parameters to the family
+        ///     Add type parameters to the family
         /// </summary>
         /// <param name="DWGFileName">Name of imported dwg file</param>
         private void AddParameters(string DWGFileName)
@@ -122,7 +126,7 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
         }
 
         /// <summary>
-        /// Get the view where the dwg file will be imported
+        ///     Get the view where the dwg file will be imported
         /// </summary>
         /// <returns>The view where the dwg file will be imported</returns>
         private View GetView()
@@ -132,13 +136,11 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
             var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
             views.AddRange(collector.OfClass(typeof(View)).ToElements());
             foreach (View v in views)
-            {
                 if (!v.IsTemplate && v.ViewType == ViewType.FloorPlan && v.Name == "Ref. Level")
                 {
                     view = v;
                     break;
                 }
-            }
 
             return view;
         }

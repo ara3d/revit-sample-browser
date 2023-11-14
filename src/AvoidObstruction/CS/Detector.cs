@@ -28,22 +28,22 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.AvoidObstruction.CS
 {
     /// <summary>
-    /// This class is used to detect the obstructions of a Line or a ray.
+    ///     This class is used to detect the obstructions of a Line or a ray.
     /// </summary>
-    class Detector
+    internal class Detector
     {
         /// <summary>
-        /// Revit Document.
+        ///     Revit Document.
         /// </summary>
-        private Document m_rvtDoc;
+        private readonly Document m_rvtDoc;
 
         /// <summary>
-        /// Revit 3D view.
+        ///     Revit 3D view.
         /// </summary>
-        private View3D m_view3d;
+        private readonly View3D m_view3d;
 
         /// <summary>
-        /// Constructor, initialize all the fields.
+        ///     Constructor, initialize all the fields.
         /// </summary>
         /// <param name="rvtDoc">Revit Document</param>
         public Detector(Document rvtDoc)
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
         }
 
         /// <summary>
-        /// Return all the obstructions which intersect with a ray given by an origin and a direction.
+        ///     Return all the obstructions which intersect with a ray given by an origin and a direction.
         /// </summary>
         /// <param name="origin">Ray's origin</param>
         /// <param name="dir">Ray's direction</param>
@@ -73,19 +73,15 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
             referenceIntersector.TargetType = FindReferenceTarget.Face;
             var obstructionsOnUnboundLine = referenceIntersector.Find(origin, dir);
             foreach (var gRef in obstructionsOnUnboundLine)
-            {
                 if (!InArray(result, gRef))
-                {
                     result.Add(gRef);
-                }
-            }
 
             result.Sort(CompareReferencesWithContext);
             return result;
         }
 
         /// <summary>
-        /// Return all the obstructions which intersect with a bound line.
+        ///     Return all the obstructions which intersect with a bound line.
         /// </summary>
         /// <param name="boundLine">Bound line</param>
         /// <returns>Obstructions intersected with the bound line</returns>
@@ -104,12 +100,8 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
                 // Judge whether the point is in the bound line or not, if the distance between the point and line
                 // is Zero, then the point is in the bound line.
                 if (boundLine.Distance(gRef.GlobalPoint) < 1e-9)
-                {
                     if (!InArray(result, gRefWithContext))
-                    {
                         result.Add(gRefWithContext);
-                    }
-                }
             }
 
             result.Sort(CompareReferencesWithContext);
@@ -117,9 +109,9 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
         }
 
         /// <summary>
-        /// Judge whether a given Reference is in a Reference list.
-        /// Give two References, if their Proximity and Element Id is equal, 
-        /// we say the two reference is equal.
+        ///     Judge whether a given Reference is in a Reference list.
+        ///     Give two References, if their Proximity and Element Id is equal,
+        ///     we say the two reference is equal.
         /// </summary>
         /// <param name="arr">Reference Array</param>
         /// <param name="entry">Reference</param>
@@ -127,33 +119,23 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
         private bool InArray(List<ReferenceWithContext> arr, ReferenceWithContext entry)
         {
             foreach (var tmp in arr)
-            {
                 if (Math.Abs(tmp.Proximity - entry.Proximity) < 1e-9 &&
                     tmp.GetReference().ElementId == entry.GetReference().ElementId)
-                {
                     return true;
-                }
-            }
             return false;
         }
 
         /// <summary>
-        /// Used to compare two references, just compare their ProximityParameter.
+        ///     Used to compare two references, just compare their ProximityParameter.
         /// </summary>
         /// <param name="a">First Reference to compare</param>
         /// <param name="b">Second Reference to compare</param>
         /// <returns>-1, 0, or 1</returns>
         private int CompareReferencesWithContext(ReferenceWithContext a, ReferenceWithContext b)
         {
-            if (a.Proximity > b.Proximity)
-            {
-                return 1;
-            }
+            if (a.Proximity > b.Proximity) return 1;
 
-            if (a.Proximity < b.Proximity)
-            {
-                return -1;
-            }
+            if (a.Proximity < b.Proximity) return -1;
 
             return 0;
         }

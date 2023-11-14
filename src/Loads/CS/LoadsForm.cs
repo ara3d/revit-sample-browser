@@ -29,10 +29,10 @@ namespace Revit.SDK.Samples.Loads.CS
     public partial class LoadsForm : Form
     {
         // Private members
-        Loads m_dataBuffer;   // A reference of Loads.
+        private readonly Loads m_dataBuffer; // A reference of Loads.
 
         /// <summary>
-        /// Constructor of LoadsForm
+        ///     Constructor of LoadsForm
         /// </summary>
         /// <param name="dataBuffer"> A reference of Loads class </param>
         public LoadsForm(Loads dataBuffer)
@@ -41,11 +41,11 @@ namespace Revit.SDK.Samples.Loads.CS
             InitializeComponent();
 
             //Get a reference of LoadsForm
-            m_dataBuffer = dataBuffer; 
+            m_dataBuffer = dataBuffer;
         }
 
         /// <summary>
-        /// Initialize the data on the form
+        ///     Initialize the data on the form
         /// </summary>
         private void LoadsForm_Load(object sender, EventArgs e)
         {
@@ -54,10 +54,10 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // Initialize the data of LoadCombinationsTabPage
             InitializeLoadCombinationPage();
-        }     
+        }
 
         /// <summary>
-        /// Respond the ok button click event.
+        ///     Respond the ok button click event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -68,7 +68,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Respond the cancel button click event.
+        ///     Respond the cancel button click event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

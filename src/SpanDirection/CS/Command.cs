@@ -22,21 +22,23 @@
 
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SpanDirection.CS
 {
     /// <summary>
-    /// Get Span direction of Floor and all the SpanDirection Symbols
+    ///     Get Span direction of Floor and all the SpanDirection Symbols
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Document m_docment;
-                public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var application = commandData.Application;
             m_docment = application.ActiveUIDocument.Document;
@@ -52,18 +54,13 @@ namespace Revit.SDK.Samples.SpanDirection.CS
                 // get the selected slab and show its span direction
                 var elementSet = new ElementSet();
                 foreach (var elementId in application.ActiveUIDocument.Selection.GetElementIds())
-                {
-                   elementSet.Insert(application.ActiveUIDocument.Document.GetElement(elementId));
-                }
+                    elementSet.Insert(application.ActiveUIDocument.Document.GetElement(elementId));
                 var elemIter = elementSet.ForwardIterator();
                 elemIter.Reset();
                 while (elemIter.MoveNext())
                 {
                     var floor = elemIter.Current as Floor;
-                    if (floor != null)
-                    {
-                        GetSpanDirectionAndSymobls(floor);
-                    }
+                    if (floor != null) GetSpanDirectionAndSymobls(floor);
                 }
             }
             catch (Exception ex)
@@ -71,22 +68,23 @@ namespace Revit.SDK.Samples.SpanDirection.CS
                 message = ex.ToString();
                 return Result.Failed;
             }
+
             return Result.Succeeded;
         }
-        
+
 
         /// <summary>
-        /// Get SpanDirection and SpanDirectionSymobols of Floor
+        ///     Get SpanDirection and SpanDirectionSymobols of Floor
         /// </summary>
         /// <param name="floor"></param>
-        void GetSpanDirectionAndSymobls(Floor floor)
+        private void GetSpanDirectionAndSymobls(Floor floor)
         {
             if (null != floor)
             {
                 // get SpanDirection angle of Floor(Slab)
                 // The angle returned is in radians. An exception will be thrown if the floor
                 // is non structural.
-                var spanDirAngle = "Span direction angle: " + floor.SpanDirectionAngle.ToString() + "\r\n";
+                var spanDirAngle = "Span direction angle: " + floor.SpanDirectionAngle + "\r\n";
 
                 // get span direction symbols of Floor(Slab)
                 var symbols = "Span direction symbols: \r\n\t";
@@ -97,10 +95,7 @@ namespace Revit.SDK.Samples.SpanDirection.CS
                 foreach (var eid in symbolArray)
                 {
                     var elem = m_docment.GetElement(eid);
-                    if (elem != null)
-                    {
-                        symbols += (m_docment.GetElement(elem.GetTypeId()) as ElementType).Name + "\r\n";
-                    }
+                    if (elem != null) symbols += (m_docment.GetElement(elem.GetTypeId()) as ElementType).Name + "\r\n";
                 }
 
                 TaskDialog.Show("Revit Direction", spanDirAngle + symbols, TaskDialogCommonButtons.Ok);

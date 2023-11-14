@@ -19,15 +19,16 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
 using System.Windows.Forms;
-
 
 namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
 {
     public partial class OptionsAndAnalysisForm : Form
     {
-        EnergyAnalysisModel m_model;
+        private readonly EnergyAnalysisModel m_model;
+
         public OptionsAndAnalysisForm(EnergyAnalysisModel analysisModel)
         {
             m_model = analysisModel;
@@ -52,13 +53,11 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         }
 
         /// <summary>
-        /// Set default Tier as SecondLevelBoundaries
+        ///     Set default Tier as SecondLevelBoundaries
         /// </summary>
         private void InitializeOptionsUI()
         {
             comboBoxTier.SelectedIndex = 3;
         }
     }
-
-
 }

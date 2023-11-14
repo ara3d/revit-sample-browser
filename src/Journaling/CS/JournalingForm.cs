@@ -23,26 +23,25 @@
 
 using System;
 using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.Journaling.CS
 {
-
     /// <summary>
-    /// The form used to collect the support data for wall creation and store in journal 
+    ///     The form used to collect the support data for wall creation and store in journal
     /// </summary>
-    public partial class JournalingForm : System.Windows.Forms.Form
+    public partial class JournalingForm : Form
     {
         // Private members
-        const double Precision = 0.00001;   //precision when judge whether two doubles are equal
-        Journaling m_dataBuffer;    // A reference of Journaling.
+        private const double Precision = 0.00001; //precision when judge whether two doubles are equal
+        private readonly Journaling m_dataBuffer; // A reference of Journaling.
 
 
         // Methods
         /// <summary>
-        /// Constructor of JournalingForm
+        ///     Constructor of JournalingForm
         /// </summary>
         /// <param name="dataBuffer">A reference of Journaling class</param>
         public JournalingForm(Journaling dataBuffer)
@@ -62,15 +61,15 @@ namespace Revit.SDK.Samples.Journaling.CS
 
 
         /// <summary>
-        /// The okButton click event method,
-        /// this method collect the data, and pass them to the journaling class
+        ///     The okButton click event method,
+        ///     this method collect the data, and pass them to the journaling class
         /// </summary>
         private void okButton_Click(object sender, EventArgs e)
         {
             // Get the support data from the UI controls
-            var startPoint = startPointUserControl.GetPointData();  // start point 
-            var endPoint = endPointUserControl.GetPointData();      // end point
-            if (startPoint.Equals(endPoint))    // Don't allow start point equals end point
+            var startPoint = startPointUserControl.GetPointData(); // start point 
+            var endPoint = endPointUserControl.GetPointData(); // end point
+            if (startPoint.Equals(endPoint)) // Don't allow start point equals end point
             {
                 TaskDialog.Show("Revit", "Start point should not equal end point.");
                 return;
@@ -83,15 +82,15 @@ namespace Revit.SDK.Samples.Journaling.CS
                 return;
             }
 
-            var level = levelComboBox.SelectedItem as Level;  // level information
-            if (null == level)  // assert it isn't null
+            var level = levelComboBox.SelectedItem as Level; // level information
+            if (null == level) // assert it isn't null
             {
                 TaskDialog.Show("Revit", "The selected level is null or incorrect.");
                 return;
             }
 
-            var type = typeComboBox.SelectedItem as WallType;  // wall type
-            if (null == type)    // assert it isn't null
+            var type = typeComboBox.SelectedItem as WallType; // wall type
+            if (null == type) // assert it isn't null
             {
                 TaskDialog.Show("Revit", "The selected wall type is null or incorrect.");
                 return;
@@ -107,7 +106,7 @@ namespace Revit.SDK.Samples.Journaling.CS
 
 
         /// <summary>
-        /// The cancelButton click event method
+        ///     The cancelButton click event method
         /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {

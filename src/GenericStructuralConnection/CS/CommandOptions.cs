@@ -23,44 +23,52 @@
 namespace Revit.SDK.Samples.GenericStructuralConnection.CS
 {
     /// <summary>
-    /// Enum for user commands. 
+    ///     Enum for user commands.
     /// </summary>
     public enum CommandOption
     {
         /// <summary>
-        /// Create generic connection. 
+        ///     Create generic connection.
         /// </summary>
         CreateGeneric,
+
         /// <summary>
-        /// Delete generic connection. 
+        ///     Delete generic connection.
         /// </summary>
         DeleteGeneric,
+
         /// <summary>
-        /// Read generic connection. 
+        ///     Read generic connection.
         /// </summary>
         ReadGeneric,
+
         /// <summary>
-        /// Update generic connection. 
+        ///     Update generic connection.
         /// </summary>
         UpdateGeneric,
+
         /// <summary>
-        /// Create detailed connection. 
+        ///     Create detailed connection.
         /// </summary>
         CreateDetailed,
+
         /// <summary>
-        /// Change detailed connection. 
+        ///     Change detailed connection.
         /// </summary>
         ChangeDetailed,
+
         /// <summary>
-        /// Copy detailed connection. 
+        ///     Copy detailed connection.
         /// </summary>
         CopyDetailed,
+
         /// <summary>
-        /// Match properties of detailed connections. 
+        ///     Match properties of detailed connections.
         /// </summary>
         MatchPropDetailed,
+
         /// <summary>
-        /// Reset detailed connection. 
+        ///     Reset detailed connection.
         /// </summary>
         ResetDetailed
     }

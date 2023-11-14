@@ -29,82 +29,74 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.InPlaceMembers.CS
 {
     /// <summary>
-    /// trigger when view data updated
+    ///     trigger when view data updated
     /// </summary>
     public delegate void UpdateViewDelegate();
 
     /// <summary>
-    /// interface as the datasource of view, include nececessary members
+    ///     interface as the datasource of view, include nececessary members
     /// </summary>
     public interface IGraphicsData
     {
         /// <summary>
-        /// 2D lines
+        ///     region of 3D view data
+        /// </summary>
+        RectangleF Region { get; }
+
+        /// <summary>
+        ///     2D lines
         /// </summary>
         /// <returns></returns>
         List<PointF[]> PointCurves();
 
         /// <summary>
-        /// view data update
+        ///     view data update
         /// </summary>
         event UpdateViewDelegate UpdateViewEvent;
-
-        /// <summary>
-        /// region of 3D view data
-        /// </summary>
-        RectangleF Region
-        {
-            get;
-        }
     }
 
     /// <summary>
-    /// abstract class include general members
+    ///     abstract class include general members
     /// </summary>
-    public abstract class GraphicsDataBase:IGraphicsData
+    public abstract class GraphicsDataBase : IGraphicsData
     {
         /// <summary>
-        ///3D max point after transfered 
-        /// </summary>
-        protected XYZ m_transferedMax;    
-
-        /// <summary>
-        ///3D min point after transfered 
-        /// </summary>
-        protected XYZ m_transferedMin;    
-
-        /// <summary>
-        /// origin max define
-        /// </summary>
-        protected XYZ m_originMax = new XYZ (double.MinValue, double.MinValue, double.MinValue);    
-
-        /// <summary>
-        /// origin min define
-        /// </summary>
-        protected XYZ m_originMin = new XYZ (double.MaxValue, double.MaxValue, double.MaxValue);
-
-        /// <summary>
-        /// origin define
-        /// </summary>
-        protected double[,] m_origin = {{ 1.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 1.0 } };
-
-        /// <summary>
-        ///minimum value of the region box's edge 
+        ///     minimum value of the region box's edge
         /// </summary>
         public const float MINEDGElENGTH = 1.0f;
 
         /// <summary>
-        /// default angle when rotate around X,Y,Z axis
+        ///     default angle when rotate around X,Y,Z axis
         /// </summary>
-        public const double ROTATEANGLE = Math.PI / 90;    
+        public const double ROTATEANGLE = Math.PI / 90;
 
         /// <summary>
-        /// update view event
+        ///     origin define
         /// </summary>
-        public virtual event UpdateViewDelegate UpdateViewEvent;
-        
+        protected double[,] m_origin = { { 1.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 1.0 } };
+
         /// <summary>
-        /// constructor
+        ///     origin max define
+        /// </summary>
+        protected XYZ m_originMax = new XYZ(double.MinValue, double.MinValue, double.MinValue);
+
+        /// <summary>
+        ///     origin min define
+        /// </summary>
+        protected XYZ m_originMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
+
+        /// <summary>
+        ///     3D max point after transfered
+        /// </summary>
+        protected XYZ m_transferedMax;
+
+        /// <summary>
+        ///     3D min point after transfered
+        /// </summary>
+        protected XYZ m_transferedMin;
+
+        /// <summary>
+        ///     constructor
         /// </summary>
         public GraphicsDataBase()
         {
@@ -112,34 +104,18 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// initialize some member data
+        ///     update view event
         /// </summary>
-        protected virtual void Initialize()
-        {    
-            var INITANGLE = Math.PI / 4;
-
-            RotateX(ref m_origin, INITANGLE);
-            RotateY(ref m_origin, INITANGLE);
-            m_transferedMax = new XYZ (double.MinValue, double.MinValue, double.MinValue);
-            m_transferedMin = new XYZ (double.MaxValue, double.MaxValue, double.MaxValue);
-        }
+        public virtual event UpdateViewDelegate UpdateViewEvent;
 
         /// <summary>
-        /// trigger updata view event
-        /// </summary>
-        public virtual void UpdataData()
-        {
-            UpdateViewEvent();
-        }
-
-        /// <summary>
-        /// point curves function
+        ///     point curves function
         /// </summary>
         /// <returns>the points list of curves</returns>
         public abstract List<PointF[]> PointCurves();
 
         /// <summary>
-        /// rectangular region of 3D view data
+        ///     rectangular region of 3D view data
         /// </summary>
         public RectangleF Region
         {
@@ -151,14 +127,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 var minX = -(width / 2);
                 var minY = -(height / 2);
 
-                if (width < 1)
-                {
-                    width = 1;
-                }
-                if (height < 1)
-                {
-                    height = 1;
-                }
+                if (width < 1) width = 1;
+                if (height < 1) height = 1;
 
                 var rec = new RectangleF(minX, minY, width, height);
                 return rec;
@@ -166,23 +136,41 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// rotate around Z axis with default angle
+        ///     initialize some member data
+        /// </summary>
+        protected void Initialize()
+        {
+            var INITANGLE = Math.PI / 4;
+
+            RotateX(ref m_origin, INITANGLE);
+            RotateY(ref m_origin, INITANGLE);
+            m_transferedMax = new XYZ(double.MinValue, double.MinValue, double.MinValue);
+            m_transferedMin = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
+        }
+
+        /// <summary>
+        ///     trigger updata view event
+        /// </summary>
+        public virtual void UpdataData()
+        {
+            UpdateViewEvent();
+        }
+
+        /// <summary>
+        ///     rotate around Z axis with default angle
         /// </summary>
         /// <param name="direction">minus or positive angle</param>
         public void RotateZ(bool direction)
         {
             var angle = ROTATEANGLE;
-            if (!direction)
-            {
-                angle = -ROTATEANGLE;
-            }
+            if (!direction) angle = -ROTATEANGLE;
 
             RotateZ(ref m_origin, angle);
             UpdataData();
         }
 
         /// <summary>
-        /// rotate 3*3 matrix around Z axis 
+        ///     rotate 3*3 matrix around Z axis
         /// </summary>
         /// <param name="origin">matrix to rotate</param>
         /// <param name="angle"></param>
@@ -196,23 +184,20 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// rotate around Y axis with default angle
+        ///     rotate around Y axis with default angle
         /// </summary>
         /// <param name="direction">minus or positive angle</param>
         public void RotateY(bool direction)
         {
             var angle = ROTATEANGLE;
-            if (!direction)
-            {
-                angle = -ROTATEANGLE;
-            }
+            if (!direction) angle = -ROTATEANGLE;
 
             RotateY(ref m_origin, angle);
             UpdataData();
         }
 
         /// <summary>
-        /// rotate 3*3 matrix around Y axis 
+        ///     rotate 3*3 matrix around Y axis
         /// </summary>
         /// <param name="origin">matrix to rotate</param>
         /// <param name="angle"></param>
@@ -226,23 +211,20 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// rotate around X axis with default angle
+        ///     rotate around X axis with default angle
         /// </summary>
         /// <param name="direction">minus or positive angle</param>
         public void RotateX(bool direction)
         {
             var angle = ROTATEANGLE;
-            if (!direction)
-            {
-                angle = -ROTATEANGLE;
-            }
+            if (!direction) angle = -ROTATEANGLE;
 
-            RotateX(ref m_origin ,angle);
+            RotateX(ref m_origin, angle);
             UpdataData();
         }
 
         /// <summary>
-        /// rotate 3*3 matrix around X axis 
+        ///     rotate 3*3 matrix around X axis
         /// </summary>
         /// <param name="origin">matrix to rotate</param>
         /// <param name="angle"></param>
@@ -257,23 +239,18 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
     }
 
     /// <summary>
-    /// datasource that can bind to PictureBox3D
+    ///     datasource that can bind to PictureBox3D
     /// </summary>
     public class GraphicsData : GraphicsDataBase
     {
-        List<List<XYZ>> m_originCurves;
-        List<List<XYZ>> m_transferedCurves;
-        List<PointF[]> m_curves2D;
+        private readonly List<PointF[]> m_curves2D;
+        private readonly List<List<XYZ>> m_originCurves;
+        private readonly List<List<XYZ>> m_transferedCurves;
 
         /// <summary>
-        /// update view event
+        ///     constructor to initialize member data
         /// </summary>
-        public override event UpdateViewDelegate UpdateViewEvent;
-
-        /// <summary>
-        /// constructor to initialize member data
-        /// </summary>
-        public GraphicsData() : base()
+        public GraphicsData()
         {
             m_originCurves = new List<List<XYZ>>();
             m_transferedCurves = new List<List<XYZ>>();
@@ -281,7 +258,12 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// curves array
+        ///     update view event
+        /// </summary>
+        public override event UpdateViewDelegate UpdateViewEvent;
+
+        /// <summary>
+        ///     curves array
         /// </summary>
         /// <returns></returns>
         public override List<PointF[]> PointCurves()
@@ -290,7 +272,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// insert curves array into datasource
+        ///     insert curves array into datasource
         /// </summary>
         /// <param name="points">points compose the curve</param>
         public void InsertCurve(List<XYZ> points)
@@ -304,29 +286,23 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         }
 
         /// <summary>
-        /// update 3D view data
+        ///     update 3D view data
         /// </summary>
         public override void UpdataData()
         {
             m_transferedMin = TransferRotate(m_originMin);
-            m_transferedMax = TransferRotate(m_originMax);    
-        
+            m_transferedMax = TransferRotate(m_originMax);
+
             m_transferedCurves.Clear();
             m_curves2D.Clear();
 
-            foreach (var points in m_originCurves)
-            {
-                SynChroData(points);
-            }
+            foreach (var points in m_originCurves) SynChroData(points);
 
-            if (null != UpdateViewEvent)
-            {
-                UpdateViewEvent();
-            }
+            if (null != UpdateViewEvent) UpdateViewEvent();
         }
 
         /// <summary>
-        /// update 3D view curve data with origin data and transfer matrix
+        ///     update 3D view curve data with origin data and transfer matrix
         /// </summary>
         /// <param name="points"></param>
         private void SynChroData(List<XYZ> points)
@@ -334,13 +310,14 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             var size = points.Count;
             var points2D = new PointF[size];
             var transferedPoints = new List<XYZ>();
-            for(var i = 0; i<size;i++)
+            for (var i = 0; i < size; i++)
             {
                 var point = points[i];
                 var temp = TransferRotate(point);
                 var transferedPoint = TransferMove(temp);
                 points2D[i] = new PointF((float)transferedPoint.X, (float)transferedPoint.Y);
             }
+
             m_transferedCurves.Add(transferedPoints);
             m_curves2D.Add(points2D);
         }
@@ -363,7 +340,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
 
 
         /// <summary>
-        /// rotate points with origion matrix
+        ///     rotate points with origion matrix
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
@@ -377,18 +354,17 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 x * m_origin[0, 0] + y * m_origin[0, 1] + z * m_origin[0, 2],
                 x * m_origin[1, 0] + y * m_origin[1, 1] + z * m_origin[1, 2],
                 x * m_origin[2, 0] + y * m_origin[2, 1] + z * m_origin[2, 2]);
-
         }
 
         /// <summary>
-        /// move the point so that the center of the curves in 3D view is origin
+        ///     move the point so that the center of the curves in 3D view is origin
         /// </summary>
         /// <param name="point">points to be moved</param>
         /// <returns>moved result</returns>
         private XYZ TransferMove(XYZ point)
         {
             //transform the origin of the old coordinate system in the new coordinate system
-            
+
             return new XYZ(
                 point.X - (m_transferedMax.X + m_transferedMin.X) / 2,
                 point.Y - (m_transferedMax.Y + m_transferedMin.Y) / 2,
@@ -397,12 +373,12 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
     }
 
     /// <summary>
-    /// utility class provide arithmetic of matrix
+    ///     utility class provide arithmetic of matrix
     /// </summary>
     public class MatrixArith
     {
         /// <summary>
-        /// multiply cross two matrix
+        ///     multiply cross two matrix
         /// </summary>
         /// <param name="m1">left matrix</param>
         /// <param name="m2">right matrix</param>
@@ -412,15 +388,9 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             var result = new double[3, 3];
 
             for (var i = 0; i < 3; i++)
-            {
-                for (var j = 0; j < 3; j++)
-                {
-                    for (var k = 0; k < 3; k++)
-                    {
-                        result[i, j] += m1[i, k] * m2[k, j];
-                    }                    
-                }
-            }
+            for (var j = 0; j < 3; j++)
+            for (var k = 0; k < 3; k++)
+                result[i, j] += m1[i, k] * m2[k, j];
 
             return result;
         }

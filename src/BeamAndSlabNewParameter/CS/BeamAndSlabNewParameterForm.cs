@@ -21,30 +21,37 @@
 //
 
 
+using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 {
     /// <summary>
-    /// User Interface.
+    ///     User Interface.
     /// </summary>
     public class BeamAndSlabParametersForm : Form
     {
         private Button addParameterButton;
-        private Button  displayValueButton;
-        private Button  exitButton;
+        private Label attributeValueLabel;
         private ListBox attributeValueListBox;
-        private Label    attributeValueLabel;
-        private Button findButton;
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.Container components = null;
 
         /// <summary>
-        /// constructor
+        ///     Required designer variable.
+        /// </summary>
+        private readonly Container components = null;
+
+        private Button displayValueButton;
+        private Button exitButton;
+        private Button findButton;
+
+        // an instance of Command class
+        private readonly Command m_dataBuffer;
+
+        /// <summary>
+        ///     constructor
         /// </summary>
         /// <param name="dataBuffer"></param>
         public BeamAndSlabParametersForm(Command dataBuffer)
@@ -54,124 +61,116 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         }
 
         /// <summary>
-        /// Clean up any resources being used.
+        ///     Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
-            {
-                if(components != null)
-                {
+            if (disposing)
+                if (components != null)
                     components.Dispose();
-                }
-            }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
-                /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// <summary>
+        ///     Required method for Designer support - do not modify
+        ///     the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.addParameterButton = new System.Windows.Forms.Button();
-            this.displayValueButton = new System.Windows.Forms.Button();
-            this.exitButton = new System.Windows.Forms.Button();
-            this.attributeValueListBox = new System.Windows.Forms.ListBox();
-            this.attributeValueLabel = new System.Windows.Forms.Label();
-            this.findButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            addParameterButton = new Button();
+            displayValueButton = new Button();
+            exitButton = new Button();
+            attributeValueListBox = new ListBox();
+            attributeValueLabel = new Label();
+            findButton = new Button();
+            SuspendLayout();
             // 
             // addParameterButton
             // 
-            this.addParameterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addParameterButton.Location = new System.Drawing.Point(311, 65);
-            this.addParameterButton.Name = "addParameterButton";
-            this.addParameterButton.Size = new System.Drawing.Size(105, 26);
-            this.addParameterButton.TabIndex = 1;
-            this.addParameterButton.Text = "&Add";
-            this.addParameterButton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.addParameterButton.Click += new System.EventHandler(this.addParameterButton_Click);
+            addParameterButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            addParameterButton.Location = new Point(311, 65);
+            addParameterButton.Name = "addParameterButton";
+            addParameterButton.Size = new Size(105, 26);
+            addParameterButton.TabIndex = 1;
+            addParameterButton.Text = "&Add";
+            addParameterButton.TextAlign = ContentAlignment.TopCenter;
+            addParameterButton.Click += addParameterButton_Click;
             // 
             // displayValueButton
             // 
-            this.displayValueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayValueButton.Location = new System.Drawing.Point(311, 111);
-            this.displayValueButton.Name = "displayValueButton";
-            this.displayValueButton.Size = new System.Drawing.Size(105, 26);
-            this.displayValueButton.TabIndex = 2;
-            this.displayValueButton.Text = "&Display Value";
-            this.displayValueButton.Click += new System.EventHandler(this.displayValueButton_Click);
+            displayValueButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            displayValueButton.Location = new Point(311, 111);
+            displayValueButton.Name = "displayValueButton";
+            displayValueButton.Size = new Size(105, 26);
+            displayValueButton.TabIndex = 2;
+            displayValueButton.Text = "&Display Value";
+            displayValueButton.Click += displayValueButton_Click;
             // 
             // exitButton
             // 
-            this.exitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(311, 203);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(105, 26);
-            this.exitButton.TabIndex = 4;
-            this.exitButton.Text = "&Exit";
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            exitButton.DialogResult = DialogResult.Cancel;
+            exitButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            exitButton.Location = new Point(311, 203);
+            exitButton.Name = "exitButton";
+            exitButton.Size = new Size(105, 26);
+            exitButton.TabIndex = 4;
+            exitButton.Text = "&Exit";
+            exitButton.Click += exitButton_Click;
             // 
             // attributeValueListBox
             // 
-            this.attributeValueListBox.ItemHeight = 16;
-            this.attributeValueListBox.Location = new System.Drawing.Point(19, 46);
-            this.attributeValueListBox.Name = "attributeValueListBox";
-            this.attributeValueListBox.Size = new System.Drawing.Size(269, 228);
-            this.attributeValueListBox.TabIndex = 18;
-            this.attributeValueListBox.TabStop = false;
+            attributeValueListBox.ItemHeight = 16;
+            attributeValueListBox.Location = new Point(19, 46);
+            attributeValueListBox.Name = "attributeValueListBox";
+            attributeValueListBox.Size = new Size(269, 228);
+            attributeValueListBox.TabIndex = 18;
+            attributeValueListBox.TabStop = false;
             // 
             // attributeValueLabel
             // 
-            this.attributeValueLabel.Location = new System.Drawing.Point(19, 9);
-            this.attributeValueLabel.Name = "attributeValueLabel";
-            this.attributeValueLabel.Size = new System.Drawing.Size(279, 37);
-            this.attributeValueLabel.TabIndex = 19;
-            this.attributeValueLabel.Text = "Display the value of the Unique ID if present for all the selected elements";
+            attributeValueLabel.Location = new Point(19, 9);
+            attributeValueLabel.Name = "attributeValueLabel";
+            attributeValueLabel.Size = new Size(279, 37);
+            attributeValueLabel.TabIndex = 19;
+            attributeValueLabel.Text = "Display the value of the Unique ID if present for all the selected elements";
             // 
             // findButton
             // 
-            this.findButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.findButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.findButton.Location = new System.Drawing.Point(311, 157);
-            this.findButton.Name = "findButton";
-            this.findButton.Size = new System.Drawing.Size(105, 26);
-            this.findButton.TabIndex = 3;
-            this.findButton.Text = "&Find";
-            this.findButton.Click += new System.EventHandler(this.findButton_Click);
+            findButton.DialogResult = DialogResult.OK;
+            findButton.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            findButton.Location = new Point(311, 157);
+            findButton.Name = "findButton";
+            findButton.Size = new Size(105, 26);
+            findButton.TabIndex = 3;
+            findButton.Text = "&Find";
+            findButton.Click += findButton_Click;
             // 
             // BeamAndSlabParametersForm
             // 
-            this.CancelButton = this.exitButton;
-            this.ClientSize = new System.Drawing.Size(438, 292);
-            this.Controls.Add(this.attributeValueLabel);
-            this.Controls.Add(this.attributeValueListBox);
-            this.Controls.Add(this.addParameterButton);
-            this.Controls.Add(this.findButton);
-            this.Controls.Add(this.displayValueButton);
-            this.Controls.Add(this.exitButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "BeamAndSlabParametersForm";
-            this.ShowInTaskbar = false;
-            this.Text = "Beam and Slab New Parameters";
-            this.ResumeLayout(false);
-
+            CancelButton = exitButton;
+            ClientSize = new Size(438, 292);
+            Controls.Add(attributeValueLabel);
+            Controls.Add(attributeValueListBox);
+            Controls.Add(addParameterButton);
+            Controls.Add(findButton);
+            Controls.Add(displayValueButton);
+            Controls.Add(exitButton);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "BeamAndSlabParametersForm";
+            ShowInTaskbar = false;
+            Text = "Beam and Slab New Parameters";
+            ResumeLayout(false);
         }
-            
-        // an instance of Command class
-        Command m_dataBuffer;
 
         /// <summary>
-        /// Call SetNewParameterToBeamsAndSlabs function 
-        /// which is belongs to BeamAndSlabParameters class
+        ///     Call SetNewParameterToBeamsAndSlabs function
+        ///     which is belongs to BeamAndSlabParameters class
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addParameterButton_Click(object sender, System.EventArgs e)
+        private void addParameterButton_Click(object sender, EventArgs e)
         {
             var successAddParameter = m_dataBuffer.SetNewParameterToBeamsAndSlabs();
 
@@ -187,28 +186,26 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                 m_dataBuffer.SetValueToUniqueIDParameter();
                 TaskDialog.Show("Revit", "Unique ID parameter exist");
             }
-        }    
-        
-        /// <summary>
-        /// Call SetValueToUniqueIDParameter function 
-        /// which is belongs to BeamAndSlabNewParameters class
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void findButton_Click(object sender, System.EventArgs e)
-        {
-            if (null != attributeValueListBox.SelectedItem)
-            {
-                m_dataBuffer.FindElement(attributeValueListBox.SelectedItem.ToString());
-            }
         }
 
         /// <summary>
-        /// Call SendValueToListBox function which is belongs to BeamAndSlabNewParameters class
+        ///     Call SetValueToUniqueIDParameter function
+        ///     which is belongs to BeamAndSlabNewParameters class
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void displayValueButton_Click(object sender, System.EventArgs e)
+        private void findButton_Click(object sender, EventArgs e)
+        {
+            if (null != attributeValueListBox.SelectedItem)
+                m_dataBuffer.FindElement(attributeValueListBox.SelectedItem.ToString());
+        }
+
+        /// <summary>
+        ///     Call SendValueToListBox function which is belongs to BeamAndSlabNewParameters class
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void displayValueButton_Click(object sender, EventArgs e)
         {
             attributeValueListBox.DataSource = m_dataBuffer.SendValueToListBox();
 
@@ -225,11 +222,11 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         }
 
         /// <summary>
-        /// Close this form
+        ///     Close this form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void exitButton_Click(object sender, System.EventArgs e)
+        private void exitButton_Click(object sender, EventArgs e)
         {
             Close();
         }

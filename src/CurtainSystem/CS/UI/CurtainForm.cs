@@ -22,25 +22,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
+using Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem;
 using Revit.SDK.Samples.CurtainSystem.CS.Data;
+using Revit.SDK.Samples.CurtainSystem.CS.Properties;
 
 namespace Revit.SDK.Samples.CurtainSystem.CS.UI
 {
     /// <summary>
-    /// the main window form for UI operations
+    ///     the main window form for UI operations
     /// </summary>
     public partial class CurtainForm : Form
     {
         // the document containing all the data used in the sample
-        MyDocument m_mydocument;
+        private readonly MyDocument m_mydocument;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="mydoc">
-        /// the data used in the sample
+        ///     the data used in the sample
         /// </param>
         public CurtainForm(MyDocument mydoc)
         {
@@ -54,7 +57,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         }
 
         /// <summary>
-        /// initialize some controls manually
+        ///     initialize some controls manually
         /// </summary>
         private void InitializeCustomComponent()
         {
@@ -64,37 +67,35 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         }
 
         /// <summary>
-        /// register the customized events
+        ///     register the customized events
         /// </summary>
         private void RegisterEvents()
         {
-            m_mydocument.FatalErrorEvent += new MyDocument.FatalErrorHandler(m_document_FatalErrorEvent);
-            m_mydocument.SystemData.CurtainSystemChanged += new CurtainSystem.SystemData.CurtainSystemChangedHandler(m_document_SystemData_CurtainSystemChanged);
+            m_mydocument.FatalErrorEvent += m_document_FatalErrorEvent;
+            m_mydocument.SystemData.CurtainSystemChanged += m_document_SystemData_CurtainSystemChanged;
             // moniter the sample message change status
-            m_mydocument.MessageChanged += new MyDocument.MessageChangedHandler(m_document_MessageChanged);
+            m_mydocument.MessageChanged += m_document_MessageChanged;
         }
 
         /// <summary>
-        /// Fatal error occurs, close the sample dialog directly
+        ///     Fatal error occurs, close the sample dialog directly
         /// </summary>
         /// <param name="errorMsg">
-        /// the error hint shown to user
+        ///     the error hint shown to user
         /// </param>
-        void m_document_FatalErrorEvent(string errorMsg)
+        private void m_document_FatalErrorEvent(string errorMsg)
         {
             // hang the sample and shown the error hint to users
-            var result = TaskDialog.Show(Properties.Resources.TXT_DialogTitle, errorMsg, TaskDialogCommonButtons.Ok, TaskDialogResult.Ok);
+            var result = TaskDialog.Show(Resources.TXT_DialogTitle, errorMsg, TaskDialogCommonButtons.Ok,
+                TaskDialogResult.Ok);
             // the user has read the hint and clicked the "OK" button, close the dialog
-            if (TaskDialogResult.Ok == result)
-            {
-                Close();
-            }
+            if (TaskDialogResult.Ok == result) Close();
         }
 
         /// <summary>
-        /// curtain system changed(added/removed), refresh the lists
+        ///     curtain system changed(added/removed), refresh the lists
         /// </summary>
-        void m_document_SystemData_CurtainSystemChanged()
+        private void m_document_SystemData_CurtainSystemChanged()
         {
             // clear the out-of-date values
             csListBox.Items.Clear();
@@ -115,10 +116,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
                 return;
             }
 
-            foreach (var info in csInfos)
-            {
-                csListBox.Items.Add(info);
-            }
+            foreach (var info in csInfos) csListBox.Items.Add(info);
 
             // activate the last one
             var csInfo = csInfos[csInfos.Count - 1];
@@ -132,39 +130,36 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
                 addCGButton.Enabled = true;
                 removeCGButton.Enabled = true;
             }
+
             Show();
         }
 
         /// <summary>
-        /// update the status hints in the status strip
+        ///     update the status hints in the status strip
         /// </summary>
-        void m_document_MessageChanged()
+        private void m_document_MessageChanged()
         {
             //if it's an error / warning message, set the color of the text to red
             var message = m_mydocument.Message;
-            if (true == message.Value)
-            {
-                operationStatusLabel.ForeColor = System.Drawing.Color.Red;
-            }
+            if (message.Value)
+                operationStatusLabel.ForeColor = Color.Red;
             // it's a common hint message, set the color to black
             else
-            {
-                operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            }
+                operationStatusLabel.ForeColor = Color.Black;
             operationStatusLabel.Text = message.Key;
             statusStrip.Refresh();
         }
 
         /// <summary>
-        /// "Create curtain system" button clicked, hide the main form,
-        /// pop up the create curtain system dialog to let user add a new curtain system.
-        /// After the curtain system created, close the dialog and show the main form again
+        ///     "Create curtain system" button clicked, hide the main form,
+        ///     pop up the create curtain system dialog to let user add a new curtain system.
+        ///     After the curtain system created, close the dialog and show the main form again
         /// </summary>
         /// <param name="sender">
-        /// object who sent this event
+        ///     object who sent this event
         /// </param>
         /// <param name="e">
-        /// event args
+        ///     event args
         /// </param>
         private void createCSButton_Click(object sender, EventArgs e)
         {
@@ -178,13 +173,13 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         }
 
         /// <summary>
-        /// delete the checked curtain systems in  the curtain system list box
+        ///     delete the checked curtain systems in  the curtain system list box
         /// </summary>
         /// <param name="sender">
-        /// object who sent this event 
+        ///     object who sent this event
         /// </param>
-        /// <param name="e"> 
-        /// event args 
+        /// <param name="e">
+        ///     event args
         /// </param>
         private void deleteCSButton_Click(object sender, EventArgs e)
         {
@@ -192,7 +187,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             if (null == csListBox.Items ||
                 0 == csListBox.Items.Count)
             {
-                var hint = Properties.Resources.HINT_CreateCSFirst;
+                var hint = Resources.HINT_CreateCSFirst;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, true);
                 return;
             }
@@ -203,10 +198,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             {
                 var itemChecked = csListBox.GetItemChecked(i);
 
-                if (true == itemChecked)
-                {
-                    checkedIndices.Add(i);
-                }
+                if (itemChecked) checkedIndices.Add(i);
             }
 
             // no curtain system available or no curtain system selected for deletion
@@ -214,7 +206,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             if (null == checkedIndices ||
                 0 == checkedIndices.Count)
             {
-                var hint = Properties.Resources.HINT_SelectCSFirst;
+                var hint = Resources.HINT_SelectCSFirst;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, true);
                 return;
             }
@@ -224,14 +216,14 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         }
 
         /// <summary>
-        /// the selected curtain system changed, update the "Curtain grid" and 
-        /// "Uncovered faces" list boxes of the selected curtain system
+        ///     the selected curtain system changed, update the "Curtain grid" and
+        ///     "Uncovered faces" list boxes of the selected curtain system
         /// </summary>
         /// <param name="sender">
-        /// object who sent this event 
+        ///     object who sent this event
         /// </param>
-        /// <param name="e"> 
-        /// event args 
+        /// <param name="e">
+        ///     event args
         /// </param>
         private void csListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -240,9 +232,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             // data verification
             if (null == csInfos ||
                 0 == csInfos.Count)
-            {
                 return;
-            }
 
             //
             // step 1: activate the selected one
@@ -252,22 +242,24 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             cgCheckedListBox.Items.Clear();
             foreach (var index in csInfo.GridFacesIndices)
             {
-                var gridFaceInfo = new CurtainSystem.GridFaceInfo(index);
+                var gridFaceInfo = new GridFaceInfo(index);
                 cgCheckedListBox.Items.Add(gridFaceInfo);
             }
+
             // update the uncovered face list box
             facesCheckedListBox.Items.Clear();
             foreach (var index in csInfo.UncoverFacesIndices)
             {
-                var uncoverFaceInfo = new CurtainSystem.UncoverFaceInfo(index);
+                var uncoverFaceInfo = new UncoverFaceInfo(index);
                 facesCheckedListBox.Items.Add(uncoverFaceInfo);
             }
+
             //
             // step 2: enable/disable some buttons and refresh the status hints
             //
             // the selected curtain system is created by face array
             // it's not allowed to modify its curtain grids data
-            if (true == csInfo.ByFaceArray)
+            if (csInfo.ByFaceArray)
             {
                 // disable the buttons
                 addCGButton.Enabled = false;
@@ -275,7 +267,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
                 facesCheckedListBox.Enabled = false;
                 cgCheckedListBox.Enabled = false;
                 // update the status hints
-                var hint = Properties.Resources.HINT_CSIsByFaceArray;
+                var hint = Resources.HINT_CSIsByFaceArray;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, false);
             }
             // the selected curtain system is created by references of the faces
@@ -285,23 +277,15 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
                 // enable the buttons
                 if (null == facesCheckedListBox.Items ||
                     0 == facesCheckedListBox.Items.Count)
-                {
                     addCGButton.Enabled = false;
-                }
                 else
-                {
                     addCGButton.Enabled = true;
-                }
                 // at least one curtain grid must be kept
                 if (null == cgCheckedListBox.Items ||
                     2 > cgCheckedListBox.Items.Count)
-                {
                     removeCGButton.Enabled = false;
-                }
                 else
-                {
                     removeCGButton.Enabled = true;
-                }
                 facesCheckedListBox.Enabled = true;
                 cgCheckedListBox.Enabled = true;
                 // update the status hints
@@ -311,13 +295,13 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         }
 
         /// <summary>
-        /// add curtain grids to the checked faces 
+        ///     add curtain grids to the checked faces
         /// </summary>
         /// <param name="sender">
-        /// object who sent this event
+        ///     object who sent this event
         /// </param>
         /// <param name="e">
-        /// event args
+        ///     event args
         /// </param>
         private void addCGButton_Click(object sender, EventArgs e)
         {
@@ -327,24 +311,22 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             // no curtain system available, ask sample user to create some curtain systems first
             if (null == csInfos || 0 == csInfos.Count)
             {
-                var hint = Properties.Resources.HINT_CreateCSFirst;
+                var hint = Resources.HINT_CreateCSFirst;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, true);
                 return;
             }
+
             var csInfo = csInfos[csListBox.SelectedIndex];
             // if the curtain system is created by face array, it's forbidden to make other operations on it
-            if (true == csInfo.ByFaceArray)
-            {
-                return;
-            }
+            if (csInfo.ByFaceArray) return;
             // step 2: find out the faces to be covered
             var faceIndices = new List<int>();
             for (var i = 0; i < facesCheckedListBox.Items.Count; i++)
             {
                 var itemChecked = facesCheckedListBox.GetItemChecked(i);
-                if (true == itemChecked)
+                if (itemChecked)
                 {
-                    var info = facesCheckedListBox.Items[i] as CurtainSystem.UncoverFaceInfo;
+                    var info = facesCheckedListBox.Items[i] as UncoverFaceInfo;
                     faceIndices.Add(info.Index);
                 }
             }
@@ -353,7 +335,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             if (null == faceIndices ||
                 0 == faceIndices.Count)
             {
-                var hint = Properties.Resources.HINT_SelectFaceFirst;
+                var hint = Resources.HINT_SelectFaceFirst;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, true);
                 return;
             }
@@ -365,15 +347,15 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         }
 
         /// <summary>
-        /// remove  the checked curtain grids from the curtain system
-        /// Note: curtain system must have at least one curtain grid
-        /// so sample users can't remove all the curtain grids away
+        ///     remove  the checked curtain grids from the curtain system
+        ///     Note: curtain system must have at least one curtain grid
+        ///     so sample users can't remove all the curtain grids away
         /// </summary>
         /// <param name="sender">
-        /// object who sent this event 
+        ///     object who sent this event
         /// </param>
         /// <param name="e">
-        /// event args 
+        ///     event args
         /// </param>
         private void removeCGButton_Click(object sender, EventArgs e)
         {
@@ -383,25 +365,22 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             // no curtain system available, ask sample user to create some curtain systems first
             if (null == csInfos || 0 == csInfos.Count)
             {
-                var hint = Properties.Resources.HINT_CreateCSFirst;
+                var hint = Resources.HINT_CreateCSFirst;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, true);
                 return;
             }
 
             var csInfo = csInfos[csListBox.SelectedIndex];
             // if the curtain system is created by face array, it's forbidden to make other operations on it
-            if (true == csInfo.ByFaceArray)
-            {
-                return;
-            }
+            if (csInfo.ByFaceArray) return;
             // step 2: find out the curtain grids to be removed
             var faceIndices = new List<int>();
             for (var i = 0; i < cgCheckedListBox.Items.Count; i++)
             {
                 var itemChecked = cgCheckedListBox.GetItemChecked(i);
-                if (true == itemChecked)
+                if (itemChecked)
                 {
-                    var info = cgCheckedListBox.Items[i] as CurtainSystem.GridFaceInfo;
+                    var info = cgCheckedListBox.Items[i] as GridFaceInfo;
                     faceIndices.Add(info.FaceIndex);
                 }
             }
@@ -410,7 +389,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             if (null == faceIndices ||
                 0 == faceIndices.Count)
             {
-                var hint = Properties.Resources.HINT_SelectCGFirst;
+                var hint = Resources.HINT_SelectCGFirst;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, true);
                 return;
             }
@@ -422,14 +401,14 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         }
 
         /// <summary>
-        /// check the curtain grids to delete them, if user wants to check all the curtain
-        /// grids for deletion, prohibit it (must keep at least one curtain grid)
+        ///     check the curtain grids to delete them, if user wants to check all the curtain
+        ///     grids for deletion, prohibit it (must keep at least one curtain grid)
         /// </summary>
         /// <param name="sender">
-        /// object who sent this event
+        ///     object who sent this event
         /// </param>
         /// <param name="e">
-        /// event args 
+        ///     event args
         /// </param>
         private void cgCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
@@ -438,10 +417,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             for (var i = 0; i < cgCheckedListBox.Items.Count; i++)
             {
                 var itemChecked = cgCheckedListBox.GetItemChecked(i);
-                if (false == itemChecked)
-                {
-                    indices.Add(i);
-                }
+                if (false == itemChecked) indices.Add(i);
             }
 
             // for curtain system, we must keep at least one curtain grid
@@ -452,7 +428,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
                 e.NewValue = CheckState.Unchecked;
 
                 // update the status hints
-                var hint = Properties.Resources.HINT_KeepOneCG;
+                var hint = Resources.HINT_KeepOneCG;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, true);
             }
             else
@@ -464,21 +440,16 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         }
 
 
-
         private void facesCheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void mainPanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void csLabel_Click(object sender, EventArgs e)
         {
-
         }
-
     } // end of class
 }

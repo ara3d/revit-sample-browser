@@ -21,6 +21,8 @@
 //
 
 using System.Collections.Generic;
+using System.Diagnostics;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
@@ -28,11 +30,11 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.PanelSchedule.CS
 {
     /// <summary>
-    /// Export Panel Schedule View form Revit to CSV or HTML file.
+    ///     Export Panel Schedule View form Revit to CSV or HTML file.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class PanelScheduleExport : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -52,14 +54,9 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
             {
                 var psView = element as PanelScheduleView;
                 if (psView.IsPanelScheduleTemplate())
-                {
                     // ignore the PanelScheduleView instance which is a template.
                     continue;
-                }
-                else
-                {
-                    noPanelScheduleInstance = false;
-                }
+                noPanelScheduleInstance = false;
 
                 // choose what format export to, it can be CSV or HTML.
                 var alternativeDlg = new TaskDialog("Choose Format to export");
@@ -67,15 +64,14 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
                 alternativeDlg.CommonButtons = TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel;
                 alternativeDlg.AllowCancellation = true;
                 var exportToCSV = alternativeDlg.Show();
-                
-                var translator = TaskDialogResult.Cancel == exportToCSV ? new HTMLTranslator(psView) : new CSVTranslator(psView) as Translator;
+
+                var translator = TaskDialogResult.Cancel == exportToCSV
+                    ? new HTMLTranslator(psView)
+                    : new CSVTranslator(psView) as Translator;
                 var exported = translator.Export();
 
                 // open the file if export successfully.
-                if (!string.IsNullOrEmpty(exported))
-                {
-                    System.Diagnostics.Process.Start(exported);
-                }
+                if (!string.IsNullOrEmpty(exported)) Process.Start(exported);
             }
 
             if (noPanelScheduleInstance)
@@ -89,6 +85,5 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
 
             return Result.Succeeded;
         }
-
     }
 }

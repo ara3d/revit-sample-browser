@@ -24,107 +24,106 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Color = System.Drawing.Color;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.TransactionControl.CS
 {
-    using SystemColor = System.Drawing.Color;
+    using SystemColor = Color;
 
     /// <summary>
-    /// A Form used to deal with transaction and create, move or delete a wall
+    ///     A Form used to deal with transaction and create, move or delete a wall
     /// </summary>
-    public partial class TransactionForm : System.Windows.Forms.Form
+    public partial class TransactionForm : Form
     {
         /// <summary>
-        /// An enum used to indicate which operation is executed
+        ///     A reference to the external command data.
         /// </summary>
-        private enum OperationType
-        {
-            StartTransactionGroup,
-            RollbackTransactionGroup,
-            CommitTransactionGroup,
-            StartTransaction,
-            CommitTransaction,
-            RollbackTransaction,
-            ObjectModification,
-            ObjectDeletion
-        }
+        private readonly ExternalCommandData m_commandData;
 
         /// <summary>
-        /// A reference to the external command data.
+        ///     fore color of tree node after ending a transaction
         /// </summary>
-        private ExternalCommandData m_commandData;
+        private readonly SystemColor m_committedColor = SystemColor.Black;
+
         /// <summary>
-        /// The active document
+        ///     fore color of a tree node of a deleted element
         /// </summary>
-        private Document m_document;
+        private readonly SystemColor m_deletedColor = SystemColor.Red;
+
         /// <summary>
-        /// The root node of the operation tree
+        ///     The active document
         /// </summary>
-        private TreeNode m_rootNode;
+        private readonly Document m_document;
+
         /// <summary>
-        /// A reference to active transaction group node where sub transaction node will be added 
-        /// </summary>
-        private TreeNode m_transGroupNode;
-        /// <summary>
-        /// A reference to the active sub transaction node
-        /// </summary>
-        private TreeNode m_transNode;
-        /// <summary>
-        /// fore color of tree node before a transaction is over
-        /// </summary>
-        private SystemColor m_startedColor = SystemColor.Green;
-        /// <summary>
-        /// fore color of tree node after ending a transaction
-        /// </summary>
-        private SystemColor m_committedColor = SystemColor.Black;
-        /// <summary>
-        /// fore color of tree node after aborting a transaction
-        /// </summary>
-        private SystemColor m_rolledbackColor = SystemColor.Gray;
-        /// <summary>
-        /// fore color of a tree node of a created or modified element
-        /// </summary>
-        private SystemColor m_normalColor = SystemColor.Blue;
-        /// <summary>
-        /// fore color of a tree node of a deleted element
-        /// </summary>
-        private SystemColor m_deletedColor = SystemColor.Red;
-        /// <summary>
-        /// The currently active transaction group
-        /// </summary>
-        private TransactionGroup m_transactionGroup;
-        /// The main, hidden outer transaction group
-        /// </summary>
-        private TransactionGroup m_mainTtransactionGroup;
-        /// <summary>
-        /// The active transaction
-        /// </summary>
-        private Transaction m_transaction;
-        /// <summary>
-        /// The number of transactions
-        /// </summary>
-        private int m_transCount;
-        /// <summary>
-        /// The number of transaction groups
-        /// </summary>
-        private int m_transGroupCount;
-        /// <summary>
-        /// The last created wall in the active transaction
+        ///     The last created wall in the active transaction
         /// </summary>
         private Wall m_lastCreatedWall;
 
+        /// The main, hidden outer transaction group
+        /// </summary>
+        private readonly TransactionGroup m_mainTtransactionGroup;
+
         /// <summary>
-        /// Constructor
+        ///     fore color of a tree node of a created or modified element
+        /// </summary>
+        private readonly SystemColor m_normalColor = SystemColor.Blue;
+
+        /// <summary>
+        ///     fore color of tree node after aborting a transaction
+        /// </summary>
+        private readonly SystemColor m_rolledbackColor = SystemColor.Gray;
+
+        /// <summary>
+        ///     The root node of the operation tree
+        /// </summary>
+        private readonly TreeNode m_rootNode;
+
+        /// <summary>
+        ///     fore color of tree node before a transaction is over
+        /// </summary>
+        private readonly SystemColor m_startedColor = SystemColor.Green;
+
+        /// <summary>
+        ///     The active transaction
+        /// </summary>
+        private Transaction m_transaction;
+
+        /// <summary>
+        ///     The currently active transaction group
+        /// </summary>
+        private TransactionGroup m_transactionGroup;
+
+        /// <summary>
+        ///     The number of transactions
+        /// </summary>
+        private int m_transCount;
+
+        /// <summary>
+        ///     The number of transaction groups
+        /// </summary>
+        private int m_transGroupCount;
+
+        /// <summary>
+        ///     A reference to active transaction group node where sub transaction node will be added
+        /// </summary>
+        private TreeNode m_transGroupNode;
+
+        /// <summary>
+        ///     A reference to the active sub transaction node
+        /// </summary>
+        private TreeNode m_transNode;
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">the external command data</param>
         public TransactionForm(ExternalCommandData commandData)
         {
             m_commandData = commandData;
             m_document = m_commandData.Application.ActiveUIDocument.Document;
-            if (m_document == null)
-            {
-                TaskDialog.Show("Revit", "There is no active document.");
-            }
+            if (m_document == null) TaskDialog.Show("Revit", "There is no active document.");
 
             InitializeComponent();
 
@@ -138,18 +137,17 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             // start the main transaction group (will be hidden to the user)
             m_mainTtransactionGroup = new TransactionGroup(m_document);
             m_mainTtransactionGroup.Start();
-
         }
 
         /// <summary>
-        /// Begin a transaction, append transaction node to tree view
+        ///     Begin a transaction, append transaction node to tree view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void startTransButton_Click(object sender, EventArgs e)
         {
             var transNo = m_transCount + 1;
-            m_transaction = new Transaction(m_document, "Transaction " + transNo.ToString());
+            m_transaction = new Transaction(m_document, "Transaction " + transNo);
             if (m_transaction.Start() == TransactionStatus.Started)
             {
                 m_transCount++;
@@ -165,13 +163,13 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Commit a transaction
+        ///     Commit a transaction
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void commitTransButton_Click(object sender, EventArgs e)
         {
-            if ((m_transaction != null) && (m_transaction.GetStatus() == TransactionStatus.Started))
+            if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
             {
                 m_transaction.Commit();
                 if (m_transaction.HasEnded())
@@ -195,13 +193,13 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Rollback a transaction
+        ///     Rollback a transaction
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void rollbackTransButton_Click(object sender, EventArgs e)
         {
-            if ((m_transaction != null) && (m_transaction.GetStatus() == TransactionStatus.Started))
+            if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
             {
                 if (m_transaction.RollBack() == TransactionStatus.RolledBack)
                 {
@@ -218,7 +216,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Create a wall, append a node to tree view
+        ///     Create a wall, append a node to tree view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -232,18 +230,17 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 try
                 {
                     if (subTransaction.Start() == TransactionStatus.Started)
-                    {
                         using (var createWallForm = new CreateWallForm(m_commandData))
                         {
                             createWallForm.ShowDialog();
                             if (DialogResult.OK == createWallForm.DialogResult)
                             {
-                                updateModel(true);  // immediately update the view to see the changes
+                                updateModel(true); // immediately update the view to see the changes
 
                                 if (subTransaction.Commit() == TransactionStatus.Committed)
                                 {
                                     m_lastCreatedWall = createWallForm.CreatedWall;
-                                    AddNode(OperationType.ObjectModification, "Created wall " + m_lastCreatedWall.Id.ToString());
+                                    AddNode(OperationType.ObjectModification, "Created wall " + m_lastCreatedWall.Id);
                                     UpdateButtonsStatus();
                                     return;
                                 }
@@ -254,18 +251,18 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                                 return;
                             }
                         }
-                    }
                 }
                 catch (Exception ex)
                 {
                     TaskDialog.Show("Revit", "Exception when creating a wall: " + ex.Message);
                 }
             }
+
             TaskDialog.Show("Revit", "Creating wall failed");
         }
 
         /// <summary>
-        /// Move a wall, append a node to tree view
+        ///     Move a wall, append a node to tree view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -285,11 +282,11 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                     {
                         var translationVec = new XYZ(10, 10, 0);
                         ElementTransformUtils.MoveElement(m_document, m_lastCreatedWall.Id, translationVec);
-                        updateModel(true);  // immediately update the view to see the changes
+                        updateModel(true); // immediately update the view to see the changes
 
                         if (subTransaction.Commit() == TransactionStatus.Committed)
                         {
-                            AddNode(OperationType.ObjectModification, "Moved wall " + m_lastCreatedWall.Id.ToString());
+                            AddNode(OperationType.ObjectModification, "Moved wall " + m_lastCreatedWall.Id);
                             return;
                         }
                     }
@@ -299,11 +296,12 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                     TaskDialog.Show("Revit", "Exception when moving a wall: " + ex.Message);
                 }
             }
+
             TaskDialog.Show("Revit", "Moving wall failed.");
         }
 
         /// <summary>
-        /// Delete a wall, append a node to tree view
+        ///     Delete a wall, append a node to tree view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -323,15 +321,13 @@ namespace Revit.SDK.Samples.TransactionControl.CS
 
                     if (TaskDialogResult.No ==
                         TaskDialog.Show("Warning", "Do you really want to delete wall with id " + wallId + "?",
-                     TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No))
-                    {
+                            TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No))
                         return;
-                    }
 
                     if (subTransaction.Start() == TransactionStatus.Started)
                     {
                         m_document.Delete(m_lastCreatedWall.Id);
-                        updateModel(false);  // immediately update the view to see the changes
+                        updateModel(false); // immediately update the view to see the changes
 
                         if (subTransaction.Commit() == TransactionStatus.Committed)
                         {
@@ -347,18 +343,19 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                     TaskDialog.Show("Revit", "Exception when deleting a wall: " + ex.Message);
                 }
             }
+
             TaskDialog.Show("Revit", "Deleting wall failed.");
         }
 
         /// <summary>
-        /// Start transaction group button click event
+        ///     Start transaction group button click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnStartTransGroup_Click(object sender, EventArgs e)
         {
             m_transGroupCount++;
-            m_transactionGroup = new TransactionGroup(m_document, "Transaction Group " + m_transGroupCount.ToString());
+            m_transactionGroup = new TransactionGroup(m_document, "Transaction Group " + m_transGroupCount);
             m_transactionGroup.Start();
 
             AddNode(OperationType.StartTransactionGroup);
@@ -367,7 +364,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Commit transaction group button click event
+        ///     Commit transaction group button click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -384,7 +381,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Rollback transaction group button click event
+        ///     Rollback transaction group button click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -401,10 +398,12 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Accept the changes and and close this form
+        ///     Accept the changes and and close this form
         /// </summary>
-        /// <remarks>If any transaction group or the active transaction is still open
-        /// give the user the option to either commit them or roll them back first.</remarks>
+        /// <remarks>
+        ///     If any transaction group or the active transaction is still open
+        ///     give the user the option to either commit them or roll them back first.
+        /// </remarks>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
@@ -413,33 +412,31 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             if (null != m_transaction || null != m_transactionGroup)
             {
                 var dialogResult =
-                   TaskDialog.Show("Warning", "Some transaction groups or the active transaction is not committed."
-                   + " Choose Yes to commit them, or No to roll them back.", TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No | TaskDialogCommonButtons.Cancel);
+                    TaskDialog.Show("Warning", "Some transaction groups or the active transaction is not committed."
+                                               + " Choose Yes to commit them, or No to roll them back.",
+                        TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No | TaskDialogCommonButtons.Cancel);
 
                 if (TaskDialogResult.Cancel == dialogResult)
                 {
                     return;
                 }
-                else if (TaskDialogResult.Yes == dialogResult)
+
+                if (TaskDialogResult.Yes == dialogResult)
                 {
-                    if (m_transaction != null && (m_transaction.GetStatus() == TransactionStatus.Started))
-                    {
+                    if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
                         m_transaction.Commit();
-                    }
                     HandleNestedTransactionGroups(OperationType.CommitTransactionGroup);
                 }
                 else
                 {
-                    if (m_transaction != null && (m_transaction.GetStatus() == TransactionStatus.Started))
-                    {
+                    if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
                         m_transaction.RollBack();
-                    }
                     HandleNestedTransactionGroups(OperationType.RollbackTransactionGroup);
                 }
             }
 
             // silently commit the main (hidden) transaction group
-            if ((null != m_mainTtransactionGroup) && (m_mainTtransactionGroup.GetStatus() == TransactionStatus.Started))
+            if (null != m_mainTtransactionGroup && m_mainTtransactionGroup.GetStatus() == TransactionStatus.Started)
             {
                 m_mainTtransactionGroup.SetName("SDK Transaction Sample");
                 m_mainTtransactionGroup.Assimilate();
@@ -450,47 +447,40 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Rollback all changes and close this form
+        ///     Rollback all changes and close this form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             if (m_transCount > 0)
-            {
                 if (TaskDialogResult.No ==
-                   TaskDialog.Show("Warning", "By canceling this dialog, all modifications to the model will be discarded."
-                    + " Do you want to proceed?", TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No))
+                    TaskDialog.Show("Warning",
+                        "By canceling this dialog, all modifications to the model will be discarded."
+                        + " Do you want to proceed?", TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No))
                 {
                     DialogResult = DialogResult.None;
                     return;
                 }
-            }
 
             // if there is still an active transaction, roll it back now, silently
-            if ((null != m_transaction) && (m_transaction.GetStatus() == TransactionStatus.Started))
-            {
+            if (null != m_transaction && m_transaction.GetStatus() == TransactionStatus.Started)
                 m_transaction.RollBack();
-            }
 
             // if there are still transaction groups open, roll them back now, silently
-            if ((null != m_transactionGroup) && (m_transactionGroup.GetStatus() == TransactionStatus.Started))
-            {
+            if (null != m_transactionGroup && m_transactionGroup.GetStatus() == TransactionStatus.Started)
                 HandleNestedTransactionGroups(OperationType.RollbackTransactionGroup);
-            }
 
             // silently roll back the main (hidden) transaction group
-            if ((null != m_mainTtransactionGroup) && (m_mainTtransactionGroup.GetStatus() == TransactionStatus.Started))
-            {
+            if (null != m_mainTtransactionGroup && m_mainTtransactionGroup.GetStatus() == TransactionStatus.Started)
                 m_mainTtransactionGroup.RollBack();
-            }
 
             DialogResult = DialogResult.Cancel;
             Close();
         }
 
         /// <summary>
-        /// Commit or rollback nested transaction groups
+        ///     Commit or rollback nested transaction groups
         /// </summary>
         /// <param name="operationType">The operation type determines whether to commit or to rollback transaction groups</param>
         private void HandleNestedTransactionGroups(OperationType operationType)
@@ -498,25 +488,17 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             while (m_transactionGroup != null)
             {
                 if (operationType.Equals(OperationType.CommitTransactionGroup))
-                {
                     m_transactionGroup.Commit();
-                }
                 else
-                {
                     m_transactionGroup.RollBack();
-                }
 
                 if (m_transactionGroup.HasEnded())
                 {
                     m_transGroupNode = m_transGroupNode.Parent;
                     if (m_transGroupNode.Equals(m_rootNode))
-                    {
                         m_transactionGroup = null;
-                    }
                     else
-                    {
                         m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
-                    }
                 }
                 else
                 {
@@ -526,25 +508,26 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Update form buttons depending on the status of existing transaction and groups
+        ///     Update form buttons depending on the status of existing transaction and groups
         /// </summary>
         private void UpdateButtonsStatus()
         {
             // there can be only one active transaction at any given time 
-            btnStartTrans.Enabled = (m_transaction == null);
+            btnStartTrans.Enabled = m_transaction == null;
 
             // only active transaction can be committed 
-            btnCommitTrans.Enabled = ((m_transaction != null) && (m_transaction.GetStatus() == TransactionStatus.Started));
+            btnCommitTrans.Enabled = m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started;
 
             // the same rule applies to rolling back a transaction
             btnRollbackTrans.Enabled = btnCommitTrans.Enabled;
 
             // transaction group cannot be started inside an active transaction
-            btnStartTransGroup.Enabled = (m_transaction == null);
+            btnStartTransGroup.Enabled = m_transaction == null;
 
             // transaction group cannot be committed while still inside an active transaction
             // also, the group must be active in order to be committed
-            btnCommitTransGroup.Enabled = ((m_transaction == null) && (m_transactionGroup != null) && (m_transactionGroup.GetStatus() == TransactionStatus.Started));
+            btnCommitTransGroup.Enabled = m_transaction == null && m_transactionGroup != null &&
+                                          m_transactionGroup.GetStatus() == TransactionStatus.Started;
 
             // the same rule applies to rolling back a transaction group
             btnRollbackTransGroup.Enabled = btnCommitTransGroup.Enabled;
@@ -553,14 +536,14 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             btnCreateWall.Enabled = btnCommitTrans.Enabled;
 
             // the same rule applies to deleting a wall, plus, naturally, the wall must exist
-            btnDeleteWall.Enabled = (btnCreateWall.Enabled && (m_lastCreatedWall != null));
+            btnDeleteWall.Enabled = btnCreateWall.Enabled && m_lastCreatedWall != null;
 
             // the same applies to moving a wall
             btnMoveWall.Enabled = btnDeleteWall.Enabled;
         }
 
         /// <summary>
-        /// add node to tree view control
+        ///     add node to tree view control
         /// </summary>
         /// <param name="type">indicate operation type</param>
         private void AddNode(OperationType type)
@@ -569,7 +552,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// add node to tree view control
+        ///     add node to tree view control
         /// </summary>
         /// <param name="type">indicate operation type</param>
         /// <param name="info">tree node text</param>
@@ -596,6 +579,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                     m_transGroupNode.Expand();
                     UpdateTreeNode(m_transGroupNode, type);
                 }
+
                 m_transNode = null;
                 m_transaction = null;
             }
@@ -614,6 +598,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                     m_transGroupNode.Expand();
                     m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
                 }
+
                 m_transNode = null;
                 m_transaction = null;
             }
@@ -632,6 +617,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                     m_transGroupNode = m_transGroupNode.Parent;
                     m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
                 }
+
                 m_transNode = null;
                 m_transaction = null;
             }
@@ -663,13 +649,9 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 string childNodeText = null;
 
                 if (string.IsNullOrEmpty(info))
-                {
                     childNodeText = "Operation";
-                }
                 else
-                {
                     childNodeText = info;
-                }
 
                 var childNode = new TreeNode(childNodeText);
                 if (type == OperationType.ObjectDeletion)
@@ -682,7 +664,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Update the color of a tree node
+        ///     Update the color of a tree node
         /// </summary>
         /// <param name="parentNode">indicate child nodes of which will be updated</param>
         /// <param name="type">operation type</param>
@@ -712,7 +694,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// Update the color of tree node including all its sub-nodes
+        ///     Update the color of tree node including all its sub-nodes
         /// </summary>
         /// <param name="parentNode">the node of which color will be updated</param>
         /// <param name="color">Color to change</param>
@@ -721,16 +703,13 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             parentNode.ForeColor = color;
             foreach (TreeNode childNode in parentNode.Nodes)
             {
-                if (childNode.ForeColor == m_rolledbackColor)
-                {
-                    continue;
-                }
+                if (childNode.ForeColor == m_rolledbackColor) continue;
                 UpdateTreeNode(childNode, color);
             }
         }
 
         /// <summary>
-        /// Updates the model and refreshes the active view
+        ///     Updates the model and refreshes the active view
         /// </summary>
         /// <param name="autoJoin">Whether to also perform auto-join or not</param>
         private void updateModel(bool autoJoin)
@@ -741,13 +720,25 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             m_document.Regenerate();
 
             // auto-joining is optional, but may be necessary to see connection details.
-            if (autoJoin)
-            {
-                m_document.AutoJoinElements();
-            }
+            if (autoJoin) m_document.AutoJoinElements();
 
             // to see the changes immediately, we need to refresh the view
             m_commandData.Application.ActiveUIDocument.RefreshActiveView();
+        }
+
+        /// <summary>
+        ///     An enum used to indicate which operation is executed
+        /// </summary>
+        private enum OperationType
+        {
+            StartTransactionGroup,
+            RollbackTransactionGroup,
+            CommitTransactionGroup,
+            StartTransaction,
+            CommitTransaction,
+            RollbackTransaction,
+            ObjectModification,
+            ObjectDeletion
         }
     }
 }

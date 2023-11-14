@@ -20,22 +20,21 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System.Collections.Generic;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Site.CS
 {
     /// <summary>
-    /// A command that normalizes all points in a region to the average elevation.
+    ///     A command that normalizes all points in a region to the average elevation.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SiteNormalizeTerrainInRegionCommand : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class SiteNormalizeTerrainInRegionCommand : IExternalCommand
     {
-        
         /// <summary>
-        /// Implementation of the external command.
+        ///     Implementation of the external command.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
@@ -48,9 +47,9 @@ namespace Revit.SDK.Samples.Site.CS
             return Result.Succeeded;
         }
 
-        
+
         /// <summary>
-        /// Normalizes all points in the selected subregion to the average elevation of the host surface.
+        ///     Normalizes all points in the selected subregion to the average elevation of the host surface.
         /// </summary>
         /// <param name="uiDoc">The document.</param>
         private void NormalizeSubregionAndPoints(UIDocument uiDoc)

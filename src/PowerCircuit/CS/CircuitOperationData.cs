@@ -24,71 +24,88 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Electrical;
+using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using Revit.SDK.Samples.PowerCircuit.CS.Properties;
 
 namespace Revit.SDK.Samples.PowerCircuit.CS
 {
     /// <summary>
-    /// Data class which stores the information of electrical circuit operation
+    ///     Data class which stores the information of electrical circuit operation
     /// </summary>
     public class CircuitOperationData
     {
-        
         /// <summary>
-        /// Active document of Revit
-        /// </summary>
-        UIDocument m_revitDoc;
-
-        /// <summary>
-        /// Selection of active document
-        /// </summary>
-        Selection m_selection;
-
-        /// <summary>
-        /// Operation on selected elements
-        /// </summary>
-        private Operation m_operation;
-
-        /// <summary>
-        /// Option of editing circuit
-        /// </summary>
-        private EditOption m_editOption;
-
-        /// <summary>
-        /// Whether new circuit can be created with selected elements
+        ///     Whether new circuit can be created with selected elements
         /// </summary>
         private bool m_canCreateCircuit;
 
         /// <summary>
-        /// Whether there is a circuit in selected elements
+        ///     Option of editing circuit
         /// </summary>
-        private bool m_hasCircuit;
+        private EditOption m_editOption;
 
         /// <summary>
-        /// Whether the circuit in selected elements has panel
+        ///     All electrical system items which will be displayed in circuit selecting form
         /// </summary>
-        private bool m_hasPanel;
+        private readonly List<ElectricalSystemItem> m_electricalSystemItems;
 
         /// <summary>
-        /// All electrical systems contain selected element
+        ///     All electrical systems contain selected element
         /// </summary>
         private ISet<ElectricalSystem> m_electricalSystemSet;
 
         /// <summary>
-        /// All electrical system items which will be displayed in circuit selecting form
+        ///     Whether there is a circuit in selected elements
         /// </summary>
-        private List<ElectricalSystemItem> m_electricalSystemItems;
+        private bool m_hasCircuit;
 
         /// <summary>
-        /// The electrical system chosen to operate
+        ///     Whether the circuit in selected elements has panel
+        /// </summary>
+        private bool m_hasPanel;
+
+        /// <summary>
+        ///     Operation on selected elements
+        /// </summary>
+        private Operation m_operation;
+
+        /// <summary>
+        ///     Active document of Revit
+        /// </summary>
+        private readonly UIDocument m_revitDoc;
+
+        /// <summary>
+        ///     The electrical system chosen to operate
         /// </summary>
         private ElectricalSystem m_selectedElectricalSystem;
 
-        
-                /// <summary>
-        /// Operation type
+        /// <summary>
+        ///     Selection of active document
+        /// </summary>
+        private readonly Selection m_selection;
+
+
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="commandData">Revit's external commandData</param>
+        public CircuitOperationData(ExternalCommandData commandData)
+        {
+            m_revitDoc = commandData.Application.ActiveUIDocument;
+            m_selection = m_revitDoc.Selection;
+
+            m_electricalSystemSet = new HashSet<ElectricalSystem>();
+            m_electricalSystemItems = new List<ElectricalSystemItem>();
+
+            CollectConnectorInfo();
+            CollectCircuitInfo();
+        }
+
+
+        /// <summary>
+        ///     Operation type
         /// </summary>
         public Operation Operation
         {
@@ -98,22 +115,22 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Get the information whether new circuit can be created
+        ///     Get the information whether new circuit can be created
         /// </summary>
         public bool CanCreateCircuit => m_canCreateCircuit;
 
         /// <summary>
-        /// Get the value of whether there are circuits in selected elements
+        ///     Get the value of whether there are circuits in selected elements
         /// </summary>
         public bool HasCircuit => m_hasCircuit;
 
         /// <summary>
-        /// Get the information whether the circuit in selected elements has panel
+        ///     Get the information whether the circuit in selected elements has panel
         /// </summary>
         public bool HasPanel => m_hasPanel;
 
         /// <summary>
-        /// Edit options
+        ///     Edit options
         /// </summary>
         public EditOption EditOption
         {
@@ -122,7 +139,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// All electrical system items which will be displayed in circuit selecting form
+        ///     All electrical system items which will be displayed in circuit selecting form
         /// </summary>
         public ReadOnlyCollection<ElectricalSystemItem> ElectricalSystemItems
         {
@@ -139,29 +156,12 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Number of electrical systems contain selected elements
+        ///     Number of electrical systems contain selected elements
         /// </summary>
         public int ElectricalSystemCount => m_electricalSystemSet.Count;
 
-        
-                /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="commandData">Revit's external commandData</param>
-        public CircuitOperationData(ExternalCommandData commandData)
-        {
-            m_revitDoc = commandData.Application.ActiveUIDocument;
-            m_selection = m_revitDoc.Selection;
-
-            m_electricalSystemSet = new HashSet<ElectricalSystem>();
-            m_electricalSystemItems = new List<ElectricalSystemItem>();
-
-            CollectConnectorInfo();
-            CollectCircuitInfo();
-        }
-
         /// <summary>
-        /// Verify if all selected elements have unused connectors
+        ///     Verify if all selected elements have unused connectors
         /// </summary>
         private void CollectConnectorInfo()
         {
@@ -171,7 +171,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
 
             foreach (var elementId in m_selection.GetElementIds())
             {
-               var element = m_revitDoc.Document.GetElement(elementId);
+                var element = m_revitDoc.Document.GetElement(elementId);
                 var fi = element as FamilyInstance;
                 if (null == fi)
                 {
@@ -179,10 +179,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                     return;
                 }
 
-                if (!string.Equals(fi.Category.Name, "Lighting Devices"))
-                {
-                    allLightingDevices = false;
-                }
+                if (!string.Equals(fi.Category.Name, "Lighting Devices")) allLightingDevices = false;
 
                 // Verify if the family instance has usable connectors
                 if (!VerifyUnusedConnectors(fi))
@@ -192,44 +189,35 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                 }
             }
 
-            if (allLightingDevices)
-            {
-                m_canCreateCircuit = false;
-            }
+            if (allLightingDevices) m_canCreateCircuit = false;
         }
 
         /// <summary>
-        /// Verify if the family instance has usable connectors
+        ///     Verify if the family instance has usable connectors
         /// </summary>
         /// <param name="fi">The family instance to be verified</param>
-        /// <returns>True if the family instance has usable connecotors, 
-        /// otherwise false</returns>
-        static private bool VerifyUnusedConnectors(FamilyInstance fi)
+        /// <returns>
+        ///     True if the family instance has usable connecotors,
+        ///     otherwise false
+        /// </returns>
+        private static bool VerifyUnusedConnectors(FamilyInstance fi)
         {
             var hasUnusedElectricalConnector = false;
             try
             {
                 var mepModel = fi.MEPModel;
-                if (null == mepModel)
-                {
-                    return hasUnusedElectricalConnector;
-                }
+                if (null == mepModel) return hasUnusedElectricalConnector;
 
                 var cm = mepModel.ConnectorManager;
                 var unusedConnectors = cm.UnusedConnectors;
-                if (null == unusedConnectors || unusedConnectors.IsEmpty)
-                {
-                    return hasUnusedElectricalConnector;
-                }
+                if (null == unusedConnectors || unusedConnectors.IsEmpty) return hasUnusedElectricalConnector;
 
                 foreach (Connector connector in unusedConnectors)
-                {
                     if (connector.Domain == Domain.DomainElectrical)
                     {
                         hasUnusedElectricalConnector = true;
                         break;
                     }
-                }
             }
             catch (Exception)
             {
@@ -240,7 +228,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Get common circuits contain all selected elements
+        ///     Get common circuits contain all selected elements
         /// </summary>
         private void CollectCircuitInfo()
         {
@@ -254,7 +242,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             ElectricalSystem tempElectricalSystem = null;
             foreach (var elementId in m_selection.GetElementIds())
             {
-               var element = m_revitDoc.Document.GetElement(elementId);
+                var element = m_revitDoc.Document.GetElement(elementId);
                 var fi = element as FamilyInstance;
                 MEPModel mepModel;
 
@@ -277,12 +265,8 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
 
                     // Remove systems which are not power circuits
                     foreach (var es in ess)
-                    {
                         if (es.SystemType != ElectricalSystemType.PowerCircuit)
-                        {
                             ess.Remove(es);
-                        }
-                    }
 
                     if (ess.Count == 0)
                     {
@@ -300,22 +284,16 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                         bInitilzedElectricalSystemSet = true;
                         continue;
                     }
-                    else
-                    {
-                        foreach (var es in m_electricalSystemSet)
-                        {
-                            if (!ess.Contains(es))
-                            {
-                                m_electricalSystemSet.Remove(es);
-                            }
-                        }
 
-                        if (m_electricalSystemSet.Count == 0)
-                        {
-                            m_hasCircuit = false;
-                            m_hasPanel = false;
-                            return;
-                        }
+                    foreach (var es in m_electricalSystemSet)
+                        if (!ess.Contains(es))
+                            m_electricalSystemSet.Remove(es);
+
+                    if (m_electricalSystemSet.Count == 0)
+                    {
+                        m_hasCircuit = false;
+                        m_hasPanel = false;
+                        return;
                     }
                 }
                 else if ((tempElectricalSystem = element as ElectricalSystem) != null)
@@ -366,27 +344,23 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             {
                 m_hasCircuit = true;
                 if (m_electricalSystemSet.Count == 1)
-                {
                     foreach (var es in m_electricalSystemSet)
                     {
                         m_selectedElectricalSystem = es;
                         break;
                     }
-                }
 
                 foreach (var es in m_electricalSystemSet)
-                {
                     if (!string.IsNullOrEmpty(es.PanelName))
                     {
                         m_hasPanel = true;
                         break;
                     }
-                }
             }
         }
 
         /// <summary>
-        /// Dispatch operations
+        ///     Dispatch operations
         /// </summary>
         public void Operate()
         {
@@ -406,39 +380,31 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                 case Operation.DisconnectPanel:
                     DisconnectPanel();
                     break;
-                default:
-                    break;
             }
+
             transaction.Commit();
 
             // Select the modified circuit
-            if (m_operation != Operation.CreateCircuit)
-            {
-                SelectCurrentCircuit();
-            }
+            if (m_operation != Operation.CreateCircuit) SelectCurrentCircuit();
         }
 
         /// <summary>
-        /// Create a power circuit with selected elements
+        ///     Create a power circuit with selected elements
         /// </summary>
         public void CreatePowerCircuit()
         {
             var selectionElementId = new List<ElementId>();
             var elements = new ElementSet();
             foreach (var elementId in m_selection.GetElementIds())
-            {
-               elements.Insert(m_revitDoc.Document.GetElement(elementId));
-            }
+                elements.Insert(m_revitDoc.Document.GetElement(elementId));
 
-            foreach (Element e in elements)
-            {
-                selectionElementId.Add(e.Id);
-            }
+            foreach (Element e in elements) selectionElementId.Add(e.Id);
 
             try
             {
                 // Creation
-                var es = ElectricalSystem.Create(m_revitDoc.Document, selectionElementId, ElectricalSystemType.PowerCircuit);
+                var es = ElectricalSystem.Create(m_revitDoc.Document, selectionElementId,
+                    ElectricalSystemType.PowerCircuit);
 
                 // Select the newly created power system
                 m_selection.GetElementIds().Clear();
@@ -451,7 +417,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Dispatch operations of editing circuit
+        ///     Dispatch operations of editing circuit
         /// </summary>
         public void EditCircuit()
         {
@@ -466,24 +432,18 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                 case EditOption.SelectPanel:
                     SelectPanel();
                     break;
-                default:
-                    break;
             }
-
         }
 
         /// <summary>
-        /// Add an element to circuit
+        ///     Add an element to circuit
         /// </summary>
         public void AddElementToCircuit()
         {
             // Clear selection before selecting the panel
             m_selection.GetElementIds().Clear();
             // Interact with UI to select a panel
-            if (m_revitDoc.Selection.PickObject(ObjectType.Element) == null)
-            {
-                return;
-            }
+            if (m_revitDoc.Selection.PickObject(ObjectType.Element) == null) return;
 
             //
             // Verify if the selected element can be added to the circuit
@@ -493,7 +453,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             Element selectedElement = null;
             foreach (var elementId in m_selection.GetElementIds())
             {
-               var element = m_revitDoc.Document.GetElement(elementId);
+                var element = m_revitDoc.Document.GetElement(elementId);
                 selectedElement = element;
             }
 
@@ -521,16 +481,10 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
 
             try
             {
-               var es = new ElementSet();
-               foreach (var elementId in m_selection.GetElementIds())
-               {
-                  es.Insert(m_revitDoc.Document.GetElement(elementId));
-               }
-                if (!m_selectedElectricalSystem.AddToCircuit(es))
-                {
-                    ShowErrorMessage("FailedToAddElement");
-                    return;
-                }
+                var es = new ElementSet();
+                foreach (var elementId in m_selection.GetElementIds())
+                    es.Insert(m_revitDoc.Document.GetElement(elementId));
+                if (!m_selectedElectricalSystem.AddToCircuit(es)) ShowErrorMessage("FailedToAddElement");
             }
             catch (Exception)
             {
@@ -539,23 +493,20 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Remove an element from selected circuit
+        ///     Remove an element from selected circuit
         /// </summary>
         public void RemoveElementFromCircuit()
         {
             // Clear selection before selecting the panel
             m_selection.GetElementIds().Clear();
             // Interact with UI to select a panel
-            if (m_revitDoc.Selection.PickObject(ObjectType.Element) == null)
-            {
-                return;
-            }
+            if (m_revitDoc.Selection.PickObject(ObjectType.Element) == null) return;
 
             // Get the selected element
             Element selectedElement = null;
             foreach (var elementId in m_revitDoc.Selection.GetElementIds())
             {
-               var element = m_revitDoc.Document.GetElement(elementId);
+                var element = m_revitDoc.Document.GetElement(elementId);
                 selectedElement = element;
             }
 
@@ -578,11 +529,9 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             try
             {
                 // Remove the selected element from circuit
-               var es = new ElementSet();
-               foreach (var elementId in m_revitDoc.Selection.GetElementIds())
-               {
-                  es.Insert(m_revitDoc.Document.GetElement(elementId));
-               }
+                var es = new ElementSet();
+                foreach (var elementId in m_revitDoc.Selection.GetElementIds())
+                    es.Insert(m_revitDoc.Document.GetElement(elementId));
                 m_selectedElectricalSystem.RemoveFromCircuit(es);
             }
             catch (Exception)
@@ -591,20 +540,17 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             }
         }
 
-        static private bool IsElementBelongsToCircuit(MEPModel mepModel,
+        private static bool IsElementBelongsToCircuit(MEPModel mepModel,
             ElectricalSystem selectedElectricalSystem)
         {
             var ess = mepModel.GetElectricalSystems();
-            if (null == ess || !ess.Contains(selectedElectricalSystem))
-            {
-                return false;
-            }
+            if (null == ess || !ess.Contains(selectedElectricalSystem)) return false;
 
             return true;
         }
 
         /// <summary>
-        /// Select a panel for selected circuit
+        ///     Select a panel for selected circuit
         /// </summary>
         public void SelectPanel()
         {
@@ -612,21 +558,15 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             m_selection.GetElementIds().Clear();
 
             // Interact with UI to select a panel
-            if (m_revitDoc.Selection.PickObject(ObjectType.Element) == null)
-            {
-                return;
-            }
+            if (m_revitDoc.Selection.PickObject(ObjectType.Element) == null) return;
 
             try
             {
                 foreach (var elementId in m_selection.GetElementIds())
                 {
-                   var element = m_revitDoc.Document.GetElement(elementId);
+                    var element = m_revitDoc.Document.GetElement(elementId);
                     var fi = element as FamilyInstance;
-                    if (fi != null)
-                    {
-                        m_selectedElectricalSystem.SelectPanel(fi);
-                    }
+                    if (fi != null) m_selectedElectricalSystem.SelectPanel(fi);
                 }
             }
             catch (Exception)
@@ -636,7 +576,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Disconnect panel for selected circuit
+        ///     Disconnect panel for selected circuit
         /// </summary>
         public void DisconnectPanel()
         {
@@ -651,13 +591,13 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Get selected index from circuit selecting form and locate expected circuit
+        ///     Get selected index from circuit selecting form and locate expected circuit
         /// </summary>
         /// <param name="index">Index of selected item in circuit selecting form</param>
         public void SelectCircuit(int index)
         {
             // Locate ElectricalSystemItem by index
-            var esi = m_electricalSystemItems[index] as ElectricalSystemItem;
+            var esi = m_electricalSystemItems[index];
             var ei = esi.Id;
 
             // Locate expected electrical system
@@ -667,7 +607,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Select created/modified/selected electrical system
+        ///     Select created/modified/selected electrical system
         /// </summary>
         public void SelectCurrentCircuit()
         {
@@ -676,24 +616,25 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Get selected index from circuit selecting form and show the circuit in the center of 
-        /// screen by moving the view.
+        ///     Get selected index from circuit selecting form and show the circuit in the center of
+        ///     screen by moving the view.
         /// </summary>
         /// <param name="index">Index of selected item in circuit selecting form</param>
         public void ShowCircuit(int index)
         {
-            var esi = m_electricalSystemItems[index] as ElectricalSystemItem;
+            var esi = m_electricalSystemItems[index];
             var ei = esi.Id;
             m_revitDoc.ShowElements(ei);
         }
 
         /// <summary>
-        /// Show message box with specified string
+        ///     Show message box with specified string
         /// </summary>
         /// <param name="message">specified string to show</param>
-        static private void ShowErrorMessage(string message)
+        private static void ShowErrorMessage(string message)
         {
-            TaskDialog.Show(Properties.Resources.ResourceManager.GetString("OperationFailed"), Properties.Resources.ResourceManager.GetString(message), TaskDialogCommonButtons.Ok);
+            TaskDialog.Show(Resources.ResourceManager.GetString("OperationFailed"),
+                Resources.ResourceManager.GetString(message), TaskDialogCommonButtons.Ok);
         }
-            }
+    }
 }

@@ -23,15 +23,15 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Analysis;
+using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
-using Autodesk.Revit.DB.Events;
-using Autodesk.Revit.DB.Analysis;
 
 namespace Revit.SDK.Samples.WorkThread.CS
 {
     /// <summary>
-    /// Implements the Revit add-in interface IExternalApplication
+    ///     Implements the Revit add-in interface IExternalApplication
     /// </summary>
     public class Application : IExternalApplication
     {
@@ -40,36 +40,29 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
         // instance of class FaceAnalyzer
         private FaceAnalyzer m_analyzer;
-        // event handler of idling
-        private EventHandler<IdlingEventArgs> m_hIdling;
+
         // event handler of document changed
         private EventHandler<DocumentChangedEventArgs> m_hDocChanged;
 
-                /// <summary>
-        /// Implements the OnShutdown event
+        // event handler of idling
+        private EventHandler<IdlingEventArgs> m_hIdling;
+
+        /// <summary>
+        ///     Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
-            if (m_analyzer != null)
-            {
-                m_analyzer.StopCalculation();
-            }
-            if (m_hIdling != null)
-            {
-                application.Idling -= m_hIdling;
-            }
-            if (m_hDocChanged != null)
-            {
-                application.ControlledApplication.DocumentChanged -= m_hDocChanged;
-            }
+            if (m_analyzer != null) m_analyzer.StopCalculation();
+            if (m_hIdling != null) application.Idling -= m_hIdling;
+            if (m_hDocChanged != null) application.ControlledApplication.DocumentChanged -= m_hDocChanged;
 
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Implements the OnStartup event
+        ///     Implements the OnStartup event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -80,16 +73,15 @@ namespace Revit.SDK.Samples.WorkThread.CS
         }
 
         /// <summary>
-        ///   Kicking off an analysis of a wall face.
+        ///     Kicking off an analysis of a wall face.
         /// </summary>
         /// <remarks>
-        ///   After successfully starting a new application
-        ///   the method subscribe to the Idling event in order to
-        ///   periodically fetch data from the analyzer to Revit.
-        ///   It also subscribes to DocumentChange to monitor
-        ///   eventual changes to the element being analyzed.
+        ///     After successfully starting a new application
+        ///     the method subscribe to the Idling event in order to
+        ///     periodically fetch data from the analyzer to Revit.
+        ///     It also subscribes to DocumentChange to monitor
+        ///     eventual changes to the element being analyzed.
         /// </remarks>
-        /// 
         public void RunAnalyzer(UIApplication uiapp, string sref)
         {
             if (uiapp.ActiveUIDocument != null)
@@ -120,26 +112,24 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   Subscription to Idling
+        ///     Subscription to Idling
         /// </summary>
         /// <remarks>
-        ///   We hold the delegate to remember we we have subscribed.
+        ///     We hold the delegate to remember we we have subscribed.
         /// </remarks>
-        /// 
         private void SubscribeToIdling(UIApplication uiapp)
         {
             if (m_hIdling == null)
             {
-                m_hIdling = new EventHandler<IdlingEventArgs>(IdlingHandler);
+                m_hIdling = IdlingHandler;
                 uiapp.Idling += m_hIdling;
             }
         }
 
 
         /// <summary>
-        ///   Unsubscribing from Idling event
+        ///     Unsubscribing from Idling event
         /// </summary>
-        /// 
         private void UnsubscribeFromIdling(UIApplication uiapp)
         {
             if (m_hIdling != null)
@@ -151,26 +141,24 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   Subscription to DocumentChanged
+        ///     Subscription to DocumentChanged
         /// </summary>
         /// <remarks>
-        ///   We hold the delegate to remember we we have subscribed.
+        ///     We hold the delegate to remember we we have subscribed.
         /// </remarks>
-        /// 
         private void SubscribeToChanges(UIApplication uiapp)
         {
             if (m_hDocChanged == null)
             {
-                m_hDocChanged = new EventHandler<DocumentChangedEventArgs>(DocChangedHandler);
+                m_hDocChanged = DocChangedHandler;
                 uiapp.Application.DocumentChanged += m_hDocChanged;
             }
         }
 
 
         /// <summary>
-        ///   Unsubscribing from DocumentChanged event
+        ///     Unsubscribing from DocumentChanged event
         /// </summary>
-        /// 
         private void UnsubscribeFromChanges(UIApplication uiapp)
         {
             if (m_hDocChanged != null)
@@ -182,18 +170,17 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   Idling Handler
+        ///     Idling Handler
         /// </summary>
         /// <remarks>
-        ///   It reaches out to the analyzer and ask it to update
-        ///   the results in Revit if more data has been calculated
-        ///   since the last time we asked.
-        ///   <para>
-        ///   If there is no more data available, we unsubscribe
-        ///   from the Idling event, for we do not need it anymore.
-        ///   </para>
+        ///     It reaches out to the analyzer and ask it to update
+        ///     the results in Revit if more data has been calculated
+        ///     since the last time we asked.
+        ///     <para>
+        ///         If there is no more data available, we unsubscribe
+        ///         from the Idling event, for we do not need it anymore.
+        ///     </para>
         /// </remarks>
-        /// 
         public void IdlingHandler(object sender, IdlingEventArgs args)
         {
             var processing = false;
@@ -229,14 +216,13 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   DocumentChanged Handler
+        ///     DocumentChanged Handler
         /// </summary>
         /// <remarks>
-        ///   It monitors changes to the element that is being analyzed.
-        ///   If the element was changed, we ask it to restart the analysis.
-        ///   If the element was deleted, we ask the analyzer to stop.
+        ///     It monitors changes to the element that is being analyzed.
+        ///     If the element was changed, we ask it to restart the analysis.
+        ///     If the element was deleted, we ask the analyzer to stop.
         /// </remarks>
-        /// 
         public void DocChangedHandler(object sender, DocumentChangedEventArgs args)
         {
             if (m_analyzer != null)
@@ -253,16 +239,13 @@ namespace Revit.SDK.Samples.WorkThread.CS
                     UnsubscribeFromIdling(sender as UIApplication);
                     UnsubscribeFromChanges(sender as UIApplication);
                 }
-                else   // not deleted? what about changed?
+                else // not deleted? what about changed?
                 {
                     elems = args.GetModifiedElementIds();
-                    if (elems.Contains(m_analyzer.AnalyzedElementId))
-                    {
-                        m_analyzer.RestartCalculation();
-                    }
+                    if (elems.Contains(m_analyzer.AnalyzedElementId)) m_analyzer.RestartCalculation();
                 }
             }
-            else   // no analyzer => no need for the events anymore
+            else // no analyzer => no need for the events anymore
             {
                 UnsubscribeFromIdling(sender as UIApplication);
                 UnsubscribeFromChanges(sender as UIApplication);
@@ -271,15 +254,14 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   We setup our preferred style for displaying the results
+        ///     We setup our preferred style for displaying the results
         /// </summary>
         /// <remarks>
-        ///   This is to make it easier to run this sample on any document.
-        ///   We create a gradient-like style (unless it already exists)
-        ///   and register it with the given view. Then we set it as the
-        ///   default analysis stile in that view.
+        ///     This is to make it easier to run this sample on any document.
+        ///     We create a gradient-like style (unless it already exists)
+        ///     and register it with the given view. Then we set it as the
+        ///     default analysis stile in that view.
         /// </remarks>
-        /// 
         private void SetupDisplayStyle(View view)
         {
             const string styleName = "SDK2014-AL Style";
@@ -290,10 +272,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
             if (ElementId.InvalidElementId != view.AnalysisDisplayStyleId)
             {
                 ourStyle = view.Document.GetElement(view.AnalysisDisplayStyleId) as AnalysisDisplayStyle;
-                if (ourStyle.Name == styleName)
-                {
-                    return;
-                }
+                if (ourStyle.Name == styleName) return;
             }
 
             // Look if the style exist at all in the document
@@ -301,9 +280,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
             var collector = new FilteredElementCollector(view.Document);
             ICollection<Element> allStyles = collector.OfClass(typeof(AnalysisDisplayStyle)).ToElements();
             foreach (var elem in allStyles)
-            {
                 if (elem.Name == styleName)
-                {
                     using (var trans = new Transaction(view.Document))
                     {
                         trans.Start("Change Analysis Display Style");
@@ -311,8 +288,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
                         trans.Commit();
                         return;
                     }
-                }
-            }
 
             // we do not have out style yet - let's create it
 
@@ -338,11 +313,11 @@ namespace Revit.SDK.Samples.WorkThread.CS
             using (var trans = new Transaction(view.Document))
             {
                 trans.Start("Set Analysis Display Style");
-                ourStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(view.Document, styleName, surface, colors, legend);
+                ourStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(view.Document, styleName, surface, colors,
+                    legend);
                 view.AnalysisDisplayStyleId = ourStyle.Id;
                 trans.Commit();
             }
         }
-
-            }
+    }
 }

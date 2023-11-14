@@ -19,55 +19,55 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.ExternalService;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.RebarFreeForm.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalApplication
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class Application : IExternalApplication
-   {
-      
-      RebarUpdateServer m_server = new RebarUpdateServer();
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalApplication
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class Application : IExternalApplication
+    {
+        private readonly RebarUpdateServer m_server = new RebarUpdateServer();
 
-      
-            /// <summary>
-      /// Implements the OnShutdown event
-      /// </summary>
-      /// <param name="application"></param>
-      /// <returns></returns>
-      public Result OnShutdown(UIControlledApplication application)
-      {
-         return Result.Succeeded;
-      }
 
-      /// <summary>
-      /// Implements the OnStartup event
-      /// 
-      /// </summary>
-      /// <param name="application"></param>
-      /// <returns></returns>
-      public Result OnStartup(UIControlledApplication application)
-      {
-         // Register CurveElement updater with revit to trigger regen in rebar for selected lines
-         var updater = new CurveElementRegenUpdater(application.ActiveAddInId);
-         UpdaterRegistry.RegisterUpdater(updater);
-         var modelLineFilter = new ElementClassFilter(typeof(CurveElement));
-         UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), modelLineFilter, Element.GetChangeTypeAny());
-
-         //Register the RebarUpdateServer
-         var service = ExternalServiceRegistry.GetService(m_server.GetServiceId());
-         if (service != null)
-         {
-            service.AddServer(m_server);
+        /// <summary>
+        ///     Implements the OnShutdown event
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public Result OnShutdown(UIControlledApplication application)
+        {
             return Result.Succeeded;
-         }
-         return Result.Succeeded;
-      }
-         }
+        }
+
+        /// <summary>
+        ///     Implements the OnStartup event
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public Result OnStartup(UIControlledApplication application)
+        {
+            // Register CurveElement updater with revit to trigger regen in rebar for selected lines
+            var updater = new CurveElementRegenUpdater(application.ActiveAddInId);
+            UpdaterRegistry.RegisterUpdater(updater);
+            var modelLineFilter = new ElementClassFilter(typeof(CurveElement));
+            UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), modelLineFilter, Element.GetChangeTypeAny());
+
+            //Register the RebarUpdateServer
+            var service = ExternalServiceRegistry.GetService(m_server.GetServiceId());
+            if (service != null)
+            {
+                service.AddServer(m_server);
+                return Result.Succeeded;
+            }
+
+            return Result.Succeeded;
+        }
+    }
 }

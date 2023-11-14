@@ -20,16 +20,16 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Script.Serialization;
+using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
 {
     /// <summary>
-    /// Triangles points and facets data which can be used to create topography surface.
+    ///     Triangles points and facets data which can be used to create topography surface.
     /// </summary>
     public class TrianglesData
     {
@@ -40,16 +40,17 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
         public IList<IList<int>> Facets { get; set; }
 
         /// <summary>
-        /// parse all points and facets stored in the TrianglesData.json
+        ///     parse all points and facets stored in the TrianglesData.json
         /// </summary>
         /// <returns>an instance of TrianglesData</returns>
         public static TrianglesData Load()
         {
             var assemblyFileFolder = Path.GetDirectoryName(typeof(TrianglesData).Assembly.Location);
-            var emmfilePath        = Path.Combine(assemblyFileFolder, "TrianglesData.json");
-            var emmfileContent     = File.ReadAllText(emmfilePath);
+            var emmfilePath = Path.Combine(assemblyFileFolder, "TrianglesData.json");
+            var emmfileContent = File.ReadAllText(emmfilePath);
             return JSONParse(emmfileContent);
         }
+
         private static TrianglesData JSONParse(string jsonString)
         {
             var serializer = new JavaScriptSerializer();
@@ -60,24 +61,34 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
     }
 
     /// <summary>
-    ///The converter for Revit XYZ.
+    ///     The converter for Revit XYZ.
     /// </summary>
     public class XYZConverter : JavaScriptConverter
     {
         /// <summary>
-        ///  Converts the provided dictionary into an object of Revit XYZ
+        ///     gets a collection of the supported types
+        /// </summary>
+        public override IEnumerable<Type> SupportedTypes
+        {
+            get { return new[] { typeof(XYZ) }; }
+        }
+
+        /// <summary>
+        ///     Converts the provided dictionary into an object of Revit XYZ
         /// </summary>
         /// <param name="dictionary"></param>
         /// <param name="type"></param>
         /// <param name="serializer"></param>
         /// <returns></returns>
-        public override object Deserialize(IDictionary<string, object> dictionary, Type type, JavaScriptSerializer serializer)
+        public override object Deserialize(IDictionary<string, object> dictionary, Type type,
+            JavaScriptSerializer serializer)
         {
-            return new XYZ(Convert.ToDouble(dictionary["X"]), Convert.ToDouble(dictionary["Y"]), Convert.ToDouble(dictionary["Z"]));
+            return new XYZ(Convert.ToDouble(dictionary["X"]), Convert.ToDouble(dictionary["Y"]),
+                Convert.ToDouble(dictionary["Z"]));
         }
 
         /// <summary>
-        ///  Converts the provided Revit XYZ object to a dictionary of name/value pairs.
+        ///     Converts the provided Revit XYZ object to a dictionary of name/value pairs.
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="serializer"></param>
@@ -93,17 +104,6 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
             dic.Add("Z", node.Z);
 
             return dic;
-        }
-
-        /// <summary>
-        ///  gets a collection of the supported types
-        /// </summary>
-        public override IEnumerable<Type> SupportedTypes
-        {
-            get
-            {
-                return new Type[] { typeof(XYZ) };
-            }
         }
     }
 }

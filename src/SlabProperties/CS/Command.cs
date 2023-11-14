@@ -22,39 +22,92 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SlabProperties.CS
 {
     /// <summary>
-    /// Get some properties of a slab , such as Level, Type name, Span direction,
-    /// Material name, Thickness, and Young Modulus for the slab's Material.
+    ///     Get some properties of a slab , such as Level, Type name, Span direction,
+    ///     Material name, Thickness, and Young Modulus for the slab's Material.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                const double PI = 3.1415926535879;
-        const int Degree = 180;
-        const int ToMillimeter = 1000;
-        const double ToMetricThickness = 0.3048;    // unit for changing inch to meter
-        const double ToMetricYoungmodulus = 304800.0;
+        private const double PI = 3.1415926535879;
+        private const int Degree = 180;
+        private const int ToMillimeter = 1000;
+        private const double ToMetricThickness = 0.3048; // unit for changing inch to meter
+        private const double ToMetricYoungmodulus = 304800.0;
+        private Document m_document;
 
-        
 
-        
-        ElementSet m_slabComponent;  // the selected Slab component
-        Floor m_slabFloor; // Floor 
-        CompoundStructureLayer m_slabLayer; // Structure Layer 
-        System.Collections.Generic.IList<CompoundStructureLayer> m_slabLayerCollection; // Structure Layer collection
-        Document m_document;
+        private ElementSet m_slabComponent; // the selected Slab component
+        private Floor m_slabFloor; // Floor 
+        private CompoundStructureLayer m_slabLayer; // Structure Layer 
+        private IList<CompoundStructureLayer> m_slabLayerCollection; // Structure Layer collection
 
-        
 
-                public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        /// <summary>
+        ///     Level property, read only.
+        /// </summary>
+        public string Level { get; private set; }
+
+
+        /// <summary>
+        ///     TypeName property, read only.
+        /// </summary>
+        public string TypeName { get; private set; }
+
+
+        /// <summary>
+        ///     SpanDirection property, read only.
+        /// </summary>
+        public string SpanDirection { get; private set; }
+
+
+        /// <summary>
+        ///     NumberOfLayers property, read only.
+        /// </summary>
+        public int NumberOfLayers { get; private set; }
+
+
+        /// <summary>
+        ///     LayerThickness property, read only.
+        /// </summary>
+        public string LayerThickness { get; private set; }
+
+
+        /// <summary>
+        ///     LayerMaterialName property, read only.
+        /// </summary>
+        public string LayerMaterialName { get; private set; }
+
+
+        /// <summary>
+        ///     LayerYoungModulusX property, read only.
+        /// </summary>
+        public string LayerYoungModulusX { get; private set; }
+
+
+        /// <summary>
+        ///     LayerYoungModulusY property, read only.
+        /// </summary>
+        public string LayerYoungModulusY { get; private set; }
+
+
+        /// <summary>
+        ///     LayerYoungModulusZ property, read only.
+        /// </summary>
+        public string LayerYoungModulusZ { get; private set; }
+
+
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
 
@@ -62,17 +115,11 @@ namespace Revit.SDK.Samples.SlabProperties.CS
             {
                 // function initialization and find out a slab's Level, Type name, and set the Span Direction properties.
                 var isInitialization = Initialize(revit);
-                if (false == isInitialization)
-                {
-                    return Result.Failed;
-                }
+                if (false == isInitialization) return Result.Failed;
 
                 // show a displayForm to display the properties of the slab
                 var slabForm = new SlabPropertiesForm(this);
-                if (DialogResult.OK != slabForm.ShowDialog())
-                {
-                    return Result.Cancelled;
-                }
+                if (DialogResult.OK != slabForm.ShowDialog()) return Result.Cancelled;
             }
             catch (Exception displayProblem)
             {
@@ -82,65 +129,10 @@ namespace Revit.SDK.Samples.SlabProperties.CS
 
             return Result.Succeeded;
         }
-        
-
-                /// <summary>
-        /// Level property, read only.
-        /// </summary>
-        public string Level { get; private set; }
 
 
         /// <summary>
-        /// TypeName property, read only.
-        /// </summary>
-        public string TypeName { get; private set; }
-
-
-        /// <summary>
-        /// SpanDirection property, read only.
-        /// </summary>
-        public string SpanDirection { get; private set; }
-
-
-        /// <summary>
-        /// NumberOfLayers property, read only.
-        /// </summary>
-        public int NumberOfLayers { get; private set; }
-
-
-        /// <summary>
-        /// LayerThickness property, read only.
-        /// </summary>
-        public string LayerThickness { get; private set; }
-
-
-        /// <summary>
-        /// LayerMaterialName property, read only.
-        /// </summary>
-        public string LayerMaterialName { get; private set; }
-
-
-        /// <summary>
-        /// LayerYoungModulusX property, read only.
-        /// </summary>
-        public string LayerYoungModulusX { get; private set; }
-
-
-        /// <summary>
-        /// LayerYoungModulusY property, read only.
-        /// </summary>
-        public string LayerYoungModulusY { get; private set; }
-
-
-        /// <summary>
-        /// LayerYoungModulusZ property, read only.
-        /// </summary>
-        public string LayerYoungModulusZ { get; private set; }
-
-        
-
-                /// <summary>
-        /// SetLayer method
+        ///     SetLayer method
         /// </summary>
         /// <param name="layerNumber">The layerNumber for the number of the layers</param>
         public void SetLayer(int layerNumber)
@@ -150,7 +142,7 @@ namespace Revit.SDK.Samples.SlabProperties.CS
             m_slabLayer = m_slabLayerCollection[layerNumber];
 
             // Get the Thickness property and change to the metric millimeter
-            LayerThickness = ((m_slabLayer.Width) * ToMetricThickness * ToMillimeter).ToString() + " mm";
+            LayerThickness = m_slabLayer.Width * ToMetricThickness * ToMillimeter + " mm";
 
             // Get the Material name property
             if (ElementId.InvalidElementId != m_slabLayer.MaterialId)
@@ -170,19 +162,16 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 var material = m_document.GetElement(m_slabLayer.MaterialId) as Material;
                 var youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD1);
                 if (null != youngModuleAttribute)
-                {
-                    LayerYoungModulusX = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
-                }
+                    LayerYoungModulusX =
+                        (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
                 youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD2);
                 if (null != youngModuleAttribute)
-                {
-                    LayerYoungModulusY = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
-                }
+                    LayerYoungModulusY =
+                        (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
                 youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD3);
                 if (null != youngModuleAttribute)
-                {
-                    LayerYoungModulusZ = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
-                }
+                    LayerYoungModulusZ =
+                        (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
             }
             else
             {
@@ -191,10 +180,10 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 LayerYoungModulusZ = "Null";
             }
         }
-        
 
-                /// <summary>
-        /// Initialization and find out a slab's Level, Type name, and set the Span Direction properties.
+
+        /// <summary>
+        ///     Initialization and find out a slab's Level, Type name, and set the Span Direction properties.
         /// </summary>
         /// <param name="revit">The revit object for the active instance of Autodesk Revit.</param>
         /// <returns>A value that signifies if your initialization was successful for true or failed for false.</returns>
@@ -202,9 +191,7 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         {
             m_slabComponent = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
-            {
-               m_slabComponent.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
-            }
+                m_slabComponent.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
             m_document = revit.ActiveUIDocument.Document;
 
             // There must be exactly one slab selected
@@ -214,7 +201,8 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 TaskDialog.Show("Revit", "Please select a slab.");
                 return false;
             }
-            else if (1 != m_slabComponent.Size)
+
+            if (1 != m_slabComponent.Size)
             {
                 // too many things selected
                 TaskDialog.Show("Revit", "Please select only one slab.");
@@ -249,18 +237,17 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 // using the built in parameter FLOOR_PARAM_SPAN_DIRECTION
                 var spanDirectionAttribute = m_slabFloor.get_Parameter(BuiltInParameter.FLOOR_PARAM_SPAN_DIRECTION);
                 if (null != spanDirectionAttribute)
-                {
                     // Set the Span Direction property
                     SetSpanDirection(spanDirectionAttribute.AsDouble());
-                }
             }
+
             return true;
         }
 
 
         /// <summary>
-        /// Set SpanDirection property to the class private member
-        /// Because of the property retrieved from the parameter uses radian for unit, we should change it to degree.
+        ///     Set SpanDirection property to the class private member
+        ///     Because of the property retrieved from the parameter uses radian for unit, we should change it to degree.
         /// </summary>
         /// <param name="spanDirection">The value of span direction property</param>
         private void SetSpanDirection(double spanDirection)
@@ -270,13 +257,10 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 spanDirection / PI * Degree;
 
             // If the absolute value very small, we consider it to be zero
-            if (Math.Abs(spanDirectionDegree) < 1E-12)
-            {
-                spanDirectionDegree = 0.0;
-            }
+            if (Math.Abs(spanDirectionDegree) < 1E-12) spanDirectionDegree = 0.0;
 
             // The precision is 0.01, and unit is "degree".
             SpanDirection = spanDirectionDegree.ToString("F2");
         }
-            }
+    }
 }

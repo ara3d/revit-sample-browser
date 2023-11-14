@@ -21,25 +21,26 @@
 // 
 
 using System;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
 using Autodesk.Revit.UI;
+using View = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// It contains a dialog which provides the options of importing dwg format
+    ///     It contains a dialog which provides the options of importing dwg format
     /// </summary>
     public partial class ImportDWGForm : Form
     {
         /// <summary>
-        /// Data class
+        ///     Data class
         /// </summary>
-        ImportDWGData m_importData;
+        private readonly ImportDWGData m_importData;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="importData"></param>
         public ImportDWGForm(ImportDWGData importData)
@@ -50,7 +51,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Change the status of checkBoxOrient2View and comboBoxLevel according to the selection
+        ///     Change the status of checkBoxOrient2View and comboBoxLevel according to the selection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -62,29 +63,20 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize values and status of controls
+        ///     Initialize values and status of controls
         /// </summary>
         private void InitializeControls()
         {
             //Layers
-            foreach (var layer in m_importData.VisibleLayersOnly)
-            {
-                comboBoxLayers.Items.Add(layer);
-            }
+            foreach (var layer in m_importData.VisibleLayersOnly) comboBoxLayers.Items.Add(layer);
             comboBoxLayers.SelectedIndex = 0;
 
             //unit
-            foreach (var unit in m_importData.Unit)
-            {
-                comboBoxUnits.Items.Add(unit);
-            }
+            foreach (var unit in m_importData.Unit) comboBoxUnits.Items.Add(unit);
             comboBoxUnits.SelectedIndex = 0;
 
             //Level
-            foreach (Autodesk.Revit.DB.View view in m_importData.Views)
-            {
-                comboBoxLevel.Items.Add(view.Name);
-            }
+            foreach (View view in m_importData.Views) comboBoxLevel.Items.Add(view.Name);
             comboBoxLevel.SelectedIndex = 0;
 
             //If active view is 3D
@@ -98,7 +90,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Specify a file to export from
+        ///     Specify a file to export from
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -106,13 +98,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             var returnFileFullName = string.Empty;
             if (MainData.ShowOpenDialog(m_importData, ref returnFileFullName) != DialogResult.Cancel)
-            {
                 textBoxFileSource.Text = returnFileFullName;
-            }
         }
 
         /// <summary>
-        /// Change the status of textBoxScale according to the selection
+        ///     Change the status of textBoxScale according to the selection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -123,7 +113,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Transfer information back to ImportData class and execute IMPORT operation
+        ///     Transfer information back to ImportData class and execute IMPORT operation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -146,10 +136,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 try
                 {
                     if (!m_importData.Import())
-                    {
                         TaskDialog.Show("Import", "Cannot import " + Path.GetFileName(m_importData.ImportFileFullName) +
-                        " in current settings.", TaskDialogCommonButtons.Ok);
-                    }
+                                                  " in current settings.", TaskDialogCommonButtons.Ok);
                 }
                 catch (Exception ex)
                 {
@@ -162,7 +150,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Validate the file to import
+        ///     Validate the file to import
         /// </summary>
         /// <returns></returns>
         private bool ValidateFileName()
@@ -189,67 +177,53 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Set the value of color mode
+        ///     Set the value of color mode
         /// </summary>
         private void SetImportColorMode()
         {
             string colorMode;
             if (radioButtonBlackWhite.Checked)
-            {
                 colorMode = radioButtonBlackWhite.Text;
-            }
             else if (radioButtonPreserve.Checked)
-            {
                 colorMode = radioButtonPreserve.Text;
-            }
             else
-            {
                 colorMode = radioButtonInvertColor.Text;
-            }
 
             var indexColor = 0;
             for (var i = 0; i < m_importData.ColorMode.Count; ++i)
-            {
                 if (colorMode == m_importData.ColorMode[i])
                 {
                     indexColor = i;
                     break;
                 }
-            }
 
             m_importData.ImportColorMode = m_importData.EnumColorMode[indexColor];
         }
 
         /// <summary>
-        /// Set the value of placement
+        ///     Set the value of placement
         /// </summary>
         private void SetImportPlacement()
         {
             string placement;
             if (radioButtonCenter2Center.Checked)
-            {
                 placement = radioButtonCenter2Center.Text;
-            }
             else
-            {
                 placement = radioButtonOrigin2Origin.Text;
-            }
 
             var indexPlacement = 0;
             for (var i = 0; i < m_importData.Placement.Count; ++i)
-            {
                 if (placement == m_importData.Placement[i])
                 {
                     indexPlacement = i;
                     break;
                 }
-            }
 
             m_importData.ImportPlacement = m_importData.EnumPlacement[indexPlacement];
         }
 
         /// <summary>
-        /// Set the value of ImportThisViewOnly, ImportOrientToView, ImportView
+        ///     Set the value of ImportThisViewOnly, ImportOrientToView, ImportView
         /// </summary>
         private void SetImportViewsRelated()
         {
@@ -262,19 +236,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 m_importData.ImportThisViewOnly = false;
                 m_importData.ImportOrientToView = checkBoxOrient2View.Checked;
                 var viewName = comboBoxLevel.SelectedItem.ToString();
-                foreach (Autodesk.Revit.DB.View view in m_importData.Views)
-                {
+                foreach (View view in m_importData.Views)
                     if (viewName == view.Name)
                     {
                         m_importData.ImportView = view;
                         break;
                     }
-                }
             }
         }
 
         /// <summary>
-        /// Set the value of ImportVisibleLayersOnly
+        ///     Set the value of ImportVisibleLayersOnly
         /// </summary>
         private void SetImportLayers()
         {
@@ -283,7 +255,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Set the value of unit, scaling
+        ///     Set the value of unit, scaling
         /// </summary>
         private void SetImportUnitsAndScaling()
         {
@@ -291,37 +263,29 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             //Custom is selected
             if (custom)
-            {
                 //Set the scaling
                 m_importData.ImportCustomScale = double.Parse(textBoxScale.Text);
-            }
             else
-            {
                 //Do not change the scaling
                 //Set unit
                 m_importData.ImportUnit = m_importData.EnumUnit[comboBoxUnits.SelectedIndex];
-            }
         }
 
         /// <summary>
-        /// Only numbers and '.' permitted
+        ///     Only numbers and '.' permitted
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void textBoxScale_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar < (char)46 || e.KeyChar > (char)57) && (e.KeyChar != (char)8 || e.KeyChar == (char)47))
-            {
                 e.Handled = true;
-            }
             else
-            {
                 e.Handled = false;
-            }
         }
 
         /// <summary>
-        /// Only one '.' permitted
+        ///     Only one '.' permitted
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -332,20 +296,18 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var textAfter = new StringBuilder();
             for (var i = 0; i < text.Length; i++)
             {
-                var tmp = char.Parse(text.Substring(i, 1).ToString());
-                if (!newPoint && (tmp == '.'))
+                var tmp = char.Parse(text.Substring(i, 1));
+                if (!newPoint && tmp == '.')
                 {
                     textAfter.Append(tmp);
                     newPoint = true;
                 }
                 else
                 {
-                    if (char.IsDigit(tmp))
-                    {
-                        textAfter.Append(tmp);
-                    }
+                    if (char.IsDigit(tmp)) textAfter.Append(tmp);
                 }
             }
+
             textBoxScale.Text = textAfter.ToString();
         }
     }

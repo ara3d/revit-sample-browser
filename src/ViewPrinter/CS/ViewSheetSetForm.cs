@@ -28,53 +28,46 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 {
     public partial class viewSheetSetForm : Form
     {
+        private bool m_stopUpdateFlag;
+
+        private readonly ViewSheets m_viewSheets;
+
         public viewSheetSetForm(ViewSheets viewSheets)
-        {            
+        {
             InitializeComponent();
 
             m_viewSheets = viewSheets;
         }
 
-        private ViewSheets m_viewSheets;
-        private bool m_stopUpdateFlag;
-
         private void ViewSheetSetForm_Load(object sender, EventArgs e)
         {
-            viewSheetSetNameComboBox.DataSource = m_viewSheets.ViewSheetSetNames;            
-            viewSheetSetNameComboBox.SelectedValueChanged += new EventHandler(viewSheetSetNameComboBox_SelectedValueChanged);
+            viewSheetSetNameComboBox.DataSource = m_viewSheets.ViewSheetSetNames;
+            viewSheetSetNameComboBox.SelectedValueChanged += viewSheetSetNameComboBox_SelectedValueChanged;
             viewSheetSetNameComboBox.SelectedItem = m_viewSheets.SettingName;
 
             showSheetsCheckBox.Checked = true;
             showViewsCheckBox.Checked = true;
             ListViewSheetSet();
-            viewSheetSetListView.ItemChecked += new ItemCheckedEventHandler(viewSheetSetListView_ItemChecked);
+            viewSheetSetListView.ItemChecked += viewSheetSetListView_ItemChecked;
         }
 
         private void ListViewSheetSet()
         {
             VisibleType vt;
             if (showSheetsCheckBox.Checked && showViewsCheckBox.Checked)
-            {
                 vt = VisibleType.VT_BothViewAndSheet;
-            }
             else if (showSheetsCheckBox.Checked && !showViewsCheckBox.Checked)
-            {
                 vt = VisibleType.VT_SheetOnly;
-            }
             else if (!showSheetsCheckBox.Checked && showViewsCheckBox.Checked)
-            {
                 vt = VisibleType.VT_ViewOnly;
-            }
             else
-            {
                 vt = VisibleType.VT_None;
-            }
 
             var views = m_viewSheets.AvailableViewSheetSet(vt);
             viewSheetSetListView.Items.Clear();
             foreach (var view in views)
             {
-                var item = new ListViewItem(view.ViewType.ToString() + ": " + view.Name);
+                var item = new ListViewItem(view.ViewType + ": " + view.Name);
                 item.Checked = m_viewSheets.IsSelected(item.Text);
                 viewSheetSetListView.Items.Add(item);
             }
@@ -85,7 +78,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             if (m_stopUpdateFlag)
                 return;
 
-            m_viewSheets.SettingName = viewSheetSetNameComboBox.SelectedItem as string;            
+            m_viewSheets.SettingName = viewSheetSetNameComboBox.SelectedItem as string;
             ListViewSheetSet();
 
             saveButton.Enabled = revertButton.Enabled = false;
@@ -108,12 +101,8 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         {
             var names = new List<string>();
             foreach (ListViewItem item in viewSheetSetListView.Items)
-            {
                 if (item.Checked)
-                {
                     names.Add(item.Text);
-                }
-            }
 
             m_viewSheets.ChangeCurrentViewSheetSet(names);
 
@@ -128,7 +117,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             }
 
             m_stopUpdateFlag = true;
-            viewSheetSetNameComboBox.DataSource = m_viewSheets.ViewSheetSetNames;            
+            viewSheetSetNameComboBox.DataSource = m_viewSheets.ViewSheetSetNames;
             viewSheetSetNameComboBox.Update();
             m_stopUpdateFlag = false;
 
@@ -149,7 +138,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             }
 
             m_stopUpdateFlag = true;
-            viewSheetSetNameComboBox.DataSource = m_viewSheets.ViewSheetSetNames;            
+            viewSheetSetNameComboBox.DataSource = m_viewSheets.ViewSheetSetNames;
             viewSheetSetNameComboBox.Update();
             m_stopUpdateFlag = false;
 
@@ -170,28 +159,20 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         private void checkAllButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in viewSheetSetListView.Items)
-            {
-                item.Checked = true;
-            }
+            foreach (ListViewItem item in viewSheetSetListView.Items) item.Checked = true;
         }
 
         private void checkNoneButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in viewSheetSetListView.Items)
-            {
-                item.Checked = false;
-            }
+            foreach (ListViewItem item in viewSheetSetListView.Items) item.Checked = false;
         }
 
         private void viewSheetSetListView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             if (!m_viewSheets.SettingName.Equals("<In-Session>")
                 && !saveButton.Enabled)
-            {
                 saveButton.Enabled = revertButton.Enabled
                     = reNameButton.Enabled = true;
-            }
         }
     }
 }

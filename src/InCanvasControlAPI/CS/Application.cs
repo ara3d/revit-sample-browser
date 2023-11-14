@@ -20,133 +20,125 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Autodesk.Revit.DB.Events;
+using Autodesk.Revit.DB.ExternalService;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalApplication
-   /// </summary>
-   public class Application : IExternalApplication
-   {
-      const string TabLabel = "Issues";
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalApplication
+    /// </summary>
+    public class Application : IExternalApplication
+    {
+        private const string TabLabel = "Issues";
 
-      
-      /// <summary>
-      /// Creates external application object and initializes event handlers.
-      /// </summary>
-      public Application()
-      {
-         var issueMarkerTrackingManager = IssueMarkerTrackingManager.GetInstance();
+        private readonly EventHandler<DocumentClosedEventArgs> closedHandler;
 
-         // This event handler moves or deletes the markers based on changes to the tracked elements
-         updateHandler = (sender, data) =>
-         {
-            IssueMarkerUpdater.Execute(data);
-         };
 
-         // This event handler initiates data for the opened document
-         openHandler = (sender, data) =>
-         {
-            issueMarkerTrackingManager.AddTracking(data.Document);
-         };
+        private readonly Dictionary<int, Guid> closingDocumentIdToIssueTrackingPairs = new Dictionary<int, Guid>();
 
-         // This event handler initiates data for the newly-created document
-         createHandler = (sender, data) =>
-         {
-            issueMarkerTrackingManager.AddTracking(data.Document);
-         };
+        private readonly EventHandler<DocumentClosingEventArgs> closingHandler;
 
-         // This event handler prepares marker data for the document to be cleaned
-         closingHandler = (closingSender, closeData) =>
-         {
-            var track = issueMarkerTrackingManager.GetTracking(closeData.Document);
-            if(!closingDocumentIdToIssueTrackingPairs.ContainsKey(closeData.DocumentId) && !closeData.IsCancelled())
-               closingDocumentIdToIssueTrackingPairs.Add(closeData.DocumentId, track.Id);
-         };
+        private readonly EventHandler<DocumentCreatedEventArgs> createHandler;
 
-         // This event handler cleans marker data after the document is closed
-         closedHandler = (closedSender, closedData) =>
-         {
-            issueMarkerTrackingManager.DeleteTracking(closingDocumentIdToIssueTrackingPairs[closedData.DocumentId]);
-            closingDocumentIdToIssueTrackingPairs.Remove(closedData.DocumentId);
-         };
-      }
+        private readonly EventHandler<DocumentOpenedEventArgs> openHandler;
 
-      
-      
-      /// <summary>
-      /// Implements the OnShutdown event. It cleans up events and IssueMarkerTrackingManager
-      /// </summary>
-      /// <param name="application"></param>
-      /// <returns></returns>
-      public Result OnShutdown(UIControlledApplication application)
-      {
-         application.ControlledApplication.DocumentChanged -= updateHandler;
-         application.ControlledApplication.DocumentOpened -= openHandler;
-         application.ControlledApplication.DocumentCreated -= createHandler;
-         application.ControlledApplication.DocumentClosing -= closingHandler;
-         application.ControlledApplication.DocumentClosed -= closedHandler;
+        private readonly EventHandler<DocumentChangedEventArgs> updateHandler;
 
-         IssueMarkerTrackingManager.GetInstance().ClearTrackings();
 
-         return Result.Succeeded;
-      }
+        /// <summary>
+        ///     Creates external application object and initializes event handlers.
+        /// </summary>
+        public Application()
+        {
+            var issueMarkerTrackingManager = IssueMarkerTrackingManager.GetInstance();
 
-      /// <summary>
-      /// Implements the OnStartup event. It adds a server to listen for clicks on issue markers, events that manage issue marker data based on changes in document, 
-      /// and a button that lets user create an issue marker.
-      /// </summary>
-      /// <param name="application"></param>
-      /// <returns></returns>
-      public Result OnStartup(UIControlledApplication application)
-      {
-         var click = new IssueSelectHandler();
+            // This event handler moves or deletes the markers based on changes to the tracked elements
+            updateHandler = (sender, data) => { IssueMarkerUpdater.Execute(data); };
 
-         //This registers a service. On success, we register a button or event as well.
-         var service = Autodesk.Revit.DB.ExternalService.ExternalServiceRegistry.GetService(click.GetServiceId());
-         if (service != null)
-         {
-            service.AddServer(click);
-            (service as Autodesk.Revit.DB.ExternalService.MultiServerService).SetActiveServers(new List<Guid>() { click.GetServerId() });
+            // This event handler initiates data for the opened document
+            openHandler = (sender, data) => { issueMarkerTrackingManager.AddTracking(data.Document); };
 
-            var ribbonPanel = application.GetRibbonPanels(Tab.AddIns).Find(x => x.Name == TabLabel);
-            if (ribbonPanel == null)
-               ribbonPanel = application.CreateRibbonPanel(Tab.AddIns, TabLabel);
+            // This event handler initiates data for the newly-created document
+            createHandler = (sender, data) => { issueMarkerTrackingManager.AddTracking(data.Document); };
 
-            RibbonItemData ribbonItemData = new PushButtonData("Create marker", "Create issue marker on an element",
-                System.Reflection.Assembly.GetExecutingAssembly().Location, typeof(Command).FullName);
+            // This event handler prepares marker data for the document to be cleaned
+            closingHandler = (closingSender, closeData) =>
+            {
+                var track = issueMarkerTrackingManager.GetTracking(closeData.Document);
+                if (!closingDocumentIdToIssueTrackingPairs.ContainsKey(closeData.DocumentId) &&
+                    !closeData.IsCancelled())
+                    closingDocumentIdToIssueTrackingPairs.Add(closeData.DocumentId, track.Id);
+            };
 
-            _ = (PushButton)ribbonPanel.AddItem(ribbonItemData);
+            // This event handler cleans marker data after the document is closed
+            closedHandler = (closedSender, closedData) =>
+            {
+                issueMarkerTrackingManager.DeleteTracking(closingDocumentIdToIssueTrackingPairs[closedData.DocumentId]);
+                closingDocumentIdToIssueTrackingPairs.Remove(closedData.DocumentId);
+            };
+        }
 
-            application.ControlledApplication.DocumentChanged += updateHandler;
-            application.ControlledApplication.DocumentOpened += openHandler;
-            application.ControlledApplication.DocumentCreated += createHandler;
-            application.ControlledApplication.DocumentClosing += closingHandler;
-            application.ControlledApplication.DocumentClosed += closedHandler;
+
+        /// <summary>
+        ///     Implements the OnShutdown event. It cleans up events and IssueMarkerTrackingManager
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            application.ControlledApplication.DocumentChanged -= updateHandler;
+            application.ControlledApplication.DocumentOpened -= openHandler;
+            application.ControlledApplication.DocumentCreated -= createHandler;
+            application.ControlledApplication.DocumentClosing -= closingHandler;
+            application.ControlledApplication.DocumentClosed -= closedHandler;
+
+            IssueMarkerTrackingManager.GetInstance().ClearTrackings();
 
             return Result.Succeeded;
+        }
 
-         }
-         return Result.Failed;
-      }
+        /// <summary>
+        ///     Implements the OnStartup event. It adds a server to listen for clicks on issue markers, events that manage issue
+        ///     marker data based on changes in document,
+        ///     and a button that lets user create an issue marker.
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public Result OnStartup(UIControlledApplication application)
+        {
+            var click = new IssueSelectHandler();
 
-      
-      
-      private Dictionary<int, Guid> closingDocumentIdToIssueTrackingPairs = new Dictionary<int, Guid>();
+            //This registers a service. On success, we register a button or event as well.
+            var service = ExternalServiceRegistry.GetService(click.GetServiceId());
+            if (service != null)
+            {
+                service.AddServer(click);
+                (service as MultiServerService).SetActiveServers(new List<Guid> { click.GetServerId() });
 
-      private EventHandler<Autodesk.Revit.DB.Events.DocumentChangedEventArgs> updateHandler;
+                var ribbonPanel = application.GetRibbonPanels(Tab.AddIns).Find(x => x.Name == TabLabel);
+                if (ribbonPanel == null)
+                    ribbonPanel = application.CreateRibbonPanel(Tab.AddIns, TabLabel);
 
-      private EventHandler<Autodesk.Revit.DB.Events.DocumentOpenedEventArgs> openHandler;
+                RibbonItemData ribbonItemData = new PushButtonData("Create marker", "Create issue marker on an element",
+                    Assembly.GetExecutingAssembly().Location, typeof(Command).FullName);
 
-      private EventHandler<Autodesk.Revit.DB.Events.DocumentCreatedEventArgs> createHandler;
+                _ = (PushButton)ribbonPanel.AddItem(ribbonItemData);
 
-      private EventHandler<Autodesk.Revit.DB.Events.DocumentClosedEventArgs> closedHandler;
-      
-      private EventHandler<Autodesk.Revit.DB.Events.DocumentClosingEventArgs> closingHandler;
-     
-         }
+                application.ControlledApplication.DocumentChanged += updateHandler;
+                application.ControlledApplication.DocumentOpened += openHandler;
+                application.ControlledApplication.DocumentCreated += createHandler;
+                application.ControlledApplication.DocumentClosing += closingHandler;
+                application.ControlledApplication.DocumentClosed += closedHandler;
 
+                return Result.Succeeded;
+            }
+
+            return Result.Failed;
+        }
+    }
 }

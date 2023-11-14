@@ -21,11 +21,11 @@
 //
 
 
-using System;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.DeckProperties.CS
 {
-    public partial class DeckPropertyForm : System.Windows.Forms.Form
+    public partial class DeckPropertyForm : Form
     {
         public DeckPropertyForm()
         {

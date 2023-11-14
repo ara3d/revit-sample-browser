@@ -26,12 +26,12 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.PlacementOptions.CS
 {
     /// <summary>
-    /// The dialog for choosing the face based family instance or sketch based family instance.
+    ///     The dialog for choosing the face based family instance or sketch based family instance.
     /// </summary>
     public partial class OptionsForm : Form
     {
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         public OptionsForm()
         {
@@ -42,12 +42,12 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// The option for choosing the face based family instance or sketch based family instance.
+        ///     The option for choosing the face based family instance or sketch based family instance.
         /// </summary>
         public PlacementOptionsEnum OptionType { get; private set; }
 
         /// <summary>
-        /// Use the PlacementOptionsEnum.FaceBased option or not.
+        ///     Use the PlacementOptionsEnum.FaceBased option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -57,7 +57,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the PlacementOptionsEnum.SketchBased option or not.
+        ///     Use the PlacementOptionsEnum.SketchBased option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>

@@ -24,45 +24,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.CreateViewSection.CS
 {
     /// <summary>
-    /// The main class which given a linear element, such as a wall, floor or beam,
-    /// generates a section view across the mid point of the element.
+    ///     The main class which given a linear element, such as a wall, floor or beam,
+    ///     generates a section view across the mid point of the element.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        // Private Members
-        UIDocument m_project;  // Store the current document in revit   
-        string m_errorInformation;  // Store the error information
-        const double PRECISION = 0.0000000001;  // Define a precision of double data
+        private const double PRECISION = 0.0000000001; // Define a precision of double data
 
-        BoundingBoxXYZ m_box;       // Store the BoundingBoxXYZ reference used in creation
-        Element m_currentComponent; // Store the selected element
-        SelectType m_type;     // Indicate the type of the selected element.
         // 0 - wall, 1 - beam, 2 - floor, -1 - invalid
-        const double LENGTH = 10;   // Define half length and width of BoudingBoxXYZ
-        const double HEIGHT = 5;    // Define height of the BoudingBoxXYZ
+        private const double LENGTH = 10; // Define half length and width of BoudingBoxXYZ
+        private const double HEIGHT = 5; // Define height of the BoudingBoxXYZ
 
-        // Define a enum to indicate the selected element type
-        enum SelectType
-        {
-            WALL = 0,
-            BEAM = 1,
-            FLOOR = 2,
-            INVALID = -1
-        }
+        private BoundingBoxXYZ m_box; // Store the BoundingBoxXYZ reference used in creation
+        private Element m_currentComponent; // Store the selected element
+
+        private string m_errorInformation; // Store the error information
+
+        // Private Members
+        private UIDocument m_project; // Store the current document in revit   
+        private SelectType m_type; // Indicate the type of the selected element.
 
         // Methods
         /// <summary>
-        /// Default constructor of Command
+        ///     Default constructor of Command
         /// </summary>
         public Command()
         {
@@ -70,7 +65,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         }
 
         public Result Execute(ExternalCommandData commandData,
-                                                    ref string message, ElementSet elements)
+            ref string message, ElementSet elements)
         {
             try
             {
@@ -95,7 +90,8 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 transaction.Start();
                 //ViewSection section = m_project.Document.Create.NewViewSection(m_box);
                 var DetailViewId = ElementId.InvalidElementId;
-                var elems = new FilteredElementCollector(m_project.Document).OfClass(typeof(ViewFamilyType)).ToElements();
+                var elems = new FilteredElementCollector(m_project.Document).OfClass(typeof(ViewFamilyType))
+                    .ToElements();
                 foreach (var e in elems)
                 {
                     var v = e as ViewFamilyType;
@@ -106,6 +102,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                         break;
                     }
                 }
+
                 var section = ViewSection.CreateDetail(m_project.Document, DetailViewId, m_box);
                 if (null == section)
                 {
@@ -130,17 +127,15 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
 
 
         /// <summary>
-        /// Get the selected element, and check whether it is a wall, a floor or a beam.
+        ///     Get the selected element, and check whether it is a wall, a floor or a beam.
         /// </summary>
         /// <returns>true if the process succeed; otherwise, false.</returns>
-        bool GetSelectedElement()
+        private bool GetSelectedElement()
         {
             // First get the selection, and make sure only one element in it.
-           var collection = new ElementSet();
+            var collection = new ElementSet();
             foreach (var elementId in m_project.Selection.GetElementIds())
-            {
-               collection.Insert(m_project.Document.GetElement(elementId));
-            }
+                collection.Insert(m_project.Document.GetElement(elementId));
             if (1 != collection.Size)
             {
                 m_errorInformation =
@@ -149,10 +144,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             }
 
             // Get the selected element.
-            foreach (Element e in collection)
-            {
-                m_currentComponent = e;
-            }
+            foreach (Element e in collection) m_currentComponent = e;
 
             // Make sure the element to be a wall, beam or a floor.
             if (m_currentComponent is Wall)
@@ -164,28 +156,27 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                     m_errorInformation = "The selected wall should be linear.";
                     return false;
                 }
+
                 if (location.Curve is Line)
                 {
-                    m_type = SelectType.WALL;   // when the element is a linear wall
+                    m_type = SelectType.WALL; // when the element is a linear wall
                     return true;
                 }
-                else
-                {
-                    m_errorInformation = "The selected wall should be linear.";
-                    return false;
-                }
+
+                m_errorInformation = "The selected wall should be linear.";
+                return false;
             }
 
             var beam = m_currentComponent as FamilyInstance;
             if (null != beam && StructuralType.Beam == beam.StructuralType)
             {
-                m_type = SelectType.BEAM;       // when the element is a beam
+                m_type = SelectType.BEAM; // when the element is a beam
                 return true;
             }
 
             if (m_currentComponent is Floor)
             {
-                m_type = SelectType.FLOOR;      // when the element is a floor.
+                m_type = SelectType.FLOOR; // when the element is a floor.
                 return true;
             }
 
@@ -196,10 +187,10 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
 
 
         /// <summary>
-        /// Generate a BoundingBoxXYZ instance which used in NewViewSection() method
+        ///     Generate a BoundingBoxXYZ instance which used in NewViewSection() method
         /// </summary>
         /// <returns>true if the instance can be created; otherwise, false.</returns>
-        bool GenerateBoundingBoxXYZ()
+        private bool GenerateBoundingBoxXYZ()
         {
             var transaction = new Transaction(m_project.Document, "GenerateBoundingBox");
             transaction.Start();
@@ -215,10 +206,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             // It define the Orgin and the directions(include RightDirection, 
             // UpDirection and ViewDirection) of the created view.
             var transform = GenerateTransform();
-            if (null == transform)
-            {
-                return false;
-            }
+            if (null == transform) return false;
             m_box.Transform = transform;
             transaction.Commit();
 
@@ -228,39 +216,33 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
 
 
         /// <summary>
-        /// Generate a Transform instance which as Transform property of BoundingBoxXYZ
+        ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ
         /// </summary>
         /// <returns>the reference of Transform, return null if it can't be generated</returns>
-        Transform GenerateTransform()
+        private Transform GenerateTransform()
         {
             // Because different element have different ways to create Transform.
             // So, this method just call corresponding method.
-            if (SelectType.WALL == m_type)
-            {
-                return GenerateWallTransform();
-            }
-            else if (SelectType.BEAM == m_type)
-            {
-                return GenerateBeamTransform();
-            }
-            else if (SelectType.FLOOR == m_type)
+            if (SelectType.WALL == m_type) return GenerateWallTransform();
+
+            if (SelectType.BEAM == m_type) return GenerateBeamTransform();
+
+            if (SelectType.FLOOR == m_type)
             {
                 return GenerateFloorTransform();
             }
-            else
-            {
-                m_errorInformation = "The program should never go here.";
-                return null;
-            }
+
+            m_errorInformation = "The program should never go here.";
+            return null;
         }
 
 
         /// <summary>
-        /// Generate a Transform instance which as Transform property of BoundingBoxXYZ, 
-        /// when the user select a wall, this method will be called
+        ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,
+        ///     when the user select a wall, this method will be called
         /// </summary>
         /// <returns>the reference of Transform, return null if it can't be generated</returns>
-        Transform GenerateWallTransform()
+        private Transform GenerateWallTransform()
         {
             var wall = m_currentComponent as Wall;
 
@@ -292,123 +274,121 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         }
 
 
-      /// <summary>
-      /// Generate a Transform instance which as Transform property of BoundingBoxXYZ, 
-      /// when the user select a beam, this method will be called
-      /// </summary>
-      /// <returns>the reference of Transform, return null if it can't be generated</returns>
-      Transform GenerateBeamTransform()
-      {
-         Transform transform = null;
-         var instance = m_currentComponent as FamilyInstance;
+        /// <summary>
+        ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,
+        ///     when the user select a beam, this method will be called
+        /// </summary>
+        /// <returns>the reference of Transform, return null if it can't be generated</returns>
+        private Transform GenerateBeamTransform()
+        {
+            Transform transform = null;
+            var instance = m_currentComponent as FamilyInstance;
 
-         // First check whether the beam is horizontal.
-         // In order to predigest the calculation, only allow it to be horizontal
-         var startOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END0_ELEVATION).AsDouble();
-         var endOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END1_ELEVATION).AsDouble();
-         if (-PRECISION > startOffset - endOffset || PRECISION < startOffset - endOffset)
-         {
-            m_errorInformation = "Please select a horizontal beam.";
-            return transform;
-         }
-
-         if (!(instance.Location is LocationCurve))
-         {
-            m_errorInformation = "The program should never go here.";
-            return transform;
-         }
-         var curve = (instance.Location as LocationCurve).Curve;
-         if (null == curve)
-         {
-            m_errorInformation = "The program should never go here.";
-            return transform;
-         }
-
-         // Now I am sure I can create a transform instance.
-         transform = Transform.Identity;
-
-         // Third find the middle point of the line and set it as Origin property.
-         var startPoint = curve.GetEndPoint(0);
-         var endPoint = curve.GetEndPoint(1);
-         var midPoint = XYZMath.FindMidPoint(startPoint, endPoint);
-         transform.Origin = midPoint;
-
-         // At last find out the directions of the created view, and set it as Basis property.   
-         var basisZ = XYZMath.FindDirection(startPoint, endPoint);
-         var basisX = XYZMath.FindRightDirection(basisZ);
-         var basisY = XYZMath.FindUpDirection(basisZ);
-
-         transform.set_Basis(0, basisX);
-         transform.set_Basis(1, basisY);
-         transform.set_Basis(2, basisZ);
-         return transform;
-      }
-
-
-      /// <summary>
-      /// Generate a Transform instance which as Transform property of BoundingBoxXYZ, 
-      /// when the user select a floor, this method will be called
-      /// </summary>
-      /// <returns>the reference of Transform, return null if it can't be generated</returns>
-      Transform GenerateFloorTransform()
-      {
-         Transform transform = null;
-         var floor = m_currentComponent as Floor;
-
-         // First get the Analytical Model lines
-         AnalyticalPanel model = null;
-         var document = floor.Document;
-         var assocManager = AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(document);
-         if (assocManager != null)
-         {
-            var associatedElementId = assocManager.GetAssociatedElementId(floor.Id);
-            if (associatedElementId != ElementId.InvalidElementId)
+            // First check whether the beam is horizontal.
+            // In order to predigest the calculation, only allow it to be horizontal
+            var startOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END0_ELEVATION).AsDouble();
+            var endOffset = instance.get_Parameter(BuiltInParameter.STRUCTURAL_BEAM_END1_ELEVATION).AsDouble();
+            if (-PRECISION > startOffset - endOffset || PRECISION < startOffset - endOffset)
             {
-               var associatedElement = document.GetElement(associatedElementId);
-               if (associatedElement != null && associatedElement is AnalyticalPanel)
-               {
-                  model = associatedElement as AnalyticalPanel;
-               }
+                m_errorInformation = "Please select a horizontal beam.";
+                return transform;
             }
-         }
-         if (null == model)
-         {
-            m_errorInformation = "Please select a structural floor.";
+
+            if (!(instance.Location is LocationCurve))
+            {
+                m_errorInformation = "The program should never go here.";
+                return transform;
+            }
+
+            var curve = (instance.Location as LocationCurve).Curve;
+            if (null == curve)
+            {
+                m_errorInformation = "The program should never go here.";
+                return transform;
+            }
+
+            // Now I am sure I can create a transform instance.
+            transform = Transform.Identity;
+
+            // Third find the middle point of the line and set it as Origin property.
+            var startPoint = curve.GetEndPoint(0);
+            var endPoint = curve.GetEndPoint(1);
+            var midPoint = XYZMath.FindMidPoint(startPoint, endPoint);
+            transform.Origin = midPoint;
+
+            // At last find out the directions of the created view, and set it as Basis property.   
+            var basisZ = XYZMath.FindDirection(startPoint, endPoint);
+            var basisX = XYZMath.FindRightDirection(basisZ);
+            var basisY = XYZMath.FindUpDirection(basisZ);
+
+            transform.set_Basis(0, basisX);
+            transform.set_Basis(1, basisY);
+            transform.set_Basis(2, basisZ);
             return transform;
-         }
+        }
 
-         var curves = m_project.Document.Application.Create.NewCurveArray();
-         IList<Curve> curveList = model.GetOuterContour().ToList();
-         foreach (var curve in curveList)
-         {
-            curves.Append(curve);
-         }
 
-         if (null == curves || true == curves.IsEmpty)
-         {
-            m_errorInformation = "The program should never go here.";
+        /// <summary>
+        ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,
+        ///     when the user select a floor, this method will be called
+        /// </summary>
+        /// <returns>the reference of Transform, return null if it can't be generated</returns>
+        private Transform GenerateFloorTransform()
+        {
+            Transform transform = null;
+            var floor = m_currentComponent as Floor;
+
+            // First get the Analytical Model lines
+            AnalyticalPanel model = null;
+            var document = floor.Document;
+            var assocManager =
+                AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(document);
+            if (assocManager != null)
+            {
+                var associatedElementId = assocManager.GetAssociatedElementId(floor.Id);
+                if (associatedElementId != ElementId.InvalidElementId)
+                {
+                    var associatedElement = document.GetElement(associatedElementId);
+                    if (associatedElement != null && associatedElement is AnalyticalPanel)
+                        model = associatedElement as AnalyticalPanel;
+                }
+            }
+
+            if (null == model)
+            {
+                m_errorInformation = "Please select a structural floor.";
+                return transform;
+            }
+
+            var curves = m_project.Document.Application.Create.NewCurveArray();
+            IList<Curve> curveList = model.GetOuterContour().ToList();
+            foreach (var curve in curveList) curves.Append(curve);
+
+            if (null == curves || curves.IsEmpty)
+            {
+                m_errorInformation = "The program should never go here.";
+                return transform;
+            }
+
+            // Now I am sure I can create a transform instance.
+            transform = Transform.Identity;
+
+            // Third find the middle point of the floor and set it as Origin property.
+            var midPoint = XYZMath.FindMiddlePoint(curves);
+            transform.Origin = midPoint;
+
+            // At last find out the directions of the created view, and set it as Basis property.
+            var basisZ = XYZMath.FindFloorViewDirection(curves);
+            var basisX = XYZMath.FindRightDirection(basisZ);
+            var basisY = XYZMath.FindUpDirection(basisZ);
+
+            transform.set_Basis(0, basisX);
+            transform.set_Basis(1, basisY);
+            transform.set_Basis(2, basisZ);
             return transform;
-         }
+        }
 
-         // Now I am sure I can create a transform instance.
-         transform = Transform.Identity;
-
-         // Third find the middle point of the floor and set it as Origin property.
-         var midPoint = XYZMath.FindMiddlePoint(curves);
-         transform.Origin = midPoint;
-
-         // At last find out the directions of the created view, and set it as Basis property.
-         var basisZ = XYZMath.FindFloorViewDirection(curves);
-         var basisX = XYZMath.FindRightDirection(basisZ);
-         var basisY = XYZMath.FindUpDirection(basisZ);
-
-         transform.set_Basis(0, basisX);
-         transform.set_Basis(1, basisY);
-         transform.set_Basis(2, basisZ);
-         return transform;
-      }
-
-      double GetWallMidOffsetFromLocation(Wall wall)
+        private double GetWallMidOffsetFromLocation(Wall wall)
         {
             // First get the "Base Offset" property.
             var baseOffset = wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).AsDouble();
@@ -421,19 +401,28 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             var midOffset = baseOffset + height / 2;
             return midOffset;
         }
+
+        // Define a enum to indicate the selected element type
+        private enum SelectType
+        {
+            WALL = 0,
+            BEAM = 1,
+            FLOOR = 2,
+            INVALID = -1
+        }
     }
 
     /// <summary>
-    /// Create a drafting view. 
+    ///     Create a drafting view.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class CreateDraftingView : IExternalCommand
     {
         public Result Execute(
-          ExternalCommandData commandData,
-          ref string message,
-          ElementSet elements)
+            ExternalCommandData commandData,
+            ref string message,
+            ElementSet elements)
         {
             try
             {
@@ -446,19 +435,21 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 var viewFamilyTypes = collector.OfClass(typeof(ViewFamilyType)).ToElements();
                 foreach (var e in viewFamilyTypes)
                 {
-                   var v = e as ViewFamilyType;
-                   if (v.ViewFamily == ViewFamily.Drafting)
-                   {
-                      viewFamilyType = v;
-                      break;
-                   }
+                    var v = e as ViewFamilyType;
+                    if (v.ViewFamily == ViewFamily.Drafting)
+                    {
+                        viewFamilyType = v;
+                        break;
+                    }
                 }
+
                 var drafting = ViewDrafting.Create(doc, viewFamilyType.Id);
                 if (null == drafting)
                 {
                     message = "Can't create the ViewDrafting.";
                     return Result.Failed;
                 }
+
                 transaction.Commit();
                 TaskDialog.Show("Revit", "Create view drafting succeeded.");
                 return Result.Succeeded;

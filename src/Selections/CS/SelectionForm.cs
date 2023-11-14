@@ -26,14 +26,14 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.Selections.CS
 {
     /// <summary>
-    /// A Form to show selection from dialog.
+    ///     A Form to show selection from dialog.
     /// </summary>
     public partial class SelectionForm : Form
     {
-        SelectionManager m_manager;
+        private readonly SelectionManager m_manager;
 
         /// <summary>
-        /// Form initialize.
+        ///     Form initialize.
         /// </summary>
         /// <param name="manager"></param>
         public SelectionForm(SelectionManager manager)
@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Set the selection type for picking element.
+        ///     Set the selection type for picking element.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.Selections.CS
         }
 
         /// <summary>
-        /// Set the selection type for picking point.
+        ///     Set the selection type for picking point.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

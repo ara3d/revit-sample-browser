@@ -23,20 +23,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DuplicateViews.CS
 {
     /// <summary>
-    /// A command to copy schedules and drafting views across documents.
+    ///     A command to copy schedules and drafting views across documents.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class DuplicateAcrossDocumentsCommand : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class DuplicateAcrossDocumentsCommand : IExternalCommand
     {
-        
         /// <summary>
-        /// The command implementation.
+        ///     The command implementation.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
@@ -50,20 +50,19 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
             // Find target document - it must be the only other open document in session
             Document toDocument = null;
             var documents = application.Documents.Cast<Document>();
-            if (documents.Count<Document>() != 2)
+            if (documents.Count() != 2)
             {
                 TaskDialog.Show("No target document",
-                                "This tool can only be used if there are two documents (a source document and target document).");
+                    "This tool can only be used if there are two documents (a source document and target document).");
                 return Result.Cancelled;
             }
+
             foreach (var loadedDoc in documents)
-            {
                 if (loadedDoc.Title != doc.Title)
                 {
                     toDocument = loadedDoc;
                     break;
                 }
-            }
 
             // Collect schedules and drafting views
             var collector = new FilteredElementCollector(doc);
@@ -76,28 +75,27 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
 
             collector.WhereElementIsViewIndependent(); // skip view-specfic schedules (e.g. Revision Schedules);
             // These should not be copied as they are associated to another view that cannot be copied
-   
+
             // Copy all schedules together so that any dependency elements are copied only once
             var schedules = collector.OfType<ViewSchedule>();
             DuplicateViewUtils.DuplicateSchedules(doc, schedules, toDocument);
-            var numSchedules = schedules.Count<ViewSchedule>();
-            
+            var numSchedules = schedules.Count();
+
             // Copy drafting views together
             var draftingViews = collector.OfType<ViewDrafting>();
-            var numDraftingElements = 
+            var numDraftingElements =
                 DuplicateViewUtils.DuplicateDraftingViews(doc, draftingViews, toDocument);
-            var numDrafting = draftingViews.Count<ViewDrafting>();
+            var numDrafting = draftingViews.Count();
 
             // Show results
             TaskDialog.Show("Statistics",
-                   string.Format("Copied: \n" + 
-                                "\t{0} schedules.\n" +
-                                "\t{1} drafting views.\n"+
-                                "\t{2} new drafting elements created.",
-                   numSchedules, numDrafting, numDraftingElements));
+                string.Format("Copied: \n" +
+                              "\t{0} schedules.\n" +
+                              "\t{1} drafting views.\n" +
+                              "\t{2} new drafting elements created.",
+                    numSchedules, numDrafting, numDraftingElements));
 
             return Result.Succeeded;
         }
-
-            }
+    }
 }

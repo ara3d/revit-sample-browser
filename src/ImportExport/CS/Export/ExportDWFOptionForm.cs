@@ -21,21 +21,23 @@
 // 
 
 using System;
+using Autodesk.Revit.DB;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Data class which stores information of lower priority for exporting DWF(x) format.
+    ///     Data class which stores information of lower priority for exporting DWF(x) format.
     /// </summary>
-    public partial class ExportDWFOptionForm : System.Windows.Forms.Form
+    public partial class ExportDWFOptionForm : Form
     {
         /// <summary>
-        /// ExportDWFData object
+        ///     ExportDWFData object
         /// </summary>
-        private ExportDWFData m_data;
+        private readonly ExportDWFData m_data;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="data">Data class object</param>
         public ExportDWFOptionForm(ExportDWFData data)
@@ -46,7 +48,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize controls
+        ///     Initialize controls
         /// </summary>
         private void Initialize()
         {
@@ -69,12 +71,12 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_data.ExportMergeFiles = checkBoxMergeViews.Checked;
             if (radioButtonStandardFormat.Checked)
             {
-                m_data.DwfImageFormat = Autodesk.Revit.DB.DWFImageFormat.Lossless;
-                m_data.DwfImageQuality = Autodesk.Revit.DB.DWFImageQuality.Default;
+                m_data.DwfImageFormat = DWFImageFormat.Lossless;
+                m_data.DwfImageQuality = DWFImageQuality.Default;
             }
             else
             {
-                m_data.DwfImageFormat = Autodesk.Revit.DB.DWFImageFormat.Lossy;
+                m_data.DwfImageFormat = DWFImageFormat.Lossy;
                 m_data.DwfImageQuality = m_data.ImageQualities[comboBoxImageQuality.SelectedIndex];
             }
         }

@@ -26,17 +26,17 @@ using Autodesk.Revit.DB.PointClouds;
 
 namespace Revit.SDK.Samples.CS.PointCloudEngine
 {
-
     /// <summary>
-    /// An implementation for a non file-based point cloud.  In this implementaiton, the location of the cells, including their colors and options, 
-    /// are hardcoded.
+    ///     An implementation for a non file-based point cloud.  In this implementaiton, the location of the cells, including
+    ///     their colors and options,
+    ///     are hardcoded.
     /// </summary>
     public class PredefinedPointCloud : PointCloudAccessBase, IPointCloudAccess
     {
-                string m_identifier;
-        
-                /// <summary>
-        /// Constructs a new predefined point cloud access instance.
+        private readonly string m_identifier;
+
+        /// <summary>
+        ///     Constructs a new predefined point cloud access instance.
         /// </summary>
         /// <param name="identifier">The identifier of the point cloud.</param>
         public PredefinedPointCloud(string identifier)
@@ -47,7 +47,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         }
 
         /// <summary>
-        /// Constructs a new predefined point cloud access instance.
+        ///     Constructs a new predefined point cloud access instance.
         /// </summary>
         /// <param name="identifier">The identifier of the point cloud.</param>
         /// <param name="randomizedPoints">True to use randomization for the point location and number, false otherwise.</param>
@@ -58,8 +58,100 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             Setup(randomizedPoints);
         }
 
+
         /// <summary>
-        /// Sets up the predefined point cloud.
+        ///     The implementation of IPointCloudAccess.GetName().
+        /// </summary>
+        /// <returns>The name (the file name).</returns>
+        public string GetName()
+        {
+            return "apipc: " + m_identifier;
+        }
+
+        /// <summary>
+        ///     The implementation of IPointCloudAccess.GetColorEncoding()
+        /// </summary>
+        /// <returns>The color encoding.</returns>
+        public PointCloudColorEncoding GetColorEncoding()
+        {
+            return PointCloudColorEncoding.ABGR;
+        }
+
+        /// <summary>
+        ///     The implementation of IPointCloudAccess.CreatePointSetIterator().
+        /// </summary>
+        /// <param name="rFilter">The filter.</param>
+        /// <param name="viewId">The view id (unused).</param>
+        /// <returns>The new iterator.</returns>
+        public IPointSetIterator CreatePointSetIterator(PointCloudFilter rFilter, ElementId viewId)
+        {
+            return new PointCloudAccessBaseIterator(this, rFilter);
+        }
+
+        /// <summary>
+        ///     The implementation of IPointCloudAccess.CreatePointSetIterator().
+        /// </summary>
+        /// <param name="rFilter">The filter.</param>
+        /// <param name="density">The density.</param>
+        /// <param name="viewId">The view id (unused).</param>
+        /// <returns>The new iterator.</returns>
+        public IPointSetIterator CreatePointSetIterator(PointCloudFilter rFilter, double density, ElementId viewId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     The implementation of IPointCloudAccess.GetExtent().
+        /// </summary>
+        /// <returns>The extents of the point cloud.</returns>
+        public Outline GetExtent()
+        {
+            return GetOutline();
+        }
+
+        /// <summary>
+        ///     The implementation of IPointCloudAccess.GetOffset().
+        /// </summary>
+        /// <remarks>This method is not used by Revit and will be removed in a later pre-release build.</remarks>
+        /// <returns>Zero.</returns>
+        public XYZ GetOffset()
+        {
+            return XYZ.Zero;
+        }
+
+        /// <summary>
+        ///     The implementation of IPointCloudAccess.GetUnitsToFeetConversionFactor().
+        /// </summary>
+        /// <returns>The scale.</returns>
+        public double GetUnitsToFeetConversionFactor()
+        {
+            return GetScale();
+        }
+
+        /// <summary>
+        ///     The implementation of IPointCloudAccess.ReadPoints().
+        /// </summary>
+        /// <param name="rFilter">The filter.</param>
+        /// <param name="viewId">The view id (unused).</param>
+        /// <param name="buffer">The point cloud buffer.</param>
+        /// <param name="nBufferSize">The maximum number of points.</param>
+        /// <returns>The number of points read.</returns>
+        public int ReadPoints(PointCloudFilter rFilter, ElementId viewId, IntPtr buffer, int nBufferSize)
+        {
+            var read = ReadSomePoints(rFilter, buffer, nBufferSize, 0);
+
+            return read;
+        }
+
+        /// <summary>
+        ///     The implementation of IPointCloudAccess.Free().
+        /// </summary>
+        public void Free()
+        {
+        }
+
+        /// <summary>
+        ///     Sets up the predefined point cloud.
         /// </summary>
         /// <param name="randomizedPoints">True to use randomization for the point location and number, false otherwise.</param>
         private void Setup(bool randomizedPoints)
@@ -78,97 +170,5 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             AddCell(new XYZ(0, 70, 3), new XYZ(0.5, 73, 8), 0xA0A0A0, randomizedPoints);
             AddCell(new XYZ(0, 73, 3), new XYZ(0.5, 76, 8), 0xA0A0A0, randomizedPoints);
         }
-                
-        
-        /// <summary>
-        /// The implementation of IPointCloudAccess.GetName().
-        /// </summary>
-        /// <returns>The name (the file name).</returns>
-        public string GetName()
-        {
-            return "apipc: " + m_identifier;
-        }
-
-        /// <summary>
-        /// The implementation of IPointCloudAccess.GetColorEncoding()
-        /// </summary>
-        /// <returns>The color encoding.</returns>
-        public PointCloudColorEncoding GetColorEncoding()
-        {
-            return PointCloudColorEncoding.ABGR;
-        }
-
-        /// <summary>
-        /// The implementation of IPointCloudAccess.CreatePointSetIterator().
-        /// </summary>
-        /// <param name="rFilter">The filter.</param>
-        /// <param name="viewId">The view id (unused).</param>
-        /// <returns>The new iterator.</returns>
-        public IPointSetIterator CreatePointSetIterator(PointCloudFilter rFilter, ElementId viewId)
-        {
-            return new PointCloudAccessBaseIterator(this, rFilter);
-        }
-
-        /// <summary>
-        /// The implementation of IPointCloudAccess.CreatePointSetIterator().
-        /// </summary>
-        /// <param name="rFilter">The filter.</param>
-        /// <param name="density">The density.</param>
-        /// <param name="viewId">The view id (unused).</param>
-        /// <returns>The new iterator.</returns>
-        public IPointSetIterator CreatePointSetIterator(PointCloudFilter rFilter, double density, ElementId viewId)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The implementation of IPointCloudAccess.GetExtent().
-        /// </summary>
-        /// <returns>The extents of the point cloud.</returns>
-        public Outline GetExtent()
-        {
-            return GetOutline();
-        }
-
-        /// <summary>
-        /// The implementation of IPointCloudAccess.GetOffset().
-        /// </summary>
-        /// <remarks>This method is not used by Revit and will be removed in a later pre-release build.</remarks>
-        /// <returns>Zero.</returns>
-        public XYZ GetOffset()
-        {
-            return XYZ.Zero;
-        }
-
-        /// <summary>
-        /// The implementation of IPointCloudAccess.GetUnitsToFeetConversionFactor().
-        /// </summary>
-        /// <returns>The scale.</returns>
-        public double GetUnitsToFeetConversionFactor()
-        {
-            return GetScale();
-        }
-
-        /// <summary>
-        /// The implementation of IPointCloudAccess.ReadPoints().
-        /// </summary>
-        /// <param name="rFilter">The filter.</param>
-        /// <param name="viewId">The view id (unused).</param>
-        /// <param name="buffer">The point cloud buffer.</param>
-        /// <param name="nBufferSize">The maximum number of points.</param>
-        /// <returns>The number of points read.</returns>
-        public int ReadPoints(PointCloudFilter rFilter, ElementId viewId, IntPtr buffer, int nBufferSize)
-        {
-            var read = ReadSomePoints(rFilter, buffer, nBufferSize, 0);
-
-            return read;
-        }
-
-        /// <summary>
-        /// The implementation of IPointCloudAccess.Free().
-        /// </summary>
-        public void Free()
-        {
-        }
-            }
+    }
 }

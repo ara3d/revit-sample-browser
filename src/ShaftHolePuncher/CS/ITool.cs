@@ -19,42 +19,30 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 {
     /// <summary>
-    /// Abstract class used as a base class of all drawing tool class
+    ///     Abstract class used as a base class of all drawing tool class
     /// </summary>
-    public abstract class ITool
+    public abstract class Tool
     {
-        protected List<Point> m_points = new List<Point>();  // Field used to store points of a line
-        protected Pen m_backGroundPen;  // background pen used to Erase the preview line
-        protected Pen m_foreGroundPen;  // foreground pen used to draw lines
-        protected Point m_preMovePoint;  // store the mouse position when mouse move in pictureBox
+        protected Pen m_backGroundPen; // background pen used to Erase the preview line
+        protected bool m_finished; // indicate whether user have finished drawing
+        protected Pen m_foreGroundPen; // foreground pen used to draw lines
+        protected List<Point> m_points = new List<Point>(); // Field used to store points of a line
         protected Point m_preDownPoint; // store the mouse position when right mouse button clicked in pictureBox
-        protected bool m_finished;    // indicate whether user have finished drawing
-        
-        /// <summary>
-        /// Finished property to define whether curve was finished
-        /// </summary>
-        public virtual bool Finished
-        {
-            get => m_finished;
-            set => m_finished = value;
-        }
+        protected Point m_preMovePoint; // store the mouse position when mouse move in pictureBox
 
         /// <summary>
-        /// get all lines drawn in pictureBox
+        ///     default constructor
         /// </summary>
-        public virtual List<Point> Points => m_points;
-
-        /// <summary>
-        /// default constructor
-        /// </summary>
-        public ITool()
+        protected Tool()
         {
             m_backGroundPen = new Pen(Color.White);
             m_backGroundPen.Width *= 2;
@@ -64,12 +52,26 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// calculate the distance between two points
+        ///     Finished property to define whether curve was finished
+        /// </summary>
+        public bool Finished
+        {
+            get => m_finished;
+            set => m_finished = value;
+        }
+
+        /// <summary>
+        ///     get all lines drawn in pictureBox
+        /// </summary>
+        public List<Point> Points => m_points;
+
+        /// <summary>
+        ///     calculate the distance between two points
         /// </summary>
         /// <param name="p1">first point</param>
         /// <param name="p2">second point</param>
         /// <returns>distance between two points</returns>
-        public double GetDistance(Point p1, Point p2)
+        protected double GetDistance(Point p1, Point p2)
         {
             var distance = Math.Sqrt(
                 (p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y));
@@ -77,31 +79,37 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// clear all the points in the tool
+        ///     clear all the points in the tool
         /// </summary>
-        public virtual void Clear() 
+        public void Clear()
         {
             m_points.Clear();
         }
 
         /// <summary>
-        /// draw a line from end point to the location where mouse moved
+        ///     draw a line from end point to the location where mouse moved
         /// </summary>
         /// <param name="graphic">Graphics object,used to draw geometry</param>
         /// <param name="e">mouse event args</param>
-        public virtual void OnMouseMove(Graphics graphic, 
-            System.Windows.Forms.MouseEventArgs e) { }
+        public virtual void OnMouseMove(Graphics graphic,
+            MouseEventArgs e)
+        {
+        }
 
         /// <summary>
-        /// record the location point where mouse clicked
+        ///     record the location point where mouse clicked
         /// </summary>
         /// <param name="e">mouse event args</param>
-        public virtual void OnMouseDown(System.Windows.Forms.MouseEventArgs e) { }
+        public virtual void OnMouseDown(MouseEventArgs e)
+        {
+        }
 
         /// <summary>
-        /// draw the stored lines
+        ///     draw the stored lines
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
-        public virtual void Draw(Graphics graphic) { }
+        public virtual void Draw(Graphics graphic)
+        {
+        }
     }
 }

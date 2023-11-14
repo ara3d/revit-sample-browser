@@ -22,20 +22,20 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 
 namespace Revit.SDK.Samples.PanelSchedule.CS
 {
     /// <summary>
-    /// Translate the panel schedule view data from Revit to CSV.
+    ///     Translate the panel schedule view data from Revit to CSV.
     /// </summary>
-    class CSVTranslator : Translator
+    internal class CSVTranslator : Translator
     {
         /// <summary>
-        /// create a CSVTranslator instance for a PanelScheduleView instance.
+        ///     create a CSVTranslator instance for a PanelScheduleView instance.
         /// </summary>
         /// <param name="psView">the exporting panel schedule view instance.</param>
         public CSVTranslator(PanelScheduleView psView)
@@ -44,19 +44,17 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         }
 
         /// <summary>
-        /// export to a CSV file that contains the PanelScheduleView instance data.
+        ///     export to a CSV file that contains the PanelScheduleView instance data.
         /// </summary>
         /// <returns>the exported file path</returns>
         public override string Export()
         {
-            var asemblyName = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var asemblyName = Assembly.GetExecutingAssembly().Location;
 
-            var panelScheduleCSVFile = asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(m_psView.Name) + ".csv");
+            var panelScheduleCSVFile =
+                asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(m_psView.Name) + ".csv");
 
-            if (File.Exists(panelScheduleCSVFile))
-            {
-                File.Delete(panelScheduleCSVFile);
-            }
+            if (File.Exists(panelScheduleCSVFile)) File.Delete(panelScheduleCSVFile);
 
             using (var sw = File.CreateText(panelScheduleCSVFile))
             {
@@ -69,7 +67,7 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         }
 
         /// <summary>
-        /// dump PanelScheduleData to comma delimited.
+        ///     dump PanelScheduleData to comma delimited.
         /// </summary>
         /// <param name="sw"></param>
         private void DumpPanelScheduleData(StreamWriter sw)
@@ -81,7 +79,7 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         }
 
         /// <summary>
-        /// dump SectionData to comma delimited.
+        ///     dump SectionData to comma delimited.
         /// </summary>
         /// <param name="sw">exporting file stream</param>
         /// <param name="psView">the PanelScheduleView instance is exporting.</param>
@@ -96,7 +94,6 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
             {
                 var oneRow = new StringBuilder();
                 for (var jj = 0; jj < nCols_Section; ++jj)
-                {
                     try
                     {
                         oneRow.AppendFormat("{0},", m_psView.GetCellText(sectionType, ii, jj));
@@ -105,7 +102,6 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
                     {
                         // do nothing.
                     }
-                }
 
                 sw.WriteLine(oneRow.ToString());
             }

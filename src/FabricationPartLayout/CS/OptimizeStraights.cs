@@ -22,67 +22,66 @@
 
 using System;
 using System.Collections.Generic;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FabricationPartLayout.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class OptimizeStraights : IExternalCommand
-   {
-      public virtual Result Execute(ExternalCommandData commandData
-          , ref string message, ElementSet elements)
-      {
-         try
-         {
-            var doc = commandData.Application.ActiveUIDocument.Document;
-
-            // check user selection
-            var uidoc = commandData.Application.ActiveUIDocument;
-            var collection = uidoc.Selection.GetElementIds();
-            if (collection.Count > 0)
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class OptimizeStraights : IExternalCommand
+    {
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            try
             {
-               ISet<ElementId> selIds = new HashSet<ElementId>();
-               foreach (var id in collection)
-                  selIds.Add(id);
+                var doc = commandData.Application.ActiveUIDocument.Document;
 
-               using (var tr = new Transaction(doc, "Optimize Straights"))
-               {
-                  tr.Start();
+                // check user selection
+                var uidoc = commandData.Application.ActiveUIDocument;
+                var collection = uidoc.Selection.GetElementIds();
+                if (collection.Count > 0)
+                {
+                    ISet<ElementId> selIds = new HashSet<ElementId>();
+                    foreach (var id in collection)
+                        selIds.Add(id);
 
-                  // optimize lengths method will take a set of elements and any fabrication straight parts
-                  // within this set that have been optimized will be returned.
-                  var affectedPartIds = FabricationPart.OptimizeLengths(doc, selIds);
-                  if (affectedPartIds.Count == 0)
-                  {
-                     message = "No fabrication straight parts were optimized.";
-                     return Result.Cancelled;
-                  }
+                    using (var tr = new Transaction(doc, "Optimize Straights"))
+                    {
+                        tr.Start();
 
-                  doc.Regenerate();
+                        // optimize lengths method will take a set of elements and any fabrication straight parts
+                        // within this set that have been optimized will be returned.
+                        var affectedPartIds = FabricationPart.OptimizeLengths(doc, selIds);
+                        if (affectedPartIds.Count == 0)
+                        {
+                            message = "No fabrication straight parts were optimized.";
+                            return Result.Cancelled;
+                        }
 
-                  tr.Commit();
-               }
+                        doc.Regenerate();
 
-               return Result.Succeeded;
+                        tr.Commit();
+                    }
+
+                    return Result.Succeeded;
+                }
+
+                // inform user they need to select at least one element
+                message = "Please select at least one element.";
+
+                return Result.Failed;
             }
-            else
+            catch (Exception ex)
             {
-               // inform user they need to select at least one element
-               message = "Please select at least one element.";
+                message = ex.Message;
+                return Result.Failed;
             }
-
-            return Result.Failed;
-         }
-         catch (Exception ex)
-         {
-            message = ex.Message;
-            return Result.Failed;
-         }
-      }
-   }
+        }
+    }
 }

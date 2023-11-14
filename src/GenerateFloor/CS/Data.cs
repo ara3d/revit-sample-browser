@@ -21,337 +21,308 @@
 //
 
 using System;
-using System.Collections.Generic;
-
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Document = Autodesk.Revit.DB.Document;
 
 namespace Revit.SDK.Samples.GenerateFloor.CS
 {
-   /// <summary>
-   /// obtain all data for this sample.
-   /// all possible types for floor
-   /// the level that walls based
-   /// </summary>
-   public class Data
-   {
-      private Hashtable m_floorTypes;
-      private const double PRECISION = 0.00000001;
-      private Autodesk.Revit.Creation.Application m_creApp;
-      private Document m_document;
+    /// <summary>
+    ///     obtain all data for this sample.
+    ///     all possible types for floor
+    ///     the level that walls based
+    /// </summary>
+    public class Data
+    {
+        private const double PRECISION = 0.00000001;
+        private Application m_creApp;
+        private Document m_document;
+        private Hashtable m_floorTypes;
 
-      /// <summary>
-      /// A floor type to be used by the new floor instead of the default type.
-      /// </summary>
-      public FloorType FloorType { get; set; }
+        /// <summary>
+        ///     A floor type to be used by the new floor instead of the default type.
+        /// </summary>
+        public FloorType FloorType { get; set; }
 
-      /// <summary>
-      /// The level on which the floor is to be placed.
-      /// </summary>
-      public Level Level { get; set; }
+        /// <summary>
+        ///     The level on which the floor is to be placed.
+        /// </summary>
+        public Level Level { get; set; }
 
-      /// <summary>
-      /// A array of planar lines and arcs that represent the horizontal profile of the floor.
-      /// </summary>
-      public CurveArray Profile { get; set; }
+        /// <summary>
+        ///     A array of planar lines and arcs that represent the horizontal profile of the floor.
+        /// </summary>
+        public CurveArray Profile { get; set; }
 
-      /// <summary>
-      /// If set, specifies that the floor is structural in nature.
-      /// </summary>
-      public bool Structural { get; set; }
+        /// <summary>
+        ///     If set, specifies that the floor is structural in nature.
+        /// </summary>
+        public bool Structural { get; set; }
 
-      /// <summary>
-      /// Points to be draw.
-      /// </summary>
-      public PointF[] Points { get; set; }
+        /// <summary>
+        ///     Points to be draw.
+        /// </summary>
+        public PointF[] Points { get; set; }
 
-      /// <summary>
-      /// the graphics' max length
-      /// </summary>
-      public double MaxLength { get; set; }
+        /// <summary>
+        ///     the graphics' max length
+        /// </summary>
+        public double MaxLength { get; set; }
 
-      /// <summary>
-      /// List of all floor types name could be used by the floor.
-      /// </summary>
-      public List<string> FloorTypesName { get; set; }
+        /// <summary>
+        ///     List of all floor types name could be used by the floor.
+        /// </summary>
+        public List<string> FloorTypesName { get; set; }
 
-      /// <summary>
-      /// Obtain all data which is necessary for generate floor.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      public void ObtainData(ExternalCommandData commandData)
-      {
-         if (null == commandData)
-         {
-            throw new ArgumentNullException("commandData");
-         }
+        /// <summary>
+        ///     Obtain all data which is necessary for generate floor.
+        /// </summary>
+        /// <param name="commandData">
+        ///     An object that is passed to the external application
+        ///     which contains data related to the command,
+        ///     such as the application object and active view.
+        /// </param>
+        public void ObtainData(ExternalCommandData commandData)
+        {
+            if (null == commandData) throw new ArgumentNullException("commandData");
 
-         var doc = commandData.Application.ActiveUIDocument;
-         m_document = doc.Document;
-         var es = new ElementSet();
-         foreach (var elementId in doc.Selection.GetElementIds())
-         {
-            es.Insert(doc.Document.GetElement(elementId));
-         }
-         var walls = WallFilter(es);
-         m_creApp = commandData.Application.Application.Create;
-         Profile = m_creApp.NewCurveArray();
+            var doc = commandData.Application.ActiveUIDocument;
+            m_document = doc.Document;
+            var es = new ElementSet();
+            foreach (var elementId in doc.Selection.GetElementIds()) es.Insert(doc.Document.GetElement(elementId));
+            var walls = WallFilter(es);
+            m_creApp = commandData.Application.Application.Create;
+            Profile = m_creApp.NewCurveArray();
 
-         var iter = (new FilteredElementCollector(doc.Document)).OfClass(typeof(FloorType)).GetElementIterator();
-         ObtainFloorTypes(iter);
-         ObtainProfile(walls);
-         ObtainLevel(walls);
-         Generate2D();
-         Structural = true;
-      }
+            var iter = new FilteredElementCollector(doc.Document).OfClass(typeof(FloorType)).GetElementIterator();
+            ObtainFloorTypes(iter);
+            ObtainProfile(walls);
+            ObtainLevel(walls);
+            Generate2D();
+            Structural = true;
+        }
 
-      /// <summary>
-      /// Set the floor type to generate by its name.
-      /// </summary>
-      /// <param name="typeName">the floor type's name</param>
-      public void ChooseFloorType(string typeName)
-      {
-         FloorType = m_floorTypes[typeName] as FloorType;
-      }
+        /// <summary>
+        ///     Set the floor type to generate by its name.
+        /// </summary>
+        /// <param name="typeName">the floor type's name</param>
+        public void ChooseFloorType(string typeName)
+        {
+            FloorType = m_floorTypes[typeName] as FloorType;
+        }
 
-      /// <summary>
-      /// Obtain all types are available for floor.
-      /// </summary>
-      /// <param name="elements">all elements within the Document.</param>
-      private void ObtainFloorTypes(FilteredElementIterator elements)
-      {
-         m_floorTypes = new Hashtable();
-         FloorTypesName = new List<string>();
+        /// <summary>
+        ///     Obtain all types are available for floor.
+        /// </summary>
+        /// <param name="elements">all elements within the Document.</param>
+        private void ObtainFloorTypes(FilteredElementIterator elements)
+        {
+            m_floorTypes = new Hashtable();
+            FloorTypesName = new List<string>();
 
-         elements.Reset();
-         while (elements.MoveNext())
-         {
-            var ft = elements.Current as FloorType;
-
-            if (null == ft || null == ft.Category || !ft.Category.Name.Equals("Floors"))
+            elements.Reset();
+            while (elements.MoveNext())
             {
-               continue;
+                var ft = elements.Current as FloorType;
+
+                if (null == ft || null == ft.Category || !ft.Category.Name.Equals("Floors")) continue;
+
+                m_floorTypes.Add(ft.Name, ft);
+                FloorTypesName.Add(ft.Name);
+                FloorType = ft;
+            }
+        }
+
+        /// <summary>
+        ///     Obtain the wall's level
+        /// </summary>
+        /// <param name="walls">the selection of walls that make a closed outline </param>
+        private void ObtainLevel(ElementSet walls)
+        {
+            Level temp = null;
+
+            foreach (Wall w in walls)
+            {
+                if (null == temp)
+                {
+                    temp = m_document.GetElement(w.LevelId) as Level;
+                    Level = temp;
+                }
+
+                if (Level.Elevation != (m_document.GetElement(w.LevelId) as Level).Elevation)
+                    throw new InvalidOperationException("All walls should base the same level.");
+            }
+        }
+
+        /// <summary>
+        ///     Obtain a profile to generate floor.
+        /// </summary>
+        /// <param name="walls">the selection of walls that make a closed outline</param>
+        private void ObtainProfile(ElementSet walls)
+        {
+            var temp = new CurveArray();
+            foreach (Wall w in walls)
+            {
+                var curve = w.Location as LocationCurve;
+                temp.Append(curve.Curve);
             }
 
-            m_floorTypes.Add(ft.Name, ft);
-            FloorTypesName.Add(ft.Name);
-            FloorType = ft;
-         }
-      }
+            SortCurves(temp);
+        }
 
-      /// <summary>
-      /// Obtain the wall's level
-      /// </summary>
-      /// <param name="walls">the selection of walls that make a closed outline </param>
-      private void ObtainLevel(ElementSet walls)
-      {
-         Level temp = null;
+        /// <summary>
+        ///     Generate 2D data for preview pane.
+        /// </summary>
+        private void Generate2D()
+        {
+            var tempArray = new ArrayList();
+            double xMin = 0;
+            double xMax = 0;
+            double yMin = 0;
+            double yMax = 0;
 
-         foreach (Wall w in walls)
-         {
-            if (null == temp)
+            foreach (Curve c in Profile)
             {
-                temp = m_document.GetElement(w.LevelId) as Level;
-               Level = temp;
+                var xyzArray = c.Tessellate() as List<XYZ>;
+                foreach (var xyz in xyzArray)
+                {
+                    var temp = new XYZ(xyz.X, -xyz.Y, xyz.Z);
+                    FindMinMax(temp, ref xMin, ref xMax, ref yMin, ref yMax);
+                    tempArray.Add(temp);
+                }
             }
 
-            if (Level.Elevation != (m_document.GetElement(w.LevelId) as Level).Elevation)
+            MaxLength = xMax - xMin > yMax - yMin ? xMax - xMin : yMax - yMin;
+
+            Points = new PointF[tempArray.Count / 2 + 1];
+            for (var i = 0; i < tempArray.Count; i = i + 2)
             {
-               throw new InvalidOperationException("All walls should base the same level.");
+                var point = (XYZ)tempArray[i];
+                Points.SetValue(new PointF((float)(point.X - xMin), (float)(point.Y - yMin)), i / 2);
             }
-         }
-      }
 
-      /// <summary>
-      /// Obtain a profile to generate floor.
-      /// </summary>
-      /// <param name="walls">the selection of walls that make a closed outline</param>
-      private void ObtainProfile(ElementSet walls)
-      {
-         var temp = new CurveArray();
-         foreach (Wall w in walls)
-         {
-            var curve = w.Location as LocationCurve;
-            temp.Append(curve.Curve);
-         }
-         SortCurves(temp);
-      }
+            var end = (PointF)Points.GetValue(0);
+            Points.SetValue(end, tempArray.Count / 2);
+        }
 
-      /// <summary>
-      /// Generate 2D data for preview pane.
-      /// </summary>
-      private void Generate2D()
-      {
-         var tempArray = new ArrayList();
-         double xMin = 0;
-         double xMax = 0;
-         double yMin = 0;
-         double yMax = 0;
+        /// <summary>
+        ///     Estimate the current point is left_bottom or right_up.
+        /// </summary>
+        /// <param name="point">current point</param>
+        /// <param name="xMin">left</param>
+        /// <param name="xMax">right</param>
+        /// <param name="yMin">bottom</param>
+        /// <param name="yMax">up</param>
+        private static void FindMinMax(XYZ point, ref double xMin, ref double xMax, ref double yMin, ref double yMax)
+        {
+            if (point.X < xMin) xMin = point.X;
+            if (point.X > xMax) xMax = point.X;
+            if (point.Y < yMin) yMin = point.Y;
+            if (point.Y > yMax) yMax = point.Y;
+        }
 
-         foreach (Curve c in Profile)
-         {
-            var xyzArray = c.Tessellate() as List<XYZ>;
-            foreach (var xyz in xyzArray)
+        /// <summary>
+        ///     Filter none-wall elements.
+        /// </summary>
+        /// <param name="miscellanea">The currently selected Elements in Autodesk Revit</param>
+        /// <returns></returns>
+        private static ElementSet WallFilter(ElementSet miscellanea)
+        {
+            var walls = new ElementSet();
+            foreach (Element e in miscellanea)
             {
-               var temp = new XYZ(xyz.X, -xyz.Y, xyz.Z);
-               FindMinMax(temp, ref xMin, ref xMax, ref yMin, ref yMax);
-               tempArray.Add(temp);
+                var w = e as Wall;
+                if (null != w) walls.Insert(w);
             }
-         }
 
-         MaxLength = ((xMax - xMin) > (yMax - yMin)) ? (xMax - xMin) : (yMax - yMin);
+            if (0 == walls.Size) throw new InvalidOperationException("Please select wall first.");
 
-         Points = new PointF[tempArray.Count / 2 + 1];
-         for (var i = 0; i < tempArray.Count; i = i + 2)
-         {
-            var point = (XYZ)tempArray[i];
-            Points.SetValue(new PointF((float)(point.X - xMin), (float)(point.Y - yMin)), i / 2);
-         }
-         var end = (PointF)Points.GetValue(0);
-         Points.SetValue(end, tempArray.Count / 2);
-      }
+            return walls;
+        }
 
-      /// <summary>
-      /// Estimate the current point is left_bottom or right_up.
-      /// </summary>
-      /// <param name="point">current point</param>
-      /// <param name="xMin">left</param>
-      /// <param name="xMax">right</param>
-      /// <param name="yMin">bottom</param>
-      /// <param name="yMax">up</param>
-      static private void FindMinMax(XYZ point, ref double xMin, ref double xMax, ref double yMin, ref double yMax)
-      {
-         if (point.X < xMin)
-         {
-            xMin = point.X;
-         }
-         if (point.X > xMax)
-         {
-            xMax = point.X;
-         }
-         if (point.Y < yMin)
-         {
-            yMin = point.Y;
-         }
-         if (point.Y > yMax)
-         {
-            yMax = point.Y;
-         }
-      }
-
-      /// <summary>
-      /// Filter none-wall elements.
-      /// </summary>
-      /// <param name="miscellanea">The currently selected Elements in Autodesk Revit</param>
-      /// <returns></returns>
-      static private ElementSet WallFilter(ElementSet miscellanea)
-      {
-         var walls = new ElementSet();
-         foreach (Element e in miscellanea)
-         {
-            var w = e as Wall;
-            if (null != w)
-            {
-               walls.Insert(w);
-            }
-         }
-
-         if (0 == walls.Size)
-         {
-            throw new InvalidOperationException("Please select wall first.");
-         }
-
-         return walls;
-      }
-
-      /// <summary>
-      /// Chaining the profile.
-      /// </summary>
-      /// <param name="lines">none-chained profile</param>
-      private void SortCurves(CurveArray lines)
-      {
-         var temp = lines.get_Item(0).GetEndPoint(1);
-         var temCurve = lines.get_Item(0);
-
-         Profile.Append(temCurve);
-
-         while (Profile.Size != lines.Size)
-         {
-
-            temCurve = GetNext(lines, temp, temCurve);
-
-            if (Math.Abs(temp.X - temCurve.GetEndPoint(0).X) < PRECISION
-                && Math.Abs(temp.Y - temCurve.GetEndPoint(0).Y) < PRECISION)
-            {
-               temp = temCurve.GetEndPoint(1);
-            }
-            else
-            {
-               temp = temCurve.GetEndPoint(0);
-            }
+        /// <summary>
+        ///     Chaining the profile.
+        /// </summary>
+        /// <param name="lines">none-chained profile</param>
+        private void SortCurves(CurveArray lines)
+        {
+            var temp = lines.get_Item(0).GetEndPoint(1);
+            var temCurve = lines.get_Item(0);
 
             Profile.Append(temCurve);
-         }
 
-         if (Math.Abs(temp.X - lines.get_Item(0).GetEndPoint(0).X) > PRECISION
-             || Math.Abs(temp.Y - lines.get_Item(0).GetEndPoint(0).Y) > PRECISION
-             || Math.Abs(temp.Z - lines.get_Item(0).GetEndPoint(0).Z) > PRECISION)
-         {
+            while (Profile.Size != lines.Size)
+            {
+                temCurve = GetNext(lines, temp, temCurve);
+
+                if (Math.Abs(temp.X - temCurve.GetEndPoint(0).X) < PRECISION
+                    && Math.Abs(temp.Y - temCurve.GetEndPoint(0).Y) < PRECISION)
+                    temp = temCurve.GetEndPoint(1);
+                else
+                    temp = temCurve.GetEndPoint(0);
+
+                Profile.Append(temCurve);
+            }
+
+            if (Math.Abs(temp.X - lines.get_Item(0).GetEndPoint(0).X) > PRECISION
+                || Math.Abs(temp.Y - lines.get_Item(0).GetEndPoint(0).Y) > PRECISION
+                || Math.Abs(temp.Z - lines.get_Item(0).GetEndPoint(0).Z) > PRECISION)
+                throw new InvalidOperationException("The selected walls should be closed.");
+        }
+
+        /// <summary>
+        ///     Get the connected curve for current curve
+        /// </summary>
+        /// <param name="profile">a closed outline made by the selection of walls</param>
+        /// <param name="connected">current curve's end point</param>
+        /// <param name="line">current curve</param>
+        /// <returns>a appropriate curve for generate floor</returns>
+        private Curve GetNext(CurveArray profile, XYZ connected, Curve line)
+        {
+            foreach (Curve c in profile)
+            {
+                if (c.Equals(line)) continue;
+                if (Math.Abs(c.GetEndPoint(0).X - line.GetEndPoint(1).X) < PRECISION &&
+                    Math.Abs(c.GetEndPoint(0).Y - line.GetEndPoint(1).Y) < PRECISION &&
+                    Math.Abs(c.GetEndPoint(0).Z - line.GetEndPoint(1).Z) < PRECISION
+                    && Math.Abs(c.GetEndPoint(1).X - line.GetEndPoint(0).X) < PRECISION &&
+                    Math.Abs(c.GetEndPoint(1).Y - line.GetEndPoint(0).Y) < PRECISION &&
+                    Math.Abs(c.GetEndPoint(1).Z - line.GetEndPoint(0).Z) < PRECISION
+                    && 2 != profile.Size)
+                    continue;
+
+                if (Math.Abs(c.GetEndPoint(0).X - connected.X) < PRECISION &&
+                    Math.Abs(c.GetEndPoint(0).Y - connected.Y) < PRECISION &&
+                    Math.Abs(c.GetEndPoint(0).Z - connected.Z) < PRECISION) return c;
+
+                if (Math.Abs(c.GetEndPoint(1).X - connected.X) < PRECISION &&
+                    Math.Abs(c.GetEndPoint(1).Y - connected.Y) < PRECISION &&
+                    Math.Abs(c.GetEndPoint(1).Z - connected.Z) < PRECISION)
+                {
+                    if (c.GetType().Name.Equals("Line"))
+                    {
+                        var start = c.GetEndPoint(1);
+                        var end = c.GetEndPoint(0);
+                        return Line.CreateBound(start, end);
+                    }
+
+                    if (c.GetType().Name.Equals("Arc"))
+                    {
+                        var size = c.Tessellate().Count;
+                        var start = c.Tessellate()[0];
+                        var middle = c.Tessellate()[size / 2];
+                        var end = c.Tessellate()[size];
+
+                        return Arc.Create(start, end, middle);
+                    }
+                }
+            }
+
             throw new InvalidOperationException("The selected walls should be closed.");
-         }
-      }
-
-      /// <summary>
-      /// Get the connected curve for current curve
-      /// </summary>
-      /// <param name="profile">a closed outline made by the selection of walls</param>
-      /// <param name="connected">current curve's end point</param>
-      /// <param name="line">current curve</param>
-      /// <returns>a appropriate curve for generate floor</returns>
-      private Curve GetNext(CurveArray profile, XYZ connected, Curve line)
-      {
-         foreach (Curve c in profile)
-         {
-            if (c.Equals(line))
-            {
-               continue;
-            }
-            if ((Math.Abs(c.GetEndPoint(0).X - line.GetEndPoint(1).X) < PRECISION && Math.Abs(c.GetEndPoint(0).Y - line.GetEndPoint(1).Y) < PRECISION && Math.Abs(c.GetEndPoint(0).Z - line.GetEndPoint(1).Z) < PRECISION)
-                && (Math.Abs(c.GetEndPoint(1).X - line.GetEndPoint(0).X) < PRECISION && Math.Abs(c.GetEndPoint(1).Y - line.GetEndPoint(0).Y) < PRECISION && Math.Abs(c.GetEndPoint(1).Z - line.GetEndPoint(0).Z) < PRECISION)
-                && 2 != profile.Size)
-            {
-               continue;
-            }
-
-            if (Math.Abs(c.GetEndPoint(0).X - connected.X) < PRECISION && Math.Abs(c.GetEndPoint(0).Y - connected.Y) < PRECISION && Math.Abs(c.GetEndPoint(0).Z - connected.Z) < PRECISION)
-            {
-               return c;
-            }
-            else if (Math.Abs(c.GetEndPoint(1).X - connected.X) < PRECISION && Math.Abs(c.GetEndPoint(1).Y - connected.Y) < PRECISION && Math.Abs(c.GetEndPoint(1).Z - connected.Z) < PRECISION)
-            {
-               if (c.GetType().Name.Equals("Line"))
-               {
-                  var start = c.GetEndPoint(1);
-                  var end = c.GetEndPoint(0);
-                  return Line.CreateBound(start, end);
-               }
-               else if (c.GetType().Name.Equals("Arc"))
-               {
-                  var size = c.Tessellate().Count;
-                  var start = c.Tessellate()[0];
-                  var middle = c.Tessellate()[size / 2];
-                  var end = c.Tessellate()[size];
-
-                  return Arc.Create(start, end, middle);
-               }
-            }
-         }
-
-         throw new InvalidOperationException("The selected walls should be closed.");
-      }
-   }
+        }
+    }
 }

@@ -21,36 +21,37 @@
 //
 
 using System.Collections.Generic;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
 {
     /// <summary>
-    /// Implements the Revit add-in interface IExternalCommand, create a wall
+    ///     Implements the Revit add-in interface IExternalCommand, create a wall
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class ExternalCommandCreateWall : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData,
-           ref string message, ElementSet elements)
+            ref string message, ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.ExternalCommandRegistration");
+            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                "Revit.SDK.Samples.ExternalCommandRegistration");
             trans.Start();
             var uiDoc = commandData.Application.ActiveUIDocument;
             var curves = new List<Curve>();
             //create rectangular curve: wall length: 60 , wall width: 40
             var line1 = Line.CreateBound(new XYZ(0, 0, 0),
-               new XYZ(0, 60, 0));
+                new XYZ(0, 60, 0));
             var line2 = Line.CreateBound(new XYZ(0, 60, 0),
-               new XYZ(0, 60, 40));
+                new XYZ(0, 60, 40));
             var line3 = Line.CreateBound(new XYZ(0, 60, 40),
-               new XYZ(0, 0, 40));
+                new XYZ(0, 0, 40));
             var line4 = Line.CreateBound(new XYZ(0, 0, 40),
-               new XYZ(0, 0, 0));
+                new XYZ(0, 0, 0));
             curves.Add(line1);
             curves.Add(line2);
             curves.Add(line3);
@@ -61,35 +62,31 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             trans.Commit();
             return Result.Succeeded;
         }
-
-            };
+    }
 
     /// <summary>
-    /// Implements the Revit add-in interface IExternalCommand, show a message box
+    ///     Implements the Revit add-in interface IExternalCommand, show a message box
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.ReadOnly)]
+    [Regeneration(RegenerationOption.Manual)]
     public class ExternalCommand3DView : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData,
-           ref string message, ElementSet elements)
+            ref string message, ElementSet elements)
         {
             TaskDialog.Show("External Command Registration Sample", "Hello, 3D View!");
 
             return Result.Succeeded;
         }
-
-            };
+    }
 
     /// <summary>
-    /// Implements the Revit add-in interface IExternalApplication, 
-    /// show message box when Revit start up and shut down
+    ///     Implements the Revit add-in interface IExternalApplication,
+    ///     show message box when Revit start up and shut down
     /// </summary>
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class ExternalApplicationClass : IExternalApplication
     {
-        
         public Result OnStartup(UIControlledApplication application)
         {
             TaskDialog.Show("External command Registration Sample", "Revit is starting up.");
@@ -101,6 +98,5 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             TaskDialog.Show("External command Registration Sample", "Revit is shutting down.");
             return Result.Succeeded;
         }
-
-            };
+    }
 }

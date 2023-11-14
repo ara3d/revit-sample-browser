@@ -26,13 +26,14 @@ using Autodesk.Revit.UI.Selection;
 namespace Revit.SDK.Samples.GenericStructuralConnection.CS
 {
     /// <summary>
-    /// Define filter for generic structural connection input elements. 
+    ///     Define filter for generic structural connection input elements.
     /// </summary>
-    class StructuralConnectionSelectionFilter : ISelectionFilter
+    internal class StructuralConnectionSelectionFilter : ISelectionFilter
     {
-        LogicalOrFilter _filter;
+        private readonly LogicalOrFilter _filter;
+
         /// <summary>
-        /// Initialize the filter with the accepted element types.
+        ///     Initialize the filter with the accepted element types.
         /// </summary>
         /// <param name="elemTypesAllowed">Logical filter containing accepted element types.</param>
         /// <returns></returns>
@@ -42,7 +43,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Allows an element to be selected
+        ///     Allows an element to be selected
         /// </summary>
         /// <param name="element">A candidate element in the selection operation.</param>
         /// <returns>Return true to allow the user to select this candidate element.</returns>
@@ -50,8 +51,9 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         {
             return _filter.PassesFilter(element);
         }
+
         /// <summary>
-        /// Allows a reference to be selected.
+        ///     Allows a reference to be selected.
         /// </summary>
         /// <param name="refer"> A candidate reference in the selection operation.</param>
         /// <param name="point">The 3D position of the mouse on the candidate reference.</param>

@@ -19,116 +19,130 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
 
+using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
-
 
 namespace Revit.SDK.Samples.WorkThread.CS
 {
     /// <summary>
-    ///   This class handles displaying results of an analysis of a wall surface.
+    ///     This class handles displaying results of an analysis of a wall surface.
     /// </summary>
     /// <remarks>
-    ///   The analyzer only displays the results, it does not calculate them.
-    ///   The calculation is delegated to a work-thread. The analyzer kicks
-    ///   off the calculation and then returns to Revit. Periodically Revit
-    ///   checks (during an Idling event) if there is more results available.
-    ///   If there is, the analyzer grabs them from the work-thread and takes
-    ///   care of the visualization. The thread lets the analyzer to know when 
-    ///   the calculation is finally over. When that happens, the application
-    ///   can unregister from Idling since it does not need it anymore.
-    ///   <para>
-    ///   Optionally, Revit can interrupt the analysis, which it typically does
-    ///   when the element being analyzed changes (or gets deleted). Depending
-    ///   on that change the application requests the analysis to restart
-    ///   or to stop completely. The analyzer makes sure the requests
-    ///   are delivered to the work-thread.
-    ///   </para>
+    ///     The analyzer only displays the results, it does not calculate them.
+    ///     The calculation is delegated to a work-thread. The analyzer kicks
+    ///     off the calculation and then returns to Revit. Periodically Revit
+    ///     checks (during an Idling event) if there is more results available.
+    ///     If there is, the analyzer grabs them from the work-thread and takes
+    ///     care of the visualization. The thread lets the analyzer to know when
+    ///     the calculation is finally over. When that happens, the application
+    ///     can unregister from Idling since it does not need it anymore.
+    ///     <para>
+    ///         Optionally, Revit can interrupt the analysis, which it typically does
+    ///         when the element being analyzed changes (or gets deleted). Depending
+    ///         on that change the application requests the analysis to restart
+    ///         or to stop completely. The analyzer makes sure the requests
+    ///         are delivered to the work-thread.
+    ///     </para>
     /// </remarks>
-    /// 
-    class FaceAnalyzer
+    internal class FaceAnalyzer
     {
-                // ActiveView
-        private View m_view;
-        // string representation of reference object
-        private string m_sreference;
-        // SpatialFieldManager
-        private SpatialFieldManager m_SFManager;
-        // schema Id
-        private int m_schemaId = -1;
         // field Id
         private int m_fieldId = -1;
-        // ThreadAgent
-        private ThreadAgent m_threadAgent;
-        // Results
-        private SharedResults m_results;
+
         // If the result manager needs to be initialized
         private bool m_needInitialization = true;
-        
-                /// <summary>
-        ///   Constructor
+
+        // Results
+        private SharedResults m_results;
+
+        // schema Id
+        private int m_schemaId = -1;
+
+        // SpatialFieldManager
+        private SpatialFieldManager m_SFManager;
+
+        // string representation of reference object
+        private readonly string m_sreference;
+
+        // ThreadAgent
+        private ThreadAgent m_threadAgent;
+
+        // ActiveView
+        private readonly View m_view;
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
-        /// 
         public FaceAnalyzer(View view, string sref)
         {
             m_sreference = sref;
             m_view = view;
         }
 
+
         /// <summary>
-        ///   Simple convention method to get an actual reference object
-        ///   from its stable representation we keep around.
+        ///     Returns the Id of the element being analyzed
+        /// </summary>
+        /// <value>
+        ///     Id of the element of which face the analysis was set up for.
+        /// </value>
+        public ElementId AnalyzedElementId
+        {
+            get
+            {
+                var faceref = GetReference();
+
+                if (faceref != null) return faceref.ElementId;
+
+                return ElementId.InvalidElementId;
+            }
+        }
+
+        /// <summary>
+        ///     Simple convention method to get an actual reference object
+        ///     from its stable representation we keep around.
         /// </summary>
         private Reference GetReference()
         {
-            if ((m_view != null) && (m_sreference.Length > 0))
-            {
+            if (m_view != null && m_sreference.Length > 0)
                 return Reference.ParseFromStableRepresentation(m_view.Document, m_sreference);
-            }
             return null;
         }
 
 
         /// <summary>
-        ///   Getting the face object corresponding to the reference we have stored
+        ///     Getting the face object corresponding to the reference we have stored
         /// </summary>
         /// <remarks>
-        ///   The face may change during the time it takes our calculation to finish,
-        ///   thus we always get it from the reference right when we actually need it;
+        ///     The face may change during the time it takes our calculation to finish,
+        ///     thus we always get it from the reference right when we actually need it;
         /// </remarks>
         private Face GetReferencedFace()
         {
             var faceref = GetReference();
             if (faceref != null)
-            {
                 return m_view.Document.GetElement(faceref).GetGeometryObjectFromReference(faceref) as Face;
-            }
             return null;
         }
 
 
         /// <summary>
-        ///   Getting ready to preform an analysis for the given in view
+        ///     Getting ready to preform an analysis for the given in view
         /// </summary>
         /// <remarks>
-        ///   This initializes the Spatial Field Manager,
-        ///   adds a field primitive corresponding to the face,
-        ///   and registers our result schema we want to use.
-        ///   The method clears any previous results in the view.
+        ///     This initializes the Spatial Field Manager,
+        ///     adds a field primitive corresponding to the face,
+        ///     and registers our result schema we want to use.
+        ///     The method clears any previous results in the view.
         /// </remarks>
-        /// 
         public void Initialize()
         {
             // create of get field manager for the view
 
             m_SFManager = SpatialFieldManager.GetSpatialFieldManager(m_view);
-            if (m_SFManager == null)
-            {
-                m_SFManager = SpatialFieldManager.CreateSpatialFieldManager(m_view, 1);
-            }
+            if (m_SFManager == null) m_SFManager = SpatialFieldManager.CreateSpatialFieldManager(m_view, 1);
 
             // For the sake of simplicity, we remove any previous results
 
@@ -148,37 +162,14 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   Returns the Id of the element being analyzed
-        /// </summary>
-        /// <value>
-        ///   Id of the element of which face the analysis was set up for.
-        /// </value>
-        /// 
-        public ElementId AnalyzedElementId
-        {
-            get
-            {
-                var faceref = GetReference();
-
-                if (faceref != null)
-                {
-                    return faceref.ElementId;
-                }
-
-                return ElementId.InvalidElementId;
-            }
-        }
-
-
-        /// <summary>
-        ///   Updating results on the surface being analyzed
+        ///     Updating results on the surface being analyzed
         /// </summary>
         /// <remarks>
-        ///   This is called periodically by the Idling event
-        ///   until there is no more results to be updated. 
+        ///     This is called periodically by the Idling event
+        ///     until there is no more results to be updated.
         /// </remarks>
         /// <returns>
-        ///   Returns True if there is still more to be processed.
+        ///     Returns True if there is still more to be processed.
         /// </returns>
         public bool UpdateResults()
         {
@@ -212,24 +203,21 @@ namespace Revit.SDK.Samples.WorkThread.CS
             // if the thread is not around anymore to result more data,
             // it means the analysis is finished for the FaceAnalyzer too.
 
-            return ((m_threadAgent != null) && (m_threadAgent.IsThreadAlive));
+            return m_threadAgent != null && m_threadAgent.IsThreadAlive;
         }
 
 
         /// <summary>
-        ///   Starting a work-thread to perform the calculation
+        ///     Starting a work-thread to perform the calculation
         /// </summary>
         /// <returns>
-        ///   True if the thread started off successfully.
+        ///     True if the thread started off successfully.
         /// </returns>
         public bool StartCalculation()
         {
             // we need to get the face from the reference we track
             var theface = GetReferencedFace();
-            if (theface == null)
-            {
-                return false;
-            }
+            if (theface == null) return false;
 
             // An instance for the result exchange
             m_results = new SharedResults();
@@ -247,13 +235,12 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   Stopping the calculation if still in progress
+        ///     Stopping the calculation if still in progress
         /// </summary>
         /// <remarks>
-        ///   This is typically to be called when there have been changes
-        ///   made in the model resulting in changes to the element being analyzed.
+        ///     This is typically to be called when there have been changes
+        ///     made in the model resulting in changes to the element being analyzed.
         /// </remarks>
-        /// 
         public void StopCalculation()
         {
             // We first signal we do not want more results,
@@ -266,23 +253,19 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
             if (m_threadAgent != null)
             {
-                if (m_threadAgent.IsThreadAlive)
-                {
-                    m_threadAgent.WaitToFinish();
-                }
+                if (m_threadAgent.IsThreadAlive) m_threadAgent.WaitToFinish();
                 m_threadAgent = null;
             }
         }
 
 
         /// <summary>
-        ///   Restarting the calculation.
+        ///     Restarting the calculation.
         /// </summary>
         /// <remarks>
-        ///   This is probably caused by a change in the face being analyzed,
-        ///   typically when the DocumentChanged event indicates modification were made.
+        ///     This is probably caused by a change in the face being analyzed,
+        ///     typically when the DocumentChanged event indicates modification were made.
         /// </remarks>
-        /// 
         public void RestartCalculation()
         {
             // First we make sure we start the ongoing calculation
@@ -296,8 +279,5 @@ namespace Revit.SDK.Samples.WorkThread.CS
             // on a regular Idling event, during which the document is modifiable.
             m_needInitialization = true;
         }
-        
-
-    }  // class
-
+    } // class
 }

@@ -25,19 +25,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace Revit.SDK.Samples.GenericStructuralConnection.CS
 {
     /// <summary>
-    /// Performs basic operations on detailed structural connections.
+    ///     Performs basic operations on detailed structural connections.
     /// </summary>
     public class DetailedStructuralConnectionOps
     {
         /// <summary>
-        /// Create detailed structural connection.
+        ///     Create detailed structural connection.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -56,11 +56,10 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                     transaction.Start();
 
                     // The type is from the SteelConnectionsData.xml file.
-                    var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "usclipangle", new Guid("A42C5CE5-91C5-47E4-B445-D053E5BD66DB"), "usclipangle");
+                    var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "usclipangle",
+                        new Guid("A42C5CE5-91C5-47E4-B445-D053E5BD66DB"), "usclipangle");
                     if (connectionType != null)
-                    {
                         StructuralConnectionHandler.Create(activeDoc.Document, ids, connectionType.Id);
-                    }
 
                     var ts = transaction.Commit();
                     if (ts != TransactionStatus.Committed)
@@ -80,7 +79,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Change detailed structural connection.
+        ///     Change detailed structural connection.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -98,12 +97,11 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                     tran.Start();
 
                     // The type is from the SteelConnectionsData.xml file.
-                    var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "shearplatenew", new Guid("B490A703-5B6D-4B7A-8471-752133527925"), "shearplatenew");
+                    var connectionType = StructuralConnectionHandlerType.Create(activeDoc.Document, "shearplatenew",
+                        new Guid("B490A703-5B6D-4B7A-8471-752133527925"), "shearplatenew");
                     if (connectionType != null)
-                    {
                         // The replacement type should be valid on the connected elements.
                         conn.ChangeTypeId(connectionType.Id);
-                    }
 
                     var ts = tran.Commit();
                     if (ts != TransactionStatus.Committed)
@@ -123,7 +121,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Copy detailed structural connection.
+        ///     Copy detailed structural connection.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -162,7 +160,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Match properties for detailed structural connections.
+        ///     Match properties for detailed structural connections.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -188,7 +186,6 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                     // You could also access and modify the connection parameters.
                     var fields = primarySchema.ListFields();
                     foreach (var field in fields)
-                    {
                         if (field.ValueType == typeof(string))
                         {
                             var parameters = primaryEnt.Get<IList<string>>(field);
@@ -197,7 +194,6 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                                 // Do something.
                             }
                         }
-                    }
 
                     destConn.SetEntity(primaryEnt);
 
@@ -220,7 +216,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Reset detailed structural connection type to generic.
+        ///     Reset detailed structural connection type to generic.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -238,11 +234,12 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                 {
                     tran.Start();
 
-                    var genericTypeId = StructuralConnectionHandlerType.GetDefaultConnectionHandlerType(activeDoc.Document);
+                    var genericTypeId =
+                        StructuralConnectionHandlerType.GetDefaultConnectionHandlerType(activeDoc.Document);
                     if (genericTypeId == ElementId.InvalidElementId)
-                    {
-                        genericTypeId = StructuralConnectionHandlerType.CreateDefaultStructuralConnectionHandlerType(activeDoc.Document);                        
-                    }
+                        genericTypeId =
+                            StructuralConnectionHandlerType.CreateDefaultStructuralConnectionHandlerType(
+                                activeDoc.Document);
 
                     conn.ChangeTypeId(genericTypeId);
 
@@ -260,11 +257,12 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                 ret = Result.Failed;
             }
 
-            return ret; ;
+            return ret;
+            ;
         }
 
         /// <summary>
-        /// Get the Extensible storage schema
+        ///     Get the Extensible storage schema
         /// </summary>
         private static Schema GetSchema(Document doc, StructuralConnectionHandler connection)
         {
@@ -278,7 +276,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Get the unique identifier of the structural steel connection type
+        ///     Get the unique identifier of the structural steel connection type
         /// </summary>
         /// <param name="conn">structural connection</param>
         /// <param name="doc">current document</param>

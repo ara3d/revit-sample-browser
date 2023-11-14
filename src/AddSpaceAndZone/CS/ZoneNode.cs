@@ -26,14 +26,14 @@ using Autodesk.Revit.DB.Mechanical;
 namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 {
     /// <summary>
-    /// The ZoneNode class inherit TreeNode Class, it is used
-    /// to display the Zones is a TreeView, each ZoneNode contains
-    /// a Zone element.
+    ///     The ZoneNode class inherit TreeNode Class, it is used
+    ///     to display the Zones is a TreeView, each ZoneNode contains
+    ///     a Zone element.
     /// </summary>
     public class ZoneNode : TreeNode
     {
         /// <summary>
-        /// The constructor of ZoneNode class
+        ///     The constructor of ZoneNode class
         /// </summary>
         /// <param name="zone"></param>
         public ZoneNode(Zone zone)
@@ -45,7 +45,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// Get the Zone element in the ZoneNode.
+        ///     Get the Zone element in the ZoneNode.
         /// </summary>
         public Zone Zone { get; }
     }

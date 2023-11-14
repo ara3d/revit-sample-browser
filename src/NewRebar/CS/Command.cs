@@ -21,6 +21,7 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using GElement = Autodesk.Revit.DB.GeometryElement;
@@ -31,16 +32,15 @@ using GInstance = Autodesk.Revit.DB.Instance;
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// This class is the entrance of this project, it implements IExternalCommand.
+    ///     This class is the entrance of this project, it implements IExternalCommand.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
             {
@@ -48,16 +48,17 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 var creator = new RebarCreator(commandData);
                 creator.Execute();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                message = e.Message.ToString();
+                message = e.Message;
                 return Result.Cancelled;
             }
             finally
             {
                 transaction.Commit();
             }
+
             return Result.Succeeded;
-        } 
+        }
     }
 }

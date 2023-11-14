@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
@@ -30,24 +31,22 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.DynamicModelUpdate.CS
 {
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //
     // Command to setup the updater, register the triggers (on execute), and unregister it (on close the document)
     //
 
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+    [Transaction(TransactionMode.Manual)]
     public class AssociativeSectionUpdater : IExternalCommand
     {
-        Document m_document;
-        UIDocument m_documentUI;
-
         // application's private data
         private static SectionUpdater m_sectionUpdater;
-        private AddInId m_thisAppId;
 
-        private static List<ElementId> idsToWatch = new List<ElementId>();
+        private static readonly List<ElementId> idsToWatch = new List<ElementId>();
         private static ElementId m_oldSectionId = ElementId.InvalidElementId;
+        private Document m_document;
+        private UIDocument m_documentUI;
+        private AddInId m_thisAppId;
 
         Result IExternalCommand.Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -60,7 +59,6 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
 
                 // creating and registering the updater for the document.
                 if (m_sectionUpdater == null)
-                {
                     using (var tran = new Transaction(m_document, "Register Section Updater"))
                     {
                         tran.Start();
@@ -70,7 +68,6 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
 
                         tran.Commit();
                     }
-                }
 
                 TaskDialog.Show("Message", "Please select a section view, then select a window.");
 
@@ -78,24 +75,22 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                 Element sectionElement = null;
                 try
                 {
-                    var referSection = m_documentUI.Selection.PickObject(ObjectType.Element, "Please select a section view.");
+                    var referSection =
+                        m_documentUI.Selection.PickObject(ObjectType.Element, "Please select a section view.");
                     if (referSection != null)
                     {
                         var sectionElem = m_document.GetElement(referSection);
-                        if (sectionElem != null)
-                        {
-                            sectionElement = sectionElem;
-                        }
+                        if (sectionElem != null) sectionElement = sectionElem;
                     }
-                    var referModel = m_documentUI.Selection.PickObject(ObjectType.Element, "Please select a window to associated with the section view.");
+
+                    var referModel = m_documentUI.Selection.PickObject(ObjectType.Element,
+                        "Please select a window to associated with the section view.");
                     if (referModel != null)
                     {
                         var model = m_document.GetElement(referModel);
                         if (model != null)
-                        {
                             if (model is FamilyInstance)
                                 modelId = model.Id;
-                        }
                     }
                 }
                 catch (OperationCanceledException)
@@ -115,15 +110,17 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                 var collector = new FilteredElementCollector(m_document);
                 collector.WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_Views));
                 var viewElements = from element in collector
-                                   where element.Name == name
-                                   select element;
+                    where element.Name == name
+                    select element;
 
-                var sectionViews = viewElements.ToList<Element>();
+                var sectionViews = viewElements.ToList();
                 if (sectionViews.Count == 0)
                 {
-                    TaskDialog.Show("Message", "Cannot find the view name " + name + "\n The operation will be canceled.");
+                    TaskDialog.Show("Message",
+                        "Cannot find the view name " + name + "\n The operation will be canceled.");
                     return Result.Failed;
                 }
+
                 var sectionId = sectionViews[0].Id;
 
                 // Associated the section view to the window, and add a trigger for it.
@@ -134,7 +131,9 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                     m_oldSectionId = sectionId;
                     UpdaterRegistry.RemoveAllTriggers(m_sectionUpdater.GetUpdaterId());
                     m_sectionUpdater.AddTriggerForUpdater(m_document, idsToWatch, sectionId, sectionElement);
-                    TaskDialog.Show("Message", "The ViewSection id: " + sectionId + " has been associated to the window id: " + modelId + "\n You can try to move or modify the window to see how the updater works.");
+                    TaskDialog.Show("Message",
+                        "The ViewSection id: " + sectionId + " has been associated to the window id: " + modelId +
+                        "\n You can try to move or modify the window to see how the updater works.");
                 }
                 else
                 {
@@ -153,7 +152,7 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
         }
 
         /// <summary>
-        /// Unregister the updater on Revit document close.
+        ///     Unregister the updater on Revit document close.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="args">The DocumentClosing event args.</param>
@@ -168,7 +167,5 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                 m_sectionUpdater = null;
             }
         }
-
     }
-
 }

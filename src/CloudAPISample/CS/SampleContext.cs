@@ -25,24 +25,24 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.CloudAPISample.CS
 {
-   /// <summary>
-   ///    Base class for each sample context in samples portal.
-   /// </summary>
-   public abstract class SampleContext
-   {
-      /// <summary>
-      ///    The root node for this sample
-      /// </summary>
-      public UserControl View { get; set; }
+    /// <summary>
+    ///     Base class for each sample context in samples portal.
+    /// </summary>
+    public abstract class SampleContext
+    {
+        /// <summary>
+        ///     The root node for this sample
+        /// </summary>
+        public UserControl View { get; set; }
 
-      /// <summary>
-      ///    Gives each sample the ability to access Revit application
-      /// </summary>
-      public UIApplication Application { get; set; }
+        /// <summary>
+        ///     Gives each sample the ability to access Revit application
+        /// </summary>
+        public UIApplication Application { get; set; }
 
-      /// <summary>
-      ///    Terminate this sample context, resource allocated should be released here
-      /// </summary>
-      public abstract void Terminate();
-   }
+        /// <summary>
+        ///     Terminate this sample context, resource allocated should be released here
+        /// </summary>
+        public abstract void Terminate();
+    }
 }

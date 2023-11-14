@@ -22,51 +22,38 @@
 
 namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
 {
-   /// <summary>
-   ///   A class with methods to execute requests made by the dialog user.
-   /// </summary>
-   /// 
-   public static class RequestHandler
-   {
-
-      /// <summary>
-      ///   The top function that distributes requests to individual methods. 
-      /// </summary>
-      /// 
-      public static void Execute(Application app, RequestId request)
-      {
-         switch (request)
-         {
-            case RequestId.None:
+    /// <summary>
+    ///     A class with methods to execute requests made by the dialog user.
+    /// </summary>
+    public static class RequestHandler
+    {
+        /// <summary>
+        ///     The top function that distributes requests to individual methods.
+        /// </summary>
+        public static void Execute(Application app, RequestId request)
+        {
+            switch (request)
             {
-               return;  // no request at this time -> we can leave immediately
+                case RequestId.None:
+                {
+                    return; // no request at this time -> we can leave immediately
+                }
+                case RequestId.Select:
+                {
+                    app.GetPaintedMaterial();
+                    break;
+                }
+                case RequestId.Lighter:
+                {
+                    app.ModifySelectedMaterial("Lighter", true);
+                    break;
+                }
+                case RequestId.Darker:
+                {
+                    app.ModifySelectedMaterial("Darker", false);
+                    break;
+                }
             }
-            case RequestId.Select:
-            {
-               app.GetPaintedMaterial();
-               break;
-            }
-            case RequestId.Lighter:
-            {
-               app.ModifySelectedMaterial("Lighter", true);
-               break;
-            }
-            case RequestId.Darker:
-            {
-               app.ModifySelectedMaterial("Darker", false);
-               break;
-            }                     
-            default:
-            {
-               // some kind of a warning here should
-               // notify us about an unexpected request 
-               break;
-            }
-         }
-
-         return;
-      }             
-
-
-   }  // class
+        }
+    } // class
 }

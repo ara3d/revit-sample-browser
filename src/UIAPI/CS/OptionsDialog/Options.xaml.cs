@@ -3,26 +3,20 @@
 namespace Revit.SDK.Samples.UIAPI.CS.OptionsDialog
 {
     /// <summary>
-    /// Interaction logic for Options.xaml
+    ///     Interaction logic for Options.xaml
     /// </summary>
-    public partial class Options : UserControl
+    public partial class Options
     {
         public Options()
         {
             InitializeComponent();
-
             var options = ApplicationOptions.Get();
-
-
             ButtonAccessibility.SelectedIndex = (int)options.Availability;
         }
 
         public void OnOK()
         {
-            var options = ApplicationOptions.Get();
-
-            options.Availability = (ApplicationAvailablity)ButtonAccessibility.SelectedIndex;
-
+            ApplicationOptions.Get().Availability = (ApplicationAvailablity)ButtonAccessibility.SelectedIndex;
         }
 
         public void OnRestoreDefaults()
@@ -32,10 +26,7 @@ namespace Revit.SDK.Samples.UIAPI.CS.OptionsDialog
 
         private bool GetCheckbuttonChecked(CheckBox checkBox)
         {
-            if (checkBox.IsChecked.HasValue)
-                return checkBox.IsChecked.Value;
-            return false;
+            return checkBox.IsChecked.HasValue && checkBox.IsChecked.Value;
         }
-
     }
 }

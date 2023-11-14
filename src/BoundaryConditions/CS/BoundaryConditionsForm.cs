@@ -22,21 +22,24 @@
 
 
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Autodesk.Revit.DB;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.BoundaryConditions.CS
 {
     /// <summary>
-    /// UI which display the information and interact with users
+    ///     UI which display the information and interact with users
     /// </summary>
     public partial class BoundaryConditionsForm : Form
-    { 
+    {
         // an instance of BoundaryConditionsData class which deal with the need data
-        private BoundaryConditionsData m_dataBuffer;
+        private readonly BoundaryConditionsData m_dataBuffer;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="dataBuffer"></param>
         public BoundaryConditionsForm(BoundaryConditionsData dataBuffer)
@@ -47,7 +50,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         }
 
         /// <summary>
-        /// display the information about the host element and the BC parameter value 
+        ///     display the information about the host element and the BC parameter value
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -60,8 +63,8 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             // else list the BC ids in the combox and display the first BC's parameter values
             if (0 == m_dataBuffer.BCs.Count)
             {
-                bCComboBox.Visible       = false;
-                bCLabel.Visible          = false;
+                bCComboBox.Visible = false;
+                bCLabel.Visible = false;
                 var isCreatedSuccessful = m_dataBuffer.CreateBoundaryConditions();
                 m_dataBuffer.HostElement.Document.Regenerate();
 
@@ -69,57 +72,48 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 {
                     DialogResult = DialogResult.Retry;
                     return;
-                }     
+                }
             }
             else
             {
                 bCComboBox.Visible = true;
-                bCLabel.Visible    = true;
+                bCLabel.Visible = true;
             }
 
             // list the boundary conditions Id values to the combobox
-            System.Collections.ICollection bCIdValues = m_dataBuffer.BCs.Keys;
-            foreach (Autodesk.Revit.DB.ElementId bCIdValue in bCIdValues)
-            {
-                bCComboBox.Items.Add(bCIdValue);
-            }
+            ICollection bCIdValues = m_dataBuffer.BCs.Keys;
+            foreach (ElementId bCIdValue in bCIdValues) bCComboBox.Items.Add(bCIdValue);
 
             bCComboBox.SelectedIndex = 0;
         }
 
         /// <summary>
-        /// display the BC's property value according the selected BC ID in combobox
+        ///     display the BC's property value according the selected BC ID in combobox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void bCComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // create a BCProperties instance according to current selected BC Id
-            m_dataBuffer.BCProperties = new BCProperties(m_dataBuffer.BCs[Autodesk.Revit.DB.ElementId.Parse(bCComboBox.Text)]);
-            
+            m_dataBuffer.BCProperties = new BCProperties(m_dataBuffer.BCs[ElementId.Parse(bCComboBox.Text)]);
+
             // set the display object
             bCPropertyGrid.SelectedObject = m_dataBuffer.BCProperties;
 
             // set the browsable attributes of the property grid
             Attribute[] attributes = null;
             if (BCType.Point == m_dataBuffer.BCProperties.BoundaryConditionsType)
-            {
-                attributes = new Attribute[] { new BCTypeAttribute(new BCType[] { BCType.Point }) };
-            }
+                attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Point }) };
             else if (BCType.Line == m_dataBuffer.BCProperties.BoundaryConditionsType)
-            {
-                attributes = new Attribute[] { new BCTypeAttribute(new BCType[] { BCType.Line }) };
-            }
+                attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Line }) };
             else if (BCType.Area == m_dataBuffer.BCProperties.BoundaryConditionsType)
-            {
-                attributes = new Attribute[] { new BCTypeAttribute(new BCType[] { BCType.Area }) };
-            }
+                attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Area }) };
 
             bCPropertyGrid.BrowsableAttributes = new AttributeCollection(attributes);
         }
 
         /// <summary>
-        /// deal with operations that user set these parameters with other valid value.
+        ///     deal with operations that user set these parameters with other valid value.
         /// </summary>
         /// <param name="s"></param>
         /// <param name="e"></param>
@@ -132,14 +126,12 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 // when set any Translation/Rotation parameter to Spring 
                 var value = (BCTranslationRotation)e.ChangedItem.Value;
                 if (BCTranslationRotation.Spring == value)
-                {
                     m_dataBuffer.BCProperties.SetSpringModulus(e.ChangedItem.Label);
-                }
             }
         }
 
         /// <summary>
-        /// confirm the changed and exist the UI
+        ///     confirm the changed and exist the UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

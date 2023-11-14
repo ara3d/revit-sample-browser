@@ -21,26 +21,25 @@
 // 
 
 using System;
-using System.Windows.Forms;
-using System.IO;
 using System.Diagnostics;
-
+using System.IO;
+using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Provide a dialog which provides the options for exporting dgn format
+    ///     Provide a dialog which provides the options for exporting dgn format
     /// </summary>
     public partial class ExportDGNOptionsForm : Form
     {
         /// <summary>
-        /// data class
+        ///     data class
         /// </summary>
-        private ExportDGNData m_data;
+        private readonly ExportDGNData m_data;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="data">Data class object</param>
         public ExportDGNOptionsForm(ExportDGNData data)
@@ -51,7 +50,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize values and status of controls
+        ///     Initialize values and status of controls
         /// </summary>
         private void InitializeControl()
         {
@@ -65,7 +64,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// OK button click event
+        ///     OK button click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -109,7 +108,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// button2DSeedFile click event
+        ///     button2DSeedFile click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -117,14 +116,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             var fileName = string.Empty;
             var result = ShowOpenDialog(ref fileName);
-            if (result != DialogResult.Cancel)
-            {
-                textBox2DSeedFile.Text = fileName;
-            }
+            if (result != DialogResult.Cancel) textBox2DSeedFile.Text = fileName;
         }
 
         /// <summary>
-        /// Show open file dialog
+        ///     Show open file dialog
         /// </summary>
         /// <param name="returnFileName"></param>
         /// <returns></returns>
@@ -134,10 +130,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var folderRevit = Path.GetDirectoryName(mainModule.FileName);
             var folderACADInterop = Path.Combine(folderRevit, "ACADInterop");
             var initialDirectory = folderRevit;
-            if (Directory.Exists(folderACADInterop))
-            {
-                initialDirectory = folderACADInterop;
-            }
+            if (Directory.Exists(folderACADInterop)) initialDirectory = folderACADInterop;
 
             using (var openFileDialog = new OpenFileDialog())
             {
@@ -147,10 +140,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 openFileDialog.RestoreDirectory = true;
 
                 var result = openFileDialog.ShowDialog();
-                if (result != DialogResult.Cancel)
-                {
-                    returnFileName = openFileDialog.FileName;
-                }
+                if (result != DialogResult.Cancel) returnFileName = openFileDialog.FileName;
 
                 return result;
             }
@@ -160,10 +150,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             var fileName = string.Empty;
             var result = ShowOpenDialog(ref fileName);
-            if (result != DialogResult.Cancel)
-            {
-                textBox3DSeedFile.Text = fileName;
-            }
+            if (result != DialogResult.Cancel) textBox3DSeedFile.Text = fileName;
         }
     }
 }

@@ -21,8 +21,8 @@
 //
 
 
-using System.Text;
 using System.Linq;
+using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
@@ -30,12 +30,12 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.GenericStructuralConnection.CS
 {
     /// <summary>
-    /// Performs basic operations on generic structural connections.
+    ///     Performs basic operations on generic structural connections.
     /// </summary>
     public class GenericStructuralConnectionOps
     {
         /// <summary>
-        /// Create generic structural connection.
+        ///     Create generic structural connection.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -53,7 +53,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                     tran.Start();
 
                     StructuralConnectionHandler.CreateGenericConnection(activeDoc.Document, ids);
-               
+
                     var ts = tran.Commit();
                     if (ts != TransactionStatus.Committed)
                     {
@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Delete generic structural connection.
+        ///     Delete generic structural connection.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -112,7 +112,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Read information from generic structural connection.
+        ///     Read information from generic structural connection.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -137,10 +137,11 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                 var connectedElemIds = conn.GetConnectedElementIds();
                 foreach (var connId in connectedElemIds)
                 {
-                    msgBuilder.Append(connId.ToString());
+                    msgBuilder.Append(connId);
                     if (connId != connectedElemIds.Last())
                         msgBuilder.Append(", ");
                 }
+
                 TaskDialog.Show("Info", msgBuilder.ToString());
             }
             else
@@ -153,7 +154,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Update generic structural connection.
+        ///     Update generic structural connection.
         /// </summary>
         /// <param name="activeDoc">The active document.</param>
         /// <param name="message">Set message on failure.</param>
@@ -169,9 +170,9 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                 // Select elements to add to connection.
                 var ids = StructuralConnectionSelectionUtils.SelectConnectionElements(activeDoc);
                 if (ids.Count() > 0)
-                {
                     // Start a new transaction.
-                    using (var transaction = new Transaction(activeDoc.Document, "Update generic structural connection"))
+                    using (var transaction =
+                           new Transaction(activeDoc.Document, "Update generic structural connection"))
                     {
                         transaction.Start();
 
@@ -184,15 +185,11 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                             ret = Result.Failed;
                         }
                     }
-                }
                 else
-                {
                     message = "There are no connection input elements selected !";
-                }
             }
 
             return ret;
         }
-
     }
 }

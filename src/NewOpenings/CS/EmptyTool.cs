@@ -21,15 +21,17 @@
 //
 
 
+using System.Drawing;
+
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
     /// <summary>
-    /// Tool used to draw nothing
+    ///     Tool used to draw nothing
     /// </summary>
-    class EmptyTool : ITool
+    internal class EmptyTool : ITool
     {
         /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
         public EmptyTool()
         {
@@ -37,10 +39,10 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Draw nothing
+        ///     Draw nothing
         /// </summary>
         /// <param name="graphic">Graphics object</param>
-        public override void Draw(System.Drawing.Graphics graphic)
+        public override void Draw(Graphics graphic)
         {
         }
     }

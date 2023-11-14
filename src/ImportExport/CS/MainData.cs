@@ -23,101 +23,100 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Export formats
+    ///     Export formats
     /// </summary>
     public enum ExportFormat
     {
         /// <summary>
-        /// DWG format
+        ///     DWG format
         /// </summary>
         DWG,
+
         /// <summary>
-        /// DXF format
+        ///     DXF format
         /// </summary>
         DXF,
+
         /// <summary>
-        /// SAT format
-        /// </summary> 
+        ///     SAT format
+        /// </summary>
         SAT,
+
         /// <summary>
-        /// DWF format
+        ///     DWF format
         /// </summary>
         DWF,
+
         /// <summary>
-        /// DWFx format
+        ///     DWFx format
         /// </summary>
         DWFx,
+
         /// <summary>
-        /// GBXML format
+        ///     GBXML format
         /// </summary>
         GBXML,
+
         /// <summary>
-        /// FBX format
+        ///     FBX format
         /// </summary>
         FBX,
+
         /// <summary>
-        /// DGN format
+        ///     DGN format
         /// </summary>
         DGN,
+
         /// <summary>
-        /// IMG format
+        ///     IMG format
         /// </summary>
         Image,
+
         /// <summary>
-        /// PDF format
+        ///     PDF format
         /// </summary>
         PDF
-   }
+    }
 
     /// <summary>
-    /// Import formats
+    ///     Import formats
     /// </summary>
     public enum ImportFormat
     {
         /// <summary>
-        /// DWF format
+        ///     DWF format
         /// </summary>
         DWG,
+
         /// <summary>
-        /// IMAGE format
+        ///     IMAGE format
         /// </summary>
         IMAGE,
+
         /// <summary>
-        /// GBXML format
+        ///     GBXML format
         /// </summary>
         GBXML,
+
         /// <summary>
-        /// Inventor format
+        ///     Inventor format
         /// </summary>
         Inventor
     }
 
     /// <summary>
-    /// Data class contains the external command data.
+    ///     Data class contains the external command data.
     /// </summary>
     public class MainData
     {
-        // Revit command data
-
-        // Whether current view is a 3D view
-
         /// <summary>
-        /// Revit command data
-        /// </summary>
-        public ExternalCommandData CommandData { get; }
-
-        /// <summary>
-        /// Whether current view is a 3D view
-        /// </summary>
-        public bool Is3DView { get; set; }
-
-        /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         public MainData(ExternalCommandData commandData)
@@ -125,18 +124,27 @@ namespace Revit.SDK.Samples.ImportExport.CS
             CommandData = commandData;
 
             //Whether current active view is 3D view
-            if (commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == Autodesk.Revit.DB.ViewType.ThreeD)
-            {
+            if (commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == ViewType.ThreeD)
                 Is3DView = true;
-            }
             else
-            {
                 Is3DView = false;
-            }
         }
+        // Revit command data
+
+        // Whether current view is a 3D view
 
         /// <summary>
-        /// Get the format to export
+        ///     Revit command data
+        /// </summary>
+        public ExternalCommandData CommandData { get; }
+
+        /// <summary>
+        ///     Whether current view is a 3D view
+        /// </summary>
+        public bool Is3DView { get; set; }
+
+        /// <summary>
+        ///     Get the format to export
         /// </summary>
         /// <param name="selectedFormat">Selected format in format selecting dialog</param>
         /// <returns>The format to export</returns>
@@ -175,15 +183,13 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 case "PDF":
                     format = ExportFormat.PDF;
                     break;
-                default:
-                    break;
             }
 
             return format;
         }
 
         /// <summary>
-        /// Export according to selected format
+        ///     Export according to selected format
         /// </summary>
         /// <param name="selectedFormat">Selected format</param>
         public DialogResult Export(string selectedFormat)
@@ -201,6 +207,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
+
                         break;
                     case ExportFormat.DXF:
                         var exportDXFData = new ExportDXFData(CommandData, format);
@@ -208,6 +215,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
+
                         break;
                     case ExportFormat.SAT:
                         var exportSATData = new ExportSATData(CommandData, format);
@@ -215,6 +223,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
+
                         break;
                     case ExportFormat.DWF:
                     case ExportFormat.DWFx:
@@ -223,6 +232,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
+
                         break;
                     case ExportFormat.GBXML:
                         var exportGBXMLData = new ExportGBXMLData(CommandData, format);
@@ -238,6 +248,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
+
                         break;
                     case ExportFormat.Image:
                         var exportIMGdata = new ExportIMGData(CommandData, format);
@@ -245,21 +256,22 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         {
                             dialogResult = DialogResult.OK;
                         }
+
                         break;
                     case ExportFormat.PDF:
                         var exportPDFData = new ExportPDFData(CommandData, format);
                         using (var exportForm = new ExportWithViewsForm(exportPDFData))
                         {
-                           dialogResult = exportForm.ShowDialog();
+                            dialogResult = exportForm.ShowDialog();
                         }
-                        break;
-                    default:
+
                         break;
                 }
             }
             catch (Exception ex)
             {
-                var errorMessage = "Failed to export " + format + " format" + ex.ToString(); ;
+                var errorMessage = "Failed to export " + format + " format" + ex;
+                ;
                 TaskDialog.Show("Error", errorMessage, TaskDialogCommonButtons.Ok);
             }
 
@@ -267,7 +279,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Export
+        ///     Export
         /// </summary>
         /// <param name="data"></param>
         private static DialogResult Export(ExportData data)
@@ -281,17 +293,15 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 data.ExportFileName = Path.GetFileName(returnFilename);
                 data.ExportFolder = Path.GetDirectoryName(returnFilename);
                 if (!data.Export())
-                {
                     TaskDialog.Show("Export", "This project cannot be exported to " + data.ExportFileName +
-                        " in current settings.", TaskDialogCommonButtons.Ok);
-                }
+                                              " in current settings.", TaskDialogCommonButtons.Ok);
             }
 
             return result;
         }
 
         /// <summary>
-        /// Show Save dialog
+        ///     Show Save dialog
         /// </summary>
         /// <param name="exportData">Data to export</param>
         /// <param name="returnFileName">File name will be returned</param>
@@ -321,7 +331,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Get the format to import
+        ///     Get the format to import
         /// </summary>
         /// <param name="selectedFormat">Selected format in format selecting dialog</param>
         /// <returns>The format to import</returns>
@@ -342,15 +352,13 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 case "Inventor":
                     format = ImportFormat.Inventor;
                     break;
-                default:
-                    break;
             }
 
             return format;
         }
 
         /// <summary>
-        /// Export according to selected format
+        ///     Export according to selected format
         /// </summary>
         /// <param name="selectedFormat">Selected format</param>
         /// <returns></returns>
@@ -369,6 +377,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         {
                             dialogResult = importForm.ShowDialog();
                         }
+
                         break;
                     case ImportFormat.IMAGE:
                         var importIMAGEData = new ImportImageData(CommandData, format);
@@ -377,8 +386,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     case ImportFormat.GBXML:
                         var importGBXMLData = new ImportGBXMLData(CommandData, format);
                         dialogResult = Import(importGBXMLData);
-                        break;
-                    default:
                         break;
                 }
             }
@@ -392,7 +399,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Import
+        ///     Import
         /// </summary>
         /// <param name="data"></param>
         private static DialogResult Import(ImportData data)
@@ -403,17 +410,15 @@ namespace Revit.SDK.Samples.ImportExport.CS
             {
                 data.ImportFileFullName = returnFilename;
                 if (!data.Import())
-                {
                     TaskDialog.Show("Import", "Cannot import " + Path.GetFileName(data.ImportFileFullName) +
-                        " in current settings.", TaskDialogCommonButtons.Ok);
-                }
+                                              " in current settings.", TaskDialogCommonButtons.Ok);
             }
 
             return result;
         }
 
         /// <summary>
-        /// Show Open File dialog
+        ///     Show Open File dialog
         /// </summary>
         /// <param name="importData">Data to import</param>
         /// <param name="returnFileName">File name will be returned</param>
@@ -428,10 +433,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 importDialog.RestoreDirectory = true;
 
                 var result = importDialog.ShowDialog();
-                if (result != DialogResult.Cancel)
-                {
-                    returnFileName = importDialog.FileName;
-                }
+                if (result != DialogResult.Cancel) returnFileName = importDialog.FileName;
 
                 return result;
             }

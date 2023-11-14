@@ -27,13 +27,13 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
     /// <summary>
-    /// Utility verifies the input parameters, like curves from Revit document.
-    /// It also adapts the input data for winder stairs creation.
+    ///     Utility verifies the input parameters, like curves from Revit document.
+    ///     It also adapts the input data for winder stairs creation.
     /// </summary>
-    class WinderUtil
+    internal class WinderUtil
     {
         /// <summary>
-        /// Return the control points from the connected curve elements.
+        ///     Return the control points from the connected curve elements.
         /// </summary>
         /// <param name="rvtDoc">Revit Document</param>
         /// <param name="crvElements">Connected curve element</param>
@@ -47,41 +47,26 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 var curve = rvtDoc.GetElement(crvElements[i]);
                 var locationCrv = curve.Location as LocationCurve;
                 if (locationCrv == null || !(locationCrv.Curve is Line))
-                {
                     throw new ArgumentException("The input elements are not Line base.");
-                }
 
-                if (Math.Abs(locationCrv.Curve.GetEndPoint(0).Z 
-                    - locationCrv.Curve.GetEndPoint(1).Z) > 1.0e-9)
-                {
+                if (Math.Abs(locationCrv.Curve.GetEndPoint(0).Z
+                             - locationCrv.Curve.GetEndPoint(1).Z) > 1.0e-9)
                     throw new AggregateException(
                         "The input curve elements are not in the same elevation plane.");
-                }
-                if (curve is Wall)
-                {
-                    maxOffset = Math.Max(maxOffset, ((Wall)curve).Width * 0.5);
-                }
+                if (curve is Wall) maxOffset = Math.Max(maxOffset, ((Wall)curve).Width * 0.5);
             }
 
             var controlPoints = CalculateControlPoints2(rvtDoc, crvElements);
-            if (controlPoints.Count == 0)
-            {
-                throw new ArgumentException("The input curve elements are not continues.");
-            }
+            if (controlPoints.Count == 0) throw new ArgumentException("The input curve elements are not continues.");
             if (!CheckOrientation(controlPoints))
-            {
                 throw new ArgumentException(
                     "The input curve elements should have the same orientation: CW or CCW.");
-            }
-            if (maxOffset > 0.0)
-            {
-                controlPoints = CalculateOffset(controlPoints, maxOffset);
-            }
+            if (maxOffset > 0.0) controlPoints = CalculateOffset(controlPoints, maxOffset);
             return controlPoints;
         }
 
         /// <summary>
-        /// Calculate the max straight steps determined by the control points.
+        ///     Calculate the max straight steps determined by the control points.
         /// </summary>
         /// <param name="controlPoints">Control points of the stairs</param>
         /// <param name="runWidth">Stairs Run width</param>
@@ -98,15 +83,16 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 var count = (uint)(dist / treadDepth);
                 counts.Add(count);
             }
+
             return counts;
         }
 
         /// <summary>
-        /// Check to see if the control points bend to the same direction(CW or CCW).
+        ///     Check to see if the control points bend to the same direction(CW or CCW).
         /// </summary>
         /// <param name="controlPoints">Control points to test</param>
         /// <returns>true if the controls points bend to the same direction</returns>
-        static bool CheckOrientation(IList<XYZ> controlPoints)
+        private static bool CheckOrientation(IList<XYZ> controlPoints)
         {
             XYZ previousDir = null;
             for (var i = 1; i < controlPoints.Count - 1; i++)
@@ -114,24 +100,20 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 var dir1 = controlPoints[i] - controlPoints[i - 1];
                 var dir2 = controlPoints[i + 1] - controlPoints[i];
                 if (previousDir == null)
-                {
                     previousDir = dir1.CrossProduct(dir2).Normalize();
-                }
-                else if (!previousDir.IsAlmostEqualTo(dir1.CrossProduct(dir2).Normalize()))
-                {
-                    return false;
-                }
+                else if (!previousDir.IsAlmostEqualTo(dir1.CrossProduct(dir2).Normalize())) return false;
             }
+
             return true;
-        } 
+        }
 
         /// <summary>
-        /// Offset the control points by specified distance.
+        ///     Offset the control points by specified distance.
         /// </summary>
         /// <param name="controlPoints">Control point to offset</param>
         /// <param name="offset">offset distance</param>
         /// <returns>Control points after offsetting</returns>
-        static IList<XYZ> CalculateOffset(IList<XYZ> controlPoints, double offset)
+        private static IList<XYZ> CalculateOffset(IList<XYZ> controlPoints, double offset)
         {
             IList<XYZ> innerPnts = new List<XYZ>();
 
@@ -147,10 +129,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 if (stepInside1stDir.DotProduct(bisectDir) < 0.0)
                     stepInside1stDir = stepInside1stDir.Negate();
 
-                if (i == 1)
-                {
-                    innerPnts.Add(controlPoints[i - 1] + stepInside1stDir * offset);
-                }
+                if (i == 1) innerPnts.Add(controlPoints[i - 1] + stepInside1stDir * offset);
 
                 // Calculate the step direction of the second line.
                 var stepInside2ndDir = new XYZ(-dir2.Y, dir2.X, 0.0);
@@ -165,22 +144,19 @@ namespace Revit.SDK.Samples.WinderStairs.CS
 
                 innerPnts.Add(innerCornerPnt);
 
-                if (i == controlPoints.Count - 2)
-                {
-                    innerPnts.Add(controlPoints[i + 1] + stepInside2ndDir * offset);
-                }
+                if (i == controlPoints.Count - 2) innerPnts.Add(controlPoints[i + 1] + stepInside2ndDir * offset);
             }
 
             return innerPnts;
         }
 
         /// <summary>
-        /// Calculate the control points from the connected curve elements.
+        ///     Calculate the control points from the connected curve elements.
         /// </summary>
         /// <param name="rvtDoc">Revit Document</param>
         /// <param name="elements">Connected Curve Elements</param>
         /// <returns>Control points</returns>
-        static IList<XYZ> CalculateControlPoints2(Document rvtDoc, IList<ElementId> elements)
+        private static IList<XYZ> CalculateControlPoints2(Document rvtDoc, IList<ElementId> elements)
         {
             IList<Curve> curves = new List<Curve>();
             for (var i = 0; i < elements.Count; i++)
@@ -222,7 +198,6 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                         // common curve is curve1
                         start = curve2.GetEndPoint(1 - index2);
                         end = curve3.GetEndPoint(1 - index4);
-
                     }
                     else if (HasCommonEndPoint(curve2, curve3, out commonPnt2, out index3, out index4))
                     {
@@ -241,6 +216,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                         end = curve2.GetEndPoint(1 - index3);
                     }
                 }
+
                 if (start != null)
                 {
                     controlPoints.Add(start);
@@ -249,11 +225,12 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                     controlPoints.Add(end);
                 }
             }
+
             return controlPoints;
         }
 
         /// <summary>
-        /// Calculate the common end point of two curves.
+        ///     Calculate the common end point of two curves.
         /// </summary>
         /// <param name="crv1">Curve 1</param>
         /// <param name="crv2">Curve 2</param>
@@ -261,7 +238,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// <param name="index1">index of the common point in curve 1</param>
         /// <param name="index2">index of the common point in curve 2</param>
         /// <returns>true if there is one common point, false otherwise</returns>
-        static bool HasCommonEndPoint(Curve crv1, Curve crv2, out XYZ common,
+        private static bool HasCommonEndPoint(Curve crv1, Curve crv2, out XYZ common,
             out int index1, out int index2)
         {
             var pnt1 = crv1.GetEndPoint(0);
@@ -272,28 +249,36 @@ namespace Revit.SDK.Samples.WinderStairs.CS
 
             if (pnt1.IsAlmostEqualTo(pnt3))
             {
-                index1 = 0; index2 = 0;
+                index1 = 0;
+                index2 = 0;
                 common = pnt1;
                 return true;
             }
-            else if (pnt1.IsAlmostEqualTo(pnt4))
+
+            if (pnt1.IsAlmostEqualTo(pnt4))
             {
-                index1 = 0; index2 = 1;
+                index1 = 0;
+                index2 = 1;
                 common = pnt1;
                 return true;
             }
-            else if (pnt2.IsAlmostEqualTo(pnt3))
+
+            if (pnt2.IsAlmostEqualTo(pnt3))
             {
-                index1 = 1; index2 = 0;
+                index1 = 1;
+                index2 = 0;
                 common = pnt2;
                 return true;
             }
-            else if (pnt2.IsAlmostEqualTo(pnt4))
+
+            if (pnt2.IsAlmostEqualTo(pnt4))
             {
-                index1 = 1; index2 = 1;
+                index1 = 1;
+                index2 = 1;
                 common = pnt2;
                 return true;
             }
+
             common = null;
             index1 = index2 = -1;
             return false;

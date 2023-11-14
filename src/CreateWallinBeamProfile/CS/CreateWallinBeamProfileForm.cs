@@ -21,16 +21,17 @@
 //
 
 using System;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
 {
-    public partial class CreateWallinBeamProfileForm : System.Windows.Forms.Form
+    public partial class CreateWallinBeamProfileForm : Form
     {
         // Private members
-        CreateWallinBeamProfile m_dataBuffer;
+        private readonly CreateWallinBeamProfile m_dataBuffer;
 
         /// <summary>
-        /// Constructor of CreateWallinBeamProfileForm
+        ///     Constructor of CreateWallinBeamProfileForm
         /// </summary>
         /// <param name="dataBuffer"> A reference of CreateWallinBeamProfile class </param>
         public CreateWallinBeamProfileForm(CreateWallinBeamProfile dataBuffer)
@@ -39,11 +40,11 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             InitializeComponent();
 
             //Get a reference of CreateWallAndFloor
-            m_dataBuffer = dataBuffer; 
+            m_dataBuffer = dataBuffer;
         }
 
         /// <summary>
-        /// Initialize the data on the form
+        ///     Initialize the data on the form
         /// </summary>
         private void CreateWallinBeamProfileForm_Load(object sender, EventArgs e)
         {
@@ -54,7 +55,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         }
 
         /// <summary>
-        /// update the data to CreateWallinBeamProfile class
+        ///     update the data to CreateWallinBeamProfile class
         /// </summary>
         private void okButton_Click(object sender, EventArgs e)
         {

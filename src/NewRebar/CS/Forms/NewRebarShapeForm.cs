@@ -22,48 +22,50 @@
 
 
 using System;
-using System.Windows.Forms;
-using System.Reflection;
 using System.IO;
-
+using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using Application = Autodesk.Revit.ApplicationServices.Application;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// This form is provided for user to define a new RebarShape.
+    ///     This form is provided for user to define a new RebarShape.
     /// </summary>
-    public partial class NewRebarShapeForm : System.Windows.Forms.Form
+    public partial class NewRebarShapeForm : Form
     {
         /// <summary>
-        /// RebarShapeDef object.
+        ///     Binding source for constraints ListBox.
         /// </summary>
-        private RebarShapeDef m_rebarShapeDef;
+        private readonly BindingSource m_constraintsListBoxBinding = new BindingSource();
 
         /// <summary>
-        /// Autodesk Revit Application object.
+        ///     Binding source for parameters ListBox.
         /// </summary>
-        private Autodesk.Revit.ApplicationServices.Application m_rvtApp;
+        private readonly BindingSource m_parametersListBoxBinding = new BindingSource();
 
         /// <summary>
-        /// Autodesk Revit Document Object.
+        ///     RebarShapeDef object.
         /// </summary>
-        private Document m_rvtDoc;
+        private readonly RebarShapeDef m_rebarShapeDef;
 
         /// <summary>
-        /// Binding source for parameters ListBox.
+        ///     Autodesk Revit Application object.
         /// </summary>
-        private BindingSource m_parametersListBoxBinding = new BindingSource();
+        private readonly Application m_rvtApp;
 
         /// <summary>
-        /// Binding source for constraints ListBox.
+        ///     Autodesk Revit Document Object.
         /// </summary>
-        private BindingSource m_constraintsListBoxBinding = new BindingSource();
+        private readonly Document m_rvtDoc;
 
         /// <summary>
-        /// Default constructor.
+        ///     Default constructor.
         /// </summary>
         public NewRebarShapeForm()
         {
@@ -71,7 +73,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Constructor, Initialize the fields.
+        ///     Constructor, Initialize the fields.
         /// </summary>
         /// <param name="rvtApp">Revit Application object</param>
         /// <param name="shapeDef">RebarShapeDef object</param>
@@ -84,36 +86,36 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// If this return true, the hook of RebarShape will be set, otherwise not.
+        ///     If this return true, the hook of RebarShape will be set, otherwise not.
         /// </summary>
         public bool NeedSetHooks => useHooksCheckBox.Checked;
 
         /// <summary>
-        /// Return start hook angle.
+        ///     Return start hook angle.
         /// </summary>
         public int StartHookAngle => int.Parse(startHookAngleComboBox.Text);
 
         /// <summary>
-        /// Return end hook angle.
+        ///     Return end hook angle.
         /// </summary>
         public int EndHookAngle => int.Parse(endHookAngleComboBox.Text);
 
         /// <summary>
-        /// Return start hook orientation.
+        ///     Return start hook orientation.
         /// </summary>
         public RebarHookOrientation StartHookOrientation =>
             (RebarHookOrientation)Enum.Parse(
                 typeof(RebarHookOrientation), startHookOrientationComboBox.Text);
 
         /// <summary>
-        /// Return end hook orientation.
+        ///     Return end hook orientation.
         /// </summary>
         public RebarHookOrientation EndHookOrientation =>
             (RebarHookOrientation)Enum.Parse(
                 typeof(RebarHookOrientation), endHookOrientationcomboBox.Text);
 
         /// <summary>
-        /// Get a definition group if there exists one, otherwise, a new one will be created. 
+        ///     Get a definition group if there exists one, otherwise, a new one will be created.
         /// </summary>
         /// <returns>Definition group</returns>
         private DefinitionGroup GetOrCreateDefinitionGroup()
@@ -134,7 +136,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                     // Fill Schema data of Revit shared parameter file.
                     // If no this schema data, OpenSharedParameterFile may alway return null.
-                    var contents = new System.Text.StringBuilder();
+                    var contents = new StringBuilder();
                     contents.AppendLine("# This is a Revit shared parameter file.");
                     contents.AppendLine("# Do not edit manually.");
                     contents.AppendLine("*META	VERSION	MINVERSION");
@@ -151,7 +153,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 // To avoid infinite loop.
                 ++count;
-            }            
+            }
 
             // Get or create a definition group "Rebar Shape Parameters".
             var group = file.Groups.get_Item("Rebar Shape Parameters");
@@ -161,7 +163,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Present a dialog to add a parameter to RebarShapeDef.
+        ///     Present a dialog to add a parameter to RebarShapeDef.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -169,11 +171,11 @@ namespace Revit.SDK.Samples.NewRebar.CS
         {
             using (var addParam = new AddParameter(m_rebarShapeDef.Parameters))
             {
-                if( DialogResult.OK == addParam.ShowDialog())
+                if (DialogResult.OK == addParam.ShowDialog())
                 {
-                    var paramType = addParam.IsFormula ? 
-                        typeof(RebarShapeParameterFormula) : 
-                        typeof(RebarShapeParameterDouble);
+                    var paramType = addParam.IsFormula
+                        ? typeof(RebarShapeParameterFormula)
+                        : typeof(RebarShapeParameterDouble);
 
                     object paramName = addParam.ParamName;
                     object paramValue = addParam.ParamValue;
@@ -190,7 +192,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Present a dialog to add a constraint to RebarShapeDef.
+        ///     Present a dialog to add a constraint to RebarShapeDef.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -198,7 +200,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         {
             using (var addConstraint = new AddConstraint(m_rebarShapeDef.AllowedConstraintTypes()))
             {
-                if(DialogResult.OK == addConstraint.ShowDialog())
+                if (DialogResult.OK == addConstraint.ShowDialog())
                 {
                     var constraintType = addConstraint.ConstraintType;
 
@@ -212,8 +214,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// OK Button, commit the RebarShapeDef, if there are not any exception,
-        /// The RebarShape will be added to Revit Document successfully.
+        ///     OK Button, commit the RebarShapeDef, if there are not any exception,
+        ///     The RebarShape will be added to Revit Document successfully.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -225,16 +227,16 @@ namespace Revit.SDK.Samples.NewRebar.CS
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Revit", "Rebar shape creation failed:" + ex.ToString());
+                TaskDialog.Show("Revit", "Rebar shape creation failed:" + ex);
                 return;
             }
-            
+
             DialogResult = DialogResult.OK;
             Close();
         }
 
         /// <summary>
-        /// Cancel Button, Cancel the creation of RebarShape.
+        ///     Cancel Button, Cancel the creation of RebarShape.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -245,7 +247,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Load event, Initialize the controls data.
+        ///     Load event, Initialize the controls data.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -264,19 +266,19 @@ namespace Revit.SDK.Samples.NewRebar.CS
             // Initialize start and end hook angles comboBox data source.
             var startAngles = new int[4] { 0, 90, 135, 180 };
             var endAngles = new int[4] { 0, 90, 135, 180 };
-            startHookAngleComboBox.DataSource = startAngles;            
+            startHookAngleComboBox.DataSource = startAngles;
             endHookAngleComboBox.DataSource = endAngles;
 
             // Initialize start and end hook orientation comboBox data source.
             var startOritationNames = Enum.GetNames(typeof(RebarHookOrientation));
             var endOritationNames = Enum.GetNames(typeof(RebarHookOrientation));
-            startHookOrientationComboBox.DataSource = startOritationNames;            
+            startHookOrientationComboBox.DataSource = startOritationNames;
             endHookOrientationcomboBox.DataSource = endOritationNames;
         }
 
         /// <summary>
-        /// When the selection in the constraint listBox is changed, the property grid's
-        /// content should be changed too.
+        ///     When the selection in the constraint listBox is changed, the property grid's
+        ///     content should be changed too.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -286,8 +288,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// When the selection in the parameter listBox is changed, the property grid's
-        /// content should be changed too.
+        ///     When the selection in the parameter listBox is changed, the property grid's
+        ///     content should be changed too.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -297,8 +299,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// When the check status of useHooksCheckBox is changed, other comboBox's 
-        /// enabled status should be changed too.
+        ///     When the check status of useHooksCheckBox is changed, other comboBox's
+        ///     enabled status should be changed too.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

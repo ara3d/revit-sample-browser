@@ -23,94 +23,107 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ValidateParameters.CS
 {
     /// <summary>
-    /// A class inherits IExternalApplication interface to add an event to the document saving,
-    /// which will be called when the document is being saved.
+    ///     A class inherits IExternalApplication interface to add an event to the document saving,
+    ///     which will be called when the document is being saved.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    class Application: IExternalApplication
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    internal class Application : IExternalApplication
     {
-                /// <summary>
-        /// Implement this method to implement the external application which should be called when 
-        /// Revit starts before a file or default template is actually loaded.
+        /// <summary>
+        ///     Implement this method to implement the external application which should be called when
+        ///     Revit starts before a file or default template is actually loaded.
         /// </summary>
-        /// <param name="application">An object that is passed to the external application 
-        /// which contains the controlled application.</param>
-        /// <returns>Return the status of the external application. 
-        /// A result of Succeeded means that the external application successfully started. 
-        /// Cancelled can be used to signify that the user cancelled the external operation at 
-        /// some point.
-        /// If false is returned then Revit should inform the user that the external application 
-        /// failed to load and the release the internal reference.</returns>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.
+        ///     A result of Succeeded means that the external application successfully started.
+        ///     Cancelled can be used to signify that the user cancelled the external operation at
+        ///     some point.
+        ///     If false is returned then Revit should inform the user that the external application
+        ///     failed to load and the release the internal reference.
+        /// </returns>
         public Result OnStartup(UIControlledApplication application)
         {
             try
-            {               
-                application.ControlledApplication.DocumentSaving += new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingEventArgs>(application_DocumentSaving);
-                application.ControlledApplication.DocumentSavingAs += new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs>(application_DocumentSavingAs);
+            {
+                application.ControlledApplication.DocumentSaving += application_DocumentSaving;
+                application.ControlledApplication.DocumentSavingAs += application_DocumentSavingAs;
             }
             catch (Exception)
             {
                 return Result.Failed;
             }
+
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Implement this method to implement the external application which should be called when 
-        /// Revit is about to exit,Any documents must have been closed before this method is called.
+        ///     Implement this method to implement the external application which should be called when
+        ///     Revit is about to exit,Any documents must have been closed before this method is called.
         /// </summary>
-        /// <param name="application">An object that is passed to the external application 
-        /// which contains the controlled application.</param>
-        /// <returns>Return the status of the external application. 
-        /// A result of Succeeded means that the external application successfully shutdown. 
-        /// Cancelled can be used to signify that the user cancelled the external operation at 
-        /// some point.
-        /// If false is returned then the Revit user should be warned of the failure of the external 
-        /// application to shut down correctly.</returns>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.
+        ///     A result of Succeeded means that the external application successfully shutdown.
+        ///     Cancelled can be used to signify that the user cancelled the external operation at
+        ///     some point.
+        ///     If false is returned then the Revit user should be warned of the failure of the external
+        ///     application to shut down correctly.
+        /// </returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             try
             {
-                application.ControlledApplication.DocumentSaving -= new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingEventArgs>(application_DocumentSaving);
-                application.ControlledApplication.DocumentSavingAs -= new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs>(application_DocumentSavingAs);
+                application.ControlledApplication.DocumentSaving -= application_DocumentSaving;
+                application.ControlledApplication.DocumentSavingAs -= application_DocumentSavingAs;
             }
             catch (Exception)
             {
                 return Result.Failed;
             }
+
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Subscribe to the DocumentSaving event to be notified when Revit is just about to save the document. 
+        ///     Subscribe to the DocumentSaving event to be notified when Revit is just about to save the document.
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">The event argument used by DocumentSaving event. </param>
-        private void application_DocumentSaving(object sender, Autodesk.Revit.DB.Events.DocumentSavingEventArgs e)
+        private void application_DocumentSaving(object sender, DocumentSavingEventArgs e)
         {
             validateParameters(e.Document);
         }
 
         /// <summary>
-        /// Subscribe to the DocumentSavingAs event to be notified when Revit is just about to save the document with a new file name. 
+        ///     Subscribe to the DocumentSavingAs event to be notified when Revit is just about to save the document with a new
+        ///     file name.
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">The event argument used by DocumentSavingAs event.</param>
-        private void application_DocumentSavingAs(object sender, Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs e)
-        {   
+        private void application_DocumentSavingAs(object sender, DocumentSavingAsEventArgs e)
+        {
             validateParameters(e.Document);
         }
 
         /// <summary>
-        /// The method is to validate parameters via FamilyParameter and FamilyType
+        ///     The method is to validate parameters via FamilyParameter and FamilyType
         /// </summary>
         /// <param name="doc">the document which need to validate parameters</param>
         private void validateParameters(Document doc)
@@ -123,13 +136,15 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
             }
             else
             {
-                errorInfo.Add("The current document isn't a family document, so the validation doesn't work correctly!");
+                errorInfo.Add(
+                    "The current document isn't a family document, so the validation doesn't work correctly!");
             }
+
             using (var msgForm = new MessageForm(errorInfo.ToArray()))
             {
                 msgForm.StartPosition = FormStartPosition.CenterParent;
                 msgForm.ShowDialog();
             }
         }
-            }
+    }
 }

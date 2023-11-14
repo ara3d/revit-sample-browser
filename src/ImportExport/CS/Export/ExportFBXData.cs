@@ -26,12 +26,12 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Data class which stores the information for exporting fbx format
+    ///     Data class which stores the information for exporting fbx format
     /// </summary>
-    class ExportFBXData : ExportData
+    internal class ExportFBXData : ExportData
     {
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Export FBX format
+        ///     Export FBX format
         /// </summary>
         /// <returns></returns>
         public override bool Export()

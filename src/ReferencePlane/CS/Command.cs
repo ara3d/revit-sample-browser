@@ -19,25 +19,29 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ReferencePlane.CS
 {
     /// <summary>
-    /// The entry of this sample, that supports the IExternalCommand interface.
+    ///     The entry of this sample, that supports the IExternalCommand interface.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
             ref string message,
             ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.ReferencePlane");
+            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                "Revit.SDK.Samples.ReferencePlane");
             trans.Start();
             try
             {
@@ -46,18 +50,16 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
 
                 using (var dlg = new ReferencePlaneForm(refPlaneMgr))
                 {
-                    if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    if (dlg.ShowDialog() == DialogResult.OK)
                     {
                         // Done some actions, ask revit to execute it.
                         trans.Commit();
                         return Result.Succeeded;
                     }
-                    else
-                    {
-                        // Revit need to do nothing.
-                        trans.RollBack();
-                        return Result.Cancelled;
-                    }
+
+                    // Revit need to do nothing.
+                    trans.RollBack();
+                    return Result.Cancelled;
                 }
             }
             catch (Exception e)
@@ -67,7 +69,6 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
                 trans.RollBack();
                 return Result.Failed;
             }
-            
         }
     }
 }

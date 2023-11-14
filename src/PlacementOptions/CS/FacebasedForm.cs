@@ -24,18 +24,19 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.PlacementOptions.CS
 {
     /// <summary>
-    /// The dialog for setting the FaceBasedPlacementType option of the face based family instance.
+    ///     The dialog for setting the FaceBasedPlacementType option of the face based family instance.
     /// </summary>
-    public partial class FacebasedForm : System.Windows.Forms.Form
+    public partial class FacebasedForm : Form
     {
-        List<FamilySymbol> m_familySymbolList;
+        private readonly List<FamilySymbol> m_familySymbolList;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         public FacebasedForm(List<FamilySymbol> symbolList)
         {
@@ -47,27 +48,24 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();
-            foreach (var symbol in m_familySymbolList)
-            {
-                nameList.Add(symbol.Name);
-            }
+            foreach (var symbol in m_familySymbolList) nameList.Add(symbol.Name);
             comboBoxFamilySymbol.DataSource = nameList;
             comboBoxFamilySymbol.SelectedIndex = 0;
             SelectedFamilySymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
         }
 
         /// <summary>
-        /// The family instance placement options for placement.
+        ///     The family instance placement options for placement.
         /// </summary>
         public PromptForFamilyInstancePlacementOptions FIPlacementOptions { get; }
 
         /// <summary>
-        /// The family symbol for placement.
+        ///     The family symbol for placement.
         /// </summary>
         public FamilySymbol SelectedFamilySymbol { get; private set; }
 
         /// <summary>
-        /// Use the FaceBasedPlacementType.Default option or not.
+        ///     Use the FaceBasedPlacementType.Default option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -77,7 +75,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the FaceBasedPlacementType.PlaceOnFace option or not.
+        ///     Use the FaceBasedPlacementType.PlaceOnFace option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -87,7 +85,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the FaceBasedPlacementType.PlaceOnVerticalFace option or not.
+        ///     Use the FaceBasedPlacementType.PlaceOnVerticalFace option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -97,7 +95,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the FaceBasedPlacementType.PlaceOnWorkPlane option or not.
+        ///     Use the FaceBasedPlacementType.PlaceOnWorkPlane option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -107,7 +105,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Select the family symbol for family instance placement.
+        ///     Select the family symbol for family instance placement.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>

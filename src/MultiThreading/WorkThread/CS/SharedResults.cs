@@ -20,45 +20,44 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
 using System.Collections.Generic;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
-
 
 namespace Revit.SDK.Samples.WorkThread.CS
 {
     /// <summary>
-    ///   This class is for exchange of results between the
-    ///   analyzer which displays the results and the work-thread
-    ///   that calculates them. All operations are thread-safe;
+    ///     This class is for exchange of results between the
+    ///     analyzer which displays the results and the work-thread
+    ///     that calculates them. All operations are thread-safe;
     /// </summary>
-    /// 
-    class SharedResults
+    internal class SharedResults
     {
-                // List of ValueAtPoints
-        private IList<ValueAtPoint> m_values = new List<ValueAtPoint>();
-        // List of UV points
-        private IList<UV> m_points = new List<UV>();
-        // lock object
-        private object mylock = new object();
         // If completed
         private bool m_completed;
+
         // Last read number
         private int m_NumberWhenLastRead;
-        
-                /// <summary>
-        ///   Signaling no more results are needed
+
+        // List of UV points
+        private readonly IList<UV> m_points = new List<UV>();
+
+        // List of ValueAtPoints
+        private readonly IList<ValueAtPoint> m_values = new List<ValueAtPoint>();
+
+        // lock object
+        private readonly object mylock = new object();
+
+        /// <summary>
+        ///     Signaling no more results are needed
         /// </summary>
         /// <remarks>
-        ///   This is set by the analyzer if it needs no more data.
-        ///   We will let this know to the work-thread when it attempts
-        ///   to add more results. When the work-tread results are not
-        ///   needed anymore, it will stop even when not finished yet
-        ///   and returns (which basically means it will die).
+        ///     This is set by the analyzer if it needs no more data.
+        ///     We will let this know to the work-thread when it attempts
+        ///     to add more results. When the work-tread results are not
+        ///     needed anymore, it will stop even when not finished yet
+        ///     and returns (which basically means it will die).
         /// </remarks>
-        /// 
         public void SetCompleted()
         {
             lock (mylock)
@@ -69,22 +68,21 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   Returns a list of points and values acquired so far.
+        ///     Returns a list of points and values acquired so far.
         /// </summary>
         /// <returns>
-        ///   False if there have been no new results acquired from
-        ///   the work-thread since the last time this method was called.
+        ///     False if there have been no new results acquired from
+        ///     the work-thread since the last time this method was called.
         /// </returns>
-        /// 
         public bool GetResults(out IList<UV> points, out IList<ValueAtPoint> values)
         {
             var hasMoreResults = false;
             points = null;
             values = null;
 
-            lock (mylock)    // lock the access
+            lock (mylock) // lock the access
             {
-                hasMoreResults = (m_values.Count != m_NumberWhenLastRead);
+                hasMoreResults = m_values.Count != m_NumberWhenLastRead;
 
                 if (hasMoreResults)
                 {
@@ -99,21 +97,20 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
 
         /// <summary>
-        ///   Adding one pair of point/value to the collected
-        ///   results for the current analysis.
+        ///     Adding one pair of point/value to the collected
+        ///     results for the current analysis.
         /// </summary>
-        ///   The work-thread calls this every time it has another result to add.
+        /// The work-thread calls this every time it has another result to add.
         /// <returns>
-        ///   Returns False if no more values can be accepted, which signals 
-        ///   to the work-thread that the analysis was interrupted and
-        ///   that the thread is supposed to stop and return immediately.
+        ///     Returns False if no more values can be accepted, which signals
+        ///     to the work-thread that the analysis was interrupted and
+        ///     that the thread is supposed to stop and return immediately.
         /// </returns>
-        /// 
         public bool AddResult(UV point, double value)
         {
             var accepted = false;
 
-            lock (mylock)    // lock the access
+            lock (mylock) // lock the access
             {
                 // do nothing if reading has been completed
                 if (!m_completed)
@@ -133,6 +130,5 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
             return accepted;
         }
-            }  // class
-
+    } // class
 }

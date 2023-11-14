@@ -26,28 +26,28 @@ using System;
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// Point class use to store point coordinate value
-    /// and get the value via (x, y ,z)property
+    ///     Point class use to store point coordinate value
+    ///     and get the value via (x, y ,z)property
     /// </summary>
     public struct Vector
     {
         /// <summary>
-        /// x coordinate of vector
+        ///     x coordinate of vector
         /// </summary>
-        private double m_x; 
+        private double m_x;
 
         /// <summary>
-        /// y coordinate of vector
+        ///     y coordinate of vector
         /// </summary>
         private double m_y;
 
         /// <summary>
-        /// z coordinate of vector
+        ///     z coordinate of vector
         /// </summary>
         private double m_z;
 
         /// <summary>
-        /// Property to get X coordinate
+        ///     Property to get X coordinate
         /// </summary>
         public double X
         {
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// Property to get Y coordinate
+        ///     Property to get Y coordinate
         /// </summary>
         public double Y
         {
@@ -65,7 +65,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// Property to get Z coordinate
+        ///     Property to get Z coordinate
         /// </summary>
         public double Z
         {
@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// Property to get x, y, z coordinate bu index 1, 2, 3
+        ///     Property to get x, y, z coordinate bu index 1, 2, 3
         /// </summary>
         public double this[int index]
         {
@@ -112,7 +112,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// copy constructor
+        ///     copy constructor
         /// </summary>
         public Vector(Vector rhs)
         {
@@ -122,7 +122,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="x">x coordinate of point</param>
         /// <param name="y">y coordinate of point</param>
@@ -135,7 +135,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get Normal by vector
+        ///     get Normal by vector
         /// </summary>
         public Vector GetNormal()
         {
@@ -148,7 +148,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// add two vector
+        ///     add two vector
         /// </summary>
         /// <param name="lhs">first vector</param>
         /// <param name="rhs">second vector</param>
@@ -163,7 +163,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// subtraction of two vector
+        ///     subtraction of two vector
         /// </summary>
         /// <param name="lhs">first vector</param>
         /// <param name="rhs">second vector</param>
@@ -178,7 +178,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// negative of vector
+        ///     negative of vector
         /// </summary>
         /// <param name="lhs">vector</param>
         /// <returns>negative of vector</returns>
@@ -192,7 +192,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get normal vector of two vector
+        ///     get normal vector of two vector
         /// </summary>
         /// <param name="lhs">first vector</param>
         /// <param name="rhs">second vector</param>
@@ -215,7 +215,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get cross vector of two vector
+        ///     get cross vector of two vector
         /// </summary>
         /// <param name="lhs">first vector</param>
         /// <param name="rhs">second vector</param>
@@ -226,7 +226,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get vector multiply by an double value
+        ///     get vector multiply by an double value
         /// </summary>
         /// <param name="lhs">vector</param>
         /// <param name="rhs">double value</param>
@@ -237,7 +237,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// estimate whether two are unequal
+        ///     estimate whether two are unequal
         /// </summary>
         /// <param name="lhs">first vector</param>
         /// <param name="rhs">second vector</param>
@@ -248,7 +248,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// estimate whether two are equal
+        ///     estimate whether two are equal
         /// </summary>
         /// <param name="lhs">first vector</param>
         /// <param name="rhs">second vector</param>
@@ -259,7 +259,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get the length of vector
+        ///     get the length of vector
         /// </summary>
         /// <param name="lhs">vector</param>
         /// <returns>length of vector</returns>
@@ -269,7 +269,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get vector divided by an double value
+        ///     get vector divided by an double value
         /// </summary>
         /// <param name="lhs">vector</param>
         /// <param name="rhs">double value</param>
@@ -280,7 +280,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get angle of two vector
+        ///     get angle of two vector
         /// </summary>
         /// <param name="lhs">first vector</param>
         /// <param name="rhs">second vector</param>
@@ -288,15 +288,12 @@ namespace Revit.SDK.Samples.Openings.CS
         public static double GetAngleOf2Vectors(Vector lhs, Vector rhs, bool acuteAngleDesired)
         {
             var angle = Math.Acos(lhs.GetNormal() * rhs.GetNormal());
-            if (acuteAngleDesired && angle > Math.PI / 2)
-            {
-                angle = Math.PI - angle;
-            }
+            if (acuteAngleDesired && angle > Math.PI / 2) angle = Math.PI - angle;
             return angle;
         }
 
         /// <summary>
-        /// estimate whether two are equal
+        ///     estimate whether two are equal
         /// </summary>
         /// <param name="obj">object which compare with</param>
         /// <returns> whether two are equal</returns>
@@ -310,11 +307,12 @@ namespace Revit.SDK.Samples.Openings.CS
             catch
             {
             }
+
             return false;
         }
 
         /// <summary>
-        /// Get HashCode
+        ///     Get HashCode
         /// </summary>
         public override int GetHashCode()
         {
@@ -322,15 +320,15 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// Get Length of vector
+        ///     Get Length of vector
         /// </summary>
         public double GetLength()
         {
-            return Math.Sqrt(m_x*m_x + m_y*m_y + m_z*m_z);
+            return Math.Sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
         }
 
         /// <summary>
-        /// estimate whether two vector are equal
+        ///     estimate whether two vector are equal
         /// </summary>
         /// <param name="lhs">first vector</param>
         /// <param name="rhs">second vector</param>
@@ -338,13 +336,8 @@ namespace Revit.SDK.Samples.Openings.CS
         private static bool IsEqual(Vector lhs, Vector rhs)
         {
             if (lhs.X == rhs.X && lhs.X == rhs.X && lhs.X == rhs.X)
-            {
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

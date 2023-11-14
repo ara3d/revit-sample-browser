@@ -22,194 +22,195 @@
 
 using System;
 using System.Windows;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
-   /// <summary>
-   /// Interaction logic for DockingSetupDialog.xaml
-   /// </summary>
-   public partial class DockingSetupDialog : Window
-   {
-      public DockingSetupDialog()
-      {
-         InitializeComponent();
-         tb_newGuid.Text = Globals.sm_UserDockablePaneId.Guid.ToString();
-      }
+    /// <summary>
+    ///     Interaction logic for DockingSetupDialog.xaml
+    /// </summary>
+    public partial class DockingSetupDialog : Window
+    {
+        private int m_bottom;
 
-      /// <summary>
-      /// Take user-input data for docking dialog choices and attempt to parse it
-      /// into higher-level data for later use.
-      /// </summary>
-      private void btn_ok_Click(object sender, RoutedEventArgs e)
-      {
-         int.TryParse(tb_left.Text, out m_left);
-         int.TryParse(tb_right.Text, out m_right);
-         int.TryParse(tb_top.Text, out m_top);
-         int.TryParse(tb_bottom.Text, out m_bottom);
+        private int m_left;
+        private string m_mainPageGuid;
+        private int m_right;
+        private string m_targetGuidString;
+        private int m_top;
 
-         if (!string.IsNullOrEmpty(tb_newGuid.Text))
-            m_mainPageGuid = tb_newGuid.Text;
+        public DockingSetupDialog()
+        {
+            InitializeComponent();
+            tb_newGuid.Text = Globals.sm_UserDockablePaneId.Guid.ToString();
+        }
 
-         if (!string.IsNullOrEmpty(tb_targetGuid.Text))
-            m_targetGuidString = tb_targetGuid.Text;
+        public int FloatLeft => m_left;
+        public int FloatRight => m_right;
+        public int FloatTop => m_top;
+        public int FloatBottom => m_bottom;
 
-         else if (rb_ElementView.IsChecked == true)
-            m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.ElementView.Guid.ToString();
-
-         else if (rb_SystemNav.IsChecked == true)
-            m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid.ToString();
-
-         else if (rb_HostByLinkNavigator.IsChecked == true)
-            m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid.ToString();
-
-         else if (rb_ProjectBrowser.IsChecked == true)
-            m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid.ToString();
-
-         else if (rb_PropertiesPalette.IsChecked == true)
-            m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid.ToString();
-
-         else if (rb_RebarBrowser.IsChecked == true)
-            m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid.ToString();
-
-         else
-            m_targetGuidString = "null";
-
-         if (rb_bottom.IsChecked == true)
-            DockPosition = Autodesk.Revit.UI.DockPosition.Bottom;
-         else if (rb_left.IsChecked == true)
-            DockPosition = Autodesk.Revit.UI.DockPosition.Left;
-         else if (rb_right.IsChecked == true)
-            DockPosition = Autodesk.Revit.UI.DockPosition.Right;
-         else if (rb_top.IsChecked == true)
-            DockPosition = Autodesk.Revit.UI.DockPosition.Top;
-         else if (rb_tabbed.IsChecked == true)
-            DockPosition = Autodesk.Revit.UI.DockPosition.Tabbed;
-         else
-            DockPosition = Autodesk.Revit.UI.DockPosition.Floating;
-
-         DialogResult = true;
-         Close();
-      }
-
-      private int m_left;
-      private int m_right;
-      private int m_top;
-      private int m_bottom;
-      private string m_targetGuidString;
-      private string m_mainPageGuid;
-
-      public int FloatLeft => m_left;
-      public int FloatRight => m_right;
-      public int FloatTop => m_top;
-      public int FloatBottom => m_bottom;
-
-      /// <summary>
-      /// The guid of the main docking page.
-      /// </summary>
-      public Guid MainPageGuid
-      {
-         get
-         {
-            var retval = Guid.Empty;
-            if (m_mainPageGuid == "null")
-               return retval;
-            else
+        /// <summary>
+        ///     The guid of the main docking page.
+        /// </summary>
+        public Guid MainPageGuid
+        {
+            get
             {
+                var retval = Guid.Empty;
+                if (m_mainPageGuid == "null")
+                {
+                    return retval;
+                }
 
-               try
-               {
-                  retval = new Guid(m_mainPageGuid);
+                try
+                {
+                    retval = new Guid(m_mainPageGuid);
+                }
+                catch (Exception)
+                {
+                }
 
-               }
-               catch (Exception)
-               {
-               }
-               return retval;
+                return retval;
             }
-         }
-      }
+        }
 
-      /// <summary>
-      /// The guid of a tab-behind system pane.
-      /// </summary>
-      public Guid TargetGuid
-      {
-         get
-         {
-            var retval = Guid.Empty;
-            if (m_targetGuidString == "null")
-               return retval;
-            else
+        /// <summary>
+        ///     The guid of a tab-behind system pane.
+        /// </summary>
+        public Guid TargetGuid
+        {
+            get
             {
+                var retval = Guid.Empty;
+                if (m_targetGuidString == "null")
+                {
+                    return retval;
+                }
 
-               try
-               {
-                  retval = new Guid(m_targetGuidString);
+                try
+                {
+                    retval = new Guid(m_targetGuidString);
+                }
+                catch (Exception)
+                {
+                }
 
-               }
-               catch (Exception)
-               {
-               }
-               return retval;
+                return retval;
             }
-         }
-      }
+        }
 
-      public Autodesk.Revit.UI.DockPosition DockPosition { get; private set; }
+        public DockPosition DockPosition { get; private set; }
 
-      private void SetFloatingCoordsStates(bool enabled)
-      {
-         tb_right.IsEnabled = enabled;
-         tb_left.IsEnabled = enabled;
-         tb_top.IsEnabled = enabled;
-         tb_bottom.IsEnabled = enabled;
-      }
+        /// <summary>
+        ///     Take user-input data for docking dialog choices and attempt to parse it
+        ///     into higher-level data for later use.
+        /// </summary>
+        private void btn_ok_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(tb_left.Text, out m_left);
+            int.TryParse(tb_right.Text, out m_right);
+            int.TryParse(tb_top.Text, out m_top);
+            int.TryParse(tb_bottom.Text, out m_bottom);
 
-      private void SetTabTargetStates(bool enabled)
-      {
-         rb_ElementView.IsEnabled = enabled;
-         rb_HostByLinkNavigator.IsEnabled = enabled;
-         rb_ProjectBrowser.IsEnabled = enabled;
-         rb_PropertiesPalette.IsEnabled = enabled;
-         rb_RebarBrowser.IsEnabled = enabled;
-         rb_SystemNav.IsEnabled = enabled;
-         rb_Null.IsEnabled = enabled;
-      }
-      private void rb_top_Checked(object sender, RoutedEventArgs e)
-      {
-         SetFloatingCoordsStates(false);
-         SetTabTargetStates(false);
-      }
+            if (!string.IsNullOrEmpty(tb_newGuid.Text))
+                m_mainPageGuid = tb_newGuid.Text;
 
-      private void rb_tabbed_Checked(object sender, RoutedEventArgs e)
-      {
-         SetFloatingCoordsStates(false);
-         SetTabTargetStates(true);
-      }
+            if (!string.IsNullOrEmpty(tb_targetGuid.Text))
+                m_targetGuidString = tb_targetGuid.Text;
+
+            else if (rb_ElementView.IsChecked == true)
+                m_targetGuidString = DockablePanes.BuiltInDockablePanes.ElementView.Guid.ToString();
+
+            else if (rb_SystemNav.IsChecked == true)
+                m_targetGuidString = DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid.ToString();
+
+            else if (rb_HostByLinkNavigator.IsChecked == true)
+                m_targetGuidString = DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid.ToString();
+
+            else if (rb_ProjectBrowser.IsChecked == true)
+                m_targetGuidString = DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid.ToString();
+
+            else if (rb_PropertiesPalette.IsChecked == true)
+                m_targetGuidString = DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid.ToString();
+
+            else if (rb_RebarBrowser.IsChecked == true)
+                m_targetGuidString = DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid.ToString();
+
+            else
+                m_targetGuidString = "null";
+
+            if (rb_bottom.IsChecked == true)
+                DockPosition = DockPosition.Bottom;
+            else if (rb_left.IsChecked == true)
+                DockPosition = DockPosition.Left;
+            else if (rb_right.IsChecked == true)
+                DockPosition = DockPosition.Right;
+            else if (rb_top.IsChecked == true)
+                DockPosition = DockPosition.Top;
+            else if (rb_tabbed.IsChecked == true)
+                DockPosition = DockPosition.Tabbed;
+            else
+                DockPosition = DockPosition.Floating;
+
+            DialogResult = true;
+            Close();
+        }
+
+        private void SetFloatingCoordsStates(bool enabled)
+        {
+            tb_right.IsEnabled = enabled;
+            tb_left.IsEnabled = enabled;
+            tb_top.IsEnabled = enabled;
+            tb_bottom.IsEnabled = enabled;
+        }
+
+        private void SetTabTargetStates(bool enabled)
+        {
+            rb_ElementView.IsEnabled = enabled;
+            rb_HostByLinkNavigator.IsEnabled = enabled;
+            rb_ProjectBrowser.IsEnabled = enabled;
+            rb_PropertiesPalette.IsEnabled = enabled;
+            rb_RebarBrowser.IsEnabled = enabled;
+            rb_SystemNav.IsEnabled = enabled;
+            rb_Null.IsEnabled = enabled;
+        }
+
+        private void rb_top_Checked(object sender, RoutedEventArgs e)
+        {
+            SetFloatingCoordsStates(false);
+            SetTabTargetStates(false);
+        }
+
+        private void rb_tabbed_Checked(object sender, RoutedEventArgs e)
+        {
+            SetFloatingCoordsStates(false);
+            SetTabTargetStates(true);
+        }
 
 
-      private void rb_left_Checked(object sender, RoutedEventArgs e)
-      {
-         SetFloatingCoordsStates(false);
-         SetTabTargetStates(false);
-      }
+        private void rb_left_Checked(object sender, RoutedEventArgs e)
+        {
+            SetFloatingCoordsStates(false);
+            SetTabTargetStates(false);
+        }
 
-      private void rb_right_Checked(object sender, RoutedEventArgs e)
-      {
-         SetFloatingCoordsStates(false);
-         SetTabTargetStates(false);
-      }
+        private void rb_right_Checked(object sender, RoutedEventArgs e)
+        {
+            SetFloatingCoordsStates(false);
+            SetTabTargetStates(false);
+        }
 
-      private void rb_bottom_Checked(object sender, RoutedEventArgs e)
-      {
-         SetFloatingCoordsStates(false);
-         SetTabTargetStates(false);
-      }
+        private void rb_bottom_Checked(object sender, RoutedEventArgs e)
+        {
+            SetFloatingCoordsStates(false);
+            SetTabTargetStates(false);
+        }
 
-      private void rb_floating_Checked(object sender, RoutedEventArgs e)
-      {
-         SetFloatingCoordsStates(true);
-         SetTabTargetStates(false);
-      }
-   }
+        private void rb_floating_Checked(object sender, RoutedEventArgs e)
+        {
+            SetFloatingCoordsStates(true);
+            SetTabTargetStates(false);
+        }
+    }
 }

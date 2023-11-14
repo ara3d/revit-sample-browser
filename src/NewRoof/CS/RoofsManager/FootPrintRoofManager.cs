@@ -20,36 +20,41 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
+using System;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Document = Autodesk.Revit.Creation.Document;
 
 namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
 {
     /// <summary>
-    /// The FootPrintRoofManager class is to manage the creation of the footprint roof.
+    ///     The FootPrintRoofManager class is to manage the creation of the footprint roof.
     /// </summary>
-    class FootPrintRoofManager
+    internal class FootPrintRoofManager
     {
         // To store a reference to the commandData
-        ExternalCommandData m_commandData;
-        // To store a reference to the creation document
-        Autodesk.Revit.Creation.Document m_creationDoc;
+        private readonly ExternalCommandData m_commandData;
+
         // To store a reference to the creation application
-        Autodesk.Revit.Creation.Application m_creationApp;
+        private Application m_creationApp;
+
+        // To store a reference to the creation document
+        private readonly Document m_creationDoc;
 
         /// <summary>
-        /// The construct of ExtrusionRoofManager class.
+        ///     The construct of ExtrusionRoofManager class.
         /// </summary>
         /// <param name="commandData">A reference to the commandData.</param>
         public FootPrintRoofManager(ExternalCommandData commandData)
         {
             m_commandData = commandData;
             m_creationDoc = m_commandData.Application.ActiveUIDocument.Document.Create;
-            m_creationApp = m_commandData.Application.Application.Create;        
+            m_creationApp = m_commandData.Application.Application.Create;
         }
 
         /// <summary>
-        /// Create a footprint roof.
+        ///     Create a footprint roof.
         /// </summary>
         /// <param name="footPrint">The footprint is a curve loop, or a wall loop, or loops combined of walls and curves</param>
         /// <param name="level">The base level of the roof to be created.</param>
@@ -58,7 +63,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
         public FootPrintRoof CreateFootPrintRoof(CurveArray footPrint, Level level, RoofType roofType)
         {
             FootPrintRoof footprintRoof = null;
-            var createRoofTransaction = new Transaction(m_commandData.Application.ActiveUIDocument.Document, "FootPrintRoof");
+            var createRoofTransaction =
+                new Transaction(m_commandData.Application.ActiveUIDocument.Document, "FootPrintRoof");
             createRoofTransaction.Start();
             try
             {
@@ -66,14 +72,13 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
                 footprintRoof = m_creationDoc.NewFootPrintRoof(footPrint, level, roofType, out _);
                 createRoofTransaction.Commit();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 createRoofTransaction.RollBack();
                 throw e;
             }
-            
+
             return footprintRoof;
         }
-
     }
 }

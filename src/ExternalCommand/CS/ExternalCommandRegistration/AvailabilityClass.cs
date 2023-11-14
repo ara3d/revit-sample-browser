@@ -20,59 +20,49 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommandAvailability, 
-   /// determine when to enable\disable the corresponding external command by 
-   /// return value from IsCommandAvailable function.
-   /// Corresponding command will be disabled when a wall selected by user in this case.
-   /// </summary>
-   class WallSelection : IExternalCommandAvailability
-   {
-      
-      public bool IsCommandAvailable(UIApplication applicationData, 
-         Autodesk.Revit.DB.CategorySet selectedCategories)
-      {
-         var iterCategory = selectedCategories.GetEnumerator();
-         iterCategory.Reset();
-         while (iterCategory.MoveNext())
-         {
-            var category = (Autodesk.Revit.DB.Category)(iterCategory.Current);
-            if (category.Name == "Walls")
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommandAvailability,
+    ///     determine when to enable\disable the corresponding external command by
+    ///     return value from IsCommandAvailable function.
+    ///     Corresponding command will be disabled when a wall selected by user in this case.
+    /// </summary>
+    internal class WallSelection : IExternalCommandAvailability
+    {
+        public bool IsCommandAvailable(UIApplication applicationData,
+            CategorySet selectedCategories)
+        {
+            var iterCategory = selectedCategories.GetEnumerator();
+            iterCategory.Reset();
+            while (iterCategory.MoveNext())
             {
-               return false;
-            } 
-         }
-         return true;
-      }
+                var category = (Category)iterCategory.Current;
+                if (category.Name == "Walls") return false;
+            }
 
-         }
-
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommandAvailability, 
-   /// determine when to enable\disable the corresponding external command by 
-   /// return value from IsCommandAvailable function.
-   /// Corresponding command will be disabled if active document is not a 3D view.
-   /// </summary>
-   class View3D : IExternalCommandAvailability
-   {
-      
-      public bool IsCommandAvailable(UIApplication applicationData, 
-         Autodesk.Revit.DB.CategorySet selectedCategories)
-      {
-         var activeView = applicationData.ActiveUIDocument.Document.ActiveView;
-         if (Autodesk.Revit.DB.ViewType.ThreeD == activeView.ViewType)
-         {
             return true;
-         }
-         else 
-         {
-            return false;
-         }
-      }
+        }
+    }
 
-         }
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommandAvailability,
+    ///     determine when to enable\disable the corresponding external command by
+    ///     return value from IsCommandAvailable function.
+    ///     Corresponding command will be disabled if active document is not a 3D view.
+    /// </summary>
+    internal class View3D : IExternalCommandAvailability
+    {
+        public bool IsCommandAvailable(UIApplication applicationData,
+            CategorySet selectedCategories)
+        {
+            var activeView = applicationData.ActiveUIDocument.Document.ActiveView;
+            if (ViewType.ThreeD == activeView.ViewType)
+                return true;
+            return false;
+        }
+    }
 }

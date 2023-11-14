@@ -20,43 +20,44 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Data;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ChangesMonitor.CS
 {
     /// <summary>
-    /// A class inherits IExternalApplication interface and provide an entry of the sample.
-    /// It create a modeless dialog to track the changes.
+    ///     A class inherits IExternalApplication interface and provide an entry of the sample.
+    ///     It create a modeless dialog to track the changes.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class ExternalApplication : IExternalApplication
     {
-                /// <summary>
-        /// A controlled application used to register the DocumentChanged event. Because all trigger points
-        /// in this sample come from UI, the event must be registered to ControlledApplication. 
-        /// If the trigger point is from API, user can register it to application 
-        /// which can retrieve from ExternalCommand.
+        /// <summary>
+        ///     A controlled application used to register the DocumentChanged event. Because all trigger points
+        ///     in this sample come from UI, the event must be registered to ControlledApplication.
+        ///     If the trigger point is from API, user can register it to application
+        ///     which can retrieve from ExternalCommand.
         /// </summary>
         private static ControlledApplication m_CtrlApp;
 
         /// <summary>
-        /// data table for information windows.
+        ///     data table for information windows.
         /// </summary>
         private static DataTable m_ChangesInfoTable;
 
         /// <summary>
-        /// The window is used to show changes' information.
+        ///     The window is used to show changes' information.
         /// </summary>
         private static ChangesInformationForm m_InfoForm;
-                
-                /// <summary>
-        /// Property to get and set private member variables of changes log information.
+
+        /// <summary>
+        ///     Property to get and set private member variables of changes log information.
         /// </summary>
         public static DataTable ChangesInfoTable
         {
@@ -65,26 +66,30 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
         }
 
         /// <summary>
-        /// Property to get and set private member variables of info form.
+        ///     Property to get and set private member variables of info form.
         /// </summary>
         public static ChangesInformationForm InfoForm
         {
             get => m_InfoForm;
             set => m_InfoForm = value;
         }
-                
-                /// <summary>
-        /// Implement this method to implement the external application which should be called when 
-        /// Revit starts before a file or default template is actually loaded.
+
+        /// <summary>
+        ///     Implement this method to implement the external application which should be called when
+        ///     Revit starts before a file or default template is actually loaded.
         /// </summary>
-        /// <param name="application">An object that is passed to the external application 
-        /// which contains the controlled application.</param> 
-        /// <returns>Return the status of the external application. 
-        /// A result of Succeeded means that the external application successfully started. 
-        /// Cancelled can be used to signify that the user cancelled the external operation at 
-        /// some point.
-        /// If false is returned then Revit should inform the user that the external application 
-        /// failed to load and the release the internal reference.</returns>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.
+        ///     A result of Succeeded means that the external application successfully started.
+        ///     Cancelled can be used to signify that the user cancelled the external operation at
+        ///     some point.
+        ///     If false is returned then Revit should inform the user that the external application
+        ///     failed to load and the release the internal reference.
+        /// </returns>
         public Result OnStartup(UIControlledApplication application)
         {
             // initialize member variables.
@@ -93,7 +98,7 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             m_InfoForm = new ChangesInformationForm(ChangesInfoTable);
 
             // register the DocumentChanged event
-            m_CtrlApp.DocumentChanged += new EventHandler<Autodesk.Revit.DB.Events.DocumentChangedEventArgs>(CtrlApp_DocumentChanged);
+            m_CtrlApp.DocumentChanged += CtrlApp_DocumentChanged;
 
             // show dialog
             m_InfoForm.Show();
@@ -102,17 +107,21 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
         }
 
         /// <summary>
-        /// Implement this method to implement the external application which should be called when 
-        /// Revit is about to exit,Any documents must have been closed before this method is called.
+        ///     Implement this method to implement the external application which should be called when
+        ///     Revit is about to exit,Any documents must have been closed before this method is called.
         /// </summary>
-        /// <param name="application">An object that is passed to the external application 
-        /// which contains the controlled application.</param>
-        /// <returns>Return the status of the external application. 
-        /// A result of Succeeded means that the external application successfully shutdown. 
-        /// Cancelled can be used to signify that the user cancelled the external operation at 
-        /// some point.
-        /// If false is returned then the Revit user should be warned of the failure of the external 
-        /// application to shut down correctly.</returns>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.
+        ///     A result of Succeeded means that the external application successfully shutdown.
+        ///     Cancelled can be used to signify that the user cancelled the external operation at
+        ///     some point.
+        ///     If false is returned then the Revit user should be warned of the failure of the external
+        ///     application to shut down correctly.
+        /// </returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             m_CtrlApp.DocumentChanged -= CtrlApp_DocumentChanged;
@@ -120,40 +129,30 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             m_ChangesInfoTable = null;
             return Result.Succeeded;
         }
-        
-                /// <summary>
-        /// This method is the event handler, which will dump the change information to tracking dialog
+
+        /// <summary>
+        ///     This method is the event handler, which will dump the change information to tracking dialog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void CtrlApp_DocumentChanged(object sender, Autodesk.Revit.DB.Events.DocumentChangedEventArgs e)
+        private void CtrlApp_DocumentChanged(object sender, DocumentChangedEventArgs e)
         {
             // get the current document.
             var doc = e.GetDocument();
 
             // dump the element information
             var addedElem = e.GetAddedElementIds();
-            foreach (var id in addedElem)
-            {
-                AddChangeInfoRow(id, doc, "Added");
-            }
+            foreach (var id in addedElem) AddChangeInfoRow(id, doc, "Added");
 
             var deletedElem = e.GetDeletedElementIds();
-            foreach (var id in deletedElem)
-            {
-                AddChangeInfoRow(id, doc, "Deleted");
-            }
+            foreach (var id in deletedElem) AddChangeInfoRow(id, doc, "Deleted");
 
             var modifiedElem = e.GetModifiedElementIds();
-            foreach (var id in modifiedElem)
-            {
-                AddChangeInfoRow(id, doc, "Modified");
-            }
-
+            foreach (var id in modifiedElem) AddChangeInfoRow(id, doc, "Modified");
         }
-        
-                /// <summary>
-        /// This method is used to retrieve the changed element and add row to data table.
+
+        /// <summary>
+        ///     This method is used to retrieve the changed element and add row to data table.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="doc"></param>
@@ -183,12 +182,12 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
                 newRow["Category"] = elem.Category.Name;
                 newRow["Document"] = doc.Title;
             }
-           
+
             m_ChangesInfoTable.Rows.Add(newRow);
         }
 
         /// <summary>
-        /// Generate a data table with five columns for display in window
+        ///     Generate a data table with five columns for display in window
         /// </summary>
         /// <returns>The DataTable to be displayed in window</returns>
         private DataTable CreateChangeInfoTable()
@@ -224,25 +223,22 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             // return this data table 
             return changesInfoTable;
         }
-            }
+    }
 
     /// <summary>
-    /// This class inherits IExternalCommand interface and used to retrieve the dialog again.
+    ///     This class inherits IExternalCommand interface and used to retrieve the dialog again.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             if (ExternalApplication.InfoForm == null)
-            {
                 ExternalApplication.InfoForm = new ChangesInformationForm(ExternalApplication.ChangesInfoTable);
-            }
             ExternalApplication.InfoForm.Show();
 
             return Result.Succeeded;
         }
-            }
-
+    }
 }

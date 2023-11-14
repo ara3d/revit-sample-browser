@@ -21,36 +21,41 @@
 // 
 
 
+using System;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Document = Autodesk.Revit.Creation.Document;
 
 namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
 {
     /// <summary>
-    /// The ExtrusionRoofManager class is to manage the creation of the Extrusion roof.
+    ///     The ExtrusionRoofManager class is to manage the creation of the Extrusion roof.
     /// </summary>
-    class ExtrusionRoofManager
+    internal class ExtrusionRoofManager
     {
         // To store a reference to the commandData
-        ExternalCommandData m_commandData;
-        // To store a reference to the creation document
-        Autodesk.Revit.Creation.Document m_creationDoc;
+        private readonly ExternalCommandData m_commandData;
+
         // To store a reference to the creation application
-        Autodesk.Revit.Creation.Application m_creationApp;
+        private Application m_creationApp;
+
+        // To store a reference to the creation document
+        private readonly Document m_creationDoc;
 
         /// <summary>
-        /// The construct of ExtrusionRoofManager class.
+        ///     The construct of ExtrusionRoofManager class.
         /// </summary>
         /// <param name="commandData">A reference to the commandData.</param>
         public ExtrusionRoofManager(ExternalCommandData commandData)
         {
             m_commandData = commandData;
             m_creationDoc = m_commandData.Application.ActiveUIDocument.Document.Create;
-            m_creationApp = m_commandData.Application.Application.Create;        
+            m_creationApp = m_commandData.Application.Application.Create;
         }
 
         /// <summary>
-        /// Create a extrusion roof.
+        ///     Create a extrusion roof.
         /// </summary>
         /// <param name="profile">The profile combined of straight lines and arcs.</param>
         /// <param name="refPlane">The reference plane for the extrusion roof.</param>
@@ -59,23 +64,26 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
         /// <param name="extrusionStart">The extrusion start point.</param>
         /// <param name="extrusionEnd">The extrusion end point.</param>
         /// <returns>Return a new created extrusion roof.</returns>
-        public ExtrusionRoof CreateExtrusionRoof(CurveArray profile, Autodesk.Revit.DB.ReferencePlane refPlane, Level level, RoofType roofType,
+        public ExtrusionRoof CreateExtrusionRoof(CurveArray profile, Autodesk.Revit.DB.ReferencePlane refPlane,
+            Level level, RoofType roofType,
             double extrusionStart, double extrusionEnd)
         {
             ExtrusionRoof extrusionRoof = null;
-            var createRoofTransaction = new Transaction(m_commandData.Application.ActiveUIDocument.Document, "ExtrusionRoof");
+            var createRoofTransaction =
+                new Transaction(m_commandData.Application.ActiveUIDocument.Document, "ExtrusionRoof");
             createRoofTransaction.Start();
             try
             {
-                extrusionRoof = m_creationDoc.NewExtrusionRoof(profile, refPlane, level, roofType, extrusionStart, extrusionEnd);
+                extrusionRoof =
+                    m_creationDoc.NewExtrusionRoof(profile, refPlane, level, roofType, extrusionStart, extrusionEnd);
                 createRoofTransaction.Commit();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 createRoofTransaction.RollBack();
                 throw e;
             }
-            
+
             return extrusionRoof;
         }
     }

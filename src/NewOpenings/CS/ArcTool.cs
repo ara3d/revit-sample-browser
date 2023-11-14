@@ -23,20 +23,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
     /// <summary>
-    /// Tool used to draw arc.
+    ///     Tool used to draw arc.
     /// </summary>
-    class ArcTool : ITool
+    internal class ArcTool : ITool
     {
         private bool m_isFinished;
 
         /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
         public ArcTool()
         {
@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Draw Arcs
+        ///     Draw Arcs
         /// </summary>
         /// <param name="graphic">Graphics object</param>
         public override void Draw(Graphics graphic)
@@ -60,15 +60,13 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 {
                     DrawArc(graphic, m_foreGroundPen, line[0], line[1], line[2]);
                     for (var i = 1; i < count - 3; i += 2)
-                    {
                         DrawArc(graphic, m_foreGroundPen, line[i], line[i + 2], line[i + 3]);
-                    }
                 }
             }
         }
 
         /// <summary>
-        /// Mouse down event handler
+        ///     Mouse down event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
@@ -80,10 +78,8 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 m_preMovePoint = e.Location;
 
                 if (m_points.Count >= 4 && m_points.Count % 2 == 0)
-                {
-                    graphic.DrawLine(m_backGroundPen, 
+                    graphic.DrawLine(m_backGroundPen,
                         m_points[m_points.Count - 3], m_preMovePoint);
-                }
                 Draw(graphic);
 
                 if (m_isFinished)
@@ -97,7 +93,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Mouse move event handler
+        ///     Mouse move event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
@@ -108,14 +104,13 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 DrawArc(graphic, m_backGroundPen, m_points[0], m_points[1], m_preMovePoint);
                 m_preMovePoint = e.Location;
                 DrawArc(graphic, m_foreGroundPen, m_points[0], m_points[1], e.Location);
-
             }
             else if (m_points.Count > 2 && m_points.Count % 2 == 0)
             {
-                DrawArc(graphic, m_backGroundPen, m_points[m_points.Count - 3], 
+                DrawArc(graphic, m_backGroundPen, m_points[m_points.Count - 3],
                     m_points[m_points.Count - 1], m_preMovePoint);
                 m_preMovePoint = e.Location;
-                DrawArc(graphic, m_foreGroundPen, m_points[m_points.Count - 3], 
+                DrawArc(graphic, m_foreGroundPen, m_points[m_points.Count - 3],
                     m_points[m_points.Count - 1], e.Location);
             }
             else if (!m_isFinished && m_points.Count > 2 && m_points.Count % 2 == 1)
@@ -127,7 +122,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Mouse right key click
+        ///     Mouse right key click
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
@@ -142,21 +137,18 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Mouse middle key down event handler
+        ///     Mouse middle key down event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
         public override void OnMidMouseDown(Graphics graphic, MouseEventArgs e)
         {
             base.OnMidMouseDown(graphic, e);
-            if (m_isFinished)
-            {
-                m_isFinished = false;
-            }
+            if (m_isFinished) m_isFinished = false;
         }
 
         /// <summary>
-        /// Calculate the arc center
+        ///     Calculate the arc center
         /// </summary>
         /// <param name="p1">Point on arc</param>
         /// <param name="p2">Point on arc</param>
@@ -166,10 +158,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             var deta = 4 * (p2.X - p1.X) * (p3.Y - p1.Y) - 4 * (p2.Y - p1.Y) * (p3.X - p1.X);
 
-            if (deta == 0)
-            {
-                throw new Exception("Divided by Zero!");
-            }
+            if (deta == 0) throw new Exception("Divided by Zero!");
             var constD1 = p2.X * p2.X + p2.Y * p2.Y - (p1.X * p1.X + p1.Y * p1.Y);
             var constD2 = p3.X * p3.X + p3.Y * p3.Y - (p1.X * p1.X + p1.Y * p1.Y);
 
@@ -180,7 +169,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Draw arc
+        ///     Draw arc
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="pen">Used to set drawing color</param>
@@ -192,7 +181,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             try
             {
                 var pCenter = ComputeCenter(p1, p2, p3);
-                
+
                 //computer the arc rectangle
                 var radius = (float)Math.Sqrt((p1.X - pCenter.X) * (p1.X - pCenter.X)
                                               + (p1.Y - pCenter.Y) * (p1.Y - pCenter.Y));
@@ -224,17 +213,17 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                     minAngle = maxAngle;
                     sweepAngle = 360 - sweepAngle;
                 }
+
                 graphic.DrawArc(pen, rectF, (float)minAngle, (float)sweepAngle);
             }
             //catch divided by zero exception
             catch (Exception)
             {
-                return;
             }
         }
 
         /// <summary>
-        /// Get angle between [0,360]
+        ///     Get angle between [0,360]
         /// </summary>
         /// <param name="sin">Sin(Angle) value</param>
         /// <param name="cos">Cos(Angle) value</param>
@@ -243,17 +232,10 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             double result = 0;
             if (sin > 0)
-            {
-                result = (180 / Math.PI) * Math.Acos(cos);
-            }
+                result = 180 / Math.PI * Math.Acos(cos);
             else if (cos < 0)
-            {
-                result = 180 + (180 / Math.PI) * Math.Acos(Math.Abs(cos));
-            }
-            else if (cos > 0)
-            {
-                result = 360 - (180 / Math.PI) * Math.Acos(Math.Abs(cos));
-            }
+                result = 180 + 180 / Math.PI * Math.Acos(Math.Abs(cos));
+            else if (cos > 0) result = 360 - 180 / Math.PI * Math.Acos(Math.Abs(cos));
             return result;
         }
     }

@@ -22,20 +22,21 @@
 
 using System;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.SinePlotter.CS
 {
     /// <summary>
-    /// This class plots a number of instances of a given family object along a sine curve.
+    ///     This class plots a number of instances of a given family object along a sine curve.
     /// </summary>
-    class FamilyInstancePlotter
+    internal class FamilyInstancePlotter
     {
-        private FamilySymbol familySymbol;
-        private Document document;
- 
-       
+        private readonly Document document;
+        private readonly FamilySymbol familySymbol;
+
+
         /// <summary>
-        /// The constructor for the FamilyInstancePlotter Class.
+        ///     The constructor for the FamilyInstancePlotter Class.
         /// </summary>
         /// <param name="fs">A Revit family symbol.</param>
         /// <param name="doc">The active Revit document.</param>
@@ -47,7 +48,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
 
 
         /// <summary>
-        /// Places a family instance at the given location.
+        ///     Places a family instance at the given location.
         /// </summary>
         /// <param name="location">A point XYZ signifying the location for a family instance to be placed.</param>
         private void PlaceAtLocation(XYZ location)
@@ -55,25 +56,27 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             var t = new Transaction(document, "Place family instance");
             t.Start();
             document.Create.NewFamilyInstance(location, familySymbol,
-                Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+                StructuralType.NonStructural);
             t.Commit();
         }
 
 
         /// <summary>
-        /// Computes a sine curve taking into account input values for the sine curve period, amplitude and number 
-        /// of circles and places a number of instances defined by the partitions input value of the same family 
-        /// object along this curve.
+        ///     Computes a sine curve taking into account input values for the sine curve period, amplitude and number
+        ///     of circles and places a number of instances defined by the partitions input value of the same family
+        ///     object along this curve.
         /// </summary>
         /// <param name="partitions">An integer value denoting the number of partitions per curve period.</param>
-        /// <param name="period">A double value denoting the period of the curve, i.e. how often the curve
-        /// goes a full repition around the unit circle.</param>
+        /// <param name="period">
+        ///     A double value denoting the period of the curve, i.e. how often the curve
+        ///     goes a full repition around the unit circle.
+        /// </param>
         /// <param name="amplitude">A double value denoting how far the curve gets away from the x-axis.</param>
         /// <param name="numOfCircles">A double value denoting the number of circles the curve makes.</param>
         public void PlaceInstancesOnCurve(int partitions, double period, double amplitude, double numOfCircles)
         {
             //Given the number of partitions compute the angle increment. 
-            var theta = (2 * Math.PI) / partitions;
+            var theta = 2 * Math.PI / partitions;
 
             var transGroup = new TransactionGroup(document, "Place All Instances");
             transGroup.Start();
@@ -84,13 +87,13 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             {
                 var x = i * theta;
                 //function used:  y = a*sin(b*x)
-                var y = (Math.Sin(period * x)) * amplitude;              
+                var y = Math.Sin(period * x) * amplitude;
                 var temp = new XYZ(x, y, 0);
-                
+
                 PlaceAtLocation(temp);
             }
+
             transGroup.Assimilate();
         }
-
     }
 }

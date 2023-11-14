@@ -20,32 +20,22 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace ExtensibleStorageManager
 {
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   public class Command : IExternalCommand 
-   {
-   
-     
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-      {
-
-         var dialog = new UICommand(commandData.Application.ActiveUIDocument.Document, commandData.Application.ActiveAddInId.GetGUID().ToString());
-          dialog.ShowDialog();
-          return Result.Succeeded;
-      }
-
-
-
-
- 
-   }
-
-
-
-
+    [Transaction(TransactionMode.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            var dialog = new UICommand(commandData.Application.ActiveUIDocument.Document,
+                commandData.Application.ActiveAddInId.GetGUID().ToString());
+            dialog.ShowDialog();
+            return Result.Succeeded;
+        }
+    }
 }

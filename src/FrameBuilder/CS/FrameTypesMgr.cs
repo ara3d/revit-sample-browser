@@ -19,37 +19,27 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using Autodesk.Revit.DB;
-
     /// <summary>
-    /// data manager take charge of FamilySymbol object in current document
+    ///     data manager take charge of FamilySymbol object in current document
     /// </summary>
     public class FrameTypesMgr
     {
         // map list pairs FamilySymbol object and its Name 
-        private Dictionary<string, FamilySymbol> m_symbolMaps;    
+        private readonly Dictionary<string, FamilySymbol> m_symbolMaps;
+
         // list of FamilySymbol objects
-        private List<FamilySymbol> m_symbols;
+        private readonly List<FamilySymbol> m_symbols;
 
         /// <summary>
-        /// command data pass from entry point
-        /// </summary>
-        public ExternalCommandData CommandData { get; }
-
-        /// <summary>
-        /// size of FamilySymbol objects in current Revit document
-        /// </summary>
-        public int Size => m_symbolMaps.Count;
-
-        /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="commandData"></param>
         public FrameTypesMgr(ExternalCommandData commandData)
@@ -60,28 +50,35 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// constructor without parameters is forbidden
+        ///     constructor without parameters is forbidden
         /// </summary>
         private FrameTypesMgr()
         {
         }
 
         /// <summary>
-        /// get list of FamilySymbol objects in current Revit document
+        ///     command data pass from entry point
+        /// </summary>
+        public ExternalCommandData CommandData { get; }
+
+        /// <summary>
+        ///     size of FamilySymbol objects in current Revit document
+        /// </summary>
+        public int Size => m_symbolMaps.Count;
+
+        /// <summary>
+        ///     get list of FamilySymbol objects in current Revit document
         /// </summary>
         public ReadOnlyCollection<FamilySymbol> FramingSymbols => new ReadOnlyCollection<FamilySymbol>(m_symbols);
 
         /// <summary>
-        /// add one FamilySymbol object to the lists
+        ///     add one FamilySymbol object to the lists
         /// </summary>
         /// <param name="framingSymbol"></param>
         /// <returns></returns>
         public bool AddSymbol(FamilySymbol framingSymbol)
         {
-            if (ContainsSymbolName(framingSymbol.Name))
-            {
-                return false;
-            }
+            if (ContainsSymbolName(framingSymbol.Name)) return false;
             m_symbolMaps.Add(framingSymbol.Name, framingSymbol);
             m_symbols.Add(framingSymbol);
             return true;
@@ -94,26 +91,24 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         public bool DeleteSymbol(FamilySymbol symbol)
         {
             try
-            {              
+            {
                 // remove from the lists
                 m_symbolMaps.Remove(symbol.Name);
                 m_symbols.Remove(symbol);
                 // delete from Revit
                 var ids = CommandData.Application.ActiveUIDocument.Document.Delete(symbol.Id) as List<ElementId>;
-                if (ids.Count == 0)
-                {
-                    return false;
-                }               
+                if (ids.Count == 0) return false;
             }
             catch
             {
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// duplicate one FamilySymbol and add to lists
+        ///     duplicate one FamilySymbol and add to lists
         /// </summary>
         /// <param name="framingSymbol">FamilySymbol to be copied</param>
         /// <param name="symbolName">duplicate FamilySymbol's Name</param>
@@ -129,11 +124,12 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                 m_symbolMaps.Add(result.Name, result);
                 m_symbols.Add(result);
             }
+
             return result;
         }
 
         /// <summary>
-        /// inquire whether the FamilySymbol's Name already exists in the list
+        ///     inquire whether the FamilySymbol's Name already exists in the list
         /// </summary>
         /// <param name="symbolName"></param>
         /// <returns></returns>
@@ -143,7 +139,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// generate a new FamilySymbol's Name according to given name
+        ///     generate a new FamilySymbol's Name according to given name
         /// </summary>
         /// <param name="symbolName">original name</param>
         /// <returns>generated name</returns>
@@ -153,9 +149,10 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             var result = symbolName;
             while (ContainsSymbolName(result))
             {
-                result = symbolName + " " + suffix.ToString();
+                result = symbolName + " " + suffix;
                 suffix++;
             }
+
             return result;
         }
     }

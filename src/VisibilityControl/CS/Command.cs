@@ -21,20 +21,23 @@
 //
 
 using System;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.VisibilityControl.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
-            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.VisibilityControl");
+            var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                "Revit.SDK.Samples.VisibilityControl");
             trans.Start();
             try
             {
@@ -53,12 +56,13 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
                     // show dialog
                     var result = dlg.ShowDialog();
 
-                    if (result == System.Windows.Forms.DialogResult.OK)
+                    if (result == DialogResult.OK)
                     {
                         trans.Commit();
                         return Result.Succeeded;
                     }
-                    else if (result == System.Windows.Forms.DialogResult.Yes)
+
+                    if (result == DialogResult.Yes)
                     {
                         // isolate the selected element(s)
                         visiController.Isolate();
@@ -77,8 +81,5 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
                 return Result.Failed;
             }
         }
-
     }
-
 }
-

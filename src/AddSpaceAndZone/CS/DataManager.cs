@@ -24,25 +24,25 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Mechanical;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 {
     /// <summary>
-    /// The DataManager Class is used to obtain, create or edit the Space elements and Zone elements.
+    ///     The DataManager Class is used to obtain, create or edit the Space elements and Zone elements.
     /// </summary>
     public class DataManager
     {
-        ExternalCommandData m_commandData;
-        List<Level>  m_levels;
-        SpaceManager m_spaceManager;
-        ZoneManager m_zoneManager;
-        Level m_currentLevel;
-        Phase m_defaultPhase;
+        private readonly ExternalCommandData m_commandData;
+        private Level m_currentLevel;
+        private readonly Phase m_defaultPhase;
+        private readonly List<Level> m_levels;
+        private SpaceManager m_spaceManager;
+        private ZoneManager m_zoneManager;
 
         /// <summary>
-        /// The constructor of DataManager class.
+        ///     The constructor of DataManager class.
         /// </summary>
         /// <param name="commandData">The ExternalCommandData</param>
         public DataManager(ExternalCommandData commandData)
@@ -51,13 +51,19 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             m_levels = new List<Level>();
             Initialize();
             m_currentLevel = m_levels[0];
-            var para = commandData.Application.ActiveUIDocument.Document.ActiveView.get_Parameter(BuiltInParameter.VIEW_PHASE);
+            var para =
+                commandData.Application.ActiveUIDocument.Document.ActiveView.get_Parameter(BuiltInParameter.VIEW_PHASE);
             var phaseId = para.AsElementId();
             m_defaultPhase = commandData.Application.ActiveUIDocument.Document.GetElement(phaseId) as Phase;
         }
 
         /// <summary>
-        /// Initialize the data member, obtain the Space and Zone elements.
+        ///     Get the Level elements.
+        /// </summary>
+        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
+
+        /// <summary>
+        ///     Initialize the data member, obtain the Space and Zone elements.
         /// </summary>
         private void Initialize()
         {
@@ -66,10 +72,11 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 
             var activeDoc = m_commandData.Application.ActiveUIDocument.Document;
 
-            var levelsIterator = (new FilteredElementCollector(activeDoc)).OfClass(typeof(Level)).GetElementIterator();
-            var spacesIterator =(new FilteredElementCollector(activeDoc)).WherePasses(new SpaceFilter()).GetElementIterator();
-            var zonesIterator = (new FilteredElementCollector(activeDoc)).OfClass(typeof(Zone)).GetElementIterator();
-          
+            var levelsIterator = new FilteredElementCollector(activeDoc).OfClass(typeof(Level)).GetElementIterator();
+            var spacesIterator = new FilteredElementCollector(activeDoc).WherePasses(new SpaceFilter())
+                .GetElementIterator();
+            var zonesIterator = new FilteredElementCollector(activeDoc).OfClass(typeof(Zone)).GetElementIterator();
+
             levelsIterator.Reset();
             while (levelsIterator.MoveNext())
             {
@@ -86,20 +93,14 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             while (spacesIterator.MoveNext())
             {
                 var space = spacesIterator.Current as Space;
-                if (space != null)
-                {
-                    spaceDictionary[space.LevelId].Add(space);
-                }
+                if (space != null) spaceDictionary[space.LevelId].Add(space);
             }
 
             zonesIterator.Reset();
             while (zonesIterator.MoveNext())
             {
                 var zone = zonesIterator.Current as Zone;
-                if (zone != null && activeDoc.GetElement(zone.LevelId) != null)
-                {
-                    zoneDictionary[zone.LevelId].Add(zone);
-                }
+                if (zone != null && activeDoc.GetElement(zone.LevelId) != null) zoneDictionary[zone.LevelId].Add(zone);
             }
 
             m_spaceManager = new SpaceManager(m_commandData, spaceDictionary);
@@ -107,12 +108,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// Get the Level elements.
-        /// </summary>
-        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
-
-        /// <summary>
-        /// Create a Zone element.
+        ///     Create a Zone element.
         /// </summary>
         public void CreateZone()
         {
@@ -121,6 +117,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
                 TaskDialog.Show("Revit", "The phase of the active view is null, you can't create zone in a null phase");
                 return;
             }
+
             try
             {
                 m_zoneManager.CreateZone(m_currentLevel, m_defaultPhase);
@@ -128,39 +125,36 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             catch (Exception ex)
             {
                 TaskDialog.Show("Revit", ex.Message);
-            }         
+            }
         }
 
         /// <summary>
-        /// Create some spaces.
+        ///     Create some spaces.
         /// </summary>
         public void CreateSpaces()
-        {           
+        {
             if (m_defaultPhase == null)
             {
-                TaskDialog.Show("Revit", "The phase of the active view is null, you can't create spaces in a null phase");
+                TaskDialog.Show("Revit",
+                    "The phase of the active view is null, you can't create spaces in a null phase");
                 return;
             }
 
             try
             {
                 if (m_commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == ViewType.FloorPlan)
-                {
                     m_spaceManager.CreateSpaces(m_currentLevel, m_defaultPhase);
-                }
                 else
-                {
                     TaskDialog.Show("Revit", "You can not create spaces in this plan view");
-                }
             }
             catch (Exception ex)
             {
                 TaskDialog.Show("Revit", ex.Message);
-            }               
+            }
         }
 
         /// <summary>
-        /// Get the Space elements.
+        ///     Get the Space elements.
         /// </summary>
         /// <returns>A space list in current level.</returns>
         public List<Space> GetSpaces()
@@ -169,7 +163,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// Get the Zone elements.
+        ///     Get the Zone elements.
         /// </summary>
         /// <returns>A Zone list in current level.</returns>
         public List<Zone> GetZones()
@@ -178,7 +172,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         }
 
         /// <summary>
-        /// Update the current level.
+        ///     Update the current level.
         /// </summary>
         /// <param name="level"></param>
         public void Update(Level level)

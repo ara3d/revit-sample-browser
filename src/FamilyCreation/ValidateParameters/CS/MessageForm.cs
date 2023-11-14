@@ -20,31 +20,32 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ValidateParameters.CS
 {
     /// <summary>
-    /// The form is used to show the result
+    ///     The form is used to show the result
     /// </summary>
     public partial class MessageForm : Form
-    {  
+    {
         /// <summary>
-        /// store the log file name
+        ///     store the log file name
         /// </summary>
-        string m_logFileName;
+        private readonly string m_logFileName;
 
         /// <summary>
-        /// construction of form
+        ///     construction of form
         /// </summary>
         public MessageForm()
         {
             InitializeComponent();
         }
+
         /// <summary>
-        /// construction method with parameter
+        ///     construction method with parameter
         /// </summary>
         /// <param name="messages">messages</param>
         public MessageForm(string[] messages)
@@ -55,8 +56,8 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
             Text = "Validate Parameters Message Form";
             //create regeneration log file
             var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            m_logFileName = assemblyPath + "\\ValidateParametersLog.txt"; 
-            var writer = File.CreateText(m_logFileName);  
+            m_logFileName = assemblyPath + "\\ValidateParametersLog.txt";
+            var writer = File.CreateText(m_logFileName);
             writer.Close();
             if (messages.Length == 0)
             {
@@ -67,23 +68,25 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
             else
             {
                 foreach (var row in messages)
-                {
-                    if (row == null) continue;
+                    if (row == null)
+                    {
+                    }
                     else
                     {
                         WriteLog(row);
                         msgText += row + "\n";
                     }
-                }
             }
-            msgText += "\n\nIf you want to know the validating parameters result, please get the log file at \n"+m_logFileName;
+
+            msgText += "\n\nIf you want to know the validating parameters result, please get the log file at \n" +
+                       m_logFileName;
             messageRichTextBox.Text = msgText;
-            StartPosition = FormStartPosition.CenterParent;           
+            StartPosition = FormStartPosition.CenterParent;
             CheckForIllegalCrossThreadCalls = false;
         }
-       
+
         /// <summary>
-        /// The method is used to write line to log file
+        ///     The method is used to write line to log file
         /// </summary>
         /// <param name="logStr">the log string</param>
         private void WriteLog(string logStr)

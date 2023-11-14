@@ -22,14 +22,15 @@
 
 using System;
 using System.Collections.Generic;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -42,14 +43,11 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
 
                 using (var tran = new Transaction(document, "CreateTrianglesTopography"))
                 {
-
                     tran.Start();
                     // Creates a new topography surface element from facets and adds it to the document.
                     var triangleFacets = new List<PolymeshFacet>();
                     foreach (var facet in trianglesData.Facets)
-                    {
-                       triangleFacets.Add(new PolymeshFacet(facet[0], facet[1], facet[2]));
-                    }
+                        triangleFacets.Add(new PolymeshFacet(facet[0], facet[1], facet[2]));
                     var topoSurface = TopographySurface.Create(document, trianglesData.Points, triangleFacets);
                     var name = topoSurface.get_Parameter(BuiltInParameter.ROOM_NAME);
                     if (name != null)
@@ -67,4 +65,3 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
         }
     }
 }
-

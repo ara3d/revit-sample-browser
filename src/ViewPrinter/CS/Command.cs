@@ -22,27 +22,29 @@
 
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
 {
     /// <summary>
-    /// To add an external command to Autodesk Revit 
-    /// the developer should implement an object that 
-    /// supports the IExternalCommand interface.
+    ///     To add an external command to Autodesk Revit
+    ///     the developer should implement an object that
+    ///     supports the IExternalCommand interface.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
-        ref string message, Autodesk.Revit.DB.ElementSet elements)
+            ref string message, ElementSet elements)
         {
-            Autodesk.Revit.DB.Transaction newTran = null;
+            Transaction newTran = null;
             try
             {
-                newTran = new Autodesk.Revit.DB.Transaction(commandData.Application.ActiveUIDocument.Document, "ViewPrinter");
+                newTran = new Transaction(commandData.Application.ActiveUIDocument.Document, "ViewPrinter");
                 newTran.Start();
 
                 var pMgr = new PrintMgr(commandData);
@@ -60,9 +62,9 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                         newTran.Commit();
                         return Result.Succeeded;
                     }
+
                     newTran.RollBack();
                 }
-
             }
             catch (Exception ex)
             {
@@ -74,6 +76,5 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
             return Result.Cancelled;
         }
-
     }
 }

@@ -22,22 +22,23 @@
 
 
 using System;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Reinforcement.CS
 {
     /// <summary>
-    /// The entrance of this example, which create reinforcement rebars on  
-    /// the selected concrete beam and column without reinforcement.
+    ///     The entrance of this example, which create reinforcement rebars on
+    ///     the selected concrete beam and column without reinforcement.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
-                                                ref string message, ElementSet elements)
+            ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try

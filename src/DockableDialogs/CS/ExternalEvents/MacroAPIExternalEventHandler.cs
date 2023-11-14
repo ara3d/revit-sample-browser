@@ -25,19 +25,20 @@ using Revit.SDK.Samples.DockableDialogs.CS;
 
 namespace Revit.SDK.Samples.DockableDiagnostics.CS
 {
-   class MacroAPIExternalEventHandler : IExternalEventHandler 
-   {
-      public void Execute(UIApplication app)
-      {
-         var data = ThisApplication.thisApp.GetDockableAPIUtility().ModelessCommand.Take();
-         ThisApplication.thisApp.GetDockableAPIUtility().RunModelessCommand(data);
-         ThisApplication.thisApp.GetMainWindow().UpdateUI(ThisApplication.thisApp.GetDockableAPIUtility().ModelessCommand.Take());
-         ThisApplication.thisApp.GetMainWindow().WakeUp();
-      }
+    internal class MacroAPIExternalEventHandler : IExternalEventHandler
+    {
+        public void Execute(UIApplication app)
+        {
+            var data = ThisApplication.thisApp.GetDockableAPIUtility().ModelessCommand.Take();
+            ThisApplication.thisApp.GetDockableAPIUtility().RunModelessCommand(data);
+            ThisApplication.thisApp.GetMainWindow()
+                .UpdateUI(ThisApplication.thisApp.GetDockableAPIUtility().ModelessCommand.Take());
+            ThisApplication.thisApp.GetMainWindow().WakeUp();
+        }
 
-      public string GetName()
-      {
-         return "MacroAPIExternalEventHandler";
-      }
-   }
+        public string GetName()
+        {
+            return "MacroAPIExternalEventHandler";
+        }
+    }
 }

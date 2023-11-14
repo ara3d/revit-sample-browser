@@ -22,16 +22,16 @@
 
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
 using System.IO;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SetReadonlyCost1 : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class SetReadonlyCost1 : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -40,13 +40,11 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
 
             return Result.Succeeded;
         }
+    }
 
-            }
-
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SetReadonlyCost2 : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class SetReadonlyCost2 : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -55,12 +53,10 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
 
             return Result.Succeeded;
         }
+    }
 
-            }
-
-    class ReadonlyCostSetter
+    internal class ReadonlyCostSetter
     {
-
         public static void SetReadonlyCosts1(Document doc)
         {
             SetReadonlyCosts(doc, GetReadonlyCostFromId);
@@ -74,12 +70,12 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
         private static double GetReadonlyCostFromId(Element elem, int seed)
         {
             var costRoot = elem.Id.Value % 100;
-            return (double)costRoot * 100.0 + 0.99;
+            return costRoot * 100.0 + 0.99;
         }
 
         private static double GetReadonlyCostFromIncrements(Element elem, int seed)
         {
-            return (double)seed * 100.0 + 0.88;
+            return seed * 100.0 + 0.88;
         }
 
         private static void SetReadonlyCosts(Document doc, Func<Element, int, double> valueGetter)
@@ -98,23 +94,19 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
                 foreach (var elem in collector)
                 {
                     var p = elem.LookupParameter("ReadonlyCost");
-                    if (p != null)
-                    {
-                        p.Set(valueGetter(elem, increment));
-                    }
+                    if (p != null) p.Set(valueGetter(elem, increment));
                     increment++;
                 }
+
                 t.Commit();
             }
         }
-
     }
 
 
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SetReadonlyId1 : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class SetReadonlyId1 : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -123,13 +115,11 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
 
             return Result.Succeeded;
         }
+    }
 
-            }
-
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SetReadonlyId2 : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class SetReadonlyId2 : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -138,10 +128,9 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
 
             return Result.Succeeded;
         }
+    }
 
-            }
-
-    class ReadonlyIdSetter
+    internal class ReadonlyIdSetter
     {
         private static string GetReadonlyIdUniqueId(Element elem)
         {
@@ -152,7 +141,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
         {
             var eType = elem.Document.GetElement(elem.GetTypeId());
 
-            return eType.Name.Substring(0, 2) + elem.Id.ToString();
+            return eType.Name.Substring(0, 2) + elem.Id;
         }
 
         public static void SetReadonlyIds1(Document doc)
@@ -179,21 +168,17 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
                 foreach (var elem in collector)
                 {
                     var p = elem.LookupParameter("ReadonlyId");
-                    if (p != null)
-                    {
-                        p.Set(idGetter(elem));
-                    }
+                    if (p != null) p.Set(idGetter(elem));
                 }
+
                 t.Commit();
             }
         }
-
     }
 
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class BindNewReadonlySharedParametersToDocument : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class BindNewReadonlySharedParametersToDocument : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -203,7 +188,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             return Result.Succeeded;
         }
 
-        
+
         private List<SharedParameterBindingManager> BuildSharedParametersToCreate()
         {
             var sharedParametersToCreate =
@@ -221,7 +206,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             manager.AddCategory(BuiltInCategory.OST_Roofs);
             manager.ParameterGroup = GroupTypeId.IdentityData;
 
-            sharedParametersToCreate.Add(manager);   // Look up syntax for this automatic initialization.
+            sharedParametersToCreate.Add(manager); // Look up syntax for this automatic initialization.
 
 
             manager = new SharedParameterBindingManager();
@@ -259,14 +244,14 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
                     manager.Definition = dGroup.Definitions.Create(manager.GetCreationOptions());
                     manager.AddBindings(doc);
                 }
+
                 t.Commit();
             }
         }
 
-   
+
         private string GetRandomSharedParameterFileName()
         {
-
             var randomFileName = Path.GetRandomFileName();
             var spFile = Path.ChangeExtension(randomFileName, "txt");
             var filePath = Path.Combine(@"c:\tmp\Meridian\", spFile);

@@ -21,93 +21,26 @@
 //
 
 
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Collections.ObjectModel;
 
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// This class contain the data about the Opening (get from Revit)
-    /// Such as BoundingBox, Profile Curve...
+    ///     This class contain the data about the Opening (get from Revit)
+    ///     Such as BoundingBox, Profile Curve...
     /// </summary>
     public class OpeningInfo
     {
+        private readonly List<Line3D> m_lines = new List<Line3D>(); //contains lines in curve
         private UIApplication m_revit; //Application of Revit
-        private List<Line3D> m_lines = new List<Line3D>(); //contains lines in curve
-
-        //OpeningProperty class which can use in PropertyGrid control
-
-        //property
-        /// <summary>
-        /// Property to get and set Application of Revit
-        /// </summary>
-        public UIApplication Revit
-        {
-            get => m_revit;
-            set
-            {
-                if (value != m_revit)
-                    m_revit = value;
-            }
-        }
 
         /// <summary>
-        /// Property to get Opening store in OpeningInfo
-        /// </summary>
-        public Opening Opening { get; }
-
-        /// <summary>
-        /// Property to get Name and Id 
-        /// eg: "Opening Cut (114389)"
-        /// </summary>
-        public string NameAndId => string.Concat(Opening.Name, " (", Opening.Id.ToString(), ")");
-
-        /// <summary>
-        /// Property to get bool the define whether opening is Shaft Opening
-        /// </summary>
-        public bool IsShaft
-        {
-            get
-            {
-                if (null != Opening.Category)
-                {
-                    if ("Shaft Openings" == Opening.Category.Name)
-                        return true;
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Property to get OpeningProperty class 
-        /// which can use in PropertyGrid control
-        /// </summary>
-        public OpeningProperty Property { get; }
-
-        /// <summary>
-        /// Property to get Profile information of opening
-        /// </summary>
-        public WireFrame Sketch { get; private set; }
-
-        /// <summary>
-        /// Property to get BoundingBox of Opening
-        /// </summary>
-        public BoundingBox BoundingBox { get; }
-
-        /// <summary>
-        /// The default constructor, 
-        /// get the information we want from Opening
-        /// get OpeningProperty, BoundingBox and Profile
+        ///     The default constructor,
+        ///     get the information we want from Opening
+        ///     get OpeningProperty, BoundingBox and Profile
         /// </summary>
         /// <param name="opening">an opening in revit</param>
         /// <param name="app">application object</param>
@@ -129,8 +62,69 @@ namespace Revit.SDK.Samples.Openings.CS
             GetProfile();
         }
 
+        //OpeningProperty class which can use in PropertyGrid control
+
+        //property
         /// <summary>
-        /// get Profile of Opening
+        ///     Property to get and set Application of Revit
+        /// </summary>
+        public UIApplication Revit
+        {
+            get => m_revit;
+            set
+            {
+                if (value != m_revit)
+                    m_revit = value;
+            }
+        }
+
+        /// <summary>
+        ///     Property to get Opening store in OpeningInfo
+        /// </summary>
+        public Opening Opening { get; }
+
+        /// <summary>
+        ///     Property to get Name and Id
+        ///     eg: "Opening Cut (114389)"
+        /// </summary>
+        public string NameAndId => string.Concat(Opening.Name, " (", Opening.Id.ToString(), ")");
+
+        /// <summary>
+        ///     Property to get bool the define whether opening is Shaft Opening
+        /// </summary>
+        public bool IsShaft
+        {
+            get
+            {
+                if (null != Opening.Category)
+                {
+                    if ("Shaft Openings" == Opening.Category.Name)
+                        return true;
+                    return false;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///     Property to get OpeningProperty class
+        ///     which can use in PropertyGrid control
+        /// </summary>
+        public OpeningProperty Property { get; }
+
+        /// <summary>
+        ///     Property to get Profile information of opening
+        /// </summary>
+        public WireFrame Sketch { get; private set; }
+
+        /// <summary>
+        ///     Property to get BoundingBox of Opening
+        /// </summary>
+        public BoundingBox BoundingBox { get; }
+
+        /// <summary>
+        ///     get Profile of Opening
         /// </summary>
         private void GetProfile()
         {
@@ -143,6 +137,7 @@ namespace Revit.SDK.Samples.Openings.CS
                     var points = curve.Tessellate() as List<XYZ>;
                     AddLine(points);
                 }
+
                 var wireFrameSketch = new WireFrame(new ReadOnlyCollection<Line3D>(m_lines));
                 Sketch = wireFrameSketch;
             }
@@ -164,10 +159,12 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get four corner points of a rectangular in same plane
+        ///     get four corner points of a rectangular in same plane
         /// </summary>
-        /// <param name="boundRect">an array contain two Autodesk.Revit.DB.XYZ struct store the max and min 
-        /// coordinate of rectangular</param>
+        /// <param name="boundRect">
+        ///     an array contain two Autodesk.Revit.DB.XYZ struct store the max and min
+        ///     coordinate of rectangular
+        /// </param>
         private List<XYZ> GetPoints(List<XYZ> boundRect)
         {
             var points = new List<XYZ>();
@@ -183,7 +180,7 @@ namespace Revit.SDK.Samples.Openings.CS
             var p3 = boundRect[1];
             points.Add(p3);
 
-            var p4 = new XYZ (
+            var p4 = new XYZ(
                 boundRect[1].X,
                 boundRect[1].Y,
                 boundRect[0].Z);
@@ -197,15 +194,12 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// get line from List<XYZ>(points) and add line to m_lines list
+        ///     get line from List<XYZ>(points) and add line to m_lines list
         /// </summary>
         /// <param name="points">a List<XYZ> contain points of the Curve</param>
         private void AddLine(List<XYZ> points)
         {
-            if (null == points || 0 == points.Count)
-            {
-                return;
-            }
+            if (null == points || 0 == points.Count) return;
 
             var previousPoint = points[0];
 
@@ -221,6 +215,7 @@ namespace Revit.SDK.Samples.Openings.CS
                     pointStart[j] = previousPoint[j];
                     pointEnd[j] = point[j];
                 }
+
                 line.StartPoint = pointStart;
                 line.EndPoint = pointEnd;
 

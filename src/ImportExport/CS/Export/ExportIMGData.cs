@@ -20,24 +20,22 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
 using System.Collections.Generic;
 using System.Text;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
-    class ExportIMGData : ExportDataWithViews
+    internal class ExportIMGData : ExportDataWithViews
     {
-        
         /// <summary>
-        /// String list of image type
+        ///     String list of image type
         /// </summary>
         private List<string> m_imageType;
 
-        
-                /// <summary>
-        /// Constructor
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
@@ -48,7 +46,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize the variables
+        ///     Initialize the variables
         /// </summary>
         private void Initialize()
         {
@@ -73,7 +71,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
 
         /// <summary>
-        /// Collect the parameters and export
+        ///     Collect the parameters and export
         /// </summary>
         /// <returns></returns>
         public override bool Export()
@@ -81,6 +79,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
             base.Export();
             return true;
         }
-
-            }
+    }
 }

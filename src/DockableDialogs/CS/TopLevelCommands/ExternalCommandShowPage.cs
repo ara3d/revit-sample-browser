@@ -21,41 +21,41 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class ExternalCommandShowPage : IExternalCommand, IExternalCommandAvailability
+    {
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            try
+            {
+                ThisApplication.thisApp.GetDockableAPIUtility().Initialize(commandData.Application);
+                ThisApplication.thisApp.SetWindowVisibility(commandData.Application, true);
+            }
+            catch (Exception)
+            {
+                TaskDialog.Show("Dockable Dialogs", "Dialog not registered.");
+            }
 
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class ExternalCommandShowPage : IExternalCommand, IExternalCommandAvailability
-   {
-      public virtual Result Execute(ExternalCommandData commandData
-          , ref string message, ElementSet elements)
-      {
-         try
-         {
-            ThisApplication.thisApp.GetDockableAPIUtility().Initialize(commandData.Application);
-            ThisApplication.thisApp.SetWindowVisibility(commandData.Application, true);
-         }
-         catch (Exception)
-         {
-            TaskDialog.Show("Dockable Dialogs", "Dialog not registered.");
-         }
-         return Result.Succeeded;
-      }
+            return Result.Succeeded;
+        }
 
-      /// <summary>
-      /// Onlys show the dialog when a document is open, as Dockable dialogs are only available
-      /// when a document is open.
-      /// </summary>
-      public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
-      {
-         if (applicationData.ActiveUIDocument == null)
-            return false;
-         else
+        /// <summary>
+        ///     Onlys show the dialog when a document is open, as Dockable dialogs are only available
+        ///     when a document is open.
+        /// </summary>
+        public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
+        {
+            if (applicationData.ActiveUIDocument == null)
+                return false;
             return true;
-      }
-   }
+        }
+    }
 }

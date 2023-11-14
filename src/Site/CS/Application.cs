@@ -20,22 +20,31 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using Autodesk.Revit.UI;
-using System.Windows.Media.Imaging;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
+using Revit.SDK.Samples.Site.CS.Properties;
+using Size = System.Drawing.Size;
 
 namespace Revit.SDK.Samples.Site.CS
 {
     /// <summary>
-    /// Implements the Revit add-in interface IExternalApplication
+    ///     Implements the Revit add-in interface IExternalApplication
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-                /// <summary>
-        /// Implements the OnShutdown event
+        /// <summary>
+        ///     The path to this add-in assembly.
+        /// </summary>
+        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+
+        /// <summary>
+        ///     Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -45,7 +54,7 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Implements the OnStartup event
+        ///     Implements the OnStartup event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -55,87 +64,82 @@ namespace Revit.SDK.Samples.Site.CS
             return Result.Succeeded;
         }
 
-        
+
         private void CreateSitePanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("Site");
             var addPond = new PushButtonData("Site_Add_Pond", "Add Pond",
-                                                            addAssemblyPath,
-                                                            typeof(SiteAddRetainingPondCommand).FullName);
-            SetIconsForPushButtonData(addPond, Properties.Resources.AddPond);
+                addAssemblyPath,
+                typeof(SiteAddRetainingPondCommand).FullName);
+            SetIconsForPushButtonData(addPond, Resources.AddPond);
             _ = rp.AddItem(addPond) as PushButton;
 
             var moveRegion = new PushButtonData("Site_Move_Region", "Move Region",
-                                                            addAssemblyPath,
-                                                            typeof(SiteMoveRegionAndPointsCommand).FullName);
-            SetIconsForPushButtonData(moveRegion, Properties.Resources.MoveRegion);
+                addAssemblyPath,
+                typeof(SiteMoveRegionAndPointsCommand).FullName);
+            SetIconsForPushButtonData(moveRegion, Resources.MoveRegion);
 
             var deleteRegion = new PushButtonData("Site_Delete_Region", "Delete Region",
-                                                            addAssemblyPath,
-                                                            typeof(SiteDeleteRegionAndPointsCommand).FullName);
-            SetIconsForPushButtonData(deleteRegion, Properties.Resources.DeleteRegion);
+                addAssemblyPath,
+                typeof(SiteDeleteRegionAndPointsCommand).FullName);
+            SetIconsForPushButtonData(deleteRegion, Resources.DeleteRegion);
 
             rp.AddStackedItems(moveRegion, deleteRegion);
 
             var raiseTerrain = new PushButtonData("Site_Raise_Terrain", "Raise Terrain",
-                                                            addAssemblyPath,
-                                                            typeof(SiteRaiseTerrainInRegionCommand).FullName);
-            SetIconsForPushButtonData(raiseTerrain, Properties.Resources.RaiseTerrain);
+                addAssemblyPath,
+                typeof(SiteRaiseTerrainInRegionCommand).FullName);
+            SetIconsForPushButtonData(raiseTerrain, Resources.RaiseTerrain);
 
             var lowerTerrain = new PushButtonData("Site_Lower_Terrain", "Lower Terrain",
-                                                            addAssemblyPath,
-                                                            typeof(SiteLowerTerrainInRegionCommand).FullName);
-            SetIconsForPushButtonData(lowerTerrain, Properties.Resources.LowerTerrain);
+                addAssemblyPath,
+                typeof(SiteLowerTerrainInRegionCommand).FullName);
+            SetIconsForPushButtonData(lowerTerrain, Resources.LowerTerrain);
 
             var normalizeTerrain = new PushButtonData("Site_Normalize_Terrain", "Normalize Terrain",
-                                                            addAssemblyPath,
-                                                            typeof(SiteNormalizeTerrainInRegionCommand).FullName);
-            SetIconsForPushButtonData(normalizeTerrain, Properties.Resources.SiteNormalize);
+                addAssemblyPath,
+                typeof(SiteNormalizeTerrainInRegionCommand).FullName);
+            SetIconsForPushButtonData(normalizeTerrain, Resources.SiteNormalize);
 
             rp.AddStackedItems(raiseTerrain, lowerTerrain, normalizeTerrain);
         }
 
         /// <summary>
-        /// Utility for adding icons to the button.
+        ///     Utility for adding icons to the button.
         /// </summary>
         /// <param name="button">The push button.</param>
         /// <param name="icon">The icon.</param>
-        private static void SetIconsForPushButtonData(PushButtonData button, System.Drawing.Icon icon)
+        private static void SetIconsForPushButtonData(PushButtonData button, Icon icon)
         {
             button.LargeImage = GetStdIcon(icon);
             button.Image = GetSmallIcon(icon);
         }
 
         /// <summary>
-        /// Gets the standard sized icon as a BitmapSource.
+        ///     Gets the standard sized icon as a BitmapSource.
         /// </summary>
         /// <param name="icon">The icon.</param>
         /// <returns>The BitmapSource.</returns>
-        private static BitmapSource GetStdIcon(System.Drawing.Icon icon)
+        private static BitmapSource GetStdIcon(Icon icon)
         {
-            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+            return Imaging.CreateBitmapSourceFromHIcon(
                 icon.Handle,
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
         /// <summary>
-        /// Gets the small sized icon as a BitmapSource.
+        ///     Gets the small sized icon as a BitmapSource.
         /// </summary>
         /// <param name="icon">The icon.</param>
         /// <returns>The BitmapSource.</returns>
-        private static BitmapSource GetSmallIcon(System.Drawing.Icon icon)
+        private static BitmapSource GetSmallIcon(Icon icon)
         {
-            var smallIcon = new System.Drawing.Icon(icon, new System.Drawing.Size(16, 16));
-            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+            var smallIcon = new Icon(icon, new Size(16, 16));
+            return Imaging.CreateBitmapSourceFromHIcon(
                 smallIcon.Handle,
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
         }
-
-        /// <summary>
-        /// The path to this add-in assembly.
-        /// </summary>
-        static string addAssemblyPath = typeof(Application).Assembly.Location;
     }
 }

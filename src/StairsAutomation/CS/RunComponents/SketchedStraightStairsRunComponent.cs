@@ -29,20 +29,29 @@ using Autodesk.Revit.DB.Architecture;
 namespace Revit.SDK.Samples.StairsAutomation.CS
 {
     /// <summary>
-    /// A stairs run consisting of a single sketched straight run.
+    ///     A stairs run consisting of a single sketched straight run.
     /// </summary>
     public class SketchedStraightStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
+        private readonly double m_desiredTreadDepth;
+
+
+        private readonly int m_riserNumber;
+        private readonly XYZ m_runExtent;
+        private StairsRun m_stairsRun;
+        private double m_width;
+        private readonly XYZ m_widthOffset;
+
         /// <summary>
-        /// Creates a new sketched run configuration at the default location and orientation.
+        ///     Creates a new sketched run configuration at the default location and orientation.
         /// </summary>
         /// <remarks>Stairs run boundary curves can be calculated before the run is created.</remarks>
         /// <param name="riserNumber">The number of risers.</param>
         /// <param name="bottomElevation">The bottom elevation.</param>
         /// <param name="desiredTreadDepth">The desired tread depth.</param>
         /// <param name="width">The width of the run.</param>
-    	public SketchedStraightStairsRunComponent(int riserNumber, double bottomElevation, double desiredTreadDepth, double width):
-    		base()
+        public SketchedStraightStairsRunComponent(int riserNumber, double bottomElevation, double desiredTreadDepth,
+            double width)
         {
             m_riserNumber = riserNumber;
             RunElevation = bottomElevation;
@@ -53,15 +62,16 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
 
         /// <summary>
-        /// Creates a new sketched run configuration at the specified location and orientation.
+        ///     Creates a new sketched run configuration at the specified location and orientation.
         /// </summary>
         /// <param name="riserNumber">The number of risers.</param>
         /// <param name="bottomElevation">The bottom elevation.</param>
         /// <param name="desiredTreadDepth">The desired tread depth.</param>
         /// <param name="width">The width of the run.</param>
         /// <param name="transform">The transform (location and orientation).</param>
-    	public SketchedStraightStairsRunComponent(int riserNumber, double bottomElevation, double desiredTreadDepth, double width, Transform transform):
-    		base(transform)
+        public SketchedStraightStairsRunComponent(int riserNumber, double bottomElevation, double desiredTreadDepth,
+            double width, Transform transform) :
+            base(transform)
         {
             m_riserNumber = riserNumber;
             RunElevation = bottomElevation;
@@ -73,44 +83,25 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
 
 
-        private int m_riserNumber;
-        private double m_desiredTreadDepth;
-        private double m_width;
-        private XYZ m_runExtent;
-        private XYZ m_widthOffset;
-        private StairsRun m_stairsRun;
-
-        
         /// <summary>
-        /// Implements the interface property.
+        ///     Implements the interface property.
         /// </summary>
         public double RunElevation { get; }
 
         /// <summary>
-        /// Implements the interface property.
+        ///     Implements the interface property.
         /// </summary>
         public double TopElevation
         {
-        	get
-        	{
-        		if (m_stairsRun == null)
-        		{
-        			throw new NotSupportedException("Stairs run hasn't been constructed yet.");
-        		}	
-        		return m_stairsRun.TopElevation;
-        	}
+            get
+            {
+                if (m_stairsRun == null) throw new NotSupportedException("Stairs run hasn't been constructed yet.");
+                return m_stairsRun.TopElevation;
+            }
         }
 
         /// <summary>
-        /// Implements the interface method.
-        /// </summary>
-        public double GetRunElevation()
-        {
-            return RunElevation;
-        }
-
-        /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
         public IList<Curve> GetStairsPath()
         {
@@ -125,68 +116,73 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
         public Curve GetFirstCurve()
         {
-        	return GenerateRunRiserCurves().First<Curve>();
+            return GenerateRunRiserCurves().First();
         }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
         public Curve GetLastCurve()
         {
-        	return GenerateRunRiserCurves().Last<Curve>();
+            return GenerateRunRiserCurves().Last();
         }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
         /// </summary>
         public XYZ GetRunEndpoint()
         {
-        	return GetLastCurve().GetEndPoint(1);
+            return GetLastCurve().GetEndPoint(1);
         }
 
         /// <summary>
-        /// Implements the interface method.
+        ///     Implements the interface method.
+        /// </summary>
+        public StairsRun CreateStairsRun(Document document, ElementId stairsId)
+        {
+            m_stairsRun = StairsRun.CreateSketchedRun(document, stairsId, GetRunElevation(),
+                GetRunBoundaryCurves(), GenerateRunRiserCurves(),
+                GetStairsPath());
+            document.Regenerate();
+
+            return m_stairsRun;
+        }
+
+        /// <summary>
+        ///     Implements the interface property.
+        /// </summary>
+        public double Width
+        {
+            get => m_width;
+            set
+            {
+                if (m_stairsRun != null) throw new InvalidOperationException("Cannot change width of sketched run.");
+                m_width = value;
+            }
+        }
+
+        /// <summary>
+        ///     Implements the interface method.
+        /// </summary>
+        public double GetRunElevation()
+        {
+            return RunElevation;
+        }
+
+        /// <summary>
+        ///     Implements the interface method.
         /// </summary>
         public IList<Curve> GetRunBoundaryCurves()
         {
-        	return Transform(GenerateUntransformedRunBoundaryCurves());
+            return Transform(GenerateUntransformedRunBoundaryCurves());
         }
 
         /// <summary>
-        /// Implements the interface method.
-        /// </summary>
-		public StairsRun CreateStairsRun(Document document, ElementId stairsId)
-		{
-			m_stairsRun = StairsRun.CreateSketchedRun(document, stairsId, GetRunElevation(), 
-			                                   GetRunBoundaryCurves(), GenerateRunRiserCurves(), 
-			                                   GetStairsPath());
-			document.Regenerate(); 
-			
-			return m_stairsRun;
-		}
-
-        /// <summary>
-        /// Implements the interface property.
-        /// </summary>
-		public double Width
-		{
-			get => m_width;
-            set
-			{
-				if (m_stairsRun != null)
-				{
-					throw new InvalidOperationException("Cannot change width of sketched run.");
-				}
-				m_width =  value;
-			}
-		}
-        
-        /// <summary>
-        /// Generates the run boundary curves (not transformed by the stored transformation).
+        ///     Generates the run boundary curves (not transformed by the stored transformation).
         /// </summary>
         /// <returns></returns>
         private IList<Curve> GenerateUntransformedRunBoundaryCurves()
@@ -209,7 +205,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
 
         /// <summary>
-        /// Generates the riser curves for the sketch.
+        ///     Generates the riser curves for the sketch.
         /// </summary>
         /// <returns></returns>
         private IList<Curve> GenerateRunRiserCurves()

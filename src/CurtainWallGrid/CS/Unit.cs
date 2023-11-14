@@ -25,82 +25,83 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
 {
-   /// <summary>
-   /// Provides static functions to convert unit
-   /// </summary>
-   static class Unit
-   {
-            /// <summary>
-      /// Convert the value get from RevitAPI to the value indicated by ForgeTypeId
-      /// </summary>
-      /// <param name="to">
-      /// ForgeTypeId indicates unit of target value
-      /// </param>
-      /// <param name="value">
-      /// value get from RevitAPI
-      /// </param>
-      /// <returns>
-      /// Target value
-      /// </returns>
-      public static double CovertFromAPI(ForgeTypeId to, double value)
-      {
-         return value *= ImperialDutRatio(to);
-      }
+    /// <summary>
+    ///     Provides static functions to convert unit
+    /// </summary>
+    internal static class Unit
+    {
+        /// <summary>
+        ///     Convert the value get from RevitAPI to the value indicated by ForgeTypeId
+        /// </summary>
+        /// <param name="to">
+        ///     ForgeTypeId indicates unit of target value
+        /// </param>
+        /// <param name="value">
+        ///     value get from RevitAPI
+        /// </param>
+        /// <returns>
+        ///     Target value
+        /// </returns>
+        public static double CovertFromAPI(ForgeTypeId to, double value)
+        {
+            return value *= ImperialDutRatio(to);
+        }
 
-      /// <summary>
-      /// Convert a value indicated by ForgeTypeId to the value used by RevitAPI
-      /// </summary>
-      /// <param name="value">
-      /// Value to be converted
-      /// </param>
-      /// <param name="from">
-      /// ForgeTypeId indicates the unit of the value to be converted
-      /// </param>
-      /// <returns>
-      /// Target value
-      /// </returns>
-      public static double CovertToAPI(double value, ForgeTypeId from)
-      {
-         return value /= ImperialDutRatio(from);
-      }
+        /// <summary>
+        ///     Convert a value indicated by ForgeTypeId to the value used by RevitAPI
+        /// </summary>
+        /// <param name="value">
+        ///     Value to be converted
+        /// </param>
+        /// <param name="from">
+        ///     ForgeTypeId indicates the unit of the value to be converted
+        /// </param>
+        /// <returns>
+        ///     Target value
+        /// </returns>
+        public static double CovertToAPI(double value, ForgeTypeId from)
+        {
+            return value /= ImperialDutRatio(from);
+        }
 
-      /// <summary>
-      /// Get ratio between value in RevitAPI and value to display indicated by ForgeTypeId
-      /// </summary>
-      /// <param name="dut">
-      /// ForgeTypeId indicates display unit type
-      /// </param>
-      /// <returns>
-      /// Ratio 
-      /// </returns>
-      private static double ImperialDutRatio(ForgeTypeId unitTypeId)
-      {
-         if (unitTypeId == UnitTypeId.Feet) return 1;
-         if (unitTypeId == UnitTypeId.FeetFractionalInches) return 1;
-         if (unitTypeId == UnitTypeId.Inches) return 12;
-         if (unitTypeId == UnitTypeId.FractionalInches) return 12;
-         if (unitTypeId == UnitTypeId.Meters) return 0.3048;
-         if (unitTypeId == UnitTypeId.Centimeters) return 30.48;
-         if (unitTypeId == UnitTypeId.Millimeters) return 304.8;
-         if (unitTypeId == UnitTypeId.MetersCentimeters) return 0.3048;
-         return 1;
-      }
+        /// <summary>
+        ///     Get ratio between value in RevitAPI and value to display indicated by ForgeTypeId
+        /// </summary>
+        /// <param name="dut">
+        ///     ForgeTypeId indicates display unit type
+        /// </param>
+        /// <returns>
+        ///     Ratio
+        /// </returns>
+        private static double ImperialDutRatio(ForgeTypeId unitTypeId)
+        {
+            if (unitTypeId == UnitTypeId.Feet) return 1;
+            if (unitTypeId == UnitTypeId.FeetFractionalInches) return 1;
+            if (unitTypeId == UnitTypeId.Inches) return 12;
+            if (unitTypeId == UnitTypeId.FractionalInches) return 12;
+            if (unitTypeId == UnitTypeId.Meters) return 0.3048;
+            if (unitTypeId == UnitTypeId.Centimeters) return 30.48;
+            if (unitTypeId == UnitTypeId.Millimeters) return 304.8;
+            if (unitTypeId == UnitTypeId.MetersCentimeters) return 0.3048;
+            return 1;
+        }
 
-      public static string GetUnitLabel(ForgeTypeId unitTypeId)
-      {
-         var unitLabels = new Dictionary<ForgeTypeId, string> {
-            { UnitTypeId.Centimeters, "cm" },
-            { UnitTypeId.Feet, "'" },
-            { UnitTypeId.Inches, "\"" },
-            { UnitTypeId.FeetFractionalInches, "'" },
-            { UnitTypeId.FractionalInches, "\"" },
-            { UnitTypeId.Meters, "m" },
-            { UnitTypeId.MetersCentimeters, "m" },
-            { UnitTypeId.Millimeters, "mm" }
-         };
-         if (unitLabels.ContainsKey(unitTypeId))
-            return unitLabels[unitTypeId];
-         return string.Empty;
-      }
-         }
+        public static string GetUnitLabel(ForgeTypeId unitTypeId)
+        {
+            var unitLabels = new Dictionary<ForgeTypeId, string>
+            {
+                { UnitTypeId.Centimeters, "cm" },
+                { UnitTypeId.Feet, "'" },
+                { UnitTypeId.Inches, "\"" },
+                { UnitTypeId.FeetFractionalInches, "'" },
+                { UnitTypeId.FractionalInches, "\"" },
+                { UnitTypeId.Meters, "m" },
+                { UnitTypeId.MetersCentimeters, "m" },
+                { UnitTypeId.Millimeters, "mm" }
+            };
+            if (unitLabels.ContainsKey(unitTypeId))
+                return unitLabels[unitTypeId];
+            return string.Empty;
+        }
+    }
 }

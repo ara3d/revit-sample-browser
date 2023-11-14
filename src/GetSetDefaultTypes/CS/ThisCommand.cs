@@ -20,36 +20,36 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
 {
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   class ThisCommand : IExternalCommand
-   {
-      
-      public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
-      {
-         if (!DockablePane.PaneExists(DefaultFamilyTypes.PaneId) ||
-             !DockablePane.PaneExists(DefaultElementTypes.PaneId))
-            return Result.Failed;
+    [Transaction(TransactionMode.Manual)]
+    internal class ThisCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!DockablePane.PaneExists(DefaultFamilyTypes.PaneId) ||
+                !DockablePane.PaneExists(DefaultElementTypes.PaneId))
+                return Result.Failed;
 
-         var uiApp = commandData.Application;
-         if (uiApp == null)
-            return Result.Failed;
+            var uiApp = commandData.Application;
+            if (uiApp == null)
+                return Result.Failed;
 
-         var pane = uiApp.GetDockablePane(DefaultFamilyTypes.PaneId);
-         pane.Show();
-         var elemTypePane = uiApp.GetDockablePane(DefaultElementTypes.PaneId);
-         elemTypePane.Show();
+            var pane = uiApp.GetDockablePane(DefaultFamilyTypes.PaneId);
+            pane.Show();
+            var elemTypePane = uiApp.GetDockablePane(DefaultElementTypes.PaneId);
+            elemTypePane.Show();
 
-         if (ThisApplication.DefaultFamilyTypesPane != null)
-            ThisApplication.DefaultFamilyTypesPane.SetDocument(commandData.Application.ActiveUIDocument.Document);
-         if (ThisApplication.DefaultElementTypesPane != null)
-            ThisApplication.DefaultElementTypesPane.SetDocument(commandData.Application.ActiveUIDocument.Document);
+            if (ThisApplication.DefaultFamilyTypesPane != null)
+                ThisApplication.DefaultFamilyTypesPane.SetDocument(commandData.Application.ActiveUIDocument.Document);
+            if (ThisApplication.DefaultElementTypesPane != null)
+                ThisApplication.DefaultElementTypesPane.SetDocument(commandData.Application.ActiveUIDocument.Document);
 
-         return Result.Succeeded;
-      }
-
-         }
+            return Result.Succeeded;
+        }
+    }
 }

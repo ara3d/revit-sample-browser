@@ -20,30 +20,30 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Site.CS
 {
     /// <summary>
-    /// Raised all points contained in a subregion by 3 feet.
+    ///     Raised all points contained in a subregion by 3 feet.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SiteRaiseTerrainInRegionCommand : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class SiteRaiseTerrainInRegionCommand : IExternalCommand
     {
-        
         /// <summary>
-        /// Implementation of the external command.
+        ///     Implementation of the external command.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             SiteUIUtils.ChangeSubregionAndPointsElevation(commandData.Application.ActiveUIDocument, 3);
 
             return Result.Succeeded;
         }
-
-            }
+    }
 }

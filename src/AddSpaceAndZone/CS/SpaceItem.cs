@@ -26,28 +26,24 @@ using Autodesk.Revit.DB.Mechanical;
 namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 {
     /// <summary>
-    /// The SpaceItem class inherit ListViewItem Class, it is used
-    /// to display the Spaces is a ListView, each SpaceItem contains
-    /// a Space element.
+    ///     The SpaceItem class inherit ListViewItem Class, it is used
+    ///     to display the Spaces is a ListView, each SpaceItem contains
+    ///     a Space element.
     /// </summary>
-    class SpaceItem : ListViewItem
+    internal class SpaceItem : ListViewItem
     {
         public SpaceItem(Space space) : base(space.Name)
         {
             Space = space;
             Text = space.Name;
             if (space.Zone != null)
-            {
                 SubItems.Add(space.Zone.Name);
-            }
             else
-            {
                 SubItems.Add("Default");
-            }
         }
 
         /// <summary>
-        /// Get the Space element in the SpaceItem.
+        ///     Get the Space element in the SpaceItem.
         /// </summary>
         public Space Space { get; }
     }

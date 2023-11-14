@@ -26,61 +26,57 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
 {
-   /// <summary>
-   /// compare 2 wall types and sort them by their type names
-   /// </summary>
-   class WallTypeComparer : IComparer<WallType>
-   {
-      
-      /// <summary>
-      /// compare 2 walltypes by their names
-      /// </summary>
-      /// <param name="x">
-      /// wall type to be compared
-      /// </param>
-      /// <param name="y">
-      /// wall type to be compared
-      /// </param>
-      /// <returns>
-      /// returns the result by comparing their names with CaseInsensitiveComparer
-      /// </returns>
-      public int Compare(WallType x, WallType y)
-      {
-         var xName = x.Name;
-         var yName = y.Name;
+    /// <summary>
+    ///     compare 2 wall types and sort them by their type names
+    /// </summary>
+    internal class WallTypeComparer : IComparer<WallType>
+    {
+        /// <summary>
+        ///     compare 2 walltypes by their names
+        /// </summary>
+        /// <param name="x">
+        ///     wall type to be compared
+        /// </param>
+        /// <param name="y">
+        ///     wall type to be compared
+        /// </param>
+        /// <returns>
+        ///     returns the result by comparing their names with CaseInsensitiveComparer
+        /// </returns>
+        public int Compare(WallType x, WallType y)
+        {
+            var xName = x.Name;
+            var yName = y.Name;
 
-         IComparer comp = new CaseInsensitiveComparer();
-         return comp.Compare(xName, yName);
-      }
+            IComparer comp = new CaseInsensitiveComparer();
+            return comp.Compare(xName, yName);
+        }
+    }
 
-         }
+    /// <summary>
+    ///     compare 2 views and sort them by their type names
+    /// </summary>
+    internal class ViewComparer : IComparer<View>
+    {
+        /// <summary>
+        ///     compare 2 views by their names
+        /// </summary>
+        /// <param name="x">
+        ///     view to be compared
+        /// </param>
+        /// <param name="y">
+        ///     view to be compared
+        /// </param>
+        /// <returns>
+        ///     returns the result by comparing their names with CaseInsensitiveComparer
+        /// </returns>
+        public int Compare(View x, View y)
+        {
+            var xName = x.ViewType + " : " + x.Name;
+            var yName = y.ViewType + " : " + y.Name;
 
-   /// <summary>
-   /// compare 2 views and sort them by their type names
-   /// </summary>
-   class ViewComparer : IComparer<View>
-   {
-      
-      /// <summary>
-      /// compare 2 views by their names
-      /// </summary>
-      /// <param name="x">
-      /// view to be compared
-      /// </param>
-      /// <param name="y">
-      /// view to be compared
-      /// </param>
-      /// <returns>
-      /// returns the result by comparing their names with CaseInsensitiveComparer
-      /// </returns>
-      public int Compare(View x, View y)
-      {
-         var xName = x.ViewType.ToString() + " : " + x.Name;
-         var yName = y.ViewType.ToString() + " : " + y.Name;
-
-         IComparer comp = new CaseInsensitiveComparer();
-         return comp.Compare(xName, yName);
-      }
-
-         }
+            IComparer comp = new CaseInsensitiveComparer();
+            return comp.Compare(xName, yName);
+        }
+    }
 }

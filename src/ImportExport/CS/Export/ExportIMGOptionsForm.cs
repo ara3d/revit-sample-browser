@@ -23,31 +23,30 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
+using View = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Provide a dialog which provides the options of lower priority information for exporting image
+    ///     Provide a dialog which provides the options of lower priority information for exporting image
     /// </summary>
-    public partial class ExportIMGOptionsForm : System.Windows.Forms.Form
+    public partial class ExportIMGOptionsForm : Form
     {
-
         /// <summary>
-        /// Data class object of m_exportOptions
+        ///     Data class object of ExportDataWithViews
         /// </summary>
-        private ImageExportOptions m_exportOptions;
-
+        private readonly ExportDataWithViews m_exportData;
 
         /// <summary>
-        /// Data class object of ExportDataWithViews
+        ///     Data class object of m_exportOptions
         /// </summary>
-        private ExportDataWithViews m_exportData;
+        private readonly ImageExportOptions m_exportOptions;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="exportData">Data class object</param>
         public ExportIMGOptionsForm(ExportDataWithViews exportData)
@@ -160,11 +159,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var fileName = string.Empty;
             var filterIndex = -1;
             var result = ShowSaveDialog(m_exportData, ref fileName, ref filterIndex);
-            if (result != DialogResult.Cancel)
-            {
-                saveAs.Text = fileName.Substring(0, fileName.LastIndexOf("."));
-
-            }
+            if (result != DialogResult.Cancel) saveAs.Text = fileName.Substring(0, fileName.LastIndexOf("."));
         }
 
         private DialogResult ShowSaveDialog(ExportData exportData, ref string returnFileName, ref int filterIndex)
@@ -210,10 +205,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             {
                 var views = m_exportData.SelectViewsData.SelectedViews;
                 var viewIds = new List<ElementId>();
-                foreach (Autodesk.Revit.DB.View view in views)
-                {
-                    viewIds.Add(view.Id);
-                }
+                foreach (View view in views) viewIds.Add(view.Id);
                 m_exportOptions.SetViewsAndSheets(viewIds);
             }
 
@@ -223,9 +215,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
             }
             catch (Exception ex)
             {
-                var errorMessage = "Failed to export img" + ex.ToString();
+                var errorMessage = "Failed to export img" + ex;
                 TaskDialog.Show("Error", errorMessage, TaskDialogCommonButtons.Ok);
             }
+
             Close();
         }
 
@@ -238,7 +231,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             m_exportOptions.FitDirection = FitDirectionType.Horizontal;
         }
-
-
     }
 }

@@ -19,45 +19,49 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Windows.Forms;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
+using View = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.Truss.CS
 {
     /// <summary>
-    /// window form contains one three picture box to show the 
-    /// profile of truss geometry and profile and tabControl.
-    /// User can create truss, edit profile of truss and change type of truss members.
+    ///     window form contains one three picture box to show the
+    ///     profile of truss geometry and profile and tabControl.
+    ///     User can create truss, edit profile of truss and change type of truss members.
     /// </summary>
-    public partial class TrussForm : System.Windows.Forms.Form
+    public partial class TrussForm : Form
     {
-        ExternalCommandData m_commandData; //object which contains reference of Revit Application
-        ArrayList m_trussTypes; //stores all the truss types
-        IEnumerable<FamilySymbol> m_beamTypes; //stores all the beam types (FamilySymbol)
-        IEnumerable<ViewPlan> m_views; //stores all the ViewPlan use to create truss
-        TrussGeometry trussGeometry; //TrussGeometry object store geometry info of Truss
-        TrussType m_selectedTrussType; //selected truss type
-        Autodesk.Revit.DB.Structure.Truss m_truss; //store the truss created by this sample
-        bool m_topChord; //allows to draw top chord when it's true, otherwise forbids to do it.
-        bool m_bottomChord; //draw bottom chord when it's true, otherwise forbids to do it.
-        int m_selectMemberIndex; //index of selected truss member
-        ViewPlan m_selectedView; //store the selected view
-        FamilyInstance m_selecedtBeam; //store the selected beam
-        FamilySymbol m_selectedBeamType; //store the selected beam type
-        UIDocument m_activeDocument; //active document in Revit
-        FamilyInstance column1; //one of 2 columns which truss build on
-        FamilyInstance column2; //one of 2 columns which truss build on
-        const string NoAssociatedLevel = "<not associated>"; //when select truss doesn't have associate level
+        private const string NoAssociatedLevel = "<not associated>"; //when select truss doesn't have associate level
+        private FamilyInstance column1; //one of 2 columns which truss build on
+        private FamilyInstance column2; //one of 2 columns which truss build on
+        private readonly UIDocument m_activeDocument; //active document in Revit
+        private IEnumerable<FamilySymbol> m_beamTypes; //stores all the beam types (FamilySymbol)
+        private bool m_bottomChord; //draw bottom chord when it's true, otherwise forbids to do it.
+        private readonly ExternalCommandData m_commandData; //object which contains reference of Revit Application
+        private FamilyInstance m_selecedtBeam; //store the selected beam
+        private FamilySymbol m_selectedBeamType; //store the selected beam type
+        private TrussType m_selectedTrussType; //selected truss type
+        private ViewPlan m_selectedView; //store the selected view
+        private int m_selectMemberIndex; //index of selected truss member
+        private bool m_topChord; //allows to draw top chord when it's true, otherwise forbids to do it.
+        private Autodesk.Revit.DB.Structure.Truss m_truss; //store the truss created by this sample
+        private readonly ArrayList m_trussTypes; //stores all the truss types
+        private IEnumerable<ViewPlan> m_views; //stores all the ViewPlan use to create truss
+        private TrussGeometry trussGeometry; //TrussGeometry object store geometry info of Truss
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="commandData">object which contains reference of Revit Application</param>
         public TrussForm(ExternalCommandData commandData)
@@ -72,55 +76,60 @@ namespace Revit.SDK.Samples.Truss.CS
                 TaskDialog.Show("Select", "Please select 1 existing truss or 2 columns before load this application.");
                 Close();
             }
+
             // get all the beam types, truss types and all the view plans from the active document
             DataInitialize();
         }
 
         /// <summary>
-        /// Get 1 truss or 2 columns from selection
+        ///     Get 1 truss or 2 columns from selection
         /// </summary>
         /// <returns>return false if selection incorrect</returns>
         private bool GetSelectTrussOrColumns()
         {
             if (m_activeDocument.Selection.GetElementIds().Count > 2 ||
                 0 == m_activeDocument.Selection.GetElementIds().Count)
-            { return false; }
+                return false;
 
             var es = new ElementSet();
             foreach (var elementId in m_activeDocument.Selection.GetElementIds())
-            {
-               es.Insert(m_activeDocument.Document.GetElement(elementId));
-            }
+                es.Insert(m_activeDocument.Document.GetElement(elementId));
             var iter = es.GetEnumerator();
             iter.Reset();
             while (iter.MoveNext())
-            {
                 if (iter.Current is Autodesk.Revit.DB.Structure.Truss)
                 {
                     if (null == m_truss)
-                    { m_truss = iter.Current as Autodesk.Revit.DB.Structure.Truss; }
-                    else { return false; }
+                        m_truss = iter.Current as Autodesk.Revit.DB.Structure.Truss;
+                    else
+                        return false;
                 }
                 else if (iter.Current is FamilyInstance)
                 {
                     var familyInstance = iter.Current as FamilyInstance;
                     if (StructuralType.Column == familyInstance.StructuralType)
                     {
-                        if (null == column1) { column1 = familyInstance; }
-                        else { column2 = familyInstance; }
+                        if (null == column1)
+                            column1 = familyInstance;
+                        else
+                            column2 = familyInstance;
                     }
                     else
-                    { return false; }
+                    {
+                        return false;
+                    }
                 }
-                else { return false; }
-            }
-            if (null == m_truss && (null == column1 || null == column2))
-            { return false; }
+                else
+                {
+                    return false;
+                }
+
+            if (null == m_truss && (null == column1 || null == column2)) return false;
             return true;
         }
 
         /// <summary>
-        /// get all the beam types, truss types and all the view plans from the active document
+        ///     get all the beam types, truss types and all the view plans from the active document
         /// </summary>
         public void DataInitialize()
         {
@@ -132,7 +141,7 @@ namespace Revit.SDK.Samples.Truss.CS
             var filteredElementCollector = new FilteredElementCollector(m_activeDocument.Document);
             filteredElementCollector.OfClass(typeof(FamilySymbol));
             filteredElementCollector.OfCategory(BuiltInCategory.OST_Truss);
-            IList<TrussType> trussTypes = filteredElementCollector.Cast<TrussType>().ToList<TrussType>();
+            IList<TrussType> trussTypes = filteredElementCollector.Cast<TrussType>().ToList();
 
             if (null == trussTypes || 0 == trussTypes.Count)
             {
@@ -142,13 +151,10 @@ namespace Revit.SDK.Samples.Truss.CS
 
             foreach (var trussType in trussTypes)
             {
-                if (null == trussType)
-                {
-                    continue;
-                }
+                if (null == trussType) continue;
 
                 var trussTypeName = trussType.get_Parameter
-                        (BuiltInParameter.SYMBOL_FAMILY_AND_TYPE_NAMES_PARAM).AsString();
+                    (BuiltInParameter.SYMBOL_FAMILY_AND_TYPE_NAMES_PARAM).AsString();
                 TrussTypeComboBox.Items.Add(trussTypeName);
                 m_trussTypes.Add(trussType);
             }
@@ -157,46 +163,43 @@ namespace Revit.SDK.Samples.Truss.CS
             // Skip view templates because they're behind-the-scene and invisible in project browser; also invalid for API..., etc.
 
             m_views = from elem in
-                          new FilteredElementCollector(m_activeDocument.Document).OfClass(typeof(ViewPlan)).ToElements()
-                      let viewPlan = elem as ViewPlan
-                      where viewPlan != null && !viewPlan.IsTemplate
-                      select viewPlan;
-            foreach (Autodesk.Revit.DB.View view in m_views)
-            {
-                ViewComboBox.Items.Add(view.Name);
-            }
-
+                    new FilteredElementCollector(m_activeDocument.Document).OfClass(typeof(ViewPlan)).ToElements()
+                let viewPlan = elem as ViewPlan
+                where viewPlan != null && !viewPlan.IsTemplate
+                select viewPlan;
+            foreach (View view in m_views) ViewComboBox.Items.Add(view.Name);
         }
 
         /// <summary>
-        /// get all the beam types
+        ///     get all the beam types
         /// </summary>
         private void GetBeamTypes()
         {
             m_beamTypes = from elem in
-                              new FilteredElementCollector(m_activeDocument.Document).OfClass(
-                              typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_StructuralFraming)
-                          let type = elem as FamilySymbol
-                          select type;
+                    new FilteredElementCollector(m_activeDocument.Document).OfClass(
+                        typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_StructuralFraming)
+                let type = elem as FamilySymbol
+                select type;
 
             // can't obtain beam types from the active document
             if (null == m_beamTypes ||
                 0 == m_beamTypes.Count())
             {
-                TaskDialog.Show("Load Structural Framing Family", "No Structural Framing Family loaded. Please load one of the Structure Framing Family.");
+                TaskDialog.Show("Load Structural Framing Family",
+                    "No Structural Framing Family loaded. Please load one of the Structure Framing Family.");
                 Close();
             }
 
             foreach (var familySymbol in m_beamTypes)
             {
                 var beamTypeName = familySymbol.get_Parameter(
-                             BuiltInParameter.SYMBOL_FAMILY_AND_TYPE_NAMES_PARAM).AsString();
+                    BuiltInParameter.SYMBOL_FAMILY_AND_TYPE_NAMES_PARAM).AsString();
                 BeamTypeComboBox.Items.Add(beamTypeName);
             }
         }
 
         /// <summary>
-        /// initialize the UI ComboBox's appearance
+        ///     initialize the UI ComboBox's appearance
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -209,7 +212,7 @@ namespace Revit.SDK.Samples.Truss.CS
             {
                 // show the truss type and level of pre-selected truss in the ComboBox
                 var nameOfTrussType = m_truss.TrussType.get_Parameter
-                        (BuiltInParameter.SYMBOL_FAMILY_AND_TYPE_NAMES_PARAM).AsString();
+                    (BuiltInParameter.SYMBOL_FAMILY_AND_TYPE_NAMES_PARAM).AsString();
                 TrussTypeComboBox.SelectedIndex = TrussTypeComboBox.Items.IndexOf(nameOfTrussType);
                 var viewName = m_truss.get_Parameter(BuiltInParameter.SKETCH_PLANE_PARAM);
                 if (null == viewName || 0 == viewName.AsString().CompareTo(NoAssociatedLevel))
@@ -232,7 +235,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// get selected truss type, this data will be used in truss creation
+        ///     get selected truss type, this data will be used in truss creation
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -242,7 +245,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// create new truss
+        ///     create new truss
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -269,60 +272,55 @@ namespace Revit.SDK.Samples.Truss.CS
             ViewComboBox.Enabled = false;
         }
 
-      /// <summary>
-      /// create truss in Revit
-      /// </summary>
-      /// <returns>new created truss</returns>
-      public Autodesk.Revit.DB.Structure.Truss CreateTruss()
-      {
-         var document = m_commandData.Application.ActiveUIDocument.Document;
-         //sketchPlane
-         var origin = new XYZ(0, 0, 0);
-         var xDirection = new XYZ(1, 0, 0);
-         var yDirection = new XYZ(0, 1, 0);
-         var plane = Plane.CreateByOriginAndBasis(xDirection, yDirection, origin);
-         var sketchPlane = SketchPlane.Create(document, plane);
-         //new base Line
-         Curve frame1Curve = null;
-         Curve frame2Curve = null;
-         if (column1.Location is LocationCurve)
-         {
-            frame1Curve = (column1.Location as LocationCurve).Curve;
-         }
-         if (column2.Location is LocationCurve)
-         {
-            frame2Curve = (column2.Location as LocationCurve).Curve;
-         }
-         
-         var centerPoint1 = (frame1Curve as Line).GetEndPoint(0);
-         
-
-         var centerPoint2 = (frame2Curve as Line).GetEndPoint(0);
-         var startPoint = new XYZ(centerPoint1.X, centerPoint1.Y, 0);
-         var endPoint = new XYZ(centerPoint2.X, centerPoint2.Y, 0);
-         Line baseLine = null;
-
-         try
-         { baseLine = Line.CreateBound(startPoint, endPoint); }
-         catch (ArgumentException)
-         {
-            TaskDialog.Show("Argument Exception", "Two column you selected are too close to create truss.");
-         }
-
-         return Autodesk.Revit.DB.Structure.Truss.Create(document, m_selectedTrussType.Id, sketchPlane.Id, baseLine);
-      }
-
-      /// <summary>
-      /// draw profile, top chord and bottom of truss
-      /// </summary>
-      /// <param name="sender">object who sent this event</param>
-      /// <param name="e">event args</param>
-      private void ProfileEditPictureBox_Paint(object sender, PaintEventArgs e)
+        /// <summary>
+        ///     create truss in Revit
+        /// </summary>
+        /// <returns>new created truss</returns>
+        public Autodesk.Revit.DB.Structure.Truss CreateTruss()
         {
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            var document = m_commandData.Application.ActiveUIDocument.Document;
+            //sketchPlane
+            var origin = new XYZ(0, 0, 0);
+            var xDirection = new XYZ(1, 0, 0);
+            var yDirection = new XYZ(0, 1, 0);
+            var plane = Plane.CreateByOriginAndBasis(xDirection, yDirection, origin);
+            var sketchPlane = SketchPlane.Create(document, plane);
+            //new base Line
+            Curve frame1Curve = null;
+            Curve frame2Curve = null;
+            if (column1.Location is LocationCurve) frame1Curve = (column1.Location as LocationCurve).Curve;
+            if (column2.Location is LocationCurve) frame2Curve = (column2.Location as LocationCurve).Curve;
 
-            if (trussGeometry != null)
-            { trussGeometry.Draw2D(e.Graphics, Pens.Blue); }
+            var centerPoint1 = (frame1Curve as Line).GetEndPoint(0);
+
+
+            var centerPoint2 = (frame2Curve as Line).GetEndPoint(0);
+            var startPoint = new XYZ(centerPoint1.X, centerPoint1.Y, 0);
+            var endPoint = new XYZ(centerPoint2.X, centerPoint2.Y, 0);
+            Line baseLine = null;
+
+            try
+            {
+                baseLine = Line.CreateBound(startPoint, endPoint);
+            }
+            catch (ArgumentException)
+            {
+                TaskDialog.Show("Argument Exception", "Two column you selected are too close to create truss.");
+            }
+
+            return Autodesk.Revit.DB.Structure.Truss.Create(document, m_selectedTrussType.Id, sketchPlane.Id, baseLine);
+        }
+
+        /// <summary>
+        ///     draw profile, top chord and bottom of truss
+        /// </summary>
+        /// <param name="sender">object who sent this event</param>
+        /// <param name="e">event args</param>
+        private void ProfileEditPictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+            if (trussGeometry != null) trussGeometry.Draw2D(e.Graphics, Pens.Blue);
 
             var font = new Font("Verdana", 10, FontStyle.Regular);
             var indicator = "Draw Top Chord and Bottom Chord here:";
@@ -330,7 +328,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// add point to top chord and bottom chord
+        ///     add point to top chord and bottom chord
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -338,31 +336,29 @@ namespace Revit.SDK.Samples.Truss.CS
         {
             // draw top chord line
             if (m_topChord)
-            { trussGeometry.AddTopChordPoint(e.X, e.Y); }
+                trussGeometry.AddTopChordPoint(e.X, e.Y);
             // draw bottom chord line
-            else if (m_bottomChord)
-            { trussGeometry.AddBottomChordPoint(e.X, e.Y); }
+            else if (m_bottomChord) trussGeometry.AddBottomChordPoint(e.X, e.Y);
 
             ProfileEditPictureBox.Refresh();
         }
 
         /// <summary>
-        /// change move point of top chord lineTool and bottom chord lineTool
+        ///     change move point of top chord lineTool and bottom chord lineTool
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void ProfileEditPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             if (m_topChord)
-            { trussGeometry.AddTopChordMovePoint(e.X, e.Y); }
-            else if (m_bottomChord)
-            { trussGeometry.AddBottomChordMovePoint(e.X, e.Y); }
+                trussGeometry.AddTopChordMovePoint(e.X, e.Y);
+            else if (m_bottomChord) trussGeometry.AddBottomChordMovePoint(e.X, e.Y);
 
             ProfileEditPictureBox.Refresh();
         }
 
         /// <summary>
-        /// begin to draw top chord
+        ///     begin to draw top chord
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -375,7 +371,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// begin to draw bottom chord
+        ///     begin to draw bottom chord
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -388,7 +384,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// update the truss according to the top chord line and the bottom chord line
+        ///     update the truss according to the top chord line and the bottom chord line
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -403,7 +399,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// restore profile of truss
+        ///     restore profile of truss
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -418,7 +414,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// clear points of top and bottom chord line
+        ///     clear points of top and bottom chord line
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -432,16 +428,15 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// draw geometry of truss, and draw selected line red
+        ///     draw geometry of truss, and draw selected line red
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void TrussGeometryPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            if (trussGeometry != null)
-            { trussGeometry.Draw2D(e.Graphics, Pens.Blue); }
+            if (trussGeometry != null) trussGeometry.Draw2D(e.Graphics, Pens.Blue);
 
             var font = new Font("Verdana", 10, FontStyle.Regular);
             var indicator = "Select a beam from the truss:";
@@ -449,7 +444,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// get selected truss member (Beam)
+        ///     get selected truss member (Beam)
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -462,7 +457,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// select truss member (beam)
+        ///     select truss member (beam)
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -494,7 +489,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// change selected beam type
+        ///     change selected beam type
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -505,7 +500,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// change type of selected beam
+        ///     change type of selected beam
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -514,13 +509,12 @@ namespace Revit.SDK.Samples.Truss.CS
             // apply the beam type change
             var transaction = new Transaction(m_activeDocument.Document, "ChangeSelectedBeamType");
             transaction.Start();
-            if (null != m_selecedtBeam)
-            { m_selecedtBeam.Symbol = m_selectedBeamType; }
+            if (null != m_selecedtBeam) m_selecedtBeam.Symbol = m_selectedBeamType;
             transaction.Commit();
         }
 
         /// <summary>
-        /// change selected ViewPlan
+        ///     change selected ViewPlan
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -528,12 +522,12 @@ namespace Revit.SDK.Samples.Truss.CS
         {
             // choose another view for the truss creation
             if (ViewComboBox.SelectedIndex < m_views.Count())
-            { m_selectedView = m_views.ElementAt(ViewComboBox.SelectedIndex); }
+                m_selectedView = m_views.ElementAt(ViewComboBox.SelectedIndex);
         }
 
         /// <summary>
-        /// quit the "top chord" or "bottom chord" drawing operation
-        /// by pressing the "ESC" key
+        ///     quit the "top chord" or "bottom chord" drawing operation
+        ///     by pressing the "ESC" key
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -554,7 +548,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// won't let open truss member tab until truss create successfully
+        ///     won't let open truss member tab until truss create successfully
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -573,7 +567,7 @@ namespace Revit.SDK.Samples.Truss.CS
         }
 
         /// <summary>
-        /// Close dialogue box
+        ///     Close dialogue box
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

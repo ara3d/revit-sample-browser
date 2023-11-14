@@ -22,51 +22,47 @@
 
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
+    /// <summary>
+    ///     A thread-safe class for getting and setting modeless-command data.
+    /// </summary>
+    public class ModelessCommand
+    {
+        private ModelessCommandData m_data = new ModelessCommandData();
 
-   /// <summary>
-   /// A thread-safe class for getting and setting modeless-command data.
-   /// </summary>
-      public class ModelessCommand
-      {
-
-         /// <summary>
-         /// Set data into the command.
-         /// </summary>
-         public void Make(ModelessCommandData commandData)
-         {
+        /// <summary>
+        ///     Set data into the command.
+        /// </summary>
+        public void Make(ModelessCommandData commandData)
+        {
             lock (this)
             {
-               m_data = commandData;
+                m_data = commandData;
             }
-         }
+        }
 
-         /// <summary>
-         /// Get data from the command.
-         /// </summary>
-         public ModelessCommandData Take()
-         {
+        /// <summary>
+        ///     Get data from the command.
+        /// </summary>
+        public ModelessCommandData Take()
+        {
             lock (this)
             {
-               return m_data;
+                return m_data;
             }
+        }
+    }
 
-         }
-         private ModelessCommandData m_data = new ModelessCommandData();
+    public enum ModelessCommandType
+    {
+        PrintMainPageStatistics,
+        PrintSelectedPageStatistics,
+        Return
+    }
 
-      }
-      public enum ModelessCommandType : int
-      {
-         PrintMainPageStatistics,
-         PrintSelectedPageStatistics,
-         Return
-      }
-
-      public class ModelessCommandData
-      {
-         public ModelessCommandData() { }
-         public ModelessCommandType CommandType;
-         public string WindowSummaryData;
-         public string SelectedPaneId; 
-      }
-   }
-
+    public class ModelessCommandData
+    {
+        public ModelessCommandType CommandType;
+        public string SelectedPaneId;
+        public string WindowSummaryData;
+    }
+}

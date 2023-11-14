@@ -20,6 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
@@ -28,11 +29,11 @@ using Autodesk.Revit.UI.Selection;
 namespace Revit.SDK.Samples.PanelSchedule.CS
 {
     /// <summary>
-    /// Create view instance for an electrical panel.
+    ///     Create view instance for an electrical panel.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class InstanceViewCreation : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -51,12 +52,9 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
                 message = "Please select one electrical panel.";
                 return Result.Failed;
             }
-            else
-            {
-                newInstanceView.Commit();
-                return Result.Succeeded;
-            }
 
+            newInstanceView.Commit();
+            return Result.Succeeded;
         }
     }
 }

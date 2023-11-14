@@ -20,22 +20,23 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using Autodesk.Revit.DB;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB.Structure;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
+using System.Text;
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.MultiplanarRebar.CS
 {
     /// <summary>
-    /// This is an utility class used to create shared parameter in Revit Document.
-    /// It simplifies the process of shared parameters creation.
+    ///     This is an utility class used to create shared parameter in Revit Document.
+    ///     It simplifies the process of shared parameters creation.
     /// </summary>
-    class SharedParameterUtil
+    internal class SharedParameterUtil
     {
         /// <summary>
-        /// Get existed or create a new shared parameters with the given name and Revit DB Document.
+        ///     Get existed or create a new shared parameters with the given name and Revit DB Document.
         /// </summary>
         /// <param name="name">Shared parameter name</param>
         /// <param name="revitDoc">Revit DB Document</param>
@@ -47,7 +48,7 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         }
 
         /// <summary>
-        /// Get existed or create a new shared parameters with the given name and Revit DB Application.
+        ///     Get existed or create a new shared parameters with the given name and Revit DB Application.
         /// </summary>
         /// <param name="name">Shared parameter name</param>
         /// <param name="revitApp">Revit DB Application</param>
@@ -56,9 +57,9 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         {
             return GetOrCreateDef(name, "Rebar Shape", revitApp);
         }
- 
+
         /// <summary>
-        /// Get existed or create a new shared parameters with the given name, group and Revit DB Application.
+        ///     Get existed or create a new shared parameters with the given name, group and Revit DB Application.
         /// </summary>
         /// <param name="name">Shared parameter name</param>
         /// <param name="groupName">Shared parameter group name</param>
@@ -75,15 +76,16 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var Bdef = group.Definitions.get_Item(name) as ExternalDefinition;
             if (Bdef == null)
             {
-               var ExternalDefinitionCreationOptions = new ExternalDefinitionCreationOptions(name, SpecTypeId.ReinforcementLength);
-               Bdef = group.Definitions.Create(ExternalDefinitionCreationOptions) as ExternalDefinition;
+                var ExternalDefinitionCreationOptions =
+                    new ExternalDefinitionCreationOptions(name, SpecTypeId.ReinforcementLength);
+                Bdef = group.Definitions.Create(ExternalDefinitionCreationOptions) as ExternalDefinition;
             }
 
             return Bdef;
         }
 
         /// <summary>
-        /// Get shared parameter DefinitionFile of given Revit DB Application.
+        ///     Get shared parameter DefinitionFile of given Revit DB Application.
         /// </summary>
         /// <param name="revitApp">Revit DB Application</param>
         /// <returns>DefinitionFile of Revit DB Application</returns>
@@ -99,13 +101,13 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
                 if (file == null)
                 {
                     // If Shared parameter file does not exist, then create a new one.
-                    var shapeFile = 
-                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) 
-                        + "\\MultiplanarParameterFiles.txt";                        
+                    var shapeFile =
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                        + "\\MultiplanarParameterFiles.txt";
 
                     // Fill Schema data of Revit shared parameter file.
                     // If no this schema data, OpenSharedParameterFile may alway return null.
-                    var contents = new System.Text.StringBuilder();
+                    var contents = new StringBuilder();
                     contents.AppendLine("# This is a Revit shared parameter file.");
                     contents.AppendLine("# Do not edit manually.");
                     contents.AppendLine("*META	VERSION	MINVERSION");
@@ -122,10 +124,9 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
 
                 // To avoid infinite loop.
                 ++count;
-            }            
+            }
 
             return file;
         }
     }
-
 }

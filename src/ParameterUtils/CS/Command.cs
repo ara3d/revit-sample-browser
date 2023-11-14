@@ -23,21 +23,22 @@
 
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ParameterUtils.CS
 {
     /// <summary>
-    /// display a Revit element property-like form related to the selected element.
+    ///     display a Revit element property-like form related to the selected element.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.ReadOnly)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData, ref string message,
+        public Result Execute(ExternalCommandData commandData, ref string message,
             ElementSet elements)
         {
             // set out default result to failure.
@@ -50,9 +51,7 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
             // document via the selection object
             var seletion = new ElementSet();
             foreach (var elementId in app.ActiveUIDocument.Selection.GetElementIds())
-            {
-               seletion.Insert(app.ActiveUIDocument.Document.GetElement(elementId));
-            }
+                seletion.Insert(app.ActiveUIDocument.Document.GetElement(elementId));
 
             // we need to make sure that only one element is selected.
             if (seletion.Size == 1)
@@ -118,8 +117,6 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
                             // append the type and value
                             sb.AppendFormat("none\t{0}", param.AsValueString());
                             break;
-                        default:
-                            break;
                     }
 
                     // add the completed line to the string list
@@ -136,8 +133,8 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
             {
                 message = "Please select only one element";
             }
+
             return retRes;
         }
-
-            }
+    }
 }

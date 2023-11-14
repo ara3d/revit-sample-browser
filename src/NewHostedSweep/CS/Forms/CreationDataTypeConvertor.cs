@@ -22,16 +22,17 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This class is intent to convert CreationData to String.
+    ///     This class is intent to convert CreationData to String.
     /// </summary>
-    class CreationDataTypeConverter : TypeConverter
+    internal class CreationDataTypeConverter : TypeConverter
     {
         /// <summary>
-        /// CreationData can convert to string.
+        ///     CreationData can convert to string.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="destinationType"></param>
@@ -42,21 +43,18 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Convert CreationData to string.
+        ///     Convert CreationData to string.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="culture"></param>
         /// <param name="value"></param>
         /// <param name="destinationType"></param>
         /// <returns></returns>
-        public override object ConvertTo(ITypeDescriptorContext context, 
-            System.Globalization.CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context,
+            CultureInfo culture, object value, Type destinationType)
         {
             var cd = value as CreationData;
-            if (cd != null)
-            {
-                return "Total " + cd.EdgesForHostedSweep.Count + " Edges";
-            }
+            if (cd != null) return "Total " + cd.EdgesForHostedSweep.Count + " Edges";
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }

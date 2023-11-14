@@ -23,21 +23,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NewPathReinforcement.CS
 {
     /// <summary>
-    /// ProfileFloor class contains the information about profile of floor,
-    /// and contains method used to create PathReinforcement on floor
+    ///     ProfileFloor class contains the information about profile of floor,
+    ///     and contains method used to create PathReinforcement on floor
     /// </summary>
     public class ProfileFloor : Profile
     {
-        private Floor m_data;
+        private readonly Floor m_data;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="floor">floor to create reinforcement on</param>
         /// <param name="commandData">object which contains reference to Revit Application</param>
@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// Get points of the first face
+        ///     Get points of the first face
         /// </summary>
         /// <param name="faces">edges in all faces</param>
         /// <returns>points of first face</returns>
@@ -63,11 +63,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 var edgexyzs = edge.Tessellate() as List<XYZ>;
                 needPoints.Add(edgexyzs);
             }
+
             return needPoints;
         }
 
         /// <summary>
-        /// Get a matrix which can transform points to 2D
+        ///     Get a matrix which can transform points to 2D
         /// </summary>
         /// <returns>matrix which can transform points to 2D</returns>
         public override Matrix4 GetTo2DMatrix()
@@ -76,10 +77,11 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             // Once use the View type to filterrrr the element ,please skip the view templates 
             // because they're behind-the-scene and invisible in project browser; also invalid for API.
             var views = from elem in
-                                          (new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document)).OfClass(typeof(ViewPlan)).ToElements()
-                                      let view = elem as View
-                                      where (view != null) && (!view.IsTemplate) && (view.Name == "Level 2")
-                                      select view;
+                    new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document)
+                        .OfClass(typeof(ViewPlan)).ToElements()
+                let view = elem as View
+                where view != null && !view.IsTemplate && view.Name == "Level 2"
+                select view;
             var viewLevel2 = views.First();
 
             var xAxis = new Vector4(viewLevel2.RightDirection);
@@ -92,12 +94,13 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// Create PathReinforcement on floor
+        ///     Create PathReinforcement on floor
         /// </summary>
         /// <param name="points">points used to create PathReinforcement</param>
         /// <param name="flip">used to specify whether new PathReinforcement is Filp</param>
         /// <returns>new created PathReinforcement</returns>
-        public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points, bool flip)
+        public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points,
+            bool flip)
         {
             IList<Curve> curves = new List<Curve>();
             for (var i = 0; i < points.Count - 1; i++)
@@ -107,10 +110,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 var curve = Line.CreateBound(p1, p2);
                 curves.Add(curve);
             }
+
             var pathReinforcementTypeId = PathReinforcementType.CreateDefaultPathReinforcementType(m_document);
             var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(m_document);
             var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(m_document);
-            return Autodesk.Revit.DB.Structure.PathReinforcement.Create(m_document, m_data, curves, flip, pathReinforcementTypeId, rebarBarTypeId, rebarHookTypeId, rebarHookTypeId);
+            return Autodesk.Revit.DB.Structure.PathReinforcement.Create(m_document, m_data, curves, flip,
+                pathReinforcementTypeId, rebarBarTypeId, rebarHookTypeId, rebarHookTypeId);
         }
     }
 }

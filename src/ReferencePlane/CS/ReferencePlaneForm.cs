@@ -19,27 +19,29 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ReferencePlane.CS
 {
     /// <summary>
-    /// A form display all reference planes, and allow user to create
-    /// reference plane with a button.
+    ///     A form display all reference planes, and allow user to create
+    ///     reference plane with a button.
     /// </summary>
-    public partial class ReferencePlaneForm : System.Windows.Forms.Form
+    public partial class ReferencePlaneForm : Form
     {
         //A object to manage reference plane.
-        private ReferencePlaneMgr m_refPlaneMgr;
+        private readonly ReferencePlaneMgr m_refPlaneMgr;
 
         /// <summary>
-        /// A form object constructor.
+        ///     A form object constructor.
         /// </summary>
         /// <param name="refPlaneMgr">A ReferencePlaneMgr buffer.</param>
         public ReferencePlaneForm(ReferencePlaneMgr refPlaneMgr)
         {
-            Debug.Assert(null != refPlaneMgr);            
+            Debug.Assert(null != refPlaneMgr);
             InitializeComponent();
 
             m_refPlaneMgr = refPlaneMgr;
@@ -54,7 +56,7 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
         }
 
         /// <summary>
-        /// Notify revit to generate a reference plane.
+        ///     Notify revit to generate a reference plane.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

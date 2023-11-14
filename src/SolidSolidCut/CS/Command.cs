@@ -21,19 +21,19 @@
 //
 
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SolidSolidCut.CS
 {
     /// <summary>
-    /// Demonstrate how to use the SolidSolidCut API to make one solid cut another.
+    ///     Demonstrate how to use the SolidSolidCut API to make one solid cut another.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Cut : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
@@ -42,7 +42,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            
+
             long solidToBeCutElementId = 30481; //The cube
             long cuttingSolidElementId = 30809; //The sphere
 
@@ -53,7 +53,8 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             //If the two elements do not exist, notify user to open the family file then try this command.
             if (solidToBeCut == null || cuttingSolid == null)
             {
-                TaskDialog.Show("Notice", "Please open the family file SolidSolidCut.rfa, then try to run this command.");
+                TaskDialog.Show("Notice",
+                    "Please open the family file SolidSolidCut.rfa, then try to run this command.");
 
                 return Result.Succeeded;
             }
@@ -74,19 +75,18 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
                 transaction.Commit();
             }
 
-            
+
             return Result.Succeeded;
         }
-            }
+    }
 
     /// <summary>
-    /// Demonstrate how to use the SolidSolidCut API to uncut two solids which have the cutting relationship.
+    ///     Demonstrate how to use the SolidSolidCut API to uncut two solids which have the cutting relationship.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Uncut : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
@@ -95,7 +95,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            
+
             long solidToBeCutElementId = 30481; //The cube
             long cuttingSolidElementId = 30809; //The sphere
 
@@ -106,7 +106,8 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             //If the two elements do not exist, notify user to open the family file then try this command.
             if (solidToBeCut == null || cuttingSolid == null)
             {
-                TaskDialog.Show("Notice", "Please open the family file SolidSolidCut.rfa, then try to run this command.");
+                TaskDialog.Show("Notice",
+                    "Please open the family file SolidSolidCut.rfa, then try to run this command.");
 
                 return Result.Succeeded;
             }
@@ -121,8 +122,8 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
 
             transaction.Commit();
 
-            
+
             return Result.Succeeded;
         }
-            }
+    }
 }

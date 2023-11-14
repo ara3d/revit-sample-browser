@@ -1,17 +1,19 @@
 using System;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
 {
-    public partial class SaveAsForm : System.Windows.Forms.Form
+    public partial class SaveAsForm : Form
     {
+        private readonly ISettingNameOperation m_settingNameOperation;
+
         public SaveAsForm(ISettingNameOperation settingNameOperation)
         {
             InitializeComponent();
             m_settingNameOperation = settingNameOperation;
             newNameTextBox.Text = m_settingNameOperation.Prefix
-                + m_settingNameOperation.SettingCount.ToString();
+                                  + m_settingNameOperation.SettingCount;
         }
-        ISettingNameOperation m_settingNameOperation;
 
         private void okButton_Click(object sender, EventArgs e)
         {

@@ -22,52 +22,52 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// This is the main form for user to operate the Rebar creation.
+    ///     This is the main form for user to operate the Rebar creation.
     /// </summary>
-    public partial class NewRebarForm : System.Windows.Forms.Form
+    public partial class NewRebarForm : Form
     {
+        /// <summary>
+        ///     Control binding source, provides data source for RebarBarType list box.
+        /// </summary>
+        private readonly BindingSource m_barTypesBinding = new BindingSource();
+
+        /// <summary>
+        ///     All RebarBarTypes of Revit current document.
+        /// </summary>
+        private readonly List<RebarBarType> m_rebarBarTypes = new List<RebarBarType>();
+
+        /// <summary>
+        ///     All RebarShape of Revit current document.
+        /// </summary>
+        private readonly List<RebarShape> m_rebarShapes = new List<RebarShape>();
         ///// <summary>
         ///// Revit Application object.
         ///// </summary>
         //Autodesk.Revit.ApplicationServices.Application m_rvtApp;
 
         /// <summary>
-        /// Revit Document object.
+        ///     Revit Document object.
         /// </summary>
-        Document m_rvtDoc;
+        private readonly Document m_rvtDoc;
 
         /// <summary>
-        /// All RebarBarTypes of Revit current document.
+        ///     Control binding source, provides data source for RebarShapes list box.
         /// </summary>
-        List<RebarBarType> m_rebarBarTypes = new List<RebarBarType>();
+        private readonly BindingSource m_shapesBinding = new BindingSource();
 
         /// <summary>
-        /// All RebarShape of Revit current document.
-        /// </summary>
-        List<RebarShape> m_rebarShapes = new List<RebarShape>();
-
-        /// <summary>
-        /// Control binding source, provides data source for RebarBarType list box.
-        /// </summary>
-        BindingSource m_barTypesBinding = new BindingSource();
-
-        /// <summary>
-        /// Control binding source, provides data source for RebarShapes list box. 
-        /// </summary>
-        BindingSource m_shapesBinding = new BindingSource();
-
-        /// <summary>
-        /// Default constructor.
+        ///     Default constructor.
         /// </summary>
         public NewRebarForm()
         {
@@ -75,7 +75,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Constructor, initialize fields of RebarBarTypes and RebarShapes.
+        ///     Constructor, initialize fields of RebarBarTypes and RebarShapes.
         /// </summary>
         /// <param name="rvtApp"></param>
         public NewRebarForm(Document rvtDoc)
@@ -85,38 +85,37 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
             var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
             filteredElementCollector.OfClass(typeof(RebarBarType));
-            m_rebarBarTypes = filteredElementCollector.Cast<RebarBarType>().ToList<RebarBarType>();
+            m_rebarBarTypes = filteredElementCollector.Cast<RebarBarType>().ToList();
 
             filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
             filteredElementCollector.OfClass(typeof(RebarShape));
-            m_rebarShapes = filteredElementCollector.Cast<RebarShape>().ToList<RebarShape>();
+            m_rebarShapes = filteredElementCollector.Cast<RebarShape>().ToList();
         }
 
         /// <summary>
-        /// Return RebarBarType from selection of barTypesComboBox.
+        ///     Return RebarBarType from selection of barTypesComboBox.
         /// </summary>
         public RebarBarType RebarBarType => barTypesComboBox.SelectedItem as RebarBarType;
 
         /// <summary>
-        /// Return RebarShape from selection of shapesComboBox.
+        ///     Return RebarShape from selection of shapesComboBox.
         /// </summary>
         public RebarShape RebarShape => shapesComboBox.SelectedItem as RebarShape;
 
 
         /// <summary>
-        /// OK Button, return DialogResult.OK and close this form.
+        ///     OK Button, return DialogResult.OK and close this form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-
             DialogResult = DialogResult.OK;
             Close();
         }
 
         /// <summary>
-        /// Cancel Button, return DialogResult.Cancel and close this form.
+        ///     Cancel Button, return DialogResult.Cancel and close this form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -127,7 +126,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Present a dialog to customize a RebarShape.
+        ///     Present a dialog to customize a RebarShape.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -145,7 +144,9 @@ namespace Revit.SDK.Samples.NewRebar.CS
             var regex = new Regex("^[a-zA-Z]\\w+$");
             if (!regex.IsMatch(nameTextBox.Text.Trim()))
             {
-                TaskDialog.Show("Revit", "Please input the name starting with letter and just containing letters, numbers and underlines. String is " + nameTextBox.Text.ToString());
+                TaskDialog.Show("Revit",
+                    "Please input the name starting with letter and just containing letters, numbers and underlines. String is " +
+                    nameTextBox.Text);
                 nameTextBox.Focus();
                 return;
             }
@@ -157,16 +158,14 @@ namespace Revit.SDK.Samples.NewRebar.CS
             {
                 // Create arc shape.
                 RebarShapeDefinitionByArc arcShapeDefinition = null;
-                var arcType = (RebarShapeDefinitionByArcType)Enum.Parse(typeof(RebarShapeDefinitionByArcType), arcTypecomboBox.Text);
+                var arcType =
+                    (RebarShapeDefinitionByArcType)Enum.Parse(typeof(RebarShapeDefinitionByArcType),
+                        arcTypecomboBox.Text);
                 if (arcType != RebarShapeDefinitionByArcType.Spiral)
-                {
                     arcShapeDefinition = new RebarShapeDefinitionByArc(m_rvtDoc, arcType);
-                }
                 else
-                {
                     // Set default value for Spiral-Shape definition.
                     arcShapeDefinition = new RebarShapeDefinitionByArc(m_rvtDoc, 10.0, 3.0, 0, 0);
-                }
                 shapeDef = new RebarShapeDefByArc(arcShapeDefinition);
             }
             else if (bySegmentsradioButton.Checked)
@@ -223,11 +222,10 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 m_shapesBinding.ResetBindings(false);
                 shapesComboBox.SelectedItem = createdRebarShape;
             }
-
         }
 
         /// <summary>
-        /// Update the status of some controls.
+        ///     Update the status of some controls.
         /// </summary>
         private void UpdateUIStatus()
         {
@@ -236,7 +234,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// byArcradioButton check status change event.
+        ///     byArcradioButton check status change event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -246,7 +244,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// bySegmentsradioButton check status change event.
+        ///     bySegmentsradioButton check status change event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -256,7 +254,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Load event, Initialize controls data source.
+        ///     Load event, Initialize controls data source.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

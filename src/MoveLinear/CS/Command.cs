@@ -21,17 +21,19 @@
 //  
 
 using System;
+using System.Collections;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.MoveLinear.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
+        public Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
         {
             var res = Result.Succeeded;
             var trans = new Transaction(cmdData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.MoveLinear");
@@ -42,9 +44,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
 
                 var elemSet = new ElementSet();
                 foreach (var elementId in sel.GetElementIds())
-                {
-                   elemSet.Insert(cmdData.Application.ActiveUIDocument.Document.GetElement(elementId));
-                }
+                    elemSet.Insert(cmdData.Application.ActiveUIDocument.Document.GetElement(elementId));
 
                 //Check whether user has selected only one element
                 if (0 == elemSet.Size)
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
                     return res;
                 }
 
-                System.Collections.IEnumerator iter = elemSet.ForwardIterator();
+                IEnumerator iter = elemSet.ForwardIterator();
 
                 iter.MoveNext();
 
@@ -101,11 +101,9 @@ namespace Revit.SDK.Samples.MoveLinear.CS
                 TaskDialog.Show("MoveLinear", ex.Message);
                 res = Result.Failed;
             }
-            finally
-            {
-            }
+
             trans.Commit();
             return res;
         }
-            }
+    }
 }

@@ -19,17 +19,18 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
+using Autodesk.Revit.DB;
+
 namespace Revit.SDK.Samples.AreaReinCurve.CS
 {
-    using Autodesk.Revit.DB;
-
     /// <summary>
-    /// contain utility methods find or set certain parameter
+    ///     contain utility methods find or set certain parameter
     /// </summary>
     public class ParameterUtil
     {
         /// <summary>
-        /// find certain parameter in a set
+        ///     find certain parameter in a set
         /// </summary>
         /// <param name="paras"></param>
         /// <param name="name">find by name</param>
@@ -39,10 +40,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
             var paras = elem.Parameters;
             var findPara = FindParaByName(paras, paraName);
 
-            if (null == findPara)
-            {
-                return false;
-            }
+            if (null == findPara) return false;
 
             if (!findPara.IsReadOnly)
             {
@@ -54,7 +52,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         }
 
         /// <summary>
-        /// find certain parameter in a set
+        ///     find certain parameter in a set
         /// </summary>
         /// <param name="paras"></param>
         /// <param name="name">find by name</param>
@@ -64,18 +62,14 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
             Parameter findPara = null;
 
             foreach (Parameter para in paras)
-            {
                 if (para.Definition.Name == name)
-                {
                     findPara = para;
-                }
-            }
 
             return findPara;
         }
 
         /// <summary>
-        /// set certain parameter of given element to int value
+        ///     set certain parameter of given element to int value
         /// </summary>
         /// <param name="elem">given element</param>
         /// <param name="paraIndex">BuiltInParameter</param>
@@ -84,10 +78,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         public static bool SetParaInt(Element elem, BuiltInParameter paraIndex, int value)
         {
             var para = elem.get_Parameter(paraIndex);
-            if (null == para)
-            {
-                return false;
-            }
+            if (null == para) return false;
 
             if (!para.IsReadOnly)
             {
@@ -99,7 +90,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         }
 
         /// <summary>
-        /// set certain parameter of given element to int value
+        ///     set certain parameter of given element to int value
         /// </summary>
         /// <param name="elem">given element</param>
         /// <param name="paraIndex">BuiltInParameter</param>
@@ -114,6 +105,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
                 para.Set(id);
                 return true;
             }
+
             return false;
         }
     }

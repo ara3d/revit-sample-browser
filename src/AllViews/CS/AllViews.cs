@@ -21,213 +21,67 @@
 //
 
 using System;
-using System.Collections.Generic;
-
-using System.Windows.Forms;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using View = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.AllViews.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                
-       public Result Execute(ExternalCommandData commandData,
-         ref string message, ElementSet elements)
-       {
-           if (null == commandData)
-           {
-               throw new ArgumentNullException("commandData");
-           }
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
+        {
+            if (null == commandData) throw new ArgumentNullException("commandData");
 
-           var doc = commandData.Application.ActiveUIDocument.Document;
-           var view = new ViewsMgr(doc);
+            var doc = commandData.Application.ActiveUIDocument.Document;
+            var view = new ViewsMgr(doc);
 
-           var dlg = new AllViewsForm(view);
+            var dlg = new AllViewsForm(view);
 
-           try
-           {
-               if (dlg.ShowDialog() == DialogResult.OK)
-               {
-                   return view.GenerateSheet(doc);
-               }
-           }
-           catch (Exception e)
-           {
-               message = e.Message;
-               return Result.Failed;
-           }
-
-           return Result.Succeeded;
-      }
-
+            try
+            {
+                if (dlg.ShowDialog() == DialogResult.OK) return view.GenerateSheet(doc);
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+                return Result.Failed;
             }
 
+            return Result.Succeeded;
+        }
+    }
+
     /// <summary>
-    /// Generating a new sheet that has all the selected views placed in.
-    /// Updating and retrieving properties of a selected viewport.
+    ///     Generating a new sheet that has all the selected views placed in.
+    ///     Updating and retrieving properties of a selected viewport.
     /// </summary>
     public class ViewsMgr
     {
-        private ViewSet m_allViews = new ViewSet();
-      private ViewSet m_selectedViews = new ViewSet();
-      private FamilySymbol m_titleBlock;
-      private IList<Element> m_allTitleBlocks = new List<Element>();
-      private double m_rows;
+        private readonly double GOLDENSECTION = 0.618;
+        private IList<Element> m_allTitleBlocks = new List<Element>();
+        private readonly ViewSet m_allViews = new ViewSet();
 
-      private double TITLEBAR = 0.2;
-      private double GOLDENSECTION = 0.618;
+        private readonly Document m_doc;
+        private double m_rows;
+        private readonly ViewSet m_selectedViews = new ViewSet();
+        private FamilySymbol m_titleBlock;
 
-      private Document m_doc;
+        private Viewport m_VP;
 
-      private Viewport m_VP;
-
-      /// <summary>
-      /// Update Form data members bonded to UI controls.
-      /// </summary>
-      /// <param name="form">The Form to be updated.</param>
-      public void UpdateViewportProperties(AllViewsForm form)
-      {
-         form.m_getMinBoxOutline = m_VP.GetBoxOutline().MinimumPoint;
-         form.m_getMaxBoxOutline = m_VP.GetBoxOutline().MaximumPoint;
-
-         form.m_getMinLabelOutline = m_VP.GetLabelOutline().MinimumPoint;
-         form.m_getMaxLabelOutline = m_VP.GetLabelOutline().MaximumPoint;
-
-         form.m_getLabelLineOffset = m_VP.LabelOffset;
-         form.m_getLabelLineLength = m_VP.LabelLineLength;
-
-         form.m_getBoxCenter = m_VP.GetBoxCenter();
-         form.m_getOrientation = m_VP.Rotation;
-      }
-
-      /// <summary>
-      /// Select a viewport by its associated view name and sheet name.
-      /// </summary>
-      /// <param name="form">The Form to be updated.</param>
-      /// <param name="selectSheetName"> Sheet name.</param>
-      /// <param name="selectAssociatedViewName">Associated view name.</param>
-      public bool SelectViewport(AllViewsForm form, string selectSheetName, string selectAssociatedViewName)
-      {
-         m_VP = null;
-         form.invalidViewport = true;
-
-         var fec = new FilteredElementCollector(m_doc);
-         fec.OfClass(typeof(Autodesk.Revit.DB.View));
-         var viewSheets = fec.Cast<Autodesk.Revit.DB.View>().Where<Autodesk.Revit.DB.View>(vp => !vp.IsTemplate && vp.ViewType == ViewType.DrawingSheet);
-
-         foreach (var view in viewSheets)
-         {
-            if (view.Name.Equals(selectSheetName))
-            {
-               var viewSheet = (ViewSheet)view;
-               foreach (var vp in viewSheet.GetAllViewports())
-               {
-                  var VP = (Viewport)(m_doc.GetElement(vp));
-
-                  var associatedView = m_doc.GetElement(VP.ViewId) as Autodesk.Revit.DB.View;
-
-                  if (associatedView.Name.Equals(selectAssociatedViewName))
-                  {
-                     m_VP = VP;
-                     break;
-                  }
-               }
-            }
-         }
-
-         if (m_VP == null)
-         {
-            throw new InvalidOperationException("Viewport not found.");
-         }
-
-         form.invalidViewport = false;
-         UpdateViewportProperties(form);
-         return true;
-      }
-
-      /// <summary>
-      /// Change viewport label offset.
-      /// </summary>
-      /// <param name="form">The Form to be updated.</param>
-      /// <param name="labelOffsetX">Label offset X component.</param>
-      /// <param name="labelOffsetY">Label offset Y component.</param>
-      public void SetLabelOffset(AllViewsForm form,
-         double labelOffsetX, double labelOffsetY)
-      {
-         using (var t = new Transaction(m_doc, "Change label offset"))
-         {
-            t.Start();
-
-            m_VP.LabelOffset = new XYZ(labelOffsetX, labelOffsetY, 0.0);
-
-            t.Commit();
-
-            UpdateViewportProperties(form);
-         }
-      }
-
-      /// <summary>
-      /// Change viewport label length.
-      /// </summary>
-      /// <param name="form">The Form to be updated.</param>
-      /// <param name="labelLineLength">Label line length.</param>
-      public void SetLabelLength(AllViewsForm form, double labelLineLength)
-      {
-         using (var t = new Transaction(m_doc, "Change label length"))
-         {
-            t.Start();
-
-            m_VP.LabelLineLength = labelLineLength;
-
-            t.Commit();
-
-            UpdateViewportProperties(form);
-         }
-      }
-
-      /// <summary>
-      /// Change viewport orientation.
-      /// </summary>
-      /// <param name="form">The Form to be updated.</param>
-      /// <param name="rotation">Label line rotation.</param>
-      public void SetRotation(AllViewsForm form, ViewportRotation rotation)
-      {
-         using (var t = new Transaction(m_doc, "Change label orientation"))
-         {
-            t.Start();
-
-            m_VP.Rotation = rotation;
-
-            t.Commit();
-
-            UpdateViewportProperties(form);
-         }
-      }
+        private readonly double TITLEBAR = 0.2;
 
         /// <summary>
-        /// Tree node store all views' names.
-        /// </summary>
-        public TreeNode AllViewsNames { get; } = new TreeNode("Views (all)");
-
-        /// <summary>
-        /// List of all title blocks' names.
-        /// </summary>
-        public ArrayList AllTitleBlocksNames { get; } = new ArrayList();
-
-        /// <summary>
-        /// The selected sheet's name.
-        /// </summary>
-        public string SheetName { get; set; }
-
-        /// <summary>
-        /// Constructor of views object.
+        ///     Constructor of views object.
         /// </summary>
         /// <param name="doc">the active document</param>
         public ViewsMgr(Document doc)
@@ -238,169 +92,267 @@ namespace Revit.SDK.Samples.AllViews.CS
         }
 
         /// <summary>
-        /// Finds all the views in the active document.
+        ///     Tree node store all views' names.
+        /// </summary>
+        public TreeNode AllViewsNames { get; } = new TreeNode("Views (all)");
+
+        /// <summary>
+        ///     List of all title blocks' names.
+        /// </summary>
+        public ArrayList AllTitleBlocksNames { get; } = new ArrayList();
+
+        /// <summary>
+        ///     The selected sheet's name.
+        /// </summary>
+        public string SheetName { get; set; }
+
+        /// <summary>
+        ///     Update Form data members bonded to UI controls.
+        /// </summary>
+        /// <param name="form">The Form to be updated.</param>
+        public void UpdateViewportProperties(AllViewsForm form)
+        {
+            form.m_getMinBoxOutline = m_VP.GetBoxOutline().MinimumPoint;
+            form.m_getMaxBoxOutline = m_VP.GetBoxOutline().MaximumPoint;
+
+            form.m_getMinLabelOutline = m_VP.GetLabelOutline().MinimumPoint;
+            form.m_getMaxLabelOutline = m_VP.GetLabelOutline().MaximumPoint;
+
+            form.m_getLabelLineOffset = m_VP.LabelOffset;
+            form.m_getLabelLineLength = m_VP.LabelLineLength;
+
+            form.m_getBoxCenter = m_VP.GetBoxCenter();
+            form.m_getOrientation = m_VP.Rotation;
+        }
+
+        /// <summary>
+        ///     Select a viewport by its associated view name and sheet name.
+        /// </summary>
+        /// <param name="form">The Form to be updated.</param>
+        /// <param name="selectSheetName"> Sheet name.</param>
+        /// <param name="selectAssociatedViewName">Associated view name.</param>
+        public bool SelectViewport(AllViewsForm form, string selectSheetName, string selectAssociatedViewName)
+        {
+            m_VP = null;
+            form.invalidViewport = true;
+
+            var fec = new FilteredElementCollector(m_doc);
+            fec.OfClass(typeof(View));
+            var viewSheets = fec.Cast<View>().Where(vp => !vp.IsTemplate && vp.ViewType == ViewType.DrawingSheet);
+
+            foreach (var view in viewSheets)
+                if (view.Name.Equals(selectSheetName))
+                {
+                    var viewSheet = (ViewSheet)view;
+                    foreach (var vp in viewSheet.GetAllViewports())
+                    {
+                        var VP = (Viewport)m_doc.GetElement(vp);
+
+                        var associatedView = m_doc.GetElement(VP.ViewId) as View;
+
+                        if (associatedView.Name.Equals(selectAssociatedViewName))
+                        {
+                            m_VP = VP;
+                            break;
+                        }
+                    }
+                }
+
+            if (m_VP == null) throw new InvalidOperationException("Viewport not found.");
+
+            form.invalidViewport = false;
+            UpdateViewportProperties(form);
+            return true;
+        }
+
+        /// <summary>
+        ///     Change viewport label offset.
+        /// </summary>
+        /// <param name="form">The Form to be updated.</param>
+        /// <param name="labelOffsetX">Label offset X component.</param>
+        /// <param name="labelOffsetY">Label offset Y component.</param>
+        public void SetLabelOffset(AllViewsForm form,
+            double labelOffsetX, double labelOffsetY)
+        {
+            using (var t = new Transaction(m_doc, "Change label offset"))
+            {
+                t.Start();
+
+                m_VP.LabelOffset = new XYZ(labelOffsetX, labelOffsetY, 0.0);
+
+                t.Commit();
+
+                UpdateViewportProperties(form);
+            }
+        }
+
+        /// <summary>
+        ///     Change viewport label length.
+        /// </summary>
+        /// <param name="form">The Form to be updated.</param>
+        /// <param name="labelLineLength">Label line length.</param>
+        public void SetLabelLength(AllViewsForm form, double labelLineLength)
+        {
+            using (var t = new Transaction(m_doc, "Change label length"))
+            {
+                t.Start();
+
+                m_VP.LabelLineLength = labelLineLength;
+
+                t.Commit();
+
+                UpdateViewportProperties(form);
+            }
+        }
+
+        /// <summary>
+        ///     Change viewport orientation.
+        /// </summary>
+        /// <param name="form">The Form to be updated.</param>
+        /// <param name="rotation">Label line rotation.</param>
+        public void SetRotation(AllViewsForm form, ViewportRotation rotation)
+        {
+            using (var t = new Transaction(m_doc, "Change label orientation"))
+            {
+                t.Start();
+
+                m_VP.Rotation = rotation;
+
+                t.Commit();
+
+                UpdateViewportProperties(form);
+            }
+        }
+
+        /// <summary>
+        ///     Finds all the views in the active document.
         /// </summary>
         /// <param name="doc">the active document</param>
         private void GetAllViews(Document doc)
         {
             var collector = new FilteredElementCollector(doc);
-            var itor = collector.OfClass(typeof(Autodesk.Revit.DB.View)).GetElementIterator();
+            var itor = collector.OfClass(typeof(View)).GetElementIterator();
             itor.Reset();
             while (itor.MoveNext())
             {
-                var view = itor.Current as Autodesk.Revit.DB.View;
+                var view = itor.Current as View;
                 // skip view templates because they're invisible in project browser
-                if (null == view || view.IsTemplate)
-                {
+                if (null == view || view.IsTemplate) continue;
+
+                var objType = doc.GetElement(view.GetTypeId()) as ElementType;
+                if (null == objType || objType.Name.Equals("Schedule")
+                                    || objType.Name.Equals("Drawing Sheet"))
                     continue;
-                }
-                else
-                {
-                    var objType = doc.GetElement(view.GetTypeId()) as ElementType;
-                    if (null == objType || objType.Name.Equals("Schedule")
-                        || objType.Name.Equals("Drawing Sheet"))
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        m_allViews.Insert(view);
-                        AssortViews(view.Name, objType.Name);
-                    }
-                }
+
+                m_allViews.Insert(view);
+                AssortViews(view.Name, objType.Name);
             }
         }
 
         /// <summary>
-        /// Assort all views for tree view displaying.
+        ///     Assort all views for tree view displaying.
         /// </summary>
         /// <param name="view">The view assorting</param>
         /// <param name="type">The type of view</param>
         private void AssortViews(string view, string type)
         {
             foreach (TreeNode t in AllViewsNames.Nodes)
-            {
                 if (t.Tag.Equals(type))
                 {
                     t.Nodes.Add(new TreeNode(view));
                     return;
                 }
-            }
 
             var categoryNode = new TreeNode(type);
             categoryNode.Tag = type;
             if (type.Equals("Building Elevation"))
-            {
                 categoryNode.Text = "Elevations [" + type + "]";
-            }
             else
-            {
                 categoryNode.Text = type + "s";
-            }
             categoryNode.Nodes.Add(new TreeNode(view));
             AllViewsNames.Nodes.Add(categoryNode);
         }
 
         /// <summary>
-        /// Retrieve the checked view from tree view.
+        ///     Retrieve the checked view from tree view.
         /// </summary>
         public void SelectViews()
         {
             var names = new ArrayList();
             foreach (TreeNode t in AllViewsNames.Nodes)
-            {
-                foreach (TreeNode n in t.Nodes)
-                {
-                    if (n.Checked && 0 == n.Nodes.Count)
-                    {
-                        names.Add(n.Text);
-                    }
-                }
-            }
+            foreach (TreeNode n in t.Nodes)
+                if (n.Checked && 0 == n.Nodes.Count)
+                    names.Add(n.Text);
 
-            foreach (Autodesk.Revit.DB.View v in m_allViews)
-            {
-                foreach (string s in names)
+            foreach (View v in m_allViews)
+            foreach (string s in names)
+                if (s.Equals(v.Name))
                 {
-                    if (s.Equals(v.Name))
-                    {
-                        m_selectedViews.Insert(v);
-                        break;
-                    }
+                    m_selectedViews.Insert(v);
+                    break;
                 }
-            }
         }
 
-      /// <summary>
-      /// Generate sheet in active document.
-      /// </summary>
-      /// <param name="doc">the currently active document</param>
-      public Result GenerateSheet(Document doc)
-      {
-         if (null == doc)
-         {
-                throw new ArgumentNullException("doc");
-         }
+        /// <summary>
+        ///     Generate sheet in active document.
+        /// </summary>
+        /// <param name="doc">the currently active document</param>
+        public Result GenerateSheet(Document doc)
+        {
+            if (null == doc) throw new ArgumentNullException("doc");
 
-         if (m_selectedViews.IsEmpty)
-         {
+            if (m_selectedViews.IsEmpty)
                 throw new InvalidOperationException("No view be selected, generate sheet be canceled.");
-         }
 
-         var result = Result.Succeeded;
+            var result = Result.Succeeded;
 
-         using (var newTran = new Transaction(doc, "AllViews_Sample"))
-         {
-            newTran.Start();
-
-            try
+            using (var newTran = new Transaction(doc, "AllViews_Sample"))
             {
-                  var sheet = ViewSheet.Create(doc, m_titleBlock.Id);
-                  sheet.Name = SheetName;
-                  PlaceViews(m_selectedViews, sheet);
-            }
-            catch(Exception)
-            {
-                  result = Result.Failed;
+                newTran.Start();
+
+                try
+                {
+                    var sheet = ViewSheet.Create(doc, m_titleBlock.Id);
+                    sheet.Name = SheetName;
+                    PlaceViews(m_selectedViews, sheet);
+                }
+                catch (Exception)
+                {
+                    result = Result.Failed;
+                }
+
+                if (result == Result.Succeeded)
+                {
+                    newTran.Commit();
+                }
+                else
+                {
+                    newTran.RollBack();
+                    throw new InvalidOperationException("Failed to generate sheet view and/or its viewports.");
+                }
             }
 
-            if (result == Result.Succeeded)
-            {
-                  newTran.Commit();
-            }
-            else
-            {
-                  newTran.RollBack();
-                  throw new InvalidOperationException("Failed to generate sheet view and/or its viewports.");
-            }
-         }
-
-         return result;
-      }
+            return result;
+        }
 
         /// <summary>
-        /// Retrieve the title block to be generate by its name.
+        ///     Retrieve the title block to be generate by its name.
         /// </summary>
         /// <param name="name">The title block's name</param>
         public void ChooseTitleBlock(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException("name");
-            }
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 
             foreach (FamilySymbol f in m_allTitleBlocks)
-            {
-               if (name.Equals(f.Family.Name + ":" + f.Name))
-               {
-                  m_titleBlock = f;
-                  return;
-               }
-            }
+                if (name.Equals(f.Family.Name + ":" + f.Name))
+                {
+                    m_titleBlock = f;
+                    return;
+                }
         }
 
         /// <summary>
-        /// Retrieve all available title blocks in the currently active document.
+        ///     Retrieve all available title blocks in the currently active document.
         /// </summary>
         /// <param name="doc">the currently active document</param>
         private void GetTitleBlocks(Document doc)
@@ -410,23 +362,18 @@ namespace Revit.SDK.Samples.AllViews.CS
             filteredElementCollector.OfCategory(BuiltInCategory.OST_TitleBlocks);
             m_allTitleBlocks = filteredElementCollector.ToElements();
             if (0 == m_allTitleBlocks.Count)
-            {
                 throw new InvalidOperationException("There is no title block to generate sheet.");
-            }
 
             foreach (var element in m_allTitleBlocks)
             {
                 var f = element as FamilySymbol;
                 AllTitleBlocksNames.Add(f.Family.Name + ":" + f.Name);
-                if (null == m_titleBlock)
-                {
-                   m_titleBlock = f;
-                }
+                if (null == m_titleBlock) m_titleBlock = f;
             }
         }
 
         /// <summary>
-        /// Place all selected views on this sheet's appropriate location.
+        ///     Place all selected views on this sheet's appropriate location.
         /// </summary>
         /// <param name="views">all selected views</param>
         /// <param name="sheet">all views located sheet</param>
@@ -441,7 +388,7 @@ namespace Revit.SDK.Samples.AllViews.CS
             var tempU = origin.U;
             var tempV = origin.V;
             var n = 1;
-            foreach (Autodesk.Revit.DB.View v in views)
+            foreach (View v in views)
             {
                 var location = new UV(tempU, tempV);
                 var view = v;
@@ -454,7 +401,7 @@ namespace Revit.SDK.Samples.AllViews.CS
                 catch (ArgumentException /*ae*/)
                 {
                     throw new InvalidOperationException("The view '" + view.Name +
-                        "' can't be added, it may have already been placed in another sheet.");
+                                                        "' can't be added, it may have already been placed in another sheet.");
                 }
 
                 if (0 != n++ % m_rows)
@@ -470,7 +417,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         }
 
         /// <summary>
-        /// Retrieve the appropriate origin.
+        ///     Retrieve the appropriate origin.
         /// </summary>
         /// <param name="bBox"></param>
         /// <param name="x"></param>
@@ -482,7 +429,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         }
 
         /// <summary>
-        /// Calculate the appropriate distance between the views lay on the sheet.
+        ///     Calculate the appropriate distance between the views lay on the sheet.
         /// </summary>
         /// <param name="bBox">The outline of sheet.</param>
         /// <param name="amount">Amount of views.</param>
@@ -491,16 +438,17 @@ namespace Revit.SDK.Samples.AllViews.CS
         private void CalculateDistance(BoundingBoxUV bBox, int amount, ref double x, ref double y)
         {
             var xLength = (bBox.Max.U - bBox.Min.U) * (1 - TITLEBAR);
-            var yLength = (bBox.Max.V - bBox.Min.V);
+            var yLength = bBox.Max.V - bBox.Min.V;
 
             //calculate appropriate rows numbers.
             var result = Math.Sqrt(amount);
 
-            while (0 < (result - (int)result))
+            while (0 < result - (int)result)
             {
                 amount = amount + 1;
                 result = Math.Sqrt(amount);
             }
+
             m_rows = result;
             var area = xLength * yLength / amount;
 
@@ -518,30 +466,23 @@ namespace Revit.SDK.Samples.AllViews.CS
         }
 
         /// <summary>
-        /// Rescale the view's Scale value for suitable.
+        ///     Rescale the view's Scale value for suitable.
         /// </summary>
         /// <param name="view">The view to be located on sheet.</param>
         /// <param name="x">Distance in x axis between each view</param>
         /// <param name="y">Distance in y axis between each view</param>
-        static private void Rescale(Autodesk.Revit.DB.View view, double x, double y)
+        private static void Rescale(View view, double x, double y)
         {
             double Rescale = 2;
             var outline = new UV(view.Outline.Max.U - view.Outline.Min.U,
                 view.Outline.Max.V - view.Outline.Min.V);
 
             if (outline.U > outline.V)
-            {
                 Rescale = outline.U / x * Rescale;
-            }
             else
-            {
                 Rescale = outline.V / y * Rescale;
-            }
 
-            if (1 != view.Scale && 0 != Rescale)
-            {
-                view.Scale = (int)(view.Scale * Rescale);
-            }
+            if (1 != view.Scale && 0 != Rescale) view.Scale = (int)(view.Scale * Rescale);
         }
     }
 }

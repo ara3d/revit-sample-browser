@@ -21,45 +21,47 @@
 //
 
 
+using System.Drawing;
+using System.Drawing.Drawing2D;
+
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
-    using System.Drawing;
-    using System.Drawing.Drawing2D;
-
     /// <summary>
-    /// sketch line and any tag on it
+    ///     sketch line and any tag on it
     /// </summary>
     public class LineSketch : ObjectSketch
-    {        
+    {
         /// <summary>
-        /// the rate of direction tag's distance to the line
+        ///     the rate of direction tag's distance to the line
         /// </summary>
         private const float DirectionTag_Distance_Ratio = 0.02f;
+
         /// <summary>
-        /// the rate of direction tag's length to the line
+        ///     the rate of direction tag's length to the line
         /// </summary>
         private const float DirectionTag_Length_Ratio = 0.1f;
-        private Line2D m_line = new Line2D();    // geometry line to draw
+
+        private readonly Line2D m_line = new Line2D(); // geometry line to draw
 
         /// <summary>
-        /// whether has direction tag
-        /// </summary>
-        public bool IsDirection { get; set; }
-
-        /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="line"></param>
         public LineSketch(Line2D line)
         {
-            m_line        = line;
+            m_line = line;
             m_boundingBox = line.BoundingBox;
-            m_pen.Color   = Color.DarkGreen;
-            m_pen.Width   = 1f;
+            m_pen.Color = Color.DarkGreen;
+            m_pen.Width = 1f;
         }
 
         /// <summary>
-        /// draw the line
+        ///     whether has direction tag
+        /// </summary>
+        public bool IsDirection { get; set; }
+
+        /// <summary>
+        ///     draw the line
         /// </summary>
         /// <param name="g">drawing object</param>
         /// <param name="translate">translation between drawn sketch and geometry object</param>
@@ -68,22 +70,19 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             var path = new GraphicsPath();
             path.AddLine(m_line.StartPnt, m_line.EndPnt);
 
-            if (IsDirection)
-            {
-                DrawDirectionTag(path);
-            }
+            if (IsDirection) DrawDirectionTag(path);
 
             path.Transform(translate);
             g.DrawPath(m_pen, path);
         }
 
         /// <summary>
-        /// draw 2 shorter parallel lines on each side of the line
+        ///     draw 2 shorter parallel lines on each side of the line
         /// </summary>
         /// <param name="path"></param>
         private void DrawDirectionTag(GraphicsPath path)
         {
-            var leftLine  = m_line.Clone();
+            var leftLine = m_line.Clone();
             var rightLine = m_line.Clone();
             leftLine.Scale(DirectionTag_Length_Ratio);
             leftLine.Shift(DirectionTag_Distance_Ratio * m_line.Length);

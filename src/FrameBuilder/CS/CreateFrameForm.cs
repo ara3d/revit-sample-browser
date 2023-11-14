@@ -20,30 +20,32 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Forms;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
+
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Windows.Forms;
-    using Autodesk.Revit.UI;
-
     /// <summary>
-    /// main form to create framing
+    ///     main form to create framing
     /// </summary>
     public partial class CreateFrameForm : Form
     {
-        private FrameData m_frameData;        // necessary data to create framing
+        private readonly FrameData m_frameData; // necessary data to create framing
 
         /// <summary>
-        /// constructor without parameter is forbidden
+        ///     constructor without parameter is forbidden
         /// </summary>
         private CreateFrameForm()
         {
         }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="data">necessary data to create</param>
         public CreateFrameForm(FrameData data)
@@ -53,7 +55,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// initialize controls
+        ///     initialize controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -74,20 +76,18 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// duplicate column type
+        ///     duplicate column type
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void columnDuplicateButton_Click(object sender, EventArgs e)
         {
             if (DuplicateSymbol(m_frameData.ColumnSymbolsMgr, columnTypeComboBox.SelectedValue))
-            {
                 RefreshListControl(columnTypeComboBox, m_frameData.ColumnSymbolsMgr);
-            }
         }
 
         /// <summary>
-        /// duplicate beam type
+        ///     duplicate beam type
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -101,7 +101,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// duplicate brace type
+        ///     duplicate brace type
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -115,7 +115,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// provide user UI to duplicate FamilySymbols
+        ///     provide user UI to duplicate FamilySymbols
         /// </summary>
         /// <param name="typesMgr">data manager of FamilySymbols</param>
         /// <param name="symbol">FamilySymbol to be copied</param>
@@ -125,16 +125,14 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             var result = false;
             using (var typeFrm = new DuplicateTypeForm(symbol, typesMgr))
             {
-                if (typeFrm.ShowDialog() == DialogResult.OK)
-                {
-                    result = true;
-                }
+                if (typeFrm.ShowDialog() == DialogResult.OK) result = true;
             }
+
             return result;
         }
 
         /// <summary>
-        /// refresh the ListControl's datasource
+        ///     refresh the ListControl's datasource
         /// </summary>
         /// <param name="list">ListControl to be refreshed</param>
         private static void RefreshListControl(ListControl list, FrameTypesMgr typesMgr)
@@ -147,8 +145,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// validate the input value
-        /// set back to its old value if input is invalid
+        ///     validate the input value
+        ///     set back to its old value if input is invalid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -174,8 +172,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// validate the input value
-        /// set back to its old value if input is invalid
+        ///     validate the input value
+        ///     set back to its old value if input is invalid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -207,8 +205,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// validate the input value
-        /// set back to its old value if input is invalid
+        ///     validate the input value
+        ///     set back to its old value if input is invalid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -240,8 +238,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// validate the input value
-        /// set back to its old value if input is invalid
+        ///     validate the input value
+        ///     set back to its old value if input is invalid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -270,20 +268,17 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                 TaskDialog.Show("Revit", "Please input a valid integer.");
                 e.Cancel = true;
             }
+
             // change readonly property of levelHeightTextBox
-            if ((m_frameData.FloorNumber + 1) > m_frameData.Levels.Count)
-            {
+            if (m_frameData.FloorNumber + 1 > m_frameData.Levels.Count)
                 levelHeightTextBox.Enabled = true;
-            }
             else
-            {
                 levelHeightTextBox.Enabled = false;
-            }
         }
 
         /// <summary>
-        /// validate the input value
-        /// set back to its old value if input is invalid
+        ///     validate the input value
+        ///     set back to its old value if input is invalid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -309,8 +304,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// validate the input value
-        /// set back to its old value if input is invalid
+        ///     validate the input value
+        ///     set back to its old value if input is invalid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -320,7 +315,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             {
                 var value = double.Parse(originXtextBox.Text);
                 var oldValue = m_frameData.FrameOrigin;
-                m_frameData.FrameOrigin = new Autodesk.Revit.DB.UV(value, oldValue.V);
+                m_frameData.FrameOrigin = new UV(value, oldValue.V);
             }
             catch (FormatException formatEx)
             {
@@ -337,8 +332,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// validate the input value
-        /// set back to its old value if input is invalid
+        ///     validate the input value
+        ///     set back to its old value if input is invalid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -348,7 +343,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             {
                 var value = double.Parse(originYtextBox.Text);
                 var oldValue = m_frameData.FrameOrigin;
-                m_frameData.FrameOrigin = new Autodesk.Revit.DB.UV(oldValue.U, value);
+                m_frameData.FrameOrigin = new UV(oldValue.U, value);
             }
             catch (FormatException formatEx)
             {
@@ -365,8 +360,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// validate the input value
-        /// set back to its old value if input is invalid
+        ///     validate the input value
+        ///     set back to its old value if input is invalid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -379,6 +374,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             {
                 Debug.Assert(true, "Reflection binding failed because interface of FrameData changed");
             }
+
             try
             {
                 m_frameData.FrameOriginAngle = double.Parse(originAngletextBox.Text);
@@ -398,7 +394,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// create the Frame
+        ///     create the Frame
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -409,7 +405,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// cancel all command
+        ///     cancel all command
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -420,7 +416,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// set type of column
+        ///     set type of column
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -430,7 +426,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// set type of beam
+        ///     set type of beam
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -440,7 +436,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         }
 
         /// <summary>
-        /// set type of brace
+        ///     set type of brace
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -448,6 +444,5 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         {
             m_frameData.SetBraceSymbol(braceTypeComboBox.SelectedItem);
         }
-
     }
 }

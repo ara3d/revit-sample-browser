@@ -25,44 +25,38 @@ using System.Reflection;
 
 namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 {
-   /// <summary>
-   /// Provider for string resources
-   /// </summary>
-   public class ResourceProvider
-   {
-      
-      private ResourceProvider()
-      {
-         IssueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\issue.bmp";
-         SelectedIssueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\selected.bmp";
-      }
+    /// <summary>
+    ///     Provider for string resources
+    /// </summary>
+    public class ResourceProvider
+    {
+        private static ResourceProvider provider;
 
-      /// <summary>
-      /// Gets the string resource provider
-      /// </summary>
-      /// <returns>Instance of the provider</returns>
-      public static ResourceProvider GetInstance()
-      {
-         if (provider == null)
-         {
-            provider = new ResourceProvider();
-         }
-         return provider;
-      }
+        private ResourceProvider()
+        {
+            IssueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\issue.bmp";
+            SelectedIssueImage =
+                new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\selected.bmp";
+        }
 
-      /// <summary>
-      /// Path to marker's bitmap for unselected issues
-      /// </summary>
-      public string IssueImage { get; }
+        /// <summary>
+        ///     Path to marker's bitmap for unselected issues
+        /// </summary>
+        public string IssueImage { get; }
 
-      /// <summary>
-      /// Path to marker's bitmap for selected issues
-      /// </summary>
-      public string SelectedIssueImage { get; }
+        /// <summary>
+        ///     Path to marker's bitmap for selected issues
+        /// </summary>
+        public string SelectedIssueImage { get; }
 
-      
-      
-      private static ResourceProvider provider;
-
-         }
+        /// <summary>
+        ///     Gets the string resource provider
+        /// </summary>
+        /// <returns>Instance of the provider</returns>
+        public static ResourceProvider GetInstance()
+        {
+            if (provider == null) provider = new ResourceProvider();
+            return provider;
+        }
+    }
 }

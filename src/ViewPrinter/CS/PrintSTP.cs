@@ -25,18 +25,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Control = System.Windows.Forms.Control;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
 {
     /// <summary>
-    /// Change and save printer setup setting, exposes the print parameters just
-    /// like the Print Setup Dialog (File->Print Setup...) in UI such as Printer name,
-    /// paper, zoom, options, etc.
+    ///     Change and save printer setup setting, exposes the print parameters just
+    ///     like the Print Setup Dialog (File->Print Setup...) in UI such as Printer name,
+    ///     paper, zoom, options, etc.
     /// </summary>
     public class PrintSTP : ISettingNameOperation
     {
-        private ExternalCommandData m_commandData;
-        private PrintManager m_printMgr;
+        private readonly ExternalCommandData m_commandData;
+        private readonly PrintManager m_printMgr;
 
         public PrintSTP(PrintManager printMgr
             , ExternalCommandData commandData)
@@ -46,36 +47,6 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         }
 
         public string PrinterName => m_printMgr.PrinterName;
-
-        public string Prefix => "Default ";
-
-        public int SettingCount => m_commandData.Application.ActiveUIDocument.Document.GetPrintSettingIds().Count;
-
-        public bool SaveAs(string newName)
-        {
-            try
-            {
-                return m_printMgr.PrintSetup.SaveAs(newName);
-            }
-            catch (Exception ex)
-            {
-                PrintMgr.MyMessageBox(ex.Message);
-                return false;
-            }            
-        }
-
-        public bool Rename(string name)
-        {            
-            try
-            {
-                return m_printMgr.PrintSetup.Rename(name);
-            }
-            catch (Exception ex)
-            {
-                PrintMgr.MyMessageBox(ex.Message);
-                return false;
-            }    
-        }
 
         public List<string> PrintSettingNames
         {
@@ -89,36 +60,9 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                     var printSetting = m_commandData.Application.ActiveUIDocument.Document.GetElement(eid);
                     names.Add(printSetting.Name);
                 }
+
                 names.Add(ConstData.InSessionName);
                 return names;
-            }
-        }
-
-        public string SettingName
-        {
-            get
-            {
-                var setting = m_printMgr.PrintSetup.CurrentPrintSetting;
-                return (setting is PrintSetting) ?
-                    (setting as PrintSetting).Name : ConstData.InSessionName;
-            }
-            set
-            {
-                if (value == ConstData.InSessionName)
-                {
-                    m_printMgr.PrintSetup.CurrentPrintSetting = m_printMgr.PrintSetup.InSession;
-                    return;
-                }
-                //foreach (Element printSetting in m_commandData.Application.ActiveUIDocument.Document.PrintSettings)
-                var printSettingIds = m_commandData.Application.ActiveUIDocument.Document.GetPrintSettingIds();
-                foreach (var eid in printSettingIds)
-                {
-                   var printSetting = m_commandData.Application.ActiveUIDocument.Document.GetElement(eid);
-                    if (printSetting.Name.Equals(value))
-                    {
-                        m_printMgr.PrintSetup.CurrentPrintSetting = printSetting as PrintSetting;
-                    }
-                }
             }
         }
 
@@ -127,10 +71,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             get
             {
                 var names = new List<string>();
-                foreach (PaperSize ps in m_printMgr.PaperSizes)
-                {
-                    names.Add(ps.Name);
-                }
+                foreach (PaperSize ps in m_printMgr.PaperSizes) names.Add(ps.Name);
                 return names;
             }
         }
@@ -151,13 +92,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             set
             {
                 foreach (PaperSize ps in m_printMgr.PaperSizes)
-                {
                     if (ps.Name.Equals(value))
                     {
                         m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.PaperSize = ps;
                         break;
                     }
-                }
             }
         }
 
@@ -166,10 +105,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             get
             {
                 var names = new List<string>();
-                foreach (PaperSource ps in m_printMgr.PaperSources)
-                {
-                    names.Add(ps.Name);
-                }
+                foreach (PaperSource ps in m_printMgr.PaperSources) names.Add(ps.Name);
                 return names;
             }
         }
@@ -180,13 +116,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             set
             {
                 foreach (PaperSource ps in m_printMgr.PaperSources)
-                {
                     if (ps.Name.Equals(value))
                     {
                         m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.PaperSource = ps;
                         break;
                     }
-                }
             }
         }
 
@@ -286,6 +220,62 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             set => m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.HideUnreferencedViewTags = value;
         }
 
+        public string Prefix => "Default ";
+
+        public int SettingCount => m_commandData.Application.ActiveUIDocument.Document.GetPrintSettingIds().Count;
+
+        public bool SaveAs(string newName)
+        {
+            try
+            {
+                return m_printMgr.PrintSetup.SaveAs(newName);
+            }
+            catch (Exception ex)
+            {
+                PrintMgr.MyMessageBox(ex.Message);
+                return false;
+            }
+        }
+
+        public bool Rename(string name)
+        {
+            try
+            {
+                return m_printMgr.PrintSetup.Rename(name);
+            }
+            catch (Exception ex)
+            {
+                PrintMgr.MyMessageBox(ex.Message);
+                return false;
+            }
+        }
+
+        public string SettingName
+        {
+            get
+            {
+                var setting = m_printMgr.PrintSetup.CurrentPrintSetting;
+                return setting is PrintSetting ? (setting as PrintSetting).Name : ConstData.InSessionName;
+            }
+            set
+            {
+                if (value == ConstData.InSessionName)
+                {
+                    m_printMgr.PrintSetup.CurrentPrintSetting = m_printMgr.PrintSetup.InSession;
+                    return;
+                }
+
+                //foreach (Element printSetting in m_commandData.Application.ActiveUIDocument.Document.PrintSettings)
+                var printSettingIds = m_commandData.Application.ActiveUIDocument.Document.GetPrintSettingIds();
+                foreach (var eid in printSettingIds)
+                {
+                    var printSetting = m_commandData.Application.ActiveUIDocument.Document.GetElement(eid);
+                    if (printSetting.Name.Equals(value))
+                        m_printMgr.PrintSetup.CurrentPrintSetting = printSetting as PrintSetting;
+                }
+            }
+        }
+
         public bool Save()
         {
             try
@@ -324,25 +314,23 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             }
         }
 
-        public bool VerifyMarginType(System.Windows.Forms.Control controlToEnableOrNot)
+        public bool VerifyMarginType(Control controlToEnableOrNot)
         {
             // Enable terms (or):
             // 1. Paper placement is LowerLeft.
             return controlToEnableOrNot.Enabled =
-                m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.PaperPlacement == PaperPlacementType.LowerLeft;
+                m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.PaperPlacement ==
+                PaperPlacementType.LowerLeft;
         }
 
-        public bool VerifyUserDefinedMargin(Collection<System.Windows.Forms.Control> controlsToEnableOrNot)
+        public bool VerifyUserDefinedMargin(Collection<Control> controlsToEnableOrNot)
         {
             var enableOrNot =
                 m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.MarginType == MarginType.UserDefined;
 
-            foreach (var control in controlsToEnableOrNot)
-            {
-                control.Enabled = enableOrNot;
-            }
+            foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
 
             return enableOrNot;
-        }        
+        }
     }
 }

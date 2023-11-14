@@ -20,17 +20,18 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SlabShapeEditing.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             var selectFloor = GetSelectFloor(commandData);
@@ -40,7 +41,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                 return Result.Failed;
             }
 
-            var slabShapeEditingForm = 
+            var slabShapeEditingForm =
                 new SlabShapeEditingForm(selectFloor, commandData);
             slabShapeEditingForm.ShowDialog();
 
@@ -48,26 +49,21 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// get selected floor (slab)
+        ///     get selected floor (slab)
         /// </summary>
         /// <param name="commandData">object which contains reference of Revit Application.</param>
         /// <returns>selected floor (slab)</returns>
         private Floor GetSelectFloor(ExternalCommandData commandData)
         {
-           var eleSet = new ElementSet();
+            var eleSet = new ElementSet();
             foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
-            {
-               eleSet.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
-            }
-            if (eleSet.Size != 1) { return null; }
+                eleSet.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+            if (eleSet.Size != 1) return null;
 
             var iter = eleSet.GetEnumerator();
             iter.Reset();
-            while (iter.MoveNext())
-            {
-                return iter.Current as Floor;
-            }
+            while (iter.MoveNext()) return iter.Current as Floor;
             return null;
         }
-            }
+    }
 }

@@ -25,60 +25,50 @@ using Autodesk.Revit.DB.Events;
 
 namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 {
-   /// <summary>
-   /// This class demonstrates updating in-canvas controls in a DocumentUpdated event handler.
-   /// </summary>
-   public class IssueMarkerUpdater
-   {
-      
-      /// <summary>
-      /// Perform updates on in-canvas controls.
-      /// In this example, the In-Canvas controls will be deleted, or have their positions changed, depending on the changes to related elements.
-      /// </summary>
-      /// <param name="data">Data about changes in the document.</param>
-      public static void Execute(DocumentChangedEventArgs data)
-      {
-         var doc = data.GetDocument();
-         var temporaryGraphicsManager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(doc);
-         var tracking = IssueMarkerTrackingManager.GetInstance().GetTracking(doc);
-         
-         foreach (var deleted in data.GetDeletedElementIds())
-         {
-            if (tracking.GetMarkerByElementId(deleted) is IssueMarker marker)
-            {
-               // This is how to delete control
-               temporaryGraphicsManager.RemoveControl(marker.ControlIndex);
+    /// <summary>
+    ///     This class demonstrates updating in-canvas controls in a DocumentUpdated event handler.
+    /// </summary>
+    public class IssueMarkerUpdater
+    {
+        /// <summary>
+        ///     Perform updates on in-canvas controls.
+        ///     In this example, the In-Canvas controls will be deleted, or have their positions changed, depending on the changes
+        ///     to related elements.
+        /// </summary>
+        /// <param name="data">Data about changes in the document.</param>
+        public static void Execute(DocumentChangedEventArgs data)
+        {
+            var doc = data.GetDocument();
+            var temporaryGraphicsManager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(doc);
+            var tracking = IssueMarkerTrackingManager.GetInstance().GetTracking(doc);
 
-               // Don't forget to clean up your own data
-               tracking.RemoveMarkerByElement(deleted);
-            }
-         }
+            foreach (var deleted in data.GetDeletedElementIds())
+                if (tracking.GetMarkerByElementId(deleted) is IssueMarker marker)
+                {
+                    // This is how to delete control
+                    temporaryGraphicsManager.RemoveControl(marker.ControlIndex);
 
-         foreach (var updated in data.GetModifiedElementIds())
-         {
-            if (tracking.GetMarkerByElementId(updated) is IssueMarker marker)
-            {
-               var element = doc.GetElement(updated);
+                    // Don't forget to clean up your own data
+                    tracking.RemoveMarkerByElement(deleted);
+                }
 
-               // Since we keep a copy of InCanvasControlData, we can avoid creating a new one. It already has image and position set - and we can just change the position
-               var controlData = marker.InCanvasControlData;
-               if (element.Location is LocationPoint pointLoc)
-               {
-                  controlData.Position = pointLoc.Point;
-               }
-               else if (element.Location is LocationCurve curveLoc)
-               {
-                  controlData.Position = curveLoc.Curve.GetEndPoint(0);
-               }
+            foreach (var updated in data.GetModifiedElementIds())
+                if (tracking.GetMarkerByElementId(updated) is IssueMarker marker)
+                {
+                    var element = doc.GetElement(updated);
 
-               marker.InCanvasControlData = controlData;
+                    // Since we keep a copy of InCanvasControlData, we can avoid creating a new one. It already has image and position set - and we can just change the position
+                    var controlData = marker.InCanvasControlData;
+                    if (element.Location is LocationPoint pointLoc)
+                        controlData.Position = pointLoc.Point;
+                    else if (element.Location is LocationCurve curveLoc)
+                        controlData.Position = curveLoc.Curve.GetEndPoint(0);
 
-               // This is how to set updated data to a control
-               temporaryGraphicsManager.UpdateControl(marker.ControlIndex, marker.InCanvasControlData);
-            }
-         }
-      }
+                    marker.InCanvasControlData = controlData;
 
-      
-   }
+                    // This is how to set updated data to a control
+                    temporaryGraphicsManager.UpdateControl(marker.ControlIndex, marker.InCanvasControlData);
+                }
+        }
+    }
 }

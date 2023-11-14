@@ -21,23 +21,24 @@
 //
 
 using System;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.RoomSchedule
 {
-        /// <summary>
-    /// To add an external command to Autodesk Revit, 
-    /// the developer must define a class which implements the IExternalCommand interface. 
-    /// This class is used as the connection of Revit and external program
+    /// <summary>
+    ///     To add an external command to Autodesk Revit,
+    ///     the developer must define a class which implements the IExternalCommand interface.
+    ///     This class is used as the connection of Revit and external program
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
-                                               ref string message, ElementSet elements)
+            ref string message, ElementSet elements)
         {
             Transaction tranSample = null;
             try
@@ -49,6 +50,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 {
                     infoForm.ShowDialog();
                 }
+
                 tranSample.Commit();
                 return Result.Succeeded;
             }
@@ -61,4 +63,4 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
         }
     }
-    }
+}

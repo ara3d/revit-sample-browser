@@ -24,29 +24,30 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.PathReinforcement.CS
-{    
+{
     /// <summary>
-    /// Main form,it contains a picture box to display the path of path reinforcement and
-    /// a property grid to display the parameters of path reinforcement.
+    ///     Main form,it contains a picture box to display the path of path reinforcement and
+    ///     a property grid to display the parameters of path reinforcement.
     /// </summary>
     public partial class PathReinforcementForm : Form
     {
         /// <summary>
-        /// path reinforcement object
+        ///     path reinforcement object
         /// </summary>
         private Autodesk.Revit.DB.Structure.PathReinforcement m_pathRein;
 
         /// <summary>
-        /// profile object
+        ///     profile object
         /// </summary>
-        private Profile m_profile;
+        private readonly Profile m_profile;
 
-        private PathReinProperties m_properties;
-        
+        private readonly PathReinProperties m_properties;
+
         /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
         public PathReinforcementForm()
         {
@@ -54,24 +55,24 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         }
 
         /// <summary>
-        /// Overload constructor
+        ///     Overload constructor
         /// </summary>
         /// <param name="pathRein">path reinforcement object</param>
         /// <param name="commandData">revit command data</param>
-        public PathReinforcementForm(Autodesk.Revit.DB.Structure.PathReinforcement pathRein, 
-                                     Autodesk.Revit.UI.ExternalCommandData commandData ):this()            
-        {            
+        public PathReinforcementForm(Autodesk.Revit.DB.Structure.PathReinforcement pathRein,
+            ExternalCommandData commandData) : this()
+        {
             m_pathRein = pathRein;
             m_properties = new PathReinProperties(pathRein);
-            m_properties.UpdateSelectObjEvent += new PathReinProperties.UpdateSelectObjEventHandler(UpdatePropSelectedObject);
+            m_properties.UpdateSelectObjEvent += UpdatePropSelectedObject;
             propertyGrid.SelectedObject = m_properties;
-            m_profile = new Profile(pathRein, commandData);            
+            m_profile = new Profile(pathRein, commandData);
         }
 
         /// <summary>
-        /// update the SelectObject of PropertyGrid control
+        ///     update the SelectObject of PropertyGrid control
         /// </summary>
-        void UpdatePropSelectedObject()
+        private void UpdatePropSelectedObject()
         {
             propertyGrid.SelectedObject = null;
             propertyGrid.SelectedObject = m_properties;
@@ -79,17 +80,17 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         }
 
         /// <summary>
-        /// cancel button click event handler.
+        ///     cancel button click event handler.
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            Close(); 
+            Close();
         }
 
         /// <summary>
-        /// Ok button click event handler
+        ///     Ok button click event handler
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -100,7 +101,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         }
 
         /// <summary>
-        /// Picture box paint event handler.
+        ///     Picture box paint event handler.
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>

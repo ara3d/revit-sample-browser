@@ -26,29 +26,31 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Mechanical;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.RoofsRooms.CS
 {
     /// <summary>
-    /// This class inherits from IExternalCommand, 
-    /// used to check if room can cut roof by geometry relationship
+    ///     This class inherits from IExternalCommand,
+    ///     used to check if room can cut roof by geometry relationship
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.UsingCommandData)]
+    [Transaction(TransactionMode.ReadOnly)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.UsingCommandData)]
     public class Command : IExternalCommand
     {
-                // Revit application
-        Autodesk.Revit.ApplicationServices.Application m_application;
+        // Revit application
+        private Application m_application;
+
         // Current document in Revit
-        Document m_document;
-        
-                public Result Execute(ExternalCommandData commandData,
+        private Document m_document;
+
+        public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
@@ -66,23 +68,16 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                 FindRoomBoundingRoofs(ref message, elements);
 
                 // Not show TaskDialog in regression mode
-                if (0 == commandData.JournalData.Count)
-                {
-                    TaskDialog.Show("Roofs Rooms", message);
-                }
+                if (0 == commandData.JournalData.Count) TaskDialog.Show("Roofs Rooms", message);
 
                 // Insert result to journal data for regression purpose.
                 const string DataKey = "Results";
                 if (!commandData.JournalData.ContainsKey(DataKey))
-                {
                     // In normal/recording mode 
                     commandData.JournalData.Add(DataKey, message);
-                }
                 else
-                {
                     // In regression/replaying mode
                     commandData.JournalData[DataKey] = message;
-                }
 
                 return Result.Succeeded;
             }
@@ -102,7 +97,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
         }
 
         /// <summary>
-        /// Test whether each room has a roof to bound it.
+        ///     Test whether each room has a roof to bound it.
         /// </summary>
         /// <param name="message">Error message to be dumped.</param>
         /// <param name="elements">Some elements to return.</param>
@@ -119,7 +114,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
 
             // Represents the criteria for boundary elements to be considered bounding roofs
             var categoryFilter = new LogicalOrFilter(new ElementCategoryFilter(BuiltInCategory.OST_Roofs),
-                                                                    new ElementCategoryFilter(BuiltInCategory.OST_RoofSoffit));
+                new ElementCategoryFilter(BuiltInCategory.OST_RoofSoffit));
 
             // Calculator for room/space geometry.
             var calculator = new SpatialElementGeometryCalculator(m_document);
@@ -148,7 +143,8 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                         var localElementId = boundaryElementId.HostElementId;
 
                         // Evaluate if element meets criteria using PassesFilter()
-                        if (localElementId != ElementId.InvalidElementId && categoryFilter.PassesFilter(m_document, localElementId))
+                        if (localElementId != ElementId.InvalidElementId &&
+                            categoryFilter.PassesFilter(m_document, localElementId))
                         {
                             // Room already has roofs, add more
                             if (roomsAndRoofs.ContainsKey(room))
@@ -164,6 +160,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                                 roofs.Add(localElementId);
                                 roomsAndRoofs.Add(room, roofs);
                             }
+
                             break;
                         }
                     }
@@ -173,7 +170,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
             // Format results
             if (roomsAndRoofs.Count > 0)
             {
-                var logs = string.Format("Rooms that have a bounding roof:");
+                var logs = "Rooms that have a bounding roof:";
                 message += logs + "\t\r\n";
                 Trace.WriteLine(logs);
                 foreach (var kvp in roomsAndRoofs)
@@ -188,18 +185,19 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                     if (roofs.Count == 1)
                     {
                         var roof = m_document.GetElement(roofs[0]);
-                        roofsString = string.Format("Roof: Id = {0}, Name = {1}", roof.Id.ToString(), roof.Name);
+                        roofsString = string.Format("Roof: Id = {0}, Name = {1}", roof.Id, roof.Name);
                     }
                     // Multiple roofs
                     else
                     {
-                        roofsString = "Roofs ids = " + string.Join(", ", Array.ConvertAll<ElementId, string>(roofs.ToArray(), i => i.ToString()));
+                        roofsString = "Roofs ids = " +
+                                      string.Join(", ", Array.ConvertAll(roofs.ToArray(), i => i.ToString()));
                     }
 
                     // Save results
                     logs = string.Format(
                         "  Room: Id = {0}, Name = {1} --> {2}",
-                        kvp.Key.Id.ToString(), kvp.Key.Name, roofsString);
+                        kvp.Key.Id, kvp.Key.Name, roofsString);
                     message += logs + "\t\r\n";
                     Trace.WriteLine(logs);
                 }
@@ -209,14 +207,14 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
             Trace.WriteLine("Geometry relationship checking finished...");
             if (rooms.Count != 0)
             {
-                var logs = string.Format("Below rooms don't have bounding roofs:");
+                var logs = "Below rooms don't have bounding roofs:";
                 message += logs + "\t\r\n";
                 Trace.WriteLine(logs);
                 foreach (var room in rooms)
                 {
                     elements.Insert(room);
                     logs = string.Format("  Room Id: {0}, Room Name: {1}",
-                        room.Id.ToString(), room.Name);
+                        room.Id, room.Name);
                     message += logs + "\t\r\n";
                     Trace.WriteLine(logs);
                 }
@@ -226,7 +224,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
         }
 
         /// <summary>
-        /// Retrieve all Rooms and Spaces elements from active document.
+        ///     Retrieve all Rooms and Spaces elements from active document.
         /// </summary>
         /// <returns>Element list retrieved from current document.</returns>
         private List<Element> GetRoomsElements()
@@ -237,6 +235,5 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
             array.AddRange(collector.WherePasses(roomSpaceFilter).ToElements());
             return array;
         }
-
-            }
+    }
 }

@@ -21,35 +21,38 @@
 //
 
 
+using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
-
 
 namespace Revit.SDK.Samples.SlabProperties.CS
 {
     /// <summary>
-    /// Show some properties of a slab in Revit Structure 5, including Level, Type name, Span direction,
-    /// Material name, Thickness, and Young Modulus for each layer of the slab's material. 
+    ///     Show some properties of a slab in Revit Structure 5, including Level, Type name, Span direction,
+    ///     Material name, Thickness, and Young Modulus for each layer of the slab's material.
     /// </summary>
     public class SlabPropertiesForm : Form
     {
-        private GroupBox layerGroupBox;
-        private RichTextBox layerRichTextBox;
-        private Label levelLabel;
-        private Label typeNameLabel;
-        private Label spanDirectionLabel;
-        private TextBox levelTextBox;
-        private TextBox typeNameTextBox;
-        private TextBox spanDirectionTextBox;
         private Button closeButton;
 
         /// <summary>
-        /// Required designer variable.
+        ///     Required designer variable.
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private readonly Container components = null;
+
         private Label degreeLabel;
+        private GroupBox layerGroupBox;
+        private RichTextBox layerRichTextBox;
+        private Label levelLabel;
+        private TextBox levelTextBox;
 
         // To store the data
-        private Command m_dataBuffer;
+        private readonly Command m_dataBuffer;
+        private Label spanDirectionLabel;
+        private TextBox spanDirectionTextBox;
+        private Label typeNameLabel;
+        private TextBox typeNameTextBox;
 
 
         private SlabPropertiesForm()
@@ -61,185 +64,180 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         }
 
         /// <summary>
-        /// overload the constructor
+        ///     overload the constructor
         /// </summary>
         /// <param name="dataBuffer">To store the data of a slab</param>
         public SlabPropertiesForm(Command dataBuffer)
         {
             InitializeComponent();
-            
+
             // get all the data
             m_dataBuffer = dataBuffer;
         }
 
         /// <summary>
-        /// Clean up any resources being used.
+        ///     Clean up any resources being used.
         /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 if (null != components)
-                {
                     components.Dispose();
-                }
-            }
             base.Dispose(disposing);
         }
 
-                /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// <summary>
+        ///     Required method for Designer support - do not modify
+        ///     the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.layerGroupBox = new System.Windows.Forms.GroupBox();
-            this.layerRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.levelLabel = new System.Windows.Forms.Label();
-            this.levelTextBox = new System.Windows.Forms.TextBox();
-            this.typeNameTextBox = new System.Windows.Forms.TextBox();
-            this.spanDirectionTextBox = new System.Windows.Forms.TextBox();
-            this.typeNameLabel = new System.Windows.Forms.Label();
-            this.spanDirectionLabel = new System.Windows.Forms.Label();
-            this.closeButton = new System.Windows.Forms.Button();
-            this.degreeLabel = new System.Windows.Forms.Label();
-            this.layerGroupBox.SuspendLayout();
-            this.SuspendLayout();
+            layerGroupBox = new GroupBox();
+            layerRichTextBox = new RichTextBox();
+            levelLabel = new Label();
+            levelTextBox = new TextBox();
+            typeNameTextBox = new TextBox();
+            spanDirectionTextBox = new TextBox();
+            typeNameLabel = new Label();
+            spanDirectionLabel = new Label();
+            closeButton = new Button();
+            degreeLabel = new Label();
+            layerGroupBox.SuspendLayout();
+            SuspendLayout();
             // 
             // layerGroupBox
             // 
-            this.layerGroupBox.Controls.Add(this.layerRichTextBox);
-            this.layerGroupBox.Location = new System.Drawing.Point(22, 86);
-            this.layerGroupBox.Name = "layerGroupBox";
-            this.layerGroupBox.Size = new System.Drawing.Size(375, 265);
-            this.layerGroupBox.TabIndex = 29;
-            this.layerGroupBox.TabStop = false;
-            this.layerGroupBox.Text = "Layers:";
+            layerGroupBox.Controls.Add(layerRichTextBox);
+            layerGroupBox.Location = new Point(22, 86);
+            layerGroupBox.Name = "layerGroupBox";
+            layerGroupBox.Size = new Size(375, 265);
+            layerGroupBox.TabIndex = 29;
+            layerGroupBox.TabStop = false;
+            layerGroupBox.Text = "Layers:";
             // 
             // layerRichTextBox
             // 
-            this.layerRichTextBox.Location = new System.Drawing.Point(6, 19);
-            this.layerRichTextBox.Name = "layerRichTextBox";
-            this.layerRichTextBox.ReadOnly = true;
-            this.layerRichTextBox.Size = new System.Drawing.Size(359, 232);
-            this.layerRichTextBox.TabIndex = 2;
-            this.layerRichTextBox.Text = "";
+            layerRichTextBox.Location = new Point(6, 19);
+            layerRichTextBox.Name = "layerRichTextBox";
+            layerRichTextBox.ReadOnly = true;
+            layerRichTextBox.Size = new Size(359, 232);
+            layerRichTextBox.TabIndex = 2;
+            layerRichTextBox.Text = "";
             // 
             // levelLabel
             // 
-            this.levelLabel.Location = new System.Drawing.Point(13, 7);
-            this.levelLabel.Name = "levelLabel";
-            this.levelLabel.Size = new System.Drawing.Size(98, 23);
-            this.levelLabel.TabIndex = 27;
-            this.levelLabel.Text = "Level:";
-            this.levelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            levelLabel.Location = new Point(13, 7);
+            levelLabel.Name = "levelLabel";
+            levelLabel.Size = new Size(98, 23);
+            levelLabel.TabIndex = 27;
+            levelLabel.Text = "Level:";
+            levelLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // levelTextBox
             // 
-            this.levelTextBox.Location = new System.Drawing.Point(117, 8);
-            this.levelTextBox.Name = "levelTextBox";
-            this.levelTextBox.ReadOnly = true;
-            this.levelTextBox.Size = new System.Drawing.Size(280, 20);
-            this.levelTextBox.TabIndex = 24;
+            levelTextBox.Location = new Point(117, 8);
+            levelTextBox.Name = "levelTextBox";
+            levelTextBox.ReadOnly = true;
+            levelTextBox.Size = new Size(280, 20);
+            levelTextBox.TabIndex = 24;
             // 
             // typeNameTextBox
             // 
-            this.typeNameTextBox.Location = new System.Drawing.Point(117, 34);
-            this.typeNameTextBox.Name = "typeNameTextBox";
-            this.typeNameTextBox.ReadOnly = true;
-            this.typeNameTextBox.Size = new System.Drawing.Size(280, 20);
-            this.typeNameTextBox.TabIndex = 22;
+            typeNameTextBox.Location = new Point(117, 34);
+            typeNameTextBox.Name = "typeNameTextBox";
+            typeNameTextBox.ReadOnly = true;
+            typeNameTextBox.Size = new Size(280, 20);
+            typeNameTextBox.TabIndex = 22;
             // 
             // spanDirectionTextBox
             // 
-            this.spanDirectionTextBox.Location = new System.Drawing.Point(117, 60);
-            this.spanDirectionTextBox.Name = "spanDirectionTextBox";
-            this.spanDirectionTextBox.ReadOnly = true;
-            this.spanDirectionTextBox.Size = new System.Drawing.Size(224, 20);
-            this.spanDirectionTextBox.TabIndex = 23;
+            spanDirectionTextBox.Location = new Point(117, 60);
+            spanDirectionTextBox.Name = "spanDirectionTextBox";
+            spanDirectionTextBox.ReadOnly = true;
+            spanDirectionTextBox.Size = new Size(224, 20);
+            spanDirectionTextBox.TabIndex = 23;
             // 
             // typeNameLabel
             // 
-            this.typeNameLabel.Location = new System.Drawing.Point(13, 34);
-            this.typeNameLabel.Name = "typeNameLabel";
-            this.typeNameLabel.Size = new System.Drawing.Size(98, 23);
-            this.typeNameLabel.TabIndex = 25;
-            this.typeNameLabel.Text = "Type Name:";
-            this.typeNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            typeNameLabel.Location = new Point(13, 34);
+            typeNameLabel.Name = "typeNameLabel";
+            typeNameLabel.Size = new Size(98, 23);
+            typeNameLabel.TabIndex = 25;
+            typeNameLabel.Text = "Type Name:";
+            typeNameLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // spanDirectionLabel
             // 
-            this.spanDirectionLabel.Location = new System.Drawing.Point(13, 60);
-            this.spanDirectionLabel.Name = "spanDirectionLabel";
-            this.spanDirectionLabel.Size = new System.Drawing.Size(98, 23);
-            this.spanDirectionLabel.TabIndex = 26;
-            this.spanDirectionLabel.Text = "Span Direction:";
-            this.spanDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            spanDirectionLabel.Location = new Point(13, 60);
+            spanDirectionLabel.Name = "spanDirectionLabel";
+            spanDirectionLabel.Size = new Size(98, 23);
+            spanDirectionLabel.TabIndex = 26;
+            spanDirectionLabel.Text = "Span Direction:";
+            spanDirectionLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // closeButton
             // 
-            this.closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.closeButton.Location = new System.Drawing.Point(322, 367);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(75, 23);
-            this.closeButton.TabIndex = 0;
-            this.closeButton.Text = "Close";
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            closeButton.DialogResult = DialogResult.Cancel;
+            closeButton.Location = new Point(322, 367);
+            closeButton.Name = "closeButton";
+            closeButton.Size = new Size(75, 23);
+            closeButton.TabIndex = 0;
+            closeButton.Text = "Close";
+            closeButton.Click += closeButton_Click;
             // 
             // degreeLabel
             // 
-            this.degreeLabel.Location = new System.Drawing.Point(347, 59);
-            this.degreeLabel.Name = "degreeLabel";
-            this.degreeLabel.Size = new System.Drawing.Size(50, 23);
-            this.degreeLabel.TabIndex = 26;
-            this.degreeLabel.Text = "Degree";
-            this.degreeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            degreeLabel.Location = new Point(347, 59);
+            degreeLabel.Name = "degreeLabel";
+            degreeLabel.Size = new Size(50, 23);
+            degreeLabel.TabIndex = 26;
+            degreeLabel.Text = "Degree";
+            degreeLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // SlabPropertiesForm
             // 
-            this.AcceptButton = this.closeButton;
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.CancelButton = this.closeButton;
-            this.ClientSize = new System.Drawing.Size(411, 402);
-            this.Controls.Add(this.layerGroupBox);
-            this.Controls.Add(this.levelLabel);
-            this.Controls.Add(this.levelTextBox);
-            this.Controls.Add(this.typeNameTextBox);
-            this.Controls.Add(this.spanDirectionTextBox);
-            this.Controls.Add(this.typeNameLabel);
-            this.Controls.Add(this.degreeLabel);
-            this.Controls.Add(this.spanDirectionLabel);
-            this.Controls.Add(this.closeButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "SlabPropertiesForm";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Slab Properties";
-            this.Load += new System.EventHandler(this.SlabPropertiesForm_Load);
-            this.layerGroupBox.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AcceptButton = closeButton;
+            AutoScaleBaseSize = new Size(5, 13);
+            CancelButton = closeButton;
+            ClientSize = new Size(411, 402);
+            Controls.Add(layerGroupBox);
+            Controls.Add(levelLabel);
+            Controls.Add(levelTextBox);
+            Controls.Add(typeNameTextBox);
+            Controls.Add(spanDirectionTextBox);
+            Controls.Add(typeNameLabel);
+            Controls.Add(degreeLabel);
+            Controls.Add(spanDirectionLabel);
+            Controls.Add(closeButton);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "SlabPropertiesForm";
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Slab Properties";
+            Load += SlabPropertiesForm_Load;
+            layerGroupBox.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
-        
+
         /// <summary>
-        /// Close the Form
+        ///     Close the Form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void closeButton_Click(object sender, System.EventArgs e)
+        private void closeButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
         /// <summary>
-        /// Display the properties on the form when the form load
+        ///     Display the properties on the form when the form load
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SlabPropertiesForm_Load(object sender, System.EventArgs e)
+        private void SlabPropertiesForm_Load(object sender, EventArgs e)
         {
             levelTextBox.Text = m_dataBuffer.Level;
             typeNameTextBox.Text = m_dataBuffer.TypeName;
@@ -254,7 +252,7 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 // Get each layer's Material name and Young Modulus properties
                 m_dataBuffer.SetLayer(i);
 
-                layerRichTextBox.Text += "Layer " + (i + 1).ToString() + "\r\n";
+                layerRichTextBox.Text += "Layer " + (i + 1) + "\r\n";
                 layerRichTextBox.Text += "Material name:  " + m_dataBuffer.LayerMaterialName + "\r\n";
                 layerRichTextBox.Text += "Thickness: " + m_dataBuffer.LayerThickness + "\r\n";
                 layerRichTextBox.Text += "YoungModulus X:  " + m_dataBuffer.LayerYoungModulusX + "\r\n";

@@ -24,30 +24,27 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.TransactionControl.CS
 {
     /// <summary>
-    /// A Form used to create a wall
+    ///     A Form used to create a wall
     /// </summary>
-    public partial class CreateWallForm : System.Windows.Forms.Form
+    public partial class CreateWallForm : Form
     {
         /// <summary>
-        /// A reference to the external command data.
+        ///     A reference to the external command data.
         /// </summary>
-        private ExternalCommandData m_commandData;
+        private readonly ExternalCommandData m_commandData;
+
         /// <summary>
-        /// The created wall
+        ///     The created wall
         /// </summary>
         private Wall m_createdWall;
 
         /// <summary>
-        /// The created wall
-        /// </summary>
-        public Wall CreatedWall => m_createdWall;
-
-        /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">the external command data</param>
         public CreateWallForm(ExternalCommandData commandData)
@@ -58,8 +55,13 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         }
 
         /// <summary>
-        /// do some initialization work: get all levels and wall types in active document 
-        /// and add them to combo box
+        ///     The created wall
+        /// </summary>
+        public Wall CreatedWall => m_createdWall;
+
+        /// <summary>
+        ///     do some initialization work: get all levels and wall types in active document
+        ///     and add them to combo box
         /// </summary>
         private void Initialize()
         {
@@ -73,10 +75,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             foreach (var element in levels)
             {
                 var level = element as Level;
-                if (level != null)
-                {
-                    levelsComboBox.Items.Add(level);
-                }
+                if (level != null) levelsComboBox.Items.Add(level);
             }
 
             if (levelsComboBox.Items.Count > 0)
@@ -91,23 +90,20 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             foreach (var element in filteredElementCollector)
             {
                 var wallType = element as WallType;
-                if (null == wallType)
-                {
-                    continue;
-                }
+                if (null == wallType) continue;
                 wallTypesComboBox.Items.Add(wallType);
             }
+
             if (wallTypesComboBox.Items.Count > 0)
             {
                 wallTypesComboBox.DisplayMember = "Name";
                 wallTypesComboBox.SelectedIndex = 0;
             }
-
         }
 
         /// <summary>
-        /// try to create a wall. if failed, keep this dialog,
-        /// otherwise, close it.
+        ///     try to create a wall. if failed, keep this dialog,
+        ///     otherwise, close it.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -121,8 +117,8 @@ namespace Revit.SDK.Samples.TransactionControl.CS
 
                 //try to convert string to double, and return without closing dialog if failed
                 if (double.TryParse(spXTextBox.Text, out x) &&
-                   double.TryParse(spYTextBox.Text, out y) &&
-                   double.TryParse(spZTextBox.Text, out z))
+                    double.TryParse(spYTextBox.Text, out y) &&
+                    double.TryParse(spZTextBox.Text, out z))
                 {
                     sPoint = new XYZ(x, y, z);
                 }

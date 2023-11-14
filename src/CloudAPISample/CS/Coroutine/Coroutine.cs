@@ -24,44 +24,44 @@ using System.Collections;
 
 namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
 {
-   /// <summary>
-   ///    Represent a coroutine instance.
-   /// </summary>
-   public class Coroutine
-   {
-      private readonly IEnumerator innerEnumerator;
+    /// <summary>
+    ///     Represent a coroutine instance.
+    /// </summary>
+    public class Coroutine
+    {
+        private readonly IEnumerator innerEnumerator;
 
-      /// <summary>
-      ///    Create a coroutine with a enumerator
-      /// </summary>
-      /// <param name="coroutine"></param>
-      public Coroutine(IEnumerator coroutine)
-      {
-         innerEnumerator = coroutine;
-      }
+        /// <summary>
+        ///     Create a coroutine with a enumerator
+        /// </summary>
+        /// <param name="coroutine"></param>
+        public Coroutine(IEnumerator coroutine)
+        {
+            innerEnumerator = coroutine;
+        }
 
-      /// <summary>
-      ///    Indicates if this coroutine is finished.
-      /// </summary>
-      public bool IsFinished { get; set; }
+        /// <summary>
+        ///     Indicates if this coroutine is finished.
+        /// </summary>
+        public bool IsFinished { get; set; }
 
-      /// <summary>
-      ///    The previous coroutine in this double linked list
-      /// </summary>
-      public Coroutine Previous { get; set; }
+        /// <summary>
+        ///     The previous coroutine in this double linked list
+        /// </summary>
+        public Coroutine Previous { get; set; }
 
-      /// <summary>
-      ///    The next coroutine in this double linked list
-      /// </summary>
-      public Coroutine Next { get; set; }
+        /// <summary>
+        ///     The next coroutine in this double linked list
+        /// </summary>
+        public Coroutine Next { get; set; }
 
-      /// <summary>
-      ///    Execute one step of the enumerator
-      /// </summary>
-      /// <returns></returns>
-      public bool ExecuteOnStep()
-      {
-         return innerEnumerator.MoveNext();
-      }
-   }
+        /// <summary>
+        ///     Execute one step of the enumerator
+        /// </summary>
+        /// <returns></returns>
+        public bool ExecuteOnStep()
+        {
+            return innerEnumerator.MoveNext();
+        }
+    }
 }

@@ -21,18 +21,17 @@
 //
 
 using System.ComponentModel;
-
 using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// Dimension on RebarShapeDefByArc.
+    ///     Dimension on RebarShapeDefByArc.
     /// </summary>
-    abstract class ConstraintOnArcShape : ConstraintOnRebarShape
+    internal abstract class ConstraintOnArcShape : ConstraintOnRebarShape
     {
         /// <summary>
-        /// Dimension to constrain the arc shape.
+        ///     Dimension to constrain the arc shape.
         /// </summary>
         protected RebarShapeParameter m_rebarShapeParameter;
 
@@ -42,10 +41,12 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Dimension to constrain the arc shape.
+        ///     Dimension to constrain the arc shape.
         /// </summary>
-        [DisplayName("RebarShape parameter"), TypeConverter(typeof(TypeConverterRebarShapeParameter)), ReadOnly(false)]
-        public virtual RebarShapeParameter RebarShapeParameter
+        [DisplayName("RebarShape parameter")]
+        [TypeConverter(typeof(TypeConverterRebarShapeParameter))]
+        [ReadOnly(false)]
+        public RebarShapeParameter RebarShapeParameter
         {
             get
             {
@@ -57,15 +58,16 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Get RebarShapeDefinitionByArc object.
+        ///     Get RebarShapeDefinitionByArc object.
         /// </summary>
-        protected RebarShapeDefinitionByArc GetRebarShapeDefinitionByArc => m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionByArc;
+        protected RebarShapeDefinitionByArc GetRebarShapeDefinitionByArc =>
+            m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionByArc;
     }
 
     /// <summary>
-    /// Arc length dimension.
+    ///     Arc length dimension.
     /// </summary>
-    class ConstraintArcLength : ConstraintOnArcShape
+    internal class ConstraintArcLength : ConstraintOnArcShape
     {
         public ConstraintArcLength(RebarShapeDefByArc def)
             : base(def)
@@ -73,20 +75,19 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain the arc length.
+        ///     Add dimension to constrain the arc length.
         /// </summary>
         public override void Commit()
         {
-            GetRebarShapeDefinitionByArc.AddConstraintArcLength( 
+            GetRebarShapeDefinitionByArc.AddConstraintArcLength(
                 RebarShapeParameter.Parameter);
-                
         }
     }
 
     /// <summary>
-    /// Arc chord length dimension.
+    ///     Arc chord length dimension.
     /// </summary>
-    class ConstraintChordLength : ConstraintOnArcShape
+    internal class ConstraintChordLength : ConstraintOnArcShape
     {
         public ConstraintChordLength(RebarShapeDefByArc def)
             : base(def)
@@ -94,22 +95,22 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain the arc chord length.
+        ///     Add dimension to constrain the arc chord length.
         /// </summary>
         public override void Commit()
         {
             GetRebarShapeDefinitionByArc.AddConstraintChordLength(
-                RebarShapeParameter.Parameter);                
+                RebarShapeParameter.Parameter);
         }
     }
 
     /// <summary>
-    /// Arc circumference dimension.
+    ///     Arc circumference dimension.
     /// </summary>
-    class ConstraintCircumference : ConstraintOnArcShape
+    internal class ConstraintCircumference : ConstraintOnArcShape
     {
         /// <summary>
-        /// Arc reference type.
+        ///     Arc reference type.
         /// </summary>
         private RebarShapeArcReferenceType m_arcReferenceType;
 
@@ -117,10 +118,10 @@ namespace Revit.SDK.Samples.NewRebar.CS
             : base(def)
         {
             m_arcReferenceType = RebarShapeArcReferenceType.External;
-        }        
+        }
 
         /// <summary>
-        /// Arc reference type.
+        ///     Arc reference type.
         /// </summary>
         public RebarShapeArcReferenceType ArcReferenceType
         {
@@ -129,22 +130,22 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain the arc circumference.
+        ///     Add dimension to constrain the arc circumference.
         /// </summary>
         public override void Commit()
         {
             GetRebarShapeDefinitionByArc.AddConstraintCircumference(
                 RebarShapeParameter.Parameter, ArcReferenceType);
-         }
+        }
     }
 
     /// <summary>
-    /// Arc diameter dimension.
+    ///     Arc diameter dimension.
     /// </summary>
-    class ConstraintDiameter : ConstraintOnArcShape
+    internal class ConstraintDiameter : ConstraintOnArcShape
     {
         /// <summary>
-        /// Arc reference type.
+        ///     Arc reference type.
         /// </summary>
         private RebarShapeArcReferenceType m_arcReferenceType;
 
@@ -155,7 +156,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Arc reference type.
+        ///     Arc reference type.
         /// </summary>
         public RebarShapeArcReferenceType ArcReferenceType
         {
@@ -164,23 +165,22 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain arc diameter.
+        ///     Add dimension to constrain arc diameter.
         /// </summary>
         public override void Commit()
         {
             GetRebarShapeDefinitionByArc.AddConstraintDiameter(
                 RebarShapeParameter.Parameter, ArcReferenceType);
-                
         }
     }
 
     /// <summary>
-    /// Arc radius dimension.
+    ///     Arc radius dimension.
     /// </summary>
-    class ConstraintRadius : ConstraintOnArcShape
+    internal class ConstraintRadius : ConstraintOnArcShape
     {
         /// <summary>
-        /// Arc reference type.
+        ///     Arc reference type.
         /// </summary>
         private RebarShapeArcReferenceType m_arcReferenceType;
 
@@ -188,10 +188,10 @@ namespace Revit.SDK.Samples.NewRebar.CS
             : base(def)
         {
             m_arcReferenceType = RebarShapeArcReferenceType.External;
-        }        
+        }
 
         /// <summary>
-        /// Arc reference type.
+        ///     Arc reference type.
         /// </summary>
         public RebarShapeArcReferenceType ArcReferenceType
         {
@@ -200,7 +200,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain the radius of arc.
+        ///     Add dimension to constrain the radius of arc.
         /// </summary>
         public override void Commit()
         {
@@ -210,9 +210,9 @@ namespace Revit.SDK.Samples.NewRebar.CS
     }
 
     /// <summary>
-    /// Arc Sagittarius length dimension.
+    ///     Arc Sagittarius length dimension.
     /// </summary>
-    class ConstraintSagittaLength : ConstraintOnArcShape
+    internal class ConstraintSagittaLength : ConstraintOnArcShape
     {
         public ConstraintSagittaLength(RebarShapeDefByArc def)
             : base(def)
@@ -220,7 +220,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add dimension to constrain the Sagittarius length of arc.
+        ///     Add dimension to constrain the Sagittarius length of arc.
         /// </summary>
         public override void Commit()
         {

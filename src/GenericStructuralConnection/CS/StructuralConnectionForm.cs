@@ -26,12 +26,11 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.GenericStructuralConnection.CS
 {
     /// <summary>
-    /// 
     /// </summary>
     public partial class StructuralConnectionForm : Form
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
         public StructuralConnectionForm()
         {
@@ -39,9 +38,9 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
         }
 
         /// <summary>
-        /// Property set with the user's choice.
+        ///     Property set with the user's choice.
         /// </summary>
-        public CommandOption UserOption {get; set;}
+        public CommandOption UserOption { get; set; }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {

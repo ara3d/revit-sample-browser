@@ -1,16 +1,25 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using ComboBox = System.Windows.Forms.ComboBox;
+using Form = System.Windows.Forms.Form;
 using RView = Autodesk.Revit.DB.View;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {
-    public partial class PreviewModel : System.Windows.Forms.Form
+    public partial class PreviewModel : Form
     {
+        private readonly RApplication _application;
+
+
+        private ElementId _currentDBViewId;
+        private Document _dbDocument;
+        private readonly UIApplication _uiApplication;
+
         public PreviewModel(RApplication application, ElementId viewId)
         {
             InitializeComponent();
@@ -26,8 +35,8 @@ namespace Revit.SDK.Samples.UIAPI.CS
         {
             // fill the combobox with printable views <name + id>
             var collecotr = new FilteredElementCollector(_dbDocument);
-            collecotr.OfClass(typeof(Autodesk.Revit.DB.View));
-            var secs = from Element f in collecotr where (f as Autodesk.Revit.DB.View).CanBePrinted == true select f as Autodesk.Revit.DB.View;
+            collecotr.OfClass(typeof(RView));
+            var secs = from Element f in collecotr where (f as RView).CanBePrinted select f as RView;
             _cbViews.Items.Clear();
             DBViewItem activeItem = null;
             foreach (var dbView in secs)
@@ -37,14 +46,18 @@ namespace Revit.SDK.Samples.UIAPI.CS
                     activeItem = new DBViewItem(dbView, _dbDocument);
                     viewId = dbView.Id;
                 }
+
                 if (dbView.Id == viewId)
                 {
                     activeItem = new DBViewItem(dbView, _dbDocument);
                     _cbViews.Items.Add(activeItem);
                 }
                 else
+                {
                     _cbViews.Items.Add(new DBViewItem(dbView, _dbDocument));
+                }
             }
+
             _cbViews.SelectedItem = activeItem;
         }
 
@@ -74,29 +87,33 @@ namespace Revit.SDK.Samples.UIAPI.CS
                             if (string.IsNullOrEmpty(dbDoc.PathName))
                                 documentName = projName;
                             else
-                                documentName = new System.IO.FileInfo(dbDoc.PathName).Name;
+                                documentName = new FileInfo(dbDoc.PathName).Name;
                         }
                         else
+                        {
                             documentName = projName;
+                        }
 
                         item = new DBDocumentItem(documentName, dbDoc);
-
                     }
+
                     if (dbDoc.Equals(selectedDocument))
                     {
                         _dbDocument = selectedDocument;
                         activeItem = item;
                     }
+
                     _cbDocuments.Items.Add(item);
                 }
             }
+
             _cbDocuments.Items.Add(new DBDocumentItem());
             _cbDocuments.SelectedItem = activeItem;
         }
 
         private void cbViews_SelIdxChanged(object sender, EventArgs e)
         {
-            var cb = sender as System.Windows.Forms.ComboBox;
+            var cb = sender as ComboBox;
             if (cb == null)
                 return;
 
@@ -121,12 +138,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
             _currentDBViewId = dbItem.Id;
         }
 
-
-        private ElementId _currentDBViewId;
-        private Document _dbDocument;
-        private RApplication _application;
-        private UIApplication _uiApplication;
-
         private void cbDocs_SelIdxChanged(object sender, EventArgs e)
         {
             var documentItem = _cbDocuments.SelectedItem as DBDocumentItem;
@@ -137,7 +148,8 @@ namespace Revit.SDK.Samples.UIAPI.CS
             {
                 var ofd = new OpenFileDialog();
                 ofd.DefaultExt = "rvt";
-                ofd.Filter = "Revit project files (*.rvt)|*.rvt|Revit family files (*.rfa)|*.rfa|Revit family template files (*.rft)|*.rft";
+                ofd.Filter =
+                    "Revit project files (*.rvt)|*.rvt|Revit family files (*.rfa)|*.rfa|Revit family template files (*.rft)|*.rft";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     try
@@ -146,8 +158,8 @@ namespace Revit.SDK.Samples.UIAPI.CS
                     }
                     catch (Exception)
                     {
-
                     }
+
                     if (_dbDocument != null)
                     {
                         updateDocumentList(_dbDocument);
@@ -164,19 +176,19 @@ namespace Revit.SDK.Samples.UIAPI.CS
                         if (string.IsNullOrEmpty(_dbDocument.PathName))
                             documentName = projName;
                         else
-                            documentName = new System.IO.FileInfo(_dbDocument.PathName).Name;
+                            documentName = new FileInfo(_dbDocument.PathName).Name;
                     }
                     else
+                    {
                         documentName = projName;
+                    }
 
                     foreach (DBDocumentItem dbItem in _cbDocuments.Items)
-                    {
                         if (dbItem.Name.ToLower().CompareTo(documentName.ToLower()) == 0)
                         {
                             _cbDocuments.SelectedItem = dbItem;
                             break;
                         }
-                    }
                 }
             }
             else
@@ -184,8 +196,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 _dbDocument = documentItem.Document;
                 updateViewsList(null);
             }
-
-
         }
     }
 
@@ -200,16 +210,16 @@ namespace Revit.SDK.Samples.UIAPI.CS
             UniqueId = dbView.UniqueId;
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
-
         public string Name { get; set; }
 
         public ElementId Id { get; set; }
 
         public string UniqueId { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
 
@@ -227,16 +237,15 @@ namespace Revit.SDK.Samples.UIAPI.CS
             IsNull = true;
         }
 
+        public bool IsNull { get; set; }
+        public string Name { get; set; }
+        public Document Document { get; set; }
+
         public override string ToString()
         {
             if (IsNull)
                 return "<Open Document...>";
             return Name;
         }
-
-        public bool IsNull { get; set; }
-        public string Name { get; set; }
-        public Document Document { get; set; }
     }
-
 }

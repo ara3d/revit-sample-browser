@@ -23,55 +23,55 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Drawing.Drawing2D;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This form is intent to fetch edges for hosted sweep creation or modification.
-    /// It contains a picture box for geometry preview and a tree view to list all the edges
-    /// which hosted sweep can be created on.
-    /// If the user mouse-over an edge where a hosted sweep can be created, the edge will be 
-    /// highlighted in yellow. If user clicks on the highlighted edge, the edge will 
-    /// be marked as selected in red color. Click it again to un-select, the color will turn back. 
-    /// Edge selection from preview box will be reflected in edge list and vice versa. 
-    /// The geometry displayed in the picture box can be rotated with left mouse or 
-    /// arrow keys (up, down, left and right) and zoomed with right mouse.
+    ///     This form is intent to fetch edges for hosted sweep creation or modification.
+    ///     It contains a picture box for geometry preview and a tree view to list all the edges
+    ///     which hosted sweep can be created on.
+    ///     If the user mouse-over an edge where a hosted sweep can be created, the edge will be
+    ///     highlighted in yellow. If user clicks on the highlighted edge, the edge will
+    ///     be marked as selected in red color. Click it again to un-select, the color will turn back.
+    ///     Edge selection from preview box will be reflected in edge list and vice versa.
+    ///     The geometry displayed in the picture box can be rotated with left mouse or
+    ///     arrow keys (up, down, left and right) and zoomed with right mouse.
     /// </summary>
-    public partial class EdgeFetchForm : System.Windows.Forms.Form
+    public partial class EdgeFetchForm : Form
     {
-                
         /// <summary>
-        /// Contains all the data need to fetch edges.
-        /// </summary>
-        private CreationData m_creationData;
-
-        /// <summary>
-        /// Flag to indicate whether or not we should cancel expand or collapse
-        /// the tree-node which contains children.
-        /// </summary>
-        private bool m_cancelExpandOrCollapse;
-
-        /// <summary>
-        /// Active element displayed in the preview.
+        ///     Active element displayed in the preview.
         /// </summary>
         private Element m_activeElem;
 
         /// <summary>
-        /// Yield rotation and scale transformation for current geometry display.
+        ///     Flag to indicate whether or not we should cancel expand or collapse
+        ///     the tree-node which contains children.
         /// </summary>
-        private TrackBall m_trackBall;
+        private bool m_cancelExpandOrCollapse;
 
         /// <summary>
-        /// Move the Graphics origin to preview center and flip its y-Axis.
+        ///     Move the Graphics origin to preview center and flip its y-Axis.
         /// </summary>
         private Matrix m_centerMatrix;
 
         /// <summary>
-        /// Default constructor.
+        ///     Contains all the data need to fetch edges.
+        /// </summary>
+        private readonly CreationData m_creationData;
+
+        /// <summary>
+        ///     Yield rotation and scale transformation for current geometry display.
+        /// </summary>
+        private readonly TrackBall m_trackBall;
+
+        /// <summary>
+        ///     Default constructor.
         /// </summary>
         public EdgeFetchForm()
         {
@@ -79,7 +79,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Customize constructor.
+        ///     Customize constructor.
         /// </summary>
         /// <param name="creationData"></param>
         public EdgeFetchForm(CreationData creationData)
@@ -89,11 +89,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             treeViewHost.StateImageList = imageListForCheckBox;
             m_trackBall = new TrackBall();
         }
-        
-        
+
+
         /// <summary>
-        /// Initialize the combo box data source with Autodesk.Revit.DB.
-        /// e.g. FasciaTypes, GutterTypes, SlabEdgeTypes, and so on.
+        ///     Initialize the combo box data source with Autodesk.Revit.DB.
+        ///     e.g. FasciaTypes, GutterTypes, SlabEdgeTypes, and so on.
         /// </summary>
         private void InitializeTypes()
         {
@@ -103,13 +103,10 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             {
                 objects.Add(obj);
                 if (m_creationData.Symbol != null)
-                {
                     if ((obj as ElementType).Id == m_creationData.Symbol.Id)
-                    {
                         selected = obj;
-                    }
-                }
             }
+
             comboBoxTypes.DataSource = objects;
             comboBoxTypes.DisplayMember = "Name";
 
@@ -118,8 +115,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Initialize the TreeView: create a tree according to geometry edges 
-        /// and set each node's check status to unchecked.
+        ///     Initialize the TreeView: create a tree according to geometry edges
+        ///     and set each node's check status to unchecked.
         /// </summary>
         private void InitializeTree()
         {
@@ -130,7 +127,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             foreach (var pair in creator.SupportEdges)
             {
                 var elem = pair.Key;
-                var elemNode = new TreeNode("[Id:" + elem.Id.ToString() + "] " + elem.Name);
+                var elemNode = new TreeNode("[Id:" + elem.Id + "] " + elem.Name);
                 elemNode.StateImageIndex = (int)CheckState.Unchecked;
                 rootNode.Nodes.Add(elemNode);
                 elemNode.Tag = elem;
@@ -144,17 +141,15 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     ++i;
                 }
             }
+
             rootNode.Text = "Roofs";
-            if (creator is SlabEdgeCreator)
-            {
-                rootNode.Text = "Floors";
-            }            
+            if (creator is SlabEdgeCreator) rootNode.Text = "Floors";
             treeViewHost.Nodes.Add(rootNode);
             treeViewHost.TopNode.Expand();
         }
 
         /// <summary>
-        /// Initialize element geometry.
+        ///     Initialize element geometry.
         /// </summary>
         private void InitializeElementGeometry()
         {
@@ -166,43 +161,35 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Initialize tree check states according to edges which hosted sweep can be created on.
+        ///     Initialize tree check states according to edges which hosted sweep can be created on.
         /// </summary>
         private void InitializeTreeCheckStates()
         {
             if (m_creationData.EdgesForHostedSweep.Count == 0) return;
 
             // Initialize edge binding selection state
-            foreach(var edge in m_creationData.EdgesForHostedSweep)
-            {
-                foreach(var elemGeom in m_creationData.Creator.ElemGeomDic.Values)
-                {
-                    if(elemGeom.EdgeBindingDic.ContainsKey(edge))
-                    {                        
-                        elemGeom.EdgeBindingDic[edge].IsSelected = true;
-                    }
-                }
-            }
+            foreach (var edge in m_creationData.EdgesForHostedSweep)
+            foreach (var elemGeom in m_creationData.Creator.ElemGeomDic.Values)
+                if (elemGeom.EdgeBindingDic.ContainsKey(edge))
+                    elemGeom.EdgeBindingDic[edge].IsSelected = true;
 
             // Initialize tree node selection state
             // check on all the edges on which we created hostd sweeps
             var root = treeViewHost.Nodes[0];
-            foreach(TreeNode elemNode in root.Nodes)
+            foreach (TreeNode elemNode in root.Nodes)
+            foreach (TreeNode edgeNode in elemNode.Nodes)
             {
-                foreach(TreeNode edgeNode in elemNode.Nodes)
+                var edge = edgeNode.Tag as Edge;
+                if (m_creationData.EdgesForHostedSweep.IndexOf(edge) != -1)
                 {
-                    var edge = edgeNode.Tag as Edge;
-                    if(m_creationData.EdgesForHostedSweep.IndexOf(edge) != -1)
-                    {
-                        edgeNode.StateImageIndex = (int)CheckState.Checked;
-                        UpdateParent(edgeNode);
-                    }
+                    edgeNode.StateImageIndex = (int)CheckState.Checked;
+                    UpdateParent(edgeNode);
                 }
             }
         }
 
         /// <summary>
-        /// Initialize text properties of this form.
+        ///     Initialize text properties of this form.
         /// </summary>
         private void InitializeText()
         {
@@ -212,12 +199,12 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Initialize something related to the geometry preview.
+        ///     Initialize something related to the geometry preview.
         /// </summary>
         private void InitializePreview()
         {
             m_centerMatrix = new Matrix(1, 0, 0, -1,
-               (float)pictureBoxPreview.Width / 2.0f, (float)pictureBoxPreview.Height / 2.0f);
+                pictureBoxPreview.Width / 2.0f, pictureBoxPreview.Height / 2.0f);
             KeyPreview = true;
 
             foreach (var elem in m_creationData.Creator.ElemGeomDic.Keys)
@@ -225,50 +212,46 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 m_activeElem = elem;
                 break;
             }
-        }        
-        
-        
+        }
+
+
         /// <summary>
-        /// Extract the checked edges in the whole tree to CreationData.EdgesForHostedSweep.
+        ///     Extract the checked edges in the whole tree to CreationData.EdgesForHostedSweep.
         /// </summary>
         private void ExtractCheckedEdgesAndSelectedSymbol()
         {
             m_creationData.EdgesForHostedSweep.Clear();
             var rootNode = treeViewHost.Nodes[0];
             foreach (TreeNode hostNode in rootNode.Nodes)
-            {
-                foreach (TreeNode edgeNode in hostNode.Nodes)
-                {
-                    
-                    if (edgeNode.StateImageIndex == (int)CheckState.Checked)
-                        m_creationData.EdgesForHostedSweep.Add(edgeNode.Tag as Edge);
-                }
-            }
+            foreach (TreeNode edgeNode in hostNode.Nodes)
+                if (edgeNode.StateImageIndex == (int)CheckState.Checked)
+                    m_creationData.EdgesForHostedSweep.Add(edgeNode.Tag as Edge);
             m_creationData.Symbol = comboBoxTypes.SelectedItem as ElementType;
         }
 
         /// <summary>
-        /// Update tree node check status, it will impact its children and parents' status.
+        ///     Update tree node check status, it will impact its children and parents' status.
         /// </summary>
         /// <param name="node">Tree node to update</param>
         /// <param name="state">CheckState value</param>
         private void UpdateNodeCheckStatus(TreeNode node, CheckState state)
         {
             node.StateImageIndex = (int)state;
-            if(node.Tag != null && node.Tag is Edge && m_activeElem != null)
+            if (node.Tag != null && node.Tag is Edge && m_activeElem != null)
             {
                 var edge = node.Tag as Edge;
                 var elem = node.Parent.Tag as Element;
                 var elemGeom = m_creationData.Creator.ElemGeomDic[elem];
                 elemGeom.EdgeBindingDic[edge].IsSelected =
-                    (node.StateImageIndex == (int)CheckState.Checked);
+                    node.StateImageIndex == (int)CheckState.Checked;
             }
+
             UpdateChildren(node);
             UpdateParent(node);
         }
 
         /// <summary>
-        /// Recursively update tree children's status to match its parent status.
+        ///     Recursively update tree children's status to match its parent status.
         /// </summary>
         /// <param name="node">Parent node whose children will be updated</param>
         private void UpdateChildren(TreeNode node)
@@ -279,21 +262,22 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 {
                     child.StateImageIndex = node.StateImageIndex;
 
-                    if(m_activeElem != null && child.Tag != null && child.Tag is Edge)
+                    if (m_activeElem != null && child.Tag != null && child.Tag is Edge)
                     {
-                        var edge  = child.Tag as Edge;
+                        var edge = child.Tag as Edge;
                         var elem = child.Parent.Tag as Element;
                         var elemGeom = m_creationData.Creator.ElemGeomDic[elem];
-                        elemGeom.EdgeBindingDic[edge].IsSelected = 
-                            (child.StateImageIndex == (int)CheckState.Checked);
+                        elemGeom.EdgeBindingDic[edge].IsSelected =
+                            child.StateImageIndex == (int)CheckState.Checked;
                     }
                 }
+
                 UpdateChildren(child);
             }
         }
 
         /// <summary>
-        /// Recursively update tree parent's status to match its children status.
+        ///     Recursively update tree parent's status to match its children status.
         /// </summary>
         /// <param name="node">Child whose parents will be updated</param>
         private void UpdateParent(TreeNode node)
@@ -301,20 +285,19 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             var parent = node.Parent;
             if (parent == null) return;
             foreach (TreeNode brother in parent.Nodes)
-            {
                 if (brother.StateImageIndex != node.StateImageIndex)
                 {
                     parent.StateImageIndex = (int)CheckState.Indeterminate;
                     UpdateParent(parent);
                     return;
                 }
-            }
+
             parent.StateImageIndex = node.StateImageIndex;
             UpdateParent(parent);
         }
 
         /// <summary>
-        /// Switch geometry displayed in the preview according to the tree node.
+        ///     Switch geometry displayed in the preview according to the tree node.
         /// </summary>
         /// <param name="node">Tree node to active</param>
         private void ActiveNode(TreeNode node)
@@ -323,14 +306,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
 
             if (node.Tag is Element)
                 m_activeElem = node.Tag as Element;
-            else if (node.Tag is Edge)
-            {
-                m_activeElem = node.Parent.Tag as Element;
-            }
+            else if (node.Tag is Edge) m_activeElem = node.Parent.Tag as Element;
         }
 
         /// <summary>
-        /// Clear Highlighted status of all highlighted edges.
+        ///     Clear Highlighted status of all highlighted edges.
         /// </summary>
         private void ClearAllHighLight()
         {
@@ -338,13 +318,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
 
             foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
-            {
                 elemGeom.EdgeBindingDic[edge].IsHighLighted = false;
-            }
         }
 
         /// <summary>
-        /// Get the related tree node of an edit
+        ///     Get the related tree node of an edit
         /// </summary>
         /// <param name="edge">Given edge to find its tree-node</param>
         /// <returns>Tree-node matched with the given edge</returns>
@@ -357,26 +335,23 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             while (todo.Count > 0)
             {
                 var node = todo.Pop();
-                if (node.Tag != null && node.Tag is Edge && (node.Tag as Edge) == edge)
+                if (node.Tag != null && node.Tag is Edge && node.Tag as Edge == edge)
                 {
                     result = node;
                     break;
                 }
 
-                foreach (TreeNode tmpNode in node.Nodes)
-                {
-                    todo.Push(tmpNode);
-                }
+                foreach (TreeNode tmpNode in node.Nodes) todo.Push(tmpNode);
             }
+
             return result;
         }
 
-        
-        
+
         /// <summary>
-        /// Extract checked edges and verify there are edges 
-        /// checked in the treeView, if there aren't edges to be checked, complain
-        /// about it with a message box, otherwise close this from.
+        ///     Extract checked edges and verify there are edges
+        ///     checked in the treeView, if there aren't edges to be checked, complain
+        ///     about it with a message box, otherwise close this from.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -388,12 +363,13 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 TaskDialog.Show("Revit", "At least one edge should be selected!");
                 return;
             }
+
             DialogResult = DialogResult.OK;
             Close();
         }
 
         /// <summary>
-        /// Close this form.
+        ///     Close this form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -404,7 +380,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// This form Load event handle, all the initializations will be in here.
+        ///     This form Load event handle, all the initializations will be in here.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -419,8 +395,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Suppress the default behaviors that double-click
-        /// on a tree-node which contains children will make the tree-node collapse or expand.
+        ///     Suppress the default behaviors that double-click
+        ///     on a tree-node which contains children will make the tree-node collapse or expand.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -432,8 +408,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Suppress the default behaviors that double-click
-        /// on a tree-node which contains children will make the tree-node collapse or expand.
+        ///     Suppress the default behaviors that double-click
+        ///     on a tree-node which contains children will make the tree-node collapse or expand.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -442,10 +418,10 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             if (m_cancelExpandOrCollapse)
                 e.Cancel = true;
             m_cancelExpandOrCollapse = false;
-        } 
+        }
 
         /// <summary>
-        /// Draw the geometry.
+        ///     Draw the geometry.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -463,7 +439,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Initialize the track ball.
+        ///     Initialize the track ball.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -473,7 +449,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Rotate or zoom the displayed geometry, or highlight the edge under the mouse location.
+        ///     Rotate or zoom the displayed geometry, or highlight the edge under the mouse location.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -497,26 +473,20 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             {
                 ClearAllHighLight();
                 pictureBoxPreview.Refresh();
-                var mat = (Matrix)m_centerMatrix.Clone();
+                var mat = m_centerMatrix.Clone();
                 mat.Invert();
                 var pts = new PointF[1] { e.Location };
                 mat.TransformPoints(pts);
                 var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
                 foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
-                {
                     if (elemGeom.EdgeBindingDic.ContainsKey(edge))
-                    {
                         if (elemGeom.EdgeBindingDic[edge].HighLight(pts[0].X, pts[0].Y))
-                        {
                             pictureBoxPreview.Refresh();
-                        }
-                    }
-                }
             }
         }
 
         /// <summary>
-        /// Select or unselect edge
+        ///     Select or unselect edge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -526,15 +496,13 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
 
             var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
             foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
-            {
                 if (elemGeom.EdgeBindingDic.ContainsKey(edge))
-                {
                     if (elemGeom.EdgeBindingDic[edge].IsHighLighted)
                     {
                         var isSelect = elemGeom.EdgeBindingDic[edge].IsSelected;
                         elemGeom.EdgeBindingDic[edge].IsHighLighted = false;
                         elemGeom.EdgeBindingDic[edge].IsSelected = !isSelect;
-                            
+
                         var node = GetEdgeTreeNode(edge);
 
                         var state = isSelect ? CheckState.Unchecked : CheckState.Checked;
@@ -543,13 +511,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                         treeViewHost.Refresh();
                         return;
                     }
-                }
-            }
         }
 
         /// <summary>
-        /// Highlight the edge in the preview
-        /// if mouse-over an edge tree-node.
+        ///     Highlight the edge in the preview
+        ///     if mouse-over an edge tree-node.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -557,7 +523,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             var node = e.Node;
             treeViewHost.SelectedNode = e.Node;
-            ClearAllHighLight();            
+            ClearAllHighLight();
             ActiveNode(node);
             pictureBoxPreview.Refresh();
             if (m_activeElem == null || node.Tag == null || !(node.Tag is Edge)) return;
@@ -568,7 +534,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Use arrow keys to rotate the display of geometry.
+        ///     Use arrow keys to rotate the display of geometry.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -584,12 +550,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     m_creationData.Creator.ElemGeomDic[m_activeElem].Rotation *= m_trackBall.Rotation;
                     pictureBoxPreview.Refresh();
                     break;
-                default: break;
             }
         }
 
         /// <summary>
-        /// Suppress the key input.
+        ///     Suppress the key input.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -599,8 +564,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Select or un-select the key-node
-        /// if down the left mouse button in the area of check-box or label.
+        ///     Select or un-select the key-node
+        ///     if down the left mouse button in the area of check-box or label.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -608,16 +573,16 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             var hitInfo = treeViewHost.HitTest(e.Location);
 
-            if(e.Button == MouseButtons.Left && 
+            if (e.Button == MouseButtons.Left &&
                 (hitInfo.Location == TreeViewHitTestLocations.StateImage ||
-                hitInfo.Location == TreeViewHitTestLocations.Label))
+                 hitInfo.Location == TreeViewHitTestLocations.Label))
             {
                 // mouse down in area of state image or label.                
                 var node = hitInfo.Node;
-                if(node.Nodes.Count > 0)
+                if (node.Nodes.Count > 0)
                     // cancel the expand or collapse of node which has children.
                     m_cancelExpandOrCollapse = true;
-                
+
                 // active the node.
                 ActiveNode(node);
 
@@ -628,5 +593,5 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 pictureBoxPreview.Refresh();
             }
         }
-            }
+    }
 }

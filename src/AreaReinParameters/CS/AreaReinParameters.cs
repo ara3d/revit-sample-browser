@@ -21,47 +21,74 @@
 //
 
 
+using System;
+using System.Collections;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
+
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using System;
-    using System.Collections;
-    using System.Windows.Forms;
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.UI;
-    using Autodesk.Revit.DB.Structure;
-
     /// <summary>
-    /// Entry point and main command class
+    ///     Entry point and main command class
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    class Command : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    internal class Command : IExternalCommand
     {
-        AreaReinforcement m_areaRein;
+        private AreaReinforcement m_areaRein;
 
         /// <summary>
-        /// Implement this method as an external command for Revit.
+        ///     it is convenient for other class to get
         /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
+        public static ExternalCommandData CommandData { get; private set; }
+
+        /// <summary>
+        ///     all hook types in current project
+        ///     it is static because of IConverter limitation
+        /// </summary>
+        public static Hashtable HookTypes { get; private set; }
+
+        /// <summary>
+        ///     all hook types in current project
+        ///     it is static because of IConverter limitation
+        /// </summary>
+        public static Hashtable BarTypes { get; private set; }
+
+        /// <summary>
+        ///     Implement this method as an external command for Revit.
+        /// </summary>
+        /// <param name="commandData">
+        ///     An object that is passed to the external application
+        ///     which contains data related to the command,
+        ///     such as the application object and active view.
+        /// </param>
+        /// <param name="message">
+        ///     A message that can be set by the external application
+        ///     which will be displayed if a failure or cancellation is returned by
+        ///     the external command.
+        /// </param>
+        /// <param name="elements">
+        ///     A set of elements to which the external application
+        ///     can add elements that are to be highlighted in case of failure or cancellation.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external command.
+        ///     A result of Succeeded means that the API external method functioned as expected.
+        ///     Cancelled can be used to signify that the user cancelled the external operation
+        ///     at some point. Failure should be returned if the application is unable to proceed with
+        ///     the operation.
+        /// </returns>
         public Result Execute(
-          ExternalCommandData revit,
-          ref string message,
-          ElementSet elements)
+            ExternalCommandData revit,
+            ref string message,
+            ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.AreaReinParameters");
+            var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
+                "Revit.SDK.Samples.AreaReinParameters");
             trans.Start();
             CommandData = revit;
             if (!PreData())
@@ -90,53 +117,26 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 trans.RollBack();
                 return Result.Cancelled;
             }
+
             trans.Commit();
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// it is convenient for other class to get
-        /// </summary>
-        public static ExternalCommandData CommandData { get; private set; }
-
-        /// <summary>
-        /// all hook types in current project
-        /// it is static because of IConverter limitation
-        /// </summary>
-        public static Hashtable HookTypes { get; private set; }
-
-        /// <summary>
-        /// all hook types in current project
-        /// it is static because of IConverter limitation
-        /// </summary>
-        public static Hashtable BarTypes { get; private set; }
-
-        /// <summary>
-        /// check whether the selected is expected, find all hooktypes in current project
+        ///     check whether the selected is expected, find all hooktypes in current project
         /// </summary>
         /// <param name="selected">selected elements</param>
         /// <returns>whether the selected AreaReinforcement is expected</returns>
         private bool PreData()
         {
-           var selected = new ElementSet();
+            var selected = new ElementSet();
             foreach (var elementId in CommandData.Application.ActiveUIDocument.Selection.GetElementIds())
-            {
-               selected.Insert(CommandData.Application.ActiveUIDocument.Document.GetElement(elementId));
-            }
+                selected.Insert(CommandData.Application.ActiveUIDocument.Document.GetElement(elementId));
 
             //selected is not only one AreaReinforcement
-            if (selected.Size != 1)
-            {
-                return false;
-            }
-            foreach (var o in selected)
-            {
-                m_areaRein = o as AreaReinforcement;
-            }
-            if (null == m_areaRein)
-            {
-                return false;
-            }
+            if (selected.Size != 1) return false;
+            foreach (var o in selected) m_areaRein = o as AreaReinforcement;
+            if (null == m_areaRein) return false;
 
             //make sure hook type and bar type exist in current project and get them
             HookTypes = new Hashtable();
@@ -145,7 +145,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             var activeDoc = CommandData.Application.ActiveUIDocument.Document;
 
 
-            var itor = (new FilteredElementCollector(activeDoc)).OfClass(typeof(RebarHookType)).GetElementIterator();
+            var itor = new FilteredElementCollector(activeDoc).OfClass(typeof(RebarHookType)).GetElementIterator();
             itor.Reset();
             while (itor.MoveNext())
             {
@@ -157,7 +157,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 }
             }
 
-            itor = (new FilteredElementCollector(activeDoc)).OfClass(typeof(RebarBarType)).GetElementIterator();
+            itor = new FilteredElementCollector(activeDoc).OfClass(typeof(RebarBarType)).GetElementIterator();
             itor.Reset();
             while (itor.MoveNext())
             {
@@ -168,23 +168,21 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                     BarTypes.Add(barTypeName, barType.Id);
                 }
             }
-            if (HookTypes.Count == 0 || BarTypes.Count == 0)
-            {
-                return false;
-            }
+
+            if (HookTypes.Count == 0 || BarTypes.Count == 0) return false;
 
             return true;
         }
     }
 
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    class RebarParas : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    internal class RebarParas : IExternalCommand
     {
         public Result Execute(
-          ExternalCommandData revit,
-          ref string message,
-          ElementSet elements)
+            ExternalCommandData revit,
+            ref string message,
+            ElementSet elements)
         {
             try
             {
@@ -193,7 +191,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 foreach (var elemId in revitDoc.Selection.GetElementIds())
                 {
                     //if( elem.GetType() == typeof( Autodesk.Revit.DB.Structure.Rebar ) )
-                   var elem = revitDoc.Document.GetElement(elemId);
+                    var elem = revitDoc.Document.GetElement(elemId);
                     if (elem is Rebar)
                     {
                         var str = "";
@@ -221,15 +219,16 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                                 case StorageType.String:
                                     val = param.AsString();
                                     break;
-                                default:
-                                    break;
                             }
+
                             str = str + name + ": " + val + "\r\n";
                         }
+
                         TaskDialog.Show("Rebar parameters", str);
                         return Result.Succeeded;
                     }
                 }
+
                 message = "No rebar selected!";
                 return Result.Failed;
             }

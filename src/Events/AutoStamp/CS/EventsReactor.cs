@@ -21,58 +21,58 @@
 //
 
 using System;
-using System.IO;
 using System.Diagnostics;
-using Autodesk.Revit.DB.Events;
+using System.IO;
+using System.Reflection;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
 
 namespace Revit.SDK.Samples.AutoStamp.CS
 {
     /// <summary>
-    /// This class consists of two handler methods which will be subscribed to ViewPrinting and ViewPrinted events separately,
-    /// The pre-event handler will create TextNote element when event is raised, and the post-event handler will delete it.
-    /// Meanwhile, these two handler methods will be used to dump designed information to log file.
-    /// 
-    /// It contains other methods which are used to dump related information(like events arguments and sequences) 
-    /// to log file PrintEventsLog.txt.
+    ///     This class consists of two handler methods which will be subscribed to ViewPrinting and ViewPrinted events
+    ///     separately,
+    ///     The pre-event handler will create TextNote element when event is raised, and the post-event handler will delete it.
+    ///     Meanwhile, these two handler methods will be used to dump designed information to log file.
+    ///     It contains other methods which are used to dump related information(like events arguments and sequences)
+    ///     to log file PrintEventsLog.txt.
     /// </summary>
     public sealed class EventsReactor
     {
-                /// <summary>
-        /// This listener is used to monitor the events raising sequences and arguments of events.
-        /// it will be bound to log file PrintEventsLog.txt, it will be added to Trace.Listeners.
-        /// 
-        /// This log file will only contain information of event raising sequence, event arguments, etc.
-        /// This file can be used to check if events work well in different platforms, for example:
-        /// By this sample, if user printed something, Revit journal will record all operation of users, 
-        /// meanwhile PrintEventsLog.txt will be generated. If user run the journal in other machine, user will get another 
-        /// PrintEventsLog.txt, by comparing the two files user can figure out easily if the two prints work equally.
+        /// <summary>
+        ///     Current assembly path
+        /// </summary>
+        private readonly string m_assemblyPath;
+
+        /// <summary>
+        ///     This listener is used to monitor the events raising sequences and arguments of events.
+        ///     it will be bound to log file PrintEventsLog.txt, it will be added to Trace.Listeners.
+        ///     This log file will only contain information of event raising sequence, event arguments, etc.
+        ///     This file can be used to check if events work well in different platforms, for example:
+        ///     By this sample, if user printed something, Revit journal will record all operation of users,
+        ///     meanwhile PrintEventsLog.txt will be generated. If user run the journal in other machine, user will get another
+        ///     PrintEventsLog.txt, by comparing the two files user can figure out easily if the two prints work equally.
         /// </summary>
         private TextWriterTraceListener m_eventsLog;
 
         /// <summary>
-        /// Current assembly path
+        ///     Reserves the id of TextNote created by ViewPrinting and delete it in ViewPrinted event.
         /// </summary>
-        string m_assemblyPath;
+        private ElementId m_newTextNoteId;
+
 
         /// <summary>
-        /// Reserves the id of TextNote created by ViewPrinting and delete it in ViewPrinted event.
-        /// </summary>
-        ElementId m_newTextNoteId; 
-        
-
-                /// <summary>
-        /// Constructor method, it will only initialize m_assemblyPath.
-        /// Notice that this method won't open log files at this time.
+        ///     Constructor method, it will only initialize m_assemblyPath.
+        ///     Notice that this method won't open log files at this time.
         /// </summary>
         public EventsReactor()
         {
             // Get assembly path 
-            m_assemblyPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            m_assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         }
 
         /// <summary>
-        ///  Close log files now
+        ///     Close log files now
         /// </summary>
         public void CloseLogFiles()
         {
@@ -89,22 +89,19 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                 m_eventsLog.Close();
             }
         }
-        
 
-                /// <summary>
-        /// Handler method for ViewPrinting event.
-        /// This method will dump EventArgument information of event firstly and then create TextNote element for this view.
-        /// View print will be canceled if TextNote creation failed.
+
+        /// <summary>
+        ///     Handler method for ViewPrinting event.
+        ///     This method will dump EventArgument information of event firstly and then create TextNote element for this view.
+        ///     View print will be canceled if TextNote creation failed.
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments of ViewPrinting event.</param>
         public void AppViewPrinting(object sender, ViewPrintingEventArgs e)
         {
             // Setup log file if it still is empty
-            if (null == m_eventsLog)
-            {
-                SetupLogFiles(); 
-            } 
+            if (null == m_eventsLog) SetupLogFiles();
             //
             // header information
             Trace.WriteLine(Environment.NewLine + "View Print Start: ------------------------");
@@ -123,7 +120,7 @@ namespace Revit.SDK.Samples.AutoStamp.CS
 #if !(Debug || DEBUG)
                 strText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 #endif
-                using( var eventTransaction = new Transaction(e.Document, "External Tool"))
+                using (var eventTransaction = new Transaction(e.Document, "External Tool"))
                 {
                     eventTransaction.Start();
                     var options = new TextNoteOptions();
@@ -133,35 +130,33 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                     eventTransaction.Commit();
 
                     // Check to see whether TextNote creation succeeded
-                    if(null != newTextNote)
+                    if (null != newTextNote)
                     {
                         Trace.WriteLine("Create TextNote element successfully...");
                         m_newTextNoteId = newTextNote.Id;
                     }
                     else
                     {
-                       failureOccured = true;
+                        failureOccured = true;
                     }
                 }
             }
             catch (Exception ex)
             {
-               failureOccured = true;
+                failureOccured = true;
                 Trace.WriteLine("Exception occurred when creating TextNote, print will be canceled, ex: " + ex.Message);
             }
             finally
             {
                 // Cancel the TextNote creation when failure occurred, meantime the event is cancellable
-               if (failureOccured && e.Cancellable)
-                {
-                    e.Cancel();  
-                }
+                if (failureOccured && e.Cancellable) e.Cancel();
             }
         }
 
         /// <summary>
-        /// Handler method for ViewPrinted event.
-        /// This handler will dump information of printed view firstly and then delete the TextNote created in pre-event handler.
+        ///     Handler method for ViewPrinted event.
+        ///     This handler will dump information of printed view firstly and then delete the TextNote created in pre-event
+        ///     handler.
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments of ViewPrinted event.</param>
@@ -176,37 +171,31 @@ namespace Revit.SDK.Samples.AutoStamp.CS
             // Delete the TextNote element created in ViewPrinting only when view print process succeeded or failed.
             // We don't care about the delete when event status is Cancelled because no TextNote element
             // will be created when cancelling occurred.
-            if(RevitAPIEventStatus.Cancelled != e.Status)
+            if (RevitAPIEventStatus.Cancelled != e.Status)
             {
-               //now event framework will not provide transaction, user need start by self(2009/11/18)
-               var eventTransaction = new Transaction(e.Document, "External Tool");
-               eventTransaction.Start();
-               e.Document.Delete(m_newTextNoteId);
-               eventTransaction.Commit();
-               Trace.WriteLine("Succeeded to delete the created TextNote element.");
+                //now event framework will not provide transaction, user need start by self(2009/11/18)
+                var eventTransaction = new Transaction(e.Document, "External Tool");
+                eventTransaction.Start();
+                e.Document.Delete(m_newTextNoteId);
+                eventTransaction.Commit();
+                Trace.WriteLine("Succeeded to delete the created TextNote element.");
             }
-        }               
-        
+        }
 
-                /// <summary>
-        /// For singleton consideration, setup log file only when ViewPrinting is raised.
-        /// m_eventsLog will be initialized and added to Trace.Listeners, 
-        /// PrintEventsLog.txt will be removed if it already existed.
+
+        /// <summary>
+        ///     For singleton consideration, setup log file only when ViewPrinting is raised.
+        ///     m_eventsLog will be initialized and added to Trace.Listeners,
+        ///     PrintEventsLog.txt will be removed if it already existed.
         /// </summary>
         private void SetupLogFiles()
         {
             // singleton instance for log file
-            if (null != m_eventsLog)
-            {
-                return;
-            }
+            if (null != m_eventsLog) return;
             //
             // delete existed log files
             var printEventsLogFile = Path.Combine(m_assemblyPath, "PrintEventsLog.txt");
-            if (File.Exists(printEventsLogFile))
-            {
-                File.Delete(printEventsLogFile);
-            }
+            if (File.Exists(printEventsLogFile)) File.Delete(printEventsLogFile);
             //
             // Create listener and add to Trace.Listeners to monitor the string to be emitted
             m_eventsLog = new TextWriterTraceListener(printEventsLogFile);
@@ -215,10 +204,10 @@ namespace Revit.SDK.Samples.AutoStamp.CS
         }
 
         /// <summary>
-        /// Dump the events arguments to log file PrintEventsLog.txt.
-        /// This method will only dump EventArguments of ViewPrint, two event arguments will be handled:
-        /// ViewPrintingEventArgs and ViewPrintedEventArgs.
-        /// Typical properties of EventArgs of them will be dumped to log file.
+        ///     Dump the events arguments to log file PrintEventsLog.txt.
+        ///     This method will only dump EventArguments of ViewPrint, two event arguments will be handled:
+        ///     ViewPrintingEventArgs and ViewPrintedEventArgs.
+        ///     Typical properties of EventArgs of them will be dumped to log file.
         /// </summary>
         /// <param name="eventArgs">Event argument to be dumped. </param>
         private static void DumpEventArguments(RevitAPIEventArgs eventArgs)
@@ -231,7 +220,7 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                 var args = eventArgs as ViewPrintingEventArgs;
                 Trace.WriteLine("    TotalViews          : " + args.TotalViews);
                 Trace.WriteLine("    View Index          : " + args.Index);
-                Trace.WriteLine("    View Information    :"); 
+                Trace.WriteLine("    View Information    :");
                 DumpViewInfo(args.View, "      ");
             }
             else if (eventArgs.GetType().Equals(typeof(ViewPrintedEventArgs)))
@@ -240,25 +229,22 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                 var args = eventArgs as ViewPrintedEventArgs;
                 Trace.WriteLine("    Event Status        : " + args.Status);
                 Trace.WriteLine("    TotalViews          : " + args.TotalViews);
-                Trace.WriteLine("    View Index          : " + args.Index); 
-                Trace.WriteLine("    View Information    :"); 
+                Trace.WriteLine("    View Index          : " + args.Index);
+                Trace.WriteLine("    View Information    :");
                 DumpViewInfo(args.View, "      ");
             }
-            else
-            {
-                // no handling for other arguments
-            }
+            // no handling for other arguments
         }
 
         /// <summary>
-        /// Dump information of  view(View name and type) to log file.
+        ///     Dump information of  view(View name and type) to log file.
         /// </summary>
         /// <param name="view">View element to be dumped to log files.</param>
         /// <param name="prefix">Prefix mark for each line dumped to log files.</param>
         private static void DumpViewInfo(View view, string prefix)
         {
-            Trace.WriteLine(string.Format("{0} ViewName: {1}, ViewType: {2}", 
+            Trace.WriteLine(string.Format("{0} ViewName: {1}, ViewType: {2}",
                 prefix, view.Name, view.ViewType));
         }
-            }
+    }
 }

@@ -23,20 +23,20 @@
 
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.GenericStructuralConnection.CS
 {
     /// <summary>
-    /// Demonstrate how to create a generic structural connection.
+    ///     Demonstrate how to create a generic structural connection.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var ret = Result.Succeeded;
@@ -55,47 +55,56 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                         {
                             case CommandOption.CreateGeneric:
                             {
-                                ret = GenericStructuralConnectionOps.CreateGenericStructuralConnection(activeDoc, ref message);
-                                break; 
+                                ret = GenericStructuralConnectionOps.CreateGenericStructuralConnection(activeDoc,
+                                    ref message);
+                                break;
                             }
                             case CommandOption.DeleteGeneric:
                             {
-                                ret = GenericStructuralConnectionOps.DeleteGenericStructuralConnection(activeDoc, ref message);
-                                break; 
+                                ret = GenericStructuralConnectionOps.DeleteGenericStructuralConnection(activeDoc,
+                                    ref message);
+                                break;
                             }
                             case CommandOption.ReadGeneric:
                             {
-                                ret = GenericStructuralConnectionOps.ReadGenericStructuralConnection(activeDoc, ref message);
-                                break; 
+                                ret = GenericStructuralConnectionOps.ReadGenericStructuralConnection(activeDoc,
+                                    ref message);
+                                break;
                             }
                             case CommandOption.UpdateGeneric:
                             {
-                                ret = GenericStructuralConnectionOps.UpdateGenericStructuralConnection(activeDoc, ref message);
+                                ret = GenericStructuralConnectionOps.UpdateGenericStructuralConnection(activeDoc,
+                                    ref message);
                                 break;
                             }
                             case CommandOption.CreateDetailed:
                             {
-                                ret = DetailedStructuralConnectionOps.CreateDetailedStructuralConnection(activeDoc, ref message);
+                                ret = DetailedStructuralConnectionOps.CreateDetailedStructuralConnection(activeDoc,
+                                    ref message);
                                 break;
                             }
                             case CommandOption.ChangeDetailed:
                             {
-                                ret = DetailedStructuralConnectionOps.ChangeDetailedStructuralConnection(activeDoc, ref message);
+                                ret = DetailedStructuralConnectionOps.ChangeDetailedStructuralConnection(activeDoc,
+                                    ref message);
                                 break;
                             }
                             case CommandOption.CopyDetailed:
                             {
-                                ret = DetailedStructuralConnectionOps.CopyDetailedStructuralConnection(activeDoc, ref message);
+                                ret = DetailedStructuralConnectionOps.CopyDetailedStructuralConnection(activeDoc,
+                                    ref message);
                                 break;
                             }
                             case CommandOption.MatchPropDetailed:
                             {
-                                ret = DetailedStructuralConnectionOps.MatchPropertiesDetailedStructuralConnection(activeDoc, ref message);
+                                ret = DetailedStructuralConnectionOps.MatchPropertiesDetailedStructuralConnection(
+                                    activeDoc, ref message);
                                 break;
                             }
                             case CommandOption.ResetDetailed:
                             {
-                                ret = DetailedStructuralConnectionOps.ResetDetailedStructuralConnection(activeDoc, ref message);
+                                ret = DetailedStructuralConnectionOps.ResetDetailedStructuralConnection(activeDoc,
+                                    ref message);
                                 break;
                             }
                         }
@@ -114,6 +123,5 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
 
             return ret;
         }
-
-            }
+    }
 }

@@ -28,20 +28,17 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// This class use to create a object can use by PropertyGrid control
+    ///     This class use to create a object can use by PropertyGrid control
     /// </summary>
     public class OpeningProperty
     {
         /// <summary>
-        /// The default constructor
+        ///     The default constructor
         /// </summary>
         /// <param name="opening">Opening in Revit</param>
         public OpeningProperty(Opening opening)
         {
-            if (null == opening)
-            {
-                throw new ArgumentNullException();
-            }
+            if (null == opening) throw new ArgumentNullException();
 
             //get parameters which need to show
             Name = opening.Name;
@@ -56,45 +53,43 @@ namespace Revit.SDK.Samples.Openings.CS
             }
 
             if (null != opening.Category)
-            {
                 if ("Shaft Openings" == opening.Category.Name)
                     ShaftOpening = true;
-            }
         }
 
         /// <summary>
-        /// name
+        ///     name
         /// </summary>
-        [Description("Name of current diaplayed Opening"),
-        Category("Opening Name"),]
+        [Description("Name of current diaplayed Opening")]
+        [Category("Opening Name")]
         public string Name { get; } = "Opening";
 
         /// <summary>
-        ///element id 
+        ///     element id
         /// </summary>
-        [Description("ElementId of current diaplayed Opening"),
-        Category("Opening Property"),]
+        [Description("ElementId of current diaplayed Opening")]
+        [Category("Opening Property")]
         public string ElementID { get; } = "";
 
         /// <summary>
-        /// host name
+        ///     host name
         /// </summary>
-        [Description("Name of the Host which contains Current displayed Opening"),
-        CategoryAttribute("Opening Property"),]
+        [Description("Name of the Host which contains Current displayed Opening")]
+        [CategoryAttribute("Opening Property")]
         public string HostName { get; } = "Null";
 
         /// <summary>
-        /// host elements id
+        ///     host elements id
         /// </summary>
-        [Description("ElementId of Host"),
-        CategoryAttribute("Opening Property"),]
+        [Description("ElementId of Host")]
+        [CategoryAttribute("Opening Property")]
         public string HostElementID { get; } = "";
 
         /// <summary>
-        /// shaft opening 
+        ///     shaft opening
         /// </summary>
-        [Description("whether displayed openging is Shaft Opening"),
-        CategoryAttribute("Opening Property"),]
+        [Description("whether displayed openging is Shaft Opening")]
+        [CategoryAttribute("Opening Property")]
         public bool ShaftOpening { get; }
     }
 }

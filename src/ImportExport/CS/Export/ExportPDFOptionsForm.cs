@@ -25,37 +25,37 @@ using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
-   /// <summary>
-   /// Data class which stores information of lower priority for exporting PDF format.
-   /// </summary>
-   public partial class ExportPDFOptionsForm : Form
-   {
-      /// <summary>
-      /// ExportPDFData object
-      /// </summary>
-      private ExportPDFData m_data;
-
     /// <summary>
-    /// ExportPDFOptionsForm constructor
+    ///     Data class which stores information of lower priority for exporting PDF format.
     /// </summary>
-    public ExportPDFOptionsForm(ExportPDFData data)
-      {
-         m_data = data;
-         InitializeComponent();
-         Initialize();
-      }
+    public partial class ExportPDFOptionsForm : Form
+    {
+        /// <summary>
+        ///     ExportPDFData object
+        /// </summary>
+        private readonly ExportPDFData m_data;
 
-      /// <summary>
-      /// Initialize controls
-      /// </summary>
-      private void Initialize()
-      {
-         checkBoxCombineViews.Checked = m_data.Combine;
-      }
+        /// <summary>
+        ///     ExportPDFOptionsForm constructor
+        /// </summary>
+        public ExportPDFOptionsForm(ExportPDFData data)
+        {
+            m_data = data;
+            InitializeComponent();
+            Initialize();
+        }
 
-      private void buttonOK_Click(object sender, EventArgs e)
-      {
-         m_data.Combine = checkBoxCombineViews.Checked;
-      }
-   }
+        /// <summary>
+        ///     Initialize controls
+        /// </summary>
+        private void Initialize()
+        {
+            checkBoxCombineViews.Checked = m_data.Combine;
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            m_data.Combine = checkBoxCombineViews.Checked;
+        }
+    }
 }

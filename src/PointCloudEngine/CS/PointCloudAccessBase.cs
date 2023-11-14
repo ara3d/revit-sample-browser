@@ -27,21 +27,19 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
-
-
 namespace Revit.SDK.Samples.CS.PointCloudEngine
 {
     /// <summary>
-    ///  The base class for all IPointCloudAccess implementations in this sample.
+    ///     The base class for all IPointCloudAccess implementations in this sample.
     /// </summary>
     public class PointCloudAccessBase
     {
-                private double m_scale = 1.0;
-        private List<PointCloudCellStorage> m_storedCells;
         private Outline m_outline;
-        
-                /// <summary>
-        /// Constructs a new instance of the base class.
+        private double m_scale = 1.0;
+        private List<PointCloudCellStorage> m_storedCells;
+
+        /// <summary>
+        ///     Constructs a new instance of the base class.
         /// </summary>
         protected PointCloudAccessBase()
         {
@@ -49,7 +47,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         }
 
         /// <summary>
-        /// Adds a new cell to the point cloud.
+        ///     Adds a new cell to the point cloud.
         /// </summary>
         /// <param name="lowerLeft">The lower left point.</param>
         /// <param name="upperRight">The upper right point.</param>
@@ -65,7 +63,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         }
 
         /// <summary>
-        /// Adds a new cell to the point cloud.
+        ///     Adds a new cell to the point cloud.
         /// </summary>
         /// <param name="lowerLeft">The lower left point.</param>
         /// <param name="upperRight">The upper right point.</param>
@@ -76,8 +74,9 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         }
 
         /// <summary>
-        /// Adds a cell to the stored outline of the point cloud.  If the cell boundaries extend beyond the current outline, the outline 
-        /// is adjusted.
+        ///     Adds a cell to the stored outline of the point cloud.  If the cell boundaries extend beyond the current outline,
+        ///     the outline
+        ///     is adjusted.
         /// </summary>
         /// <param name="storage"></param>
         private void AddCellToOutline(PointCloudCellStorage storage)
@@ -85,24 +84,26 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             var lowerLeft = storage.LowerLeft;
             var upperRight = storage.UpperRight;
             if (m_outline == null)
+            {
                 m_outline = new Outline(lowerLeft, upperRight);
+            }
             else
             {
                 var minimumPoint = m_outline.MinimumPoint;
 
                 m_outline.MinimumPoint = new XYZ(Math.Min(minimumPoint.X, lowerLeft.X),
-                                                Math.Min(minimumPoint.Y, lowerLeft.Y),
-                                                Math.Min(minimumPoint.Z, lowerLeft.Z));
+                    Math.Min(minimumPoint.Y, lowerLeft.Y),
+                    Math.Min(minimumPoint.Z, lowerLeft.Z));
 
                 var maximumPoint = m_outline.MaximumPoint;
                 m_outline.MaximumPoint = new XYZ(Math.Max(maximumPoint.X, upperRight.X),
-                                                Math.Max(maximumPoint.Y, upperRight.Y),
-                                                Math.Max(maximumPoint.Z, upperRight.Z));
+                    Math.Max(maximumPoint.Y, upperRight.Y),
+                    Math.Max(maximumPoint.Z, upperRight.Z));
             }
         }
 
         /// <summary>
-        /// Gets the outline calculated from all cells in the point cloud.
+        ///     Gets the outline calculated from all cells in the point cloud.
         /// </summary>
         /// <returns></returns>
         protected Outline GetOutline()
@@ -111,7 +112,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         }
 
         /// <summary>
-        /// Gets the scale stored for this point cloud.
+        ///     Gets the scale stored for this point cloud.
         /// </summary>
         /// <returns></returns>
         protected double GetScale()
@@ -120,14 +121,14 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         }
 
         /// <summary>
-        /// Saves the contents of the point cloud into an XML element.
+        ///     Saves the contents of the point cloud into an XML element.
         /// </summary>
         /// <param name="rootElement">The XML element in which to save the point cloud properties.</param>
-        public virtual void SerializeObjectData(XElement rootElement)
+        public void SerializeObjectData(XElement rootElement)
         {
             var scaleElement = XmlUtils.GetXElement(m_scale, "Scale");
             rootElement.Add(scaleElement);
-            
+
             var count = m_storedCells.Count;
             for (var i = 0; i < count; i++)
             {
@@ -138,15 +139,18 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         }
 
         /// <summary>
-        /// The internal implementation for point cloud read requests from Revit.  
+        ///     The internal implementation for point cloud read requests from Revit.
         /// </summary>
         /// <remarks>Both IPointCloudAccess.ReadPoints() and IPointSetIterator.ReadPoints() are served by this method.</remarks>
         /// <param name="rFilter">The point cloud filter.</param>
         /// <param name="buffer">The point cloud buffer.</param>
         /// <param name="nBufferSize">The maximum number of points in the buffer.</param>
-        /// <param name="startIndex">The start index for points.  Pass 0 if called from IPointCloudAccess.ReadPoints() or if this is the first 
-        /// call to IPointSetIterator.ReadPoints().  Pass the previous cumulative number of read points for second and successive calls to 
-        /// IPointSetIterator.ReadPoints().</param>
+        /// <param name="startIndex">
+        ///     The start index for points.  Pass 0 if called from IPointCloudAccess.ReadPoints() or if this is the first
+        ///     call to IPointSetIterator.ReadPoints().  Pass the previous cumulative number of read points for second and
+        ///     successive calls to
+        ///     IPointSetIterator.ReadPoints().
+        /// </param>
         /// <returns>The number of points read.</returns>
         protected unsafe int ReadSomePoints(PointCloudFilter rFilter, IntPtr buffer, int nBufferSize, int startIndex)
         {
@@ -205,27 +209,19 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                     // If we need to test the point for acceptance, use the filter to do so.
                     // If filter result == 1 the entire cell was in scope, no need to test.
                     if (filterResult == 0)
-                    {
                         if (!rFilter.TestPoint(cell.PointsBuffer[j]))
                             continue;
-                    }
 
                     // Add the point to the buffer and increment the counter
                     *(cpBuffer + pointIndex) = cell.PointsBuffer[j];
                     pointIndex++;
-                    
+
                     // Stop when the max number of points is reached
-                    if (pointIndex >= nBufferSize)
-                    {
-                        break;
-                    }
+                    if (pointIndex >= nBufferSize) break;
                 }
 
                 // Stop when the max number of points is reached
-                if (pointIndex >= nBufferSize)
-                {
-                    break;
-                }
+                if (pointIndex >= nBufferSize) break;
                 currentIndex = 0;
             }
 
@@ -233,23 +229,19 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         }
 
         /// <summary>
-        /// Sets up a point cloud from an XML root element.
+        ///     Sets up a point cloud from an XML root element.
         /// </summary>
         /// <param name="rootElement">The root element.</param>
         protected void SetupFrom(XElement rootElement)
-        {  
+        {
             // Read scale, if it exists.
             foreach (var scaleElement in rootElement.Elements("Scale"))
             {
                 var scale = XmlUtils.GetDouble(scaleElement);
                 if (scale < 0.0)
-                {
                     TaskDialog.Show("Scale error", "The value of scale is not a valid number greater than zero.");
-                }
                 else
-                {
                     m_scale = scale;
-                }
             }
 
             // Read cells.
@@ -262,19 +254,19 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 cell.GeneratePoints();
             }
         }
-        
+
         /// <summary>
-        /// The implementation for an IPointSetIterator for a file-based or predefined point cloud.
+        ///     The implementation for an IPointSetIterator for a file-based or predefined point cloud.
         /// </summary>
         protected class PointCloudAccessBaseIterator : IPointSetIterator
         {
-                        private PointCloudFilter m_filter;
+            private readonly PointCloudAccessBase m_access;
             private int m_currentIndex;
-            private PointCloudAccessBase m_access;
             private bool m_done;
-            
-                        /// <summary>
-            /// Constructs a new instance of the point cloud iterator.
+            private readonly PointCloudFilter m_filter;
+
+            /// <summary>
+            ///     Constructs a new instance of the point cloud iterator.
             /// </summary>
             /// <param name="access">The access.</param>
             /// <param name="filter">The filter used for this iteration.</param>
@@ -284,40 +276,33 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 m_filter = filter;
                 m_currentIndex = 0;
             }
-            
-            
+
+
             /// <summary>
-            /// Implementation of IPointSetIterator.ReadPoints()
+            ///     Implementation of IPointSetIterator.ReadPoints()
             /// </summary>
             /// <param name="buffer">The point buffer.</param>
             /// <param name="nBufferSize">The buffer size.</param>
             /// <returns>The number of points read.</returns>
             public int ReadPoints(IntPtr buffer, int nBufferSize)
             {
-                if (m_done)
-                {
-                    return 0;
-                }
+                if (m_done) return 0;
 
                 var found = m_access.ReadSomePoints(m_filter, buffer, nBufferSize, m_currentIndex);
                 m_currentIndex += found;
 
-                if (found > nBufferSize)
-                {
-                    m_done = true;
-                }
+                if (found > nBufferSize) m_done = true;
 
                 return found;
             }
 
             /// <summary>
-            /// Implementation of IPointSetIterator.Free()
+            ///     Implementation of IPointSetIterator.Free()
             /// </summary>
             public void Free()
             {
                 m_done = true;
             }
-
-                    }
+        }
     }
 }

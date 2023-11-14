@@ -23,25 +23,28 @@
 
 using System;
 using System.Collections.Generic;
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Loads.CS
 {
     /// <summary>
-    /// Deal the LoadCase class which give methods to connect Revit and the user operation on the form
+    ///     Deal the LoadCase class which give methods to connect Revit and the user operation on the form
     /// </summary>
     public class LoadCaseDeal
     {
+        private readonly Loads m_dataBuffer;
+
+        private readonly List<string> m_newLoadNaturesName; //store all the new nature's name that should be added
+
         // Private Members
-        Autodesk.Revit.ApplicationServices.Application m_revit; // Store the reference of revit application
-        Loads m_dataBuffer;                 
-        List<string> m_newLoadNaturesName; //store all the new nature's name that should be added
+        private readonly Application m_revit; // Store the reference of revit application
 
         // Methods
         /// <summary>
-        /// Default constructor of LoadCaseDeal
+        ///     Default constructor of LoadCaseDeal
         /// </summary>
         public LoadCaseDeal(Loads dataBuffer)
         {
@@ -59,7 +62,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// prepare data for the dialog
+        ///     prepare data for the dialog
         /// </summary>
         public void PrepareData()
         {
@@ -83,7 +86,8 @@ namespace Revit.SDK.Samples.Loads.CS
             }
 
             //get all the loadnatures name
-            var elements = new FilteredElementCollector(uiapplication.ActiveUIDocument.Document).OfClass(typeof(LoadNature)).ToElements();
+            var elements = new FilteredElementCollector(uiapplication.ActiveUIDocument.Document)
+                .OfClass(typeof(LoadNature)).ToElements();
             foreach (var e in elements)
             {
                 var nature = e as LoadNature;
@@ -92,10 +96,11 @@ namespace Revit.SDK.Samples.Loads.CS
                     m_dataBuffer.LoadNatures.Add(nature);
                     var newLoadNaturesMap = new LoadNaturesMap(nature);
                     m_dataBuffer.LoadNaturesMap.Add(newLoadNaturesMap);
-
                 }
             }
-            elements = new FilteredElementCollector(uiapplication.ActiveUIDocument.Document).OfClass(typeof(LoadCase)).ToElements();
+
+            elements = new FilteredElementCollector(uiapplication.ActiveUIDocument.Document).OfClass(typeof(LoadCase))
+                .ToElements();
             foreach (var e in elements)
             {
                 //get all the loadcases
@@ -110,7 +115,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// create some load case natures named EQ1, EQ2, W1, W2, W3, W4, Other
+        ///     create some load case natures named EQ1, EQ2, W1, W2, W3, W4, Other
         /// </summary>
         /// <returns></returns>
         private bool CreateLoadNatures()
@@ -120,27 +125,25 @@ namespace Revit.SDK.Samples.Loads.CS
             {
                 var uiapplication = new UIApplication(m_revit);
                 foreach (var name in m_newLoadNaturesName)
-                {
                     LoadNature.Create(uiapplication.ActiveUIDocument.Document, name);
-                }
-
             }
             catch (Exception e)
             {
                 m_dataBuffer.ErrorInformation += e.ToString();
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// add a new load nature
+        ///     add a new load nature
         /// </summary>
         /// <param name="index">the selected nature's index in the nature map</param>
         /// <returns></returns>
         public bool AddLoadNature(int index)
         {
-            var isUnique = false;     // check if the name is unique    
+            var isUnique = false; // check if the name is unique    
             LoadNaturesMap myLoadNature = null;
 
             //try to get out the loadnature from the map
@@ -190,11 +193,12 @@ namespace Revit.SDK.Samples.Loads.CS
                 m_dataBuffer.ErrorInformation += e.ToString();
                 return false;
             }
+
             return true;
         }
-      
+
         /// <summary>
-        /// Duplicate a new load case
+        ///     Duplicate a new load case
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -238,12 +242,14 @@ namespace Revit.SDK.Samples.Loads.CS
             //try to create a load case
             try
             {
-                var newLoadCase = LoadCase.Create(uiapplication.ActiveUIDocument.Document, caseName, natureId, categoryId);
+                var newLoadCase = LoadCase.Create(uiapplication.ActiveUIDocument.Document, caseName, natureId,
+                    categoryId);
                 if (null == newLoadCase)
                 {
                     m_dataBuffer.ErrorInformation += "Create Load Case Failed";
                     return false;
                 }
+
                 //add the new case into list and map
                 m_dataBuffer.LoadCases.Add(newLoadCase);
                 var newLoadCaseMap = new LoadCasesMap(newLoadCase);
@@ -254,11 +260,12 @@ namespace Revit.SDK.Samples.Loads.CS
                 m_dataBuffer.ErrorInformation += e.ToString();
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// check if the case's name is unique
+        ///     check if the case's name is unique
         /// </summary>
         /// <param name="name">the name to be checked</param>
         /// <returns>true will be returned if the name is unique</returns>
@@ -268,16 +275,14 @@ namespace Revit.SDK.Samples.Loads.CS
             for (var i = 0; i < m_dataBuffer.LoadCasesMap.Count; i++)
             {
                 var nameTemp = m_dataBuffer.LoadCasesMap[i].LoadCasesName;
-                if (name == nameTemp)
-                {
-                    return false;
-                }
+                if (name == nameTemp) return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// check if the nature's name is unique
+        ///     check if the nature's name is unique
         /// </summary>
         /// <param name="name">the name to be checked</param>
         /// <returns>true will be returned if the name is unique</returns>
@@ -287,11 +292,9 @@ namespace Revit.SDK.Samples.Loads.CS
             for (var i = 0; i < m_dataBuffer.LoadNatures.Count; i++)
             {
                 var nameTemp = m_dataBuffer.LoadNaturesMap[i].LoadNaturesName;
-                if (name == nameTemp)
-                {
-                    return false;
-                }
+                if (name == nameTemp) return false;
             }
+
             return true;
         }
     }

@@ -24,42 +24,41 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// This class wraps the creation of Rebar. Its "Execute" method shows
-    /// the main dialog for user and after that a Rebar will be created 
-    /// if user click OK button on the main dialog.
+    ///     This class wraps the creation of Rebar. Its "Execute" method shows
+    ///     the main dialog for user and after that a Rebar will be created
+    ///     if user click OK button on the main dialog.
     /// </summary>
-    class RebarCreator
+    internal class RebarCreator
     {
-
         /// <summary>
-        /// Revit UI document
+        ///     Newly created Rebar.
         /// </summary>
-        UIDocument m_rvtUIDoc;
+        private Rebar m_createdRebar;
 
         /// <summary>
-        /// Revit FamilyInstance object, it will be the host of Rebar.
+        ///     GeometrySupport object.
         /// </summary>
-        FamilyInstance m_rebarHost;
+        private GeometrySupport m_geometryData;
 
         /// <summary>
-        /// GeometrySupport object.
+        ///     Revit FamilyInstance object, it will be the host of Rebar.
         /// </summary>
-        GeometrySupport m_geometryData;
+        private FamilyInstance m_rebarHost;
 
         /// <summary>
-        /// Newly created Rebar.
+        ///     Revit UI document
         /// </summary>
-        Rebar m_createdRebar;
+        private readonly UIDocument m_rvtUIDoc;
 
         /// <summary>
-        /// Constructor, initialize fields and do some assert.
-        /// If the Assert throw exception, creation will fail.
+        ///     Constructor, initialize fields and do some assert.
+        ///     If the Assert throw exception, creation will fail.
         /// </summary>
         /// <param name="commandData">ExternalCommandData</param>
         public RebarCreator(ExternalCommandData commandData)
@@ -69,8 +68,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Do some check for the selection elements, includes geometry check.
-        /// If the data doesn't meet our need, Exception will be thrown.
+        ///     Do some check for the selection elements, includes geometry check.
+        ///     If the data doesn't meet our need, Exception will be thrown.
         /// </summary>
         private void Assert()
         {
@@ -78,9 +77,10 @@ namespace Revit.SDK.Samples.NewRebar.CS
             var selectedIds = new List<ElementId>();
             foreach (var elemId in m_rvtUIDoc.Selection.GetElementIds())
             {
-               var elem = m_rvtUIDoc.Document.GetElement(elemId);
+                var elem = m_rvtUIDoc.Document.GetElement(elemId);
                 selectedIds.Add(elem.Id);
             }
+
             if (selectedIds.Count == 0)
                 throw new Exception("Please select a concrete beam or column to create rebar.");
 
@@ -95,7 +95,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 new StructuralMaterialTypeFilter(StructuralMaterialType.Concrete));
             // Expected rebar host: it should be family instance
             var collector = new FilteredElementCollector(m_rvtUIDoc.Document, selectedIds);
-            var rebarHost = collector.OfClass(typeof(FamilyInstance)).WherePasses(hostFilter).FirstElement() as FamilyInstance;
+            var rebarHost =
+                collector.OfClass(typeof(FamilyInstance)).WherePasses(hostFilter).FirstElement() as FamilyInstance;
             // Make sure the selected beam or column is rectangular.
             try
             {
@@ -111,20 +112,16 @@ namespace Revit.SDK.Samples.NewRebar.CS
             // Judge the rebar host is a valid host.
             var rebarHostData = RebarHostData.GetRebarHostData(rebarHost);
             if (rebarHostData == null || !rebarHostData.IsValidHost())
-            {
                 throw new Exception("The selected element is not a valid rebar host.");
-            }
 
             // Make sure the selected beam or column doesn't contain any rebar.
             if (rebarHostData.GetRebarsInHost().Count > 0)
-            {
                 throw new Exception("Please select a beam or a column which doesn't contain any rebar.");
-            }
         }
 
         /// <summary>
-        /// Present the main dialog for user to prepare the parameters for Rebar creation,
-        /// and after that if user click the OK button, a new Rebar will be created.
+        ///     Present the main dialog for user to prepare the parameters for Rebar creation,
+        ///     and after that if user click the OK button, a new Rebar will be created.
         /// </summary>
         public void Execute()
         {
@@ -140,7 +137,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
                     var yVec = profilePoints[1] - origin;
                     var xVec = profilePoints[3] - origin;
 
-                    m_createdRebar = Rebar.CreateFromRebarShape(m_rvtUIDoc.Document, barShape, barType, m_rebarHost, origin, xVec, yVec);
+                    m_createdRebar = Rebar.CreateFromRebarShape(m_rvtUIDoc.Document, barShape, barType, m_rebarHost,
+                        origin, xVec, yVec);
 
                     LayoutRebar();
                 }
@@ -148,7 +146,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Move and Scale the  created Rebar to specified box.
+        ///     Move and Scale the  created Rebar to specified box.
         /// </summary>
         private void LayoutRebar()
         {
@@ -158,16 +156,17 @@ namespace Revit.SDK.Samples.NewRebar.CS
             var xVec = profilePoints[3] - origin;
 
             var arcDef =
-                 (m_createdRebar.Document.GetElement(m_createdRebar.GetShapeId()) as RebarShape).GetRebarShapeDefinition() as RebarShapeDefinitionByArc;
+                (m_createdRebar.Document.GetElement(m_createdRebar.GetShapeId()) as RebarShape)
+                .GetRebarShapeDefinition() as RebarShapeDefinitionByArc;
 
             var rebarShapeDrivenAccessor = m_createdRebar.GetShapeDrivenAccessor();
             if (arcDef != null && arcDef.Type == RebarShapeDefinitionByArcType.Spiral)
             {
-               rebarShapeDrivenAccessor.ScaleToBoxFor3D(origin, xVec, yVec, 10.0);
-               rebarShapeDrivenAccessor.Height = m_geometryData.DrivingLength - 0.1;
-               rebarShapeDrivenAccessor.Pitch = 0.1;
-               rebarShapeDrivenAccessor.BaseFinishingTurns = 3;
-               rebarShapeDrivenAccessor.TopFinishingTurns = 3;
+                rebarShapeDrivenAccessor.ScaleToBoxFor3D(origin, xVec, yVec, 10.0);
+                rebarShapeDrivenAccessor.Height = m_geometryData.DrivingLength - 0.1;
+                rebarShapeDrivenAccessor.Pitch = 0.1;
+                rebarShapeDrivenAccessor.BaseFinishingTurns = 3;
+                rebarShapeDrivenAccessor.TopFinishingTurns = 3;
             }
             else
             {

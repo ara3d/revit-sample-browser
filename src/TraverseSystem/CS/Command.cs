@@ -19,21 +19,22 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
-using System.Reflection;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
-using Element = Autodesk.Revit.DB.Element;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.TraverseSystem.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -45,16 +46,15 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 var activeDoc = commandData.Application.ActiveUIDocument;
                 if (activeDoc == null)
                 {
-                    TaskDialog.Show("No Active Document", "There's no active document in Revit.", TaskDialogCommonButtons.Ok);
+                    TaskDialog.Show("No Active Document", "There's no active document in Revit.",
+                        TaskDialogCommonButtons.Ok);
                     return Result.Failed;
                 }
 
                 // Verify the number of selected elements
                 var selElements = new ElementSet();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
-                {
-                   selElements.Insert(activeDoc.Document.GetElement(elementId));
-                }
+                    selElements.Insert(activeDoc.Document.GetElement(elementId));
                 if (selElements.Size != 1)
                 {
                     message = "Please select ONLY one element from current project.";
@@ -77,7 +77,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 var system = ExtractMechanicalOrPipingSystem(selectedElement);
                 if (system == null)
                 {
-                    message = "The selected element does not belong to any well-connected mechanical or piping system. " +
+                    message =
+                        "The selected element does not belong to any well-connected mechanical or piping system. " +
                         "The sample will not support well-connected systems for the following reasons: " +
                         Environment.NewLine +
                         "- Some elements in a non-well-connected system may get lost when traversing the system in the " +
@@ -89,7 +90,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 // Traverse the system and dump the traversal into an XML file
                 var tree = new TraversalTree(activeDoc.Document, system);
                 tree.Traverse();
-                var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "traversal.xml");
+                var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "traversal.xml");
                 tree.DumpIntoXML(fileName);
 
                 return Result.Succeeded;
@@ -102,7 +104,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         }
 
         /// <summary>
-        /// Get the mechanical or piping system from selected element
+        ///     Get the mechanical or piping system from selected element
         /// </summary>
         /// <param name="selectedElement">Selected element</param>
         /// <returns>The extracted mechanical or piping system. Null if no expected system is found.</returns>
@@ -156,44 +158,32 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         }
 
         /// <summary>
-        /// Get the mechanical or piping system from the connectors of selected element
+        ///     Get the mechanical or piping system from the connectors of selected element
         /// </summary>
         /// <param name="connectors">Connectors of selected element</param>
         /// <returns>The found mechanical or piping system</returns>
-        static private MEPSystem ExtractSystemFromConnectors(ConnectorSet connectors)
+        private static MEPSystem ExtractSystemFromConnectors(ConnectorSet connectors)
         {
             MEPSystem system = null;
 
-            if (connectors == null || connectors.Size == 0)
-            {
-                return null;
-            }
+            if (connectors == null || connectors.Size == 0) return null;
 
             // Get well-connected mechanical or piping systems from each connector
             var systems = new List<MEPSystem>();
             foreach (Connector connector in connectors)
             {
                 var tmpSystem = connector.MEPSystem;
-                if (tmpSystem == null)
-                {
-                    continue;
-                }
+                if (tmpSystem == null) continue;
 
                 var ms = tmpSystem as MechanicalSystem;
                 if (ms != null)
                 {
-                    if (ms.IsWellConnected)
-                    {
-                        systems.Add(tmpSystem);
-                    }
+                    if (ms.IsWellConnected) systems.Add(tmpSystem);
                 }
                 else
                 {
                     var ps = tmpSystem as PipingSystem;
-                    if (ps != null && ps.IsWellConnected)
-                    {
-                        systems.Add(tmpSystem);
-                    }
+                    if (ps != null && ps.IsWellConnected) systems.Add(tmpSystem);
                 }
             }
 
@@ -203,18 +193,14 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             {
                 var countOfElements = 0;
                 foreach (var sys in systems)
-                {
                     if (sys.Elements.Size > countOfElements)
                     {
                         system = sys;
                         countOfElements = sys.Elements.Size;
                     }
-                }
             }
 
             return system;
         }
     }
 }
-
-

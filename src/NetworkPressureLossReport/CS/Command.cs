@@ -20,22 +20,22 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NetworkPressureLossReport
 {
     /// <summary>
-    /// Demonstrate how to find all networks available in the active document.
+    ///     Demonstrate how to find all networks available in the active document.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
             // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
@@ -44,5 +44,5 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
 
             return Result.Succeeded;
         }
-            }
+    }
 }

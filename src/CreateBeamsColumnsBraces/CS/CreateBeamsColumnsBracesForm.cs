@@ -22,44 +22,49 @@
 
 
 using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
+using ComboBox = System.Windows.Forms.ComboBox;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
 {
     /// <summary>
-    /// UI
+    ///     UI
     /// </summary>
     public class CreateBeamsColumnsBracesForm : Form
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.Container components = null;
-        private Button OKButton;
-        private System.Windows.Forms.TextBox XTextBox;
-        private System.Windows.Forms.TextBox DistanceTextBox;
-        private System.Windows.Forms.TextBox YTextBox;
-        private System.Windows.Forms.ComboBox columnComboBox;
-        private System.Windows.Forms.ComboBox beamComboBox;
-        private System.Windows.Forms.ComboBox braceComboBox;
-        private Button cancelButton;
-        private System.Windows.Forms.TextBox floornumberTextBox;
-        private Label columnLabel;
+        private ComboBox beamComboBox;
         private Label beamLabel;
+        private ComboBox braceComboBox;
         private Label braceLabel;
+        private Button cancelButton;
+        private ComboBox columnComboBox;
+        private Label columnLabel;
+
+        /// <summary>
+        ///     Required designer variable.
+        /// </summary>
+        private readonly Container components = null;
+
         private Label DistanceLabel;
-        private Label YLabel;
-        private Label XLabel;
+        private TextBox DistanceTextBox;
         private Label floornumberLabel;
-        private Label unitLabel;
+        private TextBox floornumberTextBox;
 
         // To store the datas
-        Command m_dataBuffer;
+        private readonly Command m_dataBuffer;
+        private Button OKButton;
+        private Label unitLabel;
+        private Label XLabel;
+        private TextBox XTextBox;
+        private Label YLabel;
+        private TextBox YTextBox;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="dataBuffer">the revit datas</param>
         public CreateBeamsColumnsBracesForm(Command dataBuffer)
@@ -73,223 +78,218 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         }
 
         /// <summary>
-        /// Clean up any resources being used.
+        ///     Clean up any resources being used.
         /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 if (components != null)
-                {
                     components.Dispose();
-                }
-            }
             base.Dispose(disposing);
         }
 
-                /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// <summary>
+        ///     Required method for Designer support - do not modify
+        ///     the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.OKButton = new System.Windows.Forms.Button();
-            this.XTextBox = new System.Windows.Forms.TextBox();
-            this.YTextBox = new System.Windows.Forms.TextBox();
-            this.DistanceTextBox = new System.Windows.Forms.TextBox();
-            this.columnComboBox = new System.Windows.Forms.ComboBox();
-            this.beamComboBox = new System.Windows.Forms.ComboBox();
-            this.braceComboBox = new System.Windows.Forms.ComboBox();
-            this.columnLabel = new System.Windows.Forms.Label();
-            this.beamLabel = new System.Windows.Forms.Label();
-            this.braceLabel = new System.Windows.Forms.Label();
-            this.floornumberTextBox = new System.Windows.Forms.TextBox();
-            this.DistanceLabel = new System.Windows.Forms.Label();
-            this.YLabel = new System.Windows.Forms.Label();
-            this.XLabel = new System.Windows.Forms.Label();
-            this.floornumberLabel = new System.Windows.Forms.Label();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.unitLabel = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            OKButton = new Button();
+            XTextBox = new TextBox();
+            YTextBox = new TextBox();
+            DistanceTextBox = new TextBox();
+            columnComboBox = new ComboBox();
+            beamComboBox = new ComboBox();
+            braceComboBox = new ComboBox();
+            columnLabel = new Label();
+            beamLabel = new Label();
+            braceLabel = new Label();
+            floornumberTextBox = new TextBox();
+            DistanceLabel = new Label();
+            YLabel = new Label();
+            XLabel = new Label();
+            floornumberLabel = new Label();
+            cancelButton = new Button();
+            unitLabel = new Label();
+            SuspendLayout();
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(296, 208);
-            this.OKButton.Name = "OKButton";
-            this.OKButton.TabIndex = 8;
-            this.OKButton.Text = "&OK";
-            this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
+            OKButton.Location = new Point(296, 208);
+            OKButton.Name = "OKButton";
+            OKButton.TabIndex = 8;
+            OKButton.Text = "&OK";
+            OKButton.Click += OKButton_Click;
             // 
             // XTextBox
             // 
-            this.XTextBox.Location = new System.Drawing.Point(16, 96);
-            this.XTextBox.Name = "XTextBox";
-            this.XTextBox.Size = new System.Drawing.Size(136, 20);
-            this.XTextBox.TabIndex = 2;
-            this.XTextBox.Text = "";
-            this.XTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.XTextBox_Validating);
+            XTextBox.Location = new Point(16, 96);
+            XTextBox.Name = "XTextBox";
+            XTextBox.Size = new Size(136, 20);
+            XTextBox.TabIndex = 2;
+            XTextBox.Text = "";
+            XTextBox.Validating += XTextBox_Validating;
             // 
             // YTextBox
             // 
-            this.YTextBox.Location = new System.Drawing.Point(16, 152);
-            this.YTextBox.Name = "YTextBox";
-            this.YTextBox.Size = new System.Drawing.Size(136, 20);
-            this.YTextBox.TabIndex = 3;
-            this.YTextBox.Text = "";
-            this.YTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.YTextBox_Validating);
+            YTextBox.Location = new Point(16, 152);
+            YTextBox.Name = "YTextBox";
+            YTextBox.Size = new Size(136, 20);
+            YTextBox.TabIndex = 3;
+            YTextBox.Text = "";
+            YTextBox.Validating += YTextBox_Validating;
             // 
             // DistanceTextBox
             // 
-            this.DistanceTextBox.Location = new System.Drawing.Point(16, 40);
-            this.DistanceTextBox.Name = "DistanceTextBox";
-            this.DistanceTextBox.Size = new System.Drawing.Size(112, 20);
-            this.DistanceTextBox.TabIndex = 1;
-            this.DistanceTextBox.Text = "";
-            this.DistanceTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.DistanceTextBox_Validating);
+            DistanceTextBox.Location = new Point(16, 40);
+            DistanceTextBox.Name = "DistanceTextBox";
+            DistanceTextBox.Size = new Size(112, 20);
+            DistanceTextBox.TabIndex = 1;
+            DistanceTextBox.Text = "";
+            DistanceTextBox.Validating += DistanceTextBox_Validating;
             // 
             // columnComboBox
             // 
-            this.columnComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.columnComboBox.Location = new System.Drawing.Point(240, 40);
-            this.columnComboBox.Name = "columnComboBox";
-            this.columnComboBox.Size = new System.Drawing.Size(288, 21);
-            this.columnComboBox.TabIndex = 5;
+            columnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            columnComboBox.Location = new Point(240, 40);
+            columnComboBox.Name = "columnComboBox";
+            columnComboBox.Size = new Size(288, 21);
+            columnComboBox.TabIndex = 5;
             // 
             // beamComboBox
             // 
-            this.beamComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.beamComboBox.Location = new System.Drawing.Point(240, 96);
-            this.beamComboBox.Name = "beamComboBox";
-            this.beamComboBox.Size = new System.Drawing.Size(288, 21);
-            this.beamComboBox.TabIndex = 6;
+            beamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            beamComboBox.Location = new Point(240, 96);
+            beamComboBox.Name = "beamComboBox";
+            beamComboBox.Size = new Size(288, 21);
+            beamComboBox.TabIndex = 6;
             // 
             // braceComboBox
             // 
-            this.braceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.braceComboBox.Location = new System.Drawing.Point(240, 152);
-            this.braceComboBox.Name = "braceComboBox";
-            this.braceComboBox.Size = new System.Drawing.Size(288, 21);
-            this.braceComboBox.TabIndex = 7;
+            braceComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            braceComboBox.Location = new Point(240, 152);
+            braceComboBox.Name = "braceComboBox";
+            braceComboBox.Size = new Size(288, 21);
+            braceComboBox.TabIndex = 7;
             // 
             // columnLabel
             // 
-            this.columnLabel.Location = new System.Drawing.Point(240, 16);
-            this.columnLabel.Name = "columnLabel";
-            this.columnLabel.Size = new System.Drawing.Size(120, 23);
-            this.columnLabel.TabIndex = 10;
-            this.columnLabel.Text = "Type of Columns:";
+            columnLabel.Location = new Point(240, 16);
+            columnLabel.Name = "columnLabel";
+            columnLabel.Size = new Size(120, 23);
+            columnLabel.TabIndex = 10;
+            columnLabel.Text = "Type of Columns:";
             // 
             // beamLabel
             // 
-            this.beamLabel.Location = new System.Drawing.Point(240, 72);
-            this.beamLabel.Name = "beamLabel";
-            this.beamLabel.Size = new System.Drawing.Size(120, 23);
-            this.beamLabel.TabIndex = 11;
-            this.beamLabel.Text = "Type of Beams:";
+            beamLabel.Location = new Point(240, 72);
+            beamLabel.Name = "beamLabel";
+            beamLabel.Size = new Size(120, 23);
+            beamLabel.TabIndex = 11;
+            beamLabel.Text = "Type of Beams:";
             // 
             // braceLabel
             // 
-            this.braceLabel.Location = new System.Drawing.Point(240, 128);
-            this.braceLabel.Name = "braceLabel";
-            this.braceLabel.Size = new System.Drawing.Size(120, 23);
-            this.braceLabel.TabIndex = 12;
-            this.braceLabel.Text = "Type of Braces:";
+            braceLabel.Location = new Point(240, 128);
+            braceLabel.Name = "braceLabel";
+            braceLabel.Size = new Size(120, 23);
+            braceLabel.TabIndex = 12;
+            braceLabel.Text = "Type of Braces:";
             // 
             // floornumberTextBox
             // 
-            this.floornumberTextBox.Location = new System.Drawing.Point(16, 208);
-            this.floornumberTextBox.Name = "floornumberTextBox";
-            this.floornumberTextBox.Size = new System.Drawing.Size(112, 20);
-            this.floornumberTextBox.TabIndex = 4;
-            this.floornumberTextBox.Text = "";
-            this.floornumberTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.floornumberTextBox_Validating);
+            floornumberTextBox.Location = new Point(16, 208);
+            floornumberTextBox.Name = "floornumberTextBox";
+            floornumberTextBox.Size = new Size(112, 20);
+            floornumberTextBox.TabIndex = 4;
+            floornumberTextBox.Text = "";
+            floornumberTextBox.Validating += floornumberTextBox_Validating;
             // 
             // DistanceLabel
             // 
-            this.DistanceLabel.Location = new System.Drawing.Point(16, 16);
-            this.DistanceLabel.Name = "DistanceLabel";
-            this.DistanceLabel.Size = new System.Drawing.Size(152, 23);
-            this.DistanceLabel.TabIndex = 14;
-            this.DistanceLabel.Text = "Distance between Columns:";
+            DistanceLabel.Location = new Point(16, 16);
+            DistanceLabel.Name = "DistanceLabel";
+            DistanceLabel.Size = new Size(152, 23);
+            DistanceLabel.TabIndex = 14;
+            DistanceLabel.Text = "Distance between Columns:";
             // 
             // YLabel
             // 
-            this.YLabel.Location = new System.Drawing.Point(16, 128);
-            this.YLabel.Name = "YLabel";
-            this.YLabel.Size = new System.Drawing.Size(200, 23);
-            this.YLabel.TabIndex = 15;
-            this.YLabel.Text = "Number of Columns in the Y Direction:";
+            YLabel.Location = new Point(16, 128);
+            YLabel.Name = "YLabel";
+            YLabel.Size = new Size(200, 23);
+            YLabel.TabIndex = 15;
+            YLabel.Text = "Number of Columns in the Y Direction:";
             // 
             // XLabel
             // 
-            this.XLabel.Location = new System.Drawing.Point(16, 72);
-            this.XLabel.Name = "XLabel";
-            this.XLabel.Size = new System.Drawing.Size(200, 23);
-            this.XLabel.TabIndex = 16;
-            this.XLabel.Text = "Number of Columns in the X Direction:";
+            XLabel.Location = new Point(16, 72);
+            XLabel.Name = "XLabel";
+            XLabel.Size = new Size(200, 23);
+            XLabel.TabIndex = 16;
+            XLabel.Text = "Number of Columns in the X Direction:";
             // 
             // floornumberLabel
             // 
-            this.floornumberLabel.Location = new System.Drawing.Point(16, 184);
-            this.floornumberLabel.Name = "floornumberLabel";
-            this.floornumberLabel.Size = new System.Drawing.Size(144, 23);
-            this.floornumberLabel.TabIndex = 17;
-            this.floornumberLabel.Text = "Number of Floors:";
+            floornumberLabel.Location = new Point(16, 184);
+            floornumberLabel.Name = "floornumberLabel";
+            floornumberLabel.Size = new Size(144, 23);
+            floornumberLabel.TabIndex = 17;
+            floornumberLabel.Text = "Number of Floors:";
             // 
             // cancelButton
             // 
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(392, 208);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.TabIndex = 9;
-            this.cancelButton.Text = "&Cancel";
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            cancelButton.DialogResult = DialogResult.Cancel;
+            cancelButton.Location = new Point(392, 208);
+            cancelButton.Name = "cancelButton";
+            cancelButton.TabIndex = 9;
+            cancelButton.Text = "&Cancel";
+            cancelButton.Click += cancelButton_Click;
             // 
             // unitLabel
             // 
-            this.unitLabel.Location = new System.Drawing.Point(136, 42);
-            this.unitLabel.Name = "unitLabel";
-            this.unitLabel.Size = new System.Drawing.Size(32, 23);
-            this.unitLabel.TabIndex = 18;
-            this.unitLabel.Text = "feet";
+            unitLabel.Location = new Point(136, 42);
+            unitLabel.Name = "unitLabel";
+            unitLabel.Size = new Size(32, 23);
+            unitLabel.TabIndex = 18;
+            unitLabel.Text = "feet";
             // 
             // CreateBeamsColumnsBracesForm
             // 
-            this.AcceptButton = this.OKButton;
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(546, 246);
-            this.Controls.Add(this.unitLabel);
-            this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.floornumberLabel);
-            this.Controls.Add(this.XLabel);
-            this.Controls.Add(this.YLabel);
-            this.Controls.Add(this.DistanceLabel);
-            this.Controls.Add(this.floornumberTextBox);
-            this.Controls.Add(this.DistanceTextBox);
-            this.Controls.Add(this.YTextBox);
-            this.Controls.Add(this.XTextBox);
-            this.Controls.Add(this.braceLabel);
-            this.Controls.Add(this.beamLabel);
-            this.Controls.Add(this.columnLabel);
-            this.Controls.Add(this.braceComboBox);
-            this.Controls.Add(this.beamComboBox);
-            this.Controls.Add(this.columnComboBox);
-            this.Controls.Add(this.OKButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "CreateBeamsColumnsBracesForm";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Create Beams Columns and Braces";
-            this.Load += new System.EventHandler(this.CreateBeamsColumnsBracesForm_Load);
-            this.ResumeLayout(false);
-
+            AcceptButton = OKButton;
+            AutoScaleBaseSize = new Size(5, 13);
+            CancelButton = cancelButton;
+            ClientSize = new Size(546, 246);
+            Controls.Add(unitLabel);
+            Controls.Add(cancelButton);
+            Controls.Add(floornumberLabel);
+            Controls.Add(XLabel);
+            Controls.Add(YLabel);
+            Controls.Add(DistanceLabel);
+            Controls.Add(floornumberTextBox);
+            Controls.Add(DistanceTextBox);
+            Controls.Add(YTextBox);
+            Controls.Add(XTextBox);
+            Controls.Add(braceLabel);
+            Controls.Add(beamLabel);
+            Controls.Add(columnLabel);
+            Controls.Add(braceComboBox);
+            Controls.Add(beamComboBox);
+            Controls.Add(columnComboBox);
+            Controls.Add(OKButton);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "CreateBeamsColumnsBracesForm";
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Create Beams Columns and Braces";
+            Load += CreateBeamsColumnsBracesForm_Load;
+            ResumeLayout(false);
         }
-        
+
         /// <summary>
-        /// Refresh the text box for the default data
+        ///     Refresh the text box for the default data
         /// </summary>
         private void TextBoxRefresh()
         {
@@ -306,12 +306,15 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var notLoadSymbol = false;
             if (0 == m_dataBuffer.ColumnMaps.Count)
             {
-                TaskDialog.Show("Revit", "No Structural Columns family is loaded in the project, please load one firstly.");
+                TaskDialog.Show("Revit",
+                    "No Structural Columns family is loaded in the project, please load one firstly.");
                 notLoadSymbol = true;
             }
+
             if (0 == m_dataBuffer.BeamMaps.Count)
             {
-                TaskDialog.Show("Revit", "No Structural Framing family is loaded in the project, please load one firstly.");
+                TaskDialog.Show("Revit",
+                    "No Structural Framing family is loaded in the project, please load one firstly.");
                 notLoadSymbol = true;
             }
 
@@ -336,7 +339,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         }
 
         /// <summary>
-        /// accept use's input and create columns, beams and braces
+        ///     accept use's input and create columns, beams and braces
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -366,7 +369,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         }
 
         /// <summary>
-        /// cancel the command
+        ///     cancel the command
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -377,11 +380,11 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         }
 
         /// <summary>
-        /// Verify the distance
+        ///     Verify the distance
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DistanceTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        private void DistanceTextBox_Validating(object sender, CancelEventArgs e)
         {
             var distance = 0.1;
             try
@@ -409,16 +412,15 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 TaskDialog.Show("Revit", "Please enter a value less than 30000.");
                 DistanceTextBox.Text = "";
                 DistanceTextBox.Focus();
-                return;
             }
         }
 
         /// <summary>
-        /// Verify the number of X direction
+        ///     Verify the number of X direction
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void XTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        private void XTextBox_Validating(object sender, CancelEventArgs e)
         {
             var xNumber = 1;
             try
@@ -430,6 +432,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 TaskDialog.Show("Revit", "Please input an integer for X direction between 1 to 20.");
                 XTextBox.Text = "";
             }
+
             if (xNumber < 1 || xNumber > 20)
             {
                 TaskDialog.Show("Revit", "Please input an integer for X direction between 1 to 20.");
@@ -438,11 +441,11 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         }
 
         /// <summary>
-        /// Verify the number of Y direction
+        ///     Verify the number of Y direction
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void YTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        private void YTextBox_Validating(object sender, CancelEventArgs e)
         {
             var yNumber = 1;
             try
@@ -454,6 +457,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 TaskDialog.Show("Revit", "Please input an integer for Y direction between 1 to 20.");
                 YTextBox.Text = "";
             }
+
             if (yNumber < 1 || yNumber > 20)
             {
                 TaskDialog.Show("Revit", "Please input an integer for Y direction between 1 to 20.");
@@ -462,11 +466,11 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         }
 
         /// <summary>
-        /// Verify the number of floors
+        ///     Verify the number of floors
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void floornumberTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        private void floornumberTextBox_Validating(object sender, CancelEventArgs e)
         {
             var floorNumber = 1;
             try
@@ -478,6 +482,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 TaskDialog.Show("Revit", "Please input an integer for the number of floors between 1 to 10.");
                 floornumberTextBox.Text = "";
             }
+
             if (floorNumber < 1 || floorNumber > 10)
             {
                 TaskDialog.Show("Revit", "Please input an integer for the number of floors between 1 to 10.");

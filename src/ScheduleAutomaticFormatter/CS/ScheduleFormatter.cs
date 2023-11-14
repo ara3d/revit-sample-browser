@@ -20,18 +20,96 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
+using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
-    /// A class capable of formatting schedules with alternating background colors on the columns
+    ///     A class capable of formatting schedules with alternating background colors on the columns
     /// </summary>
-    class ScheduleFormatter : IUpdater
+    internal class ScheduleFormatter : IUpdater
     {
         /// <summary>
-        /// Formats the schedule with alternating background colors
+        ///     Constructs a new schedule formatter utility.
+        /// </summary>
+        public ScheduleFormatter()
+        {
+            Schema = null;
+            AddInId = null;
+        }
+
+
+        /// <summary>
+        ///     The ExtensibleStorage schema for marking schedules which have been formatted.
+        /// </summary>
+        public Schema Schema { get; set; }
+
+        /// <summary>
+        ///     The add-in id.
+        /// </summary>
+        public AddInId AddInId { get; set; }
+
+
+        /// <summary>
+        ///     GUID of the updater.
+        /// </summary>
+        private static Guid UpdaterGUID => new Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
+
+
+        /// <summary>
+        ///     Implements IUpdater.Execute()
+        /// </summary>
+        /// <param name="data"></param>
+        public void Execute(UpdaterData data)
+        {
+            // Only previously formatted schedules should trigger - so just reformat them
+            foreach (var scheduleId in data.GetModifiedElementIds())
+            {
+                var schedule = data.GetDocument().GetElement(scheduleId) as ViewSchedule;
+                FormatScheduleColumns(schedule);
+            }
+        }
+
+        /// <summary>
+        ///     Implements IUpdater.GetAdditionalInformation()
+        /// </summary>
+        /// <returns></returns>
+        public string GetAdditionalInformation()
+        {
+            return "Automatic schedule formatter";
+        }
+
+        /// <summary>
+        ///     Implements IUpdater.GetChangePriority()
+        /// </summary>
+        /// <returns></returns>
+        public ChangePriority GetChangePriority()
+        {
+            return ChangePriority.Views;
+        }
+
+        /// <summary>
+        ///     Implements IUpdater.GetUpdaterId()
+        /// </summary>
+        /// <returns></returns>
+        public UpdaterId GetUpdaterId()
+        {
+            return new UpdaterId(AddInId, UpdaterGUID);
+        }
+
+        /// <summary>
+        ///     Implements IUpdater.GetUpdaterName()
+        /// </summary>
+        /// <returns></returns>
+        public string GetUpdaterName()
+        {
+            return "AutomaticScheduleFormatter";
+        }
+
+        /// <summary>
+        ///     Formats the schedule with alternating background colors
         /// </summary>
         /// <param name="viewSchedule"></param>
         public void FormatScheduleColumns(ViewSchedule viewSchedule)
@@ -48,14 +126,10 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             {
                 // Index 0, 2, etc use highlight color
                 if (index % 2 == 0)
-                {
                     applyHighlight = true;
-                }
                 // Index 1, 3, etc use no background color
                 else
-                {
                     applyHighlight = false;
-                }
 
                 // Get the field style
                 var field = definition.GetField(id);
@@ -73,91 +147,5 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
                 index++;
             }
         }
-
-        
-        /// <summary>
-        /// The ExtensibleStorage schema for marking schedules which have been formatted.
-        /// </summary>
-        public Schema Schema
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// The add-in id.
-        /// </summary>
-        public AddInId AddInId
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Constructs a new schedule formatter utility.
-        /// </summary>
-        public ScheduleFormatter()
-        {
-            Schema = null;
-            AddInId = null;
-        }
-
-        
-        /// <summary>
-        /// Implements IUpdater.Execute()
-        /// </summary>
-        /// <param name="data"></param>
-        public void Execute(UpdaterData data)
-        {
-            // Only previously formatted schedules should trigger - so just reformat them
-            foreach (var scheduleId in data.GetModifiedElementIds())
-            {
-                var schedule = data.GetDocument().GetElement(scheduleId) as ViewSchedule;
-                FormatScheduleColumns(schedule);
-            }
-        }
-
-        /// <summary>
-        /// Implements IUpdater.GetAdditionalInformation()
-        /// </summary>
-        /// <returns></returns>
-        public string GetAdditionalInformation()
-        {
-            return "Automatic schedule formatter";
-        }
-
-        /// <summary>
-        /// Implements IUpdater.GetChangePriority()
-        /// </summary>
-        /// <returns></returns>
-        public ChangePriority GetChangePriority()
-        {
-            return ChangePriority.Views;
-        }
-
-        /// <summary>
-        /// Implements IUpdater.GetUpdaterId()
-        /// </summary>
-        /// <returns></returns>
-        public UpdaterId GetUpdaterId()
-        {
-            return new UpdaterId(AddInId, UpdaterGUID);
-        }
-
-        /// <summary>
-        /// Implements IUpdater.GetUpdaterName()
-        /// </summary>
-        /// <returns></returns>
-        public string GetUpdaterName()
-        {
-            return "AutomaticScheduleFormatter";
-        }
-
-        
-        /// <summary>
-        /// GUID of the updater.
-        /// </summary>
-        private static System.Guid UpdaterGUID => new System.Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
-
-            }
+    }
 }

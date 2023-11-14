@@ -19,22 +19,26 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
+
 using System;
+using Autodesk.Revit.DB;
+using Form = System.Windows.Forms.Form;
+using View = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Provide a dialog which lets users choose views to export.
+    ///     Provide a dialog which lets users choose views to export.
     /// </summary>
-    public partial class SelectViewsForm : System.Windows.Forms.Form
+    public partial class SelectViewsForm : Form
     {
         /// <summary>
-        /// Data class
+        ///     Data class
         /// </summary>
-        private SelectViewsData m_selectViewsData;
+        private readonly SelectViewsData m_selectViewsData;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="selectViewsData"></param>
         public SelectViewsForm(SelectViewsData selectViewsData)
@@ -45,41 +49,35 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize values and status of controls
+        ///     Initialize values and status of controls
         /// </summary>
-        void InitializeControls()
+        private void InitializeControls()
         {
             UpdateViews();
         }
 
         /// <summary>
-        /// Check all items
+        ///     Check all items
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonCheckAll_Click(object sender, EventArgs e)
         {
-            for(var i = 0; i < checkedListBoxViews.Items.Count; ++i)
-            {
-                checkedListBoxViews.SetItemChecked(i, true);
-            }
+            for (var i = 0; i < checkedListBoxViews.Items.Count; ++i) checkedListBoxViews.SetItemChecked(i, true);
         }
 
         /// <summary>
-        /// Un-check all items
+        ///     Un-check all items
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonCheckNone_Click(object sender, EventArgs e)
         {
-            for (var i = 0; i < checkedListBoxViews.Items.Count; ++i)
-            {
-                checkedListBoxViews.SetItemChecked(i, false);
-            }
+            for (var i = 0; i < checkedListBoxViews.Items.Count; ++i) checkedListBoxViews.SetItemChecked(i, false);
         }
 
         /// <summary>
-        /// Whether to show the sheets
+        ///     Whether to show the sheets
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -89,7 +87,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Whether to show the views (except sheets)
+        ///     Whether to show the views (except sheets)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -99,50 +97,42 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Update the views in the checked list box
+        ///     Update the views in the checked list box
         /// </summary>
         private void UpdateViews()
         {
             checkedListBoxViews.Items.Clear();
             if (checkBoxViews.Checked)
-            {
-                foreach (Autodesk.Revit.DB.View view in m_selectViewsData.PrintableViews)
-                {
-                    checkedListBoxViews.Items.Add(view.ViewType.ToString() + ": " + view.Name);
-                }
-            }
+                foreach (View view in m_selectViewsData.PrintableViews)
+                    checkedListBoxViews.Items.Add(view.ViewType + ": " + view.Name);
 
             if (checkBoxSheets.Checked)
-            {
-                foreach (Autodesk.Revit.DB.ViewSheet viewSheet in m_selectViewsData.PrintableSheets)
-                {
+                foreach (ViewSheet viewSheet in m_selectViewsData.PrintableSheets)
                     checkedListBoxViews.Items.Add("Drawing Sheet: " + viewSheet.SheetNumber + " - " +
-                        viewSheet.Name);
-                }
-            }
+                                                  viewSheet.Name);
             checkedListBoxViews.Sorted = true;
         }
 
         /// <summary>
-        /// OK button clicked
+        ///     OK button clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
             GetSelectedViews();
-            Close();           
+            Close();
         }
 
         /// <summary>
-        /// Transfer information back to SelectViewsData class
+        ///     Transfer information back to SelectViewsData class
         /// </summary>
         /// <returns></returns>
         private void GetSelectedViews()
         {
             m_selectViewsData.Contain3DView = false;
 
-            foreach(int index in checkedListBoxViews.CheckedIndices)
+            foreach (int index in checkedListBoxViews.CheckedIndices)
             {
                 var text = checkedListBoxViews.Items[index].ToString();
                 var sheetPrefix = "Drawing Sheet: ";
@@ -151,29 +141,24 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     text = text.Substring(sheetPrefix.Length);
                     var sheetNumber = text.Substring(0, text.IndexOf(" - "));
                     var sheetViewName = text.Substring(text.IndexOf(" - ") + 3);
-                    foreach(Autodesk.Revit.DB.ViewSheet viewSheet in m_selectViewsData.PrintableSheets)
-                    {
-                        if(viewSheet.SheetNumber == sheetNumber && viewSheet.Name == sheetViewName)
+                    foreach (ViewSheet viewSheet in m_selectViewsData.PrintableSheets)
+                        if (viewSheet.SheetNumber == sheetNumber && viewSheet.Name == sheetViewName)
                         {
                             m_selectViewsData.SelectedViews.Insert(viewSheet);
                             break;
                         }
-                    }
                 }
                 else
                 {
                     var viewType = text.Substring(0, text.IndexOf(": "));
                     var viewName = text.Substring(text.IndexOf(": ") + 2);
-                    foreach (Autodesk.Revit.DB.View view in m_selectViewsData.PrintableViews)
+                    foreach (View view in m_selectViewsData.PrintableViews)
                     {
                         var vt = view.ViewType;
-                        if(viewType == vt.ToString() && viewName == view.Name)
+                        if (viewType == vt.ToString() && viewName == view.Name)
                         {
                             m_selectViewsData.SelectedViews.Insert(view);
-                            if (vt == Autodesk.Revit.DB.ViewType.ThreeD)
-                            {
-                                m_selectViewsData.Contain3DView = true;
-                            }
+                            if (vt == ViewType.ThreeD) m_selectViewsData.Contain3DView = true;
                             break;
                         }
                     }

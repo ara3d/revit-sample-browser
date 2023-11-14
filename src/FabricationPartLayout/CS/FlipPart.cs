@@ -21,59 +21,60 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.FabricationPartLayout.CS
 {
-   /// <summary>
-   /// Implements the Revit add-in interface IExternalCommand
-   /// </summary>
-   [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class FlipPart : IExternalCommand
-   {
-      public virtual Result Execute(ExternalCommandData commandData
-          , ref string message, ElementSet elements)
-      {
-         try
-         {
-            // check user selection
-            var uiDoc = commandData.Application.ActiveUIDocument;
-            var doc = uiDoc.Document;
-
-            var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part to flip.");
-            var part = doc.GetElement(refObj) as FabricationPart;
-
-            if (part == null)
+    /// <summary>
+    ///     Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    public class FlipPart : IExternalCommand
+    {
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
+        {
+            try
             {
-               message = "The selected element is not a fabrication part.";
-               return Result.Failed;
-            }
+                // check user selection
+                var uiDoc = commandData.Application.ActiveUIDocument;
+                var doc = uiDoc.Document;
 
-            if (part.CanFlipPart() == false)
+                var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part to flip.");
+                var part = doc.GetElement(refObj) as FabricationPart;
+
+                if (part == null)
+                {
+                    message = "The selected element is not a fabrication part.";
+                    return Result.Failed;
+                }
+
+                if (part.CanFlipPart() == false)
+                {
+                    message = "The selected fabrication part cannot be flipped";
+                    return Result.Failed;
+                }
+
+                using (var trans = new Transaction(doc, "flip part"))
+                {
+                    trans.Start();
+
+                    part.Flip();
+
+                    trans.Commit();
+                }
+
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
             {
-               message = "The selected fabrication part cannot be flipped";
-               return Result.Failed;
+                message = ex.Message;
+                return Result.Failed;
             }
-
-            using (var trans = new Transaction(doc, "flip part"))
-            {
-               trans.Start();
-
-               part.Flip();
-
-               trans.Commit();
-            }
-
-            return Result.Succeeded;
-         }
-         catch (Exception ex)
-         {
-            message = ex.Message;
-            return Result.Failed;
-         }
-      }
-   }
+        }
+    }
 }

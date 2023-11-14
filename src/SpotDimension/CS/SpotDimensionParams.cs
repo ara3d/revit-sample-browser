@@ -22,29 +22,40 @@
 
 
 using System;
-using System.Data;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.SpotDimension.CS
 {
     /// <summary>
-    /// this class is used to get some information 
-    /// of SpotDimension's Parameters   
+    ///     this class is used to get some information
+    ///     of SpotDimension's Parameters
     /// </summary>
     public class SpotDimensionParams
     {
-        const double ToFractionalInches = 0.08333333;               //const number to convert number to FractionalInches
-        static List<string> s_elevationOrigin = new List<string>();   //list store information about Elevation origin
-        static List<string> s_textOrientation = new List<string>();   //list store information about Text Orientation
-        static List<string> s_indicator = new List<string>();         //list store information about s_indicator
-        static List<string> s_topBottomValue = new List<string>();    //list store information about Top and Bottom Value
-        static List<string> s_textBackground = new List<string>();    //list store information about Text background
-        Document m_document;                                        //a reference to Revit's document
+        private const double ToFractionalInches = 0.08333333; //const number to convert number to FractionalInches
+
+        private static readonly List<string>
+            s_elevationOrigin = new List<string>(); //list store information about Elevation origin
+
+        private static readonly List<string>
+            s_textOrientation = new List<string>(); //list store information about Text Orientation
+
+        private static readonly List<string>
+            s_indicator = new List<string>(); //list store information about s_indicator
+
+        private static readonly List<string>
+            s_topBottomValue = new List<string>(); //list store information about Top and Bottom Value
+
+        private static readonly List<string>
+            s_textBackground = new List<string>(); //list store information about Text background
+
+        private readonly Document m_document; //a reference to Revit's document
 
         /// <summary>
-        /// static constructor used to initialize lists
+        ///     static constructor used to initialize lists
         /// </summary>
         static SpotDimensionParams()
         {
@@ -68,7 +79,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         }
 
         /// <summary>
-        /// a constructor of class SpotDimensionParams
+        ///     a constructor of class SpotDimensionParams
         /// </summary>
         /// <param name="document">external command document of Revit</param>
         public SpotDimensionParams(Document document)
@@ -77,8 +88,8 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         }
 
         /// <summary>
-        /// get a datatable contains parameters'information of SpotDimension
-        /// here, almost only get Type Parameters of SpotDimension
+        ///     get a datatable contains parameters'information of SpotDimension
+        ///     here, almost only get Type Parameters of SpotDimension
         /// </summary>
         /// <param name="spotDimension">the SpotDimension need to be dealt with</param>
         /// <returns>a DataTable store Parameter information</returns>
@@ -87,11 +98,8 @@ namespace Revit.SDK.Samples.SpotDimension.CS
             try
             {
                 //check whether is null
-                if (null == spotDimension)
-                {
-                    return null;
-                }                
-                
+                if (null == spotDimension) return null;
+
                 //create an empty datatable
                 var parameterTable = CreateTable();
 
@@ -101,7 +109,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 //begin to get Parameters and add them to a DataTable
                 var temporaryValue = "";
 
-                
+
                 //string formatter
                 var formatter = "#0.000";
 
@@ -113,13 +121,9 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 var elementId = temporaryParam.AsElementId();
                 //if not found that element, add string "None" to DataTable
                 if (ElementId.InvalidElementId == elementId)
-                {
                     temporaryValue = "None";
-                }
                 else
-                {
                     temporaryValue = m_document.GetElement(elementId).Name;
-                }
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //Leader Line Weight
@@ -128,7 +132,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //Leader Arrowhead Line Weight
-                temporaryParam = 
+                temporaryParam =
                     dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_TICK_MARK_PEN);
                 temporaryValue = temporaryParam.AsInteger().ToString();
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
@@ -138,32 +142,28 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 elementId = temporaryParam.AsElementId();
                 //if not found that element, add string "None" to DataTable
                 if (ElementId.InvalidElementId == elementId)
-                {
                     temporaryValue = "None";
-                }
                 else
-                {
                     temporaryValue = m_document.GetElement(elementId).Name;
-                }
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //Text Size
                 temporaryParam = dimensionType.get_Parameter(BuiltInParameter.TEXT_SIZE);
-                temporaryValue = 
+                temporaryValue =
                     (temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter) + "''";
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //Text Offset from Leader
-                temporaryParam = 
+                temporaryParam =
                     dimensionType.get_Parameter(BuiltInParameter.SPOT_TEXT_FROM_LEADER);
-                temporaryValue = 
+                temporaryValue =
                     (temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter) + "''";
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //Text Offset from Symbol
-                temporaryParam = 
+                temporaryParam =
                     dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_TEXT_HORIZ_OFFSET);
-                temporaryValue = 
+                temporaryValue =
                     (temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter) + "''";
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
@@ -171,31 +171,31 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 if ("Spot Coordinates" == spotDimension.Category.Name)
                 {
                     //Coordinate Origin
-                    temporaryParam = 
+                    temporaryParam =
                         dimensionType.get_Parameter(BuiltInParameter.SPOT_COORDINATE_BASE);
                     temporaryValue = temporaryParam.AsInteger().ToString();
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                     //Top Value
-                    temporaryParam = 
+                    temporaryParam =
                         dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_TOP_VALUE);
                     temporaryValue = s_topBottomValue[temporaryParam.AsInteger()];
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
-                    
+
                     //Bottom Value
-                    temporaryParam = 
+                    temporaryParam =
                         dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_BOT_VALUE);
                     temporaryValue = s_topBottomValue[temporaryParam.AsInteger()];
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                     //North / South s_indicator
-                    temporaryParam = 
+                    temporaryParam =
                         dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_IND_NS);
                     temporaryValue = temporaryParam.AsString();
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                     //East / West s_indicator
-                    temporaryParam = 
+                    temporaryParam =
                         dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_IND_EW);
                     temporaryValue = temporaryParam.AsString();
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
@@ -204,7 +204,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 else
                 {
                     //Instance Parameter----Value
-                    temporaryParam = 
+                    temporaryParam =
                         spotDimension.get_Parameter(BuiltInParameter.DIM_VALUE_LENGTH);
                     temporaryValue = temporaryParam.AsDouble().ToString(formatter) + "'";
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
@@ -215,14 +215,14 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                     //Elevation s_indicator
-                    temporaryParam = 
+                    temporaryParam =
                         dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_IND_ELEVATION);
                     temporaryValue = temporaryParam.AsString();
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
                 }
 
                 //Text Orientation
-                temporaryParam = 
+                temporaryParam =
                     dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_TEXT_ORIENTATION);
                 temporaryValue = s_textOrientation[temporaryParam.AsInteger()];
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
@@ -242,7 +242,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 temporaryValue = s_textBackground[temporaryParam.AsInteger()];
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
-                                return parameterTable;
+                return parameterTable;
             }
             catch (Exception ex)
             {
@@ -252,7 +252,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         }
 
         /// <summary>
-        /// Create an empty table with parameter's name column and value column
+        ///     Create an empty table with parameter's name column and value column
         /// </summary>
         /// <returns>a DataTable be initialized</returns>
         private DataTable CreateTable()
@@ -281,7 +281,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         }
 
         /// <summary>
-        /// add one row to datatable
+        ///     add one row to datatable
         /// </summary>
         /// <param name="parameterName">name of parameter</param>
         /// <param name="Value">value of parameter</param>

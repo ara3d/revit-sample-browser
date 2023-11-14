@@ -20,22 +20,20 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// Dimension on RebarShape.
+    ///     Dimension on RebarShape.
     /// </summary>
     public abstract class ConstraintOnRebarShape
     {
         /// <summary>
-        /// A wrapper of RebarShapeDefinition.
+        ///     A wrapper of RebarShapeDefinition.
         /// </summary>
         protected RebarShapeDef m_shapeDef;
 
         /// <summary>
-        /// Constructor, initialize fields.
+        ///     Constructor, initialize fields.
         /// </summary>
         /// <param name="def">RebarShapeDef object</param>
         protected ConstraintOnRebarShape(RebarShapeDef def)
@@ -44,7 +42,12 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Update the parameter list value for property grid.
+        ///     Name of the constraint.
+        /// </summary>
+        public string Name => GetType().Name;
+
+        /// <summary>
+        ///     Update the parameter list value for property grid.
         /// </summary>
         protected void UpdateParameterTypeConverter()
         {
@@ -52,12 +55,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Name of the constraint.
-        /// </summary>
-        public string Name => GetType().Name;
-
-        /// <summary>
-        /// Commit the dimension.
+        ///     Commit the dimension.
         /// </summary>
         public abstract void Commit();
     }

@@ -21,63 +21,63 @@
 // 
 
 
-using System;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Events;
+using Revit.SDK.Samples.UIAPI.CS.OptionsDialog;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {
-   public class AddTabCommand
-   {
+    public class AddTabCommand
+    {
+        private readonly UIControlledApplication _application;
 
-      public AddTabCommand(UIControlledApplication application)
-      {
-         _application = application;
-      }
+        public AddTabCommand(UIControlledApplication application)
+        {
+            _application = application;
+        }
 
-      public bool AddTabToOptionsDialog()
-      {
-         _application.DisplayingOptionsDialog += 
-            new EventHandler<Autodesk.Revit.UI.Events.DisplayingOptionsDialogEventArgs>(Command_DisplayingOptionDialog);
-         return true;
-      }
+        public bool AddTabToOptionsDialog()
+        {
+            _application.DisplayingOptionsDialog +=
+                Command_DisplayingOptionDialog;
+            return true;
+        }
 
-      void Command_DisplayingOptionDialog(object sender, Autodesk.Revit.UI.Events.DisplayingOptionsDialogEventArgs e)
-      {
-          // Actual options
-          var optionsControl = new OptionsDialog.Options();
-          var ch = new ContextualHelp(ContextualHelpType.Url, "http://www.autodesk.com/");
-          var extension = new TabbedDialogExtension(optionsControl, optionsControl.OnOK);
-          extension.OnRestoreDefaultsAction = optionsControl.OnRestoreDefaults;
-          extension.SetContextualHelp(ch);
-          e.AddTab("Demo options", extension);
+        private void Command_DisplayingOptionDialog(object sender, DisplayingOptionsDialogEventArgs e)
+        {
+            // Actual options
+            var optionsControl = new Options();
+            var ch = new ContextualHelp(ContextualHelpType.Url, "http://www.autodesk.com/");
+            var extension = new TabbedDialogExtension(optionsControl, optionsControl.OnOK);
+            extension.OnRestoreDefaultsAction = optionsControl.OnRestoreDefaults;
+            extension.SetContextualHelp(ch);
+            e.AddTab("Demo options", extension);
 
-          // Demo options
-          var userControl3 = new UserControl3("Product Information");
-          new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
-          var tdext3 = new TabbedDialogExtension(userControl3,
-             userControl3.OnOK);
-          tdext3.OnCancelAction = userControl3.OnCancel;
-          tdext3.OnRestoreDefaultsAction = userControl3.OnRestoreDefaults;
-          tdext3.SetContextualHelp(ch);
-          e.AddTab("Product Information", tdext3);
-            
+            // Demo options
+            var userControl3 = new UserControl3("Product Information");
+            new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
+            var tdext3 = new TabbedDialogExtension(userControl3,
+                userControl3.OnOK);
+            tdext3.OnCancelAction = userControl3.OnCancel;
+            tdext3.OnRestoreDefaultsAction = userControl3.OnRestoreDefaults;
+            tdext3.SetContextualHelp(ch);
+            e.AddTab("Product Information", tdext3);
+
             var userControl2 = new UserControl2("Copy of SteeringWheels");
             var tdext2 = new TabbedDialogExtension(userControl2,
-               userControl2.OnOK);
+                userControl2.OnOK);
             tdext2.OnCancelAction = userControl2.OnCancel;
             e.AddTab("SteeringWheels(Copy)", tdext2);
 
             var userControl1 = new UserControl1();
             new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
             var tdext1 = new TabbedDialogExtension(userControl1,
-               userControl1.OnOK);
+                userControl1.OnOK);
             tdext1.OnCancelAction = userControl1.OnCancel;
             tdext1.OnRestoreDefaultsAction = userControl1.OnRestoreDefaults;
             tdext1.SetContextualHelp(ch);
-            e.AddTab("WPF components", tdext1);               
-      }
-
-      private UIControlledApplication _application;
-   }
+            e.AddTab("WPF components", tdext1);
+        }
+    }
 }

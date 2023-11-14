@@ -5,29 +5,30 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
-    /// Wrapper class for SiteLocation
+    ///     Wrapper class for SiteLocation
     /// </summary>
     public class SiteLocationWrapper : IWrapper
     {
-                /// <summary>
-        /// SiteLocation
+        /// <summary>
+        ///     SiteLocation
         /// </summary>
-        private SiteLocation m_siteLocation;
-        
-                /// <summary>
-        /// Initializes private variables.
+        private readonly SiteLocation m_siteLocation;
+
+        /// <summary>
+        ///     Initializes private variables.
         /// </summary>
         /// <param name="siteLocation"></param>
         public SiteLocationWrapper(SiteLocation siteLocation)
         {
             m_siteLocation = siteLocation;
             //m_citys = RevitStartInfo.RevitApp.Cities;
-        } 
-        
-                /// <summary>
-        /// Gets or sets TimeZone
+        }
+
+        /// <summary>
+        ///     Gets or sets TimeZone
         /// </summary>
-        [DisplayName("Time Zone"), TypeConverter(typeof(TimeZoneConverter))]
+        [DisplayName("Time Zone")]
+        [TypeConverter(typeof(TimeZoneConverter))]
         public string TimeZone => GetTimeZoneFromDouble(m_siteLocation.TimeZone);
 
         //set
@@ -35,9 +36,10 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         //    m_siteLocation.TimeZone = GetTimeZoneFromString(value);
         //}
         /// <summary>
-        /// Gets or sets Longitude
+        ///     Gets or sets Longitude
         /// </summary>
-        [DisplayName("Longitude"), TypeConverter(typeof(AngleConverter))]
+        [DisplayName("Longitude")]
+        [TypeConverter(typeof(AngleConverter))]
         public double Longitude
         {
             get => m_siteLocation.Longitude;
@@ -45,16 +47,18 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Gets or sets Latitude
+        ///     Gets or sets Latitude
         /// </summary>
-        [DisplayName("Latitude"), TypeConverter(typeof(AngleConverter))]
+        [DisplayName("Latitude")]
+        [TypeConverter(typeof(AngleConverter))]
         public double Latitude
         {
             get => m_siteLocation.Latitude;
             set => m_siteLocation.Latitude = value;
         }
 
-        [DisplayName("City"), TypeConverter(typeof(CityConverter))]
+        [DisplayName("City")]
+        [TypeConverter(typeof(CityConverter))]
         public City City
         {
             get => GetCityFromPosition(Latitude, Longitude);
@@ -66,13 +70,28 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
         }
 
+
+        /// <summary>
+        ///     Gets the handle object.
+        /// </summary>
+        [Browsable(false)]
+        public object Handle => m_siteLocation;
+
+        /// <summary>
+        ///     Gets the name of the handle.
+        /// </summary>
+        [Browsable(false)]
+        public string Name
+        {
+            get => m_siteLocation.Name;
+            set => m_siteLocation.Name = value;
+        }
+
         private City GetCityFromPosition(double latitude, double longitude)
         {
             foreach (City city in RevitStartInfo.RevitApp.Cities)
-            {
                 if (DoubleEquals(city.Latitude, latitude) && DoubleEquals(city.Longitude, longitude))
                     return city;
-            }
             return null;
         }
 
@@ -81,27 +100,9 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             return Math.Abs(x - y) < 1E-9;
         }
 
-        
-        /// <summary>
-        /// Gets the handle object.
-        /// </summary>
-        [Browsable(false)]
-        public object Handle => m_siteLocation;
 
         /// <summary>
-        /// Gets the name of the handle.
-        /// </summary>
-        [Browsable(false)]
-        public string Name
-        {
-            get => m_siteLocation.Name;
-            set => m_siteLocation.Name = value;
-        }
-        
-        
-        
-        /// <summary>
-        /// Get time zone double value from time zone string
+        ///     Get time zone double value from time zone string
         /// </summary>
         /// <param name="value">time zone string</param>
         /// <returns>the value of time zone</returns>
@@ -112,12 +113,11 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             var timeZoneDouble = value.Substring(4, value.IndexOf(')') - 4).Replace(':', '.').Trim();
             if (string.IsNullOrEmpty(timeZoneDouble))
                 return 0d;
-            else
-                return double.Parse(timeZoneDouble);
+            return double.Parse(timeZoneDouble);
         }
 
         /// <summary>
-        /// Get time zone display string from time zone value
+        ///     Get time zone display string from time zone value
         /// </summary>
         /// <param name="timeZone">zone value</param>
         /// <returns>display string</returns>
@@ -132,7 +132,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                 if ((double)tmpZone == timeZone)
                     lastTimeZone = tmpTimeZone;
             }
+
             return lastTimeZone;
         }
-            }
+    }
 }

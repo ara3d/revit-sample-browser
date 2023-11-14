@@ -20,31 +20,30 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.MeasurePanelArea.CS
 {
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// this class creates an instance of the UI window and pop it up.
+    ///     A class inherits IExternalCommand interface.
+    ///     this class creates an instance of the UI window and pop it up.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   public class MeasurePanelArea : IExternalCommand
-   {
-      public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
-      {
-         using (var form = new frmPanelArea(commandData))
-         {
-            // The form is created successfully
-            if (null != form && !form.IsDisposed)
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class MeasurePanelArea : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            using (var form = new frmPanelArea(commandData))
             {
-               form.ShowDialog();
+                // The form is created successfully
+                if (null != form && !form.IsDisposed) form.ShowDialog();
             }
-         }
 
-         return Result.Succeeded;
-      }
-   }
+            return Result.Succeeded;
+        }
+    }
 }

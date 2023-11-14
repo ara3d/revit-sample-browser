@@ -22,16 +22,17 @@
 
 using System;
 using System.Windows.Forms;
+using Revit.SDK.Samples.GridCreation.CS.Properties;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
     public partial class CreateRadialAndArcGridsForm : Form
     {
         // data class object
-        private CreateRadialAndArcGridsData m_data;
+        private readonly CreateRadialAndArcGridsData m_data;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="data">Data class object</param>
         public CreateRadialAndArcGridsForm(CreateRadialAndArcGridsData data)
@@ -44,12 +45,12 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Set state of controls
+        ///     Set state of controls
         /// </summary>
         private void InitializeControls()
         {
             // Set length unit related labels
-            var unit = Properties.Resources.ResourceManager.GetString(m_data.Unit.TypeId);
+            var unit = Resources.ResourceManager.GetString(m_data.Unit.TypeId);
             labelUnitX.Text = unit;
             labelUnitY.Text = unit;
             labelUnitFirstRadius.Text = unit;
@@ -89,18 +90,14 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             // Check if input are validated
             if (ValidateValues())
-            {
                 // Transfer data back into data class
                 SetData();
-            }
             else
-            {
                 DialogResult = DialogResult.None;
-            }
         }
 
         /// <summary>
-        /// Transfer data back into data class
+        ///     Transfer data back into data class
         /// </summary>
         private void SetData()
         {
@@ -132,62 +129,41 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             if (Convert.ToUInt32(textBoxLineNumber.Text) != 0)
             {
-                m_data.LineFirstDistance = Unit.CovertToAPI(Convert.ToDouble(textBoxLineFirstDistance.Text), m_data.Unit);
+                m_data.LineFirstDistance =
+                    Unit.CovertToAPI(Convert.ToDouble(textBoxLineFirstDistance.Text), m_data.Unit);
                 m_data.LineFirstBubbleLoc = (BubbleLocation)comboBoxLineBubbleLocation.SelectedIndex;
                 m_data.LineFirstLabel = textBoxLineFirstLabel.Text;
             }
         }
 
         /// <summary>
-        /// Check if input are validated
+        ///     Check if input are validated
         /// </summary>
         /// <returns>Whether input is validated</returns>
         private bool ValidateValues()
         {
-            if (!Validation.ValidateNumbers(textBoxArcNumber, textBoxLineNumber))
-            {
-                return false;
-            }
+            if (!Validation.ValidateNumbers(textBoxArcNumber, textBoxLineNumber)) return false;
 
-            if (!Validation.ValidateCoord(textBoxXCoord) || !Validation.ValidateCoord(textBoxYCoord))
-            {
-                return false;
-            }
+            if (!Validation.ValidateCoord(textBoxXCoord) || !Validation.ValidateCoord(textBoxYCoord)) return false;
 
             if (Convert.ToUInt32(textBoxArcNumber.Text) != 0)
-            {
                 if (!Validation.ValidateLength(textBoxArcSpacing, "Spacing", false) ||
                     !Validation.ValidateLength(textBoxArcFirstRadius, "Radius", false) ||
                     !Validation.ValidateLabel(textBoxArcFirstLabel, m_data.LabelsList))
-                {
                     return false;
-                }
-            }
 
             if (Convert.ToUInt32(textBoxLineNumber.Text) != 0)
-            {
                 if (!Validation.ValidateLength(textBoxLineFirstDistance, "Distance", true) ||
-                !Validation.ValidateLabel(textBoxLineFirstLabel, m_data.LabelsList))
-                {
+                    !Validation.ValidateLabel(textBoxLineFirstLabel, m_data.LabelsList))
                     return false;
-                }
-            }
 
             if (Convert.ToUInt32(textBoxArcNumber.Text) != 0 && Convert.ToUInt32(textBoxLineNumber.Text) != 0)
-            {
                 if (!Validation.ValidateLabels(textBoxArcFirstLabel, textBoxLineFirstLabel))
-                {
                     return false;
-                }
-            }
 
             if (radioButtonCustomize.Checked)
-            {
                 if (!Validation.ValidateDegrees(textBoxStartDegree, textBoxEndDegree))
-                {
                     return false;
-                }
-            }
 
             return true;
         }

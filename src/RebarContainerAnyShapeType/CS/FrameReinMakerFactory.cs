@@ -25,54 +25,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 {
     /// <summary>
-    /// The factory to create the corresponding FrameReinMaker, such as BeamFramReinMaker.
+    ///     The factory to create the corresponding FrameReinMaker, such as BeamFramReinMaker.
     /// </summary>
-    class FrameReinMakerFactory
+    internal class FrameReinMakerFactory
     {
         // Private members
-        ExternalCommandData m_commandData;  // the ExternalCommandData reference
-        FamilyInstance m_hostObject;        // the host object
+        private readonly ExternalCommandData m_commandData; // the ExternalCommandData reference
+        private FamilyInstance m_hostObject; // the host object
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="commandData">the ExternalCommandData reference</param>
         public FrameReinMakerFactory(ExternalCommandData commandData)
         {
             m_commandData = commandData;
 
-            if (!GetHostObject())
-            {
-                throw new Exception("Please select a beam or column.");
-            }
+            if (!GetHostObject()) throw new Exception("Please select a beam or column.");
         }
 
 
         /// <summary>
-        /// check the condition of host object and see whether the reinforcement can be placed on
+        ///     check the condition of host object and see whether the reinforcement can be placed on
         /// </summary>
         /// <returns></returns>
         public bool AssertData()
         {
-           // judge whether is any reinforcement exist in the beam or column
+            // judge whether is any reinforcement exist in the beam or column
             if (new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document)
-                .OfClass(typeof(Rebar))
-                .Cast<Rebar>()
-                .Where(x => x.GetHostId() == m_hostObject.Id).Count() > 0)
+                    .OfClass(typeof(Rebar))
+                    .Cast<Rebar>()
+                    .Where(x => x.GetHostId() == m_hostObject.Id).Count() > 0)
                 return false;
-            
+
             return true;
         }
 
         /// <summary>
-        /// The main method which create the corresponding FrameReinMaker according to 
-        /// the host object type, and invoke Run() method to create reinforcement rebars
+        ///     The main method which create the corresponding FrameReinMaker according to
+        ///     the host object type, and invoke Run() method to create reinforcement rebars
         /// </summary>
         /// <returns>true if the creation is successful, otherwise false</returns>
         public bool work()
@@ -83,13 +80,11 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             // create FrameReinMaker instance according to host object type
             switch (m_hostObject.StructuralType)
             {
-                case StructuralType.Beam:   // if host object is a beam
+                case StructuralType.Beam: // if host object is a beam
                     maker = new BeamFramReinMaker(m_commandData, m_hostObject);
                     break;
                 case StructuralType.Column: // if host object is a column
                     maker = new ColumnFramReinMaker(m_commandData, m_hostObject);
-                    break;
-                default:
                     break;
             }
 
@@ -101,7 +96,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
 
         /// <summary>
-        /// Get the selected element as the host object, also check if the selected element is expected host object
+        ///     Get the selected element as the host object, also check if the selected element is expected host object
         /// </summary>
         /// <returns>true if get the selected element, otherwise false.</returns>
         private bool GetHostObject()
@@ -109,9 +104,10 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var selectedIds = new List<ElementId>();
             foreach (var elemId in m_commandData.Application.ActiveUIDocument.Selection.GetElementIds())
             {
-               var elem = m_commandData.Application.ActiveUIDocument.Document.GetElement(elemId);
+                var elem = m_commandData.Application.ActiveUIDocument.Document.GetElement(elemId);
                 selectedIds.Add(elem.Id);
             }
+
             if (selectedIds.Count != 1)
                 return false;
             //
@@ -129,12 +125,13 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
                 new StructuralMaterialTypeFilter(StructuralMaterialType.Concrete));
             //
             // Expected host object
-            var collector = new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document, selectedIds);
+            var collector =
+                new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document, selectedIds);
             m_hostObject = collector
                 .OfClass(typeof(FamilyInstance)) // FamilyInstance
                 .WherePasses(hostFilter) // Filters
                 .FirstElement() as FamilyInstance;
-            return (null != m_hostObject);
+            return null != m_hostObject;
         }
     }
 }

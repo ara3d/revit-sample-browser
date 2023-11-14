@@ -21,45 +21,44 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.RoomSchedule
 {
     /// <summary>
-    /// This class implements the IExternalApplication interface, 
-    /// OnStartup will subscribe Save/SaveAs and DocumentClose events when Revit starts and OnShutdown will unregister these events when Revit exists.
+    ///     This class implements the IExternalApplication interface,
+    ///     OnStartup will subscribe Save/SaveAs and DocumentClose events when Revit starts and OnShutdown will unregister
+    ///     these events when Revit exists.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class CrtlApplication : IExternalApplication
     {
-                /// <summary>
-        /// The events reactor for this application. 
+        /// <summary>
+        ///     The events reactor for this application.
         /// </summary>
-        static private EventsReactor m_eventReactor;
+        private static EventsReactor m_eventReactor;
 
         /// <summary>
-        /// Access the event reactor instance
+        ///     Access the event reactor instance
         /// </summary>
         public static EventsReactor EventReactor
         {
-            get 
+            get
             {
                 if (null == m_eventReactor)
-                {
-                    throw new ArgumentException("External application was not loaded yet, please make sure you register external application by correct full path of dll.", "EventReactor");
-                }
-                else
-                {
-                    return m_eventReactor;
-                }
+                    throw new ArgumentException(
+                        "External application was not loaded yet, please make sure you register external application by correct full path of dll.",
+                        "EventReactor");
+                return m_eventReactor;
             }
         }
-        
 
-                /// <summary>
-        /// Implement OnStartup method to subscribe related events.
+
+        /// <summary>
+        ///     Implement OnStartup method to subscribe related events.
         /// </summary>
         /// <param name="application">Current loaded application.</param>
         /// <returns></returns>
@@ -70,24 +69,24 @@ namespace Revit.SDK.Samples.RoomSchedule
             m_eventReactor = new EventsReactor(assemblyName.Replace(".dll", ".log"));
             //
             // subscribe events
-            application.ControlledApplication.DocumentSaving += new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingEventArgs>(EventReactor.DocumentSaving);
-            application.ControlledApplication.DocumentSavingAs += new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs>(EventReactor.DocumentSavingAs);
-            application.ControlledApplication.DocumentClosed += new EventHandler<Autodesk.Revit.DB.Events.DocumentClosedEventArgs>(EventReactor.DocumentClosed);
+            application.ControlledApplication.DocumentSaving += EventReactor.DocumentSaving;
+            application.ControlledApplication.DocumentSavingAs += EventReactor.DocumentSavingAs;
+            application.ControlledApplication.DocumentClosed += EventReactor.DocumentClosed;
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Unregister subscribed events when Revit exists
+        ///     Unregister subscribed events when Revit exists
         /// </summary>
         /// <param name="application">Current loaded application.</param>
         /// <returns></returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             m_eventReactor.Dispose();
-            application.ControlledApplication.DocumentSaving -= new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingEventArgs>(EventReactor.DocumentSaving);
-            application.ControlledApplication.DocumentSavingAs -= new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs>(EventReactor.DocumentSavingAs);
-            application.ControlledApplication.DocumentClosed -= new EventHandler<Autodesk.Revit.DB.Events.DocumentClosedEventArgs>(EventReactor.DocumentClosed);
+            application.ControlledApplication.DocumentSaving -= EventReactor.DocumentSaving;
+            application.ControlledApplication.DocumentSavingAs -= EventReactor.DocumentSavingAs;
+            application.ControlledApplication.DocumentClosed -= EventReactor.DocumentClosed;
             return Result.Succeeded;
         }
-            }
+    }
 }

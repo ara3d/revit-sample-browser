@@ -22,27 +22,28 @@
 
 
 using System;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
 {
     /// <summary>
-    /// UI which display the information
+    ///     UI which display the information
     /// </summary>
-    public partial class AnalyticalSupportData_InfoForm : System.Windows.Forms.Form
+    public partial class AnalyticalSupportData_InfoForm : Form
     {
         // an instance of Command class which is prepared the displayed data.
-        Command m_dataBuffer;
+        private readonly Command m_dataBuffer;
 
         /// <summary>
-        /// Default constructor
+        ///     Default constructor
         /// </summary>
-        AnalyticalSupportData_InfoForm()
+        private AnalyticalSupportData_InfoForm()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="dataBuffer"></param>
         public AnalyticalSupportData_InfoForm(Command dataBuffer) : this()
@@ -60,7 +61,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
         }
 
         /// <summary>
-        /// exit
+        ///     exit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

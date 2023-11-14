@@ -19,36 +19,38 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
-using Point = System.Drawing.Point;
-
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
+using Point = System.Drawing.Point;
 
 namespace Revit.SDK.Samples.NewPathReinforcement.CS
 {
     /// <summary>
-    /// window form contains one picture box to show the 
-    /// profile of wall (or slab), and four command buttons and a check box.
-    /// User can draw PathReinforcement on picture box.
+    ///     window form contains one picture box to show the
+    ///     profile of wall (or slab), and four command buttons and a check box.
+    ///     User can draw PathReinforcement on picture box.
     /// </summary>
-    public partial class NewPathReinforcementForm : System.Windows.Forms.Form
+    public partial class NewPathReinforcementForm : Form
     {
-                private Profile m_profile;  //save the profile date (ProfileFloor or ProfileWall)
-        private Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
-        private Matrix4 m_moveToCenterMatrix;  //save the matrix use to move point to origin
-        private Matrix4 m_scaleMatrix; //save the matrix use to scale
-        private Matrix4 m_transMatrix; //save the final matrix
-        private LineTool m_tool; //current using tool
-        private bool m_previewMode; //indicate whether in the Preview Mode
+        private readonly Matrix4 m_moveToCenterMatrix; //save the matrix use to move point to origin
         private List<List<XYZ>> m_pointsPreview; //store all the points of the preview
-        Size m_sizePictureBox; //size of picture box
-        
+        private bool m_previewMode; //indicate whether in the Preview Mode
+        private readonly Profile m_profile; //save the profile date (ProfileFloor or ProfileWall)
+        private Matrix4 m_scaleMatrix; //save the matrix use to scale
+        private Size m_sizePictureBox; //size of picture box
+        private readonly Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
+        private readonly LineTool m_tool; //current using tool
+        private Matrix4 m_transMatrix; //save the final matrix
+
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         public NewPathReinforcementForm()
         {
@@ -56,7 +58,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="profile">ProfileWall or ProfileFloor</param>
         public NewPathReinforcementForm(Profile profile)
@@ -72,7 +74,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// store mouse location when mouse down
+        ///     store mouse location when mouse down
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -81,18 +83,15 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             if (!m_previewMode)
             {
                 var graphics = pictureBox.CreateGraphics();
-                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
                 m_tool.OnMouseDown(e);
                 pictureBox.Refresh();
-                if (m_tool.PointsNumber >= 2)
-                {
-                    previewButton.Enabled = true;
-                }
+                if (m_tool.PointsNumber >= 2) previewButton.Enabled = true;
             }
         }
 
         /// <summary>
-        /// draw the line to where mouse moved
+        ///     draw the line to where mouse moved
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -100,25 +99,25 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         {
             pictureBox.Refresh();
             var graphics = pictureBox.CreateGraphics();
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
             m_tool.OnMouseMove(graphics, e);
         }
 
         /// <summary>
-        /// draw the curve of slab (or wall) and path of PathReinforcement
+        ///     draw the curve of slab (or wall) and path of PathReinforcement
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             if (m_previewMode)
             {
                 //Draw the geometry of Path Reinforcement
                 DrawPreview(e.Graphics);
                 //move the gdi origin to the picture center
                 e.Graphics.Transform = new
-                    System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 0, 0);
+                    Matrix(1, 0, 0, 1, 0, 0);
                 m_tool.Draw(e.Graphics);
             }
             else
@@ -128,7 +127,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             }
 
             //move the gdi origin to the picture center
-            e.Graphics.Transform = new System.Drawing.Drawing2D.Matrix(
+            e.Graphics.Transform = new Matrix(
                 1, 0, 0, 1, m_sizePictureBox.Width / 2, m_sizePictureBox.Height / 2);
 
             //get matrix
@@ -142,7 +141,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// draw all the curves of PathReinforcement when click "Preview" Button
+        ///     draw all the curves of PathReinforcement when click "Preview" Button
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -157,10 +156,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 TaskDialog.Show("Revit", "Please draw Path of Reinforcement before create!");
                 return;
             }
+
             var ps3D = Transform2DTo3D(points.ToArray());
 
             //begin Transaction, so action here can be aborted.
-            var transaction = new Transaction(m_profile.CommandData.Application.ActiveUIDocument.Document, "CreatePathReinforcement");
+            var transaction = new Transaction(m_profile.CommandData.Application.ActiveUIDocument.Document,
+                "CreatePathReinforcement");
             transaction.Start();
 
             var pathRein = m_profile.CreatePathReinforcement(ps3D, flipCheckBox.Checked);
@@ -173,20 +174,17 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// redraw curve of PathReinforcement when "flip" changed
+        ///     redraw curve of PathReinforcement when "flip" changed
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void FlipCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (m_previewMode)
-            {
-                ButtonPreview_Click(null, null);
-            }
+            if (m_previewMode) ButtonPreview_Click(null, null);
         }
 
         /// <summary>
-        /// clean all the points of the PathReinforcement when click "Clean" Button
+        ///     clean all the points of the PathReinforcement when click "Clean" Button
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -200,27 +198,27 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// stop drawing path when click "Escape" button
+        ///     stop drawing path when click "Escape" button
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void NewPathReinforcementForm_KeyPress(object sender, KeyPressEventArgs e)
         {
             //finish the sketch when press "Escape"
-            if (27 == (int)e.KeyChar && m_tool.PointsNumber >= 2 && !m_tool.Finished)
+            if (27 == e.KeyChar && m_tool.PointsNumber >= 2 && !m_tool.Finished)
             {
                 m_tool.Finished = true;
                 pictureBox.Refresh();
             }
             //Close form if sketch has finished when press "Escape"
-            else if (27 == (int)e.KeyChar && (m_tool.Finished || 0 == m_tool.PointsNumber))
+            else if (27 == e.KeyChar && (m_tool.Finished || 0 == m_tool.PointsNumber))
             {
                 Close();
             }
         }
 
         /// <summary>
-        /// create PathReinforcement in Revit
+        ///     create PathReinforcement in Revit
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -235,7 +233,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             }
 
             //begin Transaction, so action here can be aborted.
-            var transaction = new Transaction(m_profile.CommandData.Application.ActiveUIDocument.Document, "CreatePathReinforcement");
+            var transaction = new Transaction(m_profile.CommandData.Application.ActiveUIDocument.Document,
+                "CreatePathReinforcement");
             transaction.Start();
 
             var ps3D = Transform2DTo3D(points.ToArray());
@@ -247,7 +246,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// close the form
+        ///     close the form
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -257,7 +256,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// transform the point on Form to  3d world coordinate of revit
+        ///     transform the point on Form to  3d world coordinate of revit
         /// </summary>
         /// <param name="ps">contain the points to be transformed</param>
         private List<Vector4> Transform2DTo3D(Point[] ps)
@@ -273,24 +272,25 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 v = transformMatrix.Transform(v);
                 result.Add(v);
             }
+
             return result;
         }
 
         /// <summary>
-        /// calculate the matrix use to scale
+        ///     calculate the matrix use to scale
         /// </summary>
         /// <param name="size">pictureBox size</param>
         private Matrix4 ComputeScaleMatrix(Size size)
         {
             var boundPoints = m_profile.GetFaceBounds();
-            var width = ((float)size.Width) / (boundPoints[1].X - boundPoints[0].X);
-            var hight = ((float)size.Height) / (boundPoints[1].Y - boundPoints[0].Y);
+            var width = size.Width / (boundPoints[1].X - boundPoints[0].X);
+            var hight = size.Height / (boundPoints[1].Y - boundPoints[0].Y);
             var factor = width <= hight ? width : hight;
             return new Matrix4(factor);
         }
 
         /// <summary>
-        /// calculate the matrix used to transform 3D to 2D
+        ///     calculate the matrix used to transform 3D to 2D
         /// </summary>
         private Matrix4 Compute3DTo2DMatrix()
         {
@@ -301,19 +301,19 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// use matrix to transform point
+        ///     use matrix to transform point
         /// </summary>
         /// <param name="pts">contain the points to be transform</param>
         private void TransformPoints(Point[] pts)
         {
-            var matrix = new System.Drawing.Drawing2D.Matrix(
+            var matrix = new Matrix(
                 1, 0, 0, 1, pictureBox.Width / 2, pictureBox.Height / 2);
             matrix.Invert();
             matrix.TransformPoints(pts);
         }
 
         /// <summary>
-        /// Get geometry of the pathReinforcement
+        ///     Get geometry of the pathReinforcement
         /// </summary>
         /// <param name="pathRein">pathReinforcement created</param>
         private List<List<XYZ>> GetGeometry(Autodesk.Revit.DB.Structure.PathReinforcement pathRein)
@@ -333,26 +333,25 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 var curve = geo as Curve;
                 curvesList.Add(curve);
             }
+
             var pointsPreview = new List<List<XYZ>>();
-            foreach (var curve in curvesList)
-            {
-                pointsPreview.Add(curve.Tessellate() as List<XYZ>);
-            }
+            foreach (var curve in curvesList) pointsPreview.Add(curve.Tessellate() as List<XYZ>);
             return pointsPreview;
         }
 
         /// <summary>
-        /// draw points in the List on the form
+        ///     draw points in the List on the form
         /// </summary>
         /// <param name="graphics">form graphic</param>
         /// <param name="pen">pen used to draw line in pictureBox</param>
-        /// <param name="matrix4">Matrix used to transform 3d to 2d 
-        /// and make picture in right scale </param>
+        /// <param name="matrix4">
+        ///     Matrix used to transform 3d to 2d
+        ///     and make picture in right scale
+        /// </param>
         /// <param name="points">points need to be drawn</param>
         private void DrawPoints(Graphics graphics, Pen pen, Matrix4 matrix4, List<List<XYZ>> points)
         {
             foreach (var xyzArray in points)
-            {
                 for (var i = 0; i < xyzArray.Count - 1; i++)
                 {
                     var point1 = xyzArray[i];
@@ -366,21 +365,17 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                     graphics.DrawLine(pen, new Point((int)v1.X, (int)v1.Y),
                         new Point((int)v2.X, (int)v2.Y));
                 }
-            }
         }
 
         /// <summary>
-        /// draw preview of Path Reinforcement on the form
+        ///     draw preview of Path Reinforcement on the form
         /// </summary>
         private void DrawPreview(Graphics graphics)
         {
-            if (null == m_pointsPreview)
-            {
-                return;
-            }
+            if (null == m_pointsPreview) return;
 
             //move the gdi origin to the picture center
-            graphics.Transform = new System.Drawing.Drawing2D.Matrix(
+            graphics.Transform = new Matrix(
                 1, 0, 0, 1, m_sizePictureBox.Width / 2, m_sizePictureBox.Height / 2);
             DrawPoints(graphics, Pens.Red, m_transMatrix, m_pointsPreview);
         }

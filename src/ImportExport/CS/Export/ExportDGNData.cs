@@ -20,118 +20,63 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using System.Diagnostics;
 using System.IO;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Data class which stores the main information for exporting dgn format
+    ///     Data class which stores the main information for exporting dgn format
     /// </summary>
     public class ExportDGNData : ExportDataWithViews
     {
-                /// <summary>
-        /// String list of Layer Settings used in UI
-        /// </summary>
-        List<string> m_layerMapping;
         /// <summary>
-        /// String list of layer settings values defined in Revit 
+        ///     String list of layer settings values defined in Revit
         /// </summary>
-        List<string> m_enumLayerMapping;
+        private List<string> m_enumLayerMapping;
+
         /// <summary>
-        /// String list of exported format version defined in Revit 
-        /// </summary>
-        List<string> m_exportFileVersions;
-      
-        /// <summary>
-        /// Layer setting option to export
-        /// </summary>
-        private string m_exportLayerMapping;
-        /// <summary>
-        /// Exported format version
+        ///     Exported format version
         /// </summary>
         private string m_exportFileVersion;
+
         /// <summary>
-        /// Whether to hide scope box
+        ///     String list of exported format version defined in Revit
         /// </summary>
-        private bool m_hideScopeBox;
+        private List<string> m_exportFileVersions;
+
         /// <summary>
-        /// Whether to hide unreference view tags
+        ///     Layer setting option to export
         /// </summary>
-        private bool m_hideUnreferenceViewTags;
+        private string m_exportLayerMapping;
+
         /// <summary>
-        /// Whether to hide reference plane
+        ///     Whether to hide reference plane
         /// </summary>
         private bool m_hideReferencePlane;
-        
-                /// <summary>
-        /// Layer setting option to export
-        /// </summary>
-        public string ExportLayerMapping
-        {
-            get => m_exportLayerMapping;
-            set => m_exportLayerMapping = value;
-        }
 
         /// <summary>
-        /// Whether to hide scope box
+        ///     Whether to hide scope box
         /// </summary>
-        public bool HideScopeBox
-        {
-            get => m_hideScopeBox;
-            set => m_hideScopeBox = value;
-        }
+        private bool m_hideScopeBox;
 
         /// <summary>
-        /// Whether to hide unreference view tags
+        ///     Whether to hide unreference view tags
         /// </summary>
-        public bool HideUnreferenceViewTags
-        {
-            get => m_hideUnreferenceViewTags;
-            set => m_hideUnreferenceViewTags = value;
-        }
+        private bool m_hideUnreferenceViewTags;
 
         /// <summary>
-        /// Whether to hide reference plane
+        ///     String list of Layer Settings used in UI
         /// </summary>
-        public bool HideReferencePlane
-        {
-            get => m_hideReferencePlane;
-            set => m_hideReferencePlane = value;
-        }
+        private List<string> m_layerMapping;
+
 
         /// <summary>
-        /// Exported format version
-        /// </summary>
-        public string ExportFileVersion
-        {
-            get => m_exportFileVersion;
-            set => m_exportFileVersion = value;
-        }
-
-        /// <summary>
-        /// String collection of Layer Settings used in UI
-        /// </summary>
-        public ReadOnlyCollection<string> LayerMapping => new ReadOnlyCollection<string>(m_layerMapping);
-
-        /// <summary>
-        /// String list of exported format version defined in Revit 
-        /// </summary>
-        public List<string> ExportFileVersions => m_exportFileVersions;
-
-        /// <summary>
-        /// String collection of layer settings values defined in Revit  
-        /// </summary>
-        public ReadOnlyCollection<string> EnumLayerMapping => new ReadOnlyCollection<string>(m_enumLayerMapping);
-
-        
-                /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
@@ -142,7 +87,67 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize the variables
+        ///     Layer setting option to export
+        /// </summary>
+        public string ExportLayerMapping
+        {
+            get => m_exportLayerMapping;
+            set => m_exportLayerMapping = value;
+        }
+
+        /// <summary>
+        ///     Whether to hide scope box
+        /// </summary>
+        public bool HideScopeBox
+        {
+            get => m_hideScopeBox;
+            set => m_hideScopeBox = value;
+        }
+
+        /// <summary>
+        ///     Whether to hide unreference view tags
+        /// </summary>
+        public bool HideUnreferenceViewTags
+        {
+            get => m_hideUnreferenceViewTags;
+            set => m_hideUnreferenceViewTags = value;
+        }
+
+        /// <summary>
+        ///     Whether to hide reference plane
+        /// </summary>
+        public bool HideReferencePlane
+        {
+            get => m_hideReferencePlane;
+            set => m_hideReferencePlane = value;
+        }
+
+        /// <summary>
+        ///     Exported format version
+        /// </summary>
+        public string ExportFileVersion
+        {
+            get => m_exportFileVersion;
+            set => m_exportFileVersion = value;
+        }
+
+        /// <summary>
+        ///     String collection of Layer Settings used in UI
+        /// </summary>
+        public ReadOnlyCollection<string> LayerMapping => new ReadOnlyCollection<string>(m_layerMapping);
+
+        /// <summary>
+        ///     String list of exported format version defined in Revit
+        /// </summary>
+        public List<string> ExportFileVersions => m_exportFileVersions;
+
+        /// <summary>
+        ///     String collection of layer settings values defined in Revit
+        /// </summary>
+        public ReadOnlyCollection<string> EnumLayerMapping => new ReadOnlyCollection<string>(m_enumLayerMapping);
+
+        /// <summary>
+        ///     Initialize the variables
         /// </summary>
         private void Initialize()
         {
@@ -168,7 +173,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Collect the parameters and export
+        ///     Collect the parameters and export
         /// </summary>
         /// <returns></returns>
         public override bool Export()
@@ -177,16 +182,10 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             ICollection<ElementId> views = new List<ElementId>();
             if (m_currentViewOnly)
-            {
                 views.Add(m_activeDoc.ActiveView.Id);
-            }
             else
-            {
                 foreach (View view in m_selectViewsData.SelectedViews)
-                {
-                   views.Add(view.Id);
-                }
-            }
+                    views.Add(view.Id);
 
             //parameter : DWGExportOptions dwgExportOptions
             var dgnExportOptions = new DGNExportOptions();
@@ -197,23 +196,19 @@ namespace Revit.SDK.Samples.ImportExport.CS
             // set values from selected options
             dgnExportOptions.LayerMapping = m_exportLayerMapping;
             if (m_exportFileVersion == "MicroStation V7 Format")
-            {
                 dgnExportOptions.FileVersion = DGNFileFormat.DGNVersion7;
-            }
             else
-            {
                 dgnExportOptions.FileVersion = DGNFileFormat.DGNVersion8;
-            }
             dgnExportOptions.HideScopeBox = m_hideScopeBox;
             dgnExportOptions.HideUnreferenceViewTags = m_hideUnreferenceViewTags;
             dgnExportOptions.HideReferencePlane = m_hideReferencePlane;
             var mainModule = Process.GetCurrentProcess().MainModule;
-            var RevitFolder = Path.GetDirectoryName( mainModule.FileName );
+            var RevitFolder = Path.GetDirectoryName(mainModule.FileName);
             dgnExportOptions.SeedName = Path.Combine(RevitFolder, @"ACADInterop\V8-Imperial-Seed3D.dgn");
 
             //Export
             var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, dgnExportOptions);
             return exported;
         }
-            }
+    }
 }

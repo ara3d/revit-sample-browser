@@ -23,24 +23,18 @@
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
-    /// wrapper interface
+    ///     wrapper interface
     /// </summary>
     public interface IWrapper
     {
-                /// <summary>
-        /// Gets the handle object.
+        /// <summary>
+        ///     Gets the handle object.
         /// </summary>
-        object Handle
-        {
-            get;
-        }
+        object Handle { get; }
 
         /// <summary>
-        /// Gets the name of the handle.
+        ///     Gets the name of the handle.
         /// </summary>
-        string Name
-        {
-            get;
-        } 
-            }
+        string Name { get; }
+    }
 }

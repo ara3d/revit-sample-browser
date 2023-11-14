@@ -20,32 +20,35 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 {
     /// <summary>
-    /// Main Revit command
+    ///     Main Revit command
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
-    public class Command : Autodesk.Revit.UI.IExternalCommand
+    [Transaction(TransactionMode.ReadOnly)]
+    public class Command : IExternalCommand
     {
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
             if (!Validation.ValidateMep(commandData.Application.Application))
             {
                 Validation.MepWarning();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
 
             if (!Validation.ValidatePipesDefined(commandData.Application.ActiveUIDocument.Document))
             {
                 Validation.PipesDefinedWarning();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
 
             var mainWindow = new MainWindow(commandData.Application);
             mainWindow.ShowDialog();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
     }
 }

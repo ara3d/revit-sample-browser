@@ -23,14 +23,14 @@
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
-{   
+{
     /// <summary>
-    /// The class is used to create ReferencePlane
+    ///     The class is used to create ReferencePlane
     /// </summary>
-    class CreateRefPlane
+    internal class CreateRefPlane
     {
-                /// <summary>
-        /// This method is used to create ReferencePlane along to a host referenceplane with a offset parameter
+        /// <summary>
+        ///     This method is used to create ReferencePlane along to a host referenceplane with a offset parameter
         /// </summary>
         /// <param name="doc">the document</param>
         /// <param name="host">the host ReferencePlane</param>
@@ -39,13 +39,14 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="cutVec">the cutVec of the ReferencePlane</param>
         /// <param name="name">the name of the ReferencePlane</param>
         /// <returns>ReferencePlane</returns>
-        public Autodesk.Revit.DB.ReferencePlane Create(Document doc, Autodesk.Revit.DB.ReferencePlane host, View view, XYZ offSet, XYZ cutVec, string name)
+        public Autodesk.Revit.DB.ReferencePlane Create(Document doc, Autodesk.Revit.DB.ReferencePlane host, View view,
+            XYZ offSet, XYZ cutVec, string name)
         {
-            var bubbleEnd = new XYZ ();
-            var freeEnd = new XYZ ();
+            var bubbleEnd = new XYZ();
+            var freeEnd = new XYZ();
             try
             {
-                var refPlane = host as Autodesk.Revit.DB.ReferencePlane;
+                var refPlane = host;
                 if (refPlane != null)
                 {
                     bubbleEnd = refPlane.BubbleEnd.Add(offSet);
@@ -56,6 +57,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                     refPlane.Name = name;
                     subTransaction.Commit();
                 }
+
                 return refPlane;
             }
             catch
@@ -63,5 +65,5 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 return null;
             }
         }
-            }  
+    }
 }

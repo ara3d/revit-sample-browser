@@ -20,34 +20,89 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System.Collections;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using System.Collections;
+using Autodesk.Revit.Exceptions;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// Provides functions to create Fascia.
+    ///     Provides functions to create Fascia.
     /// </summary>
     public class FasciaCreator : HostedSweepCreator
     {
         /// <summary>
-        /// Constructor which take Revit.Document as parameter.
+        ///     Dictionary to store the roof=>edges for fascia creation.
+        /// </summary>
+        private Dictionary<Element, List<Edge>> m_roofFasciaEdges;
+
+        /// <summary>
+        ///     Constructor which take Revit.Document as parameter.
         /// </summary>
         /// <param name="rvtDoc">Revit document</param>
-        public FasciaCreator(Autodesk.Revit.UI.UIDocument rvtDoc)
+        public FasciaCreator(UIDocument rvtDoc)
             : base(rvtDoc)
         {
         }
 
         /// <summary>
-        /// Dictionary to store the roof=>edges for fascia creation.
+        ///     A string indicates this creator just for Roof Fascia creation.
         /// </summary>
-        private Dictionary<Element, List<Edge>> m_roofFasciaEdges;
+        public override string Name => "Roof Fascia";
 
         /// <summary>
-        /// Filter all the edges of the given element for fascia creation.
+        ///     All fascia types in Revit active document.
+        /// </summary>
+        public override IEnumerable AllTypes
+        {
+            get
+            {
+                var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
+                filteredElementCollector.OfClass(typeof(FasciaType));
+                return filteredElementCollector;
+            }
+        }
+
+        /// <summary>
+        ///     Dictionary to store all the Roof=>Edges which Fascia can be created on.
+        /// </summary>
+        public override Dictionary<Element, List<Edge>> SupportEdges
+        {
+            get
+            {
+                if (m_roofFasciaEdges == null)
+                {
+                    m_roofFasciaEdges = new Dictionary<Element, List<Edge>>();
+                    var collector = new FilteredElementCollector(m_rvtDoc);
+                    collector.OfClass(typeof(FootPrintRoof));
+                    var elements = collector.ToElements();
+
+                    collector = new FilteredElementCollector(m_rvtDoc);
+                    collector.OfClass(typeof(ExtrusionRoof));
+                    foreach (var elem in collector) elements.Add(elem);
+
+                    foreach (var elem in elements)
+                        if (elem is RoofBase)
+                        {
+                            var solid = ExtractGeom(elem);
+                            if (solid != null)
+                            {
+                                m_roofFasciaEdges.Add(elem, new List<Edge>());
+                                m_elemGeom.Add(elem, solid);
+                                FilterEdgesForFascia(elem);
+                            }
+                        }
+                }
+
+                return m_roofFasciaEdges;
+            }
+        }
+
+        /// <summary>
+        ///     Filter all the edges of the given element for fascia creation.
         /// </summary>
         /// <param name="elem">Element used to filter edges which fascia can be created on</param>
         private void FilterEdgesForFascia(Element elem)
@@ -71,11 +126,12 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     // AddSegment successfully, so this edge can be used to crate Fascia.
                     roofEdges.Add(edge);
                 }
-                catch (Autodesk.Revit.Exceptions.ArgumentOutOfRangeException)
+                catch (ArgumentOutOfRangeException)
                 {
                     // Exception, this edge will be discard.
                 }
             }
+
             // Delete this element, because we just use it to filter the edges.
             m_rvtDoc.Delete(fascia.Id);
 
@@ -83,64 +139,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// A string indicates this creator just for Roof Fascia creation.
-        /// </summary>
-        public override string Name => "Roof Fascia";
-
-        /// <summary>
-        /// All fascia types in Revit active document.
-        /// </summary>
-        public override IEnumerable AllTypes
-        {
-            get
-            {
-                var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
-                filteredElementCollector.OfClass(typeof(FasciaType));
-                return filteredElementCollector;
-            }
-        }
-
-        /// <summary>
-        /// Dictionary to store all the Roof=>Edges which Fascia can be created on.
-        /// </summary>
-        public override Dictionary<Element, List<Edge>> SupportEdges
-        {
-            get
-            {
-                if (m_roofFasciaEdges == null)
-                {
-                    m_roofFasciaEdges = new Dictionary<Element, List<Edge>>();
-                    var collector = new FilteredElementCollector(m_rvtDoc);
-                    collector.OfClass(typeof(FootPrintRoof));
-                    var elements = collector.ToElements();
-
-                    collector = new FilteredElementCollector(m_rvtDoc);
-                    collector.OfClass(typeof(ExtrusionRoof));
-                    foreach (var elem in collector)
-                    {
-                        elements.Add(elem);
-                    }
-
-                    foreach (var elem in elements)
-                    {
-                        if (elem is RoofBase)
-                        {
-                            var solid = ExtractGeom(elem);
-                            if (solid != null)
-                            {
-                                m_roofFasciaEdges.Add(elem, new List<Edge>());
-                                m_elemGeom.Add(elem, solid);
-                                FilterEdgesForFascia(elem);
-                            }
-                        }
-                    }
-                }
-                return m_roofFasciaEdges;
-            }
-        }
-
-        /// <summary>
-        /// Create a Fascia.
+        ///     Create a Fascia.
         /// </summary>
         /// <param name="symbol">Fascia type</param>
         /// <param name="refArr">Fascia reference array</param>

@@ -20,30 +20,28 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Truss.CS
 {
     /// <summary>
-    /// The entrance of this example, implements the Execute method of IExternalCommand
+    ///     The entrance of this example, implements the Execute method of IExternalCommand
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             var trussForm = new TrussForm(commandData);
             // The form is created successfully
-            if (null != trussForm && false == trussForm.IsDisposed)
-            {
-                trussForm.ShowDialog();
-            }
+            if (null != trussForm && false == trussForm.IsDisposed) trussForm.ShowDialog();
 
             return Result.Succeeded;
         }
-
-            }
+    }
 }

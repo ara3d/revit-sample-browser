@@ -28,45 +28,45 @@ using Autodesk.Revit.DB.Architecture;
 namespace Revit.SDK.Samples.StairsAutomation.CS
 {
     /// <summary>
-    /// The main class governing the automatic stairs element creation.
+    ///     The main class governing the automatic stairs element creation.
     /// </summary>
     public class StairsAutomationUtility
     {
-        private int m_stairsNumber;
+        private readonly int m_stairsNumber;
 
         /// <summary>
-        /// The bottom level for the stairs assembly.
+        ///     The bottom level for the stairs assembly.
         /// </summary>
         public Level BottomLevel { get; set; }
 
         /// <summary>
-        /// The top level for the stairs assembly.
+        ///     The top level for the stairs assembly.
         /// </summary>
         public Level TopLevel { get; set; }
 
         /// <summary>
-        /// The document.
+        ///     The document.
         /// </summary>
         protected Document Document { get; }
 
         /// <summary>
-        /// The stairs.
+        ///     The stairs.
         /// </summary>
         protected Stairs Stairs { get; private set; }
 
         /// <summary>
-        /// Creates a new instance of this class for a given stairs congfiguration. 
+        ///     Creates a new instance of this class for a given stairs congfiguration.
         /// </summary>
         /// <param name="document">The document.</param>
         /// <param name="stairsNumber">The stairs configuration number.</param>
         protected StairsAutomationUtility(Document document, int stairsNumber)
         {
-            this.Document = document;
+            Document = document;
             m_stairsNumber = stairsNumber;
         }
 
         /// <summary>
-        /// Sets up a new stairs automation utility.
+        ///     Sets up a new stairs automation utility.
         /// </summary>
         /// <param name="document">The document in which the stairs will be created.</param>
         /// <param name="stairsNumber">The predefined stairs configuration number.</param>
@@ -77,8 +77,8 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             return utility;
         }
 
-                /// <summary>
-        /// Sets up the levels for the bottom and top of the stairs assembly.
+        /// <summary>
+        ///     Sets up the levels for the bottom and top of the stairs assembly.
         /// </summary>
         private void SetupLevels()
         {
@@ -101,7 +101,8 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             }
         }
 
-        private static Tuple<Level, Level, Level> FindTargetLevels(Document doc, string name1, string name2, string name3)
+        private static Tuple<Level, Level, Level> FindTargetLevels(Document doc, string name1, string name2,
+            string name3)
         {
             var collector = new FilteredElementCollector(doc);
             collector.OfClass(typeof(Level));
@@ -109,15 +110,14 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             Level level1 = null;
             Level level2 = null;
             Level level3 = null;
-            foreach (var level in collector.Cast<Level>().Where<Level>(level => level.Name.Equals(name1) || level.Name.Equals(name2) || level.Name.Equals(name3)))
-            {
+            foreach (var level in collector.Cast<Level>().Where(level =>
+                         level.Name.Equals(name1) || level.Name.Equals(name2) || level.Name.Equals(name3)))
                 if (level.Name.Equals(name1))
                     level1 = level;
                 else if (level.Name.Equals(name2))
                     level2 = level;
                 else
                     level3 = level;
-            }
 
             return new Tuple<Level, Level, Level>(level1, level2, level3);
         }
@@ -145,12 +145,14 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             return collector.Cast<Level>().Where<Level>(level => IsBetweenExtents(level) && IsStoryLevel(level));
         }
 #endif
-        
+
         /// <summary>
-        /// Sets up and returns the hardcoded configuration corresponding to the stairs number.
+        ///     Sets up and returns the hardcoded configuration corresponding to the stairs number.
         /// </summary>
-        /// <remarks>Some configuration types will require the ability to make changes to the stairs element.  
-        /// Thus, this method needs an open transaction.</remarks>
+        /// <remarks>
+        ///     Some configuration types will require the ability to make changes to the stairs element.
+        ///     Thus, this method needs an open transaction.
+        /// </remarks>
         /// <returns></returns>
         protected virtual IStairsConfiguration SetupHardcodedConfiguration()
         {
@@ -158,56 +160,62 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             {
                 // Straight run 1 level
                 case 0:
-                    {
-                        var run = new StairsSingleStraightRun(Stairs, BottomLevel, Transform.CreateTranslation(new XYZ(100, 0, 0)));
-                        run.SetRunWidth(15.0);
-                        return run;
-                    }
+                {
+                    var run = new StairsSingleStraightRun(Stairs, BottomLevel,
+                        Transform.CreateTranslation(new XYZ(100, 0, 0)));
+                    run.SetRunWidth(15.0);
+                    return run;
+                }
                 // Curved run 1 level
                 case 1:
-                    {
-                        var run = new StairsSingleCurvedRun(Stairs, BottomLevel, 6.0);
-                        run.SetRunWidth(10.0);
-                        return run;
-                    }
+                {
+                    var run = new StairsSingleCurvedRun(Stairs, BottomLevel, 6.0);
+                    run.SetRunWidth(10.0);
+                    return run;
+                }
                 // Curve run 2 level
                 case 2:
-                    return new StairsSingleCurvedRun(Stairs, BottomLevel, 3.0, Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI, new XYZ(10, -20, 0)));
+                    return new StairsSingleCurvedRun(Stairs, BottomLevel, 3.0,
+                        Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI, new XYZ(10, -20, 0)));
                 // Standard stair 1 level
                 case 3:
-                    {
-                        var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 1, Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI / 4.0, new XYZ(-20, -20, 0)));
-                        configuration.EqualizeRuns = true;
-                        configuration.Initialize();
-                        return configuration;
-                    }
+                {
+                    var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 1,
+                        Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI / 4.0, new XYZ(-20, -20, 0)));
+                    configuration.EqualizeRuns = true;
+                    configuration.Initialize();
+                    return configuration;
+                }
                 // Standard stair multi-level
                 case 4:
-                    {
-                        var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 3, Transform.CreateRotationAtPoint(XYZ.BasisZ, 7.0 * Math.PI / 6.0, new XYZ(15, 10, 0)));
-                        configuration.RunWidth = 6.0;
-                        configuration.RunOffset = 8.0 / 12.0;
-                        configuration.LandingWidth = 4.0;
-                        configuration.EqualizeRuns = true;
-                        configuration.Initialize();
-                        return configuration;
-                    }
+                {
+                    var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 3,
+                        Transform.CreateRotationAtPoint(XYZ.BasisZ, 7.0 * Math.PI / 6.0, new XYZ(15, 10, 0)));
+                    configuration.RunWidth = 6.0;
+                    configuration.RunOffset = 8.0 / 12.0;
+                    configuration.LandingWidth = 4.0;
+                    configuration.EqualizeRuns = true;
+                    configuration.Initialize();
+                    return configuration;
+                }
                 case 100:
-                    {
-                        return new StairsSingleSketchedStraightRun(Stairs, BottomLevel, Transform.CreateTranslation(new XYZ(50, 0, 0)));
-                    }
+                {
+                    return new StairsSingleSketchedStraightRun(Stairs, BottomLevel,
+                        Transform.CreateTranslation(new XYZ(50, 0, 0)));
+                }
                 case 101:
-                    {
-                        return new StairsSingleSketchedCurvedRun(Stairs, BottomLevel, 6.0, Transform.CreateTranslation(new XYZ(-10, 0, 0)));
-                    }
-
+                {
+                    return new StairsSingleSketchedCurvedRun(Stairs, BottomLevel, 6.0,
+                        Transform.CreateTranslation(new XYZ(-10, 0, 0)));
+                }
             }
+
             return null;
         }
 
 
         /// <summary>
-        /// Execute the creation of the specified stairs assembly.
+        ///     Execute the creation of the specified stairs assembly.
         /// </summary>
         public void GenerateStairs()
         {
@@ -235,17 +243,12 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 
                     // Create each run
                     var numberOfRuns = configuration.GetNumberOfRuns();
-                    for (var i = 0; i < numberOfRuns; i++)
-                    {
-                        configuration.CreateStairsRun(Document, stairsElementId, i);
-                    }
+                    for (var i = 0; i < numberOfRuns; i++) configuration.CreateStairsRun(Document, stairsElementId, i);
 
                     // Create each landing
                     var numberOfLandings = configuration.GetNumberOfLandings();
                     for (var i = 0; i < numberOfLandings; i++)
-                    {
                         configuration.CreateLanding(Document, stairsElementId, i);
-                    }
 
                     t.Commit();
                 }
@@ -255,7 +258,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
     }
 
-    class StairsEditScopeFailuresPreprocessor : IFailuresPreprocessor
+    internal class StairsEditScopeFailuresPreprocessor : IFailuresPreprocessor
     {
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {

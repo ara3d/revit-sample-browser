@@ -27,14 +27,14 @@ using System.Drawing.Drawing2D;
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// sketch line and any tag on it
+    ///     sketch line and any tag on it
     /// </summary>
     public class LineSketch : ObjectSketch
     {
-        private Line2D m_line = new Line2D();    // geometry line to draw
+        private readonly Line2D m_line = new Line2D(); // geometry line to draw
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="line"></param>
         public LineSketch(Line2D line)
@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// draw the line
+        ///     draw the line
         /// </summary>
         /// <param name="g">drawing object</param>
         /// <param name="translate">translation between drawn sketch and geometry object</param>

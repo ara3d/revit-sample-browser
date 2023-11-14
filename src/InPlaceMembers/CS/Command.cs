@@ -22,23 +22,24 @@
 
 
 using System;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
-
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.InPlaceMembers.CS
 {
     /// <summary>
-    /// This command shows how to get In-place Family instance properties and
-    /// paint it AnalyticalModel profile on a PictureBox.
+    ///     This command shows how to get In-place Family instance properties and
+    ///     paint it AnalyticalModel profile on a PictureBox.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        static ExternalCommandData m_commandData;
+        private static ExternalCommandData m_commandData;
 
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
@@ -62,10 +63,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 var graphicsData = GraphicsDataFactory.CreateGraphicsData(model);
                 var instanceProperties = new Properties(inPlace);
                 var form = new InPlaceMembersForm(instanceProperties, graphicsData);
-                if (form.ShowDialog() == System.Windows.Forms.DialogResult.Abort)
-                {
-                    return Result.Failed;
-                }
+                if (form.ShowDialog() == DialogResult.Abort) return Result.Failed;
 
                 return Result.Succeeded;
             }
@@ -79,55 +77,44 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 transaction.Commit();
             }
         }
-      /// <summary>
-      /// Search for the In-Place family instance's properties data to be listed
-      /// and graphics data to be drawn.
-      /// </summary>
-      /// <param name="inPlaceMember">properties data to be listed</param>
-      /// <param name="model">graphics data to be draw</param>
-      /// <returns>Returns true if retrieved this data</returns>
-      private bool PrepareData(ref FamilyInstance inPlaceMember, ref AnalyticalElement model)
-      {
-         var selected = new ElementSet();
-         foreach (var elementId in m_commandData.Application.ActiveUIDocument.Selection.GetElementIds())
-         {
-            selected.Insert(m_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
-         }
 
-         if (selected.Size != 1)
-         {
-            return false;
-         }
+        /// <summary>
+        ///     Search for the In-Place family instance's properties data to be listed
+        ///     and graphics data to be drawn.
+        /// </summary>
+        /// <param name="inPlaceMember">properties data to be listed</param>
+        /// <param name="model">graphics data to be draw</param>
+        /// <returns>Returns true if retrieved this data</returns>
+        private bool PrepareData(ref FamilyInstance inPlaceMember, ref AnalyticalElement model)
+        {
+            var selected = new ElementSet();
+            foreach (var elementId in m_commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+                selected.Insert(m_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
 
-         foreach (var o in selected)
-         {
-            inPlaceMember = o as FamilyInstance;
-            if (null == inPlaceMember)
+            if (selected.Size != 1) return false;
+
+            foreach (var o in selected)
             {
-               return false;
+                inPlaceMember = o as FamilyInstance;
+                if (null == inPlaceMember) return false;
             }
-         }
-         var document = inPlaceMember.Document;
-         var relManager = AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(document);
-         if (relManager != null)
-         {
-            var associatedElementId = relManager.GetAssociatedElementId(inPlaceMember.Id);
-            if (associatedElementId != ElementId.InvalidElementId)
+
+            var document = inPlaceMember.Document;
+            var relManager = AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(document);
+            if (relManager != null)
             {
-               var associatedElement = document.GetElement(associatedElementId);
-               if (associatedElement != null && associatedElement is AnalyticalElement)
-               {
-                  model = associatedElement as AnalyticalElement;
-               }
+                var associatedElementId = relManager.GetAssociatedElementId(inPlaceMember.Id);
+                if (associatedElementId != ElementId.InvalidElementId)
+                {
+                    var associatedElement = document.GetElement(associatedElementId);
+                    if (associatedElement != null && associatedElement is AnalyticalElement)
+                        model = associatedElement as AnalyticalElement;
+                }
             }
-         }
 
-         if (null == model)
-         {
-            return false;
-         }
+            if (null == model) return false;
 
-         return true;
-      }
-   }
+            return true;
+        }
+    }
 }

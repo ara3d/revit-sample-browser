@@ -21,17 +21,17 @@
 //
 
 
+using Autodesk.Revit.DB.Structure;
+
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using Autodesk.Revit.DB.Structure;
-
     /// <summary>
-    /// all class that can be the datasource of propertygrid must inherit from it
+    ///     all class that can be the datasource of propertygrid must inherit from it
     /// </summary>
     public interface IAreaReinData
     {
         /// <summary>
-        /// fill datasource with the data of AreaReinforcement
+        ///     fill datasource with the data of AreaReinforcement
         /// </summary>
         /// <param name="areaRein"></param>
         /// <returns>is successful</returns>

@@ -20,57 +20,64 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System.IO;
 using System.Xml;
-
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Microsoft.Win32;
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 {
     /// <summary>
-    /// A command to read routing preference data from a document and write an XML file summarizing it that can later be read by the
-    /// CommandReadPreferences command.
+    ///     A command to read routing preference data from a document and write an XML file summarizing it that can later be
+    ///     read by the
+    ///     CommandReadPreferences command.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
-    public class CommandWritePreferences : Autodesk.Revit.UI.IExternalCommand
+    [Transaction(TransactionMode.ReadOnly)]
+    public class CommandWritePreferences : IExternalCommand
     {
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
             if (!Validation.ValidateMep(commandData.Application.Application))
             {
                 Validation.MepWarning();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
 
             if (!Validation.ValidatePipesDefined(commandData.Application.ActiveUIDocument.Document))
             {
                 Validation.PipesDefinedWarning();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
 
-            var sfd = new Microsoft.Win32.SaveFileDialog();
+            var sfd = new SaveFileDialog();
             sfd.DefaultExt = ".xml";
             sfd.Filter = "RoutingPreference Builder Xml files (*.xml)|*.xml";
-            sfd.FileName = (System.IO.Path.GetFileNameWithoutExtension(commandData.Application.ActiveUIDocument.Document.PathName)) + ".routingPreferences.xml";
+            sfd.FileName =
+                Path.GetFileNameWithoutExtension(commandData.Application.ActiveUIDocument.Document.PathName) +
+                ".routingPreferences.xml";
             if (sfd.ShowDialog() == true)
             {
                 var builder = new RoutingPreferenceBuilder(commandData.Application.ActiveUIDocument.Document);
-        	var pathsNotFound = false;
-            var routingPreferenceBuilderDoc = builder.CreateXmlFromAllPipingPolicies(ref pathsNotFound);
-            var xmlWriterSettings = new XmlWriterSettings();
-            xmlWriterSettings.Indent = true;
-            xmlWriterSettings.NewLineOnAttributes = false;
-            var writer = XmlWriter.Create(sfd.FileName, xmlWriterSettings);
-            routingPreferenceBuilderDoc.WriteTo(writer);
-            writer.Flush();
-            writer.Close();
-            var pathmessage = "";
-            if (pathsNotFound)
-               pathmessage = "One or more paths to .rfa files were not found.  You may need to add these paths in manually to the generated xml file.";
-            Autodesk.Revit.UI.TaskDialog.Show("RoutingPreferenceBuilder", "Routing Preferences exported successfully.   " + pathmessage);
-
+                var pathsNotFound = false;
+                var routingPreferenceBuilderDoc = builder.CreateXmlFromAllPipingPolicies(ref pathsNotFound);
+                var xmlWriterSettings = new XmlWriterSettings();
+                xmlWriterSettings.Indent = true;
+                xmlWriterSettings.NewLineOnAttributes = false;
+                var writer = XmlWriter.Create(sfd.FileName, xmlWriterSettings);
+                routingPreferenceBuilderDoc.WriteTo(writer);
+                writer.Flush();
+                writer.Close();
+                var pathmessage = "";
+                if (pathsNotFound)
+                    pathmessage =
+                        "One or more paths to .rfa files were not found.  You may need to add these paths in manually to the generated xml file.";
+                TaskDialog.Show("RoutingPreferenceBuilder",
+                    "Routing Preferences exported successfully.   " + pathmessage);
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+
+            return Result.Succeeded;
         }
     }
 }
-

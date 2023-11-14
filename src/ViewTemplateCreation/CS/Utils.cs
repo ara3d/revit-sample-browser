@@ -20,40 +20,42 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System.Windows.Forms;
+
 namespace Revit.SDK.Samples.ViewTemplateCreation.CS
 {
-   /// <summary>
-   /// Utils class contains useful methods and members for using in whole project.
-   /// </summary>
-   public class Utils
-   {
-      /// <summary>
-      /// Shows regular message box with warning icon and OK button
-      /// </summary>
-      public static void ShowWarningMessageBox(string message)
-      {
-         System.Windows.Forms.MessageBox.Show(
-            message,
-            SampleName,
-            System.Windows.Forms.MessageBoxButtons.OK,
-            System.Windows.Forms.MessageBoxIcon.Warning);
-      }
+    /// <summary>
+    ///     Utils class contains useful methods and members for using in whole project.
+    /// </summary>
+    public class Utils
+    {
+        /// <summary>
+        ///     Contains a name of this sample
+        /// </summary>
+        public const string SampleName = "View Template Creation sample";
 
-      /// <summary>
-      /// Shows regular message box with information icon and OK button
-      /// </summary>
-      public static void ShowInformationMessageBox(string message)
-      {
-         System.Windows.Forms.MessageBox.Show(
-            message,
-            SampleName,
-            System.Windows.Forms.MessageBoxButtons.OK,
-            System.Windows.Forms.MessageBoxIcon.Information);
-      }
+        /// <summary>
+        ///     Shows regular message box with warning icon and OK button
+        /// </summary>
+        public static void ShowWarningMessageBox(string message)
+        {
+            MessageBox.Show(
+                message,
+                SampleName,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+        }
 
-      /// <summary>
-      /// Contains a name of this sample
-      /// </summary>
-      public const string SampleName = "View Template Creation sample";
-   }
+        /// <summary>
+        ///     Shows regular message box with information icon and OK button
+        /// </summary>
+        public static void ShowInformationMessageBox(string message)
+        {
+            MessageBox.Show(
+                message,
+                SampleName,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+    }
 }

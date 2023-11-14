@@ -20,36 +20,39 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System.Xml.Linq;
 using System.IO;
 using System.Xml;
-
+using System.Xml.Linq;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Microsoft.Win32;
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 {
     /// <summary>
-    /// A command to read a routing preference builder xml file and add pipe types, schedules, segments, and sizes, and routing preferences rules to the
-    /// document from the xml data.
+    ///     A command to read a routing preference builder xml file and add pipe types, schedules, segments, and sizes, and
+    ///     routing preferences rules to the
+    ///     document from the xml data.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    public class CommandReadPreferences : Autodesk.Revit.UI.IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    public class CommandReadPreferences : IExternalCommand
     {
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
             if (!Validation.ValidateMep(commandData.Application.Application))
             {
                 Validation.MepWarning();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
 
             if (!Validation.ValidatePipesDefined(commandData.Application.ActiveUIDocument.Document))
             {
                 Validation.PipesDefinedWarning();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
 
-            var ofd = new Microsoft.Win32.OpenFileDialog();
+            var ofd = new OpenFileDialog();
             ofd.DefaultExt = ".xml";
             ofd.Filter = "RoutingPreference Builder Xml files (*.xml)|*.xml";
 
@@ -61,23 +64,28 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
                 //Distribute the .xsd file to routing preference builder xml authors as necessary.
                 string xmlValidationMessage;
-                if (!SchemaValidationHelper.ValidateRoutingPreferenceBuilderXml(routingPreferenceBuilderDoc, out xmlValidationMessage))
+                if (!SchemaValidationHelper.ValidateRoutingPreferenceBuilderXml(routingPreferenceBuilderDoc,
+                        out xmlValidationMessage))
                 {
-                    Autodesk.Revit.UI.TaskDialog.Show("RoutingPreferenceBuilder", "Xml file is not a valid RoutingPreferenceBuilder xml document.  Please check RoutingPreferenceBuilderData.xsd.  " + xmlValidationMessage);
-                    return Autodesk.Revit.UI.Result.Succeeded;
+                    TaskDialog.Show("RoutingPreferenceBuilder",
+                        "Xml file is not a valid RoutingPreferenceBuilder xml document.  Please check RoutingPreferenceBuilderData.xsd.  " +
+                        xmlValidationMessage);
+                    return Result.Succeeded;
                 }
+
                 try
                 {
                     var builder = new RoutingPreferenceBuilder(commandData.Application.ActiveUIDocument.Document);
                     builder.ParseAllPipingPoliciesFromXml(routingPreferenceBuilderDoc);
-                    Autodesk.Revit.UI.TaskDialog.Show("RoutingPreferenceBuilder", "Routing Preferences imported successfully.");
+                    TaskDialog.Show("RoutingPreferenceBuilder", "Routing Preferences imported successfully.");
                 }
                 catch (RoutingPreferenceDataException ex)
                 {
-                    Autodesk.Revit.UI.TaskDialog.Show("RoutingPreferenceBuilder error: ", ex.ToString());
+                    TaskDialog.Show("RoutingPreferenceBuilder error: ", ex.ToString());
                 }
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+
+            return Result.Succeeded;
         }
     }
 }

@@ -20,17 +20,18 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DeleteObject.CS
 {
     /// <summary>
-    /// Delete the elements that were selected
+    ///     Delete the elements that were selected
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(
@@ -42,9 +43,7 @@ namespace Revit.SDK.Samples.DeleteObject.CS
             trans.Start();
             var collection = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
-            {
-               collection.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
-            }
+                collection.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
             // check user selection
             if (collection.Size < 1)
             {
@@ -73,10 +72,7 @@ namespace Revit.SDK.Samples.DeleteObject.CS
             catch
             {
                 // if revit threw an exception, try to catch it
-                foreach (Element c in collection)
-                {
-                    elements.Insert(c);
-                }
+                foreach (Element c in collection) elements.Insert(c);
                 message = "object(s) can't be deleted.";
                 trans.RollBack();
                 return Result.Failed;
@@ -84,11 +80,9 @@ namespace Revit.SDK.Samples.DeleteObject.CS
             finally
             {
                 // if revit threw an exception, display error and return failed
-                if (error)
-                {
-                    TaskDialog.Show("Error", "Delete failed.");
-                }
+                if (error) TaskDialog.Show("Error", "Delete failed.");
             }
+
             trans.Commit();
             return Result.Succeeded;
         }

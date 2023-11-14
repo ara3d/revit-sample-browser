@@ -20,48 +20,28 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System.ComponentModel;
+using Autodesk.Revit.DB;
+
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System.ComponentModel;
-    using Autodesk.Revit.DB;
-
     /// <summary>
-    /// for control PropertyGrid to show and modify parameters of column, beam or brace
+    ///     for control PropertyGrid to show and modify parameters of column, beam or brace
     /// </summary>
     public class FrameTypeParameters
     {
-        Parameter m_hDimension;        // parameter named h
-        Parameter m_bDimension;        // parameter named b
+        private readonly Parameter m_bDimension; // parameter named b
+        private readonly Parameter m_hDimension; // parameter named h
 
         /// <summary>
-        /// parameter h in parameter category Dimension
-        /// </summary>
-        [CategoryAttribute("Dimensions")]
-        public double h
-        {
-            get => m_hDimension.AsDouble();
-            set => m_hDimension.Set(value);
-        }
-
-        /// <summary>
-        /// parameter b in parameter category Dimension
-        /// </summary>
-        [CategoryAttribute("Dimensions")]
-        public double b
-        {
-            get => m_bDimension.AsDouble();
-            set => m_bDimension.Set(value);
-        }
-
-        /// <summary>
-        /// constructor without parameter is forbidden
+        ///     constructor without parameter is forbidden
         /// </summary>
         private FrameTypeParameters()
         {
         }
 
         /// <summary>
-        /// constructor used only for object factory
+        ///     constructor used only for object factory
         /// </summary>
         /// <param name="symbol">FamilySymbol object has parameters</param>
         private FrameTypeParameters(FamilySymbol symbol)
@@ -74,27 +54,44 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                     m_hDimension = para;
                     continue;
                 }
+
                 if (para.Definition.Name == "b")
                 {
                     m_bDimension = para;
-                    continue;
                 }
             }
         }
 
         /// <summary>
-        /// object factory to create FramingTypeParameters; 
-        /// will return null if necessary Parameters can't be found
+        ///     parameter h in parameter category Dimension
+        /// </summary>
+        [CategoryAttribute("Dimensions")]
+        public double h
+        {
+            get => m_hDimension.AsDouble();
+            set => m_hDimension.Set(value);
+        }
+
+        /// <summary>
+        ///     parameter b in parameter category Dimension
+        /// </summary>
+        [CategoryAttribute("Dimensions")]
+        public double b
+        {
+            get => m_bDimension.AsDouble();
+            set => m_bDimension.Set(value);
+        }
+
+        /// <summary>
+        ///     object factory to create FramingTypeParameters;
+        ///     will return null if necessary Parameters can't be found
         /// </summary>
         /// <param name="symbol"></param>
         /// <returns></returns>
         public static FrameTypeParameters CreateInstance(FamilySymbol symbol)
         {
             var result = new FrameTypeParameters(symbol);
-            if (null == result.m_bDimension || null == result.m_hDimension)
-            {
-                return null;
-            }
+            if (null == result.m_bDimension || null == result.m_hDimension) return null;
             return result;
         }
     }

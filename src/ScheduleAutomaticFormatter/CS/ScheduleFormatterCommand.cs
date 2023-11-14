@@ -21,23 +21,29 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
-    /// An external command that formats the columns of the schedule automatically.  After this has taken place,
-    /// the schedule formatting will be automatically updated when the schedule changes.
+    ///     An external command that formats the columns of the schedule automatically.  After this has taken place,
+    ///     the schedule formatting will be automatically updated when the schedule changes.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class ScheduleFormatterCommand : IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class ScheduleFormatterCommand : IExternalCommand
     {
-        
-        
         /// <summary>
-        /// The command implementation.
+        ///     The formatter used by the command when updating the schedule.
+        ///     Created upon first use.
+        /// </summary>
+        private ScheduleFormatter theFormatter;
+
+
+        /// <summary>
+        ///     The command implementation.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
@@ -53,11 +59,11 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             // Setup formatter for the schedule, if not setup. 
             if (theFormatter == null)
             {
-               theFormatter = new ScheduleFormatter();
-               theFormatter.Schema = schema;
-               theFormatter.AddInId = commandData.Application.ActiveAddInId;
+                theFormatter = new ScheduleFormatter();
+                theFormatter.Schema = schema;
+                theFormatter.AddInId = commandData.Application.ActiveAddInId;
             }
-            
+
             using (var t = new Transaction(viewSchedule.Document, "Format columns"))
             {
                 t.Start();
@@ -75,9 +81,9 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             return Result.Succeeded;
         }
 
-        
+
         /// <summary>
-        /// Adds an entity to the schedule, indicating that the schedule should be formatted by this tool.
+        ///     Adds an entity to the schedule, indicating that the schedule should be formatted by this tool.
         /// </summary>
         /// <param name="viewSchedule">The schedule.</param>
         /// <param name="schema">The schema used for the entity.</param>
@@ -90,13 +96,13 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             if (!entity.IsValid())
             {
                 entity = new Entity(schema);
-                entity.Set<bool>("Formatted", true);
+                entity.Set("Formatted", true);
                 viewSchedule.SetEntity(entity);
             }
         }
 
         /// <summary>
-        /// Set up the schema used to mark the schedules as formatted.
+        ///     Set up the schema used to mark the schedules as formatted.
         /// </summary>
         /// <returns></returns>
         private static Schema GetOrCreateSchema()
@@ -116,7 +122,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         }
 
         /// <summary>
-        /// Add the updater to watch for formatted schedule changes.
+        ///     Add the updater to watch for formatted schedule changes.
         /// </summary>
         /// <param name="formatter">The schedule formatter.</param>
         private static void AddUpdater(ScheduleFormatter formatter)
@@ -134,10 +140,5 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
                 UpdaterRegistry.AddTrigger(formatter.GetUpdaterId(), filter, Element.GetChangeTypeAny());
             }
         }
-        /// <summary>
-        /// The formatter used by the command when updating the schedule.
-        /// Created upon first use. 
-        /// </summary>
-        private ScheduleFormatter theFormatter;
     }
 }

@@ -22,33 +22,33 @@
 
 using System;
 using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.TagBeam.CS
 {
     /// <summary>
-    /// Form to get input from user to create beam tags.
+    ///     Form to get input from user to create beam tags.
     /// </summary>
-    public partial class TagBeamForm : System.Windows.Forms.Form
+    public partial class TagBeamForm : Form
     {
         //Required designer variable.
-        private TagBeamData m_dataBuffer;
+        private readonly TagBeamData m_dataBuffer;
 
         /// <summary>
-        /// Initialize GUI with TagBeamData 
+        ///     Initialize GUI with TagBeamData
         /// </summary>
         /// <param name="dataBuffer">relevant data from revit</param>
         public TagBeamForm(TagBeamData dataBuffer)
         {
             InitializeComponent();
             m_dataBuffer = dataBuffer;
-            InitializeComboBoxes();           
+            InitializeComboBoxes();
         }
 
         /// <summary>
-        /// Initialize the combo boxes. 
+        ///     Initialize the combo boxes.
         /// </summary>
         private void InitializeComboBoxes()
         {
@@ -59,12 +59,12 @@ namespace Revit.SDK.Samples.TagBeam.CS
 
             //Set DropDownStyle of combo boxes to "DropDownList"
             tagComboBox.DropDownStyle =
-            tagSymbolComboBox.DropDownStyle =
-            tagOrientationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                tagSymbolComboBox.DropDownStyle =
+                    tagOrientationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         /// <summary>
-        /// Create tags on beam's start and end.
+        ///     Create tags on beam's start and end.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -73,27 +73,23 @@ namespace Revit.SDK.Samples.TagBeam.CS
             try
             {
                 if (tagSymbolComboBox.SelectedItem != null)
-                {
                     m_dataBuffer.CreateTag((TagMode)tagComboBox.SelectedItem,
                         tagSymbolComboBox.SelectedItem as FamilySymbolWrapper,
                         leadercheckBox.Checked,
                         (TagOrientation)tagOrientationComboBox.SelectedItem);
-                }
                 else
-                {
                     throw new ApplicationException("No tag type selected.");
-                }
-    
+
                 Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 TaskDialog.Show("Revit", ex.Message);
-            }           
+            }
         }
 
         /// <summary>
-        /// Close the form.
+        ///     Close the form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -103,7 +99,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
         }
 
         /// <summary>
-        /// Update tag types in tagComboBox according to the selected tag mode.  
+        ///     Update tag types in tagComboBox according to the selected tag mode.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

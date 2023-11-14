@@ -20,34 +20,90 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System.Collections;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using System.Collections;
+using Autodesk.Revit.Exceptions;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// Provides functions to create Gutter.
+    ///     Provides functions to create Gutter.
     /// </summary>
     public class GutterCreator : HostedSweepCreator
     {
         /// <summary>
-        /// Constructor with Revit.Document as parameter.
+        ///     Edges which gutter can be created on.
+        /// </summary>
+        private Dictionary<Element, List<Edge>> m_roofGutterEdges;
+
+        /// <summary>
+        ///     Constructor with Revit.Document as parameter.
         /// </summary>
         /// <param name="rvtDoc">Revit document</param>
-        public GutterCreator(Autodesk.Revit.UI.UIDocument rvtDoc)
+        public GutterCreator(UIDocument rvtDoc)
             : base(rvtDoc)
         {
         }
 
         /// <summary>
-        /// Edges which gutter can be created on.
+        ///     A string indicates this creator just for Roof Gutter creation.
         /// </summary>
-        private Dictionary<Element, List<Edge>> m_roofGutterEdges;
+        public override string Name => "Roof Gutter";
 
         /// <summary>
-        /// Filter all the edges from the element which gutter can be created on.
+        ///     All Gutter types in Revit active document.
+        /// </summary>
+        public override IEnumerable AllTypes
+        {
+            get
+            {
+                var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
+                filteredElementCollector.OfClass(typeof(GutterType));
+                return filteredElementCollector;
+            }
+        }
+
+        /// <summary>
+        ///     Dictionary to store all the Roof=>Edges which Gutter can be created on.
+        /// </summary>
+        public override Dictionary<Element, List<Edge>> SupportEdges
+        {
+            get
+            {
+                if (m_roofGutterEdges == null)
+                {
+                    m_roofGutterEdges = new Dictionary<Element, List<Edge>>();
+
+                    var collector = new FilteredElementCollector(m_rvtDoc);
+                    collector.OfClass(typeof(FootPrintRoof));
+                    var elements = collector.ToElements();
+
+                    collector = new FilteredElementCollector(m_rvtDoc);
+                    collector.OfClass(typeof(ExtrusionRoof));
+                    foreach (var elem in collector) elements.Add(elem);
+
+                    foreach (var elem in elements)
+                        if (elem is RoofBase)
+                        {
+                            var solid = ExtractGeom(elem);
+                            if (solid != null)
+                            {
+                                m_roofGutterEdges.Add(elem, new List<Edge>());
+                                m_elemGeom.Add(elem, solid);
+                                FilterEdgesForGutter(elem);
+                            }
+                        }
+                }
+
+                return m_roofGutterEdges;
+            }
+        }
+
+        /// <summary>
+        ///     Filter all the edges from the element which gutter can be created on.
         /// </summary>
         /// <param name="elem"></param>
         private void FilterEdgesForGutter(Element elem)
@@ -71,11 +127,12 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     // AddSegment successfully, so this edge can be used to crate Gutter.
                     roofEdges.Add(edge);
                 }
-                catch (Autodesk.Revit.Exceptions.ArgumentOutOfRangeException)
+                catch (ArgumentOutOfRangeException)
                 {
                     // Exception, this edge will be discard.
                 }
             }
+
             // Delete this element, because we just use it to filter the edges.
             m_rvtDoc.Delete(gutter.Id);
 
@@ -83,65 +140,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// A string indicates this creator just for Roof Gutter creation.
-        /// </summary>
-        public override string Name => "Roof Gutter";
-
-        /// <summary>
-        /// All Gutter types in Revit active document.
-        /// </summary>
-        public override IEnumerable AllTypes
-        {
-            get
-            {
-                var filteredElementCollector = new FilteredElementCollector(m_rvtDoc);
-                filteredElementCollector.OfClass(typeof(GutterType));
-                return filteredElementCollector;
-            }
-        }
-
-        /// <summary>
-        /// Dictionary to store all the Roof=>Edges which Gutter can be created on.
-        /// </summary>
-        public override Dictionary<Element, List<Edge>> SupportEdges
-        {
-            get
-            {
-                if (m_roofGutterEdges == null)
-                {
-                    m_roofGutterEdges = new Dictionary<Element, List<Edge>>();
-
-                    var collector = new FilteredElementCollector(m_rvtDoc);
-                    collector.OfClass(typeof(FootPrintRoof));
-                    var elements = collector.ToElements();
-
-                    collector = new FilteredElementCollector(m_rvtDoc);
-                    collector.OfClass(typeof(ExtrusionRoof));
-                    foreach (var elem in collector)
-                    {
-                        elements.Add(elem);
-                    }
-
-                    foreach (var elem in elements)
-                    {
-                        if (elem is RoofBase)
-                        {
-                            var solid = ExtractGeom(elem);
-                            if (solid != null)
-                            {
-                                m_roofGutterEdges.Add(elem, new List<Edge>());
-                                m_elemGeom.Add(elem, solid);
-                                FilterEdgesForGutter(elem);
-                            }
-                        }
-                    }
-                }
-                return m_roofGutterEdges;
-            }
-        }
-
-        /// <summary>
-        /// Create a Gutter.
+        ///     Create a Gutter.
         /// </summary>
         /// <param name="symbol">Gutter type</param>
         /// <param name="refArr">Gutter Reference array</param>

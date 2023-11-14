@@ -21,38 +21,39 @@
 //
 
 
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.VersionChecking.CS
-{   
+{
     /// <summary>
-    /// Get the product name, version and build number about Revit main program.
+    ///     Get the product name, version and build number about Revit main program.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    public class Command: IExternalCommand
+    [Transaction(TransactionMode.ReadOnly)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
     {
         // properties
         /// <summary>
-        /// get product name of Revit main program
+        ///     get product name of Revit main program
         /// </summary>
         public string ProductName { get; private set; } = "";
 
         /// <summary>
-        /// get version number of current Revit main program
+        ///     get version number of current Revit main program
         /// </summary>
         public string ProductVersion { get; private set; } = "";
 
         /// <summary>
-        /// get build number of current Revit main program
+        ///     get build number of current Revit main program
         /// </summary>
         public string BuildNumner { get; private set; } = "";
 
         public Result Execute(ExternalCommandData revit,
-                                               ref string message,
-                                               ElementSet elements)
+            ref string message,
+            ElementSet elements)
         {
             // get currently executable application
             var revitApplication = revit.Application.Application;
@@ -60,7 +61,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
             // get product name, version number and build number information
             // via corresponding Properties of Autodesk.Revit.ApplicationServices.Application class
             ProductName = revitApplication.VersionName;
-            ProductVersion     = revitApplication.VersionNumber;
+            ProductVersion = revitApplication.VersionNumber;
             BuildNumner = revitApplication.VersionBuild;
 
             //Show forms dialog which is a UI
@@ -68,9 +69,8 @@ namespace Revit.SDK.Samples.VersionChecking.CS
             {
                 displayForm.ShowDialog();
             }
-            
+
             return Result.Succeeded;
         }
-
     }
 }

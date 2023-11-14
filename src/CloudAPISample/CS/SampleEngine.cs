@@ -28,47 +28,47 @@ using Revit.SDK.Samples.CloudAPISample.CS.View;
 
 namespace Revit.SDK.Samples.CloudAPISample.CS
 {
-   internal class SampleEngine : IDisposable
-   {
-      private readonly UIApplication application;
-      private readonly List<SampleContext> allContext = new List<SampleContext>();
-      private ViewSamplePortal viewPortal;
+    internal class SampleEngine : IDisposable
+    {
+        private readonly List<SampleContext> allContext = new List<SampleContext>();
+        private readonly UIApplication application;
+        private ViewSamplePortal viewPortal;
 
-      public SampleEngine(UIApplication app)
-      {
-         application = app;
-         viewPortal = new ViewSamplePortal(app);
+        public SampleEngine(UIApplication app)
+        {
+            application = app;
+            viewPortal = new ViewSamplePortal(app);
 
-         CoroutineScheduler.Run();
-      }
+            CoroutineScheduler.Run();
+        }
 
-      /// <inheritdoc />
-      public void Dispose()
-      {
-         foreach (var context in allContext)
-         {
-            context.Terminate();
-            context.Application = null;
-         }
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            foreach (var context in allContext)
+            {
+                context.Terminate();
+                context.Application = null;
+            }
 
-         allContext.Clear();
-         viewPortal?.Close();
-         viewPortal = null;
+            allContext.Clear();
+            viewPortal?.Close();
+            viewPortal = null;
 
-         CoroutineScheduler.Stop();
-      }
+            CoroutineScheduler.Stop();
+        }
 
-      public void RegisterSample(string name, SampleContext sampleContext)
-      {
-         sampleContext.Application = application;
-         allContext.Add(sampleContext);
+        public void RegisterSample(string name, SampleContext sampleContext)
+        {
+            sampleContext.Application = application;
+            allContext.Add(sampleContext);
 
-         viewPortal.AddTab(name, sampleContext.View);
-      }
+            viewPortal.AddTab(name, sampleContext.View);
+        }
 
-      public void Run()
-      {
-         viewPortal.ShowDialog();
-      }
-   }
+        public void Run()
+        {
+            viewPortal.ShowDialog();
+        }
+    }
 }

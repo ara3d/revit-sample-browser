@@ -20,33 +20,24 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
     /// <summary>
-    /// This class wraps a double parameter which will be the dimension of 
-    /// RebarShape definition.
+    ///     This class wraps a double parameter which will be the dimension of
+    ///     RebarShape definition.
     /// </summary>
-    class RebarShapeParameterDouble : RebarShapeParameter
+    internal class RebarShapeParameterDouble : RebarShapeParameter
     {
         /// <summary>
-        /// Parameter double value.
+        ///     Parameter double value.
         /// </summary>
         private double m_value;
 
         /// <summary>
-        /// Parameter double value.
-        /// </summary>
-        public double Value
-        {
-            get => m_value;
-            set => m_value = value;
-        }
-
-        /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
         /// <param name="shapeDef">RebarShapeDefinition proxy</param>
         /// <param name="name">Parameter name</param>
@@ -58,13 +49,22 @@ namespace Revit.SDK.Samples.NewRebar.CS
         }
 
         /// <summary>
-        /// Add a double parameter to RebarShapeDefinition.
+        ///     Parameter double value.
+        /// </summary>
+        public double Value
+        {
+            get => m_value;
+            set => m_value = value;
+        }
+
+        /// <summary>
+        ///     Add a double parameter to RebarShapeDefinition.
         /// </summary>
         /// <param name="defGroup">Definition group</param>
         public override void Commit(Document doc, DefinitionGroup defGroup)
         {
             var def = GetOrCreateDef(defGroup);
-            m_parameterId = Autodesk.Revit.DB.Structure.RebarShapeParameters.GetOrCreateElementIdForExternalDefinition(doc, def);
+            m_parameterId = RebarShapeParameters.GetOrCreateElementIdForExternalDefinition(doc, def);
             m_rebarShapeDef.RebarshapeDefinition.AddParameter(m_parameterId, m_value);
         }
     }

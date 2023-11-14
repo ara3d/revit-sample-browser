@@ -26,27 +26,27 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.WindowWizard.CS
 {
     /// <summary>
-    /// The class is used to create window wizard form
+    ///     The class is used to create window wizard form
     /// </summary>
     public class WindowWizard
     {
         /// <summary>
-        /// store the WizardParameter
+        ///     store the ExternalCommandData
+        /// </summary>
+        private readonly ExternalCommandData m_commandData;
+
+        /// <summary>
+        ///     store the WizardParameter
         /// </summary>
         private WizardParameter m_para;
-        
+
         /// <summary>
-        /// store the WindowCreation
+        ///     store the WindowCreation
         /// </summary>
         private WindowCreation m_winCreator;
 
         /// <summary>
-        /// store the ExternalCommandData
-        /// </summary>
-        private ExternalCommandData m_commandData;
-
-        /// <summary>
-        /// constructor of WindowWizard
+        ///     constructor of WindowWizard
         /// </summary>
         /// <param name="commandData">the ExternalCommandData parameter</param>
         public WindowWizard(ExternalCommandData commandData)
@@ -55,24 +55,21 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// the method is used to show wizard form and do the creation
+        ///     the method is used to show wizard form and do the creation
         /// </summary>
         /// <returns>the process result</returns>
         public int RunWizard()
         {
             var result = 0;
-            m_para = new WizardParameter();           
+            m_para = new WizardParameter();
             m_para.m_template = "DoubleHung";
-            if (m_para.m_template == "DoubleHung")
-            {
-                m_winCreator = new DoubleHungWinCreation(m_para, m_commandData);
-            }
+            if (m_para.m_template == "DoubleHung") m_winCreator = new DoubleHungWinCreation(m_para, m_commandData);
             using (var form = new WizardForm(m_para))
             {
-                switch(form.ShowDialog())
+                switch (form.ShowDialog())
                 {
                     case DialogResult.Cancel:
-                        result=0;
+                        result = 0;
                         break;
                     case DialogResult.OK:
                         if (Creation())
@@ -80,22 +77,22 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                         else
                             result = -1;
                         break;
-                    default :
-                        result=-1;
+                    default:
+                        result = -1;
                         break;
-                }           
+                }
             }
+
             return result;
         }
 
         /// <summary>
-        /// The window creation process
+        ///     The window creation process
         /// </summary>
         /// <returns>the result</returns>
         private bool Creation()
         {
             return m_winCreator.Creation();
         }
-
     }
 }

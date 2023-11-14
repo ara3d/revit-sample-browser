@@ -26,54 +26,27 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Base data class which stores the common information for exporting view related format
+    ///     Base data class which stores the common information for exporting view related format
     /// </summary>
     public class ExportDataWithViews : ExportData
     {
-                /// <summary>
-        /// Data class SelectViewsData
+        /// <summary>
+        ///     Whether to export current view only
         /// </summary>
-        protected SelectViewsData m_selectViewsData;
+        protected bool m_currentViewOnly;
 
         /// <summary>
-        /// Views to export
+        ///     Views to export
         /// </summary>
         private ViewSet m_exportViews;
 
         /// <summary>
-        /// Whether to export current view only
+        ///     Data class SelectViewsData
         /// </summary>
-        protected bool m_currentViewOnly;
-        
-                /// <summary>
-        /// Data class SelectViewsData
-        /// </summary>
-        public SelectViewsData SelectViewsData
-        {
-            get => m_selectViewsData;
-            set => m_selectViewsData = value;
-        }
+        protected SelectViewsData m_selectViewsData;
 
         /// <summary>
-        /// Views to export
-        /// </summary>
-        public ViewSet ExportViews
-        {
-            get => m_exportViews;
-            set => m_exportViews = value;
-        } 
-
-        /// <summary>
-        /// Whether to export current view only
-        /// </summary>
-        public bool CurrentViewOnly
-        {
-            get => m_currentViewOnly;
-            set => m_currentViewOnly = value;
-        }
-        
-                /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="exportFormat">Format to export</param>
@@ -86,12 +59,39 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize the variables
+        ///     Data class SelectViewsData
+        /// </summary>
+        public SelectViewsData SelectViewsData
+        {
+            get => m_selectViewsData;
+            set => m_selectViewsData = value;
+        }
+
+        /// <summary>
+        ///     Views to export
+        /// </summary>
+        public ViewSet ExportViews
+        {
+            get => m_exportViews;
+            set => m_exportViews = value;
+        }
+
+        /// <summary>
+        ///     Whether to export current view only
+        /// </summary>
+        public bool CurrentViewOnly
+        {
+            get => m_currentViewOnly;
+            set => m_currentViewOnly = value;
+        }
+
+        /// <summary>
+        ///     Initialize the variables
         /// </summary>
         private void Initialize()
         {
             //Views to export
             m_exportViews = new ViewSet();
         }
-            }
+    }
 }

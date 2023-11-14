@@ -28,7 +28,7 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
     public partial class PropertiesForm : Form
     {
         /// <summary>
-        /// Default constructor, initialize all controls
+        ///     Default constructor, initialize all controls
         /// </summary>
         private PropertiesForm()
         {
@@ -36,8 +36,8 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
         }
 
         /// <summary>
-        /// This Form is used to display the properties that exist upon an element. 
-        /// It consists of a list view and the ok, cancel buttons.
+        ///     This Form is used to display the properties that exist upon an element.
+        ///     It consists of a list view and the ok, cancel buttons.
         /// </summary>
         /// <param name="information">A string array that will be loaded into the list view</param>
         public PropertiesForm(string[] information)
@@ -70,10 +70,7 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
 
             // increase the width of columns by 40, make them a litter wider
             var span = 40;
-            foreach (ColumnHeader ch in propertyListView.Columns)
-            {
-                ch.Width += span;
-            }
+            foreach (ColumnHeader ch in propertyListView.Columns) ch.Width += span;
 
             // the last column fit the rest of the list view
             propertyListView.Columns[propertyListView.Columns.Count - 1].Width = -2;

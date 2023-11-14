@@ -21,30 +21,16 @@
 //
 
 
-using System;
-
 namespace Revit.SDK.Samples.Loads.CS
 {
     /// <summary>
-    /// The map class which store the data and display in formulaDataGridView
+    ///     The map class which store the data and display in formulaDataGridView
     /// </summary>
     public class FormulaMap
     {
-        // Private Members
-
-        /// <summary>
-        /// Factor
-        /// </summary>
-        public double Factor { get; set; }
-
-        /// <summary>
-        /// Load Case
-        /// </summary>
-        public string Case { get; set; }
-
         // Methods
         /// <summary>
-        /// Default constructor of FormulaMap
+        ///     Default constructor of FormulaMap
         /// </summary>
         public FormulaMap()
         {
@@ -52,7 +38,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// constructor with the case name
+        ///     constructor with the case name
         /// </summary>
         /// <param name="caseName">The value set to Case Property</param>
         public FormulaMap(string caseName)
@@ -62,7 +48,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Constructor with the factor and case name
+        ///     Constructor with the factor and case name
         /// </summary>
         /// <param name="factor">The value set to Factor Property</param>
         /// <param name="caseName">The value set to Case Property</param>
@@ -71,5 +57,16 @@ namespace Revit.SDK.Samples.Loads.CS
             Factor = factor;
             Case = caseName;
         }
+        // Private Members
+
+        /// <summary>
+        ///     Factor
+        /// </summary>
+        public double Factor { get; set; }
+
+        /// <summary>
+        ///     Load Case
+        /// </summary>
+        public string Case { get; set; }
     }
 }

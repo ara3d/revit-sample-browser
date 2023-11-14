@@ -19,17 +19,19 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
 {
-    public partial class CreateWallsUnderBeamsForm : System.Windows.Forms.Form
+    public partial class CreateWallsUnderBeamsForm : Form
     {
         // Private members
-        CreateWallsUnderBeams m_dataBuffer;
+        private readonly CreateWallsUnderBeams m_dataBuffer;
 
         /// <summary>
-        /// Constructor of CreateWallsUnderBeamsForm
+        ///     Constructor of CreateWallsUnderBeamsForm
         /// </summary>
         /// <param name="dataBuffer"> A reference of CreateWallsUnderBeams class </param>
         public CreateWallsUnderBeamsForm(CreateWallsUnderBeams dataBuffer)
@@ -38,11 +40,11 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             InitializeComponent();
 
             //Get a reference of CreateWallsUnderBeams
-            m_dataBuffer = dataBuffer; 
+            m_dataBuffer = dataBuffer;
         }
 
         /// <summary>
-        /// Initialize the data on the form
+        ///     Initialize the data on the form
         /// </summary>
         private void CreateWallsUnderBeamsForm_Load(object sender, EventArgs e)
         {
@@ -53,7 +55,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         }
 
         /// <summary>
-        /// update the data to CreateWallsUnderBeams class
+        ///     update the data to CreateWallsUnderBeams class
         /// </summary>
         private void OKButton_Click(object sender, EventArgs e)
         {
@@ -61,7 +63,5 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
 
             m_dataBuffer.IsSturctual = structualCheckBox.Checked;
         }
-
-
     }
 }

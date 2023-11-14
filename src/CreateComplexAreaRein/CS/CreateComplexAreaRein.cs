@@ -20,31 +20,38 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using Document = Autodesk.Revit.Creation.Document;
 
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Windows.Forms;
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.DB.Structure;
-
-    using DocCreator = Autodesk.Revit.Creation.Document;
+    using DocCreator = Document;
 
 
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         private UIDocument m_currentDoc;
         private AreaReinData m_data;
 
+        /// <summary>
+        ///     ExternalCommandData
+        /// </summary>
+        public static ExternalCommandData CommandData { get; private set; }
+
         public Result Execute(ExternalCommandData revit,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.CreateComplexAreaRein");
+            var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
+                "Revit.SDK.Samples.CreateComplexAreaRein");
             trans.Start();
             //initialize members
             CommandData = revit;
@@ -66,17 +73,22 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                 {
                     //define the Major Direction of AreaReinforcement,
                     //we get direction of first Line on the Floor as the Major Direction
-                    var firstLine = (Line)(curves[0]);
+                    var firstLine = (Line)curves[0];
                     var majorDirection = new XYZ(
                         firstLine.GetEndPoint(1).X - firstLine.GetEndPoint(0).X,
                         firstLine.GetEndPoint(1).Y - firstLine.GetEndPoint(0).Y,
                         firstLine.GetEndPoint(1).Z - firstLine.GetEndPoint(0).Z);
 
                     //create AreaReinforcement by AreaReinforcement.Create() function
-                    var areaReinforcementTypeId = AreaReinforcementType.CreateDefaultAreaReinforcementType(revit.Application.ActiveUIDocument.Document);
-                    var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(revit.Application.ActiveUIDocument.Document);
-                    var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(revit.Application.ActiveUIDocument.Document);
-                    var areaRein = AreaReinforcement.Create(revit.Application.ActiveUIDocument.Document, floor, curves, majorDirection, areaReinforcementTypeId, rebarBarTypeId, rebarHookTypeId);
+                    var areaReinforcementTypeId =
+                        AreaReinforcementType.CreateDefaultAreaReinforcementType(revit.Application.ActiveUIDocument
+                            .Document);
+                    var rebarBarTypeId =
+                        RebarBarType.CreateDefaultRebarBarType(revit.Application.ActiveUIDocument.Document);
+                    var rebarHookTypeId =
+                        RebarHookType.CreateDefaultRebarHookType(revit.Application.ActiveUIDocument.Document);
+                    var areaRein = AreaReinforcement.Create(revit.Application.ActiveUIDocument.Document, floor, curves,
+                        majorDirection, areaReinforcementTypeId, rebarBarTypeId, rebarHookTypeId);
 
                     //set AreaReinforcement and it's AreaReinforcementCurves parameters
                     dataOnFloor.FillIn(areaRein);
@@ -96,25 +108,19 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                 trans.RollBack();
                 return Result.Failed;
             }
+
             trans.RollBack();
             return Result.Cancelled;
         }
 
         /// <summary>
-        /// ExternalCommandData
-        /// </summary>
-        public static ExternalCommandData CommandData { get; private set; }
-
-        /// <summary>
-        /// initialize member data, judge simple precondition
+        ///     initialize member data, judge simple precondition
         /// </summary>
         private Floor InitFloor(ref Reference refer, ref IList<Curve> curves)
         {
-           var elems = new ElementSet();
+            var elems = new ElementSet();
             foreach (var elementId in m_currentDoc.Selection.GetElementIds())
-            {
-               elems.Insert(m_currentDoc.Document.GetElement(elementId));
-            }
+                elems.Insert(m_currentDoc.Document.GetElement(elementId));
             //selected 0 or more than 1 element
             if (elems.Size != 1)
             {
@@ -122,6 +128,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                 var appEx = new ApplicationException(msg);
                 throw appEx;
             }
+
             Floor floor = null;
             foreach (var o in elems)
             {
@@ -134,13 +141,14 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                     throw appEx;
                 }
             }
+
             //check the shape is rectangular and get its edges
             var helper = new GeomHelper();
             if (!helper.GetFloorGeom(floor, ref refer, ref curves))
             {
                 var appEx = new
                     ApplicationException(
-                    "Your selection is not a structural rectangular horizontal slab.");
+                        "Your selection is not a structural rectangular horizontal slab.");
                 throw appEx;
             }
 

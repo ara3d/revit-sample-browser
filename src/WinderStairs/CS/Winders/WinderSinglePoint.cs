@@ -27,10 +27,21 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
     /// <summary>
-    /// This represents a single point winder corner.
+    ///     This represents a single point winder corner.
     /// </summary>
-    class WinderSinglePoint : WinderCorner
+    internal class WinderSinglePoint : WinderCorner
     {
+        /// <summary>
+        ///     Constructor to initialize the basic fields of the winder region.
+        /// </summary>
+        /// <param name="cornerPnt">Corner Point</param>
+        /// <param name="dir1">Enter direction</param>
+        /// <param name="dir2">Leave direction</param>
+        /// <param name="steps">Number of steps</param>
+        public WinderSinglePoint(XYZ cornerPnt, XYZ dir1, XYZ dir2, uint steps)
+            : base(cornerPnt, dir1, dir2, steps)
+        {
+        }
         /*   
         *   Direction1
         *    |      
@@ -43,24 +54,12 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         */
 
         /// <summary>
-        /// Calculated point: All the riser lines are pass through this point.
+        ///     Calculated point: All the riser lines are pass through this point.
         /// </summary>
         public XYZ CenterPoint { get; private set; }
 
         /// <summary>
-        /// Constructor to initialize the basic fields of the winder region.
-        /// </summary>
-        /// <param name="cornerPnt">Corner Point</param>
-        /// <param name="dir1">Enter direction</param>
-        /// <param name="dir2">Leave direction</param>
-        /// <param name="steps">Number of steps</param>
-        public WinderSinglePoint(XYZ cornerPnt, XYZ dir1, XYZ dir2, uint steps)
-            : base(cornerPnt, dir1, dir2, steps)
-        {
-        }
-
-        /// <summary>
-        /// Calculate the CenterPoint base on Australia single-point layout algorithm.
+        ///     Calculate the CenterPoint base on Australia single-point layout algorithm.
         /// </summary>
         /// <param name="runWidth">Stairs Runwidth</param>
         /// <param name="offset1">CenterPoint Offset from the first inner boundary</param>
@@ -96,8 +95,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Generate the sketch base on the calculated CenterPoint:
-        /// Divide the corner into NumSteps evenly.
+        ///     Generate the sketch base on the calculated CenterPoint:
+        ///     Divide the corner into NumSteps evenly.
         /// </summary>
         public override void GenerateSketch(double runWidth,
             IList<Curve> outerBoundary, IList<Curve> walkPath,
@@ -183,7 +182,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             var currentDir = perpendicularDir1;
             for (var i = 0; i < NumSteps - 1; ++i)
             {
-                var rayDir = tsf.OfVector(currentDir); currentDir = rayDir;
+                var rayDir = tsf.OfVector(currentDir);
+                currentDir = rayDir;
                 var ray = Line.CreateUnbound(CenterPoint, rayDir);
 
                 IntersectionResultArray xsect;
@@ -193,28 +193,18 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                     var xOuter = xsect.get_Item(0).XYZPoint;
                     XYZ xInner = null;
                     if (innerLine1 == null || innerLine2 == null)
-                    {
                         if (ray.Distance(innerCornerPnt) < 1.0e-9)
-                        {
                             xInner = innerCornerPnt;
-                        }
-                    }
                     if (xInner == null)
                     {
                         if (innerLine1 != null && ray.Intersect(innerLine1, out xsect) == SetComparisonResult.Overlap)
-                        {
                             xInner = xsect.get_Item(0).XYZPoint;
-                        }
-                        else if (innerLine2 != null && ray.Intersect(innerLine2, out xsect) == SetComparisonResult.Overlap)
-                        {
+                        else if (innerLine2 != null &&
+                                 ray.Intersect(innerLine2, out xsect) == SetComparisonResult.Overlap)
                             xInner = xsect.get_Item(0).XYZPoint;
-                        }
                     }
 
-                    if (xInner == null)
-                    {
-                        throw new ArgumentException("Bad Input.");
-                    }
+                    if (xInner == null) throw new ArgumentException("Bad Input.");
                     riserLines.Add(Line.CreateBound(xOuter, xInner));
                 }
                 else
@@ -225,7 +215,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// Move the center point
+        ///     Move the center point
         /// </summary>
         public override void Move(XYZ vector)
         {

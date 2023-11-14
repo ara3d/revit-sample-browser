@@ -23,48 +23,41 @@
 
 using System;
 using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Loads.CS
 {
     /// <summary>
-    /// mainly deal with the operation on load case page on the form
+    ///     mainly deal with the operation on load case page on the form
     /// </summary>
     public partial class LoadsForm
     {
-        int m_loadCaseDataGridViewSelectedIndex;
-        int m_loadNatureDataGridViewSelectedIndex;
-        DataGridViewTextBoxColumn LoadCasesName;
-        DataGridViewTextBoxColumn LoadCasesNumber;
-        DataGridViewComboBoxColumn LoadCasesNature;
-        DataGridViewComboBoxColumn LoadCasesCategory;
-        DataGridViewTextBoxColumn LoadNatureName;
+        private DataGridViewComboBoxColumn LoadCasesCategory;
+        private DataGridViewTextBoxColumn LoadCasesName;
+        private DataGridViewComboBoxColumn LoadCasesNature;
+        private DataGridViewTextBoxColumn LoadCasesNumber;
+        private DataGridViewTextBoxColumn LoadNatureName;
+        private int m_loadCaseDataGridViewSelectedIndex;
+        private int m_loadNatureDataGridViewSelectedIndex;
 
 
         // Methods
         /// <summary>
-        /// Initialize the data on this page.
+        ///     Initialize the data on this page.
         /// </summary>
-        void InitializeLoadCasePage()
+        private void InitializeLoadCasePage()
         {
             InitializeLoadCasesDataGridView();
             InitializeLoadNaturesDataGridView();
 
 
-            if (0 == m_dataBuffer.LoadCases.Count)
-            {
-                duplicateLoadCasesButton.Enabled = false;
-            }
-            if (0 == m_dataBuffer.LoadNatures.Count)
-            {
-                addLoadNaturesButton.Enabled = false;
-            }
+            if (0 == m_dataBuffer.LoadCases.Count) duplicateLoadCasesButton.Enabled = false;
+            if (0 == m_dataBuffer.LoadNatures.Count) addLoadNaturesButton.Enabled = false;
             addLoadNaturesButton.Enabled = false;
         }
 
         /// <summary>
-        /// Initialize the loadCasesDataGridView
+        ///     Initialize the loadCasesDataGridView
         /// </summary>
         private void InitializeLoadCasesDataGridView()
         {
@@ -73,7 +66,7 @@ namespace Revit.SDK.Samples.Loads.CS
             LoadCasesNature = new DataGridViewComboBoxColumn();
             LoadCasesCategory = new DataGridViewComboBoxColumn();
             loadCasesDataGridView.AutoGenerateColumns = false;
-            loadCasesDataGridView.Columns.AddRange(new DataGridViewColumn[] { LoadCasesName, LoadCasesNumber, LoadCasesNature, LoadCasesCategory });
+            loadCasesDataGridView.Columns.AddRange(LoadCasesName, LoadCasesNumber, LoadCasesNature, LoadCasesCategory);
             loadCasesDataGridView.DataSource = m_dataBuffer.LoadCasesMap;
 
             LoadCasesName.DataPropertyName = "LoadCasesName";
@@ -116,13 +109,13 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Initialize the loadNaturesDataGridView
+        ///     Initialize the loadNaturesDataGridView
         /// </summary>
         private void InitializeLoadNaturesDataGridView()
         {
             LoadNatureName = new DataGridViewTextBoxColumn();
             loadNaturesDataGridView.AutoGenerateColumns = false;
-            loadNaturesDataGridView.Columns.AddRange(new DataGridViewColumn[] { LoadNatureName });
+            loadNaturesDataGridView.Columns.AddRange(LoadNatureName);
             loadNaturesDataGridView.DataSource = m_dataBuffer.LoadNaturesMap;
             LoadNatureName.DataPropertyName = "LoadNaturesName";
             LoadNatureName.HeaderText = "Name";
@@ -131,11 +124,10 @@ namespace Revit.SDK.Samples.Loads.CS
             LoadNatureName.Width = loadCasesDataGridView.Width - 100;
             loadNaturesDataGridView.MultiSelect = false;
             loadNaturesDataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-
         }
 
         /// <summary>
-        /// Respond the loadCasesDataGridView_CellClick event.
+        ///     Respond the loadCasesDataGridView_CellClick event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -146,7 +138,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Respond the loadNaturesDataGridView_CellClick event.
+        ///     Respond the loadNaturesDataGridView_CellClick event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -157,7 +149,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Respond the loadCasesDataGridView_ColumnHeaderMouseClick event.
+        ///     Respond the loadCasesDataGridView_ColumnHeaderMouseClick event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -167,7 +159,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Respond the loadNaturesDataGridView_RowHeaderMouseClick event.
+        ///     Respond the loadNaturesDataGridView_RowHeaderMouseClick event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -177,8 +169,8 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Respond the DataGridView cell validating event, 
-        /// check the user's input whether it is correct.
+        ///     Respond the DataGridView cell validating event,
+        ///     check the user's input whether it is correct.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -190,10 +182,7 @@ namespace Revit.SDK.Samples.Loads.CS
             var changeValue = e.FormattedValue;
             var changeValueTemp = changeValue as string;
 
-            if (nameTemp == changeValueTemp)
-            {
-                return;
-            }
+            if (nameTemp == changeValueTemp) return;
 
             if (null == changeValueTemp)
             {
@@ -213,28 +202,21 @@ namespace Revit.SDK.Samples.Loads.CS
             {
                 TaskDialog.Show("Revit", "Name can not be same");
                 e.Cancel = true;
-                return;
             }
         }
 
         /// <summary>
-        /// Respond the DataGridView cell validating event, 
-        /// check the user's input whether it is correct.
+        ///     Respond the DataGridView cell validating event,
+        ///     check the user's input whether it is correct.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void loadCasesDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (e.ColumnIndex != 0)
-            {
-                return;
-            }
+            if (e.ColumnIndex != 0) return;
 
             var cellTemp = loadCasesDataGridView.CurrentCell;
-            if (null == cellTemp)
-            {
-                return;
-            }
+            if (null == cellTemp) return;
             var nameTemp = cellTemp.Value as string;
             if (null == nameTemp)
             {
@@ -245,10 +227,7 @@ namespace Revit.SDK.Samples.Loads.CS
             var changeValue = e.FormattedValue;
             var changeValueTemp = changeValue as string;
 
-            if (nameTemp == changeValueTemp)
-            {
-                return;
-            }
+            if (nameTemp == changeValueTemp) return;
 
             if (null == changeValueTemp)
             {
@@ -268,12 +247,11 @@ namespace Revit.SDK.Samples.Loads.CS
             {
                 TaskDialog.Show("Revit", "Name can not be same");
                 e.Cancel = true;
-                return;
             }
         }
 
         /// <summary>
-        /// When duplicateLoadCasesButton clicked, duplicate a load case. 
+        ///     When duplicateLoadCasesButton clicked, duplicate a load case.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -285,11 +263,12 @@ namespace Revit.SDK.Samples.Loads.CS
                 TaskDialog.Show("Revit", "Duplicate failed");
                 return;
             }
+
             ReLoad();
         }
 
         /// <summary>
-        /// When addLoadNaturesButton clicked, add a new load nature. 
+        ///     When addLoadNaturesButton clicked, add a new load nature.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -300,11 +279,12 @@ namespace Revit.SDK.Samples.Loads.CS
                 TaskDialog.Show("Revit", "Add Nature Failed");
                 return;
             }
+
             ReLoad();
         }
 
         /// <summary>
-        /// Reload the data of the cases and natures
+        ///     Reload the data of the cases and natures
         /// </summary>
         private void ReLoad()
         {
@@ -314,11 +294,10 @@ namespace Revit.SDK.Samples.Loads.CS
             loadNaturesDataGridView.DataSource = m_dataBuffer.LoadNaturesMap;
             loadCasesDataGridView.DataSource = m_dataBuffer.LoadCasesMap;
             Refresh();
-            return;
         }
 
         /// <summary>
-        /// enable button
+        ///     enable button
         /// </summary>
         private void Initilize()
         {
@@ -326,16 +305,14 @@ namespace Revit.SDK.Samples.Loads.CS
             {
                 addLoadNaturesButton.Enabled = false;
                 duplicateLoadCasesButton.Enabled = true;
-
             }
             else if (loadNaturesDataGridView.Focused)
             {
                 addLoadNaturesButton.Enabled = true;
                 duplicateLoadCasesButton.Enabled = false;
-
             }
+
             Refresh();
-            return;
         }
     }
 }

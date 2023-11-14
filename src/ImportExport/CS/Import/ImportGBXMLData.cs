@@ -26,12 +26,12 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Data class which stores the information for importing GBXML format
+    ///     Data class which stores the information for importing GBXML format
     /// </summary>
-    class ImportGBXMLData : ImportData
+    internal class ImportGBXMLData : ImportData
     {
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
         /// <param name="importFormat">Format to import</param>
@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Collect the parameters and export
+        ///     Collect the parameters and export
         /// </summary>
         /// <returns></returns>
         public override bool Import()
@@ -62,5 +62,3 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
     }
 }
-
-

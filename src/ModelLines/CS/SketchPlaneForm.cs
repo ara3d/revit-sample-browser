@@ -27,15 +27,15 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ModelLines.CS
 {
     /// <summary>
-    /// This UserControl is used to collect the information for sketch plane creation
+    ///     This UserControl is used to collect the information for sketch plane creation
     /// </summary>
     public partial class SketchPlaneForm : Form
     {
         // Private members
-        ModelLines m_dataBuffer;   // A reference of ModelLines.
+        private readonly ModelLines m_dataBuffer; // A reference of ModelLines.
 
         /// <summary>
-        /// Constructor of SketchPlaneForm
+        ///     Constructor of SketchPlaneForm
         /// </summary>
         /// <param name="dataBuffer">a reference of ModelLines class</param>
         public SketchPlaneForm(ModelLines dataBuffer)
@@ -48,17 +48,17 @@ namespace Revit.SDK.Samples.ModelLines.CS
         }
 
         /// <summary>
-        /// Check the data which the user input are integrated or not 
+        ///     Check the data which the user input are integrated or not
         /// </summary>
         /// <returns>If the data are integrated return true, otherwise false</returns>
-        bool AssertDataIntegrity()
+        private bool AssertDataIntegrity()
         {
-            return (normalUserControl.AssertPointIntegrity()
-            && originUserControl.AssertPointIntegrity());
+            return normalUserControl.AssertPointIntegrity()
+                   && originUserControl.AssertPointIntegrity();
         }
 
         /// <summary>
-        /// The event method for okButton click
+        ///     The event method for okButton click
         /// </summary>
         private void okButton_Click(object sender, EventArgs e)
         {
@@ -88,7 +88,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         }
 
         /// <summary>
-        /// The event method for cancelButton click
+        ///     The event method for cancelButton click
         /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {

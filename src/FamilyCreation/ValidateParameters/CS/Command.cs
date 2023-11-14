@@ -22,54 +22,53 @@
 
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ValidateParameters.CS
-{  
+{
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// this class controls the class which subscribes handle events and the events' information UI.
-    /// like a bridge between them.
+    ///     A class inherits IExternalCommand interface.
+    ///     this class controls the class which subscribes handle events and the events' information UI.
+    ///     like a bridge between them.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    public class Command:IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
     {
-                /// <summary>
-        /// store the family manager
+        /// <summary>
+        ///     store the family manager
         /// </summary>
-        FamilyManager m_familyManager;         
-                
-                public Result Execute(ExternalCommandData commandData,
-                                             ref string message,
-                                             ElementSet elements)
+        private FamilyManager m_familyManager;
+
+        public Result Execute(ExternalCommandData commandData,
+            ref string message,
+            ElementSet elements)
         {
             var document = commandData.Application.ActiveUIDocument.Document;
             // only a family document can retrieve family manager
             if (document.IsFamilyDocument)
-            {                
+            {
                 m_familyManager = document.FamilyManager;
                 var errorMessages = ValidateParameters(m_familyManager);
-                using(var msgForm = new MessageForm(errorMessages.ToArray()))
+                using (var msgForm = new MessageForm(errorMessages.ToArray()))
                 {
                     msgForm.StartPosition = FormStartPosition.CenterParent;
-                    msgForm.ShowDialog();                    
+                    msgForm.ShowDialog();
                     return Result.Succeeded;
                 }
             }
-            else
-            {
-                message = "please make sure you have opened a family document!";
-                return Result.Failed;
-            }
+
+            message = "please make sure you have opened a family document!";
+            return Result.Failed;
         }
-        
-                /// <summary>
-        /// implementation of validate parameters, get all family types and parameters, 
-        /// use the function FamilyType.HasValue() to make sure if the parameter needs to
-        /// validate. Then along to the storage type to validate the parameters.
+
+        /// <summary>
+        ///     implementation of validate parameters, get all family types and parameters,
+        ///     use the function FamilyType.HasValue() to make sure if the parameter needs to
+        ///     validate. Then along to the storage type to validate the parameters.
         /// </summary>
         /// <returns>error information list</returns>
         public static List<string> ValidateParameters(FamilyManager familyManager)
@@ -82,9 +81,8 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
                 foreach (FamilyParameter para in familyManager.Parameters)
                 {
                     try
-                    { 
+                    {
                         if (type.HasValue(para))
-                        {
                             switch (para.StorageType)
                             {
                                 case StorageType.Double:
@@ -99,7 +97,8 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
                                     catch
                                     {
                                         right = false;
-                                    }                                    
+                                    }
+
                                     break;
                                 case StorageType.Integer:
                                     if (!(type.AsInteger(para) is int))
@@ -109,25 +108,22 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
                                     if (!(type.AsString(para) is string))
                                         right = false;
                                     break;
-                                default:
-                                    break;
                             }
-                        }
-                    } 
+                    }
                     // output the parameters which failed during validating.
                     catch
                     {
-                        errorInfo.Add("Family Type:" + type.Name + "   Family Parameter:" 
-                            + para.Definition.Name + "   validating failed!");                       
-                    }
-                    if (!right)
-                    {
                         errorInfo.Add("Family Type:" + type.Name + "   Family Parameter:"
-                            + para.Definition.Name + "   validating failed!");                       
-                    }                  
-                } 
-            }           
+                                      + para.Definition.Name + "   validating failed!");
+                    }
+
+                    if (!right)
+                        errorInfo.Add("Family Type:" + type.Name + "   Family Parameter:"
+                                      + para.Definition.Name + "   validating failed!");
+                }
+            }
+
             return errorInfo;
-        }       
-            }   
+        }
+    }
 }

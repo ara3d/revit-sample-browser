@@ -25,16 +25,17 @@ using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Point = System.Drawing.Point;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
 {
     /// <summary>
-    /// manages the behaviors & operations of CurtainGrid
+    ///     manages the behaviors & operations of CurtainGrid
     /// </summary>
     public class GridGeometry
     {
-                // the document of this sample
-        private MyDocument m_myDocument;
+        // the active document of Revit
+        private readonly Document m_activeDocument;
 
         // stores the curtain grid information of the created curtain wall
 
@@ -43,8 +44,28 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         //object which contains reference of Revit Application
         private ExternalCommandData m_commandData;
 
-        // the active document of Revit
-        private Document m_activeDocument;
+        // the document of this sample
+        private readonly MyDocument m_myDocument;
+
+
+        /// <summary>
+        ///     constructor
+        /// </summary>
+        /// <param name="myDoc">
+        ///     the document of the sample
+        /// </param>
+        public GridGeometry(MyDocument myDoc)
+        {
+            m_myDocument = myDoc;
+            m_commandData = myDoc.CommandData;
+            m_activeDocument = myDoc.Document;
+            GridProperties = new GridProperties();
+            //m_activeGrid = grid;
+            Drawing = new GridDrawing(myDoc, this);
+            UGridLines = new List<CurtainGridLine>();
+            VGridLines = new List<CurtainGridLine>();
+            GridVertexesXYZ = new List<XYZ>();
+        }
 
         // store the mullion type used in this sample
 
@@ -60,84 +81,60 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         // store the offset to be moved for the specified grid line
 
-        
-                /// <summary>
-        /// stores the curtain grid information of the created curtain wall
+
+        /// <summary>
+        ///     stores the curtain grid information of the created curtain wall
         /// </summary>
         public CurtainGrid ActiveGrid { get; private set; }
 
         /// <summary>
-        /// the referred drawing class for the curtain grid
+        ///     the referred drawing class for the curtain grid
         /// </summary>
         public GridDrawing Drawing { get; }
 
         /// <summary>
-        /// store the mullion type used in this sample
+        ///     store the mullion type used in this sample
         /// </summary>
         public MullionType MullionType { get; set; }
 
         /// <summary>
-        /// all the grid lines of U direction (in CurtainGridLine format)
+        ///     all the grid lines of U direction (in CurtainGridLine format)
         /// </summary>
         public List<CurtainGridLine> UGridLines { get; }
 
         /// <summary>
-        /// all the grid lines of V direction (in CurtainGridLine format)
+        ///     all the grid lines of V direction (in CurtainGridLine format)
         /// </summary>
         public List<CurtainGridLine> VGridLines { get; }
 
         /// <summary>
-        /// stores all the vertexes of the curtain grid (in Autodesk.Revit.DB.XYZ format)
+        ///     stores all the vertexes of the curtain grid (in Autodesk.Revit.DB.XYZ format)
         /// </summary>
         public List<XYZ> GridVertexesXYZ { get; }
 
         /// <summary>
-        /// stores all the properties of the curtain grid
+        ///     stores all the properties of the curtain grid
         /// </summary>
         public GridProperties GridProperties { get; }
 
         public CurtainGridLine LineToBeMoved { get; private set; }
 
         /// <summary>
-        /// store the offset to be moved for the specified grid line
+        ///     store the offset to be moved for the specified grid line
         /// </summary>
         public int MoveOffset { get; set; }
 
-        
-                /// <summary>
-        /// constructor
-        /// </summary>
-        /// <param name="myDoc">
-        /// the document of the sample
-        /// </param>
-        public GridGeometry(MyDocument myDoc)
-        {
-            m_myDocument = myDoc;
-            m_commandData = myDoc.CommandData;
-            m_activeDocument = myDoc.Document;
-            GridProperties = new GridProperties();
-            //m_activeGrid = grid;
-            Drawing = new GridDrawing(myDoc, this);
-            UGridLines = new List<CurtainGridLine>();
-            VGridLines = new List<CurtainGridLine>();
-            GridVertexesXYZ = new List<XYZ>();
-        }
-        
-                /// <summary>
-        /// obtain all the properties of the curtain grid
+        /// <summary>
+        ///     obtain all the properties of the curtain grid
         /// </summary>
         public void ReloadGridProperties()
         {
             if (null == ActiveGrid)
             {
-                if (true == m_myDocument.WallCreated)
-                {
+                if (m_myDocument.WallCreated)
                     ActiveGrid = m_myDocument.CurtainWall.CurtainGrid;
-                }
                 else
-                {
                     return;
-                }
             }
 
             // horizontal grid pattern 
@@ -154,9 +151,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 case CurtainGridAlignType.End:
                     GridProperties.HorizontalJustification = CurtainGridAlign.End;
                     break;
-                default:
-                    break;
             }
+
             GridProperties.HorizontalAngle = ActiveGrid.Grid2Angle * 180.0 / Math.PI;
             GridProperties.HorizontalOffset = ActiveGrid.Grid2Offset;
             GridProperties.HorizontalLinesNumber = ActiveGrid.NumULines;
@@ -172,9 +168,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 case CurtainGridAlignType.End:
                     GridProperties.VerticalJustification = CurtainGridAlign.End;
                     break;
-                default:
-                    break;
             }
+
             GridProperties.VerticalAngle = ActiveGrid.Grid1Angle * 180.0 / Math.PI;
             GridProperties.VerticalOffset = ActiveGrid.Grid1Offset;
             GridProperties.VerticalLinesNumber = ActiveGrid.NumVLines;
@@ -187,24 +182,21 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 GridProperties.MullionsNumber = ActiveGrid.GetMullionIds().Count;
                 GridProperties.UnlockedmullionsNumber = ActiveGrid.GetUnlockedMullionIds().Count;
             }
+
             act.Commit();
         }
 
         /// <summary>
-        /// reload all the geometry data of the curtain grid (grid lines, vertexes, and convert them to 2D format)
+        ///     reload all the geometry data of the curtain grid (grid lines, vertexes, and convert them to 2D format)
         /// </summary>
         public void ReloadGeometryData()
         {
             if (null == ActiveGrid)
             {
-                if (true == m_myDocument.WallCreated)
-                {
+                if (m_myDocument.WallCreated)
                     ActiveGrid = m_myDocument.CurtainWall.CurtainGrid;
-                }
                 else
-                {
                     return;
-                }
             }
 
             var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
@@ -214,7 +206,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
             act.Commit();
             if (0 == mullions.Count)
-            {
                 foreach (var e in mullions)
                 {
                     var mullion = m_activeDocument.GetElement(e) as Mullion;
@@ -225,7 +216,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                         break;
                     }
                 }
-            }
 
 
             GetULines();
@@ -236,16 +226,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// remove the selected segment from the curtain grid
+        ///     remove the selected segment from the curtain grid
         /// </summary>
         public void RemoveSegment()
         {
             // verify that the mouse is inside the curtain grid area
             var lines2D = Drawing.DrawObject.Lines2D;
-            if (lines2D.Count < 1)
-            {
-                return;
-            }
+            if (lines2D.Count < 1) return;
 
             var toBeRemovedList = new List<SegmentLine2D>();
             // check whether the deletion is valid
@@ -253,7 +240,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             MimicRemoveSegments(ref canRemove, toBeRemovedList);
             // in the "MimicRemove" process, we didn't find that we need to "Remove the last segment of the grid line"
             // so the "Remove" action can go on
-            if (true == canRemove)
+            if (canRemove)
             {
                 try
                 {
@@ -266,17 +253,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                         var isUSegment = seg2D.IsUSegment;
 
                         CurtainGridLine line;
-                        if (true == isUSegment)
-                        {
+                        if (isUSegment)
                             line = UGridLines[gridLineIndex];
-                        }
                         else
-                        {
                             line = VGridLines[gridLineIndex];
-                        }
                         var curve = line.AllSegmentCurves.get_Item(segIndex);
                         line.RemoveSegment(curve);
                     }
+
                     act.Commit();
                 }
                 catch (Exception e)
@@ -296,20 +280,17 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                     var isUSegment = seg2D.IsUSegment;
                     GridLine2D gridLine2D;
 
-                    if (true == isUSegment)
-                    {
+                    if (isUSegment)
                         gridLine2D = Drawing.UGridLines2D[gridLineIndex];
-                    }
                     else
-                    {
                         gridLine2D = Drawing.VGridLines2D[gridLineIndex];
-                    }
 
                     gridLine2D.RemovedNumber--;
                     var segLine2D = gridLine2D.Segments[segIndex];
                     segLine2D.Removed = false;
                     gridLine2D.Segments[segIndex] = segLine2D;
                 }
+
                 var statusMsg = "Delete this segment will make some grid lines have no existent segments.";
                 m_myDocument.Message = new KeyValuePair<string, bool>(statusMsg, true);
             }
@@ -319,16 +300,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// add a new segment to the specified location
+        ///     add a new segment to the specified location
         /// </summary>
         public void AddSegment()
         {
             // verify that the mouse is inside the curtain grid area
             var lines2D = Drawing.DrawObject.Lines2D;
-            if (lines2D.Count < 1)
-            {
-                return;
-            }
+            if (lines2D.Count < 1) return;
 
             // the selected segment location is on a U grid line
             if (-1 != Drawing.SelectedUIndex)
@@ -336,7 +314,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 var line = UGridLines[Drawing.SelectedUIndex];
                 var curve = line.AllSegmentCurves.get_Item(Drawing.SelectedUSegmentIndex);
                 if (null != line && null != curve)
-                {
                     try
                     {
                         var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
@@ -350,7 +327,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                         TaskDialog.Show("Exception", e.Message);
                         return;
                     }
-                }
 
                 var gridLine2D = Drawing.UGridLines2D[Drawing.SelectedUIndex];
                 gridLine2D.RemovedNumber--;
@@ -364,7 +340,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 var line = VGridLines[Drawing.SelectedVIndex];
                 var curve = line.AllSegmentCurves.get_Item(Drawing.SelectedVSegmentIndex);
                 if (null != line && null != curve)
-                {
                     try
                     {
                         var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
@@ -377,7 +352,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                         TaskDialog.Show("Exception", e.Message);
                         return;
                     }
-                }
 
                 var gridLine2D = Drawing.VGridLines2D[Drawing.SelectedVIndex];
                 gridLine2D.RemovedNumber--;
@@ -391,22 +365,18 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// add all the deleted segments back for a grid line
+        ///     add all the deleted segments back for a grid line
         /// </summary>
         public void AddAllSegments()
         {
             // verify that the mouse is inside the curtain grid area
             var lines2D = Drawing.DrawObject.Lines2D;
-            if (lines2D.Count < 1)
-            {
-                return;
-            }
+            if (lines2D.Count < 1) return;
 
             if (-1 != Drawing.SelectedUIndex)
             {
                 var line = UGridLines[Drawing.SelectedUIndex];
                 if (null != line)
-                {
                     try
                     {
                         var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
@@ -419,20 +389,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                         TaskDialog.Show("Exception", e.Message);
                         return;
                     }
-                }
 
                 var gridLine2D = Drawing.UGridLines2D[Drawing.SelectedUIndex];
                 gridLine2D.RemovedNumber = 0;
-                foreach (var segLine2D in gridLine2D.Segments)
-                {
-                    segLine2D.Removed = false;
-                }
+                foreach (var segLine2D in gridLine2D.Segments) segLine2D.Removed = false;
             }
             else if (-1 != Drawing.SelectedVIndex)
             {
                 var line = VGridLines[Drawing.SelectedVIndex];
                 if (null != line)
-                {
                     try
                     {
                         var act = new Transaction(m_activeDocument, Guid.NewGuid().GetHashCode().ToString());
@@ -445,14 +410,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                         TaskDialog.Show("Exception", e.Message);
                         return;
                     }
-                }
 
                 var gridLine2D = Drawing.VGridLines2D[Drawing.SelectedVIndex];
                 gridLine2D.RemovedNumber = 0;
-                foreach (var segLine2D in gridLine2D.Segments)
-                {
-                    segLine2D.Removed = false;
-                }
+                foreach (var segLine2D in gridLine2D.Segments) segLine2D.Removed = false;
             }
 
             ReloadGeometryData();
@@ -460,32 +421,24 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// add a new U grid line to the specified location
+        ///     add a new U grid line to the specified location
         /// </summary>
         public void AddUGridLine()
         {
             // verify that the mouse location is valid: it's inside the curtain grid area 
             // & it doesn't lap over another grid line (it's not allowed to add a grid line to lap over another one)
-            if (false == Drawing.MouseLocationValid)
-            {
-                return;
-            }
+            if (false == Drawing.MouseLocationValid) return;
 
             // all the assistant lines (in "Add U (Horizontal) Grid Line" operation, 
             // there's only one dash line, this line indicates the location to be added)
             var lines2D = Drawing.DrawObject.Lines2D;
-            if (lines2D.Count < 1)
-            {
-                return;
-            }
+            if (lines2D.Count < 1) return;
 
             // the dash U line shown in the sample (incidates the location to be added)
             var line2D = lines2D[0].Key;
-            if (System.Drawing.Point.Empty == line2D.StartPoint ||
-                System.Drawing.Point.Empty == line2D.EndPoint)
-            {
+            if (Point.Empty == line2D.StartPoint ||
+                Point.Empty == line2D.EndPoint)
                 return;
-            }
 
             // get the point to be added
             var midX = (line2D.StartPoint.X + line2D.EndPoint.X) / 2;
@@ -507,6 +460,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 // "add U line" failed, so return directly
                 return;
             }
+
             act.Commit();
 
             // U line added, the V line's segment information changed, so reload all the geometry data
@@ -514,32 +468,24 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// add a new V grid line to the specified location
+        ///     add a new V grid line to the specified location
         /// </summary>
         public void AddVGridLine()
         {
             // verify that the mouse location is valid: it's inside the curtain grid area 
             // & it doesn't lap over another grid line (it's not allowed to add a grid line to lap over another one)
-            if (false == Drawing.MouseLocationValid)
-            {
-                return;
-            }
+            if (false == Drawing.MouseLocationValid) return;
 
             // all the assistant lines (in "Add V (Vertical) Grid Line" operation, 
             // there's only one dash line, this line indicates the location to be added)
             var lines2D = Drawing.DrawObject.Lines2D;
-            if (lines2D.Count < 1)
-            {
-                return;
-            }
+            if (lines2D.Count < 1) return;
 
             // the dash V line shown in the sample (incidates the location to be added)
             var line2D = lines2D[0].Key;
-            if (System.Drawing.Point.Empty == line2D.StartPoint ||
-                System.Drawing.Point.Empty == line2D.EndPoint)
-            {
+            if (Point.Empty == line2D.StartPoint ||
+                Point.Empty == line2D.EndPoint)
                 return;
-            }
 
             // get the point to be added
             var midX = (line2D.StartPoint.X + line2D.EndPoint.X) / 2;
@@ -561,6 +507,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 // "add V line" failed, so return directly
                 return;
             }
+
             act.Commit();
 
             // V line added, the U line's segment information changed, so reload all the geometry data
@@ -568,7 +515,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// toggle the selected grid line's Lock status:  if it's locked, unlock it, vice versa
+        ///     toggle the selected grid line's Lock status:  if it's locked, unlock it, vice versa
         /// </summary>
         public void LockOrUnlockSelectedGridLine()
         {
@@ -608,10 +555,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// get the grid line to be removed
+        ///     get the grid line to be removed
         /// </summary>
         /// <returns>
-        /// if the line obtained, return true; otherwise false
+        ///     if the line obtained, return true; otherwise false
         /// </returns>
         public bool GetLineToBeMoved()
         {
@@ -620,40 +567,33 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 LineToBeMoved = UGridLines[Drawing.SelectedUIndex];
                 return true;
             }
-            else if (-1 != Drawing.SelectedVIndex)
+
+            if (-1 != Drawing.SelectedVIndex)
             {
                 LineToBeMoved = VGridLines[Drawing.SelectedVIndex];
                 return true;
             }
-            else
-            {
-                LineToBeMoved = null;
-                return false;
-            }
+
+            LineToBeMoved = null;
+            return false;
         }
 
         /// <summary>
-        /// move the selected grid line to the location of the mouse cursor
+        ///     move the selected grid line to the location of the mouse cursor
         /// </summary>
         /// <param name="mousePosition">
-        /// indicates the destination position of the grid line
+        ///     indicates the destination position of the grid line
         /// </param>
         /// <returns>
-        /// return whether the grid line be moved successfully
+        ///     return whether the grid line be moved successfully
         /// </returns>
-        public bool MoveGridLine(System.Drawing.Point mousePosition)
+        public bool MoveGridLine(Point mousePosition)
         {
             // verify that the mouse location is valid: it's inside the curtain grid area 
             // & it doesn't lap over another grid line (it's not allowed to move a grid line to lap over another one)
-            if (false == Drawing.MouseLocationValid)
-            {
-                return false;
-            }
+            if (false == Drawing.MouseLocationValid) return false;
 
-            if (null == LineToBeMoved)
-            {
-                return false;
-            }
+            if (null == LineToBeMoved) return false;
 
             // move a U line along the V direction
             if (-1 != Drawing.SelectedUIndex)
@@ -675,12 +615,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                     TaskDialog.Show("Exception", e.Message);
                     return false;
                 }
+
                 act.Commit();
 
                 // update the grid line 2d
                 var line = Drawing.UGridLines2D[Drawing.SelectedUIndex];
-                line.StartPoint = new System.Drawing.Point(line.StartPoint.X, line.StartPoint.Y + MoveOffset);
-                line.EndPoint = new System.Drawing.Point(line.EndPoint.X, line.EndPoint.Y + MoveOffset);
+                line.StartPoint = new Point(line.StartPoint.X, line.StartPoint.Y + MoveOffset);
+                line.EndPoint = new Point(line.EndPoint.X, line.EndPoint.Y + MoveOffset);
 
                 // update the mapped grid line graphics path
                 var path = new GraphicsPath();
@@ -694,8 +635,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 {
                     // update the segment
                     var segLine2D = segLineList[i];
-                    segLine2D.StartPoint = new System.Drawing.Point(segLine2D.StartPoint.X, segLine2D.StartPoint.Y + MoveOffset);
-                    segLine2D.EndPoint = new System.Drawing.Point(segLine2D.EndPoint.X, segLine2D.EndPoint.Y + MoveOffset);
+                    segLine2D.StartPoint = new Point(segLine2D.StartPoint.X, segLine2D.StartPoint.Y + MoveOffset);
+                    segLine2D.EndPoint = new Point(segLine2D.EndPoint.X, segLine2D.EndPoint.Y + MoveOffset);
 
                     // update the segment's graphics path
                     var gpath = new GraphicsPath();
@@ -724,12 +665,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                     TaskDialog.Show("Exception", e.Message);
                     return false;
                 }
+
                 act.Commit();
 
                 // update the grid line 2d
                 var line = Drawing.VGridLines2D[Drawing.SelectedVIndex];
-                line.StartPoint = new System.Drawing.Point(line.StartPoint.X + MoveOffset, line.StartPoint.Y);
-                line.EndPoint = new System.Drawing.Point(line.EndPoint.X + MoveOffset, line.EndPoint.Y);
+                line.StartPoint = new Point(line.StartPoint.X + MoveOffset, line.StartPoint.Y);
+                line.EndPoint = new Point(line.EndPoint.X + MoveOffset, line.EndPoint.Y);
 
                 // update the mapped grid line graphics path
                 var path = new GraphicsPath();
@@ -743,8 +685,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 {
                     // update the segment
                     var segLine2D = segLineList[i];
-                    segLine2D.StartPoint = new System.Drawing.Point(segLine2D.StartPoint.X + MoveOffset, segLine2D.StartPoint.Y);
-                    segLine2D.EndPoint = new System.Drawing.Point(segLine2D.EndPoint.X + MoveOffset, segLine2D.EndPoint.Y);
+                    segLine2D.StartPoint = new Point(segLine2D.StartPoint.X + MoveOffset, segLine2D.StartPoint.Y);
+                    segLine2D.EndPoint = new Point(segLine2D.EndPoint.X + MoveOffset, segLine2D.EndPoint.Y);
 
                     // update the segment's graphics path
                     var gpath = new GraphicsPath();
@@ -752,6 +694,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                     pathList[i] = gpath;
                 }
             }
+
             // line moved, the segment information changed, so reload all the geometry data
             ReloadGeometryData();
 
@@ -760,9 +703,9 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// add mullions to all the segments of the curtain grid
-        /// due to the limitations of Mullions, it's not available yet to add mullions to the 
-        /// edges of the curtain grid as Revit UI does
+        ///     add mullions to all the segments of the curtain grid
+        ///     due to the limitations of Mullions, it's not available yet to add mullions to the
+        ///     edges of the curtain grid as Revit UI does
         /// </summary>
         public void AddAllMullions()
         {
@@ -772,25 +715,22 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             {
                 // add mullions to all U grid lines
                 foreach (var line in UGridLines)
-                {
                     line.AddMullions(line.AllSegmentCurves.get_Item(0), MullionType, false);
-                }
                 // add mullions to all V grid lines
                 foreach (var line in VGridLines)
-                {
                     line.AddMullions(line.AllSegmentCurves.get_Item(0), MullionType, false);
-                }
             }
             catch (Exception e)
             {
                 TaskDialog.Show("Exception", e.Message);
                 return;
             }
+
             act.Commit();
         }
 
         /// <summary>
-        /// delete all the mullions of the curtain grid
+        ///     delete all the mullions of the curtain grid
         /// </summary>
         public void DeleteAllMullions()
         {
@@ -805,10 +745,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                     var mullion = m_activeDocument.GetElement(e) as Mullion;
 
                     // Exceptions may jump out if attempting to delete "Locked" mullions
-                    if (true == mullion.Lockable && true == mullion.Lock)
-                    {
-                        mullion.Lock = false;
-                    }
+                    if (mullion.Lockable && mullion.Lock) mullion.Lock = false;
 
                     m_activeDocument.Delete(mullion.Id);
                 }
@@ -818,11 +755,12 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 TaskDialog.Show("Exception", e.Message);
                 return;
             }
+
             act.Commit();
         }
-        
-                /// <summary>
-        /// get all the U grid lines' data of the curtain grid
+
+        /// <summary>
+        ///     get all the U grid lines' data of the curtain grid
         /// </summary>
         private void GetULines()
         {
@@ -832,10 +770,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             //ElementSet uLines = m_activeGrid.UGridLines;
             var uLines = ActiveGrid.GetUGridLineIds();
             act.Commit();
-            if (0 == uLines.Count)
-            {
-                return;
-            }
+            if (0 == uLines.Count) return;
 
             foreach (var e in uLines)
             {
@@ -846,7 +781,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// get all the V grid lines' data of the curtain grid
+        ///     get all the V grid lines' data of the curtain grid
         /// </summary>
         private void GetVLines()
         {
@@ -856,10 +791,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             //ElementSet vLines = m_activeGrid.VGridLines;
             var vLines = ActiveGrid.GetVGridLineIds();
             act.Commit();
-            if (0 == vLines.Count)
-            {
-                return;
-            }
+            if (0 == vLines.Count) return;
 
             foreach (var e in vLines)
             {
@@ -870,7 +802,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// get all of the 4 vertexes of the curtain grid
+        ///     get all of the 4 vertexes of the curtain grid
         /// </summary>
         /// <returns></returns>
         private bool GetCurtainGridVertexes()
@@ -878,10 +810,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             // even in "ReloadGeometryData()" method, no need to reload the boundary information
             // (as the boundary of the curtain grid won't be changed in the sample)
             // just need to load it after the curtain wall been created
-            if (null != GridVertexesXYZ && 0 < GridVertexesXYZ.Count)
-            {
-                return true;
-            }
+            if (null != GridVertexesXYZ && 0 < GridVertexesXYZ.Count) return true;
 
             // the curtain grid is from "Curtain Wall: Curtain Wall 1" (by default, the "Curtain Wall 1" has no U/V grid lines)
             if (UGridLines.Count <= 0 || VGridLines.Count <= 0)
@@ -907,59 +836,51 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 GridVertexesXYZ.Add(new XYZ(minXYZ.X, minXYZ.Y, maxXYZ.Z));
                 return true;
             }
-            else
-            {
-                // handling for the other kinds of curtain walls (contains U&V grid lines by default)
-                var uLine = UGridLines[0];
-                var vLine = VGridLines[0];
 
-                var points = new List<XYZ>();
+            // handling for the other kinds of curtain walls (contains U&V grid lines by default)
+            var uLine = UGridLines[0];
+            var vLine = VGridLines[0];
 
-                var uStartPoint = uLine.FullCurve.GetEndPoint(0);
-                var uEndPoint = uLine.FullCurve.GetEndPoint(1);
+            var points = new List<XYZ>();
 
-                var vStartPoint = vLine.FullCurve.GetEndPoint(0);
-                var vEndPoint = vLine.FullCurve.GetEndPoint(1);
+            var uStartPoint = uLine.FullCurve.GetEndPoint(0);
+            var uEndPoint = uLine.FullCurve.GetEndPoint(1);
 
-                points.Add(uStartPoint);
-                points.Add(uEndPoint);
-                points.Add(vStartPoint);
-                points.Add(vEndPoint);
+            var vStartPoint = vLine.FullCurve.GetEndPoint(0);
+            var vEndPoint = vLine.FullCurve.GetEndPoint(1);
 
-                //move the U & V lines to the boundary of the curtain grid, and get their end points as the vertexes of the curtain grid
-                GridVertexesXYZ.Add(new XYZ(uStartPoint.X, uStartPoint.Y, vStartPoint.Z));
-                GridVertexesXYZ.Add(new XYZ(uEndPoint.X, uEndPoint.Y, vStartPoint.Z));
-                GridVertexesXYZ.Add(new XYZ(uEndPoint.X, uEndPoint.Y, vEndPoint.Z));
-                GridVertexesXYZ.Add(new XYZ(uStartPoint.X, uStartPoint.Y, vEndPoint.Z));
+            points.Add(uStartPoint);
+            points.Add(uEndPoint);
+            points.Add(vStartPoint);
+            points.Add(vEndPoint);
 
-                return true;
-            }
+            //move the U & V lines to the boundary of the curtain grid, and get their end points as the vertexes of the curtain grid
+            GridVertexesXYZ.Add(new XYZ(uStartPoint.X, uStartPoint.Y, vStartPoint.Z));
+            GridVertexesXYZ.Add(new XYZ(uEndPoint.X, uEndPoint.Y, vStartPoint.Z));
+            GridVertexesXYZ.Add(new XYZ(uEndPoint.X, uEndPoint.Y, vEndPoint.Z));
+            GridVertexesXYZ.Add(new XYZ(uStartPoint.X, uStartPoint.Y, vEndPoint.Z));
+
+            return true;
         }
 
         /// <summary>
-        /// get all the vertexes of the curtain cells
+        ///     get all the vertexes of the curtain cells
         /// </summary>
         /// <param name="cells">
-        /// the curtain cells which need to be got the vertexes
+        ///     the curtain cells which need to be got the vertexes
         /// </param>
         /// <returns>
-        /// the vertexes of the curtain cells
+        ///     the vertexes of the curtain cells
         /// </returns>
         private List<XYZ> GetPoints(ICollection<CurtainCell> cells)
         {
             var points = new List<XYZ>();
 
-            if (null == cells || cells.Count == 0)
-            {
-                return points;
-            }
+            if (null == cells || cells.Count == 0) return points;
 
             foreach (var cell in cells)
             {
-                if (null == cell || 0 == cell.CurveLoops.Size)
-                {
-                    continue;
-                }
+                if (null == cell || 0 == cell.CurveLoops.Size) continue;
 
                 var curves = cell.CurveLoops.get_Item(0);
 
@@ -974,23 +895,20 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// get a bounding box which covers all the input points 
+        ///     get a bounding box which covers all the input points
         /// </summary>
         /// <param name="points">
-        /// the source points
+        ///     the source points
         /// </param>
         /// <param name="minXYZ">
-        /// one of the bounding box points
+        ///     one of the bounding box points
         /// </param>
         /// <param name="maxXYZ">
-        /// one of the bounding box points
+        ///     one of the bounding box points
         /// </param>
         private void GetVertexesByPoints(List<XYZ> points, ref XYZ minXYZ, ref XYZ maxXYZ)
         {
-            if (null == points || 0 == points.Count)
-            {
-                return;
-            }
+            if (null == points || 0 == points.Count) return;
 
             var minX = minXYZ.X;
             var minY = minXYZ.Y;
@@ -1007,20 +925,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                     minX = xyz.X;
                     minY = xyz.Y;
                 }
+
                 if (xyz.X > maxX)
                 {
                     maxX = xyz.X;
                     maxY = xyz.Y;
                 }
 
-                if (xyz.Z < minZ)
-                {
-                    minZ = xyz.Z;
-                }
-                if (xyz.Z > maxZ)
-                {
-                    maxZ = xyz.Z;
-                }
+                if (xyz.Z < minZ) minZ = xyz.Z;
+                if (xyz.Z > maxZ) maxZ = xyz.Z;
             } // end of loop
 
             minXYZ = new XYZ(minX, minY, minZ);
@@ -1028,38 +941,37 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// get the vertexes of the bounding box which covers all the curtain cells
+        ///     get the vertexes of the bounding box which covers all the curtain cells
         /// </summary>
         /// <param name="cells">
-        /// the source curtain cells
+        ///     the source curtain cells
         /// </param>
         /// <param name="minXYZ">
-        /// the result bounding point
+        ///     the result bounding point
         /// </param>
         /// <param name="maxXYZ">
-        /// the result bounding point
+        ///     the result bounding point
         /// </param>
         private void GetVertexesByCells(ICollection<CurtainCell> cells, ref XYZ minXYZ, ref XYZ maxXYZ)
         {
-            if (null == cells || cells.Count == 0)
-            {
-                return;
-            }
+            if (null == cells || cells.Count == 0) return;
 
             var points = GetPoints(cells);
             GetVertexesByPoints(points, ref minXYZ, ref maxXYZ);
         }
 
         /// <summary>
-        /// a simulative "Delete Segment" operation before real deletion
-        /// as we may occur some situations that prevent us to delete the specific segment
-        /// for example, delete the specific segment will make some other segments to be deleted automatically (the "conjoint" ones)
-        /// and the "automatically deleted" segment is the last segment of its parent grid line
-        /// in this situation, we should prevent deleting that specific segment and rollback all the simulative deletion
+        ///     a simulative "Delete Segment" operation before real deletion
+        ///     as we may occur some situations that prevent us to delete the specific segment
+        ///     for example, delete the specific segment will make some other segments to be deleted automatically (the "conjoint"
+        ///     ones)
+        ///     and the "automatically deleted" segment is the last segment of its parent grid line
+        ///     in this situation, we should prevent deleting that specific segment and rollback all the simulative deletion
         /// </summary>
         /// <param name="removeList">
-        /// the refferred to-be-removed list, in the simulative deletion operation, all the suitable (not the last segment) segments will
-        /// be added to that list
+        ///     the refferred to-be-removed list, in the simulative deletion operation, all the suitable (not the last segment)
+        ///     segments will
+        ///     be added to that list
         /// </param>
         private void MimicRemoveSegments(ref bool canRemove, List<SegmentLine2D> removeList)
         {
@@ -1112,17 +1024,17 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         /// <summary>
-        /// the "regeneration" step: if there're only 2 segments existing in one joint and they're in the same line,
-        /// delete one seg will cause the other been deleted automatically
+        ///     the "regeneration" step: if there're only 2 segments existing in one joint and they're in the same line,
+        ///     delete one seg will cause the other been deleted automatically
         /// </summary>
         /// <param name="segLine2D">
-        /// the to-be-automatically-deleted segment
+        ///     the to-be-automatically-deleted segment
         /// </param>
         /// <param name="removeList">
-        /// the referred to-be-deleted list of the segments
+        ///     the referred to-be-deleted list of the segments
         /// </param>
         /// <returns>
-        /// returns the operation result: if there's no "last" segment in the deletion operation, return true; otherwise false
+        ///     returns the operation result: if there's no "last" segment in the deletion operation, return true; otherwise false
         /// </returns>
         private void MimicRecursiveDelete(ref bool canRemove, SegmentLine2D segLine2D, List<SegmentLine2D> removeList)
         {
@@ -1135,41 +1047,34 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
             // there's no isolated segment need to be removed automatically
             if (null == removeSegments || 0 == removeSegments.Count)
-            {
                 // didn't "remove last segment of the curtain grid line", all the operations are valid. so return true
                 return;
-            }
 
             // there're conjoint segments need to be removed automatically
             // add the segments to removeList first, and compute whether other segments need to be 
             // removed automatically because of the deletion of this newly removed segment
-            if (true == segLine2D.Removed)
-            {
+            if (segLine2D.Removed)
                 foreach (var seg in removeSegments)
                 {
                     MimicRemoveSegment(ref canRemove, seg, removeList);
 
-                    if (false == canRemove)
-                    {
-                        return;
-                    }
+                    if (false == canRemove) return;
                     // recursive calling
                     MimicRecursiveDelete(ref canRemove, seg, removeList);
                 }
-            }
         }
 
         /// <summary>
-        /// remove the segment from the grid line
+        ///     remove the segment from the grid line
         /// </summary>
         /// <param name="canRemove">
-        /// the returned result value, indicates whether the segment can be removed (is NOT the last segment)
+        ///     the returned result value, indicates whether the segment can be removed (is NOT the last segment)
         /// </param>
         /// <param name="seg">
-        /// the to-be-removed segment
+        ///     the to-be-removed segment
         /// </param>
         /// <param name="removeList">
-        /// the referred to-be-deleted list of the segments
+        ///     the referred to-be-deleted list of the segments
         /// </param>
         private void MimicRemoveSegment(ref bool canRemove, SegmentLine2D seg, List<SegmentLine2D> removeList)
         {
@@ -1180,14 +1085,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             {
                 // update the gridline2d and segmentline2d data
                 GridLine2D grid;
-                if (true == seg.IsUSegment)
-                {
+                if (seg.IsUSegment)
                     grid = Drawing.UGridLines2D[gridLineIndex];
-                }
                 else
-                {
                     grid = Drawing.VGridLines2D[gridLineIndex];
-                }
 
                 // the last segment of the grid line
                 var existingNumber = grid.Segments.Count - grid.RemovedNumber;
@@ -1205,5 +1106,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 removeList.Add(seg2D);
             }
         }
-            }// end of class
+    } // end of class
 }

@@ -24,18 +24,19 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.PlacementOptions.CS
 {
     /// <summary>
-    /// The dialog for setting the SketchGalleryOptions option of the face based family instance.
+    ///     The dialog for setting the SketchGalleryOptions option of the face based family instance.
     /// </summary>
-    public partial class SketchbasedForm : System.Windows.Forms.Form
+    public partial class SketchbasedForm : Form
     {
-        List<FamilySymbol> m_familySymbolList;
+        private readonly List<FamilySymbol> m_familySymbolList;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         public SketchbasedForm(List<FamilySymbol> symbolList)
         {
@@ -46,10 +47,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();
-            foreach (var symbol in m_familySymbolList)
-            {
-                nameList.Add(symbol.Name);
-            }
+            foreach (var symbol in m_familySymbolList) nameList.Add(symbol.Name);
 
             comboBoxFamilySymbol.DataSource = nameList;
             comboBoxFamilySymbol.SelectedIndex = 0;
@@ -57,17 +55,17 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// The family instance placement options for placement.
+        ///     The family instance placement options for placement.
         /// </summary>
         public PromptForFamilyInstancePlacementOptions FIPlacementOptions { get; }
 
         /// <summary>
-        /// The family symbol for placement.
+        ///     The family symbol for placement.
         /// </summary>
         public FamilySymbol SelectedFamilySymbol { get; private set; }
 
         /// <summary>
-        /// Select the family symbol for family instance placement.
+        ///     Select the family symbol for family instance placement.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -77,7 +75,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the SketchGalleryOptions.SGO_Line option or not.
+        ///     Use the SketchGalleryOptions.SGO_Line option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -87,7 +85,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the SketchGalleryOptions.SGO_Arc3Point option or not.
+        ///     Use the SketchGalleryOptions.SGO_Arc3Point option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -97,7 +95,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the SketchGalleryOptions.SGO_ArcCenterEnds option or not.
+        ///     Use the SketchGalleryOptions.SGO_ArcCenterEnds option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -107,7 +105,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the SketchGalleryOptions.SGO_Spline option or not.
+        ///     Use the SketchGalleryOptions.SGO_Spline option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -117,7 +115,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the SketchGalleryOptions.SGO_PartialEllipse option or not.
+        ///     Use the SketchGalleryOptions.SGO_PartialEllipse option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>
@@ -127,7 +125,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Use the SketchGalleryOptions.SGO_PickLines option or not.
+        ///     Use the SketchGalleryOptions.SGO_PickLines option or not.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arg.</param>

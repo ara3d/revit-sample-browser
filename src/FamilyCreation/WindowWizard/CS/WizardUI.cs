@@ -23,66 +23,72 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
 {
     /// <summary>
-    /// The wizard form
+    ///     The wizard form
     /// </summary>
     public partial class WizardForm : Form
     {
-                /// <summary>
-        /// store the wizard parameter
+        /// <summary>
+        ///     store the bindSource
         /// </summary>
-        WizardParameter m_para;
+        private readonly BindingSource bindSource = new BindingSource();
 
         /// <summary>
-        /// store the family types list
+        ///     store the copy type button tooltip
         /// </summary>
-        List<string> m_types = new List<string>();
+        private readonly ToolTip m_copyTip = new ToolTip();
 
         /// <summary>
-        /// store the bindSource
+        ///     store the error tooltip
         /// </summary>
-        BindingSource bindSource = new BindingSource();
-        
+        private readonly ToolTip m_errorTip = new ToolTip();
+
         /// <summary>
-        /// store the new type button tooltip
+        ///     store the font
         /// </summary>
-        ToolTip m_newTip = new ToolTip();
-        
+        private readonly Font m_highFont;
+
         /// <summary>
-        /// store the copy type button tooltip
+        ///     store the font
         /// </summary>
-        ToolTip m_copyTip = new ToolTip();
-        
+        private readonly Font m_commonFont;
+
         /// <summary>
-        /// store the error tooltip
+        ///     store the new type button tooltip
         /// </summary>
-        ToolTip m_errorTip = new ToolTip();
-        
+        private readonly ToolTip m_newTip = new ToolTip();
+
         /// <summary>
-        /// store the font
+        ///     store the wizard parameter
         /// </summary>
-        Font m_highFont, m_commonFont;
-        
+        private readonly WizardParameter m_para;
+
         /// <summary>
-        /// store DoubleHungWinPara list
+        ///     store the family types list
         /// </summary>
-        BindingList<DoubleHungWinPara> paraList = new BindingList<DoubleHungWinPara>();
-                
+        private readonly List<string> m_types = new List<string>();
+
         /// <summary>
-        /// constructor of WizardForm
+        ///     store DoubleHungWinPara list
+        /// </summary>
+        private readonly BindingList<DoubleHungWinPara> paraList = new BindingList<DoubleHungWinPara>();
+
+        /// <summary>
+        ///     constructor of WizardForm
         /// </summary>
         /// <param name="para">the WizardParameter</param>
         public WizardForm(WizardParameter para)
         {
             m_para = para;
-            InitializeComponent();           
+            InitializeComponent();
             InitializePara();
             m_newTip.SetToolTip(button_newType, "Add new type");
             m_copyTip.SetToolTip(button_duplicateType, "Duplicate the type");
@@ -93,7 +99,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// The nextbutton click function
+        ///     The nextbutton click function
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -123,7 +129,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// set panel visibility
+        ///     set panel visibility
         /// </summary>
         /// <param name="panelNum">panel number</param>
         private void SetPanelVisibility(int panelNum)
@@ -141,7 +147,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                     panel1.Visible = false;
                     panel2.Visible = true;
                     panel3.Visible = false;
-                    panel4.Visible = false;                    
+                    panel4.Visible = false;
                     Step1_BackButton.Enabled = false;
                     InputDimensionLabel.ForeColor = Color.Black;
                     InputDimensionLabel.Font = m_highFont;
@@ -153,10 +159,10 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 case 3:
                     panel3.Visible = true;
                     panel1.Visible = false;
-                    panel2.Visible = false;                    
+                    panel2.Visible = false;
                     panel4.Visible = false;
                     Step1_BackButton.Enabled = true;
-                    Step1_NextButton.Text = "Next >";                    
+                    Step1_NextButton.Text = "Next >";
                     InputPathLabel.ForeColor = Color.Gray;
                     InputDimensionLabel.Font = m_commonFont;
                     WindowPropertyLabel.ForeColor = Color.Black;
@@ -182,28 +188,21 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// the backbutton click function
+        ///     the backbutton click function
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
         private void Step1_BackButton_Click(object sender, EventArgs e)
         {
             if (panel2.Visible)
-            {
                 SetPanelVisibility(1);
-            }
             else if (panel3.Visible)
-            {
                 SetPanelVisibility(2);
-            }
-            else if (panel4.Visible)
-            {
-                SetPanelVisibility(3);
-            }
+            else if (panel4.Visible) SetPanelVisibility(3);
         }
 
         /// <summary>
-        /// transfer data
+        ///     transfer data
         /// </summary>
         private void transforData()
         {
@@ -218,7 +217,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 m_para.CurrentPara = dbhungPara;
                 if (!m_para.WinParaTab.Contains(dbhungPara.Type))
                 {
-                    m_para.WinParaTab.Add(dbhungPara.Type, dbhungPara);                       
+                    m_para.WinParaTab.Add(dbhungPara.Type, dbhungPara);
                     m_comboType.Items.Add(dbhungPara.Type);
                 }
                 else
@@ -226,15 +225,16 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                     m_para.WinParaTab[dbhungPara.Type] = dbhungPara;
                 }
             }
+
             Update();
         }
 
         /// <summary>
-        /// Initialize data
+        ///     Initialize data
         /// </summary>
         private void InitializePara()
         {
-            var dbhungPara = new DoubleHungWinPara(m_para.Validator.IsMetric);            
+            var dbhungPara = new DoubleHungWinPara(m_para.Validator.IsMetric);
             if (!m_para.WinParaTab.Contains(dbhungPara.Type))
             {
                 m_para.WinParaTab.Add(dbhungPara.Type, dbhungPara);
@@ -243,8 +243,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             else
             {
                 m_para.WinParaTab[dbhungPara.Type] = dbhungPara;
-            }           
-            bindSource.DataSource = m_types;            
+            }
+
+            bindSource.DataSource = m_types;
             m_comboType.Items.Add(m_para.CurrentPara.Type);
             m_comboType.SelectedIndex = 0;
             m_glassMat.DataSource = m_para.GlassMaterials;
@@ -254,7 +255,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// The newtype button click function
+        ///     The newtype button click function
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -267,7 +268,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// The duplicatebutton click function
+        ///     The duplicatebutton click function
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -280,11 +281,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// set WindowParameter text
+        ///     set WindowParameter text
         /// </summary>
         /// <param name="para">the WindowParameter</param>
         private void SetParaText(WindowParameter para)
-        { 
+        {
             var dbhungPara = para as DoubleHungWinPara;
             m_sillHeight.Text = dbhungPara.SillHeight.ToString();
             m_width.Text = dbhungPara.Width.ToString();
@@ -294,25 +295,23 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// set grid data
+        ///     set grid data
         /// </summary>
         private void SetGridData()
         {
             paraList.Clear();
             foreach (string key in m_para.WinParaTab.Keys)
-            { 
+            {
                 var para = m_para.WinParaTab[key] as DoubleHungWinPara;
-                if (null == para)
-                {
-                    continue;
-                }
+                if (null == para) continue;
                 paraList.Add(para);
             }
+
             dataGridView1.DataSource = paraList;
         }
 
         /// <summary>
-        /// m_height textbox's text changed event
+        ///     m_height textbox's text changed event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -322,7 +321,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_width textbox's text changed event
+        ///     m_width textbox's text changed event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -332,7 +331,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_inset textbox's text changed event
+        ///     m_inset textbox's text changed event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -342,7 +341,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_sillHeight textbox's text changed event
+        ///     m_sillHeight textbox's text changed event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -352,7 +351,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_comboType SelectedIndexChanged event
+        ///     m_comboType SelectedIndexChanged event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -363,7 +362,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_glassMat SelectedIndexChanged event
+        ///     m_glassMat SelectedIndexChanged event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -373,7 +372,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_sashMat SelectedIndexChanged event
+        ///     m_sashMat SelectedIndexChanged event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -383,25 +382,20 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// validate control input value
+        ///     validate control input value
         /// </summary>
         /// <param name="control">the control</param>
         private bool ValidateInput(Control control)
         {
-            if (null == control)
-            {
-                return true;
-            }
+            if (null == control) return true;
             if (string.IsNullOrEmpty(control.Text))
             {
                 Step1_NextButton.Enabled = false;
                 return false;
             }
+
             var textbox = control as TextBox;
-            if (null == textbox)
-            {
-                return true;
-            }
+            if (null == textbox) return true;
             var value = 0.0;
             var result = m_para.Validator.IsDouble(textbox.Text, ref value);
             if (!string.IsNullOrEmpty(result))
@@ -411,6 +405,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 Step1_NextButton.Enabled = false;
                 return false;
             }
+
             m_errorTip.RemoveAll();
             switch (textbox.Name)
             {
@@ -426,22 +421,22 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 case "m_sillHeight":
                     result = m_para.Validator.IsSillHeightInRange(value);
                     break;
-                default:
-                    break;
             }
+
             if (!string.IsNullOrEmpty(result))
             {
                 m_errorTip.SetToolTip(textbox, result);
                 Step1_NextButton.Enabled = false;
                 return false;
             }
+
             m_errorTip.RemoveAll();
             Step1_NextButton.Enabled = true;
             return true;
         }
 
         /// <summary>
-        /// m_buttonBrowser click event
+        ///     m_buttonBrowser click event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -449,22 +444,18 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             var saveDialog = new SaveFileDialog();
             saveDialog.CheckPathExists = true;
-            saveDialog.SupportMultiDottedExtensions = true; 
+            saveDialog.SupportMultiDottedExtensions = true;
             saveDialog.OverwritePrompt = true;
             saveDialog.ValidateNames = true;
             saveDialog.Filter = "Family file(*.rfa)|*.rfa|All files(*.*)|*.*";
             saveDialog.FilterIndex = 2;
             if (DialogResult.OK == saveDialog.ShowDialog())
-            {
                 if (!string.IsNullOrEmpty(saveDialog.FileName))
-                {
                     m_pathName.Text = saveDialog.FileName;
-                }
-            }
         }
 
         /// <summary>
-        /// m_height leave event 
+        ///     m_height leave event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -474,7 +465,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// check input 
+        ///     check input
         /// </summary>
         /// <param name="control">the host control</param>
         private void CheckValue(Control control)
@@ -484,6 +475,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 control.Focus();
                 m_errorTip.SetToolTip(control, "Please input a valid value");
             }
+
             if (!ValidateInput(control))
             {
                 control.Focus();
@@ -492,7 +484,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_width leave event 
+        ///     m_width leave event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -502,7 +494,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_inset leave event 
+        ///     m_inset leave event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -512,7 +504,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_sillHeight leave event 
+        ///     m_sillHeight leave event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -522,7 +514,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// m_comboType leave event 
+        ///     m_comboType leave event
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
@@ -532,17 +524,17 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// Step1_HelpButton click event to open the help document
+        ///     Step1_HelpButton click event to open the help document
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">EventArgs</param>
         private void Step1_HelpButton_Click(object sender, EventArgs e)
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var sp = Path.DirectorySeparatorChar;//{'\\'};
+            var sp = Path.DirectorySeparatorChar; //{'\\'};
             path = path.Substring(0, path.LastIndexOf(sp));
             path = path.Substring(0, path.LastIndexOf(sp)) + sp + "ReadMe_WindowWizard.rtf";
-            System.Diagnostics.Process.Start(path);            
+            Process.Start(path);
         }
     }
 }

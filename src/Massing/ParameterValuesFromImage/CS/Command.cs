@@ -23,20 +23,22 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Color = System.Drawing.Color;
 
 namespace Revit.SDK.Samples.ParameterValuesFromImage.CS
 {
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// This class used to set parameter values from image data
+    ///     A class inherits IExternalCommand interface.
+    ///     This class used to set parameter values from image data
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class SetParameterValueWithImageData : IExternalCommand
     {
-        static AddInId appId = new AddInId(new Guid("9F405E24-3799-4b56-828F-14842ABE4802"));
+        private static AddInId appId = new AddInId(new Guid("9F405E24-3799-4b56-828F-14842ABE4802"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -68,36 +70,31 @@ namespace Revit.SDK.Samples.ParameterValuesFromImage.CS
                                     trans.RollBack();
                                     throw new Exception("Panel family must have a Grayscale instance parameter");
                                 }
-                                else
+
+                                var pixelColor = new Color();
+                                try
                                 {
-                                    var pixelColor = new System.Drawing.Color();
-                                    try
-                                    {
-                                        pixelColor = image.GetPixel(image.Width - v, image.Height - u);
-                                        double grayscale = 255 - ((pixelColor.R + pixelColor.G + pixelColor.B) / 3);
-                                        if (grayscale == 0)
-                                        {
-                                            doc.Delete(familyinstance.Id);
-                                        }
-                                        else
-                                        {
-                                            param.Set(grayscale / 255);
-                                        }
-                                    }
-                                    catch (Exception)
-                                    {
-                                        //       TaskDialog.Show("Revit", "Exception: " + u + ", " + v);                                        
-                                    }
+                                    pixelColor = image.GetPixel(image.Width - v, image.Height - u);
+                                    double grayscale = 255 - (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+                                    if (grayscale == 0)
+                                        doc.Delete(familyinstance.Id);
+                                    else
+                                        param.Set(grayscale / 255);
+                                }
+                                catch (Exception)
+                                {
+                                    //       TaskDialog.Show("Revit", "Exception: " + u + ", " + v);                                        
                                 }
                             }
                         }
                     }
                 }
             }
-            doc.Regenerate(); ;
+
+            doc.Regenerate();
+            ;
             trans.Commit();
             return Result.Succeeded;
         }
     }
-
 }

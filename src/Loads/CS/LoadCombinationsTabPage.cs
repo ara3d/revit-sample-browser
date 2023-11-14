@@ -24,37 +24,37 @@
 using System;
 using System.Text;
 using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Loads.CS
 {
     /// <summary>
-    /// mainly deal with the operation on load combination page on the form
+    ///     mainly deal with the operation on load combination page on the form
     /// </summary>
     public partial class LoadsForm
     {
+        private DataGridViewTextBoxColumn combinationFormulaColumn;
+
         // Private Members
         // Define the columns in LoadCombination DataGridView control
-        DataGridViewTextBoxColumn combinationNameColumn;
-        DataGridViewTextBoxColumn combinationFormulaColumn;
-        DataGridViewTextBoxColumn combinationTypeColumn;
-        DataGridViewTextBoxColumn combinationStateColumn;
-        DataGridViewTextBoxColumn combinationUsageColumn;
-
-        // Define the columns in Usage DataGridView control
-        DataGridViewCheckBoxColumn usageSetColumn;
-        DataGridViewTextBoxColumn usageNameColumn;
+        private DataGridViewTextBoxColumn combinationNameColumn;
+        private DataGridViewTextBoxColumn combinationStateColumn;
+        private DataGridViewTextBoxColumn combinationTypeColumn;
+        private DataGridViewTextBoxColumn combinationUsageColumn;
+        private DataGridViewComboBoxColumn formulaCaseColumn;
 
         // Define the columns in Formula DataGridView control
-        DataGridViewTextBoxColumn formulaFactorColumn;
-        DataGridViewComboBoxColumn formulaCaseColumn;
+        private DataGridViewTextBoxColumn formulaFactorColumn;
+        private DataGridViewTextBoxColumn usageNameColumn;
+
+        // Define the columns in Usage DataGridView control
+        private DataGridViewCheckBoxColumn usageSetColumn;
 
         // Methods
         /// <summary>
-        /// Initialize the data on this page.
+        ///     Initialize the data on this page.
         /// </summary>
-        void InitializeLoadCombinationPage()
+        private void InitializeLoadCombinationPage()
         {
             // Add the Items in combinationType and combinationState comboBox
             combinationTypeComboBox.Items.AddRange(new object[] { "Combination", "Envelope" });
@@ -79,7 +79,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Initialize the loadCombination DataGridView control
+        ///     Initialize the loadCombination DataGridView control
         /// </summary>
         private void InitializeCombinationGrid()
         {
@@ -92,9 +92,8 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // Binging the columns to the DataGridView
             combinationDataGridView.AutoGenerateColumns = false;
-            combinationDataGridView.Columns.AddRange(new DataGridViewColumn[] 
-                      {combinationNameColumn, combinationFormulaColumn, combinationTypeColumn,
-                            combinationStateColumn, combinationUsageColumn});
+            combinationDataGridView.Columns.AddRange(combinationNameColumn, combinationFormulaColumn,
+                combinationTypeColumn, combinationStateColumn, combinationUsageColumn);
 
             // Binging the data source and set this grid to readonly.
             combinationDataGridView.DataSource = m_dataBuffer.LoadCombinationMap;
@@ -128,7 +127,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Initialize the load combination usage DataGridView control
+        ///     Initialize the load combination usage DataGridView control
         /// </summary>
         private void InitializeUsageGrid()
         {
@@ -138,13 +137,13 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // Binging the columns to the DataGridView
             usageDataGridView.AutoGenerateColumns = false;
-            usageDataGridView.Columns.AddRange(new DataGridViewColumn[] { usageSetColumn, usageNameColumn });
+            usageDataGridView.Columns.AddRange(usageSetColumn, usageNameColumn);
 
             // Binding the data source.
             usageDataGridView.DataSource = m_dataBuffer.UsageMap;
 
             // Binding event
-            usageDataGridView.CellValidating += new DataGridViewCellValidatingEventHandler(usageDataGridView_CellValidating);
+            usageDataGridView.CellValidating += usageDataGridView_CellValidating;
             // Initialize each column.
             usageSetColumn.HeaderText = "Set";
             usageSetColumn.DataPropertyName = "Set";
@@ -159,7 +158,7 @@ namespace Revit.SDK.Samples.Loads.CS
 
 
         /// <summary>
-        /// Initialize the load combination formula DataGridView control
+        ///     Initialize the load combination formula DataGridView control
         /// </summary>
         private void InitializeFormulaGrid()
         {
@@ -169,7 +168,7 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // Binging the columns to the DataGridView
             formulaDataGridView.AutoGenerateColumns = false;
-            formulaDataGridView.Columns.AddRange(new DataGridViewColumn[] { formulaFactorColumn, formulaCaseColumn });
+            formulaDataGridView.Columns.AddRange(formulaFactorColumn, formulaCaseColumn);
 
             // Binging the data source.
             formulaDataGridView.DataSource = m_dataBuffer.FormulaMap;
@@ -193,14 +192,11 @@ namespace Revit.SDK.Samples.Loads.CS
 
         // The Button Event method.
         /// <summary>
-        /// Check All Button
+        ///     Check All Button
         /// </summary>
         private void usageCheckAllButton_Click(object sender, EventArgs e)
         {
-            foreach (var map in m_dataBuffer.UsageMap)
-            {
-                map.Set = true;
-            }
+            foreach (var map in m_dataBuffer.UsageMap) map.Set = true;
             // Disable the CheckAll button, enable CheckNone button and refresh.
             usageCheckAllButton.Enabled = false;
             usageCheckNoneButton.Enabled = true;
@@ -208,14 +204,11 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Check None Button
+        ///     Check None Button
         /// </summary>
         private void usageCheckNoneButton_Click(object sender, EventArgs e)
         {
-            foreach (var map in m_dataBuffer.UsageMap)
-            {
-                map.Set = false;
-            }
+            foreach (var map in m_dataBuffer.UsageMap) map.Set = false;
 
             // Disable the CheckNone button, enable CheckAll button and refresh.
             usageCheckAllButton.Enabled = true;
@@ -224,13 +217,13 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Usage Add Button
+        ///     Usage Add Button
         /// </summary>
         private void usageAddButton_Click(object sender, EventArgs e)
         {
             var usageString = new StringBuilder("Usage");
             var i = 1;
-            var needFind = true;   // need to find another name which is not used
+            var needFind = true; // need to find another name which is not used
 
             // First, need to find a name which is not the same as the other usages.
             while (needFind)
@@ -238,13 +231,12 @@ namespace Revit.SDK.Samples.Loads.CS
                 var isEqual = false;
                 usageString.Append(i);
                 foreach (var s in m_dataBuffer.LoadUsageNames)
-                {
                     if (s == usageString.ToString())
                     {
                         isEqual = true;
                         break;
                     }
-                }
+
                 if (isEqual)
                 {
                     usageString.Remove(0, usageString.Length);
@@ -275,7 +267,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Usage Delete Button
+        ///     Usage Delete Button
         /// </summary>
         private void usageDeleteButton_Click(object sender, EventArgs e)
         {
@@ -304,11 +296,11 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// When modify Usage name, judge if the inputted Name is unique.
+        ///     When modify Usage name, judge if the inputted Name is unique.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void usageDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        private void usageDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             // Modifying the usage name
             if (1 == usageDataGridView.CurrentCell.ColumnIndex)
@@ -316,20 +308,14 @@ namespace Revit.SDK.Samples.Loads.CS
                 var newName = e.FormattedValue as string;
                 var oldName = usageDataGridView.CurrentCell.FormattedValue as string;
                 if (newName != oldName)
-                {
                     for (var i = 0; i < m_dataBuffer.UsageMap.Count; i++)
-                    {
                         if (m_dataBuffer.UsageMap[i].Name == newName)
-                        {
                             e.Cancel = true;
-                        }
-                    }
-                }
             }
         }
 
         /// <summary>
-        /// New Combination Button
+        ///     New Combination Button
         /// </summary>
         private void newCombinationButton_Click(object sender, EventArgs e)
         {
@@ -343,13 +329,11 @@ namespace Revit.SDK.Samples.Loads.CS
             //  Check if it has been used
             var name = combinationNameTextBox.Text;
             foreach (var s in m_dataBuffer.LoadCombinationNames)
-            {
                 if (s == name)
                 {
                     TaskDialog.Show("Revit", "Combination name has been used by another combination.");
                     return;
                 }
-            }
 
             // get the data and begin to create.
             var typeIndex = combinationTypeComboBox.SelectedIndex;
@@ -375,7 +359,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Delete Combination Button
+        ///     Delete Combination Button
         /// </summary>
         private void deleteCombinationButton_Click(object sender, EventArgs e)
         {
@@ -404,7 +388,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Add Formula Button
+        ///     Add Formula Button
         /// </summary>
         private void formulaAddButton_Click(object sender, EventArgs e)
         {
@@ -425,7 +409,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// Delete Formula Button
+        ///     Delete Formula Button
         /// </summary>
         private void formulaDeleteButton_Click(object sender, EventArgs e)
         {
@@ -460,7 +444,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// If the formulaDataGridView get focus, enable the buttons in CombinationsTabPage
+        ///     If the formulaDataGridView get focus, enable the buttons in CombinationsTabPage
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -470,7 +454,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// If the usageDataGridView get focus, enable the buttons in CombinationsTabPage
+        ///     If the usageDataGridView get focus, enable the buttons in CombinationsTabPage
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -480,7 +464,7 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// The following is the event when the usage DataGridView selection changed
+        ///     The following is the event when the usage DataGridView selection changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -490,8 +474,8 @@ namespace Revit.SDK.Samples.Loads.CS
         }
 
         /// <summary>
-        /// This method used to check the state of all the buttons on Load Combination page,
-        /// and judge whether the buttons should be enable or disable.
+        ///     This method used to check the state of all the buttons on Load Combination page,
+        ///     and judge whether the buttons should be enable or disable.
         /// </summary>
         private void CombinationsTabPageButtonEnable()
         {
@@ -525,12 +509,8 @@ namespace Revit.SDK.Samples.Loads.CS
             {
                 var checkedCount = 0;
                 foreach (var map in m_dataBuffer.UsageMap)
-                {
-                    if (true == map.Set)
-                    {
+                    if (map.Set)
                         checkedCount++;
-                    }
-                }
 
                 if (checkedCount <= 0)
                 {
@@ -551,16 +531,10 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // If the formula DataGridView has no data or is not focused
             // Delete formula button should be disable
-            if (0 == m_dataBuffer.FormulaMap.Count)
-            {
-                formulaDeleteButtonEnabled = false;
-            }
+            if (0 == m_dataBuffer.FormulaMap.Count) formulaDeleteButtonEnabled = false;
             // If the combination DataGridView has no data or is not focused
             // Delete combination button should be disable.
-            if (0 == m_dataBuffer.LoadCombinationMap.Count)
-            {
-                deleteCombinationButtonEnabled = false;
-            }
+            if (0 == m_dataBuffer.LoadCombinationMap.Count) deleteCombinationButtonEnabled = false;
 
             // At last, set the Buttons state
             usageCheckAllButton.Enabled = usageCheckAllButtonEnabled;
@@ -572,6 +546,7 @@ namespace Revit.SDK.Samples.Loads.CS
             formulaAddButton.Enabled = formulaAddButtonEnabled;
             formulaDeleteButton.Enabled = formulaDeleteButtonEnabled;
         }
+
         private void usageDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             CombinationsTabPageButtonEnable();

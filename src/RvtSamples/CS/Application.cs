@@ -22,143 +22,175 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
+using RvtSamples.Properties;
 
 namespace RvtSamples
 {
     /// <summary>
-    /// Main external application class.
-    /// A generic menu generator application.
-    /// Read a text file and add entries to the Revit menu.
-    /// Any number and location of entries is supported.
+    ///     Main external application class.
+    ///     A generic menu generator application.
+    ///     Read a text file and add entries to the Revit menu.
+    ///     Any number and location of entries is supported.
     /// </summary>
     public class Application : IExternalApplication
     {
         /// <summary>
-        /// Default pulldown menus for samples
+        ///     Default pulldown menus for samples
         /// </summary>
         public enum DefaultPulldownMenus
         {
             /// <summary>
-            /// Menu for Basics category
+            ///     Menu for Basics category
             /// </summary>
             Basics,
+
             /// <summary>
-            /// Menu for Geometry category
+            ///     Menu for Geometry category
             /// </summary>
             Geometry,
+
             /// <summary>
-            /// Menu for Parameters category
+            ///     Menu for Parameters category
             /// </summary>
             Parameters,
+
             /// <summary>
-            /// Menu for Elements category
+            ///     Menu for Elements category
             /// </summary>
             Elements,
+
             /// <summary>
-            /// Menu for Families category
+            ///     Menu for Families category
             /// </summary>
             Families,
+
             /// <summary>
-            /// Menu for Materials category
+            ///     Menu for Materials category
             /// </summary>
             Materials,
+
             /// <summary>
-            /// Menu for Annotation category
+            ///     Menu for Annotation category
             /// </summary>
             Annotation,
+
             /// <summary>
-            /// Menu for Views category
+            ///     Menu for Views category
             /// </summary>
             Views,
+
             /// <summary>
-            /// Menu for Rooms/Spaces category
+            ///     Menu for Rooms/Spaces category
             /// </summary>
             RoomsAndSpaces,
+
             /// <summary>
-            /// Menu for Data Exchange category
+            ///     Menu for Data Exchange category
             /// </summary>
             DataExchange,
+
             /// <summary>
-            /// Menu for MEP category
+            ///     Menu for MEP category
             /// </summary>
             MEP,
+
             /// <summary>
-            /// Menu for Structure category
+            ///     Menu for Structure category
             /// </summary>
             Structure,
+
             /// <summary>
-            /// Menu for Analysis category
+            ///     Menu for Analysis category
             /// </summary>
             Analysis,
+
             /// <summary>
-            /// Menu for Massing category
+            ///     Menu for Massing category
             /// </summary>
             Massing,
+
             /// <summary>
-            /// Menu for Selection category
+            ///     Menu for Selection category
             /// </summary>
             Selection
         }
 
-                /// <summary>
-        /// Separator of category for samples have more than one category
-        /// </summary>
-        static char[] s_charSeparatorOfCategory = new char[] { ',' };
         /// <summary>
-        /// chars which will be trimmed in the file to include extra sample list files
-        /// </summary>
-        static char[] s_trimChars = new char[] { ' ', '"', '\'', '<', '>' };
-        /// <summary>
-        /// The start symbol of lines to include extra sample list files
-        /// </summary>
-        static string s_includeSymbol = "#include";
-        /// <summary>
-        /// Assembly directory
-        /// </summary>
-        static string s_assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        /// <summary>
-        /// Name of file which contains information required for menu items
+        ///     Name of file which contains information required for menu items
         /// </summary>
         public const string m_fileNameStem = "RvtSamples.txt";
+
         /// <summary>
-        /// The controlled application of Revit
+        ///     Separator of category for samples have more than one category
+        /// </summary>
+        private static readonly char[] s_charSeparatorOfCategory = { ',' };
+
+        /// <summary>
+        ///     chars which will be trimmed in the file to include extra sample list files
+        /// </summary>
+        private static readonly char[] s_trimChars = { ' ', '"', '\'', '<', '>' };
+
+        /// <summary>
+        ///     The start symbol of lines to include extra sample list files
+        /// </summary>
+        private static readonly string s_includeSymbol = "#include";
+
+        /// <summary>
+        ///     Assembly directory
+        /// </summary>
+        private static readonly string s_assemblyDirectory =
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        /// <summary>
+        ///     The controlled application of Revit
         /// </summary>
         private UIControlledApplication m_application;
+
         /// <summary>
-        /// List contains all pulldown button items contain sample items
+        ///     List contains information of samples not belong to default pulldown menus
         /// </summary>
-        private SortedList<string, PulldownButton> m_pulldownButtons = new SortedList<string, PulldownButton>();
+        private readonly SortedList<string, List<SampleItem>> m_customizedMenus =
+            new SortedList<string, List<SampleItem>>();
+
         /// <summary>
-        /// List contains information of samples not belong to default pulldown menus
+        ///     List contains information of samples belong to default pulldown menus
         /// </summary>
-        private SortedList<string, List<SampleItem>> m_customizedMenus = new SortedList<string, List<SampleItem>>();
+        private readonly SortedList<string, List<SampleItem>> m_defaultMenus =
+            new SortedList<string, List<SampleItem>>();
+
         /// <summary>
-        /// List contains information of samples belong to default pulldown menus
+        ///     Panel for RvtSamples
         /// </summary>
-        private SortedList<string, List<SampleItem>> m_defaultMenus = new SortedList<string, List<SampleItem>>();
+        private RibbonPanel m_panelRvtSamples;
+
         /// <summary>
-        /// Panel for RvtSamples
+        ///     List contains all pulldown button items contain sample items
         /// </summary>
-        RibbonPanel m_panelRvtSamples;
-        
-                /// <summary>
-        /// Implement this method to implement the external application which should be called when 
-        /// Revit starts before a file or default template is actually loaded.
+        private readonly SortedList<string, PulldownButton>
+            m_pulldownButtons = new SortedList<string, PulldownButton>();
+
+        /// <summary>
+        ///     Implement this method to implement the external application which should be called when
+        ///     Revit starts before a file or default template is actually loaded.
         /// </summary>
-        /// <param name="application">An object that is passed to the external application 
-        /// which contains the controlled application.</param>
-        /// <returns>Return the status of the external application. 
-        /// A result of Succeeded means that the external application successfully started. 
-        /// Cancelled can be used to signify that the user cancelled the external operation at 
-        /// some point.
-        /// If false is returned then Revit should inform the user that the external application 
-        /// failed to load and the release the internal reference.</returns>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.
+        ///     A result of Succeeded means that the external application successfully started.
+        ///     Cancelled can be used to signify that the user cancelled the external operation at
+        ///     some point.
+        ///     If false is returned then Revit should inform the user that the external application
+        ///     failed to load and the release the internal reference.
+        /// </returns>
         public Result OnStartup(UIControlledApplication application)
         {
             m_application = application;
@@ -189,10 +221,7 @@ namespace RvtSamples
                 var pdData = new List<PulldownButtonData>(3);
                 foreach (var category in Enum.GetNames(typeof(DefaultPulldownMenus)))
                 {
-                    if ((i + 1) % 3 == 1)
-                    {
-                        pdData.Clear();
-                    }
+                    if ((i + 1) % 3 == 1) pdData.Clear();
 
                     //
                     // Prepare PulldownButtonData for add stacked buttons operation
@@ -217,8 +246,9 @@ namespace RvtSamples
                             var enumName = GetEnumNameByDisplayName(name);
                             var button = item as PulldownButton;
                             button.Image = new BitmapImage(
-                                new Uri(Path.Combine(s_assemblyDirectory, "Icons\\" + enumName + ".ico"), UriKind.Absolute));
-                            button.ToolTip = Properties.Resource.ResourceManager.GetString(enumName);
+                                new Uri(Path.Combine(s_assemblyDirectory, "Icons\\" + enumName + ".ico"),
+                                    UriKind.Absolute));
+                            button.ToolTip = Resource.ResourceManager.GetString(enumName);
                             m_pulldownButtons.Add(name, button);
                         }
                     }
@@ -231,10 +261,7 @@ namespace RvtSamples
                 //
                 n = lines.GetLength(0);
                 k = 0;
-                while (k < n)
-                {
-                    AddSample(lines, n, ref k);
-                }
+                while (k < n) AddSample(lines, n, ref k);
 
                 AddSamplesToDefaultPulldownMenus();
                 AddCustomizedPulldownMenus();
@@ -244,15 +271,37 @@ namespace RvtSamples
             catch (Exception e)
             {
                 var s = string.Format("{0}: n = {1}, k = {2}, lines[k] = {3}",
-                  e.Message, n, k, (k < n ? lines[k] : "eof"));
+                    e.Message, n, k, k < n ? lines[k] : "eof");
 
                 ErrorMsg(s);
             }
+
             return rc;
         }
 
         /// <summary>
-        /// Get a button's enum name by its display name
+        ///     Implement this method to implement the external application which should be called when
+        ///     Revit is about to exit,Any documents must have been closed before this method is called.
+        /// </summary>
+        /// <param name="application">
+        ///     An object that is passed to the external application
+        ///     which contains the controlled application.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external application.
+        ///     A result of Succeeded means that the external application successfully shutdown.
+        ///     Cancelled can be used to signify that the user cancelled the external operation at
+        ///     some point.
+        ///     If false is returned then the Revit user should be warned of the failure of the external
+        ///     application to shut down correctly.
+        /// </returns>
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            return Result.Succeeded;
+        }
+
+        /// <summary>
+        ///     Get a button's enum name by its display name
         /// </summary>
         /// <param name="name">display name</param>
         /// <returns>enum name</returns>
@@ -260,23 +309,17 @@ namespace RvtSamples
         {
             string enumName = null;
             if (name.Equals("Rooms/Spaces"))
-            {
                 enumName = DefaultPulldownMenus.RoomsAndSpaces.ToString();
-            }
             else if (name.Equals("Data Exchange"))
-            {
                 enumName = DefaultPulldownMenus.DataExchange.ToString();
-            }
             else
-            {
                 enumName = name;
-            }
 
             return enumName;
         }
 
         /// <summary>
-        /// Get a button's display name by its enum name
+        ///     Get a button's display name by its enum name
         /// </summary>
         /// <param name="enumName">The button's enum name</param>
         /// <returns>The button's display name</returns>
@@ -284,40 +327,17 @@ namespace RvtSamples
         {
             string displayName = null;
             if (enumName.Equals(DefaultPulldownMenus.RoomsAndSpaces.ToString()))
-            {
                 displayName = "Rooms/Spaces";
-            }
             else if (enumName.Equals(DefaultPulldownMenus.DataExchange.ToString()))
-            {
                 displayName = "Data Exchange";
-            }
             else
-            {
                 displayName = enumName;
-            }
 
             return displayName;
         }
 
         /// <summary>
-        /// Implement this method to implement the external application which should be called when 
-        /// Revit is about to exit,Any documents must have been closed before this method is called.
-        /// </summary>
-        /// <param name="application">An object that is passed to the external application 
-        /// which contains the controlled application.</param>
-        /// <returns>Return the status of the external application. 
-        /// A result of Succeeded means that the external application successfully shutdown. 
-        /// Cancelled can be used to signify that the user cancelled the external operation at 
-        /// some point.
-        /// If false is returned then the Revit user should be warned of the failure of the external 
-        /// application to shut down correctly.</returns>
-        public Result OnShutdown(UIControlledApplication application)
-        {
-            return Result.Succeeded;
-        }
-        
-        /// <summary>
-        /// Display error message
+        ///     Display error message
         /// </summary>
         /// <param name="msg">Message to display</param>
         public void ErrorMsg(string msg)
@@ -326,8 +346,8 @@ namespace RvtSamples
             TaskDialog.Show("RvtSamples", msg, TaskDialogCommonButtons.Ok);
         }
 
-                /// <summary>
-        /// Read file contents, including contents of files included in the current file
+        /// <summary>
+        ///     Read file contents, including contents of files included in the current file
         /// </summary>
         /// <param name="filename">Current file to be read</param>
         /// <returns>All lines of file contents</returns>
@@ -338,6 +358,7 @@ namespace RvtSamples
                 ErrorMsg(filename + " not found.");
                 return new string[] { };
             }
+
             var lines = File.ReadAllLines(filename);
 
             var n = lines.GetLength(0);
@@ -356,34 +377,32 @@ namespace RvtSamples
                     all_lines.Add(line);
                 }
             }
+
             return all_lines.ToArray(typeof(string)) as string[];
         }
 
         /// <summary>
-        /// Get the input file path.
-        /// Search and return the full path for the given file
-        /// in the current exe directory or one or two directory levels higher.
+        ///     Get the input file path.
+        ///     Search and return the full path for the given file
+        ///     in the current exe directory or one or two directory levels higher.
         /// </summary>
         /// <param name="filename">Input filename stem, output full file path</param>
         /// <returns>True if found, false otherwise.</returns>
-        bool GetFilepath(ref string filename)
+        private bool GetFilepath(ref string filename)
         {
             var path = Path.Combine(s_assemblyDirectory, filename);
             var rc = File.Exists(path);
 
             // Get full path of the file
-            if (rc)
-            {
-                filename = Path.GetFullPath(path);
-            }
+            if (rc) filename = Path.GetFullPath(path);
             return rc;
         }
 
         /// <summary>
-        /// Remove all comments and empty lines from a given array of lines.
-        /// Comments are delimited by '#' to the end of the line.
+        ///     Remove all comments and empty lines from a given array of lines.
+        ///     Comments are delimited by '#' to the end of the line.
         /// </summary>
-        string[] RemoveComments(string[] lines)
+        private string[] RemoveComments(string[] lines)
         {
             var n = lines.GetLength(0);
             var a = new string[n];
@@ -392,37 +411,30 @@ namespace RvtSamples
             {
                 var s = line;
                 var j = s.IndexOf('#');
-                if (0 <= j)
-                {
-                    s = s.Substring(0, j);
-                }
+                if (0 <= j) s = s.Substring(0, j);
                 s = s.Trim();
-                if (0 < s.Length)
-                {
-                    a[i++] = s;
-                }
+                if (0 < s.Length) a[i++] = s;
             }
+
             var b = new string[i];
             n = i;
-            for (i = 0; i < n; ++i)
-            {
-                b[i] = a[i];
-            }
+            for (i = 0; i < n; ++i) b[i] = a[i];
             return b;
         }
-        
-                /// <summary>
-        /// Add a new command to the corresponding pulldown button.
+
+        /// <summary>
+        ///     Add a new command to the corresponding pulldown button.
         /// </summary>
-        /// <param name="lines">Array of lines defining sample's category, display name, description, large image, image, assembly and classname</param>
+        /// <param name="lines">
+        ///     Array of lines defining sample's category, display name, description, large image, image, assembly
+        ///     and classname
+        /// </param>
         /// <param name="n">Total number of lines in array</param>
         /// <param name="i">Current index in array</param>
-        void AddSample(string[] lines, int n, ref int i)
+        private void AddSample(string[] lines, int n, ref int i)
         {
             if (n < i + 6)
-            {
                 throw new Exception(string.Format("Incomplete record at line {0} of {1}", i, m_fileNameStem));
-            }
 
             var categories = lines[i++].Trim();
             var displayName = lines[i++].Trim();
@@ -433,10 +445,8 @@ namespace RvtSamples
             var className = lines[i++].Trim();
 
             if (!File.Exists(assembly)) // jeremy
-            {
                 ErrorMsg(string.Format("Assembly '{0}' specified in line {1} of {2} not found",
-                  assembly, i, m_fileNameStem));
-            }
+                    assembly, i, m_fileNameStem));
 
             var testClassName = false; // jeremy
             if (testClassName)
@@ -460,7 +470,7 @@ namespace RvtSamples
                     if (null == a)
                     {
                         ErrorMsg(string.Format("Unable to load assembly '{0}' specified in line {1} of {2}",
-                          assembly, i, m_fileNameStem));
+                            assembly, i, m_fileNameStem));
                     }
                     else
                     {
@@ -468,25 +478,25 @@ namespace RvtSamples
                         var t = a.GetType(className);
                         if (null == t)
                         {
-                            ErrorMsg(string.Format("External command class {0} in assembly '{1}' specified in line {2} of {3} not found",
-                              className, assembly, i, m_fileNameStem));
+                            ErrorMsg(string.Format(
+                                "External command class {0} in assembly '{1}' specified in line {2} of {3} not found",
+                                className, assembly, i, m_fileNameStem));
                         }
                         else
                         {
                             // get the method to call:
                             var m = t.GetMethod("Execute");
                             if (null == m)
-                            {
-                                ErrorMsg(string.Format("External command class {0} in assembly '{1}' specified in line {2} of {3} does not define an Execute method",
-                                  className, assembly, i, m_fileNameStem));
-                            }
+                                ErrorMsg(string.Format(
+                                    "External command class {0} in assembly '{1}' specified in line {2} of {3} does not define an Execute method",
+                                    className, assembly, i, m_fileNameStem));
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     ErrorMsg(string.Format("Exception '{0}' \ntesting assembly '{1}' \nspecified in line {2} of {3}",
-                      ex.Message, assembly, i, m_fileNameStem));
+                        ex.Message, assembly, i, m_fileNameStem));
                 }
             }
 
@@ -518,7 +528,7 @@ namespace RvtSamples
         }
 
         /// <summary>
-        /// Add sample item to pulldown menu
+        ///     Add sample item to pulldown menu
         /// </summary>
         /// <param name="pullDownButton">Pulldown menu</param>
         /// <param name="item">Sample item to be added</param>
@@ -531,6 +541,7 @@ namespace RvtSamples
                 var largeImageSource = new BitmapImage(new Uri(item.LargeImage, UriKind.Absolute));
                 pushButton.LargeImage = largeImageSource;
             }
+
             if (!string.IsNullOrEmpty(item.Image))
             {
                 var imageSource = new BitmapImage(new Uri(item.Image, UriKind.Absolute));
@@ -541,7 +552,7 @@ namespace RvtSamples
         }
 
         /// <summary>
-        /// Comparer to sort sample items by their display name
+        ///     Comparer to sort sample items by their display name
         /// </summary>
         /// <param name="s1">sample item 1</param>
         /// <param name="s2">sample item 2</param>
@@ -552,7 +563,7 @@ namespace RvtSamples
         }
 
         /// <summary>
-        /// Sort samples in one category by the sample items' display name
+        ///     Sort samples in one category by the sample items' display name
         /// </summary>
         /// <param name="menus">samples to be sorted</param>
         private void SortSampleItemsInOneCategory(SortedList<string, List<SampleItem>> menus)
@@ -567,7 +578,7 @@ namespace RvtSamples
         }
 
         /// <summary>
-        /// Add samples of categories in default categories
+        ///     Add samples of categories in default categories
         /// </summary>
         private void AddSamplesToDefaultPulldownMenus()
         {
@@ -580,16 +591,14 @@ namespace RvtSamples
             {
                 var category = m_defaultMenus.Keys[i];
                 var sampleItems = m_defaultMenus.Values[i];
-                var menuButton = m_pulldownButtons.Values[m_pulldownButtons.IndexOfKey(GetDisplayNameByEnumName(category))];
-                foreach (var item in sampleItems)
-                {
-                    AddSampleToPulldownMenu(menuButton, item);
-                }
+                var menuButton =
+                    m_pulldownButtons.Values[m_pulldownButtons.IndexOfKey(GetDisplayNameByEnumName(category))];
+                foreach (var item in sampleItems) AddSampleToPulldownMenu(menuButton, item);
             }
         }
 
         /// <summary>
-        /// Add samples of categories not in default categories
+        ///     Add samples of categories not in default categories
         /// </summary>
         private void AddCustomizedPulldownMenus()
         {
@@ -629,15 +638,12 @@ namespace RvtSamples
                 var pulldownButtonData = new PulldownButtonData(name, name);
                 var button = m_panelRvtSamples.AddItem(pulldownButtonData) as PulldownButton;
                 var sampleItems = m_customizedMenus.Values[m_customizedMenus.IndexOfKey(button.Name)];
-                foreach (var item in sampleItems)
-                {
-                    AddSampleToPulldownMenu(button, item);
-                }
+                foreach (var item in sampleItems) AddSampleToPulldownMenu(button, item);
             }
         }
 
         /// <summary>
-        /// Add samples to corresponding pulldown button
+        ///     Add samples to corresponding pulldown button
         /// </summary>
         /// <param name="buttons">pulldown buttons</param>
         private void AddSamplesToStackedButtons(IList<RibbonItem> buttons)
@@ -646,11 +652,8 @@ namespace RvtSamples
             {
                 var button = rItem as PulldownButton;
                 var sampleItems = m_customizedMenus.Values[m_customizedMenus.IndexOfKey(button.Name)];
-                foreach (var item in sampleItems)
-                {
-                    AddSampleToPulldownMenu(button, item);
-                }
+                foreach (var item in sampleItems) AddSampleToPulldownMenu(button, item);
             }
         }
-            }
+    }
 }

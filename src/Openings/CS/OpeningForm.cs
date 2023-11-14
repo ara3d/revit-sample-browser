@@ -29,13 +29,18 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// Main form use to show the selected opening.
+    ///     Main form use to show the selected opening.
     /// </summary>
     public partial class OpeningForm : Form
     {
+        //private member
+        private readonly List<OpeningInfo> m_openingInfos; //store all the OpeningInfo class
+
+        private OpeningInfo m_selectedOpeningInfo; //current displayed (in preview) OpeningInfo
+
         //constructor
         /// <summary>
-        /// The default constructor
+        ///     The default constructor
         /// </summary>
         public OpeningForm()
         {
@@ -43,7 +48,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// constructor of OpeningForm
+        ///     constructor of OpeningForm
         /// </summary>
         /// <param name="openingInfos">a list of OpeningInFo</param>
         public OpeningForm(List<OpeningInfo> openingInfos)
@@ -52,10 +57,6 @@ namespace Revit.SDK.Samples.Openings.CS
 
             m_openingInfos = openingInfos;
         }
-
-        //private member
-        private readonly List<OpeningInfo> m_openingInfos; //store all the OpeningInfo class
-        private OpeningInfo m_selectedOpeningInfo; //current displayed (in preview) OpeningInfo
 
         private void OpeningForm_Load(object sender, EventArgs e)
         {
@@ -72,7 +73,7 @@ namespace Revit.SDK.Samples.Openings.CS
             var height = PreviewPictureBox.Height;
             if (m_selectedOpeningInfo.Sketch != null)
             {
-                m_selectedOpeningInfo.Sketch.Draw2D(width, 
+                m_selectedOpeningInfo.Sketch.Draw2D(width,
                     height, e.Graphics);
             }
             else
@@ -94,7 +95,7 @@ namespace Revit.SDK.Samples.Openings.CS
 
         private void Createbutton_Click(object sender, EventArgs e)
         {
-            var optionForm = 
+            var optionForm =
                 new CreateModelLineOptionsForm(m_openingInfos, m_selectedOpeningInfo);
             optionForm.ShowDialog();
         }

@@ -32,8 +32,16 @@ namespace Revit.SDK.Samples.UIAPI.CS
         StructuralAnalysis,
         MEP
     }
+
     public class ApplicationOptions
     {
+        private static ApplicationOptions s_options;
+        private ExternalApp m_eApplication;
+
+        private ApplicationOptions()
+        {
+            Availability = ApplicationAvailablity.Always;
+        }
 
         public ApplicationAvailablity Availability { get; set; }
 
@@ -41,7 +49,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
         public static void Initialize(ExternalApp application)
         {
             s_options = new ApplicationOptions();
-            s_options.m_eApplication = application; 
+            s_options.m_eApplication = application;
         }
 
         public static ApplicationOptions Get()
@@ -50,14 +58,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 throw new Exception("Static options was not initialized");
 
             return s_options;
-        }
-
-        private static ApplicationOptions s_options;
-        private ExternalApp m_eApplication;
-
-        private ApplicationOptions()
-        {
-            Availability = ApplicationAvailablity.Always;
         }
     }
 }

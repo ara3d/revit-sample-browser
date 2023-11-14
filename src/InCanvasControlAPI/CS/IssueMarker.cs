@@ -24,68 +24,59 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 {
-   /// <summary>
-   /// A simple object to keep the connection between marker control and the given element.
-   /// </summary>
-   public class IssueMarker
-   {
-      
-      private IssueMarker(ElementId elementId, int controlIndex, InCanvasControlData inCanvasControlData)
-      {
-         this.TrackedElementId = elementId;
-         this.ControlIndex = controlIndex;
-         InCanvasControlData = inCanvasControlData;
-      }
+    /// <summary>
+    ///     A simple object to keep the connection between marker control and the given element.
+    /// </summary>
+    public class IssueMarker
+    {
+        private IssueMarker(ElementId elementId, int controlIndex, InCanvasControlData inCanvasControlData)
+        {
+            TrackedElementId = elementId;
+            ControlIndex = controlIndex;
+            InCanvasControlData = inCanvasControlData;
+        }
 
-      /// <summary>
-      /// Creates an issue marker. It also creates an In-Canvas control on given element's position.
-      /// </summary>
-      /// <param name="document">Document in which the tracked element is.</param>
-      /// <param name="elementId">Tracked element id.</param>
-      /// <returns>IssueMarker created from data</returns>
-      public static IssueMarker Create(Document document, ElementId elementId)
-      {
-         var resourceProvider = ResourceProvider.GetInstance();
+        /// <summary>
+        ///     Data with which an In-Canvas control was created. We need to keep this to make small changes later on.
+        /// </summary>
+        public InCanvasControlData InCanvasControlData { get; set; }
 
-         // Prepare InCanvasControlData. It needs position and image path. 
-         // In this example, all controls will share the same image - though it is possible to create controls with different images, or even change it via an update (see IssueMarkerSelector::SelectMarker).
-         var elementTracked = document.GetElement(elementId);
+        /// <summary>
+        ///     Index of the control, returned by TemporaryGraphicsManager
+        /// </summary>
+        public int ControlIndex { get; }
 
-         var elementLocation = new XYZ();
-         if (elementTracked.Location is LocationPoint pointLoc)
-         {
-            elementLocation = pointLoc.Point;
-         }
-         else if (elementTracked.Location is LocationCurve curveLoc)
-         {
-            elementLocation = curveLoc.Curve.GetEndPoint(0);
-         }
+        /// <summary>
+        ///     Id of the element that the marker tracks
+        /// </summary>
+        public ElementId TrackedElementId { get; }
 
-         var inCanvasControlData = new InCanvasControlData(resourceProvider.IssueImage, elementLocation);
+        /// <summary>
+        ///     Creates an issue marker. It also creates an In-Canvas control on given element's position.
+        /// </summary>
+        /// <param name="document">Document in which the tracked element is.</param>
+        /// <param name="elementId">Tracked element id.</param>
+        /// <returns>IssueMarker created from data</returns>
+        public static IssueMarker Create(Document document, ElementId elementId)
+        {
+            var resourceProvider = ResourceProvider.GetInstance();
 
-         // Create In-Canvas control
-         var manager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document);
-         var controlIndex = manager.AddControl(inCanvasControlData, ElementId.InvalidElementId);
+            // Prepare InCanvasControlData. It needs position and image path. 
+            // In this example, all controls will share the same image - though it is possible to create controls with different images, or even change it via an update (see IssueMarkerSelector::SelectMarker).
+            var elementTracked = document.GetElement(elementId);
 
-         return new IssueMarker(elementId, controlIndex, inCanvasControlData);
-      }
+            var elementLocation = new XYZ();
+            if (elementTracked.Location is LocationPoint pointLoc)
+                elementLocation = pointLoc.Point;
+            else if (elementTracked.Location is LocationCurve curveLoc) elementLocation = curveLoc.Curve.GetEndPoint(0);
 
-      /// <summary>
-      /// Data with which an In-Canvas control was created. We need to keep this to make small changes later on.
-      /// </summary>
-      public InCanvasControlData InCanvasControlData { get; set; }
+            var inCanvasControlData = new InCanvasControlData(resourceProvider.IssueImage, elementLocation);
 
-      /// <summary>
-      /// Index of the control, returned by TemporaryGraphicsManager
-      /// </summary>
-      public int ControlIndex { get; }
+            // Create In-Canvas control
+            var manager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document);
+            var controlIndex = manager.AddControl(inCanvasControlData, ElementId.InvalidElementId);
 
-      /// <summary>
-      /// Id of the element that the marker tracks
-      /// </summary>
-      public ElementId TrackedElementId { get; }
-
-      
-      
-         }
+            return new IssueMarker(elementId, controlIndex, inCanvasControlData);
+        }
+    }
 }

@@ -21,49 +21,45 @@
 //
 
 using System;
-using System.IO;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace Revit.SDK.Samples.EventsMonitor.CS
 {
     /// <summary>
-    /// This class implements all operators about writing log file and generating event 
-    /// information for showing in the information window. This class is not the main one 
-    /// just a assistant in this sample. If you just want to learn how to use Revit events,
-    /// please pay more attention to EventManager class.
+    ///     This class implements all operators about writing log file and generating event
+    ///     information for showing in the information window. This class is not the main one
+    ///     just a assistant in this sample. If you just want to learn how to use Revit events,
+    ///     please pay more attention to EventManager class.
     /// </summary>
     public class LogManager
     {
-                /// <summary>
-        /// data table for information windows.
+        /// <summary>
+        ///     data table for information windows.
         /// </summary>
-        private DataTable m_eventsLog;
+        private readonly DataTable m_eventsLog;
 
         /// <summary>
-        /// add a trace listener.
+        ///     path of temp file and log file
+        /// </summary>
+        private readonly string m_filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        /// <summary>
+        ///     a temp file to record log and before revit closed the temp file will be change to log file.
+        ///     This strategy can make the log file alway can be accessable.
+        /// </summary>
+        private string m_tempFile;
+
+        /// <summary>
+        ///     add a trace listener.
         /// </summary>
         private TraceListener m_txtListener;
 
-        /// <summary>
-        /// path of temp file and log file
-        /// </summary>
-        private string m_filePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         /// <summary>
-        /// a temp file to record log and before revit closed the temp file will be change to log file.
-        /// This strategy can make the log file alway can be accessable.
-        /// </summary>
-        private string m_tempFile;
-        
-                /// <summary>
-        /// Property to get and set private member variables of Event log information.
-        /// </summary>
-        public DataTable EventsLog => m_eventsLog;
-
-        
-                /// <summary>
-        /// Constructor without argument.
+        ///     Constructor without argument.
         /// </summary>
         public LogManager()
         {
@@ -72,9 +68,14 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             m_eventsLog = CreateEventsLogTable();
         }
 
-        
-                /// <summary>
-        /// Create a log file to track the subscribed events' work process.
+        /// <summary>
+        ///     Property to get and set private member variables of Event log information.
+        /// </summary>
+        public DataTable EventsLog => m_eventsLog;
+
+
+        /// <summary>
+        ///     Create a log file to track the subscribed events' work process.
         /// </summary>
         private void CreateLogFile()
         {
@@ -85,7 +86,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         }
 
         /// <summary>
-        /// Close the log file and remove the corresponding listener.
+        ///     Close the log file and remove the corresponding listener.
         /// </summary>
         public void CloseLogFile()
         {
@@ -101,7 +102,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         }
 
         /// <summary>
-        /// Generate a data table with four columns for display in window
+        ///     Generate a data table with four columns for display in window
         /// </summary>
         /// <returns>The DataTable to be displayed in window</returns>
         private DataTable CreateEventsLogTable()
@@ -129,8 +130,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         }
 
         /// <summary>
-        /// When any event which has been subscribed is fired, log its information.
-        /// the information includes: machine name, user, time and event
+        ///     When any event which has been subscribed is fired, log its information.
+        ///     the information includes: machine name, user, time and event
         /// </summary>
         /// <param name="sender"> Event sender.</param>
         /// <param name="args">EventArgs of this event.</param>
@@ -147,34 +148,27 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         }
 
         /// <summary>
-        /// Write log to file, event name and type will be dumped
+        ///     Write log to file, event name and type will be dumped
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="args">EventArgs of this event.</param>
         public void WriteLogFile(object sender, EventArgs args)
         {
             Trace.WriteLine("*********************************************************");
-            if (null == args)
-            {
-                return;
-            }
+            if (null == args) return;
             // get this eventArgs's runtime type.
             var type = args.GetType();
             var eventName = GetEventsName(type);
-            Trace.WriteLine("Raised " + sender.GetType().ToString() + "." + eventName);
+            Trace.WriteLine("Raised " + sender.GetType() + "." + eventName);
             Trace.WriteLine("---------------------------------------------------------");
-            
+
             // 1: output sender's information
             Trace.WriteLine("  Start to dump Sender and EventAgrs of Event...\n");
             if (null != sender)
-            {
                 // output the type of sender
                 Trace.WriteLine("    [Event Sender]: " + sender.GetType().FullName);
-            }
             else
-            {
                 Trace.WriteLine("      Sender is null, it's unexpected!!!");
-            }
 
             // 2: Output event argument
             // get all properties info of this argument.
@@ -182,30 +176,24 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
 
             // output some typical property's name and value. (for example, Cancelable, Cancel,etc)
             foreach (var propertyInfo in propertyInfos)
-            {
                 try
                 {
-                    if (!propertyInfo.CanRead)
+                    if (!propertyInfo.CanRead) continue;
+
+                    var propertyName = propertyInfo.Name;
+                    switch (propertyName)
                     {
-                        continue;
-                    }
-                    else
-                    {
-                        var propertyName = propertyInfo.Name;
-                        switch(propertyName)
-                        {
-                            case "Document":
-                            case "Cancellable":
-                            case "Cancel":
-                            case "Status":
-                            case "DocumentType":
-                            case "Format":
+                        case "Document":
+                        case "Cancellable":
+                        case "Cancel":
+                        case "Status":
+                        case "DocumentType":
+                        case "Format":
                             var propertyValue = propertyInfo.GetValue(args, null);
                             // Dump current property value
                             Trace.WriteLine("    [Property]: " + propertyInfo.Name);
-                            Trace.WriteLine("    [Value]: " + propertyValue.ToString());
+                            Trace.WriteLine("    [Value]: " + propertyValue);
                             break;
-                        }
                     }
                 }
                 catch (Exception ex)
@@ -213,11 +201,10 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                     // Unexpected exception
                     Trace.WriteLine("    [Property Exception]: " + propertyInfo.Name + ", " + ex.Message);
                 }
-            }
         }
 
         /// <summary>
-        /// Get event name from its EventArgs, without namespace prefix
+        ///     Get event name from its EventArgs, without namespace prefix
         /// </summary>
         /// <param name="type">Generic event type.</param>
         /// <returns></returns>
@@ -231,5 +218,5 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             var eventName = argName.Substring(firstIndex, length);
             return eventName;
         }
-            }
+    }
 }

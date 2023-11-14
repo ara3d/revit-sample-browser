@@ -3,13 +3,13 @@
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
-    /// Converter used to convert TimeZone
+    ///     Converter used to convert TimeZone
     /// </summary>
     public class TimeZoneConverter : TypeConverter
     {
-                /// <summary>
-        /// Returns whether this object supports a standard set of values that can be
-        /// picked from a list, using the specified context.
+        /// <summary>
+        ///     Returns whether this object supports a standard set of values that can be
+        ///     picked from a list, using the specified context.
         /// </summary>
         /// <returns>true</returns>
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
@@ -18,8 +18,9 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns whether the collection of standard values returned from System.ComponentModel.TypeConverter.GetStandardValues()
-        /// is an exclusive list.
+        ///     Returns whether the collection of standard values returned from
+        ///     System.ComponentModel.TypeConverter.GetStandardValues()
+        ///     is an exclusive list.
         /// </summary>
         /// <returns>true</returns>
         public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
@@ -28,13 +29,13 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Returns a collection of standard values from the default context for the
-        /// data type this type converter is designed for.
+        ///     Returns a collection of standard values from the default context for the
+        ///     data type this type converter is designed for.
         /// </summary>
         /// <returns>Element collection retrieved through filtering current Revit document elements</returns>
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
             return new StandardValuesCollection(RevitStartInfo.TimeZones);
         }
-            };
+    }
 }

@@ -25,61 +25,60 @@ using System.ComponentModel;
 
 namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
 {
-   /// <summary>
-   ///    Provide user BIM360 project information and configuration for this sample.
-   ///    Can be modified via ViewInputMigrationInfo dialog
-   /// </summary>
-   public class UIMigrationViewModel : IMigrationModel, INotifyPropertyChanged
-   {
-      private string accountGuid;
+    /// <summary>
+    ///     Provide user BIM360 project information and configuration for this sample.
+    ///     Can be modified via ViewInputMigrationInfo dialog
+    /// </summary>
+    public class UIMigrationViewModel : IMigrationModel, INotifyPropertyChanged
+    {
+        private string accountGuid;
 
-      private string projectGuid;
+        private string projectGuid;
 
-      /// <inheritdoc />
-      public ObservableCollection<FolderLocation> AvailableFolders { get; set; } =
-         new ObservableCollection<FolderLocation>();
+        /// <inheritdoc />
+        public ObservableCollection<FolderLocation> AvailableFolders { get; set; } =
+            new ObservableCollection<FolderLocation>();
 
-      /// <inheritdoc />
-      public ObservableCollection<MigrationRule> Rules { get; set; } = new ObservableCollection<MigrationRule>();
+        /// <inheritdoc />
+        public ObservableCollection<MigrationRule> Rules { get; set; } = new ObservableCollection<MigrationRule>();
 
-      
-      /// <inheritdoc />
-      public string AccountGuid
-      {
-         get => accountGuid;
-         set
-         {
-            if (accountGuid != value)
+
+        /// <inheritdoc />
+        public string AccountGuid
+        {
+            get => accountGuid;
+            set
             {
-               accountGuid = value;
-               NotifyPropertyChanged("AccountGuid");
+                if (accountGuid != value)
+                {
+                    accountGuid = value;
+                    NotifyPropertyChanged("AccountGuid");
+                }
             }
-         }
-      }
+        }
 
-      /// <inheritdoc />
-      public string ProjectGuid
-      {
-         get => projectGuid;
-         set
-         {
-            if (projectGuid != value)
+        /// <inheritdoc />
+        public string ProjectGuid
+        {
+            get => projectGuid;
+            set
             {
-               projectGuid = value;
-               NotifyPropertyChanged("ProjectGuid");
+                if (projectGuid != value)
+                {
+                    projectGuid = value;
+                    NotifyPropertyChanged("ProjectGuid");
+                }
             }
-         }
-      }
+        }
 
-      private void NotifyPropertyChanged(string propertyName)
-      {
-         if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
+        /// <summary>
+        ///     Indicates target folder has been changed in this case.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
-      /// <summary>
-      ///    Indicates target folder has been changed in this case.
-      /// </summary>
-      public event PropertyChangedEventHandler PropertyChanged;
-
-         }
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 }

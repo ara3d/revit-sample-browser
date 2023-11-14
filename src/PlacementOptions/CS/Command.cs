@@ -21,17 +21,18 @@
 //
 
 using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
+using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
 namespace Revit.SDK.Samples.PlacementOptions.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -52,16 +53,17 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
                             famSymbolList = FindProperFamilySymbol(document, BuiltInCategory.OST_GenericModel);
                             if (famSymbolList == null || famSymbolList.Count == 0)
                             {
-                                TaskDialog.Show("Error", "There is no Face-Based family symbol, please load one first.");
+                                TaskDialog.Show("Error",
+                                    "There is no Face-Based family symbol, please load one first.");
                                 return Result.Cancelled;
                             }
+
                             // Show the FacebasedForm for setting the face based family symbol and FaceBasedPlacementType option.
                             using (var facebaseForm = new FacebasedForm(famSymbolList))
                             {
                                 if (DialogResult.OK == facebaseForm.ShowDialog())
-                                {
-                                    commandData.Application.ActiveUIDocument.PromptForFamilyInstancePlacement(facebaseForm.SelectedFamilySymbol, facebaseForm.FIPlacementOptions);
-                                }
+                                    commandData.Application.ActiveUIDocument.PromptForFamilyInstancePlacement(
+                                        facebaseForm.SelectedFamilySymbol, facebaseForm.FIPlacementOptions);
                             }
                         }
                         else
@@ -69,16 +71,17 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
                             famSymbolList = FindProperFamilySymbol(document, BuiltInCategory.OST_StructuralFraming);
                             if (famSymbolList == null || famSymbolList.Count == 0)
                             {
-                                TaskDialog.Show("Error", "There is no Sketch-Based family symbol, please load one first.");
+                                TaskDialog.Show("Error",
+                                    "There is no Sketch-Based family symbol, please load one first.");
                                 return Result.Cancelled;
                             }
+
                             // Show the FacebasedForm for setting the face based family symbol and SketchGalleryOptions option.
                             using (var sketchbasedForm = new SketchbasedForm(famSymbolList))
                             {
                                 if (DialogResult.OK == sketchbasedForm.ShowDialog())
-                                {
-                                    commandData.Application.ActiveUIDocument.PromptForFamilyInstancePlacement(sketchbasedForm.SelectedFamilySymbol, sketchbasedForm.FIPlacementOptions);
-                                }
+                                    commandData.Application.ActiveUIDocument.PromptForFamilyInstancePlacement(
+                                        sketchbasedForm.SelectedFamilySymbol, sketchbasedForm.FIPlacementOptions);
                             }
                         }
                     }
@@ -86,7 +89,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
 
                 return Result.Succeeded;
             }
-            catch (Autodesk.Revit.Exceptions.OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 // UI preempted operation is finished peacefully, so we consider it successful
                 return Result.Succeeded;
@@ -99,7 +102,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         }
 
         /// <summary>
-        /// Find proper family symbol for family instance placement.
+        ///     Find proper family symbol for family instance placement.
         /// </summary>
         /// <param name="document">The Revit document.</param>
         /// <param name="category">The category of the family symbol.</param>
@@ -122,24 +125,24 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
                 if (famSymbol != null)
                     famSymbolList.Add(famSymbol);
             }
+
             return famSymbolList;
         }
     }
 
     /// <summary>
-    /// The placement options for user to place the family instance.
+    ///     The placement options for user to place the family instance.
     /// </summary>
     public enum PlacementOptionsEnum
     {
         /// <summary>
-        /// Face based
+        ///     Face based
         /// </summary>
         FaceBased,
 
         /// <summary>
-        /// Sketch based
+        ///     Sketch based
         /// </summary>
         SketchBased
     }
 }
-

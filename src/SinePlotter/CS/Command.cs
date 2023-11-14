@@ -22,15 +22,14 @@
 
 using System;
 using System.Linq;
-
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.SinePlotter.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
@@ -53,7 +52,8 @@ namespace Revit.SDK.Samples.SinePlotter.CS
                 }
                 catch (InvalidOperationException)
                 {
-                    TaskDialog.Show("FamilySymbol Loading Error", "The family symbol is not loaded in the project file.");
+                    TaskDialog.Show("FamilySymbol Loading Error",
+                        "The family symbol is not loaded in the project file.");
                     return Result.Failed;
                 }
 
@@ -78,4 +78,3 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         }
     }
 }
-

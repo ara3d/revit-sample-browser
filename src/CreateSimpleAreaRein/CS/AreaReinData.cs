@@ -19,87 +19,87 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
+using System;
+using System.ComponentModel;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+
 namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
-    using System;
-    using System.ComponentModel;
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.DB.Structure;
-
-    using GeoElement = Autodesk.Revit.DB.GeometryElement;
+    using GeoElement = GeometryElement;
 
 
     /// <summary>
-    /// data of the AreaReinforcement
+    ///     data of the AreaReinforcement
     /// </summary>
     public class AreaReinData
     {
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         public AreaReinData()
-        {}
+        {
+        }
 
         /// <summary>
-        /// Parameter LayoutRule of AreaReinforcement
+        ///     Parameter LayoutRule of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Construction"), DefaultValueAttribute(
+        [CategoryAttribute("Construction")]
+        [DefaultValueAttribute(
             LayoutRules.Maximum_Spacing)]
         public LayoutRules LayoutRule { get; set; } = LayoutRules.Maximum_Spacing;
 
         /// <summary>
-        /// set the parameters to given AreaReinforcement
+        ///     set the parameters to given AreaReinforcement
         /// </summary>
         /// <param name="areaRein"></param>
         public virtual void FillIn(AreaReinforcement areaRein)
         {
             var temp = (int)LayoutRule;
-            var flag = ParameterUtil.SetParaInt(areaRein, 
+            var flag = ParameterUtil.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE, temp);
 
-            if(!flag)    
+            if (!flag)
             {
                 var paraLayout = ParameterUtil.FindParaByName(
                     areaRein.Parameters, "Layout Rule");
-                if (null != paraLayout)
-                {
-                    paraLayout.Set(temp);
-                }
+                if (null != paraLayout) paraLayout.Set(temp);
             }
         }
     }
 
     /// <summary>
-    /// data of AreaReinforcement which created on wall
+    ///     data of AreaReinforcement which created on wall
     /// </summary>
-    public class AreaReinDataOnWall:AreaReinData
+    public class AreaReinDataOnWall : AreaReinData
     {
         /// <summary>
-        /// Parameter of AreaReinforcement
+        ///     Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
         public bool ExteriorMajorDirection { get; set; } = true;
 
         /// <summary>
-        /// Parameter of AreaReinforcement
+        ///     Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
         public bool ExteriorMinorDirection { get; set; } = true;
 
         /// <summary>
-        /// Parameter of AreaReinforcement
+        ///     Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
         public bool InteriorMajorDirection { get; set; } = true;
 
         /// <summary>
-        /// Parameter of AreaReinforcement
+        ///     Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
         public bool InteriorMinorDirection { get; set; } = true;
 
         /// <summary>
-        /// set the parameters to given AreaReinforcement
+        ///     set the parameters to given AreaReinforcement
         /// </summary>
         /// <param name="areaRein"></param>
         public override void FillIn(AreaReinforcement areaRein)
@@ -110,76 +110,68 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
             foreach (Parameter para in areaRein.Parameters)
             {
                 if (para.Definition.Name == "Exterior Major Direction")
-                {
                     para.Set(Convert.ToInt32(ExteriorMajorDirection));
-                }
 
                 if (para.Definition.Name == "Interior Major Direction")
-                {
                     para.Set(Convert.ToInt32(InteriorMajorDirection));
-                }
 
                 if (para.Definition.Name == "Exterior Minor Direction")
-                {
                     para.Set(Convert.ToInt32(ExteriorMinorDirection));
-                }
 
                 if (para.Definition.Name == "Interior Minor Direction")
-                {
                     para.Set(Convert.ToInt32(InteriorMinorDirection));
-                }
             }
         }
     }
 
     /// <summary>
-    /// data of AreaReinforcement which created on floor
+    ///     data of AreaReinforcement which created on floor
     /// </summary>
     public class AreaReinDataOnFloor : AreaReinData
     {
         /// <summary>
-        /// Parameter of AreaReinforcement
+        ///     Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
         public bool TopMajorDirection { get; set; } = true;
 
         /// <summary>
-        /// Parameter of AreaReinforcement
+        ///     Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
         public bool TopMinorDirection { get; set; } = true;
 
         /// <summary>
-        /// Parameter of AreaReinforcement
+        ///     Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
         public bool BottomMajorDirection { get; set; } = true;
 
         /// <summary>
-        /// Parameter of AreaReinforcement
+        ///     Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
         public bool BottomMinorDirection { get; set; } = true;
 
         /// <summary>
-        /// set the parameters to given AreaReinforcement
+        ///     set the parameters to given AreaReinforcement
         /// </summary>
         /// <param name="areaRein"></param>
         public override void FillIn(AreaReinforcement areaRein)
         {
             base.FillIn(areaRein);
 
-            ParameterUtil.SetParaInt(areaRein, 
-                BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_1, 
+            ParameterUtil.SetParaInt(areaRein,
+                BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_1,
                 Convert.ToInt32(BottomMajorDirection));
-            ParameterUtil.SetParaInt(areaRein, 
+            ParameterUtil.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_2,
                 Convert.ToInt32(BottomMinorDirection));
-            ParameterUtil.SetParaInt(areaRein, 
-                BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_1, 
+            ParameterUtil.SetParaInt(areaRein,
+                BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_1,
                 Convert.ToInt32(TopMajorDirection));
-            ParameterUtil.SetParaInt(areaRein, 
-                BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_2, 
+            ParameterUtil.SetParaInt(areaRein,
+                BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_2,
                 Convert.ToInt32(TopMinorDirection));
         }
     }

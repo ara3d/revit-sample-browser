@@ -30,76 +30,76 @@ using Revit.SDK.Samples.CloudAPISample.CS.Migration;
 
 namespace Revit.SDK.Samples.CloudAPISample.CS.View
 {
-   /// <summary>
-   ///    Interaction logic for ViewInputMigrationInfo.xaml
-   /// </summary>
-   public partial class ViewInputMigrationInfo : Window
-   {
-      /// <summary>
-      ///    Constructor for ViewSamplePortal
-      ///    ViewSamplePortal is a child window aggregating all sample case with tabs
-      /// </summary>
-      public ViewInputMigrationInfo(MigrationToBim360 sampleContext)
-      {
-         DataContext = sampleContext;
-         InitializeComponent();
-      }
+    /// <summary>
+    ///     Interaction logic for ViewInputMigrationInfo.xaml
+    /// </summary>
+    public partial class ViewInputMigrationInfo : Window
+    {
+        /// <summary>
+        ///     Constructor for ViewSamplePortal
+        ///     ViewSamplePortal is a child window aggregating all sample case with tabs
+        /// </summary>
+        public ViewInputMigrationInfo(MigrationToBim360 sampleContext)
+        {
+            DataContext = sampleContext;
+            InitializeComponent();
+        }
 
-      private void OnBtnAddFolder_Click(object sender, RoutedEventArgs e)
-      {
-         ((MigrationToBim360) DataContext).Model.AvailableFolders.Add(new FolderLocation());
-      }
+        private void OnBtnAddFolder_Click(object sender, RoutedEventArgs e)
+        {
+            ((MigrationToBim360)DataContext).Model.AvailableFolders.Add(new FolderLocation());
+        }
 
-      private void OnBtnRemoveFolder_Click(object sender, RoutedEventArgs e)
-      {
-         var model = ((MigrationToBim360) DataContext).Model;
-         if (lvFolders.SelectedIndex >= 0 && lvFolders.SelectedIndex < model.AvailableFolders.Count)
-            model.AvailableFolders.RemoveAt(lvFolders.SelectedIndex);
-      }
+        private void OnBtnRemoveFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var model = ((MigrationToBim360)DataContext).Model;
+            if (lvFolders.SelectedIndex >= 0 && lvFolders.SelectedIndex < model.AvailableFolders.Count)
+                model.AvailableFolders.RemoveAt(lvFolders.SelectedIndex);
+        }
 
-      private void OnBtnImport_Click(object sender, RoutedEventArgs e)
-      {
-         var openFileDialog = new OpenFileDialog {Filter = "Json file (*.json)|*.json|All files (*.*)|*.*"};
-         if (openFileDialog.ShowDialog() == true)
-         {
-            var model = ((MigrationToBim360) DataContext).Model;
-            var jsonString = File.ReadAllText(openFileDialog.FileName);
-            var serializer = new JavaScriptSerializer();
-            var info = serializer.Deserialize<SerializableProjectInfo>(jsonString);
-
-            model.AccountGuid = info.AccountGuid;
-            model.ProjectGuid = info.ProjectGuid;
-            model.AvailableFolders.Clear();
-            foreach (var folder in info.AvailableFolders) model.AvailableFolders.Add(folder);
-         }
-      }
-
-      private void OnBtnExport_Click(object sender, RoutedEventArgs e)
-      {
-         var saveFileDialog = new SaveFileDialog {Filter = "Json file (*.json)|*.json"};
-         if (saveFileDialog.ShowDialog() == true)
-         {
-            var model = ((MigrationToBim360) DataContext).Model;
-            var info = new SerializableProjectInfo
+        private void OnBtnImport_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog { Filter = "Json file (*.json)|*.json|All files (*.*)|*.*" };
+            if (openFileDialog.ShowDialog() == true)
             {
-               AccountGuid = model.AccountGuid,
-               ProjectGuid = model.ProjectGuid,
-               AvailableFolders = model.AvailableFolders.ToArray()
-            };
-            var serializer = new JavaScriptSerializer();
-            var jsonString = serializer.Serialize(info);
-            File.WriteAllText(saveFileDialog.FileName, jsonString);
-         }
-      }
+                var model = ((MigrationToBim360)DataContext).Model;
+                var jsonString = File.ReadAllText(openFileDialog.FileName);
+                var serializer = new JavaScriptSerializer();
+                var info = serializer.Deserialize<SerializableProjectInfo>(jsonString);
 
-      [DataContract]
-      internal class SerializableProjectInfo
-      {
-         [DataMember] public string AccountGuid { get; set; }
+                model.AccountGuid = info.AccountGuid;
+                model.ProjectGuid = info.ProjectGuid;
+                model.AvailableFolders.Clear();
+                foreach (var folder in info.AvailableFolders) model.AvailableFolders.Add(folder);
+            }
+        }
 
-         [DataMember] public string ProjectGuid { get; set; }
+        private void OnBtnExport_Click(object sender, RoutedEventArgs e)
+        {
+            var saveFileDialog = new SaveFileDialog { Filter = "Json file (*.json)|*.json" };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var model = ((MigrationToBim360)DataContext).Model;
+                var info = new SerializableProjectInfo
+                {
+                    AccountGuid = model.AccountGuid,
+                    ProjectGuid = model.ProjectGuid,
+                    AvailableFolders = model.AvailableFolders.ToArray()
+                };
+                var serializer = new JavaScriptSerializer();
+                var jsonString = serializer.Serialize(info);
+                File.WriteAllText(saveFileDialog.FileName, jsonString);
+            }
+        }
 
-         [DataMember] public FolderLocation[] AvailableFolders { get; set; }
-      }
-   }
+        [DataContract]
+        internal class SerializableProjectInfo
+        {
+            [DataMember] public string AccountGuid { get; set; }
+
+            [DataMember] public string ProjectGuid { get; set; }
+
+            [DataMember] public FolderLocation[] AvailableFolders { get; set; }
+        }
+    }
 }

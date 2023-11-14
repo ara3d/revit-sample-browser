@@ -21,50 +21,50 @@
 //
 
 using System;
-using Autodesk.Revit.DB;
 using System.Windows.Forms;
+using Autodesk.Revit.DB;
 using Point = System.Drawing.Point;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
-    /// This class is intent to convenience the geometry transformations.
-    /// It can produce rotation and scale transformations. 
+    ///     This class is intent to convenience the geometry transformations.
+    ///     It can produce rotation and scale transformations.
     /// </summary>
     public class TrackBall
     {
         /// <summary>
-        /// Canvas width.
-        /// </summary>
-        private float m_canvasWidth;
-
-        /// <summary>
-        /// Canvas height.
+        ///     Canvas height.
         /// </summary>
         private float m_canvasHeight;
 
         /// <summary>
-        /// Previous position in 2D.
+        ///     Canvas width.
+        /// </summary>
+        private float m_canvasWidth;
+
+        /// <summary>
+        ///     Previous position in 2D.
         /// </summary>
         private Point m_previousPosition2D;
 
         /// <summary>
-        /// Previous position in 3D.
+        ///     Previous position in 3D.
         /// </summary>
         private XYZ m_previousPosition3D;
 
         /// <summary>
-        /// Current rotation transform.
+        ///     Current rotation transform.
         /// </summary>
         private Transform m_rotation = Transform.Identity;
 
         /// <summary>
-        /// Current scale transform.
+        ///     Current scale transform.
         /// </summary>
         private double m_scale;
 
         /// <summary>
-        /// Current rotation transform.
+        ///     Current rotation transform.
         /// </summary>
         public Transform Rotation
         {
@@ -73,7 +73,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Current scale transform.
+        ///     Current scale transform.
         /// </summary>
         public double Scale
         {
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Project canvas 2D point to the track ball.
+        ///     Project canvas 2D point to the track ball.
         /// </summary>
         /// <param name="width">Canvas width</param>
         /// <param name="height">Canvas height</param>
@@ -90,17 +90,18 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <returns>Projected point in track ball</returns>
         private XYZ ProjectToTrackball(double width, double height, Point point)
         {
-            var x = point.X / (width / 2);    // Scale so bounds map to [0,0] - [2,2]
+            var x = point.X / (width / 2); // Scale so bounds map to [0,0] - [2,2]
             var y = point.Y / (height / 2);
 
-            x = x - 1;                           // Translate 0,0 to the center
-            y = 1 - y;                           // Flip so +Y is up instead of down
+            x = x - 1; // Translate 0,0 to the center
+            y = 1 - y; // Flip so +Y is up instead of down
 
             double z;
 
             var d = Math.Sqrt(x * x + y * y);
             if (d < 0.70710678118654752440)
-            {    /* Inside sphere */
+            {
+                /* Inside sphere */
                 z = Math.Sqrt(1 - d * d);
             }
             else
@@ -109,11 +110,12 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 var t = 1 / 1.41421356237309504880;
                 z = t * t / d;
             }
+
             return new XYZ(x, y, z);
         }
 
         /// <summary>
-        /// Yield the rotation transform according to current 2D point in canvas.
+        ///     Yield the rotation transform according to current 2D point in canvas.
         /// </summary>
         /// <param name="currentPosition">2D point in canvas</param>
         private void Track(Point currentPosition)
@@ -130,20 +132,20 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         }
 
         /// <summary>
-        /// Yield the scale transform according to current 2D point in canvas.
+        ///     Yield the scale transform according to current 2D point in canvas.
         /// </summary>
         /// <param name="currentPosition">2D point in canvas</param>
         private void Zoom(Point currentPosition)
         {
             double yDelta = currentPosition.Y - m_previousPosition2D.Y;
 
-            var scale = Math.Exp(yDelta / 100);    // e^(yDelta/100) is fairly arbitrary.
+            var scale = Math.Exp(yDelta / 100); // e^(yDelta/100) is fairly arbitrary.
 
             m_scale = scale;
         }
 
         /// <summary>
-        /// Mouse down, initialize the transformation to identity.
+        ///     Mouse down, initialize the transformation to identity.
         /// </summary>
         /// <param name="width">Canvas width</param>
         /// <param name="height">Canvas height</param>
@@ -156,13 +158,13 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             m_canvasHeight = height;
             m_previousPosition2D = e.Location;
             m_previousPosition3D = ProjectToTrackball(m_canvasWidth,
-                                                     m_canvasHeight,
-                                                     m_previousPosition2D);
+                m_canvasHeight,
+                m_previousPosition2D);
         }
 
         /// <summary>
-        /// Mouse move with left button press will yield the rotation transform,
-        /// with right button press will yield scale transform.
+        ///     Mouse move with left button press will yield the rotation transform,
+        ///     with right button press will yield scale transform.
         /// </summary>
         /// <param name="e"></param>
         public void OnMouseMove(MouseEventArgs e)
@@ -174,19 +176,14 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
 
             // Prefer tracking to zooming if both buttons are pressed.
             if (e.Button == MouseButtons.Left)
-            {
                 Track(currentPosition);
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                Zoom(currentPosition);
-            }
+            else if (e.Button == MouseButtons.Right) Zoom(currentPosition);
 
             m_previousPosition2D = currentPosition;
         }
 
         /// <summary>
-        /// Arrows key down will also yield the rotation transform.
+        ///     Arrows key down will also yield the rotation transform.
         /// </summary>
         /// <param name="e"></param>
         public void OnKeyDown(KeyEventArgs e)
@@ -206,8 +203,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 case Keys.Right:
                     axis = new XYZ(0, 1.0, 0);
                     break;
-                default: break;
             }
+
             m_rotation = Transform.CreateRotation(axis, angle);
         }
     }

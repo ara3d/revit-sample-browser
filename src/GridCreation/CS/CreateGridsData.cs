@@ -22,54 +22,53 @@
 
 using System;
 using System.Collections;
+using System.Resources;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Revit.SDK.Samples.GridCreation.CS.Properties;
+using Document = Autodesk.Revit.Creation.Document;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
     /// <summary>
-    /// Base class of all grid creation data class
+    ///     Base class of all grid creation data class
     /// </summary>
     public class CreateGridsData
     {
-                /// <summary>
-        /// The active document of Revit
-        /// </summary>
-        protected Document m_revitDoc;
         /// <summary>
-        /// Document Creation object to create new elements 
+        ///     Resource manager
         /// </summary>
-        protected Autodesk.Revit.Creation.Document m_docCreator;
+        protected static ResourceManager resManager = Resources.ResourceManager;
+
         /// <summary>
-        /// Application Creation object to create new elements
+        ///     Application Creation object to create new elements
         /// </summary>
-        protected Autodesk.Revit.Creation.Application m_appCreator;
+        protected Application m_appCreator;
+
         /// <summary>
-        /// Array list contains all grid labels in current document
+        ///     Document Creation object to create new elements
         /// </summary>
-        private ArrayList m_labelsList;
+        protected Document m_docCreator;
+
         /// <summary>
-        /// Current display unit type
+        ///     Array list contains all grid labels in current document
+        /// </summary>
+        private readonly ArrayList m_labelsList;
+
+        /// <summary>
+        ///     The active document of Revit
+        /// </summary>
+        protected Autodesk.Revit.DB.Document m_revitDoc;
+
+        /// <summary>
+        ///     Current display unit type
         /// </summary>
         protected ForgeTypeId m_unit;
-        /// <summary>
-        /// Resource manager
-        /// </summary>
-        protected static System.Resources.ResourceManager resManager = Properties.Resources.ResourceManager;
-        
-                /// <summary>
-        /// Current display unit type
-        /// </summary>
-        public ForgeTypeId Unit => m_unit;
+
 
         /// <summary>
-        /// Get array list contains all grid labels in current document
-        /// </summary>
-        public ArrayList LabelsList => m_labelsList;
-
-        
-                /// <summary>
-        /// Constructor without display unit type
+        ///     Constructor without display unit type
         /// </summary>
         /// <param name="application">Revit application</param>
         /// <param name="labels">All existing labels in Revit's document</param>
@@ -82,7 +81,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Constructor with display unit type
+        ///     Constructor with display unit type
         /// </summary>
         /// <param name="application">Revit application</param>
         /// <param name="labels">All existing labels in Revit's document</param>
@@ -97,7 +96,17 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Get the line to create grid according to the specified bubble location
+        ///     Current display unit type
+        /// </summary>
+        public ForgeTypeId Unit => m_unit;
+
+        /// <summary>
+        ///     Get array list contains all grid labels in current document
+        /// </summary>
+        public ArrayList LabelsList => m_labelsList;
+
+        /// <summary>
+        ///     Get the line to create grid according to the specified bubble location
         /// </summary>
         /// <param name="line">The original selected line</param>
         /// <param name="bubLoc">bubble location</param>
@@ -122,7 +131,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Get the arc to create grid according to the specified bubble location
+        ///     Get the arc to create grid according to the specified bubble location
         /// </summary>
         /// <param name="arc">The original selected line</param>
         /// <param name="bubLoc">bubble location</param>
@@ -140,7 +149,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 // Get start point, end point of the arc and the middle point on it 
                 var startPoint = arc.GetEndPoint(0);
                 var endPoint = arc.GetEndPoint(1);
-                var clockwise = (arc.Normal.Z == -1);
+                var clockwise = arc.Normal.Z == -1;
 
                 // Get start angel and end angel of arc
                 var startDegree = arc.GetEndParameter(0);
@@ -160,15 +169,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 }
 
                 var sumDegree = (startDegree + endDegree) / 2;
-                while (sumDegree > 2 * Values.PI)
-                {
-                    sumDegree -= 2 * Values.PI;
-                }
+                while (sumDegree > 2 * Values.PI) sumDegree -= 2 * Values.PI;
 
-                while (sumDegree < -2 * Values.PI)
-                {
-                    sumDegree += 2 * Values.PI;
-                }
+                while (sumDegree < -2 * Values.PI) sumDegree += 2 * Values.PI;
 
                 var midPoint = new XYZ(arc.Center.X + arc.Radius * Math.Cos(sumDegree),
                     arc.Center.Y + arc.Radius * Math.Sin(sumDegree), 0);
@@ -180,7 +183,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Get the arc to create grid according to the specified bubble location
+        ///     Get the arc to create grid according to the specified bubble location
         /// </summary>
         /// <param name="origin">Arc grid's origin</param>
         /// <param name="radius">Arc grid's radius</param>
@@ -201,19 +204,15 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 origin.Y + radius * Math.Sin(endDegree), origin.Z);
 
             if (bubLoc == BubbleLocation.StartPoint)
-            {
                 arcToCreate = Arc.Create(startPoint, endPoint, midPoint);
-            }
             else
-            {
                 arcToCreate = Arc.Create(endPoint, startPoint, midPoint);
-            }
 
             return arcToCreate;
         }
 
         /// <summary>
-        /// Split a circle into the upper and lower parts
+        ///     Split a circle into the upper and lower parts
         /// </summary>
         /// <param name="arc">Arc to be split</param>
         /// <param name="upperArc">Upper arc of the circle</param>
@@ -240,7 +239,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Create a new bound line
+        ///     Create a new bound line
         /// </summary>
         /// <param name="start">start point of line</param>
         /// <param name="end">end point of line</param>
@@ -251,61 +250,54 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Create a grid with a line
+        ///     Create a grid with a line
         /// </summary>
         /// <param name="line">Line to create grid</param>
         /// <returns>Newly created grid</returns>
         protected Grid NewGrid(Line line)
         {
-           return Grid.Create(m_revitDoc, line);
+            return Grid.Create(m_revitDoc, line);
         }
 
         /// <summary>
-        /// Create a grid with an arc
+        ///     Create a grid with an arc
         /// </summary>
         /// <param name="arc">Arc to create grid</param>
         /// <returns>Newly created grid</returns>
         protected Grid NewGrid(Arc arc)
         {
-           return Grid.Create(m_revitDoc, arc);
+            return Grid.Create(m_revitDoc, arc);
         }
 
         /// <summary>
-        /// Create linear grid
+        ///     Create linear grid
         /// </summary>
         /// <param name="line">The linear curve to be transferred to grid</param>
         /// <returns>The newly created grid</returns>
-        /// 
         protected Grid CreateLinearGrid(Line line)
         {
-           return Grid.Create(m_revitDoc, line);
+            return Grid.Create(m_revitDoc, line);
         }
 
         /// <summary>
-        /// Create batch of grids with curves
+        ///     Create batch of grids with curves
         /// </summary>
         /// <param name="curves">Curves used to create grids</param>
         protected void CreateGrids(CurveArray curves)
         {
-           foreach (Curve c in curves)
-           {
-              var line = c as Line;
-              var arc = c as Arc;
+            foreach (Curve c in curves)
+            {
+                var line = c as Line;
+                var arc = c as Arc;
 
-              if (line != null)
-              {
-                 Grid.Create(m_revitDoc, line);
-              }
+                if (line != null) Grid.Create(m_revitDoc, line);
 
-              if (arc != null)
-              {
-                 Grid.Create(m_revitDoc, arc);
-              }
-           }
+                if (arc != null) Grid.Create(m_revitDoc, arc);
+            }
         }
 
         /// <summary>
-        /// Add curve to curve array for batch creation
+        ///     Add curve to curve array for batch creation
         /// </summary>
         /// <param name="curves">curve array stores all curves for batch creation</param>
         /// <param name="curve">curve to be added</param>
@@ -315,7 +307,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         }
 
         /// <summary>
-        /// Show a message box
+        ///     Show a message box
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="caption">title of message box</param>
@@ -323,5 +315,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             TaskDialog.Show(caption, message, TaskDialogCommonButtons.Ok);
         }
-            }
+    }
 }

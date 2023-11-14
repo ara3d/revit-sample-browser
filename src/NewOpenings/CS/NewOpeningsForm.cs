@@ -24,25 +24,25 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using Point = System.Drawing.Point;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
     /// <summary>
-    /// Main form used to display the profile of Wall or Floor and draw the opening profiles.
+    ///     Main form used to display the profile of Wall or Floor and draw the opening profiles.
     /// </summary>
     public partial class NewOpeningsForm : Form
     {
-                private Profile m_profile;  //save the profile date (ProfileFloor or ProfileWall)
-        private Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
-        private Matrix4 m_moveToCenterMatrix;  //save the matrix use to move point to origin
+        private readonly Matrix4 m_moveToCenterMatrix; //save the matrix use to move point to origin
+        private readonly Profile m_profile; //save the profile date (ProfileFloor or ProfileWall)
         private Matrix4 m_scaleMatrix; //save the matrix use to scale
+        private readonly Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
         private ITool m_tool; //current using tool
-        private Queue<ITool> m_tools = new Queue<ITool>(); //all tool can use in pictureBox       
-                /// <summary>
-        /// default constructor
+        private readonly Queue<ITool> m_tools = new Queue<ITool>(); //all tool can use in pictureBox       
+
+        /// <summary>
+        ///     default constructor
         /// </summary>
         public NewOpeningsForm()
         {
@@ -50,11 +50,11 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="profile">ProfileWall or ProfileFloor</param>
         public NewOpeningsForm(Profile profile)
-            :this()
+            : this()
         {
             m_profile = profile;
             m_to2DMatrix = m_profile.To2DMatrix();
@@ -63,12 +63,12 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// add tools, then use can draw by these tools in picture box
+        ///     add tools, then use can draw by these tools in picture box
         /// </summary>
         private void InitTools()
         {
             //wall
-            if(m_profile is ProfileWall)
+            if (m_profile is ProfileWall)
             {
                 m_tool = new RectTool();
                 m_tools.Enqueue(m_tool);
@@ -87,7 +87,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// use matrix to transform point
+        ///     use matrix to transform point
         /// </summary>
         /// <param name="pts">contain the points to be transform</param>
         private void TransFormPoints(Point[] pts)
@@ -95,35 +95,36 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             var matrix = new Matrix(
                 1, 0, 0, 1, openingPictureBox.Width / 2, openingPictureBox.Height / 2);
             matrix.Invert();
-            matrix.TransformPoints(pts);            
+            matrix.TransformPoints(pts);
         }
 
         /// <summary>
-        /// get four points on circle by center and one point on circle
+        ///     get four points on circle by center and one point on circle
         /// </summary>
         /// <param name="points">contain the center and one point on circle</param>
         private List<Vector4> GenerateCircle4Point(List<Point> points)
         {
-            var rotation = new Matrix(); 
+            var rotation = new Matrix();
 
             //get the circle center and bound point
             var center = points[0];
             var bound = points[1];
-            rotation.RotateAt(90, (PointF)center);
+            rotation.RotateAt(90, center);
             var circle = new Point[4];
             circle[0] = points[1];
-            for(var i = 1; i < 4; i++)
+            for (var i = 1; i < 4; i++)
             {
                 var ps = new Point[1] { bound };
                 rotation.TransformPoints(ps);
                 circle[i] = ps[0];
                 bound = ps[0];
             }
+
             return TransForm2DTo3D(circle);
         }
 
         /// <summary>
-        /// Transform the point on Form to  3d world coordinate of Revit
+        ///     Transform the point on Form to  3d world coordinate of Revit
         /// </summary>
         /// <param name="ps">contain the points to be transform</param>
         private List<Vector4> TransForm2DTo3D(Point[] ps)
@@ -131,32 +132,33 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             var result = new List<Vector4>();
             TransFormPoints(ps);
             var transFormMatrix = Matrix4.Multiply(
-                m_scaleMatrix.Inverse(),m_moveToCenterMatrix);
+                m_scaleMatrix.Inverse(), m_moveToCenterMatrix);
             transFormMatrix = Matrix4.Multiply(transFormMatrix, m_to2DMatrix);
             foreach (var point in ps)
             {
                 var v = new Vector4(point.X, point.Y, 0);
-                v = transFormMatrix.TransForm(v); 
+                v = transFormMatrix.TransForm(v);
                 result.Add(v);
             }
+
             return result;
         }
 
         /// <summary>
-        /// calculate the matrix use to scale
+        ///     calculate the matrix use to scale
         /// </summary>
         /// <param name="size">pictureBox size</param>
         private Matrix4 ComputerScaleMatrix(Size size)
         {
             var boundPoints = m_profile.GetFaceBounds();
-            var width = ((float)size.Width) / (boundPoints[1].X - boundPoints[0].X);
-            var hight = ((float)size.Height) / (boundPoints[1].Y - boundPoints[0].Y);
+            var width = size.Width / (boundPoints[1].X - boundPoints[0].X);
+            var hight = size.Height / (boundPoints[1].Y - boundPoints[0].Y);
             var factor = width <= hight ? width : hight;
             return new Matrix4(factor);
         }
 
         /// <summary>
-        /// Calculate the matrix use to transform 3D to 2D
+        ///     Calculate the matrix use to transform 3D to 2D
         /// </summary>
         private Matrix4 Comuter3DTo2DMatrix()
         {
@@ -181,17 +183,22 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                     }
                     else if (tool.ToolType == ToolType.Rectangle)
                     {
-                        var ps = new Point[4] { curve[0], new Point(curve[0].X, curve[1].Y),
-                            curve[1], new Point(curve[1].X, curve[0].Y) };
+                        var ps = new Point[4]
+                        {
+                            curve[0], new Point(curve[0].X, curve[1].Y),
+                            curve[1], new Point(curve[1].X, curve[0].Y)
+                        };
                         ps3D = TransForm2DTo3D(ps);
                     }
                     else
                     {
                         ps3D = TransForm2DTo3D(curve.ToArray());
                     }
+
                     m_profile.DrawOpening(ps3D, tool.ToolType);
                 }
             }
+
             Close();
         }
 
@@ -203,15 +210,12 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         private void openingPictureBox_Paint(object sender, PaintEventArgs e)
         {
             //Draw the pictures in the m_tools list
-            foreach (var tool in m_tools)
-            {
-                tool.Draw(e.Graphics);
-            }
+            foreach (var tool in m_tools) tool.Draw(e.Graphics);
 
             //draw the tips string
-            e.Graphics.DrawString(m_tool.ToolType.ToString(), 
+            e.Graphics.DrawString(m_tool.ToolType.ToString(),
                 SystemFonts.DefaultFont, SystemBrushes.Highlight, 2, 5);
-            
+
             //move the origin to the picture center
             var size = openingPictureBox.Size;
             e.Graphics.Transform = new Matrix(
@@ -225,7 +229,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// mouse event handle
+        ///     mouse event handle
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -245,14 +249,14 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 m_tools.Enqueue(m_tool);
                 m_tools.Dequeue();
                 var graphic = openingPictureBox.CreateGraphics();
-                graphic.DrawString(m_tool.ToolType.ToString(), 
+                graphic.DrawString(m_tool.ToolType.ToString(),
                     SystemFonts.DefaultFont, SystemBrushes.Highlight, 2, 5);
                 Refresh();
             }
         }
 
         /// <summary>
-        /// Mouse event handle
+        ///     Mouse event handle
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -263,7 +267,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Mouse event handle
+        ///     Mouse event handle
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

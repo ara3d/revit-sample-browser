@@ -23,6 +23,7 @@
 
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
@@ -30,32 +31,40 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.BoundaryConditions.CS
 {
     /// <summary>
-    /// A ExternalCommand class inherited IExternalCommand interface
+    ///     A ExternalCommand class inherited IExternalCommand interface
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         /// <summary>
-        /// Implement this method as an external command for Revit.
+        ///     Implement this method as an external command for Revit.
         /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
+        /// <param name="commandData">
+        ///     An object that is passed to the external application
+        ///     which contains data related to the command,
+        ///     such as the application object and active view.
+        /// </param>
+        /// <param name="message">
+        ///     A message that can be set by the external application
+        ///     which will be displayed if a failure or cancellation is returned by
+        ///     the external command.
+        /// </param>
+        /// <param name="elements">
+        ///     A set of elements to which the external application
+        ///     can add elements that are to be highlighted in case of failure or cancellation.
+        /// </param>
+        /// <returns>
+        ///     Return the status of the external command.
+        ///     A result of Succeeded means that the API external method functioned as expected.
+        ///     Cancelled can be used to signify that the user cancelled the external operation
+        ///     at some point. Failure should be returned if the application is unable to proceed with
+        ///     the operation.
+        /// </returns>
         public Result Execute(ExternalCommandData commandData,
-                                               ref string message,
-                                               ElementSet elements)
+            ref string message,
+            ElementSet elements)
         {
             try
             {
@@ -65,9 +74,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 // must select a element first
                 var elementSet = new ElementSet();
                 foreach (var elementId in doc.Selection.GetElementIds())
-                {
-                   elementSet.Insert(doc.Document.GetElement(elementId));
-                }
+                    elementSet.Insert(doc.Document.GetElement(elementId));
                 if (1 != elementSet.Size)
                 {
                     message = "Please select one structural element which is listed as follows: \r\n" +
@@ -103,18 +110,19 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                             tran.Commit();
                             return Result.Succeeded;
                         }
-                        else if (DialogResult.Retry == result)
+
+                        if (DialogResult.Retry == result)
                         {
                             message = "failed to create BoundaryConditions.";
                             tran.RollBack();
                             return Result.Failed;
                         }
-                    }    
+                    }
                 }
 
                 tran.RollBack();
                 // user cancel the operation
-                return Result.Cancelled;                
+                return Result.Cancelled;
             }
             catch (Exception e)
             {
@@ -123,44 +131,38 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             }
         }
 
-      /// <summary>
-      /// the selected element must be a structural Column/brace/Beam/Wall/Wall Foundation/Slab/Foundation Slab.
-      /// </summary>
-      /// <returns></returns>
-      private bool IsExpectedElement(Element element)
-      {
-         // judge the element's type. If it is any type of FamilyInstance, Wall, Floor or 
-         // WallFoundation, then get judge if it has a AnalyticalModel.
-         var assocManager = AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(element.Document);
-         AnalyticalElement elemAnalytical = null;
-         if (assocManager != null)
-         {
-            var associatedElementId = assocManager.GetAssociatedElementId(element.Id);
-            if (associatedElementId != ElementId.InvalidElementId)
+        /// <summary>
+        ///     the selected element must be a structural Column/brace/Beam/Wall/Wall Foundation/Slab/Foundation Slab.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsExpectedElement(Element element)
+        {
+            // judge the element's type. If it is any type of FamilyInstance, Wall, Floor or 
+            // WallFoundation, then get judge if it has a AnalyticalModel.
+            var assocManager =
+                AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(element.Document);
+            AnalyticalElement elemAnalytical = null;
+            if (assocManager != null)
             {
-               var associatedElement = element.Document.GetElement(associatedElementId);
-               if (associatedElement != null && associatedElement is AnalyticalElement)
-               {
-                  elemAnalytical = associatedElement as AnalyticalElement;
-               }
+                var associatedElementId = assocManager.GetAssociatedElementId(element.Id);
+                if (associatedElementId != ElementId.InvalidElementId)
+                {
+                    var associatedElement = element.Document.GetElement(associatedElementId);
+                    if (associatedElement != null && associatedElement is AnalyticalElement)
+                        elemAnalytical = associatedElement as AnalyticalElement;
+                }
             }
-         }
-         if (null == elemAnalytical)
-         {
+
+            if (null == elemAnalytical) return false;
+            var familyInstance = element as FamilyInstance;
+            if (null != familyInstance &&
+                StructuralType.Footing ==
+                familyInstance.StructuralType) return false; // if selected a isolated foundation not create BC
+
+            if (element is FamilyInstance || element is Wall || element is Floor || element is WallFoundation)
+                return true;
+
             return false;
-         }
-         var familyInstance = element as FamilyInstance;
-         if ((null != familyInstance) && (StructuralType.Footing == familyInstance.StructuralType))
-         {
-            return false; // if selected a isolated foundation not create BC
-         }
-
-         if (element is FamilyInstance || element is Wall || element is Floor || element is WallFoundation)
-         {
-            return true;
-         }
-
-         return false;
-      }
-   }
+        }
+    }
 }

@@ -21,33 +21,19 @@
 //
 
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
 using System.Xml.Linq;
+using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 {
-
     /// <summary>
-    /// This class contains a routing preference rule group and list of elementIds that correspond
-    /// to found segments and fittings that meet criteria specified through a routing preference manager.
+    ///     This class contains a routing preference rule group and list of elementIds that correspond
+    ///     to found segments and fittings that meet criteria specified through a routing preference manager.
     /// </summary>
     public class PartIdInfo
     {
-        // List of part Ids
-        // group type
-
         /// <summary>
-        /// Id
-        /// </summary>
-        public List<ElementId> Id { get; }
-
-        /// <summary>
-        ///  Group type
-        /// </summary>
-        public RoutingPreferenceRuleGroupType GroupType { get; }
-
-        /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="groupType"></param>
         /// <param name="ids"></param>
@@ -57,9 +43,21 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             GroupType = groupType;
             Id.AddRange(ids);
         }
+        // List of part Ids
+        // group type
 
         /// <summary>
-        /// Build XML information of document
+        ///     Id
+        /// </summary>
+        public List<ElementId> Id { get; }
+
+        /// <summary>
+        ///     Group type
+        /// </summary>
+        public RoutingPreferenceRuleGroupType GroupType { get; }
+
+        /// <summary>
+        ///     Build XML information of document
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
@@ -96,7 +94,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         }
 
         /// <summary>
-        /// Fitting name
+        ///     Fitting name
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
@@ -104,17 +102,9 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         {
             var fittingNames = "";
 
-            if (Id.Count == 0)
-            {
-                fittingNames += "None -1";
-            }
-            foreach (var id in Id)
-            {
-                fittingNames += GetFittingName(document, id) + " " + id.ToString() + ", ";
-            }
+            if (Id.Count == 0) fittingNames += "None -1";
+            foreach (var id in Id) fittingNames += GetFittingName(document, id) + " " + id + ", ";
             return fittingNames.Remove(fittingNames.Length - 2, 2);
         }
-
-
     }
 }

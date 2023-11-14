@@ -19,26 +19,28 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 {
     /// <summary>
-    /// window form contains one picture box to show the 
-    /// profile of a wall or floor, and three command buttons.
-    /// User can draw curves of opening in picture box.
+    ///     window form contains one picture box to show the
+    ///     profile of a wall or floor, and three command buttons.
+    ///     User can draw curves of opening in picture box.
     /// </summary>
     public partial class ShaftHolePuncherForm : Form
     {
-                private Profile m_profile;  //save the profile data
-        private ITool m_tool; //current using tool
-        Size m_sizePictureBox; //size of picture box
-        
+        private readonly Profile m_profile; //save the profile data
+        private readonly Size m_sizePictureBox; //size of picture box
+        private readonly Tool m_tool; //current using tool
+
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         public ShaftHolePuncherForm()
         {
@@ -46,7 +48,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="profile">ProfileWall, ProfileFloor or ProfileNull</param>
         public ShaftHolePuncherForm(Profile profile)
@@ -56,13 +58,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             m_sizePictureBox = pictureBox.Size;
 
             if (profile is ProfileWall)
-            {
                 m_tool = new RectangleTool();
-            }
             else
-            {
                 m_tool = new LineTool();
-            }
 
             if (profile is ProfileNull)
             {
@@ -78,20 +76,20 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// store mouse location when mouse down
+        ///     store mouse location when mouse down
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             var graphics = pictureBox.CreateGraphics();
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
             m_tool.OnMouseDown(e);
             pictureBox.Refresh();
         }
 
         /// <summary>
-        /// draw the line to where mouse moved
+        ///     draw the line to where mouse moved
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -99,18 +97,18 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             pictureBox.Refresh();
             var graphics = pictureBox.CreateGraphics();
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
             m_tool.OnMouseMove(graphics, e);
         }
 
         /// <summary>
-        /// draw the curve of floor (or wall) and curves of Opening
+        ///     draw the curve of floor (or wall) and curves of Opening
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
             //Draw the pictures in the m_tools
             m_tool.Draw(e.Graphics);
@@ -124,7 +122,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// clear all the curves of the Opening
+        ///     clear all the curves of the Opening
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -136,7 +134,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// create Shaft Opening in Revit
+        ///     create Shaft Opening in Revit
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -165,7 +163,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// close the form
+        ///     close the form
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -175,7 +173,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         }
 
         /// <summary>
-        /// set the scale of profile when create Shaft Opening
+        ///     set the scale of profile when create Shaft Opening
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -192,13 +190,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             m_tool.Finished = false;
             var profile = m_profile as ProfileBeam;
             if (0 == DirectionComboBox.SelectedIndex)
-            {
                 profile.ChangeTransformMatrix(true);
-            }
-            else if (1 == DirectionComboBox.SelectedIndex)
-            {
-                profile.ChangeTransformMatrix(false);
-            }
+            else if (1 == DirectionComboBox.SelectedIndex) profile.ChangeTransformMatrix(false);
             pictureBox.Refresh();
         }
     }

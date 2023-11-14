@@ -22,79 +22,79 @@
 
 
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
     /// <summary>
-    /// Stand for the draw tool type
+    ///     Stand for the draw tool type
     /// </summary>
     public enum ToolType
     {
         /// <summary>
-        /// Draw nothing
+        ///     Draw nothing
         /// </summary>
         None,
 
         /// <summary>
-        /// Draw polygon
+        ///     Draw polygon
         /// </summary>
         Line,
 
         /// <summary>
-        /// Draw rectangle
+        ///     Draw rectangle
         /// </summary>
         Rectangle,
 
         /// <summary>
-        /// Draw circle
+        ///     Draw circle
         /// </summary>
         Circle,
 
         /// <summary>
-        /// Draw arc
+        ///     Draw arc
         /// </summary>
         Arc
     }
 
     /// <summary>
-    /// Abstract class use as base class of all draw tool class
+    ///     Abstract class use as base class of all draw tool class
     /// </summary>
     public abstract class ITool
     {
         /// <summary>
-        /// ToolType is enum type indicate draw tools.
-        /// </summary>
-        protected ToolType m_type;
-
-        /// <summary>
-        /// Field used to store points of a line
-        /// </summary>
-        protected List<Point> m_points = new List<Point>();
-        
-        /// <summary>
-        /// Field used to store lines
-        /// </summary>
-        protected List<List<Point>> m_lines = new List<List<Point>>(); 
-
-        /// <summary>
-        /// Background pen used to erase the preview line
+        ///     Background pen used to erase the preview line
         /// </summary>
         protected Pen m_backGroundPen;
 
         /// <summary>
-        /// Foreground pen used to draw lines
+        ///     Foreground pen used to draw lines
         /// </summary>
         protected Pen m_foreGroundPen;
-  
+
         /// <summary>
-        /// Store the mouse position when mouse move in pictureBox
-        /// </summary>        
+        ///     Field used to store lines
+        /// </summary>
+        protected List<List<Point>> m_lines = new List<List<Point>>();
+
+        /// <summary>
+        ///     Field used to store points of a line
+        /// </summary>
+        protected List<Point> m_points = new List<Point>();
+
+        /// <summary>
+        ///     Store the mouse position when mouse move in pictureBox
+        /// </summary>
         protected Point m_preMovePoint;
-        
+
         /// <summary>
-        /// Default constructor
+        ///     ToolType is enum type indicate draw tools.
+        /// </summary>
+        protected ToolType m_type;
+
+        /// <summary>
+        ///     Default constructor
         /// </summary>
         public ITool()
         {
@@ -103,7 +103,12 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Get all lines drawn in pictureBox
+        ///     Get the tool type
+        /// </summary>
+        public ToolType ToolType => m_type;
+
+        /// <summary>
+        ///     Get all lines drawn in pictureBox
         /// </summary>
         public List<List<Point>> GetLines()
         {
@@ -111,40 +116,43 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Get the tool type
-        /// </summary>
-        public virtual ToolType ToolType => m_type;
-
-        /// <summary>
-        /// Right mouse click event handler  
+        ///     Right mouse click event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
-        public virtual void OnRightMouseClick(Graphics graphic, MouseEventArgs e) { }
+        public virtual void OnRightMouseClick(Graphics graphic, MouseEventArgs e)
+        {
+        }
 
         /// <summary>
-        /// Mouse move event handler
+        ///     Mouse move event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
-        public virtual void OnMouseMove(Graphics graphic, MouseEventArgs e) { }
+        public virtual void OnMouseMove(Graphics graphic, MouseEventArgs e)
+        {
+        }
 
         /// <summary>
-        /// Mouse down event handler
+        ///     Mouse down event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
-        public virtual void OnMouseDown(Graphics graphic, MouseEventArgs e) { }
+        public virtual void OnMouseDown(Graphics graphic, MouseEventArgs e)
+        {
+        }
 
         /// <summary>
-        /// Mouse up event handler
+        ///     Mouse up event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
-        public virtual void OnMouseUp(Graphics graphic, MouseEventArgs e) { }
+        public virtual void OnMouseUp(Graphics graphic, MouseEventArgs e)
+        {
+        }
 
         /// <summary>
-        /// Mouse middle key down event handler
+        ///     Mouse middle key down event handler
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
@@ -154,8 +162,8 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         }
 
         /// <summary>
-        /// Draw geometries contained in the tool. which class derived from this class
-        /// must implement this abstract method
+        ///     Draw geometries contained in the tool. which class derived from this class
+        ///     must implement this abstract method
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         public abstract void Draw(Graphics graphic);

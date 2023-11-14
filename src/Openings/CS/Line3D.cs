@@ -24,87 +24,18 @@
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// Line class use to store information about line(include startPoint and endPoint)
-    /// and get the value via (startPoint, endPoint)property
+    ///     Line class use to store information about line(include startPoint and endPoint)
+    ///     and get the value via (startPoint, endPoint)property
     /// </summary>
     public class Line3D
     {
-        Vector m_startPnt; //start point
-        Vector m_endPnt; //end point
-        Vector m_normal; //normal
-        double m_length; //length of line
-
-        //property
-        /// <summary>
-        /// Property to get and set length of line
-        /// </summary>
-        public double Length
-        {
-            get => m_length;
-            set
-            {
-                if (m_length == value)
-                {
-                    return;
-                }
-                m_length = value;
-                CalculateEndPoint();
-            }
-        }
+        private Vector m_endPnt; //end point
+        private double m_length; //length of line
+        private Vector m_normal; //normal
+        private Vector m_startPnt; //start point
 
         /// <summary>
-        /// Property to get and set Start Point of line
-        /// </summary>
-        public Vector StartPoint
-        {
-            get => m_startPnt;
-            set
-            {
-                if (m_startPnt == value)
-                {
-                    return;
-                }
-                m_startPnt = value;
-                CalculateDirection();
-            }
-        }
-
-        /// <summary>
-        /// Property to get and set End Point of line
-        /// </summary>
-        public Vector EndPoint
-        {
-            get => m_endPnt;
-            set
-            {
-                if (m_endPnt == value)
-                {
-                    return;
-                }
-                m_endPnt = value;
-                CalculateDirection();
-            }
-        }
-
-        /// <summary>
-        /// Property to get and set Normal of line
-        /// </summary>
-        public Vector Normal
-        {
-            get => m_normal;
-            set
-            {
-                if (m_normal == value)
-                {
-                    return;
-                }
-                m_normal = value;
-                CalculateEndPoint();
-            }
-        }
-
-        /// <summary>
-        /// The default constructor
+        ///     The default constructor
         /// </summary>
         public Line3D()
         {
@@ -115,7 +46,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// The default constructor
+        ///     The default constructor
         /// </summary>
         /// <param name="startPnt">start point of line</param>
         /// <param name="endPnt">enn point of line</param>
@@ -126,16 +57,73 @@ namespace Revit.SDK.Samples.Openings.CS
             CalculateDirection();
         }
 
+        //property
         /// <summary>
-        /// calculate length by StartPoint and EndPoint
+        ///     Property to get and set length of line
         /// </summary>
-        private void CalculateLength()
+        public double Length
         {
-            m_length = ~(m_startPnt - m_endPnt); 
+            get => m_length;
+            set
+            {
+                if (m_length == value) return;
+                m_length = value;
+                CalculateEndPoint();
+            }
         }
 
         /// <summary>
-        /// calculate Direction by StartPoint and EndPoint
+        ///     Property to get and set Start Point of line
+        /// </summary>
+        public Vector StartPoint
+        {
+            get => m_startPnt;
+            set
+            {
+                if (m_startPnt == value) return;
+                m_startPnt = value;
+                CalculateDirection();
+            }
+        }
+
+        /// <summary>
+        ///     Property to get and set End Point of line
+        /// </summary>
+        public Vector EndPoint
+        {
+            get => m_endPnt;
+            set
+            {
+                if (m_endPnt == value) return;
+                m_endPnt = value;
+                CalculateDirection();
+            }
+        }
+
+        /// <summary>
+        ///     Property to get and set Normal of line
+        /// </summary>
+        public Vector Normal
+        {
+            get => m_normal;
+            set
+            {
+                if (m_normal == value) return;
+                m_normal = value;
+                CalculateEndPoint();
+            }
+        }
+
+        /// <summary>
+        ///     calculate length by StartPoint and EndPoint
+        /// </summary>
+        private void CalculateLength()
+        {
+            m_length = ~(m_startPnt - m_endPnt);
+        }
+
+        /// <summary>
+        ///     calculate Direction by StartPoint and EndPoint
         /// </summary>
         private void CalculateDirection()
         {
@@ -144,7 +132,7 @@ namespace Revit.SDK.Samples.Openings.CS
         }
 
         /// <summary>
-        /// calculate EndPoint by StartPoint, Length and Direction
+        ///     calculate EndPoint by StartPoint, Length and Direction
         /// </summary>
         private void CalculateEndPoint()
         {

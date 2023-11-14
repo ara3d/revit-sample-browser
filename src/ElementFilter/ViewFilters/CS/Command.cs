@@ -22,23 +22,24 @@
 
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ViewFilters.CS
 {
     /// <summary>
-    /// To add an external command to Autodesk Revit, 
-    /// the developer must define an class which implement the IExternalCommand interface. 
-    /// This class is used as the connection of revit and external program
+    ///     To add an external command to Autodesk Revit,
+    ///     the developer must define an class which implement the IExternalCommand interface.
+    ///     This class is used as the connection of revit and external program
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
-                                               ref string message, ElementSet elements)
+            ref string message, ElementSet elements)
         {
             try
             {
@@ -47,6 +48,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 {
                     infoForm.ShowDialog();
                 }
+
                 return Result.Succeeded;
             }
             catch (Exception ex)

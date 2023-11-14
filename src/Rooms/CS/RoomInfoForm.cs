@@ -26,20 +26,20 @@ using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.Rooms.CS
 {
     /// <summary>
-    /// UI to display the rooms information
+    ///     UI to display the rooms information
     /// </summary>
-    public partial class roomsInformationForm : System.Windows.Forms.Form
+    public partial class roomsInformationForm : Form
     {
-                RoomsData m_data; // Room's data for current active document
+        private readonly RoomsData m_data; // Room's data for current active document
 
-        
+
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         public roomsInformationForm()
         {
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.Rooms.CS
 
 
         /// <summary>
-        /// Overload the constructor
+        ///     Overload the constructor
         /// </summary>
         /// <param name="data">an instance of Data class</param>
         public roomsInformationForm(RoomsData data)
@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.Rooms.CS
 
 
         /// <summary>
-        /// add rooms of list roomsWithTag to the listview
+        ///     add rooms of list roomsWithTag to the listview
         /// </summary>
         private void DisplayRooms(ReadOnlyCollection<Room> roomList, bool isHaveTag)
         {
@@ -67,17 +67,14 @@ namespace Revit.SDK.Samples.Rooms.CS
             foreach (var tmpRoom in roomList)
             {
                 // make sure the room has Level, that's it locates at level.
-                if (tmpRoom.Document.GetElement(tmpRoom.LevelId) == null)
-                {
-                    continue;
-                }
+                if (tmpRoom.Document.GetElement(tmpRoom.LevelId) == null) continue;
 
                 var roomId = tmpRoom.Id.ToString();
 
                 // create a list view Item
                 var tmpItem = new ListViewItem(roomId);
-                tmpItem.SubItems.Add(tmpRoom.Name);       //display room name.
-                tmpItem.SubItems.Add(tmpRoom.Number);     //display room number.
+                tmpItem.SubItems.Add(tmpRoom.Name); //display room name.
+                tmpItem.SubItems.Add(tmpRoom.Number); //display room number.
                 tmpItem.SubItems.Add((tmpRoom.Document.GetElement(tmpRoom.LevelId) as Level).Name); //display the level
 
                 // get department name from Department property 
@@ -93,13 +90,9 @@ namespace Revit.SDK.Samples.Rooms.CS
 
                 // display whether the room with tag or not
                 if (isHaveTag)
-                {
                     tmpItem.SubItems.Add("Yes");
-                }
                 else
-                {
                     tmpItem.SubItems.Add("No");
-                }
 
                 // add the item to the listview
                 roomsListView.Items.Add(tmpItem);
@@ -111,7 +104,7 @@ namespace Revit.SDK.Samples.Rooms.CS
 
 
         /// <summary>
-        /// when the form was loaded, display the information of rooms 
+        ///     when the form was loaded, display the information of rooms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -129,15 +122,12 @@ namespace Revit.SDK.Samples.Rooms.CS
             DisplayDartmentsInfo();
 
             // if all the rooms have tags ,the button will be set to disable
-            if (0 == m_data.RoomsWithoutTag.Count)
-            {
-                addTagsButton.Enabled = false;
-            }
+            if (0 == m_data.RoomsWithoutTag.Count) addTagsButton.Enabled = false;
         }
 
 
         /// <summary>
-        /// create room tags for the rooms which are lack of tags
+        ///     create room tags for the rooms which are lack of tags
         /// </summary>
         private void addTagButton_Click(object sender, EventArgs e)
         {
@@ -148,15 +138,12 @@ namespace Revit.SDK.Samples.Rooms.CS
             DisplayRooms(m_data.RoomsWithoutTag, false);
 
             // if all the rooms have tags ,the button will be set to disable
-            if (0 == m_data.RoomsWithoutTag.Count)
-            {
-                addTagsButton.Enabled = false;
-            }
+            if (0 == m_data.RoomsWithoutTag.Count) addTagsButton.Enabled = false;
         }
 
 
         /// <summary>
-        /// reorder rooms' number
+        ///     reorder rooms' number
         /// </summary>
         private void reorderButton_Click(object sender, EventArgs e)
         {
@@ -170,7 +157,7 @@ namespace Revit.SDK.Samples.Rooms.CS
 
 
         /// <summary>
-        /// display total rooms' information for each department
+        ///     display total rooms' information for each department
         /// </summary>
         private void DisplayDartmentsInfo()
         {
@@ -179,7 +166,7 @@ namespace Revit.SDK.Samples.Rooms.CS
                 // create a listview item
                 var tmpItem = new ListViewItem(m_data.DepartmentInfos[i].DepartmentName);
                 tmpItem.SubItems.Add(m_data.DepartmentInfos[i].RoomsAmount.ToString());
-                tmpItem.SubItems.Add(m_data.DepartmentInfos[i].DepartmentAreaValue.ToString() +
+                tmpItem.SubItems.Add(m_data.DepartmentInfos[i].DepartmentAreaValue +
                                      " SF");
                 departmentsListView.Items.Add(tmpItem);
             }
@@ -187,7 +174,7 @@ namespace Revit.SDK.Samples.Rooms.CS
 
 
         /// <summary>
-        /// Save the information into an Excel file
+        ///     Save the information into an Excel file
         /// </summary>
         private void exportButton_Click(object sender, EventArgs e)
         {
@@ -198,10 +185,7 @@ namespace Revit.SDK.Samples.Rooms.CS
                 sfdlg.Filter = "CSV(command delimited)(*.csv)|*.csv";
                 sfdlg.RestoreDirectory = true;
 
-                if (DialogResult.OK == sfdlg.ShowDialog())
-                {
-                    m_data.ExportFile(sfdlg.FileName);
-                }
+                if (DialogResult.OK == sfdlg.ShowDialog()) m_data.ExportFile(sfdlg.FileName);
             }
         }
     }

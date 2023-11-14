@@ -22,41 +22,42 @@
 
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.TypeRegeneration.CS
 {
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// this class controls the class which subscribes handle events and the events' information UI.
-    /// like a bridge between them.
+    ///     A class inherits IExternalCommand interface.
+    ///     this class controls the class which subscribes handle events and the events' information UI.
+    ///     like a bridge between them.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                /// <summary>
-        /// store family manager
+        /// <summary>
+        ///     store family manager
         /// </summary>
-        FamilyManager m_familyManager;
+        private FamilyManager m_familyManager;
 
         /// <summary>
-        /// store the log file name
+        ///     store the log file name
         /// </summary>
-        string m_logFileName;       
-        
-                public Result Execute(ExternalCommandData commandData,
-                                             ref string message,
-                                             ElementSet elements)
+        private string m_logFileName;
+
+        public Result Execute(ExternalCommandData commandData,
+            ref string message,
+            ElementSet elements)
         {
             var document = commandData.Application.ActiveUIDocument.Document;
             var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            m_logFileName = assemblyPath + "\\RegenerationLog.txt";   
+            m_logFileName = assemblyPath + "\\RegenerationLog.txt";
             //only a family document  can retrieve family manager
             if (document.IsFamilyDocument)
             {
@@ -66,79 +67,76 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
                 writer.WriteLine("Family Type     Result");
                 writer.WriteLine("-------------------------");
                 writer.Close();
-                using(var msgForm=new MessageForm())
+                using (var msgForm = new MessageForm())
                 {
                     msgForm.StartPosition = FormStartPosition.Manual;
-                    CheckTypeRegeneration(msgForm);                    
-                    return Result.Succeeded;                   
-               }
+                    CheckTypeRegeneration(msgForm);
+                    return Result.Succeeded;
+                }
             }
-            else
-            {
-                message = "please make sure you have opened a family document!";
-                return Result.Failed;
-            }
+
+            message = "please make sure you have opened a family document!";
+            return Result.Failed;
         }
-        
-               /// <summary>
-        ///  After setting CurrentType property, the CurrentType has changed to the new one,the Revit model will change along with the current type
-       /// </summary>
-       /// <param name="msgForm">the form is used to show the regeneration result</param>        
+
+        /// <summary>
+        ///     After setting CurrentType property, the CurrentType has changed to the new one,the Revit model will change along
+        ///     with the current type
+        /// </summary>
+        /// <param name="msgForm">the form is used to show the regeneration result</param>
         public void CheckTypeRegeneration(MessageForm msgForm)
         {
             //the list to record the error messages           
-            var errorInfo = new List<string>(); 
+            var errorInfo = new List<string>();
             try
             {
                 foreach (FamilyType type in m_familyManager.Types)
-                {
-                    if (!(type.Name.ToString().Trim()==""))
+                    if (!(type.Name.Trim() == ""))
                     {
                         try
                         {
                             m_familyManager.CurrentType = type;
-                            msgForm.AddMessage(type.Name+" Successful\n",true);
+                            msgForm.AddMessage(type.Name + " Successful\n", true);
                             WriteLog(type.Name + "      Successful");
                         }
                         catch
                         {
                             errorInfo.Add(type.Name);
-                            msgForm.AddMessage(type.Name+" Failed \n",true);
+                            msgForm.AddMessage(type.Name + " Failed \n", true);
                             WriteLog(type.Name + "      Failed");
                         }
+
                         msgForm.ShowDialog();
-                    }                  
-                }
+                    }
 
                 //add a conclusion regeneration result
                 string resMsg;
                 if (errorInfo.Count > 0)
                 {
                     resMsg = "\nResult: " + errorInfo.Count + " family types regeneration failed!";
-                    foreach (var error in errorInfo)
-                    {
-                        resMsg += "\n " + error;
-                    }
+                    foreach (var error in errorInfo) resMsg += "\n " + error;
                 }
                 else
                 {
                     resMsg = "\nResult: All types in the family can regenerate successfully.";
                 }
-                WriteLog(resMsg.ToString());
-                resMsg += "\nIf you want to know the detail regeneration result please get log file at "+m_logFileName;
-                msgForm.AddMessage(resMsg,false);
-                msgForm.ShowDialog();           
+
+                WriteLog(resMsg);
+                resMsg += "\nIf you want to know the detail regeneration result please get log file at " +
+                          m_logFileName;
+                msgForm.AddMessage(resMsg, false);
+                msgForm.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                WriteLog("There is some problem when regeneration:" + ex.ToString());
-                msgForm.AddMessage("There is some problem when regeneration:"+ex.ToString(),true);
-                msgForm.ShowDialog();  
+                WriteLog("There is some problem when regeneration:" + ex);
+                msgForm.AddMessage("There is some problem when regeneration:" + ex, true);
+                msgForm.ShowDialog();
             }
         }
 
         /// <summary>
-        /// The method to write line to log file
+        ///     The method to write line to log file
         /// </summary>
         /// <param name="logStr">the log string</param>
         private void WriteLog(string logStr)
@@ -146,6 +144,6 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
             var writer = File.AppendText(m_logFileName);
             writer.WriteLine(logStr);
             writer.Close();
-        }       
-            }
+        }
+    }
 }

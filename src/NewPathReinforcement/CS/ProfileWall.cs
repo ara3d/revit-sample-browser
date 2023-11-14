@@ -19,24 +19,25 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NewPathReinforcement.CS
 {
     /// <summary>
-    /// ProfileWall class contains the information about profile of wall,
-    /// and contains method to create PathReinforcement on wall
+    ///     ProfileWall class contains the information about profile of wall,
+    ///     and contains method to create PathReinforcement on wall
     /// </summary>
     public class ProfileWall : Profile
     {
-        private Wall m_data;
+        private readonly Wall m_data;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="wall">wall to create reinforcement on</param>
         /// <param name="commandData">object which contains reference to Revit Application</param>
@@ -50,7 +51,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         }
 
         /// <summary>
-        /// Get points of first face
+        ///     Get points of first face
         /// </summary>
         /// <param name="faces">edges in all faces</param>
         /// <returns>points of first face</returns>
@@ -64,29 +65,22 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             var zAxis = new Vector4(0, 0, 1);
 
             //if Location curve of wall is line, then return first face
-            if (xyzs.Count == 2)
-            {
-                needFace = faces[0];
-            }
+            if (xyzs.Count == 2) needFace = faces[0];
 
             //else we return the face whose normal is Z axis
             foreach (var face in faces)
+            foreach (var edge in face)
             {
-                foreach (var edge in face)
+                var edgexyzs = edge.Tessellate() as List<XYZ>;
+                if (xyzs.Count == edgexyzs.Count)
                 {
-                    var edgexyzs = edge.Tessellate() as List<XYZ>;
-                    if (xyzs.Count == edgexyzs.Count)
-                    {
-                        var normal = GetFaceNormal(face); //get the normal of face
-                        var cross = Vector4.CrossProduct(zAxis, normal);
-                        cross.Normalize();
-                        if (cross.Length() == 1)
-                        {
-                            needFace = face;
-                        }
-                    }
+                    var normal = GetFaceNormal(face); //get the normal of face
+                    var cross = Vector4.CrossProduct(zAxis, normal);
+                    cross.Normalize();
+                    if (cross.Length() == 1) needFace = face;
                 }
             }
+
             needFace = faces[0];
 
             //get points array in edges 
@@ -95,11 +89,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 var edgexyzs = edge.Tessellate() as List<XYZ>;
                 needPoints.Add(edgexyzs);
             }
+
             return needPoints;
         }
 
         /// <summary>
-        /// Get a matrix which can transform points to 2D
+        ///     Get a matrix which can transform points to 2D
         /// </summary>
         /// <returns>matrix which can transform points to 2D</returns>
         public override Matrix4 GetTo2DMatrix()
@@ -114,10 +109,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             {
                 var curve = location.Curve;
 
-                if (!(curve is Line))
-                {
-                    throw new Exception("Path Reinforcement cannot build on this Wall");
-                }
+                if (!(curve is Line)) throw new Exception("Path Reinforcement cannot build on this Wall");
 
                 var start = curve.GetEndPoint(0);
                 var end = curve.GetEndPoint(1);
@@ -137,16 +129,18 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 origin = new Vector4((float)(end.X + start.X) / 2,
                     (float)(end.Y + start.Y) / 2, (float)(end.Z + start.Z) / 2);
             }
+
             return new Matrix4(xAxis, yAxis, zAxis, origin);
         }
 
         /// <summary>
-        /// create PathReinforcement on wall
+        ///     create PathReinforcement on wall
         /// </summary>
         /// <param name="points">points used to create PathReinforcement</param>
         /// <param name="flip">used to specify whether new PathReinforcement is Filp</param>
         /// <returns>new created PathReinforcement</returns>
-        public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points, bool flip)
+        public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points,
+            bool flip)
         {
             IList<Curve> curves = new List<Curve>();
             for (var i = 0; i < points.Count - 1; i++)
@@ -161,7 +155,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             var pathReinforcementTypeId = PathReinforcementType.CreateDefaultPathReinforcementType(m_document);
             var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(m_document);
             var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(m_document);
-            return Autodesk.Revit.DB.Structure.PathReinforcement.Create(m_document, m_data, curves, flip, pathReinforcementTypeId, rebarBarTypeId, rebarHookTypeId, rebarHookTypeId);
+            return Autodesk.Revit.DB.Structure.PathReinforcement.Create(m_document, m_data, curves, flip,
+                pathReinforcementTypeId, rebarBarTypeId, rebarHookTypeId, rebarHookTypeId);
         }
     }
 }

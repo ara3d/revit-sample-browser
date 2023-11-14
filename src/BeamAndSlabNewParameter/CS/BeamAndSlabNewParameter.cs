@@ -22,32 +22,34 @@
 
 
 using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
-using System.Collections;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 {
     /// <summary>
-    /// Display how to add a parameter to an element and set value to the parameter.
-    /// the class  supports the IExternalCommand interface
+    ///     Display how to add a parameter to an element and set value to the parameter.
+    ///     the class  supports the IExternalCommand interface
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        UIApplication m_revit; // application of Revit
-        ElementSet m_elements; // correspond to elements parameter in Execute(...)
+        private ElementSet m_elements; // correspond to elements parameter in Execute(...)
+        private UIApplication m_revit; // application of Revit
 
-        public Result Execute(ExternalCommandData revit, 
-                                               ref string message, 
-                                               ElementSet elements)
+        public Result Execute(ExternalCommandData revit,
+            ref string message,
+            ElementSet elements)
         {
             // Set currently executable application to private variable m_revit
-            m_revit = revit.Application;           
+            m_revit = revit.Application;
             m_elements = elements;
 
             var tran = new Transaction(m_revit.ActiveUIDocument.Document, "BeamAndSlabNewParameter");
@@ -64,29 +66,26 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         }
 
         /// <summary>
-        /// Add a new parameter, "Unique ID", to the beams and slabs
-        /// The following process should be followed: 
-        /// Open the shared parameters file, via the Document.OpenSharedParameterFile method. 
-        /// Access an existing group or create a new group, via the DefinitionFile.Groups property. 
-        /// Access an existing or create a new external parameter definition, 
-        /// via the DefinitionGroup.Definitions property. 
-        /// Create a new Binding with the categories to which the parameter will be bound
-        /// using an InstanceBinding or a TypeBinding.
-        /// Finally add the binding and definition to the document
-        /// using the Document.ParameterBindings object.
+        ///     Add a new parameter, "Unique ID", to the beams and slabs
+        ///     The following process should be followed:
+        ///     Open the shared parameters file, via the Document.OpenSharedParameterFile method.
+        ///     Access an existing group or create a new group, via the DefinitionFile.Groups property.
+        ///     Access an existing or create a new external parameter definition,
+        ///     via the DefinitionGroup.Definitions property.
+        ///     Create a new Binding with the categories to which the parameter will be bound
+        ///     using an InstanceBinding or a TypeBinding.
+        ///     Finally add the binding and definition to the document
+        ///     using the Document.ParameterBindings object.
         /// </summary>
         /// <returns>bool type, a value that signifies  if  add parameter was successful</returns>
-        public bool SetNewParameterToBeamsAndSlabs ()
+        public bool SetNewParameterToBeamsAndSlabs()
         {
             //Open the shared parameters file 
             // via the private method AccessOrCreateExternalSharedParameterFile
             var informationFile = AccessOrCreateExternalSharedParameterFile();
 
-            if (null == informationFile)
-            {
-                return false;
-            }
-    
+            if (null == informationFile) return false;
+
             // Access an existing or create a new group in the shared parameters file
             var informationCollections = informationFile.Groups;
 
@@ -101,33 +100,36 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             // Access an existing or create a new external parameter definition 
             // belongs to a specific group
             var information = informationCollection.Definitions.get_Item("Unique ID");
-                
+
             if (null == information)
             {
-               var ExternalDefinitionCreationOptions = new ExternalDefinitionCreationOptions("Unique ID", SpecTypeId.String.Text);
-               informationCollection.Definitions.Create(ExternalDefinitionCreationOptions);
+                var ExternalDefinitionCreationOptions =
+                    new ExternalDefinitionCreationOptions("Unique ID", SpecTypeId.String.Text);
+                informationCollection.Definitions.Create(ExternalDefinitionCreationOptions);
                 information = informationCollection.Definitions.get_Item("Unique ID");
             }
 
             // Create a new Binding object with the categories to which the parameter will be bound
-            var categories              = m_revit.Application.Create.NewCategorySet();
+            var categories = m_revit.Application.Create.NewCategorySet();
 
             // use category in instead of the string name to get category 
-            var structuralFramingCategorie = m_revit.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_StructuralFraming);
-            var floorsClassification = m_revit.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Floors);
+            var structuralFramingCategorie =
+                m_revit.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_StructuralFraming);
+            var floorsClassification =
+                m_revit.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Floors);
             categories.Insert(structuralFramingCategorie);
             categories.Insert(floorsClassification);
 
             var caseTying = m_revit.Application.Create.NewInstanceBinding(categories);
-            
+
             // Add the binding and definition to the document
-            var boundResult = m_revit.ActiveUIDocument.Document.ParameterBindings.Insert(information, caseTying);        
+            var boundResult = m_revit.ActiveUIDocument.Document.ParameterBindings.Insert(information, caseTying);
 
             return boundResult;
         }
 
         /// <summary>
-        /// Set value(uuid) to Unique ID parameter
+        ///     Set value(uuid) to Unique ID parameter
         /// </summary>
         public void SetValueToUniqueIDParameter()
         {
@@ -136,14 +138,14 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             var beamTypeFilter = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming);
             var slabTypeFilter = new ElementCategoryFilter(BuiltInCategory.OST_Floors);
 
-            var beamFilter = new LogicalAndFilter(beamClassFilter,beamTypeFilter);
-            var slabFilter = new LogicalAndFilter(slabClassFilter,slabTypeFilter);
+            var beamFilter = new LogicalAndFilter(beamClassFilter, beamTypeFilter);
+            var slabFilter = new LogicalAndFilter(slabClassFilter, slabTypeFilter);
 
             var beamandslabFilter = new LogicalOrFilter(beamFilter, slabFilter);
             var elems = from elem in
-                                             new FilteredElementCollector(m_revit.ActiveUIDocument.Document).WherePasses(beamandslabFilter).ToElements()
-
-            select elem;
+                    new FilteredElementCollector(m_revit.ActiveUIDocument.Document).WherePasses(beamandslabFilter)
+                        .ToElements()
+                select elem;
 
             foreach (var elem in elems)
             {
@@ -158,7 +160,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                     var attribute = iter.Current as Parameter;
                     var information = attribute.Definition;
 
-                    if ((null != information)&&("Unique ID" == information.Name) && (null == attribute.AsString()) )
+                    if (null != information && "Unique ID" == information.Name && null == attribute.AsString())
                     {
                         // The shared parameter "Unique ID" then be set to a UUID
                         var uuid = Guid.NewGuid();
@@ -166,23 +168,20 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                     }
                 }
             }
-
         }
 
         /// <summary>
-        /// Display the value of Unique ID parameter in a list box
+        ///     Display the value of Unique ID parameter in a list box
         /// </summary>
         /// <returns></returns>
         public ArrayList SendValueToListBox()
         {
-           var elements = new ElementSet();
+            var elements = new ElementSet();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
-            {
-               elements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
-            }
+                elements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
 
             // all the elements of current document
-            var i = elements.GetEnumerator();  
+            var i = elements.GetEnumerator();
 
             var parameterValueArrangeBox = new ArrayList();
 
@@ -207,8 +206,8 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                     continue;
                 }
 
-                if (("Structural Framing" != component.Category.Name) &&
-                    ("Floors" != component.Category.Name))
+                if ("Structural Framing" != component.Category.Name &&
+                    "Floors" != component.Category.Name)
                 {
                     moreElements = i.MoveNext();
                     continue;
@@ -217,38 +216,35 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                 // Get "Unique ID" parameter and display its value in a list box 
                 var attributes = component.Parameters;
 
-                foreach(var o in attributes) 
+                foreach (var o in attributes)
                 {
                     var attribute = o as Parameter;
 
                     if ("Unique ID" == attribute.Definition.Name)
-                    {    
-                        if (null == attribute.AsString())
-                        {
-                            break;
-                        }
+                    {
+                        if (null == attribute.AsString()) break;
 
                         parameterValueArrangeBox.Add(attribute.AsString());
                         break;
-                    }            
+                    }
                 }
+
                 moreElements = i.MoveNext();
-            }    
+            }
+
             return parameterValueArrangeBox;
         }
 
         /// <summary>
-        /// found the element which using the GUID 
-        /// that was assigned to the shared parameter in the shared parameters file.
+        ///     found the element which using the GUID
+        ///     that was assigned to the shared parameter in the shared parameters file.
         /// </summary>
         /// <param name="UniqueIdValue"></param>
         public void FindElement(string UniqueIdValue)
         {
-           var seleElements = new ElementSet();
+            var seleElements = new ElementSet();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
-            {
-               seleElements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
-            }
+                seleElements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
 
             // all the elements of current document
             var i = seleElements.GetEnumerator();
@@ -276,8 +272,8 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                     continue;
                 }
 
-                if (("Structural Framing" != component.Category.Name) &&
-                    ("Floors" != component.Category.Name))
+                if ("Structural Framing" != component.Category.Name &&
+                    "Floors" != component.Category.Name)
                 {
                     moreElements = i.MoveNext();
                     continue;
@@ -292,10 +288,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 
                     if ("Unique ID" == attribute.Definition.Name)
                     {
-                        if (null == attribute.AsString())
-                        {
-                            break;
-                        }
+                        if (null == attribute.AsString()) break;
 
                         // compare if the parameter's value is the same as the selected value.
                         // Clear the SelElementSet and add the found element into it. 
@@ -313,23 +306,22 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 
                 moreElements = i.MoveNext();
             }
-
         }
 
         /// <summary>
-        /// Access an existing or create a new shared parameters file
+        ///     Access an existing or create a new shared parameters file
         /// </summary>
         /// <returns>a shared parameters file </returns>
-        private DefinitionFile  AccessOrCreateExternalSharedParameterFile()
-        {    
+        private DefinitionFile AccessOrCreateExternalSharedParameterFile()
+        {
             // The Path of Revit.exe
-            var currentExecutablePath = System.Windows.Forms.Application.ExecutablePath;
- 
+            var currentExecutablePath = Application.ExecutablePath;
+
             // The path of ourselves shared parameters file
             var sharedParameterFile = Path.GetDirectoryName(currentExecutablePath);
 
             sharedParameterFile = sharedParameterFile + "\\MySharedParameters.txt";
-            
+
             //Method's return
 
             // Check if the file is exit
@@ -340,9 +332,9 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             if (!fileExist)
             {
                 var fileFlow = File.Create(sharedParameterFile);
-                fileFlow.Close();    
+                fileFlow.Close();
             }
-            
+
             // Set  ourselves file to  the externalSharedParameterFile 
             m_revit.Application.SharedParametersFilename = sharedParameterFile;
             var informationFile = m_revit.Application.OpenSharedParameterFile();

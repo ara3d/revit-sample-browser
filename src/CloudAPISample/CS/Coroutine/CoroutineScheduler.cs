@@ -22,127 +22,128 @@
 
 using System;
 using System.Collections;
+using System.Windows.Threading;
 
 namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
 {
-   /// <summary>
-   ///    A simple coroutine scheduler.
-   ///    This coroutine scheduler allows for control over the execution regime
-   ///    of a set of coroutines.
-   /// </summary>
-   public class CoroutineScheduler
-   {
-      private static CoroutineScheduler instance;
+    /// <summary>
+    ///     A simple coroutine scheduler.
+    ///     This coroutine scheduler allows for control over the execution regime
+    ///     of a set of coroutines.
+    /// </summary>
+    public class CoroutineScheduler
+    {
+        private static CoroutineScheduler instance;
 
-      private Coroutine coroutines;
+        private Coroutine coroutines;
 
-      private System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        private DispatcherTimer dispatcherTimer;
 
-      private CoroutineScheduler()
-      {
-      }
+        private CoroutineScheduler()
+        {
+        }
 
-      private void Attach()
-      {
-         dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-         dispatcherTimer.Tick += new EventHandler(Update);
-         dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-         dispatcherTimer.Start();
-      }
+        private void Attach()
+        {
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += Update;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
 
-      private void Detach()
-      {
-         dispatcherTimer?.Stop();
-         dispatcherTimer = null;
-      }
+        private void Detach()
+        {
+            dispatcherTimer?.Stop();
+            dispatcherTimer = null;
+        }
 
-      private void AddCoroutine(Coroutine coroutine)
-      {
-         if (coroutines != null)
-         {
-            coroutine.Next = coroutines;
-            coroutines.Previous = coroutine;
-         }
-
-         coroutines = coroutine;
-      }
-
-      private void RemoveCoroutine(Coroutine coroutine)
-      {
-         if (coroutines == coroutine)
-         {
-            coroutines = coroutines.Next;
-         }
-         else
-         {
-            if (coroutine.Next != null)
+        private void AddCoroutine(Coroutine coroutine)
+        {
+            if (coroutines != null)
             {
-               coroutine.Previous.Next = coroutine.Next;
-               coroutine.Next.Previous = coroutine.Previous;
-            }
-            else if (coroutine.Previous != null)
-            {
-               coroutine.Previous.Next = null;
-            }
-         }
-
-         coroutine.Previous = null;
-         coroutine.Next = null;
-      }
-
-      private void Update(object sender, EventArgs eventArgs)
-      {
-         UpdateAllCoroutines();
-      }
-
-      private void UpdateAllCoroutines()
-      {
-         var iter = coroutines;
-
-         while (iter != null)
-         {
-            if (!iter.ExecuteOnStep())
-            {
-               iter.IsFinished = true;
-               RemoveCoroutine(iter);
+                coroutine.Next = coroutines;
+                coroutines.Previous = coroutine;
             }
 
-            iter = iter.Next;
-         }
-      }
+            coroutines = coroutine;
+        }
 
-      /// <summary>
-      ///    Attach a scheduler to render loop.
-      ///    Must be called before using coroutine.
-      /// </summary>
-      public static void Run()
-      {
-         if (instance != null)
-            return;
-         instance = new CoroutineScheduler();
-         instance.Attach();
-      }
+        private void RemoveCoroutine(Coroutine coroutine)
+        {
+            if (coroutines == coroutine)
+            {
+                coroutines = coroutines.Next;
+            }
+            else
+            {
+                if (coroutine.Next != null)
+                {
+                    coroutine.Previous.Next = coroutine.Next;
+                    coroutine.Next.Previous = coroutine.Previous;
+                }
+                else if (coroutine.Previous != null)
+                {
+                    coroutine.Previous.Next = null;
+                }
+            }
 
-      /// <summary>
-      ///    Stop a scheduler. All coroutines will be released.
-      /// </summary>
-      public static void Stop()
-      {
-         instance?.Detach();
-         instance = null;
-      }
+            coroutine.Previous = null;
+            coroutine.Next = null;
+        }
 
-      /// <summary>
-      ///    Start a new coroutine with an enumerator
-      /// </summary>
-      /// <returns></returns>
-      public static Coroutine StartCoroutine(IEnumerator enumerator)
-      {
-         if (enumerator == null || instance == null) return null;
+        private void Update(object sender, EventArgs eventArgs)
+        {
+            UpdateAllCoroutines();
+        }
 
-         var coroutine = new Coroutine(enumerator);
-         instance.AddCoroutine(coroutine);
-         return coroutine;
-      }
-   }
+        private void UpdateAllCoroutines()
+        {
+            var iter = coroutines;
+
+            while (iter != null)
+            {
+                if (!iter.ExecuteOnStep())
+                {
+                    iter.IsFinished = true;
+                    RemoveCoroutine(iter);
+                }
+
+                iter = iter.Next;
+            }
+        }
+
+        /// <summary>
+        ///     Attach a scheduler to render loop.
+        ///     Must be called before using coroutine.
+        /// </summary>
+        public static void Run()
+        {
+            if (instance != null)
+                return;
+            instance = new CoroutineScheduler();
+            instance.Attach();
+        }
+
+        /// <summary>
+        ///     Stop a scheduler. All coroutines will be released.
+        /// </summary>
+        public static void Stop()
+        {
+            instance?.Detach();
+            instance = null;
+        }
+
+        /// <summary>
+        ///     Start a new coroutine with an enumerator
+        /// </summary>
+        /// <returns></returns>
+        public static Coroutine StartCoroutine(IEnumerator enumerator)
+        {
+            if (enumerator == null || instance == null) return null;
+
+            var coroutine = new Coroutine(enumerator);
+            instance.AddCoroutine(coroutine);
+            return coroutine;
+        }
+    }
 }

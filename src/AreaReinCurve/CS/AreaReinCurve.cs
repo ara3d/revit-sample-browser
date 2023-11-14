@@ -19,22 +19,24 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
+using System;
+using System.Collections.Generic;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
+
 namespace Revit.SDK.Samples.AreaReinCurve.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.UI;
-    using Autodesk.Revit.DB.Structure;
-
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        AreaReinforcement m_areaRein;
-        List<AreaReinforcementCurve> m_areaReinCurves;
-        Document m_doc;
+        private AreaReinforcement m_areaRein;
+        private List<AreaReinforcementCurve> m_areaReinCurves;
+        private Document m_doc;
 
         public Result Execute(ExternalCommandData revit,
             ref string message, ElementSet elements)
@@ -43,9 +45,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
             trans.Start();
             var selected = new ElementSet();
             foreach (var elementId in revit.Application.ActiveUIDocument.Selection.GetElementIds())
-            {
-               selected.Insert(revit.Application.ActiveUIDocument.Document.GetElement(elementId));
-            }
+                selected.Insert(revit.Application.ActiveUIDocument.Document.GetElement(elementId));
 
             try
             {
@@ -99,24 +99,18 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         }
 
         /// <summary>
-        /// check whether the selected is expected, prepare necessary data
+        ///     check whether the selected is expected, prepare necessary data
         /// </summary>
         /// <param name="selected">selected elements</param>
         /// <returns>whether the selected AreaReinforcement is expected</returns>
         private bool PreData(ElementSet selected)
         {
             //selected is not only one AreaReinforcement
-            if (selected.Size != 1)
-            {
-                return false;
-            }
+            if (selected.Size != 1) return false;
             foreach (var o in selected)
             {
                 m_areaRein = o as AreaReinforcement;
-                if (null == m_areaRein)
-                {
-                    return false;
-                }
+                if (null == m_areaRein) return false;
             }
 
             //whether the selected AreaReinforcement is rectangular
@@ -132,16 +126,18 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
                         ("There is unexpected error with selected AreaReinforcement.");
                     throw appEx;
                 }
+
                 m_areaReinCurves.Add(areaCurve);
                 curves.Append(areaCurve.Curve);
             }
+
             var flag = GeomUtil.IsRectangular(curves);
 
             return flag;
         }
 
         /// <summary>
-        /// turn off all layers but the Major Direction Layer or Exterior Direction Layer
+        ///     turn off all layers but the Major Direction Layer or Exterior Direction Layer
         /// </summary>
         /// <returns>whether the command is successful</returns>
         private bool TurnOffLayers()
@@ -167,8 +163,8 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         }
 
         /// <summary>
-        /// remove the hooks from one boundary curve of the Major Direction Layer 
-        /// or Exterior Direction Layer
+        ///     remove the hooks from one boundary curve of the Major Direction Layer
+        ///     or Exterior Direction Layer
         /// </summary>
         /// <returns>whether the command is successful</returns>
         private bool ChangeHookType()
@@ -178,13 +174,9 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
             var line1 = m_areaReinCurves[1].Curve as Line;
             AreaReinforcementCurve temp = null;
             if (GeomUtil.IsVertical(line0, line1))
-            {
                 temp = m_areaReinCurves[1];
-            }
             else
-            {
                 temp = m_areaReinCurves[2];
-            }
 
             //remove hooks
             ParameterUtil.SetParaInt(m_areaReinCurves[0],

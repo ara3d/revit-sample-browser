@@ -22,18 +22,20 @@
 
 
 using System;
+using System.Collections;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.PhysicalProp.CS
 {
     /// <summary>
-    /// Define a command to dump physical material properties of 
-    /// a structural element such as column, beam or brace. 
+    ///     Define a command to dump physical material properties of
+    ///     a structural element such as column, beam or brace.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.ReadOnly)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class DumpMaterialPhysicalParameters : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
@@ -48,9 +50,7 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
 
                 var selection = new ElementSet();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
-                {
-                   selection.Insert(activeDoc.Document.GetElement(elementId));
-                }
+                    selection.Insert(activeDoc.Document.GetElement(elementId));
                 if (selection.Size != 1)
                 {
                     message = "Please select only one element.";
@@ -60,10 +60,8 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
 
                 var es = new ElementSet();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
-                {
-                   es.Insert(activeDoc.Document.GetElement(elementId));
-                }
-                System.Collections.IEnumerator iter = es.ForwardIterator();
+                    es.Insert(activeDoc.Document.GetElement(elementId));
+                IEnumerator iter = es.ForwardIterator();
                 iter.MoveNext();
 
                 // we need verify the selected element is a family instance
@@ -103,8 +101,8 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                     materialElement.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_TYPE);
 
                 var str = "Material type: " +
-                          (materialType.AsInteger() == 0 ?
-                              "Generic" : (materialType.AsInteger() == 1 ? "Concrete" : "Steel")) + "\r\n";
+                          (materialType.AsInteger() == 0 ? "Generic" :
+                              materialType.AsInteger() == 1 ? "Concrete" : "Steel") + "\r\n";
 
                 // A material type of more than 0 : 0 = Generic, 1 = Concrete, 2 = Steel
                 if (materialType.AsInteger() > 0)
@@ -120,9 +118,9 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                         BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD2).AsDouble();
                     youngsModulus[2] = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD3).AsDouble();
-                    str = str + "Young's modulus: " + youngsModulus[0].ToString() +
-                        "," + youngsModulus[1].ToString() + "," + youngsModulus[2].ToString() +
-                        "\r\n";
+                    str = str + "Young's modulus: " + youngsModulus[0] +
+                          "," + youngsModulus[1] + "," + youngsModulus[2] +
+                          "\r\n";
 
                     // Poisson Modulus
                     var PoissonRatio = new double[3];
@@ -133,9 +131,9 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                         BuiltInParameter.PHY_MATERIAL_PARAM_POISSON_MOD2).AsDouble();
                     PoissonRatio[2] = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_POISSON_MOD3).AsDouble();
-                    str = str + "Poisson modulus: " + PoissonRatio[0].ToString() +
-                        "," + PoissonRatio[1].ToString() + "," + PoissonRatio[2].ToString() +
-                        "\r\n";
+                    str = str + "Poisson modulus: " + PoissonRatio[0] +
+                          "," + PoissonRatio[1] + "," + PoissonRatio[2] +
+                          "\r\n";
 
                     // Shear Modulus
                     var shearModulus = new double[3];
@@ -146,8 +144,8 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                         BuiltInParameter.PHY_MATERIAL_PARAM_SHEAR_MOD2).AsDouble();
                     shearModulus[2] = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_SHEAR_MOD3).AsDouble();
-                    str = str + "Shear modulus: " + shearModulus[0].ToString() +
-                        "," + shearModulus[1].ToString() + "," + shearModulus[2].ToString() + "\r\n";
+                    str = str + "Shear modulus: " + shearModulus[0] +
+                          "," + shearModulus[1] + "," + shearModulus[2] + "\r\n";
 
                     // Thermal Expansion Coefficient
                     var thermalExpCoeff = new double[3];
@@ -158,19 +156,19 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                         BuiltInParameter.PHY_MATERIAL_PARAM_EXP_COEFF2).AsDouble();
                     thermalExpCoeff[2] = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_EXP_COEFF3).AsDouble();
-                    str = str + "Thermal expansion coefficient: " + thermalExpCoeff[0].ToString() +
-                        "," + thermalExpCoeff[1].ToString() + "," + thermalExpCoeff[2].ToString() +
-                        "\r\n";
+                    str = str + "Thermal expansion coefficient: " + thermalExpCoeff[0] +
+                          "," + thermalExpCoeff[1] + "," + thermalExpCoeff[2] +
+                          "\r\n";
 
                     // Unit Weight
                     var unitWeight = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_UNIT_WEIGHT).AsDouble();
-                    str = str + "Unit weight: " + unitWeight.ToString() + "\r\n";
+                    str = str + "Unit weight: " + unitWeight + "\r\n";
 
                     // Behavior 0 = Isotropic, 1 = Orthotropic
                     var behaviour = materialElement.get_Parameter(
                         BuiltInParameter.PHY_MATERIAL_PARAM_BEHAVIOR).AsInteger();
-                    str = str + "Behavior: " + behaviour.ToString() + "\r\n";
+                    str = str + "Behavior: " + behaviour + "\r\n";
 
                     // Concrete Only
                     if (materialType.AsInteger() == 1)
@@ -178,17 +176,17 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                         // Concrete Compression
                         var concreteCompression = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_CONCRETE_COMPRESSION).AsDouble();
-                        str = str + "Concrete compression: " + concreteCompression.ToString() + "\r\n";
+                        str = str + "Concrete compression: " + concreteCompression + "\r\n";
 
                         // Lightweight
                         var lightWeight = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_LIGHT_WEIGHT).AsDouble();
-                        str = str + "Lightweight: " + lightWeight.ToString() + "\r\n";
+                        str = str + "Lightweight: " + lightWeight + "\r\n";
 
                         // Shear Strength Reduction
                         var shearStrengthReduction = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_SHEAR_STRENGTH_REDUCTION).AsDouble();
-                        str = str + "Shear strength reduction: " + shearStrengthReduction.ToString() + "\r\n";
+                        str = str + "Shear strength reduction: " + shearStrengthReduction + "\r\n";
                     }
                     // Steel only
                     else if (materialType.AsInteger() == 2)
@@ -196,18 +194,18 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                         // Minimum Yield Stress
                         var minimumYieldStress = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_MINIMUM_YIELD_STRESS).AsDouble();
-                        str = str + "Minimum yield stress: " + minimumYieldStress.ToString() + "\r\n";
+                        str = str + "Minimum yield stress: " + minimumYieldStress + "\r\n";
 
                         // Minimum Tensile Strength
                         var minimumTensileStrength = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_MINIMUM_TENSILE_STRENGTH).AsDouble();
                         str = str + "Minimum tensile strength: " +
-                            minimumTensileStrength.ToString() + "\r\n";
+                              minimumTensileStrength + "\r\n";
 
                         // Reduction Factor
                         var reductionFactor = materialElement.get_Parameter(
                             BuiltInParameter.PHY_MATERIAL_PARAM_REDUCTION_FACTOR).AsDouble();
-                        str = str + "Reduction factor: " + reductionFactor.ToString() + "\r\n";
+                        str = str + "Reduction factor: " + reductionFactor + "\r\n";
                     } // end of if/else materialType.Integer == 1
                 } // end if materialType.Integer > 0
 
@@ -217,9 +215,6 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
             {
                 TaskDialog.Show("PhysicalProp", ex.Message);
                 res = Result.Failed;
-            }
-            finally
-            {
             }
 
             return res;

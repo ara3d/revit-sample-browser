@@ -21,23 +21,25 @@
 //
 
 using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ModelLines.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData,
-                                               ref string message,
-                                               ElementSet elements)
+            ref string message,
+            ElementSet elements)
         {
             try
             {
-                var documentTransaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
+                var documentTransaction =
+                    new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
                 documentTransaction.Start();
                 // Get the application of revit
                 var revit = commandData.Application;
@@ -57,7 +59,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 // If any error, give error information and return failed
                 message = ex.Message;
                 return Result.Failed;
-            }           
+            }
         }
     }
 }

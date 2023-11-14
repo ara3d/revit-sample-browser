@@ -20,61 +20,34 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
 {
     /// <summary>
-    /// This class will deal with all parameters related to window creation
+    ///     This class will deal with all parameters related to window creation
     /// </summary>
     public class WindowParameter
     {
         /// <summary>
-        ///store the family type name
+        ///     store the height of opening
         /// </summary>
-        string m_type = string.Empty;
-        
-        /// <summary>
-        /// store the height of opening
-        /// </summary>
-        double m_height;
+        private double m_height;
 
         /// <summary>
-        /// store the width of opening
+        ///     store the family type name
         /// </summary>
-        double m_width;       
-
-                /// <summary>
-        /// get/set the Type property
-        /// </summary>
-        public string Type
-        {
-            set => m_type = value;
-            get => m_type;
-        }
+        private string m_type = string.Empty;
 
         /// <summary>
-        /// get/set the Height property
+        ///     store the width of opening
         /// </summary>
-        public double Height
-        {
-            set => m_height = value;
-            get => m_height;
-        }
+        private double m_width;
 
         /// <summary>
-        /// get/set the Width property
-        /// </summary>
-        public double Width
-        {
-            set => m_width = value;
-            get => m_width;
-        }
-        
-        /// <summary>
-        /// constructor of WindowParameter
+        ///     constructor of WindowParameter
         /// </summary>
         /// <param name="isMetric">indicate whether the template is metric or imperial</param>
         public WindowParameter(bool isMetric)
@@ -94,75 +67,98 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// construcion of WindowParameter
+        ///     construcion of WindowParameter
         /// </summary>
         /// <param name="para">the WindowParameter</param>
         public WindowParameter(WindowParameter para)
         {
-            if (string.IsNullOrEmpty(para.m_type))
-            {
-                m_type = "NewType";
-            }
+            if (string.IsNullOrEmpty(para.m_type)) m_type = "NewType";
             m_type = para.Type + "1";
             m_height = para.Height;
             m_width = para.Width;
         }
+
+        /// <summary>
+        ///     get/set the Type property
+        /// </summary>
+        public string Type
+        {
+            set => m_type = value;
+            get => m_type;
+        }
+
+        /// <summary>
+        ///     get/set the Height property
+        /// </summary>
+        public double Height
+        {
+            set => m_height = value;
+            get => m_height;
+        }
+
+        /// <summary>
+        ///     get/set the Width property
+        /// </summary>
+        public double Width
+        {
+            set => m_width = value;
+            get => m_width;
+        }
     }
 
     /// <summary>
-    /// This class is used to deal with wizard parameters
+    ///     This class is used to deal with wizard parameters
     /// </summary>
-    public class WizardParameter 
+    public class WizardParameter
     {
-        // ToDo add properties for them
-        
         /// <summary>
-        /// store the template name
+        ///     store the current WindowParameter
+        /// </summary>
+        private WindowParameter m_curPara = new WindowParameter(true);
+
+        /// <summary>
+        ///     store the frame material list
+        /// </summary>
+        private List<string> m_frameMats = new List<string>();
+
+        /// <summary>
+        ///     store the glass material
+        /// </summary>
+        private string m_glassMat = string.Empty;
+
+        /// <summary>
+        ///     store the glass material list
+        /// </summary>
+        private List<string> m_GlassMats = new List<string>();
+
+        /// <summary>
+        ///     store the temp path
+        /// </summary>
+        private string m_pathName = Path.GetTempPath();
+
+        /// <summary>
+        ///     store the sash material
+        /// </summary>
+        private string m_sashMat = string.Empty;
+        // ToDo add properties for them
+
+        /// <summary>
+        ///     store the template name
         /// </summary>
         public string m_template = string.Empty;
 
         /// <summary>
-        /// store the current WindowParameter
-        /// </summary>
-        private WindowParameter m_curPara = new WindowParameter(true);        
-        
-        /// <summary>
-        /// store the windowparameter hashtable
-        /// </summary>
-        Hashtable m_winParas = new Hashtable();
-        
-        /// <summary>
-        /// store the frame material list
-        /// </summary>
-        private List<string> m_frameMats = new List<string>();
-        
-        /// <summary>
-        /// store the glass material list
-        /// </summary>
-        private List<string> m_GlassMats = new List<string>();
-        
-        /// <summary>
-        /// store the glass material
-        /// </summary>
-        string m_glassMat = string.Empty;
-
-        /// <summary>
-        /// store the sash material
-        /// </summary>
-        string m_sashMat = string.Empty;
-
-        /// <summary>
-        /// store the ValidateWindowParameter
+        ///     store the ValidateWindowParameter
         /// </summary>
         private ValidateWindowParameter m_validator = new ValidateWindowParameter(10, 10);
-        
+
         /// <summary>
-        /// store the temp path
+        ///     store the windowparameter hashtable
         /// </summary>
-        private string m_pathName = System.IO.Path.GetTempPath();
-      
-                /// <summary>
-        /// get/set Validator property
+        private Hashtable m_winParas = new Hashtable();
+
+        /// <summary>
+        ///     get/set Validator property
         /// </summary>
         public ValidateWindowParameter Validator
         {
@@ -171,7 +167,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// get/set FrameMaterials property
+        ///     get/set FrameMaterials property
         /// </summary>
         public List<string> FrameMaterials
         {
@@ -180,7 +176,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// get/set GlassMaterials property
+        ///     get/set GlassMaterials property
         /// </summary>
         public List<string> GlassMaterials
         {
@@ -189,7 +185,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// get/set GlassMat property
+        ///     get/set GlassMat property
         /// </summary>
         public string GlassMat
         {
@@ -198,7 +194,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// get/set SashMat property
+        ///     get/set SashMat property
         /// </summary>
         public string SashMat
         {
@@ -207,7 +203,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// get/set WinParaTab property
+        ///     get/set WinParaTab property
         /// </summary>
         public Hashtable WinParaTab
         {
@@ -216,7 +212,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// get/set CurrentPara property
+        ///     get/set CurrentPara property
         /// </summary>
         public WindowParameter CurrentPara
         {
@@ -225,50 +221,32 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         }
 
         /// <summary>
-        /// get/set PathName property
+        ///     get/set PathName property
         /// </summary>
         public string PathName
         {
             get => m_pathName;
             set => m_pathName = value;
-        }       
-            }
+        }
+    }
 
     /// <summary>
-    /// This class inherits from WindowParameter
+    ///     This class inherits from WindowParameter
     /// </summary>
     public class DoubleHungWinPara : WindowParameter
     {
         /// <summary>
-        /// store the m_inset
+        ///     store the m_inset
         /// </summary>
-        double m_inset;
+        private double m_inset;
 
         /// <summary>
-        /// store the m_sillHeight
+        ///     store the m_sillHeight
         /// </summary>
-        double m_sillHeight; 
-
-                /// <summary>
-        /// set/get Inset property
-        /// </summary>
-        public double Inset
-        {
-            set => m_inset = value;
-            get => m_inset;
-        }
+        private double m_sillHeight;
 
         /// <summary>
-        /// set/get SillHeight property
-        /// </summary>
-        public double SillHeight
-        {
-            set => m_sillHeight = value;
-            get => m_sillHeight;
-        }
-        
-        /// <summary>
-        /// constructor of DoubleHungWinPara
+        ///     constructor of DoubleHungWinPara
         /// </summary>
         /// <param name="isMetric">indicate whether the template is metric of imperial</param>
         public DoubleHungWinPara(bool isMetric)
@@ -283,11 +261,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             {
                 m_inset = 0.05;
                 m_sillHeight = 3;
-            }            
+            }
         }
 
         /// <summary>
-        /// constructor of DoubleHungWinPara
+        ///     constructor of DoubleHungWinPara
         /// </summary>
         /// <param name="dbhungPara">DoubleHungWinPara</param>
         public DoubleHungWinPara(DoubleHungWinPara dbhungPara)
@@ -295,6 +273,24 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             m_inset = dbhungPara.Inset;
             m_sillHeight = dbhungPara.SillHeight;
+        }
+
+        /// <summary>
+        ///     set/get Inset property
+        /// </summary>
+        public double Inset
+        {
+            set => m_inset = value;
+            get => m_inset;
+        }
+
+        /// <summary>
+        ///     set/get SillHeight property
+        /// </summary>
+        public double SillHeight
+        {
+            set => m_sillHeight = value;
+            get => m_sillHeight;
         }
     }
 }

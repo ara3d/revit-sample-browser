@@ -20,26 +20,34 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System.Drawing;
 using System.Collections;
+using System.Drawing;
 
 namespace Revit.SDK.Samples.SlabShapeEditing.CS
 {
     /// <summary>
-    /// tool used to draw line
+    ///     tool used to draw line
     /// </summary>
-    class LineTool
+    internal class LineTool
     {
-        
-        PointF m_movePoint; //record the coordinate of location where mouse just moved to. 
-        
+        private PointF m_movePoint; //record the coordinate of location where mouse just moved to. 
+
         /// <summary>
-        /// Get all the points of this tool
+        ///     default constructor
+        /// </summary>
+        public LineTool()
+        {
+            Points = new ArrayList();
+            m_movePoint = Point.Empty;
+        }
+
+        /// <summary>
+        ///     Get all the points of this tool
         /// </summary>
         public ArrayList Points { get; set; }
 
         /// <summary>
-        ///Get coordinate of location where mouse just moved to.
+        ///     Get coordinate of location where mouse just moved to.
         /// </summary>
         public PointF MovePoint
         {
@@ -48,38 +56,23 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// default constructor
-        /// </summary>
-        public LineTool() 
-        {
-            Points = new ArrayList();
-            m_movePoint = Point.Empty;
-        }
-
-        /// <summary>
-        /// draw the stored lines
+        ///     draw the stored lines
         /// </summary>
         /// <param name="graphics">Graphics object, used to draw geometry</param>
         /// <param name="pen">Pen which used to draw lines</param>
         public void Draw2D(Graphics graphics, Pen pen)
         {
-            for (var i = 0; i < Points.Count - 1; i+=2)
-            {
-                graphics.DrawLine(pen, (PointF)Points[i], (PointF)Points[i+1]);
-            }
+            for (var i = 0; i < Points.Count - 1; i += 2)
+                graphics.DrawLine(pen, (PointF)Points[i], (PointF)Points[i + 1]);
 
             //draw the moving point
             if (!m_movePoint.IsEmpty)
-            {
                 if (Points.Count >= 1)
-                {
                     graphics.DrawLine(pen, (PointF)Points[Points.Count - 1], m_movePoint);
-                }
-            }
         }
 
         /// <summary>
-        /// draw rectangle with specific graphics and pen
+        ///     draw rectangle with specific graphics and pen
         /// </summary>
         /// <param name="graphics">Graphics object, used to draw geometry</param>
         /// <param name="pen">Pen which used to draw lines</param>
@@ -88,7 +81,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             for (var i = 0; i < Points.Count - 1; i += 2)
             {
                 var pointF = (PointF)Points[i];
-                graphics.DrawRectangle(pen, pointF.X-2, pointF.Y-2, 4, 4);
+                graphics.DrawRectangle(pen, pointF.X - 2, pointF.Y - 2, 4, 4);
             }
         }
     }

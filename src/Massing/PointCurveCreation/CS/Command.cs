@@ -22,20 +22,23 @@
 
 using System;
 using System.IO;
+using System.Reflection;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.PointCurveCreation.CS
 {
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// This class used to create reference points following parabolic arcs 
+    ///     A class inherits IExternalCommand interface.
+    ///     This class used to create reference points following parabolic arcs
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class PointsParabola : IExternalCommand
     {
-        static AddInId appId = new AddInId(new Guid("B6FBC0C1-F3AE-4ffa-AB46-B4CF94304827"));
+        private static AddInId appId = new AddInId(new Guid("B6FBC0C1-F3AE-4ffa-AB46-B4CF94304827"));
+
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
@@ -58,12 +61,15 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                         xyz = new XYZ(-xctr, yctr, zctr);
                         doc.FamilyCreate.NewReferencePoint(xyz);
                     }
+
                     xctr++;
                 }
+
                 power = power + 0.1;
                 yctr = yctr + 50;
                 zctr = 0;
             }
+
             transaction.Commit();
 
             return Result.Succeeded;
@@ -71,14 +77,15 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     }
 
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// This class used to create reference points constrained to a model curve
+    ///     A class inherits IExternalCommand interface.
+    ///     This class used to create reference points constrained to a model curve
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class PointsOnCurve : IExternalCommand
     {
-        static AddInId appId = new AddInId(new Guid("22D07F77-A3F7-490c-B0D8-0EC10D8DE7C7"));
+        private static AddInId appId = new AddInId(new Guid("22D07F77-A3F7-490c-B0D8-0EC10D8DE7C7"));
+
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var app = commandData.Application.Application;
@@ -95,10 +102,12 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
 
             for (var i = 0.1; i <= 1; i = i + 0.1)
             {
-                var locationOnCurve = new PointLocationOnCurve(PointOnCurveMeasurementType.NormalizedCurveParameter, i, PointOnCurveMeasureFrom.Beginning);
+                var locationOnCurve = new PointLocationOnCurve(PointOnCurveMeasurementType.NormalizedCurveParameter, i,
+                    PointOnCurveMeasureFrom.Beginning);
                 var poe = app.Create.NewPointOnEdge(modelcurve.GeometryCurve.Reference, locationOnCurve);
                 doc.FamilyCreate.NewReferencePoint(poe);
             }
+
             transaction.Commit();
 
             return Result.Succeeded;
@@ -106,14 +115,14 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     }
 
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// This class used to create reference points based on comma-delimited XYZ data in a text file
+    ///     A class inherits IExternalCommand interface.
+    ///     This class used to create reference points based on comma-delimited XYZ data in a text file
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class PointsFromTextFile : IExternalCommand
     {
-        static AddInId appId = new AddInId(new Guid("C6D0F4DB-81C3-4927-9D68-8936D6EE67DD"));
+        private static AddInId appId = new AddInId(new Guid("C6D0F4DB-81C3-4927-9D68-8936D6EE67DD"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -122,7 +131,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
             var transaction = new Transaction(doc, "PointsParabola");
             transaction.Start();
             var filename = "sphere.csv";
-            var filepath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var filepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (File.Exists(filepath + "\\" + filename))
             {
                 var readFile = new StreamReader(filepath + "\\" + filename);
@@ -134,6 +143,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                     doc.FamilyCreate.NewReferencePoint(xyz);
                 }
             }
+
             transaction.Commit();
 
             return Result.Succeeded;
@@ -141,14 +151,14 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     }
 
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// This class used to create curve based on points placed using the equation y=cos(x)
+    ///     A class inherits IExternalCommand interface.
+    ///     This class used to create curve based on points placed using the equation y=cos(x)
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class SineCurve : IExternalCommand
     {
-        static AddInId appId = new AddInId(new Guid("F18A831C-AE42-43cc-91FD-6B5D461A1AC7"));
+        private static AddInId appId = new AddInId(new Guid("F18A831C-AE42-43cc-91FD-6B5D461A1AC7"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -162,12 +172,13 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
             var rparray = new ReferencePointArray();
             while (pnt_ctr < 500)
             {
-                xyz = new XYZ(xctr, 0, (Math.Cos(xctr)) * 10);
+                xyz = new XYZ(xctr, 0, Math.Cos(xctr) * 10);
                 var rp = doc.FamilyCreate.NewReferencePoint(xyz);
                 rparray.Append(rp);
                 xctr = xctr + 0.1;
                 pnt_ctr++;
             }
+
             doc.FamilyCreate.NewCurveByPoints(rparray);
             transaction.Commit();
 
@@ -176,14 +187,14 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     }
 
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// This class used to create curve based on points placed using the equation y=ScalingFactor * CosH(x/ScalingFactor)
+    ///     A class inherits IExternalCommand interface.
+    ///     This class used to create curve based on points placed using the equation y=ScalingFactor * CosH(x/ScalingFactor)
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class CatenaryCurve : IExternalCommand
     {
-        static AddInId appId = new AddInId(new Guid("817C2A99-BF00-4029-86F3-2D10550F1410"));
+        private static AddInId appId = new AddInId(new Guid("817C2A99-BF00-4029-86F3-2D10550F1410"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -203,8 +214,10 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                         rpArray.Append(rp);
                     }
                 }
+
                 doc.FamilyCreate.NewCurveByPoints(rpArray);
             }
+
             transaction.Commit();
 
             return Result.Succeeded;
@@ -213,14 +226,14 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
 
 
     /// <summary>
-    /// A class inherits IExternalCommand interface.
-    /// This class used to create loft form based on curves and points created using the equation z = cos(x) + cos(y)
+    ///     A class inherits IExternalCommand interface.
+    ///     This class used to create loft form based on curves and points created using the equation z = cos(x) + cos(y)
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class CyclicSurface : IExternalCommand
     {
-        static AddInId appId = new AddInId(new Guid("3F926F3E-D93A-41cd-9ABF-A31594A827B3"));
+        private static AddInId appId = new AddInId(new Guid("3F926F3E-D93A-41cd-9ABF-A31594A827B3"));
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -237,18 +250,20 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                 var y = 0;
                 while (y < 800)
                 {
-                    var z = 50 * (Math.Cos((Math.PI / 180) * x) + Math.Cos((Math.PI / 180) * y));
+                    var z = 50 * (Math.Cos(Math.PI / 180 * x) + Math.Cos(Math.PI / 180 * y));
                     xyz = new XYZ(x, y, z);
                     var rp = doc.FamilyCreate.NewReferencePoint(xyz);
                     rpAr.Append(rp);
                     y = y + 40;
                 }
+
                 var curve = doc.FamilyCreate.NewCurveByPoints(rpAr);
                 var refAr = new ReferenceArray();
                 refAr.Append(curve.GeometryCurve.Reference);
                 refArAr.Append(refAr);
                 x = x + 40;
             }
+
             doc.FamilyCreate.NewLoftForm(true, refArAr);
             transaction.Commit();
 

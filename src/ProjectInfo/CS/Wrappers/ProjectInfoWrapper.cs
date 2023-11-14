@@ -1,40 +1,42 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
-    /// Wrapper class for ProjectInfo
+    ///     Wrapper class for ProjectInfo
     /// </summary>
     public class ProjectInfoWrapper : IWrapper
     {
-                /// <summary>
-        /// ProjectInfo
+        /// <summary>
+        ///     ProjectInfo
         /// </summary>
-        private Autodesk.Revit.DB.ProjectInfo m_projectInfo; 
-        
-                /// <summary>
-        /// Initializes private variables.
+        private readonly Autodesk.Revit.DB.ProjectInfo m_projectInfo;
+
+        /// <summary>
+        ///     Initializes private variables.
         /// </summary>
         /// <param name="projectInfo">ProjectInfo</param>
         public ProjectInfoWrapper(Autodesk.Revit.DB.ProjectInfo projectInfo)
         {
             m_projectInfo = projectInfo;
-        } 
-        
-                /// <summary>
-        /// Gets gbXMLSettings
-        /// </summary>
-        [Category("Energy Analysis"), DisplayName("Energy Settings")]
-        [TypeConverter(typeof(WrapperConverter))]
-        [RevitVersion(ProductType.MEP, ProductType.Architecture)]
-        public ICustomTypeDescriptor EnergyDataSettings => new WrapperCustomDescriptor(new EnergyDataSettingsWrapper(m_projectInfo.Document));
+        }
 
         /// <summary>
-        /// Gets or sets Project Issue Data
+        ///     Gets gbXMLSettings
         /// </summary>
-        [Category("Other"), DisplayName("Project Issue Data")]
+        [Category("Energy Analysis")]
+        [DisplayName("Energy Settings")]
+        [TypeConverter(typeof(WrapperConverter))]
+        [RevitVersion(ProductType.MEP, ProductType.Architecture)]
+        public ICustomTypeDescriptor EnergyDataSettings =>
+            new WrapperCustomDescriptor(new EnergyDataSettingsWrapper(m_projectInfo.Document));
+
+        /// <summary>
+        ///     Gets or sets Project Issue Data
+        /// </summary>
+        [Category("Other")]
+        [DisplayName("Project Issue Data")]
         public string IssueDate
         {
             get => m_projectInfo.IssueDate;
@@ -42,9 +44,10 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Gets or sets Project Status
+        ///     Gets or sets Project Status
         /// </summary>
-        [Category("Other"), DisplayName("Project Status")]
+        [Category("Other")]
+        [DisplayName("Project Status")]
         public string Status
         {
             get => m_projectInfo.Status;
@@ -52,9 +55,10 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Gets or sets Client Name
+        ///     Gets or sets Client Name
         /// </summary>
-        [Category("Other"), DisplayName("Client Name")]
+        [Category("Other")]
+        [DisplayName("Client Name")]
         public string ClientName
         {
             get => m_projectInfo.ClientName;
@@ -62,9 +66,10 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Gets or sets Project Address
+        ///     Gets or sets Project Address
         /// </summary>
-        [Category("Other"), DisplayName("Project Address")]
+        [Category("Other")]
+        [DisplayName("Project Address")]
         public string Address
         {
             get => m_projectInfo.Address;
@@ -72,30 +77,32 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         }
 
         /// <summary>
-        /// Gets or sets Project Number
+        ///     Gets or sets Project Number
         /// </summary>
-        [Category("Other"), DisplayName("Project Number")]
+        [Category("Other")]
+        [DisplayName("Project Number")]
         public string Number
         {
             get => m_projectInfo.Number;
             set => m_projectInfo.Number = value;
         }
 
-        
+
         /// <summary>
-        /// Gets the handle object.
+        ///     Gets the handle object.
         /// </summary>
         [Browsable(false)]
         public object Handle => m_projectInfo;
 
         /// <summary>
-        /// Gets the name of the handle.
+        ///     Gets the name of the handle.
         /// </summary>
-        [Category("Other"), DisplayName("Project Name")]
+        [Category("Other")]
+        [DisplayName("Project Name")]
         public string Name
         {
             get => m_projectInfo.Name;
             set => m_projectInfo.Name = value;
         }
-                    }
+    }
 }

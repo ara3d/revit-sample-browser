@@ -21,27 +21,27 @@
 // 
 
 using System;
+using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Provide a dialog which provides the options of lower priority information for exporting dwg format
+    ///     Provide a dialog which provides the options of lower priority information for exporting dwg format
     /// </summary>
-    public partial class ExportBaseOptionsForm : System.Windows.Forms.Form
+    public partial class ExportBaseOptionsForm : Form
     {
         /// <summary>
-        /// data class
+        ///     Whether export the current view only
         /// </summary>
-        private ExportBaseOptionsData m_exportOptionsData;
-        
+        private readonly bool m_contain3DView;
 
         /// <summary>
-        /// Whether export the current view only
+        ///     data class
         /// </summary>
-        private bool m_contain3DView;
+        private readonly ExportBaseOptionsData m_exportOptionsData;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="exportOptionsData">Data class object</param>
         /// <param name="contain3DView">If views to export contain 3D views</param>
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Initialize values and status of controls
+        ///     Initialize values and status of controls
         /// </summary>
         private void InitializeControl()
         {
@@ -75,29 +75,25 @@ namespace Revit.SDK.Samples.ImportExport.CS
             checkBoxMergeViews.Checked = m_exportOptionsData.ExportMergeFiles;
             checkBoxMergeViews.Text = "Merge all views in one file (via XRefs).";
             if (m_contain3DView)
-            {
                 comboBoxSolids.Enabled = true;
-            }
             else
-            {
                 comboBoxSolids.Enabled = false;
-            }
         }
 
         /// <summary>
-        /// Transfer information back to ExportOptionData class
+        ///     Transfer information back to ExportOptionData class
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            m_exportOptionsData.ExportLayersAndProperties = 
+            m_exportOptionsData.ExportLayersAndProperties =
                 m_exportOptionsData.EnumLayersAndProperties[comboBoxLayersAndProperties.SelectedIndex];
-            m_exportOptionsData.ExportLayerMapping = 
+            m_exportOptionsData.ExportLayerMapping =
                 m_exportOptionsData.EnumLayerMapping[comboBoxLayerSettings.SelectedIndex];
-            m_exportOptionsData.ExportLineScaling = 
+            m_exportOptionsData.ExportLineScaling =
                 m_exportOptionsData.EnumLineScaling[comboBoxLinetypeScaling.SelectedIndex];
-            m_exportOptionsData.ExportCoorSystem = 
+            m_exportOptionsData.ExportCoorSystem =
                 m_exportOptionsData.EnumCoorSystem[comboBoxCoorSystem.SelectedIndex];
             m_exportOptionsData.ExportUnit = m_exportOptionsData.EnumUnits[comboBoxDWGUnit.SelectedIndex];
             m_exportOptionsData.ExportSolid = m_exportOptionsData.EnumSolids[comboBoxSolids.SelectedIndex];

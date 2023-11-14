@@ -21,21 +21,23 @@
 //
 
 using System;
+using System.Windows.Forms;
+using Revit.SDK.Samples.PowerCircuit.CS.Properties;
 
 namespace Revit.SDK.Samples.PowerCircuit.CS
 {
     /// <summary>
-    /// The dialog which lets user operate selected elements
+    ///     The dialog which lets user operate selected elements
     /// </summary>
-    public partial class CircuitOperationForm : System.Windows.Forms.Form
+    public partial class CircuitOperationForm : Form
     {
         /// <summary>
-        /// Object of data class
+        ///     Object of data class
         /// </summary>
-        CircuitOperationData m_optionData;
+        private readonly CircuitOperationData m_optionData;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="optionData"></param>
         public CircuitOperationForm(CircuitOperationData optionData)
@@ -48,7 +50,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Initialize buttons
+        ///     Initialize buttons
         /// </summary>
         private void InitializeButtons()
         {
@@ -60,11 +62,11 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         }
 
         /// <summary>
-        /// Add tool tips
+        ///     Add tool tips
         /// </summary>
         private void AddToolTips()
         {
-            var rsm = Properties.Resources.ResourceManager;
+            var rsm = Resources.ResourceManager;
             toolTip.SetToolTip(buttonCreate, rsm.GetString("tipCreateCircuit"));
             toolTip.SetToolTip(buttonEdit, rsm.GetString("tipEditCircuit"));
             toolTip.SetToolTip(buttonSelectPanel, rsm.GetString("tipSelectPanel"));

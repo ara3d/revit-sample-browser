@@ -22,21 +22,22 @@
 
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Provide a dialog which lets user choose the operation(export or import)
+    ///     Provide a dialog which lets user choose the operation(export or import)
     /// </summary>
     public partial class MainForm : Form
     {
         /// <summary>
-        /// Data class
+        ///     Data class
         /// </summary>
-        MainData m_mainData;
+        private readonly MainData m_mainData;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="mainData"></param>
         public MainForm(MainData mainData)
@@ -51,7 +52,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Append formats to be exported or imported
+        ///     Append formats to be exported or imported
         /// </summary>
         private void InitializeFormats()
         {
@@ -64,31 +65,23 @@ namespace Revit.SDK.Samples.ImportExport.CS
             comboBoxExport.Items.Add("GBXML");
             comboBoxExport.Items.Add("DGN");
             comboBoxExport.Items.Add("PDF");
-            if (m_mainData.Is3DView)
-            {
-                comboBoxExport.Items.Add("FBX");
-            }
+            if (m_mainData.Is3DView) comboBoxExport.Items.Add("FBX");
             comboBoxExport.Items.Add("IMAGE");
             comboBoxExport.SelectedIndex = 0;
 
             // Append formats to be imported
             comboBoxImport.Items.Add("DWG");
-            if (!m_mainData.Is3DView)
-            {
-                comboBoxImport.Items.Add("IMAGE");
-            }
+            if (!m_mainData.Is3DView) comboBoxImport.Items.Add("IMAGE");
 
-            if (m_mainData.CommandData.Application.Application.Product == Autodesk.Revit.ApplicationServices.ProductType.MEP)
-            {
+            if (m_mainData.CommandData.Application.Application.Product == ProductType.MEP)
                 comboBoxImport.Items.Add("GBXML");
-            }
             comboBoxImport.Items.Add("Inventor");
-            
+
             comboBoxImport.SelectedIndex = 0;
         }
 
         /// <summary>
-        /// Show the export/import dialog
+        ///     Show the export/import dialog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -97,7 +90,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var selectedFormat = string.Empty;
             var result = DialogResult.OK;
 
-            if (radioButtonExport.Checked == true)
+            if (radioButtonExport.Checked)
             {
                 selectedFormat = comboBoxExport.SelectedItem.ToString();
                 result = m_mainData.Export(selectedFormat);
@@ -108,7 +101,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 result = m_mainData.Import(selectedFormat);
             }
 
-            DialogResult = (result != DialogResult.Cancel ? DialogResult.OK : DialogResult.None);
+            DialogResult = result != DialogResult.Cancel ? DialogResult.OK : DialogResult.None;
         }
 
         private void radioButtonExport_CheckedChanged(object sender, EventArgs e)
@@ -121,6 +114,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             Close();
         }
-      
     }
 }

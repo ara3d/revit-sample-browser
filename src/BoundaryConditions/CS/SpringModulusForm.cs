@@ -27,16 +27,24 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.BoundaryConditions.CS
 {
     /// <summary>
-    /// user enter a positive number as the SpringModulus
+    ///     user enter a positive number as the SpringModulus
     /// </summary>
     public partial class SpringModulusForm : Form
     {
         // member
         private ConversionValue m_conversion; //conversion rule of current SpringModulus
 
+        /// <summary>
+        ///     constructor
+        /// </summary>
+        public SpringModulusForm()
+        {
+            InitializeComponent();
+        }
+
         // property
         /// <summary>
-        ///set conversion rule between diaplay value and inside value of current SpringModulus
+        ///     set conversion rule between diaplay value and inside value of current SpringModulus
         /// </summary>
         public ConversionValue Conversion
         {
@@ -45,25 +53,17 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         }
 
         /// <summary>
-        /// get the new value after interact with user
+        ///     get the new value after interact with user
         /// </summary>
         public double StringModulus { get; private set; }
 
         /// <summary>
-        /// set the old value before interact with user
+        ///     set the old value before interact with user
         /// </summary>
         public double OldStringModulus { get; set; }
 
         /// <summary>
-        /// constructor
-        /// </summary>
-        public SpringModulusForm()
-        {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// display the old value in the text box when show the interaction 
+        ///     display the old value in the text box when show the interaction
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -85,20 +85,17 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         }
 
         /// <summary>
-        /// user affirm the input
+        ///     user affirm the input
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            if (!springModulusTextBox.Focused)
-            {
-                DialogResult = DialogResult.OK; 
-            }                    
+            if (!springModulusTextBox.Focused) DialogResult = DialogResult.OK;
         }
 
         /// <summary>
-        /// user cancel the input
+        ///     user cancel the input
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -108,20 +105,17 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         }
 
         /// <summary>
-        /// user can click Enter key to end of the input
+        ///     user can click Enter key to end of the input
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void springModulusTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (13 == e.KeyValue)
-            {
-                okButton.Focus();
-            }
+            if (13 == e.KeyValue) okButton.Focus();
         }
 
         /// <summary>
-        /// check if the input is valid
+        ///     check if the input is valid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -152,7 +146,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 temp = Math.Round(temp, m_conversion.Precision);
 
                 // add corresponding unit
-                springModulusTextBox.Text = temp.ToString() + m_conversion.UnitName;
+                springModulusTextBox.Text = temp + m_conversion.UnitName;
 
                 // convert the display value into the inside value
                 StringModulus = temp * m_conversion.Ratio;
@@ -162,14 +156,13 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 {
                     springModulusTextBox.Focus();
                     springModulusTextBox.SelectAll();
-                    return;
                 }
             }
             catch (Exception)
             {
                 springModulusTextBox.Focus();
                 springModulusTextBox.SelectAll();
-            }        
+            }
         }
     }
 }

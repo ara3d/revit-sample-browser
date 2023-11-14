@@ -23,22 +23,21 @@
 
 using System;
 using System.Collections.Generic;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
 
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
-    /// The entrance of this example, implement the Execute method of IExternalCommand
+    ///     The entrance of this example, implement the Execute method of IExternalCommand
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        
-        public Result Execute(ExternalCommandData commandData, 
+        public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
@@ -49,7 +48,8 @@ namespace Revit.SDK.Samples.Openings.CS
 
                 //search Opening in Revit
                 var openingInfos = new List<OpeningInfo>();
-                var iter = (new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document)).OfClass(typeof(Opening)).GetElementIterator();
+                var iter = new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document)
+                    .OfClass(typeof(Opening)).GetElementIterator();
                 iter.Reset();
                 while (iter.MoveNext())
                 {
@@ -87,5 +87,5 @@ namespace Revit.SDK.Samples.Openings.CS
 
             return Result.Succeeded;
         }
-            }
+    }
 }

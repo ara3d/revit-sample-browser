@@ -26,43 +26,12 @@ using Autodesk.Revit.DB;
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
     /// <summary>
-    /// It represents a straight run connected to winder-corner.
+    ///     It represents a straight run connected to winder-corner.
     /// </summary>
-    class WinderStraight
+    internal class WinderStraight
     {
-        /*
-         *   (StartPoint)-------->--------(EndPoint)
-         *                       |
-         *                       |
-         *                       V (OffsetDirection)
-         *                       |
-         *                       |
-         *               -----------------
-         * 
-         */
-
         /// <summary>
-        /// Start delimiter of the straight run.
-        /// </summary>
-        public XYZ StartPoint { get; private set; }
-
-        /// <summary>
-        /// End delimiter of the straight run.
-        /// </summary>
-        public XYZ EndPoint { get; private set; }
-
-        /// <summary>
-        /// Perpendicular direction of start-to-end direction.
-        /// </summary>
-        public XYZ OffsetDirection { get; private set; }
-
-        /// <summary>
-        /// Number of steps in this straight run.
-        /// </summary>
-        public uint NumSteps { get; private set; }
-
-        /// <summary>
-        /// Constructor to initialize the basic fields of the straight run.
+        ///     Constructor to initialize the basic fields of the straight run.
         /// </summary>
         /// <param name="start">Start point</param>
         /// <param name="end">End point</param>
@@ -75,9 +44,39 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             NumSteps = numSteps;
             OffsetDirection = offsetDir;
         }
+        /*
+         *   (StartPoint)-------->--------(EndPoint)
+         *                       |
+         *                       |
+         *                       V (OffsetDirection)
+         *                       |
+         *                       |
+         *               -----------------
+         * 
+         */
 
         /// <summary>
-        /// Generate sketch of the straight run.
+        ///     Start delimiter of the straight run.
+        /// </summary>
+        public XYZ StartPoint { get; }
+
+        /// <summary>
+        ///     End delimiter of the straight run.
+        /// </summary>
+        public XYZ EndPoint { get; }
+
+        /// <summary>
+        ///     Perpendicular direction of start-to-end direction.
+        /// </summary>
+        public XYZ OffsetDirection { get; }
+
+        /// <summary>
+        ///     Number of steps in this straight run.
+        /// </summary>
+        public uint NumSteps { get; }
+
+        /// <summary>
+        ///     Generate sketch of the straight run.
         /// </summary>
         public void GenerateSketch(double runWidth,
             IList<Curve> outerBoundary, IList<Curve> walkPath,
@@ -111,7 +110,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             innerBoundary.Add(Line.CreateBound(innerStart, innerEnd));
 
             // Generate the NumSteps+1 riser lines.
-            var treadDepth = StartPoint.DistanceTo(EndPoint) / (double)NumSteps;
+            var treadDepth = StartPoint.DistanceTo(EndPoint) / NumSteps;
             var dir = (EndPoint - StartPoint).Normalize();
             var currentStep = StartPoint + OffsetDirection * runWidth * 0.5;
             var deltaStep = dir * treadDepth;

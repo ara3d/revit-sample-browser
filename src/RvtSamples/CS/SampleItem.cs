@@ -1,4 +1,4 @@
-    //
+//
 // (C) Copyright 2003-2019 by Autodesk, Inc.
 //
 // Permission to use, copy, modify, and distribute this software in
@@ -20,86 +20,57 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-    namespace RvtSamples
+namespace RvtSamples
 {
     /// <summary>
-    /// The class contains information of a sample item to be added into samples menu
+    ///     The class contains information of a sample item to be added into samples menu
     /// </summary>
     public class SampleItem
     {
-                /// <summary>
-        /// category
-        /// </summary>
-        private string m_category;
         /// <summary>
-        /// display name
+        ///     path of assembly
         /// </summary>
-        private string m_displayName;
-        /// <summary>
-        /// path of large image
-        /// </summary>
-        private string m_largeImage;
-        /// <summary>
-        /// path of image
-        /// </summary>
-        private string m_image;
-        /// <summary>
-        /// description
-        /// </summary>
-        private string m_description;
-        /// <summary>
-        /// path of assembly
-        /// </summary>
-        private string m_assembly;
-        /// <summary>
-        /// class name
-        /// </summary>
-        private string m_className;
-        
-                /// <summary>
-        /// category
-        /// </summary>
-        public string Category => m_category;
+        private readonly string m_assembly;
 
         /// <summary>
-        /// display name
+        ///     category
         /// </summary>
-        public string DisplayName => m_displayName;
+        private readonly string m_category;
 
         /// <summary>
-        /// path of large image
+        ///     class name
         /// </summary>
-        public string LargeImage => m_largeImage;
+        private readonly string m_className;
 
         /// <summary>
-        /// path of image
+        ///     description
         /// </summary>
-        public string Image => m_image;
+        private readonly string m_description;
 
         /// <summary>
-        /// description
+        ///     display name
         /// </summary>
-        public string Description => m_description;
+        private readonly string m_displayName;
 
         /// <summary>
-        /// path of assembly
+        ///     path of image
         /// </summary>
-        public string Assembly => m_assembly;
+        private readonly string m_image;
 
         /// <summary>
-        /// class name
+        ///     path of large image
         /// </summary>
-        public string ClassName => m_className;
+        private readonly string m_largeImage;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         public SampleItem()
         {
         }
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="category">category</param>
         /// <param name="displayName">display name</param>
@@ -108,7 +79,8 @@
         /// <param name="image">path of image</param>
         /// <param name="assembly">path of assembly</param>
         /// <param name="className">class name</param>
-        public SampleItem(string category, string displayName, string description, string largeImage, string image, string assembly, string className)
+        public SampleItem(string category, string displayName, string description, string largeImage, string image,
+            string assembly, string className)
         {
             m_category = category;
             m_displayName = displayName;
@@ -118,5 +90,40 @@
             m_assembly = assembly;
             m_className = className;
         }
-            }
+
+        /// <summary>
+        ///     category
+        /// </summary>
+        public string Category => m_category;
+
+        /// <summary>
+        ///     display name
+        /// </summary>
+        public string DisplayName => m_displayName;
+
+        /// <summary>
+        ///     path of large image
+        /// </summary>
+        public string LargeImage => m_largeImage;
+
+        /// <summary>
+        ///     path of image
+        /// </summary>
+        public string Image => m_image;
+
+        /// <summary>
+        ///     description
+        /// </summary>
+        public string Description => m_description;
+
+        /// <summary>
+        ///     path of assembly
+        /// </summary>
+        public string Assembly => m_assembly;
+
+        /// <summary>
+        ///     class name
+        /// </summary>
+        public string ClassName => m_className;
+    }
 }

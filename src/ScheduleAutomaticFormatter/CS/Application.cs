@@ -20,22 +20,31 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using Autodesk.Revit.UI;
-using System.Windows.Media.Imaging;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
+using Revit.SDK.Samples.ScheduleAutomaticFormatter.CS.Properties;
+using Size = System.Drawing.Size;
 
 namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
-    /// Implements the Revit add-in interface IExternalApplication
+    ///     Implements the Revit add-in interface IExternalApplication
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-                /// <summary>
-        /// Implements the OnShutdown event
+        /// <summary>
+        ///     Path to this assembly.
+        /// </summary>
+        private static readonly string addAssemblyPath = typeof(Application).Assembly.Location;
+
+        /// <summary>
+        ///     Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -45,7 +54,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         }
 
         /// <summary>
-        /// Implements the OnStartup event
+        ///     Implements the OnStartup event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -55,62 +64,57 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             return Result.Succeeded;
         }
 
-        
+
         private void CreateScheduleFormatterPanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("Schedule Formatter");
-         
+
             var pbd = new PushButtonData("ScheduleFormatter", "Format schedule",
-                    addAssemblyPath,
-                    typeof(ScheduleFormatterCommand).FullName);
+                addAssemblyPath,
+                typeof(ScheduleFormatterCommand).FullName);
 
             pbd.LongDescription = "Format the active schedule background columns.";
 
             var formatSchedulePB = rp.AddItem(pbd) as PushButton;
-            SetIconsForPushButton(formatSchedulePB, Properties.Resources.ScheduleFormatter);
+            SetIconsForPushButton(formatSchedulePB, Resources.ScheduleFormatter);
         }
 
         /// <summary>
-        /// Utility for adding icons to the button.
+        ///     Utility for adding icons to the button.
         /// </summary>
         /// <param name="button">The push button.</param>
         /// <param name="icon">The icon.</param>
-        private static void SetIconsForPushButton(PushButton button, System.Drawing.Icon icon)
+        private static void SetIconsForPushButton(PushButton button, Icon icon)
         {
             button.LargeImage = GetStdIcon(icon);
             button.Image = GetSmallIcon(icon);
         }
 
         /// <summary>
-        /// Gets the standard sized icon as a BitmapSource.
+        ///     Gets the standard sized icon as a BitmapSource.
         /// </summary>
         /// <param name="icon">The icon.</param>
         /// <returns>The BitmapSource.</returns>
-        private static BitmapSource GetStdIcon(System.Drawing.Icon icon)
+        private static BitmapSource GetStdIcon(Icon icon)
         {
-            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+            return Imaging.CreateBitmapSourceFromHIcon(
                 icon.Handle,
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
         }
 
         /// <summary>
-        /// Gets the small sized icon as a BitmapSource.
+        ///     Gets the small sized icon as a BitmapSource.
         /// </summary>
         /// <param name="icon">The icon.</param>
         /// <returns>The BitmapSource.</returns>
-        private static BitmapSource GetSmallIcon(System.Drawing.Icon icon)
+        private static BitmapSource GetSmallIcon(Icon icon)
         {
-            var smallIcon = new System.Drawing.Icon(icon, new System.Drawing.Size(16, 16));
-            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+            var smallIcon = new Icon(icon, new Size(16, 16));
+            return Imaging.CreateBitmapSourceFromHIcon(
                 smallIcon.Handle,
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
         }
-
-        /// <summary>
-        /// Path to this assembly.
-        /// </summary>
-        static string addAssemblyPath = typeof(Application).Assembly.Location;
     }
 }

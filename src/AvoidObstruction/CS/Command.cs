@@ -21,31 +21,32 @@
 //
 
 
+using System;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.AvoidObstruction.CS
 {
     /// <summary>
-    /// Implements interface IExternalCommand of Revit API.
+    ///     Implements interface IExternalCommand of Revit API.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        
-          public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
             {
                 transaction.Start();
-            
+
                 var resolver = new Resolver(commandData);
-                resolver.Resolve();                
+                resolver.Resolve();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 transaction.RollBack();
                 message += e.ToString();
@@ -55,8 +56,8 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
             {
                 transaction.Commit();
             }
+
             return Result.Succeeded;
         }
-
-            }
+    }
 }

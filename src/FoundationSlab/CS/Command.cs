@@ -21,24 +21,24 @@
 //
 
 using System;
+using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FoundationSlab.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-   [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
                 // Check commandData parameter.
-                if (null == commandData)
-                {
-                    return Result.Failed;
-                }
+                if (null == commandData) return Result.Failed;
 
                 SlabData revitDatas = null;
                 try
@@ -49,17 +49,17 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                 catch (NullReferenceException e)
                 {
                     message = e.Message;
-                    return Result.Cancelled;  // Data error.
+                    return Result.Cancelled; // Data error.
                 }
+
                 // Display form.
                 using (var displayForm = new FoundationSlabForm(revitDatas))
                 {
-                    if (displayForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
+                    if (displayForm.ShowDialog() == DialogResult.OK)
                         return Result.Succeeded; // Create foundation slabs successfully.
-                    }
                 }
-                return Result.Cancelled;  // Cancel creation.
+
+                return Result.Cancelled; // Cancel creation.
             }
             catch (Exception e)
             {
@@ -67,5 +67,5 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                 return Result.Failed; // Unknow error.
             }
         }
-            }
+    }
 }

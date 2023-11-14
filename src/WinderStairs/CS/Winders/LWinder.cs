@@ -21,75 +21,72 @@
 //
 
 using System;
-using Autodesk.Revit.DB;
 using System.Collections.Generic;
+using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
     /// <summary>
-    /// It represents an L-shape winder and consists of two straight runs and one winder corner.
+    ///     It represents an L-shape winder and consists of two straight runs and one winder corner.
     /// </summary>
-    class LWinder : Winder
+    internal class LWinder : Winder
     {
         /// <summary>
-        /// Number of straight steps at start.
+        ///     Winder Corner, connecting the first and the second straight runs.
+        /// </summary>
+        private WinderSinglePoint m_corner;
+
+        /// <summary>
+        ///     The second straight run at end.
+        /// </summary>
+        private WinderStraight m_straightAtEnd;
+
+        /// <summary>
+        ///     The first straight run at start.
+        /// </summary>
+        private WinderStraight m_straightAtStart;
+
+        /// <summary>
+        ///     Number of straight steps at start.
         /// </summary>
         public uint NumStepsAtStart { get; set; }
 
         /// <summary>
-        /// Number of straight steps at end.
+        ///     Number of straight steps at end.
         /// </summary>
         public uint NumStepsAtEnd { get; set; }
 
         /// <summary>
-        /// Number of winder steps in corner.
+        ///     Number of winder steps in corner.
         /// </summary>
         public uint NumStepsInCorner { get; set; }
 
         /// <summary>
-        /// CenterPoint Offset distance from the first inner boundary line of the corner.
+        ///     CenterPoint Offset distance from the first inner boundary line of the corner.
         /// </summary>
         public double CenterOffsetE { get; set; }
 
         /// <summary>
-        /// CenterPoint Offset distance from the second inner boundary line of the corner.
+        ///     CenterPoint Offset distance from the second inner boundary line of the corner.
         /// </summary>
         public double CenterOffsetF { get; set; }
 
         /// <summary>
-        /// Three points to determine the L-shape of the stairs.
+        ///     Three points to determine the L-shape of the stairs.
         /// </summary>
         public override IList<XYZ> ControlPoints
         {
             get => base.ControlPoints;
             set
             {
-                if (value.Count != 3)
-                {
-                    throw new ArgumentException("The control points count must be 3 for LWinder.");
-                }
+                if (value.Count != 3) throw new ArgumentException("The control points count must be 3 for LWinder.");
                 base.ControlPoints = value;
             }
         }
-        
-                /// <summary>
-        /// Winder Corner, connecting the first and the second straight runs.
-        /// </summary>
-        private WinderSinglePoint m_corner;
 
         /// <summary>
-        /// The first straight run at start.
-        /// </summary>
-        private WinderStraight m_straightAtStart;
-
-        /// <summary>
-        /// The second straight run at end.
-        /// </summary>
-        private WinderStraight m_straightAtEnd;
-
-        /// <summary>
-        /// This method constructs the winder corner and two straight runs.
-        /// Please be sure the input properties being set properly before calling this method.
+        ///     This method constructs the winder corner and two straight runs.
+        ///     Please be sure the input properties being set properly before calling this method.
         /// </summary>
         private void Construct()
         {
@@ -114,14 +111,15 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 perpendicularDir1 = perpendicularDir1.Negate();
                 perpendicularDir2 = perpendicularDir2.Negate();
             }
+
             m_straightAtStart = new WinderStraight(
                 startPnt, m_corner.StartPoint, perpendicularDir1, NumStepsAtStart);
             m_straightAtEnd = new WinderStraight(
                 m_corner.EndPoint, endPnt, perpendicularDir2, NumStepsAtEnd);
         }
-        
+
         /// <summary>
-        /// This method generates the sketch for L-shape winder stairs.
+        ///     This method generates the sketch for L-shape winder stairs.
         /// </summary>
         protected override void GenerateSketch()
         {

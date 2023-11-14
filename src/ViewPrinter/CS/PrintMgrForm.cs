@@ -19,25 +19,24 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
+using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
+using Control = System.Windows.Forms.Control;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
 {
-    public partial class PrintMgrForm : System.Windows.Forms.Form
+    public partial class PrintMgrForm : Form
     {
-        private PrintMgr m_printMgr;
+        private readonly PrintMgr m_printMgr;
 
         public PrintMgrForm(PrintMgr printMgr)
         {
             if (null == printMgr)
-            {
                 throw new ArgumentNullException("printMgr");
-            }
-            else
-            {
-                m_printMgr = printMgr;
-            }
+            m_printMgr = printMgr;
 
             InitializeComponent();
         }
@@ -49,7 +48,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         }
 
         /// <summary>
-        /// Initialize the UI data.
+        ///     Initialize the UI data.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -58,15 +57,13 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             printerNameComboBox.DataSource = m_printMgr.InstalledPrinterNames;
             // the selectedValueChange event have to add event handler after
             // data source be set, or else the delegate method will be invoked meaningless.
-            printerNameComboBox.SelectedValueChanged += new EventHandler(printerNameComboBox_SelectedValueChanged);
+            printerNameComboBox.SelectedValueChanged += printerNameComboBox_SelectedValueChanged;
             printerNameComboBox.SelectedItem = m_printMgr.PrinterName;
             if (m_printMgr.VerifyPrintToFile(printToFileCheckBox))
-            {
                 printToFileCheckBox.Checked = m_printMgr.IsPrintToFile;
-            }
 
             var controlsToEnableOrNot =
-                new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();
+                new Collection<Control>();
             controlsToEnableOrNot.Add(copiesNumericUpDown);
             controlsToEnableOrNot.Add(numberofcoyiesLabel);
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
@@ -77,22 +74,20 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             controlsToEnableOrNot.Add(browseButton);
             m_printMgr.VerifyPrintToFileName(controlsToEnableOrNot);
 
-            m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton);  
+            m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton);
 
             if (m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton))
             {
                 singleFileRadioButton.Checked = m_printMgr.IsCombinedFile;
                 separateFileRadioButton.Checked = !m_printMgr.IsCombinedFile;
             }
-            
+
 
             if (!m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton)
                 && m_printMgr.VerifyPrintToSeparateFile(separateFileRadioButton))
-            {
                 separateFileRadioButton.Checked = true;
-            } 
-            singleFileRadioButton.CheckedChanged += new EventHandler(combineRadioButton_CheckedChanged);
-                        
+            singleFileRadioButton.CheckedChanged += combineRadioButton_CheckedChanged;
+
             switch (m_printMgr.PrintRange)
             {
                 case PrintRange.Current:
@@ -104,12 +99,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 case PrintRange.Visible:
                     visiblePortionRadioButton.Checked = true;
                     break;
-                default:
-                    break;
             }
-            currentWindowRadioButton.CheckedChanged += new EventHandler(currentWindowRadioButton_CheckedChanged);
-            visiblePortionRadioButton.CheckedChanged += new EventHandler(visiblePortionRadioButton_CheckedChanged);
-            selectedViewsRadioButton.CheckedChanged += new EventHandler(selectedViewsRadioButton_CheckedChanged);
+
+            currentWindowRadioButton.CheckedChanged += currentWindowRadioButton_CheckedChanged;
+            visiblePortionRadioButton.CheckedChanged += visiblePortionRadioButton_CheckedChanged;
+            selectedViewsRadioButton.CheckedChanged += selectedViewsRadioButton_CheckedChanged;
 
             printToFileNameTextBox.Text = Environment.GetFolderPath(
                 Environment.SpecialFolder.MyDocuments) + "\\" + m_printMgr.DocumentTitle;
@@ -117,18 +111,13 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
             controlsToEnableOrNot.Add(selectedViewSheetSetButton);
             if (m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot))
-            {
                 selectedViewSheetSetLabel.Text = m_printMgr.SelectedViewSheetSetName;
-            }
 
             orderCheckBox.Checked = m_printMgr.PrintOrderReverse;
-            orderCheckBox.CheckedChanged += new EventHandler(orderCheckBox_CheckedChanged);
+            orderCheckBox.CheckedChanged += orderCheckBox_CheckedChanged;
 
-            if (m_printMgr.VerifyCollate(collateCheckBox))
-            {
-                collateCheckBox.Checked = m_printMgr.Collate;
-            }
-            collateCheckBox.CheckedChanged += new EventHandler(collateCheckBox_CheckedChanged);
+            if (m_printMgr.VerifyCollate(collateCheckBox)) collateCheckBox.Checked = m_printMgr.Collate;
+            collateCheckBox.CheckedChanged += collateCheckBox_CheckedChanged;
 
             printSetupNameLabel.Text = m_printMgr.PrintSetupName;
         }
@@ -141,7 +130,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             m_printMgr.VerifyPrintToFile(printToFileCheckBox);
 
             var controlsToEnableOrNot =
-                new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();
+                new Collection<Control>();
             controlsToEnableOrNot.Add(copiesNumericUpDown);
             controlsToEnableOrNot.Add(numberofcoyiesLabel);
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
@@ -152,16 +141,13 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             controlsToEnableOrNot.Add(browseButton);
 
             if (!string.IsNullOrEmpty(printToFileNameTextBox.Text))
-            {
                 printToFileNameTextBox.Text = printToFileNameTextBox.Text.Remove(
                     printToFileNameTextBox.Text.LastIndexOf(".")) + m_printMgr.PostFix;
-            }
-            
+
             m_printMgr.VerifyPrintToFileName(controlsToEnableOrNot);
 
             m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton);
             m_printMgr.VerifyPrintToSeparateFile(separateFileRadioButton);
-            
         }
 
         private void printToFileCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -171,7 +157,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             // Verify the relative controls is enable or not, according to the print to file
             // check box is checked or not.
             var controlsToEnableOrNot =
-                new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();
+                new Collection<Control>();
             controlsToEnableOrNot.Add(copiesNumericUpDown);
             controlsToEnableOrNot.Add(numberofcoyiesLabel);
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
@@ -182,24 +168,19 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             controlsToEnableOrNot.Add(browseButton);
             m_printMgr.VerifyPrintToFileName(controlsToEnableOrNot);
 
-            m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton);            
+            m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton);
         }
 
         private void combineRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton))
-            {
                 m_printMgr.IsCombinedFile = singleFileRadioButton.Checked;
-            }            
         }
 
         private void browseButton_Click(object sender, EventArgs e)
         {
             var newName = m_printMgr.ChangePrintToFileName();
-            if (!string.IsNullOrEmpty(newName))
-            {
-                printToFileNameTextBox.Text = newName;
-            }
+            if (!string.IsNullOrEmpty(newName)) printToFileNameTextBox.Text = newName;
         }
 
         private void currentWindowRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -209,7 +190,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 m_printMgr.PrintRange = PrintRange.Current;
 
                 var controlsToEnableOrNot =
-                new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();
+                    new Collection<Control>();
                 controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
                 controlsToEnableOrNot.Add(selectedViewSheetSetButton);
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
@@ -220,6 +201,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                     singleFileRadioButton.Checked = true;
                     separateFileRadioButton.Checked = false;
                 }
+
                 m_printMgr.VerifyPrintToSeparateFile(separateFileRadioButton);
                 m_printMgr.VerifyCollate(collateCheckBox);
             }
@@ -232,7 +214,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 m_printMgr.PrintRange = PrintRange.Visible;
 
                 var controlsToEnableOrNot =
-                new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();
+                    new Collection<Control>();
                 controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
                 controlsToEnableOrNot.Add(selectedViewSheetSetButton);
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
@@ -243,6 +225,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                     singleFileRadioButton.Checked = true;
                     separateFileRadioButton.Checked = false;
                 }
+
                 m_printMgr.VerifyPrintToSeparateFile(separateFileRadioButton);
                 m_printMgr.VerifyCollate(collateCheckBox);
             }
@@ -255,20 +238,17 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 m_printMgr.PrintRange = PrintRange.Select;
 
                 var controlsToEnableOrNot =
-                new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();
+                    new Collection<Control>();
                 controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
                 controlsToEnableOrNot.Add(selectedViewSheetSetButton);
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
 
                 m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton);
                 if (m_printMgr.VerifyPrintToSeparateFile(separateFileRadioButton))
-                {
                     separateFileRadioButton.Checked = true;
-                }
                 m_printMgr.VerifyPrintToSeparateFile(separateFileRadioButton);
                 m_printMgr.VerifyCollate(collateCheckBox);
             }
-            
         }
 
         private void orderCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -291,7 +271,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         {
             try
             {
-                m_printMgr.CopyNumber = (int)(copiesNumericUpDown.Value);
+                m_printMgr.CopyNumber = (int)copiesNumericUpDown.Value;
             }
             catch (InvalidOperationException)
             {

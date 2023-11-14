@@ -27,13 +27,25 @@ using Autodesk.Revit.UI.Events;
 namespace Revit.SDK.Samples.DisableCommand.CS
 {
     /// <summary>
-    /// Implements the Revit add-in interface IExternalApplication
+    ///     Implements the Revit add-in interface IExternalApplication
     /// </summary>
     public class Application : IExternalApplication
     {
-               
         /// <summary>
-        /// Implements the OnStartup event
+        ///     The string name of the command to disable.  To lookup a command id string, open a session of Revit,
+        ///     invoke the desired command, close Revit, then look to the journal from that session.  The command
+        ///     id string will be toward the end of the journal, look for the "Jrn.Command" entry that was recorded
+        ///     when it was selected.
+        /// </summary>
+        private static readonly string s_commandToDisable = "ID_EDIT_DESIGNOPTIONS";
+
+        /// <summary>
+        ///     The command id, stored statically to allow for removal of the command binding.
+        /// </summary>
+        private static RevitCommandId s_commandId;
+
+        /// <summary>
+        ///     Implements the OnStartup event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -45,9 +57,9 @@ namespace Revit.SDK.Samples.DisableCommand.CS
             // Confirm that the command can be overridden
             if (!s_commandId.CanHaveBinding)
             {
-                ShowDialog("Error", "The target command " + s_commandToDisable + 
-                            " selected for disabling cannot be overridden");
-				return Result.Failed;
+                ShowDialog("Error", "The target command " + s_commandToDisable +
+                                    " selected for disabling cannot be overridden");
+                return Result.Failed;
             }
 
             // Create a binding to override the command.
@@ -63,14 +75,14 @@ namespace Revit.SDK.Samples.DisableCommand.CS
             catch (Exception)
             {
                 ShowDialog("Error", "This add-in is unable to disable the target command " + s_commandToDisable +
-                            "; most likely another add-in has overridden this command.");
+                                    "; most likely another add-in has overridden this command.");
             }
 
             return Result.Succeeded;
         }
 
         /// <summary>
-        /// Implements the OnShutdown event
+        ///     Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
@@ -82,9 +94,9 @@ namespace Revit.SDK.Samples.DisableCommand.CS
             return Result.Succeeded;
         }
 
-        
+
         /// <summary>
-        /// A command execution method which disables any command it is applied to (with a user-visible message).
+        ///     A command execution method which disables any command it is applied to (with a user-visible message).
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="args">Arguments.</param>
@@ -94,7 +106,7 @@ namespace Revit.SDK.Samples.DisableCommand.CS
         }
 
         /// <summary>
-        /// Show a task dialog with a message and title.
+        ///     Show a task dialog with a message and title.
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="message">The message.</param>
@@ -108,19 +120,5 @@ namespace Revit.SDK.Samples.DisableCommand.CS
             };
             td.Show();
         }
-
-        /// <summary>
-        /// The string name of the command to disable.  To lookup a command id string, open a session of Revit, 
-        /// invoke the desired command, close Revit, then look to the journal from that session.  The command
-        /// id string will be toward the end of the journal, look for the "Jrn.Command" entry that was recorded
-        /// when it was selected.
-        /// </summary>
-        static string s_commandToDisable = "ID_EDIT_DESIGNOPTIONS";
-
-        /// <summary>
-        /// The command id, stored statically to allow for removal of the command binding.
-        /// </summary>
-        static RevitCommandId s_commandId;
-
     }
 }

@@ -19,23 +19,24 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
+
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using Autodesk.Revit.DB;
-    using Autodesk.Revit.DB.Structure;
-
-    using GeoElement = Autodesk.Revit.DB.GeometryElement;
+    using GeoElement = GeometryElement;
 
 
     /// <summary>
-    /// data and data manager of the AreaReinforcement
+    ///     data and data manager of the AreaReinforcement
     /// </summary>
     public class AreaReinData
     {
-        private Document m_doc;
+        private readonly Document m_doc;
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         public AreaReinData(Document doc)
         {
@@ -43,12 +44,12 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        /// Parameter LayoutRule of AreaReinforcement
+        ///     Parameter LayoutRule of AreaReinforcement
         /// </summary>
         public LayoutRules LayoutRule { get; set; } = LayoutRules.Maximum_Spacing;
 
         /// <summary>
-        /// set the parameters to given AreaReinforcement
+        ///     set the parameters to given AreaReinforcement
         /// </summary>
         /// <param name="areaRein"></param>
         public virtual void FillIn(AreaReinforcement areaRein)
@@ -61,17 +62,15 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             {
                 var paraLayout = ParameterUtil.FindParaByName(
                     areaRein.Parameters, "Layout Rule");
-                if (null != paraLayout)
-                {
-                    paraLayout.Set(temp);
-                }
+                if (null != paraLayout) paraLayout.Set(temp);
             }
+
             ChangeAreaReinCurves(areaRein);
         }
 
         /// <summary>
-        /// On the interior 4 curves, set the override flag 
-        /// and flip the hooks on the top 2 layers to "up"
+        ///     On the interior 4 curves, set the override flag
+        ///     and flip the hooks on the top 2 layers to "up"
         /// </summary>
         /// <param name="areaRein"></param>
         private void ChangeAreaReinCurves(AreaReinforcement areaRein)

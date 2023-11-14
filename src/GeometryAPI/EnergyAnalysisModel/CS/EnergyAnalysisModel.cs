@@ -19,11 +19,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using System.Windows.Forms;
 
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
@@ -33,15 +32,13 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
     {
         // An EnergyAnalysisDetailModel member that can get all analysis data includes surfaces, spaces and openings.
         private EnergyAnalysisDetailModel m_energyAnalysisDetailModel;
+
         // Options for Energy Analysis process
         // revit document
-        private Document RevitDoc;
-
-        // Options Property
-        public EnergyAnalysisDetailModelOptions Options { get; set; }
+        private readonly Document RevitDoc;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="doc">Revit Document</param>
         public EnergyAnalysisModel(Document doc)
@@ -50,8 +47,11 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
             Options = new EnergyAnalysisDetailModelOptions();
         }
 
+        // Options Property
+        public EnergyAnalysisDetailModelOptions Options { get; set; }
+
         /// <summary>
-        /// Get EnergyAnalysisDetailModel object and Initialize it.
+        ///     Get EnergyAnalysisDetailModel object and Initialize it.
         /// </summary>
         public void Initialize()
         {
@@ -61,7 +61,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         }
 
         /// <summary>
-        /// This method get all openings surfaces from current model
+        ///     This method get all openings surfaces from current model
         /// </summary>
         /// <returns>XElement that places openings surfaces</returns>
         public XElement GetAnalyticalOpenings()
@@ -93,7 +93,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         }
 
         /// <summary>
-        /// This method get all Analytical ShadingSurfaces from current model
+        ///     This method get all Analytical ShadingSurfaces from current model
         /// </summary>
         /// <returns>XElement that places shading surfaces</returns>
         public XElement GetAnalyticalShadingSurfaces()
@@ -110,7 +110,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         }
 
         /// <summary>
-        /// Extract Analytical data about Space and its surfaces
+        ///     Extract Analytical data about Space and its surfaces
         /// </summary>
         /// <returns>XElment that includes all data about AnalyticalSpace</returns>
         public XElement GetAnalyticalSpaces()
@@ -131,12 +131,13 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
                 var analyticalSurfaces = space.GetAnalyticalSurfaces();
                 SurfacesToXElement(spaceNode, analyticalSurfaces);
             }
+
             // return the whole Spaces Node
             return energyAnalysisSpacesNode;
         }
 
         /// <summary>
-        /// The method adds given surfaces to specific XElement
+        ///     The method adds given surfaces to specific XElement
         /// </summary>
         /// <param name="node">Parent node</param>
         /// <param name="analyticalSurfaces">The surfaces list that will be added into the para node</param>
@@ -153,7 +154,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         }
 
         /// <summary>
-        /// Get Analytical data and pass them to UI controls
+        ///     Get Analytical data and pass them to UI controls
         /// </summary>
         /// <param name="treeView"></param>
         public void RefreshAnalysisData(TreeView treeView)
@@ -178,7 +179,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         }
 
         /// <summary>
-        /// This method converts XElement nodes to Tree nodes so that analysis data could be displayed in UI treeView
+        ///     This method converts XElement nodes to Tree nodes so that analysis data could be displayed in UI treeView
         /// </summary>
         /// <param name="element">XElement to be converted</param>
         /// <returns>Tree Node that comes from XElement</returns>
@@ -191,16 +192,13 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
                 // return if it is leaf node
                 return node;
             // convert its child elements
-            foreach (var ele in element.Elements())
-            {
-                node.Nodes.Add(XElementToTreeNode(ele));
-            }
+            foreach (var ele in element.Elements()) node.Nodes.Add(XElementToTreeNode(ele));
             // return whole node
             return node;
         }
 
         /// <summary>
-        /// This method converts UI selected string to EnergyAnalysisDetailModelTier enum
+        ///     This method converts UI selected string to EnergyAnalysisDetailModelTier enum
         /// </summary>
         /// <param name="tierValue">Selected string from UI</param>
         public void SetTier(string tierValue)

@@ -22,22 +22,24 @@
 
 
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.PrintLog.CS
 {
     /// <summary>
-    /// Class used to call API to raise ViewPrint and DocumentPrint events
+    ///     Class used to call API to raise ViewPrint and DocumentPrint events
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    public class Command: IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
+    public class Command : IExternalCommand
     {
-                public Result Execute(ExternalCommandData commandData, 
+        public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             // Filter all printable views in current document and print them,
@@ -53,16 +55,12 @@ namespace Revit.SDK.Samples.PrintLog.CS
                 // Filter all printable views 
                 var printableViews = new ViewSet();
                 foreach (View view in viewElems)
-                {
                     // skip view templates because they're invalid for print
                     if (!view.IsTemplate && view.CanBePrinted)
-                    {
                         printableViews.Insert(view);
-                    }
-                }
                 // 
                 // Print to file to folder of assembly
-                var assemblyPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var pm = document.PrintManager;
                 pm.PrintToFile = true;
                 pm.PrintToFileName = assemblyPath + "\\PrintOut.prn";
@@ -71,14 +69,15 @@ namespace Revit.SDK.Samples.PrintLog.CS
                 // Print views now to raise events:
                 document.Print(printableViews);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 message = ex.Message;
                 return Result.Failed;
             }
+
             //
             // return succeed by default
             return Result.Succeeded;
         }
-            }
+    }
 }

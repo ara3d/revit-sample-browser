@@ -22,17 +22,18 @@
 
 using System;
 using System.Windows.Forms;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.TagBeam.CS
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
+    [Transaction(TransactionMode.Manual)]
+    [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-                public Result Execute(
+        public Result Execute(
             ExternalCommandData commandData,
             ref string message,
             ElementSet elements)
@@ -46,10 +47,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
                 using (var displayForm = new TagBeamForm(dataBuffer))
                 {
                     var result = displayForm.ShowDialog();
-                    if (DialogResult.OK != result)
-                    {
-                        return Result.Cancelled;
-                    }
+                    if (DialogResult.OK != result) return Result.Cancelled;
                 }
 
                 return Result.Succeeded;
@@ -60,15 +58,15 @@ namespace Revit.SDK.Samples.TagBeam.CS
                 return Result.Failed;
             }
         }
-            }
+    }
 
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+    [Transaction(TransactionMode.Manual)]
     public class TagRebar : IExternalCommand
     {
         public Result Execute(
-          ExternalCommandData commandData,
-          ref string message,
-          ElementSet elements)
+            ExternalCommandData commandData,
+            ref string message,
+            ElementSet elements)
         {
             try
             {
@@ -77,26 +75,29 @@ namespace Revit.SDK.Samples.TagBeam.CS
                 var view = revitDoc.Document.ActiveView;
                 foreach (var elemId in revitDoc.Selection.GetElementIds())
                 {
-                   var elem = revitDoc.Document.GetElement(elemId);
+                    var elem = revitDoc.Document.GetElement(elemId);
                     if (elem.GetType() == typeof(Rebar))
                     {
                         // cast to Rebar and get its first curve
                         var rebar = (Rebar)elem;
-                        var curve = rebar.GetCenterlineCurves(false, false, false,MultiplanarOption.IncludeAllMultiplanarCurves,0)[0];
-                        var subelements = rebar.GetSubelements();  
+                        var curve = rebar.GetCenterlineCurves(false, false, false,
+                            MultiplanarOption.IncludeAllMultiplanarCurves, 0)[0];
+                        var subelements = rebar.GetSubelements();
 
                         // create a rebar tag at the first end point of the first curve
-                        using( var t = new Transaction(revitDoc.Document))
+                        using (var t = new Transaction(revitDoc.Document))
                         {
-                           t.Start("Create new tag");
-                           IndependentTag.Create(revitDoc.Document, view.Id, subelements[0].GetReference(), true,
-                               TagMode.TM_ADDBY_CATEGORY,
-                               TagOrientation.Horizontal, curve.GetEndPoint(0));
-                           t.Commit();
+                            t.Start("Create new tag");
+                            IndependentTag.Create(revitDoc.Document, view.Id, subelements[0].GetReference(), true,
+                                TagMode.TM_ADDBY_CATEGORY,
+                                TagOrientation.Horizontal, curve.GetEndPoint(0));
+                            t.Commit();
                         }
+
                         return Result.Succeeded;
                     }
                 }
+
                 message = "No rebar selected!";
                 return Result.Failed;
             }
@@ -108,13 +109,13 @@ namespace Revit.SDK.Samples.TagBeam.CS
         }
     }
 
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+    [Transaction(TransactionMode.Manual)]
     public class CreateText : IExternalCommand
     {
         public Result Execute(
-          ExternalCommandData commandData,
-          ref string message,
-          ElementSet elements)
+            ExternalCommandData commandData,
+            ref string message,
+            ElementSet elements)
         {
             try
             {
@@ -126,12 +127,13 @@ namespace Revit.SDK.Samples.TagBeam.CS
 
                 foreach (var elemId in revitDoc.Selection.GetElementIds())
                 {
-                   var elem = dbDoc.GetElement(elemId);
+                    var elem = dbDoc.GetElement(elemId);
                     if (elem.GetType() == typeof(Rebar))
                     {
                         // cast to Rebar and get its first curve
                         var rebar = (Rebar)elem;
-                        var curve = rebar.GetCenterlineCurves(false, false, false, MultiplanarOption.IncludeAllMultiplanarCurves, 0)[0];
+                        var curve = rebar.GetCenterlineCurves(false, false, false,
+                            MultiplanarOption.IncludeAllMultiplanarCurves, 0)[0];
 
                         // calculate necessary arguments
                         var origin = new XYZ(
@@ -141,15 +143,17 @@ namespace Revit.SDK.Samples.TagBeam.CS
                         var strText = "This is " + rebar.Category.Name + " : " + rebar.Name;
 
                         // create the text
-                        using( var t = new Transaction(dbDoc))
+                        using (var t = new Transaction(dbDoc))
                         {
-                           t.Start("New text note");
-                           TextNote.Create(dbDoc, view.Id, origin, strText, currentTextTypeId);
-                           t.Commit();
+                            t.Start("New text note");
+                            TextNote.Create(dbDoc, view.Id, origin, strText, currentTextTypeId);
+                            t.Commit();
                         }
+
                         return Result.Succeeded;
                     }
                 }
+
                 message = "No rebar selected!";
                 return Result.Failed;
             }

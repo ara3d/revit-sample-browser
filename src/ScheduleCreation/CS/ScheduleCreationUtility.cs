@@ -28,14 +28,14 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ScheduleCreation.CS
 {
     /// <summary>
-    /// Utility class that contains methods of view schedule creation and schedule sheet instance creation.
+    ///     Utility class that contains methods of view schedule creation and schedule sheet instance creation.
     /// </summary>
-    class ScheduleCreationUtility
+    internal class ScheduleCreationUtility
     {
-        private static BuiltInParameter[] s_skipParameters = new BuiltInParameter[] { BuiltInParameter.ALL_MODEL_MARK };
+        private static readonly BuiltInParameter[] s_skipParameters = { BuiltInParameter.ALL_MODEL_MARK };
 
         /// <summary>
-        /// Create view schedule(s) and add them to sheet.
+        ///     Create view schedule(s) and add them to sheet.
         /// </summary>
         /// <param name="uiDocument">UIdocument of revit file.</param>
         public void CreateAndAddSchedules(UIDocument uiDocument)
@@ -45,16 +45,13 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
 
             var schedules = CreateSchedules(uiDocument);
 
-            foreach (var schedule in schedules)
-            {
-                AddScheduleToNewSheet(uiDocument.Document, schedule);
-            }
+            foreach (var schedule in schedules) AddScheduleToNewSheet(uiDocument.Document, schedule);
 
             tGroup.Assimilate();
         }
 
         /// <summary>
-        /// Create a sheet to show the schedule.
+        ///     Create a sheet to show the schedule.
         /// </summary>
         /// <param name="document">DBDocument of revit file.</param>
         /// <param name="schedule">View schedule which will be shown on sheet.</param>
@@ -105,7 +102,7 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
         }
 
         /// <summary>
-        /// Create a view schedule of wall category and add schedule field, filter and sorting/grouping field to it.
+        ///     Create a view schedule of wall category and add schedule field, filter and sorting/grouping field to it.
         /// </summary>
         /// <param name="uiDocument">UIdocument of revit file.</param>
         /// <returns>ICollection of created view schedule(s).</returns>
@@ -119,13 +116,13 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
             var schedules = new List<ViewSchedule>();
 
             //Create an empty view schedule of wall category.
-            var schedule = ViewSchedule.CreateSchedule(document, new ElementId(BuiltInCategory.OST_Walls), ElementId.InvalidElementId);
+            var schedule = ViewSchedule.CreateSchedule(document, new ElementId(BuiltInCategory.OST_Walls),
+                ElementId.InvalidElementId);
             schedule.Name = "Wall Schedule 1";
             schedules.Add(schedule);
 
             //Iterate all the schedulable field gotten from the walls view schedule.
             foreach (var schedulableField in schedule.Definition.GetSchedulableFields())
-            {
                 //Judge if the FieldType is ScheduleFieldType.Instance.
                 if (schedulableField.FieldType == ScheduleFieldType.Instance)
                 {
@@ -164,7 +161,8 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
                     if (field.ParameterId == new ElementId(BuiltInParameter.HOST_VOLUME_COMPUTED))
                     {
                         var volumeFilterInCubicFt = 0.8 * Math.Pow(3.2808399, 3.0);
-                        var filter = new ScheduleFilter(field.FieldId, ScheduleFilterType.GreaterThan, volumeFilterInCubicFt);
+                        var filter = new ScheduleFilter(field.FieldId, ScheduleFilterType.GreaterThan,
+                            volumeFilterInCubicFt);
                         schedule.Definition.AddFilter(filter);
                     }
 
@@ -176,7 +174,6 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
                         schedule.Definition.AddSortGroupField(sortGroupField);
                     }
                 }
-            }
 
             t.Commit();
 
@@ -186,17 +183,15 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
         }
 
         /// <summary>
-        /// Judge if the parameterId should be skipped.
+        ///     Judge if the parameterId should be skipped.
         /// </summary>
         /// <param name="parameterId">ParameterId to be judged.</param>
         /// <returns>Return true if parameterId should be skipped.</returns>
         private bool ShouldSkip(ElementId parameterId)
         {
             foreach (var bip in s_skipParameters)
-            {
                 if (new ElementId(bip) == parameterId)
                     return true;
-            }
             return false;
         }
     }

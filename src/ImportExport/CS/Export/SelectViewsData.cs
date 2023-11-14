@@ -26,73 +26,37 @@ using Autodesk.Revit.UI;
 namespace Revit.SDK.Samples.ImportExport.CS
 {
     /// <summary>
-    /// Data class which stores views information for export
+    ///     Data class which stores views information for export
     /// </summary>
     public class SelectViewsData
     {
-                /// <summary>
-        /// Revit command data
+        /// <summary>
+        ///     Revit command data
         /// </summary>
-        private ExternalCommandData m_commandData;
+        private readonly ExternalCommandData m_commandData;
 
         /// <summary>
-        /// All printable views(except sheets)
+        ///     Whether contain 3D view in selected views
         /// </summary>
-        private ViewSet m_printableViews;
+        private bool m_contain3DView;
 
         /// <summary>
-        /// All printable sheets
+        ///     All printable sheets
         /// </summary>
         private ViewSet m_printableSheets;
 
         /// <summary>
-        /// All selected views in UI
+        ///     All printable views(except sheets)
+        /// </summary>
+        private ViewSet m_printableViews;
+
+        /// <summary>
+        ///     All selected views in UI
         /// </summary>
         private ViewSet m_selectedViews;
 
         /// <summary>
-        /// Whether contain 3D view in selected views
-        /// </summary>
-        private bool m_contain3DView;
-        
-                /// <summary>
-        /// All printable views(except sheets)
-        /// </summary>
-        public ViewSet PrintableViews
-        {
-            get => m_printableViews;
-            set => m_printableViews = value;
-        }
-
-        /// <summary>
-        /// All printable sheets
-        /// </summary>
-        public ViewSet PrintableSheets
-        {
-            get => m_printableSheets;
-            set => m_printableSheets = value;
-        }      
-
-        /// <summary>
-        /// All selected views in UI
-        /// </summary>
-        public ViewSet SelectedViews
-        {
-            get => m_selectedViews;
-            set => m_selectedViews = value;
-        }
-
-        /// <summary>
-        /// Whether contain 3D view in selected views
-        /// </summary>
-        public bool Contain3DView
-        {
-            get => m_contain3DView;
-            set => m_contain3DView = value;
-        }
-        
-        /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="commandData"></param>
         public SelectViewsData(ExternalCommandData commandData)
@@ -106,7 +70,43 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         /// <summary>
-        /// Get all printable views and sheets
+        ///     All printable views(except sheets)
+        /// </summary>
+        public ViewSet PrintableViews
+        {
+            get => m_printableViews;
+            set => m_printableViews = value;
+        }
+
+        /// <summary>
+        ///     All printable sheets
+        /// </summary>
+        public ViewSet PrintableSheets
+        {
+            get => m_printableSheets;
+            set => m_printableSheets = value;
+        }
+
+        /// <summary>
+        ///     All selected views in UI
+        /// </summary>
+        public ViewSet SelectedViews
+        {
+            get => m_selectedViews;
+            set => m_selectedViews = value;
+        }
+
+        /// <summary>
+        ///     Whether contain 3D view in selected views
+        /// </summary>
+        public bool Contain3DView
+        {
+            get => m_contain3DView;
+            set => m_contain3DView = value;
+        }
+
+        /// <summary>
+        ///     Get all printable views and sheets
         /// </summary>
         private void GetAllPrintableViews()
         {
@@ -121,17 +121,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 var view = itor.Current as View;
                 // skip view templates because they're invisible in project browser, invalid for print
                 if (null == view || view.IsTemplate || !view.CanBePrinted)
-                {
                     continue;
-                }
-                else if(view.ViewType == ViewType.DrawingSheet)
-                {
+                if (view.ViewType == ViewType.DrawingSheet)
                     m_printableSheets.Insert(view);
-                }
                 else
-                {
                     m_printableViews.Insert(view);
-                }
             }
         }
     }

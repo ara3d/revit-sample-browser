@@ -20,21 +20,21 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System.Collections.Generic;
-using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Site.CS
 {
     /// <summary>
-    /// A command that deletes a subregion and all topography surface points it contains.
+    ///     A command that deletes a subregion and all topography surface points it contains.
     /// </summary>
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    class SiteDeleteRegionAndPointsCommand: IExternalCommand
+    [Transaction(TransactionMode.Manual)]
+    internal class SiteDeleteRegionAndPointsCommand : IExternalCommand
     {
-                /// <summary>
-        /// Implementation of the command.
+        /// <summary>
+        ///     Implementation of the command.
         /// </summary>
         /// <param name="commandData"></param>
         /// <param name="message"></param>
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.Site.CS
         }
 
         /// <summary>
-        /// Deletes a subregion and all topography surface points it contains.
+        ///     Deletes a subregion and all topography surface points it contains.
         /// </summary>
         /// <param name="uiDoc">The document.</param>
         public void DeleteSubregionAndPoints(UIDocument uiDoc)
@@ -67,7 +67,6 @@ namespace Revit.SDK.Samples.Site.CS
 
                 // Edit scope to delete points- if there are points in the region
                 if (points.Count > 0)
-                {
                     using (var editScope = new TopographyEditScope(doc, "Edit TS"))
                     {
                         editScope.Start(toposurface.Id);
@@ -83,7 +82,6 @@ namespace Revit.SDK.Samples.Site.CS
 
                         editScope.Commit(new TopographyEditFailuresPreprocessor());
                     }
-                }
 
                 // Transaction to delete subregion
                 using (var t2 = new Transaction(doc, "Delete subregion"))
@@ -92,10 +90,9 @@ namespace Revit.SDK.Samples.Site.CS
                     doc.Delete(subregion.Id);
                     t2.Commit();
                 }
+
                 deleteGroup.Assimilate();
             }
-
         }
-
-            }
+    }
 }

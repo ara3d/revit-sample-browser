@@ -19,47 +19,49 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
+
 using System;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Collections;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Drawing.Drawing2D;
+using Color = System.Drawing.Color;
+using Form = System.Windows.Forms.Form;
 
 namespace Revit.SDK.Samples.SlabShapeEditing.CS
 {
     /// <summary>
-    /// window form contains one picture box to show the 
-    /// profile of slab geometry. user can add vertex and crease.
-    /// User can edit slab shape via vertex and crease too.
+    ///     window form contains one picture box to show the
+    ///     profile of slab geometry. user can add vertex and crease.
+    ///     User can edit slab shape via vertex and crease too.
     /// </summary>
-    public partial class SlabShapeEditingForm : System.Windows.Forms.Form
+    public partial class SlabShapeEditingForm : Form
     {
-        enum EditorState { AddVertex, AddCrease, Select, Rotate, Null };
+        private const string justNumber = "Please input numbers in textbox!"; //error message
+        private const string selectFirst = "Please select a Vertex (or Crease) first!"; //error message
+        private EditorState editorState; //state of user's operation
+        private int m_clickedIndex; //index of crease and vertex which mouse clicked.
 
-        ExternalCommandData m_commandData; //object which contains reference of Revit Application
-        SlabProfile m_slabProfile; //store geometry info of selected slab
-        PointF m_mouseRightDownLocation; //where mouse right button down
-        LineTool m_lineTool; //tool use to draw crease
-        LineTool m_pointTool; //tool use to draw vertex
-        ArrayList m_graphicsPaths; //store all the GraphicsPath objects of crease and vertex.
-        int m_selectIndex; //index of crease and vertex which mouse hovering on.
-        int m_clickedIndex; //index of crease and vertex which mouse clicked.
-        ArrayList m_createdVertices; // new created vertices
-        ArrayList m_createCreases; // new created creases
-        SlabShapeEditor m_slabShapeEditor; //object use to edit slab shape
-        SlabShapeCrease m_selectedCrease; //selected crease, mouse clicked on
-        SlabShapeVertex m_selectedVertex; //selected vertex, mouse clicked on
-        EditorState editorState; //state of user's operation
-        Pen m_toolPen; //pen use to draw new created vertex and crease
-        Pen m_selectPen; // pen use to draw vertex and crease which been selected
-        Pen m_profilePen; // pen use to draw slab's profile
-        const string justNumber = "Please input numbers in textbox!"; //error message
-        const string selectFirst = "Please select a Vertex (or Crease) first!"; //error message
+        private readonly ExternalCommandData m_commandData; //object which contains reference of Revit Application
+        private readonly ArrayList m_createCreases; // new created creases
+        private readonly ArrayList m_createdVertices; // new created vertices
+        private readonly ArrayList m_graphicsPaths; //store all the GraphicsPath objects of crease and vertex.
+        private readonly LineTool m_lineTool; //tool use to draw crease
+        private PointF m_mouseRightDownLocation; //where mouse right button down
+        private readonly LineTool m_pointTool; //tool use to draw vertex
+        private readonly Pen m_profilePen; // pen use to draw slab's profile
+        private SlabShapeCrease m_selectedCrease; //selected crease, mouse clicked on
+        private SlabShapeVertex m_selectedVertex; //selected vertex, mouse clicked on
+        private int m_selectIndex; //index of crease and vertex which mouse hovering on.
+        private readonly Pen m_selectPen; // pen use to draw vertex and crease which been selected
+        private readonly SlabProfile m_slabProfile; //store geometry info of selected slab
+        private readonly SlabShapeEditor m_slabShapeEditor; //object use to edit slab shape
+        private readonly Pen m_toolPen; //pen use to draw new created vertex and crease
 
         /// <summary>
-        /// constructor
+        ///     constructor
         /// </summary>
         /// <param name="commandData">selected floor (or slab)</param>
         /// <param name="commandData">contains reference of Revit Application</param>
@@ -77,13 +79,13 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             m_createCreases = new ArrayList();
             m_selectIndex = -1;
             m_clickedIndex = -1;
-            m_toolPen = new Pen(System.Drawing.Color.Blue, 2);
-            m_selectPen = new Pen(System.Drawing.Color.Red, 2);
-            m_profilePen = new Pen(System.Drawing.Color.Black, (float)(0.5));
+            m_toolPen = new Pen(Color.Blue, 2);
+            m_selectPen = new Pen(Color.Red, 2);
+            m_profilePen = new Pen(Color.Black, (float)0.5);
         }
 
         /// <summary>
-        /// represents the geometry info for slab
+        ///     represents the geometry info for slab
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -103,7 +105,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// Draw selected crease or vertex red
+        ///     Draw selected crease or vertex red
         /// </summary>
         /// <param name="graphics">Form graphics object,</param>
         /// <param name="pen">Pen which used to draw lines</param>
@@ -115,22 +117,25 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                 var pointF0 = (PointF)selectedPath.PathPoints.GetValue(0);
                 var pointF1 = (PointF)selectedPath.PathPoints.GetValue(1);
                 if (m_selectIndex < m_createCreases.Count)
-                { graphics.DrawLine(pen, pointF0, pointF1); }
-                else { graphics.DrawRectangle(pen, pointF0.X - 2, pointF0.Y - 2, 4, 4); }
+                    graphics.DrawLine(pen, pointF0, pointF1);
+                else
+                    graphics.DrawRectangle(pen, pointF0.X - 2, pointF0.Y - 2, 4, 4);
             }
+
             if (-1 != m_clickedIndex)
             {
                 var clickedPath = (GraphicsPath)m_graphicsPaths[m_clickedIndex];
                 var pointF0 = (PointF)clickedPath.PathPoints.GetValue(0);
                 var pointF1 = (PointF)clickedPath.PathPoints.GetValue(1);
                 if (m_clickedIndex < m_createCreases.Count)
-                { graphics.DrawLine(pen, pointF0, pointF1); }
-                else { graphics.DrawRectangle(pen, pointF0.X - 2, pointF0.Y - 2, 4, 4); }
+                    graphics.DrawLine(pen, pointF0, pointF1);
+                else
+                    graphics.DrawRectangle(pen, pointF0.X - 2, pointF0.Y - 2, 4, 4);
             }
         }
 
         /// <summary>
-        /// rotate slab and get selected vertex or crease
+        ///     rotate slab and get selected vertex or crease
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -138,8 +143,9 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         {
             var pointF = new PointF(e.X, e.Y);
             if (EditorState.AddCrease == editorState && 1 == m_lineTool.Points.Count % 2)
-            { m_lineTool.MovePoint = pointF; }
-            else { m_lineTool.MovePoint = PointF.Empty; }
+                m_lineTool.MovePoint = pointF;
+            else
+                m_lineTool.MovePoint = PointF.Empty;
 
             if (MouseButtons.Right == e.Button)
             {
@@ -154,15 +160,20 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                 {
                     var path = (GraphicsPath)m_graphicsPaths[i];
                     if (path.IsOutlineVisible(pointF, m_toolPen))
-                    { m_selectIndex = i; break; }
+                    {
+                        m_selectIndex = i;
+                        break;
+                    }
+
                     m_selectIndex = -1;
                 }
             }
+
             SlabShapePictureBox.Refresh();
         }
 
         /// <summary>
-        /// get location where right button click down.
+        ///     get location where right button click down.
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -177,7 +188,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// add vertex and crease, select new created vertex and crease
+        ///     add vertex and crease, select new created vertex and crease
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -185,24 +196,22 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         {
             if (EditorState.AddCrease == editorState)
             {
-                if (!m_slabProfile.CanCreateVertex(new PointF(e.X, e.Y))) { return; }
+                if (!m_slabProfile.CanCreateVertex(new PointF(e.X, e.Y))) return;
                 m_lineTool.Points.Add(new PointF(e.X, e.Y));
                 var lineSize = m_lineTool.Points.Count;
                 if (0 == m_lineTool.Points.Count % 2)
-                {
                     m_createCreases.Add(
                         m_slabProfile.AddCrease((PointF)m_lineTool.Points[lineSize - 2],
-                        (PointF)m_lineTool.Points[lineSize - 1]));
-                }
+                            (PointF)m_lineTool.Points[lineSize - 1]));
                 CreateGraphicsPath(); //create graphic path for all the vertex and crease
             }
             else if (EditorState.AddVertex == editorState)
             {
                 var vertex = m_slabProfile.AddVertex(new PointF(e.X, e.Y));
-                if (null == vertex) { return; }
+                if (null == vertex) return;
                 m_pointTool.Points.Add(new PointF(e.X, e.Y));
                 //draw point as a short line, so add two points here
-                m_pointTool.Points.Add(new PointF((float)(e.X + 2), (float)(e.Y + 2)));
+                m_pointTool.Points.Add(new PointF(e.X + 2, e.Y + 2));
                 m_createdVertices.Add(vertex);
                 CreateGraphicsPath(); //create graphic path for all the vertex and crease
             }
@@ -213,24 +222,30 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                     m_clickedIndex = m_selectIndex;
                     if (m_selectIndex <= m_createCreases.Count - 1)
                     {
-                        m_selectedCrease = (SlabShapeCrease)(m_createCreases[m_selectIndex]);
+                        m_selectedCrease = (SlabShapeCrease)m_createCreases[m_selectIndex];
                         m_selectedVertex = null;
                     }
                     else
                     {
                         //put all path (crease and vertex) in one arrayList, so reduce creases.count
                         var index = m_selectIndex - m_createCreases.Count;
-                        m_selectedVertex = (SlabShapeVertex)(m_createdVertices[index]);
+                        m_selectedVertex = (SlabShapeVertex)m_createdVertices[index];
                         m_selectedCrease = null;
                     }
                 }
-                else { m_selectedVertex = null; m_selectedCrease = null; m_clickedIndex = -1; }
+                else
+                {
+                    m_selectedVertex = null;
+                    m_selectedCrease = null;
+                    m_clickedIndex = -1;
+                }
             }
+
             SlabShapePictureBox.Refresh();
         }
 
         /// <summary>
-        /// get ready to add vertex
+        ///     get ready to add vertex
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -242,7 +257,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// get ready to add crease
+        ///     get ready to add crease
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -254,7 +269,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// get ready to move vertex and crease
+        ///     get ready to move vertex and crease
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -266,25 +281,35 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// Move vertex and crease, then update profile of slab
+        ///     Move vertex and crease, then update profile of slab
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            if (-1 == m_clickedIndex) { TaskDialog.Show("Revit", selectFirst); return; }
+            if (-1 == m_clickedIndex)
+            {
+                TaskDialog.Show("Revit", selectFirst);
+                return;
+            }
 
             double moveDistance = 0;
-            try { moveDistance = Convert.ToDouble(DistanceTextBox.Text); }
-            catch (Exception) { TaskDialog.Show("Revit", justNumber); return; }
+            try
+            {
+                moveDistance = Convert.ToDouble(DistanceTextBox.Text);
+            }
+            catch (Exception)
+            {
+                TaskDialog.Show("Revit", justNumber);
+                return;
+            }
 
             var transaction = new Transaction(
-               m_commandData.Application.ActiveUIDocument.Document, "Update");
+                m_commandData.Application.ActiveUIDocument.Document, "Update");
             transaction.Start();
             if (null != m_selectedCrease)
-            { m_slabShapeEditor.ModifySubElement(m_selectedCrease, moveDistance); }
-            else if (null != m_selectedVertex)
-            { m_slabShapeEditor.ModifySubElement(m_selectedVertex, moveDistance); }
+                m_slabShapeEditor.ModifySubElement(m_selectedCrease, moveDistance);
+            else if (null != m_selectedVertex) m_slabShapeEditor.ModifySubElement(m_selectedVertex, moveDistance);
             transaction.Commit();
             //re-calculate geometry info
             m_slabProfile.GetSlabProfileInfo();
@@ -292,7 +317,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// Reset slab shape
+        ///     Reset slab shape
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -304,7 +329,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        ///  Create Graphics Path for each vertex and crease
+        ///     Create Graphics Path for each vertex and crease
         /// </summary>
         public void CreateGraphicsPath()
         {
@@ -316,6 +341,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                 path.AddLine((PointF)m_lineTool.Points[i], (PointF)m_lineTool.Points[i + 1]);
                 m_graphicsPaths.Add(path);
             }
+
             for (var i = 0; i < m_pointTool.Points.Count - 1; i += 2)
             {
                 var path = new GraphicsPath();
@@ -325,7 +351,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// set tool tip for MoveButton
+        ///     set tool tip for MoveButton
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -335,7 +361,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// set tool tip for PointButton
+        ///     set tool tip for PointButton
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -345,7 +371,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// set tool tip for LineButton
+        ///     set tool tip for LineButton
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -355,7 +381,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         }
 
         /// <summary>
-        /// change cursor
+        ///     change cursor
         /// </summary>
         /// <param name="sender">object who sent this event</param>
         /// <param name="e">event args</param>
@@ -364,14 +390,27 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             switch (editorState)
             {
                 case EditorState.AddVertex:
-                    SlabShapePictureBox.Cursor = Cursors.Cross; break;
+                    SlabShapePictureBox.Cursor = Cursors.Cross;
+                    break;
                 case EditorState.AddCrease:
-                    SlabShapePictureBox.Cursor = Cursors.Cross; break;
+                    SlabShapePictureBox.Cursor = Cursors.Cross;
+                    break;
                 case EditorState.Select:
-                    SlabShapePictureBox.Cursor = Cursors.Arrow; break;
+                    SlabShapePictureBox.Cursor = Cursors.Arrow;
+                    break;
                 default:
-                    SlabShapePictureBox.Cursor = Cursors.Default; break;
+                    SlabShapePictureBox.Cursor = Cursors.Default;
+                    break;
             }
+        }
+
+        private enum EditorState
+        {
+            AddVertex,
+            AddCrease,
+            Select,
+            Rotate,
+            Null
         }
     }
 }

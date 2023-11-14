@@ -28,47 +28,47 @@ using Autodesk.Revit.DB.Architecture;
 namespace Revit.SDK.Samples.WinderStairs.CS
 {
     /// <summary>
-    /// It represents a winder stairs, might include multiple straight runs and winder corners.
+    ///     It represents a winder stairs, might include multiple straight runs and winder corners.
     /// </summary>
-    abstract class Winder
+    internal abstract class Winder
     {
         /// <summary>
-        /// Control Points to determine the winder shape(e.g. L or U shape).
+        ///     Control Points to determine the winder shape(e.g. L or U shape).
         /// </summary>
         public virtual IList<XYZ> ControlPoints { get; set; }
 
         /// <summary>
-        /// Winder stairs Run width.
+        ///     Winder stairs Run width.
         /// </summary>
         public double RunWidth { get; set; }
 
         /// <summary>
-        /// Winder stairs tread depth, it just makes sense for straight steps.
+        ///     Winder stairs tread depth, it just makes sense for straight steps.
         /// </summary>
         public double TreadDepth { get; set; }
 
         /// <summary>
-        /// Outer boundary curves calculated by algorithm.
+        ///     Outer boundary curves calculated by algorithm.
         /// </summary>
         protected IList<Curve> OuterBoundary { get; private set; }
 
         /// <summary>
-        /// Inner boundary curves calculated by algorithm.
+        ///     Inner boundary curves calculated by algorithm.
         /// </summary>
         protected IList<Curve> InnerBoundary { get; private set; }
 
         /// <summary>
-        /// Center walk-path calculated by algorithm.
+        ///     Center walk-path calculated by algorithm.
         /// </summary>
         protected IList<Curve> CenterWalkpath { get; private set; }
 
         /// <summary>
-        /// Riser lines calculated by algorithm.
+        ///     Riser lines calculated by algorithm.
         /// </summary>
         protected IList<Curve> RiserLines { get; set; }
 
         /// <summary>
-        /// This method creates the sketched winder run and it also deletes the input winderRunId.
+        ///     This method creates the sketched winder run and it also deletes the input winderRunId.
         /// </summary>
         /// <param name="rvtDoc">Revit Document to create the sketched run</param>
         /// <param name="drawSketch">Flag to control whether to draw the sketch in document</param>
@@ -92,13 +92,13 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
 
         /// <summary>
-        /// This method generates the winder sketch and fills the sketch to the properties:
-        /// OuterBoundary, InnerBoundary, CenterWalkpath and RiserLines.
+        ///     This method generates the winder sketch and fills the sketch to the properties:
+        ///     OuterBoundary, InnerBoundary, CenterWalkpath and RiserLines.
         /// </summary>
         protected abstract void GenerateSketch();
 
         /// <summary>
-        /// This method creates the sketched run in Revit document.
+        ///     This method creates the sketched run in Revit document.
         /// </summary>
         /// <param name="rvtDoc">Revit Document</param>
         /// <param name="winderRunId">Created winder run</param>
@@ -116,8 +116,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                     var levels = filterLevels.OfClass(typeof(Level)).ToElements();
                     var levelList = new List<Element>();
                     levelList.AddRange(levels);
-                    levelList.Sort((a, b) =>
-                    { return ((Level)a).Elevation.CompareTo(((Level)b).Elevation); });
+                    levelList.Sort((a, b) => { return ((Level)a).Elevation.CompareTo(((Level)b).Elevation); });
                     // Start the stairs edit mode
                     stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);
                 }
@@ -146,22 +145,21 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                     var run = StairsRun.CreateSketchedRun(rvtDoc, stairsId,
                         actualElevation, boundarys, RiserLines, CenterWalkpath);
                     if (ElementId.InvalidElementId != winderRunId)
-                    {
                         // Delete the old run
                         rvtDoc.Delete(winderRunId);
-                    }
                     // output the new run
                     winderRunId = run.Id;
                     // Finish the winder run creation.
                     winderTransaction.Commit();
                 }
+
                 // Finish the stairs Edit mode.
                 stairsMode.Commit(new StairsEditScopeFailuresPreprocessor());
             }
         }
 
         /// <summary>
-        /// This method draws sketch as model curves in Revit document for debug purpose.
+        ///     This method draws sketch as model curves in Revit document for debug purpose.
         /// </summary>
         /// <param name="rvtDoc">Revit document</param>
         private void DebugSketch(Document rvtDoc)
@@ -175,25 +173,13 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                     var skp = SketchPlane.Create(
                         rvtDoc, Plane.CreateByNormalAndOrigin(XYZ.BasisZ, ControlPoints[0]));
                     var curves = new CurveArray();
-                    foreach (var curve in OuterBoundary)
-                    {
-                        curves.Append(curve);
-                    }
+                    foreach (var curve in OuterBoundary) curves.Append(curve);
 
-                    foreach (var curve in InnerBoundary)
-                    {
-                        curves.Append(curve);
-                    }
+                    foreach (var curve in InnerBoundary) curves.Append(curve);
 
-                    foreach (var curve in CenterWalkpath)
-                    {
-                        curves.Append(curve);
-                    }
+                    foreach (var curve in CenterWalkpath) curves.Append(curve);
 
-                    foreach (var curve in RiserLines)
-                    {
-                        curves.Append(curve);
-                    }
+                    foreach (var curve in RiserLines) curves.Append(curve);
 
                     rvtDoc.Create.NewModelCurveArray(curves, skp);
                     debugTransaction.Commit();
@@ -206,7 +192,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         }
     }
 
-    class StairsEditScopeFailuresPreprocessor : IFailuresPreprocessor
+    internal class StairsEditScopeFailuresPreprocessor : IFailuresPreprocessor
     {
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {

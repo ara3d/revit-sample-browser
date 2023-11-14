@@ -23,120 +23,112 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using Document = Autodesk.Revit.Creation.Document;
 
 namespace Revit.SDK.Samples.TagBeam.CS
 {
     /// <summary>
-    /// Tag beam data class.
+    ///     Tag beam data class.
     /// </summary>
     public class TagBeamData
     {
-        //Required designer variable.
-        private View m_view; // current view
-        private Autodesk.Revit.Creation.Document m_docCreator; // document creation
-        private UIDocument m_revitDoc;
         /// <summary>
-        /// Selected beams
+        ///     Selected beams
         /// </summary>
-        private List<FamilyInstance> m_beamList =
+        private readonly List<FamilyInstance> m_beamList =
             new List<FamilyInstance>();
 
         /// <summary>
-        /// Tag types whose category is "Structural Framing Tags"
+        ///     Tag types whose category is "Structural Framing Tags"
         /// </summary>
-        private List<FamilySymbolWrapper> m_categoryTagTypes =
+        private readonly List<FamilySymbolWrapper> m_categoryTagTypes =
+            new List<FamilySymbolWrapper>();
+
+        private Document m_docCreator; // document creation
+
+        /// <summary>
+        ///     Tag types whose category is "Material Tags"
+        /// </summary>
+        private readonly List<FamilySymbolWrapper> m_materialTagTypes =
             new List<FamilySymbolWrapper>();
 
         /// <summary>
-        /// Tag types whose category is "Multi-Category Tags"
+        ///     Tag types whose category is "Multi-Category Tags"
         /// </summary>
-        private List<FamilySymbolWrapper> m_multiCategoryTagTypes =
+        private readonly List<FamilySymbolWrapper> m_multiCategoryTagTypes =
             new List<FamilySymbolWrapper>();
 
-        /// <summary>
-        /// Tag types whose category is "Material Tags"
-        /// </summary>
-        private List<FamilySymbolWrapper> m_materialTagTypes =
-            new List<FamilySymbolWrapper>();
+        private readonly UIDocument m_revitDoc;
+
+        //Required designer variable.
+        private readonly View m_view; // current view
 
         /// <summary>
-        /// Initializes a new instance of TagBeamData. 
+        ///     Initializes a new instance of TagBeamData.
         /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command</param>
+        /// <param name="commandData">
+        ///     An object that is passed to the external application
+        ///     which contains data related to the command
+        /// </param>
         public TagBeamData(ExternalCommandData commandData)
         {
             //Get beams selected 
-           m_revitDoc = commandData.Application.ActiveUIDocument;
-           m_docCreator = m_revitDoc.Document.Create;
-           m_view = m_revitDoc.Document.ActiveView;
+            m_revitDoc = commandData.Application.ActiveUIDocument;
+            m_docCreator = m_revitDoc.Document.Create;
+            m_view = m_revitDoc.Document.ActiveView;
 
-           var elementSet = new ElementSet();
-           foreach (var elementId in m_revitDoc.Selection.GetElementIds())
-           {
-              elementSet.Insert(m_revitDoc.Document.GetElement(elementId));
-           }
+            var elementSet = new ElementSet();
+            foreach (var elementId in m_revitDoc.Selection.GetElementIds())
+                elementSet.Insert(m_revitDoc.Document.GetElement(elementId));
             var itor = elementSet.ForwardIterator();
             while (itor.MoveNext())
             {
                 var familyInstance = itor.Current as FamilyInstance;
-                if ((familyInstance != null) && (familyInstance.StructuralType == Autodesk.Revit.DB.Structure.StructuralType.Beam))
-                {
+                if (familyInstance != null && familyInstance.StructuralType == StructuralType.Beam)
                     m_beamList.Add(familyInstance);
-                }
             }
-            if (m_beamList.Count < 1)
-            {
-                throw new ApplicationException("there is no beam selected");
-            } 
+
+            if (m_beamList.Count < 1) throw new ApplicationException("there is no beam selected");
 
             //Get the family symbols of tag in this document.
             var collector = new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document);
             var elements = collector.OfClass(typeof(Family)).ToElements();
 
             foreach (Family family in elements)
-            {
-               if (family != null && family.GetFamilySymbolIds() != null)
-               {
-                  var ffs = new List<FamilySymbol>(); 
-                  foreach (var elementId in family.GetFamilySymbolIds())
-                  {
-                     ffs.Add((FamilySymbol)(commandData.Application.ActiveUIDocument.Document.GetElement(elementId)));
-                  }
-                  foreach(var tagSymbol in ffs)
-                  {
-                     try
-                     {
-                        if (tagSymbol != null)
+                if (family != null && family.GetFamilySymbolIds() != null)
+                {
+                    var ffs = new List<FamilySymbol>();
+                    foreach (var elementId in family.GetFamilySymbolIds())
+                        ffs.Add((FamilySymbol)commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                    foreach (var tagSymbol in ffs)
+                        try
                         {
-                           switch (tagSymbol.Category.Name)
-                           {
-                              case "Structural Framing Tags":
-                                 m_categoryTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
-                                 continue;
-                              case "Material Tags":
-                                 m_materialTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
-                                 continue;
-                              case "Multi-Category Tags":
-                                 m_multiCategoryTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
-                                 continue;
-                              default:
-                                 continue;
-                           }
+                            if (tagSymbol != null)
+                                switch (tagSymbol.Category.Name)
+                                {
+                                    case "Structural Framing Tags":
+                                        m_categoryTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
+                                        continue;
+                                    case "Material Tags":
+                                        m_materialTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
+                                        continue;
+                                    case "Multi-Category Tags":
+                                        m_multiCategoryTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
+                                        continue;
+                                    default:
+                                        continue;
+                                }
                         }
-                     }
-                     catch (Exception)
-                     {
-                        continue;
-                     }
-                  }
-               }
-            }
+                        catch (Exception)
+                        {
+                        }
+                }
         }
 
         /// <summary>
-        /// Tag families with specified mode
+        ///     Tag families with specified mode
         /// </summary>
         /// <param name="mode">mode of tag families to get</param>
         /// <returns></returns>
@@ -159,7 +151,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
         }
 
         /// <summary>
-        /// Tag the beam's start and end.
+        ///     Tag the beam's start and end.
         /// </summary>
         /// <param name="tagMode">Mode of tag</param>
         /// <param name="tagSymbol">Tag symbol wrapper</param>
@@ -169,7 +161,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
             FamilySymbolWrapper tagSymbol, bool leader,
             TagOrientation tagOrientation)
         {
-            foreach(var beam in m_beamList)
+            foreach (var beam in m_beamList)
             {
                 //Get the start point and end point of the selected beam.
                 var location = beam.Location as LocationCurve;

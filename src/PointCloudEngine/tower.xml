@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <PointCloud>
-  <Scale value="2.5"/>
+  <Scale value="2.5" />
   <Cell>
     <LowerLeft X="-30" Y="-30" Z="0" />
     <UpperRight X="30" Y="30" Z="200" />
@@ -19,4 +20,4 @@
     <Color value="#CC3300" />
     <Randomize value="False" />
   </Cell>
- </PointCloud>
+</PointCloud>
