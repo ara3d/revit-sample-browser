@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ShaftHolePuncher.CS
+namespace RevitMultiSample.ShaftHolePuncher.CS
 {
     /// <summary>
     ///     window form contains one picture box to show the

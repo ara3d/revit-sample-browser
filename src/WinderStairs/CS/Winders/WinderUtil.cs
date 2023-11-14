@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.WinderStairs.CS
+namespace RevitMultiSample.WinderStairs.CS
 {
     /// <summary>
     ///     Utility verifies the input parameters, like curves from Revit document.

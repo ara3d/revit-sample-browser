@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     ///     Converter for ConstructionWrapper

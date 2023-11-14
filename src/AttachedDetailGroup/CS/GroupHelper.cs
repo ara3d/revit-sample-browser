@@ -4,7 +4,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AttachedDetailGroup.CS
+namespace RevitMultiSample.AttachedDetailGroup.CS
 {
     /// <summary>
     ///     Utility class for accessing group API functionality.

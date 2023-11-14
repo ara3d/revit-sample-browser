@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     ///     Convert ElementIds with string

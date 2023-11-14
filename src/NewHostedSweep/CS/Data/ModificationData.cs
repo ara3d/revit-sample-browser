@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NewHostedSweep.CS
+namespace RevitMultiSample.NewHostedSweep.CS
 {
     /// <summary>
     ///     This class contains the data for hosted sweep modification.

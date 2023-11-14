@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ValidateParameters.CS
+namespace RevitMultiSample.ValidateParameters.CS
 {
     /// <summary>
     ///     The form is used to show the result

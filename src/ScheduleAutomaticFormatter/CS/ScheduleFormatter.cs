@@ -16,7 +16,7 @@ using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
+namespace RevitMultiSample.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
     ///     A class capable of formatting schedules with alternating background colors on the columns

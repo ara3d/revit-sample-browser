@@ -20,7 +20,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.WorkThread.CS
+namespace RevitMultiSample.WorkThread.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

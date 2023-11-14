@@ -2,9 +2,9 @@
 
 using System;
 using System.Windows.Forms;
-using Revit.SDK.Samples.PowerCircuit.CS.Properties;
+using RevitMultiSample.PowerCircuit.CS.Properties;
 
-namespace Revit.SDK.Samples.PowerCircuit.CS
+namespace RevitMultiSample.PowerCircuit.CS
 {
     /// <summary>
     ///     The dialog which lets user operate selected elements

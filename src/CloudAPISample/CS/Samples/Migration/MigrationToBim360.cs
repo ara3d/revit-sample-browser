@@ -21,9 +21,9 @@ using System.Linq;
 using System.Web.Script.Serialization;
 using System.Windows;
 using Autodesk.Revit.DB;
-using Revit.SDK.Samples.CloudAPISample.CS.View;
+using RevitMultiSample.CloudAPISample.CS.View;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
+namespace RevitMultiSample.CloudAPISample.CS.Migration
 {
     /// <summary>
     ///     This is a sample shows how to migrate A360 Teams project to BIM360 Docs

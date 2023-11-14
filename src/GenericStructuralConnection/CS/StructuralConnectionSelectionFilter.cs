@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.GenericStructuralConnection.CS
+namespace RevitMultiSample.GenericStructuralConnection.CS
 {
     /// <summary>
     ///     Define filter for generic structural connection input elements.

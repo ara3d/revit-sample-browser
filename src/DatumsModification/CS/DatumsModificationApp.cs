@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DatumsModification.CS
+namespace RevitMultiSample.DatumsModification.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication
@@ -41,17 +41,17 @@ namespace Revit.SDK.Samples.DatumsModification.CS
         {
             var ribbonPanel = application.CreateRibbonPanel("DatumModification");
             var styleSettingButton = new PushButtonData("DatumStyle", "Datum Style", AddInPath,
-                "Revit.SDK.Samples.DatumsModification.CS.DatumStyleModification")
+                "RevitMultiSample.DatumsModification.CS.DatumStyleModification")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Style.png"), UriKind.Absolute))
             };
             var alignSettingButton = new PushButtonData("AlignDatum", "Align Datums", AddInPath,
-                "Revit.SDK.Samples.DatumsModification.CS.DatumAlignment")
+                "RevitMultiSample.DatumsModification.CS.DatumAlignment")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Align.png"), UriKind.Absolute))
             };
             var propagateButton = new PushButtonData("PropagateDatum", "Propagate Extents", AddInPath,
-                "Revit.SDK.Samples.DatumsModification.CS.DatumPropagation")
+                "RevitMultiSample.DatumsModification.CS.DatumPropagation")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Propagate.png"), UriKind.Absolute))
             };

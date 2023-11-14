@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Controls.ComboBox;
 
-namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
+namespace RevitMultiSample.GetSetDefaultTypes.CS
 {
     /// <summary>
     ///     Interaction logic for DefaultElementTypes.xaml

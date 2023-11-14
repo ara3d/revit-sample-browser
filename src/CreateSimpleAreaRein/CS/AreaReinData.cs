@@ -5,7 +5,7 @@ using System.ComponentModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
+namespace RevitMultiSample.CreateSimpleAreaRein.CS
 {
     /// <summary>
     ///     data of the AreaReinforcement

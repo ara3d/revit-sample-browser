@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.Loads.CS
+namespace RevitMultiSample.Loads.CS
 {
     public partial class LoadsForm : Form
     {

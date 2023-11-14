@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Controls;
 
-namespace Revit.SDK.Samples.DockableDialogs.CS
+namespace RevitMultiSample.DockableDialogs.CS
 {
     /// <summary>
     ///     A simple utility class to route calls from Console.WriteLine and other standard IO to

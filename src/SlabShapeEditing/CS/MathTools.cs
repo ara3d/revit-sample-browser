@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.SlabShapeEditing.CS
+namespace RevitMultiSample.SlabShapeEditing.CS
 {
     /// <summary>
     ///     Vector4 is a homogeneous coordinate class used to store vector

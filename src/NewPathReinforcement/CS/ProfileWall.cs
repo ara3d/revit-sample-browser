@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NewPathReinforcement.CS
+namespace RevitMultiSample.NewPathReinforcement.CS
 {
     /// <summary>
     ///     ProfileWall class contains the information about profile of wall,

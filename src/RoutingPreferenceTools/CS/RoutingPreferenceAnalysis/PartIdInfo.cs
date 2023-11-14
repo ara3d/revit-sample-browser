@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
+namespace RevitMultiSample.RoutingPreferenceTools.CS
 {
     /// <summary>
     ///     This class contains a routing preference rule group and list of elementIds that correspond

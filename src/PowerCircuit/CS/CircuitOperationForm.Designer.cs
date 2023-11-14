@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.PowerCircuit.CS
+namespace RevitMultiSample.PowerCircuit.CS
 {
     partial class CircuitOperationForm
     {
@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.Cancel;
+            this.buttonCancel.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(177, 8);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(84, 29);
@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             this.buttonDisconnectPanel.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonDisconnectPanel.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.buttonDisconnectPanel.FlatAppearance.BorderSize = 0;
-            this.buttonDisconnectPanel.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.DisconnectPanel;
+            this.buttonDisconnectPanel.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.DisconnectPanel;
             this.buttonDisconnectPanel.Location = new System.Drawing.Point(133, 9);
             this.buttonDisconnectPanel.Name = "buttonDisconnectPanel";
             this.buttonDisconnectPanel.Size = new System.Drawing.Size(34, 28);
@@ -68,7 +68,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             this.buttonSelectPanel.BackColor = System.Drawing.Color.Transparent;
             this.buttonSelectPanel.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonSelectPanel.FlatAppearance.BorderSize = 0;
-            this.buttonSelectPanel.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.SelectPanel;
+            this.buttonSelectPanel.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.SelectPanel;
             this.buttonSelectPanel.Location = new System.Drawing.Point(93, 9);
             this.buttonSelectPanel.Name = "buttonSelectPanel";
             this.buttonSelectPanel.Size = new System.Drawing.Size(34, 28);
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             this.buttonEdit.BackColor = System.Drawing.Color.Transparent;
             this.buttonEdit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonEdit.FlatAppearance.BorderSize = 0;
-            this.buttonEdit.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.EditCircuit;
+            this.buttonEdit.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.EditCircuit;
             this.buttonEdit.Location = new System.Drawing.Point(55, 9);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(34, 28);
@@ -96,7 +96,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             this.buttonCreate.BackColor = System.Drawing.Color.Transparent;
             this.buttonCreate.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonCreate.FlatAppearance.BorderSize = 0;
-            this.buttonCreate.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.CreateCircuit;
+            this.buttonCreate.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.CreateCircuit;
             this.buttonCreate.Location = new System.Drawing.Point(7, 9);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(34, 28);

@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.LevelsProperty.CS
+namespace RevitMultiSample.LevelsProperty.CS
 {
     /// <summary>
     /// new level form
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
             // 
             // deleteButton
             // 
-            this.deleteButton.Image = global::Revit.SDK.Samples.LevelsProperty.CS.Properties.Resources.delete;
+            this.deleteButton.Image = global::RevitMultiSample.LevelsProperty.CS.Properties.Resources.delete;
             this.deleteButton.Location = new System.Drawing.Point(51, 473);
             this.deleteButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.deleteButton.Name = "deleteButton";
@@ -93,7 +93,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
             // 
             // addButton
             // 
-            this.addButton.Image = global::Revit.SDK.Samples.LevelsProperty.CS.Properties.Resources._new;
+            this.addButton.Image = global::RevitMultiSample.LevelsProperty.CS.Properties.Resources._new;
             this.addButton.Location = new System.Drawing.Point(13, 473);
             this.addButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.addButton.Name = "addButton";

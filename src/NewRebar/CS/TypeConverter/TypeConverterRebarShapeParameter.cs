@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Revit.SDK.Samples.NewRebar.CS
+namespace RevitMultiSample.NewRebar.CS
 {
     /// <summary>
     ///     Type converter between RebarShapeParameter and string is provided for property grid.

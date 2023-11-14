@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.NewHostedSweep.CS
+namespace RevitMultiSample.NewHostedSweep.CS
 {
     /// <summary>
     ///     This is the main form. It is the entry to create a new hosted sweep or to modify

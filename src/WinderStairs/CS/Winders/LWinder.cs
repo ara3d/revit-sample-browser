@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.WinderStairs.CS
+namespace RevitMultiSample.WinderStairs.CS
 {
     /// <summary>
     ///     It represents an L-shape winder and consists of two straight runs and one winder corner.

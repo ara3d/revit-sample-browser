@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using SelectionChangedEventArgs = Autodesk.Revit.UI.Events.SelectionChangedEventArgs;
 
-namespace Revit.SDK.Samples.SelectionChanged.CS
+namespace RevitMultiSample.SelectionChanged.CS
 {
     /// <summary>
     ///     Interaction logic for InfoWindow.xaml

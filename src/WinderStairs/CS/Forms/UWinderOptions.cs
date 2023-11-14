@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.WinderStairs.CS
+namespace RevitMultiSample.WinderStairs.CS
 {
     /// <summary>
     ///     This form is used to collect parameters for UWinder creation. It also validates the input

@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     /// <summary>
     ///     Base data class which stores the common information for exporting view related format

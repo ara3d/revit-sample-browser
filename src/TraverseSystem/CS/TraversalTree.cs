@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 
-namespace Revit.SDK.Samples.TraverseSystem.CS
+namespace RevitMultiSample.TraverseSystem.CS
 {
     /// <summary>
     ///     A TreeNode object represents an element in the system

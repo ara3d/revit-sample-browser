@@ -19,9 +19,9 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.BRepBuilderExample.CS.Properties;
+using RevitMultiSample.BRepBuilderExample.CS.Properties;
 
-namespace Revit.SDK.Samples.BRepBuilderExample.CS
+namespace RevitMultiSample.BRepBuilderExample.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication
@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
 
             var pbd1 = new PushButtonData("CreateCube", "Create Cube",
                 AddinAssmeblyPath,
-                "Revit.SDK.Samples.BRepBuilderExample.CS.CreateCube")
+                "RevitMultiSample.BRepBuilderExample.CS.CreateCube")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)
@@ -68,7 +68,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
 
             var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
                 AddinAssmeblyPath,
-                "Revit.SDK.Samples.BRepBuilderExample.CS.CreateNURBS")
+                "RevitMultiSample.BRepBuilderExample.CS.CreateNURBS")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)
@@ -77,7 +77,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
 
             var pbd3 = new PushButtonData("CreatePeriodic", "Create Periodic Surface",
                 AddinAssmeblyPath,
-                "Revit.SDK.Samples.BRepBuilderExample.CS.CreatePeriodic")
+                "RevitMultiSample.BRepBuilderExample.CS.CreatePeriodic")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)

@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Control = System.Windows.Forms.Control;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.ViewPrinter.CS
+namespace RevitMultiSample.ViewPrinter.CS
 {
     public partial class PrintMgrForm : Form
     {

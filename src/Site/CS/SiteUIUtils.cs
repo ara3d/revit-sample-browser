@@ -17,7 +17,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.Site.CS
+namespace RevitMultiSample.Site.CS
 {
     /// <summary>
     ///     User interface utilities for site editing commands.

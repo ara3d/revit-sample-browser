@@ -16,7 +16,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PostCommandWorkflow.CS
+namespace RevitMultiSample.PostCommandWorkflow.CS
 {
     /// <summary>
     ///     The external command to set up the revision monitor and execute tasks related to it.

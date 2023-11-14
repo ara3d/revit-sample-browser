@@ -8,7 +8,7 @@ using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 
-namespace Revit.SDK.Samples.PrintLog.CS
+namespace RevitMultiSample.PrintLog.CS
 {
     /// <summary>
     ///     This class has four handler methods which will be subscribed to ViewPrint and DocumentPrint events separately,

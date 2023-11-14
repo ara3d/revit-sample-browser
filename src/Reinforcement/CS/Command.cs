@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Reinforcement.CS
+namespace RevitMultiSample.Reinforcement.CS
 {
     /// <summary>
     ///     The entrance of this example, which create reinforcement rebars on

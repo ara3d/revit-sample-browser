@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.NetworkPressureLossReport
+namespace RevitMultiSample.NetworkPressureLossReport
 {
     /// <summary>
     ///     Interaction logic for NetworkDialog.xaml

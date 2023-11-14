@@ -4,12 +4,12 @@ using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem;
-using Revit.SDK.Samples.CurtainSystem.CS.Data;
-using Revit.SDK.Samples.CurtainSystem.CS.Properties;
-using Revit.SDK.Samples.CurtainSystem.CS.UI;
+using RevitMultiSample.CurtainSystem.CS.CurtainSystem;
+using RevitMultiSample.CurtainSystem.CS.Data;
+using RevitMultiSample.CurtainSystem.CS.Properties;
+using RevitMultiSample.CurtainSystem.CS.UI;
 
-namespace Revit.SDK.Samples.CurtainSystem.CS
+namespace RevitMultiSample.CurtainSystem.CS
 {
     /// <summary>
     ///     the entry point of the sample (to launch the sample dialog and allows further operations)

@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-namespace Revit.SDK.Samples.Custom2DExporter.CS
+namespace RevitMultiSample.Custom2DExporter.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

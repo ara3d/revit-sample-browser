@@ -6,7 +6,7 @@ using System.IO;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.WindowWizard.CS
+namespace RevitMultiSample.WindowWizard.CS
 {
     /// <summary>
     ///     Inherited from WindowCreation class

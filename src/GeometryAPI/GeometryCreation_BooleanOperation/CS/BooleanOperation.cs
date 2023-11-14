@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
+namespace RevitMultiSample.GeometryCreation_BooleanOperation.CS
 {
     internal static class BooleanOperation
     {

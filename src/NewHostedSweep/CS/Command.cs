@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NewHostedSweep.CS
+namespace RevitMultiSample.NewHostedSweep.CS
 {
     /// <summary>
     ///     This class is the entrance of this project, it implements IExternalCommand.

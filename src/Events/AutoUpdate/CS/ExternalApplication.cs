@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AutoUpdate.CS
+namespace RevitMultiSample.AutoUpdate.CS
 {
     /// <summary>
     ///     This class implements IExternalApplication and demonstrate how to subscribe event

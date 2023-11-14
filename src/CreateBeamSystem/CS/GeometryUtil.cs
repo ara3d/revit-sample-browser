@@ -6,7 +6,7 @@ using System.Drawing;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     utility class contains some methods deal with 3D arithmetic

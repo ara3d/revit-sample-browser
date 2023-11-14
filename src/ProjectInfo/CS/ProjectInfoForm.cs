@@ -2,7 +2,7 @@
 
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     ///     Form used to display project information

@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.VersionChecking.CS
+namespace RevitMultiSample.VersionChecking.CS
 {
     /// <summary>
     ///     Get the product name, version and build number about Revit main program.

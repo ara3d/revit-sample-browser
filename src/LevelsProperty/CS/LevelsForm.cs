@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.LevelsProperty.CS
+namespace RevitMultiSample.LevelsProperty.CS
 {
     /// <summary>
     ///     form for new levels

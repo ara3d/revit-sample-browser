@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.TagBeam.CS
+namespace RevitMultiSample.TagBeam.CS
 {
     /// <summary>
     ///     Form to get input from user to create beam tags.

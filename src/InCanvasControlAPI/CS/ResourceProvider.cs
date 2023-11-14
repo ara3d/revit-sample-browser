@@ -15,7 +15,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace Revit.SDK.Samples.InCanvasControlAPI.CS
+namespace RevitMultiSample.InCanvasControlAPI.CS
 {
     /// <summary>
     ///     Provider for string resources

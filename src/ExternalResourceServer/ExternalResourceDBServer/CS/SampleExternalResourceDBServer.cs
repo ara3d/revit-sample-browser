@@ -8,7 +8,7 @@ using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 
-namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
+namespace RevitMultiSample.ExternalResourceDBServer.CS
 {
     /// <summary>
     ///     <para>

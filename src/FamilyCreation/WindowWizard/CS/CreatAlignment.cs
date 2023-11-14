@@ -4,7 +4,7 @@ using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Revit.SDK.Samples.WindowWizard.CS
+namespace RevitMultiSample.WindowWizard.CS
 {
     /// <summary>
     ///     The class allows users to create alignment

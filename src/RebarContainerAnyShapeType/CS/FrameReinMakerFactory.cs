@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
+namespace RevitMultiSample.RebarContainerAnyShapeType.CS
 {
     /// <summary>
     ///     The factory to create the corresponding FrameReinMaker, such as BeamFramReinMaker.

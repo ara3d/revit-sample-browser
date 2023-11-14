@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NetworkPressureLossReport
+namespace RevitMultiSample.NetworkPressureLossReport
 {
     /// <summary>
     ///     Demonstrate how to find all networks available in the active document.

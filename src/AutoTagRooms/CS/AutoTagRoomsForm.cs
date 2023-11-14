@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.AutoTagRooms.CS
+namespace RevitMultiSample.AutoTagRooms.CS
 {
     /// <summary>
     ///     The graphic user interface of auto tag rooms

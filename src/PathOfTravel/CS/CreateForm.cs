@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.PathOfTravelCreation.CS
+namespace RevitMultiSample.PathOfTravelCreation.CS
 {
     /// <summary>
     ///     Form presented to the user to fill in the options to control the path of travel creation.

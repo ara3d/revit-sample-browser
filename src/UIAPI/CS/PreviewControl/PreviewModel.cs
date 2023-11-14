@@ -10,7 +10,7 @@ using Form = System.Windows.Forms.Form;
 using RView = Autodesk.Revit.DB.View;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
-namespace Revit.SDK.Samples.UIAPI.CS
+namespace RevitMultiSample.UIAPI.CS
 {
     public partial class PreviewModel : Form
     {

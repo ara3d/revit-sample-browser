@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.FrameBuilder.CS
+namespace RevitMultiSample.FrameBuilder.CS
 {
     /// <summary>
     ///     data manager take charge of FamilySymbol object in current document

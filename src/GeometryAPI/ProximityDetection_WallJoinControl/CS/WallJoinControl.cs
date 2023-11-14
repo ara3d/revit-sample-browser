@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
+namespace RevitMultiSample.ProximityDetection_WallJoinControl.CS
 {
     /// <summary>
     ///     The class that is responsible for controlling the joint of walls

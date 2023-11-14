@@ -9,7 +9,7 @@ using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.ShaftHolePuncher.CS
+namespace RevitMultiSample.ShaftHolePuncher.CS
 {
     /// <summary>
     ///     base class of ProfileFloor, ProfileWall and ProfileNull.

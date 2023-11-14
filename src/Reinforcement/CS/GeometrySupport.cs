@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.Reinforcement.CS
+namespace RevitMultiSample.Reinforcement.CS
 {
     using GeoInstance = GeometryInstance;
 

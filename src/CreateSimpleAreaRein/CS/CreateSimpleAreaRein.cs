@@ -9,7 +9,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
+namespace RevitMultiSample.CreateSimpleAreaRein.CS
 {
     /// <summary>
     ///     main class to create simple AreaReinforcement on selected wall or floor
@@ -30,7 +30,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.CreateSimpleAreaRein");
+                "RevitMultiSample.CreateSimpleAreaRein");
             trans.Start();
             //initialize necessary data
             CommandData = revit;

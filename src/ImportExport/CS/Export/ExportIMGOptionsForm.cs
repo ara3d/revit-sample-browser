@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 using View = Autodesk.Revit.DB.View;
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     /// <summary>
     ///     Provide a dialog which provides the options of lower priority information for exporting image

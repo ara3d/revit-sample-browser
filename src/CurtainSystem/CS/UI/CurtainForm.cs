@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem;
-using Revit.SDK.Samples.CurtainSystem.CS.Data;
-using Revit.SDK.Samples.CurtainSystem.CS.Properties;
+using RevitMultiSample.CurtainSystem.CS.CurtainSystem;
+using RevitMultiSample.CurtainSystem.CS.Data;
+using RevitMultiSample.CurtainSystem.CS.Properties;
 
-namespace Revit.SDK.Samples.CurtainSystem.CS.UI
+namespace RevitMultiSample.CurtainSystem.CS.UI
 {
     /// <summary>
     ///     the main window form for UI operations

@@ -3,7 +3,7 @@
 using System.Collections;
 using System.Drawing;
 
-namespace Revit.SDK.Samples.Truss.CS
+namespace RevitMultiSample.Truss.CS
 {
     /// <summary>
     ///     tool used to draw line

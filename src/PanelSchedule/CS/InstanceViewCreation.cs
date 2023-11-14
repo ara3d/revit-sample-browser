@@ -6,7 +6,7 @@ using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.PanelSchedule.CS
+namespace RevitMultiSample.PanelSchedule.CS
 {
     /// <summary>
     ///     Create view instance for an electrical panel.

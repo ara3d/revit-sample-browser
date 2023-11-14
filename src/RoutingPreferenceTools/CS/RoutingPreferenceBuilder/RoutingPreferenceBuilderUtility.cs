@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using Autodesk.Revit.ApplicationServices;
 
-namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
+namespace RevitMultiSample.RoutingPreferenceTools.CS
 {
     /// <summary>
     ///     A helper class to find paths of .rfa family files in a document.
@@ -199,7 +199,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             try
             {
                 schemaStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                    "Revit.SDK.Samples.RoutingPreferenceTools.CS.RoutingPreferenceBuilder.RoutingPreferenceBuilderData.xsd");
+                    "RevitMultiSample.RoutingPreferenceTools.CS.RoutingPreferenceBuilder.RoutingPreferenceBuilderData.xsd");
             }
             catch (Exception)
             {

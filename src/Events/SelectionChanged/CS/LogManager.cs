@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace Revit.SDK.Samples.SelectionChanged.CS
+namespace RevitMultiSample.SelectionChanged.CS
 {
     /// <summary>
     ///     One log file will be created by this class for tracking events raised.

@@ -8,7 +8,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DWGFamilyCreation.CS
+namespace RevitMultiSample.DWGFamilyCreation.CS
 {
     /// <summary>
     ///     To add an external command to Autodesk Revit

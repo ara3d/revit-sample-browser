@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.ApplicationServices;
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     /// <summary>
     ///     Provide a dialog which lets user choose the operation(export or import)

@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
+namespace RevitMultiSample.RoutingPreferenceTools.CS
 {
     internal class Validation
     {

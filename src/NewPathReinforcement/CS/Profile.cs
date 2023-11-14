@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.DB.Document;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.NewPathReinforcement.CS
+namespace RevitMultiSample.NewPathReinforcement.CS
 {
     /// <summary>
     ///     base class of ProfileFloor and ProfileWall

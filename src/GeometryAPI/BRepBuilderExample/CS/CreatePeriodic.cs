@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.BRepBuilderExample.CS
+namespace RevitMultiSample.BRepBuilderExample.CS
 {
     /// <summary>
     ///     Implement method Execute of this class as an external command for Revit.

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Revit.SDK.Samples.UIAPI.CS
+namespace RevitMultiSample.UIAPI.CS
 {
     public enum ApplicationAvailablity
     {

@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DoorSwing.CS
+namespace RevitMultiSample.DoorSwing.CS
 {
     /// <summary>
     ///     Left/Right feature based on family's actual geometry and country's standard.

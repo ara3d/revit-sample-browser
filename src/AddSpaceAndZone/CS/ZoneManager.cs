@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AddSpaceAndZone.CS
+namespace RevitMultiSample.AddSpaceAndZone.CS
 {
     /// <summary>
     ///     The ZoneManager class is used to manage the Zone elements in the current document.

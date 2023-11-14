@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.InvisibleParam.CS
+namespace RevitMultiSample.InvisibleParam.CS
 {
     /// <summary>
     ///     This command show how to use parameter file to store invisible and

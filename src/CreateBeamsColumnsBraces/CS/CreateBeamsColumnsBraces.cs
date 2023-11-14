@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using STRUCTURALTYPE = Autodesk.Revit.DB.Structure.StructuralType;
 
-namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
+namespace RevitMultiSample.CreateBeamsColumnsBraces.CS
 {
     /// <summary>
     ///     Create Beams, Columns and Braces according to user's input information

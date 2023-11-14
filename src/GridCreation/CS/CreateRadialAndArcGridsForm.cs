@@ -2,9 +2,9 @@
 
 using System;
 using System.Windows.Forms;
-using Revit.SDK.Samples.GridCreation.CS.Properties;
+using RevitMultiSample.GridCreation.CS.Properties;
 
-namespace Revit.SDK.Samples.GridCreation.CS
+namespace RevitMultiSample.GridCreation.CS
 {
     public partial class CreateRadialAndArcGridsForm : Form
     {

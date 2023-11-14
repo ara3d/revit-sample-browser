@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
+namespace RevitMultiSample.ProximityDetection_WallJoinControl.CS
 {
     [Transaction(TransactionMode.Manual)]
     public class Command : IExternalCommand

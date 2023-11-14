@@ -16,7 +16,7 @@ using System;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.DisableCommand.CS
+namespace RevitMultiSample.DisableCommand.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

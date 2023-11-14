@@ -19,7 +19,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DuplicateViews.CS
+namespace RevitMultiSample.DuplicateViews.CS
 {
     /// <summary>
     ///     A command to copy schedules and drafting views across documents.

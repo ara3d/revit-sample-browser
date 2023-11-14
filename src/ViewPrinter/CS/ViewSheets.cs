@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ViewPrinter.CS
+namespace RevitMultiSample.ViewPrinter.CS
 {
     public enum VisibleType
     {

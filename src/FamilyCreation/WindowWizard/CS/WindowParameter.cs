@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Revit.SDK.Samples.WindowWizard.CS
+namespace RevitMultiSample.WindowWizard.CS
 {
     /// <summary>
     ///     This class will deal with all parameters related to window creation

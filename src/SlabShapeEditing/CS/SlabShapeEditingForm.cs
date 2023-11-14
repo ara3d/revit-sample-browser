@@ -10,7 +10,7 @@ using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.SlabShapeEditing.CS
+namespace RevitMultiSample.SlabShapeEditing.CS
 {
     /// <summary>
     ///     window form contains one picture box to show the

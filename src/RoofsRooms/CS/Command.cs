@@ -12,7 +12,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RoofsRooms.CS
+namespace RevitMultiSample.RoofsRooms.CS
 {
     /// <summary>
     ///     This class inherits from IExternalCommand,

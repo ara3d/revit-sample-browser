@@ -9,7 +9,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
+namespace RevitMultiSample.CreateComplexAreaRein.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -28,7 +28,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.CreateComplexAreaRein");
+                "RevitMultiSample.CreateComplexAreaRein");
             trans.Start();
             //initialize members
             CommandData = revit;

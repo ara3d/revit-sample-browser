@@ -8,7 +8,7 @@ using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Ribbon.CS
+namespace RevitMultiSample.Ribbon.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommand, create a wall

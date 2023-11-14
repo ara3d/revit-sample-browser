@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 
-namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
+namespace RevitMultiSample.RoutingPreferenceTools.CS
 {
     /// <summary>
     ///     Queries all routing preferences and reports potential problems in the form of an XDocument.

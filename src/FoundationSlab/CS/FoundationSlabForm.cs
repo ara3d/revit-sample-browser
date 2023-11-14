@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.FoundationSlab.CS
+namespace RevitMultiSample.FoundationSlab.CS
 {
     /// <summary>
     ///     A class to show properties and profiles of the foundation slabs.

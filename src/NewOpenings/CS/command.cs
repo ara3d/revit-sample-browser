@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NewOpenings.CS
+namespace RevitMultiSample.NewOpenings.CS
 {
     /// <summary>
     ///     The entrance of this example, implement the Execute method of IExternalCommand

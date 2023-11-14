@@ -10,7 +10,7 @@ using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 
-namespace Revit.SDK.Samples.CurtainWallGrid.CS
+namespace RevitMultiSample.CurtainWallGrid.CS
 {
     /// <summary>
     ///     Maintain the appearance of the 2D projection of the curtain grid and its behaviors

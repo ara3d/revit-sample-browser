@@ -14,7 +14,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.InCanvasControlAPI.CS
+namespace RevitMultiSample.InCanvasControlAPI.CS
 {
     /// <summary>
     ///     This class demonstrates marking a marker selected by changing the in-canvas control's image.

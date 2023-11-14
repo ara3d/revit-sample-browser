@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.BoundaryConditions.CS
+namespace RevitMultiSample.BoundaryConditions.CS
 {
     /// <summary>
     ///     UI which display the information and interact with users

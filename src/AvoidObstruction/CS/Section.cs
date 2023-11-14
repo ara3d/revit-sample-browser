@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 
-namespace Revit.SDK.Samples.AvoidObstruction.CS
+namespace RevitMultiSample.AvoidObstruction.CS
 {
     /// <summary>
     ///     This class presents an obstruction of a Pipe.

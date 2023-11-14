@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     /// <summary>
     ///     It contains a dialog which provides the options of importing dwg format

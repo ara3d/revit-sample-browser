@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB.Events;
 
-namespace Revit.SDK.Samples.ProgressNotifier.CS
+namespace RevitMultiSample.ProgressNotifier.CS
 {
     /// <summary>
     ///     An object containing a progress event name, position, and status.

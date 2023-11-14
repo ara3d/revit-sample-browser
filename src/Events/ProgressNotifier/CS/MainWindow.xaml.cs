@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Events;
 using Microsoft.Win32;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
-namespace Revit.SDK.Samples.ProgressNotifier.CS
+namespace RevitMultiSample.ProgressNotifier.CS
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml

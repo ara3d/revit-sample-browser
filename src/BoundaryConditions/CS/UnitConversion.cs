@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Revit.SDK.Samples.BoundaryConditions.CS
+namespace RevitMultiSample.BoundaryConditions.CS
 {
     /// <summary>
     ///     a structure about the conversion rule between display value and inside value

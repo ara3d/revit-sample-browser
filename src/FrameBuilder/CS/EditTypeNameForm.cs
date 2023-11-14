@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.FrameBuilder.CS
+namespace RevitMultiSample.FrameBuilder.CS
 {
     /// <summary>
     ///     form to edit Type's name

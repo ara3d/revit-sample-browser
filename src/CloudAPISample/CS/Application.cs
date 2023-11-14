@@ -18,9 +18,9 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.CloudAPISample.CS.Migration;
+using RevitMultiSample.CloudAPISample.CS.Migration;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS
+namespace RevitMultiSample.CloudAPISample.CS
 {
     /// <summary>
     ///     Main external application class.
@@ -60,12 +60,12 @@ namespace Revit.SDK.Samples.CloudAPISample.CS
             var assemblyPath = typeof(Application).Assembly.Location;
             var pushButton = ribbonPanel.AddItem(new PushButtonData("CloudAPI Tutorial", "CloudAPI Tutorial",
                 assemblyPath,
-                "Revit.SDK.Samples.CloudAPISample.CS.RunSampleCommand")) as PushButton;
+                "RevitMultiSample.CloudAPISample.CS.RunSampleCommand")) as PushButton;
             pushButton.Enabled = true;
 
             pushButton.LargeImage =
                 new BitmapImage(new Uri(Path.Combine(Path.GetDirectoryName(assemblyPath) ?? string.Empty, "icon.ico")));
-            pushButton.AvailabilityClassName = " Revit.SDK.Samples.CloudAPISample.CS.RunSampleCommand";
+            pushButton.AvailabilityClassName = " RevitMultiSample.CloudAPISample.CS.RunSampleCommand";
 
             return Result.Succeeded;
         }

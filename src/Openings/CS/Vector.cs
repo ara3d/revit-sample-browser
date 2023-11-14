@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Revit.SDK.Samples.Openings.CS
+namespace RevitMultiSample.Openings.CS
 {
     /// <summary>
     ///     Point class use to store point coordinate value

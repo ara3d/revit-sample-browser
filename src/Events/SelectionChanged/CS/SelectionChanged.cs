@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.SelectionChanged.CS
+namespace RevitMultiSample.SelectionChanged.CS
 {
     /// <summary>
     ///     This class is an external application which monitors when the selection is changed.
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
 
             var ribbonPanel = _ctrlApp.CreateRibbonPanel("SelectionChanged Event");
             var showInfoWindowButton = new PushButtonData("showInfoWindow", "Show Event Info", AddInPath,
-                "Revit.SDK.Samples.SelectionChanged.CS.Command")
+                "RevitMultiSample.SelectionChanged.CS.Command")
             {
                 ToolTip = "Show Event Monitor window"
             };

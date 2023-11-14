@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ReferencePlane.CS
+namespace RevitMultiSample.ReferencePlane.CS
 {
     /// <summary>
     ///     A form display all reference planes, and allow user to create

@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
+namespace RevitMultiSample.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The ExtrusionRoofWrapper class is use to edit a extrusion roof in a PropertyGrid.

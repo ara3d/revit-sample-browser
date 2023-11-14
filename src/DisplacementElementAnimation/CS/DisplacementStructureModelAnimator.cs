@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
+namespace RevitMultiSample.DisplacementElementAnimation.CS
 {
     /// <summary>
     ///     A class that executes an animation of structural model elements using DisplacementElements.

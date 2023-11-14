@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
+namespace RevitMultiSample.AnalyticalSupportData_Info.CS
 {
     /// <summary>
     ///     UI which display the information

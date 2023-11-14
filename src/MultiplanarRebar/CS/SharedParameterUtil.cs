@@ -7,7 +7,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.MultiplanarRebar.CS
+namespace RevitMultiSample.MultiplanarRebar.CS
 {
     /// <summary>
     ///     This is an utility class used to create shared parameter in Revit Document.

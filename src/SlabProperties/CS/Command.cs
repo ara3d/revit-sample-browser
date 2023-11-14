@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SlabProperties.CS
+namespace RevitMultiSample.SlabProperties.CS
 {
     /// <summary>
     ///     Get some properties of a slab , such as Level, Type name, Span direction,

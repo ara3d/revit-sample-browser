@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ViewPrinter.CS
+namespace RevitMultiSample.ViewPrinter.CS
 {
     public partial class ReNameForm : Form
     {

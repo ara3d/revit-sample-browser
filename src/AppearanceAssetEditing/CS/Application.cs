@@ -9,7 +9,7 @@ using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
-namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
+namespace RevitMultiSample.AppearanceAssetEditing.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

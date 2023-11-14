@@ -12,7 +12,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.VisualBasic;
 
-namespace Revit.SDK.Samples.DockableDialogs.CS
+namespace RevitMultiSample.DockableDialogs.CS
 {
     public partial class MainPage : Page, IDockablePaneProvider
     {

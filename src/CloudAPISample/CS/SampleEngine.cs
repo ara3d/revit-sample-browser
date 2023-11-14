@@ -15,10 +15,10 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.CloudAPISample.CS.Coroutine;
-using Revit.SDK.Samples.CloudAPISample.CS.View;
+using RevitMultiSample.CloudAPISample.CS.Coroutine;
+using RevitMultiSample.CloudAPISample.CS.View;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS
+namespace RevitMultiSample.CloudAPISample.CS
 {
     internal class SampleEngine : IDisposable
     {

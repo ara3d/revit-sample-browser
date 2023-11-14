@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.FrameBuilder.CS
+namespace RevitMultiSample.FrameBuilder.CS
 {
     /// <summary>
     ///     data class contains information to create framing

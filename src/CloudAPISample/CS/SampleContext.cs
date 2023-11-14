@@ -15,7 +15,7 @@
 using System.Windows.Controls;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS
+namespace RevitMultiSample.CloudAPISample.CS
 {
     /// <summary>
     ///     Base class for each sample context in samples portal.

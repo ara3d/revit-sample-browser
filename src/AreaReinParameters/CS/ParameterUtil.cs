@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.AreaReinParameters.CS
+namespace RevitMultiSample.AreaReinParameters.CS
 {
     /// <summary>
     ///     contain utility methods find or set certain parameter

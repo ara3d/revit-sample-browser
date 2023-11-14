@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ShaftHolePuncher.CS
+namespace RevitMultiSample.ShaftHolePuncher.CS
 {
     /// <summary>
     ///     The entrance of this example, implements the Execute method of IExternalCommand
@@ -20,7 +20,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.ShaftHolePuncher");
+                "RevitMultiSample.ShaftHolePuncher");
             trans.Start();
             try
             {

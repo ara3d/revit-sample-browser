@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.InCanvasControlAPI.CS
+namespace RevitMultiSample.InCanvasControlAPI.CS
 {
     /// <summary>
     ///     This class manages instances of IssueMarkerTracking on per-document basis.

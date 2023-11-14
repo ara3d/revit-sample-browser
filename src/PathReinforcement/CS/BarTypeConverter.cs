@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.PathReinforcement.CS
+namespace RevitMultiSample.PathReinforcement.CS
 {
     /// <summary>
     ///     Converter between Autodesk.Revit.DB.ElementId and Element's name

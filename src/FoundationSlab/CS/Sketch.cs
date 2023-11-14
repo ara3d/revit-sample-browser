@@ -8,7 +8,7 @@ using System.Drawing.Drawing2D;
 using Autodesk.Revit.DB;
 using Color = System.Drawing.Color;
 
-namespace Revit.SDK.Samples.FoundationSlab.CS
+namespace RevitMultiSample.FoundationSlab.CS
 {
     /// <summary>
     ///     An internal class for drawing slabs' profiles.

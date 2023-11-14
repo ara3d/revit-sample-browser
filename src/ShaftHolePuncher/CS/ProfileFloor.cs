@@ -5,7 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ShaftHolePuncher.CS
+namespace RevitMultiSample.ShaftHolePuncher.CS
 {
     /// <summary>
     ///     ProfileFloor class contains the information about profile of floor,

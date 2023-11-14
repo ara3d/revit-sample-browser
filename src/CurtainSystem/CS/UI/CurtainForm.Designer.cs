@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.CurtainSystem.CS.UI
+namespace RevitMultiSample.CurtainSystem.CS.UI
 {
     partial class CurtainForm
     {
@@ -49,7 +49,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             // 
             // createCSButton
             // 
-            this.createCSButton.Image = global::Revit.SDK.Samples.CurtainSystem.CS.Properties.Resources._new;
+            this.createCSButton.Image = global::RevitMultiSample.CurtainSystem.CS.Properties.Resources._new;
             this.createCSButton.Location = new System.Drawing.Point(16, 192);
             this.createCSButton.Margin = new System.Windows.Forms.Padding(4);
             this.createCSButton.Name = "createCSButton";
@@ -154,7 +154,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             // 
             // deleteCSButton
             // 
-            this.deleteCSButton.Image = global::Revit.SDK.Samples.CurtainSystem.CS.Properties.Resources.delete;
+            this.deleteCSButton.Image = global::RevitMultiSample.CurtainSystem.CS.Properties.Resources.delete;
             this.deleteCSButton.Location = new System.Drawing.Point(56, 192);
             this.deleteCSButton.Margin = new System.Windows.Forms.Padding(4);
             this.deleteCSButton.Name = "deleteCSButton";

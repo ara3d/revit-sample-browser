@@ -5,10 +5,10 @@ using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.NewRoof.RoofForms.CS;
+using RevitMultiSample.NewRoof.RoofForms.CS;
 using View = Autodesk.Revit.DB.View;
 
-namespace Revit.SDK.Samples.NewRoof.CS
+namespace RevitMultiSample.NewRoof.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

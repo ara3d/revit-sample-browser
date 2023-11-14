@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.ViewTemplateCreation.CS
+namespace RevitMultiSample.ViewTemplateCreation.CS
 {
     /// <summary>
     ///     A form for the sample, which allows user to create and configure a new view template.

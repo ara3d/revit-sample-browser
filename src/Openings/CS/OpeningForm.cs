@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.Openings.CS
+namespace RevitMultiSample.Openings.CS
 {
     /// <summary>
     ///     Main form use to show the selected opening.

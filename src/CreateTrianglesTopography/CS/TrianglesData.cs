@@ -6,7 +6,7 @@ using System.IO;
 using System.Web.Script.Serialization;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
+namespace RevitMultiSample.CreateTrianglesTopography.CS
 {
     /// <summary>
     ///     Triangles points and facets data which can be used to create topography surface.

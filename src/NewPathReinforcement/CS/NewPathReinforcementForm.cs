@@ -10,7 +10,7 @@ using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.NewPathReinforcement.CS
+namespace RevitMultiSample.NewPathReinforcement.CS
 {
     /// <summary>
     ///     window form contains one picture box to show the

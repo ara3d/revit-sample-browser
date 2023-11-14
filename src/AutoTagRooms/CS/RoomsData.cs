@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AutoTagRooms.CS
+namespace RevitMultiSample.AutoTagRooms.CS
 {
     /// <summary>
     ///     This class can get all the rooms, rooms tags, room tag types and levels

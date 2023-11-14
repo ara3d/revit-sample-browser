@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Events;
 
-namespace Revit.SDK.Samples.RoomSchedule
+namespace RevitMultiSample.RoomSchedule
 {
     /// <summary>
     ///     One struct defines the content of mapped Excel spreadsheet: the full name of this file and the sheet.

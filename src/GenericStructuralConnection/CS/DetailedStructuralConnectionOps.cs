@@ -8,7 +8,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.GenericStructuralConnection.CS
+namespace RevitMultiSample.GenericStructuralConnection.CS
 {
     /// <summary>
     ///     Performs basic operations on detailed structural connections.

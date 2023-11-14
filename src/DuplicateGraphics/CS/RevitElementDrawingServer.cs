@@ -15,7 +15,7 @@ using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-namespace Revit.SDK.Samples.DuplicateGraphics.CS
+namespace RevitMultiSample.DuplicateGraphics.CS
 {
     internal class RevitElementDrawingServer : IDirectContext3DServer
     {

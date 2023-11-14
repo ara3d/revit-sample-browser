@@ -4,7 +4,7 @@ using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.MultiplanarRebar.CS
+namespace RevitMultiSample.MultiplanarRebar.CS
 {
     /// <summary>
     ///     This class is to parse the geometry information of given Corbel FamilyInstance,

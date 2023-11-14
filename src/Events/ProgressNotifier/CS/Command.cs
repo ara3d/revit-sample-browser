@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ProgressNotifier.CS
+namespace RevitMultiSample.ProgressNotifier.CS
 {
     [Transaction(TransactionMode.Manual)]
     internal class Command : IExternalCommand

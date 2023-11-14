@@ -19,9 +19,9 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.Properties;
+using RevitMultiSample.UpdateExternallyTaggedBRep.CS.Properties;
 
-namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
+namespace RevitMultiSample.UpdateExternallyTaggedBRep.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication.
@@ -76,7 +76,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
             // Create and add the new ribbon button "Create tagged BRep".
             var pbd1 = new PushButtonData("CreateTaggedBRep", "Create tagged BRep",
                 AddinAssemblyPath,
-                "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.CreateBRep")
+                "RevitMultiSample.UpdateExternallyTaggedBRep.CS.CreateBRep")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)
@@ -86,7 +86,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
             // Create and add the new ribbon button "Update tagged BRep".
             var pbd2 = new PushButtonData("UpdateTaggedBRep", "Update tagged BRep",
                 AddinAssemblyPath,
-                "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.UpdateBRep")
+                "RevitMultiSample.UpdateExternallyTaggedBRep.CS.UpdateBRep")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)

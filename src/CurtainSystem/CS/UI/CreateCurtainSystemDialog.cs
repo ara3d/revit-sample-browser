@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Revit.SDK.Samples.CurtainSystem.CS.Data;
+using RevitMultiSample.CurtainSystem.CS.Data;
 
-namespace Revit.SDK.Samples.CurtainSystem.CS.UI
+namespace RevitMultiSample.CurtainSystem.CS.UI
 {
     /// <summary>
     ///     the winForm for user to create a new curtain system

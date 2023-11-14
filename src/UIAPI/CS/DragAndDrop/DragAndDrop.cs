@@ -10,7 +10,7 @@ using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.UIAPI.CS
+namespace RevitMultiSample.UIAPI.CS
 {
     public partial class FurnitureFamilyDragAndDropForm : Form
     {

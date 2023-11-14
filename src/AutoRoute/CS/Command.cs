@@ -12,7 +12,7 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 using GXYZ = Autodesk.Revit.DB.XYZ;
 
-namespace Revit.SDK.Samples.AutoRoute.CS
+namespace RevitMultiSample.AutoRoute.CS
 {
     /// <summary>
     ///     route a set of ducts and fittings between a base air supply equipment and 2 terminals.

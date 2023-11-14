@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.InPlaceMembers.CS
+namespace RevitMultiSample.InPlaceMembers.CS
 {
     /// <summary>
     ///     trigger when view data updated

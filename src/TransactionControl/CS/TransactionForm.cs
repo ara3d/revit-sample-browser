@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.TransactionControl.CS
+namespace RevitMultiSample.TransactionControl.CS
 {
     using SystemColor = Color;
 

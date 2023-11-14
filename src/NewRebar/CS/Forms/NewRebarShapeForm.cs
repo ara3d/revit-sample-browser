@@ -11,7 +11,7 @@ using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.NewRebar.CS
+namespace RevitMultiSample.NewRebar.CS
 {
     /// <summary>
     ///     This form is provided for user to define a new RebarShape.

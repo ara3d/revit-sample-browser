@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
+namespace RevitMultiSample.RebarContainerAnyShapeType.CS
 {
     /// <summary>
     ///     The entrance of this example, which create reinforcement rebars on

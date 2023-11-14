@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.MeasurePanelArea.CS
+namespace RevitMultiSample.MeasurePanelArea.CS
 {
     /// <summary>
     ///     The window designed for interactive operations

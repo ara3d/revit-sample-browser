@@ -5,10 +5,10 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.NewRoof.RoofsManager.CS;
+using RevitMultiSample.NewRoof.RoofsManager.CS;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
+namespace RevitMultiSample.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The main form to create or delete roof in Revit.

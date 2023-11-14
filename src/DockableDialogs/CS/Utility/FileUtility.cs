@@ -3,7 +3,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace Revit.SDK.Samples.DockableDialogs.CS
+namespace RevitMultiSample.DockableDialogs.CS
 {
     public class FileUtility
     {

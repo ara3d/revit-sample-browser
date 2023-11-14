@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.PowerCircuit.CS
+namespace RevitMultiSample.PowerCircuit.CS
 {
     /// <summary>
     ///     The dialog which provides the options of selecting and showing circuit

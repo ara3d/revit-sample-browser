@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DeleteObject.CS
+namespace RevitMultiSample.DeleteObject.CS
 {
     /// <summary>
     ///     Delete the elements that were selected
@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.DeleteObject.CS
             ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
-            var trans = new Transaction(revit.ActiveUIDocument.Document, "Revit.SDK.Samples.DeleteObject");
+            var trans = new Transaction(revit.ActiveUIDocument.Document, "RevitMultiSample.DeleteObject");
             trans.Start();
             var collection = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())

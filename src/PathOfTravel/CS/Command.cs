@@ -13,7 +13,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.PathOfTravelCreation.CS
+namespace RevitMultiSample.PathOfTravelCreation.CS
 {
     /// <summary>
     ///     The options for creating the PathOfTravel.

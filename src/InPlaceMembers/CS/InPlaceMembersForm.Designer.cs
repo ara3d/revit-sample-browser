@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.InPlaceMembers.CS
+namespace RevitMultiSample.InPlaceMembers.CS
 {
     partial class InPlaceMembersForm
     {
@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             this.instancePropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.OKbutton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.modelPictureBox = new Revit.SDK.Samples.InPlaceMembers.CS.PictureBox3D();
+            this.modelPictureBox = new RevitMultiSample.InPlaceMembers.CS.PictureBox3D();
             this.SuspendLayout();
             // 
             // instancePropertyGrid

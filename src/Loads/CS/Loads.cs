@@ -9,7 +9,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
-namespace Revit.SDK.Samples.Loads.CS
+namespace RevitMultiSample.Loads.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

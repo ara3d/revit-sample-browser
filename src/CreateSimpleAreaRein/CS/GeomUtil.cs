@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
+namespace RevitMultiSample.CreateSimpleAreaRein.CS
 {
     using GeoSolid = Solid;
 

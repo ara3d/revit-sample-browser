@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     /// <summary>
     /// Provide a dialog which provides the options of lower priority information 

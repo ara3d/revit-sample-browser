@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CS.PointCloudEngine
+namespace RevitMultiSample.CS.PointCloudEngine
 {
     /// <summary>
     ///     The base class for all IPointCloudAccess implementations in this sample.

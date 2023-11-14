@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.Reinforcement.CS
+namespace RevitMultiSample.Reinforcement.CS
 {
     /// <summary>
     ///     contain utility methods find or set certain parameter

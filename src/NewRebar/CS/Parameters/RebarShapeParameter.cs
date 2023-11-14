@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.NewRebar.CS
+namespace RevitMultiSample.NewRebar.CS
 {
     /// <summary>
     ///     This class wraps an Parameter object which will be added

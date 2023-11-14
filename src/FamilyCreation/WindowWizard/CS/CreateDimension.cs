@@ -3,7 +3,7 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.WindowWizard.CS
+namespace RevitMultiSample.WindowWizard.CS
 {
     /// <summary>
     ///     The class allows users to create dimension using Document.FamilyCreate.NewDimension() function

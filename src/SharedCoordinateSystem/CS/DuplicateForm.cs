@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
+namespace RevitMultiSample.SharedCoordinateSystem.CS
 {
     /// <summary>
     ///     dupliate coordiante data form

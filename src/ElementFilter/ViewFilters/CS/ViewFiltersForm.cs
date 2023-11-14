@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.ViewFilters.CS
+namespace RevitMultiSample.ViewFilters.CS
 {
     /// <summary>
     ///     UI form to display the view filters information

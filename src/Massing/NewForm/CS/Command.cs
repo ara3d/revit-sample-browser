@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NewForm.CS
+namespace RevitMultiSample.NewForm.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

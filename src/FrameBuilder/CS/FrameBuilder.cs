@@ -8,7 +8,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace Revit.SDK.Samples.FrameBuilder.CS
+namespace RevitMultiSample.FrameBuilder.CS
 {
     using ModelElement = Element;
 

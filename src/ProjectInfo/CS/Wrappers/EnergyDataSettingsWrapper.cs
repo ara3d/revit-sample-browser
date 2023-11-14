@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.DB.Mechanical;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     ///     Wrapper class for gbXMLParamElem

@@ -6,7 +6,7 @@ using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ShaftHolePuncher.CS
+namespace RevitMultiSample.ShaftHolePuncher.CS
 {
     /// <summary>
     ///     ProfileBeam class contains the information about profile of beam,

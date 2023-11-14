@@ -12,7 +12,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
-namespace Revit.SDK.Samples.Selections.CS
+namespace RevitMultiSample.Selections.CS
 {
     /// <summary>
     ///     This command allows to pick some elements and then delete from document.

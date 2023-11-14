@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DuplicateGraphics.CS
+namespace RevitMultiSample.DuplicateGraphics.CS
 {
     /// <summary>
     ///     Provides the external command to duplicate selected graphics using DirectContext3D.

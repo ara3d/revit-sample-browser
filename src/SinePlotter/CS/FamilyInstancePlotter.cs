@@ -16,7 +16,7 @@ using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.SinePlotter.CS
+namespace RevitMultiSample.SinePlotter.CS
 {
     /// <summary>
     ///     This class plots a number of instances of a given family object along a sine curve.

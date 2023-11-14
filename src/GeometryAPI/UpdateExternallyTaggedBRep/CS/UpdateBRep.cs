@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
+namespace RevitMultiSample.UpdateExternallyTaggedBRep.CS
 {
     /// <summary>
     ///     This class implements method Execute as an external command for Revit.

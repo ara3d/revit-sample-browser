@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Revit.SDK.Samples.CurtainWallGrid.CS
+namespace RevitMultiSample.CurtainWallGrid.CS
 {
     /// <summary>
     ///     a linear line in 2D point format

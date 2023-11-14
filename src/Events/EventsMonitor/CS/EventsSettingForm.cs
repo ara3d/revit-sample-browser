@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.EventsMonitor.CS
+namespace RevitMultiSample.EventsMonitor.CS
 {
     /// <summary>
     ///     The UI to allow user to choose which event they want to subscribe.

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.NewOpenings.CS
+namespace RevitMultiSample.NewOpenings.CS
 {
     /// <summary>
     ///     Tool used to draw rectangle

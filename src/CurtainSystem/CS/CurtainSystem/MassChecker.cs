@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
-using Revit.SDK.Samples.CurtainSystem.CS.Data;
-using Revit.SDK.Samples.CurtainSystem.CS.Properties;
-using Revit.SDK.Samples.CurtainSystem.CS.Utility;
+using RevitMultiSample.CurtainSystem.CS.Data;
+using RevitMultiSample.CurtainSystem.CS.Properties;
+using RevitMultiSample.CurtainSystem.CS.Utility;
 
-namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
+namespace RevitMultiSample.CurtainSystem.CS.CurtainSystem
 {
     /// <summary>
     ///     check whether the selected element is a mass and whether the mass is kind of parallelepiped

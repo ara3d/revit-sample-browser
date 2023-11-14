@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.WindowWizard.CS
+namespace RevitMultiSample.WindowWizard.CS
 {
     /// <summary>
     ///     The class is used to create ReferencePlane

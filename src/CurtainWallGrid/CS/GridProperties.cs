@@ -2,7 +2,7 @@
 
 using System.ComponentModel;
 
-namespace Revit.SDK.Samples.CurtainWallGrid.CS
+namespace RevitMultiSample.CurtainWallGrid.CS
 {
     /// <summary>
     ///     all the supported Align type for the curtain grid

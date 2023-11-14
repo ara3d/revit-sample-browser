@@ -10,7 +10,7 @@ using Autodesk.Revit.UI;
 using Control = System.Windows.Forms.Control;
 using PrintRange = Autodesk.Revit.DB.PrintRange;
 
-namespace Revit.SDK.Samples.ViewPrinter.CS
+namespace RevitMultiSample.ViewPrinter.CS
 {
     /// <summary>
     ///     Exposes the print interfaces just like the Print Dialog (File->Print...) in UI.

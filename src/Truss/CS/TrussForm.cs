@@ -13,7 +13,7 @@ using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 using View = Autodesk.Revit.DB.View;
 
-namespace Revit.SDK.Samples.Truss.CS
+namespace RevitMultiSample.Truss.CS
 {
     /// <summary>
     ///     window form contains one three picture box to show the

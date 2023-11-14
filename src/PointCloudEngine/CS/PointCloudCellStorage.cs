@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CS.PointCloudEngine
+namespace RevitMultiSample.CS.PointCloudEngine
 {
     /// <summary>
     ///     This class is used to calculate and store points for a given cell.

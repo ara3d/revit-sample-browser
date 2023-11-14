@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.DeckProperties.CS
+namespace RevitMultiSample.DeckProperties.CS
 {
     partial class DeckPropertyForm
     {

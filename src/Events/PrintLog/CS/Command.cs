@@ -8,7 +8,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PrintLog.CS
+namespace RevitMultiSample.PrintLog.CS
 {
     /// <summary>
     ///     Class used to call API to raise ViewPrint and DocumentPrint events

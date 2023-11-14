@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DeleteDimensions.CS
+namespace RevitMultiSample.DeleteDimensions.CS
 {
     /// <summary>
     ///     Add a command that given a selection deletes all the unpinned dimensions

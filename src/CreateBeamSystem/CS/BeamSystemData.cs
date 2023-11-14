@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     mixed data class save the data to show in UI

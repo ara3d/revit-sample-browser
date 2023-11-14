@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RayTraceBounce.CS
+namespace RevitMultiSample.RayTraceBounce.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

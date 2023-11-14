@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using AppCreation = Autodesk.Revit.Creation.Application;
 
-namespace Revit.SDK.Samples.AutoJoin.CS
+namespace RevitMultiSample.AutoJoin.CS
 {
     /// <summary>
     ///     This sample demonstrates how to automatically join geometry
@@ -23,7 +23,7 @@ namespace Revit.SDK.Samples.AutoJoin.CS
             , ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.AutoJoin");
+                "RevitMultiSample.AutoJoin");
             trans.Start();
             if (null == SAppCreation)
                 // share for class Intersection.

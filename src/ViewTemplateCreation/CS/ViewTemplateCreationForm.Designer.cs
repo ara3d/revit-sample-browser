@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
-namespace Revit.SDK.Samples.ViewTemplateCreation.CS
+namespace RevitMultiSample.ViewTemplateCreation.CS
 {
    /// <summary>
    /// A form for the sample, which allows user to create and configure a new view template.

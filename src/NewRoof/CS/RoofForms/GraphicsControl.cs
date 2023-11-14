@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
+namespace RevitMultiSample.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The GraphicsControl is used to display the footprint roof lines with GDI.

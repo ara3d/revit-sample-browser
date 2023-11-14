@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Loads.CS
+namespace RevitMultiSample.Loads.CS
 {
     /// <summary>
     ///     mainly deal with the operation on load case page on the form

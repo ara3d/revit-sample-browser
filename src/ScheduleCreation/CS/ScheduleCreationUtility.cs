@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ScheduleCreation.CS
+namespace RevitMultiSample.ScheduleCreation.CS
 {
     /// <summary>
     ///     Utility class that contains methods of view schedule creation and schedule sheet instance creation.

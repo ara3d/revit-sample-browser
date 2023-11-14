@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.NewOpenings.CS
+namespace RevitMultiSample.NewOpenings.CS
 {
     /// <summary>
     ///     Vector4 class use to store vector

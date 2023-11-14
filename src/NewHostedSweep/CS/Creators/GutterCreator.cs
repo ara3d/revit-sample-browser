@@ -7,7 +7,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NewHostedSweep.CS
+namespace RevitMultiSample.NewHostedSweep.CS
 {
     /// <summary>
     ///     Provides functions to create Gutter.

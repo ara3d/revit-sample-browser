@@ -16,7 +16,7 @@ using System;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.InCanvasControlAPI.CS
+namespace RevitMultiSample.InCanvasControlAPI.CS
 {
     /// <summary>
     ///     This class demonstrates using external server to handle click events on an in-canvas control.

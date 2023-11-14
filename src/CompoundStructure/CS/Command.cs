@@ -8,7 +8,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CompoundStructureCreation.CS
+namespace RevitMultiSample.CompoundStructureCreation.CS
 {
     /// <summary>
     ///     This command allows to create vertical CompoundStructure and applying to walls.

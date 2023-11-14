@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
+namespace RevitMultiSample.SharedCoordinateSystem.CS
 {
     /// <summary>
     ///     coordinate system data form

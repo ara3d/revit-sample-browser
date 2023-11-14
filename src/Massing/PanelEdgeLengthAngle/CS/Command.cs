@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
+namespace RevitMultiSample.PanelEdgeLengthAngle.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

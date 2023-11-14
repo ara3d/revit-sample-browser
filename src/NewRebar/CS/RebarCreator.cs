@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NewRebar.CS
+namespace RevitMultiSample.NewRebar.CS
 {
     /// <summary>
     ///     This class wraps the creation of Rebar. Its "Execute" method shows

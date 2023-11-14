@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using PFRF = Autodesk.Revit.DB.ParameterFilterRuleFactory;
 
-namespace Revit.SDK.Samples.ViewFilters.CS
+namespace RevitMultiSample.ViewFilters.CS
 {
     /// <summary>
     ///     Sample custom immutable class used to represents Revit internal FilterRule.

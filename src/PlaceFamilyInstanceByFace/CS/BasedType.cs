@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
+namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
     ///     This form class is for user choose a based-type of creating family instance

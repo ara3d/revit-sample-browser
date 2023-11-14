@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
+namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
     ///     The main UI for creating family instance by face

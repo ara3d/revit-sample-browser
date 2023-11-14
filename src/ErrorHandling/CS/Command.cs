@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ErrorHandling.CS
+namespace RevitMultiSample.ErrorHandling.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommand and IExternalApplication

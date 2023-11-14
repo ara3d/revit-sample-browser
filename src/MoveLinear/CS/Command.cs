@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.MoveLinear.CS
+namespace RevitMultiSample.MoveLinear.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
         public Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
         {
             var res = Result.Succeeded;
-            var trans = new Transaction(cmdData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.MoveLinear");
+            var trans = new Transaction(cmdData.Application.ActiveUIDocument.Document, "RevitMultiSample.MoveLinear");
             trans.Start();
             try
             {

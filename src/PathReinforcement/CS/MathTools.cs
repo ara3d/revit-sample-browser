@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.PathReinforcement.CS
+namespace RevitMultiSample.PathReinforcement.CS
 {
     /// <summary>
     ///     Vector4 class is used to store vector

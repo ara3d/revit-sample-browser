@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Openings.CS
+namespace RevitMultiSample.Openings.CS
 {
     /// <summary>
     ///     This class which inherit from Autodesk.Revit.DB.BoundingBoxXYZ

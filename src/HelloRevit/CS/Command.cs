@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.HelloRevit.CS
+namespace RevitMultiSample.HelloRevit.CS
 {
     /// <summary>
     ///     Demonstrate how a basic ExternalCommand can be added to the Revit user interface.

@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.ModelLines.CS
+namespace RevitMultiSample.ModelLines.CS
 {
     public partial class ModelLinesForm : Form
     {

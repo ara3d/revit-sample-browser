@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.UIAPI.CS
+namespace RevitMultiSample.UIAPI.CS
 {
     [Transaction(TransactionMode.Manual)]
     public class DragAndDropCommand : IExternalCommand

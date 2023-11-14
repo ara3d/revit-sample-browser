@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Revit.SDK.Samples.StairsAutomation.CS
+namespace RevitMultiSample.StairsAutomation.CS
 {
     /// <summary>
     ///     Represents a stairs configuration consisting of straight runs and rectangular landings.  The runs will

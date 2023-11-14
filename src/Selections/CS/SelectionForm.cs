@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.Selections.CS
+namespace RevitMultiSample.Selections.CS
 {
     /// <summary>
     ///     A Form to show selection from dialog.

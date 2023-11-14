@@ -6,9 +6,9 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.ExternalResourceDBServer.CS;
+using RevitMultiSample.ExternalResourceDBServer.CS;
 
-namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
+namespace RevitMultiSample.ExternalResourceUIServer.CS
 {
     internal class SampleExternalResourceUiServer : IExternalResourceUIServer
     {

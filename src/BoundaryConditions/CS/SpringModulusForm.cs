@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.BoundaryConditions.CS
+namespace RevitMultiSample.BoundaryConditions.CS
 {
     /// <summary>
     ///     user enter a positive number as the SpringModulus

@@ -7,7 +7,7 @@ using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ReferencePlane.CS
+namespace RevitMultiSample.ReferencePlane.CS
 {
     /// <summary>
     ///     A object to manage reference plane.

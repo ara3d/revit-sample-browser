@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Loads.CS
+namespace RevitMultiSample.Loads.CS
 {
     /// <summary>
     ///     The map class which store the data and display in usageDataGridView

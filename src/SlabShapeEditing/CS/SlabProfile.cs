@@ -5,7 +5,7 @@ using System.Drawing;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SlabShapeEditing.CS
+namespace RevitMultiSample.SlabShapeEditing.CS
 {
     /// <summary>
     ///     SlabProfile class contains Geometry information of Slab,

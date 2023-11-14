@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
-using Revit.SDK.Samples.CurtainSystem.CS.Data;
-using Revit.SDK.Samples.CurtainSystem.CS.Properties;
+using RevitMultiSample.CurtainSystem.CS.Data;
+using RevitMultiSample.CurtainSystem.CS.Properties;
 
-namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
+namespace RevitMultiSample.CurtainSystem.CS.CurtainSystem
 {
     /// <summary>
     ///     the class to maintain the data and operations of the curtain system

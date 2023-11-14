@@ -6,7 +6,7 @@ using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
-namespace Revit.SDK.Samples.NewHostedSweep.CS
+namespace RevitMultiSample.NewHostedSweep.CS
 {
     /// <summary>
     ///     This class is intent to provide a model dialog in property grid control.

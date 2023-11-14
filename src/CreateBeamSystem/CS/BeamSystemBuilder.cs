@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     is used to create new instances of beam system

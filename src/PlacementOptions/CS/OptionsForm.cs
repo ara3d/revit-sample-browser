@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.PlacementOptions.CS
+namespace RevitMultiSample.PlacementOptions.CS
 {
     /// <summary>
     ///     The dialog for choosing the face based family instance or sketch based family instance.

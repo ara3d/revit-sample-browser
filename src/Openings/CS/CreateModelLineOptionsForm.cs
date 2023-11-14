@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.Openings.CS
+namespace RevitMultiSample.Openings.CS
 {
     /// <summary>
     ///     create model line options form

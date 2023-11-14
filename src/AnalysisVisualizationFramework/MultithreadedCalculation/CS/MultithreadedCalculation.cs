@@ -11,7 +11,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.MultithreadedCalculation.CS
+namespace RevitMultiSample.MultithreadedCalculation.CS
 {
     /// <summary>
     ///     Command to set the target element and begin the multithreaded calculation.

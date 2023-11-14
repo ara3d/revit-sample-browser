@@ -17,7 +17,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Site.CS
+namespace RevitMultiSample.Site.CS
 {
     internal class TopographyEditFailuresPreprocessor : IFailuresPreprocessor
     {

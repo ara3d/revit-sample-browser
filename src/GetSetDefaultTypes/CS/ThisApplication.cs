@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
+namespace RevitMultiSample.GetSetDefaultTypes.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication
@@ -31,7 +31,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
                 var panel = application.CreateRibbonPanel(str);
                 var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var data = new PushButtonData("Default Type Selector", "Default Type Selector",
-                    directoryName + @"\GetSetDefaultTypes.dll", "Revit.SDK.Samples.GetSetDefaultTypes.CS.ThisCommand");
+                    directoryName + @"\GetSetDefaultTypes.dll", "RevitMultiSample.GetSetDefaultTypes.CS.ThisCommand");
                 var button = panel.AddItem(data) as PushButton;
                 button.LargeImage = new BitmapImage(new Uri(directoryName + "\\Resources\\type.png"));
 

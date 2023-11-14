@@ -16,7 +16,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Site.CS
+namespace RevitMultiSample.Site.CS
 {
     /// <summary>
     ///     Raised all points contained in a subregion by 3 feet.

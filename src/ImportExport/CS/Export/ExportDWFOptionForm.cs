@@ -4,7 +4,7 @@ using System;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     /// <summary>
     ///     Data class which stores information of lower priority for exporting DWF(x) format.

@@ -18,10 +18,10 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.ScheduleAutomaticFormatter.CS.Properties;
+using RevitMultiSample.ScheduleAutomaticFormatter.CS.Properties;
 using Size = System.Drawing.Size;
 
-namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
+namespace RevitMultiSample.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ViewPrinter.CS
+namespace RevitMultiSample.ViewPrinter.CS
 {
     public partial class ViewSheetSetForm : Form
     {

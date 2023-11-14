@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.AutoParameter.CS
+namespace RevitMultiSample.AutoParameter.CS
 {
     /// <summary>
     ///     add parameters(family parameters/shared parameters) to the opened family file

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.NewOpenings.CS
+namespace RevitMultiSample.NewOpenings.CS
 {
     /// <summary>
     ///     Main form used to display the profile of Wall or Floor and draw the opening profiles.

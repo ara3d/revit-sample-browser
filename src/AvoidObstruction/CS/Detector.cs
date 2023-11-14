@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.AvoidObstruction.CS
+namespace RevitMultiSample.AvoidObstruction.CS
 {
     /// <summary>
     ///     This class is used to detect the obstructions of a Line or a ray.

@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ParameterUtils.CS
+namespace RevitMultiSample.ParameterUtils.CS
 {
     /// <summary>
     ///     display a Revit element property-like form related to the selected element.

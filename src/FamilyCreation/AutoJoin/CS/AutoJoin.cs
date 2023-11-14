@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.AutoJoin.CS
+namespace RevitMultiSample.AutoJoin.CS
 {
     /// <summary>
     ///     Join all the overlapping generic forms in this document.

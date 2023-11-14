@@ -5,7 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
+namespace RevitMultiSample.CreateComplexAreaRein.CS
 {
     /// <summary>
     ///     provide utility method to get geometry data for

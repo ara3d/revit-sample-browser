@@ -6,7 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.BoundaryConditions.CS
+namespace RevitMultiSample.BoundaryConditions.CS
 {
     /// <summary>
     ///     user select a element. If the selected element has boundary conditions, display

@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.PowerCircuit.CS
+namespace RevitMultiSample.PowerCircuit.CS
 {
     partial class EditCircuitForm
     {
@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             // buttonAdd
             // 
             this.buttonAdd.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonAdd.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.AddToCircuit;
+            this.buttonAdd.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.AddToCircuit;
             this.buttonAdd.Location = new System.Drawing.Point(12, 12);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(34, 28);
@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             // buttonRemove
             // 
             this.buttonRemove.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonRemove.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.RemoveFromCircuit;
+            this.buttonRemove.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.RemoveFromCircuit;
             this.buttonRemove.Location = new System.Drawing.Point(52, 12);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(34, 28);
@@ -62,7 +62,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.Cancel;
+            this.buttonCancel.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(132, 11);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 28);
@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             // buttonSelectPanel
             // 
             this.buttonSelectPanel.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonSelectPanel.Image = global::Revit.SDK.Samples.PowerCircuit.CS.Properties.Resources.SelectPanel;
+            this.buttonSelectPanel.Image = global::RevitMultiSample.PowerCircuit.CS.Properties.Resources.SelectPanel;
             this.buttonSelectPanel.Location = new System.Drawing.Point(92, 11);
             this.buttonSelectPanel.Name = "buttonSelectPanel";
             this.buttonSelectPanel.Size = new System.Drawing.Size(34, 28);

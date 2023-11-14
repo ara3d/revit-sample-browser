@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
+namespace RevitMultiSample.AppearanceAssetEditing.CS
 {
     /// <summary>
     ///     The class of our modeless dialog.

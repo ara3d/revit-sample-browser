@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Revit.SDK.Samples.WorkThread.CS
+namespace RevitMultiSample.WorkThread.CS
 {
     /// <summary>
     ///     This class handles displaying results of an analysis of a wall surface.

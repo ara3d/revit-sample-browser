@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.WorkThread.CS
+namespace RevitMultiSample.WorkThread.CS
 {
     /// <summary>
     ///     A main class of the delegated thread.

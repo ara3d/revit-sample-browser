@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DynamicModelUpdate.CS
+namespace RevitMultiSample.DynamicModelUpdate.CS
 {
     /// <summary>
     ///     Updater to automatically move a section in conjunction with the location of a window

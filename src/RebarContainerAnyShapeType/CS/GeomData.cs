@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
+namespace RevitMultiSample.RebarContainerAnyShapeType.CS
 {
     /// <summary>
     ///     a struct to store the geometry information of the reinforcement

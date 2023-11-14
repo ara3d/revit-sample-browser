@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.RevitAddIns;
 
-namespace Revit.SDK.Samples.CancelSave.CS
+namespace RevitMultiSample.CancelSave.CS
 {
     /// <summary>
     ///     This class is an external application which checks whether "Project Status" is updated

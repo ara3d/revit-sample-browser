@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.Rooms.CS
+namespace RevitMultiSample.Rooms.CS
 {
     /// <summary>
     ///     UI to display the rooms information

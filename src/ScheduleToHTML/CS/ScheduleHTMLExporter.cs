@@ -6,7 +6,7 @@ using System.IO;
 using System.Web.UI;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ScheduleToHTML.CS
+namespace RevitMultiSample.ScheduleToHTML.CS
 {
     /// <summary>
     ///     A class that can export a schedule to HTML.

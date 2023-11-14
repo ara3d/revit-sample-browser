@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SelectionChanged.CS
+namespace RevitMultiSample.SelectionChanged.CS
 {
     /// <summary>
     ///     This class inherits IExternalCommand interface and is used to show the SelectionChanged event

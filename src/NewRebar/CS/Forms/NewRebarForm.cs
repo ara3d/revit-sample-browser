@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.NewRebar.CS
+namespace RevitMultiSample.NewRebar.CS
 {
     /// <summary>
     ///     This is the main form for user to operate the Rebar creation.

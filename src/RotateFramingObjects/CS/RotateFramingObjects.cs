@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RotateFramingObjects.CS
+namespace RevitMultiSample.RotateFramingObjects.CS
 {
     /// <summary>
     ///     Rotate the objects that were selected when the command was executed.

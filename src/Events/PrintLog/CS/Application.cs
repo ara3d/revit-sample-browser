@@ -3,7 +3,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PrintLog.CS
+namespace RevitMultiSample.PrintLog.CS
 {
     /// <summary>
     ///     This class implements the methods of interface IExternalApplication and register Print related events.

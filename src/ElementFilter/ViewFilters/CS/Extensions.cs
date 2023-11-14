@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Revit.SDK.Samples.ViewFilters.CS
+namespace RevitMultiSample.ViewFilters.CS
 {
     /// <summary>
     ///     Generic utility class used to extend enum parse related methods

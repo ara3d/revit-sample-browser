@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
-namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
+namespace RevitMultiSample.AppearanceAssetEditing.CS
 {
    partial class AppearanceAssetEditingForm
    {
@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
          // 
          // buttonSelect
          // 
-         this.buttonSelect.Image = global::Revit.SDK.Samples.AppearanceAssetEditing.CS.Properties.Resources.element_select;
+         this.buttonSelect.Image = global::RevitMultiSample.AppearanceAssetEditing.CS.Properties.Resources.element_select;
          this.buttonSelect.Location = new System.Drawing.Point(191, 17);
          this.buttonSelect.Name = "buttonSelect";
          this.buttonSelect.Size = new System.Drawing.Size(50, 30);
@@ -52,7 +52,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
          // buttonDarker
          // 
          this.buttonDarker.Enabled = false;
-         this.buttonDarker.Image = global::Revit.SDK.Samples.AppearanceAssetEditing.CS.Properties.Resources.shortcut_remove;
+         this.buttonDarker.Image = global::RevitMultiSample.AppearanceAssetEditing.CS.Properties.Resources.shortcut_remove;
          this.buttonDarker.Location = new System.Drawing.Point(126, 65);
          this.buttonDarker.Name = "buttonDarker";
          this.buttonDarker.Size = new System.Drawing.Size(25, 25);
@@ -64,7 +64,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
          // buttonLighter
          // 
          this.buttonLighter.Enabled = false;
-         this.buttonLighter.Image = global::Revit.SDK.Samples.AppearanceAssetEditing.CS.Properties.Resources.shortcut_assign;
+         this.buttonLighter.Image = global::RevitMultiSample.AppearanceAssetEditing.CS.Properties.Resources.shortcut_assign;
          this.buttonLighter.Location = new System.Drawing.Point(78, 65);
          this.buttonLighter.Name = "buttonLighter";
          this.buttonLighter.Size = new System.Drawing.Size(25, 25);

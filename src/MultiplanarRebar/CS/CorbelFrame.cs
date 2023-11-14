@@ -6,7 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.MultiplanarRebar.CS
+namespace RevitMultiSample.MultiplanarRebar.CS
 {
     /// <summary>
     ///     This class represents the trapezoid wire frame profile of corbel.

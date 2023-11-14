@@ -7,7 +7,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace Revit.SDK.Samples.TagBeam.CS
+namespace RevitMultiSample.TagBeam.CS
 {
     /// <summary>
     ///     Tag beam data class.

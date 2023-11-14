@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.AreaReinCurve.CS
+namespace RevitMultiSample.AreaReinCurve.CS
 {
     /// <summary>
     ///     contain utility methods find or set certain parameter

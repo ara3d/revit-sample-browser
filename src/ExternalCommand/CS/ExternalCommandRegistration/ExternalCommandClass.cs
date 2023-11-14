@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
+namespace RevitMultiSample.ExternalCommandRegistration.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommand, create a wall
@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.ExternalCommandRegistration");
+                "RevitMultiSample.ExternalCommandRegistration");
             trans.Start();
             var uiDoc = commandData.Application.ActiveUIDocument;
             var curves = new List<Curve>();

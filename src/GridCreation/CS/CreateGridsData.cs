@@ -6,10 +6,10 @@ using System.Resources;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.GridCreation.CS.Properties;
+using RevitMultiSample.GridCreation.CS.Properties;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace Revit.SDK.Samples.GridCreation.CS
+namespace RevitMultiSample.GridCreation.CS
 {
     /// <summary>
     ///     Base class of all grid creation data class

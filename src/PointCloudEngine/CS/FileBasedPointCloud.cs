@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 
-namespace Revit.SDK.Samples.CS.PointCloudEngine
+namespace RevitMultiSample.CS.PointCloudEngine
 {
     /// <summary>
     ///     An implementation for a file-based point cloud.

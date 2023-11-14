@@ -17,12 +17,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
-using Revit.SDK.Samples.CloudAPISample.CS.Coroutine;
-using Revit.SDK.Samples.CloudAPISample.CS.Migration;
+using RevitMultiSample.CloudAPISample.CS.Coroutine;
+using RevitMultiSample.CloudAPISample.CS.Migration;
 using MessageBox = System.Windows.MessageBox;
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS.View
+namespace RevitMultiSample.CloudAPISample.CS.View
 {
     /// <summary>
     ///     Interaction logic for ViewMigrationToBim360.xaml

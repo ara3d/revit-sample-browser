@@ -6,7 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.InPlaceMembers.CS
+namespace RevitMultiSample.InPlaceMembers.CS
 {
     /// <summary>
     ///     generate GraphicsData by given geometry object

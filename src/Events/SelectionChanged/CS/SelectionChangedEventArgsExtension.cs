@@ -5,7 +5,7 @@ using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.SelectionChanged.CS
+namespace RevitMultiSample.SelectionChanged.CS
 {
     /// <summary>
     ///     This class is used to extend SelectionChangedEventArgs with GetInfo method

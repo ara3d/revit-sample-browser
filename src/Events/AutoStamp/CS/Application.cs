@@ -3,7 +3,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AutoStamp.CS
+namespace RevitMultiSample.AutoStamp.CS
 {
     /// <summary>
     ///     This class implements the methods of interface IExternalApplication and register View Print related events.

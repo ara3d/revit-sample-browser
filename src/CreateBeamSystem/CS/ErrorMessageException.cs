@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     pass error message to UI or back to internal error messagebox by Execute method in IExternalCommand

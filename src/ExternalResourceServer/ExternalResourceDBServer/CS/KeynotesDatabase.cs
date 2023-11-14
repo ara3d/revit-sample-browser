@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
+namespace RevitMultiSample.ExternalResourceDBServer.CS
 {
     /// <summary>
     ///     A "fake" keynote database used to demonstrate how Revit keynote data can

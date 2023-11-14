@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
+namespace RevitMultiSample.ComputedSymbolGeometry.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.
@@ -23,7 +23,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
             try
             {
                 var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                    "Revit.SDK.Samples.ComputedSymbolGeometry");
+                    "RevitMultiSample.ComputedSymbolGeometry");
                 trans.Start();
                 // create a ComputedSymbolGeometry object 
                 var computedSymGeo = new ComputedSymbolGeometry(commandData.Application.ActiveUIDocument.Document);

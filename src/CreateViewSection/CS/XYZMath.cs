@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateViewSection.CS
+namespace RevitMultiSample.CreateViewSection.CS
 {
     /// <summary>
     ///     The helper class which give some operation about point and vector.

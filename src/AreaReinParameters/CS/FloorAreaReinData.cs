@@ -4,7 +4,7 @@ using System.ComponentModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.AreaReinParameters.CS
+namespace RevitMultiSample.AreaReinParameters.CS
 {
     /// <summary>
     ///     can be the datasource of propertygrid

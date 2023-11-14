@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
-namespace Revit.SDK.Samples.WorkThread.CS
+namespace RevitMultiSample.WorkThread.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

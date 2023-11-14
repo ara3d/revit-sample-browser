@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace Revit.SDK.Samples.ModelLines.CS
+namespace RevitMultiSample.ModelLines.CS
 {
     /// <summary>
     ///     The main deal class, which takes charge of showing the number of each model line type

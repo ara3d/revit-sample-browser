@@ -17,7 +17,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.PostCommandWorkflow.CS
+namespace RevitMultiSample.PostCommandWorkflow.CS
 {
     /// <summary>
     ///     This class has the capabilities to monitor when a document is saved, and prompt the user to

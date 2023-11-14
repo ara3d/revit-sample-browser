@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Revit.SDK.Samples.StairsAutomation.CS
+namespace RevitMultiSample.StairsAutomation.CS
 {
     /// <summary>
     ///     A stairs run consisting of a single sketched curved run.

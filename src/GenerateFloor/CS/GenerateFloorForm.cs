@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.GenerateFloor.CS
+namespace RevitMultiSample.GenerateFloor.CS
 {
     /// <summary>
     ///     User interface.

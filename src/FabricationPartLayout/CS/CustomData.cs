@@ -9,7 +9,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
-namespace Revit.SDK.Samples.FabricationPartLayout.CS
+namespace RevitMultiSample.FabricationPartLayout.CS
 {
     /// <summary>
     ///     Helper class to report custom data from fabrication part selection.

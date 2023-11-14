@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.NewRebar.CS
+namespace RevitMultiSample.NewRebar.CS
 {
     /// <summary>
     ///     Segment's ends reference enum.

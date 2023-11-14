@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 
-namespace Revit.SDK.Samples.ParameterValuesFromImage.CS
+namespace RevitMultiSample.ParameterValuesFromImage.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.
@@ -24,7 +24,7 @@ namespace Revit.SDK.Samples.ParameterValuesFromImage.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var trans = new Transaction(doc, "Revit.SDK.Samples.ParameterValuesFromImage");
+            var trans = new Transaction(doc, "RevitMultiSample.ParameterValuesFromImage");
             trans.Start();
             var image = new Bitmap(doc.PathName + "_grayscale.bmp");
             var collector = new FilteredElementCollector(doc);

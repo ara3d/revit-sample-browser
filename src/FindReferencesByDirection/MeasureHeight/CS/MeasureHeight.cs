@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.MeasureHeight.CS
+namespace RevitMultiSample.MeasureHeight.CS
 {
     /// <summary>
     ///     Calculate the height above the ground floor of a selected skylight.
@@ -71,7 +71,7 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
             m_app = revit.Application.Application;
             m_doc = revit.Application.ActiveUIDocument.Document;
 
-            var trans = new Transaction(m_doc, "Revit.SDK.Samples.MeasureHeight");
+            var trans = new Transaction(m_doc, "RevitMultiSample.MeasureHeight");
             trans.Start();
             // Find a 3D view to use for the ray tracing operation
             var collector = new FilteredElementCollector(m_doc);

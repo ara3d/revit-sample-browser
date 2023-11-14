@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PointCurveCreation.CS
+namespace RevitMultiSample.PointCurveCreation.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

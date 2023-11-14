@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
+namespace RevitMultiSample.SharedCoordinateSystem.CS
 {
     /// <summary>
     ///     this class is used to get, set and manage information about Location

@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem;
+using RevitMultiSample.CurtainSystem.CS.CurtainSystem;
 
-namespace Revit.SDK.Samples.CurtainSystem.CS.Data
+namespace RevitMultiSample.CurtainSystem.CS.Data
 {
     /// <summary>
     ///     maintains all the data used in the sample

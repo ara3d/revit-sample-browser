@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     describes the type of beam layout method in beam system

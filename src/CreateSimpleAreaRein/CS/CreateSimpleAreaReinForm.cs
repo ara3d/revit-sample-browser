@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
+namespace RevitMultiSample.CreateSimpleAreaRein.CS
 {
     /// <summary>
     ///     simple business process of UI

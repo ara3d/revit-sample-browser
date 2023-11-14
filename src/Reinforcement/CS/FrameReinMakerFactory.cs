@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Reinforcement.CS
+namespace RevitMultiSample.Reinforcement.CS
 {
     /// <summary>
     ///     The factory to create the corresponding FrameReinMaker, such as BeamFramReinMaker.

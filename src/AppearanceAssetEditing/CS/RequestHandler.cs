@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
+namespace RevitMultiSample.AppearanceAssetEditing.CS
 {
     /// <summary>
     ///     A class with methods to execute requests made by the dialog user.

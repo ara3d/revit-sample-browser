@@ -5,9 +5,9 @@ using System.Collections;
 using System.Resources;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.GridCreation.CS.Properties;
+using RevitMultiSample.GridCreation.CS.Properties;
 
-namespace Revit.SDK.Samples.GridCreation.CS
+namespace RevitMultiSample.GridCreation.CS
 {
     /// <summary>
     ///     Class to validate input data before creating grids

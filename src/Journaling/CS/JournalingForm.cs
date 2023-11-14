@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.Journaling.CS
+namespace RevitMultiSample.Journaling.CS
 {
     /// <summary>
     ///     The form used to collect the support data for wall creation and store in journal

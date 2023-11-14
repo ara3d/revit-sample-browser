@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using Autodesk.RevitAddIns;
 
-namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
+namespace RevitMultiSample.RevitAddInUtilitySample.CS
 {
     /// <summary>
     ///     Demonstrates how to use RevitAddInUtility.dll to create or edit addin manifest file.
@@ -33,18 +33,18 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
             //create an external application
             var application1 = new RevitAddInApplication(
                 "ExternalApplication", fileInfo.FullName, Guid.NewGuid(),
-                "Revit.SDK.Samples.ExternalCommandRegistration.CS.ExternalApplicationClass", "adsk");
+                "RevitMultiSample.ExternalCommandRegistration.CS.ExternalApplicationClass", "adsk");
 
             //create an external command to create a wall
             //This command will not be visible when there is no active document. 
             //And this command will be disabled if user selected a wall. 
             var command1 = new RevitAddInCommand(
                 fileInfo.FullName, Guid.NewGuid(),
-                "Revit.SDK.Samples.ExternalCommandRegistration.CS.ExternalCommandCreateWall", "adsk")
+                "RevitMultiSample.ExternalCommandRegistration.CS.ExternalCommandCreateWall", "adsk")
  {
      Description = "A simple external command which is used to create a wall.",
      Text = "@createWallText",
-     AvailabilityClassName = "Revit.SDK.Samples.ExternalCommandRegistration.CS.WallSelection",
+     AvailabilityClassName = "RevitMultiSample.ExternalCommandRegistration.CS.WallSelection",
      LanguageType = LanguageType.English_USA,
      LargeImage = "@CreateWall",
      TooltipImage = "@CreateWallTooltip",
@@ -58,11 +58,11 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
             //And this command will be disabled if the active view is not a 3D view. ";
             var command2 = new RevitAddInCommand(
                 fileInfo.FullName, Guid.NewGuid(),
-                "Revit.SDK.Samples.ExternalCommandRegistration.CS.ExternalCommand3DView", "adsk")
+                "RevitMultiSample.ExternalCommandRegistration.CS.ExternalCommand3DView", "adsk")
             {
                 Description = "A simple external command which show a message box.",
                 Text = "@view3DText",
-                AvailabilityClassName = "Revit.SDK.Samples.ExternalCommandRegistration.CS.View3D",
+                AvailabilityClassName = "RevitMultiSample.ExternalCommandRegistration.CS.View3D",
                 LargeImage = "@View3D",
                 LanguageType = LanguageType.English_USA,
                 VisibilityMode = VisibilityMode.NotVisibleInFamily | VisibilityMode.NotVisibleWhenNoActiveDocument,

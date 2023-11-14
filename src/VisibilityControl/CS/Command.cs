@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.VisibilityControl.CS
+namespace RevitMultiSample.VisibilityControl.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -17,7 +17,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
             , ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.VisibilityControl");
+                "RevitMultiSample.VisibilityControl");
             trans.Start();
             try
             {

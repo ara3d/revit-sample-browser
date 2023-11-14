@@ -16,7 +16,7 @@ using System;
 using System.Windows;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DockableDialogs.CS
+namespace RevitMultiSample.DockableDialogs.CS
 {
     /// <summary>
     ///     Interaction logic for DockingSetupDialog.xaml

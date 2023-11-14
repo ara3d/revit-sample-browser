@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.GenericStructuralConnection.CS
+namespace RevitMultiSample.GenericStructuralConnection.CS
 {
     /// <summary>
     ///     Demonstrate how to create a generic structural connection.

@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.UIAPI.CS
+namespace RevitMultiSample.UIAPI.CS
 {
     internal class ApplicationAvailabilityClass : IExternalCommandAvailability
     {

@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
+namespace RevitMultiSample.RebarContainerAnyShapeType.CS
 {
     /// <summary>
     ///     contain utility methods find or set certain parameter

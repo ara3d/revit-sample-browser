@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Rooms.CS
+namespace RevitMultiSample.Rooms.CS
 {
     /// <summary>
     ///     Iterates through the rooms in the project and get the information of all the rooms

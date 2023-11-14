@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     base class of converting types of FamilySymbol to string

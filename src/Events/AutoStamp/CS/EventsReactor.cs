@@ -7,7 +7,7 @@ using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 
-namespace Revit.SDK.Samples.AutoStamp.CS
+namespace RevitMultiSample.AutoStamp.CS
 {
     /// <summary>
     ///     This class consists of two handler methods which will be subscribed to ViewPrinting and ViewPrinted events

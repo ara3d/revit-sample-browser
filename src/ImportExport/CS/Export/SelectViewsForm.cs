@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 using View = Autodesk.Revit.DB.View;
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     /// <summary>
     ///     Provide a dialog which lets users choose views to export.

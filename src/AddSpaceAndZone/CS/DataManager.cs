@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AddSpaceAndZone.CS
+namespace RevitMultiSample.AddSpaceAndZone.CS
 {
     /// <summary>
     ///     The DataManager Class is used to obtain, create or edit the Space elements and Zone elements.

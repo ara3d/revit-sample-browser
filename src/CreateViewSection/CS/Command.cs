@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CreateViewSection.CS
+namespace RevitMultiSample.CreateViewSection.CS
 {
     /// <summary>
     ///     The main class which given a linear element, such as a wall, floor or beam,

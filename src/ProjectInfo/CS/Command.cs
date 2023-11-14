@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

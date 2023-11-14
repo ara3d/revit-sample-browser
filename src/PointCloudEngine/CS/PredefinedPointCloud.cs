@@ -4,7 +4,7 @@ using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 
-namespace Revit.SDK.Samples.CS.PointCloudEngine
+namespace RevitMultiSample.CS.PointCloudEngine
 {
     /// <summary>
     ///     An implementation for a non file-based point cloud.  In this implementaiton, the location of the cells, including

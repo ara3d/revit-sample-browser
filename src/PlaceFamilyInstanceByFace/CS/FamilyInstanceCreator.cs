@@ -9,7 +9,7 @@ using GeoInstance = Autodesk.Revit.DB.GeometryInstance;
 using GeoElement = Autodesk.Revit.DB.GeometryElement;
 using RevitElement = Autodesk.Revit.DB.Element;
 
-namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
+namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
     ///     This is main data class for creating family Instance by face

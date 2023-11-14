@@ -3,7 +3,7 @@
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
+namespace RevitMultiSample.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The RoofItem is used to display a roof info in the ListView as a ListViewItem.

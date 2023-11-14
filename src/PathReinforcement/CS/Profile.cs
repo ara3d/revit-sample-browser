@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PathReinforcement.CS
+namespace RevitMultiSample.PathReinforcement.CS
 {
     /// <summary>
     ///     This class stores the geometry information of path reinforcement.

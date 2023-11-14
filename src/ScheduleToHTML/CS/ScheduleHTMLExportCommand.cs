@@ -3,7 +3,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ScheduleToHTML.CS
+namespace RevitMultiSample.ScheduleToHTML.CS
 {
     /// <summary>
     ///     The external command exporting the active schedule to HTML.

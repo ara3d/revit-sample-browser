@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.DuplicateViews.CS
+namespace RevitMultiSample.DuplicateViews.CS
 {
     /// <summary>
     ///     Utilities that facilitate duplication of drafting views and schedules into another document.

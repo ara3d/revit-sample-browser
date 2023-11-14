@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     ///     Wrapper class for Construction

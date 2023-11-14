@@ -18,10 +18,10 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.FreeFormElement.CS.Properties;
+using RevitMultiSample.FreeFormElement.CS.Properties;
 using Size = System.Drawing.Size;
 
-namespace Revit.SDK.Samples.FreeFormElement.CS
+namespace RevitMultiSample.FreeFormElement.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

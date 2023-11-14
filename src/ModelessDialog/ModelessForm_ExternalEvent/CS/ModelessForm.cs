@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
+namespace RevitMultiSample.ModelessForm_ExternalEvent.CS
 {
     /// <summary>
     ///     The class of our modeless dialog.

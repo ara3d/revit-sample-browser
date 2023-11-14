@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.SlabProperties.CS
+namespace RevitMultiSample.SlabProperties.CS
 {
     /// <summary>
     ///     Show some properties of a slab in Revit Structure 5, including Level, Type name, Span direction,

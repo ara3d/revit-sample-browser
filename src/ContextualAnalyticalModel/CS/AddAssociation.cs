@@ -22,7 +22,7 @@ namespace ContextualAnalyticalModel
             if (null == doc) return Result.Failed;
 
             using (var trans =
-                   new Transaction(doc, "Revit.SDK.Samples.AddRelationBetweenPhysicalAndAnalyticalElements"))
+                   new Transaction(doc, "RevitMultiSample.AddRelationBetweenPhysicalAndAnalyticalElements"))
             {
                 trans.Start();
 

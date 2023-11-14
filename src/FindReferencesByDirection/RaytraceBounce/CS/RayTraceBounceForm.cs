@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.RayTraceBounce.CS
+namespace RevitMultiSample.RayTraceBounce.CS
 {
     /// <summary>
     ///     1. This form allowing entry of a coordinate location (X, Y, Z) within the model and a coordinate direction (i, j,

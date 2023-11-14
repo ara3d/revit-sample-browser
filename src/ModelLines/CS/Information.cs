@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ModelLines.CS
+namespace RevitMultiSample.ModelLines.CS
 {
     /// <summary>
     ///     The map class which store the data and display in informationDataGridView

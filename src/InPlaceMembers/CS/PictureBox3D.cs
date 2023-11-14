@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.InPlaceMembers.CS
+namespace RevitMultiSample.InPlaceMembers.CS
 {
     /// <summary>
     ///     picturebox wich can display 3D geometry outline

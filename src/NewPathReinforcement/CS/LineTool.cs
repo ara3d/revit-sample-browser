@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.NewPathReinforcement.CS
+namespace RevitMultiSample.NewPathReinforcement.CS
 {
     /// <summary>
     ///     tool used to draw line

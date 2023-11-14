@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.EventsMonitor.CS
+namespace RevitMultiSample.EventsMonitor.CS
 {
     /// <summary>
     ///     This class is a manager for application events.

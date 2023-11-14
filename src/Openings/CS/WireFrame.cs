@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace Revit.SDK.Samples.Openings.CS
+namespace RevitMultiSample.Openings.CS
 {
     /// <summary>
     ///     WireFrame class for generate the model lines and fit the picture box's size to display

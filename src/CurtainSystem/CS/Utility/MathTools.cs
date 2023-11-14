@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
+namespace RevitMultiSample.CurtainSystem.CS.Utility
 {
     /// <summary>
     ///     Vector4 is a homogeneous coordinate class used to store vector

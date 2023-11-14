@@ -5,7 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Revit.SDK.Samples.NetworkPressureLossReport
+namespace RevitMultiSample.NetworkPressureLossReport
 {
     public class AvfViewer
     {

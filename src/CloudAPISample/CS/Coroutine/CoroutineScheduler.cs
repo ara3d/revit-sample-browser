@@ -16,7 +16,7 @@ using System;
 using System.Collections;
 using System.Windows.Threading;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
+namespace RevitMultiSample.CloudAPISample.CS.Coroutine
 {
     /// <summary>
     ///     A simple coroutine scheduler.

@@ -4,7 +4,7 @@ using System.Timers;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
 
-namespace Revit.SDK.Samples.TypeRegeneration.CS
+namespace RevitMultiSample.TypeRegeneration.CS
 {
     /// <summary>
     ///     The form is used to show the result

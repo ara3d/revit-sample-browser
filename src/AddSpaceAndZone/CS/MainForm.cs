@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.AddSpaceAndZone.CS
+namespace RevitMultiSample.AddSpaceAndZone.CS
 {
     /// <summary>
     ///     The MainForm Class is the main user interface to manage the Space elements and Zone elements

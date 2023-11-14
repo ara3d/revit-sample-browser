@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.CreateFillPattern.CS
+namespace RevitMultiSample.CreateFillPattern.CS
 {
     /// <summary>
     /// </summary>

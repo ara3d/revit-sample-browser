@@ -3,7 +3,7 @@
 using System.Windows.Forms;
 using Autodesk.Revit.DB.Mechanical;
 
-namespace Revit.SDK.Samples.AddSpaceAndZone.CS
+namespace RevitMultiSample.AddSpaceAndZone.CS
 {
     /// <summary>
     ///     The SpaceItem class inherit ListViewItem Class, it is used

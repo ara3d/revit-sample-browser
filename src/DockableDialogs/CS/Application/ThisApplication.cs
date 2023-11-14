@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DockableDialogs.CS
+namespace RevitMultiSample.DockableDialogs.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

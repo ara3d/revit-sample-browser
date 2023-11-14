@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace Revit.SDK.Samples.PrintLog.CS
+namespace RevitMultiSample.PrintLog.CS
 {
     /// <summary>
     ///     This class consists of two watches for view print and document print processes.

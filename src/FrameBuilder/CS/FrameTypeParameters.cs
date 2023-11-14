@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.FrameBuilder.CS
+namespace RevitMultiSample.FrameBuilder.CS
 {
     /// <summary>
     ///     for control PropertyGrid to show and modify parameters of column, beam or brace

@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CurtainWallGrid.CS
+namespace RevitMultiSample.CurtainWallGrid.CS
 {
     /// <summary>
     ///     Provides static functions to convert unit

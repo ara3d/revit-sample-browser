@@ -20,7 +20,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.SinePlotter.CS
+namespace RevitMultiSample.SinePlotter.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication
@@ -233,7 +233,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         private void AddRunButton(RibbonPanel panel)
         {
             var pushButtonData = new PushButtonData("arrayPrisms", "run",
-                m_assemblyPath + "\\" + m_assemblyName, "Revit.SDK.Samples.SinePlotter.CS.Command")
+                m_assemblyPath + "\\" + m_assemblyName, "RevitMultiSample.SinePlotter.CS.Command")
             {
                 LargeImage = new BitmapImage(new Uri(m_imageFolder + "Start.png"))
             };

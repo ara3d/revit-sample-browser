@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
+namespace RevitMultiSample.RebarContainerAnyShapeType.CS
 {
     /// <summary>
     ///     The form is used for collecting information of column reinforcement creation

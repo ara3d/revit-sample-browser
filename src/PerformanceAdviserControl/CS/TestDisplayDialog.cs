@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
+namespace RevitMultiSample.PerformanceAdviserControl.CS
 {
     public partial class TestDisplayDialog : Form
     {

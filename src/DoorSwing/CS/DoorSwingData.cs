@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DoorSwing.CS
+namespace RevitMultiSample.DoorSwing.CS
 {
     /// <summary>
     ///     Stores all the needed data and operates RevitAPI.

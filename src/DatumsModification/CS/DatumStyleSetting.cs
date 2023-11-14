@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.DatumsModification.CS
+namespace RevitMultiSample.DatumsModification.CS
 {
     /// <summary>
     /// </summary>

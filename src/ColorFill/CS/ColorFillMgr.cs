@@ -6,7 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ColorFill.CS
+namespace RevitMultiSample.ColorFill.CS
 {
     /// <summary>
     ///     This is a helper class to deal with the color fill

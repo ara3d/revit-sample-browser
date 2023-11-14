@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
+namespace RevitMultiSample.EnergyAnalysisModel.CS
 {
     public class EnergyAnalysisModel
     {

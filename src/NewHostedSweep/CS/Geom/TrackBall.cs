@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.NewHostedSweep.CS
+namespace RevitMultiSample.NewHostedSweep.CS
 {
     /// <summary>
     ///     This class is intent to convenience the geometry transformations.

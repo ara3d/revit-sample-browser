@@ -18,9 +18,9 @@ using System.Runtime.Serialization;
 using System.Web.Script.Serialization;
 using System.Windows;
 using Microsoft.Win32;
-using Revit.SDK.Samples.CloudAPISample.CS.Migration;
+using RevitMultiSample.CloudAPISample.CS.Migration;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS.View
+namespace RevitMultiSample.CloudAPISample.CS.View
 {
     /// <summary>
     ///     Interaction logic for ViewInputMigrationInfo.xaml

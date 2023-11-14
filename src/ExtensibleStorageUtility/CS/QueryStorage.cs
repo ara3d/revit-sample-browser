@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ExtensibleStorageUtility.CS
+namespace RevitMultiSample.ExtensibleStorageUtility.CS
 {
     /// <summary>
     ///     Checks to see if any extensible storage in the document exists and displays elements

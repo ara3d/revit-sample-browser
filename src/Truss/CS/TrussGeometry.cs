@@ -11,7 +11,7 @@ using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.Truss.CS
+namespace RevitMultiSample.Truss.CS
 {
     /// <summary>
     ///     TrussGeometry class contains Geometry information of new created Truss,

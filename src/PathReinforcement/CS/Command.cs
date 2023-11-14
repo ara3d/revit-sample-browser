@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PathReinforcement.CS
+namespace RevitMultiSample.PathReinforcement.CS
 {
     /// <summary>
     ///     The entrance of this example, implement the Execute method of IExternalCommand

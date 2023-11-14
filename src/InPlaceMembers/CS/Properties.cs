@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.InPlaceMembers.CS
+namespace RevitMultiSample.InPlaceMembers.CS
 {
     /// <summary>
     ///     This class is used as PropertyGrid.SelectedObject.

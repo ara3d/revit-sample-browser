@@ -15,7 +15,7 @@
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
+namespace RevitMultiSample.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

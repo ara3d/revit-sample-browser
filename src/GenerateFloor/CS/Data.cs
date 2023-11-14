@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Revit.SDK.Samples.GenerateFloor.CS
+namespace RevitMultiSample.GenerateFloor.CS
 {
     /// <summary>
     ///     obtain all data for this sample.

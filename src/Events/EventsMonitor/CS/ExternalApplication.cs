@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.EventsMonitor.CS
+namespace RevitMultiSample.EventsMonitor.CS
 {
     /// <summary>
     ///     A class inherits IExternalApplication interface and provide an entry of the sample.
@@ -237,7 +237,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             var ribbonPanelPushButtons = application.CreateRibbonPanel(panelName);
             var pushButtonData = new PushButtonData("EventsSetting",
                 "Set Events", Assembly.GetExecutingAssembly().Location,
-                "Revit.SDK.Samples.EventsMonitor.CS.Command");
+                "RevitMultiSample.EventsMonitor.CS.Command");
             var pushButtonCreateWall = ribbonPanelPushButtons.AddItem(pushButtonData) as PushButton;
             pushButtonCreateWall.ToolTip = "Setting Events";
         }

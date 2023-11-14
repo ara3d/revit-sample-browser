@@ -20,7 +20,7 @@ using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
+namespace RevitMultiSample.AnalysisVisualizationFramework.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
             var doc = commandData.Application.ActiveUIDocument.Document;
             var uiDoc = commandData.Application.ActiveUIDocument;
 
-            var trans = new Transaction(doc, "Revit.SDK.Samples.AnalysisVisualizationFramework");
+            var trans = new Transaction(doc, "RevitMultiSample.AnalysisVisualizationFramework");
             trans.Start();
 
             var sfm = SpatialFieldManager.GetSpatialFieldManager(doc.ActiveView) ?? SpatialFieldManager.CreateSpatialFieldManager(doc.ActiveView, 1);

@@ -14,7 +14,7 @@
 
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
+namespace RevitMultiSample.ModelessForm_ExternalEvent.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

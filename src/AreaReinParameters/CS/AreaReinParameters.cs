@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AreaReinParameters.CS
+namespace RevitMultiSample.AreaReinParameters.CS
 {
     /// <summary>
     ///     Entry point and main command class
@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             ElementSet elements)
         {
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.AreaReinParameters");
+                "RevitMultiSample.AreaReinParameters");
             trans.Start();
             CommandData = revit;
             if (!PreData())

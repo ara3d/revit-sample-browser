@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.FoundationSlab.CS
+namespace RevitMultiSample.FoundationSlab.CS
 {
     /// <summary>
     ///     A class collecting all useful datas from revit API for UI.

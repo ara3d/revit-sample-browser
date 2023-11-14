@@ -6,7 +6,7 @@ using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-namespace Revit.SDK.Samples.ExtensibleStorageUtility.CS
+namespace RevitMultiSample.ExtensibleStorageUtility.CS
 {
     public class StorageUtility
     {

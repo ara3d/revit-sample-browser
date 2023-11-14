@@ -3,7 +3,7 @@
 using System;
 using System.Drawing;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     represent a geometry segment line

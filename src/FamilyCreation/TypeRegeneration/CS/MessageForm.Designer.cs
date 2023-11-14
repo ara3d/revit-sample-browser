@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.TypeRegeneration.CS
+namespace RevitMultiSample.TypeRegeneration.CS
 {
     partial class MessageForm
     {

@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
+namespace RevitMultiSample.ProximityDetection_WallJoinControl.CS
 {
     /// <summary>
     ///     The form that show the operations and results

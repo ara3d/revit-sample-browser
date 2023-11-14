@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.StructSample.CS
+namespace RevitMultiSample.StructSample.CS
 {
     /// <summary>
     ///     This command places a set of columns in the selected wall.

@@ -12,7 +12,7 @@ using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.MaterialProperties.CS
+namespace RevitMultiSample.MaterialProperties.CS
 {
     /// <summary>
     ///     Summary description for MaterialPropFrm.

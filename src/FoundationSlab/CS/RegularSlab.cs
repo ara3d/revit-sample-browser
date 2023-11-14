@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.FoundationSlab.CS
+namespace RevitMultiSample.FoundationSlab.CS
 {
     /// <summary>
     ///     A class of regular slab.

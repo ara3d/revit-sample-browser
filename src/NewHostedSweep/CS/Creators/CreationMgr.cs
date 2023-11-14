@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.NewHostedSweep.CS
+namespace RevitMultiSample.NewHostedSweep.CS
 {
     /// <summary>
     ///     This is the manager of all hosted sweep creators, it contains all the creators

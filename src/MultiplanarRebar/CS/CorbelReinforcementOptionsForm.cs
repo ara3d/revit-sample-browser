@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.MultiplanarRebar.CS
+namespace RevitMultiSample.MultiplanarRebar.CS
 {
     internal partial class CorbelReinforcementOptionsForm : Form
     {

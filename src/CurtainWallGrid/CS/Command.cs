@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CurtainWallGrid.CS
+namespace RevitMultiSample.CurtainWallGrid.CS
 {
     /// <summary>
     ///     the entry point of the sample (to launch the sample dialog and allows further operations)

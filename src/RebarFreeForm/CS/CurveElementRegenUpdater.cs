@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.RebarFreeForm.CS
+namespace RevitMultiSample.RebarFreeForm.CS
 {
     /// <summary>
     ///     This updater is used to regen rebar elements whenever a curveElement that was "Selected" is changed

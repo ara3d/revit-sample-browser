@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
+namespace RevitMultiSample.SharedCoordinateSystem.CS
 {
     /// <summary>
     /// coordinate system data form

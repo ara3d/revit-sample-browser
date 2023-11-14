@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.AreaReinParameters.CS
+namespace RevitMultiSample.AreaReinParameters.CS
 {
     /// <summary>
     ///     all class that can be the datasource of propertygrid must inherit from it

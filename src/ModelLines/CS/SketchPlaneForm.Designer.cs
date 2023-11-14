@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-using Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS;
+using RevitMultiSample.PlaceFamilyInstanceByFace.CS;
 
-namespace Revit.SDK.Samples.ModelLines.CS
+namespace RevitMultiSample.ModelLines.CS
 {
     /// <summary>
     /// This UserControl is used to collect the information for sketch plane creation
@@ -133,10 +133,10 @@ namespace Revit.SDK.Samples.ModelLines.CS
         }
 
         
-        private Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS.PointUserControl normalUserControl;
+        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl normalUserControl;
         private System.Windows.Forms.Label normalLabel;
         private System.Windows.Forms.Label originLabel;
-        private Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS.PointUserControl originUserControl;
+        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl originUserControl;
         private System.Windows.Forms.GroupBox creationGroupBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;

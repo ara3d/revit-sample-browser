@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ReferencePlane.CS
+namespace RevitMultiSample.ReferencePlane.CS
 {
     /// <summary>
     ///     The entry of this sample, that supports the IExternalCommand interface.
@@ -21,7 +21,7 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
             ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.ReferencePlane");
+                "RevitMultiSample.ReferencePlane");
             trans.Start();
             try
             {

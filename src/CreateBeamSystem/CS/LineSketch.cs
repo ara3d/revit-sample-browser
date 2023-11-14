@@ -3,7 +3,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     sketch line and any tag on it

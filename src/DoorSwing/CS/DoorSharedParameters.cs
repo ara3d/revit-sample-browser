@@ -7,7 +7,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DoorSwing.CS
+namespace RevitMultiSample.DoorSwing.CS
 {
     /// <summary>
     ///     Static class used to add project shared parameters.

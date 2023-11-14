@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
+namespace RevitMultiSample.AppearanceAssetEditing.CS
 {
     /// <summary>
     ///     A list of requests the dialog has available

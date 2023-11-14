@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
-namespace Revit.SDK.Samples.StairsAutomation.CS
+namespace RevitMultiSample.StairsAutomation.CS
 {
     /// <summary>
     ///     The base interface for a single stairs run.

@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Color = System.Drawing.Color;
 using Control = System.Windows.Forms.Control;
 
-namespace Revit.SDK.Samples.CreateBeamSystem.CS
+namespace RevitMultiSample.CreateBeamSystem.CS
 {
     /// <summary>
     ///     Sketch the profile of beam system on canvas

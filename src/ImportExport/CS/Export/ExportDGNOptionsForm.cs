@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     /// <summary>
     ///     Provide a dialog which provides the options for exporting dgn format

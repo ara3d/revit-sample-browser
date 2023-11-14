@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DividedSurfaceByIntersects.CS
+namespace RevitMultiSample.DividedSurfaceByIntersects.CS
 {
     /// <summary>
     ///     the entry point of the sample

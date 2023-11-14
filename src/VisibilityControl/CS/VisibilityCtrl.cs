@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.VisibilityControl.CS
+namespace RevitMultiSample.VisibilityControl.CS
 {
     /// <summary>
     ///     An enumerate type listing the types of element select mode.

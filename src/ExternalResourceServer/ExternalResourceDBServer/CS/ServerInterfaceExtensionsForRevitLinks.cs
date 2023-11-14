@@ -3,7 +3,7 @@
 using System.IO;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
+namespace RevitMultiSample.ExternalResourceDBServer.CS
 {
     /// <summary>
     ///     Extension operator to support "Open (and Unload)" command.

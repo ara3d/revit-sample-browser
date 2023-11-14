@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CurvedBeam.CS
+namespace RevitMultiSample.CurvedBeam.CS
 {
     /// <summary>
     ///     This class inherits from IExternalCommand interface, and implements the Execute method to create Arc, BSpline

@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.Loads.CS
+namespace RevitMultiSample.Loads.CS
 {
     /// <summary>
     ///     A class to store Load Case and it's properties.

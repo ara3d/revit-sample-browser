@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.StructuralLayerFunction.CS
+namespace RevitMultiSample.StructuralLayerFunction.CS
 {
     /// <summary>
     ///     display the function of each of a select floor's structural layers

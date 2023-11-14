@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.VisibilityControl.CS
+namespace RevitMultiSample.VisibilityControl.CS
 {
     /// <summary>
     ///     the user interface form

@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     ///     Converts angle with string

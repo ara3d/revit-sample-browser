@@ -10,7 +10,7 @@ using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Revit.SDK.Samples.CreateTruss.CS
+namespace RevitMultiSample.CreateTruss.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

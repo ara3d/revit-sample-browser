@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.EventsMonitor.CS
+namespace RevitMultiSample.EventsMonitor.CS
 {
     /// <summary>
     ///     The UI to show the events history logs. This class is not the main one just a assistant

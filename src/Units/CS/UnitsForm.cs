@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.Units.CS
+namespace RevitMultiSample.Units.CS
 {
     /// <summary>
     /// </summary>

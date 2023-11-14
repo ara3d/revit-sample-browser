@@ -5,9 +5,9 @@ using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.PowerCircuit.CS.Properties;
+using RevitMultiSample.PowerCircuit.CS.Properties;
 
-namespace Revit.SDK.Samples.PowerCircuit.CS
+namespace RevitMultiSample.PowerCircuit.CS
 {
     /// <summary>
     ///     To add an external command to Autodesk Revit

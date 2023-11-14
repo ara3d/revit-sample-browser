@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
-namespace Revit.SDK.Samples.Truss.CS
+namespace RevitMultiSample.Truss.CS
 {
     /// <summary>
     /// window form contains one three picture box to show the 

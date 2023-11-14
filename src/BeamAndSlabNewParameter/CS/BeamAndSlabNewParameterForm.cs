@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
+namespace RevitMultiSample.BeamAndSlabNewParameter.CS
 {
     /// <summary>
     ///     User Interface.

@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DockableDialogs.CS
+namespace RevitMultiSample.DockableDialogs.CS
 {
     /// <summary>
     ///     A simple class to manage an interface into the Revit API.

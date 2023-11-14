@@ -5,7 +5,7 @@ using System.Text;
 using Autodesk.Revit.DB;
 using ArgumentException = Autodesk.Revit.Exceptions.ArgumentException;
 
-namespace Revit.SDK.Samples.NetworkPressureLossReport
+namespace RevitMultiSample.NetworkPressureLossReport
 {
     public class CsvExporter : IDisposable
     {

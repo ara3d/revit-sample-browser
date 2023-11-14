@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.MeasurePanelArea.CS
+namespace RevitMultiSample.MeasurePanelArea.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

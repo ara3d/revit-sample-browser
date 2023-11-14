@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
+namespace RevitMultiSample.ReadonlySharedParameters.CS
 {
     internal class SharedParameterBindingManager
     {

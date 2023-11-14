@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
+namespace RevitMultiSample.CreateWallinBeamProfile.CS
 {
     public partial class CreateWallinBeamProfileForm : Form
     {

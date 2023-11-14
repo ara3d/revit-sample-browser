@@ -37,7 +37,7 @@ using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.DuplicateGraphics.CS
+namespace RevitMultiSample.DuplicateGraphics.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

@@ -19,7 +19,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
+namespace RevitMultiSample.ExportPDFSettingsSample.CS
 {
     /// <summary>
     ///     ExternalApplication for ExportPDFSettings manipulation through Revit API. ExportPDFSettings is the element to store
@@ -52,35 +52,35 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
                 panel.AddItem(new PushButtonData("CreateExportPDFSettingsInstance",
                     "Create ExportPDFSettings Instance",
                     assembly.Location,
-                    "Revit.SDK.Samples.ExportPDFSettingsSample.CS.CreateExportPDFSettingsCommand"));
+                    "RevitMultiSample.ExportPDFSettingsSample.CS.CreateExportPDFSettingsCommand"));
 
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("ModifyExportPDFSettingsInstance",
                     "Modify ExportPDFSettings Instance",
                     assembly.Location,
-                    "Revit.SDK.Samples.ExportPDFSettingsSample.CS.ModifyExportPDFSettingsCommand"));
+                    "RevitMultiSample.ExportPDFSettingsSample.CS.ModifyExportPDFSettingsCommand"));
 
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("AddNamingRule",
                     "Add Naming Rule",
                     assembly.Location,
-                    "Revit.SDK.Samples.ExportPDFSettingsSample.CS.AddNamingRuleCommand"));
+                    "RevitMultiSample.ExportPDFSettingsSample.CS.AddNamingRuleCommand"));
 
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("ModifyNamingRule",
                     "Mofidy Naming Rule",
                     assembly.Location,
-                    "Revit.SDK.Samples.ExportPDFSettingsSample.CS.MofidyNamingRuleCommand"));
+                    "RevitMultiSample.ExportPDFSettingsSample.CS.MofidyNamingRuleCommand"));
 
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("DeleteNamingRule",
                     "Delete Naming Rule",
                     assembly.Location,
-                    "Revit.SDK.Samples.ExportPDFSettingsSample.CS.DeleteNamingRuleCommand"));
+                    "RevitMultiSample.ExportPDFSettingsSample.CS.DeleteNamingRuleCommand"));
             }
             catch (Exception e)
             {

@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     /// </summary>

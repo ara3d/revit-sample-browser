@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.AreaReinCurve.CS
+namespace RevitMultiSample.AreaReinCurve.CS
 {
     /// <summary>
     ///     provide some common geometry judgement and calculate method

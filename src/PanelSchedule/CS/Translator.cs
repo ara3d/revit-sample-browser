@@ -4,7 +4,7 @@ using System.IO;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 
-namespace Revit.SDK.Samples.PanelSchedule.CS
+namespace RevitMultiSample.PanelSchedule.CS
 {
     /// <summary>
     ///     Translate the panel schedule view data from Revit to some formats, HTML, CSV etc.

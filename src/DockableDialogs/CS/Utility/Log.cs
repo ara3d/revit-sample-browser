@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DockableDialogs.CS
+namespace RevitMultiSample.DockableDialogs.CS
 {
     public class Log
     {

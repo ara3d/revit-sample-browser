@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Revit.SDK.Samples.WorkThread.CS
+namespace RevitMultiSample.WorkThread.CS
 {
     /// <summary>
     ///     This class is for exchange of results between the

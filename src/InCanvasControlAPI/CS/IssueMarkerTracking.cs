@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.InCanvasControlAPI.CS
+namespace RevitMultiSample.InCanvasControlAPI.CS
 {
     /// <summary>
     ///     A class tracks all issue markers in a given document. It also tracks the index of the active selected marker.

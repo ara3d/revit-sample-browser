@@ -2,7 +2,7 @@
 
 using System.Drawing;
 
-namespace Revit.SDK.Samples.NewOpenings.CS
+namespace RevitMultiSample.NewOpenings.CS
 {
     /// <summary>
     ///     Tool used to draw nothing

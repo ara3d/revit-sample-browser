@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.LevelsProperty.CS
+namespace RevitMultiSample.LevelsProperty.CS
 {
     /// <summary>
     ///     Provides static functions to convert unit

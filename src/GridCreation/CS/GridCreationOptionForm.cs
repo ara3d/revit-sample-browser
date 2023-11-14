@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.GridCreation.CS
+namespace RevitMultiSample.GridCreation.CS
 {
     /// <summary>
     ///     The dialog which lets user choose the way to create grids

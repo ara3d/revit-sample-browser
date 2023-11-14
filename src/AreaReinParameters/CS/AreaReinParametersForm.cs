@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.AreaReinParameters.CS
+namespace RevitMultiSample.AreaReinParameters.CS
 {
     public partial class AreaReinParametersForm : Form
     {

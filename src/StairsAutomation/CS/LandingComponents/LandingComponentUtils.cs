@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.StairsAutomation.CS
+namespace RevitMultiSample.StairsAutomation.CS
 {
     /// <summary>
     ///     Utilities used in processing of landings.

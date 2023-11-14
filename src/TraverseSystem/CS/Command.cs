@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.TraverseSystem.CS
+namespace RevitMultiSample.TraverseSystem.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

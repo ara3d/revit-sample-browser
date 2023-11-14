@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Autodesk.Revit.ApplicationServices;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     ///     Wrapper class for ProjectInfo

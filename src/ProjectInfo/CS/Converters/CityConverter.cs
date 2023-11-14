@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ProjectInfo.CS
+namespace RevitMultiSample.ProjectInfo.CS
 {
     /// <summary>
     ///     Converts City with string

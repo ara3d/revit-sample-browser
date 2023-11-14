@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
+namespace RevitMultiSample.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The RoofEditorForm is the main edit form to edit a roof data.

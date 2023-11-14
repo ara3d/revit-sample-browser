@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.Truss.CS
+namespace RevitMultiSample.Truss.CS
 {
     /// <summary>
     ///     Vector4 is a homogeneous coordinate class used to store vector

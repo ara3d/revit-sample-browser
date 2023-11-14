@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PanelSchedule.CS
+namespace RevitMultiSample.PanelSchedule.CS
 {
     /// <summary>
     ///     Import the panel scheduel view to place on a sheet view.

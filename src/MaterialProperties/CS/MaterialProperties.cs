@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.MaterialProperties.CS
+namespace RevitMultiSample.MaterialProperties.CS
 {
     /// <summary>
     ///     get the material physical properties of the selected beam, column or brace

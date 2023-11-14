@@ -18,7 +18,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
-namespace Revit.SDK.Samples.Site.CS
+namespace RevitMultiSample.Site.CS
 {
     /// <summary>
     ///     Database level utilities for the site editing commands.

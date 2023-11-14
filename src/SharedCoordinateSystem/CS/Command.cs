@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
+namespace RevitMultiSample.SharedCoordinateSystem.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             try
             {
                 var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                    "Revit.SDK.Samples.SharedCoordinateSystem");
+                    "RevitMultiSample.SharedCoordinateSystem");
                 trans.Start();
                 var data = new CoordinateSystemData(commandData);
                 data.GatData();

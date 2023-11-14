@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
+namespace RevitMultiSample.CreateSimpleAreaRein.CS
 {
     /// <summary>
     ///     enum of AreaReinforcement's parameter Layout Rules

@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
+namespace RevitMultiSample.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
     ///     A list of requests the dialog has available

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Revit.SDK.Samples.WindowWizard.CS
+namespace RevitMultiSample.WindowWizard.CS
 {
     /// <summary>
     ///     class is used to validate window parameters

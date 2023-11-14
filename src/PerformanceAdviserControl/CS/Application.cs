@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
+namespace RevitMultiSample.PerformanceAdviserControl.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication,
@@ -50,7 +50,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             var rp = application.CreateRibbonPanel("PerformanceAdviserControl");
             var currentAssembly = Assembly.GetAssembly(GetType()).Location;
             var pb = rp.AddItem(new PushButtonData("Performance Adviser", "Performance Adviser", currentAssembly,
-                "Revit.SDK.Samples.PerformanceAdviserControl.CS.UICommand")) as PushButton;
+                "RevitMultiSample.PerformanceAdviserControl.CS.UICommand")) as PushButton;
             var uriImage = new Uri(Path.GetDirectoryName(currentAssembly) + "\\Button32.png");
             var largeImage = new BitmapImage(uriImage);
             pb.LargeImage = largeImage;

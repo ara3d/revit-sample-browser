@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
-namespace Revit.SDK.Samples.WinderStairs.CS
+namespace RevitMultiSample.WinderStairs.CS
 {
     partial class UWinderOptions
     {
@@ -146,7 +146,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             // previewPictureBox
             // 
             this.previewPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.previewPictureBox.Image = global::Revit.SDK.Samples.WinderStairs.CS.Properties.Resources.UWinder;
+            this.previewPictureBox.Image = global::RevitMultiSample.WinderStairs.CS.Properties.Resources.UWinder;
             this.previewPictureBox.Location = new System.Drawing.Point(274, 23);
             this.previewPictureBox.Name = "previewPictureBox";
             this.previewPictureBox.Size = new System.Drawing.Size(360, 302);

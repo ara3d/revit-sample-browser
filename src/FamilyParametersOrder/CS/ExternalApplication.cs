@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.FamilyParametersOrder.CS
+namespace RevitMultiSample.FamilyParametersOrder.CS
 {
     /// <summary>
     ///     A class inherits IExternalApplication interface and provide an entry of the sample.

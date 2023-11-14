@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.BoundaryConditions.CS
+namespace RevitMultiSample.BoundaryConditions.CS
 {
     /// <summary>
     ///     BoundaryConditions Type Enumeration

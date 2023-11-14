@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
+namespace RevitMultiSample.GetSetDefaultTypes.CS
 {
     [Transaction(TransactionMode.Manual)]
     internal class ThisCommand : IExternalCommand

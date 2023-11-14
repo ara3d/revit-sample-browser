@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AvoidObstruction.CS
+namespace RevitMultiSample.AvoidObstruction.CS
 {
     /// <summary>
     ///     Implements interface IExternalCommand of Revit API.

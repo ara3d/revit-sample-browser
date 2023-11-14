@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.AreaReinParameters.CS
+namespace RevitMultiSample.AreaReinParameters.CS
 {
     /// <summary>
     ///     converter between Autodesk.Revit.DB.ElementId and Element's name

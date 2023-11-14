@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Revit.SDK.Samples.Openings.CS
+namespace RevitMultiSample.Openings.CS
 {
     /// <summary>
     ///     This class stand for user coordinate system

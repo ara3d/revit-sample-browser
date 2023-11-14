@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.DoorSwing.CS
+namespace RevitMultiSample.DoorSwing.CS
 {
     /// <summary>
     ///     The DoorGeometry object is used to transform Revit geometry data

@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CapitalizeAllTextNotes.CS
+namespace RevitMultiSample.CapitalizeAllTextNotes.CS
 {
     /// <summary>
     ///     Find all the TextNote instances in the document and change their formatting to 'AllCaps'

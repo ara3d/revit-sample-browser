@@ -10,7 +10,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.CS.PointCloudEngine
+namespace RevitMultiSample.CS.PointCloudEngine
 {
     /// <summary>
     ///     ExternalApplication used to register the point cloud engines managed by this sample.
@@ -49,25 +49,25 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 panel.AddItem(new PushButtonData("AddPredefinedInstance",
                     "Add predefined instance",
                     assembly.Location,
-                    "Revit.SDK.Samples.CS.PointCloudEngine.AddPredefinedInstanceCommand"));
+                    "RevitMultiSample.CS.PointCloudEngine.AddPredefinedInstanceCommand"));
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("AddRandomizedInstance",
                     "Add randomized instance",
                     assembly.Location,
-                    "Revit.SDK.Samples.CS.PointCloudEngine.AddRandomizedInstanceCommand"));
+                    "RevitMultiSample.CS.PointCloudEngine.AddRandomizedInstanceCommand"));
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("AddTransformedInstance",
                     "Add randomized instance\nat transform",
                     assembly.Location,
-                    "Revit.SDK.Samples.CS.PointCloudEngine.AddTransformedInstanceCommand"));
+                    "RevitMultiSample.CS.PointCloudEngine.AddTransformedInstanceCommand"));
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("SerializePointCloud",
                     "Serialize point cloud (utility)",
                     assembly.Location,
-                    "Revit.SDK.Samples.CS.PointCloudEngine.SerializePredefinedPointCloud"));
+                    "RevitMultiSample.CS.PointCloudEngine.SerializePredefinedPointCloud"));
             }
             catch (Exception e)
             {

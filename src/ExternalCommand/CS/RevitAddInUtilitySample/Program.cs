@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
+namespace RevitMultiSample.RevitAddInUtilitySample.CS
 {
     internal static class RevitAddInUtilitySample
     {

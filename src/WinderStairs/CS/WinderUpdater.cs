@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.WinderStairs.CS
+namespace RevitMultiSample.WinderStairs.CS
 {
     /// <summary>
     ///     This class implements IUpdater and IExternalEventHandler interfaces. It's mainly
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         string IExternalEventHandler.GetName()
         {
-            return "Revit.SDK.Samples.WinderStairs";
+            return "RevitMultiSample.WinderStairs";
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         string IUpdater.GetUpdaterName()
         {
-            return "Revit.SDK.Samples.WinderStairs";
+            return "RevitMultiSample.WinderStairs";
         }
 
         /// <summary>

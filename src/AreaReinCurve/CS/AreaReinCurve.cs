@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AreaReinCurve.CS
+namespace RevitMultiSample.AreaReinCurve.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -21,7 +21,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         public Result Execute(ExternalCommandData revit,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.AreaReinCurve");
+            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "RevitMultiSample.AreaReinCurve");
             trans.Start();
             var selected = new ElementSet();
             foreach (var elementId in revit.Application.ActiveUIDocument.Selection.GetElementIds())

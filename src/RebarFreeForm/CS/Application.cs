@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RebarFreeForm.CS
+namespace RevitMultiSample.RebarFreeForm.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

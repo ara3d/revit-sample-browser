@@ -9,7 +9,7 @@ using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.CurtainWallGrid.CS
+namespace RevitMultiSample.CurtainWallGrid.CS
 {
     /// <summary>
     ///     the main windows form for users to operate on

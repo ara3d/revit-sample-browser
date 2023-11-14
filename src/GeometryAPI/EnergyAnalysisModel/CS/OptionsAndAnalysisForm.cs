@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
+namespace RevitMultiSample.EnergyAnalysisModel.CS
 {
     public partial class OptionsAndAnalysisForm : Form
     {

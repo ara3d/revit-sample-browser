@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.Custom2DExporter.CS
+namespace RevitMultiSample.Custom2DExporter.CS
 {
     /// <summary>
     ///     Collection of helpful utility classes.

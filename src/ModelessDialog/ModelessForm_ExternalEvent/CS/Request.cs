@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
+namespace RevitMultiSample.ModelessForm_ExternalEvent.CS
 {
     /// <summary>
     ///     A list of requests the dialog has available

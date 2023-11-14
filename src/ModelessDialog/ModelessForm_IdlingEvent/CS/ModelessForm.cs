@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
+namespace RevitMultiSample.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
     ///     The class of our modeless dialog.

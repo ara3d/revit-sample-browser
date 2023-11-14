@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ImportExport.CS
+namespace RevitMultiSample.ImportExport.CS
 {
     internal class ExportImgData : ExportDataWithViews
     {

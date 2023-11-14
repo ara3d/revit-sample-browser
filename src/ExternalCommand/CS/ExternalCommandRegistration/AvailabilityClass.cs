@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
+namespace RevitMultiSample.ExternalCommandRegistration.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommandAvailability,

@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.StructuralLayerFunction.CS
+namespace RevitMultiSample.StructuralLayerFunction.CS
 {
     /// <summary>
     ///     With the selected floor, display the function of each of its structural layers

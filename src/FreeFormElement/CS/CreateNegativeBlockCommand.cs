@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.FreeFormElement.CS
+namespace RevitMultiSample.FreeFormElement.CS
 {
     /// <summary>
     ///     A command to create a new family block representing a negative of a selected element.

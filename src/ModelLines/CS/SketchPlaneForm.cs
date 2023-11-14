@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ModelLines.CS
+namespace RevitMultiSample.ModelLines.CS
 {
     /// <summary>
     ///     This UserControl is used to collect the information for sketch plane creation

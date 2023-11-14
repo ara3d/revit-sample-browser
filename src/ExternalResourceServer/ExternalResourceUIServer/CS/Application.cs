@@ -15,7 +15,7 @@
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
+namespace RevitMultiSample.ExternalResourceUIServer.CS
 {
     /// <summary>
     ///     <para>Implements the Revit add-in interface IExternalApplication.</para>

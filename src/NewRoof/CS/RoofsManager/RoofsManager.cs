@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
+namespace RevitMultiSample.NewRoof.RoofsManager.CS
 {
     /// <summary>
     ///     The kinds of roof than can be created.

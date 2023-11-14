@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.LevelsProperty.CS.Properties {
+namespace RevitMultiSample.LevelsProperty.CS.Properties {
     using System;
     
     
@@ -31,7 +31,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Revit.SDK.Samples.LevelsProperty.CS.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RevitMultiSample.LevelsProperty.CS.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

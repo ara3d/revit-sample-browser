@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.Reinforcement.CS
+namespace RevitMultiSample.Reinforcement.CS
 {
     /// <summary>
     ///     The class which give the base geometry operation, it is a static class.

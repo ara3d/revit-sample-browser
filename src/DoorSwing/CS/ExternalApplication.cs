@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DoorSwing.CS
+namespace RevitMultiSample.DoorSwing.CS
 {
     /// <summary>
     ///     A class inherited IExternalApplication interface.

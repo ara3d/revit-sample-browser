@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.RoomSchedule
+namespace RevitMultiSample.RoomSchedule
 {
     /// <summary>
     ///     To add an external command to Autodesk Revit,

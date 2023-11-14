@@ -2,7 +2,7 @@
 
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ParameterUtils.CS
+namespace RevitMultiSample.ParameterUtils.CS
 {
     public partial class PropertiesForm : Form
     {

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.UI;
 using TextBox = System.Windows.Forms.TextBox;
 
-namespace Revit.SDK.Samples.RotateFramingObjects.CS
+namespace RevitMultiSample.RotateFramingObjects.CS
 {
     /// <summary>
     ///     Summary description for PutDialog.

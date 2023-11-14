@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ReferencePlane.CS
+namespace RevitMultiSample.ReferencePlane.CS
 {
     /// <summary>
     ///     A object to help locating with geometry data.

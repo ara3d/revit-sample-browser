@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using TextBox = System.Windows.Forms.TextBox;
 
-namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
+namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
     ///     Stand for the point data of this user control

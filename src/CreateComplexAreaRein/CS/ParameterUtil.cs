@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
+namespace RevitMultiSample.CreateComplexAreaRein.CS
 {
     /// <summary>
     ///     enum of AreaReinforcement's parameter Layout Rules

@@ -2,9 +2,9 @@
 
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
-using Revit.SDK.Samples.UIAPI.CS.OptionsDialog;
+using RevitMultiSample.UIAPI.CS.OptionsDialog;
 
-namespace Revit.SDK.Samples.UIAPI.CS
+namespace RevitMultiSample.UIAPI.CS
 {
     public class AddTabCommand
     {

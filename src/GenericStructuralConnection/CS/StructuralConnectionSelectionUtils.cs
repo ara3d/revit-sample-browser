@@ -7,7 +7,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.GenericStructuralConnection.CS
+namespace RevitMultiSample.GenericStructuralConnection.CS
 {
     /// <summary>
     ///     Utility class to select connections or connection input elements.

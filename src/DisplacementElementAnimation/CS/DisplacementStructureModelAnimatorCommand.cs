@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
+namespace RevitMultiSample.DisplacementElementAnimation.CS
 {
     /// <summary>
     ///     The command that initializes and starts the model animation.

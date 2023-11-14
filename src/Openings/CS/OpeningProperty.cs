@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.Openings.CS
+namespace RevitMultiSample.Openings.CS
 {
     /// <summary>
     ///     This class use to create a object can use by PropertyGrid control

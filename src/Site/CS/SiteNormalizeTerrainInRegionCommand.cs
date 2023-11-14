@@ -17,7 +17,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Site.CS
+namespace RevitMultiSample.Site.CS
 {
     /// <summary>
     ///     A command that normalizes all points in a region to the average elevation.

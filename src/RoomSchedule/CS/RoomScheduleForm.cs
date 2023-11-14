@@ -11,7 +11,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.RoomSchedule
+namespace RevitMultiSample.RoomSchedule
 {
     /// <summary>
     ///     Room Schedule form, used to retrieve data from .xls data source and create new rooms.

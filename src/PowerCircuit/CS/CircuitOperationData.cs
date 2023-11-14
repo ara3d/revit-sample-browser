@@ -7,9 +7,9 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using Revit.SDK.Samples.PowerCircuit.CS.Properties;
+using RevitMultiSample.PowerCircuit.CS.Properties;
 
-namespace Revit.SDK.Samples.PowerCircuit.CS
+namespace RevitMultiSample.PowerCircuit.CS
 {
     /// <summary>
     ///     Data class which stores the information of electrical circuit operation

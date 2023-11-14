@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
+namespace RevitMultiSample.EnergyAnalysisModel.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.
@@ -21,7 +21,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "Revit.SDK.Samples.EnergyAnalysisModel");
+                "RevitMultiSample.EnergyAnalysisModel");
             trans.Start();
             // Create an object that is responsible for collecting users inputs and getting analysis data of current model.
             var analysisModel = new EnergyAnalysisModel(commandData.Application.ActiveUIDocument.Document);

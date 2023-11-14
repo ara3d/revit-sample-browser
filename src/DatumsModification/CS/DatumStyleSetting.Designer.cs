@@ -2,7 +2,7 @@
 
 using System.Resources;
 
-namespace Revit.SDK.Samples.DatumsModification.CS
+namespace RevitMultiSample.DatumsModification.CS
 {
    partial class DatumStyleSetting
    {

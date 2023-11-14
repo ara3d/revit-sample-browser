@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB.PointClouds;
 
-namespace Revit.SDK.Samples.CS.PointCloudEngine
+namespace RevitMultiSample.CS.PointCloudEngine
 {
     /// <summary>
     ///     The type of engine.

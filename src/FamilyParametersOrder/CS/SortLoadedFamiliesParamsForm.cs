@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.FamilyParametersOrder.CS
+namespace RevitMultiSample.FamilyParametersOrder.CS
 {
     /// <summary>
     ///     Sort parameters' order in families which are loaded into a project or a family:

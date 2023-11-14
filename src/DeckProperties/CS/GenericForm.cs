@@ -2,7 +2,7 @@
 
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.DeckProperties.CS
+namespace RevitMultiSample.DeckProperties.CS
 {
     public partial class DeckPropertyForm : Form
     {

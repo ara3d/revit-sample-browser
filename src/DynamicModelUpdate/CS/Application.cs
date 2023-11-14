@@ -9,7 +9,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Revit.SDK.Samples.DynamicModelUpdate.CS
+namespace RevitMultiSample.DynamicModelUpdate.CS
 {
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //

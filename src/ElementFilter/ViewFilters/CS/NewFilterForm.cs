@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ViewFilters.CS
+namespace RevitMultiSample.ViewFilters.CS
 {
     /// <summary>
     ///     Form used to create new filter

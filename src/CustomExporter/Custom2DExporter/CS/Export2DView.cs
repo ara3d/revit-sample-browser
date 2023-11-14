@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.Custom2DExporter.CS
+namespace RevitMultiSample.Custom2DExporter.CS
 {
     /// <summary>
     ///     UI Form presented to the user used to collection options related to the export.

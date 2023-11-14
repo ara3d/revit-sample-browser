@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
+namespace RevitMultiSample.CreateWallsUnderBeams.CS
 {
     public partial class CreateWallsUnderBeamsForm : Form
     {

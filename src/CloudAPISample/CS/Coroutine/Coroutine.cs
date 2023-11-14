@@ -14,7 +14,7 @@
 
 using System.Collections;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS.Coroutine
+namespace RevitMultiSample.CloudAPISample.CS.Coroutine
 {
     /// <summary>
     ///     Represent a coroutine instance.

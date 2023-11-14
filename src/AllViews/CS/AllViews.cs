@@ -10,7 +10,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-namespace Revit.SDK.Samples.AllViews.CS
+namespace RevitMultiSample.AllViews.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

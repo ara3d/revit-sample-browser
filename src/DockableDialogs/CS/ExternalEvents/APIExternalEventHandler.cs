@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DockableDialogs.CS
+namespace RevitMultiSample.DockableDialogs.CS
 {
     /// <summary>
     ///     A class to manage the safe execution of events in a modeless dialog.

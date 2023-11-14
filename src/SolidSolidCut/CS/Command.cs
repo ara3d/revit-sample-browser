@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SolidSolidCut.CS
+namespace RevitMultiSample.SolidSolidCut.CS
 {
     /// <summary>
     ///     Demonstrate how to use the SolidSolidCut API to make one solid cut another.

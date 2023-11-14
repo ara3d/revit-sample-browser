@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.GenericStructuralConnection.CS
+namespace RevitMultiSample.GenericStructuralConnection.CS
 {
     /// <summary>
     ///     Performs basic operations on generic structural connections.

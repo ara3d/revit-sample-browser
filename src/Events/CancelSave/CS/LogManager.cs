@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.CancelSave.CS
+namespace RevitMultiSample.CancelSave.CS
 {
     /// <summary>
     ///     One log file will be created by this class for tracking events raise.

@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
 
-namespace Revit.SDK.Samples.EventsMonitor.CS
+namespace RevitMultiSample.EventsMonitor.CS
 {
     /// <summary>
     ///     This class is implemented to make sample autotest.

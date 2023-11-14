@@ -18,7 +18,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
+namespace RevitMultiSample.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
     ///     An external command that formats the columns of the schedule automatically.  After this has taken place,

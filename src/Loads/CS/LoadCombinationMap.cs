@@ -3,7 +3,7 @@
 using System.Text;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.Loads.CS
+namespace RevitMultiSample.Loads.CS
 {
     /// <summary>
     ///     A class to store Load Combination and it's properties.

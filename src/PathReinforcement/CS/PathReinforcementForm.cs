@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PathReinforcement.CS
+namespace RevitMultiSample.PathReinforcement.CS
 {
     /// <summary>
     ///     Main form,it contains a picture box to display the path of path reinforcement and

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.AllViews.CS
+namespace RevitMultiSample.AllViews.CS
 {
     /// <summary>
     ///     This is a dialog should appear that contains the following:

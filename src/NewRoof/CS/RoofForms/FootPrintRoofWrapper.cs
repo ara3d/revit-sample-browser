@@ -6,9 +6,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using Autodesk.Revit.DB;
-using Revit.SDK.Samples.NewRoof.CS;
+using RevitMultiSample.NewRoof.CS;
 
-namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
+namespace RevitMultiSample.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The Util class is used to translate Revit coordination to windows coordination.

@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.TransactionControl.CS
+namespace RevitMultiSample.TransactionControl.CS
 {
     /// <summary>
     ///     A Form used to create a wall

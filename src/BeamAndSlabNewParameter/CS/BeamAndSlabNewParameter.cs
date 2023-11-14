@@ -9,7 +9,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
+namespace RevitMultiSample.BeamAndSlabNewParameter.CS
 {
     /// <summary>
     ///     Display how to add a parameter to an element and set value to the parameter.

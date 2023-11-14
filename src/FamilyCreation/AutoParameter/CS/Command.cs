@@ -9,7 +9,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AutoParameter.CS
+namespace RevitMultiSample.AutoParameter.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

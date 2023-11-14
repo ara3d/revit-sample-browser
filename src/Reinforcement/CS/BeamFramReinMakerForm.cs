@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Reinforcement.CS
+namespace RevitMultiSample.Reinforcement.CS
 {
     /// <summary>
     ///     The form is used for collecting information of beam reinforcement creation

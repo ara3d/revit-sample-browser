@@ -3,7 +3,7 @@
 using System;
 using System.Drawing;
 
-namespace Revit.SDK.Samples.Openings.CS
+namespace RevitMultiSample.Openings.CS
 {
     /// <summary>
     ///     represent a geometry segment line

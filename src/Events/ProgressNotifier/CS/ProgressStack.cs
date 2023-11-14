@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Text;
 using Autodesk.Revit.DB.Events;
 
-namespace Revit.SDK.Samples.ProgressNotifier.CS
+namespace RevitMultiSample.ProgressNotifier.CS
 {
     /// <summary>
     ///     A collection of ProgressItem objects arranged in a stack

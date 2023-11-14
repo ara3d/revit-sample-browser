@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
+namespace RevitMultiSample.UpdateExternallyTaggedBRep.CS
 {
     internal class Podium
     {

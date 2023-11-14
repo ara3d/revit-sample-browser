@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using TextBox = System.Windows.Forms.TextBox;
 
-namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
+namespace RevitMultiSample.CreateBeamsColumnsBraces.CS
 {
     /// <summary>
     ///     UI

@@ -3,7 +3,7 @@
 using System.Windows.Forms;
 using Autodesk.Revit.DB.Mechanical;
 
-namespace Revit.SDK.Samples.AddSpaceAndZone.CS
+namespace RevitMultiSample.AddSpaceAndZone.CS
 {
     /// <summary>
     ///     The ZoneNode class inherit TreeNode Class, it is used

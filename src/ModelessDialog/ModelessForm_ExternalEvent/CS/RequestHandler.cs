@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
+namespace RevitMultiSample.ModelessForm_ExternalEvent.CS
 {
     /// <summary>
     ///     A class with methods to execute requests made by the dialog user.

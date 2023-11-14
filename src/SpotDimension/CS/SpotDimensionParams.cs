@@ -6,7 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.SpotDimension.CS
+namespace RevitMultiSample.SpotDimension.CS
 {
     /// <summary>
     ///     this class is used to get some information

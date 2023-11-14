@@ -2,7 +2,7 @@
 
 using System.ComponentModel;
 
-namespace Revit.SDK.Samples.NewRebar.CS
+namespace RevitMultiSample.NewRebar.CS
 {
     /// <summary>
     ///     Type converter between int and string is provided for property grid.

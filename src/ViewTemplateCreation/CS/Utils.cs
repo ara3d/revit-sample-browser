@@ -2,7 +2,7 @@
 
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.ViewTemplateCreation.CS
+namespace RevitMultiSample.ViewTemplateCreation.CS
 {
     /// <summary>
     ///     Utils class contains useful methods and members for using in whole project.

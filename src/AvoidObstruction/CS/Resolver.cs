@@ -8,7 +8,7 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AvoidObstruction.CS
+namespace RevitMultiSample.AvoidObstruction.CS
 {
     /// <summary>
     ///     This class implement the algorithm to detect the obstruction and resolve it.

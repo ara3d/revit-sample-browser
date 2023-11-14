@@ -11,7 +11,7 @@ using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Revit.SDK.Samples.CreateAirHandler.CS
+namespace RevitMultiSample.CreateAirHandler.CS
 {
     /// <summary>
     ///     Create one air handler and add connectors.

@@ -18,10 +18,10 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-using Revit.SDK.Samples.ScheduleToHTML.CS.Properties;
+using RevitMultiSample.ScheduleToHTML.CS.Properties;
 using Size = System.Drawing.Size;
 
-namespace Revit.SDK.Samples.ScheduleToHTML.CS
+namespace RevitMultiSample.ScheduleToHTML.CS
 {
     /// <summary>
     ///     Implementation of the IExternalApplication.

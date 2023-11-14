@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ValidateParameters.CS
+namespace RevitMultiSample.ValidateParameters.CS
 {
     /// <summary>
     ///     A class inherits IExternalApplication interface to add an event to the document saving,

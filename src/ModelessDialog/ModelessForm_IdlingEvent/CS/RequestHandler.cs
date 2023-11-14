@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
+namespace RevitMultiSample.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
     ///     A class with methods to execute requests made by the dialog user.

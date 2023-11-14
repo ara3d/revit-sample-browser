@@ -14,7 +14,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.InCanvasControlAPI.CS
+namespace RevitMultiSample.InCanvasControlAPI.CS
 {
     /// <summary>
     ///     A simple object to keep the connection between marker control and the given element.

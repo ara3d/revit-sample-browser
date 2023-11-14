@@ -15,7 +15,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 
-namespace Revit.SDK.Samples.InCanvasControlAPI.CS
+namespace RevitMultiSample.InCanvasControlAPI.CS
 {
     /// <summary>
     ///     This class demonstrates updating in-canvas controls in a DocumentUpdated event handler.

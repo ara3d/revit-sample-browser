@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 using Autodesk.Revit.DB.Mechanical;
 
-namespace Revit.SDK.Samples.AddSpaceAndZone.CS
+namespace RevitMultiSample.AddSpaceAndZone.CS
 {
     partial class ZoneEditorForm
     {

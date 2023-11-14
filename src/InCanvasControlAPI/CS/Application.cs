@@ -19,7 +19,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.InCanvasControlAPI.CS
+namespace RevitMultiSample.InCanvasControlAPI.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

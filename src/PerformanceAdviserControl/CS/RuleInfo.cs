@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
+namespace RevitMultiSample.PerformanceAdviserControl.CS
 {
     /// <summary>
     ///     A simple data class that holds Performance Adviser rule information for use with

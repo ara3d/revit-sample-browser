@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
+namespace RevitMultiSample.NewRoof.RoofsManager.CS
 {
     /// <summary>
     ///     The FootPrintRoofManager class is to manage the creation of the footprint roof.

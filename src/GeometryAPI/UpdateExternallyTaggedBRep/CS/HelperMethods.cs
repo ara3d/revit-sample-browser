@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
+namespace RevitMultiSample.UpdateExternallyTaggedBRep.CS
 {
     internal static class HelperMethods
     {

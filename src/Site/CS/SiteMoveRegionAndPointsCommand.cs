@@ -17,7 +17,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.Site.CS
+namespace RevitMultiSample.Site.CS
 {
     /// <summary>
     ///     A command that moves a subregion and the points it contains to a new location on the host surface.

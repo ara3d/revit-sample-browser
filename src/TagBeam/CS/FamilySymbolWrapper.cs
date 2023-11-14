@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.TagBeam.CS
+namespace RevitMultiSample.TagBeam.CS
 {
     /// <summary>
     ///     A wrapper of family symbol

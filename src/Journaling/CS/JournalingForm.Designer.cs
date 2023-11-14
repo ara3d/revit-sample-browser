@@ -1,8 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-using Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS;
+using RevitMultiSample.PlaceFamilyInstanceByFace.CS;
 
-namespace Revit.SDK.Samples.Journaling.CS
+namespace RevitMultiSample.Journaling.CS
 {
     partial class JournalingForm
     {
@@ -185,7 +185,7 @@ namespace Revit.SDK.Samples.Journaling.CS
         private System.Windows.Forms.Label startPointLabel;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
-        private Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS.PointUserControl endPointUserControl;
-        private Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS.PointUserControl startPointUserControl;
+        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl endPointUserControl;
+        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl startPointUserControl;
     }
 }

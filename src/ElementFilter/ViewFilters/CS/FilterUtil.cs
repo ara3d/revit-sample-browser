@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.ViewFilters.CS
+namespace RevitMultiSample.ViewFilters.CS
 {
     /// <summary>
     ///     One utility class used to access or modify filter related

@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.FamilyParametersOrder.CS
+namespace RevitMultiSample.FamilyParametersOrder.CS
 {
     /// <summary>
     ///     Sort parameters' order in family files which are located in a folder:

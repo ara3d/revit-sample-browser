@@ -5,7 +5,7 @@ using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.GridCreation.CS
+namespace RevitMultiSample.GridCreation.CS
 {
     /// <summary>
     ///     The dialog which provides the options of creating radial and arc grids

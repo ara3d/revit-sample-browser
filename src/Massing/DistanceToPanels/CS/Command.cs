@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.DistanceToPanels.CS
+namespace RevitMultiSample.DistanceToPanels.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommand.

@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.PhysicalProp.CS
+namespace RevitMultiSample.PhysicalProp.CS
 {
     /// <summary>
     ///     Define a command to dump physical material properties of

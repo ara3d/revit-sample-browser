@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SpotDimension.CS
+namespace RevitMultiSample.SpotDimension.CS
 {
     /// <summary>
     ///     Store all the views and spot dimensions in Revit.

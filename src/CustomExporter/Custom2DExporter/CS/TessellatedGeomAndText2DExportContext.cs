@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Revit.SDK.Samples.Custom2DExporter.CS
+namespace RevitMultiSample.Custom2DExporter.CS
 {
     /// <summary>
     ///     This is an implementation of IExportContext2D, to be passed to an instance of CustomExporter object. It exports:

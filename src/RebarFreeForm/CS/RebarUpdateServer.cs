@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.DB.Structure;
 
-namespace Revit.SDK.Samples.RebarFreeForm.CS
+namespace RevitMultiSample.RebarFreeForm.CS
 {
     /// <summary>
     ///     Class used to represent a structural face that is part of a rebar constraint.

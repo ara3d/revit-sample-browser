@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 using Point = System.Drawing.Point;
 
-namespace Revit.SDK.Samples.NewOpenings.CS
+namespace RevitMultiSample.NewOpenings.CS
 {
     /// <summary>
     ///     Base class of ProfileFloor and ProfileWall

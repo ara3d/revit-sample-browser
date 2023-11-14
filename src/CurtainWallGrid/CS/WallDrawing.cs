@@ -3,7 +3,7 @@
 using System;
 using System.Drawing;
 
-namespace Revit.SDK.Samples.CurtainWallGrid.CS
+namespace RevitMultiSample.CurtainWallGrid.CS
 {
     /// <summary>
     ///     maintain the baseline of the curtain wall

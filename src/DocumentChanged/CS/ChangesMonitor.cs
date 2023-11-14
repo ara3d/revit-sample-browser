@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ChangesMonitor.CS
+namespace RevitMultiSample.ChangesMonitor.CS
 {
     /// <summary>
     ///     A class inherits IExternalApplication interface and provide an entry of the sample.

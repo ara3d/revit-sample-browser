@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.AutoTagRooms.CS
+namespace RevitMultiSample.AutoTagRooms.CS
 {
     /// <summary>
     /// The graphic user interface of auto tag rooms

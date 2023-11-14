@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AttachedDetailGroup.CS
+namespace RevitMultiSample.AttachedDetailGroup.CS
 {
     /// <summary>
     ///     The external command that hides all of the selected group's attached detail groups.

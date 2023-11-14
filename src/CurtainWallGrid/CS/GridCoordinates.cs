@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 
-namespace Revit.SDK.Samples.CurtainWallGrid.CS
+namespace RevitMultiSample.CurtainWallGrid.CS
 {
     /// <summary>
     ///     Maintain the matrixes needed by 3D & 2D operations: pan, zoom, 2D->3D, 3D->2D

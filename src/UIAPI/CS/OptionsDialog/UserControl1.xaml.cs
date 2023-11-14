@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.UIAPI.CS
+namespace RevitMultiSample.UIAPI.CS
 {
     /// <summary>
     ///     Interaction logic for UserControl1.xaml

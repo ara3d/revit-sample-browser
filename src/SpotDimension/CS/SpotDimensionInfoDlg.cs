@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.SpotDimension.CS
+namespace RevitMultiSample.SpotDimension.CS
 {
     /// <summary>
     ///     spot dimension form to display information

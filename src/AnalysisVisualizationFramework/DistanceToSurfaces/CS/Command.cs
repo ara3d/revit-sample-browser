@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
+namespace RevitMultiSample.AnalysisVisualizationFramework.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

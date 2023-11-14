@@ -9,7 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.WindowWizard.CS
+namespace RevitMultiSample.WindowWizard.CS
 {
     /// <summary>
     ///     The wizard form

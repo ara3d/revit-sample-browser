@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Revit.SDK.Samples.VersionChecking.CS
+namespace RevitMultiSample.VersionChecking.CS
 {
     /// <summary>
     ///     UI that display the version information

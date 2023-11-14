@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ExtensibleStorageUtility.CS
+namespace RevitMultiSample.ExtensibleStorageUtility.CS
 {
     /// <summary>
     ///     Deletes all extensible storage created by any application all active documents.

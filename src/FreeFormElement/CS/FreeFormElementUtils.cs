@@ -10,7 +10,7 @@ using ArgumentException = Autodesk.Revit.Exceptions.ArgumentException;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 using RevitFreeFormElement = Autodesk.Revit.DB.FreeFormElement;
 
-namespace Revit.SDK.Samples.FreeFormElement.CS
+namespace RevitMultiSample.FreeFormElement.CS
 {
     /// <summary>
     ///     Utilities supporting the creation of a family containing a FreeFormElement which is cut out from existing geometry

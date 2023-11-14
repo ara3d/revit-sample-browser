@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
+namespace RevitMultiSample.AnalyticalSupportData_Info.CS
 {
     /// <summary>
     ///     get element's id and type information and its supported information.

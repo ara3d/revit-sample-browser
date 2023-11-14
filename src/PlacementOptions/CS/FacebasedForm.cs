@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Revit.SDK.Samples.PlacementOptions.CS
+namespace RevitMultiSample.PlacementOptions.CS
 {
     /// <summary>
     ///     The dialog for setting the FaceBasedPlacementType option of the face based family instance.

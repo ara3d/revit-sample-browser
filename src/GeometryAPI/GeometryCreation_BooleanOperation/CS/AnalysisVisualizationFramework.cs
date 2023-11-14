@@ -5,7 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
+namespace RevitMultiSample.GeometryCreation_BooleanOperation.CS
 {
     internal class AnalysisVisualizationFramework
     {

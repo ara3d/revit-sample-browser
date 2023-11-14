@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
+namespace RevitMultiSample.SharedCoordinateSystem.CS
 {
     /// <summary>
     ///     define type of value

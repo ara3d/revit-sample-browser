@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.UI;
 
-namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
+namespace RevitMultiSample.ReadonlySharedParameters.CS
 {
     public class ReadonlySharedParameterApplication : IExternalApplication
     {

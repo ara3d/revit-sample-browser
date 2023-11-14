@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-namespace Revit.SDK.Samples.TransactionControl.CS
+namespace RevitMultiSample.TransactionControl.CS
 {
     partial class TransactionForm
     {
