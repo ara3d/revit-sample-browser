@@ -48,7 +48,6 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
 
          // Extract the faces in Corbel parallel with Corbel host face.
          var corbelSolid = GetElementSolid(corbel);
-         PlanarFace corbelTopFace = null;
          PlanarFace corbelBottomFace = null;
          foreach (Face face in corbelSolid.Faces)
          {
@@ -56,7 +55,6 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var normal = GetNormalOutside(planarFace);
             if (normal.IsAlmostEqualTo(hostNormal))
             {
-               corbelTopFace = planarFace;
             }
             else if (normal.IsAlmostEqualTo(-hostNormal))
             {
@@ -361,7 +359,7 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
          var boxUV = face2.GetBoundingBox();
          var center = (boxUV.Max + boxUV.Min) * 0.5;
          var centerPt = face2.Evaluate(center);
-         var result = face1.Project(centerPt);
+         face1.Project(centerPt);
          return face1.Project(centerPt).Distance;
       }
    }

@@ -32,10 +32,9 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
     /// </summary>
     class SpaceItem : ListViewItem
     {
-        Space m_space;
         public SpaceItem(Space space) : base(space.Name)
         {
-            m_space = space;
+            Space = space;
             Text = space.Name;
             if (space.Zone != null)
             {
@@ -50,6 +49,6 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         /// <summary>
         /// Get the Space element in the SpaceItem.
         /// </summary>
-        public Space Space => m_space;
+        public Space Space { get; }
     }
 }

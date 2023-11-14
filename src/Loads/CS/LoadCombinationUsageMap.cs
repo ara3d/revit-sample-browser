@@ -33,17 +33,12 @@ namespace Revit.SDK.Samples.Loads.CS
     {
         // Private Members
         Loads m_dataBuffer; // A reference of Loads
-        bool m_set;      // Indicate the set column of Usage DataGridView control
         string m_name;      // Indicate the name column of Usage DataGridView control
 
         /// <summary>
         /// is selected in Usage DataGridView control
         /// </summary>
-        public bool Set
-        {
-            get => m_set;
-            set => m_set = value;
-        }
+        public bool Set { get; set; }
 
         /// <summary>
         /// usage name
@@ -89,7 +84,7 @@ namespace Revit.SDK.Samples.Loads.CS
         public UsageMap(Loads dataBuffer, string name)
         {
             m_dataBuffer = dataBuffer;
-            m_set = false;
+            Set = false;
             m_name = name;
         }
 
@@ -102,7 +97,7 @@ namespace Revit.SDK.Samples.Loads.CS
         public UsageMap(Loads dataBuffer, bool set, string name)
         {
             m_dataBuffer = dataBuffer;
-            m_set = set;
+            Set = set;
             m_name = name;
         }
     }

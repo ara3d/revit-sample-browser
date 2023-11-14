@@ -33,40 +33,31 @@ namespace Revit.SDK.Samples.Loads.CS
     public class LoadCombinationMap
     {
         // Private Members
-        string m_name;      // Indicate name column of LoadCombination DataGridView control
-        string m_formula;   // Indicate formula column of LoadCombination DataGridView control
-        string m_type;      // Indicate type column of LoadCombination DataGridView control
-        string m_state;     // Indicate state column of LoadCombination DataGridView control
-        string m_usage;     // Indicate usage column of LoadCombination DataGridView control
 
         /// <summary>
         /// Name property of LoadCombinationMap
         /// </summary>
-        public string Name => m_name;
+        public string Name { get; }
 
         /// <summary>
         /// Formula property of LoadCombinationMap
         /// </summary>
-        public string Formula => m_formula;
+        public string Formula { get; }
 
         /// <summary>
         /// Type property of LoadCombinationMap
         /// </summary>
-        public string Type => m_type;
+        public string Type { get; }
 
         /// <summary>
         /// State property of LoadCombinationMap
         /// </summary>
-        public string State => m_state;
+        public string State { get; }
 
         /// <summary>
         /// Usage property of LoadCombinationMap
         /// </summary>
-        public string Usage
-        {
-            get => m_usage;
-            set => m_usage = value;
-        }
+        public string Usage { get; set; }
 
         /// <summary>
         /// Default constructor of LoadCombinationMap
@@ -74,9 +65,9 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <param name="combination">the reference of LoadCombination</param>
         public LoadCombinationMap(LoadCombination combination)
         {
-            m_name = combination.Name;
-            m_type = combination.Type.ToString();
-            m_state = combination.State.ToString();
+            Name = combination.Name;
+            Type = combination.Type.ToString();
+            State = combination.State.ToString();
             var m_document = combination.Document;
 
             // Generate the formula field.
@@ -94,14 +85,14 @@ namespace Revit.SDK.Samples.Loads.CS
                 }
             }
 
-            m_formula = formulaString.ToString();
+            Formula = formulaString.ToString();
             
             // Generate the usage field.
             var usageString = new StringBuilder();
             var usageIds = combination.GetUsageIds();
             foreach (var id in usageIds)
             {
-                var element = m_document.GetElement(id);
+                m_document.GetElement(id);
                 usageString.Append(m_document.GetElement(id).Name);
 
                 if (usageIds.IndexOf(id) < usageIds.Count - 1)
@@ -110,7 +101,7 @@ namespace Revit.SDK.Samples.Loads.CS
                 }
             }
 
-            m_usage = usageString.ToString();
+            Usage = usageString.ToString();
         }
     }
 }

@@ -59,22 +59,6 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
       IList<string> m_connGroups { get; set; }
       IList<string> m_connNames { get; set; }
 
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {
@@ -372,7 +356,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                // add a 10' long tube
                var pt_tube5 = CreateStraightPart(bt_tube, 0, levelOne.Id, 10.0);
                var conn1_tube5 = GetPrimaryConnector(pt_tube5.ConnectorManager);
-               var conn2_tube5 = GetSecondaryConnector(pt_tube5.ConnectorManager);
+               GetSecondaryConnector(pt_tube5.ConnectorManager);
                SizeAlignCoupleConnect(conn1_tube5, conn2_45Bend2, 0);
 
                //add one hangers in middle of tube5, by default button condition 
@@ -437,7 +421,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                // add a 10' long tube
                var pt_tube7 = CreateStraightPart(bt_tube, 0, levelOne.Id, 10.0);
                var conn1_tube7 = GetPrimaryConnector(pt_tube7.ConnectorManager);
-               var conn2_tube7 = GetSecondaryConnector(pt_tube7.ConnectorManager);
+               GetSecondaryConnector(pt_tube7.ConnectorManager);
                SizeAlignCoupleConnect(conn1_tube7, conn2_reducer1, 0);
 
                //add one hangers in middle of tube7, by default button condition 
@@ -455,7 +439,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                var length_tube8 = 16.0 + (8.0 / 12.0);
                var pt_tube8 = CreateStraightPart(bt_tube, 0, levelOne.Id, length_tube8);
                var conn1_tube8 = GetPrimaryConnector(pt_tube8.ConnectorManager);
-               var conn2_tube8 = GetSecondaryConnector(pt_tube8.ConnectorManager);
+               GetSecondaryConnector(pt_tube8.ConnectorManager);
                SizeAlignCoupleConnect(conn1_tube8, conn2_curvedBoot1, 0);
                //add 3 hangers for tube8, with specified condition 
                for (var i = 0; i < 3; i++)
@@ -520,7 +504,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                // add 1' 8" long tube 
                var pt_tube12 = CreateStraightPart(bt_tube, 0, levelOne.Id, 1.0 + (8.0 / 12.0));
                var conn1_tube12 = GetPrimaryConnector(pt_tube12.ConnectorManager);
-               var conn2_tube12 = GetSecondaryConnector(pt_tube12.ConnectorManager);
+               GetSecondaryConnector(pt_tube12.ConnectorManager);
                SizeAlignCoupleConnect(conn1_tube12, conn2_45Bend4, 0);
 
                // add a reducer (to 10") on the tube with the curved boot (pt_tube12)
@@ -562,7 +546,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                // add a 20' long tube
                var pt_tube15 = CreateStraightPart(bt_tube, 0, levelOne.Id, 20.0);
                var conn1_tube15 = GetPrimaryConnector(pt_tube15.ConnectorManager);
-               var conn2_tube15 = GetSecondaryConnector(pt_tube15.ConnectorManager);
+               GetSecondaryConnector(pt_tube15.ConnectorManager);
                SizeAlignCoupleConnect(conn1_tube15, conn2_45bend5, 0);
                //add 4 hangers for tube15, by default button condition 
                for (var i = 0; i < 4; i++)
@@ -599,7 +583,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                // add a copper pipe
                var pt_pipe2 = CreateStraightPart(bt_groovedPipe, 0, levelOne.Id, 10.0);
                var conn1_pipe2 = GetPrimaryConnector(pt_pipe2.ConnectorManager);
-               var conn2_pipe2 = GetSecondaryConnector(pt_pipe2.ConnectorManager);
+               GetSecondaryConnector(pt_pipe2.ConnectorManager);
                SizeAlignSlopeJustifyCoupleConnect(conn1_pipe2, conn2_90elbow1, 0, 0, FabricationPartJustification.Middle);
 
                tr.Commit();

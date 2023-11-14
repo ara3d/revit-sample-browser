@@ -132,7 +132,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
          var textBox =
              GetRibbonItemByName(myPanel, "WallMark") as TextBox;
          if (null == textBox) { throw new InvalidCastException("Cannot get Wall Mark TextBox!"); }
-         string newWallMark;
+
          var newWallIndex = 0;
          var collector = new FilteredElementCollector(app.ActiveUIDocument.Document);
          ICollection<Element> founds = collector.OfClass(typeof(Wall)).ToElements();
@@ -159,7 +159,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
                }
             }
          }
-         newWallMark = textBox.Value.ToString() + '_' + (newWallIndex + 1);
+         var newWallMark = textBox.Value.ToString() + '_' + (newWallIndex + 1);
          return newWallMark;
       }
 

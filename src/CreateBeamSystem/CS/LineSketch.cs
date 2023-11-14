@@ -40,16 +40,11 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// </summary>
         private const float DirectionTag_Length_Ratio = 0.1f;
         private Line2D m_line = new Line2D();    // geometry line to draw
-        private bool m_isDirection;                // whether has direction tag
 
         /// <summary>
         /// whether has direction tag
         /// </summary>
-        public bool IsDirection
-        {
-            get => m_isDirection;
-            set => m_isDirection = value;
-        }
+        public bool IsDirection { get; set; }
 
         /// <summary>
         /// constructor
@@ -73,7 +68,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             var path = new GraphicsPath();
             path.AddLine(m_line.StartPnt, m_line.EndPnt);
 
-            if (m_isDirection)
+            if (IsDirection)
             {
                 DrawDirectionTag(path);
             }

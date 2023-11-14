@@ -156,8 +156,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 return false;
             }
 
-            uint numAtStart;
-            if (!uint.TryParse(numAtStartTextBox.Text, out numAtStart))
+            if (!uint.TryParse(numAtStartTextBox.Text, out _))
             {
                 TaskDialog.Show("U-Winder Warning", "Start steps should be unsigned integer", TaskDialogCommonButtons.Ok);
                 numAtStartTextBox.Focus();
@@ -165,8 +164,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 return false;
             }
 
-            uint numInMiddle;
-            if (!uint.TryParse(numInMiddleTextBox.Text, out numInMiddle))
+            if (!uint.TryParse(numInMiddleTextBox.Text, out _))
             {
                 TaskDialog.Show("U-Winder Warning", "Middle steps should be unsigned integer", TaskDialogCommonButtons.Ok);
                 numInMiddleTextBox.Focus();
@@ -174,8 +172,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 return false;
             }
 
-            uint numAtEnd;
-            if (!uint.TryParse(numAtEndTextBox.Text, out numAtEnd))
+            if (!uint.TryParse(numAtEndTextBox.Text, out _))
             {
                 TaskDialog.Show("U-Winder Warning", "End steps should be unsigned integer", TaskDialogCommonButtons.Ok);
                 numAtEndTextBox.Focus();

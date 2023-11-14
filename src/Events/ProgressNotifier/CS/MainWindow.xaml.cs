@@ -101,9 +101,9 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
             if ((itemReturn.Stage == Autodesk.Revit.DB.Events.ProgressStage.RangeChanged) || (itemReturn.Stage == Autodesk.Revit.DB.Events.ProgressStage.Unchanged))
             {
-                var previousEventData = "null";
                 if (m_previousEvent != null)
-                    previousEventData = m_previousEvent.ToString();
+                {
+                }
 
                 //   textBox_log.Text += "Previous: "+  previousEventData + Environment.NewLine + "Current: " + itemReturn.ToString() + Environment.NewLine;
             }

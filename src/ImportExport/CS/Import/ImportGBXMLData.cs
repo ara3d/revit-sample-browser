@@ -48,8 +48,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <returns></returns>
         public override bool Import()
         {
-            var imported = false;
-
             //parameter: GBXMLImportOptions
             var options = new GBXMLImportOptions();
 
@@ -57,7 +55,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var t = new Transaction(m_activeDoc);
             t.SetName("Import GBXML");
             t.Start();
-            imported = m_activeDoc.Import(m_importFileFullName, options);
+            var imported = m_activeDoc.Import(m_importFileFullName, options);
             t.Commit();
 
             return imported;

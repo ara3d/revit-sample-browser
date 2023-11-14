@@ -39,7 +39,7 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
     {
         #region Private data members
         Floor m_slab;    //Store the selected floor
-        ArrayList m_functions;                            //Store the function of each floor
+
         #endregion
 
 
@@ -47,7 +47,7 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
         /// <summary>
         /// With the selected floor, export the function of each of its structural layers
         /// </summary>
-        public ArrayList Functions => m_functions;
+        public ArrayList Functions { get; }
 
         #endregion
 
@@ -59,28 +59,12 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
         public Command()
         {
             //Construct the data members for the property
-            m_functions = new ArrayList();
+            Functions = new ArrayList();
         }
         #endregion
 
 
         #region Interface implemetation
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData,
                                                 ref string message, ElementSet elements)
         {
@@ -118,11 +102,11 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
                 // is exist, if it's not exist, there should be zero.
                 if (0 == e.Function)
                 {
-                    m_functions.Add("No function");
+                    Functions.Add("No function");
                 }
                 else
                 {
-                    m_functions.Add(e.Function.ToString());
+                    Functions.Add(e.Function.ToString());
                 }
 
             }

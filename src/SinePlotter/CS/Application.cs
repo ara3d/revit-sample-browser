@@ -248,7 +248,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             var pushButtonData = new PushButtonData("arrayPrisms", "run",
                 assemblyPath + "\\" + assemblyName, "Revit.SDK.Samples.SinePlotter.CS.Command");
             pushButtonData.LargeImage = new BitmapImage(new Uri(imageFolder + "Start.png"));
-            var pushButton = panel.AddItem(pushButtonData) as PushButton;
+            _ = panel.AddItem(pushButtonData) as PushButton;
         }
 
 

@@ -43,23 +43,17 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
     public class VisibilityCtrl
     {
         private Autodesk.Revit.UI.UIDocument m_document;    // the active document
-        private Hashtable m_allCategories; // all categories name with its visibility
         private Hashtable m_categoriesWithName; // all categories with its name
-        private IsolateMode m_isolateMode;  // the mode to select element(s)
-        
+
         /// <summary>
         /// get all categories name with its visibility
         /// </summary>
-        public Hashtable AllCategories => m_allCategories;
+        public Hashtable AllCategories { get; }
 
         /// <summary>
         /// get and set the mode to select element(s)
         /// </summary>
-        public IsolateMode IsolateMode
-        {
-            get => m_isolateMode;
-            set => m_isolateMode = value;
-        }
+        public IsolateMode IsolateMode { get; set; }
 
         /// <summary>
         /// Default constructor
@@ -78,7 +72,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
             }
 
             // initialize the two table
-            m_allCategories = new Hashtable();
+            AllCategories = new Hashtable();
             m_categoriesWithName = new Hashtable();
 
             // fill out the two table
@@ -86,7 +80,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
             {
                 if(category.get_AllowsVisibilityControl(m_document.Document.ActiveView))
                 {
-                    m_allCategories.Add(category.Name, category.get_Visible(m_document.Document.ActiveView));
+                    AllCategories.Add(category.Name, category.get_Visible(m_document.Document.ActiveView));
                     m_categoriesWithName.Add(category.Name, category);
                 }                
             }
@@ -103,7 +97,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
                 var cat = m_categoriesWithName[name] as Category;                
                 m_document.Document.ActiveView.SetCategoryHidden(cat.Id, !visible);
                 //or cat.set_Visible(m_document.ActiveView, visible);
-                m_allCategories[cat.Name] = visible;
+                AllCategories[cat.Name] = visible;
             }
             catch (Exception)
             {
@@ -121,7 +115,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
         {
             //m_document.Selection.Elements.Clear();
             System.Collections.Generic.ICollection<Reference> elements = null;
-            switch (m_isolateMode)
+            switch (IsolateMode)
             {
                 case IsolateMode.PickOne: 
                     // One more element will be added to modscope 

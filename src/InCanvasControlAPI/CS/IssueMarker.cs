@@ -33,9 +33,9 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 
       private IssueMarker(ElementId elementId, int controlIndex, InCanvasControlData inCanvasControlData)
       {
-         this.elementId = elementId;
-         this.controlIndex = controlIndex;
-         inCanvasData = inCanvasControlData;
+         this.TrackedElementId = elementId;
+         this.ControlIndex = controlIndex;
+         InCanvasControlData = inCanvasControlData;
       }
 
       /// <summary>
@@ -74,30 +74,21 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// <summary>
       /// Data with which an In-Canvas control was created. We need to keep this to make small changes later on.
       /// </summary>
-      public InCanvasControlData InCanvasControlData
-      {
-         get => inCanvasData;
-
-         set => inCanvasData = value;
-      }
+      public InCanvasControlData InCanvasControlData { get; set; }
 
       /// <summary>
       /// Index of the control, returned by TemporaryGraphicsManager
       /// </summary>
-      public int ControlIndex => controlIndex;
+      public int ControlIndex { get; }
 
       /// <summary>
       /// Id of the element that the marker tracks
       /// </summary>
-      public ElementId TrackedElementId => elementId;
+      public ElementId TrackedElementId { get; }
 
       #endregion
 
       #region Class member variables
-
-      private int controlIndex;
-      private ElementId elementId;
-      private InCanvasControlData inCanvasData;
 
       #endregion
    }

@@ -79,7 +79,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                placementOptions.PlacementPoint = BoxPlacement.TopLeft;
                placementOptions.Location = new XYZ(1, 1, 1);
 
-               var imageInstance = ImageInstance.Create(m_activeDoc, view, imageType.Id, placementOptions);
+               ImageInstance.Create(m_activeDoc, view, imageType.Id, placementOptions);
             }
 
             t.Commit();

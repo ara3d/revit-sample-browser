@@ -131,7 +131,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             using (var t = new Transaction(familyDoc, "Add element"))
             {
                 t.Start();
-                var element = Autodesk.Revit.DB.FreeFormElement.Create(familyDoc, block);
+                Autodesk.Revit.DB.FreeFormElement.Create(familyDoc, block);
                 t.Commit();
             }
 

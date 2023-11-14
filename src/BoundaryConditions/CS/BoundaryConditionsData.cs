@@ -40,15 +40,11 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         #region "Members"
 
         // the selected Element
-        private Element m_hostElement;
 
         // store all the corresponding BCs of the current selected host element 
         // and use the BC Id value as the key
-        private Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> m_bCsDictionary =
-                new Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions>();
 
         // the object for which the grid in UI displays.
-        private BCProperties m_bCProperties;
 
         #endregion
 
@@ -57,21 +53,17 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <summary>
         /// gets or sets the object for which the grid in UI displays. 
         /// </summary>
-        public BCProperties BCProperties
-        {
-            get => m_bCProperties;
-            set => m_bCProperties = value;
-        }
+        public BCProperties BCProperties { get; set; }
 
         /// <summary>
         /// get current host element
         /// </summary>
-        public Element HostElement => m_hostElement;
+        public Element HostElement { get; private set; }
 
         /// <summary>
         /// get all the BCs correspond with current host
         /// </summary>
-        public Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs => m_bCsDictionary;
+        public Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs { get; } = new Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions>();
 
         #endregion
 
@@ -104,9 +96,9 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             CreateBCHandler createBCH = null;
             
             // judge the type of the HostElement
-            if (m_hostElement is FamilyInstance)
+            if (HostElement is FamilyInstance)
             {  
-                var familyInstance = m_hostElement as FamilyInstance;
+                var familyInstance = HostElement as FamilyInstance;
                 var structuralType = familyInstance.StructuralType;
 
                 if (structuralType == StructuralType.Beam)
@@ -122,17 +114,17 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                     createBCH = new CreateBCHandler(CreatePointBC);
                 }
             }
-            else if (m_hostElement is Wall)
+            else if (HostElement is Wall)
             {
                 // create line BC for wall
                 createBCH = new CreateBCHandler(CreateLineBC);
             }
-            else if (m_hostElement is Floor)
+            else if (HostElement is Floor)
             {
                 // create area BC for Floor
                 createBCH = new CreateBCHandler(CreateAreaBC);
             }
-            else if (m_hostElement is WallFoundation)
+            else if (HostElement is WallFoundation)
             {
                 // create line BC for WallFoundation
                 createBCH = new CreateBCHandler(CreateLineBC);
@@ -142,7 +134,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             Autodesk.Revit.DB.Structure.BoundaryConditions NewBC = null;
             try
             {
-                NewBC = createBCH(m_hostElement);
+                NewBC = createBCH(HostElement);
                 if (null == NewBC)
                 {
                     return false;
@@ -154,7 +146,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             }
 
             // add the created Boundary Conditions into m_bCsDictionary
-            m_bCsDictionary.Add(NewBC.Id, NewBC);
+            BCs.Add(NewBC.Id, NewBC);
             return true;
         }
 
@@ -165,18 +157,18 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         private void SetBCHostMap(Element element)
         {
             // set the Host element with current selected element
-            m_hostElement = element;
+            HostElement = element;
             // retrieve the Document in which the Element resides.
             var doc = element.Document;
 
             var boundaryConditions = from elem in
                                                                                        new FilteredElementCollector(doc).OfClass(typeof(Autodesk.Revit.DB.Structure.BoundaryConditions)).ToElements()
                                                                                    let bC = elem as Autodesk.Revit.DB.Structure.BoundaryConditions
-                                                                                   where bC != null && m_hostElement.Id == bC.HostElementId
+                                                                                   where bC != null && HostElement.Id == bC.HostElementId
                                                                                    select bC;
             foreach (var bC in boundaryConditions)
             {
-                m_bCsDictionary.Add(bC.Id, bC);
+                BCs.Add(bC.Id, bC);
             }
         }
 
@@ -214,7 +206,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
          {
             return null;
          }
-         var familyInstance = hostElement as FamilyInstance;
+
          var analyticalModel = GetAnalyticalElement(hostElement);
          Reference endReference = null;
 

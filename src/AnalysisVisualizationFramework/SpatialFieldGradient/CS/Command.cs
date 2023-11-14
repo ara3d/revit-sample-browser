@@ -35,9 +35,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
       static AddInId m_appId = new AddInId(new Guid("CF099951-E66B-4a35-BF7F-2959CA87A42D"));
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
-         var cdata = commandData;
-         var app = commandData.Application.Application;
-         var doc = commandData.Application.ActiveUIDocument.Document;
+          var doc = commandData.Application.ActiveUIDocument.Document;
          var uiDoc = commandData.Application.ActiveUIDocument;
 
          var trans = new Transaction(doc, "Revit.SDK.Samples.AnalysisVisualizationFramework");

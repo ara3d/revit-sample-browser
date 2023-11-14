@@ -39,45 +39,33 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private MyDocument m_myDocument;
 
         // stores the reference to the parent geometry
-        private GridGeometry m_geometry;
 
         // stores the matrix transform system used in the image drawing
-        private GridCoordinates m_coordinates;
 
         // stores the client rectangle of the canvas of the curtain grid
-        private System.Drawing.Rectangle m_boundary;
 
         // stores the midpoint of the client rectangle 
-        private System.Drawing.Point m_center;
 
         // all the grid lines of U ("Horizontal" in curtain wall) direction (in GridLine2D format)
-        List<GridLine2D> m_uGridLines2D;
 
         // all the grid lines of V ("Vertical" in curtain wall) direction (in GridLine2D format)
-        List<GridLine2D> m_vGridLines2D;
 
         // stores the boundary lines of the curtain grid of the curtain wall(in GridLine2D format)
-        List<GridLine2D> m_boundLines2D;
 
         // stores the graphics path of all the U ("Horizontal") lines
-        private List<GraphicsPath> m_uLinePathList;
 
         // stores the graphics paths of all the segments of the U lines, 
         // each element in the "m_uSegLinePathListList" is a list, which contains all the segments of a grid line
-        private List<List<GraphicsPath>> m_uSegLinePathListList;
 
         // stores the graphics path of all the V ("Vertical") lines
-        private List<GraphicsPath> m_vLinePathList;
 
         // stores the graphics paths of all the segments of the V lines, 
         // each element in the "m_uSegLinePathListList" is a list, which contains all the segments of a grid line
-        private List<List<GraphicsPath>> m_vSegLinePathListList;
 
         // stores the graphics path of the boundary of the curtain grid
         private List<GraphicsPath> m_boundPath;
 
         // stores all the assistant lines & hints
-        DrawObject m_drawObject;
 
         // stores the boundary coordinate of the curtain grid of the curtain wall
         int m_minX;
@@ -86,16 +74,12 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         int m_maxY;
 
         // stores the index of the currently selected U grid line
-        private int m_selectedUIndex = -1;
 
         // stores the index of the currently selected V grid line
-        private int m_selectedVIndex = -1;
 
         // stores the index of the currently selected segment of a specified U grid line
-        private int m_selectedUSegmentIndex = -1;
 
         // stores the index of the currently selected segment of a specified V grid line
-        private int m_selectedVSegmentIndex = -1;
 
         // indicates whether the current mouse is valid
         // if the mouse location is outside the boundary of the curtain grid, it's invalid
@@ -104,7 +88,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // if the current operation is "Move grid line" and the destination location to be moved (indicated by the mouse location)
         // is on another grid line, it's invalid (it's not allowed to move a grid line to lap over another)
         // except these, the mouse location is valid
-        private bool m_mouseLocationValid;
 
         // specify the pen width used in different kind of lines
         //////////////////////////////////////////////////////////////////////////
@@ -131,96 +114,84 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         /// stores the reference to the parent geometry
         /// </summary>
-        public GridGeometry Geometry => m_geometry;
+        public GridGeometry Geometry { get; }
 
         /// <summary>
         /// stores the matrix transform system used in the image drawing
         /// </summary>
-        public GridCoordinates Coordinates
-        {
-            get => m_coordinates;
-            set => m_coordinates = value;
-        }
+        public GridCoordinates Coordinates { get; set; }
 
         /// <summary>
         /// stores the client rectangle of the canvas of the curtain grid
         /// </summary>
-        public System.Drawing.Rectangle Boundary
-        {
-            get => m_boundary;
-            set => m_boundary = value;
-        }
+        public System.Drawing.Rectangle Boundary { get; set; }
 
         /// <summary>
         /// stores the midpoint of the client rectangle 
         /// </summary>
-        public System.Drawing.Point Center
-        {
-            get => m_center;
-            set => m_center = value;
-        }
+        public System.Drawing.Point Center { get; set; }
 
         /// <summary>
         /// all the grid lines of U ("Horizontal" in curtain wall) direction (in GridLine2D format)
         /// </summary>
-        public List<GridLine2D> UGridLines2D => m_uGridLines2D;
+        public List<GridLine2D> UGridLines2D { get; }
 
         /// <summary>
         /// all the grid lines of V ("Vertical" in curtain wall) direction (in GridLine2D format)
         /// </summary>
-        public List<GridLine2D> VGridLines2D => m_vGridLines2D;
+        public List<GridLine2D> VGridLines2D { get; }
 
         /// <summary>
         /// stores the boundary lines of the curtain grid of the curtain wall(in GridLine2D format)
         /// </summary>
-        public List<GridLine2D> BoundLines2D => m_boundLines2D;
+        public List<GridLine2D> BoundLines2D { get; }
 
         /// <summary>
         /// stores the graphics path of all the U ("Horizontal") lines
         /// </summary>
-        public List<GraphicsPath> ULinePathList => m_uLinePathList;
+        public List<GraphicsPath> ULinePathList { get; }
 
         /// <summary>
         /// stores the graphics paths of all the segments of the U lines, 
         /// each element in the "m_uSegLinePathListList" is a list, which contains all the segments of a grid line
         /// </summary>
-        public List<List<GraphicsPath>> USegLinePathListList => m_uSegLinePathListList;
+        public List<List<GraphicsPath>> USegLinePathListList { get; }
 
         /// <summary>
         /// stores the graphics path of all the V ("Vertical") lines
         /// </summary>
-        public List<GraphicsPath> VLinePathList => m_vLinePathList;
+        public List<GraphicsPath> VLinePathList { get; }
 
         /// <summary>
         /// stores the graphics paths of all the segments of the V lines, 
         /// each element in the "m_uSegLinePathListList" is a list, which contains all the segments of a grid line
         /// </summary>
-        public List<List<GraphicsPath>> VSegLinePathListList => m_vSegLinePathListList;
+        public List<List<GraphicsPath>> VSegLinePathListList { get; }
 
         /// <summary>
         /// stores all the assistant lines & hints
         /// </summary>
-        public DrawObject DrawObject => m_drawObject;
+        public DrawObject DrawObject { get; private set; }
 
         /// <summary>
         /// stores the index of the currently selected U grid line
         /// </summary>
-        public int SelectedUIndex => m_selectedUIndex;
+        public int SelectedUIndex { get; private set; } = -1;
 
         /// <summary>
         /// stores the index of the currently selected V grid line
         /// </summary>
-        public int SelectedVIndex => m_selectedVIndex;
+        public int SelectedVIndex { get; private set; } = -1;
 
         /// <summary>
         /// stores the index of the currently selected segment of a specified U grid line
         /// </summary>
-        public int SelectedUSegmentIndex => m_selectedUSegmentIndex;
+        public int SelectedUSegmentIndex { get; private set; } = -1;
 
         /// <summary>
         /// stores the index of the currently selected segment of a specified V grid line
         /// </summary>
-        public int SelectedVSegmentIndex => m_selectedVSegmentIndex;
+        public int SelectedVSegmentIndex { get; private set; } = -1;
 
         /// <summary>
         /// indicates whether the current mouse is valid
@@ -231,7 +202,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// is on another grid line, it's invalid (it's not allowed to move a grid line to lap over another)
         /// except these, the mouse location is valid
         /// </summary>
-        public bool MouseLocationValid => m_mouseLocationValid;
+        public bool MouseLocationValid { get; private set; }
 
         #endregion
 
@@ -262,17 +233,17 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             }
             else
             {
-                m_geometry = geometry;
-                m_coordinates = new GridCoordinates(myDoc, this);
-                m_uGridLines2D = new List<GridLine2D>();
-                m_vGridLines2D = new List<GridLine2D>();
-                m_boundLines2D = new List<GridLine2D>();
-                m_uLinePathList = new List<GraphicsPath>();
-                m_uSegLinePathListList = new List<List<GraphicsPath>>();
-                m_vSegLinePathListList = new List<List<GraphicsPath>>();
-                m_vLinePathList = new List<GraphicsPath>();
+                Geometry = geometry;
+                Coordinates = new GridCoordinates(myDoc, this);
+                UGridLines2D = new List<GridLine2D>();
+                VGridLines2D = new List<GridLine2D>();
+                BoundLines2D = new List<GridLine2D>();
+                ULinePathList = new List<GraphicsPath>();
+                USegLinePathListList = new List<List<GraphicsPath>>();
+                VSegLinePathListList = new List<List<GraphicsPath>>();
+                VLinePathList = new List<GraphicsPath>();
                 m_boundPath = new List<GraphicsPath>();
-                m_drawObject = new DrawObject();
+                DrawObject = new DrawObject();
             }
         }
         #endregion
@@ -285,17 +256,17 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         public void GetLines2D()
         {
             // clear the data container first to delete all the obsolete data
-            m_uGridLines2D.Clear();
-            m_vGridLines2D.Clear();
-            m_boundLines2D.Clear();
-            m_uLinePathList.Clear();
-            m_uSegLinePathListList.Clear();
-            m_vSegLinePathListList.Clear();
-            m_vLinePathList.Clear();
+            UGridLines2D.Clear();
+            VGridLines2D.Clear();
+            BoundLines2D.Clear();
+            ULinePathList.Clear();
+            USegLinePathListList.Clear();
+            VSegLinePathListList.Clear();
+            VLinePathList.Clear();
             m_boundPath.Clear();
-            m_drawObject.Clear();
+            DrawObject.Clear();
             // initialize the matrixes used in the code
-            m_coordinates.GetMatrix();
+            Coordinates.GetMatrix();
             // get the U grid lines and their segments (in GridLine2D format)
             GetULines2D();
             // get the V grid lines and their segments (in GridLine2D format)
@@ -326,15 +297,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             // mouse is outside the curtain grid boundary
             if (false == mouseInGrid)
             {
-                m_mouseLocationValid = false;
+                MouseLocationValid = false;
                 return false;
             }
 
             // if the mouse laps over another grid line, it's invalid
-            var isOverlapped = IsOverlapped(mousePosition, m_uLinePathList);
+            var isOverlapped = IsOverlapped(mousePosition, ULinePathList);
             if (true == isOverlapped)
             {
-                m_mouseLocationValid = false;
+                MouseLocationValid = false;
                 var msg = "It's not allowed to add grid line lapping over another grid line";
                 m_myDocument.Message = new KeyValuePair<string, bool>(msg, true);
                 return false;
@@ -346,18 +317,18 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 m_myDocument.Message = new KeyValuePair<string, bool>(msg, false);
             }
 
-            m_mouseLocationValid = true;
+            MouseLocationValid = true;
             // get a parallel U line first
             GridLine2D uLine2D;
             // for "Curtain Wall: Curtain Wall 1", there's no initial U/V grid lines, so we use the boundary
             // line instead (the same result)
-            if (null == m_uGridLines2D || 0 == m_uGridLines2D.Count)
+            if (null == UGridLines2D || 0 == UGridLines2D.Count)
             {
-                uLine2D = m_boundLines2D[0];
+                uLine2D = BoundLines2D[0];
             }
             else
             {
-                uLine2D = m_uGridLines2D[0];
+                uLine2D = UGridLines2D[0];
             }
 
             var startPoint = uLine2D.StartPoint;
@@ -371,12 +342,11 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
             // initialize the pan
             var redPen = new Pen(System.Drawing.Color.Red, m_sketchPenWidth);
-            var brush = Brushes.Red;
             redPen.DashCap = DashCap.Flat;
             redPen.DashStyle = DashStyle.Dash;
 
             // add the dash line to the assistant line list for drawing
-            m_drawObject = new DrawObject(dashULine, redPen);
+            DrawObject = new DrawObject(dashULine, redPen);
             return true;
         }
 
@@ -423,15 +393,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             // mouse is outside the curtain grid boundary
             if (false == mouseInGrid)
             {
-                m_mouseLocationValid = false;
+                MouseLocationValid = false;
                 return false;
             }
 
             // if the mouse laps over another grid line, it's invalid
-            var isOverlapped = IsOverlapped(mousePosition, m_vLinePathList);
+            var isOverlapped = IsOverlapped(mousePosition, VLinePathList);
             if (true == isOverlapped)
             {
-                m_mouseLocationValid = false;
+                MouseLocationValid = false;
                 var msg = "It's not allowed to add grid line lapping over another grid line";
                 m_myDocument.Message = new KeyValuePair<string, bool>(msg, true);
                 return false;
@@ -443,18 +413,18 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 m_myDocument.Message = new KeyValuePair<string, bool>(msg, false);
             }
 
-            m_mouseLocationValid = true;
+            MouseLocationValid = true;
             // get a parallel V line first
             GridLine2D vLine2D;
             // for "Curtain Wall: Curtain Wall 1", there's no initial U/V grid lines, so we use the boundary
             // line instead (the same result)
-            if (null == m_vGridLines2D || 0 == m_vGridLines2D.Count)
+            if (null == VGridLines2D || 0 == VGridLines2D.Count)
             {
-                vLine2D = m_boundLines2D[1];
+                vLine2D = BoundLines2D[1];
             }
             else
             {
-                vLine2D = m_vGridLines2D[0];
+                vLine2D = VGridLines2D[0];
             }
             var startPoint = vLine2D.StartPoint;
             var endPoint = vLine2D.EndPoint;
@@ -467,12 +437,11 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
             // initialize the pan
             var redPen = new Pen(System.Drawing.Color.Red, m_sketchPenWidth);
-            var brush = Brushes.Red;
             redPen.DashCap = DashCap.Flat;
             redPen.DashStyle = DashStyle.Dash;
 
             // add the dash line to the assistant line list for drawing
-            m_drawObject = new DrawObject(dashVLine, redPen);
+            DrawObject = new DrawObject(dashVLine, redPen);
             return true;
         }
 
@@ -496,7 +465,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             var offset = 0.0;
 
             // the selected grid line is a U grid line (it's the grid line to be moved)
-            if (-1 != m_selectedUIndex)
+            if (-1 != SelectedUIndex)
             {
                 var succeeded = AddDashULine(mousePosition);
                 // add failed (for example, the mouse locates on another grid line)
@@ -507,26 +476,26 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
                 // add the selected grid line (the line to be moved) to the assistant line list
                 // (it will be painted in bold and with red color)
-                var line = m_uGridLines2D[m_selectedUIndex];
+                var line = UGridLines2D[SelectedUIndex];
                 var redPen = new Pen(System.Drawing.Color.Red, m_selectedLinePenWidth);
-                m_drawObject.Lines2D.Add(new KeyValuePair<Line2D, Pen>(line, redPen));
-                m_geometry.MoveOffset = mousePosition.Y - line.StartPoint.Y;
+                DrawObject.Lines2D.Add(new KeyValuePair<Line2D, Pen>(line, redPen));
+                Geometry.MoveOffset = mousePosition.Y - line.StartPoint.Y;
 
                 // convert the 2D data to 3D
                 var xyz = new XYZ(mousePosition.X, mousePosition.Y, 0);
                 var vec = new Vector4(xyz);
-                vec = m_coordinates.RestoreMatrix.Transform(vec);
-                offset = vec.Z - m_geometry.LineToBeMoved.FullCurve.GetEndPoint(0).Z;
+                vec = Coordinates.RestoreMatrix.Transform(vec);
+                offset = vec.Z - Geometry.LineToBeMoved.FullCurve.GetEndPoint(0).Z;
                 offset = Unit.CovertFromAPI(m_myDocument.LengthUnit, offset);
 
                 // showing the move offset
-                m_drawObject.Text = "Offset: " + Math.Round(offset, 1) + Unit.GetUnitLabel(m_myDocument.LengthUnit);
-                m_drawObject.TextPosition = mousePosition;
-                m_drawObject.TextPen = redPen;
+                DrawObject.Text = "Offset: " + Math.Round(offset, 1) + Unit.GetUnitLabel(m_myDocument.LengthUnit);
+                DrawObject.TextPosition = mousePosition;
+                DrawObject.TextPen = redPen;
                 return;
             }
             // the selected grid line is a V grid line (it's the grid line to be moved)
-            else if (-1 != m_selectedVIndex)
+            else if (-1 != SelectedVIndex)
             {
                 var succeeded = AddDashVLine(mousePosition);
                 // add failed (for example, the mouse locates on another grid line)
@@ -537,21 +506,21 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
                 // add the selected grid line (the line to be moved) to the assistant line list
                 // (it will be painted in bold and with red color)
-                var line = m_vGridLines2D[m_selectedVIndex];
+                var line = VGridLines2D[SelectedVIndex];
                 var redPen = new Pen(System.Drawing.Color.Red, m_selectedLinePenWidth);
-                m_drawObject.Lines2D.Add(new KeyValuePair<Line2D, Pen>(line, redPen));
-                m_geometry.MoveOffset = mousePosition.X - line.StartPoint.X;
+                DrawObject.Lines2D.Add(new KeyValuePair<Line2D, Pen>(line, redPen));
+                Geometry.MoveOffset = mousePosition.X - line.StartPoint.X;
                 // convert the 2D data to 3D
                 var xyz = new XYZ(mousePosition.X, mousePosition.Y, 0);
                 var vec = new Vector4(xyz);
-                vec = m_coordinates.RestoreMatrix.Transform(vec);
-                offset = vec.X - m_geometry.LineToBeMoved.FullCurve.GetEndPoint(0).X;
+                vec = Coordinates.RestoreMatrix.Transform(vec);
+                offset = vec.X - Geometry.LineToBeMoved.FullCurve.GetEndPoint(0).X;
                 offset = Unit.CovertFromAPI(m_myDocument.LengthUnit, offset);
 
                 // showing the move offset
-                m_drawObject.Text = "Offset: " + Math.Round(offset, 1) + Unit.GetUnitLabel(m_myDocument.LengthUnit);
-                m_drawObject.TextPosition = mousePosition;
-                m_drawObject.TextPen = redPen;
+                DrawObject.Text = "Offset: " + Math.Round(offset, 1) + Unit.GetUnitLabel(m_myDocument.LengthUnit);
+                DrawObject.TextPosition = mousePosition;
+                DrawObject.TextPen = redPen;
             }
         }
 
@@ -584,7 +553,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             // supposing the mouse hovers on the cross point of a U line and a V line, just handle
             // the U line, skip the V line 
             // otherwise it allows users to select "2" cross lines at one time
-            if (-1 != m_selectedUIndex)
+            if (-1 != SelectedUIndex)
             {
                 return;
             }
@@ -607,10 +576,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         public void SelectULine(System.Drawing.Point mousePosition, bool verifyLock, bool verifyRemove)
         {
-            for (var i = 0; i < m_uLinePathList.Count; i++)
+            for (var i = 0; i < ULinePathList.Count; i++)
             {
-                var path = m_uLinePathList[i];
-                var line2D = m_uGridLines2D[i];
+                var path = ULinePathList[i];
+                var line2D = UGridLines2D[i];
                 // the verifyLock is true (won't pick up locked ones) and the current pointed grid line is locked
                 // so can't select it
                 if (true == verifyLock &&
@@ -631,21 +600,21 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 // the mouse is in the outline of the graphics path
                 if (path.IsOutlineVisible(mousePosition, redPen))
                 {
-                    m_selectedUIndex = i;
-                    m_drawObject = new DrawObject(line2D, new Pen(System.Drawing.Color.Red, m_selectedLinePenWidth));
+                    SelectedUIndex = i;
+                    DrawObject = new DrawObject(line2D, new Pen(System.Drawing.Color.Red, m_selectedLinePenWidth));
                     // show the lock status of the grid line
                     if (false == verifyLock && false == verifyRemove)
                     {
-                        m_drawObject.Text = (true == line2D.Locked) ? "Locked" : "Unlocked";
-                        m_drawObject.TextPosition = mousePosition;
-                        m_drawObject.TextPen = redPen;
+                        DrawObject.Text = (true == line2D.Locked) ? "Locked" : "Unlocked";
+                        DrawObject.TextPosition = mousePosition;
+                        DrawObject.TextPen = redPen;
                     }
                     return;
                 }
             }
 
-            m_drawObject.Clear();
-            m_selectedUIndex = -1;
+            DrawObject.Clear();
+            SelectedUIndex = -1;
         }
 
         /// <summary>
@@ -662,10 +631,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         public void SelectVLine(System.Drawing.Point mousePosition, bool verifyLock, bool verifyRemove)
         {
-            for (var i = 0; i < m_vLinePathList.Count; i++)
+            for (var i = 0; i < VLinePathList.Count; i++)
             {
-                var path = m_vLinePathList[i];
-                var line2D = m_vGridLines2D[i];
+                var path = VLinePathList[i];
+                var line2D = VGridLines2D[i];
                 // the verifyLock is true (won't pick up locked ones) and the current pointed grid line is locked
                 // so can't select it
                 if (true == verifyLock &&
@@ -686,21 +655,21 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 // the mouse is in the outline of the graphics path
                 if (path.IsOutlineVisible(mousePosition, redPen))
                 {
-                    m_selectedVIndex = i;
-                    m_drawObject = new DrawObject(line2D, new Pen(System.Drawing.Color.Red, m_selectedLinePenWidth));
+                    SelectedVIndex = i;
+                    DrawObject = new DrawObject(line2D, new Pen(System.Drawing.Color.Red, m_selectedLinePenWidth));
                     // show the lock status of the grid line
                     if (false == verifyLock && false == verifyRemove)
                     {
-                        m_drawObject.Text = (true == line2D.Locked) ? "Locked" : "Unlocked";
-                        m_drawObject.TextPosition = mousePosition;
-                        m_drawObject.TextPen = redPen;
+                        DrawObject.Text = (true == line2D.Locked) ? "Locked" : "Unlocked";
+                        DrawObject.TextPosition = mousePosition;
+                        DrawObject.TextPen = redPen;
                     }
                     return;
                 }
             }
 
-            m_drawObject.Clear();
-            m_selectedVIndex = -1;
+            DrawObject.Clear();
+            SelectedVIndex = -1;
         }
 
         /// <summary>
@@ -725,7 +694,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             // supposing the mouse hovers on the cross point of a U line and a V line, just handle
             // the U line, skip the V line 
             // otherwise it allows users to select "2" cross lines at one time
-            if (-1 != m_selectedUIndex)
+            if (-1 != SelectedUIndex)
             {
                 return;
             }
@@ -742,16 +711,16 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         public void SelectUSegment(System.Drawing.Point mousePosition)
         {
-            for (var i = 0; i < m_uSegLinePathListList.Count; i++)
+            for (var i = 0; i < USegLinePathListList.Count; i++)
             {
-                var gridLine2D = m_uGridLines2D[i];
-                var pathList = m_uSegLinePathListList[i];
+                var gridLine2D = UGridLines2D[i];
+                var pathList = USegLinePathListList[i];
                 var redPen = new Pen(System.Drawing.Color.Red, m_outlineSelectPenWidth);
 
                 // find out which segment it's on and which grid line does the segment belong to
                 for (var j = 0; j < pathList.Count; j++)
                 {
-                    var segLine2D = m_uGridLines2D[i].Segments[j];
+                    var segLine2D = UGridLines2D[i].Segments[j];
                     var path = pathList[j];
                     if (path.IsOutlineVisible(mousePosition, redPen))
                     {
@@ -785,9 +754,9 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                             }
                         }
 
-                        m_selectedUIndex = i;
-                        m_selectedUSegmentIndex = j;
-                        m_drawObject = new DrawObject(segLine2D, new Pen(System.Drawing.Color.Red, m_selectedSegmentPenWidth));
+                        SelectedUIndex = i;
+                        SelectedUSegmentIndex = j;
+                        DrawObject = new DrawObject(segLine2D, new Pen(System.Drawing.Color.Red, m_selectedSegmentPenWidth));
                         // update the status strip hint
                         {
                             var msg = "Left-click to finish the operation";
@@ -799,9 +768,9 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 }
             }
 
-            m_drawObject.Clear();
-            m_selectedUIndex = -1;
-            m_selectedUSegmentIndex = -1;
+            DrawObject.Clear();
+            SelectedUIndex = -1;
+            SelectedUSegmentIndex = -1;
             // update the hints
             {
                 var msg = "Select a segment";
@@ -818,16 +787,16 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         public void SelectVSegment(System.Drawing.Point mousePosition)
         {
-            for (var i = 0; i < m_vSegLinePathListList.Count; i++)
+            for (var i = 0; i < VSegLinePathListList.Count; i++)
             {
-                var gridLine2D = m_vGridLines2D[i];
-                var pathList = m_vSegLinePathListList[i];
+                var gridLine2D = VGridLines2D[i];
+                var pathList = VSegLinePathListList[i];
                 var redPen = new Pen(System.Drawing.Color.Red, m_outlineSelectPenWidth);
 
                 // find out which segment it's on and which grid line does the segment belong to
                 for (var j = 0; j < pathList.Count; j++)
                 {
-                    var segLine2D = m_vGridLines2D[i].Segments[j];
+                    var segLine2D = VGridLines2D[i].Segments[j];
                     var path = pathList[j];
 
                     if (path.IsOutlineVisible(mousePosition, redPen))
@@ -862,9 +831,9 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                             }
                         }
 
-                        m_selectedVIndex = i;
-                        m_selectedVSegmentIndex = j;
-                        m_drawObject = new DrawObject(segLine2D, new Pen(System.Drawing.Color.Red, m_selectedSegmentPenWidth));
+                        SelectedVIndex = i;
+                        SelectedVSegmentIndex = j;
+                        DrawObject = new DrawObject(segLine2D, new Pen(System.Drawing.Color.Red, m_selectedSegmentPenWidth));
 
                         // update the status strip hint
                         {
@@ -877,10 +846,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 }
             }
 
-            m_drawObject.Clear();
+            DrawObject.Clear();
             // selection failed
-            m_selectedVIndex = -1;
-            m_selectedVSegmentIndex = -1;
+            SelectedVIndex = -1;
+            SelectedVSegmentIndex = -1;
             // update the status hint
             {
                 var msg = "Select a segment";
@@ -934,7 +903,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private void GetULines2D()
         {
             var gridLineIndex = -1;
-            foreach (var line in m_geometry.UGridLines)
+            foreach (var line in Geometry.UGridLines)
             {
                 gridLineIndex++;
                 // store the segment paths
@@ -942,15 +911,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
                 // get the line2D and its segments
                 var line2D = ConvertToLine2D(line, segPaths, gridLineIndex);
-                m_uGridLines2D.Add(line2D);
+                UGridLines2D.Add(line2D);
 
                 // convert the grid line of GridLine2D format to GraphicsPath format
                 var path = new GraphicsPath();
                 path.AddLine(line2D.StartPoint, line2D.EndPoint);
-                m_uLinePathList.Add(path);
+                ULinePathList.Add(path);
 
                 // store the segment paths to a list
-                m_uSegLinePathListList.Add(segPaths);
+                USegLinePathListList.Add(segPaths);
             }
         }
 
@@ -981,8 +950,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             var v2 = new Vector4(point2);
 
             // transform from 3D point to 2D point
-            v1 = m_coordinates.TransformMatrix.Transform(v1);
-            v2 = m_coordinates.TransformMatrix.Transform(v2);
+            v1 = Coordinates.TransformMatrix.Transform(v1);
+            v2 = Coordinates.TransformMatrix.Transform(v2);
 
             // create a new line in GridLine2D format
             var line2D = new GridLine2D();
@@ -1020,8 +989,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 var v2 = new Vector4(point2);
 
                 // transform from 3D point to 2D point
-                v1 = m_coordinates.TransformMatrix.Transform(v1);
-                v2 = m_coordinates.TransformMatrix.Transform(v2);
+                v1 = Coordinates.TransformMatrix.Transform(v1);
+                v2 = Coordinates.TransformMatrix.Transform(v2);
 
                 // add the segment data
                 var segLine2D = new SegmentLine2D();
@@ -1100,8 +1069,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 var v2 = new Vector4(point2);
 
                 // transform from 3D point to 2D point
-                v1 = m_coordinates.TransformMatrix.Transform(v1);
-                v2 = m_coordinates.TransformMatrix.Transform(v2);
+                v1 = Coordinates.TransformMatrix.Transform(v1);
+                v2 = Coordinates.TransformMatrix.Transform(v2);
 
                 // add the segment data
                 var segLine2D = new SegmentLine2D();
@@ -1134,21 +1103,21 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private void GetVLines2D()
         {
             var gridLineIndex = -1;
-            foreach (var line in m_geometry.VGridLines)
+            foreach (var line in Geometry.VGridLines)
             {
                 gridLineIndex++;
                 // store the segment paths
                 var segPaths = new List<GraphicsPath>();
                 // get the line2D and its segments
                 var line2D = ConvertToLine2D(line, segPaths, gridLineIndex);
-                m_vGridLines2D.Add(line2D);
+                VGridLines2D.Add(line2D);
 
                 var path = new GraphicsPath();
                 path.AddLine(line2D.StartPoint, line2D.EndPoint);
-                m_vLinePathList.Add(path);
+                VLinePathList.Add(path);
 
                 // store the segment paths to a list
-                m_vSegLinePathListList.Add(segPaths);
+                VSegLinePathListList.Add(segPaths);
             }
         }
 
@@ -1157,28 +1126,28 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         private void GetBoundLines2D()
         {
-            for (var i = 0; i < m_geometry.GridVertexesXYZ.Count; i += 1)
+            for (var i = 0; i < Geometry.GridVertexesXYZ.Count; i += 1)
             {
                 XYZ point1, point2;
 
                 // connect the last point with the first point as a boundary line
-                if (i == m_geometry.GridVertexesXYZ.Count - 1)
+                if (i == Geometry.GridVertexesXYZ.Count - 1)
                 {
-                    point1 = m_geometry.GridVertexesXYZ[i];
-                    point2 = m_geometry.GridVertexesXYZ[0];
+                    point1 = Geometry.GridVertexesXYZ[i];
+                    point2 = Geometry.GridVertexesXYZ[0];
                 }
                 else
                 {
-                    point1 = m_geometry.GridVertexesXYZ[i];
-                    point2 = m_geometry.GridVertexesXYZ[i + 1];
+                    point1 = Geometry.GridVertexesXYZ[i];
+                    point2 = Geometry.GridVertexesXYZ[i + 1];
                 }
 
                 var v1 = new Vector4(point1);
                 var v2 = new Vector4(point2);
 
                 // transform from 3D point to 2D point
-                v1 = m_coordinates.TransformMatrix.Transform(v1);
-                v2 = m_coordinates.TransformMatrix.Transform(v2);
+                v1 = Coordinates.TransformMatrix.Transform(v1);
+                v2 = Coordinates.TransformMatrix.Transform(v2);
 
                 // stores the bounding coordinate
                 var v1X = (int)v1.X;
@@ -1230,7 +1199,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 var line2D = new GridLine2D();
                 line2D.StartPoint = new System.Drawing.Point((int)v1.X, (int)v1.Y);
                 line2D.EndPoint = new System.Drawing.Point((int)v2.X, (int)v2.Y);
-                m_boundLines2D.Add(line2D);
+                BoundLines2D.Add(line2D);
 
                 // add the line to the mapped GraphicsPath list
                 var path = new GraphicsPath();
@@ -1253,7 +1222,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         private void DrawULines(Graphics graphics, Pen lockPen, Pen unlockPen)
         {
-            foreach (var line2D in m_uGridLines2D)
+            foreach (var line2D in UGridLines2D)
             {
                 var pen = (true == line2D.Locked) ? lockPen : unlockPen;
                 var isolatedPen = new Pen(Brushes.Gray, pen.Width);
@@ -1293,7 +1262,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         private void DrawVLines(Graphics graphics, Pen lockPen, Pen unlockPen)
         {
-            foreach (var line2D in m_vGridLines2D)
+            foreach (var line2D in VGridLines2D)
             {
                 var pen = (true == line2D.Locked) ? lockPen : unlockPen;
                 var isolatedPen = new Pen(Brushes.Gray, pen.Width);
@@ -1329,7 +1298,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         private void DrawBoundLines(Graphics graphics, Pen pen)
         {
-            foreach (var line2D in m_boundLines2D)
+            foreach (var line2D in BoundLines2D)
             {
                 graphics.DrawLine(pen, line2D.StartPoint, line2D.EndPoint);
             }
@@ -1345,9 +1314,9 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         private void DrawAssistLine(Graphics graphics)
         {
-            if (null != m_drawObject)
+            if (null != DrawObject)
             {
-                m_drawObject.Draw(graphics);
+                DrawObject.Draw(graphics);
             }
         }
 
@@ -1421,7 +1390,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         private void UpdateIsolate()
         {
-            foreach (var line2D in m_uGridLines2D)
+            foreach (var line2D in UGridLines2D)
             {
                 foreach (var seg in line2D.Segments)
                 {
@@ -1444,15 +1413,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         private bool IsPointIsolate(System.Drawing.Point point)
         {
-            var uIndex = -1;
             var uSegIndexes = new List<int>();
             // get which U grid line contains the point
-            uIndex = GetOutlineIndex(m_uLinePathList, point);
+            var uIndex = GetOutlineIndex(ULinePathList, point);
 
-            var vIndex = -1;
             var vSegIndexes = new List<int>();
             // get which V grid line contains the point
-            vIndex = GetOutlineIndex(m_vLinePathList, point);
+            var vIndex = GetOutlineIndex(VLinePathList, point);
 
             if (-1 == uIndex || -1 == vIndex)
             {
@@ -1462,7 +1429,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             if (-1 != uIndex)
             {
                 // get the grid line containing the point and its segments
-                var segList = m_uGridLines2D[uIndex].Segments;
+                var segList = UGridLines2D[uIndex].Segments;
                 // get which segments of the grid line contains the point
                 uSegIndexes = GetOutlineIndexes(segList, point);
             }
@@ -1470,7 +1437,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             if (-1 != vIndex)
             {
                 // get the grid line containing the point and its segments
-                var segList = m_vGridLines2D[vIndex].Segments;
+                var segList = VGridLines2D[vIndex].Segments;
                 // get which segments of the grid line contains the point
                 vSegIndexes = GetOutlineIndexes(segList, point);
             }
@@ -1479,7 +1446,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             // there's only 1 v segment contains the point and no u segment, so the segment is an isolated one
             if (0 == uSegIndexes.Count && 1 == vSegIndexes.Count)
             {
-                var seg = m_vGridLines2D[vIndex].Segments[vSegIndexes[0]];
+                var seg = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
                 seg.Isolated = true;
 
                 // recursive check
@@ -1488,7 +1455,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             }
             else if (1 == uSegIndexes.Count && 0 == vSegIndexes.Count)
             {
-                var seg = m_uGridLines2D[uIndex].Segments[uSegIndexes[0]];
+                var seg = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
                 seg.Isolated = true;
 
                 // recursive check
@@ -1526,7 +1493,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                     continue;
                 }
 
-                var redPen = Pens.Red;
                 // the specified point is one of the end points of the current segment
                 System.Drawing.Point[] points = { seg.StartPoint, seg.EndPoint };
                 foreach (var p in points)
@@ -1624,20 +1590,18 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private void GetConjointSegment(System.Drawing.Point point, bool isUSegment,
              ref SegmentLine2D removeSegLine)
         {
-            var uIndex = -1;
             var uSegIndexes = new List<int>();
             // get which U grid line contains the point
-            uIndex = GetOutlineIndex(m_uLinePathList, point);
+            var uIndex = GetOutlineIndex(ULinePathList, point);
 
-            var vIndex = -1;
             var vSegIndexes = new List<int>();
             // get which V grid line contains the point
-            vIndex = GetOutlineIndex(m_vLinePathList, point);
+            var vIndex = GetOutlineIndex(VLinePathList, point);
 
             if (-1 != uIndex)
             {
                 // get the grid line containing the point and its segments
-                var segList = m_uGridLines2D[uIndex].Segments;
+                var segList = UGridLines2D[uIndex].Segments;
                 // get which segments of the grid line contains the point
                 uSegIndexes = GetOutlineIndexes(segList, point);
             }
@@ -1645,7 +1609,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             if (-1 != vIndex)
             {
                 // get the grid line containing the point and its segments
-                var segList = m_vGridLines2D[vIndex].Segments;
+                var segList = VGridLines2D[vIndex].Segments;
                 // get which segments of the grid line contains the point
                 vSegIndexes = GetOutlineIndexes(segList, point);
             }
@@ -1657,7 +1621,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 // according to the UI rule
                 if (false == isUSegment)
                 {
-                    removeSegLine = m_vGridLines2D[vIndex].Segments[vSegIndexes[0]];
+                    removeSegLine = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
                     return;
                 }
             }
@@ -1668,7 +1632,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 // according to the UI rule
                 if (true == isUSegment)
                 {
-                    removeSegLine = m_uGridLines2D[uIndex].Segments[uSegIndexes[0]];
+                    removeSegLine = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
                     return;
                 }
             }
@@ -1683,36 +1647,26 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
     {
         #region Fields
         // the lines to be drawn with the mapping pen
-        private List<KeyValuePair<Line2D, Pen>> m_lines2D;
 
         // the hint to be drawn
-        private string m_text;
 
         // the location to draw the hint
         private System.Drawing.Point m_textPosition;
 
         // the pen to draw the hint
-        private Pen m_textPen;
+
         #endregion
 
         #region Properties
         /// <summary>
         /// the lines to be drawn with the mapping pen
         /// </summary>
-        public List<KeyValuePair<Line2D, Pen>> Lines2D
-        {
-            get => m_lines2D;
-            set => m_lines2D = value;
-        }
+        public List<KeyValuePair<Line2D, Pen>> Lines2D { get; set; }
 
         /// <summary>
         /// the hint to be drawn
         /// </summary>
-        public string Text
-        {
-            get => m_text;
-            set => m_text = value;
-        }
+        public string Text { get; set; }
 
         /// <summary>
         /// the location to draw the hint
@@ -1726,11 +1680,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         /// the pen to draw the hint
         /// </summary>
-        public Pen TextPen
-        {
-            get => m_textPen;
-            set => m_textPen = value;
-        }
+        public Pen TextPen { get; set; }
+
         #endregion
 
         #region Constructors
@@ -1739,8 +1690,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public DrawObject()
         {
-            m_lines2D = new List<KeyValuePair<Line2D, Pen>>();
-            m_text = string.Empty;
+            Lines2D = new List<KeyValuePair<Line2D, Pen>>();
+            Text = string.Empty;
             m_textPosition = System.Drawing.Point.Empty;
         }
 
@@ -1755,9 +1706,9 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         public DrawObject(Line2D line, Pen pen)
         {
-            m_lines2D = new List<KeyValuePair<Line2D, Pen>>();
-            m_lines2D.Add(new KeyValuePair<Line2D, Pen>(new Line2D(line), pen));
-            m_text = string.Empty;
+            Lines2D = new List<KeyValuePair<Line2D, Pen>>();
+            Lines2D.Add(new KeyValuePair<Line2D, Pen>(new Line2D(line), pen));
+            Text = string.Empty;
             m_textPosition = System.Drawing.Point.Empty;
         }
         #endregion
@@ -1768,8 +1719,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public void Clear()
         {
-            m_lines2D.Clear();
-            m_text = string.Empty;
+            Lines2D.Clear();
+            Text = string.Empty;
             m_textPosition = System.Drawing.Point.Empty;
         }
 
@@ -1782,7 +1733,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         public void Draw(Graphics graphics)
         {
             // draw the assistant lines
-            foreach (var pair in m_lines2D)
+            foreach (var pair in Lines2D)
             {
                 var line2D = pair.Key;
                 if (System.Drawing.Point.Empty == line2D.StartPoint ||
@@ -1796,11 +1747,11 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             }
 
             // draw the hint text
-            if (false == string.IsNullOrEmpty(m_text) &&
+            if (false == string.IsNullOrEmpty(Text) &&
                 System.Drawing.Point.Empty != m_textPosition)
             {
                 var font = new Font("Verdana", 10, FontStyle.Regular);
-                graphics.DrawString(m_text, font, m_textPen.Brush, new PointF(m_textPosition.X + 2, m_textPosition.Y + 2));
+                graphics.DrawString(Text, font, TextPen.Brush, new PointF(m_textPosition.X + 2, m_textPosition.Y + 2));
             }
         }
         #endregion

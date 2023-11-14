@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         {
             var t = new Transaction(document, "Place family instance");
             t.Start();
-            var prism = document.Create.NewFamilyInstance(location, familySymbol,
+            document.Create.NewFamilyInstance(location, familySymbol,
                 Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
             t.Commit();
         }

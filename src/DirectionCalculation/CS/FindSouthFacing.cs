@@ -32,17 +32,10 @@ namespace Revit.Samples.DirectionCalculation
     public class FindSouthFacingBase
     {
         #region Helper properties
-        protected Autodesk.Revit.ApplicationServices.Application Application
-        {
-            get => m_app;
-            set => m_app = value;
-        }
+        protected Autodesk.Revit.ApplicationServices.Application Application { get; set; }
 
-        protected Document Document
-        {
-            get => m_doc;
-            set => m_doc = value;
-        }
+        protected Document Document { get; set; }
+
         #endregion
 
         /// <summary>
@@ -124,8 +117,6 @@ namespace Revit.Samples.DirectionCalculation
         }
         #endregion
 
-        private Autodesk.Revit.ApplicationServices.Application m_app;
-        private Document m_doc;
         private TextWriter m_writer;
     }
 }

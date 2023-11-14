@@ -38,32 +38,11 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
     public class Command : IExternalCommand
     {
         /// <summary>
-        /// static field used to store all RebarBarType in document.
-        /// </summary>
-        private static Hashtable s_rebarBarTypes = new Hashtable();
-
-        /// <summary>
         /// static property corresponding to s_rebarBarTypes field.
         /// </summary>
-        public static Hashtable BarTypes => s_rebarBarTypes;
+        public static Hashtable BarTypes { get; } = new Hashtable();
 
         #region IExternalCommand Members Implementation
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application
-        /// which contains data related to the command,
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application
-        /// which will be displayed if a failure or cancellation is returned by
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command.
-        /// A result of Succeeded means that the API external method functioned as expected.
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
@@ -98,9 +77,9 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 #endregion
 
                 //clear all rebar bar type.
-                if (s_rebarBarTypes.Count > 0)
+                if (BarTypes.Count > 0)
                 {
-                    s_rebarBarTypes.Clear();
+                    BarTypes.Clear();
                 }
 
                 //get all bar type.
@@ -114,7 +93,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                     {
                         var id = bartype.Id;
                         var name = bartype.Name;
-                        s_rebarBarTypes.Add(name, id);
+                        BarTypes.Add(name, id);
                     }
                 }
 

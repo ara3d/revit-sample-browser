@@ -39,7 +39,6 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
     public class Command : IExternalCommand
     {
         private UIDocument m_currentDoc;
-        private static ExternalCommandData m_revit;
         private AreaReinData m_data;
 
         public Result Execute(ExternalCommandData revit,
@@ -48,7 +47,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.CreateComplexAreaRein");
             trans.Start();
             //initialize members
-            m_revit = revit;
+            CommandData = revit;
             m_currentDoc = revit.Application.ActiveUIDocument;
             m_data = new AreaReinData(revit.Application.ActiveUIDocument.Document);
 
@@ -74,7 +73,6 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                         firstLine.GetEndPoint(1).Z - firstLine.GetEndPoint(0).Z);
 
                     //create AreaReinforcement by AreaReinforcement.Create() function
-                    var creator = m_revit.Application.ActiveUIDocument.Document.Create;
                     var areaReinforcementTypeId = AreaReinforcementType.CreateDefaultAreaReinforcementType(revit.Application.ActiveUIDocument.Document);
                     var rebarBarTypeId = RebarBarType.CreateDefaultRebarBarType(revit.Application.ActiveUIDocument.Document);
                     var rebarHookTypeId = RebarHookType.CreateDefaultRebarHookType(revit.Application.ActiveUIDocument.Document);
@@ -105,7 +103,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <summary>
         /// ExternalCommandData
         /// </summary>
-        public static ExternalCommandData CommandData => m_revit;
+        public static ExternalCommandData CommandData { get; private set; }
 
         /// <summary>
         /// initialize member data, judge simple precondition

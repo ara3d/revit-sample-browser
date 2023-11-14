@@ -190,7 +190,6 @@ namespace Revit.SDK.Samples.ColorFill.CS
       private ColorFillSchemeEntry CreateEntry(ColorFillScheme scheme, StorageType type, ElementId fillPatternId, Color color)
       {
          var entries = scheme.GetEntries();
-         var isbyRange = scheme.IsByRange;
          ColorFillSchemeEntry lastEntry = null;
          if (entries.Count > 0)
             lastEntry = entries.Last();

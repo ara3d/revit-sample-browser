@@ -45,7 +45,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
     		base()
         {
             m_riserNumber = riserNumber;
-            m_bottomElevation = bottomElevation;
+            RunElevation = bottomElevation;
             m_desiredTreadDepth = desiredTreadDepth;
             m_width = width;
             m_runExtent = new XYZ(0, (riserNumber - 1) * desiredTreadDepth, 0);
@@ -64,7 +64,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
     		base(transform)
         {
             m_riserNumber = riserNumber;
-            m_bottomElevation = bottomElevation;
+            RunElevation = bottomElevation;
             m_desiredTreadDepth = desiredTreadDepth;
             m_width = width;
             // This is the full extent of the run across all treads
@@ -74,7 +74,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 
 
         private int m_riserNumber;
-        private double m_bottomElevation;
         private double m_desiredTreadDepth;
         private double m_width;
         private XYZ m_runExtent;
@@ -86,7 +85,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// Implements the interface property.
         /// </summary>
-        public double RunElevation => m_bottomElevation;
+        public double RunElevation { get; }
 
         /// <summary>
         /// Implements the interface property.
@@ -108,7 +107,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         public double GetRunElevation()
         {
-            return m_bottomElevation;
+            return RunElevation;
         }
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         public IList<Curve> GetStairsPath()
         {
             // Proceed up the middle of the run to the run extent
-            var start = new XYZ(m_width / 2.0, 0, m_bottomElevation);
+            var start = new XYZ(m_width / 2.0, 0, RunElevation);
             var end = start + m_runExtent;
             var curve1 = Line.CreateBound(start, end);
 
@@ -195,7 +194,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         private IList<Curve> GenerateUntransformedRunBoundaryCurves()
         {
             // Start at 0, 0 and extend to the run extent
-            var start = new XYZ(0, 0, m_bottomElevation);
+            var start = new XYZ(0, 0, RunElevation);
             var end = start + m_runExtent;
             var curve1 = Line.CreateBound(start, end);
 
@@ -203,7 +202,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             ret.Add(curve1);
 
             // Start offset along the width and extend to the run extent
-            start = new XYZ(m_width, 0, m_bottomElevation);
+            start = new XYZ(m_width, 0, RunElevation);
             end = start + m_runExtent;
             var curve2 = Line.CreateBound(start, end);
             ret.Add(curve2);
@@ -222,7 +221,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             // Generate all curves but the last by incrementing along the tread depth
             for (var i = 0; i < m_riserNumber - 1; i++)
             {
-                var start = new XYZ(0, i * m_desiredTreadDepth, m_bottomElevation);
+                var start = new XYZ(0, i * m_desiredTreadDepth, RunElevation);
                 var end = start + m_widthOffset;
 
                 ret.Add(Line.CreateBound(start, end));

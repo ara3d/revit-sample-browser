@@ -509,7 +509,6 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             var walls = Utility.GetElements<Wall>(m_application, m_document);
             m_wallThickness = walls[0].Width;
-            var paraMap = walls[0].ParametersMap;
             var wallheightPara = walls[0].get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM);//paraMap.get_Item("Unconnected Height");
             if (wallheightPara != null)
             {
@@ -584,7 +583,6 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             //get categories
             var categories = m_document.Settings.Categories;
             var category = categories.get_Item(BuiltInCategory.OST_Windows);
-            var cnm = category.SubCategories;
 
             m_frameCat = categories.get_Item(BuiltInCategory.OST_WindowsFrameMullionProjection);
             m_glassCat = categories.get_Item(BuiltInCategory.OST_WindowsGlassProjection);

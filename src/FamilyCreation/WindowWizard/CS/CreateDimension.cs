@@ -64,20 +64,15 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// <returns>the new dimension</returns>
       public Dimension AddDimension(View view, Autodesk.Revit.DB.ReferencePlane refPlane1, Autodesk.Revit.DB.ReferencePlane refPlane2, Autodesk.Revit.DB.ReferencePlane refPlane)
       {
-         Dimension dim;
-         var startPoint = new XYZ();
+          var startPoint = new XYZ();
          var endPoint = new XYZ();
-         Line line;
-         Reference ref1;
-         Reference ref2;
-         Reference ref3;
          var refArray = new ReferenceArray();
-         ref1 = refPlane1.GetReference();
-         ref2 = refPlane2.GetReference();
-         ref3 = refPlane.GetReference();
+         var ref1 = refPlane1.GetReference();
+         var ref2 = refPlane2.GetReference();
+         var ref3 = refPlane.GetReference();
          startPoint = refPlane1.FreeEnd;
          endPoint = refPlane2.FreeEnd;
-         line = Line.CreateBound(startPoint, endPoint);
+         var line = Line.CreateBound(startPoint, endPoint);
          if (null != ref1 && null != ref2 && null != ref3)
          {
             refArray.Append(ref1);
@@ -86,7 +81,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          }
          var subTransaction = new SubTransaction(m_document);
          subTransaction.Start();
-         dim = m_document.FamilyCreate.NewDimension(view, line, refArray);
+         var dim = m_document.FamilyCreate.NewDimension(view, line, refArray);
          subTransaction.Commit();
          return dim;
       }
@@ -100,16 +95,12 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// <returns>the new dimension</returns>
       public Dimension AddDimension(View view, Autodesk.Revit.DB.ReferencePlane refPlane, Face face)
       {
-         Dimension dim;
-         var startPoint = new XYZ();
+          var startPoint = new XYZ();
          var endPoint = new XYZ();
-         Line line;
-         Reference ref1;
-         Reference ref2;
          var refArray = new ReferenceArray();
-         ref1 = refPlane.GetReference();
+         var ref1 = refPlane.GetReference();
          var pFace = face as PlanarFace;
-         ref2 = pFace.Reference;
+         var ref2 = pFace.Reference;
          if (null != ref1 && null != ref2)
          {
             refArray.Append(ref1);
@@ -119,8 +110,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          endPoint = new XYZ(startPoint.X, pFace.Origin.Y, startPoint.Z);
          var subTransaction = new SubTransaction(m_document);
          subTransaction.Start();
-         line = Line.CreateBound(startPoint, endPoint);
-         dim = m_document.FamilyCreate.NewDimension(view, line, refArray);
+         var line = Line.CreateBound(startPoint, endPoint);
+         var dim = m_document.FamilyCreate.NewDimension(view, line, refArray);
          subTransaction.Commit();
          return dim;
       }
@@ -134,17 +125,13 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// <returns>the new dimension</returns>
       public Dimension AddDimension(View view, Face face1, Face face2)
       {
-         Dimension dim;
-         var startPoint = new XYZ();
+          var startPoint = new XYZ();
          var endPoint = new XYZ();
-         Line line;
-         Reference ref1;
-         Reference ref2;
          var refArray = new ReferenceArray();
          var pFace1 = face1 as PlanarFace;
-         ref1 = pFace1.Reference;
+         var ref1 = pFace1.Reference;
          var pFace2 = face2 as PlanarFace;
-         ref2 = pFace2.Reference;
+         var ref2 = pFace2.Reference;
          if (null != ref1 && null != ref2)
          {
             refArray.Append(ref1);
@@ -154,8 +141,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          endPoint = new XYZ(startPoint.X, pFace2.Origin.Y, startPoint.Z);
          var subTransaction = new SubTransaction(m_document);
          subTransaction.Start();
-         line = Line.CreateBound(startPoint, endPoint);
-         dim = m_document.FamilyCreate.NewDimension(view, line, refArray);
+         var line = Line.CreateBound(startPoint, endPoint);
+         var dim = m_document.FamilyCreate.NewDimension(view, line, refArray);
          subTransaction.Commit();
          return dim;
       }

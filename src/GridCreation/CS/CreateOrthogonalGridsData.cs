@@ -34,117 +34,69 @@ namespace Revit.SDK.Samples.GridCreation.CS
     {
         #region Fields
         // X coordinate of origin
-        private double m_xOrigin;
         // Y coordinate of origin
-        private double m_yOrigin;
         // Spacing between horizontal grids
-        private double m_xSpacing; 
         // Spacing between vertical grids
-        private double m_ySpacing;
         // Number of horizontal grids
-        private uint m_xNumber;
         // Number of vertical grids
-        private uint m_yNumber;
         // Bubble location of horizontal grids
-        private BubbleLocation m_xBubbleLoc;
         // Bubble location of vertical grids
-        private BubbleLocation m_yBubbleLoc;
         // Label of first horizontal grid
-        private string m_xFirstLabel;
         // Label of first vertical grid
-        private string m_yFirstLabel;
+
         #endregion
 
         #region Properties
         /// <summary>
         /// X coordinate of origin
         /// </summary>
-        public double XOrigin
-        {
-            get => m_xOrigin;
-            set => m_xOrigin = value;
-        }
+        public double XOrigin { get; set; }
 
         /// <summary>
         /// Y coordinate of origin
         /// </summary>
-        public double YOrigin
-        {
-            get => m_yOrigin;
-            set => m_yOrigin = value;
-        }
+        public double YOrigin { get; set; }
 
         /// <summary>
         /// Spacing between horizontal grids
         /// </summary>
-        public double XSpacing
-        {
-            get => m_xSpacing;
-            set => m_xSpacing = value;
-        }
+        public double XSpacing { get; set; }
 
         /// <summary>
         /// Spacing between vertical grids
         /// </summary>
-        public double YSpacing
-        {
-            get => m_ySpacing;
-            set => m_ySpacing = value;
-        }
+        public double YSpacing { get; set; }
 
         /// <summary>
         /// Number of horizontal grids
         /// </summary>
-        public uint XNumber
-        {
-            get => m_xNumber;
-            set => m_xNumber = value;
-        }
+        public uint XNumber { get; set; }
 
         /// <summary>
         /// Number of vertical grids
         /// </summary>
-        public uint YNumber
-        {
-            get => m_yNumber;
-            set => m_yNumber = value;
-        }
+        public uint YNumber { get; set; }
 
         /// <summary>
         /// Bubble location of horizontal grids
         /// </summary>
-        public BubbleLocation XBubbleLoc
-        {
-            get => m_xBubbleLoc;
-            set => m_xBubbleLoc = value;
-        }
+        public BubbleLocation XBubbleLoc { get; set; }
 
         /// <summary>
         /// Bubble location of vertical grids
         /// </summary>
-        public BubbleLocation YBubbleLoc
-        {
-            get => m_yBubbleLoc;
-            set => m_yBubbleLoc = value;
-        }
+        public BubbleLocation YBubbleLoc { get; set; }
 
         /// <summary>
         /// Label of first horizontal grid
         /// </summary>
-        public string XFirstLabel
-        {
-            get => m_xFirstLabel;
-            set => m_xFirstLabel = value;
-        }
+        public string XFirstLabel { get; set; }
 
         /// <summary>
         /// Label of first vertical grid
         /// </summary>
-        public string YFirstLabel
-        {
-            get => m_yFirstLabel;
-            set => m_yFirstLabel = value;
-        }
+        public string YFirstLabel { get; set; }
+
         #endregion
 
         #region Methods
@@ -196,7 +148,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             // Curve array which stores all curves for batch creation
             var curves = new CurveArray();
 
-            for (var i = 0; i < m_xNumber; ++i)
+            for (var i = 0; i < XNumber; ++i)
             {
                 XYZ startPoint;
                 XYZ endPoint;
@@ -204,23 +156,23 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
                 try
                 {
-                    if (m_yNumber != 0)
+                    if (YNumber != 0)
                     {
                         // Grids will have an extension distance of m_ySpacing / 2
-                        startPoint = new XYZ (m_xOrigin - m_ySpacing / 2, m_yOrigin + i * m_xSpacing, 0);
-                        endPoint = new XYZ (m_xOrigin + (m_yNumber - 1) * m_ySpacing + m_ySpacing / 2, m_yOrigin + i * m_xSpacing, 0);
+                        startPoint = new XYZ (XOrigin - YSpacing / 2, YOrigin + i * XSpacing, 0);
+                        endPoint = new XYZ (XOrigin + (YNumber - 1) * YSpacing + YSpacing / 2, YOrigin + i * XSpacing, 0);
                     }
                     else
                     {
-                        startPoint = new XYZ (m_xOrigin, m_yOrigin + i * m_xSpacing, 0);
-                        endPoint = new XYZ (m_xOrigin + m_xSpacing / 2, m_yOrigin + i * m_xSpacing, 0);
+                        startPoint = new XYZ (XOrigin, YOrigin + i * XSpacing, 0);
+                        endPoint = new XYZ (XOrigin + XSpacing / 2, YOrigin + i * XSpacing, 0);
 
                     }
 
                     try
                     {
                         // Create a line according to the bubble location
-                        if (m_xBubbleLoc == BubbleLocation.StartPoint)
+                        if (XBubbleLoc == BubbleLocation.StartPoint)
                         {
                             line = NewLine(startPoint, endPoint);
                         }
@@ -242,18 +194,18 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
                     if (i == 0)
                     {
-                        Grid grid;
-                        // Create grid with line
-                        grid = NewGrid(line);
+                        var grid =
+                            // Create grid with line
+                            NewGrid(line);
 
                         try
                         {
                             // Set the label of first horizontal grid
-                            grid.Name = m_xFirstLabel;
+                            grid.Name = XFirstLabel;
                         }
                         catch (ArgumentException)
                         {
-                            ShowMessage(resManager.GetString("FailedToSetLabel") + m_xFirstLabel + "!",
+                            ShowMessage(resManager.GetString("FailedToSetLabel") + XFirstLabel + "!",
                                         resManager.GetString("FailureCaptionSetLabel"));
                         }
                     }
@@ -288,7 +240,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             // Curve array which stores all curves for batch creation
             var curves = new CurveArray();
 
-            for (var j = 0; j < m_yNumber; ++j)
+            for (var j = 0; j < YNumber; ++j)
             {
                 XYZ startPoint;
                 XYZ endPoint;
@@ -296,21 +248,21 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
                 try
                 {
-                    if (m_xNumber != 0)
+                    if (XNumber != 0)
                     {
-                        startPoint = new XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin - m_xSpacing / 2, 0);
-                        endPoint = new XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin + (m_xNumber - 1) * m_xSpacing + m_xSpacing / 2, 0);
+                        startPoint = new XYZ (XOrigin + j * YSpacing, YOrigin - XSpacing / 2, 0);
+                        endPoint = new XYZ (XOrigin + j * YSpacing, YOrigin + (XNumber - 1) * XSpacing + XSpacing / 2, 0);
                     }
                     else
                     {
-                        startPoint = new XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin, 0);
-                        endPoint = new XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin + m_ySpacing / 2, 0);
+                        startPoint = new XYZ (XOrigin + j * YSpacing, YOrigin, 0);
+                        endPoint = new XYZ (XOrigin + j * YSpacing, YOrigin + YSpacing / 2, 0);
                     }
 
                     try
                     {
                         // Create a line according to the bubble location
-                        if (m_yBubbleLoc == BubbleLocation.StartPoint)
+                        if (YBubbleLoc == BubbleLocation.StartPoint)
                         {
                             line = NewLine(startPoint, endPoint);
                         }
@@ -332,18 +284,18 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
                     if (j == 0)
                     {
-                        Grid grid;
-                        // Create grid with line
-                        grid = NewGrid(line);
+                        var grid =
+                            // Create grid with line
+                            NewGrid(line);
 
                         try
                         {
                             // Set label of first vertical grid
-                            grid.Name = m_yFirstLabel;
+                            grid.Name = YFirstLabel;
                         }
                         catch (ArgumentException)
                         {
-                            ShowMessage(resManager.GetString("FailedToSetLabel") + m_yFirstLabel + "!",
+                            ShowMessage(resManager.GetString("FailedToSetLabel") + YFirstLabel + "!",
                                         resManager.GetString("FailureCaptionSetLabel"));
                         }
                     }

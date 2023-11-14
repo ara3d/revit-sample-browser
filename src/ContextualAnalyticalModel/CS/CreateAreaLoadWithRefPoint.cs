@@ -75,9 +75,8 @@ namespace ContextualAnalyticalModel
 
                IList<XYZ> forceVector = new List<XYZ>() { new XYZ(0, 0, -10000), new XYZ(0, 0, 0), new XYZ(0, 0, 0) };
 
-               AreaLoad areaLoad = null;
                if (AreaLoad.IsCurveLoopsInsideHostBoundaries(document, selectedElementId, loops))
-                  areaLoad = AreaLoad.Create(document, selectedElementId, loops, forceVector, refPointsIndexes, refPointsCurveEnds, null);
+                   AreaLoad.Create(document, selectedElementId, loops, forceVector, refPointsIndexes, refPointsCurveEnds, null);
 
                transaction.Commit();
             }

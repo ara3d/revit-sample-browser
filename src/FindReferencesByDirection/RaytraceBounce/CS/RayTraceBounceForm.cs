@@ -311,8 +311,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             var referenceGeometryObject = referenceElement.GetGeometryObjectFromReference(reference);
             m_face = null;
             m_face = referenceGeometryObject as Face;
-            Edge edge = null;
-            edge = referenceGeometryObject as Edge;
+            var edge = referenceGeometryObject as Edge;
             if (m_face != null)
             {
                if ((r.Proximity < face_prox) && (r.Proximity > epsilon))
@@ -387,8 +386,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// </summary>
       public void DeleteLines()
       {
-         var delLineNum = 0;
-         try
+          try
          {
             var transaction = new SubTransaction(m_app.ActiveUIDocument.Document);
             transaction.Start();
@@ -404,7 +402,6 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
                   if (mc.LineStyle.Name == "bounce" || mc.LineStyle.Name == "normal")
                   {
                       m_app.ActiveUIDocument.Document.Delete(e.Id);
-                     delLineNum++;
                   }
                }
             }

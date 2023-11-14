@@ -36,40 +36,27 @@ namespace Revit.SDK.Samples.GridCreation.CS
       // Selected curves in current document
       private CurveArray m_selectedCurves;
       // Whether to delete selected lines/arc after creation
-      private bool m_deleteSelectedElements;
       // Label of first grid
-      private string m_firstLabel;
       // Bubble location of grids
-      private BubbleLocation m_bubbleLocation;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// Whether to delete selected lines/arc after creation
       /// </summary>
-      public bool DeleteSelectedElements
-      {
-         get => m_deleteSelectedElements;
-         set => m_deleteSelectedElements = value;
-      }
+      public bool DeleteSelectedElements { get; set; }
 
       /// <summary>
       /// Bubble location of grids
       /// </summary>
-      public BubbleLocation BubbleLocation
-      {
-         get => m_bubbleLocation;
-         set => m_bubbleLocation = value;
-      }
+      public BubbleLocation BubbleLocation { get; set; }
 
       /// <summary>
       /// Label of first grid
       /// </summary>
-      public string FirstLabel
-      {
-         get => m_firstLabel;
-         set => m_firstLabel = value;
-      }
+      public string FirstLabel { get; set; }
+
       #endregion
 
       #region Methods
@@ -102,22 +89,21 @@ namespace Revit.SDK.Samples.GridCreation.CS
                var line = curve as Line;
                if (line != null) // Selected curve is a line
                {
-                  Line lineToCreate;
-                  lineToCreate = TransformLine(line, m_bubbleLocation);
+                   var lineToCreate = TransformLine(line, BubbleLocation);
                   if (i == 0)
                   {
-                     Grid grid;
-                     // Create the first grid
-                     grid = CreateLinearGrid(lineToCreate);
+                      var grid =
+                          // Create the first grid
+                          CreateLinearGrid(lineToCreate);
 
                      try
                      {
                         // Set label of first grid
-                        grid.Name = m_firstLabel;
+                        grid.Name = FirstLabel;
                      }
                      catch (ArgumentException)
                      {
-                        ShowMessage(resManager.GetString("FailedToSetLabel") + m_firstLabel + "!",
+                        ShowMessage(resManager.GetString("FailedToSetLabel") + FirstLabel + "!",
                                     resManager.GetString("FailureCaptionSetLabel"));
                      }
                   }
@@ -133,23 +119,22 @@ namespace Revit.SDK.Samples.GridCreation.CS
                   {
                      if (arc.IsBound) // Part of a circle
                      {
-                        Arc arcToCreate;
-                        arcToCreate = TransformArc(arc, m_bubbleLocation);
+                         var arcToCreate = TransformArc(arc, BubbleLocation);
 
                         if (i == 0)
                         {
-                           Grid grid;
-                           // Create arc grid
-                           grid = NewGrid(arcToCreate);
+                            var grid =
+                                // Create arc grid
+                                NewGrid(arcToCreate);
 
                            try
                            {
                               // Set label of first grid
-                              grid.Name = m_firstLabel;
+                              grid.Name = FirstLabel;
                            }
                            catch (ArgumentException)
                            {
-                              ShowMessage(resManager.GetString("FailedToSetLabel") + m_firstLabel + "!",
+                              ShowMessage(resManager.GetString("FailedToSetLabel") + FirstLabel + "!",
                                           resManager.GetString("FailureCaptionSetLabel"));
                            }
                         }
@@ -168,21 +153,21 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         Arc upperArc = null;
                         Arc lowerArc = null;
 
-                        TransformCircle(arc, ref upperArc, ref lowerArc, m_bubbleLocation);
+                        TransformCircle(arc, ref upperArc, ref lowerArc, BubbleLocation);
                         // Create grids
                         if (i == 0)
                         {
-                           Grid gridUpper;
-                           // Create arc grid
-                           gridUpper = NewGrid(upperArc);
+                            var gridUpper =
+                                // Create arc grid
+                                NewGrid(upperArc);
                            try
                            {
                               // Set label of first grid
-                              gridUpper.Name = m_firstLabel;
+                              gridUpper.Name = FirstLabel;
                            }
                            catch (ArgumentException)
                            {
-                              ShowMessage(resManager.GetString("FailedToSetLabel") + m_firstLabel + "!",
+                              ShowMessage(resManager.GetString("FailedToSetLabel") + FirstLabel + "!",
                                           resManager.GetString("FailureCaptionSetLabel"));
                            }
                            AddCurveForBatchCreation(ref curves, lowerArc);
@@ -208,7 +193,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
          // Create grids with curves
          CreateGrids(curves);
 
-         if (m_deleteSelectedElements)
+         if (DeleteSelectedElements)
          {
             try
             {

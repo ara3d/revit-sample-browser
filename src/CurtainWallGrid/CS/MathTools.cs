@@ -31,48 +31,30 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    public class Vector4
    {
       #region Fields
-      private float m_x;
-      private float m_y;
-      private float m_z;
-      private float m_w = 1.0f;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// X property to get/set x value of Vector4
       /// </summary>
-      public float X
-      {
-         get => m_x;
-         set => m_x = value;
-      }
+      public float X { get; set; }
 
       /// <summary>
       /// Y property to get/set y value of Vector4
       /// </summary>
-      public float Y
-      {
-         get => m_y;
-         set => m_y = value;
-      }
+      public float Y { get; set; }
 
       /// <summary>
       /// Z property to get/set z value of Vector4
       /// </summary>
-      public float Z
-      {
-         get => m_z;
-         set => m_z = value;
-      }
+      public float Z { get; set; }
 
       /// <summary>
       /// W property to get/set fourth value of Vector4
       /// </summary>
-      public float W
-      {
-         get => m_w;
-         set => m_w = value;
-      }
+      public float W { get; set; } = 1.0f;
+
       #endregion
 
       #region Constructors
@@ -451,30 +433,22 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    {
       #region Fields
       // X coordinate
-      double m_x;
 
       // Y coordinate
-      double m_y;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// X coordinate
       /// </summary>
-      public double X
-      {
-         get => m_x;
-         set => m_x = value;
-      }
+      public double X { get; set; }
 
       /// <summary>
       /// Y coordinate
       /// </summary>
-      public double Y
-      {
-         get => m_y;
-         set => m_y = value;
-      }
+      public double Y { get; set; }
+
       #endregion
 
       #region Constructors
@@ -489,8 +463,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       public PointD(double x, double y)
       {
-         m_x = x;
-         m_y = y;
+         X = x;
+         Y = y;
       }
       #endregion
    }

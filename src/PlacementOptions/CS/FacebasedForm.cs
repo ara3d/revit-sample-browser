@@ -33,8 +33,6 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
     public partial class FacebasedForm : System.Windows.Forms.Form
     {
         List<FamilySymbol> m_familySymbolList;
-        FamilySymbol m_selectedSymbol;
-        PromptForFamilyInstancePlacementOptions m_placementOptions;
 
         /// <summary>
         /// Constructor
@@ -44,8 +42,8 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
             InitializeComponent();
 
             radioButtonFace.Checked = true;
-            m_placementOptions = new PromptForFamilyInstancePlacementOptions();
-            m_placementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
+            FIPlacementOptions = new PromptForFamilyInstancePlacementOptions();
+            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();
@@ -55,18 +53,18 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
             }
             comboBoxFamilySymbol.DataSource = nameList;
             comboBoxFamilySymbol.SelectedIndex = 0;
-            m_selectedSymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
+            SelectedFamilySymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
         }
 
         /// <summary>
         /// The family instance placement options for placement.
         /// </summary>
-        public PromptForFamilyInstancePlacementOptions FIPlacementOptions => m_placementOptions;
+        public PromptForFamilyInstancePlacementOptions FIPlacementOptions { get; }
 
         /// <summary>
         /// The family symbol for placement.
         /// </summary>
-        public FamilySymbol SelectedFamilySymbol => m_selectedSymbol;
+        public FamilySymbol SelectedFamilySymbol { get; private set; }
 
         /// <summary>
         /// Use the FaceBasedPlacementType.Default option or not.
@@ -75,7 +73,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonDefault_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.FaceBasedPlacementType = FaceBasedPlacementType.Default;
+            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.Default;
         }
 
         /// <summary>
@@ -85,7 +83,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonFace_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
+            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
         }
 
         /// <summary>
@@ -95,7 +93,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonVF_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnVerticalFace;
+            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnVerticalFace;
         }
 
         /// <summary>
@@ -105,7 +103,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonWP_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnWorkPlane;
+            FIPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnWorkPlane;
         }
 
         /// <summary>
@@ -115,7 +113,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void comboBoxFamilySymbol_SelectedIndexChanged(object sender, EventArgs e)
         {
-            m_selectedSymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
+            SelectedFamilySymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
         }
     }
 }

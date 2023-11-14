@@ -169,7 +169,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
                 var splitOrientation = (RectangularGridSegmentOrientation)(((int)(wallCS.GetSegmentOrientation(segId)) + 1) % 2);
                 var splitUV = (endPoint1 + endPoint2) / 2.0;
                 var newRegionId = wallCS.SplitRegion(splitUV, splitOrientation);
-                var isValidRegionId = wallCS.IsValidRegionId(newRegionId);
+                wallCS.IsValidRegionId(newRegionId);
 
                 // Find the enclosing region and the two segments intersected by a line through the split point
                 int segId1;

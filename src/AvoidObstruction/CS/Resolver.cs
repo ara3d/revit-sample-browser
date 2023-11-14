@@ -179,12 +179,12 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
             // Create elbow fitting to connect previous section with tmpPipe.
             var conn1 = FindConnector(sections[i - 1].Pipes[2], start);
             var conn2 = FindConnector(tmpPipe, start);
-            var fi = m_rvtDoc.Create.NewElbowFitting(conn1, conn2);
+            m_rvtDoc.Create.NewElbowFitting(conn1, conn2);
 
             // Create elbow fitting to connect current section with tmpPipe.
             var conn3 = FindConnector(sections[i].Pipes[0], end);
             var conn4 = FindConnector(tmpPipe, end);
-            var f2 = m_rvtDoc.Create.NewElbowFitting(conn3, conn4);
+            m_rvtDoc.Create.NewElbowFitting(conn3, conn4);
          }
 
          // Find two connectors which pipe's two ends connector connected to. 
@@ -209,7 +209,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
          // Connect the startPipe and first section with elbow fitting.
          var connStart1 = FindConnector(startPipe, sections[0].Start);
          var connStart2 = FindConnector(sections[0].Pipes[0], sections[0].Start);
-         var fii = m_rvtDoc.Create.NewElbowFitting(connStart1, connStart2);
+         m_rvtDoc.Create.NewElbowFitting(connStart1, connStart2);
 
          Pipe endPipe = null;
          var count = sections.Count;
@@ -230,7 +230,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
          // Connect the endPipe and last section with elbow fitting.
          var connEnd1 = FindConnector(endPipe, sections[count - 1].End);
          var connEnd2 = FindConnector(sections[count - 1].Pipes[2], sections[count - 1].End);
-         var fiii = m_rvtDoc.Create.NewElbowFitting(connEnd1, connEnd2);
+         m_rvtDoc.Create.NewElbowFitting(connEnd1, connEnd2);
 
          // Delete the pipe after resolved.
          m_rvtDoc.Delete(pipe.Id);
@@ -272,7 +272,6 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
 
          // Calculate the directions in which to find the solution.
          var dirs = new List<XYZ>();
-         XYZ crossDir = null;
          foreach (var gref in section.Refs)
          {
             var elem = m_rvtDoc.GetElement(gref.GetReference());
@@ -283,7 +282,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
             {
                continue;
             }
-            crossDir = refDir.CrossProduct(section.PipeCenterLineDirection);
+            var crossDir = refDir.CrossProduct(section.PipeCenterLineDirection);
             dirs.Add(crossDir.Normalize());
             break;
          }

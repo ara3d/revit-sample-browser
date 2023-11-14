@@ -37,12 +37,11 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         private delegate void DoorOperation(FamilyInstance e);
 
         // The value of the latest request made by the modeless form 
-        private Request m_request = new Request();
 
         /// <summary>
         /// A public property to access the current request value
         /// </summary>
-        public Request Request => m_request;
+        public Request Request { get; } = new Request();
 
         /// <summary>
         ///   A method to identify this External Event Handler

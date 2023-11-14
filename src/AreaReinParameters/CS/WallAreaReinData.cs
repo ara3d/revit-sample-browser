@@ -57,12 +57,10 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         public bool FillInData(AreaReinforcement areaRein)
         {
-            var flag = true;
-
             //member
             m_layoutRule = areaRein.get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE);
-            flag = (m_layoutRule != null);
+            var flag = (m_layoutRule != null);
 
             var paras = areaRein.Parameters;
 

@@ -39,22 +39,6 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
@@ -108,8 +92,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 // Traverse the system and dump the traversal into an XML file
                 var tree = new TraversalTree(activeDoc.Document, system);
                 tree.Traverse();
-                string fileName;
-                fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "traversal.xml");
+                var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "traversal.xml");
                 tree.DumpIntoXML(fileName);
 
                 return Result.Succeeded;
@@ -166,8 +149,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                     var mepCurve = selectedElement as MEPCurve;
                     if (mepCurve != null)
                     {
-                        ConnectorSet connectors = null;
-                        connectors = mepCurve.ConnectorManager.Connectors;
+                        var connectors = mepCurve.ConnectorManager.Connectors;
                         system = ExtractSystemFromConnectors(connectors);
                     }
                 }

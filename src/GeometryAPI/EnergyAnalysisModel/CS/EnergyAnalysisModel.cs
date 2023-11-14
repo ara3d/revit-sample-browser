@@ -34,16 +34,11 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         // An EnergyAnalysisDetailModel member that can get all analysis data includes surfaces, spaces and openings.
         private EnergyAnalysisDetailModel m_energyAnalysisDetailModel;
         // Options for Energy Analysis process
-        private EnergyAnalysisDetailModelOptions m_options;
         // revit document
         private Document RevitDoc;
 
         // Options Property
-        public EnergyAnalysisDetailModelOptions Options
-        {
-            get => m_options;
-            set => m_options = value;
-        }
+        public EnergyAnalysisDetailModelOptions Options { get; set; }
 
         /// <summary>
         /// Constructor
@@ -52,7 +47,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         public EnergyAnalysisModel(Document doc)
         {
             RevitDoc = doc;
-            m_options = new EnergyAnalysisDetailModelOptions();
+            Options = new EnergyAnalysisDetailModelOptions();
         }
 
         /// <summary>
@@ -61,7 +56,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         public void Initialize()
         {
             // create the model with a document and options.
-            m_energyAnalysisDetailModel = EnergyAnalysisDetailModel.Create(RevitDoc, m_options);
+            m_energyAnalysisDetailModel = EnergyAnalysisDetailModel.Create(RevitDoc, Options);
             m_energyAnalysisDetailModel.TransformModel();
         }
 
@@ -213,20 +208,20 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
             switch (tierValue)
             {
                 case "Final":
-                    m_options.Tier = EnergyAnalysisDetailModelTier.Final;
+                    Options.Tier = EnergyAnalysisDetailModelTier.Final;
                     break;
                 case "FirstLevelBoundaries":
-                    m_options.Tier = EnergyAnalysisDetailModelTier.FirstLevelBoundaries;
+                    Options.Tier = EnergyAnalysisDetailModelTier.FirstLevelBoundaries;
                     break;
                 case "NotComputed":
-                    m_options.Tier = EnergyAnalysisDetailModelTier.NotComputed;
+                    Options.Tier = EnergyAnalysisDetailModelTier.NotComputed;
                     break;
                 case "SecondLevelBoundaries":
-                    m_options.Tier = EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
+                    Options.Tier = EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
                     break;
                 // the default Tier is SecondLevelBoundaries
                 default:
-                    m_options.Tier = EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
+                    Options.Tier = EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
                     break;
             }
         }

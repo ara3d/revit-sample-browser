@@ -38,46 +38,35 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
       const double Modulus = 0.0174532925199433; //a modulus for degree convert to pi 
       const int Precision = 3; //default precision 
 
-      string m_currentLocationName;   //the location of the active project;
-      List<string> m_locationnames = new List<string>(); //a list to store all the location name
-      double m_angle;        //Angle from True North
-      double m_eastWest;     //East to West offset
-      double m_northSouth;   //North to South offset
-      double m_elevation;    //Elevation above ground level
-
       /// <summary>
       /// the value of the angle form true north
       /// </summary>
-      public double AngleOffset => m_angle;
+      public double AngleOffset { get; private set; }
 
       /// <summary>
       /// return the East to West offset
       /// </summary>
-      public double EastWestOffset => m_eastWest;
+      public double EastWestOffset { get; private set; }
 
       /// <summary>
       /// return the North to South offset
       /// </summary>
-      public double NorthSouthOffset => m_northSouth;
+      public double NorthSouthOffset { get; private set; }
 
       /// <summary>
       /// return the Elevation above ground level
       /// </summary>
-      public double PositionElevation => m_elevation;
+      public double PositionElevation { get; private set; }
 
       /// <summary>
       /// get and set the current project location name of the project
       /// </summary>
-      public string LocationName
-      {
-         get => m_currentLocationName;
-         set => m_currentLocationName = value;
-      }
+      public string LocationName { get; set; }
 
       /// <summary>
       /// get all the project locations' name of the project
       /// </summary>
-      public List<string> LocationNames => m_locationnames;
+      public List<string> LocationNames { get; } = new List<string>();
 
       /// <summary>
       /// constructor
@@ -103,10 +92,10 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
       /// </summary>
       public void GetLocationData()
       {
-         m_locationnames.Clear();
+         LocationNames.Clear();
          var currentLocation = m_application.ActiveUIDocument.Document.ActiveProjectLocation;
          //get the current location name
-         m_currentLocationName = currentLocation.Name;
+         LocationName = currentLocation.Name;
          //Retrieve all the project locations associated with this project
          var locations = m_application.ActiveUIDocument.Document.ProjectLocations;
 
@@ -116,7 +105,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
          {
             var locationTransform = iter.Current as ProjectLocation;
             var transformName = locationTransform.Name;
-            m_locationnames.Add(transformName); //add the location's name to the list
+            LocationNames.Add(transformName); //add the location's name to the list
          }
       }
 
@@ -156,7 +145,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             if (projectLocation.Name == locationName)
             {
                m_application.ActiveUIDocument.Document.ActiveProjectLocation = projectLocation;
-               m_currentLocationName = locationName;
+               LocationName = locationName;
                break;
             }
          }
@@ -178,10 +167,10 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                var origin = new XYZ (0, 0, 0);
                //get the project position
                var pp = projectLocation.GetProjectPosition(origin);
-               m_angle = (pp.Angle /= Modulus); //convert to unit degree  
-               m_eastWest = pp.EastWest;     //East to West offset
-               m_northSouth = pp.NorthSouth; //north to south offset
-               m_elevation = pp.Elevation;   //Elevation above ground level
+               AngleOffset = (pp.Angle /= Modulus); //convert to unit degree  
+               EastWestOffset = pp.EastWest;     //East to West offset
+               NorthSouthOffset = pp.NorthSouth; //north to south offset
+               PositionElevation = pp.Elevation;   //Elevation above ground level
                break;
             }
          }
@@ -226,10 +215,10 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
       /// </summary>
       private void ChangePrecision()
       {
-         m_angle = UnitConversion.DealPrecision(m_angle, Precision);
-         m_eastWest = UnitConversion.DealPrecision(m_eastWest, Precision);
-         m_northSouth = UnitConversion.DealPrecision(m_northSouth, Precision);
-         m_elevation = UnitConversion.DealPrecision(m_elevation, Precision);
+         AngleOffset = UnitConversion.DealPrecision(AngleOffset, Precision);
+         EastWestOffset = UnitConversion.DealPrecision(EastWestOffset, Precision);
+         NorthSouthOffset = UnitConversion.DealPrecision(NorthSouthOffset, Precision);
+         PositionElevation = UnitConversion.DealPrecision(PositionElevation, Precision);
       }
    }
 }

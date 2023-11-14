@@ -127,7 +127,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
              return false;
 
           var isAvailable = true;
-          try {  var isVisible = m_mainPage.IsVisible; }
+          try {
+          }
           catch (Exception)
           {
              isAvailable = false;

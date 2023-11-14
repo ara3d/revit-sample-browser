@@ -80,13 +80,10 @@ namespace Revit.SDK.Samples.AllViews.CS
     /// </summary>
     public class ViewsMgr
     {
-      private TreeNode m_allViewsNames = new TreeNode("Views (all)");
-      private ViewSet m_allViews = new ViewSet();
+        private ViewSet m_allViews = new ViewSet();
       private ViewSet m_selectedViews = new ViewSet();
       private FamilySymbol m_titleBlock;
       private IList<Element> m_allTitleBlocks = new List<Element>();
-      private ArrayList m_allTitleBlocksNames = new ArrayList();
-      private string m_sheetName;
       private double m_rows;
 
       private double TITLEBAR = 0.2;
@@ -222,21 +219,17 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <summary>
         /// Tree node store all views' names.
         /// </summary>
-        public TreeNode AllViewsNames => m_allViewsNames;
+        public TreeNode AllViewsNames { get; } = new TreeNode("Views (all)");
 
         /// <summary>
         /// List of all title blocks' names.
         /// </summary>
-        public ArrayList AllTitleBlocksNames => m_allTitleBlocksNames;
+        public ArrayList AllTitleBlocksNames { get; } = new ArrayList();
 
         /// <summary>
         /// The selected sheet's name.
         /// </summary>
-        public string SheetName
-        {
-            get => m_sheetName;
-            set => m_sheetName = value;
-        }
+        public string SheetName { get; set; }
 
         /// <summary>
         /// Constructor of views object.

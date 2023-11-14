@@ -38,13 +38,6 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
    public class Data
    {
       private Hashtable m_floorTypes;
-      private List<string> m_floorTypesName;
-      private FloorType m_floorType;
-      private Level m_level;
-      private CurveArray m_profile;
-      private bool m_structural;
-      private PointF[] m_points;
-      private double m_maxLength;
       private const double PRECISION = 0.00000001;
       private Autodesk.Revit.Creation.Application m_creApp;
       private Document m_document;
@@ -52,65 +45,37 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// <summary>
       /// A floor type to be used by the new floor instead of the default type.
       /// </summary>
-      public FloorType FloorType
-      {
-         get => m_floorType;
-         set => m_floorType = value;
-      }
+      public FloorType FloorType { get; set; }
 
       /// <summary>
       /// The level on which the floor is to be placed.
       /// </summary>
-      public Level Level
-      {
-         get => m_level;
-         set => m_level = value;
-      }
+      public Level Level { get; set; }
 
       /// <summary>
       /// A array of planar lines and arcs that represent the horizontal profile of the floor.
       /// </summary>
-      public CurveArray Profile
-      {
-         get => m_profile;
-         set => m_profile = value;
-      }
+      public CurveArray Profile { get; set; }
 
       /// <summary>
       /// If set, specifies that the floor is structural in nature.
       /// </summary>
-      public bool Structural
-      {
-         get => m_structural;
-         set => m_structural = value;
-      }
+      public bool Structural { get; set; }
 
       /// <summary>
       /// Points to be draw.
       /// </summary>
-      public PointF[] Points
-      {
-         get => m_points;
-         set => m_points = value;
-      }
+      public PointF[] Points { get; set; }
 
       /// <summary>
       /// the graphics' max length
       /// </summary>
-      public double MaxLength
-      {
-         get => m_maxLength;
-         set => m_maxLength = value;
-      }
+      public double MaxLength { get; set; }
 
       /// <summary>
       /// List of all floor types name could be used by the floor.
       /// </summary>
-      public List<string> FloorTypesName
-      {
-         get => m_floorTypesName;
-         set => m_floorTypesName = value;
-      }
+      public List<string> FloorTypesName { get; set; }
 
       /// <summary>
       /// Obtain all data which is necessary for generate floor.

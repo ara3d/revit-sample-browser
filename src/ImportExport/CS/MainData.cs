@@ -103,24 +103,18 @@ namespace Revit.SDK.Samples.ImportExport.CS
     public class MainData
     {
         // Revit command data
-        private ExternalCommandData m_commandData;
 
         // Whether current view is a 3D view
-        private bool m_is3DView;
 
         /// <summary>
         /// Revit command data
         /// </summary>
-        public ExternalCommandData CommandData => m_commandData;
+        public ExternalCommandData CommandData { get; }
 
         /// <summary>
         /// Whether current view is a 3D view
         /// </summary>
-        public bool Is3DView
-        {
-            get => m_is3DView;
-            set => m_is3DView = value;
-        }
+        public bool Is3DView { get; set; }
 
         /// <summary>
         /// Constructor
@@ -128,16 +122,16 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="commandData">Revit command data</param>
         public MainData(ExternalCommandData commandData)
         {
-            m_commandData = commandData;
+            CommandData = commandData;
 
             //Whether current active view is 3D view
             if (commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == Autodesk.Revit.DB.ViewType.ThreeD)
             {
-                m_is3DView = true;
+                Is3DView = true;
             }
             else
             {
-                m_is3DView = false;
+                Is3DView = false;
             }
         }
 
@@ -202,21 +196,21 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 switch (format)
                 {
                     case ExportFormat.DWG:
-                        var exportDWGData = new ExportDWGData(m_commandData, format);
+                        var exportDWGData = new ExportDWGData(CommandData, format);
                         using (var exportForm = new ExportWithViewsForm(exportDWGData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
                         break;
                     case ExportFormat.DXF:
-                        var exportDXFData = new ExportDXFData(m_commandData, format);
+                        var exportDXFData = new ExportDXFData(CommandData, format);
                         using (var exportForm = new ExportWithViewsForm(exportDXFData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
                         break;
                     case ExportFormat.SAT:
-                        var exportSATData = new ExportSATData(m_commandData, format);
+                        var exportSATData = new ExportSATData(CommandData, format);
                         using (var exportForm = new ExportWithViewsForm(exportSATData))
                         {
                             dialogResult = exportForm.ShowDialog();
@@ -224,36 +218,36 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         break;
                     case ExportFormat.DWF:
                     case ExportFormat.DWFx:
-                        var exportDWFData = new ExportDWFData(m_commandData, format);
+                        var exportDWFData = new ExportDWFData(CommandData, format);
                         using (var exportForm = new ExportWithViewsForm(exportDWFData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
                         break;
                     case ExportFormat.GBXML:
-                        var exportGBXMLData = new ExportGBXMLData(m_commandData, format);
+                        var exportGBXMLData = new ExportGBXMLData(CommandData, format);
                         dialogResult = Export(exportGBXMLData);
                         break;
                     case ExportFormat.FBX:
-                        var exportFBXData = new ExportFBXData(m_commandData, format);
+                        var exportFBXData = new ExportFBXData(CommandData, format);
                         dialogResult = Export(exportFBXData);
                         break;
                     case ExportFormat.DGN:
-                        var exportDGNData = new ExportDGNData(m_commandData, format);
+                        var exportDGNData = new ExportDGNData(CommandData, format);
                         using (var exportForm = new ExportWithViewsForm(exportDGNData))
                         {
                             dialogResult = exportForm.ShowDialog();
                         }
                         break;
                     case ExportFormat.Image:
-                        var exportIMGdata = new ExportIMGData(m_commandData, format);
-                        using (var exportForm = new ExportWithViewsForm(exportIMGdata))
+                        var exportIMGdata = new ExportIMGData(CommandData, format);
+                        using (new ExportWithViewsForm(exportIMGdata))
                         {
                             dialogResult = DialogResult.OK;
                         }
                         break;
                     case ExportFormat.PDF:
-                        var exportPDFData = new ExportPDFData(m_commandData, format);
+                        var exportPDFData = new ExportPDFData(CommandData, format);
                         using (var exportForm = new ExportWithViewsForm(exportPDFData))
                         {
                            dialogResult = exportForm.ShowDialog();
@@ -370,18 +364,18 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 switch (format)
                 {
                     case ImportFormat.DWG:
-                        var importDWGData = new ImportDWGData(m_commandData, format);
+                        var importDWGData = new ImportDWGData(CommandData, format);
                         using (var importForm = new ImportDWGForm(importDWGData))
                         {
                             dialogResult = importForm.ShowDialog();
                         }
                         break;
                     case ImportFormat.IMAGE:
-                        var importIMAGEData = new ImportImageData(m_commandData, format);
+                        var importIMAGEData = new ImportImageData(CommandData, format);
                         dialogResult = Import(importIMAGEData);
                         break;
                     case ImportFormat.GBXML:
-                        var importGBXMLData = new ImportGBXMLData(m_commandData, format);
+                        var importGBXMLData = new ImportGBXMLData(CommandData, format);
                         dialogResult = Import(importGBXMLData);
                         break;
                     default:

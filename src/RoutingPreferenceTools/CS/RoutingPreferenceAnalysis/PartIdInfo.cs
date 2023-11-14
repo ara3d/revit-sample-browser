@@ -34,19 +34,17 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
     public class PartIdInfo
     {
         // List of part Ids
-        private List<ElementId> m_ids;
         // group type
-        private RoutingPreferenceRuleGroupType m_groupType;
 
         /// <summary>
         /// Id
         /// </summary>
-        public List<ElementId> Id => m_ids;
+        public List<ElementId> Id { get; }
 
         /// <summary>
         ///  Group type
         /// </summary>
-        public RoutingPreferenceRuleGroupType GroupType => m_groupType;
+        public RoutingPreferenceRuleGroupType GroupType { get; }
 
         /// <summary>
         /// Constructor
@@ -55,9 +53,9 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// <param name="ids"></param>
         public PartIdInfo(RoutingPreferenceRuleGroupType groupType, IList<ElementId> ids)
         {
-            m_ids = new List<ElementId>();
-            m_groupType = groupType;
-            m_ids.AddRange(ids);
+            Id = new List<ElementId>();
+            GroupType = groupType;
+            Id.AddRange(ids);
         }
 
         /// <summary>
@@ -68,7 +66,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         public XElement GetXml(Document document)
         {
             var xPartInfo = new XElement(XName.Get("PartInfo"));
-            xPartInfo.Add(new XAttribute(XName.Get("groupType"), m_groupType.ToString()));
+            xPartInfo.Add(new XAttribute(XName.Get("groupType"), GroupType.ToString()));
             xPartInfo.Add(new XAttribute(XName.Get("partNames"), GetFittingNames(document)));
             return xPartInfo;
         }
@@ -106,11 +104,11 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         {
             var fittingNames = "";
 
-            if (m_ids.Count == 0)
+            if (Id.Count == 0)
             {
                 fittingNames += "None -1";
             }
-            foreach (var id in m_ids)
+            foreach (var id in Id)
             {
                 fittingNames += GetFittingName(document, id) + " " + id.ToString() + ", ";
             }

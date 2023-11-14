@@ -35,13 +35,12 @@ namespace Revit.SDK.Samples.Openings.CS
         private PointF m_endPnt;                // end point
         private float m_length;                                // length of the line
         // normal of the line; start point to end point
-        private PointF m_normal;                
-        private RectangleF m_boundingBox;// rectangle box contains the line
+        private PointF m_normal;
 
         /// <summary>
         /// rectangle box contains the line
         /// </summary>
-        public RectangleF BoundingBox => m_boundingBox;
+        public RectangleF BoundingBox { get; private set; }
 
         /// <summary>
         /// start point of the line; if it is set to new value,
@@ -167,7 +166,7 @@ namespace Revit.SDK.Samples.Openings.CS
             {
                 y1 = y2;
             }
-            m_boundingBox = new RectangleF(x1, y1, width, height);
+            BoundingBox = new RectangleF(x1, y1, width, height);
         }
 
         /// <summary>

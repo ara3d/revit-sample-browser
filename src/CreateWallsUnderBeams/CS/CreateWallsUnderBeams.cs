@@ -39,11 +39,9 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
     public class CreateWallsUnderBeams : IExternalCommand
     {
         // Private Members
-        IList<WallType> m_wallTypeCollection;         // Store all the wall types in current document
         ArrayList m_beamCollection;             // Store the selection of beams in Revit
         WallType m_selectedWallType;            // Store the selected wall type
         Level m_level;                          // Store the level which wall create on
-        bool m_isStructural;                 // Indicate whether create structural walls
         string m_errorInformation;              // Store the error information
         const double PRECISION = 0.0000000001;  // Define a precision of double data
 
@@ -51,7 +49,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         /// <summary>
         /// Inform all the wall types can be created in current document
         /// </summary>
-        public IList<WallType> WallTypes => m_wallTypeCollection;
+        public IList<WallType> WallTypes { get; private set; }
 
         /// <summary>
         /// Inform the wall type selected by the user
@@ -64,11 +62,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         /// <summary>
         /// Inform whether the user want to create structural or architecture walls
         /// </summary>
-        public bool IsSturctual
-        {
-            get => m_isStructural;
-            set => m_isStructural = value;
-        }
+        public bool IsSturctual { get; set; }
 
         // Methods
         /// <summary>
@@ -76,9 +70,9 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         /// </summary>
         public CreateWallsUnderBeams()
         {
-            m_wallTypeCollection = new List<WallType>();
+            WallTypes = new List<WallType>();
             m_beamCollection = new ArrayList();
-            m_isStructural = true;
+            IsSturctual = true;
         }
 
         #region IExternalCommand Members Implementation
@@ -123,7 +117,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             // Search all the wall types in the Revit
             var filteredElementCollector = new FilteredElementCollector(project.Document);
             filteredElementCollector.OfClass(typeof(WallType));
-            m_wallTypeCollection = filteredElementCollector.Cast<WallType>().ToList<WallType>();
+            WallTypes = filteredElementCollector.Cast<WallType>().ToList<WallType>();
 
             // Show the dialog for the user select the wall style
             using (var displayForm = new CreateWallsUnderBeamsForm(this))
@@ -184,7 +178,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             var t = new Transaction(project, Guid.NewGuid().GetHashCode().ToString());
             t.Start();
             var createdWall = Wall.Create(project, beamCurve, m_selectedWallType.Id,
-                                            m_level.Id, 10, 0, true, m_isStructural);
+                                            m_level.Id, 10, 0, true, IsSturctual);
             if (null == createdWall)
             {
                m_errorInformation = "Can not create the walls";

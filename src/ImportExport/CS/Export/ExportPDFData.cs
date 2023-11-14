@@ -32,20 +32,16 @@ namespace Revit.SDK.Samples.ImportExport.CS
    public class ExportPDFData : ExportDataWithViews
    {
       #region Class Member Variables
-      private bool m_combine;
+
       #endregion
 
       #region Class Properties
     /// <summary>
     /// Combine
     /// </summary>
-      public bool Combine
-      {
-         get => m_combine;
-         set => m_combine = value;
-      }
+      public bool Combine { get; set; }
 
-      #endregion
+    #endregion
 
       /// <summary>
       /// Constructor
@@ -58,7 +54,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
          m_filter = "PDF Files |*.pdf";
          m_title = "Export PDF";
 
-         m_combine = true;
+         Combine = true;
       }
 
       /// <summary>
@@ -69,7 +65,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
       {
          base.Export();
 
-         var exported = false;
          // Parameter: The list of view/sheet id to export
          IList<ElementId> views = new List<ElementId>();
          if (m_currentViewOnly)
@@ -88,8 +83,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
          // Parameter: The exporting options, including paper size, orientation, file name or naming rule and etc.
          var options = new PDFExportOptions();
          options.FileName = m_exportFileName;
-         options.Combine = m_combine;  // If not combined, PDFs will be exported with default naming rule "Type-ViewName"
-         exported = m_activeDoc.Export(m_exportFolder, views, options);
+         options.Combine = Combine;  // If not combined, PDFs will be exported with default naming rule "Type-ViewName"
+         var exported = m_activeDoc.Export(m_exportFolder, views, options);
 
          return exported;
       }

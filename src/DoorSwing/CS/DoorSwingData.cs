@@ -40,7 +40,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         public static List<string> OpeningTypes = new List<string>();
 
         // store current project's door families.
-        List<DoorFamily> m_doorFamilies = new List<DoorFamily>();
 
         UIApplication m_app;
 
@@ -49,7 +48,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         #region "Properties"
 
         // retrieves door families.
-        public List<DoorFamily> DoorFamilies => m_doorFamilies;
+        public List<DoorFamily> DoorFamilies { get; } = new List<DoorFamily>();
 
         #endregion
 
@@ -467,9 +466,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// </summary>
         public void UpdateDoorFamiliesOpeningFeature()
         {
-            for (var i = 0; i < m_doorFamilies.Count; i++)
+            for (var i = 0; i < DoorFamilies.Count; i++)
             {
-                m_doorFamilies[i].UpdateOpeningFeature();
+                DoorFamilies[i].UpdateOpeningFeature();
             }
         }
 
@@ -479,9 +478,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// </summary>
         public void DeleteTempDoorInstances()
         {
-            for (var i = 0; i < m_doorFamilies.Count; i++)
+            for (var i = 0; i < DoorFamilies.Count; i++)
             {
-                m_doorFamilies[i].DeleteTempDoorInstance();
+                DoorFamilies[i].DeleteTempDoorInstance();
             }
         }
 
@@ -512,7 +511,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 var tempDoorFamily = new DoorFamily(doorFamily, m_app);
 
                 // store the created DoorFamily instance
-                m_doorFamilies.Add(tempDoorFamily);
+                DoorFamilies.Add(tempDoorFamily);
             }
         }
 

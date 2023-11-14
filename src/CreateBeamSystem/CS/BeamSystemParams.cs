@@ -83,20 +83,13 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <summary>
         /// number of beams
         /// </summary>
-        protected int m_numberOfLines;    
-                
-        private LayoutRuleChangedHandler m_layoutRuleChanged;
-        private FamilySymbol m_beamType;                // beam type of beam system
+        protected int m_numberOfLines;
 
         /// <summary>
         /// layout method of beam system is changed
         /// </summary>
         [Browsable(false)]
-        public LayoutRuleChangedHandler LayoutRuleChanged
-        {
-            get => m_layoutRuleChanged;
-            set => m_layoutRuleChanged = value;
-        }
+        public LayoutRuleChangedHandler LayoutRuleChanged { get; set; }
 
         /// <summary>
         /// kind of layout rule
@@ -121,11 +114,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// </summary>
         [Category("Pattern"), TypeConverter(typeof(BeamTypeItem)),
         Description("Select a value for the Beam Type used in the beam system")]
-        public FamilySymbol BeamType
-        {
-            get => m_beamType;
-            set => m_beamType = value;
-        }
+        public FamilySymbol BeamType { get; set; }
 
         /// <summary>
         /// initial general members for its subclass
@@ -179,7 +168,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             param.m_fixedSpacing  = m_fixedSpacing;
             param.m_justifyType   = m_justifyType;
             param.m_numberOfLines = m_numberOfLines;
-            param.m_beamType      = m_beamType;
+            param.BeamType      = BeamType;
             return param;            
         }
 

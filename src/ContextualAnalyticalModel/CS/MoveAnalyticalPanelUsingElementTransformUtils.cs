@@ -23,7 +23,7 @@ namespace ContextualAnalyticalModel
             var analyticalPanel = CreateAnalyticalPanel.CreateAMPanel(document);
 
             // Create an Analytical Member connected with the Analytical Panel above
-            var analyticalMember = CreateAnalyticalMember.CreateMember(document);
+            CreateAnalyticalMember.CreateMember(document);
 
             // Move the Analytical Panel using ElementTransformUtils
             using (var transaction = new Transaction(document, "Move panel with ElementTransformUtils"))

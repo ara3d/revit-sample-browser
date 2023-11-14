@@ -23,7 +23,7 @@ namespace ContextualAnalyticalModel
             var analyticalMember = CreateAnalyticalMember.CreateMember(document);
 
             // Create the second Analytical Member
-            var convergentAnalyticalMember = CreateAnalyticalMember.CreateConvergentMember(document);
+            CreateAnalyticalMember.CreateConvergentMember(document);
 
             // Start transaction
             using (var transaction = new Transaction(document, "Offset member"))

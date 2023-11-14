@@ -131,7 +131,7 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
             var plane = Plane.CreateByNormalAndOrigin(new XYZ(1, 0, 0), line.GetEndPoint(0));
             var sketchPlane = SketchPlane.Create(m_doc, plane);
 
-            var curve = m_doc.Create.NewModelCurve(line, sketchPlane);
+            m_doc.Create.NewModelCurve(line, sketchPlane);
 
             // Show a message with the length value
             TaskDialog.Show("Distance", "Distance to floor: " + string.Format("{0:f2}", line.Length));

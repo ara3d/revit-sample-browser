@@ -96,16 +96,17 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             x = x - 1;                           // Translate 0,0 to the center
             y = 1 - y;                           // Flip so +Y is up instead of down
 
-            double d, t, z;
+            double z;
 
-            d = Math.Sqrt(x * x + y * y);
+            var d = Math.Sqrt(x * x + y * y);
             if (d < 0.70710678118654752440)
             {    /* Inside sphere */
                 z = Math.Sqrt(1 - d * d);
             }
             else
-            {           /* On hyperbola */
-                t = 1 / 1.41421356237309504880;
+            {
+                /* On hyperbola */
+                var t = 1 / 1.41421356237309504880;
                 z = t * t / d;
             }
             return new XYZ(x, y, z);

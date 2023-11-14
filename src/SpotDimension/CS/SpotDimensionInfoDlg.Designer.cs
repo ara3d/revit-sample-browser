@@ -35,7 +35,6 @@ namespace Revit.SDK.Samples.SpotDimension.CS
 
         private SpotDimensionsData m_data;
         private SpotDimensionParams m_typeParamsData;
-        private Autodesk.Revit.DB.SpotDimension m_lastSelectDimention;
 
         /// <summary>
         /// Clean up any resources being used.

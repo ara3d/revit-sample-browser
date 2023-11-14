@@ -42,16 +42,11 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
         private RadioButton relativeRadio;
         private Label rotationLabel;
         public System.Windows.Forms.TextBox rotationTextBox;
-        private bool m_isReset;
-        
+
         /// <summary>
         /// 
         /// </summary>
-        public bool IsReset
-        {
-            get => m_isReset;
-            set => m_isReset = value;
-        }
+        public bool IsReset { get; set; }
 
         /// <summary>
         /// new form, retrieve relevant data from instance
@@ -59,7 +54,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
         /// <param name="Inst">RotateFramingObjects instance</param>
         public RotateFramingObjectsForm(RotateFramingObjects Inst)
         {
-            m_isReset = false;
+            IsReset = false;
             m_instance = Inst;
             if (null == m_instance)
             {
@@ -199,13 +194,13 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
         }
         private void singleRadio_CheckedChanged(object sender, EventArgs e)
         {
-            m_isReset = true;
+            IsReset = true;
             m_instance.IsAbsoluteChecked = false;
         }
 
         private void allRadio_CheckedChanged(object sender, EventArgs e)
         {
-            m_isReset = true;
+            IsReset = true;
             m_instance.IsAbsoluteChecked = true;
         }
 
@@ -229,7 +224,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
             {
                 m_instance.ReceiveRotationTextBox = 0;
             }
-            m_isReset = true;    
+            IsReset = true;    
         }
 
         private void rotationTextBox_KeyPress(object sender, KeyPressEventArgs e)

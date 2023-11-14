@@ -100,7 +100,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         {
             //remove events
             var myPanels = application.GetRibbonPanels();
-            var comboboxLevel = (ComboBox)(myPanels[0].GetItems()[2]);
+            _ = (ComboBox)(myPanels[0].GetItems()[2]);
             application.ControlledApplication.DocumentCreated -= new EventHandler<
                Autodesk.Revit.DB.Events.DocumentCreatedEventArgs>(DocumentCreated);
             var textBox = myPanels[0].GetItems()[5] as TextBox;

@@ -36,17 +36,13 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         private Pen m_backGroundPen;  // background pen used to Erase the preview line
         private Pen m_foreGroundPen;  // foreground pen used to draw lines
         private Point m_preMovePoint;  // store the mouse position when mouse move in pictureBox
-        private bool m_finished;    // indicate whether user have finished drawing
+
         #endregion
 
         /// <summary>
         /// Finished property to define whether curve was finished
         /// </summary>
-        public bool Finished
-        {
-            get => m_finished;
-            set => m_finished = value;
-        }
+        public bool Finished { get; set; }
 
         /// <summary>
         /// PointsNumber property to get the number of points stored
@@ -62,7 +58,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             m_backGroundPen.Width *= 2;
             m_foreGroundPen = new Pen(Color.Black);
             m_foreGroundPen.Width *= 2;
-            m_finished = false;
+            Finished = false;
         }
 
         /// <summary>
@@ -88,7 +84,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <param name="e">mouse event args</param>
         public void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
-            if(m_points.Count != 0 && !m_finished)
+            if(m_points.Count != 0 && !Finished)
             {                
                 graphic.DrawLine(m_backGroundPen, m_points[m_points.Count - 1], m_preMovePoint);
                 m_preMovePoint = e.Location;
@@ -105,10 +101,10 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             //when user click right button of mouse, then erase last line
             if (MouseButtons.Right == e.Button && m_points.Count >= 2)
             {
-                m_finished = true;
+                Finished = true;
             }
 
-            if (MouseButtons.Left == e.Button && !m_finished)
+            if (MouseButtons.Left == e.Button && !Finished)
             {
                 m_preMovePoint = e.Location;
                 m_points.Add(e.Location);

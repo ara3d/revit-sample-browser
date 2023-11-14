@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       /// <summary>
       /// Get the current Modeless command.
       /// </summary>
-      public  ModelessCommand ModelessCommand => m_ModelessCommand;
+      public  ModelessCommand ModelessCommand { get; } = new ModelessCommand();
 
       /// <summary>
       /// Return dockable pane inforamtion, given a dockable pane Guid.
@@ -67,11 +67,10 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       /// </summary>
       public string GetPaneSummary(DockablePaneId id)
       {
-         DockablePane pane = null;
-         try
+          try
          {
-            pane = m_uiApplication.GetDockablePane(id);
-            return GetPaneSummary(pane);
+             var pane = m_uiApplication.GetDockablePane(id);
+             return GetPaneSummary(pane);
          }
          catch (Exception ex)
          {
@@ -107,7 +106,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
 
       #region Data
       private UIApplication m_uiApplication;
-      private ModelessCommand m_ModelessCommand = new ModelessCommand();
+
       #endregion
 
    }

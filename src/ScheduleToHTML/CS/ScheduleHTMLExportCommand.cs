@@ -20,7 +20,6 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <returns></returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var doc = commandData.Application.ActiveUIDocument.Document;
             var activeView = commandData.View;
 
             if (activeView is ViewSchedule)

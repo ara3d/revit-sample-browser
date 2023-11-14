@@ -72,8 +72,6 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <returns>matrix which can transform points to 2D</returns>
         public override Matrix4 GetTo2DMatrix()
         {
-            View viewLevel2 = null;
-
             // select the view which is named "Level 2"
             // Once use the View type to filterrrr the element ,please skip the view templates 
             // because they're behind-the-scene and invisible in project browser; also invalid for API.
@@ -82,7 +80,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                                       let view = elem as View
                                       where (view != null) && (!view.IsTemplate) && (view.Name == "Level 2")
                                       select view;
-            viewLevel2 = views.First();
+            var viewLevel2 = views.First();
 
             var xAxis = new Vector4(viewLevel2.RightDirection);
             //Because Y axis in windows UI is downward, so we should Multiply(-1) here
@@ -101,13 +99,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <returns>new created PathReinforcement</returns>
         public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points, bool flip)
         {
-            XYZ p1, p2; Line curve;
             IList<Curve> curves = new List<Curve>();
             for (var i = 0; i < points.Count - 1; i++)
             {
-                p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
-                p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
-                curve = Line.CreateBound(p1, p2);
+                var p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
+                var p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
+                var curve = Line.CreateBound(p1, p2);
                 curves.Add(curve);
             }
             var pathReinforcementTypeId = PathReinforcementType.CreateDefaultPathReinforcementType(m_document);

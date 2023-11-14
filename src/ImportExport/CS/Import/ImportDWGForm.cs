@@ -328,12 +328,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
         private void textBoxScale_TextChanged(object sender, EventArgs e)
         {
             var newPoint = false;
-            var tmp = '0';
             var text = textBoxScale.Text.Trim();
             var textAfter = new StringBuilder();
             for (var i = 0; i < text.Length; i++)
             {
-                tmp = char.Parse(text.Substring(i, 1).ToString());
+                var tmp = char.Parse(text.Substring(i, 1).ToString());
                 if (!newPoint && (tmp == '.'))
                 {
                     textAfter.Append(tmp);
@@ -346,7 +345,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
                         textAfter.Append(tmp);
                     }
                 }
-
             }
             textBoxScale.Text = textAfter.ToString();
         }

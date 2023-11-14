@@ -155,7 +155,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// <returns>conversion result</returns>
         public static string DoubleToString(double value, ValueType valueType)
         {
-            string displayText = null; // string included value and unit of parameter
             double newValue;
             ValueConversion(value, ValueType.Angle, true, out newValue);
             value = newValue;
@@ -163,7 +162,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
             //calculate the number after ".",if less than DecimalNumber
             // add some "0" after it
-            displayText = DealDecimalNumber(newValue.ToString(), DefaultPrecision);            
+            var displayText = DealDecimalNumber(newValue.ToString(), DefaultPrecision); // string included value and unit of parameter
 
             if(ValueType.Angle == valueType)
             {

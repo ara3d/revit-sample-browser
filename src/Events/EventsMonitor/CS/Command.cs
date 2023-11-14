@@ -44,10 +44,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                                        ref string message,
                                        ElementSet elements)
         {
-
-            var journaldata = commandData.JournalData;
-
-        // These #if directives within file are used to compile project in different purpose:
+            // These #if directives within file are used to compile project in different purpose:
         // . Build project with Release mode for regression test,
         // . Build project with Debug mode for manual run
 #if !(Debug || DEBUG)

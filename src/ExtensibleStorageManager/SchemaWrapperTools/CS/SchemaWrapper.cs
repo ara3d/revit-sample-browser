@@ -368,10 +368,8 @@ namespace SchemaWrapperTools
      /// <param name="strBuilder">The StringBuilder to append entity data to</param>
       private void GetFieldDataAsString<KeyType, FieldType>(Field field, Entity entity, StringBuilder strBuilder)
       {
-          var fieldName = field.FieldName;
           var fieldType = field.ValueType;
           var fieldUnit = field.GetSpecTypeId();
-          var fieldContainerType = field.ContainerType;
           Type[] methodGenericParameters = null;
           object[] invokeParams = null;
           Type[] methodOverloadSelectionParams = null;
@@ -405,7 +403,6 @@ namespace SchemaWrapperTools
               }
               else
               {
-                  var sRetval = retval.ToString();
                   strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType.ToString() + ", Value: " + retval + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " + field.ContainerType.ToString());
               }
           }

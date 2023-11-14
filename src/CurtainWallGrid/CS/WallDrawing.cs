@@ -35,7 +35,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public double SCALEFACTOR = 5.0;
 
       // the boundary of the canvas for the baseline drawing
-      Rectangle m_boundary;
 
       // the origin for the baseline (it's the center of the canvas)
       Point m_origin;
@@ -50,18 +49,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       Font m_coordinateFont;
 
       // the baseline of the curtain wall
-      WallBaseline2D m_wallLine2D;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// the boundary of the canvas for the baseline drawing
       /// </summary>
-      public Rectangle Boundary
-      {
-         get => m_boundary;
-         set => m_boundary = value;
-      }
+      public Rectangle Boundary { get; set; }
 
       /// <summary>
       /// the origin for the baseline (it's the center of the canvas)
@@ -75,7 +70,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// <summary>
       /// the baseline of the curtain wall
       /// </summary>
-      public WallBaseline2D WallLine2D => m_wallLine2D;
+      public WallBaseline2D WallLine2D { get; }
 
       #endregion
 
@@ -89,7 +84,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public WallDrawing(WallGeometry wallGeo)
       {
          m_coordinateFont = new Font("Verdana", 10, FontStyle.Regular);
-         m_wallLine2D = new WallBaseline2D();
+         WallLine2D = new WallBaseline2D();
          m_myDocument = wallGeo.MyDocument;
          m_refGeometry = wallGeo;
       }
@@ -105,28 +100,28 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public void AddPoint(Point mousePosition)
       {
          // both end points of the baseline specified, can't add more points
-         if (Point.Empty != m_wallLine2D.StartPoint &&
-             Point.Empty != m_wallLine2D.EndPoint)
+         if (Point.Empty != WallLine2D.StartPoint &&
+             Point.Empty != WallLine2D.EndPoint)
          {
             return;
          }
 
          // start point isn't specified, specify it
-         if (Point.Empty == m_wallLine2D.StartPoint)
+         if (Point.Empty == WallLine2D.StartPoint)
          {
-            m_wallLine2D.StartPoint = mousePosition;
+            WallLine2D.StartPoint = mousePosition;
             m_refGeometry.StartPointD = ConvertToPointD(mousePosition);
          }
          // start point specified, end point isn't, so specify the end point
-         else if (Point.Empty == m_wallLine2D.EndPoint)
+         else if (Point.Empty == WallLine2D.EndPoint)
          {
             // don't let the length of the 2 points too small
-            if (Math.Abs(m_wallLine2D.StartPoint.X - mousePosition.X) >= 2 ||
-                Math.Abs(m_wallLine2D.StartPoint.Y - mousePosition.Y) >= 2)
+            if (Math.Abs(WallLine2D.StartPoint.X - mousePosition.X) >= 2 ||
+                Math.Abs(WallLine2D.StartPoint.Y - mousePosition.Y) >= 2)
             {
-               m_wallLine2D.EndPoint = mousePosition;
+               WallLine2D.EndPoint = mousePosition;
                m_refGeometry.EndPointD = ConvertToPointD(mousePosition);
-               m_wallLine2D.AssistantPoint = Point.Empty;
+               WallLine2D.AssistantPoint = Point.Empty;
             }
          }
       }
@@ -140,15 +135,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public void AddMousePosition(Point mousePosition)
       {
          // both endpoints for the baseline have been confirmed, no need to record the mouse location
-         if (Point.Empty != m_wallLine2D.StartPoint &&
-             Point.Empty != m_wallLine2D.EndPoint)
+         if (Point.Empty != WallLine2D.StartPoint &&
+             Point.Empty != WallLine2D.EndPoint)
          {
             return;
          }
 
          // we just start to draw the baseline, no end points are specified
          // or just the start point was specified, so the mouse position will be the "candidate end point"
-         m_wallLine2D.AssistantPoint = mousePosition;
+         WallLine2D.AssistantPoint = mousePosition;
       }
 
       /// <summary>
@@ -175,7 +170,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public void RemovePoints()
       {
-         m_wallLine2D.Clear();
+         WallLine2D.Clear();
       }
       #endregion
 
@@ -191,10 +186,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </returns>
       private PointD ConvertToPointD(Point srcPoint)
       {
-         double x = -1;
-         double y = -1;
-         x = srcPoint.X - m_origin.X;
-         y = m_origin.Y - srcPoint.Y;
+          double x = srcPoint.X - m_origin.X;
+         double y = m_origin.Y - srcPoint.Y;
          x /= SCALEFACTOR;
          y /= SCALEFACTOR;
          return new PointD(x, y);
@@ -228,21 +221,21 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       private void DrawBaseline(Graphics graphics, Pen pen)
       {
-         if (Point.Empty != m_wallLine2D.AssistantPoint)
+         if (Point.Empty != WallLine2D.AssistantPoint)
          {
-            if (Point.Empty != m_wallLine2D.StartPoint)
+            if (Point.Empty != WallLine2D.StartPoint)
             {
-               graphics.DrawLine(pen, m_wallLine2D.StartPoint, m_wallLine2D.AssistantPoint);
+               graphics.DrawLine(pen, WallLine2D.StartPoint, WallLine2D.AssistantPoint);
             }
 
             // show the real-time coordinate of the mouse position 
             WriteCoordinate(graphics, pen);
          }
 
-         if (Point.Empty != m_wallLine2D.EndPoint &&
-             Point.Empty != m_wallLine2D.EndPoint)
+         if (Point.Empty != WallLine2D.EndPoint &&
+             Point.Empty != WallLine2D.EndPoint)
          {
-            graphics.DrawLine(pen, m_wallLine2D.StartPoint, m_wallLine2D.EndPoint);
+            graphics.DrawLine(pen, WallLine2D.StartPoint, WallLine2D.EndPoint);
          }
       }
 
@@ -257,7 +250,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       private void WriteCoordinate(Graphics graphics, Pen pen)
       {
-         var assistPointD = ConvertToPointD(m_wallLine2D.AssistantPoint);
+         var assistPointD = ConvertToPointD(WallLine2D.AssistantPoint);
          var x = Unit.CovertFromAPI(m_myDocument.LengthUnit, assistPointD.X);
          var y = Unit.CovertFromAPI(m_myDocument.LengthUnit, assistPointD.Y);
 
@@ -267,7 +260,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          var unitType = Unit.GetUnitLabel(m_myDocument.LengthUnit);
          var coordinate = "(" + xCoorString + unitType + "," + yCoorString + unitType + ")";
          graphics.DrawString(coordinate, m_coordinateFont, Brushes.Blue,
-             new PointF(m_wallLine2D.AssistantPoint.X + 2, m_wallLine2D.AssistantPoint.Y + 2));
+             new PointF(WallLine2D.AssistantPoint.X + 2, WallLine2D.AssistantPoint.Y + 2));
       }
       #endregion
    }

@@ -122,7 +122,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
             RibbonItemData ribbonItemData = new PushButtonData("Create marker", "Create issue marker on an element",
                 System.Reflection.Assembly.GetExecutingAssembly().Location, typeof(Command).FullName);
 
-            var pushButton = (PushButton)ribbonPanel.AddItem(ribbonItemData);
+            _ = (PushButton)ribbonPanel.AddItem(ribbonItemData);
 
             application.ControlledApplication.DocumentChanged += updateHandler;
             application.ControlledApplication.DocumentOpened += openHandler;

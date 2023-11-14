@@ -65,7 +65,7 @@ namespace Revit.SDK.Samples.Site.CS
                                                             addAssemblyPath,
                                                             typeof(SiteAddRetainingPondCommand).FullName);
             SetIconsForPushButtonData(addPond, Properties.Resources.AddPond);
-            var pondPB = rp.AddItem(addPond) as PushButton;
+            _ = rp.AddItem(addPond) as PushButton;
 
             var moveRegion = new PushButtonData("Site_Move_Region", "Move Region",
                                                             addAssemblyPath,

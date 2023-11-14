@@ -52,8 +52,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
         FamilyInstance m_selectedComponent;                //selected beam, column or brace
         Parameter m_currentMaterial;                //current material of selected beam, column or brace
         Material m_cacheMaterial;
-        ArrayList m_steels = new ArrayList();    //arraylist of all materials belonging to steel type
-        ArrayList m_concretes = new ArrayList();    //arraylist of all materials belonging to concrete type
 
 
         /// <summary>
@@ -97,12 +95,12 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
         /// <summary>
         /// arraylist of all materials belonging to steel type
         /// </summary>
-        public ArrayList SteelCollection => m_steels;
+        public ArrayList SteelCollection { get; } = new ArrayList();
 
         /// <summary>
         /// arraylist of all materials belonging to concrete type
         /// </summary>
-        public ArrayList ConcreteCollection => m_concretes;
+        public ArrayList ConcreteCollection { get; } = new ArrayList();
 
         /// <summary>
         /// three basic material types in Revit
@@ -125,22 +123,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             }
         }
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
@@ -186,13 +168,10 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 return parameterTable;
             }
 
-            Parameter temporaryAttribute = null;        // hold each parameter
-            var temporaryValue = "";                    // hold each value
-
             #region Get all material element parameters
 
             //- Behavior
-            temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_BEHAVIOR);
+            var temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_BEHAVIOR); // hold each parameter
             switch (temporaryAttribute.AsInteger())
             {
                 case 0:
@@ -207,7 +186,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             }
             //- Young's Modulus
             temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD1);
-            temporaryValue = temporaryAttribute.AsValueString();
+            var temporaryValue = temporaryAttribute.AsValueString(); // hold each value
             AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
             temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD2);
             temporaryValue = temporaryAttribute.AsValueString();
@@ -502,12 +481,12 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 {
                    case StructuralAssetClass.Metal:
                         {
-                            m_steels.Add(new MaterialMap(material));
+                            SteelCollection.Add(new MaterialMap(material));
                             break;
                         }
                    case StructuralAssetClass.Concrete:
                         {
-                            m_concretes.Add(new MaterialMap(material));
+                            ConcreteCollection.Add(new MaterialMap(material));
                             break;
                         }
                     default:
@@ -584,23 +563,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
               }
            }
            return StructuralAssetClass.Undefined;
-            //ElementId propElemId = material.GetMaterialAspectPropertySet(MaterialAspect.Structural);
-            //if (ElementId.InvalidElementId == propElemId)
-            //{
-            //    Parameter independentPara = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_TYPE);
-            //    if (null == independentPara)
-            //    {
-            //        return MaterialType.Generic;
-            //    }
-            //    return (MaterialType)independentPara.AsInteger();
-            //}
-            //PropertySetElement propElem = m_revit.ActiveUIDocument.Document.GetElement(propElemId) as PropertySetElement;
-            //Parameter propElemPara = propElem.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_CLASS);
-            //if (null == propElemPara)
-            //{
-            //    return MaterialType.Generic;
-            //}
-            //return (MaterialType)propElemPara.AsInteger();
         }
     }
 
@@ -610,32 +572,24 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
     /// </summary>
     public class MaterialMap
     {
-        string m_materialName;
-        Material m_material;
-
-        /// <summary>
-        /// constructor without parameter is forbidden
-        /// </summary>
-        private MaterialMap() { }
-
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="material"></param>
         public MaterialMap(Material material)
         {
-            m_materialName = material.Name;
-            m_material = material;
+            MaterialName = material.Name;
+            Material = material;
         }
 
         /// <summary>
         /// Get the material name
         /// </summary>
-        public string MaterialName => m_materialName;
+        public string MaterialName { get; }
 
         /// <summary>
         /// Get the material
         /// </summary>
-        public Material Material => m_material;
+        public Material Material { get; }
     }
 }

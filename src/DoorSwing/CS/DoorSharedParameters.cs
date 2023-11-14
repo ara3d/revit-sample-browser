@@ -140,7 +140,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          sharedParameterFilePath        = sharedParameterFilePath + "\\MySharedParameterFile.txt";
 
          //Method's return
-         DefinitionFile sharedParameterFile = null;
 
          // Check if the file exits
          var documentMessage = new FileInfo(sharedParameterFilePath);
@@ -155,7 +154,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
          // Set ourselves file to the externalSharedParameterFile 
          app.SharedParametersFilename = sharedParameterFilePath;
-         sharedParameterFile                  = app.OpenSharedParameterFile();
+         var sharedParameterFile = app.OpenSharedParameterFile();
 
          return sharedParameterFile;
       }

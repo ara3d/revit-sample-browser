@@ -114,7 +114,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
             var myMessage = string.Empty;
 
             var loadContext = data.GetLoadContext();
-            var desiredRef = data.GetExternalResourceReference();
+            data.GetExternalResourceReference();
             var currentlyLoadedRef = loadContext.GetCurrentlyLoadedReference();
 
             var loadType = loadContext.LoadOperationType;

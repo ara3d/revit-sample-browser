@@ -59,7 +59,6 @@ namespace Revit.Samples.MaterialQuantities
                                                               ref string message,
                                                               ElementSet elements)
         {
-            var app = revit.Application.Application;
             m_doc = revit.Application.ActiveUIDocument.Document;
 
             var filename = "CalculateMaterialQuantities.txt";
@@ -174,7 +173,6 @@ namespace Revit.Samples.MaterialQuantities
         public void SetDocument(Document d)
         {
             m_doc = d;
-            var app = d.Application;
         }
 
         /// <summary>
@@ -222,7 +220,7 @@ namespace Revit.Samples.MaterialQuantities
         /// </summary>
         private void DeleteAllCuttingElements()
         {
-            IList<ElementFilter> filterList = new List<ElementFilter>();
+            new List<ElementFilter>();
             var collector = new FilteredElementCollector(m_doc);
 
             // (Type == FamilyInstance && (Category == Door || Category == Window) || Type == Opening

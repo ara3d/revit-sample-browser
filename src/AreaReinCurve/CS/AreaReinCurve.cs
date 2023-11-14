@@ -147,8 +147,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         private bool TurnOffLayers()
         {
             //AreaReinforcement is on the floor or slab
-            var flag = true;
-            flag = ParameterUtil.SetParaInt(m_areaRein,
+            var flag = ParameterUtil.SetParaInt(m_areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_1, 0);
             flag &= ParameterUtil.SetParaInt(m_areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_2, 0);
@@ -177,7 +176,6 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
             //find two vertical AreaReinforcementCurve
             var line0 = m_areaReinCurves[0].Curve as Line;
             var line1 = m_areaReinCurves[1].Curve as Line;
-            var line2 = m_areaReinCurves[2].Curve as Line;
             AreaReinforcementCurve temp = null;
             if (GeomUtil.IsVertical(line0, line1))
             {

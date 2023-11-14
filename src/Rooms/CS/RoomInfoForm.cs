@@ -65,10 +65,6 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         private void DisplayRooms(ReadOnlyCollection<Room> roomList, bool isHaveTag)
         {
-            string propertyValue = null;   //value of department
-            string departmentName = null;  //department name 
-            var areaValue = 0.0;        //room area
-
             // add rooms to the listview
             foreach (var tmpRoom in roomList)
             {
@@ -87,14 +83,14 @@ namespace Revit.SDK.Samples.Rooms.CS
                 tmpItem.SubItems.Add((tmpRoom.Document.GetElement(tmpRoom.LevelId) as Level).Name); //display the level
 
                 // get department name from Department property 
-                departmentName = m_data.GetProperty(tmpRoom, BuiltInParameter.ROOM_DEPARTMENT);
+                var departmentName = m_data.GetProperty(tmpRoom, BuiltInParameter.ROOM_DEPARTMENT); //department name 
                 tmpItem.SubItems.Add(departmentName);
 
                 // get property value 
-                propertyValue = m_data.GetProperty(tmpRoom, BuiltInParameter.ROOM_AREA);
+                var propertyValue = m_data.GetProperty(tmpRoom, BuiltInParameter.ROOM_AREA); //value of department
 
                 // get the area value
-                areaValue = double.Parse(propertyValue);
+                var areaValue = double.Parse(propertyValue); //room area
                 tmpItem.SubItems.Add(propertyValue + " SF");
 
                 // display whether the room with tag or not

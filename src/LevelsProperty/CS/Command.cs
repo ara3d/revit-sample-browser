@@ -38,22 +38,6 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
     {
         #region GetDatum
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="revit">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
         {
             m_revit = revit;
@@ -63,7 +47,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
             try
             {
                 //Get every level by iterating through all elements
-                systemLevelsDatum = new List<LevelsDataSource>();
+                SystemLevelsDatum = new List<LevelsDataSource>();
                 var collector = new FilteredElementCollector(m_revit.Application.ActiveUIDocument.Document);
                 ICollection<Element> collection = collector.OfClass(typeof(Level)).ToElements();
                 foreach (var element in collection)
@@ -81,7 +65,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                      
                      levelsDataSourceRow.Elevation = temValue2;
 
-                     systemLevelsDatum.Add(levelsDataSourceRow);
+                     SystemLevelsDatum.Add(levelsDataSourceRow);
                 }
 
                 using (var displayForm = new LevelsForm(this))
@@ -101,15 +85,12 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
         ExternalCommandData m_revit;
         public ForgeTypeId UnitTypeId;
-        List<LevelsDataSource> systemLevelsDatum;
+
         /// <summary>
         /// Store all levels' datum in system
         /// </summary>
-        public List<LevelsDataSource> SystemLevelsDatum
-        {
-            get => systemLevelsDatum;
-            set => systemLevelsDatum = value;
-        }
+        public List<LevelsDataSource> SystemLevelsDatum { get; set; }
+
         #endregion
 
         #region SetData

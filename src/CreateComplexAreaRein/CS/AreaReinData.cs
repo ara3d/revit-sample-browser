@@ -42,16 +42,10 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             m_doc = doc;
         }
 
-        private LayoutRules m_layoutRule = LayoutRules.Maximum_Spacing;
-
         /// <summary>
         /// Parameter LayoutRule of AreaReinforcement
         /// </summary>
-        public LayoutRules LayoutRule
-        {
-            get => m_layoutRule;
-            set => m_layoutRule = value;
-        }
+        public LayoutRules LayoutRule { get; set; } = LayoutRules.Maximum_Spacing;
 
         /// <summary>
         /// set the parameters to given AreaReinforcement
@@ -59,7 +53,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// <param name="areaRein"></param>
         public virtual void FillIn(AreaReinforcement areaRein)
         {
-            var temp = (int)m_layoutRule;
+            var temp = (int)LayoutRule;
             var flag = ParameterUtil.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE, temp);
             //if BuiltInParameter doesn't work

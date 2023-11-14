@@ -30,7 +30,6 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
     class RoofItem : ListViewItem
     {
         // To store the roof which the RoofItem stands for.
-        Autodesk.Revit.DB.RoofBase m_roof;
 
         /// <summary>
         /// The construct of the RoofItem class.
@@ -38,15 +37,15 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="roof"></param>
         public RoofItem(Autodesk.Revit.DB.RoofBase roof) : base(roof.Id.ToString())
         {
-            m_roof = roof;
+            Roof = roof;
             SubItems.Add(roof.Name);
 
-            if (m_roof is Autodesk.Revit.DB.FootPrintRoof)
+            if (Roof is Autodesk.Revit.DB.FootPrintRoof)
             {
                 var para = roof.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
                 SubItems.Add(LevelConverter.GetLevelByID(para.AsElementId()).Name);
             }
-            else if (m_roof is Autodesk.Revit.DB.ExtrusionRoof)
+            else if (Roof is Autodesk.Revit.DB.ExtrusionRoof)
             {
                 var para = roof.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
                 SubItems.Add(LevelConverter.GetLevelByID(para.AsElementId()).Name);
@@ -63,20 +62,20 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         {
             try
             {
-                SubItems[1].Text = m_roof.Name;
+                SubItems[1].Text = Roof.Name;
 
-                if (m_roof is Autodesk.Revit.DB.FootPrintRoof)
+                if (Roof is Autodesk.Revit.DB.FootPrintRoof)
                 {
-                    var para = m_roof.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
+                    var para = Roof.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
                     SubItems[2].Text = LevelConverter.GetLevelByID(para.AsElementId()).Name;
                 }
-                else if (m_roof is Autodesk.Revit.DB.ExtrusionRoof)
+                else if (Roof is Autodesk.Revit.DB.ExtrusionRoof)
                 {
-                    var para = m_roof.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
+                    var para = Roof.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
                     SubItems[2].Text = LevelConverter.GetLevelByID(para.AsElementId()).Name;
                 }
 
-                SubItems[3].Text = m_roof.RoofType.Name;
+                SubItems[3].Text = Roof.RoofType.Name;
             }
             catch
             {
@@ -88,6 +87,6 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         /// Get the roof which the RoofItem stands for.
         /// </summary>
-        public Autodesk.Revit.DB.RoofBase Roof => m_roof;
+        public Autodesk.Revit.DB.RoofBase Roof { get; }
     }
 }

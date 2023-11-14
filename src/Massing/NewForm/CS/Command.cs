@@ -36,27 +36,8 @@ namespace Revit.SDK.Samples.NewForm.CS
    public class MakeExtrusionForm : IExternalCommand
    {
       #region Class Interface Implementation
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
-         var cdata = commandData;
-         var app = commandData.Application.Application;
-         app = commandData.Application.Application;
          var doc = commandData.Application.ActiveUIDocument.Document;
 
          var transaction = new Transaction(doc, "MakeExtrusionForm");
@@ -83,7 +64,7 @@ namespace Revit.SDK.Samples.NewForm.CS
          // The extrusion form direction
          var direction = new XYZ(0, 0, 50);
 
-         var form = doc.FamilyCreate.NewExtrusionForm(true, ref_ar, direction);
+         doc.FamilyCreate.NewExtrusionForm(true, ref_ar, direction);
 
          transaction.Commit();
 
@@ -101,28 +82,9 @@ namespace Revit.SDK.Samples.NewForm.CS
    public class MakeCapForm : IExternalCommand
    {
       #region Class Interface Implementation
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
-         var cdata = commandData;
-         var app = commandData.Application.Application;
-         app = commandData.Application.Application;
-         var doc = commandData.Application.ActiveUIDocument.Document;
+          var doc = commandData.Application.ActiveUIDocument.Document;
 
          var transaction = new Transaction(doc, "MakeCapForm");
          transaction.Start();
@@ -132,7 +94,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          var ptA = new XYZ(10, 10, 0);
          var ptB = new XYZ(100, 10, 0);
-         var line = Line.CreateBound(ptA, ptB);
+         Line.CreateBound(ptA, ptB);
          var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
@@ -146,7 +108,7 @@ namespace Revit.SDK.Samples.NewForm.CS
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         var form = doc.FamilyCreate.NewFormByCap(true, ref_ar);
+         doc.FamilyCreate.NewFormByCap(true, ref_ar);
 
          transaction.Commit();
 
@@ -164,28 +126,9 @@ namespace Revit.SDK.Samples.NewForm.CS
    public class MakeRevolveForm : IExternalCommand
    {
       #region Class Interface Implementation
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
-         var cdata = commandData;
-         var app = commandData.Application.Application;
-         app = commandData.Application.Application;
-         var doc = commandData.Application.ActiveUIDocument.Document;
+          var doc = commandData.Application.ActiveUIDocument.Document;
 
          var transaction = new Transaction(doc, "MakeRevolveForm");
          transaction.Start();
@@ -215,7 +158,7 @@ namespace Revit.SDK.Samples.NewForm.CS
          var axis = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
          axis.ChangeToReferenceLine();
 
-         var form = doc.FamilyCreate.NewRevolveForms(true, ref_ar, axis.GeometryCurve.Reference, 0, Math.PI / 4);
+         doc.FamilyCreate.NewRevolveForms(true, ref_ar, axis.GeometryCurve.Reference, 0, Math.PI / 4);
 
          transaction.Commit();
 
@@ -233,28 +176,9 @@ namespace Revit.SDK.Samples.NewForm.CS
    public class MakeSweptBlendForm : IExternalCommand
    {
       #region Class Interface Implementation
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
-         var cdata = commandData;
-         var app = commandData.Application.Application;
-         app = commandData.Application.Application;
-         var doc = commandData.Application.ActiveUIDocument.Document;
+          var doc = commandData.Application.ActiveUIDocument.Document;
 
          var transaction = new Transaction(doc, "MakeSweptBlendForm");
          transaction.Start();
@@ -305,7 +229,7 @@ namespace Revit.SDK.Samples.NewForm.CS
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          path.Append(modelcurve.GeometryCurve.Reference);
 
-         var form = doc.FamilyCreate.NewSweptBlendForm(true, path, profiles);
+         doc.FamilyCreate.NewSweptBlendForm(true, path, profiles);
 
          transaction.Commit();
 
@@ -323,28 +247,9 @@ namespace Revit.SDK.Samples.NewForm.CS
    public class MakeLoftForm : IExternalCommand
    {
       #region Class Interface Implementation
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
-         var cdata = commandData;
-         var app = commandData.Application.Application;
-         app = commandData.Application.Application;
-         var doc = commandData.Application.ActiveUIDocument.Document;
+          var doc = commandData.Application.ActiveUIDocument.Document;
 
          var transaction = new Transaction(doc, "MakeLoftForm");
          transaction.Start();
@@ -400,7 +305,7 @@ namespace Revit.SDK.Samples.NewForm.CS
          ref_ar = new ReferenceArray();
          ref_ar_ar.Append(ref_ar);
 
-         var form = doc.FamilyCreate.NewLoftForm(true, ref_ar_ar);
+         doc.FamilyCreate.NewLoftForm(true, ref_ar_ar);
 
          transaction.Commit();
 

@@ -84,7 +84,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
             // Create failure definition Ids
             var guid1 = new Guid("0C3F66B5-3E26-4d24-A228-7A8358C76D39");
             var guid2 = new Guid("93382A45-89A9-4cfe-8B94-E0B0D9542D34");
-            var guid3 = new Guid("A16D08E2-7D06-4bca-96B0-C4E4CC0512F8");
+            new Guid("A16D08E2-7D06-4bca-96B0-C4E4CC0512F8");
             m_idWarning = new FailureDefinitionId(guid1);
             m_idError = new FailureDefinitionId(guid2);
 
@@ -156,8 +156,8 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                transaction.Start();
 
                var line = Line.CreateBound(new XYZ(-10, 0, 0), new XYZ(-20, 0, 0));
-               var wall1 = Wall.Create(m_doc, line, level1.Id, false);
-               var wall2 = Wall.Create(m_doc, line, level1.Id, false);
+               Wall.Create(m_doc, line, level1.Id, false);
+               Wall.Create(m_doc, line, level1.Id, false);
                m_doc.Regenerate();
 
                transaction.Commit();

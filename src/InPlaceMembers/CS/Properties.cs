@@ -32,55 +32,47 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
     /// </summary>
     public class Properties
     {
-        private long m_ID;
-        private string m_Name;
-        private string m_Family;
-        private string m_Type;
-        private string m_StructuralType;
-        private string m_StructuralUsage;
-        private string m_Material;
-
         /// <summary>
         /// the value of the element id as an integer
         /// </summary>
         [CategoryAttribute("Identity")]
-        public long ID => m_ID;
+        public long ID { get; }
 
         /// <summary>
         /// a human readable name for the Element.
         /// </summary>
         [CategoryAttribute("Identity")]
-        public string Name => m_Name;
+        public string Name { get; }
 
         /// <summary>
         /// a human readable name for the family name.
         /// </summary>
         [CategoryAttribute("Category")]
-        public string Family => m_Family;
+        public string Family { get; }
 
         /// <summary>
         /// a human readable name for the family type name.
         /// </summary>
         [CategoryAttribute("Category")]
-        public string Type => m_Type;
+        public string Type { get; }
 
         /// <summary>
         /// the primary structural type of the instance, such as beam or column etc.
         /// </summary>
         [CategoryAttribute("Structural")]
-        public string StructuralType => m_StructuralType;
+        public string StructuralType { get; }
 
         /// <summary>
         /// the primary structural usage of the instance, such as brace, girder etc.
         /// </summary>
         [CategoryAttribute("Structural")]
-        public string StructuralUsage => m_StructuralUsage;
+        public string StructuralUsage { get; }
 
         /// <summary>
         /// the physical material from which the instance is made.
         /// </summary>
         [CategoryAttribute("Structural")]
-        public string Material => m_Material;
+        public string Material { get; }
 
         /// <summary>
         /// get this family instance's properties to display.
@@ -88,20 +80,20 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <param name="f">a In-Place family instance</param>
         public Properties(FamilyInstance f)
         {
-            m_ID = f.Id.Value;
-            m_Name = f.Name;
-            m_Family = f.Symbol.Family.Name;
-            m_Type = f.Symbol.Name;
-            m_StructuralType = f.StructuralType.ToString();
+            ID = f.Id.Value;
+            Name = f.Name;
+            Family = f.Symbol.Family.Name;
+            Type = f.Symbol.Name;
+            StructuralType = f.StructuralType.ToString();
             try
             {
-                m_StructuralUsage = f.StructuralUsage.ToString();
+                StructuralUsage = f.StructuralUsage.ToString();
             }
             catch(Exception)
             {
-                m_StructuralUsage = null;
+                StructuralUsage = null;
             }            
-            m_Material = f.StructuralMaterialType.ToString();
+            Material = f.StructuralMaterialType.ToString();
         }
 
     }

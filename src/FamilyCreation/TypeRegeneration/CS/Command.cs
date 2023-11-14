@@ -53,30 +53,12 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         #endregion
 
         #region Class Interface Implementation
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
         {
-            Document document;
-            string assemblyPath;
-            document = commandData.Application.ActiveUIDocument.Document;
-            assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var document = commandData.Application.ActiveUIDocument.Document;
+            var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             m_logFileName = assemblyPath + "\\RegenerationLog.txt";   
             //only a family document  can retrieve family manager
             if (document.IsFamilyDocument)
@@ -166,8 +148,7 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         /// <param name="logStr">the log string</param>
         private void WriteLog(string logStr)
         {
-            StreamWriter writer = null;
-            writer = File.AppendText(m_logFileName);
+            var writer = File.AppendText(m_logFileName);
             writer.WriteLine(logStr);
             writer.Close();
         }       

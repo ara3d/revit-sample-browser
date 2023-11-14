@@ -154,10 +154,9 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <param name="e"></param>
         private void distanceTextBox_Validating(object sender, CancelEventArgs e)
         {
-            double value;
             try
             {
-                value = double.Parse(distanceTextBox.Text);
+                var value = double.Parse(distanceTextBox.Text);
                 m_frameData.Distance = value;
             }
             catch (FormatException formatEx)
@@ -182,10 +181,9 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <param name="e"></param>
         private void xNumberTextBox_Validating(object sender, CancelEventArgs e)
         {
-            int value;
             try
             {
-                value = int.Parse(xNumberTextBox.Text);
+                var value = int.Parse(xNumberTextBox.Text);
                 m_frameData.XNumber = value;
             }
             catch (FormatException formatEx)
@@ -216,10 +214,9 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <param name="e"></param>
         private void yNumberTextBox_Validating(object sender, CancelEventArgs e)
         {
-            int value;
             try
             {
-                value = int.Parse(yNumberTextBox.Text);
+                var value = int.Parse(yNumberTextBox.Text);
                 m_frameData.YNumber = value;
             }
             catch (FormatException formatEx)
@@ -250,10 +247,9 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <param name="e"></param>
         private void floorNumberTextBox_Validating(object sender, CancelEventArgs e)
         {
-            int value;
             try
             {
-                value = int.Parse(floorNumberTextBox.Text);
+                var value = int.Parse(floorNumberTextBox.Text);
                 m_frameData.FloorNumber = value;
             }
             catch (FormatException formatEx)
@@ -293,10 +289,9 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <param name="e"></param>
         private void levelHeightTextBox_Validating(object sender, CancelEventArgs e)
         {
-            double value;
             try
             {
-                value = double.Parse(levelHeightTextBox.Text);
+                var value = double.Parse(levelHeightTextBox.Text);
                 m_frameData.LevelHeight = value;
             }
             catch (FormatException formatEx)
@@ -379,7 +374,6 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         {
             try
             {
-                var pInfo = typeof(FrameData).GetProperty("FrameOriginAngle");
             }
             catch
             {

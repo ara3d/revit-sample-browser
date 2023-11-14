@@ -37,12 +37,8 @@ namespace Revit.SDK.Samples.Openings.CS
     {
         private UIApplication m_revit; //Application of Revit
         private List<Line3D> m_lines = new List<Line3D>(); //contains lines in curve
-        private Opening m_opening; //Opening got from Revit
-        
+
         //OpeningProperty class which can use in PropertyGrid control
-        private OpeningProperty m_property;
-        private WireFrame m_sketch; //Profile information of opening
-        private BoundingBox m_boundingBox;  //BoundingBox of Opening
 
         //property
         /// <summary>
@@ -61,13 +57,13 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <summary>
         /// Property to get Opening store in OpeningInfo
         /// </summary>
-        public Opening Opening => m_opening;
+        public Opening Opening { get; }
 
         /// <summary>
         /// Property to get Name and Id 
         /// eg: "Opening Cut (114389)"
         /// </summary>
-        public string NameAndId => string.Concat(m_opening.Name, " (", m_opening.Id.ToString(), ")");
+        public string NameAndId => string.Concat(Opening.Name, " (", Opening.Id.ToString(), ")");
 
         /// <summary>
         /// Property to get bool the define whether opening is Shaft Opening
@@ -76,9 +72,9 @@ namespace Revit.SDK.Samples.Openings.CS
         {
             get
             {
-                if (null != m_opening.Category)
+                if (null != Opening.Category)
                 {
-                    if ("Shaft Openings" == m_opening.Category.Name)
+                    if ("Shaft Openings" == Opening.Category.Name)
                         return true;
                     else
                     {
@@ -96,17 +92,17 @@ namespace Revit.SDK.Samples.Openings.CS
         /// Property to get OpeningProperty class 
         /// which can use in PropertyGrid control
         /// </summary>
-        public OpeningProperty Property => m_property;
+        public OpeningProperty Property { get; }
 
         /// <summary>
         /// Property to get Profile information of opening
         /// </summary>
-        public WireFrame Sketch => m_sketch;
+        public WireFrame Sketch { get; private set; }
 
         /// <summary>
         /// Property to get BoundingBox of Opening
         /// </summary>
-        public BoundingBox BoundingBox => m_boundingBox;
+        public BoundingBox BoundingBox { get; }
 
         /// <summary>
         /// The default constructor, 
@@ -117,17 +113,17 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <param name="app">application object</param>
         public OpeningInfo(Opening opening, UIApplication app)
         {
-            m_opening = opening;
+            Opening = opening;
             m_revit = app;
 
             //get OpeningProperty which can use in PropertyGrid control
-            var openingProperty = new OpeningProperty(m_opening);
-            m_property = openingProperty;
+            var openingProperty = new OpeningProperty(Opening);
+            Property = openingProperty;
 
             //get BoundingBox of Opening
-            var boxXYZ = m_opening.get_BoundingBox(m_revit.ActiveUIDocument.Document.ActiveView);
+            var boxXYZ = Opening.get_BoundingBox(m_revit.ActiveUIDocument.Document.ActiveView);
             var boundingBox = new BoundingBox(boxXYZ);
-            m_boundingBox = boundingBox;
+            BoundingBox = boundingBox;
 
             //get profile
             GetProfile();
@@ -138,7 +134,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         private void GetProfile()
         {
-            var curveArray = m_opening.BoundaryCurves;
+            var curveArray = Opening.BoundaryCurves;
             if (null != curveArray)
             {
                 m_lines.Clear();
@@ -148,22 +144,22 @@ namespace Revit.SDK.Samples.Openings.CS
                     AddLine(points);
                 }
                 var wireFrameSketch = new WireFrame(new ReadOnlyCollection<Line3D>(m_lines));
-                m_sketch = wireFrameSketch;
+                Sketch = wireFrameSketch;
             }
-            else if (m_opening.IsRectBoundary)
+            else if (Opening.IsRectBoundary)
             {
                 //if opening profile is RectBoundary, 
                 //just can get profile info from BoundaryRect Property
                 m_lines.Clear();
-                var boundRect = m_opening.BoundaryRect as List<XYZ>;
+                var boundRect = Opening.BoundaryRect as List<XYZ>;
                 var RectPoints = GetPoints(boundRect);
                 AddLine(RectPoints);
                 var wireFrameSketch = new WireFrame(new ReadOnlyCollection<Line3D>(m_lines));
-                m_sketch = wireFrameSketch;
+                Sketch = wireFrameSketch;
             }
             else
             {
-                m_sketch = null;
+                Sketch = null;
             }
         }
 
@@ -211,13 +207,11 @@ namespace Revit.SDK.Samples.Openings.CS
                 return;
             }
 
-            XYZ previousPoint;
-            previousPoint = points[0];
+            var previousPoint = points[0];
 
             for (var i = 1; i < points.Count; i++)
             {
-                XYZ point;
-                point = points[i];
+                var point = points[i];
 
                 var line = new Line3D();
                 var pointStart = new Vector();

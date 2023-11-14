@@ -242,7 +242,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
                 // Setup id container for child DisplacementElement creation
                 childIds.Clear();
                 childIds.Add(childId);
-                var child = DisplacementElement.Create(doc, childIds, displacedLocation, view, parent);
+                DisplacementElement.Create(doc, childIds, displacedLocation, view, parent);
             }
             view.HideElements(ids);
         }

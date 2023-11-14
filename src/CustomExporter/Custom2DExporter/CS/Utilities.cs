@@ -49,14 +49,11 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
             for (var ii = 0; ii < points.Count; ii++)
             {
                UV uvStart, uvEnd;
-               var distance = double.MaxValue;
-               plane.Project(points[ii], out uvStart, out distance);
-               plane.Project(points[ii + 1], out uvEnd, out distance);
+               plane.Project(points[ii], out uvStart, out _);
+               plane.Project(points[ii + 1], out uvEnd, out _);
 
-               XYZ projectionStart;
-               XYZ projectionEnd;
-               projectionStart = uvStart.U * plane.XVec + uvStart.V * plane.YVec + plane.Origin;
-               projectionEnd = uvEnd.U * plane.XVec + uvEnd.V * plane.YVec + plane.Origin;
+               var projectionStart = uvStart.U * plane.XVec + uvStart.V * plane.YVec + plane.Origin;
+               var projectionEnd = uvEnd.U * plane.XVec + uvEnd.V * plane.YVec + plane.Origin;
 
                if (projectionStart.DistanceTo(projectionEnd) < tolerance)
                {
@@ -65,7 +62,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
                }
 
                var geomLine = Line.CreateBound(projectionStart, projectionEnd);
-               var line = view.Document.Create.NewDetailCurve(view, geomLine) as DetailLine;
+               _ = view.Document.Create.NewDetailCurve(view, geomLine) as DetailLine;
 
                ii++;
             }

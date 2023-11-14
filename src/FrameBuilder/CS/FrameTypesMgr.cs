@@ -36,13 +36,12 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         // map list pairs FamilySymbol object and its Name 
         private Dictionary<string, FamilySymbol> m_symbolMaps;    
         // list of FamilySymbol objects
-        private List<FamilySymbol> m_symbols;                    
-        private ExternalCommandData m_commandData;
+        private List<FamilySymbol> m_symbols;
 
         /// <summary>
         /// command data pass from entry point
         /// </summary>
-        public ExternalCommandData CommandData => m_commandData;
+        public ExternalCommandData CommandData { get; }
 
         /// <summary>
         /// size of FamilySymbol objects in current Revit document
@@ -55,7 +54,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <param name="commandData"></param>
         public FrameTypesMgr(ExternalCommandData commandData)
         {
-            m_commandData = commandData;
+            CommandData = commandData;
             m_symbolMaps = new Dictionary<string, FamilySymbol>();
             m_symbols = new List<FamilySymbol>();
         }
@@ -100,7 +99,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
                 m_symbolMaps.Remove(symbol.Name);
                 m_symbols.Remove(symbol);
                 // delete from Revit
-                var ids = m_commandData.Application.ActiveUIDocument.Document.Delete(symbol.Id) as List<ElementId>;
+                var ids = CommandData.Application.ActiveUIDocument.Document.Delete(symbol.Id) as List<ElementId>;
                 if (ids.Count == 0)
                 {
                     return false;

@@ -119,13 +119,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       static private Face GetExteriorFace(FaceArray faces)
       {
          double elevation = 0;
-         double tempElevation = 0;
-         Mesh mesh = null;
          Face face = null;
          foreach (Face f in faces)
          {
-            tempElevation = 0;
-            mesh = f.Triangulate();
+            double tempElevation = 0;
+            var mesh = f.Triangulate();
             foreach (var xyz in mesh.Vertices)
             {
                tempElevation = tempElevation + xyz.Y;
@@ -148,13 +146,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       static private Face GetInteriorFace(FaceArray faces)
       {
          double elevation = 0;
-         double tempElevation = 0;
-         Mesh mesh = null;
          Face face = null;
          foreach (Face f in faces)
          {
-            tempElevation = 0;
-            mesh = f.Triangulate();
+            double tempElevation = 0;
+            var mesh = f.Triangulate();
             foreach (var xyz in mesh.Vertices)
             {
                tempElevation = tempElevation + xyz.Y;

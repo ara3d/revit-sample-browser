@@ -41,9 +41,6 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
     {
         UIApplication m_revit;
 
-        ArrayList m_columnMaps = new ArrayList();        //list of columns' type
-        ArrayList m_beamMaps = new ArrayList();        //list of beams' type
-        ArrayList m_braceMaps = new ArrayList();        //list of braces' type
         SortedList levels = new SortedList();        //list of list sorted by their elevations
 
         UV[,] m_matrixUV;        //2D coordinates of matrix
@@ -51,17 +48,17 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <summary>
         /// list of all type of columns
         /// </summary>
-        public ArrayList ColumnMaps => m_columnMaps;
+        public ArrayList ColumnMaps { get; } = new ArrayList();
 
         /// <summary>
         /// list of all type of beams
         /// </summary>
-        public ArrayList BeamMaps => m_beamMaps;
+        public ArrayList BeamMaps { get; } = new ArrayList();
 
         /// <summary>
         /// list of all type of braces
         /// </summary>
-        public ArrayList BraceMaps => m_braceMaps;
+        public ArrayList BraceMaps { get; } = new ArrayList();
 
         public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
         {
@@ -249,12 +246,12 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                             var categoryName = familyType.Category.Name;
                             if ("Structural Framing" == categoryName)
                             {
-                                m_beamMaps.Add(new SymbolMap(familyType));
-                                m_braceMaps.Add(new SymbolMap(familyType));
+                                BeamMaps.Add(new SymbolMap(familyType));
+                                BraceMaps.Add(new SymbolMap(familyType));
                             }
                             else if ("Structural Columns" == categoryName)
                             {
-                                m_columnMaps.Add(new SymbolMap(familyType));
+                                ColumnMaps.Add(new SymbolMap(familyType));
                             }
                         }
                     }
@@ -282,8 +279,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         {
             //create column of certain type in certain level and start point 
             var point = new XYZ(point2D.U, point2D.V, 0);
-            STRUCTURALTYPE structuralType;
-            structuralType = Autodesk.Revit.DB.Structure.StructuralType.Column;
+            var structuralType = Autodesk.Revit.DB.Structure.StructuralType.Column;
             if (!columnType.IsActive)
                columnType.Activate();
             var column = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(point, columnType, topLevel, structuralType);
@@ -298,15 +294,13 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
 
                 if (null != baseLevelParameter)
                 {
-                    ElementId baseLevelId;
-                    baseLevelId = baseLevel.Id;
+                    var baseLevelId = baseLevel.Id;
                     baseLevelParameter.Set(baseLevelId);
                 }
 
                 if (null != topLevelParameter)
                 {
-                    ElementId topLevelId;
-                    topLevelId = topLevel.Id;
+                    var topLevelId = topLevel.Id;
                     topLevelParameter.Set(topLevelId);
                 }
 
@@ -336,7 +330,6 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var height = topLevel.Elevation;
             var startPoint = new XYZ(point2D1.U, point2D1.V, height);
             var endPoint = new XYZ(point2D2.U, point2D2.V, height);
-            var topLevelId = topLevel.Id;
 
             var line = Line.CreateBound(startPoint, endPoint);
             var structuralType = Autodesk.Revit.DB.Structure.StructuralType.Beam;
@@ -360,7 +353,6 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var topHeight = topLevel.Elevation;
             var baseHeight = baseLevel.Elevation;
             var middleElevation = (topHeight + baseHeight) / 2;
-            var middleHeight = (topHeight - baseHeight) / 2;
             var startPoint = new XYZ(point2D1.U, point2D1.V, middleElevation);
             var endPoint = new XYZ(point2D2.U, point2D2.V, middleElevation);
             XYZ middlePoint;
@@ -377,8 +369,6 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             //create two brace and set their location line
             var structuralType = Autodesk.Revit.DB.Structure.StructuralType.Brace;
             var levelId = topLevel.Id;
-            var startLevelId = baseLevel.Id;
-            var endLevelId = topLevel.Id;
 
             var line1 = Line.CreateBound(startPoint, middlePoint);
             if (!braceType.IsActive)
@@ -407,9 +397,6 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
     /// </summary>
     public class SymbolMap
     {
-        string m_symbolName = "";
-        FamilySymbol m_symbol;
-
         /// <summary>
         /// constructor without parameter is forbidden
         /// </summary>
@@ -423,23 +410,23 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <param name="symbol">family symbol</param>
         public SymbolMap(FamilySymbol symbol)
         {
-            m_symbol = symbol;
+            ElementType = symbol;
             var familyName = "";
             if (null != symbol.Family)
             {
                 familyName = symbol.Family.Name;
             }
-            m_symbolName = familyName + " : " + symbol.Name;
+            SymbolName = familyName + " : " + symbol.Name;
         }
 
         /// <summary>
         /// SymbolName property
         /// </summary>
-        public string SymbolName => m_symbolName;
+        public string SymbolName { get; } = "";
 
         /// <summary>
         /// ElementType property
         /// </summary>
-        public FamilySymbol ElementType => m_symbol;
+        public FamilySymbol ElementType { get; }
     }
 }

@@ -40,8 +40,8 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// <param name="document">An opened Revit document</param>
       public IssueMarkerTracking(Document document)
       {
-         this.document = document;
-         guid = Guid.NewGuid();
+         this.Document = document;
+         Id = Guid.NewGuid();
          selectedIndex = -1;
       }
 
@@ -86,12 +86,12 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// <summary>
       /// Document this object tracks
       /// </summary>
-      public Document Document => document;
+      public Document Document { get; }
 
       /// <summary>
       /// Tracker's GUID. This is needed to safely clean up after document closes.
       /// </summary>
-      public Guid Id => guid;
+      public Guid Id { get; }
 
       /// <summary>
       /// Gets the index of selected marker. This is used by selector
@@ -118,10 +118,6 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       private int selectedIndex;
 
       private HashSet<IssueMarker> issueMarkerSet = new HashSet<IssueMarker>();
-
-      private Document document;
-
-      private Guid guid;
 
       #endregion
    }

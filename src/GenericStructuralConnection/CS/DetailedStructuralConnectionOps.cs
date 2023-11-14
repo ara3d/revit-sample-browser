@@ -143,7 +143,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                 using (var tran = new Transaction(activeDoc.Document, "Copy elements"))
                 {
                     tran.Start();
-                    var copyResult = ElementTransformUtils.CopyElements(activeDoc.Document, ids, activeDoc.Document, transform, null);
+                    ElementTransformUtils.CopyElements(activeDoc.Document, ids, activeDoc.Document, transform, null);
                     var ts = tran.Commit();
                     if (ts != TransactionStatus.Committed)
                     {

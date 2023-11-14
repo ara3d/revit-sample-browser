@@ -52,34 +52,30 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         public struct DepartmentInfo
         {
-            string m_departmentName;
-            int m_roomAmount;
-            double m_departmentAreaValue;
-
             /// <summary>
             /// the name of department
             /// </summary>
-            public string DepartmentName => m_departmentName;
+            public string DepartmentName { get; }
 
 
             /// <summary>
             /// get the amount of rooms in the department
             /// </summary>
-            public int RoomsAmount => m_roomAmount;
+            public int RoomsAmount { get; }
 
             /// <summary>
             /// the total area of the rooms in department
             /// </summary>
-            public double DepartmentAreaValue => m_departmentAreaValue;
+            public double DepartmentAreaValue { get; }
 
             /// <summary>
             /// constructor
             /// </summary>
             public DepartmentInfo(string departmentName, int roomAmount, double areaValue)
             {
-                m_departmentName = departmentName;
-                m_roomAmount = roomAmount;
-                m_departmentAreaValue = areaValue;
+                DepartmentName = departmentName;
+                RoomsAmount = roomAmount;
+                DepartmentAreaValue = areaValue;
             }
         }
 
@@ -152,8 +148,7 @@ namespace Revit.SDK.Samples.Rooms.CS
                     var point = new UV(locPoint.Point.X, locPoint.Point.Y);
 
                     //create room tag
-                    RoomTag tmpTag;
-                    tmpTag = m_revit.ActiveUIDocument.Document.Create.NewRoomTag(new LinkElementId(tmpRoom.Id), point, null);
+                    var tmpTag = m_revit.ActiveUIDocument.Document.Create.NewRoomTag(new LinkElementId(tmpRoom.Id), point, null);
                     if (null != tmpTag)
                     {
                         m_roomTags.Add(tmpTag);
@@ -178,10 +173,9 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         public void ReorderRooms()
         {
-            var result = false;
-
-            // sort all the rooms by ascending order according their coordinate
-            result = SortRooms();
+            var result =
+                // sort all the rooms by ascending order according their coordinate
+                SortRooms();
 
             // fault to reorder rooms' number
             if (!result)
@@ -393,9 +387,6 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         private bool SortRooms()
         {
-            LocationPoint tmpPoint = null;
-            LocationPoint roomPoint = null;
-            Room listRoom = null;
             var result = 0;    //a temp variable
             var amount = m_rooms.Count; //the number of rooms
             var flag = false;
@@ -406,9 +397,9 @@ namespace Revit.SDK.Samples.Rooms.CS
                 var tmpRoom = m_rooms[i];
                 for (var j = i + 1; j < amount; j++)
                 {
-                    tmpPoint = tmpRoom.Location as LocationPoint;
-                    listRoom = m_rooms[j];
-                    roomPoint = listRoom.Location as LocationPoint;
+                    var tmpPoint = tmpRoom.Location as LocationPoint;
+                    var listRoom = m_rooms[j];
+                    var roomPoint = listRoom.Location as LocationPoint;
 
                     // if can't get location point, return false;
                     if (null == tmpPoint || null == roomPoint)

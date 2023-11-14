@@ -42,8 +42,6 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.ExternalCommandRegistration");
             trans.Start();
             var uiDoc = commandData.Application.ActiveUIDocument;
-            var creApp = uiDoc.Document.Application.Create;
-            var creDoc = uiDoc.Document.Create;
             var curves = new List<Curve>();
             //create rectangular curve: wall length: 60 , wall width: 40
             var line1 = Line.CreateBound(new XYZ(0, 0, 0),

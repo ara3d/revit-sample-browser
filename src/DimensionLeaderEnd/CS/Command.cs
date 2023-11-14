@@ -45,7 +45,6 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
          using (var _transaction_ = new Transaction(doc))
          {
             // Get the element selection of current document.
-            var selection = uidoc.Selection;
             var selectedIds = uidoc.Selection.GetElementIds();
 
             if (0 == selectedIds.Count)

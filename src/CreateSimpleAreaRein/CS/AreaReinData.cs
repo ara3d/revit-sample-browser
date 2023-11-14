@@ -40,18 +40,12 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         public AreaReinData()
         {}
 
-        private LayoutRules m_layoutRule = LayoutRules.Maximum_Spacing;
-
         /// <summary>
         /// Parameter LayoutRule of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Construction"), DefaultValueAttribute(
             LayoutRules.Maximum_Spacing)]
-        public LayoutRules LayoutRule
-        {
-            get => m_layoutRule;
-            set => m_layoutRule = value;
-        }
+        public LayoutRules LayoutRule { get; set; } = LayoutRules.Maximum_Spacing;
 
         /// <summary>
         /// set the parameters to given AreaReinforcement
@@ -59,7 +53,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <param name="areaRein"></param>
         public virtual void FillIn(AreaReinforcement areaRein)
         {
-            var temp = (int)m_layoutRule;
+            var temp = (int)LayoutRule;
             var flag = ParameterUtil.SetParaInt(areaRein, 
                 BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE, temp);
 
@@ -80,50 +74,29 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
     /// </summary>
     public class AreaReinDataOnWall:AreaReinData
     {
-        private bool m_exteriorMajorDirection = true;
-        private bool m_exteriorMinorDirection = true;
-        private bool m_interiorMajorDirection = true;
-        private bool m_interiorMinorDirection = true;
+        /// <summary>
+        /// Parameter of AreaReinforcement
+        /// </summary>
+        [CategoryAttribute("Layers")]
+        public bool ExteriorMajorDirection { get; set; } = true;
 
         /// <summary>
         /// Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
-        public bool ExteriorMajorDirection
-        {
-            get => m_exteriorMajorDirection;
-            set => m_exteriorMajorDirection = value;
-        }
+        public bool ExteriorMinorDirection { get; set; } = true;
 
         /// <summary>
         /// Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
-        public bool ExteriorMinorDirection
-        {
-            get => m_exteriorMinorDirection;
-            set => m_exteriorMinorDirection = value;
-        }
+        public bool InteriorMajorDirection { get; set; } = true;
 
         /// <summary>
         /// Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
-        public bool InteriorMajorDirection
-        {
-            get => m_interiorMajorDirection;
-            set => m_interiorMajorDirection = value;
-        }
-
-        /// <summary>
-        /// Parameter of AreaReinforcement
-        /// </summary>
-        [CategoryAttribute("Layers")]
-        public bool InteriorMinorDirection
-        {
-            get => m_interiorMinorDirection;
-            set => m_interiorMinorDirection = value;
-        }
+        public bool InteriorMinorDirection { get; set; } = true;
 
         /// <summary>
         /// set the parameters to given AreaReinforcement
@@ -138,22 +111,22 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
             {
                 if (para.Definition.Name == "Exterior Major Direction")
                 {
-                    para.Set(Convert.ToInt32(m_exteriorMajorDirection));
+                    para.Set(Convert.ToInt32(ExteriorMajorDirection));
                 }
 
                 if (para.Definition.Name == "Interior Major Direction")
                 {
-                    para.Set(Convert.ToInt32(m_interiorMajorDirection));
+                    para.Set(Convert.ToInt32(InteriorMajorDirection));
                 }
 
                 if (para.Definition.Name == "Exterior Minor Direction")
                 {
-                    para.Set(Convert.ToInt32(m_exteriorMinorDirection));
+                    para.Set(Convert.ToInt32(ExteriorMinorDirection));
                 }
 
                 if (para.Definition.Name == "Interior Minor Direction")
                 {
-                    para.Set(Convert.ToInt32(m_interiorMinorDirection));
+                    para.Set(Convert.ToInt32(InteriorMinorDirection));
                 }
             }
         }
@@ -164,50 +137,29 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
     /// </summary>
     public class AreaReinDataOnFloor : AreaReinData
     {
-        private bool m_topMajorDirection = true;
-        private bool m_topMinorDirection = true;
-        private bool m_bottomMajorDirection = true;
-        private bool m_bottomMinorDirection = true;
+        /// <summary>
+        /// Parameter of AreaReinforcement
+        /// </summary>
+        [CategoryAttribute("Layers")]
+        public bool TopMajorDirection { get; set; } = true;
 
         /// <summary>
         /// Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
-        public bool TopMajorDirection
-        {
-            get => m_topMajorDirection;
-            set => m_topMajorDirection = value;
-        }
+        public bool TopMinorDirection { get; set; } = true;
 
         /// <summary>
         /// Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
-        public bool TopMinorDirection
-        {
-            get => m_topMinorDirection;
-            set => m_topMinorDirection = value;
-        }
+        public bool BottomMajorDirection { get; set; } = true;
 
         /// <summary>
         /// Parameter of AreaReinforcement
         /// </summary>
         [CategoryAttribute("Layers")]
-        public bool BottomMajorDirection
-        {
-            get => m_bottomMajorDirection;
-            set => m_bottomMajorDirection = value;
-        }
-
-        /// <summary>
-        /// Parameter of AreaReinforcement
-        /// </summary>
-        [CategoryAttribute("Layers")]
-        public bool BottomMinorDirection
-        {
-            get => m_bottomMinorDirection;
-            set => m_bottomMinorDirection = value;
-        }
+        public bool BottomMinorDirection { get; set; } = true;
 
         /// <summary>
         /// set the parameters to given AreaReinforcement
@@ -219,16 +171,16 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 
             ParameterUtil.SetParaInt(areaRein, 
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_1, 
-                Convert.ToInt32(m_bottomMajorDirection));
+                Convert.ToInt32(BottomMajorDirection));
             ParameterUtil.SetParaInt(areaRein, 
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_2,
-                Convert.ToInt32(m_bottomMinorDirection));
+                Convert.ToInt32(BottomMinorDirection));
             ParameterUtil.SetParaInt(areaRein, 
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_1, 
-                Convert.ToInt32(m_topMajorDirection));
+                Convert.ToInt32(TopMajorDirection));
             ParameterUtil.SetParaInt(areaRein, 
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_2, 
-                Convert.ToInt32(m_topMinorDirection));
+                Convert.ToInt32(TopMinorDirection));
         }
     }
 }

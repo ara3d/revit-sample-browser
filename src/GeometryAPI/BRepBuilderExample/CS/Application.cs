@@ -77,7 +77,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
              "Revit.SDK.Samples.BRepBuilderExample.CS.CreateCube");
          pbd1.LargeImage = convertFromBitmap(Properties.Resources.large_shape);
          pbd1.Image = convertFromBitmap(Properties.Resources.small_shape);
-         var pb1 = rp.AddItem(pbd1) as PushButton;
+         _ = rp.AddItem(pbd1) as PushButton;
 
 
          var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
@@ -85,14 +85,14 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
              "Revit.SDK.Samples.BRepBuilderExample.CS.CreateNURBS");
          pbd2.LargeImage = convertFromBitmap(Properties.Resources.large_shape);
          pbd2.Image = convertFromBitmap(Properties.Resources.small_shape);
-         var pb2 = rp.AddItem(pbd2) as PushButton;
+         _ = rp.AddItem(pbd2) as PushButton;
 
          var pbd3 = new PushButtonData("CreatePeriodic", "Create Periodic Surface",
              addinAssmeblyPath,
              "Revit.SDK.Samples.BRepBuilderExample.CS.CreatePeriodic");
          pbd3.LargeImage = convertFromBitmap(Properties.Resources.large_shape);
          pbd3.Image = convertFromBitmap(Properties.Resources.small_shape);
-         var pb3 = rp.AddItem(pbd3) as PushButton;
+         _ = rp.AddItem(pbd3) as PushButton;
       }
 
 

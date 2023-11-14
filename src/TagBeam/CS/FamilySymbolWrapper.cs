@@ -29,17 +29,15 @@ namespace Revit.SDK.Samples.TagBeam.CS
     /// </summary>
     public class FamilySymbolWrapper
     {
-        FamilySymbol m_familySymbol;
-
         /// <summary>
         /// Family symbol
         /// </summary>
-        public FamilySymbol FamilySymbol => m_familySymbol;
+        public FamilySymbol FamilySymbol { get; }
 
         /// <summary>
         /// Display name
         /// </summary>
-        public string Name => m_familySymbol.Family.Name + " : " + m_familySymbol.Name;
+        public string Name => FamilySymbol.Family.Name + " : " + FamilySymbol.Name;
 
         /// <summary>
         /// Constructor
@@ -47,7 +45,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
         /// <param name="tagSymbol"></param>
         public FamilySymbolWrapper(FamilySymbol familySymbol)
         {
-            m_familySymbol = familySymbol;
+            FamilySymbol = familySymbol;
         }
     };
 }

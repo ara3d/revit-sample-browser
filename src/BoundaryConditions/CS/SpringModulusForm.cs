@@ -32,8 +32,6 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     public partial class SpringModulusForm : Form
     {
         // member
-        private double m_springModulus; // new value
-        private double m_oldSpringModulus; // old value
         private ConversionValue m_conversion; //conversion rule of current SpringModulus
 
         // property
@@ -49,16 +47,12 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <summary>
         /// get the new value after interact with user
         /// </summary>
-        public double StringModulus => m_springModulus;
+        public double StringModulus { get; private set; }
 
         /// <summary>
         /// set the old value before interact with user
         /// </summary>
-        public double OldStringModulus
-        {
-            get => m_oldSpringModulus;
-            set => m_oldSpringModulus = value;
-        }
+        public double OldStringModulus { get; set; }
 
         /// <summary>
         /// constructor
@@ -76,10 +70,10 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         private void SpringModulusForm_Load(object sender, EventArgs e)
         {
             // get the old value which is the inside value
-            m_springModulus = m_oldSpringModulus;
+            StringModulus = OldStringModulus;
 
             // conversion the inside value into display value
-            var displaySpringModulus = m_oldSpringModulus / m_conversion.Ratio;
+            var displaySpringModulus = OldStringModulus / m_conversion.Ratio;
 
             // deal with the diaplay value with the special percision
             displaySpringModulus = Math.Round(displaySpringModulus, m_conversion.Precision);
@@ -110,7 +104,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            m_springModulus = m_oldSpringModulus;
+            StringModulus = OldStringModulus;
         }
 
         /// <summary>
@@ -161,10 +155,10 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 springModulusTextBox.Text = temp.ToString() + m_conversion.UnitName;
 
                 // convert the display value into the inside value
-                m_springModulus = temp * m_conversion.Ratio;
+                StringModulus = temp * m_conversion.Ratio;
 
                 // the value must be a positive number
-                if (0 >= m_springModulus)
+                if (0 >= StringModulus)
                 {
                     springModulusTextBox.Focus();
                     springModulusTextBox.SelectAll();

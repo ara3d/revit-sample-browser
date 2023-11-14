@@ -43,8 +43,6 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
         {
             Face face = null;
             double elevation = 0;
-            double tempElevation = 0;
-            Mesh mesh = null;
 
             foreach (Face f in faces)
             {
@@ -54,8 +52,8 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
                     continue;
                 }
 
-                tempElevation = 0;
-                mesh = f.Triangulate();
+                double tempElevation = 0;
+                var mesh = f.Triangulate();
 
                 foreach (var xyz in mesh.Vertices)
                 {

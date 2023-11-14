@@ -198,7 +198,6 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                     }
                     else
                     {
-                        object propertyValue;
                         var propertyName = propertyInfo.Name;
                         switch(propertyName)
                         {
@@ -208,7 +207,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                             case "Status":
                             case "DocumentType":
                             case "Format":
-                            propertyValue = propertyInfo.GetValue(args, null);
+                            var propertyValue = propertyInfo.GetValue(args, null);
                             // Dump current property value
                             Trace.WriteLine("    [Property]: " + propertyInfo.Name);
                             Trace.WriteLine("    [Value]: " + propertyValue.ToString());

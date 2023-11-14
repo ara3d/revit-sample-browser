@@ -31,18 +31,14 @@ namespace Revit.SDK.Samples.Truss.CS
     class LineTool
     {
         #region class member variables
-        ArrayList m_Points; //record all the points draw by this tool
+
         Point m_movePoint; //record the coordinate of location where mouse just moved to. 
         #endregion 
 
         /// <summary>
         /// Get all the points of this tool
         /// </summary>
-        public ArrayList Points
-        {
-            get => m_Points;
-            set => m_Points = value;
-        }
+        public ArrayList Points { get; set; }
 
         /// <summary>
         ///Get coordinate of location where mouse just moved to.
@@ -58,7 +54,7 @@ namespace Revit.SDK.Samples.Truss.CS
         /// </summary>
         public LineTool() 
         {
-            m_Points = new ArrayList();
+            Points = new ArrayList();
         }
 
         /// <summary>
@@ -68,17 +64,17 @@ namespace Revit.SDK.Samples.Truss.CS
         /// <param name="pen">Pen which used to draw lines</param>
         public void Draw2D(Graphics graphics, Pen pen)
         {
-            for (var i = 0; i < m_Points.Count - 1; i++)
+            for (var i = 0; i < Points.Count - 1; i++)
             {
-                graphics.DrawLine(pen, (Point)m_Points[i], (Point)m_Points[i+1]);
+                graphics.DrawLine(pen, (Point)Points[i], (Point)Points[i+1]);
             }
 
             //draw the moving point
             if (!m_movePoint.IsEmpty)
             {
-                if (m_Points.Count >= 1)
+                if (Points.Count >= 1)
                 {
-                    graphics.DrawLine(pen, (Point)m_Points[m_Points.Count - 1], m_movePoint);
+                    graphics.DrawLine(pen, (Point)Points[Points.Count - 1], m_movePoint);
                 }
             }
         }

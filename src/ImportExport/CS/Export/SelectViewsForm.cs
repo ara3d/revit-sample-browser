@@ -149,10 +149,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 if (text.StartsWith(sheetPrefix))
                 {
                     text = text.Substring(sheetPrefix.Length);
-                    string sheetNumber;
-                    string sheetViewName;
-                    sheetNumber = text.Substring(0, text.IndexOf(" - "));
-                    sheetViewName = text.Substring(text.IndexOf(" - ") + 3);
+                    var sheetNumber = text.Substring(0, text.IndexOf(" - "));
+                    var sheetViewName = text.Substring(text.IndexOf(" - ") + 3);
                     foreach(Autodesk.Revit.DB.ViewSheet viewSheet in m_selectViewsData.PrintableSheets)
                     {
                         if(viewSheet.SheetNumber == sheetNumber && viewSheet.Name == sheetViewName)

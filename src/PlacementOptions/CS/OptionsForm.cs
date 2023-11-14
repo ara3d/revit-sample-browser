@@ -30,7 +30,6 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
     /// </summary>
     public partial class OptionsForm : Form
     {
-        PlacementOptionsEnum m_optionType;
         /// <summary>
         /// Constructor
         /// </summary>
@@ -39,13 +38,13 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
             InitializeComponent();
 
             radioButton1.Checked = true;
-            m_optionType = PlacementOptionsEnum.FaceBased;
+            OptionType = PlacementOptionsEnum.FaceBased;
         }
 
         /// <summary>
         /// The option for choosing the face based family instance or sketch based family instance.
         /// </summary>
-        public PlacementOptionsEnum OptionType => m_optionType;
+        public PlacementOptionsEnum OptionType { get; private set; }
 
         /// <summary>
         /// Use the PlacementOptionsEnum.FaceBased option or not.
@@ -54,7 +53,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            m_optionType = PlacementOptionsEnum.FaceBased;
+            OptionType = PlacementOptionsEnum.FaceBased;
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            m_optionType = PlacementOptionsEnum.SketchBased;
+            OptionType = PlacementOptionsEnum.SketchBased;
         }
     }
 }

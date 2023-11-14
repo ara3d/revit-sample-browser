@@ -104,7 +104,6 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     public sealed class BCTypeAttribute : Attribute
     { 
         // Keep a variable internally ...
-        private BCType[] m_bCTypes;
 
         /// <summary>
         /// The constructor is called when the attribute is set.
@@ -112,17 +111,13 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <param name="bcTypes"></param>
         public BCTypeAttribute(BCType[] bcTypes)
         {
-            m_bCTypes = bcTypes;
+            BCType = bcTypes;
         }
 
         /// <summary>
         /// property get or set internal variable m_bcTypes
         /// </summary>
-        public BCType[] BCType
-        {
-            get => m_bCTypes;
-            set => m_bCTypes = value;
-        }
+        public BCType[] BCType { get; set; }
 
         /// <summary>
         /// override Equals method
@@ -139,7 +134,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
 
             foreach (var t1 in temp.BCType)
             {
-                foreach (var t2 in m_bCTypes)
+                foreach (var t2 in BCType)
                 {
                     if (t1 == t2)
                     {

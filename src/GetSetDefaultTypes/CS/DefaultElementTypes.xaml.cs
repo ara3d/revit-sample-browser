@@ -156,7 +156,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
             record.DefaultElementTypeCandidates = defaultElementTypeCandidates;
 
 
-            var index = _dataGrid_DefaultElementTypes.Items.Add(record);
+            _dataGrid_DefaultElementTypes.Items.Add(record);
 
          }
       }

@@ -53,10 +53,9 @@ namespace ContextualAnalyticalModel
             using (var transaction = new Transaction(document, "Create custom PointLoad"))
             {
                transaction.Start();
-               PointLoad pointLoad = null;
 
                if(PointLoad.IsPointInsideHostBoundaries(document, selectedElementId, location))
-                  pointLoad = PointLoad.Create(document, selectedElementId, location, new XYZ(1,0,0), new XYZ(1, 0, 0), null);
+                   PointLoad.Create(document, selectedElementId, location, new XYZ(1,0,0), new XYZ(1, 0, 0), null);
 
                transaction.Commit();
             }

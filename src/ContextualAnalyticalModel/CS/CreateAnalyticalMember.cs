@@ -100,13 +100,11 @@ namespace ContextualAnalyticalModel
       /// <returns></returns>
       private static AnalyticalMember CreateAnalyticalMemberFromEndpoints(Document doc, XYZ start, XYZ end)
       {
-         AnalyticalMember analyticalMember = null;
-
-         //create curve which will be assigned to the analytical member
+          //create curve which will be assigned to the analytical member
          var line = Line.CreateBound(start, end);
 
          //create the AnalyticalMember
-         analyticalMember = AnalyticalMember.Create(doc, line);
+         var analyticalMember = AnalyticalMember.Create(doc, line);
 
          analyticalMember.StructuralRole = AnalyticalStructuralRole.StructuralRoleBeam;
          analyticalMember.AnalyzeAs = AnalyzeAs.Lateral;

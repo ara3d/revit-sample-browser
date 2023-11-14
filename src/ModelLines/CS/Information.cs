@@ -32,23 +32,17 @@ namespace Revit.SDK.Samples.ModelLines.CS
     public class ModelCurveCounter
     {
         // Private members
-        string m_typeName; // type name
-        int m_number;               // the number of corresponding type
 
         // Properties
         /// <summary>
         /// Indicate the type name, such ModelArc, ModelLine, etc
         /// </summary>
-        public string TypeName => m_typeName;
+        public string TypeName { get; }
 
         /// <summary>
         /// Indicate the number of the corresponding type which name stored in type name
         /// </summary>
-        public int Number
-        {
-            get => m_number;
-            set => m_number = value;
-        }
+        public int Number { get; set; }
 
         // Methods
         /// <summary>
@@ -57,7 +51,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// <param name="typeName">The type name</param>
         public ModelCurveCounter(string typeName)
         {
-            m_typeName = typeName;
+            TypeName = typeName;
         }
     }
 
@@ -68,19 +62,17 @@ namespace Revit.SDK.Samples.ModelLines.CS
     public class IdInfo
     {
         // Private members
-        string m_text;     // The display text
-        ElementId m_id;          // The real value - id
 
         // Properties
         /// <summary>
         /// The text displayed in the comboBox, as the DisplayMember
         /// </summary>
-        public string DisplayText => m_text;
+        public string DisplayText { get; }
 
         /// <summary>
         /// The real value of the comboBox, as the ValueMember
         /// </summary>
-        public ElementId Id => m_id;
+        public ElementId Id { get; }
 
         // Methods
         /// <summary>
@@ -90,10 +82,10 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// <param name="id">the element id</param>
         public IdInfo(string typeName, ElementId id)
         {
-            m_id = id;          // Store the element id
+            Id = id;          // Store the element id
             
             // Generate the display text
-            m_text = typeName + " : " + id.ToString();
+            DisplayText = typeName + " : " + id.ToString();
         }
     }
 

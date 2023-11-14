@@ -305,7 +305,6 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
             try
             {
-                var cn = m_printMgr.CopyNumber;
             }
             catch (Exception)
             {

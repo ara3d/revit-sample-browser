@@ -117,8 +117,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
       {
          base.Export();
 
-         var exported = false;
-         
          //parameter : ViewSet views
          var views = new ViewSet();
          if (m_currentViewOnly)
@@ -140,7 +138,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
          var satExportOptions = new SATExportOptions();
 
          //Export
-         exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, viewIds, satExportOptions);
+         var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, viewIds, satExportOptions);
          
          return exported;
       }

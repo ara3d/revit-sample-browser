@@ -46,10 +46,6 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             MinusZ = 32
         }
 
-        private CloudPoint[] m_pointsBuffer;
-        private int m_numberOfPoints;
-        private XYZ m_lowerLeft;
-        private XYZ m_upperRight;
         private int m_color;
         private bool m_randomize;
         private const int s_maxNumberOfPoints = 1000000;
@@ -61,22 +57,22 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <summary>
         /// The number of points in the cell.
         /// </summary>
-        public int NumberOfPoints => m_numberOfPoints;
+        public int NumberOfPoints { get; private set; }
 
         /// <summary>
         /// The lower left point of the cell.
         /// </summary>
-        public XYZ LowerLeft => m_lowerLeft;
+        public XYZ LowerLeft { get; }
 
         /// <summary>
         /// The upper right point of the cell.
         /// </summary>
-        public XYZ UpperRight => m_upperRight;
+        public XYZ UpperRight { get; }
 
         /// <summary>
         /// The points in the cell.
         /// </summary>
-        public CloudPoint[] PointsBuffer => m_pointsBuffer;
+        public CloudPoint[] PointsBuffer { get; }
 
         #endregion
 
@@ -90,13 +86,13 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <param name="randomize">True to apply randomization to the number and location of points, false for a regular arrangement of points.</param>
         public PointCloudCellStorage(XYZ lowerLeft, XYZ upperRight, int color, bool randomize)
         {
-            m_lowerLeft = lowerLeft;
-            m_upperRight = upperRight;
+            LowerLeft = lowerLeft;
+            UpperRight = upperRight;
             m_color = color;
             m_randomize = randomize;
 
-            m_pointsBuffer = new CloudPoint[s_maxNumberOfPoints];
-            m_numberOfPoints = 0;
+            PointsBuffer = new CloudPoint[s_maxNumberOfPoints];
+            NumberOfPoints = 0;
         }
 
         /// <summary>
@@ -105,25 +101,25 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         public void GeneratePoints()
         {
             // X direction lines
-            var xDistance = (float)(m_upperRight.X - m_lowerLeft.X);
-            AddLine(m_lowerLeft, XYZ.BasisX, PointDirections.PlusY | PointDirections.PlusZ, xDistance);
-            AddLine(new XYZ(m_lowerLeft.X, m_lowerLeft.Y, m_upperRight.Z), XYZ.BasisX, PointDirections.PlusY | PointDirections.MinusZ, xDistance);
-            AddLine(new XYZ(m_lowerLeft.X, m_upperRight.Y, m_lowerLeft.Z), XYZ.BasisX, PointDirections.MinusY | PointDirections.PlusZ, xDistance);
-            AddLine(new XYZ(m_lowerLeft.X, m_upperRight.Y, m_upperRight.Z), XYZ.BasisX, PointDirections.MinusY | PointDirections.MinusZ, xDistance);
+            var xDistance = (float)(UpperRight.X - LowerLeft.X);
+            AddLine(LowerLeft, XYZ.BasisX, PointDirections.PlusY | PointDirections.PlusZ, xDistance);
+            AddLine(new XYZ(LowerLeft.X, LowerLeft.Y, UpperRight.Z), XYZ.BasisX, PointDirections.PlusY | PointDirections.MinusZ, xDistance);
+            AddLine(new XYZ(LowerLeft.X, UpperRight.Y, LowerLeft.Z), XYZ.BasisX, PointDirections.MinusY | PointDirections.PlusZ, xDistance);
+            AddLine(new XYZ(LowerLeft.X, UpperRight.Y, UpperRight.Z), XYZ.BasisX, PointDirections.MinusY | PointDirections.MinusZ, xDistance);
 
             // Y direction lines
-            var yDistance = (float)(m_upperRight.Y - m_lowerLeft.Y);
-            AddLine(m_lowerLeft, XYZ.BasisY, PointDirections.PlusX | PointDirections.PlusZ, yDistance);
-            AddLine(new XYZ(m_lowerLeft.X, m_lowerLeft.Y, m_upperRight.Z), XYZ.BasisY, PointDirections.PlusX | PointDirections.MinusZ, yDistance);
-            AddLine(new XYZ(m_upperRight.X, m_lowerLeft.Y, m_lowerLeft.Z), XYZ.BasisY, PointDirections.MinusX | PointDirections.PlusZ, yDistance);
-            AddLine(new XYZ(m_upperRight.X, m_lowerLeft.Y, m_upperRight.Z), XYZ.BasisY, PointDirections.MinusX | PointDirections.MinusZ, yDistance);
+            var yDistance = (float)(UpperRight.Y - LowerLeft.Y);
+            AddLine(LowerLeft, XYZ.BasisY, PointDirections.PlusX | PointDirections.PlusZ, yDistance);
+            AddLine(new XYZ(LowerLeft.X, LowerLeft.Y, UpperRight.Z), XYZ.BasisY, PointDirections.PlusX | PointDirections.MinusZ, yDistance);
+            AddLine(new XYZ(UpperRight.X, LowerLeft.Y, LowerLeft.Z), XYZ.BasisY, PointDirections.MinusX | PointDirections.PlusZ, yDistance);
+            AddLine(new XYZ(UpperRight.X, LowerLeft.Y, UpperRight.Z), XYZ.BasisY, PointDirections.MinusX | PointDirections.MinusZ, yDistance);
 
             // Z direction lines
-            var zDistance = (float)(m_upperRight.Z - m_lowerLeft.Z);
-            AddLine(m_lowerLeft, XYZ.BasisZ, PointDirections.PlusX | PointDirections.PlusY, zDistance);
-            AddLine(new XYZ(m_lowerLeft.X, m_upperRight.Y, m_lowerLeft.Z), XYZ.BasisZ, PointDirections.PlusX | PointDirections.MinusY, zDistance);
-            AddLine(new XYZ(m_upperRight.X, m_lowerLeft.Y, m_lowerLeft.Z), XYZ.BasisZ, PointDirections.MinusX | PointDirections.PlusY, zDistance);
-            AddLine(new XYZ(m_upperRight.X, m_upperRight.Y, m_lowerLeft.Z), XYZ.BasisZ, PointDirections.MinusX | PointDirections.MinusY, zDistance);
+            var zDistance = (float)(UpperRight.Z - LowerLeft.Z);
+            AddLine(LowerLeft, XYZ.BasisZ, PointDirections.PlusX | PointDirections.PlusY, zDistance);
+            AddLine(new XYZ(LowerLeft.X, UpperRight.Y, LowerLeft.Z), XYZ.BasisZ, PointDirections.PlusX | PointDirections.MinusY, zDistance);
+            AddLine(new XYZ(UpperRight.X, LowerLeft.Y, LowerLeft.Z), XYZ.BasisZ, PointDirections.MinusX | PointDirections.PlusY, zDistance);
+            AddLine(new XYZ(UpperRight.X, UpperRight.Y, LowerLeft.Z), XYZ.BasisZ, PointDirections.MinusX | PointDirections.MinusY, zDistance);
         }
 
         private int AddLine(XYZ startPoint, XYZ direction, PointDirections directions, float distance)
@@ -144,9 +140,9 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         {
             var cloudPointXYZ = point + modification * Math.Pow(transverseDelta * pointNumber, 4.0);
             var cp = new CloudPoint((float)cloudPointXYZ.X, (float)cloudPointXYZ.Y, (float)cloudPointXYZ.Z, m_color);
-            m_pointsBuffer[m_numberOfPoints] = cp;
-            m_numberOfPoints++;
-            if (m_numberOfPoints == s_maxNumberOfPoints)
+            PointsBuffer[NumberOfPoints] = cp;
+            NumberOfPoints++;
+            if (NumberOfPoints == s_maxNumberOfPoints)
             {
                 TaskDialog.Show("Point  cloud engine", "A single cell is requiring more than the maximum hardcoded number of points for one cell: " + s_maxNumberOfPoints);
                 throw new Exception("Reached maximum number of points.");
@@ -204,8 +200,8 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <param name="rootElement">The element to which the properties are added as subelements.</param>
         public void SerializeObjectData(XElement rootElement)
         {
-            rootElement.Add(XmlUtils.GetXElement(m_lowerLeft, "LowerLeft"));
-            rootElement.Add(XmlUtils.GetXElement(m_upperRight, "UpperRight"));
+            rootElement.Add(XmlUtils.GetXElement(LowerLeft, "LowerLeft"));
+            rootElement.Add(XmlUtils.GetXElement(UpperRight, "UpperRight"));
             rootElement.Add(XmlUtils.GetColorXElement(m_color, "Color"));
             rootElement.Add(XmlUtils.GetXElement(m_randomize, "Randomize"));
         }
@@ -216,13 +212,13 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <param name="rootElement">The XML element representing the cell.</param>
         public PointCloudCellStorage(XElement rootElement)
         {
-            m_lowerLeft = XmlUtils.GetXYZ(rootElement.Element("LowerLeft"));
-            m_upperRight = XmlUtils.GetXYZ(rootElement.Element("UpperRight"));
+            LowerLeft = XmlUtils.GetXYZ(rootElement.Element("LowerLeft"));
+            UpperRight = XmlUtils.GetXYZ(rootElement.Element("UpperRight"));
             m_color = XmlUtils.GetColor(rootElement.Element("Color"));
             m_randomize = XmlUtils.GetBoolean(rootElement.Element("Randomize"));
 
-            m_pointsBuffer = new CloudPoint[s_maxNumberOfPoints];
-            m_numberOfPoints = 0;
+            PointsBuffer = new CloudPoint[s_maxNumberOfPoints];
+            NumberOfPoints = 0;
         }
         #endregion
     }

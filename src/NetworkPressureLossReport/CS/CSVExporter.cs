@@ -7,13 +7,11 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
    public class CSVExporter : IDisposable
    {
       private Document m_doc;
-      private bool? m_isItemized;
       private ConnectorDomainType m_connType;
-      private StreamWriter m_streamWriter;
 
-      public StreamWriter Writer => m_streamWriter;
+      public StreamWriter Writer { get; private set; }
 
-      public bool? IsItemized => m_isItemized;
+      public bool? IsItemized { get; }
 
       public Document Document
       {
@@ -27,9 +25,9 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
       {
          if(!string.IsNullOrEmpty(csvFilePath))
          {
-            m_streamWriter = new StreamWriter(csvFilePath, false, System.Text.Encoding.Unicode);
+            Writer = new StreamWriter(csvFilePath, false, System.Text.Encoding.Unicode);
          }
-         m_isItemized = isItemized;
+         IsItemized = isItemized;
       }
       ~CSVExporter() => Dispose(false);
       public void Dispose()
@@ -39,17 +37,16 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
       }
       protected virtual void Dispose(bool disposing)
       {
-         if(m_streamWriter != null)
+         if(Writer != null)
          {
             // Dispose/Close the stream writer.
-            m_streamWriter.Dispose();     
-            m_streamWriter = null;
+            Writer.Dispose();     
+            Writer = null;
          }
       }
       private string SafeGetUnitLabel(FormatOptions opt)
       {
-         string msg = null;
-         string unitLabel = null;
+          string unitLabel = null;
          try
          {
             unitLabel = LabelUtils.GetLabelForSymbol(opt.GetSymbolTypeId());
@@ -57,7 +54,6 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
          catch (Autodesk.Revit.Exceptions.ArgumentException ex)
          {
             // The unit symbol is None.
-            msg = ex.Message;
          }
          if(string.IsNullOrEmpty(unitLabel))
          {
@@ -68,7 +64,6 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             catch (Autodesk.Revit.Exceptions.ArgumentException ex)
             {
                // The unit symbol is None.
-               msg = ex.Message;
             }
          }
          return unitLabel;

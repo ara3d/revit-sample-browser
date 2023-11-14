@@ -194,12 +194,11 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         private void AdjustComboBoxDropDownListWidth(ComboBox senderComboBox)
         {
             Graphics g = null;
-            Font font = null;
             try
             {
                 var width = senderComboBox.Width;
                 g = senderComboBox.CreateGraphics();
-                font = senderComboBox.Font;
+                var font = senderComboBox.Font;
 
                 // checks if a scrollbar will be displayed.
                 // if yes, then get its width to adjust the size of the drop down list.
@@ -207,13 +206,12 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                     (senderComboBox.Items.Count > senderComboBox.MaxDropDownItems)
                     ? SystemInformation.VerticalScrollBarWidth : 0;
 
-                int newWidth;
                 foreach (var s in senderComboBox.Items)  //Loop through list items and check size of each items.
                 {
                     if (s != null)
                     {
-                        newWidth = (int)g.MeasureString(s.ToString().Trim(), font).Width
-                            + vertScrollBarWidth;
+                        var newWidth = (int)g.MeasureString(s.ToString().Trim(), font).Width
+                                       + vertScrollBarWidth;
                         if (width < newWidth)
                         {
                             width = newWidth;   //set the width of the drop down list to the width of the largest item.

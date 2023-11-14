@@ -196,11 +196,10 @@ namespace Revit.SDK.Samples.Loads.CS
             var combinationName = m_dataBuffer.LoadCombinationNames[index];
 
             // Find the combination by the name and delete the combination
-            LoadCombination combination;
             var elements = (new FilteredElementCollector(m_document)).OfClass(typeof(LoadCombination)).ToElements();
             foreach (var elem in elements)
             {
-                combination = elem as LoadCombination;
+                var combination = elem as LoadCombination;
 
                 if (combinationName == combination.Name)
                 {

@@ -262,7 +262,6 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         /// <returns>the reference of Transform, return null if it can't be generated</returns>
         Transform GenerateWallTransform()
         {
-            Transform transform = null;
             var wall = m_currentComponent as Wall;
 
             // Because the architecture wall and curtain wall don't have analytical Model lines.
@@ -270,7 +269,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             // First get the location line of the wall
             var location = wall.Location as LocationCurve;
             var locationLine = location.Curve as Line;
-            transform = Transform.Identity;
+            var transform = Transform.Identity;
 
             // Second find the middle point of the wall and set it as Origin property.
             var mPoint = XYZMath.FindMidPoint(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));

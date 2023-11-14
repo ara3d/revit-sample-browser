@@ -70,9 +70,8 @@ namespace ContextualAnalyticalModel
             {
                transaction.Start();
 
-               AreaLoad areaLoad = null;
                if (AreaLoad.IsCurveLoopsInsideHostBoundaries(document, selectedElementId, loops))
-                  areaLoad = AreaLoad.Create(document, selectedElementId, loops, new XYZ(1,0,0), null);
+                   AreaLoad.Create(document, selectedElementId, loops, new XYZ(1,0,0), null);
 
                transaction.Commit();
             }

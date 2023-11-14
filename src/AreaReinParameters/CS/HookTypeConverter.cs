@@ -70,8 +70,6 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         public override StandardValuesCollection GetStandardValues(
             ITypeDescriptorContext context)
         {
-            StandardValuesCollection standardValues= null;
-
             var Ids = new Autodesk.Revit.DB.ElementId[m_hash.Values.Count];
             var i = 0;
 
@@ -79,7 +77,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             {
                 Ids[i++] = (Autodesk.Revit.DB.ElementId)(de.Value);
             }
-            standardValues = new StandardValuesCollection(Ids);
+            var standardValues = new StandardValuesCollection(Ids);
 
             return standardValues;
         }

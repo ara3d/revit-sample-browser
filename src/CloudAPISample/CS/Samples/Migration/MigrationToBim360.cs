@@ -241,7 +241,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
                var doc = Application.Application.OpenDocumentFile(hostModelPath, ops,
                   new DefaultOpenFromCloudCallback());
                foreach (var linkInstance in GetLinkInstances(doc))
-                  if (mapModelsNameToGuid.TryGetValue(linkInstance.Name, out var sLinkedGuids))
+                  if (mapModelsNameToGuid.TryGetValue(linkInstance.Name, out _))
                   {
                      guids = mapModelsNameToGuid[linkInstance.Name].Split(',');
                      var linkModelPath =

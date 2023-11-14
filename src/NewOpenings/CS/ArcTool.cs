@@ -210,12 +210,10 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 double midCos = (p3.X - pCenter.X) / radius;
                 double midSin = (p3.Y - pCenter.Y) / radius;
 
-                double startAngle = 0, endAngle = 0, midAngle = 0;
-
                 //computer the angle between [0, 360]
-                startAngle = GetAngle(startSin, startCos);
-                endAngle   = GetAngle(endSin, endCos);
-                midAngle   = GetAngle(midSin, midCos);
+                var startAngle = GetAngle(startSin, startCos);
+                var endAngle = GetAngle(endSin, endCos);
+                var midAngle = GetAngle(midSin, midCos);
 
                 //get the min angle and sweep angle
                 var minAngle = Math.Min(startAngle, endAngle);

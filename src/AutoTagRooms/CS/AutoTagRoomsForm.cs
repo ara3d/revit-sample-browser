@@ -182,12 +182,11 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
                 (senderComboBox.Items.Count > senderComboBox.MaxDropDownItems)
                 ? SystemInformation.VerticalScrollBarWidth : 0;
 
-            int newWidth;
             foreach (Element element in ((ComboBox)sender).Items)
             {
                 var s = element.Name;
-                newWidth = (int)g.MeasureString(s, font).Width
-                    + vertScrollBarWidth;
+                var newWidth = (int)g.MeasureString(s, font).Width
+                               + vertScrollBarWidth;
                 if (width < newWidth)
                 {
                     width = newWidth;

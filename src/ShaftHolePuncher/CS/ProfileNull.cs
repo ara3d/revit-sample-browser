@@ -37,16 +37,11 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
    {
       Level level1; //level 1 used to create Shaft Opening
       Level level2; //level 2 used to create Shaft Opening
-      float m_scale = 1; //scale of shaft opening
 
       /// <summary>
       /// Scale property to get/set scale of shaft opening
       /// </summary>
-      public float Scale
-      {
-         get => m_scale;
-         set => m_scale = value;
-      }
+      public float Scale { get; set; } = 1;
 
       /// <summary>
       /// constructor
@@ -93,7 +88,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
       /// <returns>maxtrix to scale the opening curve</returns>
       public override Matrix4 ComputeScaleMatrix(Size size)
       {
-         m_scaleMatrix = new Matrix4(m_scale);
+         m_scaleMatrix = new Matrix4(Scale);
          return m_scaleMatrix;
       }
 

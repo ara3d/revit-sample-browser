@@ -40,13 +40,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       BeamGeometrySupport m_geometry;   // The geometry support for beam rebar creation
 
       // The rebar type, hook type and spacing information
-      RebarBarType m_topEndType;       //type of the end rebar in the top of beam  
-      RebarBarType m_topCenterType;    //type of the center rebar in the center of beam
-      RebarBarType m_bottomType; //type of the rebar on bottom of the beam
-      RebarBarType m_transverseType;   //type of the transverse rebar
-
-      RebarHookType m_topHookType;     //type of the hook in the top end rebar
-      RebarHookType m_transverseHookType;  // type of the hook in the transverse rebar
 
       double m_transverseEndSpacing;      //the spacing value of end transverse rebar
       double m_transverseCenterSpacing;   //the spacing value of center transverse rebar
@@ -57,38 +50,22 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// <summary>
       /// get and set the type of the end rebar in the top of beam
       /// </summary>
-      public RebarBarType TopEndRebarType
-      {
-         get => m_topEndType;
-         set => m_topEndType = value;
-      }
+      public RebarBarType TopEndRebarType { get; set; }
 
       /// <summary>
       /// get and set the type of the center rebar in the top of beam
       /// </summary>
-      public RebarBarType TopCenterRebarType
-      {
-         get => m_topCenterType;
-         set => m_topCenterType = value;
-      }
+      public RebarBarType TopCenterRebarType { get; set; }
 
       /// <summary>
       /// get and set the type of the rebar in the bottom of beam
       /// </summary>
-      public RebarBarType BottomRebarType
-      {
-         get => m_bottomType;
-         set => m_bottomType = value;
-      }
+      public RebarBarType BottomRebarType { get; set; }
 
       /// <summary>
       /// get and set the type of the transverse rebar
       /// </summary>
-      public RebarBarType TransverseRebarType
-      {
-         get => m_transverseType;
-         set => m_transverseType = value;
-      }
+      public RebarBarType TransverseRebarType { get; set; }
 
       /// <summary>
       /// get and set the spacing value of end transverse rebar
@@ -125,20 +102,12 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// <summary>
       /// get and set the hook type of top end rebar
       /// </summary>
-      public RebarHookType TopHookType
-      {
-         get => m_topHookType;
-         set => m_topHookType = value;
-      }
+      public RebarHookType TopHookType { get; set; }
 
       /// <summary>
       /// get and set the hook type of transverse rebar
       /// </summary>
-      public RebarHookType TransverseHookType
-      {
-         get => m_transverseHookType;
-         set => m_transverseHookType = value;
-      }
+      public RebarHookType TransverseHookType { get; set; }
 
       #endregion
 
@@ -219,7 +188,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
          var geomInfo = m_geometry.GetBottomRebar();
 
          // create the rebar
-         var rebar = PlaceRebars(m_bottomType, null, null, geomInfo,
+         var rebar = PlaceRebars(BottomRebarType, null, null, geomInfo,
                                  RebarHookOrientation.Left, RebarHookOrientation.Left);
          return (null != rebar);
       }
@@ -274,7 +243,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
          }
 
          // create the rebar
-         return PlaceRebars(m_transverseType, m_transverseHookType, m_transverseHookType,
+         return PlaceRebars(TransverseRebarType, TransverseHookType, TransverseHookType,
                                          geomInfo, startHook, endHook);
       }
 
@@ -351,16 +320,16 @@ namespace Revit.SDK.Samples.Reinforcement.CS
          switch (location)
          {
             case TopRebarLocation.Start:
-               startHookType = m_topHookType;  // start hook type
-               rebarType = m_topEndType;       // rebar type
+               startHookType = TopHookType;  // start hook type
+               rebarType = TopEndRebarType;       // rebar type
                startOrient = GetTopHookOrient(geomInfo, location); // start hook orient
                break;
             case TopRebarLocation.Center:
-               rebarType = m_topCenterType;    // rebar type
+               rebarType = TopCenterRebarType;    // rebar type
                break;
             case TopRebarLocation.End:
-               endHookType = m_topHookType;    // end hook type
-               rebarType = m_topEndType;       // rebar type
+               endHookType = TopHookType;    // end hook type
+               rebarType = TopEndRebarType;       // rebar type
                endOrient = GetTopHookOrient(geomInfo, location);   // end hook orient
                break;
          }

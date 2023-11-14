@@ -190,7 +190,6 @@ namespace Revit.SDK.Samples.CancelSave.CS
         private static void DealNotUpdate(RevitAPIPreDocEventArgs args)
         {
             string mainMessage;
-            string additionalText;
             var taskDialog = new TaskDialog("CancelSave Sample");
 
             if (args.Cancellable)
@@ -208,7 +207,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
             // taskDialog will not show when do regression test.
             if (!LogManager.RegressionTestNow)
             {
-               additionalText = "You can disable this permanently by uninstaling the CancelSave sample from Revit. Remove or rename CancelSave.addin from the addins directory.";
+               var additionalText = "You can disable this permanently by uninstaling the CancelSave sample from Revit. Remove or rename CancelSave.addin from the addins directory.";
 
                // use one taskDialog to inform user current situation.     
                taskDialog.MainInstruction = mainMessage;

@@ -33,8 +33,6 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
     public partial class SketchbasedForm : System.Windows.Forms.Form
     {
         List<FamilySymbol> m_familySymbolList;
-        FamilySymbol m_selectedSymbol;
-        PromptForFamilyInstancePlacementOptions m_placementOptions;
 
         /// <summary>
         /// Constructor
@@ -43,8 +41,8 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         {
             InitializeComponent();
 
-            m_placementOptions = new PromptForFamilyInstancePlacementOptions();
-            m_placementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
+            FIPlacementOptions = new PromptForFamilyInstancePlacementOptions();
+            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();
@@ -55,18 +53,18 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
 
             comboBoxFamilySymbol.DataSource = nameList;
             comboBoxFamilySymbol.SelectedIndex = 0;
-            m_selectedSymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
+            SelectedFamilySymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
         }
 
         /// <summary>
         /// The family instance placement options for placement.
         /// </summary>
-        public PromptForFamilyInstancePlacementOptions FIPlacementOptions => m_placementOptions;
+        public PromptForFamilyInstancePlacementOptions FIPlacementOptions { get; }
 
         /// <summary>
         /// The family symbol for placement.
         /// </summary>
-        public FamilySymbol SelectedFamilySymbol => m_selectedSymbol;
+        public FamilySymbol SelectedFamilySymbol { get; private set; }
 
         /// <summary>
         /// Select the family symbol for family instance placement.
@@ -75,7 +73,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void comboBoxFamilySymbol_SelectedIndexChanged(object sender, EventArgs e)
         {
-            m_selectedSymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
+            SelectedFamilySymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];
         }
 
         /// <summary>
@@ -85,7 +83,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonLine_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
+            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
         }
 
         /// <summary>
@@ -95,7 +93,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonArc3P_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Arc3Point;
+            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Arc3Point;
         }
 
         /// <summary>
@@ -105,7 +103,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonArcC_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_ArcCenterEnds;
+            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_ArcCenterEnds;
         }
 
         /// <summary>
@@ -115,7 +113,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonSpline_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Spline;
+            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Spline;
         }
 
         /// <summary>
@@ -125,7 +123,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonPEllipse_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_PartialEllipse;
+            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_PartialEllipse;
         }
 
         /// <summary>
@@ -135,7 +133,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <param name="e">The event arg.</param>
         private void radioButtonPickLine_CheckedChanged(object sender, EventArgs e)
         {
-            m_placementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_PickLines;
+            FIPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_PickLines;
         }
     }
 }

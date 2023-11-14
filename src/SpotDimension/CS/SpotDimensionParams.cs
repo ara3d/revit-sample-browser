@@ -99,7 +99,6 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 var dimensionType = spotDimension.DimensionType;
 
                 //begin to get Parameters and add them to a DataTable
-                Parameter temporaryParam = null;
                 var temporaryValue = "";
 
                 #region Get all SpotDimension element parameters
@@ -111,8 +110,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 AddDataRow("Category", spotDimension.Category.Name, parameterTable);
 
                 //Leader Arrowhead
-                temporaryParam = 
-                    dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_LEADER_ARROWHEAD);
+                var temporaryParam = dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_LEADER_ARROWHEAD);
                 var elementId = temporaryParam.AsElementId();
                 //if not found that element, add string "None" to DataTable
                 if (ElementId.InvalidElementId == elementId)

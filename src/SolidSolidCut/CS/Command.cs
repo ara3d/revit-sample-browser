@@ -35,29 +35,12 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
     {
         #region IExternalCommand Members
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application
-        /// which contains data related to the command,
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application
-        /// which will be displayed if a failure or cancellation is returned by
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command.
-        /// A result of Succeeded means that the API external method functioned as expected.
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             // NOTES: Anything can be done in this method, such as the solid-solid cut operation.
 
             // Get the application and document from external command data.
-            var app = commandData.Application.Application;
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
             #region Demo how to use the SolidSolidCut API to make one solid cut another.
@@ -78,8 +61,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             }
 
             //Check whether the cuttingSolid can cut the solidToBeCut
-            var cutFailureReason = new CutFailureReason();
-            if (SolidSolidCutUtils.CanElementCutElement(cuttingSolid, solidToBeCut, out cutFailureReason))
+            if (SolidSolidCutUtils.CanElementCutElement(cuttingSolid, solidToBeCut, out _))
             {
                 //cuttingSolid can cut solidToBeCut
 
@@ -110,29 +92,12 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
     {
         #region IExternalCommand Members
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application
-        /// which contains data related to the command,
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application
-        /// which will be displayed if a failure or cancellation is returned by
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command.
-        /// A result of Succeeded means that the API external method functioned as expected.
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             // NOTES: Anything can be done in this method, such as the solid-solid uncut operation.
 
             // Get the application and document from external command data.
-            var app = commandData.Application.Application;
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
             #region Demo how to use the SolidSolidCut API to uncut two solids which have the cutting relationship.

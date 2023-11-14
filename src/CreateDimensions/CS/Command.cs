@@ -208,8 +208,8 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
                    newLine.GetEndPoint(1).Z);
 
                var newLine2 = Line.CreateBound(p1, p2);
-               var newDimension = doc.Create.NewDimension(
-                 doc.ActiveView, newLine2, referenceArray);
+               doc.Create.NewDimension(
+                   doc.ActiveView, newLine2, referenceArray);
             }
             // catch the exceptions
             catch (Exception ex)

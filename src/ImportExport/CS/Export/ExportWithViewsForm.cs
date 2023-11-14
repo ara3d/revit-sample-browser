@@ -65,7 +65,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             else if (m_exportData.ExportFormat == ExportFormat.Image)
             {
                 Hide();
-                var exportIMGData = m_exportData as ExportIMGData;
                 using (var exportOptionsForm = new ExportIMGOptionsForm(m_exportData))
                 {
                     exportOptionsForm.ShowDialog();

@@ -236,9 +236,9 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
             return false;
 
          var thisBar = getCurrentRebar(data.GetRebarUpdateCurvesData());
-         CurveElement selectedCurve = null;
-         //if a curve elem is selected, we override the geometry we get from the intersections and use the selected curve to create our bar geometries
-         selectedCurve = getSelectedCurveElement(thisBar, data.GetRebarUpdateCurvesData());
+         var selectedCurve =
+             //if a curve elem is selected, we override the geometry we get from the intersections and use the selected curve to create our bar geometries
+             getSelectedCurveElement(thisBar, data.GetRebarUpdateCurvesData());
          //used to store the resulting curves
          var curves = new List<Curve>();
          Curve originalBar = null;
@@ -485,7 +485,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
 
       CurveElement getSelectedCurveElement(Rebar bar, RebarUpdateCurvesData data)
       {
-         var barAccess = bar.GetFreeFormAccessor();
+         bar.GetFreeFormAccessor();
          var paramCurveId = bar.LookupParameter(AddSharedParams.m_CurveIdName);
          if (paramCurveId == null)
             return null;
@@ -671,10 +671,9 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                 layout == RebarLayoutRule.MinimumClearSpacing)
                barNumber = numberOfBarsWhichCanFit - 2;
 
-            var nEval = 0.0;
             for (var ii = 0; ii < barNumber; ii++)
             {
-               nEval = (double)(ii + 1) / (double)(barNumber + 1);
+               var nEval = (double)(ii + 1) / (double)(barNumber + 1);
                var newBar = (overrideCurve != null) ? overrideCurve.CreateTransformed(Transform.CreateTranslation(startLine.Evaluate(nEval, true) - overrideCurve.GetEndPoint(0)))
                                                       : Line.CreateBound(startLine.Evaluate(nEval, true), endLine.Evaluate(nEval, true));
                curves.Add(newBar);

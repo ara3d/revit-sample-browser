@@ -92,9 +92,7 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
                using (var trans = new Transaction(m_currentDoc, "Load family."))
                {
                   trans.Start();
-                  IFamilyLoadOptions famLoadOptions = new FamilyLoadOptions();
-                  Family newFam = null;
-                  m_currentDoc.LoadFamily(tmpFile, new FamilyLoadOptions(), out newFam);
+                  m_currentDoc.LoadFamily(tmpFile, new FamilyLoadOptions(), out _);
                   trans.Commit();
                }
 

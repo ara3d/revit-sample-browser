@@ -8,20 +8,16 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
 {
    internal class SectionInfo
    {
-      private double m_totalLoss;
-      private IList<SegmentInfo> m_segments;
+       private IList<SegmentInfo> m_segments;
       const double Epsilon = 0.0001;    // The small tolerance within which two flow values may be considered equal.
 
       public SectionInfo()
       {
-         m_totalLoss = 0.0;
+         TotalPressureLoss = 0.0;
          m_segments = new List<SegmentInfo>();
       }
-      public double TotalPressureLoss
-      {
-         get => m_totalLoss;
-         set => m_totalLoss = value;
-      }
+      public double TotalPressureLoss { get; set; }
+
       public int NumberOfSegments => m_segments.Count;
 
       public int NumberOfStraights

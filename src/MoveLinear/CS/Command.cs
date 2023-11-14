@@ -35,22 +35,6 @@ namespace Revit.SDK.Samples.MoveLinear.CS
     public class Command : IExternalCommand
     {
         #region IExternalCommand Members Implementation
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="cmdData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="msg">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="eleSet">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
         {
             var res = Result.Succeeded;
@@ -58,12 +42,9 @@ namespace Revit.SDK.Samples.MoveLinear.CS
             trans.Start();
             try
             {
-                System.Collections.IEnumerator iter;
-                Autodesk.Revit.UI.Selection.Selection sel;
-                sel = cmdData.Application.ActiveUIDocument.Selection;
+                var sel = cmdData.Application.ActiveUIDocument.Selection;
 
-                ElementSet elemSet;
-                elemSet = new ElementSet();
+                var elemSet = new ElementSet();
                 foreach (var elementId in sel.GetElementIds())
                 {
                    elemSet.Insert(cmdData.Application.ActiveUIDocument.Document.GetElement(elementId));
@@ -84,17 +65,15 @@ namespace Revit.SDK.Samples.MoveLinear.CS
                     return res;
                 }
 
-                iter = elemSet.ForwardIterator();
+                System.Collections.IEnumerator iter = elemSet.ForwardIterator();
 
                 iter.MoveNext();
-                Element element;
 
-                element = (Element)iter.Current;
+                var element = (Element)iter.Current;
 
                 if (element != null)
                 {
-                    LocationCurve lineLoc;
-                    lineLoc = element.Location as LocationCurve;
+                    var lineLoc = element.Location as LocationCurve;
 
                     if (null == lineLoc)
                     {
@@ -103,7 +82,6 @@ namespace Revit.SDK.Samples.MoveLinear.CS
                         return res;
                     }
 
-                    Line line;
                     //get start point via "get_EndPoint(0)"
                     var newStart = new XYZ(
                         lineLoc.Curve.GetEndPoint(0).X + 100,
@@ -118,7 +96,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
 
                     //get a new line and use it to move current element 
                     //with property "Autodesk.Revit.DB.LocationCurve.Curve"
-                    line = Line.CreateBound(newStart, newEnd);
+                    var line = Line.CreateBound(newStart, newEnd);
                     lineLoc.Curve = line;
                 }
             }

@@ -32,14 +32,14 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
     {
         #region Fields
         // based-type
-        private BasedType m_baseType = BasedType.Point; 
+
         #endregion
 
         #region Property
         /// <summary>
         /// based-type
         /// </summary>
-        public BasedType BaseType => m_baseType;
+        public BasedType BaseType { get; private set; } = BasedType.Point;
 
         #endregion
 
@@ -63,11 +63,11 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         {
             if (radioButtonPoint.Checked)
             {
-                m_baseType = BasedType.Point;
+                BaseType = BasedType.Point;
             }
             else if (radioButtonLine.Checked)
             {
-                m_baseType = BasedType.Line;
+                BaseType = BasedType.Line;
             }
             else
             {

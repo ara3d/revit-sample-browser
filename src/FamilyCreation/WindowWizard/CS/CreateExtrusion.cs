@@ -104,9 +104,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// <returns>CurveArray</returns>
       public CurveArray CreateCurveArrayByOffset(CurveArray origin, double offset)
       {
-         Line line;
-         Line temp;
-         var counter = 0;
+          var counter = 0;
          var curveArr = m_appCreator.NewCurveArray();
          var offsetx = new XYZ(offset, 0, 0);
          var offsetz = new XYZ(0, 0, offset);
@@ -116,7 +114,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          var p3 = new XYZ();
          foreach (Curve curve in origin)
          {
-            temp = curve as Line;
+            var temp = curve as Line;
             if (temp != null)
             {
                if (counter == 0)
@@ -138,7 +136,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             }
             counter++;
          }
-         line = Line.CreateBound(p0, p1);
+         var line = Line.CreateBound(p0, p1);
          curveArr.Append(line);
          line = Line.CreateBound(p1, p2);
          curveArr.Append(line);
@@ -159,13 +157,12 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// <returns>the new extrusion</returns>
       public Extrusion NewExtrusion(CurveArrArray curveArrArray, Autodesk.Revit.DB.ReferencePlane workPlane, double startOffset, double endOffset)
       {
-         Extrusion rectExtrusion = null;
-         try
+          try
          {
             var subTransaction = new SubTransaction(m_document);
             subTransaction.Start();
             var sketch = SketchPlane.Create(m_document, workPlane.GetPlane());
-            rectExtrusion = m_familyCreator.NewExtrusion(true, curveArrArray, sketch, Math.Abs(endOffset - startOffset));
+            var rectExtrusion = m_familyCreator.NewExtrusion(true, curveArrArray, sketch, Math.Abs(endOffset - startOffset));
             rectExtrusion.StartOffset = startOffset;
             rectExtrusion.EndOffset = endOffset;
             subTransaction.Commit();

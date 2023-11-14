@@ -219,7 +219,6 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
          var endPoint = new XYZ(point2D2.U, point2D2.V, middleElevation);
          var middlePoint = new XYZ((point2D1.U + point2D2.U) / 2, (point2D1.V + point2D2.V) / 2, topHeight);
 
-         var levelId = topLevel.Id;
          // create two brace; then set their location line and reference level
          var firstBaseLine = Line.CreateBound(startPoint, middlePoint);
          if (!m_data.BraceSymbol.IsActive)
@@ -281,8 +280,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
       /// <param name="frameElems">columns, beams and braces included in frame</param>
       private void MoveRotateFrame(List<FamilyInstance> frameElems)
       {
-         var app = m_data.CommandData.Application.Application;
-         var doc = m_data.CommandData.Application.ActiveUIDocument.Document;
+          var doc = m_data.CommandData.Application.ActiveUIDocument.Document;
          foreach (var elem in frameElems)
          {
             MoveElement(doc, elem, m_data.FrameOrigin);

@@ -375,35 +375,30 @@ namespace Revit.SDK.Samples.AutoParameter.CS
    /// </summary>
    class FamilyParam
    {
-      string m_name;
-      /// <summary>
+       /// <summary>
       /// the caption of the parameter
       /// </summary>
-      public string Name => m_name;
+      public string Name { get; }
 
-      ForgeTypeId m_group;
-      /// <summary>
+       /// <summary>
       /// the group of the parameter
       /// </summary>
-      public ForgeTypeId Group => m_group;
+      public ForgeTypeId Group { get; }
 
-      ForgeTypeId m_type;
-      /// <summary>
+       /// <summary>
       /// the type of the parameter
       /// </summary>
-      public ForgeTypeId Type => m_type;
+      public ForgeTypeId Type { get; }
 
-      bool m_isInstance;
-      /// <summary>
+       /// <summary>
       /// indicate whether the parameter is an instance parameter or a type parameter
       /// </summary>
-      public bool IsInstance => m_isInstance;
+      public bool IsInstance { get; }
 
-      int m_line;
-      /// <summary>
+       /// <summary>
       /// record the location of this parameter in the family parameter file
       /// </summary>
-      public int Line => m_line;
+      public int Line { get; }
 
       /// <summary>
       /// default constructor, hide this by making it "private"
@@ -432,11 +427,11 @@ namespace Revit.SDK.Samples.AutoParameter.CS
       /// </param>
       public FamilyParam(string name, ForgeTypeId group, ForgeTypeId type, bool isInstance, int line)
       {
-         m_name = name;
-         m_group = group;
-         m_type = type;
-         m_isInstance = isInstance;
-         m_line = line;
+         Name = name;
+         Group = group;
+         Type = type;
+         IsInstance = isInstance;
+         Line = line;
       }
    }
 }

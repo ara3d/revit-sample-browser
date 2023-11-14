@@ -148,8 +148,6 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 var width = (float)(m_transferedMax.X - m_transferedMin.X);
                 var height = (float)(m_transferedMax.Y - m_transferedMin.Y);
 
-                var maxX = (width / 2);
-                var maxY = (height / 2);
                 var minX = -(width / 2);
                 var minY = -(height / 2);
 

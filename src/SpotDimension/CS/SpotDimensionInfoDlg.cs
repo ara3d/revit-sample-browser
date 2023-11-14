@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         /// <summary>
         /// Get the last selected spot dimension
         /// </summary>
-        public SpotDimension SelectedSpotDimension => m_lastSelectDimention;
+        public SpotDimension SelectedSpotDimension { get; private set; }
 
         /// <summary>
         /// Default constructor
@@ -112,9 +112,9 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         {
             if (spotDimensionsListView.FocusedItem != null)
             {
-                m_lastSelectDimention = spotDimensionsListView.FocusedItem.Tag as SpotDimension;
+                SelectedSpotDimension = spotDimensionsListView.FocusedItem.Tag as SpotDimension;
                 typeParamsDataGridView.DataSource
-                    = m_typeParamsData.GetParameterTable(m_lastSelectDimention);
+                    = m_typeParamsData.GetParameterTable(SelectedSpotDimension);
 
                 typeParamsDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
 

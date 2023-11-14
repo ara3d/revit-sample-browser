@@ -32,8 +32,6 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
     /// </summary>
     public class ZoneNode : TreeNode
     {
-        Zone m_zone;
-
         /// <summary>
         /// The constructor of ZoneNode class
         /// </summary>
@@ -41,14 +39,14 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         public ZoneNode(Zone zone)
             : base(zone.Name)
         {
-            m_zone = zone;
-            Text = m_zone.Name;
-            ToolTipText = "Phase: " + m_zone.Phase.Name;
+            Zone = zone;
+            Text = Zone.Name;
+            ToolTipText = "Phase: " + Zone.Phase.Name;
         }
 
         /// <summary>
         /// Get the Zone element in the ZoneNode.
         /// </summary>
-        public Zone Zone => m_zone;
+        public Zone Zone { get; }
     }
 }

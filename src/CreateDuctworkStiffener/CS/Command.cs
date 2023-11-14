@@ -115,7 +115,7 @@ namespace Revit.SDK.Samples.CreateDuctworkStiffener.CS
                   m_stiffenerType.Activate();
                   m_document.Regenerate();
                }
-               var stiffener = MEPSupportUtils.CreateDuctworkStiffener(m_document, m_stiffenerType.Id, m_ductwork.Id, m_distanceToHostEnd);
+               MEPSupportUtils.CreateDuctworkStiffener(m_document, m_stiffenerType.Id, m_ductwork.Id, m_distanceToHostEnd);
                transaction.Commit();
             }
             return Result.Succeeded;

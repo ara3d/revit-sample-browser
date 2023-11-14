@@ -34,49 +34,38 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
     {
         #region Fields
         // object which contains reference of Revit Application
-        ExternalCommandData m_commandData;
         /// <summary>
         /// object which contains reference of Revit Application
         /// </summary>
-        public ExternalCommandData CommandData => m_commandData;
+        public ExternalCommandData CommandData { get; }
 
         // the active document of Revit
-        UIDocument m_uiDocument;
         /// <summary>
         /// the active document of Revit
         /// </summary>
-        public UIDocument UIDocument => m_uiDocument;
+        public UIDocument UIDocument { get; }
 
         // the active document of Revit
-        Document m_document;
         /// <summary>
         /// the active document of Revit
         /// </summary>
-        public Document Document => m_document;
+        public Document Document { get; }
 
         // stores all the Curtain WallTypes in the active Revit document
-        List<WallType> m_wallTypes;
 
         // stores all the ViewPlans in the active Revit document
-        List<View> m_views;
 
         // stores the wall creation related data and operations
-        WallGeometry m_wallGeometry;
 
         // stores the curtain wall created
-        Wall m_curtainWall;
 
         // indicates whether the curtain wall has been created
-        bool m_wallCreated;
 
         // store the grid information of the created curtain wall
-        GridGeometry m_gridGeometry;
 
         // store the active grid line operation
-        LineOperation m_activeOperation;
 
         // the length unit type for the active Revit document
-        ForgeTypeId m_LengthUnit;
 
         // store the message of the sample
         private KeyValuePair<string/*msgText*/, bool/*is warningOrError*/> m_message;
@@ -87,51 +76,39 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         /// stores all the Curtain WallTypes in the active Revit document 
         /// </summary>
-        public List<WallType> WallTypes => m_wallTypes;
+        public List<WallType> WallTypes { get; private set; }
 
         /// <summary>
         /// stores all the ViewPlans in the active Revit document
         /// </summary>
-        public List<View> Views => m_views;
+        public List<View> Views { get; private set; }
 
         /// <summary>
         /// stores the wall creation related data and operations
         /// </summary>
-        public WallGeometry WallGeometry => m_wallGeometry;
+        public WallGeometry WallGeometry { get; }
 
         /// <summary>
         /// stores the curtain wall created
         /// </summary>
-        public Wall CurtainWall
-        {
-            get => m_curtainWall;
-            set => m_curtainWall = value;
-        }
+        public Wall CurtainWall { get; set; }
 
         /// <summary>
         /// indicates whether the curtain wall has been created
         /// </summary>
-        public bool WallCreated
-        {
-            get => m_wallCreated;
-            set => m_wallCreated = value;
-        }
+        public bool WallCreated { get; set; }
 
         /// <summary>
         /// store the grid information of the created curtain wall
         /// </summary>
-        public GridGeometry GridGeometry => m_gridGeometry;
+        public GridGeometry GridGeometry { get; }
 
         /// <summary>
         /// store the active grid line operation
         /// </summary>
-        public LineOperation ActiveOperation
-        {
-            get => m_activeOperation;
-            set => m_activeOperation = value;
-        }
+        public LineOperation ActiveOperation { get; set; }
 
-        public ForgeTypeId LengthUnit => m_LengthUnit;
+        public ForgeTypeId LengthUnit { get; private set; }
 
         /// <summary>
         /// store the message of the sample
@@ -167,14 +144,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         {
             if (null != commandData.Application.ActiveUIDocument)
             {
-                m_commandData = commandData;
-                m_uiDocument = m_commandData.Application.ActiveUIDocument;
-                m_document = m_uiDocument.Document;
-                m_views = new List<View>();
-                m_wallTypes = new List<WallType>();
-                m_wallGeometry = new WallGeometry(this);
-                m_wallCreated = false;
-                m_gridGeometry = new GridGeometry(this);
+                CommandData = commandData;
+                UIDocument = CommandData.Application.ActiveUIDocument;
+                Document = UIDocument.Document;
+                Views = new List<View>();
+                WallTypes = new List<WallType>();
+                WallGeometry = new WallGeometry(this);
+                WallCreated = false;
+                GridGeometry = new GridGeometry(this);
 
                 // get all the wall types and all the view plans
                 InitializeData();
@@ -183,7 +160,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 GetLengthUnitType();
 
                 // initialize the curtain grid operation type
-                m_activeOperation = new LineOperation(LineOperationType.Waiting);
+                ActiveOperation = new LineOperation(LineOperationType.Waiting);
             }
         }
         #endregion
@@ -195,15 +172,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private void GetLengthUnitType()
         {
             var specTypeId = SpecTypeId.Length;
-            var projectUnit = m_document.GetUnits();
+            var projectUnit = Document.GetUnits();
             try
             {
                 var formatOption = projectUnit.GetFormatOptions(specTypeId);
-                m_LengthUnit = formatOption.GetUnitTypeId();
+                LengthUnit = formatOption.GetUnitTypeId();
             }
             catch (System.Exception /*e*/)
             {
-                m_LengthUnit = UnitTypeId.Feet;
+                LengthUnit = UnitTypeId.Feet;
             }
         }
 
@@ -213,24 +190,24 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private void InitializeData()
         {
             // get all the wall types
-            var filteredElementCollector = new FilteredElementCollector(m_document);
+            var filteredElementCollector = new FilteredElementCollector(Document);
             filteredElementCollector.OfClass(typeof(WallType));
             // just get all the curtain wall type
-            m_wallTypes = filteredElementCollector.Cast<WallType>().Where<WallType>(wallType => wallType.Kind == WallKind.Curtain).ToList<WallType>();
+            WallTypes = filteredElementCollector.Cast<WallType>().Where<WallType>(wallType => wallType.Kind == WallKind.Curtain).ToList<WallType>();
 
             // sort them alphabetically
             var wallComp = new WallTypeComparer();
-            m_wallTypes.Sort(wallComp);
+            WallTypes.Sort(wallComp);
 
             // get all the ViewPlans
-            m_views = SkipTemplateViews(GetElements<View>());
+            Views = SkipTemplateViews(GetElements<View>());
 
             // sort them alphabetically
             var viewComp = new ViewComparer();
-            m_views.Sort(viewComp);
+            Views.Sort(viewComp);
 
             // get one of the mullion types
-            var mullTypes = m_document.MullionTypes;
+            var mullTypes = Document.MullionTypes;
             foreach (MullionType type in mullTypes)
             {
                 if (null != type)
@@ -242,7 +219,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                         var name = para.AsString().ToLower();
                         if (name.StartsWith("circular mullion"))
                         {
-                            m_gridGeometry.MullionType = type;
+                            GridGeometry.MullionType = type;
                         }
                     }
 
@@ -253,7 +230,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         protected List<T> GetElements<T>() where T : Element
         {
             var returns = new List<T>();
-            var collector = new FilteredElementCollector(m_document);
+            var collector = new FilteredElementCollector(Document);
             ICollection<Element> founds = collector.OfClass(typeof(T)).ToElements();
             foreach (var elem in founds)
             {

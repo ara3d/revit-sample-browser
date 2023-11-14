@@ -33,29 +33,21 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       #region Fields
       // the start point of the line
 
-      Point m_startPoint;
       // the end point of the line
-      Point m_endPoint;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// the start point of the line
       /// </summary>
-      public Point StartPoint
-      {
-         get => m_startPoint;
-         set => m_startPoint = value;
-      }
+      public Point StartPoint { get; set; }
 
       /// <summary>
       /// the end point of the line
       /// </summary>
-      public Point EndPoint
-      {
-         get => m_endPoint;
-         set => m_endPoint = value;
-      }
+      public Point EndPoint { get; set; }
+
       #endregion
 
       #region Constructors
@@ -64,8 +56,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public Line2D()
       {
-         m_startPoint = Point.Empty;
-         m_endPoint = Point.Empty;
+         StartPoint = Point.Empty;
+         EndPoint = Point.Empty;
       }
 
       /// <summary>
@@ -79,8 +71,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       public Line2D(Point startPoint, Point endPoint)
       {
-         m_startPoint = startPoint;
-         m_endPoint = endPoint;
+         StartPoint = startPoint;
+         EndPoint = endPoint;
       }
 
       /// <summary>
@@ -91,8 +83,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       public Line2D(Line2D line2D)
       {
-         m_startPoint = line2D.StartPoint;
-         m_endPoint = line2D.EndPoint;
+         StartPoint = line2D.StartPoint;
+         EndPoint = line2D.EndPoint;
       }
       #endregion
    }
@@ -104,18 +96,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    {
       #region Fields
       // an assistant point for temp usage
-      Point m_assistantPoint;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// an assistant point for temp usage
       /// </summary>
-      public Point AssistantPoint
-      {
-         get => m_assistantPoint;
-         set => m_assistantPoint = value;
-      }
+      public Point AssistantPoint { get; set; }
+
       #endregion
 
       #region Constructors
@@ -125,7 +114,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public WallBaseline2D()
          : base()
       {
-         m_assistantPoint = Point.Empty;
+         AssistantPoint = Point.Empty;
       }
 
       /// <summary>
@@ -140,7 +129,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public WallBaseline2D(Point startPoint, Point endPoint)
          : base(startPoint, endPoint)
       {
-         m_assistantPoint = Point.Empty;
+         AssistantPoint = Point.Empty;
       }
 
       /// <summary>
@@ -152,7 +141,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public WallBaseline2D(WallBaseline2D wallLine2D)
          : base((Line2D)wallLine2D)
       {
-         m_assistantPoint = wallLine2D.AssistantPoint;
+         AssistantPoint = wallLine2D.AssistantPoint;
       }
       #endregion
 
@@ -164,7 +153,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          StartPoint = Point.Empty;
          EndPoint = Point.Empty;
-         m_assistantPoint = Point.Empty;
+         AssistantPoint = Point.Empty;
       }
       #endregion
    }
@@ -176,50 +165,36 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    {
       #region Fields
       // indicate whether the grid line is locked
-      bool m_locked;
 
       // all the segments for the grid line
-      List<SegmentLine2D> m_segments;
 
       // indicate how many segments have been removed from the grid line
-      private int m_removedNumber;
 
       // indicate whether it's a U grid line
-      private bool m_isUGridLine;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// indicate whether the grid line is locked
       /// </summary>
-      public bool Locked
-      {
-         get => m_locked;
-         set => m_locked = value;
-      }
+      public bool Locked { get; set; }
 
       /// <summary>
       /// all the segments for the grid line
       /// </summary>
-      public List<SegmentLine2D> Segments => m_segments;
+      public List<SegmentLine2D> Segments { get; }
 
       /// <summary>
       /// indicate how many segments have been removed from the grid line
       /// </summary>
-      public int RemovedNumber
-      {
-         get => m_removedNumber;
-         set => m_removedNumber = value;
-      }
+      public int RemovedNumber { get; set; }
 
       /// <summary>
       /// indicate whether it's a U grid line
       /// </summary>
-      public bool IsUGridLine
-      {
-         get => m_isUGridLine;
-         set => m_isUGridLine = value;
-      }
+      public bool IsUGridLine { get; set; }
+
       #endregion
 
       #region Constructors
@@ -229,10 +204,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public GridLine2D()
          : base()
       {
-         m_segments = new List<SegmentLine2D>();
-         m_locked = false;
-         m_removedNumber = 0;
-         m_isUGridLine = false;
+         Segments = new List<SegmentLine2D>();
+         Locked = false;
+         RemovedNumber = 0;
+         IsUGridLine = false;
       }
 
       /// <summary>
@@ -247,10 +222,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public GridLine2D(Point startPoint, Point endPoint)
          : base(startPoint, endPoint)
       {
-         m_segments = new List<SegmentLine2D>();
-         m_locked = false;
-         m_removedNumber = 0;
-         m_isUGridLine = false;
+         Segments = new List<SegmentLine2D>();
+         Locked = false;
+         RemovedNumber = 0;
+         IsUGridLine = false;
       }
 
       /// <summary>
@@ -262,13 +237,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public GridLine2D(GridLine2D gridLine2D)
          : base((Line2D)gridLine2D)
       {
-         m_segments = new List<SegmentLine2D>();
-         m_locked = gridLine2D.Locked;
-         m_removedNumber = gridLine2D.RemovedNumber;
-         m_isUGridLine = gridLine2D.IsUGridLine;
+         Segments = new List<SegmentLine2D>();
+         Locked = gridLine2D.Locked;
+         RemovedNumber = gridLine2D.RemovedNumber;
+         IsUGridLine = gridLine2D.IsUGridLine;
          foreach (var segLine in gridLine2D.Segments)
          {
-            m_segments.Add(new SegmentLine2D(segLine));
+            Segments.Add(new SegmentLine2D(segLine));
          }
       }
       #endregion
@@ -281,68 +256,46 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    {
       #region Fields
       // indicates whether the segment is "isolated" 
-      bool m_isolated;
 
       // indicate whether the segment has been removed from the grid line
-      bool m_removed;
 
       // the index of the segment in the grid line
-      private int m_segmentIndex;
 
       // the index of its parent grid line in all the curtain grid's U/V grid lines
-      private int m_gridLineIndex;
 
       // indicates whether the segment is in a U grid line
-      private bool m_isUSegment;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// indicates whether the segment is "isolated" 
       /// </summary>
-      public bool Isolated
-      {
-         get => m_isolated;
-         set => m_isolated = value;
-      }
+      public bool Isolated { get; set; }
+
       #endregion
 
       #region
       /// <summary>
       /// indicate whether the segment has been removed from the grid line
       /// </summary>
-      public bool Removed
-      {
-         get => m_removed;
-         set => m_removed = value;
-      }
+      public bool Removed { get; set; }
 
       /// <summary>
       /// the index of the segment in the grid line
       /// </summary>
-      public int SegmentIndex
-      {
-         get => m_segmentIndex;
-         set => m_segmentIndex = value;
-      }
+      public int SegmentIndex { get; set; }
 
       /// <summary>
       /// the index of its parent grid line in all the curtain grid's U/V grid lines
       /// </summary>
-      public int GridLineIndex
-      {
-         get => m_gridLineIndex;
-         set => m_gridLineIndex = value;
-      }
+      public int GridLineIndex { get; set; }
 
       /// <summary>
       /// indicates whether the segment is in a U grid line
       /// </summary>
-      public bool IsUSegment
-      {
-         get => m_isUSegment;
-         set => m_isUSegment = value;
-      }
+      public bool IsUSegment { get; set; }
+
       #endregion
 
       #region Constructors
@@ -352,10 +305,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public SegmentLine2D()
          : base()
       {
-         m_removed = false;
-         m_isolated = false;
-         m_segmentIndex = -1;
-         m_gridLineIndex = -1;
+         Removed = false;
+         Isolated = false;
+         SegmentIndex = -1;
+         GridLineIndex = -1;
       }
 
       /// <summary>
@@ -370,10 +323,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public SegmentLine2D(Point startPoint, Point endPoint)
          : base(startPoint, endPoint)
       {
-         m_removed = false;
-         m_isolated = false;
-         m_segmentIndex = -1;
-         m_gridLineIndex = -1;
+         Removed = false;
+         Isolated = false;
+         SegmentIndex = -1;
+         GridLineIndex = -1;
       }
 
       /// <summary>
@@ -385,10 +338,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public SegmentLine2D(SegmentLine2D segLine2D)
          : base((Line2D)segLine2D)
       {
-         m_removed = segLine2D.Removed;
-         m_isolated = segLine2D.Isolated;
-         m_segmentIndex = segLine2D.SegmentIndex;
-         m_gridLineIndex = segLine2D.GridLineIndex;
+         Removed = segLine2D.Removed;
+         Isolated = segLine2D.Isolated;
+         SegmentIndex = segLine2D.SegmentIndex;
+         GridLineIndex = segLine2D.GridLineIndex;
       }
       #endregion
    }

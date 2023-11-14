@@ -39,11 +39,10 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         static int m_csIndex = -1;
 
         // all the created curtain systems and their data
-        List<SystemInfo> m_curtainSystemInfos;
         /// <summary>
         /// all the created curtain systems and their data
         /// </summary>
-        public List<SystemInfo> CurtainSystemInfos => m_curtainSystemInfos;
+        public List<SystemInfo> CurtainSystemInfos { get; private set; }
 
         /// <summary>
         /// occurs only when new curtain system added/removed
@@ -64,7 +63,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         public SystemData(MyDocument mydoc)
         {
             m_mydocument = mydoc;
-            m_curtainSystemInfos = new List<SystemInfo>();
+            CurtainSystemInfos = new List<SystemInfo>();
         }
 
         /// <summary>
@@ -165,7 +164,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             //
             // step 2: update the curtain system list in the main UI
             //
-            m_curtainSystemInfos.Add(resultInfo);
+            CurtainSystemInfos.Add(resultInfo);
             if (null != CurtainSystemChanged)
             {
                 CurtainSystemChanged();
@@ -184,7 +183,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             t.Start();
             foreach (var index in checkedIndices)
             {
-                var info = m_curtainSystemInfos[index];
+                var info = CurtainSystemInfos[index];
                 if (null != info.CurtainForm)
                 {
                     m_mydocument.Document.Delete(info.CurtainForm.Id);
@@ -195,14 +194,14 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
 
             // update the list of created curtain systems
             // remove the "deleted" curtain systems out
-            var infos = m_curtainSystemInfos;
-            m_curtainSystemInfos = new List<SystemInfo>();
+            var infos = CurtainSystemInfos;
+            CurtainSystemInfos = new List<SystemInfo>();
 
             foreach (var info in infos)
             {
                 if (null != info.CurtainForm)
                 {
-                    m_curtainSystemInfos.Add(info);
+                    CurtainSystemInfos.Add(info);
                 }
             }
 
@@ -224,15 +223,10 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         MyDocument m_mydocument;
 
         // the curtain system
-        Autodesk.Revit.DB.CurtainSystem m_curtainSystem;
         /// <summary>
         /// the curtain system
         /// </summary>
-        public Autodesk.Revit.DB.CurtainSystem CurtainForm
-        {
-            get => m_curtainSystem;
-            set => m_curtainSystem = value;
-        }
+        public Autodesk.Revit.DB.CurtainSystem CurtainForm { get; set; }
 
         // indicates which faces the curtain system covers
         List<int> m_gridFacesIndices;
@@ -251,36 +245,29 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
                 {
                     if (false == m_gridFacesIndices.Contains(i))
                     {
-                        m_uncoverFacesIndices.Add(i);
+                        UncoverFacesIndices.Add(i);
                     }
                 }
             }
         }
 
         // the uncovered faces
-        List<int> m_uncoverFacesIndices;
         /// <summary>
         /// the uncovered faces
         /// </summary>
-        public List<int> UncoverFacesIndices => m_uncoverFacesIndices;
+        public List<int> UncoverFacesIndices { get; }
 
         // indicates whether the curtain system is created by face array
-        private bool m_byFaceArray;
         /// <summary>
         /// indicates whether the curtain system is created by face array
         /// </summary>
-        public bool ByFaceArray
-        {
-            get => m_byFaceArray;
-            set => m_byFaceArray = value;
-        }
+        public bool ByFaceArray { get; set; }
 
         // the name of the curtain system, identified by its index
-        private string m_name;
         /// <summary>
         /// the name of the curtain system, identified by its index
         /// </summary>
-        public string Name => m_name;
+        public string Name { get; private set; }
 
         // the index of the curtain systems
         private int m_index;
@@ -293,7 +280,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             set
             {
                 m_index = value;
-                m_name = "Curtain System " + m_index;
+                Name = "Curtain System " + m_index;
             }
         }
 
@@ -307,8 +294,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         {
             m_mydocument = mydoc;
             m_gridFacesIndices = new List<int>();
-            m_uncoverFacesIndices = new List<int>();
-            m_byFaceArray = false;
+            UncoverFacesIndices = new List<int>();
+            ByFaceArray = false;
             m_index = 0;
         }
 
@@ -333,7 +320,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             {
                 foreach (var refFace in refFaces)
                 {
-                    m_curtainSystem.AddCurtainGrid(refFace);
+                    CurtainForm.AddCurtainGrid(refFace);
                 }
             }
             catch (Exception)
@@ -347,7 +334,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             // step 3: update the uncovered faces and curtain grid faces data
             foreach (var i in faceIndices)
             {
-                m_uncoverFacesIndices.Remove(i);
+                UncoverFacesIndices.Remove(i);
                 m_gridFacesIndices.Add(i);
             }
         }
@@ -373,7 +360,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             {
                 foreach (var refFace in refFaces)
                 {
-                    m_curtainSystem.RemoveCurtainGrid(refFace);
+                    CurtainForm.RemoveCurtainGrid(refFace);
                 }
             }
             catch (Exception)
@@ -388,7 +375,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             foreach (var i in faceIndices)
             {
                 m_gridFacesIndices.Remove(i);
-                m_uncoverFacesIndices.Add(i);
+                UncoverFacesIndices.Add(i);
             }
         }
 
@@ -400,7 +387,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </returns>
         public override string ToString()
         {
-            return m_name;
+            return Name;
         }
     }
 
@@ -410,15 +397,10 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
     public class GridFaceInfo
     {
         // the host face of the curtain grid
-        private int m_faceIndex;
         /// <summary>
         /// the host face of the curtain grid
         /// </summary>
-        public int FaceIndex
-        {
-            get => m_faceIndex;
-            set => m_faceIndex = value;
-        }
+        public int FaceIndex { get; set; }
 
         /// <summary>
         /// constructor
@@ -428,7 +410,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </param>
         public GridFaceInfo(int index)
         {
-            m_faceIndex = index;
+            FaceIndex = index;
         }
 
         /// <summary>
@@ -439,7 +421,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </returns>
         public override string ToString()
         {
-            return "Grid on Face " + m_faceIndex;
+            return "Grid on Face " + FaceIndex;
         }
     }
 
@@ -449,15 +431,10 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
     public class UncoverFaceInfo
     {
         // indicates the index for the face
-        private int m_faceIndex;
         /// <summary>
         /// indicates the index for the face
         /// </summary>
-        public int Index
-        {
-            get => m_faceIndex;
-            set => m_faceIndex = value;
-        }
+        public int Index { get; set; }
 
         /// <summary>
         /// constructor
@@ -467,7 +444,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </param>
         public UncoverFaceInfo(int index)
         {
-            m_faceIndex = index;
+            Index = index;
         }
 
         /// <summary>
@@ -478,7 +455,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </returns>
         public override string ToString()
         {
-            return "Face " + m_faceIndex;
+            return "Face " + Index;
         }
     }
 }

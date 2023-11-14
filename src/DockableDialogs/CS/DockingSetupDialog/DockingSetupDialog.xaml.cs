@@ -75,17 +75,17 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             m_targetGuidString = "null";
 
          if (rb_bottom.IsChecked == true)
-            m_dockPosition = Autodesk.Revit.UI.DockPosition.Bottom;
+            DockPosition = Autodesk.Revit.UI.DockPosition.Bottom;
          else if (rb_left.IsChecked == true)
-            m_dockPosition = Autodesk.Revit.UI.DockPosition.Left;
+            DockPosition = Autodesk.Revit.UI.DockPosition.Left;
          else if (rb_right.IsChecked == true)
-            m_dockPosition = Autodesk.Revit.UI.DockPosition.Right;
+            DockPosition = Autodesk.Revit.UI.DockPosition.Right;
          else if (rb_top.IsChecked == true)
-            m_dockPosition = Autodesk.Revit.UI.DockPosition.Top;
+            DockPosition = Autodesk.Revit.UI.DockPosition.Top;
          else if (rb_tabbed.IsChecked == true)
-            m_dockPosition = Autodesk.Revit.UI.DockPosition.Tabbed;
+            DockPosition = Autodesk.Revit.UI.DockPosition.Tabbed;
          else
-            m_dockPosition = Autodesk.Revit.UI.DockPosition.Floating;
+            DockPosition = Autodesk.Revit.UI.DockPosition.Floating;
 
          DialogResult = true;
          Close();
@@ -97,7 +97,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       private int m_bottom;
       private string m_targetGuidString;
       private string m_mainPageGuid;
-      private  Autodesk.Revit.UI.DockPosition m_dockPosition;
 
       public int FloatLeft => m_left;
       public int FloatRight => m_right;
@@ -156,7 +155,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
          }
       }
 
-      public Autodesk.Revit.UI.DockPosition DockPosition => m_dockPosition;
+      public Autodesk.Revit.UI.DockPosition DockPosition { get; private set; }
 
       private void SetFloatingCoordsStates(bool enabled)
       {

@@ -35,22 +35,6 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class Command : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {
@@ -65,7 +49,6 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
             if (fec.GetElementCount() <= 0)
                return Result.Failed;
             var barType = fec.FirstElement() as RebarBarType;
-            Rebar rebar = null;
             CurveElement curveElem = null;
             using (var tran = new Transaction(doc, "Create Rebar"))
             {
@@ -97,11 +80,11 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                }
                
                tran.Start();
-               
+
                // Create Rebar Free Form by specifying the GUID defining the custom external server.
                // The Rebar element returned needs to receive constraints, so that regeneration can
                // call the custom geometry calculations and create the bars 
-               rebar = Rebar.CreateFreeForm(doc, RebarUpdateServer.SampleGuid, barType, host);
+               var rebar = Rebar.CreateFreeForm(doc, RebarUpdateServer.SampleGuid, barType, host);
                // Get all bar handles to set constraints to them, so that the bar can generate its geometry
                var rManager = rebar.GetRebarConstraintsManager();
                var handles = rManager.GetAllHandles();

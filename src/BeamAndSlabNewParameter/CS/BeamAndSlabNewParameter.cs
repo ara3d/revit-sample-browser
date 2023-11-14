@@ -89,9 +89,8 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
     
             // Access an existing or create a new group in the shared parameters file
             var informationCollections = informationFile.Groups;
-            DefinitionGroup  informationCollection  = null;
 
-            informationCollection = informationCollections.get_Item("MyParameters");
+            var informationCollection = informationCollections.get_Item("MyParameters");
 
             if (null == informationCollection)
             {
@@ -112,12 +111,10 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 
             // Create a new Binding object with the categories to which the parameter will be bound
             var categories              = m_revit.Application.Create.NewCategorySet();
-            Category structuralFramingCategorie = null;
-            Category floorsClassification       = null;
 
             // use category in instead of the string name to get category 
-            structuralFramingCategorie = m_revit.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_StructuralFraming);
-            floorsClassification = m_revit.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Floors);
+            var structuralFramingCategorie = m_revit.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_StructuralFraming);
+            var floorsClassification = m_revit.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Floors);
             categories.Insert(structuralFramingCategorie);
             categories.Insert(floorsClassification);
 
@@ -334,7 +331,6 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             sharedParameterFile = sharedParameterFile + "\\MySharedParameters.txt";
             
             //Method's return
-            DefinitionFile informationFile = null; 
 
             // Check if the file is exit
             var documentMessage = new FileInfo(sharedParameterFile);
@@ -349,7 +345,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             
             // Set  ourselves file to  the externalSharedParameterFile 
             m_revit.Application.SharedParametersFilename = sharedParameterFile;
-            informationFile = m_revit.Application.OpenSharedParameterFile();
+            var informationFile = m_revit.Application.OpenSharedParameterFile();
 
             return informationFile;
         }

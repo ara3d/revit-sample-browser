@@ -54,8 +54,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
             //If the size of error messages is 0, means the validate parameters is successful
             Text = "Validate Parameters Message Form";
             //create regeneration log file
-            string assemblyPath;            
-            assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             m_logFileName = assemblyPath + "\\ValidateParametersLog.txt"; 
             var writer = File.CreateText(m_logFileName);  
             writer.Close();
@@ -89,8 +88,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         /// <param name="logStr">the log string</param>
         private void WriteLog(string logStr)
         {
-            StreamWriter writer = null;
-            writer = File.AppendText(m_logFileName);
+            var writer = File.AppendText(m_logFileName);
             writer.WriteLine(logStr);
             writer.Close();
         }

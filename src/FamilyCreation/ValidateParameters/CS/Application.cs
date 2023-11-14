@@ -117,10 +117,9 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         private void validateParameters(Document doc)
         {
             var errorInfo = new List<string>();
-            FamilyManager familyManager;
             if (doc.IsFamilyDocument)
             {
-                familyManager = doc.FamilyManager;
+                var familyManager = doc.FamilyManager;
                 errorInfo = Command.ValidateParameters(familyManager);
             }
             else

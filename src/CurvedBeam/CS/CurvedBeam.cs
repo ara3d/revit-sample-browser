@@ -39,8 +39,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     {
         #region Class memeber variables
         UIApplication m_revit;
-        ArrayList m_beamMaps = new ArrayList();    // list of beams' type
-        ArrayList m_levels = new ArrayList();    // list of levels
+
         #endregion
 
 
@@ -48,12 +47,12 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// <summary>
         /// list of all type of beams
         /// </summary>
-        public ArrayList BeamMaps => m_beamMaps;
+        public ArrayList BeamMaps { get; } = new ArrayList();
 
         /// <summary>
         /// list of all levels
         /// </summary>
-        public ArrayList LevelMaps => m_levels;
+        public ArrayList LevelMaps { get; } = new ArrayList();
 
         #endregion
 
@@ -105,7 +104,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
                     var level = o as Level;
                     if (null != level)
                     {
-                        m_levels.Add(new LevelMap(level));
+                        LevelMaps.Add(new LevelMap(level));
                         goto nextLoop;
                     }
 
@@ -133,7 +132,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
                         var categoryName = familyType.Category.Name;
                         if ("Structural Framing" == categoryName)
                         {
-                            m_beamMaps.Add(new SymbolMap(familyType));
+                            BeamMaps.Add(new SymbolMap(familyType));
                         }
                     }
                 nextLoop:
@@ -223,12 +222,11 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// <returns></returns>
         public bool CreateCurvedBeam(FamilySymbol fsBeam, Curve curve, Level level)
         {
-            FamilyInstance beam;
             try
             {
                if (!fsBeam.IsActive)
                   fsBeam.Activate();
-                beam = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(curve, fsBeam, level, StructuralType.Beam);
+                var beam = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(curve, fsBeam, level, StructuralType.Beam);
                 if (null == beam)
                 {
                     return false;
@@ -260,8 +258,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     public class SymbolMap
     {
         #region SymbolMap class member variables
-        string m_symbolName = "";
-        FamilySymbol m_symbol;
+
         #endregion
 
 
@@ -280,26 +277,26 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// <param name="symbol">family symbol</param>
         public SymbolMap(FamilySymbol symbol)
         {
-            m_symbol = symbol;
+            ElementType = symbol;
             var familyName = "";
             if (null != symbol.Family)
             {
                 familyName = symbol.Family.Name;
             }
-            m_symbolName = familyName + " : " + symbol.Name;
+            SymbolName = familyName + " : " + symbol.Name;
         }
 
 
         /// <summary>
         /// SymbolName property
         /// </summary>
-        public string SymbolName => m_symbolName;
+        public string SymbolName { get; } = "";
 
 
         /// <summary>
         /// ElementType property
         /// </summary>
-        public FamilySymbol ElementType => m_symbol;
+        public FamilySymbol ElementType { get; }
     }
 
 
@@ -309,8 +306,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     public class LevelMap
     {
         #region LevelMap class member variable
-        string m_levelName = "";
-        Level m_level;
+
         #endregion
 
 
@@ -330,8 +326,8 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// <param name="level">level</param>
         public LevelMap(Level level)
         {
-            m_level = level;
-            m_levelName = level.Name;
+            Level = level;
+            LevelName = level.Name;
         }
         #endregion
 
@@ -340,12 +336,12 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// <summary>
         /// LevelName property
         /// </summary>
-        public string LevelName => m_levelName;
+        public string LevelName { get; } = "";
 
         /// <summary>
         /// Level property
         /// </summary>
-        public Level Level => m_level;
+        public Level Level { get; }
 
         #endregion
     }

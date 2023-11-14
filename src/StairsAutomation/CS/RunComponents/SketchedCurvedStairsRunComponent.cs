@@ -50,7 +50,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
          base()
       {
          m_riserNumber = riserNumber;
-         m_bottomElevation = bottomElevation;
+         RunElevation = bottomElevation;
          m_innerRadius = innerRadius;
          m_outerRadius = innerRadius + width;
          m_incrementAngle = desiredTreadDepth / (m_innerRadius + width / 2.0);
@@ -79,7 +79,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
          base(transform)
       {
          m_riserNumber = riserNumber;
-         m_bottomElevation = bottomElevation;
+         RunElevation = bottomElevation;
          m_innerRadius = innerRadius;
          m_outerRadius = innerRadius + width;
          m_incrementAngle = desiredTreadDepth / (m_innerRadius + width / 2.0);
@@ -92,7 +92,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       }
 
       private int m_riserNumber;
-      private double m_bottomElevation;
       private double m_innerRadius;
       private double m_outerRadius;
       private double m_incrementAngle;
@@ -105,7 +104,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// Implements the interface property.
       /// </summary>
-      public double RunElevation => m_bottomElevation;
+      public double RunElevation { get; }
 
       /// <summary>
       /// Implements the interface property.
@@ -127,7 +126,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// </summary>
       public double GetRunElevation()
       {
-         return m_bottomElevation;
+         return RunElevation;
       }
 
       /// <summary>

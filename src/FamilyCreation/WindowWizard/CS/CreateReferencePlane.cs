@@ -44,10 +44,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             var bubbleEnd = new XYZ ();
             var freeEnd = new XYZ ();
-            Autodesk.Revit.DB.ReferencePlane refPlane;
             try
             {
-                refPlane = host as Autodesk.Revit.DB.ReferencePlane;
+                var refPlane = host as Autodesk.Revit.DB.ReferencePlane;
                 if (refPlane != null)
                 {
                     bubbleEnd = refPlane.BubbleEnd.Add(offSet);

@@ -47,7 +47,7 @@ namespace ExtensibleStorageManager
             var rp = application.CreateRibbonPanel("Extensible Storage Manager");
             var currentAssembly = System.Reflection.Assembly.GetAssembly(GetType()).Location;
         
-            var pb = rp.AddItem(new PushButtonData("Extensible Storage Manager", "Extensible Storage Manager", currentAssembly, "ExtensibleStorageManager.Command")) as PushButton;
+            _ = rp.AddItem(new PushButtonData("Extensible Storage Manager", "Extensible Storage Manager", currentAssembly, "ExtensibleStorageManager.Command")) as PushButton;
           
            return Result.Succeeded;
            
@@ -58,12 +58,6 @@ namespace ExtensibleStorageManager
        /// The Last Schema Guid value used in the UICommand dialog is stored here for future retrieval
        /// after the dialog is closed.
        /// </summary>
-        public static string LastGuid
-        {
-           get => m_lastGuid;
-           set => m_lastGuid = value;
-        }
-        private static string m_lastGuid;
-
+        public static string LastGuid { get; set; }
     }
 }

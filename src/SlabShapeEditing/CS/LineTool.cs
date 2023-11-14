@@ -31,18 +31,14 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
     class LineTool
     {
         #region class member variables
-        ArrayList m_Points; //record all the points draw by this tool
+
         PointF m_movePoint; //record the coordinate of location where mouse just moved to. 
         #endregion 
 
         /// <summary>
         /// Get all the points of this tool
         /// </summary>
-        public ArrayList Points
-        {
-            get => m_Points;
-            set => m_Points = value;
-        }
+        public ArrayList Points { get; set; }
 
         /// <summary>
         ///Get coordinate of location where mouse just moved to.
@@ -58,7 +54,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// </summary>
         public LineTool() 
         {
-            m_Points = new ArrayList();
+            Points = new ArrayList();
             m_movePoint = Point.Empty;
         }
 
@@ -69,17 +65,17 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="pen">Pen which used to draw lines</param>
         public void Draw2D(Graphics graphics, Pen pen)
         {
-            for (var i = 0; i < m_Points.Count - 1; i+=2)
+            for (var i = 0; i < Points.Count - 1; i+=2)
             {
-                graphics.DrawLine(pen, (PointF)m_Points[i], (PointF)m_Points[i+1]);
+                graphics.DrawLine(pen, (PointF)Points[i], (PointF)Points[i+1]);
             }
 
             //draw the moving point
             if (!m_movePoint.IsEmpty)
             {
-                if (m_Points.Count >= 1)
+                if (Points.Count >= 1)
                 {
-                    graphics.DrawLine(pen, (PointF)m_Points[m_Points.Count - 1], m_movePoint);
+                    graphics.DrawLine(pen, (PointF)Points[Points.Count - 1], m_movePoint);
                 }
             }
         }
@@ -91,9 +87,9 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="pen">Pen which used to draw lines</param>
         public void DrawRectangle(Graphics graphics, Pen pen)
         {
-            for (var i = 0; i < m_Points.Count - 1; i += 2)
+            for (var i = 0; i < Points.Count - 1; i += 2)
             {
-                var pointF = (PointF)m_Points[i];
+                var pointF = (PointF)Points[i];
                 graphics.DrawRectangle(pen, pointF.X-2, pointF.Y-2, 4, 4);
             }
         }

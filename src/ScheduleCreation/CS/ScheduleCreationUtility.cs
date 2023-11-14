@@ -99,7 +99,7 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
             }
 
             //Create a new schedule sheet instance that makes the sheet to show the data of wall view schedule at upperLeft point.
-            var placedInstance = ScheduleSheetInstance.Create(document, newSheet.Id, schedule.Id, upperLeft);
+            ScheduleSheetInstance.Create(document, newSheet.Id, schedule.Id, upperLeft);
 
             t.Commit();
         }

@@ -57,7 +57,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
          }
          var sphere = sphereElements.Cast<FamilyInstance>().First<FamilyInstance>();
          var viewCollector = new FilteredElementCollector(doc);
-         ICollection<Element> views = viewCollector.OfClass(typeof(View3D)).ToElements();
+         viewCollector.OfClass(typeof(View3D)).ToElements();
          var viewElements = from element in viewCollector where element.Name == "AVF" select element;
          if (viewElements.Count() == 0)
          {
@@ -99,7 +99,6 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
       public void Execute(UpdaterData data)
       {
          var doc = data.GetDocument();
-         var app = doc.Application;
 
          var view = doc.GetElement(viewID) as View;
          var sphere = doc.GetElement(sphereID) as FamilyInstance;

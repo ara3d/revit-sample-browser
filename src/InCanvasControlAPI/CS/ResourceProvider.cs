@@ -34,8 +34,8 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 
       private ResourceProvider()
       {
-         issueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\issue.bmp";
-         selectedIssueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\selected.bmp";
+         IssueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\issue.bmp";
+         SelectedIssueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\selected.bmp";
       }
 
       /// <summary>
@@ -54,19 +54,17 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// <summary>
       /// Path to marker's bitmap for unselected issues
       /// </summary>
-      public string IssueImage => issueImage;
+      public string IssueImage { get; }
 
       /// <summary>
       /// Path to marker's bitmap for selected issues
       /// </summary>
-      public string SelectedIssueImage => selectedIssueImage;
+      public string SelectedIssueImage { get; }
 
       #endregion
 
       #region Class member variables
 
-      private string issueImage;
-      private string selectedIssueImage;
       private static ResourceProvider provider;
 
       #endregion

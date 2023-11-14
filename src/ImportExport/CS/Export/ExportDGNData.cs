@@ -180,7 +180,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             base.Export();
 
-            var exported = false;
             ICollection<ElementId> views = new List<ElementId>();
             if (m_currentViewOnly)
             {
@@ -216,9 +215,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var mainModule = Process.GetCurrentProcess().MainModule;
             var RevitFolder = Path.GetDirectoryName( mainModule.FileName );
             dgnExportOptions.SeedName = Path.Combine(RevitFolder, @"ACADInterop\V8-Imperial-Seed3D.dgn");
-            
+
             //Export
-            exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, dgnExportOptions);
+            var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, dgnExportOptions);
             return exported;
         }
         #endregion

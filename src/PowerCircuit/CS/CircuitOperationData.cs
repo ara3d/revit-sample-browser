@@ -262,7 +262,6 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                var element = m_revitDoc.Document.GetElement(elementId);
                 var fi = element as FamilyInstance;
                 MEPModel mepModel;
-                ISet<ElectricalSystem> ess;
 
                 if (fi != null && (mepModel = fi.MEPModel) != null)
                 {
@@ -272,9 +271,8 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                     // Then compare the circuits with circuits of other selected elements 
                     // to get the common ones
                     //
-
                     // Get all electrical systems
-                    ess = mepModel.GetElectricalSystems();
+                    var ess = mepModel.GetElectricalSystems();
                     if (null == ess)
                     {
                         m_hasCircuit = false;
@@ -626,11 +624,10 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
 
             try
             {
-                FamilyInstance fi;
                 foreach (var elementId in m_selection.GetElementIds())
                 {
                    var element = m_revitDoc.Document.GetElement(elementId);
-                    fi = element as FamilyInstance;
+                    var fi = element as FamilyInstance;
                     if (fi != null)
                     {
                         m_selectedElectricalSystem.SelectPanel(fi);

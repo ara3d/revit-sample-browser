@@ -177,10 +177,9 @@ namespace Revit.SDK.Samples.Journaling.CS
             var doc = m_commandData.Application.ActiveUIDocument.Document;
             var dataMap = m_commandData.JournalData;
 
-            string dataValue = null;    // store the journal data value temporarily
-
-            // Get the wall type from the journal
-            dataValue = GetSpecialData(dataMap, "Wall Type Name"); // get wall type name
+            var dataValue = // store the journal data value temporarily
+                // Get the wall type from the journal
+                GetSpecialData(dataMap, "Wall Type Name"); // get wall type name
             foreach (var type in m_wallTypeList)   // get the wall type by the name
             {
                 if (dataValue == type.Name)
@@ -246,8 +245,6 @@ namespace Revit.SDK.Samples.Journaling.CS
         private void CreateWall()
         {
             // Get the create classes.
-            var createApp = m_commandData.Application.Application.Create;
-            var createDoc = m_commandData.Application.ActiveUIDocument.Document.Create;
 
             // Create geometry line(curve)
             var geometryLine = Line.CreateBound(m_startPoint, m_endPoint);
@@ -294,10 +291,10 @@ namespace Revit.SDK.Samples.Journaling.CS
             double x = 0;   // Store the temporary x coordinate
             double y = 0;   // Store the temporary y coordinate
             double z = 0;   // Store the temporary z coordinate
-            string subString;   // A part of the format string 
 
-            // Get the data string from the format string
-            subString = pointString.TrimStart('(');
+            var subString = // A part of the format string 
+                // Get the data string from the format string
+                pointString.TrimStart('(');
             subString = subString.TrimEnd(')');
             var coordinateString = subString.Split(',');
             if (3 != coordinateString.Length)

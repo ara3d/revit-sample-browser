@@ -301,7 +301,6 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
       public void IdlingHandler(object sender, IdlingEventArgs args)
       {
          var uiapp = sender as UIApplication;
-         var uidoc = uiapp.ActiveUIDocument;
 
          if (m_MyForm.IsDisposed)
          {

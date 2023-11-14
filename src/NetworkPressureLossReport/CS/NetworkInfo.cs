@@ -7,38 +7,26 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
 {
    public class NetworkInfo
    {
-      private Document m_doc;
-      private string m_name;        // A recognizable name from design system or fabrication service.
-      private double m_maxFlow;     // The maximum flow value of any segment on the entire network.
-      private string m_flow;
-      private ConnectorDomainType m_domainType;
-      private IDictionary<int, SectionInfo> m_sections;
+       private double m_maxFlow;     // The maximum flow value of any segment on the entire network.
+       private IDictionary<int, SectionInfo> m_sections;
 
       public NetworkInfo(Document doc)
       {
-         m_doc = doc;
+         Document = doc;
          m_maxFlow = 0.0;
-         m_flow = null;
-         m_domainType = ConnectorDomainType.Undefined;
+         FlowDisplay = null;
+         DomainType = ConnectorDomainType.Undefined;
          m_sections = new SortedDictionary<int, SectionInfo>();
       }
       public int NumberOfSections => m_sections.Count;
 
-      public Document Document => m_doc;
+      public Document Document { get; }
 
-      public string Name
-      {
-         get => m_name;
-         set => m_name = value;
-      }
+      public string Name { get; set; }
 
-      public string FlowDisplay => m_flow;
+      public string FlowDisplay { get; private set; }
 
-      public ConnectorDomainType DomainType
-      {
-         get => m_domainType;
-         set => m_domainType = value;
-      }
+      public ConnectorDomainType DomainType { get; set; }
 
       public static IList<NetworkInfo> FindValidNetworks(Document doc)
       {
@@ -147,12 +135,12 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
          {
             m_sections.Add(sectionNumber, new SectionInfo());
          }
-         var newSegmentInfo = m_sections[sectionNumber].AddSegment(m_doc, segment, segmentData);
+         m_sections[sectionNumber].AddSegment(Document, segment, segmentData);
       }
 
       private void RefineName(ElementId idElem)
       {
-         var elem = m_doc.GetElement(idElem);
+         var elem = Document.GetElement(idElem);
          var aCurve = elem as MEPCurve;
          if (aCurve != null)
          {
@@ -169,7 +157,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             {
                var serviceName = aPart.ServiceName;
                // Get the full name of fabrication service by its id.
-               var fabConfig = FabricationConfiguration.GetFabricationConfiguration(m_doc);
+               var fabConfig = FabricationConfiguration.GetFabricationConfiguration(Document);
                if (fabConfig != null)
                {
                   var fabService = fabConfig.GetService(aPart.ServiceId);
@@ -185,15 +173,15 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
 
       private void AppendName(string name)
       {
-         if (string.IsNullOrEmpty(m_name))
+         if (string.IsNullOrEmpty(Name))
          {
-            m_name = name;
+            Name = name;
          }
          else
          {
-            if (!m_name.Contains(name))
+            if (!Name.Contains(name))
             {
-               m_name += " + " + name;
+               Name += " + " + name;
             }
          }
       }
@@ -204,7 +192,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             specId = SpecTypeId.AirFlow;
 
          // Reset the flow display value based on the maximum number after adding all segments.
-         m_flow = UnitFormatUtils.Format(m_doc.GetUnits(), specId, m_maxFlow, false);
+         FlowDisplay = UnitFormatUtils.Format(Document.GetUnits(), specId, m_maxFlow, false);
       }
 
       public void ExportCSV(CSVExporter ex)
@@ -248,8 +236,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
 
          foreach (var item in m_sections)
          {
-            var sectionNum = item.Key;
-            item.Value.UpdateView(viewer, points, valList, m_maxFlow);
+             item.Value.UpdateView(viewer, points, valList, m_maxFlow);
          }
 
          if(points.Count > 0)

@@ -13,53 +13,40 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
       public Export2DView()
       {
          InitializeComponent();
-         m_exportOptions = new ExportOptions();
-         m_exportOptions.ExportAnnotationObjects = false;
-         m_exportOptions.ExportPatternLines = false;
+         ViewExportOptions = new ExportOptions();
+         ViewExportOptions.ExportAnnotationObjects = false;
+         ViewExportOptions.ExportPatternLines = false;
       }
-
-      ExportOptions m_exportOptions;
 
       /// <summary>
       /// Property containing the options chosen for export. 
       /// </summary>
-      public ExportOptions ViewExportOptions => m_exportOptions;
+      public ExportOptions ViewExportOptions { get; }
 
       /// <summary>
       /// The option for creating Path of Travel.
       /// </summary>
       public class ExportOptions
       {
-         bool m_exportAnnotationObjects;
-         bool m_exportPatternLines;
-
-         /// <summary>
+          /// <summary>
          /// True if AnnotationObjects are to be included in the export, false otherwise. 
          /// </summary>
-         public bool ExportAnnotationObjects
-         {
-            get => m_exportAnnotationObjects;
-            set => m_exportAnnotationObjects = value;
-         }
+         public bool ExportAnnotationObjects { get; set; }
 
          /// <summary>
          /// True if Pattern Lines are to be included in the export, false otherwise. 
          /// </summary>
-         public bool ExportPatternLines
-         {
-            get => m_exportPatternLines;
-            set => m_exportPatternLines = value;
-         }
+         public bool ExportPatternLines { get; set; }
       }
 
       private void checkBox2_CheckedChanged(object sender, EventArgs e)
       {
-         m_exportOptions.ExportAnnotationObjects = checkBox2.Checked;
+         ViewExportOptions.ExportAnnotationObjects = checkBox2.Checked;
       }
 
       private void checkBox3_CheckedChanged(object sender, EventArgs e)
       {
-         m_exportOptions.ExportPatternLines = checkBox3.Checked;
+         ViewExportOptions.ExportPatternLines = checkBox3.Checked;
       }
    }
 }

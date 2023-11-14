@@ -278,7 +278,6 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
         {
 
             var randomFileName = Path.GetRandomFileName();
-            var fileRoot = Path.GetFileNameWithoutExtension(randomFileName);
             var spFile = Path.ChangeExtension(randomFileName, "txt");
             var filePath = Path.Combine(@"c:\tmp\Meridian\", spFile);
             var writer = File.CreateText(filePath);

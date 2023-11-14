@@ -59,12 +59,12 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         /// <returns>the point data stored in this control</returns>
         public Autodesk.Revit.DB.XYZ GetPointData()
         {
-            double x = 0;   // Store the temporary x coordinate
-            double y = 0;   // Store the temporary y coordinate
-            double z = 0;   // Store the temporary z coordinate 
-            x = Convert.ToDouble(xCoordinateTextBox.Text);  // Get x coordinate
-            y = Convert.ToDouble(yCoordinateTextBox.Text);  // Get x coordinate
-            z = Convert.ToDouble(zCoordinateTextBox.Text);  // Get x coordinate
+            var x = Convert.ToDouble(xCoordinateTextBox.Text); // Get x coordinate
+            // Store the temporary x coordinate
+            var y = Convert.ToDouble(yCoordinateTextBox.Text); // Get x coordinate
+            // Store the temporary y coordinate
+            var z = Convert.ToDouble(zCoordinateTextBox.Text); // Get x coordinate
+            // Store the temporary z coordinate 
             return new Autodesk.Revit.DB.XYZ(x, y, z);
         }
 

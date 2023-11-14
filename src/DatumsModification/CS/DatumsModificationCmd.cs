@@ -134,9 +134,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
 
         private Leader CalculateLeader(Leader leader,bool addLeader)
         {
-           var end = leader.End;
-           var anchor = leader.Anchor;
-           XYZ elbow = null;
+            XYZ elbow = null;
            if (addLeftElbow)
               elbow = new XYZ(leader.Anchor.X + (leader.End.X - leader.Anchor.X) / 2,
                  leader.Anchor.Y + (leader.End.Y - leader.Anchor.Y) / 2,
@@ -202,7 +200,6 @@ namespace Revit.SDK.Samples.DatumsModification.CS
                       foreach (var datum in datumDic.Values)
                       {
                          var curve = datum.GetCurvesInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view),view).ElementAt(0);
-                         var direct = (curve as Line).Direction;
                          var newCurve = CalculateCurve(curve,baseLine,baseDirect);
                          datum.SetCurveInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view), view, newCurve);                         
                       }

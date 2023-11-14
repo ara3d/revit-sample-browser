@@ -134,7 +134,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
          {
             var options = new PDFExportOptions();
             var name = "sample";
-            var settings = ExportPDFSettings.Create(doc, name, options);
+            ExportPDFSettings.Create(doc, name, options);
          }
          catch (Exception ex)
          {

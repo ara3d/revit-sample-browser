@@ -276,8 +276,6 @@ namespace Revit.SDK.Samples.Truss.CS
       public Autodesk.Revit.DB.Structure.Truss CreateTruss()
       {
          var document = m_commandData.Application.ActiveUIDocument.Document;
-         var createDoc = document.Create;
-         var createApp = m_commandData.Application.Application.Create;
          //sketchPlane
          var origin = new XYZ(0, 0, 0);
          var xDirection = new XYZ(1, 0, 0);

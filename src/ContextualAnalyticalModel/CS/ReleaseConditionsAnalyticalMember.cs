@@ -43,7 +43,7 @@ namespace ContextualAnalyticalModel
                }
 
                // Get release type at start
-               var releaseType = analyticalMember.GetReleaseType(true);
+               analyticalMember.GetReleaseType(true);
 
                // Change release type
                analyticalMember.SetReleaseType(true, ReleaseType.UserDefined);

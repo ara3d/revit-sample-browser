@@ -837,14 +837,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    {
       #region Fields
       // the current line operation type
-      private LineOperationType m_opType;
+
       #endregion
 
       #region Properties
       /// <summary>
       /// the current line operation type
       /// </summary>
-      public LineOperationType OpType => m_opType;
+      public LineOperationType OpType { get; }
 
       #endregion
 
@@ -857,7 +857,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       public LineOperation(LineOperationType type)
       {
-         m_opType = type;
+         OpType = type;
       }
       #endregion
 
@@ -871,7 +871,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       public override string ToString()
       {
          var resultString = string.Empty;
-         switch (m_opType)
+         switch (OpType)
          {
             case LineOperationType.AddULine:
                resultString = "Add horizontal grid line";

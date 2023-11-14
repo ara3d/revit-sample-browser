@@ -62,8 +62,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
             createRoofTransaction.Start();
             try
             {
-                var footPrintToModelCurveMapping = new ModelCurveArray();
-                footprintRoof = m_creationDoc.NewFootPrintRoof(footPrint, level, roofType, out footPrintToModelCurveMapping);
+                new ModelCurveArray();
+                footprintRoof = m_creationDoc.NewFootPrintRoof(footPrint, level, roofType, out _);
                 createRoofTransaction.Commit();
             }
             catch (System.Exception e)

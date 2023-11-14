@@ -38,9 +38,6 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     class Command : IExternalCommand
     {
-        static ExternalCommandData m_commandData;
-        static Hashtable m_hookTypes;
-        static Hashtable m_barTypes;
         AreaReinforcement m_areaRein;
 
         /// <summary>
@@ -66,7 +63,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         {
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.AreaReinParameters");
             trans.Start();
-            m_commandData = revit;
+            CommandData = revit;
             if (!PreData())
             {
                 message = "Please select only one AreaReinforcement and ";
@@ -100,19 +97,19 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         /// <summary>
         /// it is convenient for other class to get
         /// </summary>
-        public static ExternalCommandData CommandData => m_commandData;
+        public static ExternalCommandData CommandData { get; private set; }
 
         /// <summary>
         /// all hook types in current project
         /// it is static because of IConverter limitation
         /// </summary>
-        public static Hashtable HookTypes => m_hookTypes;
+        public static Hashtable HookTypes { get; private set; }
 
         /// <summary>
         /// all hook types in current project
         /// it is static because of IConverter limitation
         /// </summary>
-        public static Hashtable BarTypes => m_barTypes;
+        public static Hashtable BarTypes { get; private set; }
 
         /// <summary>
         /// check whether the selected is expected, find all hooktypes in current project
@@ -122,9 +119,9 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         private bool PreData()
         {
            var selected = new ElementSet();
-            foreach (var elementId in m_commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+            foreach (var elementId in CommandData.Application.ActiveUIDocument.Selection.GetElementIds())
             {
-               selected.Insert(m_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+               selected.Insert(CommandData.Application.ActiveUIDocument.Document.GetElement(elementId));
             }
 
             //selected is not only one AreaReinforcement
@@ -142,10 +139,10 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
 
             //make sure hook type and bar type exist in current project and get them
-            m_hookTypes = new Hashtable();
-            m_barTypes = new Hashtable();
+            HookTypes = new Hashtable();
+            BarTypes = new Hashtable();
 
-            var activeDoc = m_commandData.Application.ActiveUIDocument.Document;
+            var activeDoc = CommandData.Application.ActiveUIDocument.Document;
 
 
             var itor = (new FilteredElementCollector(activeDoc)).OfClass(typeof(RebarHookType)).GetElementIterator();
@@ -156,7 +153,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 if (null != hookType)
                 {
                     var hookTypeName = hookType.Name;
-                    m_hookTypes.Add(hookTypeName, hookType.Id);
+                    HookTypes.Add(hookTypeName, hookType.Id);
                 }
             }
 
@@ -168,10 +165,10 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 if (null != barType)
                 {
                     var barTypeName = barType.Name;
-                    m_barTypes.Add(barTypeName, barType.Id);
+                    BarTypes.Add(barTypeName, barType.Id);
                 }
             }
-            if (m_hookTypes.Count == 0 || m_barTypes.Count == 0)
+            if (HookTypes.Count == 0 || BarTypes.Count == 0)
             {
                 return false;
             }
@@ -193,7 +190,6 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             {
                 // Get the active document and view
                 var revitDoc = revit.Application.ActiveUIDocument;
-                var view = revitDoc.Document.ActiveView;
                 foreach (var elemId in revitDoc.Selection.GetElementIds())
                 {
                     //if( elem.GetType() == typeof( Autodesk.Revit.DB.Structure.Rebar ) )

@@ -32,8 +32,6 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
     /// </summary>
     class SpaceNode : TreeNode
     {
-        Space m_space;
-
         /// <summary>
         /// The constructor of SpaceNode class
         /// </summary>
@@ -41,13 +39,13 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         public SpaceNode(Space space)
             : base(space.Name)
         {
-            m_space = space;
+            Space = space;
             Text = space.Name;
         }
 
         /// <summary>
         /// Get the Zone element in the ZoneNode.
         /// </summary>
-        public Space Space => m_space;
+        public Space Space { get; }
     }
 }

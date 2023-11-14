@@ -76,7 +76,6 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
 
                 ElementId modelId = null;
                 Element sectionElement = null;
-                ElementId sectionId = null;
                 try
                 {
                     var referSection = m_documentUI.Selection.PickObject(ObjectType.Element, "Please select a section view.");
@@ -125,7 +124,7 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                     TaskDialog.Show("Message", "Cannot find the view name " + name + "\n The operation will be canceled.");
                     return Result.Failed;
                 }
-                sectionId = sectionViews[0].Id;
+                var sectionId = sectionViews[0].Id;
 
                 // Associated the section view to the window, and add a trigger for it.
                 if (!idsToWatch.Contains(modelId) || m_oldSectionId != sectionId)

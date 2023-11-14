@@ -140,8 +140,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             // update the the related family shared parameter's value if user already added it.
             if (doorSymbol.ParametersMap.Contains("BasalOpening"))
             {
-               var basalOpeningParam = doorSymbol.ParametersMap.get_Item("BasalOpening");
-               var setResult = basalOpeningParam.Set(m_basalOpeningValue);
+                var basalOpeningParam = doorSymbol.ParametersMap.get_Item("BasalOpening");
+                basalOpeningParam.Set(m_basalOpeningValue);
             }
          }
       }
@@ -165,7 +165,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       {
          var doc = m_app.ActiveUIDocument.Document;
          var creDoc = doc.Create;
-         var creApp = m_app.Application.Create;
 
          // get one level. A project has at least one level.
          var level = new FilteredElementCollector(doc).OfClass(typeof(Level)).FirstElement() as Level;

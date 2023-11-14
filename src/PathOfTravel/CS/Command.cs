@@ -64,22 +64,6 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
    public class Command : IExternalCommand
    {
       #region Class Interface Implementation
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {
@@ -134,7 +118,6 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
       {
          var doc = uiDoc.Document;
          var viewPlan = uiDoc.ActiveView as ViewPlan;
-         var levelId = viewPlan.GenLevel.Id;
 
          // select room
          var reference = uiDoc.Selection.PickObject(ObjectType.Element, new RoomSelectionFilter(), "Select a room");
@@ -194,8 +177,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
          using (var t = new Transaction(doc, "Generate paths of travel"))
          {
             t.Start();
-            IList<PathOfTravelCalculationStatus> statuses;
-            PathOfTravel.CreateMapped(viewPlan, startPoints, new List<XYZ> { endPoint }, out statuses);
+            PathOfTravel.CreateMapped(viewPlan, startPoints, new List<XYZ> { endPoint }, out _);
             t.Commit();
          }
 
@@ -333,9 +315,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
       /// <param name="mapAllStartsToAllEnds"></param>
       private static void CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(Document doc, ViewPlan viewPlan, bool mapAllStartsToAllEnds)
       {
-         var levelId = viewPlan.GenLevel.Id;
-
-         // find rooms on level
+          // find rooms on level
          var fec = new FilteredElementCollector(doc, viewPlan.Id);
          fec.WherePasses(new RoomFilter());
 
@@ -497,8 +477,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
          using (var t = new Transaction(doc, "Generate paths of travel"))
          {
             t.Start();
-            IList<PathOfTravelCalculationStatus> statuses;
-            var pathsOfTravel = PathOfTravel.CreateMapped(viewPlan, sourcePoints, endPoints, out statuses);
+            var pathsOfTravel = PathOfTravel.CreateMapped(viewPlan, sourcePoints, endPoints, out _);
 
             foreach (var pOT in pathsOfTravel)
             {

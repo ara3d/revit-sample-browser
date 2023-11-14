@@ -42,7 +42,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <returns>all faces</returns>
         public static FaceArray GetFaces(Element elem)
         {
-            var faces = new List<Face>();
+            new List<Face>();
 
             var geoOptions =
                 Command.CommandData.Application.Application.Create.NewGeometryOptions();
@@ -152,7 +152,6 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
          }
 
          //make sure the first line is vertical to 2 lines and parallel to another line
-         var iniLine = lines[0];
          var verticalLines = new Line[2];
          Line paraLine = null;
          var index = 0;

@@ -38,31 +38,12 @@ namespace Revit.SDK.Samples.ParameterValuesFromImage.CS
     {
         static AddInId appId = new AddInId(new Guid("9F405E24-3799-4b56-828F-14842ABE4802"));
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
-            var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
 
             var trans = new Transaction(doc, "Revit.SDK.Samples.ParameterValuesFromImage");
             trans.Start();
-            Parameter param = null;
             var image = new Bitmap(doc.PathName + "_grayscale.bmp");
             var collector = new FilteredElementCollector(doc);
             ICollection<Element> collection = collector.OfClass(typeof(DividedSurface)).ToElements();
@@ -81,7 +62,7 @@ namespace Revit.SDK.Samples.ParameterValuesFromImage.CS
                             var familyinstance = ds.GetTileFamilyInstance(gn, 0);
                             if (familyinstance != null)
                             {
-                               param = familyinstance.LookupParameter("Grayscale");
+                                var param = familyinstance.LookupParameter("Grayscale");
                                 if (param == null)
                                 {
                                     trans.RollBack();

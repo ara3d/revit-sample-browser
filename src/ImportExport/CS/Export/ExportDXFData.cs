@@ -132,8 +132,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             base.Export();
 
-            var exported = false;
-
             //parameter :  views
             IList<ElementId> views = new List<ElementId>();
             if (m_currentViewOnly)
@@ -162,7 +160,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             dxfExportOptions.TargetUnit = m_exportOptionsData.ExportUnit;
 
             //Export
-            exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, dxfExportOptions);
+            var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, dxfExportOptions);
 
             return exported;
         }

@@ -152,7 +152,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
         /// failed to load and the release the internal reference.</returns> 
         public Result OnStartup(UIControlledApplication application)
         {
-            s_uiApplication = application;
+            UIControlledApplication = application;
             ApplicationOptions.Initialize(this);
 
             createCommandBinding(application);
@@ -164,9 +164,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             return Result.Succeeded;
         }
 
-        public UIControlledApplication UIControlledApplication => s_uiApplication;
-
-        private UIControlledApplication s_uiApplication;
+        public UIControlledApplication UIControlledApplication { get; private set; }
 
         void binding_CanExecute(object sender, Autodesk.Revit.UI.Events.CanExecuteEventArgs e)
         {

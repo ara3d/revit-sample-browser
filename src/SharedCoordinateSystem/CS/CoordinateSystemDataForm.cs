@@ -38,7 +38,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         string m_eastWest; //the value of the east to west offset
         string m_northSouth; //the value of the north to south offset
         string m_elevation; //the value of the elevation from ground level
-        string m_newLocationName; //the name of the duplicated location
 
         private PlaceInfo m_placeInfo;           //store all cities' information
         private SiteLocation m_siteLocation;     //reference to SiteLocation
@@ -51,11 +50,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// <summary>
         /// get and set the new location's name
         /// </summary>
-        public string NewLocationName
-        {
-            get => m_newLocationName;
-            set => m_newLocationName = value;
-        }
+        public string NewLocationName { get; set; }
 
         /// <summary>
         /// constructor of form
@@ -104,8 +99,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             //set the selected item to current location
             for (var i = 0; i < locationListBox.Items.Count; i++)
             {
-                string itemName = null;
-                itemName = locationListBox.Items[i].ToString();
+                var itemName = locationListBox.Items[i].ToString();
                 if (itemName.Contains("(current)"))
                 {
                     locationListBox.SelectedIndex = i;
@@ -180,7 +174,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             //make the new project location is the selected item after it was duplicated
             for (var i = 0; i < locationListBox.Items.Count; i++)
             {
-                if (m_newLocationName == locationListBox.Items[i].ToString())
+                if (NewLocationName == locationListBox.Items[i].ToString())
                 {
                     locationListBox.SelectedIndex = i;
                 }
@@ -617,7 +611,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                 var degree = ((char)0xb0).ToString();
                 if (!angleTextBox.Text.Contains(degree))
                 {
-                    var value = Convert.ToDouble(angleTextBox.Text);
                     angleTextBox.AppendText(degree);
                 }
                 else
@@ -625,7 +618,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                     var tempName = angleTextBox.Text;
                     var index = tempName.IndexOf(degree);
                     tempName = tempName.Substring(0, index);
-                    var value = Convert.ToDouble(tempName);
                 }
             }
             catch (FormatException)

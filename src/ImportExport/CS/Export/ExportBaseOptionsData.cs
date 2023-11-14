@@ -128,7 +128,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         bool m_exportMergeFiles;
 
         //Export rooms and areas as polylines
-        bool m_exportAreas;
+
         #endregion
 
         #region Class Properties
@@ -249,11 +249,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         /// Export rooms and areas as polylines
         /// </summary>
-        public bool ExportAreas
-        {
-            get => m_exportAreas;
-            set => m_exportAreas = value;
-        }
+        public bool ExportAreas { get; set; }
 
         /// <summary>
         /// Whether to create separate files for each view/sheet
@@ -343,7 +339,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_enumSolids.Add(Autodesk.Revit.DB.SolidGeometry.ACIS);
 
             // Set default values
-            m_exportAreas = false;
+            ExportAreas = false;
             m_exportSolid = Autodesk.Revit.DB.SolidGeometry.Polymesh;
             m_exportLayerMapping = "AIA";
             m_exportLayersAndProperties = Autodesk.Revit.DB.PropOverrideMode.ByEntity;

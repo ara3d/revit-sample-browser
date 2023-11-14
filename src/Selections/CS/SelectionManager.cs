@@ -74,26 +74,16 @@ namespace Revit.SDK.Samples.Selections.CS
         /// The picked point of element.
         /// </summary>
         XYZ m_elemPickedPoint;
-                
-        SelectionType m_selectionType = SelectionType.Element;
+
         /// <summary>
         /// For specific selection type.
         /// </summary>
-        public SelectionType SelectionType
-        {
-            get => m_selectionType;
-            set => m_selectionType = value;
-        }
+        public SelectionType SelectionType { get; set; } = SelectionType.Element;
 
-        Element m_selectedElement;
         /// <summary>
         /// Store the selected element.
         /// </summary>
-        public Element SelectedElement
-        {
-            get => m_selectedElement;
-            set => m_selectedElement = value;
-        }
+        public Element SelectedElement { get; set; }
 
         XYZ m_selectedPoint;
         /// <summary>
@@ -106,9 +96,9 @@ namespace Revit.SDK.Samples.Selections.CS
             set 
             { 
                 m_selectedPoint = value; 
-                if (m_selectedElement != null && m_selectedPoint != null)
+                if (SelectedElement != null && m_selectedPoint != null)
                 {
-                    MoveElement(m_selectedElement, m_selectedPoint);
+                    MoveElement(SelectedElement, m_selectedPoint);
                 }
             }
         }       
@@ -138,7 +128,7 @@ namespace Revit.SDK.Samples.Selections.CS
         /// </summary>
         public void SelectObjects()
         {
-            switch (m_selectionType)
+            switch (SelectionType)
             {
                 case SelectionType.Element:
                     PickElement(); // pick element

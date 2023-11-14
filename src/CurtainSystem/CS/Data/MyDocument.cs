@@ -32,59 +32,38 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
     public class MyDocument
     {
         // object which contains reference of Revit Applicatio
-        ExternalCommandData m_commandData;
         /// <summary>
         /// object which contains reference of Revit Applicatio
         /// </summary>
-        public ExternalCommandData CommandData
-        {
-            get => m_commandData;
-            set => m_commandData = value;
-        }
+        public ExternalCommandData CommandData { get; set; }
 
         // the active UI document of Revit
-        UIDocument m_uiDocument;
 
         /// <summary>
         /// the active document of Revit
         /// </summary>
-        public UIDocument UIDocument => m_uiDocument;
+        public UIDocument UIDocument { get; }
 
-        Document m_document;
-        public Document Document => m_document;
+        public Document Document { get; }
 
         // the data of the created curtain systems
-        CurtainSystem.SystemData m_systemData;
         /// <summary>
         /// the data of the created curtain systems
         /// </summary>
-        public CurtainSystem.SystemData SystemData
-        {
-            get => m_systemData;
-            set => m_systemData = value;
-        }
+        public CurtainSystem.SystemData SystemData { get; set; }
 
         // all the faces of  the parallelepiped mass
-        FaceArray m_massFaceArray;
         /// <summary>
         /// // all the faces of  the parallelepiped mass
         /// </summary>
-        public FaceArray MassFaceArray
-        {
-            get => m_massFaceArray;
-            set => m_massFaceArray = value;
-        }
+        public FaceArray MassFaceArray { get; set; }
 
         // the curtain system type of the active Revit document, used for curtain system creation
-        CurtainSystemType m_curtainSystemType;
         /// <summary>
         /// the curtain system type of the active Revit document, used for curtain system creation
         /// </summary>
-        public CurtainSystemType CurtainSystemType
-        {
-            get => m_curtainSystemType;
-            set => m_curtainSystemType = value;
-        }
+        public CurtainSystemType CurtainSystemType { get; set; }
+
         // the message shown when there's a fatal error in the sample
         string m_fatalErrorMsg;
         /// <summary>
@@ -152,12 +131,12 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         /// </param>
         public MyDocument(ExternalCommandData commandData)
         {
-            m_commandData = commandData;
-            m_uiDocument = m_commandData.Application.ActiveUIDocument;
-            m_document = m_uiDocument.Document;
+            CommandData = commandData;
+            UIDocument = CommandData.Application.ActiveUIDocument;
+            Document = UIDocument.Document;
 
             // initialize the curtain system data
-            m_systemData = new CurtainSystem.SystemData(this);
+            SystemData = new CurtainSystem.SystemData(this);
 
             // get the curtain system type of the active Revit document
             GetCurtainSystemType();
@@ -168,9 +147,9 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         /// </summary>
         private void GetCurtainSystemType()
         {
-            var filteredElementCollector = new FilteredElementCollector(m_document);
+            var filteredElementCollector = new FilteredElementCollector(Document);
             filteredElementCollector.OfClass(typeof(CurtainSystemType));
-            m_curtainSystemType = filteredElementCollector.FirstElement() as CurtainSystemType;
+            CurtainSystemType = filteredElementCollector.FirstElement() as CurtainSystemType;
         }
 
     } // end of class

@@ -31,26 +31,16 @@ namespace Revit.SDK.Samples.Loads.CS
     public class FormulaMap
     {
         // Private Members
-        double m_factor;    // Indicate the factor column of Formula DataGridView control
-        string m_caseName;  // Indicate case column of Formula DataGridView control
 
         /// <summary>
         /// Factor
         /// </summary>
-        public double Factor
-        {
-            get => m_factor;
-            set => m_factor = value;
-        }
+        public double Factor { get; set; }
 
         /// <summary>
         /// Load Case
         /// </summary>
-        public string Case
-        {
-            get => m_caseName;
-            set => m_caseName = value;
-        }
+        public string Case { get; set; }
 
         // Methods
         /// <summary>
@@ -58,7 +48,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         public FormulaMap()
         {
-            m_factor = 0;
+            Factor = 0;
         }
 
         /// <summary>
@@ -67,8 +57,8 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <param name="caseName">The value set to Case Property</param>
         public FormulaMap(string caseName)
         {
-            m_factor = 1;
-            m_caseName = caseName;
+            Factor = 1;
+            Case = caseName;
         }
 
         /// <summary>
@@ -78,8 +68,8 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <param name="caseName">The value set to Case Property</param>
         public FormulaMap(double factor, string caseName)
         {
-            m_factor = factor;
-            m_caseName = caseName;
+            Factor = factor;
+            Case = caseName;
         }
     }
 }

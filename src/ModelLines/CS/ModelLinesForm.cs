@@ -222,10 +222,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             // Define some local data
             XYZ firstPoint;     // Store the data of first point for line or arc       
             XYZ secondPoint;    // Store the data of second point for line or arc
-            XYZ thirdPoint;     // Store the data of third point only for arc
-            XYZ offsetPoint;    // Store the data of offset point for other lines
-            ElementId modelLineId;    // Store the selected element id using in creation
-            ElementId sketchPlaneId;  // Store the selected sketch id using in creation
 
             // First, get the create curve type.
             var createType = GetCurveType();
@@ -241,7 +237,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             try
             {
                 // Get the sketch plane id from the combobox control
-                sketchPlaneId = (ElementId)sketchPlaneComboBox.SelectedValue;
+                var sketchPlaneId = (ElementId)sketchPlaneComboBox.SelectedValue; // Store the selected sketch id using in creation
 
                 // get other necessary information to create model lines
                 switch (createType)
@@ -249,7 +245,8 @@ namespace Revit.SDK.Samples.ModelLines.CS
                     case LineType.ModelArc:
                         firstPoint = firstPointUserControl.GetPointData();  // first point
                         secondPoint = secondPointUserControl.GetPointData();// second point
-                        thirdPoint = thirdPointUserControl.GetPointData();  // third point
+                        var thirdPoint = thirdPointUserControl.GetPointData(); // third point
+                        // Store the data of third point only for arc
                         // Invoke the CreateArc method to create a model arc
                         m_dataBuffer.CreateArc(sketchPlaneId, firstPoint, secondPoint, thirdPoint);
                         break;
@@ -263,8 +260,9 @@ namespace Revit.SDK.Samples.ModelLines.CS
                     case LineType.ModelHermiteSpline:   // to create model hermite spline
                     case LineType.ModelNurbSpline:      // to create model nurb spline
                         // Get the selected element id which copy curve from
-                        modelLineId = (ElementId)elementIdComboBox.SelectedValue;
-                        offsetPoint = offsetPointUserControl.GetPointData();// offset point
+                        var modelLineId = (ElementId)elementIdComboBox.SelectedValue; // Store the selected element id using in creation
+                        var offsetPoint = offsetPointUserControl.GetPointData(); // offset point
+                        // Store the data of offset point for other lines
                         m_dataBuffer.CreateOthers(sketchPlaneId, modelLineId, offsetPoint);
                         // Rebind the data source of the elementIdComboBox to refresh it
                         ReBindElementIdComboBox(createType);

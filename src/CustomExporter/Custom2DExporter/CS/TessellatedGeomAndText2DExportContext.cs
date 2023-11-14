@@ -25,24 +25,19 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
       /// </summary>
       private IList<XYZ> m_points = new List<XYZ>();
 
+      Element m_currentElem;
+
       /// <summary>
       /// The number of all processed elements, as well as breakdown by some element kinds
       /// </summary>
-      private int m_numElements;
-      private int m_numTexts;
+      public int NumElements { get; private set; }
+
+      public int NumTexts { get; private set; }
 
       /// <summary>
       /// All text collected in the view, with a newline between each TextNode.
       /// </summary>
-      private string m_texts;
-
-      Element m_currentElem;
-
-      public int NumElements => m_numElements;
-
-      public int NumTexts => m_numTexts;
-
-      public string Texts => m_texts;
+      public string Texts { get; private set; }
 
       #endregion
 
@@ -104,7 +99,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
 
       public RenderNodeAction OnElementBegin2D(ElementNode node)
       {
-         m_numElements++;
+         NumElements++;
 
          m_currentElem = node.Document.GetElement(node.ElementId);
 
@@ -189,8 +184,8 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
 
       public void OnText(TextNode node)
       {
-         m_texts += "\n" + node.Text;
-         ++m_numTexts;
+         Texts += "\n" + node.Text;
+         ++NumTexts;
       }
 
       public void OnLight(LightNode node)

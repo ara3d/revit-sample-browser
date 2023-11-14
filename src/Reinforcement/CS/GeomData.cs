@@ -34,46 +34,26 @@ namespace Revit.SDK.Samples.Reinforcement.CS
     public struct RebarGeometry
     {
         // Private members
-        XYZ m_normal;        // the direction of rebar distribution
-        IList<Curve> m_curves; //the profile of the rebar
-        int m_number;        //the number of the rebar
-        double m_spacing;    //the spacing of the rebar
 
         /// <summary>
         /// get and set the value of the normal
         /// </summary>
-        public XYZ Normal
-        {
-            get => m_normal;
-            set => m_normal = value;
-        }
+        public XYZ Normal { get; set; }
 
         /// <summary>
         /// get and set the value of curve array
         /// </summary>
-        public IList<Curve> Curves
-        {
-            get => m_curves;
-            set => m_curves = value;
-        }
+        public IList<Curve> Curves { get; set; }
 
         /// <summary>
         /// get and set the number of the rebar
         /// </summary>
-        public int RebarNumber
-        {
-            get => m_number;
-            set => m_number = value;
-        }
+        public int RebarNumber { get; set; }
 
         /// <summary>
         /// get and set the value of the rebar spacing 
         /// </summary>
-        public double RebarSpacing
-        {
-            get => m_spacing;
-            set => m_spacing = value;
-        }
+        public double RebarSpacing { get; set; }
 
         /// <summary>
         /// consturctor
@@ -85,10 +65,10 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         public RebarGeometry(XYZ normal, IList<Curve> curves, int number, double spacing)
         {
             // initialize the data members
-            m_normal = normal;
-            m_curves = curves;
-            m_number = number;
-            m_spacing = spacing;
+            Normal = normal;
+            Curves = curves;
+            RebarNumber = number;
+            RebarSpacing = spacing;
         }
     }
 

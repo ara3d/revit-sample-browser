@@ -134,7 +134,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             UpdatePipeTypeSchedulesList();
             UpdateFittingsList();
 
-            var addPipeSegments = new Transaction(m_document, "Add Pipe Segments");
+            new Transaction(m_document, "Add Pipe Segments");
             addPipeSchedules.Start();
             var pipeSegments = xDoc.Root.Elements("PipeSegment");  //Define new segments.
             foreach (var xpipeSegment in pipeSegments)
@@ -403,7 +403,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
       private XElement CreateXmlFromPipeSegment(PipeSegment pipeSegment)
       {
          var xPipeSegment = new XElement(XName.Get("PipeSegment"));
-         var segmentName = pipeSegment.Name;
 
          xPipeSegment.Add(new XAttribute(XName.Get("pipeScheduleTypeName"), GetPipeScheduleTypeNamebyId(pipeSegment.ScheduleTypeId)));
          xPipeSegment.Add(new XAttribute(XName.Get("materialName"), GetMaterialNameById(pipeSegment.MaterialId)));
@@ -572,17 +571,12 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
        /// <returns></returns>
       private RoutingPreferenceRule ParseRoutingPreferenceRuleFromXML(XElement ruleXElement, out RoutingPreferenceRuleGroupType groupType)
       {
+          XAttribute xaMaxSize = null;
 
-         XAttribute xaDescription = null;
-         XAttribute xaPartName = null;
-         XAttribute xaMinSize = null;
-         XAttribute xaMaxSize = null;
-         XAttribute xaGroup = null;
-
-         xaDescription = ruleXElement.Attribute(XName.Get("description"));
-         xaPartName = ruleXElement.Attribute(XName.Get("partName"));
-         xaGroup = ruleXElement.Attribute(XName.Get("ruleGroup"));
-         xaMinSize = ruleXElement.Attribute(XName.Get("minimumSize"));
+          var xaDescription = ruleXElement.Attribute(XName.Get("description"));
+         var xaPartName = ruleXElement.Attribute(XName.Get("partName"));
+         var xaGroup = ruleXElement.Attribute(XName.Get("ruleGroup"));
+         var xaMinSize = ruleXElement.Attribute(XName.Get("minimumSize"));
 
          ElementId partId;
 

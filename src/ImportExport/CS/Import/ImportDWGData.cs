@@ -294,8 +294,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <returns></returns>
         public override bool Import()
         {
-            var imported = false;
-
             //parameter: DWGImportOptions
             var dwgImportOption = new DWGImportOptions();
             dwgImportOption.ColorMode = m_importColorMode;
@@ -316,13 +314,12 @@ namespace Revit.SDK.Samples.ImportExport.CS
             dwgImportOption.VisibleLayersOnly = m_importVisibleLayersOnly;
 
             //parameter: ElementId
-            ElementId elementId = null;
 
             //Import
             var t = new Transaction(m_activeDoc);
             t.SetName("Import");
             t.Start();
-            imported = m_activeDoc.Import(m_importFileFullName, dwgImportOption, view, out elementId);
+            var imported = m_activeDoc.Import(m_importFileFullName, dwgImportOption, view, out _);
             t.Commit();
 
             return imported;

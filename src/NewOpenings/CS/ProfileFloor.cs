@@ -121,11 +121,10 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       private void DrawArcOpening(List<Vector4> points)
       {
          var curves = m_appCreator.NewCurveArray();
-         Arc arc; XYZ p1, p2, p3;
-         p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
-         p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
-         p3 = new XYZ(points[2].X, points[2].Y, points[2].Z);
-         arc = Arc.Create(p1, p2, p3);
+         var p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
+         var p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
+         var p3 = new XYZ(points[2].X, points[2].Y, points[2].Z);
+         var arc = Arc.Create(p1, p2, p3);
          curves.Append(arc);
          for (var i = 1; i < points.Count - 3; i += 2)
          {

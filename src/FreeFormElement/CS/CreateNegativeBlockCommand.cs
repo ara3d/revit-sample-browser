@@ -49,7 +49,6 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
 
             // Get height for block based on target element.
             var bbox = targetElement.get_BoundingBox(null);
-            var height = bbox.Max.Z - bbox.Min.Z + 1;
 
             // Select boundaries
             var boundaries = uiDoc.Selection.PickObjects(ObjectType.Element,

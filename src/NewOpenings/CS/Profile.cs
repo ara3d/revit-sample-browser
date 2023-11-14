@@ -132,8 +132,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             var solid = geo as Solid;
             if (solid != null)
             {
-               var edges = solid.Edges;
-               var faces = solid.Faces;
+                var faces = solid.Faces;
                foreach (Face face in faces)
                {
                   var edgeArrarr = face.EdgeLoops;

@@ -28,10 +28,9 @@ namespace ContextualAnalyticalModel
 
                var analyticalNodeData = AnalyticalNodeData.GetAnalyticalNodeData(analyticalNode);
 
-               AnalyticalNodeConnectionStatus nodeStatus;
                if(analyticalNodeData != null)
                {
-                  nodeStatus = analyticalNodeData.GetConnectionStatus();
+                   analyticalNodeData.GetConnectionStatus();
                }
             }
          }

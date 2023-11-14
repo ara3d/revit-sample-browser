@@ -57,9 +57,8 @@ namespace ContextualAnalyticalModel
 
                var line = Line.CreateBound(start, end);
 
-               LineLoad lineLoad = null;
                if (LineLoad.IsCurveInsideHostBoundaries(document, selectedElementId, line))
-                  lineLoad = LineLoad.Create(document, selectedElementId, line, new XYZ(1,0,0), new XYZ(1,0,0), null);
+                   LineLoad.Create(document, selectedElementId, line, new XYZ(1,0,0), new XYZ(1,0,0), null);
 
                transaction.Commit();
             }

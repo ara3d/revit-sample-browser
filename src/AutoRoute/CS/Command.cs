@@ -486,8 +486,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             var baseY = conn3.Origin.Y;
             var baseZ = conn3.Origin.Z;
 
-            var points = new List<GXYZ>();
-            var ducts = new List<Duct>();
+            new List<GXYZ>();
+            new List<Duct>();
             var connectors = new List<Connector>();
 
             //Connect two base connectors to a connector on the trunk
@@ -700,8 +700,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             var baseX = conn3.Origin.X;
             var baseZ = conn3.Origin.Z;
 
-            var points = new List<GXYZ>();
-            var ducts = new List<Duct>();
+            new List<GXYZ>();
+            new List<Duct>();
             var connectors = new List<Connector>();
 
             //Connect two base connectors to a connector on the trunk

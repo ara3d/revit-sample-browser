@@ -22,10 +22,10 @@ namespace ContextualAnalyticalModel
             var document = activeDoc.Document;
 
             // Create Analytical Panel
-            var analyticalPanel = CreateAnalyticalPanel.CreateAMPanel(document);
+            CreateAnalyticalPanel.CreateAMPanel(document);
 
             // Create the connected Analytical Member
-            var analyticalMember = CreateAnalyticalMember.CreateMember(document);
+            CreateAnalyticalMember.CreateMember(document);
 
             // Select the node
             var eRef = activeDoc.Selection.PickObject(ObjectType.PointOnElement , "Select an Analytical Node");

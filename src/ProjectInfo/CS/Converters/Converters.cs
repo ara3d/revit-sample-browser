@@ -57,7 +57,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
 
                 // get its name
                 var type = value.GetType();
-                var wrapperType = type.ToString();
                 var mi = type.GetMethod("get_Name", new Type[0]);
                 if (mi != null)
                 {

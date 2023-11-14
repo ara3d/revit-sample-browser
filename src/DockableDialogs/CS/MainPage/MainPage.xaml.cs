@@ -130,7 +130,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         public void SetupDockablePane(DockablePaneProviderData data)
         {
             data.FrameworkElement = this as FrameworkElement;
-            var d = new DockablePaneProviderData();
+            new DockablePaneProviderData();
 
 
             data.InitialState = new DockablePaneState(); 

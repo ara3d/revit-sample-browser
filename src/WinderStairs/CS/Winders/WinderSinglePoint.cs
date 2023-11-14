@@ -157,10 +157,9 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             }
 
             // Generate the first middle line
-            Line middleLine1 = null;
             if (!middleStart.IsAlmostEqualTo(middleEnd0))
             {
-                middleLine1 = Line.CreateBound(middleStart, middleEnd0);
+                var middleLine1 = Line.CreateBound(middleStart, middleEnd0);
                 walkPath.Add(middleLine1);
             }
 
@@ -170,10 +169,9 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             walkPath.Add(middleArc);
 
             // Genera the second middle line
-            Line middleLine2 = null;
             if (!middleEnd1.IsAlmostEqualTo(middleEnd))
             {
-                middleLine2 = Line.CreateBound(middleEnd1, middleEnd);
+                var middleLine2 = Line.CreateBound(middleEnd1, middleEnd);
                 walkPath.Add(middleLine2);
             }
 

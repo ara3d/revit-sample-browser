@@ -39,7 +39,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private MyDocument m_myDocument;
 
         // stores the current GridDrawing data
-        private GridDrawing m_drawing;
 
         // stores the client rectangle of the canvas of the curtain grid
         // will be used in the scale matrix and move-to-center matrix
@@ -50,7 +49,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private Point m_center;
 
         // store the Matrix used to transform 3D points to 2D
-        Matrix4 m_to2DMatrix;
 
         // store the Matrix used to move points to center
         Matrix4 m_moveToCenterMatrix;
@@ -59,10 +57,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         Matrix4 m_scaleMatrix;
 
         // store the Matrix used to transform Revit coordinate to window UI
-        Matrix4 m_transformMatrix;
 
         // store the Matrix used to transform window UI coordinate to Revit
-        Matrix4 m_restoreMatrix;
 
         // stores the boundary of the curtain grid
         List<PointF> m_boundPoints;
@@ -73,26 +69,22 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         /// stores the GridDrawing data used in the current dialog
         /// </summary>
-        public GridDrawing Drawing
-        {
-            get => m_drawing;
-            set => m_drawing = value;
-        }
+        public GridDrawing Drawing { get; set; }
 
         /// <summary>
         /// store the Matrix used to transform 3D points to 2D
         /// </summary>
-        public Matrix4 To2DMatrix => m_to2DMatrix;
+        public Matrix4 To2DMatrix { get; private set; }
 
         /// <summary>
         /// store the Matrix used to transform Revit coordinate to window UI
         /// </summary>
-        public Matrix4 TransformMatrix => m_transformMatrix;
+        public Matrix4 TransformMatrix { get; private set; }
 
         /// <summary>
         /// store the Matrix used to transform window UI coordinate to Revit
         /// </summary>
-        public Matrix4 RestoreMatrix => m_restoreMatrix;
+        public Matrix4 RestoreMatrix { get; private set; }
 
         #endregion
 
@@ -114,7 +106,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             {
                 TaskDialog.Show("Revit", "Error! There's no grid information in the curtain wall.");
             }
-            m_drawing = drawing;
+            Drawing = drawing;
             drawing.Coordinates = this;
         }
         #endregion
@@ -126,11 +118,11 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         public void GetMatrix()
         {
             // initialize the class members, obtain the location information of the canvas
-            m_boundary = m_drawing.Boundary;
-            m_center = m_drawing.Center;
+            m_boundary = Drawing.Boundary;
+            m_center = Drawing.Center;
 
             // Get a matrix which can transform points to 2D
-            m_to2DMatrix = GetTo2DMatrix();
+            To2DMatrix = GetTo2DMatrix();
 
             // get the vertexes of the canvas (in Point/PointF format)
             m_boundPoints = GetBoundsPoints();
@@ -142,10 +134,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             m_scaleMatrix = GetScaleMatrix();
 
             // transform 3D points to 2D
-            m_transformMatrix = Get3DTo2DMatrix();
+            TransformMatrix = Get3DTo2DMatrix();
 
             // transform from 2D to 3D
-            m_restoreMatrix = Get2DTo3DMatrix();
+            RestoreMatrix = Get2DTo3DMatrix();
         }
         #endregion
 
@@ -162,7 +154,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 new Matrix4(new Vector4(-m_center.X, -m_center.Y, 0)), m_scaleMatrix.Inverse());
             matrix = Matrix4.Multiply(
                 matrix, m_moveToCenterMatrix);
-            return Matrix4.Multiply(matrix, m_to2DMatrix);
+            return Matrix4.Multiply(matrix, To2DMatrix);
         }
 
         /// <summary>
@@ -174,7 +166,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private Matrix4 Get3DTo2DMatrix()
         {
             var result = Matrix4.Multiply(
-               m_to2DMatrix.Inverse(), m_moveToCenterMatrix.Inverse());
+               To2DMatrix.Inverse(), m_moveToCenterMatrix.Inverse());
             result = Matrix4.Multiply(result, m_scaleMatrix);
             return Matrix4.Multiply(result, new Matrix4(new Vector4(m_center.X, m_center.Y, 0)));
         }
@@ -216,14 +208,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </returns>
         private List<PointF> GetBoundsPoints()
         {
-            var matrix = m_to2DMatrix;
+            var matrix = To2DMatrix;
             var inverseMatrix = matrix.Inverse();
             float minX = 0, maxX = 0, minY = 0, maxY = 0;
             var bFirstPoint = true;
             var resultPoints = new List<PointF>();
 
             //get the max and min point on the face
-            foreach (var point in m_drawing.Geometry.GridVertexesXYZ)
+            foreach (var point in Drawing.Geometry.GridVertexesXYZ)
             {
                 var v = new Vector4(point);
                 var v1 = inverseMatrix.Transform(v);
@@ -266,7 +258,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             yAxis.Normalize();
             var zAxis = Vector4.CrossProduct(xAxis, yAxis);
             zAxis.Normalize();
-            var origin = new Vector4(m_drawing.Geometry.GridVertexesXYZ[0]);
+            var origin = new Vector4(Drawing.Geometry.GridVertexesXYZ[0]);
 
             return new Matrix4(xAxis, yAxis, zAxis, origin);
         }

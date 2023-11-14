@@ -23,7 +23,7 @@ namespace ContextualAnalyticalModel
             var analyticalMember = CreateAnalyticalMember.CreateMember(document);
 
             // Create the second Analytical Member that is convergent with the first one
-            var convergentAnalyticalMember = CreateAnalyticalMember.CreateConvergentMember(document);
+            CreateAnalyticalMember.CreateConvergentMember(document);
 
 
             // Move the first Analytical Member using ElementTransformUtils

@@ -59,7 +59,6 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
                 }
             }
 
-            var iniLine = lines[0];
             var verticalLines = new Line[2];
             Line paraLine = null;
             var index = 0;

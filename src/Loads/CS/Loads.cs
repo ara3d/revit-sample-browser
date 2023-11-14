@@ -40,26 +40,13 @@ namespace Revit.SDK.Samples.Loads.CS
     {
         #region Private Data Members
         // Mainly used data definition
-        Autodesk.Revit.ApplicationServices.Application m_revit;     // Store the reference of revit
         LoadCombinationDeal m_combinationDeal;  // the deal class on load combination page
-        LoadCaseDeal m_loadCaseDeal;            // the deal class on load case page
-        string m_errorInformation;              // Store the error information
 
         // Define the data mainly used in LoadCombinationDeal class
-        List<string> m_usageNameList;       // Store all the usage names in current document
-        List<LoadUsage> m_loadUsageList;    // Used to store all the load usages
-        List<string> m_combinationNameList; // Store all the combination names in current document 
-        List<LoadCombinationMap> m_LoadCombinationMap;
-                                // Store all the Load Combination information include the user add.
-        List<FormulaMap> m_formulaMap;      // Store the formula information the user add
-        List<UsageMap> m_usageMap;
+        // Store all the Load Combination information include the user add.
 
         // Define the data mainly used in LoadCaseDeal class             
-        List<Category> m_loadCasesCategory;     //Store the load case's category
-        List<LoadCase> m_loadCases;             //Store all the load cases in current document
-        List<LoadNature> m_loadNatures;         //Store all the load natures in current document
-        List<LoadCasesMap> m_loadCasesMap;      // Store all the load case information include the user add.
-        List<LoadNaturesMap> m_loadNaturesMap;  //Store all the load natures information
+
         #endregion
         
         #region Properties
@@ -67,78 +54,74 @@ namespace Revit.SDK.Samples.Loads.CS
         /// Used as the dataSource of load cases DataGridView control,
         /// and the information which support load case creation also.
         /// </summary>
-        public List<LoadCasesMap> LoadCasesMap => m_loadCasesMap;
+        public List<LoadCasesMap> LoadCasesMap { get; }
 
         /// <summary>
         /// Used as the dataSource of load natures DataGridView control,
         /// and the information which support load nature creation also.
         /// </summary>
-        public List<LoadNaturesMap> LoadNaturesMap => m_loadNaturesMap;
+        public List<LoadNaturesMap> LoadNaturesMap { get; }
 
         /// <summary>
         /// save all loadnature object in current project
         /// </summary>
-        public List<LoadNature> LoadNatures => m_loadNatures;
+        public List<LoadNature> LoadNatures { get; }
 
         /// <summary>
         /// save all loadcase object in current project
         /// </summary>
-        public List<LoadCase> LoadCases => m_loadCases;
+        public List<LoadCase> LoadCases { get; }
 
         /// <summary>
         /// save all load cases category in current project
         /// </summary>
-        public List<Category> LoadCaseCategories => m_loadCasesCategory;
+        public List<Category> LoadCaseCategories { get; }
 
         /// <summary>
         /// object which do add, delete and update command on load related objects
         /// </summary>
-        public LoadCaseDeal LoadCasesDeal => m_loadCaseDeal;
+        public LoadCaseDeal LoadCasesDeal { get; private set; }
 
         /// <summary>
         /// Store the reference of revit
         /// </summary>
-        public Autodesk.Revit.ApplicationServices.Application RevitApplication => m_revit;
+        public Autodesk.Revit.ApplicationServices.Application RevitApplication { get; private set; }
 
         /// <summary>
         /// LoadUsageNames property, used to store all the usage names in current document
         /// </summary>
-        public List<string> LoadUsageNames => m_usageNameList;
+        public List<string> LoadUsageNames { get; }
 
         /// <summary>
         /// Used to store all the load usages in current document, include the user add
         /// </summary>
-        public List<LoadUsage> LoadUsages => m_loadUsageList;
+        public List<LoadUsage> LoadUsages { get; }
 
         /// <summary>
         /// LoadCombinationNames property, used to store all the combination names in current document
         /// </summary>
-        public List<string> LoadCombinationNames => m_combinationNameList;
+        public List<string> LoadCombinationNames { get; }
 
         /// <summary>
         /// Show the error information while contact with revit
         /// </summary>
-        public string ErrorInformation
-        {
-            get => m_errorInformation;
-            set => m_errorInformation = value;
-        }
+        public string ErrorInformation { get; set; }
 
         /// <summary>
         /// Used as the dataSource of load combination DataGridView control,
         /// and the information which support load combination creation also.
         /// </summary>
-        public List<LoadCombinationMap> LoadCombinationMap => m_LoadCombinationMap;
+        public List<LoadCombinationMap> LoadCombinationMap { get; private set; }
 
         /// <summary>
         /// Store all load combination formula names
         /// </summary>
-        public List<FormulaMap> FormulaMap => m_formulaMap;
+        public List<FormulaMap> FormulaMap { get; private set; }
 
         /// <summary>
         /// Store all load usage
         /// </summary>
-        public List<UsageMap> UsageMap => m_usageMap;
+        public List<UsageMap> UsageMap { get; private set; }
 
         #endregion
 
@@ -148,45 +131,29 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         public Loads()
         {
-            m_usageNameList = new List<string>();
-            m_combinationNameList = new List<string>();
-            m_LoadCombinationMap = new List<LoadCombinationMap>();
-            m_loadUsageList = new List<LoadUsage>();
-            m_formulaMap = new List<FormulaMap>();
-            m_usageMap = new List<UsageMap>();
+            LoadUsageNames = new List<string>();
+            LoadCombinationNames = new List<string>();
+            LoadCombinationMap = new List<LoadCombinationMap>();
+            LoadUsages = new List<LoadUsage>();
+            FormulaMap = new List<FormulaMap>();
+            UsageMap = new List<UsageMap>();
 
-            m_loadCasesCategory = new List<Category>();
-            m_loadCases = new List<LoadCase>();
-            m_loadNatures = new List<LoadNature>();
-            m_loadCasesMap = new List<LoadCasesMap>();
-            m_loadNaturesMap = new List<LoadNaturesMap>();
+            LoadCaseCategories = new List<Category>();
+            LoadCases = new List<LoadCase>();
+            LoadNatures = new List<LoadNature>();
+            LoadCasesMap = new List<LoadCasesMap>();
+            LoadNaturesMap = new List<LoadNaturesMap>();
         }
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData,
                                                     ref string message, ElementSet elements)
         {
-            m_revit = commandData.Application.Application;
+            RevitApplication = commandData.Application.Application;
             var documentTransaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
             documentTransaction.Start();
             // Initialize the helper classes.
             m_combinationDeal = new LoadCombinationDeal(this);
-            m_loadCaseDeal = new LoadCaseDeal(this);
+            LoadCasesDeal = new LoadCaseDeal(this);
 
             // Prepare some data for the form displaying
             PrepareData();
@@ -216,7 +183,7 @@ namespace Revit.SDK.Samples.Loads.CS
         void PrepareData()
         {
             // Prepare the data of the LoadCase page on form
-            m_loadCaseDeal.PrepareData();
+            LoadCasesDeal.PrepareData();
 
             //Prepare the data of the LoadCombination page on form
             m_combinationDeal.PrepareData();
@@ -233,7 +200,7 @@ namespace Revit.SDK.Samples.Loads.CS
         {
             // In order to refresh the combination DataGridView,
             // We should do like as follow
-            m_LoadCombinationMap = new List<LoadCombinationMap>(m_LoadCombinationMap);
+            LoadCombinationMap = new List<LoadCombinationMap>(LoadCombinationMap);
 
             // Just go to run NewLoadCombination method of LoadCombinationDeal class
             return m_combinationDeal.NewLoadCombination(name, typeId, stateId);
@@ -259,7 +226,7 @@ namespace Revit.SDK.Samples.Loads.CS
         {
             // In order to refresh the usage DataGridView,
             // We should do like as follow
-            m_usageMap = new List<UsageMap>(m_usageMap);
+            UsageMap = new List<UsageMap>(UsageMap);
 
             // Just go to run NewLoadUsage method of LoadCombinationDeal class
             return m_combinationDeal.NewLoadUsage(usageName);
@@ -280,9 +247,9 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // In order to refresh the usage DataGridView,
             // We should do like as follow
-            if (0 == m_usageMap.Count)
+            if (0 == UsageMap.Count)
             {
-                m_usageMap = new List<UsageMap>();
+                UsageMap = new List<UsageMap>();
             }
             return true;
         }
@@ -306,17 +273,17 @@ namespace Revit.SDK.Samples.Loads.CS
         public bool AddFormula()
         {
             // Get the first member in LoadCases as the Case
-            var loadCase = m_loadCases[0];
+            var loadCase = LoadCases[0];
             if (null == loadCase)
             {
-                m_errorInformation = "Can't not find a LoadCase.";
+                ErrorInformation = "Can't not find a LoadCase.";
                 return false;
             }
             var caseName = loadCase.Name;
 
             // In order to refresh the formula DataGridView,
             // We should do like as follow
-            m_formulaMap = new List<FormulaMap>(m_formulaMap);
+            FormulaMap = new List<FormulaMap>(FormulaMap);
 
             // Run AddFormula method of LoadCombinationDeal class
             return m_combinationDeal.AddFormula(caseName);
@@ -332,11 +299,11 @@ namespace Revit.SDK.Samples.Loads.CS
             // Just remove that data.
             try
             {
-                m_formulaMap.RemoveAt(index);
+                FormulaMap.RemoveAt(index);
             }
             catch (Exception e)
             {
-                m_errorInformation = e.ToString();
+                ErrorInformation = e.ToString();
                 return false;
             }
             return true;

@@ -308,9 +308,8 @@ namespace Revit.SDK.Samples.RoomSchedule
                     var bCommnetIsNull = false;
 
                     // get comments of room
-                    string comments;
                     var param = room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
-                    comments = (null != param) ? (param.AsString()) : ("");
+                    var comments = (null != param) ? (param.AsString()) : ("");
                     if (string.IsNullOrEmpty(comments))
                     {
                         // this room doesn't have comment value

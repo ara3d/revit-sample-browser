@@ -30,37 +30,20 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
     /// </summary>
     public class LevelsDataSource
     {
-        string m_levelName;
-        double m_levelElevation;
-        Autodesk.Revit.DB.ElementId m_levelIDValue;
-
         /// <summary>
         /// First column used to store Level's Name
         /// </summary>
-        public string Name
-        {
-            get => m_levelName;
-            set => m_levelName = value;
-        }
+        public string Name { get; set; }
 
 
         /// <summary>
         /// Second column to store Level's Elevation
         /// </summary>
-        public double Elevation
-        {
-            get => m_levelElevation;
-            set => m_levelElevation = value;
-        }
+        public double Elevation { get; set; }
 
         /// <summary>
         /// Record Level's ID
         /// </summary>
-        public Autodesk.Revit.DB.ElementId LevelIDValue
-        {
-            get => m_levelIDValue;
-            set => m_levelIDValue = value;
-        }
-
+        public Autodesk.Revit.DB.ElementId LevelIDValue { get; set; }
     }
 }

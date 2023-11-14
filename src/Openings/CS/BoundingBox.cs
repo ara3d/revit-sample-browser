@@ -57,10 +57,8 @@ namespace Revit.SDK.Samples.Openings.CS
       {
          get
          {
-            double yDistance = 0;
-            double xDistance = 0;
-            yDistance = m_points[2].Y - m_points[1].Y;
-            xDistance = m_points[5].X - m_points[2].X;
+             var yDistance = m_points[2].Y - m_points[1].Y;
+            var xDistance = m_points[5].X - m_points[2].X;
             return xDistance < yDistance ? xDistance : yDistance;
          }
       }
@@ -72,10 +70,8 @@ namespace Revit.SDK.Samples.Openings.CS
       {
          get
          {
-            double yDistance = 0;
-            double xDistance = 0;
-            yDistance = m_points[2].Y - m_points[1].Y;
-            xDistance = m_points[5].X - m_points[2].X;
+             var yDistance = m_points[2].Y - m_points[1].Y;
+            var xDistance = m_points[5].X - m_points[2].X;
             return xDistance > yDistance ? xDistance : yDistance;
          }
       }

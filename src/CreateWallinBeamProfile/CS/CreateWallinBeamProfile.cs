@@ -40,12 +40,10 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
     public class CreateWallinBeamProfile : IExternalCommand
     {
         // Private Members
-        IList<WallType> m_wallTypeCollection;         // Store all the wall types in current document
         ArrayList m_beamCollection;             // Store the selection of beams in Revit
         ArrayList m_lineCollection;   // Store the lines of all the beams
         WallType m_selectedWallType;            // Store the selected wall type
         Level m_level;                          // Store the level which wall create on
-        bool m_isStructural;                 // Indicate whether create structural walls
         string m_errorInformation;              // Store the error information
         const double PRECISION = 0.0000000001;  // Define a precision of double data
 
@@ -54,7 +52,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// <summary>
         /// Inform all the wall types can be created in current document
         /// </summary>
-        public IList<WallType> WallTypes => m_wallTypeCollection;
+        public IList<WallType> WallTypes { get; private set; }
 
         /// <summary>
         /// Inform the wall type selected by the user
@@ -67,11 +65,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// <summary>
         /// Inform whether the user want to create structual or architecture walls
         /// </summary>
-        public bool IsSturctual
-        {
-            get => m_isStructural;
-            set => m_isStructural = value;
-        }
+        public bool IsSturctual { get; set; }
 
         // Methods
         /// <summary>
@@ -79,10 +73,10 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// </summary>
         public CreateWallinBeamProfile()
         {
-            m_wallTypeCollection = new List<WallType>();
+            WallTypes = new List<WallType>();
             m_beamCollection = new ArrayList();
          m_lineCollection = new ArrayList();
-            m_isStructural = true;
+            IsSturctual = true;
         }
         #region IExternalCommand Members Implementation
         public Result Execute(ExternalCommandData commandData,
@@ -135,10 +129,9 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         {
             //CurveArray curveArray = new CurveArray();   // store the curves used to create wall
             var curveArray = new List<Curve>();
-            XYZ point;      // used to store the end point of the curve temporarily
             var curve = m_lineCollection[0] as Curve;
             curveArray.Add(curve);
-            point = curve.GetEndPoint(1);
+            var point = curve.GetEndPoint(1); // used to store the end point of the curve temporarily
 
             // Sort the curves of analytical model and then add to curveArray.
             // API asks for the curves should be in a sequence, deasil or anticlockwise
@@ -197,7 +190,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             var t = new Transaction(project, Guid.NewGuid().GetHashCode().ToString());
             t.Start();
             var createdWall = Wall.Create(project, curveArray,
-                                            m_selectedWallType.Id, m_level.Id, m_isStructural);
+                                            m_selectedWallType.Id, m_level.Id, IsSturctual);
 
             if (null == createdWall)
             {
@@ -229,7 +222,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
          // Search all the wall types in the Revit
          var filteredElementCollector = new FilteredElementCollector(project.Document);
          filteredElementCollector.OfClass(typeof(WallType));
-         m_wallTypeCollection = filteredElementCollector.Cast<WallType>().ToList<WallType>();
+         WallTypes = filteredElementCollector.Cast<WallType>().ToList<WallType>();
 
          // Find the selection of beams in Revit
          var selection = new ElementSet();
@@ -399,20 +392,18 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             // So, the judgement use this way. 
             var startPoint = new XYZ();
             var endPoint = new XYZ();
-            Curve curve = null;
             var pointArray = new ArrayList();
-            bool hasStartpoint;      // indicate whether start point is in the array
-            bool hasEndPoint;        // indicate whether end point is in the array
 
             // Find out all the points in the curves, the same point only count once.
             for (var i = 0; i < m_lineCollection.Count; i++)
             {
-                curve = m_lineCollection[i] as Curve;
+                var curve = m_lineCollection[i] as Curve;
                 startPoint = curve.GetEndPoint(0);
                 endPoint = curve.GetEndPoint(1);
-                hasStartpoint = false;  // Judge whether start point has been counted.
-                hasEndPoint = false;    // Judge whether end point has been counted.
-
+                var hasStartpoint = false; // Judge whether start point has been counted.
+                // indicate whether start point is in the array
+                var hasEndPoint = false; // Judge whether end point has been counted.
+                // indicate whether end point is in the array
                 if (0 == pointArray.Count)
                 {
                     pointArray.Add(startPoint);
@@ -460,10 +451,8 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         double FindBaseOffset()
         {
             // Initialize the data.
-            double baseOffset = 0;  // the offset from the m_level's elevation
-            double lowestElevation = 0; // the elevation of the lowest point
             var curve = m_lineCollection[0] as Curve;
-            lowestElevation = curve.GetEndPoint(0).Z;
+            var lowestElevation = curve.GetEndPoint(0).Z; // the elevation of the lowest point
 
             // Find out the elevation of the lowest point.
             foreach (Curve c in m_lineCollection)
@@ -479,7 +468,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             }
 
             // Count the offset and return.
-            baseOffset = lowestElevation - m_level.Elevation;
+            var baseOffset = lowestElevation - m_level.Elevation; // the offset from the m_level's elevation
             return baseOffset;
         }
 
@@ -490,10 +479,8 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         double FindTopOffset()
         {
             // Initialize the data
-            double topOffset = 0;   // the offset from the m_level's elevation
-            double highestElevation = 0;    // the elevation of the highest point
             var curve = m_lineCollection[0] as Curve;
-            highestElevation = curve.GetEndPoint(0).Z;
+            var highestElevation = curve.GetEndPoint(0).Z; // the elevation of the highest point
 
             // Find out the elevation of the highest point.
             foreach (Curve c in m_lineCollection)
@@ -509,7 +496,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             }
 
             // Count the offset and return.
-            topOffset = highestElevation - m_level.Elevation;
+            var topOffset = highestElevation - m_level.Elevation; // the offset from the m_level's elevation
             return topOffset;
         }
     }

@@ -41,43 +41,31 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    {
       #region Fields
       // stores the data of vertical justification
-      private CurtainGridAlign m_verticalJustification;
 
       // stores the data of vertical angle
-      private double m_verticalAngle;
 
       // stores the data of vertical offset
-      private double m_verticalOffset;
 
       // stores how many vertical lines there are in the grid
-      private int m_verticalLinesNumber;
 
       // stores the data of horizontal justification
-      private CurtainGridAlign m_horizontalJustification;
 
       // stores the data of horizontal angle
-      private double m_horizontalAngle;
 
       // stores the data of horizontal offset
-      private double m_horizontalOffset;
 
       // stores how many horizontal lines there are in the grid
-      private int m_horizontalLinesNumber;
 
       // stores how many panels there are in the grid
-      private int m_panelNumber;
 
       // stores how many curtain cells there are in the grid
-      private int m_cellNumber;
 
       // stores how many unlocked panels there are in the grid
-      private int m_unlockedPanelsNumber;
 
       // stores how many mullions there are in the grid
-      private int m_mullionsNumber;
 
       // stores how many unlocked mullions there are in the grid
-      private int m_unlockedmullionsNumber;
+
       #endregion
 
       #region Properties
@@ -85,131 +73,80 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// stores the data of vertical justification
       /// </summary>
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(CurtainGridAlign.Beginning), ReadOnlyAttribute(true)]
-      public CurtainGridAlign VerticalJustification
-      {
-         get => m_verticalJustification;
-         set => m_verticalJustification = value;
-      }
+      public CurtainGridAlign VerticalJustification { get; set; }
 
       /// <summary>
       /// stores the data of vertical angle
       /// </summary>
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(0.0), ReadOnlyAttribute(true)]
-      public double VerticalAngle
-      {
-         get => m_verticalAngle;
-         set => m_verticalAngle = value;
-      }
+      public double VerticalAngle { get; set; }
 
       /// <summary>
       /// stores the data of vertical offset
       /// </summary>
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(0.0), ReadOnlyAttribute(true)]
-      public double VerticalOffset
-      {
-         get => m_verticalOffset;
-         set => m_verticalOffset = value;
-      }
+      public double VerticalOffset { get; set; }
 
       /// <summary>
       /// stores how many U lines there are in the grid
       /// </summary>
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
-      public int VerticalLinesNumber
-      {
-         get => m_verticalLinesNumber;
-         set => m_verticalLinesNumber = value;
-      }
+      public int VerticalLinesNumber { get; set; }
 
       /// <summary>
       /// stores the data of horizontal justification
       /// </summary>
       [CategoryAttribute("Horizontal Grid Pattern"), DefaultValueAttribute(CurtainGridAlign.Beginning), ReadOnlyAttribute(true)]
-      public CurtainGridAlign HorizontalJustification
-      {
-         get => m_horizontalJustification;
-         set => m_horizontalJustification = value;
-      }
+      public CurtainGridAlign HorizontalJustification { get; set; }
 
       /// <summary>
       /// stores the data of horizontal angle
       /// </summary>
       [CategoryAttribute("Horizontal Grid Pattern"), DefaultValueAttribute(0.0), ReadOnlyAttribute(true)]
-      public double HorizontalAngle
-      {
-         get => m_horizontalAngle;
-         set => m_horizontalAngle = value;
-      }
+      public double HorizontalAngle { get; set; }
 
       /// <summary>
       /// stores the data of horizontal offset
       /// </summary>
       [CategoryAttribute("Horizontal Grid Pattern"), DefaultValueAttribute(0.0), ReadOnlyAttribute(true)]
-      public double HorizontalOffset
-      {
-         get => m_horizontalOffset;
-         set => m_horizontalOffset = value;
-      }
+      public double HorizontalOffset { get; set; }
 
       /// <summary>
       /// stores how many V lines there are in the grid
       /// </summary>
       [CategoryAttribute("Horizontal Grid Pattern"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
-      public int HorizontalLinesNumber
-      {
-         get => m_horizontalLinesNumber;
-         set => m_horizontalLinesNumber = value;
-      }
+      public int HorizontalLinesNumber { get; set; }
 
       /// <summary>
       /// stores how many panels there are in the grid
       /// </summary>
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
-      public int PanelNumber
-      {
-         get => m_panelNumber;
-         set => m_panelNumber = value;
-      }
+      public int PanelNumber { get; set; }
 
       /// <summary>
       /// stores how many curtain cells there are in the grid
       /// </summary>
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
-      public int CellNumber
-      {
-         get => m_cellNumber;
-         set => m_cellNumber = value;
-      }
+      public int CellNumber { get; set; }
 
       /// <summary>
       /// stores how many unlocked panels there are in the grid
       /// </summary>
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
-      public int UnlockedPanelsNumber
-      {
-         get => m_unlockedPanelsNumber;
-         set => m_unlockedPanelsNumber = value;
-      }
+      public int UnlockedPanelsNumber { get; set; }
 
       /// <summary>
       /// stores how many mullions there are in the grid
       /// </summary>
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
-      public int MullionsNumber
-      {
-         get => m_mullionsNumber;
-         set => m_mullionsNumber = value;
-      }
+      public int MullionsNumber { get; set; }
 
       /// <summary>
       /// stores how many unlocked mullions there are in the grid
       /// </summary>
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
-      public int UnlockedmullionsNumber
-      {
-         get => m_unlockedmullionsNumber;
-         set => m_unlockedmullionsNumber = value;
-      }
+      public int UnlockedmullionsNumber { get; set; }
+
       #endregion
    } // end of class
 }

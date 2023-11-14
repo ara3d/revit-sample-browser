@@ -207,7 +207,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
 
          // 6. Co-edges
          // Bottom face
-         var coEdgeId = brepBuilder.AddCoEdge(loopBottomId, edgeBottomFrontId, true /*bCoEdgeIsReversed*/);
+         brepBuilder.AddCoEdge(loopBottomId, edgeBottomFrontId, true /*bCoEdgeIsReversed*/);
          brepBuilder.AddCoEdge(loopBottomId, edgeBottomLeftId, true /*bCoEdgeIsReversed*/);
          brepBuilder.AddCoEdge(loopBottomId, edgeBottomBackId, true /*bCoEdgeIsReversed*/);
          brepBuilder.AddCoEdge(loopBottomId, edgeBottomRightId, true /*bCoEdgeIsReversed*/);

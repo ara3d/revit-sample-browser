@@ -37,22 +37,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ToposolidCreation : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public virtual Result Execute(ExternalCommandData commandData
          , ref string message, ElementSet elements)
       {
@@ -91,7 +75,7 @@ namespace Revit.SDK.Samples.Toposolid.CS
                //Toposolid topo = Toposolid.Create(doc, new List<CurveLoop> { m_Profile}, typeId, levelId);
                //Toposolid topo = Toposolid.Create(doc, m_Points, typeId, levelId);
                var topo = Autodesk.Revit.DB.Toposolid.Create(doc, new List<CurveLoop> { profile }, points, typeId, levelId);
-               var subTopo = topo.CreateSubDivision(doc, new List<CurveLoop> { CurveLoop.CreateViaOffset(profile, -20, XYZ.BasisZ) });
+               topo.CreateSubDivision(doc, new List<CurveLoop> { CurveLoop.CreateViaOffset(profile, -20, XYZ.BasisZ) });
                transaction.Commit();
             }
 
@@ -112,22 +96,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ToposolidFromDWG : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var uidoc = commandData.Application.ActiveUIDocument;
@@ -195,22 +163,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ContourSettingCreation : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var doc = commandData.Application.ActiveUIDocument.Document;
@@ -224,10 +176,10 @@ namespace Revit.SDK.Samples.Toposolid.CS
          using (var trans = new Transaction(doc, "contour"))
          {
             trans.Start();
-            var itemRange = contourSetting.AddContourRange(1.0, 9.0, 2.0, new ElementId(BuiltInCategory.OST_ToposolidContours));
-            var item1 = contourSetting.AddSingleContour(10, new ElementId(BuiltInCategory.OST_ToposolidSecondaryContours));
-            var item2 = contourSetting.AddSingleContour(11.5, new ElementId(BuiltInCategory.OST_ToposolidSplitLines));
-            var item3 = contourSetting.AddSingleContour(13, new ElementId(BuiltInCategory.OST_ToposolidSplitLines));
+            contourSetting.AddContourRange(1.0, 9.0, 2.0, new ElementId(BuiltInCategory.OST_ToposolidContours));
+            contourSetting.AddSingleContour(10, new ElementId(BuiltInCategory.OST_ToposolidSecondaryContours));
+            contourSetting.AddSingleContour(11.5, new ElementId(BuiltInCategory.OST_ToposolidSplitLines));
+            contourSetting.AddSingleContour(13, new ElementId(BuiltInCategory.OST_ToposolidSplitLines));
             trans.Commit();
          }
          return Result.Succeeded;
@@ -241,22 +193,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ContourSettingModification : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var doc = commandData.Application.ActiveUIDocument.Document;
@@ -292,22 +228,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ToposolidFromSurface : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var uidoc = commandData.Application.ActiveUIDocument;
@@ -334,7 +254,7 @@ namespace Revit.SDK.Samples.Toposolid.CS
             transaction.Start();
             var topo = Autodesk.Revit.DB.Toposolid.CreateFromTopographySurface(doc, surface.Id, typeId, levelId);
             transaction.Commit();
-            var ids = topo.GetSubDivisionIds().ToList();
+            topo.GetSubDivisionIds().ToList();
             //TaskDialog.Show("test", ids.Count.ToString());
          }
          return Result.Succeeded;
@@ -348,22 +268,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class SSEPointVisibility : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var uidoc = commandData.Application.ActiveUIDocument;
@@ -374,7 +278,7 @@ namespace Revit.SDK.Samples.Toposolid.CS
             SSEPointVisibilitySettings.SetVisibility(doc, new ElementId(BuiltInCategory.OST_Toposolid), false);
             transaction.Commit();
          }
-         var visible = SSEPointVisibilitySettings.GetVisibility(doc, new ElementId(BuiltInCategory.OST_Toposolid));
+         SSEPointVisibilitySettings.GetVisibility(doc, new ElementId(BuiltInCategory.OST_Toposolid));
          //TaskDialog.Show("test", visible.ToString());
          return Result.Succeeded;
       }
@@ -387,22 +291,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class SplitToposolid : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var uidoc = commandData.Application.ActiveUIDocument;
@@ -433,22 +321,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class SimplifyToposolid : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var uidoc = commandData.Application.ActiveUIDocument;

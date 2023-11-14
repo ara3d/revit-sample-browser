@@ -31,9 +31,6 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     public struct ConversionValue
     {
         // members
-        private int m_precision;   // the precision of the diaplay value
-        private string m_unitName; // the unit of the display value
-        private double m_ratio;    // the radio of inside value to display value
 
         /// <summary>
         /// constructor, using to initialize the members
@@ -44,25 +41,25 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         public ConversionValue(int precision, double ratio, string unitName)
         {
 
-            m_precision = precision;
-            m_ratio     = ratio;
-            m_unitName  = unitName;
+            Precision = precision;
+            Ratio     = ratio;
+            UnitName  = unitName;
         }
 
         /// <summary>
         /// get the precision of the diaplay value
         /// </summary>
-        public int Precision => m_precision;
+        public int Precision { get; }
 
         /// <summary>
         /// get the unit of the display value
         /// </summary>
-        public string UnitName => m_unitName;
+        public string UnitName { get; }
 
         /// <summary>
         /// get the radio of inside value to display value
         /// </summary>
-        public double Ratio => m_ratio;
+        public double Ratio { get; }
     };
 
     /// <summary>
@@ -72,12 +69,11 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     public static class UnitConversion
     {
         // member: dictionary
-        private static Dictionary<string, ConversionValue> m_unitDictionary;
 
         /// <summary>
         /// get the value dictionary
         /// </summary>
-        public static Dictionary<string, ConversionValue> UnitDictionary => m_unitDictionary;
+        public static Dictionary<string, ConversionValue> UnitDictionary { get; }
 
         /// <summary>
         /// static constructor to initialize the value conversion dictionary which we will used 
@@ -85,7 +81,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         static UnitConversion()
         {
-            m_unitDictionary = new Dictionary<string, ConversionValue>();
+            UnitDictionary = new Dictionary<string, ConversionValue>();
 
             #region "fill my units dictionary"
             var degree = (char)0xb0;
@@ -123,7 +119,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             var conversionValue = new ConversionValue(precision, ratio, unitName);
 
             // add this item to ourself dictionary
-            m_unitDictionary.Add(key, conversionValue);
+            UnitDictionary.Add(key, conversionValue);
         }
     }
 }

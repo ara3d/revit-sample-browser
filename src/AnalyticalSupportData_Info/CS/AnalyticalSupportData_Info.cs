@@ -38,12 +38,11 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
     {
 
         ExternalCommandData m_revit;  // application of Revit
-        DataTable m_elementInformation;  // store all required information
 
         /// <summary>
         /// property to get private member variable m_elementInformation.
         /// </summary>
-        public DataTable ElementInformation => m_elementInformation;
+        public DataTable ElementInformation { get; private set; }
 
         /// <summary>
         /// Implement this method as an external command for Revit.
@@ -75,7 +74,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
             }
 
             // get all the required information of selected elements and store them in a data table.
-            m_elementInformation = StoreInformationInDataTable(selectedElements);
+            ElementInformation = StoreInformationInDataTable(selectedElements);
 
             // show UI
             var displayForm = new AnalyticalSupportData_InfoForm(this);

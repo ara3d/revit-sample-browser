@@ -7,8 +7,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
    /// </summary>
    public partial class CreateForm : System.Windows.Forms.Form
    {
-      PathCreateOptions m_createOption;
-      /// <summary>
+       /// <summary>
       /// Constructor
       /// </summary>
       public CreateForm()
@@ -16,13 +15,13 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
          InitializeComponent();
 
          radioButton1.Checked = true;
-         m_createOption = PathCreateOptions.SingleRoomCornersToSingleDoor;
+         PathCreateOption = PathCreateOptions.SingleRoomCornersToSingleDoor;
       }
 
       /// <summary>
       /// The option for creating Path of Travel.
       /// </summary>
-      public PathCreateOptions PathCreateOption => m_createOption;
+      public PathCreateOptions PathCreateOption { get; private set; }
 
       /// <summary>
       /// Set the CreateOptions.SingleRoomCornersToSingleDoor option.
@@ -31,7 +30,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
       /// <param name="e">The event arg.</param>
       private void radioButton1_CheckedChanged(object sender, EventArgs e)
       {
-         m_createOption = PathCreateOptions.SingleRoomCornersToSingleDoor;
+         PathCreateOption = PathCreateOptions.SingleRoomCornersToSingleDoor;
       }
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
         /// <param name="e">The event arg.</param>
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
       {
-         m_createOption = PathCreateOptions.AllRoomCenterToSingleDoor;
+         PathCreateOption = PathCreateOptions.AllRoomCenterToSingleDoor;
       }
 
       /// <summary>
@@ -51,7 +50,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
       /// <param name="e">The event arg.</param>
       private void radioButton3_CheckedChanged(object sender, EventArgs e)
       {
-         m_createOption = PathCreateOptions.AllRoomCornersToAllDoors;
+         PathCreateOption = PathCreateOptions.AllRoomCornersToAllDoors;
       }
    }
 }

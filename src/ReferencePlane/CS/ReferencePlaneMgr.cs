@@ -112,11 +112,11 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
       {
          m_referencePlanes = new DataTable("ReferencePlanes");
          // Declare variables for DataColumn and DataRow objects.
-         DataColumn column;
 
-         // Create new DataColumn, set DataType, 
-         // ColumnName and add to DataTable.    
-         column = new DataColumn();
+         var column =
+             // Create new DataColumn, set DataType, 
+             // ColumnName and add to DataTable.    
+             new DataColumn();
          column.DataType = Type.GetType("System.Int32");
          column.ColumnName = "ID";
          // Add the Column to the DataColumnCollection.
@@ -169,22 +169,20 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
       private int GetAllReferencePlanes()
       {
          m_referencePlanes.Clear();
-         DataRow row;
 
          var itor = (new FilteredElementCollector(m_document.Document)).OfClass(typeof(Autodesk.Revit.DB.ReferencePlane)).GetElementIterator();
-         Autodesk.Revit.DB.ReferencePlane refPlane = null;
 
          itor.Reset();
          while (itor.MoveNext())
          {
-            refPlane = itor.Current as Autodesk.Revit.DB.ReferencePlane;
-            if (null == refPlane)
+             var refPlane = itor.Current as Autodesk.Revit.DB.ReferencePlane;
+             if (null == refPlane)
             {
                continue;
             }
             else
             {
-               row = m_referencePlanes.NewRow();
+               var row = m_referencePlanes.NewRow();
                row["ID"] = refPlane.Id.Value;
                row["BubbleEnd"] = Format(refPlane.BubbleEnd);
                row["FreeEnd"] = Format(refPlane.FreeEnd);

@@ -148,13 +148,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <returns>new created PathReinforcement</returns>
         public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points, bool flip)
         {
-            XYZ p1, p2; Line curve;
             IList<Curve> curves = new List<Curve>();
             for (var i = 0; i < points.Count - 1; i++)
             {
-                p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
-                p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
-                curve = Line.CreateBound(p1, p2);
+                var p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
+                var p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
+                var curve = Line.CreateBound(p1, p2);
                 curves.Add(curve);
             }
 

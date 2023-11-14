@@ -55,36 +55,10 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         System.Collections.Generic.IList<CompoundStructureLayer> m_slabLayerCollection; // Structure Layer collection
         Document m_document;
 
-        string m_level;         // level name of Slab
-        string m_typeName;      // type name of Slab
-        string m_spanDirection; // span direction (degree) of Slab
-        string m_thickness;     // thickness (millimeter) of slab layer
-        string m_materialName;  // material name of slab layer
-        string m_youngModulusX; // Young modulus X
-        string m_youngModulusY; // Young modulus Y
-        string m_youngModulusZ; // Young modulus Z
-        int m_numberOfLayers;   // number of Structure Layers
-
         #endregion
 
 
         #region Interface implementation
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
@@ -120,55 +94,55 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         /// <summary>
         /// Level property, read only.
         /// </summary>
-        public string Level => m_level;
+        public string Level { get; private set; }
 
 
         /// <summary>
         /// TypeName property, read only.
         /// </summary>
-        public string TypeName => m_typeName;
+        public string TypeName { get; private set; }
 
 
         /// <summary>
         /// SpanDirection property, read only.
         /// </summary>
-        public string SpanDirection => m_spanDirection;
+        public string SpanDirection { get; private set; }
 
 
         /// <summary>
         /// NumberOfLayers property, read only.
         /// </summary>
-        public int NumberOfLayers => m_numberOfLayers;
+        public int NumberOfLayers { get; private set; }
 
 
         /// <summary>
         /// LayerThickness property, read only.
         /// </summary>
-        public string LayerThickness => m_thickness;
+        public string LayerThickness { get; private set; }
 
 
         /// <summary>
         /// LayerMaterialName property, read only.
         /// </summary>
-        public string LayerMaterialName => m_materialName;
+        public string LayerMaterialName { get; private set; }
 
 
         /// <summary>
         /// LayerYoungModulusX property, read only.
         /// </summary>
-        public string LayerYoungModulusX => m_youngModulusX;
+        public string LayerYoungModulusX { get; private set; }
 
 
         /// <summary>
         /// LayerYoungModulusY property, read only.
         /// </summary>
-        public string LayerYoungModulusY => m_youngModulusY;
+        public string LayerYoungModulusY { get; private set; }
 
 
         /// <summary>
         /// LayerYoungModulusZ property, read only.
         /// </summary>
-        public string LayerYoungModulusZ => m_youngModulusZ;
+        public string LayerYoungModulusZ { get; private set; }
 
         #endregion
 
@@ -185,17 +159,17 @@ namespace Revit.SDK.Samples.SlabProperties.CS
             m_slabLayer = m_slabLayerCollection[layerNumber];
 
             // Get the Thickness property and change to the metric millimeter
-            m_thickness = ((m_slabLayer.Width) * ToMetricThickness * ToMillimeter).ToString() + " mm";
+            LayerThickness = ((m_slabLayer.Width) * ToMetricThickness * ToMillimeter).ToString() + " mm";
 
             // Get the Material name property
             if (ElementId.InvalidElementId != m_slabLayer.MaterialId)
             {
                 var material = m_document.GetElement(m_slabLayer.MaterialId) as Material;
-                m_materialName = material.Name;
+                LayerMaterialName = material.Name;
             }
             else
             {
-                m_materialName = "Null";
+                LayerMaterialName = "Null";
             }
 
             // The Young modulus can be found from the material by using the following generic parameters: 
@@ -203,28 +177,27 @@ namespace Revit.SDK.Samples.SlabProperties.CS
             if (ElementId.InvalidElementId != m_slabLayer.MaterialId)
             {
                 var material = m_document.GetElement(m_slabLayer.MaterialId) as Material;
-                Parameter youngModuleAttribute = null;
-                youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD1);
+                var youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD1);
                 if (null != youngModuleAttribute)
                 {
-                    m_youngModulusX = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
+                    LayerYoungModulusX = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
                 }
                 youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD2);
                 if (null != youngModuleAttribute)
                 {
-                    m_youngModulusY = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
+                    LayerYoungModulusY = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
                 }
                 youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD3);
                 if (null != youngModuleAttribute)
                 {
-                    m_youngModulusZ = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
+                    LayerYoungModulusZ = (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
                 }
             }
             else
             {
-                m_youngModulusX = "Null";
-                m_youngModulusY = "Null";
-                m_youngModulusZ = "Null";
+                LayerYoungModulusX = "Null";
+                LayerYoungModulusY = "Null";
+                LayerYoungModulusZ = "Null";
             }
         }
         #endregion
@@ -275,18 +248,17 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 // Get the layer information from the type object by using the CompoundStructure property
                 // The Layers property is then used to retrieve all the layers
                 m_slabLayerCollection = m_slabFloor.FloorType.GetCompoundStructure().GetLayers();
-                m_numberOfLayers = m_slabLayerCollection.Count;
+                NumberOfLayers = m_slabLayerCollection.Count;
 
                 // Get the Level property by the floor's Level property
-                m_level = (m_document.GetElement(m_slabFloor.LevelId) as Level).Name;
+                Level = (m_document.GetElement(m_slabFloor.LevelId) as Level).Name;
 
                 // Get the Type name property by the floor's FloorType property
-                m_typeName = m_slabFloor.FloorType.Name;
+                TypeName = m_slabFloor.FloorType.Name;
 
                 // The span direction can be found using generic parameter access 
                 // using the built in parameter FLOOR_PARAM_SPAN_DIRECTION
-                Parameter spanDirectionAttribute;
-                spanDirectionAttribute = m_slabFloor.get_Parameter(BuiltInParameter.FLOOR_PARAM_SPAN_DIRECTION);
+                var spanDirectionAttribute = m_slabFloor.get_Parameter(BuiltInParameter.FLOOR_PARAM_SPAN_DIRECTION);
                 if (null != spanDirectionAttribute)
                 {
                     // Set the Span Direction property
@@ -304,10 +276,9 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         /// <param name="spanDirection">The value of span direction property</param>
         private void SetSpanDirection(double spanDirection)
         {
-            double spanDirectionDegree;
-
-            // Change "radian" to "degree".
-            spanDirectionDegree = spanDirection / PI * Degree;
+            var spanDirectionDegree =
+                // Change "radian" to "degree".
+                spanDirection / PI * Degree;
 
             // If the absolute value very small, we consider it to be zero
             if (Math.Abs(spanDirectionDegree) < 1E-12)
@@ -316,7 +287,7 @@ namespace Revit.SDK.Samples.SlabProperties.CS
             }
 
             // The precision is 0.01, and unit is "degree".
-            m_spanDirection = spanDirectionDegree.ToString("F2");
+            SpanDirection = spanDirectionDegree.ToString("F2");
         }
         #endregion
     }

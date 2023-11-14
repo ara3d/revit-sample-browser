@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
     		base()
         {
             m_riserNumber = riserNumber;
-            m_bottomElevation = bottomElevation;
+            RunElevation = bottomElevation;
             m_desiredTreadDepth = desiredTreadDepth;
             m_width = width;
             m_runOffset = new XYZ(0, (riserNumber - 1) * desiredTreadDepth, 0);
@@ -64,7 +64,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
     		base (transform)
         {
             m_riserNumber = riserNumber;
-            m_bottomElevation = bottomElevation;
+            RunElevation = bottomElevation;
             m_desiredTreadDepth = desiredTreadDepth;
             m_width = width;
             m_runOffset = new XYZ(0, (riserNumber - 1) * desiredTreadDepth, 0);
@@ -72,7 +72,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         }
 
         private int m_riserNumber;
-        private double m_bottomElevation;
         private double m_desiredTreadDepth;
         private double m_width;
         private XYZ m_runOffset;
@@ -86,7 +85,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         public double GetRunElevation()
         {
-            return m_bottomElevation;
+            return RunElevation;
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         public Line GetRunStairsPath()
         {
-            var start = new XYZ(m_width / 2.0, 0, m_bottomElevation);
+            var start = new XYZ(m_width / 2.0, 0, RunElevation);
             var end = start + m_runOffset;
             var curve1 = Line.CreateBound(start, end);
 
@@ -104,7 +103,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// Implements the interface method.
         /// </summary>
-        public double RunElevation => m_bottomElevation;
+        public double RunElevation { get; }
 
         /// <summary>
         /// Implements the interface method.

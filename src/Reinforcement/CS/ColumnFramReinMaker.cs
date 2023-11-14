@@ -38,11 +38,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
       ColumnGeometrySupport m_geometry; // The geometry support for column rebar creation
 
-      RebarBarType m_transverseEndType;      //type of the end transverse rebar
-      RebarBarType m_transverseCenterType;   //type of the center transverse rebar
-      RebarBarType m_verticalType;           //type of the vertical rebar
-      RebarHookType m_transverseHookType;    //type of the hook
-
       double m_transverseEndSpacing;    //the space value of end transverse rebar
       double m_transverseCenterSpacing; //the space value of center transverse rebar
       int m_verticalRebarNumber;        //the number of the vertical rebar
@@ -54,29 +49,17 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// <summary>
       /// get and set the type of the end transverse rebar
       /// </summary>
-      public RebarBarType TransverseEndType
-      {
-         get => m_transverseEndType;
-         set => m_transverseEndType = value;
-      }
+      public RebarBarType TransverseEndType { get; set; }
 
       /// <summary>
       /// get and set the type of the center transverse rebar
       /// </summary>
-      public RebarBarType TransverseCenterType
-      {
-         get => m_transverseCenterType;
-         set => m_transverseCenterType = value;
-      }
+      public RebarBarType TransverseCenterType { get; set; }
 
       /// <summary>
       /// get and set the type of the vertical rebar
       /// </summary>
-      public RebarBarType VerticalRebarType
-      {
-         get => m_verticalType;
-         set => m_verticalType = value;
-      }
+      public RebarBarType VerticalRebarType { get; set; }
 
       /// <summary>
       /// get and set the space value of end transverse rebar
@@ -129,11 +112,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// <summary>
       /// get and set the hook type of transverse rebar
       /// </summary>
-      public RebarHookType TransverseHookType
-      {
-         get => m_transverseHookType;
-         set => m_transverseHookType = value;
-      }
+      public RebarHookType TransverseHookType { get; set; }
 
       #endregion
 
@@ -236,18 +215,18 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             case TransverseRebarLocation.Start: // start transverse rebar
             case TransverseRebarLocation.End:   // end transverse rebar
                geomInfo = m_geometry.GetTransverseRebar(location, m_transverseEndSpacing);
-               barType = m_transverseEndType;
+               barType = TransverseEndType;
                break;
             case TransverseRebarLocation.Center:// center transverse rebar   
                geomInfo = m_geometry.GetTransverseRebar(location, m_transverseCenterSpacing);
-               barType = m_transverseCenterType;
+               barType = TransverseCenterType;
                break;
             default:
                break;
          }
 
          // create the rebar
-         return PlaceRebars(barType, m_transverseHookType, m_transverseHookType,
+         return PlaceRebars(barType, TransverseHookType, TransverseHookType,
                                          geomInfo, RebarHookOrientation.Right, RebarHookOrientation.Left);
       }
 
@@ -289,7 +268,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
          var geomInfo = m_geometry.GetVerticalRebar(location, rebarNubmer);
 
          // create the rebar
-         return PlaceRebars(m_verticalType, null, null, geomInfo,
+         return PlaceRebars(VerticalRebarType, null, null, geomInfo,
                                      RebarHookOrientation.Left, RebarHookOrientation.Left);
       }
 

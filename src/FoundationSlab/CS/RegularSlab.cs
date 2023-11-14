@@ -30,29 +30,18 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
     /// </summary>
     public class RegularSlab
     {
-        bool m_selected = true; // Be selected or not.
-        string m_mark;   // The mark of the slab.
         Level m_level;   // The level of the slab.
         ElementType m_type; // The type of the slab.
-
-        ElementId m_id; // The id of the slab.
-        CurveArray m_profile;  // The profile of the slab.
-        CurveArray m_octagonalProfile; // The octagonal profile of the slab.
-        BoundingBoxXYZ m_maxBBox; // The max bounding box of the slab.
 
         /// <summary>
         /// Selected property.
         /// </summary>
-        public bool Selected
-        {
-            get => m_selected;
-            set => m_selected = value;
-        }
+        public bool Selected { get; set; } = true;
 
         /// <summary>
         /// Mark property.
         /// </summary>
-        public string Mark => m_mark;
+        public string Mark { get; }
 
         /// <summary>
         /// LevelName property.
@@ -67,22 +56,22 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         /// <summary>
         /// Id property.
         /// </summary>
-        public ElementId Id => m_id;
+        public ElementId Id { get; }
 
         /// <summary>
         /// Profile property.
         /// </summary>
-        public CurveArray Profile => m_profile;
+        public CurveArray Profile { get; }
 
         /// <summary>
         /// OctagonalProfile property.
         /// </summary>
-        public CurveArray OctagonalProfile => m_octagonalProfile;
+        public CurveArray OctagonalProfile { get; private set; }
 
         /// <summary>
         /// BBox property.
         /// </summary>
-        public BoundingBoxXYZ BBox => m_maxBBox;
+        public BoundingBoxXYZ BBox { get; private set; }
 
         /// <summary>
         /// Constructor.
@@ -99,13 +88,13 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                 var markPara = floor.get_Parameter(BuiltInParameter.ALL_MODEL_MARK);
                 if (null != markPara)
                 {
-                    m_mark = markPara.AsString();
+                    Mark = markPara.AsString();
                 }
 
                 m_level = floor.Document.GetElement(floor.LevelId) as Level;   // Get floor's level.
                 m_type = floor.Document.GetElement(floor.GetTypeId()) as ElementType;// Get floor's type.
-                m_id = floor.Id; // Get floor's Id.
-                m_profile = floorProfile;  // Get floor's profile.
+                Id = floor.Id; // Get floor's Id.
+                Profile = floorProfile;  // Get floor's profile.
             }
 
             // Create an octagonal profile for the floor according to it's bounding box.
@@ -140,7 +129,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             points[7] = new XYZ((min.X - xOffset), (min.Y + max.Y) / 2, z);
 
             // Get the octagonal profile.
-            m_octagonalProfile = new CurveArray();
+            OctagonalProfile = new CurveArray();
             for (var i = 0; i < 8; i++)
             {
                 Line line;
@@ -148,15 +137,15 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                     line = Line.CreateBound(points[i], points[0]);
                 else
                     line = Line.CreateBound(points[i], points[i + 1]);
-                m_octagonalProfile.Append(line);
+                OctagonalProfile.Append(line);
             }
 
             // Get the octagonal profile's bounding box.
             var newMin = new XYZ(min.X - xOffset, min.Y - yOffset, z);
             var newMax = new XYZ(max.X + xOffset, max.Y + yOffset, z);
-            m_maxBBox = new BoundingBoxXYZ();
-            m_maxBBox.Min = newMin;
-            m_maxBBox.Max = newMax;
+            BBox = new BoundingBoxXYZ();
+            BBox.Min = newMin;
+            BBox.Max = newMax;
 
             return true;
         }

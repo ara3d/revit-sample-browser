@@ -42,8 +42,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <returns>all the constraint types supported by RebarShapeDefinitionByArc</returns>
         public override List<Type> AllowedConstraintTypes()
         {
-            var definitionByArc = RebarshapeDefinition as RebarShapeDefinitionByArc;
-            
             var allowedTypes = base.AllowedConstraintTypes();
             
             allowedTypes.Add(typeof(ConstraintRadius));

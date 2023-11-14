@@ -256,10 +256,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                // A vertex of the triangle.
                var point = trigangle.get_Vertex(j);
 
-               var x = point.X;
-               var y = point.Y;
-               var z = point.Z;
-
                points.Add(point);
             }
 

@@ -35,33 +35,14 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class PointsParabola : IExternalCommand
     {
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         static AddInId appId = new AddInId(new Guid("B6FBC0C1-F3AE-4ffa-AB46-B4CF94304827"));
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
 
             var transaction = new Transaction(doc, "PointsParabola");
             transaction.Start();
             double yctr = 0;
-            XYZ xyz = null;
-            ReferencePoint rp = null;
             var power = 1.2;
             while (power < 1.5)
             {
@@ -70,12 +51,12 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                 while (zctr < 100)
                 {
                     zctr = Math.Pow(xctr, power);
-                    xyz = new XYZ(xctr, yctr, zctr);
-                    rp = doc.FamilyCreate.NewReferencePoint(xyz);
+                    var xyz = new XYZ(xctr, yctr, zctr);
+                    doc.FamilyCreate.NewReferencePoint(xyz);
                     if (xctr > 0)
                     {
                         xyz = new XYZ(-xctr, yctr, zctr);
-                        rp = doc.FamilyCreate.NewReferencePoint(xyz);
+                        doc.FamilyCreate.NewReferencePoint(xyz);
                     }
                     xctr++;
                 }
@@ -98,22 +79,6 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     public class PointsOnCurve : IExternalCommand
     {
         static AddInId appId = new AddInId(new Guid("22D07F77-A3F7-490c-B0D8-0EC10D8DE7C7"));
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var app = commandData.Application.Application;
@@ -132,7 +97,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
             {
                 var locationOnCurve = new PointLocationOnCurve(PointOnCurveMeasurementType.NormalizedCurveParameter, i, PointOnCurveMeasureFrom.Beginning);
                 var poe = app.Create.NewPointOnEdge(modelcurve.GeometryCurve.Reference, locationOnCurve);
-                var rp2 = doc.FamilyCreate.NewReferencePoint(poe);
+                doc.FamilyCreate.NewReferencePoint(poe);
             }
             transaction.Commit();
 
@@ -150,25 +115,8 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     {
         static AddInId appId = new AddInId(new Guid("C6D0F4DB-81C3-4927-9D68-8936D6EE67DD"));
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
 
             var transaction = new Transaction(doc, "PointsParabola");
@@ -183,7 +131,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                 {
                     var data = line.Split(',');
                     var xyz = new XYZ(Convert.ToDouble(data[0]), Convert.ToDouble(data[1]), Convert.ToDouble(data[2]));
-                    var rp = doc.FamilyCreate.NewReferencePoint(xyz);
+                    doc.FamilyCreate.NewReferencePoint(xyz);
                 }
             }
             transaction.Commit();
@@ -202,25 +150,8 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     {
         static AddInId appId = new AddInId(new Guid("F18A831C-AE42-43cc-91FD-6B5D461A1AC7"));
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
 
             var transaction = new Transaction(doc, "PointsParabola");
@@ -237,7 +168,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                 xctr = xctr + 0.1;
                 pnt_ctr++;
             }
-            var curve = doc.FamilyCreate.NewCurveByPoints(rparray);
+            doc.FamilyCreate.NewCurveByPoints(rparray);
             transaction.Commit();
 
             return Result.Succeeded;
@@ -254,25 +185,8 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     {
         static AddInId appId = new AddInId(new Guid("817C2A99-BF00-4029-86F3-2D10550F1410"));
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
 
             var transaction = new Transaction(doc, "CatenaryCurve");
@@ -289,7 +203,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                         rpArray.Append(rp);
                     }
                 }
-                var cbp = doc.FamilyCreate.NewCurveByPoints(rpArray);
+                doc.FamilyCreate.NewCurveByPoints(rpArray);
             }
             transaction.Commit();
 
@@ -308,26 +222,8 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
     {
         static AddInId appId = new AddInId(new Guid("3F926F3E-D93A-41cd-9ABF-A31594A827B3"));
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var cdata = commandData;
-            var app = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
 
             var transaction = new Transaction(doc, "CyclicSurface");
@@ -335,14 +231,13 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
             var xyz = new XYZ();
             var refArAr = new ReferenceArrayArray();
             var x = 0;
-            double z = 0;
             while (x < 800)
             {
                 var rpAr = new ReferencePointArray();
                 var y = 0;
                 while (y < 800)
                 {
-                    z = 50 * (Math.Cos((Math.PI / 180) * x) + Math.Cos((Math.PI / 180) * y));
+                    var z = 50 * (Math.Cos((Math.PI / 180) * x) + Math.Cos((Math.PI / 180) * y));
                     xyz = new XYZ(x, y, z);
                     var rp = doc.FamilyCreate.NewReferencePoint(xyz);
                     rpAr.Append(rp);
@@ -354,7 +249,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
                 refArAr.Append(refAr);
                 x = x + 40;
             }
-            var form = doc.FamilyCreate.NewLoftForm(true, refArAr);
+            doc.FamilyCreate.NewLoftForm(true, refArAr);
             transaction.Commit();
 
             return Result.Succeeded;

@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
           // Demo options
           var userControl3 = new UserControl3("Product Information");
-          var ch3 = new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
+          new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
           var tdext3 = new TabbedDialogExtension(userControl3,
              userControl3.OnOK);
           tdext3.OnCancelAction = userControl3.OnCancel;
@@ -69,7 +69,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             e.AddTab("SteeringWheels(Copy)", tdext2);
 
             var userControl1 = new UserControl1();
-            var ch1 = new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
+            new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
             var tdext1 = new TabbedDialogExtension(userControl1,
                userControl1.OnOK);
             tdext1.OnCancelAction = userControl1.OnCancel;

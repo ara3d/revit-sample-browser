@@ -93,7 +93,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
             record.DefaultFamilyTypeCandidates = defaultFamilyTypeCandidates;
 
 
-            var index = _dataGrid_DefaultFamilyTypes.Items.Add(record);
+            _dataGrid_DefaultFamilyTypes.Items.Add(record);
 
          }
       }

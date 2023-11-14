@@ -40,50 +40,18 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
    public class RotateFramingObjects : IExternalCommand
    {
       UIApplication m_revit;    // application of Revit
-      double m_receiveRotationTextBox;            // receive change of Angle     
-      bool m_isAbsoluteChecked;                    // true if moving absolute
       const string AngleDefinitionName = "Cross-Section Rotation";
 
       /// <summary>
       /// receive change of Angle    
       /// </summary>
-      public double ReceiveRotationTextBox
-      {
-         get => m_receiveRotationTextBox;
-         set => m_receiveRotationTextBox = value;
-      }
+      public double ReceiveRotationTextBox { get; set; }
 
       /// <summary>
       /// is moving absolutely
       /// </summary>
-      public bool IsAbsoluteChecked
-      {
-         get => m_isAbsoluteChecked;
-         set => m_isAbsoluteChecked = value;
-      }
+      public bool IsAbsoluteChecked { get; set; }
 
-      /// <summary>
-      /// Default constructor of RotateFramingObjects
-      /// </summary>
-      public RotateFramingObjects()
-      { }
-
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public Result Execute(ExternalCommandData commandData,
           ref string message, ElementSet elements)
       {
@@ -234,8 +202,8 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                      if (objectAttribute.Definition.Name.Equals(AngleDefinitionName))
                      {
                         var originDegree = objectAttribute.AsDouble();
-                        var rotateDegree = m_receiveRotationTextBox * Math.PI / 180;
-                        if (!m_isAbsoluteChecked)
+                        var rotateDegree = ReceiveRotationTextBox * Math.PI / 180;
+                        if (!IsAbsoluteChecked)
                         {
                            // absolute rotation
                            rotateDegree += originDegree;
@@ -258,9 +226,9 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                   var directionPoint = new XYZ(0, 0, 1);
                   // define the vector of axis
                   var rotateAxis = Line.CreateUnbound(insertPoint, directionPoint);
-                  var rotateDegree = m_receiveRotationTextBox * Math.PI / 180;
+                  var rotateDegree = ReceiveRotationTextBox * Math.PI / 180;
                   // rotate column by rotate method
-                  if (m_isAbsoluteChecked)
+                  if (IsAbsoluteChecked)
                   {
                      rotateDegree -= temp;
                   }

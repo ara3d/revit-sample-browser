@@ -140,8 +140,6 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <returns></returns>
         public bool AddLoadNature(int index)
         {
-
-            string natureName = null;  //the load nature's name to be added
             var isUnique = false;     // check if the name is unique    
             LoadNaturesMap myLoadNature = null;
 
@@ -164,7 +162,7 @@ namespace Revit.SDK.Samples.Loads.CS
             }
 
             //check if the name is unique
-            natureName = myLoadNature.LoadNaturesName;
+            var natureName = myLoadNature.LoadNaturesName; //the load nature's name to be added
             while (!isUnique)
             {
                 natureName += "(1)";
@@ -204,7 +202,6 @@ namespace Revit.SDK.Samples.Loads.CS
         {
             LoadCasesMap myLoadCase = null;
             var isUnique = false;
-            string caseName = null;
 
             //try to get the load case from the map
             try
@@ -225,7 +222,7 @@ namespace Revit.SDK.Samples.Loads.CS
             }
 
             //check the name
-            caseName = myLoadCase.LoadCasesName;
+            var caseName = myLoadCase.LoadCasesName;
             while (!isUnique)
             {
                 caseName += "(1)";

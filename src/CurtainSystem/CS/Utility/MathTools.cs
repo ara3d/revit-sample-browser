@@ -29,46 +29,27 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
    public class Vector4
    {
       #region Class member variables and properties
-      private double m_x;
-      private double m_y;
-      private double m_z;
-      private double m_w = 1.0d;
 
       /// <summary>
       /// X property to get/set x value of Vector4
       /// </summary>
-      public double X
-      {
-         get => m_x;
-         set => m_x = value;
-      }
+      public double X { get; set; }
 
       /// <summary>
       /// Y property to get/set y value of Vector4
       /// </summary>
-      public double Y
-      {
-         get => m_y;
-         set => m_y = value;
-      }
+      public double Y { get; set; }
 
       /// <summary>
       /// Z property to get/set z value of Vector4
       /// </summary>
-      public double Z
-      {
-         get => m_z;
-         set => m_z = value;
-      }
+      public double Z { get; set; }
 
       /// <summary>
       /// W property to get/set fourth value of Vector4
       /// </summary>
-      public double W
-      {
-         get => m_w;
-         set => m_w = value;
-      }
+      public double W { get; set; } = 1.0d;
+
       #endregion
 
       /// <summary>

@@ -32,12 +32,6 @@ namespace Revit.SDK.Samples.Openings.CS
     /// </summary>
     public class OpeningProperty
     {
-        private string m_name = "Opening"; //name of opening
-        private string m_elementId = ""; //Element Id of Opening
-        private string m_hostElementId = ""; // Element Id of Opening,'s host
-        private string m_hostName = "Null"; //Name of host
-        private bool m_isShaft; //whether Opening is Shaft Opening
-
         /// <summary>
         /// The default constructor
         /// </summary>
@@ -50,21 +44,21 @@ namespace Revit.SDK.Samples.Openings.CS
             }
 
             //get parameters which need to show
-            m_name = opening.Name;
-            m_elementId = opening.Id.ToString();
+            Name = opening.Name;
+            ElementID = opening.Id.ToString();
 
             if (null != opening.Host)
             {
                 if (null != opening.Host.Category)
-                    m_hostName = opening.Host.Category.Name;
+                    HostName = opening.Host.Category.Name;
 
-                m_hostElementId = opening.Host.Id.ToString();
+                HostElementID = opening.Host.Id.ToString();
             }
 
             if (null != opening.Category)
             {
                 if ("Shaft Openings" == opening.Category.Name)
-                    m_isShaft = true;
+                    ShaftOpening = true;
             }
         }
 
@@ -73,34 +67,34 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         [Description("Name of current diaplayed Opening"),
         Category("Opening Name"),]
-        public string Name => m_name;
+        public string Name { get; } = "Opening";
 
         /// <summary>
         ///element id 
         /// </summary>
         [Description("ElementId of current diaplayed Opening"),
         Category("Opening Property"),]
-        public string ElementID => m_elementId;
+        public string ElementID { get; } = "";
 
         /// <summary>
         /// host name
         /// </summary>
         [Description("Name of the Host which contains Current displayed Opening"),
         CategoryAttribute("Opening Property"),]
-        public string HostName => m_hostName;
+        public string HostName { get; } = "Null";
 
         /// <summary>
         /// host elements id
         /// </summary>
         [Description("ElementId of Host"),
         CategoryAttribute("Opening Property"),]
-        public string HostElementID => m_hostElementId;
+        public string HostElementID { get; } = "";
 
         /// <summary>
         /// shaft opening 
         /// </summary>
         [Description("whether displayed openging is Shaft Opening"),
         CategoryAttribute("Opening Property"),]
-        public bool ShaftOpening => m_isShaft;
+        public bool ShaftOpening { get; }
     }
 }

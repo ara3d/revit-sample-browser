@@ -34,42 +34,22 @@ namespace Revit.SDK.Samples.VersionChecking.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command: IExternalCommand
     {
-        string m_productName = ""; // product name of Revit main program
-        string m_version     = ""; // version number of Revit main program
-        string m_buildNumber = ""; // build number of Revit main program
-
         // properties
         /// <summary>
         /// get product name of Revit main program
         /// </summary>
-        public string ProductName => m_productName;
+        public string ProductName { get; private set; } = "";
 
         /// <summary>
         /// get version number of current Revit main program
         /// </summary>
-        public string ProductVersion => m_version;
+        public string ProductVersion { get; private set; } = "";
 
         /// <summary>
         /// get build number of current Revit main program
         /// </summary>
-        public string BuildNumner => m_buildNumber;
+        public string BuildNumner { get; private set; } = "";
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="revit">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData revit,
                                                ref string message,
                                                ElementSet elements)
@@ -79,9 +59,9 @@ namespace Revit.SDK.Samples.VersionChecking.CS
 
             // get product name, version number and build number information
             // via corresponding Properties of Autodesk.Revit.ApplicationServices.Application class
-            m_productName = revitApplication.VersionName;
-            m_version     = revitApplication.VersionNumber;
-            m_buildNumber = revitApplication.VersionBuild;
+            ProductName = revitApplication.VersionName;
+            ProductVersion     = revitApplication.VersionNumber;
+            BuildNumner = revitApplication.VersionBuild;
 
             //Show forms dialog which is a UI
             using (var displayForm = new versionCheckingForm(this))

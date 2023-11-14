@@ -32,8 +32,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
     /// </summary>
     public class StairsAutomationUtility
     {
-        private Document document;
-        private Stairs m_stairs;
         private int m_stairsNumber;
 
         /// <summary>
@@ -49,12 +47,12 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// The document.
         /// </summary>
-        protected Document Document => document;
+        protected Document Document { get; }
 
         /// <summary>
         /// The stairs.
         /// </summary>
-        protected Stairs Stairs => m_stairs;
+        protected Stairs Stairs { get; private set; }
 
         /// <summary>
         /// Creates a new instance of this class for a given stairs congfiguration. 
@@ -63,7 +61,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <param name="stairsNumber">The stairs configuration number.</param>
         protected StairsAutomationUtility(Document document, int stairsNumber)
         {
-            this.document = document;
+            this.Document = document;
             m_stairsNumber = stairsNumber;
         }
 
@@ -85,7 +83,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         private void SetupLevels()
         {
-            var targetLevels = FindTargetLevels(document, "Level 1", "Level 2", "Level 3");
+            var targetLevels = FindTargetLevels(Document, "Level 1", "Level 2", "Level 3");
             var level1 = targetLevels.Item1;
             var level2 = targetLevels.Item2;
             var level3 = targetLevels.Item3;
@@ -163,24 +161,24 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
                 // Straight run 1 level
                 case 0:
                     {
-                        var run = new StairsSingleStraightRun(m_stairs, BottomLevel, Transform.CreateTranslation(new XYZ(100, 0, 0)));
+                        var run = new StairsSingleStraightRun(Stairs, BottomLevel, Transform.CreateTranslation(new XYZ(100, 0, 0)));
                         run.SetRunWidth(15.0);
                         return run;
                     }
                 // Curved run 1 level
                 case 1:
                     {
-                        var run = new StairsSingleCurvedRun(m_stairs, BottomLevel, 6.0);
+                        var run = new StairsSingleCurvedRun(Stairs, BottomLevel, 6.0);
                         run.SetRunWidth(10.0);
                         return run;
                     }
                 // Curve run 2 level
                 case 2:
-                    return new StairsSingleCurvedRun(m_stairs, BottomLevel, 3.0, Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI, new XYZ(10, -20, 0)));
+                    return new StairsSingleCurvedRun(Stairs, BottomLevel, 3.0, Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI, new XYZ(10, -20, 0)));
                 // Standard stair 1 level
                 case 3:
                     {
-                        var configuration = new StairsStandardConfiguration(m_stairs, BottomLevel, 1, Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI / 4.0, new XYZ(-20, -20, 0)));
+                        var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 1, Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI / 4.0, new XYZ(-20, -20, 0)));
                         configuration.EqualizeRuns = true;
                         configuration.Initialize();
                         return configuration;
@@ -188,7 +186,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
                 // Standard stair multi-level
                 case 4:
                     {
-                        var configuration = new StairsStandardConfiguration(m_stairs, BottomLevel, 3, Transform.CreateRotationAtPoint(XYZ.BasisZ, 7.0 * Math.PI / 6.0, new XYZ(15, 10, 0)));
+                        var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 3, Transform.CreateRotationAtPoint(XYZ.BasisZ, 7.0 * Math.PI / 6.0, new XYZ(15, 10, 0)));
                         configuration.RunWidth = 6.0;
                         configuration.RunOffset = 8.0 / 12.0;
                         configuration.LandingWidth = 4.0;
@@ -198,11 +196,11 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
                     }
                 case 100:
                     {
-                        return new StairsSingleSketchedStraightRun(m_stairs, BottomLevel, Transform.CreateTranslation(new XYZ(50, 0, 0)));
+                        return new StairsSingleSketchedStraightRun(Stairs, BottomLevel, Transform.CreateTranslation(new XYZ(50, 0, 0)));
                     }
                 case 101:
                     {
-                        return new StairsSingleSketchedCurvedRun(m_stairs, BottomLevel, 6.0, Transform.CreateTranslation(new XYZ(-10, 0, 0)));
+                        return new StairsSingleSketchedCurvedRun(Stairs, BottomLevel, 6.0, Transform.CreateTranslation(new XYZ(-10, 0, 0)));
                     }
 
             }
@@ -218,17 +216,17 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             SetupLevels();
 
             // Prepare and maintain StairsEditScope for stairs creation activities
-            using (var editScope = new StairsEditScope(document, "Stairs Automation"))
+            using (var editScope = new StairsEditScope(Document, "Stairs Automation"))
             {
                 // Instantiate the new stairs element.
                 var stairsElementId = editScope.Start(BottomLevel.Id, TopLevel.Id);
 
                 // Remember the stairs for use in creation of the run and landing configurations.
-                m_stairs = document.GetElement(stairsElementId) as Stairs;
+                Stairs = Document.GetElement(stairsElementId) as Stairs;
 
 
                 // Setup a transaction for use during the run and landing creation
-                using (var t = new Transaction(document, "Stairs Automation"))
+                using (var t = new Transaction(Document, "Stairs Automation"))
                 {
                     t.Start();
 
@@ -241,14 +239,14 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
                     var numberOfRuns = configuration.GetNumberOfRuns();
                     for (var i = 0; i < numberOfRuns; i++)
                     {
-                        configuration.CreateStairsRun(document, stairsElementId, i);
+                        configuration.CreateStairsRun(Document, stairsElementId, i);
                     }
 
                     // Create each landing
                     var numberOfLandings = configuration.GetNumberOfLandings();
                     for (var i = 0; i < numberOfLandings; i++)
                     {
-                        configuration.CreateLanding(document, stairsElementId, i);
+                        configuration.CreateLanding(Document, stairsElementId, i);
                     }
 
                     t.Commit();

@@ -56,7 +56,6 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         // To store the footprint roof which the foot print data belong to.
         private FootPrintRoof m_roof;
         // To store the model curve data which the foot print data stand for.
-        private ModelCurve m_curve;
         // To store the boundingbox of the roof
         private BoundingBoxXYZ m_boundingbox;
         /// <summary>
@@ -67,7 +66,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         public FootPrintRoofLine(FootPrintRoof roof, ModelCurve curve)
         {
             m_roof = roof;
-            m_curve = curve;
+            ModelCurve = curve;
             m_boundingbox = m_roof.get_BoundingBox(Revit.SDK.Samples.NewRoof.CS.Command.ActiveView);
         }
 
@@ -78,7 +77,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="pen"></param>
         public void Draw(Graphics graphics, Pen pen)
         {
-            var curve = m_curve.GeometryCurve;
+            var curve = ModelCurve.GeometryCurve;
             DrawCurve(graphics, pen, curve);
         }
 
@@ -102,19 +101,19 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// Get the model curve data which the foot print data stand for.
         /// </summary>
         [Browsable(false)]
-        public ModelCurve ModelCurve => m_curve;
+        public ModelCurve ModelCurve { get; }
 
         /// <summary>
         /// Get the id value of the model curve.
         /// </summary>
         [Browsable(false)]
-        public ElementId Id => m_curve.Id;
+        public ElementId Id => ModelCurve.Id;
 
         /// <summary>
         /// Get the name of the model curve.
         /// </summary>
         [Browsable(false)]
-        public string Name => m_curve.Name;
+        public string Name => ModelCurve.Name;
 
         /// <summary>
         /// Get/Set the slope definition of a model curve of the roof.
@@ -122,8 +121,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The slope definition of the FootPrintRoof line.")]
         public bool DefinesSlope
         {
-            get => m_roof.get_DefinesSlope(m_curve);
-            set => m_roof.set_DefinesSlope(m_curve, value);
+            get => m_roof.get_DefinesSlope(ModelCurve);
+            set => m_roof.set_DefinesSlope(ModelCurve, value);
         }
 
         /// <summary>
@@ -132,8 +131,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The slope angle of the FootPrintRoof line.")]
         public double SlopeAngle
         {
-            get => m_roof.get_SlopeAngle(m_curve);
-            set => m_roof.set_SlopeAngle(m_curve, value);
+            get => m_roof.get_SlopeAngle(ModelCurve);
+            set => m_roof.set_SlopeAngle(ModelCurve, value);
         }
 
         /// <summary>
@@ -142,8 +141,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The offset of the FootPrintRoof line.")]
         public double Offset
         {
-            get => m_roof.get_Offset(m_curve);
-            set => m_roof.set_Offset(m_curve, value);
+            get => m_roof.get_Offset(ModelCurve);
+            set => m_roof.set_Offset(ModelCurve, value);
         }
 
         /// <summary>
@@ -152,8 +151,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The overhang value of the FootPrintRoof line if the roof is created by picked wall.")]
         public double Overhang
         {
-            get => m_roof.get_Overhang(m_curve);
-            set => m_roof.set_Overhang(m_curve, value);
+            get => m_roof.get_Overhang(ModelCurve);
+            set => m_roof.set_Overhang(ModelCurve, value);
         }
 
         /// <summary>
@@ -162,8 +161,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("whether you want the overhang to be measured from the core of the wall or not.")]
         public bool ExtendIntoWall
         {
-            get => m_roof.get_ExtendIntoWall(m_curve);
-            set => m_roof.set_ExtendIntoWall(m_curve, value);
+            get => m_roof.get_ExtendIntoWall(ModelCurve);
+            set => m_roof.set_ExtendIntoWall(ModelCurve, value);
         }
     };
 
@@ -181,7 +180,6 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         private List<FootPrintRoofLine> m_roofLines;
 
         // To store the boundingbox of the roof
-        private BoundingBoxXYZ m_boundingbox;
 
         public event EventHandler OnFootPrintRoofLineChanged;
      
@@ -206,7 +204,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             FootPrintRoofLineConverter.SetStandardValues(m_roofLines);
             m_footPrintLine = m_roofLines[0];
 
-            m_boundingbox = m_roof.get_BoundingBox(Revit.SDK.Samples.NewRoof.CS.Command.ActiveView);
+            Boundingbox = m_roof.get_BoundingBox(Revit.SDK.Samples.NewRoof.CS.Command.ActiveView);
         }
 
 
@@ -214,7 +212,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// Get the bounding box of the roof.
         /// </summary>
         [Browsable(false)]
-        public BoundingBoxXYZ Boundingbox => m_boundingbox;
+        public BoundingBoxXYZ Boundingbox { get; }
 
         /// <summary>
         /// Get/Set the current footprint roof line which will be edited in the PropertyGrid.

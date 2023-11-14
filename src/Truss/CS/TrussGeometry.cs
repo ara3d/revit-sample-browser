@@ -321,7 +321,6 @@ namespace Revit.SDK.Samples.Truss.CS
             else if (m_bottomChord.Points.Count < 2)
             { TaskDialog.Show("Truss API", "Haven't drawn bottom chord"); return; }
 
-            var createDoc = commandData.Application.ActiveUIDocument.Document.Create;
             var createApp = commandData.Application.Application.Create;
             var curvesTop = createApp.NewCurveArray();
             var curvesBottom = createApp.NewCurveArray();

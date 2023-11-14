@@ -30,46 +30,27 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
     public class Vector4
     {
         #region Class member variables and properties
-        private double m_x;
-        private double m_y;
-        private double m_z;
-        private double m_w = 1.0f;
 
         /// <summary>
         /// X property to get/set x value of Vector4
         /// </summary>
-        public double X 
-        {
-            get => m_x;
-            set => m_x = value;
-        }
+        public double X { get; set; }
 
         /// <summary>
         /// Y property to get/set y value of Vector4
         /// </summary>
-        public double Y
-        {
-            get => m_y;
-            set => m_y = value;
-        }
+        public double Y { get; set; }
 
         /// <summary>
         /// Z property to get/set z value of Vector4
         /// </summary>
-        public double Z
-        {
-            get => m_z;
-            set => m_z = value;
-        }
+        public double Z { get; set; }
 
         /// <summary>
         /// W property to get/set fourth value of Vector4
         /// </summary>
-        public double W
-        {
-            get => m_w;
-            set => m_w = value;
-        }
+        public double W { get; set; } = 1.0f;
+
         #endregion
 
         /// <summary>
@@ -215,27 +196,18 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             RotationAndTranslation, // matrix used to Rotation and Translation 
             Normal // normal matrix
         };
-        private double[,] m_matrix = new double[4,4]; // an array stores the matrix
-        private MatrixType m_type; //type of matrix
+
         #endregion
 
         /// <summary>
         /// X property to get/set Type of matrix
         /// </summary>
-        public MatrixType Type
-        {
-            get => m_type;
-            set => m_type = value;
-        }
+        public MatrixType Type { get; set; }
 
         /// <summary>
         /// X property to get/set Array which store data for matrix
         /// </summary>
-        public double[,] Matrix
-        {
-            get => m_matrix;
-            set => m_matrix = value;
-        }
+        public double[,] Matrix { get; set; } = new double[4,4];
 
         /// <summary>
         /// get a matrix used to rotate object specific angle on X direction
@@ -302,7 +274,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// </summary>
         public Matrix4()
         {
-            m_type = MatrixType.Normal;
+            Type = MatrixType.Normal;
             Identity();            
         }
 
@@ -314,11 +286,11 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="zAxis">identity of z axis</param>
         public Matrix4(Vector4 xAxis,Vector4 yAxis, Vector4 zAxis)
         {
-            m_type = MatrixType.Rotation;
+            Type = MatrixType.Rotation;
             Identity();
-            m_matrix[0, 0] = xAxis.X; m_matrix[0, 1] = xAxis.Y; m_matrix[0, 2] = xAxis.Z;
-            m_matrix[1, 0] = yAxis.X; m_matrix[1, 1] = yAxis.Y; m_matrix[1, 2] = yAxis.Z;
-            m_matrix[2, 0] = zAxis.X; m_matrix[2, 1] = zAxis.Y; m_matrix[2, 2] = zAxis.Z;
+            Matrix[0, 0] = xAxis.X; Matrix[0, 1] = xAxis.Y; Matrix[0, 2] = xAxis.Z;
+            Matrix[1, 0] = yAxis.X; Matrix[1, 1] = yAxis.Y; Matrix[1, 2] = yAxis.Z;
+            Matrix[2, 0] = zAxis.X; Matrix[2, 1] = zAxis.Y; Matrix[2, 2] = zAxis.Z;
         }
 
         /// <summary>
@@ -327,9 +299,9 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="origin">origin of ucs in world coordinate</param>
         public Matrix4(Vector4 origin)
         {
-            m_type = MatrixType.Translation;
+            Type = MatrixType.Translation;
             Identity();
-            m_matrix[3, 0] = origin.X; m_matrix[3, 1] = origin.Y; m_matrix[3, 2] = origin.Z;
+            Matrix[3, 0] = origin.X; Matrix[3, 1] = origin.Y; Matrix[3, 2] = origin.Z;
         }
 
         /// <summary>
@@ -341,12 +313,12 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="origin">origin</param>
         public Matrix4(Vector4 xAxis, Vector4 yAxis, Vector4 zAxis, Vector4 origin)
         {
-            m_type = MatrixType.RotationAndTranslation;
+            Type = MatrixType.RotationAndTranslation;
             Identity();
-            m_matrix[0, 0] = xAxis.X;  m_matrix[0, 1] = xAxis.Y;  m_matrix[0, 2] = xAxis.Z;
-            m_matrix[1, 0] = yAxis.X;  m_matrix[1, 1] = yAxis.Y;  m_matrix[1, 2] = yAxis.Z;
-            m_matrix[2, 0] = zAxis.X;  m_matrix[2, 1] = zAxis.Y;  m_matrix[2, 2] = zAxis.Z;
-            m_matrix[3, 0] = origin.X; m_matrix[3, 1] = origin.Y; m_matrix[3, 2] = origin.Z;
+            Matrix[0, 0] = xAxis.X;  Matrix[0, 1] = xAxis.Y;  Matrix[0, 2] = xAxis.Z;
+            Matrix[1, 0] = yAxis.X;  Matrix[1, 1] = yAxis.Y;  Matrix[1, 2] = yAxis.Z;
+            Matrix[2, 0] = zAxis.X;  Matrix[2, 1] = zAxis.Y;  Matrix[2, 2] = zAxis.Z;
+            Matrix[3, 0] = origin.X; Matrix[3, 1] = origin.Y; Matrix[3, 2] = origin.Z;
         }
 
         /// <summary>
@@ -355,11 +327,11 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="scale">scale factor</param>
         public Matrix4(double scale)
         {
-            m_type = MatrixType.Scale;
+            Type = MatrixType.Scale;
             Identity();
-            m_matrix[0, 0] = scale;
-            m_matrix[1, 1] = scale;
-            m_matrix[2, 2] = scale;
+            Matrix[0, 0] = scale;
+            Matrix[1, 1] = scale;
+            Matrix[2, 2] = scale;
         }
 
         /// <summary>
@@ -370,8 +342,8 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <returns></returns>
         public double this[int row, int column]
         {
-            get => m_matrix[row, column];
-            set => m_matrix[row, column] = value;
+            get => Matrix[row, column];
+            set => Matrix[row, column] = value;
         }
 
         /// <summary>
@@ -383,13 +355,13 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             {
                 for (var j = 0; j < 4; j++)
                 {
-                    m_matrix[i, j] = 0.0f;
+                    Matrix[i, j] = 0.0f;
                 }
             }
-            m_matrix[0, 0] = 1.0f;
-            m_matrix[1, 1] = 1.0f;
-            m_matrix[2, 2] = 1.0f;
-            m_matrix[3, 3] = 1.0f;
+            Matrix[0, 0] = 1.0f;
+            Matrix[1, 1] = 1.0f;
+            Matrix[2, 2] = 1.0f;
+            Matrix[3, 3] = 1.0f;
         }
 
         /// <summary>
@@ -454,7 +426,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <returns>inverse matrix</returns>
         public Matrix4 Inverse()
         {
-            switch(m_type)
+            switch(Type)
             {
                 case MatrixType.Rotation: return RotationInverse();
 
@@ -477,7 +449,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <returns>inverse of scale matrix</returns>
         public Matrix4 ScaleInverse()
         {
-            return new Matrix4(1 / m_matrix[0,0]);
+            return new Matrix4(1 / Matrix[0,0]);
         }
     };
 }
