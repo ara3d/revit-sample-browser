@@ -136,8 +136,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                             // Room found first roof
                             else
                             {
-                                var roofs = new List<ElementId>();
-                                roofs.Add(localElementId);
+                                var roofs = new List<ElementId> { localElementId };
                                 roomsAndRoofs.Add(room, roofs);
                             }
 
@@ -165,7 +164,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                     if (roofs.Count == 1)
                     {
                         var roof = m_document.GetElement(roofs[0]);
-                        roofsString = string.Format("Roof: Id = {0}, Name = {1}", roof.Id, roof.Name);
+                        roofsString = $"Roof: Id = {roof.Id}, Name = {roof.Name}";
                     }
                     // Multiple roofs
                     else
@@ -175,9 +174,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                     }
 
                     // Save results
-                    logs = string.Format(
-                        "  Room: Id = {0}, Name = {1} --> {2}",
-                        kvp.Key.Id, kvp.Key.Name, roofsString);
+                    logs = $"  Room: Id = {kvp.Key.Id}, Name = {kvp.Key.Name} --> {roofsString}";
                     message += logs + "\t\r\n";
                     Trace.WriteLine(logs);
                 }
@@ -193,8 +190,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                 foreach (var room in rooms)
                 {
                     elements.Insert(room);
-                    logs = string.Format("  Room Id: {0}, Room Name: {1}",
-                        room.Id, room.Name);
+                    logs = $"  Room Id: {room.Id}, Room Name: {room.Name}";
                     message += logs + "\t\r\n";
                     Trace.WriteLine(logs);
                 }

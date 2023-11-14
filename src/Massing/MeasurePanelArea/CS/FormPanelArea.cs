@@ -191,8 +191,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
             foreach (var elementId in m_uiDoc.Selection.GetElementIds())
             {
                 var element = m_uiDoc.Document.GetElement(elementId);
-                var ds = element as DividedSurface;
-                if (ds != null) m_dividedSurfaceList.Add(ds);
+                if (element is DividedSurface ds) m_dividedSurfaceList.Add(ds);
             }
         }
 
@@ -218,25 +217,30 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
                 var geomObject1 = Objects.Current;
 
                 Solid solid = null;
-                // find area of partial border panels
-                if (geomObject1 is Solid)
+                switch (geomObject1)
                 {
-                    solid = (Solid)geomObject1;
-                    if (null == solid) continue;
-                }
-                // find area of non-partial panels
-                else if (geomObject1 is GeometryInstance)
-                {
-                    var geomInst = geomObject1 as GeometryInstance;
-                    //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
-                    var Objects1 = geomInst.SymbolGeometry.GetEnumerator();
-                    while (Objects1.MoveNext())
+                    // find area of partial border panels
+                    case Solid object1:
                     {
-                        object geomObj = Objects1.Current;
+                        solid = object1;
+                        if (null == solid) continue;
+                        break;
+                    }
+                    // find area of non-partial panels
+                    case GeometryInstance geomInst:
+                    {
+                        //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
+                        var Objects1 = geomInst.SymbolGeometry.GetEnumerator();
+                        while (Objects1.MoveNext())
+                        {
+                            object geomObj = Objects1.Current;
 
-                        solid = geomObj as Solid;
-                        if (solid != null)
-                            break;
+                            solid = geomObj as Solid;
+                            if (solid != null)
+                                break;
+                        }
+
+                        break;
                     }
                 }
 

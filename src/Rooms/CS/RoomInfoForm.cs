@@ -141,12 +141,12 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         private void DisplayDartmentsInfo()
         {
-            for (var i = 0; i < m_data.DepartmentInfos.Count; i++)
+            foreach (var departmentInfo in m_data.DepartmentInfos)
             {
                 // create a listview item
-                var tmpItem = new ListViewItem(m_data.DepartmentInfos[i].DepartmentName);
-                tmpItem.SubItems.Add(m_data.DepartmentInfos[i].RoomsAmount.ToString());
-                tmpItem.SubItems.Add(m_data.DepartmentInfos[i].DepartmentAreaValue +
+                var tmpItem = new ListViewItem(departmentInfo.DepartmentName);
+                tmpItem.SubItems.Add(departmentInfo.RoomsAmount.ToString());
+                tmpItem.SubItems.Add(departmentInfo.DepartmentAreaValue +
                                      " SF");
                 departmentsListView.Items.Add(tmpItem);
             }

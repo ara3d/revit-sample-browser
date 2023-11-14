@@ -47,9 +47,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
             var elems = new FilteredElementCollector(RevitDoc).OfClass(typeof(ViewFamilyType)).ToElements();
             foreach (var e in elems)
             {
-                var v = e as ViewFamilyType;
-
-                if (v != null && v.ViewFamily == ViewFamily.ThreeDimensional)
+                if (e is ViewFamilyType v && v.ViewFamily == ViewFamily.ThreeDimensional)
                 {
                     View3DId = e.Id;
                     break;
@@ -99,9 +97,8 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
                 {
                     var obj = Objects.Current;
 
-                    if (obj is Solid)
+                    if (obj is Solid solid)
                     {
-                        var solid = obj as Solid;
                         PaintSolid(solid, instanceView);
                     }
                 }
@@ -113,9 +110,8 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
                 {
                     var obj = Objects1.Current;
 
-                    if (obj is Solid)
+                    if (obj is Solid solid)
                     {
-                        var solid = obj as Solid;
                         PaintSolid(solid, originalView);
                     }
                 }
@@ -127,9 +123,8 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
                 {
                     var obj = Objects2.Current;
 
-                    if (obj is Solid)
+                    if (obj is Solid solid)
                     {
-                        var solid = obj as Solid;
                         PaintSolid(solid, transView);
                     }
                 }
@@ -147,8 +142,8 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
         private void PaintSolid(Solid solid, View view)
         {
             var viewName = view.Name;
-            var sfm = SpatialFieldManager.GetSpatialFieldManager(view);
-            if (sfm == null) sfm = SpatialFieldManager.CreateSpatialFieldManager(view, 1);
+            var sfm = SpatialFieldManager.GetSpatialFieldManager(view) 
+                      ?? SpatialFieldManager.CreateSpatialFieldManager(view, 1);
 
             if (m_schemaId != -1)
             {

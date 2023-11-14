@@ -239,8 +239,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <returns>failed to cast and set</returns>
         public bool SetColumnSymbol(object obj)
         {
-            var symbol = obj as FamilySymbol;
-            if (null == symbol) return false;
+            if (!(obj is FamilySymbol symbol)) return false;
             ColumnSymbol = symbol;
             return true;
         }
@@ -252,8 +251,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <returns>failed to cast and set</returns>
         public bool SetBeamSymbol(object obj)
         {
-            var symbol = obj as FamilySymbol;
-            if (null == symbol) return false;
+            if (!(obj is FamilySymbol symbol)) return false;
             BeamSymbol = symbol;
             return true;
         }
@@ -265,8 +263,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <returns>failed to cast and set</returns>
         public bool SetBraceSymbol(object obj)
         {
-            var symbol = obj as FamilySymbol;
-            if (null == symbol) return false;
+            if (!(obj is FamilySymbol symbol)) return false;
             BraceSymbol = symbol;
             return true;
         }
@@ -284,9 +281,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             var floorPlanId = ElementId.InvalidElementId;
             foreach (var e in viewFamilyTypes)
             {
-                var v = e as ViewFamilyType;
-
-                if (v != null && v.ViewFamily == ViewFamily.FloorPlan)
+                if (e is ViewFamilyType v && v.ViewFamily == ViewFamily.FloorPlan)
                 {
                     floorPlanId = e.Id;
                     break;

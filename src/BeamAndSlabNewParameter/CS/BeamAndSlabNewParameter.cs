@@ -172,9 +172,8 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             while (moreElements)
             {
                 // Get beams and slabs from selections
-                var component = i.Current as Element;
 
-                if (null == component)
+                if (!(i.Current is Element component))
                 {
                     moreElements = i.MoveNext();
                     continue;
@@ -238,9 +237,8 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             while (moreElements)
             {
                 // Get beams and slabs from selections
-                var component = i.Current as Element;
 
-                if (null == component)
+                if (!(i.Current is Element component))
                 {
                     moreElements = i.MoveNext();
                     continue;

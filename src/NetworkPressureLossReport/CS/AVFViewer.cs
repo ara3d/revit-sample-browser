@@ -22,8 +22,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             m_view = view;
             m_isItemzied = isItemized;
 
-            m_sfm = SpatialFieldManager.GetSpatialFieldManager(view);
-            if (m_sfm == null) m_sfm = SpatialFieldManager.CreateSpatialFieldManager(view, 1);
+            m_sfm = SpatialFieldManager.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 1);
             m_sfm.Clear();
             m_maxCorner = new XYZ(-double.MaxValue, -double.MaxValue, -double.MaxValue);
         }

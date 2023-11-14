@@ -40,16 +40,8 @@ namespace Revit.SDK.Samples.CancelSave.CS
         ///     Retrieval if doing regression test now.
         ///     If the ExpectedOutPut.log exists in the assembly folder returns true, else returns false.
         /// </summary>
-        public static bool RegressionTestNow
-        {
-            get
-            {
-                var expectedLogFile = Path.Combine(AssemblyLocation, "ExpectedOutPut.log");
-                if (File.Exists(expectedLogFile)) return true;
-
-                return false;
-            }
-        }
+        public static bool RegressionTestNow 
+            => File.Exists(Path.Combine(AssemblyLocation, "ExpectedOutPut.log"));
 
         /// <summary>
         ///     Finalize and close the output log.
@@ -114,9 +106,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
 
             // Remove the extension 
             var pos = orgTitle.LastIndexOf('.');
-            if (-1 != pos)
-                return orgTitle.Remove(pos);
-            return orgTitle;
+            return -1 != pos ? orgTitle.Remove(pos) : orgTitle;
         }
     }
 }

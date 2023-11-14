@@ -46,19 +46,22 @@ namespace Revit.SDK.Samples.NewOpenings.CS
 
                 try
                 {
-                    if (selectElem is Wall)
+                    switch (selectElem)
                     {
-                        var wall = selectElem as Wall;
-                        var profileWall = new ProfileWall(wall, commandData);
-                        var newOpeningsForm = new NewOpeningsForm(profileWall);
-                        newOpeningsForm.ShowDialog();
-                    }
-                    else if (selectElem is Floor)
-                    {
-                        var floor = selectElem as Floor;
-                        var profileFloor = new ProfileFloor(floor, commandData);
-                        var newOpeningsForm = new NewOpeningsForm(profileFloor);
-                        newOpeningsForm.ShowDialog();
+                        case Wall wall:
+                        {
+                            var profileWall = new ProfileWall(wall, commandData);
+                            var newOpeningsForm = new NewOpeningsForm(profileWall);
+                            newOpeningsForm.ShowDialog();
+                            break;
+                        }
+                        case Floor floor:
+                        {
+                            var profileFloor = new ProfileFloor(floor, commandData);
+                            var newOpeningsForm = new NewOpeningsForm(profileFloor);
+                            newOpeningsForm.ShowDialog();
+                            break;
+                        }
                     }
                 }
                 catch (Exception ex)

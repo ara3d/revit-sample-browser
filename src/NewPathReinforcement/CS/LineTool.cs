@@ -76,13 +76,16 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <param name="e">mouse event args</param>
         public void OnMouseDown(MouseEventArgs e)
         {
-            //when user click right button of mouse, then erase last line
-            if (MouseButtons.Right == e.Button && m_points.Count >= 2) Finished = true;
-
-            if (MouseButtons.Left == e.Button && !Finished)
+            switch (e.Button)
             {
-                m_preMovePoint = e.Location;
-                m_points.Add(e.Location);
+                //when user click right button of mouse, then erase last line
+                case MouseButtons.Right when m_points.Count >= 2:
+                    Finished = true;
+                    break;
+                case MouseButtons.Left when !Finished:
+                    m_preMovePoint = e.Location;
+                    m_points.Add(e.Location);
+                    break;
             }
         }
 

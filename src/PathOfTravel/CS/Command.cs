@@ -47,8 +47,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             try
             {
                 var uiDoc = commandData.Application.ActiveUIDocument;
-                var viewPlan = uiDoc.ActiveView as ViewPlan;
-                if (null == viewPlan)
+                if (!(uiDoc.ActiveView is ViewPlan viewPlan))
                 {
                     var td = new TaskDialog("Cannot create PathOfTravel.");
                     td.MainInstruction = "PathOfTravel can only be created for plan views.";
@@ -62,12 +61,18 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
                 {
                     if (DialogResult.OK == createForm.ShowDialog())
                     {
-                        if (createForm.PathCreateOption == PathCreateOptions.SingleRoomCornersToSingleDoor)
-                            CreatePathsOfTravelInOneRoomMultiplePointsToOneDoor(uiDoc);
-                        else if (createForm.PathCreateOption == PathCreateOptions.AllRoomCenterToSingleDoor)
-                            CreatePathsOfTravelRoomCenterpointsToSingleDoor(uiDoc);
-                        else
-                            CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(uiDoc);
+                        switch (createForm.PathCreateOption)
+                        {
+                            case PathCreateOptions.SingleRoomCornersToSingleDoor:
+                                CreatePathsOfTravelInOneRoomMultiplePointsToOneDoor(uiDoc);
+                                break;
+                            case PathCreateOptions.AllRoomCenterToSingleDoor:
+                                CreatePathsOfTravelRoomCenterpointsToSingleDoor(uiDoc);
+                                break;
+                            default:
+                                CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(uiDoc);
+                                break;
+                        }
                     }
                 }
 
@@ -99,8 +104,10 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             var trf = doorElement.GetTransform();
             var endPoint = trf.Origin;
 
-            var resultsSummary = new ResultsSummary();
-            resultsSummary.numDoors = 1;
+            var resultsSummary = new ResultsSummary
+            {
+                numDoors = 1
+            };
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -137,8 +144,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
 
             foreach (var room in fec.Cast<Room>().Where(rm => rm.Level.Id == levelId))
             {
-                var location = room.Location as LocationPoint;
-                if (location == null)
+                if (!(room.Location is LocationPoint location))
                     continue;
                 var roomPoint = location.Point;
                 startPoints.Add(roomPoint);
@@ -444,8 +450,8 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             var successRatePercent = resultsSummary.numSuccesses / (double)numOfPathsToCreate;
 
             var td = new TaskDialog("Results of PathOfTravel creation");
-            td.MainInstruction = string.Format("Path of Travel succeeded on {0} of known points",
-                successRatePercent.ToString("P01", ci));
+            td.MainInstruction =
+                $"Path of Travel succeeded on {successRatePercent.ToString("P01", ci)} of known points";
             var details = string.Format(
                 "There were {0} room source points found in room analysis (via offsetting boundaries). " +
                 "They would be connected to {2} door target points. {1} failed to generate a Path of Travel out of {4}  " +
@@ -466,8 +472,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
         {
             public bool AllowElement(Element element)
             {
-                if (element.Category.Id == new ElementId(BuiltInCategory.OST_Doors)) return true;
-                return false;
+                return element.Category.Id == new ElementId(BuiltInCategory.OST_Doors);
             }
 
             public bool AllowReference(Reference refer, XYZ point)
@@ -483,8 +488,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
         {
             public bool AllowElement(Element element)
             {
-                if (element is Room) return true;
-                return false;
+                return element is Room;
             }
 
             public bool AllowReference(Reference refer, XYZ point)
@@ -498,17 +502,49 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
         /// </summary>
         private class ResultsSummary
         {
+            private int m_numSourcePoints;
+            private int m_numDoors;
+            private int m_numSuccesses;
+            private int m_numFailures;
+            private long m_elapsedMilliseconds;
+            private readonly List<PathOfTravelCalculationStatus> m_failuresFound;
+
             public ResultsSummary()
             {
-                failuresFound = new List<PathOfTravelCalculationStatus>();
+                m_failuresFound = new List<PathOfTravelCalculationStatus>();
             }
 
-            public int numSourcePoints { get; set; }
-            public int numDoors { get; set; }
-            public int numSuccesses { get; set; }
-            public int numFailures { get; set; }
-            public long elapsedMilliseconds { get; set; }
-            public List<PathOfTravelCalculationStatus> failuresFound { get; }
+            public int numSourcePoints
+            {
+                get => m_numSourcePoints;
+                set => m_numSourcePoints = value;
+            }
+
+            public int numDoors
+            {
+                get => m_numDoors;
+                set => m_numDoors = value;
+            }
+
+            public int numSuccesses
+            {
+                get => m_numSuccesses;
+                set => m_numSuccesses = value;
+            }
+
+            public int numFailures
+            {
+                get => m_numFailures;
+                set => m_numFailures = value;
+            }
+
+            public long elapsedMilliseconds
+            {
+                get => m_elapsedMilliseconds;
+                set => m_elapsedMilliseconds = value;
+            }
+
+            public List<PathOfTravelCalculationStatus> failuresFound => m_failuresFound;
         }
     }
 }

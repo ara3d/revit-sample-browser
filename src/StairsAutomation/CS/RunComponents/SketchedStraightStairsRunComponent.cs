@@ -90,8 +90,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             var end = start + m_runExtent;
             var curve1 = Line.CreateBound(start, end);
 
-            var ret = new List<Curve>();
-            ret.Add(curve1);
+            var ret = new List<Curve> { curve1 };
             return Transform(ret);
         }
 
@@ -172,8 +171,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             var end = start + m_runExtent;
             var curve1 = Line.CreateBound(start, end);
 
-            var ret = new List<Curve>();
-            ret.Add(curve1);
+            var ret = new List<Curve> { curve1 };
 
             // Start offset along the width and extend to the run extent
             start = new XYZ(m_width, 0, RunElevation);

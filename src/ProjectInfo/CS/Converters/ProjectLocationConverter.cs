@@ -20,7 +20,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         ///     All project locations in current document
         /// </summary>
-        public static List<ProjectLocation> ProjectLocations;
+        public static readonly List<ProjectLocation> ProjectLocations;
 
         /// <summary>
         ///     Initialize ProjectLocations
@@ -115,14 +115,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == null) throw new ArgumentNullException("destinationType");
+            if (destinationType == null) throw new ArgumentNullException(nameof(destinationType));
             if (destinationType == typeof(string))
             {
                 if (value == null) return UserDefined;
                 var projectLocation = value as ProjectLocation;
-                if (projectLocation != null)
-                    return projectLocation.Name;
-                return null;
+                return projectLocation?.Name;
             }
 
             return base.ConvertTo(context, culture, value, destinationType);

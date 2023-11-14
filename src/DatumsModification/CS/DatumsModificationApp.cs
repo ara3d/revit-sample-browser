@@ -41,20 +41,20 @@ namespace Revit.SDK.Samples.DatumsModification.CS
         {
             var ribbonPanel = application.CreateRibbonPanel("DatumModification");
             var styleSettingButton = new PushButtonData("DatumStyle", "Datum Style", AddInPath,
-                "Revit.SDK.Samples.DatumsModification.CS.DatumStyleModification");
-            styleSettingButton.LargeImage =
-                new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Style.png"), UriKind.Absolute));
-            ;
+                "Revit.SDK.Samples.DatumsModification.CS.DatumStyleModification")
+            {
+                LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Style.png"), UriKind.Absolute))
+            };
             var alignSettingButton = new PushButtonData("AlignDatum", "Align Datums", AddInPath,
-                "Revit.SDK.Samples.DatumsModification.CS.DatumAlignment");
-            alignSettingButton.LargeImage =
-                new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Align.png"), UriKind.Absolute));
-            ;
+                "Revit.SDK.Samples.DatumsModification.CS.DatumAlignment")
+            {
+                LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Align.png"), UriKind.Absolute))
+            };
             var propagateButton = new PushButtonData("PropagateDatum", "Propagate Extents", AddInPath,
-                "Revit.SDK.Samples.DatumsModification.CS.DatumPropagation");
-            propagateButton.LargeImage =
-                new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Propagate.png"), UriKind.Absolute));
-            ;
+                "Revit.SDK.Samples.DatumsModification.CS.DatumPropagation")
+            {
+                LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Propagate.png"), UriKind.Absolute))
+            };
 
             ribbonPanel.AddItem(styleSettingButton);
             ribbonPanel.AddItem(alignSettingButton);

@@ -35,7 +35,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
     /// </summary>
     public partial class DefaultFamilyTypes : Page, IDockablePaneProvider
     {
-        public static DockablePaneId PaneId = new DockablePaneId(new Guid("{DF0F08C3-447C-4615-B9B9-4843D821012E}"));
+        public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{DF0F08C3-447C-4615-B9B9-4843D821012E}"));
         private Document _document;
 
 
@@ -78,8 +78,10 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
 
             foreach (var cid in categories)
             {
-                var record = new FamilyTypeRecord();
-                record.CategoryName = Enum.GetName(typeof(BuiltInCategory), cid);
+                var record = new FamilyTypeRecord
+                {
+                    CategoryName = Enum.GetName(typeof(BuiltInCategory), cid)
+                };
 
                 //RLog.WriteComment(String.Format("The valid default family type candidates of {0} are:", Enum.GetName(typeof(BuiltInCategory), cid)));
                 var collector = new FilteredElementCollector(_document);
@@ -117,13 +119,13 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
             collector = collector.OfClass(typeof(Family));
             var query = collector.ToElements();
 
-            var categoryids = new List<BuiltInCategory>();
-
-            // The corresponding UI for OST_MatchModel is "Architecture->Build->Component"
-            categoryids.Add(BuiltInCategory.OST_MatchModel);
-
-            // The corresponding UI for OST_MatchModel is "Annotate->Detail->Component"
-            categoryids.Add(BuiltInCategory.OST_MatchDetail);
+            var categoryids = new List<BuiltInCategory>
+            {
+                // The corresponding UI for OST_MatchModel is "Architecture->Build->Component"
+                BuiltInCategory.OST_MatchModel,
+                // The corresponding UI for OST_MatchModel is "Annotate->Detail->Component"
+                BuiltInCategory.OST_MatchDetail
+            };
 
             foreach (Family t in query)
                 if (!categoryids.Contains(t.FamilyCategory.BuiltInCategory))
@@ -141,12 +143,10 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
         {
             if (e.AddedItems.Count == 1 && e.RemovedItems.Count == 1)
             {
-                var cb = sender as ComboBox;
-                if (cb == null)
+                if (!(sender is ComboBox cb))
                     return;
 
-                var item = e.AddedItems[0] as DefaultFamilyTypeCandidate;
-                if (item == null)
+                if (!(e.AddedItems[0] is DefaultFamilyTypeCandidate item))
                     return;
 
                 _handler.SetData(item.CateogryId, item.Id);

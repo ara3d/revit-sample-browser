@@ -45,7 +45,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
     ///     This class used as PropertyGrid.SelectedObject.
     ///     It stores parameters of path reinforcement.
     /// </summary>
-    [DefaultPropertyAttribute("NumberOfBars")]
+    [DefaultProperty("NumberOfBars")]
     public class PathReinProperties
     {
         /// <summary>
@@ -76,7 +76,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <summary>
         ///     cache path reinforcement object.
         /// </summary>
-        protected Autodesk.Revit.DB.Structure.PathReinforcement m_pathRein;
+        protected readonly Autodesk.Revit.DB.Structure.PathReinforcement m_pathRein;
 
         /// <summary>
         ///     primary bar length
@@ -112,7 +112,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         [Category("Layers")]
         [DisplayName("Number of Bars")]
-        [ReadOnlyAttribute(true)]
+        [ReadOnly(true)]
         public int NumberOfBars
         {
             get => m_numberOfBars;
@@ -124,7 +124,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         [Category("Construction")]
         [DisplayName("Layout Rule")]
-        [ReadOnlyAttribute(false)]
+        [ReadOnly(false)]
         public LayoutRule LayoutRule
         {
             get => m_layoutRule;
@@ -133,22 +133,23 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 if (m_layoutRule == value) return;
                 m_layoutRule = value;
 
-                // set BarSpacing and NumberOfBars readonly dynamically when:
-                // When set LayoutRule to "Fixed Number", BarSpacing should be read only
-                // When set to "Maximum Spacing", Number Of Bars should be read only
-                if (m_layoutRule == LayoutRule.Fixed_Number)
+                switch (m_layoutRule)
                 {
-                    SetPropertyReadOnly("BarSpacing", true);
-                    SetPropertyReadOnly("NumberOfBars", false);
-                }
-                else if (m_layoutRule == LayoutRule.Maximum_Spacing)
-                {
-                    SetPropertyReadOnly("BarSpacing", false);
-                    SetPropertyReadOnly("NumberOfBars", true);
+                    // set BarSpacing and NumberOfBars readonly dynamically when:
+                    // When set LayoutRule to "Fixed Number", BarSpacing should be read only
+                    // When set to "Maximum Spacing", Number Of Bars should be read only
+                    case LayoutRule.Fixed_Number:
+                        SetPropertyReadOnly("BarSpacing", true);
+                        SetPropertyReadOnly("NumberOfBars", false);
+                        break;
+                    case LayoutRule.Maximum_Spacing:
+                        SetPropertyReadOnly("BarSpacing", false);
+                        SetPropertyReadOnly("NumberOfBars", true);
+                        break;
                 }
 
                 // update the selected object is necessary
-                if (null != UpdateSelectObjEvent) UpdateSelectObjEvent();
+                UpdateSelectObjEvent?.Invoke();
             }
         }
 
@@ -157,7 +158,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         [Category("Layers")]
         [DisplayName("Bar Spacing")]
-        [ReadOnlyAttribute(false)]
+        [ReadOnly(false)]
         public string BarSpacing
         {
             get => m_barSpacing;
@@ -224,29 +225,30 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 m_pathRein.get_Parameter(
                     BuiltInParameter.PATH_REIN_LENGTH_1).SetValueString(m_primaryBarLength);
 
-                // if layout rule is maximum spacing, number of bar will be read only.
-                // In order to update previously modified number of bar, we should change the layout rule
-                // to fixed number, and then set the layout rule back.
-                if (m_layoutRule == LayoutRule.Maximum_Spacing)
+                switch (m_layoutRule)
                 {
-                    m_pathRein.get_Parameter(
-                        BuiltInParameter.PATH_REIN_SPACING).SetValueString(m_barSpacing);
-                    GetParameter("Layout Rule").Set((int)LayoutRule.Fixed_Number);
-                    m_pathRein.get_Parameter(
-                        BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(m_numberOfBars);
-                    GetParameter("Layout Rule").Set((int)m_layoutRule);
-                }
-                // if layout rule is fixed number, bar spacing will be read only.
-                // In order to update previously modified bar spacing, we should change the layout rule 
-                // to maximum spacing, and then set the layout rule back.
-                else if (m_layoutRule == LayoutRule.Fixed_Number)
-                {
-                    m_pathRein.get_Parameter(
-                        BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(m_numberOfBars);
-                    GetParameter("Layout Rule").Set((int)LayoutRule.Maximum_Spacing);
-                    m_pathRein.get_Parameter(
-                        BuiltInParameter.PATH_REIN_SPACING).SetValueString(m_barSpacing);
-                    GetParameter("Layout Rule").Set((int)m_layoutRule);
+                    // if layout rule is maximum spacing, number of bar will be read only.
+                    // In order to update previously modified number of bar, we should change the layout rule
+                    // to fixed number, and then set the layout rule back.
+                    case LayoutRule.Maximum_Spacing:
+                        m_pathRein.get_Parameter(
+                            BuiltInParameter.PATH_REIN_SPACING).SetValueString(m_barSpacing);
+                        GetParameter("Layout Rule").Set((int)LayoutRule.Fixed_Number);
+                        m_pathRein.get_Parameter(
+                            BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(m_numberOfBars);
+                        GetParameter("Layout Rule").Set((int)m_layoutRule);
+                        break;
+                    // if layout rule is fixed number, bar spacing will be read only.
+                    // In order to update previously modified bar spacing, we should change the layout rule 
+                    // to maximum spacing, and then set the layout rule back.
+                    case LayoutRule.Fixed_Number:
+                        m_pathRein.get_Parameter(
+                            BuiltInParameter.PATH_REIN_NUMBER_OF_BARS).Set(m_numberOfBars);
+                        GetParameter("Layout Rule").Set((int)LayoutRule.Maximum_Spacing);
+                        m_pathRein.get_Parameter(
+                            BuiltInParameter.PATH_REIN_SPACING).SetValueString(m_barSpacing);
+                        GetParameter("Layout Rule").Set((int)m_layoutRule);
+                        break;
                 }
             }
             catch (Exception e)
@@ -340,31 +342,31 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 {
                     number++;
                 }
-                else if (ch.Equals('\''))
+                else switch (ch)
                 {
-                    if (sQuotation > 0 || number == 0) return false;
-                    sQuotation++;
-                    number = 0;
-                }
-                else if (ch.Equals('\"'))
-                {
-                    if (dQuotation > 0 || number == 0) return false;
-                    dQuotation++;
-                    number = 0;
-                }
-                else if (ch.Equals('-'))
-                {
-                    if (hLine != 0 || sQuotation == 0 || (sQuotation != 0 && number != 0)) return false;
-                    hLine++;
-                    number = 0;
-                }
-                else if (ch.Equals(' '))
-                {
-                    // skip the white space
-                }
-                else
-                {
-                    return false;
+                    case '\'' when sQuotation > 0 || number == 0:
+                        return false;
+                    case '\'':
+                        sQuotation++;
+                        number = 0;
+                        break;
+                    case '\"' when dQuotation > 0 || number == 0:
+                        return false;
+                    case '\"':
+                        dQuotation++;
+                        number = 0;
+                        break;
+                    case '-' when hLine != 0 || sQuotation == 0 || (sQuotation != 0 && number != 0):
+                        return false;
+                    case '-':
+                        hLine++;
+                        number = 0;
+                        break;
+                    case ' ':
+                        // skip the white space
+                        break;
+                    default:
+                        return false;
                 }
             }
 
@@ -373,8 +375,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             var last = inputTrim[length - 1];
             if (dQuotation > 0 && !last.Equals('\"')) return false;
 
-            if (sQuotation > 0 && dQuotation == 0 && !last.Equals('\'')) return false;
-            return true;
+            return sQuotation <= 0 || dQuotation != 0 || last.Equals('\'');
         }
     }
 }

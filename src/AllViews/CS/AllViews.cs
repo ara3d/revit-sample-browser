@@ -20,7 +20,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            if (null == commandData) throw new ArgumentNullException("commandData");
+            if (null == commandData) throw new ArgumentNullException(nameof(commandData));
 
             var doc = commandData.Application.ActiveUIDocument.Document;
             var view = new ViewsMgr(doc);
@@ -215,13 +215,11 @@ namespace Revit.SDK.Samples.AllViews.CS
             itor.Reset();
             while (itor.MoveNext())
             {
-                var view = itor.Current as View;
                 // skip view templates because they're invisible in project browser
-                if (null == view || view.IsTemplate) continue;
+                if (!(itor.Current is View view) || view.IsTemplate) continue;
 
-                var objType = doc.GetElement(view.GetTypeId()) as ElementType;
-                if (null == objType || objType.Name.Equals("Schedule")
-                                    || objType.Name.Equals("Drawing Sheet"))
+                if (!(doc.GetElement(view.GetTypeId()) is ElementType objType) || objType.Name.Equals("Schedule")
+                                                                               || objType.Name.Equals("Drawing Sheet"))
                     continue;
 
                 m_allViews.Insert(view);
@@ -243,8 +241,10 @@ namespace Revit.SDK.Samples.AllViews.CS
                     return;
                 }
 
-            var categoryNode = new TreeNode(type);
-            categoryNode.Tag = type;
+            var categoryNode = new TreeNode(type)
+            {
+                Tag = type
+            };
             if (type.Equals("Building Elevation"))
                 categoryNode.Text = "Elevations [" + type + "]";
             else
@@ -279,7 +279,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <param name="doc">the currently active document</param>
         public Result GenerateSheet(Document doc)
         {
-            if (null == doc) throw new ArgumentNullException("doc");
+            if (null == doc) throw new ArgumentNullException(nameof(doc));
 
             if (m_selectedViews.IsEmpty)
                 throw new InvalidOperationException("No view be selected, generate sheet be canceled.");
@@ -321,7 +321,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <param name="name">The title block's name</param>
         public void ChooseTitleBlock(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
             foreach (FamilySymbol f in m_allTitleBlocks)
                 if (name.Equals(f.Family.Name + ":" + f.Name))

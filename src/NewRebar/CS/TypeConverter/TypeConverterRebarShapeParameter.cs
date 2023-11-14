@@ -56,10 +56,9 @@ namespace Revit.SDK.Samples.NewRebar.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture,
             object value, Type destinationType)
         {
-            if (destinationType == typeof(string) && value is RebarShapeParameter)
+            if (destinationType == typeof(string) && value is RebarShapeParameter parameter)
             {
-                var param = value as RebarShapeParameter;
-                if (null != param) return param.Name;
+                if (null != parameter) return parameter.Name;
             }
 
             throw new Exception("Can't be converted to other types except string.");

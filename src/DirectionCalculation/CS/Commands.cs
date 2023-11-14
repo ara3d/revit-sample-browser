@@ -43,7 +43,6 @@ namespace Revit.Samples.DirectionCalculation
             ref string message,
             ElementSet elements)
         {
-            Application = revit.Application.Application;
             Document = revit.Application.ActiveUIDocument.Document;
             var trans = new Transaction(Document, "FindSouthFacingWallsWithoutProjectLocation");
             trans.Start();
@@ -90,7 +89,6 @@ namespace Revit.Samples.DirectionCalculation
             ref string message,
             ElementSet elements)
         {
-            Application = revit.Application.Application;
             Document = revit.Application.ActiveUIDocument.Document;
             var trans = new Transaction(Document, "FindSouthFacingWallsWithProjectLocation");
             trans.Start();
@@ -137,7 +135,6 @@ namespace Revit.Samples.DirectionCalculation
             ref string message,
             ElementSet elements)
         {
-            Application = revit.Application.Application;
             Document = revit.Application.ActiveUIDocument.Document;
             var trans = new Transaction(Document, "FindSouthFacingWindowsWithoutProjectLocation");
             trans.Start();
@@ -184,7 +181,6 @@ namespace Revit.Samples.DirectionCalculation
             ref string message,
             ElementSet elements)
         {
-            Application = revit.Application.Application;
             Document = revit.Application.ActiveUIDocument.Document;
 
             var trans = new Transaction(Document, "FindSouthFacingWindowsWithProjectLocation");

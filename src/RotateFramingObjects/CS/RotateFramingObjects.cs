@@ -72,31 +72,33 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
             // if the selected elements are familyInstances, try to get their existing rotation
             foreach (Element e in selection)
             {
-                var familyComponent = e as FamilyInstance;
-                if (familyComponent != null)
+                if (e is FamilyInstance familyComponent)
                 {
-                    if (StructuralType.Beam == familyComponent.StructuralType
-                        || StructuralType.Brace == familyComponent.StructuralType)
+                    switch (familyComponent.StructuralType)
                     {
-                        // selection is a beam or brace
-                        var returnValue = FindParameter(AngleDefinitionName, familyComponent);
-                        displayForm.rotationTextBox.Text = returnValue;
-                    }
-                    else if (StructuralType.Column == familyComponent.StructuralType)
-                    {
-                        // selection is a column
-                        var columnLocation = familyComponent.Location;
-                        var pointLocation = columnLocation as LocationPoint;
-                        var temp = pointLocation.Rotation;
-                        var output = Math.Round(temp * 180 / Math.PI, 3).ToString();
-                        displayForm.rotationTextBox.Text = output;
-                    }
-                    else
-                    {
-                        // other familyInstance can not be rotated
-                        message = "It is not a beam, brace or column.";
-                        elements.Insert(familyComponent);
-                        return Result.Failed;
+                        case StructuralType.Beam:
+                        case StructuralType.Brace:
+                        {
+                            // selection is a beam or brace
+                            var returnValue = FindParameter(AngleDefinitionName, familyComponent);
+                            displayForm.rotationTextBox.Text = returnValue;
+                            break;
+                        }
+                        case StructuralType.Column:
+                        {
+                            // selection is a column
+                            var columnLocation = familyComponent.Location;
+                            var pointLocation = columnLocation as LocationPoint;
+                            var temp = pointLocation.Rotation;
+                            var output = Math.Round(temp * 180 / Math.PI, 3).ToString();
+                            displayForm.rotationTextBox.Text = output;
+                            break;
+                        }
+                        default:
+                            // other familyInstance can not be rotated
+                            message = "It is not a beam, brace or column.";
+                            elements.Insert(familyComponent);
+                            return Result.Failed;
                     }
                 }
                 else
@@ -125,10 +127,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                     return Result.Failed;
                 }
 
-            if (isAllFamilyInstance)
-                return Result.Succeeded;
-            //output error information
-            return Result.Failed;
+            return isAllFamilyInstance ? Result.Succeeded : Result.Failed;
         }
 
         /// <summary>
@@ -146,53 +145,58 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                     selection.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
                 foreach (Element e in selection)
                 {
-                    var familyComponent = e as FamilyInstance;
-                    if (familyComponent == null)
+                    if (!(e is FamilyInstance familyComponent))
                         //is not a familyInstance
                         continue;
-                    // if be familyInstance,judge the types of familyInstance
-                    if (StructuralType.Beam == familyComponent.StructuralType
-                        || StructuralType.Brace == familyComponent.StructuralType)
+                    switch (familyComponent.StructuralType)
                     {
-                        // selection is a beam or Brace
-                        var paraIterator = familyComponent.Parameters.ForwardIterator();
-                        paraIterator.Reset();
-
-                        while (paraIterator.MoveNext())
+                        // if be familyInstance,judge the types of familyInstance
+                        case StructuralType.Beam:
+                        case StructuralType.Brace:
                         {
-                            var para = paraIterator.Current;
-                            var objectAttribute = para as Parameter;
-                            //set generic property named "Cross-Section Rotation"                           
-                            if (objectAttribute.Definition.Name.Equals(AngleDefinitionName))
+                            // selection is a beam or Brace
+                            var paraIterator = familyComponent.Parameters.ForwardIterator();
+                            paraIterator.Reset();
+
+                            while (paraIterator.MoveNext())
                             {
-                                var originDegree = objectAttribute.AsDouble();
-                                var rotateDegree = ReceiveRotationTextBox * Math.PI / 180;
-                                if (!IsAbsoluteChecked)
-                                    // absolute rotation
-                                    rotateDegree += originDegree;
-                                objectAttribute.Set(rotateDegree);
-                                // relative rotation
+                                var para = paraIterator.Current;
+                                var objectAttribute = para as Parameter;
+                                //set generic property named "Cross-Section Rotation"                           
+                                if (objectAttribute.Definition.Name.Equals(AngleDefinitionName))
+                                {
+                                    var originDegree = objectAttribute.AsDouble();
+                                    var rotateDegree = ReceiveRotationTextBox * Math.PI / 180;
+                                    if (!IsAbsoluteChecked)
+                                        // absolute rotation
+                                        rotateDegree += originDegree;
+                                    objectAttribute.Set(rotateDegree);
+                                    // relative rotation
+                                }
                             }
+
+                            break;
                         }
-                    }
-                    else if (StructuralType.Column == familyComponent.StructuralType)
-                    {
-                        // rotate a column
-                        var columnLocation = familyComponent.Location;
-                        // get the location object
-                        var pointLocation = columnLocation as LocationPoint;
-                        var insertPoint = pointLocation.Point;
-                        // get the location point
-                        var temp = pointLocation.Rotation;
-                        //existing rotation
-                        var directionPoint = new XYZ(0, 0, 1);
-                        // define the vector of axis
-                        var rotateAxis = Line.CreateUnbound(insertPoint, directionPoint);
-                        var rotateDegree = ReceiveRotationTextBox * Math.PI / 180;
-                        // rotate column by rotate method
-                        if (IsAbsoluteChecked) rotateDegree -= temp;
-                        var rotateResult = pointLocation.Rotate(rotateAxis, rotateDegree);
-                        if (rotateResult == false) TaskDialog.Show("Revit", "Rotate Failed.");
+                        case StructuralType.Column:
+                        {
+                            // rotate a column
+                            var columnLocation = familyComponent.Location;
+                            // get the location object
+                            var pointLocation = columnLocation as LocationPoint;
+                            var insertPoint = pointLocation.Point;
+                            // get the location point
+                            var temp = pointLocation.Rotation;
+                            //existing rotation
+                            var directionPoint = new XYZ(0, 0, 1);
+                            // define the vector of axis
+                            var rotateAxis = Line.CreateUnbound(insertPoint, directionPoint);
+                            var rotateDegree = ReceiveRotationTextBox * Math.PI / 180;
+                            // rotate column by rotate method
+                            if (IsAbsoluteChecked) rotateDegree -= temp;
+                            var rotateResult = pointLocation.Rotate(rotateAxis, rotateDegree);
+                            if (rotateResult == false) TaskDialog.Show("Revit", "Rotate Failed.");
+                            break;
+                        }
                     }
                 }
 

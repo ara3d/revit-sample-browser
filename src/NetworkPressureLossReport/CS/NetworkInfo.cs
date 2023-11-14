@@ -10,10 +10,14 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
     {
         private double m_maxFlow; // The maximum flow value of any segment on the entire network.
         private readonly IDictionary<int, SectionInfo> m_sections;
+        private readonly Document m_document;
+        private string m_name;
+        private string m_flowDisplay;
+        private ConnectorDomainType m_domainType;
 
         public NetworkInfo(Document doc)
         {
-            Document = doc;
+            m_document = doc;
             m_maxFlow = 0.0;
             FlowDisplay = null;
             DomainType = ConnectorDomainType.Undefined;
@@ -22,13 +26,25 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
 
         public int NumberOfSections => m_sections.Count;
 
-        public Document Document { get; }
+        public Document Document => m_document;
 
-        public string Name { get; set; }
+        private string Name
+        {
+            get => m_name;
+            set => m_name = value;
+        }
 
-        public string FlowDisplay { get; private set; }
+        public string FlowDisplay
+        {
+            get => m_flowDisplay;
+            private set => m_flowDisplay = value;
+        }
 
-        public ConnectorDomainType DomainType { get; set; }
+        public ConnectorDomainType DomainType
+        {
+            get => m_domainType;
+            set => m_domainType = value;
+        }
 
         public static IList<NetworkInfo> FindValidNetworks(Document doc)
         {
@@ -37,10 +53,12 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             var visitedSegments = new HashSet<MEPNetworkSegmentId>(new CompareNetworkSegmentId());
 
             // Find all elements that may drive the pipe or duct flow calculations.
-            var categories = new List<BuiltInCategory>();
-            categories.Add(BuiltInCategory.OST_MechanicalEquipment);
-            categories.Add(BuiltInCategory.OST_PlumbingEquipment);
-            categories.Add(BuiltInCategory.OST_DuctTerminal);
+            var categories = new List<BuiltInCategory>
+            {
+                BuiltInCategory.OST_MechanicalEquipment,
+                BuiltInCategory.OST_PlumbingEquipment,
+                BuiltInCategory.OST_DuctTerminal
+            };
 
             var multiCatFilter = new ElementMulticategoryFilter(categories);
             var elemCollector = new FilteredElementCollector(doc).WherePasses(multiCatFilter)
@@ -60,8 +78,10 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
                         continue;
 
                     // Start from this analytical segment to traverse the entire network.
-                    var newNetwork = new NetworkInfo(doc);
-                    newNetwork.DomainType = seg.DomainType;
+                    var newNetwork = new NetworkInfo(doc)
+                    {
+                        DomainType = seg.DomainType
+                    };
 
                     // First start from the side of the start node.
                     var startNode = data.GetNodeById(seg.StartNode);
@@ -144,27 +164,24 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
         private void RefineName(ElementId idElem)
         {
             var elem = Document.GetElement(idElem);
-            var aCurve = elem as MEPCurve;
-            if (aCurve != null)
+            switch (elem)
             {
-                var sys = aCurve.MEPSystem;
-                if (sys != null) AppendName(sys.Name);
-            }
-            else
-            {
-                var aPart = elem as FabricationPart;
-                if (aPart != null)
+                case MEPCurve aCurve:
+                {
+                    var sys = aCurve.MEPSystem;
+                    if (sys != null) AppendName(sys.Name);
+                    break;
+                }
+                case FabricationPart aPart:
                 {
                     var serviceName = aPart.ServiceName;
                     // Get the full name of fabrication service by its id.
                     var fabConfig = FabricationConfiguration.GetFabricationConfiguration(Document);
-                    if (fabConfig != null)
-                    {
-                        var fabService = fabConfig.GetService(aPart.ServiceId);
-                        if (fabService != null) serviceName = fabService.Name;
-                    }
+                    var fabService = fabConfig?.GetService(aPart.ServiceId);
+                    if (fabService != null) serviceName = fabService.Name;
 
                     AppendName(serviceName);
+                    break;
                 }
             }
         }

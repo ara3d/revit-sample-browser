@@ -100,8 +100,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
             foreach (var e in elements)
             {
                 // skip view templates because they're invisible invalid for truss creation
-                var view = e as View;
-                if (null != view && view.IsTemplate)
+                if (e is View view && view.IsTemplate)
                     continue;
                 //
                 switch (e.Name)

@@ -29,10 +29,16 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 string sref;
                 var result = PickWallFace(uidoc, out sref);
 
-                if (result == Result.Succeeded)
+                switch (result)
+                {
                     // Start the analysis for the picked wall surface
-                    Application.thisApp.RunAnalyzer(commandData.Application, sref);
-                else if (result == Result.Failed) message = "Did not picked a face on a Wall or FaceWall element!";
+                    case Result.Succeeded:
+                        Application.thisApp.RunAnalyzer(commandData.Application, sref);
+                        break;
+                    case Result.Failed:
+                        message = "Did not picked a face on a Wall or FaceWall element!";
+                        break;
+                }
 
                 return Result.Succeeded;
             }

@@ -164,18 +164,16 @@ namespace Revit.SDK.Samples.Loads.CS
 
             if (nameTemp == changeValueTemp) return;
 
-            if (null == changeValueTemp)
+            switch (changeValueTemp)
             {
-                TaskDialog.Show("Revit", "Name can not be null");
-                e.Cancel = true;
-                return;
-            }
-
-            if ("" == changeValueTemp)
-            {
-                TaskDialog.Show("Revit", "Name can not be null");
-                e.Cancel = true;
-                return;
+                case null:
+                    TaskDialog.Show("Revit", "Name can not be null");
+                    e.Cancel = true;
+                    return;
+                case "":
+                    TaskDialog.Show("Revit", "Name can not be null");
+                    e.Cancel = true;
+                    return;
             }
 
             if (!m_dataBuffer.LoadCasesDeal.IsNatureNameUnique(changeValueTemp))
@@ -197,8 +195,7 @@ namespace Revit.SDK.Samples.Loads.CS
 
             var cellTemp = loadCasesDataGridView.CurrentCell;
             if (null == cellTemp) return;
-            var nameTemp = cellTemp.Value as string;
-            if (null == nameTemp)
+            if (!(cellTemp.Value is string nameTemp))
             {
                 e.Cancel = false;
                 return;
@@ -209,18 +206,16 @@ namespace Revit.SDK.Samples.Loads.CS
 
             if (nameTemp == changeValueTemp) return;
 
-            if (null == changeValueTemp)
+            switch (changeValueTemp)
             {
-                TaskDialog.Show("Revit", "Name can not be null");
-                e.Cancel = true;
-                return;
-            }
-
-            if ("" == changeValueTemp)
-            {
-                TaskDialog.Show("Revit", "Name can not be null");
-                e.Cancel = true;
-                return;
+                case null:
+                    TaskDialog.Show("Revit", "Name can not be null");
+                    e.Cancel = true;
+                    return;
+                case "":
+                    TaskDialog.Show("Revit", "Name can not be null");
+                    e.Cancel = true;
+                    return;
             }
 
             if (!m_dataBuffer.LoadCasesDeal.IsCaseNameUnique(changeValueTemp))

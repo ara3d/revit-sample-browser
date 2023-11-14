@@ -205,10 +205,9 @@ namespace Revit.SDK.Samples.CancelSave.CS
         private static string RetrieveProjectCurrentStatus(Document doc)
         {
             // Project information is unavailable for Family document.
-            if (doc.IsFamilyDocument) return null;
-
-            // get project status stored in project information object and return it.
-            return doc.ProjectInformation.Status;
+            return doc.IsFamilyDocument ? null :
+                // get project status stored in project information object and return it.
+                doc.ProjectInformation.Status;
         }
 
         private static string DetectAddinFileLocation(Application applictaion)

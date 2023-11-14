@@ -22,18 +22,17 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         {
             var maxOffset = 0.0;
             // All the elements should be line base.
-            for (var i = 0; i < crvElements.Count; i++)
+            foreach (var t in crvElements)
             {
-                var curve = rvtDoc.GetElement(crvElements[i]);
-                var locationCrv = curve.Location as LocationCurve;
-                if (locationCrv == null || !(locationCrv.Curve is Line))
+                var curve = rvtDoc.GetElement(t);
+                if (!(curve.Location is LocationCurve locationCrv) || !(locationCrv.Curve is Line))
                     throw new ArgumentException("The input elements are not Line base.");
 
                 if (Math.Abs(locationCrv.Curve.GetEndPoint(0).Z
                              - locationCrv.Curve.GetEndPoint(1).Z) > 1.0e-9)
                     throw new AggregateException(
                         "The input curve elements are not in the same elevation plane.");
-                if (curve is Wall) maxOffset = Math.Max(maxOffset, ((Wall)curve).Width * 0.5);
+                if (curve is Wall wall) maxOffset = Math.Max(maxOffset, wall.Width * 0.5);
             }
 
             var controlPoints = CalculateControlPoints2(rvtDoc, crvElements);
@@ -139,70 +138,77 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         private static IList<XYZ> CalculateControlPoints2(Document rvtDoc, IList<ElementId> elements)
         {
             IList<Curve> curves = new List<Curve>();
-            for (var i = 0; i < elements.Count; i++)
+            foreach (var e in elements)
             {
-                var curve = rvtDoc.GetElement(elements[i]);
+                var curve = rvtDoc.GetElement(e);
                 var locationCrv = curve.Location as LocationCurve;
                 curves.Add(locationCrv.Curve);
             }
 
             IList<XYZ> controlPoints = new List<XYZ>();
-            if (curves.Count == 2)
+            switch (curves.Count)
             {
-                var curve1 = curves[0];
-                var curve2 = curves[1];
-                XYZ commonPnt = null;
-                int index1 = -1, index2 = -1;
-                if (HasCommonEndPoint(curve1, curve2, out commonPnt, out index1, out index2))
+                case 2:
                 {
-                    var start = curve1.GetEndPoint(1 - index1);
-                    var end = curve2.GetEndPoint(1 - index2);
-                    controlPoints.Add(start);
-                    controlPoints.Add(commonPnt);
-                    controlPoints.Add(end);
-                }
-            }
-            else if (curves.Count == 3)
-            {
-                var curve1 = curves[0];
-                var curve2 = curves[1];
-                var curve3 = curves[2];
-
-                XYZ start = null, commonPnt1 = null, commonPnt2 = null, end = null;
-                int index1 = -1, index2 = -1, index3 = -1, index4 = -1;
-
-                if (HasCommonEndPoint(curve1, curve2, out commonPnt1, out index1, out index2))
-                {
-                    if (HasCommonEndPoint(curve1, curve3, out commonPnt2, out index3, out index4))
+                    var curve1 = curves[0];
+                    var curve2 = curves[1];
+                    XYZ commonPnt = null;
+                    int index1 = -1, index2 = -1;
+                    if (HasCommonEndPoint(curve1, curve2, out commonPnt, out index1, out index2))
                     {
-                        // common curve is curve1
-                        start = curve2.GetEndPoint(1 - index2);
-                        end = curve3.GetEndPoint(1 - index4);
+                        var start = curve1.GetEndPoint(1 - index1);
+                        var end = curve2.GetEndPoint(1 - index2);
+                        controlPoints.Add(start);
+                        controlPoints.Add(commonPnt);
+                        controlPoints.Add(end);
                     }
-                    else if (HasCommonEndPoint(curve2, curve3, out commonPnt2, out index3, out index4))
-                    {
-                        // common curve is curve2
-                        start = curve1.GetEndPoint(1 - index1);
-                        end = curve3.GetEndPoint(1 - index4);
-                    }
-                }
-                else
-                {
-                    if (HasCommonEndPoint(curve1, curve3, out commonPnt1, out index1, out index2) &&
-                        HasCommonEndPoint(curve2, curve3, out commonPnt2, out index3, out index4))
-                    {
-                        // common curve is curve3
-                        start = curve1.GetEndPoint(1 - index1);
-                        end = curve2.GetEndPoint(1 - index3);
-                    }
-                }
 
-                if (start != null)
+                    break;
+                }
+                case 3:
                 {
-                    controlPoints.Add(start);
-                    controlPoints.Add(commonPnt1);
-                    controlPoints.Add(commonPnt2);
-                    controlPoints.Add(end);
+                    var curve1 = curves[0];
+                    var curve2 = curves[1];
+                    var curve3 = curves[2];
+
+                    XYZ start = null, commonPnt1 = null, commonPnt2 = null, end = null;
+                    int index1 = -1, index2 = -1, index3 = -1, index4 = -1;
+
+                    if (HasCommonEndPoint(curve1, curve2, out commonPnt1, out index1, out index2))
+                    {
+                        if (HasCommonEndPoint(curve1, curve3, out commonPnt2, out index3, out index4))
+                        {
+                            // common curve is curve1
+                            start = curve2.GetEndPoint(1 - index2);
+                            end = curve3.GetEndPoint(1 - index4);
+                        }
+                        else if (HasCommonEndPoint(curve2, curve3, out commonPnt2, out index3, out index4))
+                        {
+                            // common curve is curve2
+                            start = curve1.GetEndPoint(1 - index1);
+                            end = curve3.GetEndPoint(1 - index4);
+                        }
+                    }
+                    else
+                    {
+                        if (HasCommonEndPoint(curve1, curve3, out commonPnt1, out index1, out index2) &&
+                            HasCommonEndPoint(curve2, curve3, out commonPnt2, out index3, out index4))
+                        {
+                            // common curve is curve3
+                            start = curve1.GetEndPoint(1 - index1);
+                            end = curve2.GetEndPoint(1 - index3);
+                        }
+                    }
+
+                    if (start != null)
+                    {
+                        controlPoints.Add(start);
+                        controlPoints.Add(commonPnt1);
+                        controlPoints.Add(commonPnt2);
+                        controlPoints.Add(end);
+                    }
+
+                    break;
                 }
             }
 

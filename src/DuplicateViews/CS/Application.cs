@@ -54,9 +54,10 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
 
             var pbd2 = new PushButtonData("DuplicateAll", "Duplicate across documents",
                 addAssemblyPath,
-                typeof(DuplicateAcrossDocumentsCommand).FullName);
-
-            pbd2.LongDescription = "Duplicate all duplicatable drafting views and schedules.";
+                typeof(DuplicateAcrossDocumentsCommand).FullName)
+            {
+                LongDescription = "Duplicate all duplicatable drafting views and schedules."
+            };
 
             var duplicateAllPB = rp.AddItem(pbd2) as PushButton;
             SetIconsForPushButton(duplicateAllPB, Resources.ViewCopyAcrossFiles);
@@ -68,7 +69,7 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
         /// </summary>
         /// <param name="button">The push button.</param>
         /// <param name="icon">The icon.</param>
-        private static void SetIconsForPushButton(PushButton button, Icon icon)
+        private static void SetIconsForPushButton(RibbonButton button, Icon icon)
         {
             button.LargeImage = GetStdIcon(icon);
             button.Image = GetSmallIcon(icon);

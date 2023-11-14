@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
                 return false;
             }
 
-            var selectedGroup = uiDoc.Document.GetElement(sel.First()) as Group;
-            if (selectedGroup == null)
+            if (!(uiDoc.Document.GetElement(sel.First()) is Group selectedGroup))
             {
                 errorMessage = "The selected element is not a group. Please select a single model group.";
                 return false;

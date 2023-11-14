@@ -22,8 +22,7 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
             var doc = commandData.Application.ActiveUIDocument.Document;
 
             // get one sheet view to place panel schedule.
-            var sheet = doc.ActiveView as ViewSheet;
-            if (null == sheet)
+            if (!(doc.ActiveView is ViewSheet sheet))
             {
                 message = "please go to a sheet view.";
                 return Result.Failed;

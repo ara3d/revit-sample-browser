@@ -22,7 +22,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
 
             try
             {
-                if (null == commandData) throw new ArgumentNullException("commandData");
+                if (null == commandData) throw new ArgumentNullException(nameof(commandData));
 
                 var data = new Data();
                 data.ObtainData(commandData);

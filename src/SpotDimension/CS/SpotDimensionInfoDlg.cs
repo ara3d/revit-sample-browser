@@ -67,8 +67,10 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 if (tmpSpotDimension.View.Name == viewName)
                 {
                     //create a list view Item
-                    var tmpItem = new ListViewItem(tmpSpotDimension.Id.ToString());
-                    tmpItem.Tag = tmpSpotDimension;
+                    var tmpItem = new ListViewItem(tmpSpotDimension.Id.ToString())
+                    {
+                        Tag = tmpSpotDimension
+                    };
 
                     //add the item to the listview
                     spotDimensionsListView.Items.Add(tmpItem);
@@ -106,8 +108,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         /// <param name="e"></param>
         private void viewsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectViewName = viewsComboBox.SelectedItem as string;
-            if (selectViewName != null) DisplaySpotDimensionInfos(selectViewName);
+            if (viewsComboBox.SelectedItem is string selectViewName) DisplaySpotDimensionInfos(selectViewName);
         }
     }
 }

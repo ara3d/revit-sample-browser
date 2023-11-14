@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         public PrintMgrForm(PrintMgr printMgr)
         {
             if (null == printMgr)
-                throw new ArgumentNullException("printMgr");
+                throw new ArgumentNullException(nameof(printMgr));
             m_printMgr = printMgr;
 
             InitializeComponent();
@@ -43,9 +43,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 printToFileCheckBox.Checked = m_printMgr.IsPrintToFile;
 
             var controlsToEnableOrNot =
-                new Collection<Control>();
-            controlsToEnableOrNot.Add(copiesNumericUpDown);
-            controlsToEnableOrNot.Add(numberofcoyiesLabel);
+                new Collection<Control>
+                {
+                    copiesNumericUpDown,
+                    numberofcoyiesLabel
+                };
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
 
             controlsToEnableOrNot.Clear();
@@ -110,9 +112,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             m_printMgr.VerifyPrintToFile(printToFileCheckBox);
 
             var controlsToEnableOrNot =
-                new Collection<Control>();
-            controlsToEnableOrNot.Add(copiesNumericUpDown);
-            controlsToEnableOrNot.Add(numberofcoyiesLabel);
+                new Collection<Control>
+                {
+                    copiesNumericUpDown,
+                    numberofcoyiesLabel
+                };
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
 
             controlsToEnableOrNot.Clear();
@@ -137,9 +141,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             // Verify the relative controls is enable or not, according to the print to file
             // check box is checked or not.
             var controlsToEnableOrNot =
-                new Collection<Control>();
-            controlsToEnableOrNot.Add(copiesNumericUpDown);
-            controlsToEnableOrNot.Add(numberofcoyiesLabel);
+                new Collection<Control>
+                {
+                    copiesNumericUpDown,
+                    numberofcoyiesLabel
+                };
             m_printMgr.VerifyCopies(controlsToEnableOrNot);
 
             controlsToEnableOrNot.Clear();
@@ -170,9 +176,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 m_printMgr.PrintRange = PrintRange.Current;
 
                 var controlsToEnableOrNot =
-                    new Collection<Control>();
-                controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
-                controlsToEnableOrNot.Add(selectedViewSheetSetButton);
+                    new Collection<Control>
+                    {
+                        selectedViewSheetSetLabel,
+                        selectedViewSheetSetButton
+                    };
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
 
                 if (m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton))
@@ -194,9 +202,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 m_printMgr.PrintRange = PrintRange.Visible;
 
                 var controlsToEnableOrNot =
-                    new Collection<Control>();
-                controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
-                controlsToEnableOrNot.Add(selectedViewSheetSetButton);
+                    new Collection<Control>
+                    {
+                        selectedViewSheetSetLabel,
+                        selectedViewSheetSetButton
+                    };
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
 
                 if (m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton))
@@ -218,9 +228,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 m_printMgr.PrintRange = PrintRange.Select;
 
                 var controlsToEnableOrNot =
-                    new Collection<Control>();
-                controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
-                controlsToEnableOrNot.Add(selectedViewSheetSetButton);
+                    new Collection<Control>
+                    {
+                        selectedViewSheetSetLabel,
+                        selectedViewSheetSetButton
+                    };
                 m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot);
 
                 m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton);

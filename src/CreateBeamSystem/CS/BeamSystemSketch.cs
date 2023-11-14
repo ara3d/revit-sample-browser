@@ -81,9 +81,11 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns>new Line2D</returns>
         private static Line2D GetLine2D(Line line)
         {
-            var result = new Line2D();
-            result.StartPnt = new PointF((float)line.GetEndPoint(0).X, (float)line.GetEndPoint(0).Y);
-            result.EndPnt = new PointF((float)line.GetEndPoint(1).X, (float)line.GetEndPoint(1).Y);
+            var result = new Line2D
+            {
+                StartPnt = new PointF((float)line.GetEndPoint(0).X, (float)line.GetEndPoint(0).Y),
+                EndPnt = new PointF((float)line.GetEndPoint(1).X, (float)line.GetEndPoint(1).Y)
+            };
             return result;
         }
 

@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            if (null == commandData) throw new ArgumentNullException("commandData");
+            if (null == commandData) throw new ArgumentNullException(nameof(commandData));
 
             var result = Result.Succeeded;
             try
@@ -50,7 +50,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
         /// <param name="doc">the currently active document</param>
         public static Result MakeFromViewportClick(UIDocument uidoc)
         {
-            if (null == uidoc) throw new ArgumentNullException("uidoc");
+            if (null == uidoc) throw new ArgumentNullException(nameof(uidoc));
 
             var doc = uidoc.Document;
             if (null == doc) throw new InvalidOperationException("The document can't be found.");
@@ -63,16 +63,14 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
             if (null == click) throw new InvalidOperationException("Please click on a plan view viewport on a sheet.");
 
             // Make sure the active view was a sheet view.
-            var viewSheet = uidoc.ActiveGraphicalView as ViewSheet;
-            if (null == viewSheet) throw new InvalidOperationException("The click was not on a sheet.");
+            if (!(uidoc.ActiveGraphicalView is ViewSheet viewSheet)) throw new InvalidOperationException("The click was not on a sheet.");
 
             // Find which viewport was clicked.
             var clickedViewport = GetViewportAtClick(viewSheet, click);
             if (null == clickedViewport) throw new InvalidOperationException("The click was not on a viewport.");
 
             // Verify that the transforms are reported by the viewport and its view.
-            var clickedView = doc.GetElement(clickedViewport.ViewId) as View;
-            if (null == clickedView || !clickedView.HasViewTransforms() || !clickedViewport.HasViewportTransforms())
+            if (!(doc.GetElement(clickedViewport.ViewId) is View clickedView) || !clickedView.HasViewTransforms() || !clickedViewport.HasViewportTransforms())
                 throw new InvalidOperationException(
                     "The clicked viewport doesn't report 3D model space to sheet space transforms.");
 
@@ -84,8 +82,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
                 ViewType.FloorPlan != clickedView.ViewType)
                 throw new InvalidOperationException("Only plan views are supported by this demo application.");
 
-            var plan = clickedView as ViewPlan;
-            if (null == plan)
+            if (!(clickedView is ViewPlan plan))
                 throw new InvalidOperationException("Only plan views are supported by this demo application.");
 
             // Convert the viewport click into a ray through 3d model space.
@@ -143,9 +140,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
 
             foreach (var vpId in viewSheet.GetAllViewports())
             {
-                var viewport = doc.GetElement(vpId) as Viewport;
-
-                if (null != viewport && viewport.GetBoxOutline().Contains(click, CLICK_TOLERANCE))
+                if (doc.GetElement(vpId) is Viewport viewport && viewport.GetBoxOutline().Contains(click, CLICK_TOLERANCE))
                     // Click is within the viewport
                     return viewport;
             }
@@ -245,11 +240,8 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
                 return null;
 
             var doc = viewport.Document;
-            if (null == doc)
-                return null;
 
-            var view = doc.GetElement(viewport.ViewId) as View;
-            if (null == view)
+            if (!(doc?.GetElement(viewport.ViewId) is View view))
                 return null;
 
             // Transform for view projection space --> sheet space

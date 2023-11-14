@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                     var customDataType = config.GetPartCustomDataType(customDataId);
                     var customDataName = config.GetPartCustomDataName(customDataId);
 
-                    resultsBuilder.AppendLine($"Type: {customDataType.ToString()} Name: {customDataName}");
+                    resultsBuilder.AppendLine($"Type: {customDataType} Name: {customDataName}");
                     // check custom data exists on selected part
                     if (fabPart.HasCustomData(customDataId))
                     {

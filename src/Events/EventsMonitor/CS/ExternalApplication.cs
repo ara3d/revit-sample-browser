@@ -77,62 +77,36 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         public static EventsInfoWindows InfoWindows
         {
-            get
-            {
-                if (null == m_infWindows) m_infWindows = new EventsInfoWindows(EventLogManager);
-                return m_infWindows;
-            }
+            get => m_infWindows ?? (m_infWindows = new EventsInfoWindows(EventLogManager));
             set => m_infWindows = value;
         }
 
         /// <summary>
         ///     Property to get private member variable of SeletionDialog
         /// </summary>
-        public static EventsSettingForm SettingDialog
-        {
-            get
-            {
-                if (null == m_settingDialog) m_settingDialog = new EventsSettingForm();
-                return m_settingDialog;
-            }
-        }
+        public static EventsSettingForm SettingDialog 
+            => m_settingDialog ?? (m_settingDialog = new EventsSettingForm());
 
         /// <summary>
         ///     Property to get and set private member variable of log data
         /// </summary>
-        public static LogManager EventLogManager
-        {
-            get
-            {
-                if (null == m_logManager) m_logManager = new LogManager();
-                return m_logManager;
-            }
-        }
+        public static LogManager EventLogManager 
+            => m_logManager ?? (m_logManager = new LogManager());
 
         /// <summary>
         ///     Property to get and set private member variable of application events selection.
         /// </summary>
         public static List<string> ApplicationEvents
         {
-            get
-            {
-                if (null == m_appEventsSelection) m_appEventsSelection = new List<string>();
-                return m_appEventsSelection;
-            }
+            get => m_appEventsSelection ?? (m_appEventsSelection = new List<string>());
             set => m_appEventsSelection = value;
         }
 
         /// <summary>
         ///     Property to get private member variable of application events manager.
         /// </summary>
-        public static EventManager AppEventMgr
-        {
-            get
-            {
-                if (null == m_appEventMgr) m_appEventMgr = new EventManager(m_ctrlApp);
-                return m_appEventMgr;
-            }
-        }
+        public static EventManager AppEventMgr 
+            => m_appEventMgr ?? (m_appEventMgr = new EventManager(m_ctrlApp));
 
 #if !(Debug || DEBUG)
         /// <summary>

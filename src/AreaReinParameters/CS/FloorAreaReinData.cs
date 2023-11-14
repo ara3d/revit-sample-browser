@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        [CategoryAttribute("Top Major Layer")]
+        [Category("Top Major Layer")]
         [TypeConverter(typeof(BarTypeItem))]
         public ElementId Top_Major_Bar_Type
         {
@@ -62,7 +62,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_topMajorBarType.Set(value);
         }
 
-        [CategoryAttribute("Top Major Layer")]
+        [Category("Top Major Layer")]
         [TypeConverter(typeof(HookTypeItem))]
         public ElementId Top_Major_Hook_Type
         {
@@ -70,7 +70,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_topMajorHookType.Set(value);
         }
 
-        [CategoryAttribute("Top Major Layer")]
+        [Category("Top Major Layer")]
         public FloorHookOrientations Top_Major_Hook_Orientation
         {
             get
@@ -85,7 +85,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        [CategoryAttribute("Top Minor Layer")]
+        [Category("Top Minor Layer")]
         [TypeConverter(typeof(BarTypeItem))]
         public ElementId Top_Minor_Bar_Type
         {
@@ -93,7 +93,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_topMinorBarType.Set(value);
         }
 
-        [CategoryAttribute("Top Minor Layer")]
+        [Category("Top Minor Layer")]
         [TypeConverter(typeof(HookTypeItem))]
         public ElementId Top_Minor_Hook_Type
         {
@@ -101,7 +101,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_topMinorHookType.Set(value);
         }
 
-        [CategoryAttribute("Top Minor Layer")]
+        [Category("Top Minor Layer")]
         public FloorHookOrientations Top_Minor_Hook_Orientation
         {
             get
@@ -116,7 +116,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        [CategoryAttribute("Bottom Major Layer")]
+        [Category("Bottom Major Layer")]
         [TypeConverter(typeof(BarTypeItem))]
         public ElementId Bottom_Major_Bar_Type
         {
@@ -124,7 +124,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_bottomMajorBarType.Set(value);
         }
 
-        [CategoryAttribute("Bottom Major Layer")]
+        [Category("Bottom Major Layer")]
         [TypeConverter(typeof(HookTypeItem))]
         public ElementId Bottom_Major_Hook_Type
         {
@@ -132,7 +132,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_bottomMajorHookType.Set(value);
         }
 
-        [CategoryAttribute("Bottom Major Layer")]
+        [Category("Bottom Major Layer")]
         public FloorHookOrientations Bottom_Major_Hook_Orientation
         {
             get
@@ -147,7 +147,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        [CategoryAttribute("Bottom Minor Layer")]
+        [Category("Bottom Minor Layer")]
         [TypeConverter(typeof(BarTypeItem))]
         public ElementId Bottom_Minor_Bar_Type
         {
@@ -155,7 +155,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_bottomMinorBarType.Set(value);
         }
 
-        [CategoryAttribute("Bottom Minor Layer")]
+        [Category("Bottom Minor Layer")]
         [TypeConverter(typeof(HookTypeItem))]
         public ElementId Bottom_Minor_Hook_Type
         {
@@ -163,7 +163,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_bottomMinorHookType.Set(value);
         }
 
-        [CategoryAttribute("Bottom Minor Layer")]
+        [Category("Bottom Minor Layer")]
         public FloorHookOrientations Bottom_Minor_Hook_Orientation
         {
             get

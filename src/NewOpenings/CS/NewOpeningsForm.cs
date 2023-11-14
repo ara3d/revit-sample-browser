@@ -157,22 +157,24 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 {
                     List<Vector4> ps3D;
 
-                    if (tool.ToolType == ToolType.Circle)
+                    switch (tool.ToolType)
                     {
-                        ps3D = GenerateCircle4Point(curve);
-                    }
-                    else if (tool.ToolType == ToolType.Rectangle)
-                    {
-                        var ps = new Point[4]
+                        case ToolType.Circle:
+                            ps3D = GenerateCircle4Point(curve);
+                            break;
+                        case ToolType.Rectangle:
                         {
-                            curve[0], new Point(curve[0].X, curve[1].Y),
-                            curve[1], new Point(curve[1].X, curve[0].Y)
-                        };
-                        ps3D = TransForm2DTo3D(ps);
-                    }
-                    else
-                    {
-                        ps3D = TransForm2DTo3D(curve.ToArray());
+                            var ps = new Point[4]
+                            {
+                                curve[0], new Point(curve[0].X, curve[1].Y),
+                                curve[1], new Point(curve[1].X, curve[0].Y)
+                            };
+                            ps3D = TransForm2DTo3D(ps);
+                            break;
+                        }
+                        default:
+                            ps3D = TransForm2DTo3D(curve.ToArray());
+                            break;
                     }
 
                     m_profile.DrawOpening(ps3D, tool.ToolType);
@@ -215,23 +217,29 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e"></param>
         private void openingPictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            if (MouseButtons.Left == e.Button || MouseButtons.Right == e.Button)
+            switch (e.Button)
             {
-                var g = openingPictureBox.CreateGraphics();
+                case MouseButtons.Left:
+                case MouseButtons.Right:
+                {
+                    var g = openingPictureBox.CreateGraphics();
 
-                m_tool.OnMouseDown(g, e);
-                m_tool.OnRightMouseClick(g, e);
-            }
-            else if (MouseButtons.Middle == e.Button)
-            {
-                m_tool.OnMidMouseDown(null, null);
-                m_tool = m_tools.Peek();
-                m_tools.Enqueue(m_tool);
-                m_tools.Dequeue();
-                var graphic = openingPictureBox.CreateGraphics();
-                graphic.DrawString(m_tool.ToolType.ToString(),
-                    SystemFonts.DefaultFont, SystemBrushes.Highlight, 2, 5);
-                Refresh();
+                    m_tool.OnMouseDown(g, e);
+                    m_tool.OnRightMouseClick(g, e);
+                    break;
+                }
+                case MouseButtons.Middle:
+                {
+                    m_tool.OnMidMouseDown(null, null);
+                    m_tool = m_tools.Peek();
+                    m_tools.Enqueue(m_tool);
+                    m_tools.Dequeue();
+                    var graphic = openingPictureBox.CreateGraphics();
+                    graphic.DrawString(m_tool.ToolType.ToString(),
+                        SystemFonts.DefaultFont, SystemBrushes.Highlight, 2, 5);
+                    Refresh();
+                    break;
+                }
             }
         }
 

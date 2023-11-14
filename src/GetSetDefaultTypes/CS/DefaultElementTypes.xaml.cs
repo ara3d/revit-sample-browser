@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
     /// </summary>
     public partial class DefaultElementTypes : Page, IDockablePaneProvider
     {
-        public static DockablePaneId PaneId = new DockablePaneId(new Guid("{B6579F42-2F4A-4552-92EF-24B3A897757D}"));
+        public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{B6579F42-2F4A-4552-92EF-24B3A897757D}"));
         private Document _document;
 
 
@@ -125,8 +125,10 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
                 if (_finishedTypeGroup.IndexOf(etg) == -1)
                     continue;
 
-                var record = new ElementTypeRecord();
-                record.ElementTypeGroupName = Enum.GetName(typeof(ElementTypeGroup), etg);
+                var record = new ElementTypeRecord
+                {
+                    ElementTypeGroupName = Enum.GetName(typeof(ElementTypeGroup), etg)
+                };
 
                 var collector = new FilteredElementCollector(_document);
                 collector = collector.OfClass(typeof(ElementType));
@@ -165,12 +167,10 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
         {
             if (e.AddedItems.Count == 1 && e.RemovedItems.Count == 1)
             {
-                var cb = sender as ComboBox;
-                if (cb == null)
+                if (!(sender is ComboBox cb))
                     return;
 
-                var item = e.AddedItems[0] as DefaultElementTypeCandidate;
-                if (item == null)
+                if (!(e.AddedItems[0] is DefaultElementTypeCandidate item))
                     return;
 
                 _handler.SetData(item.ElementTypeGroup, item.Id);

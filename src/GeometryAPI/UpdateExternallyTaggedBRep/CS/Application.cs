@@ -76,17 +76,21 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
             // Create and add the new ribbon button "Create tagged BRep".
             var pbd1 = new PushButtonData("CreateTaggedBRep", "Create tagged BRep",
                 m_addinAssemblyPath,
-                "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.CreateBRep");
-            pbd1.LargeImage = convertFromBitmap(Resources.large_shape);
-            pbd1.Image = convertFromBitmap(Resources.small_shape);
+                "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.CreateBRep")
+            {
+                LargeImage = convertFromBitmap(Resources.large_shape),
+                Image = convertFromBitmap(Resources.small_shape)
+            };
             _ = rp.AddItem(pbd1) as PushButton;
 
             // Create and add the new ribbon button "Update tagged BRep".
             var pbd2 = new PushButtonData("UpdateTaggedBRep", "Update tagged BRep",
                 m_addinAssemblyPath,
-                "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.UpdateBRep");
-            pbd2.LargeImage = convertFromBitmap(Resources.large_shape);
-            pbd2.Image = convertFromBitmap(Resources.small_shape);
+                "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.UpdateBRep")
+            {
+                LargeImage = convertFromBitmap(Resources.large_shape),
+                Image = convertFromBitmap(Resources.small_shape)
+            };
             _ = rp.AddItem(pbd2) as PushButton;
         }
 

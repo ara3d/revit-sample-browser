@@ -130,7 +130,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             set
             {
                 m_message = value;
-                if (null != MessageChanged) MessageChanged();
+                MessageChanged?.Invoke();
             }
         }
 

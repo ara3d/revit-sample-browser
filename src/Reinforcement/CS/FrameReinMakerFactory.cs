@@ -38,13 +38,9 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         public bool AssertData()
         {
             // judge whether is any rebar exist in the beam or column
-            if (new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document)
-                    .OfClass(typeof(Rebar))
-                    .Cast<Rebar>()
-                    .Where(x => x.GetHostId() == m_hostObject.Id).Count() > 0)
-                return false;
-
-            return true;
+            return new FilteredElementCollector(m_commandData.Application.ActiveUIDocument.Document)
+                .OfClass(typeof(Rebar))
+                .Cast<Rebar>().Count(x => x.GetHostId() == m_hostObject.Id) == 0;
         }
 
         /// <summary>

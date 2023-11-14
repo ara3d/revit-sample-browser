@@ -53,9 +53,10 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
 
             var pbd = new PushButtonData("ScheduleFormatter", "Format schedule",
                 addAssemblyPath,
-                typeof(ScheduleFormatterCommand).FullName);
-
-            pbd.LongDescription = "Format the active schedule background columns.";
+                typeof(ScheduleFormatterCommand).FullName)
+            {
+                LongDescription = "Format the active schedule background columns."
+            };
 
             var formatSchedulePB = rp.AddItem(pbd) as PushButton;
             SetIconsForPushButton(formatSchedulePB, Resources.ScheduleFormatter);

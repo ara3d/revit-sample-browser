@@ -112,9 +112,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
                 service.AddServer(click);
                 (service as MultiServerService).SetActiveServers(new List<Guid> { click.GetServerId() });
 
-                var ribbonPanel = application.GetRibbonPanels(Tab.AddIns).Find(x => x.Name == TabLabel);
-                if (ribbonPanel == null)
-                    ribbonPanel = application.CreateRibbonPanel(Tab.AddIns, TabLabel);
+                var ribbonPanel = application.GetRibbonPanels(Tab.AddIns).Find(x => x.Name == TabLabel) ?? application.CreateRibbonPanel(Tab.AddIns, TabLabel);
 
                 RibbonItemData ribbonItemData = new PushButtonData("Create marker", "Create issue marker on an element",
                     Assembly.GetExecutingAssembly().Location, typeof(Command).FullName);

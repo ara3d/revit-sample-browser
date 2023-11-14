@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// <param name="xDoc">The Xml data source to read from</param>
         public void ParseAllPipingPoliciesFromXml(XDocument xDoc)
         {
-            if (m_pipeTypes.Count() == 0)
+            if (!m_pipeTypes.Any())
                 throw new RoutingPreferenceDataException(
                     "No pipe pipes defined in this project.  At least one must be defined.");
 
@@ -354,9 +354,9 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
             ICollection<MEPSize> sizes = new List<MEPSize>();
             foreach (var sizeNode in segmentXElement.Nodes())
-                if (sizeNode is XElement)
+                if (sizeNode is XElement node)
                 {
-                    var newSize = ParseMEPSizeFromXml(sizeNode as XElement, m_document);
+                    var newSize = ParseMEPSizeFromXml(node, m_document);
                     sizes.Add(newSize);
                 }
 
@@ -480,10 +480,10 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             routingPreferenceManager.PreferredJunctionType = preferredJunctionType;
 
             foreach (var xRule in routingPreferenceManagerXElement.Nodes())
-                if (xRule is XElement)
+                if (xRule is XElement element)
                 {
                     RoutingPreferenceRuleGroupType groupType;
-                    var rule = ParseRoutingPreferenceRuleFromXML(xRule as XElement, out groupType);
+                    var rule = ParseRoutingPreferenceRuleFromXML(element, out groupType);
                     routingPreferenceManager.AddRule(groupType, rule);
                 }
         }

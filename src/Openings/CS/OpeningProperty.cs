@@ -55,21 +55,21 @@ namespace Revit.SDK.Samples.Openings.CS
         ///     host name
         /// </summary>
         [Description("Name of the Host which contains Current displayed Opening")]
-        [CategoryAttribute("Opening Property")]
+        [Category("Opening Property")]
         public string HostName { get; } = "Null";
 
         /// <summary>
         ///     host elements id
         /// </summary>
         [Description("ElementId of Host")]
-        [CategoryAttribute("Opening Property")]
+        [Category("Opening Property")]
         public string HostElementID { get; } = "";
 
         /// <summary>
         ///     shaft opening
         /// </summary>
         [Description("whether displayed openging is Shaft Opening")]
-        [CategoryAttribute("Opening Property")]
+        [Category("Opening Property")]
         public bool ShaftOpening { get; }
     }
 }

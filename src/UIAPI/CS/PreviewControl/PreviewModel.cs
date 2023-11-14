@@ -115,11 +115,8 @@ namespace Revit.SDK.Samples.UIAPI.CS
         private void cbViews_SelIdxChanged(object sender, EventArgs e)
         {
             var cb = sender as ComboBox;
-            if (cb == null)
-                return;
 
-            var dbItem = cb.SelectedItem as DBViewItem;
-            if (dbItem == null)
+            if (!(cb?.SelectedItem is DBViewItem dbItem))
                 return;
 
             //if (_currentDBViewId == null)
@@ -133,8 +130,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             //    return;
 
             var vc = _elementHostWPF.Child as PreviewControl;
-            if (vc != null)
-                vc.Dispose();
+            vc?.Dispose();
             _elementHostWPF.Child = new PreviewControl(_dbDocument, dbItem.Id);
             _currentDBViewId = dbItem.Id;
         }
@@ -203,6 +199,10 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
     public class DBViewItem
     {
+        private string m_name;
+        private ElementId m_id;
+        private string m_uniqueId;
+
         public DBViewItem(RView dbView, Document dbDoc)
         {
             var viewType = dbDoc.GetElement(dbView.GetTypeId()) as ElementType;
@@ -211,11 +211,23 @@ namespace Revit.SDK.Samples.UIAPI.CS
             UniqueId = dbView.UniqueId;
         }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get => m_name;
+            set => m_name = value;
+        }
 
-        public ElementId Id { get; set; }
+        public ElementId Id
+        {
+            get => m_id;
+            set => m_id = value;
+        }
 
-        public string UniqueId { get; set; }
+        public string UniqueId
+        {
+            get => m_uniqueId;
+            set => m_uniqueId = value;
+        }
 
         public override string ToString()
         {
@@ -226,6 +238,10 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
     public class DBDocumentItem
     {
+        private bool m_isNull;
+        private string m_name;
+        private Document m_document;
+
         public DBDocumentItem(string name, Document doc)
         {
             Name = name;
@@ -238,15 +254,27 @@ namespace Revit.SDK.Samples.UIAPI.CS
             IsNull = true;
         }
 
-        public bool IsNull { get; set; }
-        public string Name { get; set; }
-        public Document Document { get; set; }
+        public bool IsNull
+        {
+            get => m_isNull;
+            set => m_isNull = value;
+        }
+
+        public string Name
+        {
+            get => m_name;
+            set => m_name = value;
+        }
+
+        public Document Document
+        {
+            get => m_document;
+            set => m_document = value;
+        }
 
         public override string ToString()
         {
-            if (IsNull)
-                return "<Open Document...>";
-            return Name;
+            return IsNull ? "<Open Document...>" : Name;
         }
     }
 }

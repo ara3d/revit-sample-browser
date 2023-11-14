@@ -112,49 +112,48 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
 
 
                 var bUnrecognizedStatus = false;
-                if (data.LoadStatus == ExternalResourceLoadStatus.ResourceAlreadyCurrent)
+                switch (data.LoadStatus)
                 {
-                    if (data.GetLoadContext().LoadOperationType == LoadOperationType.Explicit)
+                    case ExternalResourceLoadStatus.ResourceAlreadyCurrent when data.GetLoadContext().LoadOperationType == LoadOperationType.Explicit:
                     {
                         var resourcePath = currentlyLoadedRef.InSessionPath;
                         myMessage += "\n No new changes to load for link: " + resourcePath;
+                        break;
                     }
-                    else
-                    {
+                    case ExternalResourceLoadStatus.ResourceAlreadyCurrent:
                         continue;
-                    }
-                }
-                else if (data.LoadStatus == ExternalResourceLoadStatus.Uninitialized)
-                {
-                    myMessage += "\n The load status is uninitialized - this generally shouldn't happen";
-                }
-                else if (data.LoadStatus == ExternalResourceLoadStatus.Failure)
-                {
-                    myMessage += "\n The load failed and the reason is unknown.";
-                }
-                else if (data.LoadStatus == ExternalResourceLoadStatus.Success)
-                {
-                    if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable)
+                    case ExternalResourceLoadStatus.Uninitialized:
+                        myMessage += "\n The load status is uninitialized - this generally shouldn't happen";
+                        break;
+                    case ExternalResourceLoadStatus.Failure:
+                        myMessage += "\n The load failed and the reason is unknown.";
+                        break;
+                    case ExternalResourceLoadStatus.Success when resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable:
                     {
                         var resourcePath = data.GetExternalResourceReference().InSessionPath;
                         myMessage += "\n Version " + data.GetLoadContent().Version + " of keynote data \'" +
                                      resourcePath + "\' has been loaded successfully";
+                        break;
                     }
-                    else if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.RevitLink)
+                    case ExternalResourceLoadStatus.Success:
                     {
-                        var resourcePath = data.GetExternalResourceReference().InSessionPath;
-                        var ldrlc = (LinkLoadContent)data.GetLoadContent();
-                        var destinationPath = ModelPathUtils.ConvertModelPathToUserVisiblePath(ldrlc.GetLinkDataPath());
-                        myMessage += "\n Version " + data.GetLoadContent().Version +
-                                     " of the file: " + resourcePath +
-                                     " has been downloaded into the cached folder: " + destinationPath +
-                                     " for this Revit Link.";
+                        if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.RevitLink)
+                        {
+                            var resourcePath = data.GetExternalResourceReference().InSessionPath;
+                            var ldrlc = (LinkLoadContent)data.GetLoadContent();
+                            var destinationPath = ModelPathUtils.ConvertModelPathToUserVisiblePath(ldrlc.GetLinkDataPath());
+                            myMessage += "\n Version " + data.GetLoadContent().Version +
+                                         " of the file: " + resourcePath +
+                                         " has been downloaded into the cached folder: " + destinationPath +
+                                         " for this Revit Link.";
+                        }
+
+                        break;
                     }
-                }
-                else
-                {
-                    myMessage += "Unrecognized external resource load status.";
-                    bUnrecognizedStatus = true;
+                    default:
+                        myMessage += "Unrecognized external resource load status.";
+                        bUnrecognizedStatus = true;
+                        break;
                 }
 
 
@@ -197,15 +196,14 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
                 return;
             }
 
-            var myDBServer = externalResourceService.GetServer(GetDBServerId()) as SampleExternalResourceDBServer;
-            if (myDBServer == null)
+            if (!(externalResourceService.GetServer(GetDBServerId()) is SampleExternalResourceDBServer myDBServer))
             {
                 MessageBox.Show("Cannot get SampleExternalResourceDBServer from ExternalResourceService.");
                 return;
             }
             // ... Retrieve detailed failure information from SampleExternalResourceServer here.
 
-            var message = string.Format("The browse result for <{0}> was: <{1}>.", browsingItemPath, resultString);
+            var message = $"The browse result for <{browsingItemPath}> was: <{resultString}>.";
             MessageBox.Show(message);
         }
     }

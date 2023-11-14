@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// <returns>The singleton instance of GeometryCreation</returns>
         public static GeometryCreation getInstance(Application app)
         {
-            if (Instance == null) Instance = new GeometryCreation(app);
-            return Instance;
+            return Instance ?? (Instance = new GeometryCreation(app));
         }
 
         /// <summary>

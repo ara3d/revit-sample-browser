@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <summary>
         ///     the family instance to places rebar on
         /// </summary>
-        protected FamilyInstance m_hostObject;
+        protected readonly FamilyInstance m_hostObject;
 
         /// <summary>
         ///     a set to store all the rebar types
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <summary>
         ///     the API create handle
         /// </summary>
-        protected Document m_revitDoc;
+        protected readonly Document m_revitDoc;
 
         /// <summary>
         ///     The constructor of FramReinMaker
@@ -92,8 +92,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             if (!DisplayForm()) return false;
 
             // At last, begin to create the reinforcement rebars
-            if (!FillWithBars()) return false;
-            return true;
+            return FillWithBars();
         }
 
 

@@ -105,8 +105,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             itor.Reset();
             while (itor.MoveNext())
             {
-                var hookType = itor.Current as RebarHookType;
-                if (null != hookType)
+                if (itor.Current is RebarHookType hookType)
                 {
                     var hookTypeName = hookType.Name;
                     HookTypes.Add(hookTypeName, hookType.Id);
@@ -117,17 +116,14 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             itor.Reset();
             while (itor.MoveNext())
             {
-                var barType = itor.Current as RebarBarType;
-                if (null != barType)
+                if (itor.Current is RebarBarType barType)
                 {
                     var barTypeName = barType.Name;
                     BarTypes.Add(barTypeName, barType.Id);
                 }
             }
 
-            if (HookTypes.Count == 0 || BarTypes.Count == 0) return false;
-
-            return true;
+            return HookTypes.Count != 0 && BarTypes.Count != 0;
         }
     }
 
@@ -148,10 +144,9 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 {
                     //if( elem.GetType() == typeof( Autodesk.Revit.DB.Structure.Rebar ) )
                     var elem = revitDoc.Document.GetElement(elemId);
-                    if (elem is Rebar)
+                    if (elem is Rebar rebar)
                     {
                         var str = "";
-                        var rebar = (Rebar)elem;
                         var pars = rebar.Parameters;
                         foreach (Parameter param in pars)
                         {

@@ -19,17 +19,17 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <summary>
         ///     used to create new instances of utility objects.
         /// </summary>
-        protected Application m_appCreator;
+        protected readonly Application m_appCreator;
 
         /// <summary>
         ///     object which contains reference to Revit Application
         /// </summary>
-        protected ExternalCommandData m_commandData;
+        protected readonly ExternalCommandData m_commandData;
 
         /// <summary>
         ///     Revit DB document
         /// </summary>
-        protected Document m_document;
+        protected readonly Document m_document;
 
         /// <summary>
         ///     store all the points on the needed face
@@ -94,9 +94,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// </param>
         public void Draw2D(Graphics graphics, Pen pen, Matrix4 matrix4)
         {
-            for (var i = 0; i < m_points.Count; i++)
+            foreach (var points in m_points)
             {
-                var points = m_points[i];
                 for (var j = 0; j < points.Count - 1; j++)
                 {
                     var point1 = points[j];
@@ -212,9 +211,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             var bFirstPoint = true;
 
             //get the max and min point on the face
-            for (var i = 0; i < m_points.Count; i++)
+            foreach (var points in m_points)
             {
-                var points = m_points[i];
                 foreach (var point in points)
                 {
                     var v = new Vector4(point);

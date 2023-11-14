@@ -108,9 +108,11 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
             }
 
 
-            var newLevel = new LevelsDataSource();
-            newLevel.Name = newLevelName;
-            newLevel.Elevation = newLevelElevation;
+            var newLevel = new LevelsDataSource
+            {
+                Name = newLevelName,
+                Elevation = newLevelElevation
+            };
 
             bindingSource1.Add(newLevel);
         }
@@ -189,8 +191,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
                 var oldName = levelsDataGridView.CurrentCell.FormattedValue as string;
                 if (newName != oldName)
-                    for (var i = 0; i < m_objectReference.SystemLevelsDatum.Count; i++)
-                        if (m_objectReference.SystemLevelsDatum[i].Name == newName)
+                    foreach (var systemLevelDatum in m_objectReference.SystemLevelsDatum)
+                        if (systemLevelDatum.Name == newName)
                         {
                             TaskDialog.Show("Revit", "The name entered is already in use. Enter a unique name.");
                             e.Cancel = true;

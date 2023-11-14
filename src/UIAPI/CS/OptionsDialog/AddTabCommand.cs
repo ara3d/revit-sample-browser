@@ -28,8 +28,10 @@ namespace Revit.SDK.Samples.UIAPI.CS
             // Actual options
             var optionsControl = new Options();
             var ch = new ContextualHelp(ContextualHelpType.Url, "http://www.autodesk.com/");
-            var extension = new TabbedDialogExtension(optionsControl, optionsControl.OnOK);
-            extension.OnRestoreDefaultsAction = optionsControl.OnRestoreDefaults;
+            var extension = new TabbedDialogExtension(optionsControl, optionsControl.OnOK)
+ {
+     OnRestoreDefaultsAction = optionsControl.OnRestoreDefaults
+ };
             extension.SetContextualHelp(ch);
             e.AddTab("Demo options", extension);
 
@@ -37,24 +39,30 @@ namespace Revit.SDK.Samples.UIAPI.CS
             var userControl3 = new UserControl3("Product Information");
             new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
             var tdext3 = new TabbedDialogExtension(userControl3,
-                userControl3.OnOK);
-            tdext3.OnCancelAction = userControl3.OnCancel;
-            tdext3.OnRestoreDefaultsAction = userControl3.OnRestoreDefaults;
+                userControl3.OnOK)
+            {
+                OnCancelAction = userControl3.OnCancel,
+                OnRestoreDefaultsAction = userControl3.OnRestoreDefaults
+            };
             tdext3.SetContextualHelp(ch);
             e.AddTab("Product Information", tdext3);
 
             var userControl2 = new UserControl2("Copy of SteeringWheels");
             var tdext2 = new TabbedDialogExtension(userControl2,
-                userControl2.OnOK);
-            tdext2.OnCancelAction = userControl2.OnCancel;
+                userControl2.OnOK)
+            {
+                OnCancelAction = userControl2.OnCancel
+            };
             e.AddTab("SteeringWheels(Copy)", tdext2);
 
             var userControl1 = new UserControl1();
             new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
             var tdext1 = new TabbedDialogExtension(userControl1,
-                userControl1.OnOK);
-            tdext1.OnCancelAction = userControl1.OnCancel;
-            tdext1.OnRestoreDefaultsAction = userControl1.OnRestoreDefaults;
+                userControl1.OnOK)
+            {
+                OnCancelAction = userControl1.OnCancel,
+                OnRestoreDefaultsAction = userControl1.OnRestoreDefaults
+            };
             tdext1.SetContextualHelp(ch);
             e.AddTab("WPF components", tdext1);
         }

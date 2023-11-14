@@ -15,9 +15,11 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         public Export2DView()
         {
             InitializeComponent();
-            ViewExportOptions = new ExportOptions();
-            ViewExportOptions.ExportAnnotationObjects = false;
-            ViewExportOptions.ExportPatternLines = false;
+            ViewExportOptions = new ExportOptions
+            {
+                ExportAnnotationObjects = false,
+                ExportPatternLines = false
+            };
         }
 
         /// <summary>

@@ -29,10 +29,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
                 elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
             foreach (Element elem in elems)
             {
-                var corbel = elem as FamilyInstance;
-
                 // Make sure it's a Corbel firstly.
-                if (corbel != null && IsCorbel(corbel))
+                if (elem is FamilyInstance corbel && IsCorbel(corbel))
                     try
                     {
                         // If the Corbel is sloped, this should return a non-null object.

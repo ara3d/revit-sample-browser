@@ -87,9 +87,8 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
                 foreach (var eId in selection.GetElementIds())
                 {
                     var e = revit.Application.ActiveUIDocument.Document.GetElement(eId);
-                    if (e is FamilyInstance)
+                    if (e is FamilyInstance instance)
                     {
-                        var instance = e as FamilyInstance;
                         var isWindow = instance.Category.BuiltInCategory == BuiltInCategory.OST_Windows;
                         var isHostedByRoof = instance.Host.Category.BuiltInCategory == BuiltInCategory.OST_Roofs;
 
@@ -119,7 +118,7 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
             m_doc.Create.NewModelCurve(line, sketchPlane);
 
             // Show a message with the length value
-            TaskDialog.Show("Distance", "Distance to floor: " + string.Format("{0:f2}", line.Length));
+            TaskDialog.Show("Distance", "Distance to floor: " + $"{line.Length:f2}");
 
             trans.Commit();
             return Result.Succeeded;

@@ -34,11 +34,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         public List<string> AppSelectionList
         {
-            get
-            {
-                if (null == m_appSelection) m_appSelection = new List<string>();
-                return m_appSelection;
-            }
+            get { return m_appSelection ?? (m_appSelection = new List<string>()); }
             set => m_appSelection = value;
         }
 

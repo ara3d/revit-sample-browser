@@ -126,9 +126,11 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns>interval point</returns>
         public PointF GetIntervalPoint(float rate)
         {
-            var result = new PointF();
-            result.X = m_startPnt.X + (m_endPnt.X - m_startPnt.X) * rate;
-            result.Y = m_startPnt.Y + (m_endPnt.Y - m_startPnt.Y) * rate;
+            var result = new PointF
+            {
+                X = m_startPnt.X + (m_endPnt.X - m_startPnt.X) * rate,
+                Y = m_startPnt.Y + (m_endPnt.Y - m_startPnt.Y) * rate
+            };
             return result;
         }
 

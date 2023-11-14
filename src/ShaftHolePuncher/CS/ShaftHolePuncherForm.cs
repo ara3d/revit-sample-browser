@@ -42,16 +42,17 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             else
                 m_tool = new LineTool();
 
-            if (profile is ProfileNull)
+            switch (profile)
             {
-                ScaleComboBox.Visible = true;
-                ScaleComboBox.SelectedIndex = 0;
-                scaleLabel.Visible = true;
-            }
-            else if (profile is ProfileBeam)
-            {
-                DirectionPanel.Visible = true;
-                DirectionComboBox.SelectedIndex = 0;
+                case ProfileNull _:
+                    ScaleComboBox.Visible = true;
+                    ScaleComboBox.SelectedIndex = 0;
+                    scaleLabel.Visible = true;
+                    break;
+                case ProfileBeam _:
+                    DirectionPanel.Visible = true;
+                    DirectionComboBox.SelectedIndex = 0;
+                    break;
             }
         }
 
@@ -169,9 +170,15 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             m_tool.Clear();
             m_tool.Finished = false;
             var profile = m_profile as ProfileBeam;
-            if (0 == DirectionComboBox.SelectedIndex)
-                profile.ChangeTransformMatrix(true);
-            else if (1 == DirectionComboBox.SelectedIndex) profile.ChangeTransformMatrix(false);
+            switch (DirectionComboBox.SelectedIndex)
+            {
+                case 0:
+                    profile.ChangeTransformMatrix(true);
+                    break;
+                case 1:
+                    profile.ChangeTransformMatrix(false);
+                    break;
+            }
             pictureBox.Refresh();
         }
     }

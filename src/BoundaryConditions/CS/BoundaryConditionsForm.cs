@@ -82,12 +82,18 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
 
             // set the browsable attributes of the property grid
             Attribute[] attributes = null;
-            if (BCType.Point == m_dataBuffer.BCProperties.BoundaryConditionsType)
-                attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Point }) };
-            else if (BCType.Line == m_dataBuffer.BCProperties.BoundaryConditionsType)
-                attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Line }) };
-            else if (BCType.Area == m_dataBuffer.BCProperties.BoundaryConditionsType)
-                attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Area }) };
+            switch (m_dataBuffer.BCProperties.BoundaryConditionsType)
+            {
+                case BCType.Point:
+                    attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Point }) };
+                    break;
+                case BCType.Line:
+                    attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Line }) };
+                    break;
+                case BCType.Area:
+                    attributes = new Attribute[] { new BCTypeAttribute(new[] { BCType.Area }) };
+                    break;
+            }
 
             bCPropertyGrid.BrowsableAttributes = new AttributeCollection(attributes);
         }

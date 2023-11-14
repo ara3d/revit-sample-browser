@@ -167,14 +167,15 @@ namespace Revit.SDK.Samples.ImportExport.CS
         private void OK_Click(object sender, EventArgs e)
         {
             m_exportOptions.FilePath = saveAs.Text;
-            if (m_exportOptions.ZoomType == ZoomFitType.FitToPage)
+            switch (m_exportOptions.ZoomType)
             {
-                m_exportOptions.PixelSize = int.Parse(pixelValue.Text);
-            }
-            else if (m_exportOptions.ZoomType == ZoomFitType.Zoom)
-            {
-                m_exportOptions.Zoom = (int)zoomSize.Value;
-                m_exportOptions.ImageResolution = (ImageResolution)RIQCom.SelectedIndex;
+                case ZoomFitType.FitToPage:
+                    m_exportOptions.PixelSize = int.Parse(pixelValue.Text);
+                    break;
+                case ZoomFitType.Zoom:
+                    m_exportOptions.Zoom = (int)zoomSize.Value;
+                    m_exportOptions.ImageResolution = (ImageResolution)RIQCom.SelectedIndex;
+                    break;
             }
 
             m_exportOptions.ShadowViewsFileType = (ImageFileType)shadedCom.SelectedIndex;

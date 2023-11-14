@@ -385,15 +385,14 @@ namespace Revit.SDK.Samples.RoomSchedule
         private void UpdateNewRoom(Room newRoom, int row)
         {
             string[] constantColumns = { RoomsData.RoomName, RoomsData.RoomNumber, RoomsData.RoomComments };
-            for (var col = 0; col < constantColumns.Length; col++)
-                // check to see whether the column exists in table
-                if (m_spreadRoomsTable.Columns.IndexOf(constantColumns[col]) != -1)
+            foreach (var constantColumn in constantColumns)
+                if (m_spreadRoomsTable.Columns.IndexOf(constantColumn) != -1)
                 {
                     // if value is not null or empty, set new rooms related parameter.
-                    var colValue = m_spreadRoomsTable.Rows[row][constantColumns[col]].ToString();
+                    var colValue = m_spreadRoomsTable.Rows[row][constantColumn].ToString();
                     if (string.IsNullOrEmpty(colValue)) continue;
 
-                    switch (constantColumns[col])
+                    switch (constantColumn)
                     {
                         case RoomsData.RoomName:
                             newRoom.Name = colValue;
@@ -403,7 +402,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                             break;
                         case RoomsData.RoomComments:
                             var commentParam = newRoom.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
-                            if (null != commentParam) commentParam.Set(colValue);
+                            commentParam?.Set(colValue);
                             break;
                     }
                 }
@@ -465,7 +464,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             XlsDBConnector xlsCon = null;
             try
             {
-                if (null != m_spreadRoomsTable) m_spreadRoomsTable.Clear();
+                m_spreadRoomsTable?.Clear();
 
                 // get all rooms table then close this connection immediately
                 xlsCon = new XlsDBConnector(m_dataBaseName);

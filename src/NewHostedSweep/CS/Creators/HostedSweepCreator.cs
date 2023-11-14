@@ -21,17 +21,17 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         ///     Dictionary to store element's geometry which this creator can be used.
         /// </summary>
-        protected Dictionary<Element, ElementGeometry> m_elemGeom;
+        protected readonly Dictionary<Element, ElementGeometry> m_elemGeom;
 
         /// <summary>
         ///     Revit active document.
         /// </summary>
-        protected Document m_rvtDoc;
+        protected readonly Document m_rvtDoc;
 
         /// <summary>
         ///     Revit UI document.
         /// </summary>
-        protected UIDocument m_rvtUIDoc;
+        protected readonly UIDocument m_rvtUIDoc;
 
         /// <summary>
         ///     Constructor which takes a Revit.Document as parameter.

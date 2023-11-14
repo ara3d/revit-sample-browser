@@ -38,10 +38,11 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                 foreach (var element in collection)
                 {
                     var systemLevel = element as Level;
-                    var levelsDataSourceRow = new LevelsDataSource();
-
-                    levelsDataSourceRow.LevelIDValue = systemLevel.Id;
-                    levelsDataSourceRow.Name = systemLevel.Name;
+                    var levelsDataSourceRow = new LevelsDataSource
+                    {
+                        LevelIDValue = systemLevel.Id,
+                        Name = systemLevel.Name
+                    };
 
                     var elevationPara = systemLevel.get_Parameter(BuiltInParameter.LEVEL_ELEV);
 

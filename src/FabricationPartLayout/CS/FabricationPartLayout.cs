@@ -15,26 +15,35 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
     public class FabricationPartLayout : IExternalCommand
     {
         private Document m_doc { get; set; }
+
         private IList<FabricationService> m_services { get; set; }
 
         // kept in sync
         private IList<int> m_materialIds { get; set; }
+
         private IList<string> m_materialGroups { get; set; }
+
         private IList<string> m_materialNames { get; set; }
 
         // kept in sync
         private IList<int> m_specIds { get; set; }
+
         private IList<string> m_specGroups { get; set; }
+
         private IList<string> m_specNames { get; set; }
 
         // kept in sync
         private IList<int> m_insSpecIds { get; set; }
+
         private IList<string> m_insSpecGroups { get; set; }
+
         private IList<string> m_insSpecNames { get; set; }
 
         // kept in sync
         private IList<int> m_connIds { get; set; }
+
         private IList<string> m_connGroups { get; set; }
+
         private IList<string> m_connNames { get; set; }
 
         public virtual Result Execute(ExternalCommandData commandData
@@ -65,8 +74,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 if (families.Count != 1)
                     return Result.Failed;
 
-                var fam_ahu = families[0] as FamilyInstance;
-                if (fam_ahu == null)
+                if (!(families[0] is FamilyInstance fam_ahu))
                     return Result.Failed;
 
                 // locate the proper connector - rectangular 40"x40" outlet
@@ -882,10 +890,10 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             m_materialGroups = new List<string>();
             m_materialNames = new List<string>();
 
-            for (var i = 0; i < m_materialIds.Count; i++)
+            foreach (var materialId in m_materialIds)
             {
-                m_materialGroups.Add(config.GetMaterialGroup(m_materialIds[i]));
-                m_materialNames.Add(config.GetMaterialName(m_materialIds[i]));
+                m_materialGroups.Add(config.GetMaterialGroup(materialId));
+                m_materialNames.Add(config.GetMaterialName(materialId));
             }
         }
 
@@ -907,10 +915,10 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             m_specGroups = new List<string>();
             m_specNames = new List<string>();
 
-            for (var i = 0; i < m_specIds.Count; i++)
+            foreach (var specId in m_specIds)
             {
-                m_specGroups.Add(config.GetSpecificationGroup(m_specIds[i]));
-                m_specNames.Add(config.GetSpecificationName(m_specIds[i]));
+                m_specGroups.Add(config.GetSpecificationGroup(specId));
+                m_specNames.Add(config.GetSpecificationName(specId));
             }
         }
 
@@ -932,10 +940,10 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             m_insSpecGroups = new List<string>();
             m_insSpecNames = new List<string>();
 
-            for (var i = 0; i < m_insSpecIds.Count; i++)
+            foreach (var specId in m_insSpecIds)
             {
-                m_insSpecGroups.Add(config.GetInsulationSpecificationGroup(m_insSpecIds[i]));
-                m_insSpecNames.Add(config.GetInsulationSpecificationName(m_insSpecIds[i]));
+                m_insSpecGroups.Add(config.GetInsulationSpecificationGroup(specId));
+                m_insSpecNames.Add(config.GetInsulationSpecificationName(specId));
             }
         }
 
@@ -958,10 +966,10 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             m_connGroups = new List<string>();
             m_connNames = new List<string>();
 
-            for (var i = 0; i < m_connIds.Count; i++)
+            foreach (var connId in m_connIds)
             {
-                m_connGroups.Add(config.GetFabricationConnectorGroup(m_connIds[i]));
-                m_connNames.Add(config.GetFabricationConnectorName(m_connIds[i]));
+                m_connGroups.Add(config.GetFabricationConnectorGroup(connId));
+                m_connNames.Add(config.GetFabricationConnectorName(connId));
             }
         }
     }

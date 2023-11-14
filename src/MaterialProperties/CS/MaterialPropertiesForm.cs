@@ -61,8 +61,10 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                if (components != null)
-                    components.Dispose();
+            {
+                components?.Dispose();
+            }
+
             base.Dispose(disposing);
         }
 
@@ -204,35 +206,35 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
         /// <param name="e"></param>
         private void typeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if ((StructuralAssetClass)typeComboBox.SelectedIndex == StructuralAssetClass.Metal)
+            switch ((StructuralAssetClass)typeComboBox.SelectedIndex)
             {
-                applyButton.Enabled = true;
-                changeButton.Enabled = true;
-                subTypeComboBox.Enabled = true;
-                subTypeComboBox.DataSource = m_dataBuffer.SteelCollection;
-                subTypeComboBox.DisplayMember = "MaterialName";
-                subTypeComboBox.ValueMember = "Material";
-                parameterDataGrid.DataSource = m_dataBuffer.GetParameterTable(subTypeComboBox.SelectedValue,
-                    (StructuralAssetClass)typeComboBox.SelectedIndex);
-            }
-            else if ((StructuralAssetClass)typeComboBox.SelectedIndex == StructuralAssetClass.Concrete)
-            {
-                applyButton.Enabled = true;
-                changeButton.Enabled = true;
-                subTypeComboBox.Enabled = true;
-                subTypeComboBox.DataSource = m_dataBuffer.ConcreteCollection;
-                subTypeComboBox.DisplayMember = "MaterialName";
-                subTypeComboBox.ValueMember = "Material";
-                parameterDataGrid.DataSource = m_dataBuffer.GetParameterTable(subTypeComboBox.SelectedValue,
-                    (StructuralAssetClass)typeComboBox.SelectedIndex);
-            }
-            else
-            {
-                applyButton.Enabled = false;
-                changeButton.Enabled = false;
-                subTypeComboBox.DataSource = new ArrayList();
-                subTypeComboBox.Enabled = false;
-                parameterDataGrid.DataSource = new DataTable();
+                case StructuralAssetClass.Metal:
+                    applyButton.Enabled = true;
+                    changeButton.Enabled = true;
+                    subTypeComboBox.Enabled = true;
+                    subTypeComboBox.DataSource = m_dataBuffer.SteelCollection;
+                    subTypeComboBox.DisplayMember = "MaterialName";
+                    subTypeComboBox.ValueMember = "Material";
+                    parameterDataGrid.DataSource = m_dataBuffer.GetParameterTable(subTypeComboBox.SelectedValue,
+                        (StructuralAssetClass)typeComboBox.SelectedIndex);
+                    break;
+                case StructuralAssetClass.Concrete:
+                    applyButton.Enabled = true;
+                    changeButton.Enabled = true;
+                    subTypeComboBox.Enabled = true;
+                    subTypeComboBox.DataSource = m_dataBuffer.ConcreteCollection;
+                    subTypeComboBox.DisplayMember = "MaterialName";
+                    subTypeComboBox.ValueMember = "Material";
+                    parameterDataGrid.DataSource = m_dataBuffer.GetParameterTable(subTypeComboBox.SelectedValue,
+                        (StructuralAssetClass)typeComboBox.SelectedIndex);
+                    break;
+                default:
+                    applyButton.Enabled = false;
+                    changeButton.Enabled = false;
+                    subTypeComboBox.DataSource = new ArrayList();
+                    subTypeComboBox.Enabled = false;
+                    parameterDataGrid.DataSource = new DataTable();
+                    break;
             }
         }
 
@@ -324,8 +326,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             if (null == m_dataBuffer.CurrentMaterial || (m_dataBuffer.CurrentType != StructuralAssetClass.Metal
                                                          && m_dataBuffer.CurrentType != StructuralAssetClass.Concrete))
                 return;
-            var tmp = m_dataBuffer.CurrentMaterial as Material;
-            if (null == tmp)
+            if (!(m_dataBuffer.CurrentMaterial is Material tmp))
                 return;
 
             subTypeComboBox.SelectedValue = tmp;

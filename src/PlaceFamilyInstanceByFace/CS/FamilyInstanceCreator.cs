@@ -116,8 +116,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                 var familyCategoryname = string.Empty;
                 if (null != symbol.Family.FamilyCategory)
                     familyCategoryname = symbol.Family.FamilyCategory.Name + " : ";
-                FamilySymbolNameList.Add(string.Format("{0}{1} : {2}"
-                    , familyCategoryname, symbol.Family.Name, symbol.Name));
+                FamilySymbolNameList.Add($"{familyCategoryname}{symbol.Family.Name} : {symbol.Name}");
                 ii++;
             }
 
@@ -126,7 +125,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                 FamilySymbol loadedfamilySymbol = null;
                 try
                 {
-                    RevitDoc.Document.LoadFamilySymbol(string.Format(@"{0}.rfa", defaultSymbolName)
+                    RevitDoc.Document.LoadFamilySymbol($@"{defaultSymbolName}.rfa"
                         , defaultSymbolName
                         , out loadedfamilySymbol);
                 }
@@ -142,8 +141,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                 var familyCategoryname = string.Empty;
                 if (null != loadedfamilySymbol.Family.FamilyCategory)
                     familyCategoryname = loadedfamilySymbol.Family.FamilyCategory.Name + ": ";
-                FamilySymbolNameList.Add(string.Format("{0}{1}: {2}"
-                    , familyCategoryname, loadedfamilySymbol.Family.Name, loadedfamilySymbol.Name));
+                FamilySymbolNameList.Add(
+                    $"{familyCategoryname}{loadedfamilySymbol.Family.Name}: {loadedfamilySymbol.Name}");
                 DefaultFamilySymbolIndex = FamilySymbolList.Count - 1;
             }
         }
@@ -167,8 +166,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             var instance = RevitDoc.Document.Create.NewFamilyInstance(face
                 , locationP, directionP, FamilySymbolList[familySymbolIndex]);
 
-            var instanceId = new List<ElementId>();
-            instanceId.Add(instance.Id);
+            var instanceId = new List<ElementId> { instance.Id };
             RevitDoc.Selection.SetElementIds(instanceId);
             return true;
         }
@@ -196,8 +194,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             var instance = RevitDoc.Document.Create.NewFamilyInstance(face, line
                 , FamilySymbolList[familySymbolIndex]);
 
-            var instanceId = new List<ElementId>();
-            instanceId.Add(instance.Id);
+            var instanceId = new List<ElementId> { instance.Id };
             RevitDoc.Selection.SetElementIds(instanceId);
             return true;
         }
@@ -225,9 +222,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                 break;
             }
 
-            if (0 >= FaceList.Count) return false;
-
-            return true;
+            return 0 < FaceList.Count;
         }
 
         /// <summary>
@@ -306,9 +301,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             {
                 var obj = Objects.Current;
 
-                if (obj is GeoInstance)
+                if (obj is GeoInstance instance)
                 {
-                    var instance = (GeoInstance)obj;
                     InquireGeometry(instance.SymbolGeometry, elem);
                 }
                 else if (!(obj is Solid))
@@ -332,7 +326,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                     if (tempFace is PlanarFace)
                     {
                         FaceNameList.Add(
-                            string.Format("{0} : {1} ({2})", category, elem.Name, ii));
+                            $"{category} : {elem.Name} ({ii})");
                         FaceList.Add(tempFace);
                         ii++;
                     }

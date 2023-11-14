@@ -40,9 +40,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             CategorySet selectedCategories)
         {
             var activeView = applicationData.ActiveUIDocument.Document.ActiveView;
-            if (ViewType.ThreeD == activeView.ViewType)
-                return true;
-            return false;
+            return ViewType.ThreeD == activeView.ViewType;
         }
     }
 }

@@ -104,8 +104,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         {
             get
             {
-                if (m_runWidthOverride) return m_runWidth;
-                return m_stairsType.MinRunWidth;
+                return m_runWidthOverride ? m_runWidth : m_stairsType.MinRunWidth;
             }
             set
             {
@@ -121,8 +120,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         {
             get
             {
-                if (m_runOffsetOverride) return m_runOffset;
-                return 2.0;
+                return m_runOffsetOverride ? m_runOffset : 2.0;
             }
             set
             {

@@ -22,8 +22,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <summary>
         ///     Parameter LayoutRule of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Construction")]
-        [DefaultValueAttribute(
+        [Category("Construction")]
+        [DefaultValue(
             LayoutRules.Maximum_Spacing)]
         public LayoutRules LayoutRule { get; set; } = LayoutRules.Maximum_Spacing;
 
@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
             {
                 var paraLayout = ParameterUtil.FindParaByName(
                     areaRein.Parameters, "Layout Rule");
-                if (null != paraLayout) paraLayout.Set(temp);
+                paraLayout?.Set(temp);
             }
         }
     }
@@ -54,25 +54,25 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <summary>
         ///     Parameter of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Layers")]
+        [Category("Layers")]
         public bool ExteriorMajorDirection { get; set; } = true;
 
         /// <summary>
         ///     Parameter of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Layers")]
+        [Category("Layers")]
         public bool ExteriorMinorDirection { get; set; } = true;
 
         /// <summary>
         ///     Parameter of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Layers")]
+        [Category("Layers")]
         public bool InteriorMajorDirection { get; set; } = true;
 
         /// <summary>
         ///     Parameter of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Layers")]
+        [Category("Layers")]
         public bool InteriorMinorDirection { get; set; } = true;
 
         /// <summary>
@@ -109,25 +109,25 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <summary>
         ///     Parameter of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Layers")]
+        [Category("Layers")]
         public bool TopMajorDirection { get; set; } = true;
 
         /// <summary>
         ///     Parameter of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Layers")]
+        [Category("Layers")]
         public bool TopMinorDirection { get; set; } = true;
 
         /// <summary>
         ///     Parameter of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Layers")]
+        [Category("Layers")]
         public bool BottomMajorDirection { get; set; } = true;
 
         /// <summary>
         ///     Parameter of AreaReinforcement
         /// </summary>
-        [CategoryAttribute("Layers")]
+        [Category("Layers")]
         public bool BottomMinorDirection { get; set; } = true;
 
         /// <summary>

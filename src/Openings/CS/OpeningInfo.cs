@@ -73,19 +73,7 @@ namespace Revit.SDK.Samples.Openings.CS
         ///     Property to get bool the define whether opening is Shaft Opening
         /// </summary>
         public bool IsShaft
-        {
-            get
-            {
-                if (null != Opening.Category)
-                {
-                    if ("Shaft Openings" == Opening.Category.Name)
-                        return true;
-                    return false;
-                }
-
-                return false;
-            }
-        }
+            => "Shaft Openings" == Opening.Category?.Name;
 
         /// <summary>
         ///     Property to get OpeningProperty class

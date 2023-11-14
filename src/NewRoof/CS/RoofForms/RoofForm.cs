@@ -167,9 +167,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             {
                 if (m_roofsManager.FootPrint.Size != 0)
                 {
-                    var level = levelsComboBox.SelectedItem as Level;
-                    var roofType = roofTypesComboBox.SelectedItem as RoofType;
-                    if (level != null && roofType != null)
+                    if (levelsComboBox.SelectedItem is Level level && roofTypesComboBox.SelectedItem is RoofType roofType)
                     {
                         var roof = m_roofsManager.CreateFootPrintRoof(level, roofType);
                         if (roof == null)
@@ -204,10 +202,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             {
                 if (m_roofsManager.Profile.Size != 0)
                 {
-                    var level = refLevelComboBox.SelectedItem as Level;
-                    var roofType = extrusionRoofTypesComboBox.SelectedItem as RoofType;
-                    var refPlane = refPanesComboBox.SelectedItem as Autodesk.Revit.DB.ReferencePlane;
-                    if (level != null && roofType != null && refPlane != null)
+                    if (refLevelComboBox.SelectedItem is Level level && extrusionRoofTypesComboBox.SelectedItem is RoofType roofType && refPanesComboBox.SelectedItem is Autodesk.Revit.DB.ReferencePlane refPlane)
                     {
                         var roof = m_roofsManager.CreateExtrusionRoof(refPlane, level, roofType, m_start, m_end);
                         if (roof == null)

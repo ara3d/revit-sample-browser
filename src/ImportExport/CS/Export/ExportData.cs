@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         ///     Active document
         /// </summary>
-        protected Document m_activeDoc;
+        protected readonly Document m_activeDoc;
 
         /// <summary>
         ///     ActiveDocument Name
@@ -31,7 +31,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         ///     Revit command data
         /// </summary>
-        protected ExternalCommandData m_commandData;
+        protected readonly ExternalCommandData m_commandData;
 
         /// <summary>
         ///     File Name or Prefix to be used

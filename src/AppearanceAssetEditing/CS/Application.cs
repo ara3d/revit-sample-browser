@@ -136,18 +136,15 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
             if (m_currentAppearanceAssetElementId == ElementId.InvalidElementId)
                 return false;
 
-            var assetElem = m_document.GetElement(m_currentAppearanceAssetElementId) as AppearanceAssetElement;
-            if (assetElem == null)
+            if (!(m_document.GetElement(m_currentAppearanceAssetElementId) is AppearanceAssetElement assetElem))
                 return false;
 
             var asset = assetElem.GetRenderingAsset();
-            var tintColorProp = asset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
-            if (tintColorProp == null)
+            if (!(asset.FindByName("common_Tint_color") is AssetPropertyDoubleArray4d tintColorProp))
                 return false;
 
             // If the material supports tint but it is not enabled, it will be enabled first with a value (255 255 255)
-            var tintToggleProp = asset.FindByName("common_Tint_color") as AssetPropertyBoolean;
-            if (tintToggleProp != null && !tintToggleProp.Value) EnableTintColor();
+            if (asset.FindByName("common_Tint_color") is AssetPropertyBoolean tintToggleProp && !tintToggleProp.Value) EnableTintColor();
 
             return true;
         }
@@ -188,8 +185,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
             if (!SupportTintColor())
                 return false;
 
-            var assetElem = m_document.GetElement(m_currentAppearanceAssetElementId) as AppearanceAssetElement;
-            if (assetElem == null)
+            if (!(m_document.GetElement(m_currentAppearanceAssetElementId) is AppearanceAssetElement assetElem))
                 return false;
 
             var asset = assetElem.GetRenderingAsset();
@@ -208,8 +204,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
             if (!SupportTintColor())
                 return false;
 
-            var assetElem = m_document.GetElement(m_currentAppearanceAssetElementId) as AppearanceAssetElement;
-            if (assetElem == null)
+            if (!(m_document.GetElement(m_currentAppearanceAssetElementId) is AppearanceAssetElement assetElem))
                 return false;
 
             var asset = assetElem.GetRenderingAsset();

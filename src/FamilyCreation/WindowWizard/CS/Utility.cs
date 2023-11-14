@@ -75,8 +75,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             eit.Reset();
             while (eit.MoveNext())
             {
-                var element = eit.Current as T;
-                if (element != null) elements.Add(element);
+                if (eit.Current is T element) elements.Add(element);
             }
 
             return elements;

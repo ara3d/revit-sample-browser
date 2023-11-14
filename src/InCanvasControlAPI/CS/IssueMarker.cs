@@ -58,9 +58,15 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
             var elementTracked = document.GetElement(elementId);
 
             var elementLocation = new XYZ();
-            if (elementTracked.Location is LocationPoint pointLoc)
-                elementLocation = pointLoc.Point;
-            else if (elementTracked.Location is LocationCurve curveLoc) elementLocation = curveLoc.Curve.GetEndPoint(0);
+            switch (elementTracked.Location)
+            {
+                case LocationPoint pointLoc:
+                    elementLocation = pointLoc.Point;
+                    break;
+                case LocationCurve curveLoc:
+                    elementLocation = curveLoc.Curve.GetEndPoint(0);
+                    break;
+            }
 
             var inCanvasControlData = new InCanvasControlData(resourceProvider.IssueImage, elementLocation);
 

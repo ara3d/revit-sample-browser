@@ -74,8 +74,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         /// <param name="e"></param>
         private void editZoneButton_Click(object sender, EventArgs e)
         {
-            var zoneNode = zonesTreeView.SelectedNode as ZoneNode;
-            if (zoneNode != null)
+            if (zonesTreeView.SelectedNode is ZoneNode zoneNode)
                 using (var zoneEditorForm = new ZoneEditorForm(m_dataManager, zoneNode))
                 {
                     zoneEditorForm.ShowDialog();

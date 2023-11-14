@@ -81,8 +81,10 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
             var progressItems = m_progressStack.ToStringList(6);
             foreach (var progressItem in progressItems)
             {
-                var tbProgressItem = new TextBox();
-                tbProgressItem.Text = progressItem;
+                var tbProgressItem = new TextBox
+                {
+                    Text = progressItem
+                };
                 if (tbProgressItem.Text.Contains("<None>")) tbProgressItem.Foreground = Brushes.LightSlateGray;
                 stackPanel_ProgressData.Children.Add(tbProgressItem);
             }
@@ -102,12 +104,13 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
         private void Button_Open_Click(object sender, RoutedEventArgs e)
         {
-            var ofd = new OpenFileDialog();
-
-            ofd.DefaultExt = ".rvt";
-            ofd.Filter = "rvt files (*.rvt)|*.rvt|All files (*.*)|*.*";
-            ofd.FilterIndex = 1;
-            ofd.Title = "Open revit documents.";
+            var ofd = new OpenFileDialog
+            {
+                DefaultExt = ".rvt",
+                Filter = "rvt files (*.rvt)|*.rvt|All files (*.*)|*.*",
+                FilterIndex = 1,
+                Title = "Open revit documents."
+            };
 
             ofd.ShowDialog();
             if (!File.Exists(ofd.FileName))

@@ -29,15 +29,14 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             // iterate and initialize parameters
             foreach (Parameter para in symbol.Parameters)
             {
-                if (para.Definition.Name == "h")
+                switch (para.Definition.Name)
                 {
-                    m_hDimension = para;
-                    continue;
-                }
-
-                if (para.Definition.Name == "b")
-                {
-                    m_bDimension = para;
+                    case "h":
+                        m_hDimension = para;
+                        continue;
+                    case "b":
+                        m_bDimension = para;
+                        break;
                 }
             }
         }
@@ -45,7 +44,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <summary>
         ///     parameter h in parameter category Dimension
         /// </summary>
-        [CategoryAttribute("Dimensions")]
+        [Category("Dimensions")]
         public double h
         {
             get => m_hDimension.AsDouble();
@@ -55,7 +54,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <summary>
         ///     parameter b in parameter category Dimension
         /// </summary>
-        [CategoryAttribute("Dimensions")]
+        [Category("Dimensions")]
         public double b
         {
             get => m_bDimension.AsDouble();

@@ -82,8 +82,7 @@ namespace Revit.SDK.Samples.Rooms.CS
                 foreach (var tmpRoom in m_roomsWithoutTag)
                 {
                     // get the location point of the room
-                    var locPoint = tmpRoom.Location as LocationPoint;
-                    if (null == locPoint)
+                    if (!(tmpRoom.Location is LocationPoint locPoint))
                     {
                         var roomId = "Room Id:  " + tmpRoom.Id;
                         var errMsg = roomId + "\r\nFault to create room tag," +
@@ -263,19 +262,16 @@ namespace Revit.SDK.Samples.Rooms.CS
             {
                 object obj = elementIterator.Current;
 
-                // find the rooms, skip those rooms which don't locate at Level yet.
-                var tmpRoom = obj as Room;
-                if (null != tmpRoom && null != document.GetElement(tmpRoom.LevelId))
+                switch (obj)
                 {
-                    m_rooms.Add(tmpRoom);
-                    continue;
-                }
-
-                // find the room tags
-                var tmpTag = obj as RoomTag;
-                if (null != tmpTag)
-                {
-                    m_roomTags.Add(tmpTag);
+                    // find the rooms, skip those rooms which don't locate at Level yet.
+                    case Room tmpRoom when null != document.GetElement(tmpRoom.LevelId):
+                        m_rooms.Add(tmpRoom);
+                        continue;
+                    // find the room tags
+                    case RoomTag tmpTag:
+                        m_roomTags.Add(tmpTag);
+                        break;
                 }
             }
         }
@@ -325,10 +321,9 @@ namespace Revit.SDK.Samples.Rooms.CS
                 {
                     var tmpPoint = tmpRoom.Location as LocationPoint;
                     var listRoom = m_rooms[j];
-                    var roomPoint = listRoom.Location as LocationPoint;
 
                     // if can't get location point, return false;
-                    if (null == tmpPoint || null == roomPoint) return false;
+                    if (null == tmpPoint || !(listRoom.Location is LocationPoint roomPoint)) return false;
 
                     // rooms in different level
                     if (tmpPoint.Point.Z > roomPoint.Point.Z)

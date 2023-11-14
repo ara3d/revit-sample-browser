@@ -16,7 +16,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// <summary>
         ///     ProgressItem stack
         /// </summary>
-        public Stack<ProgressItem> m_itemStack;
+        public readonly Stack<ProgressItem> m_itemStack;
 
         /// <summary>
         ///     Constructor

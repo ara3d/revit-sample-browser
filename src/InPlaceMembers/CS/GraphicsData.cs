@@ -278,7 +278,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
 
             foreach (var points in m_originCurves) SynChroData(points);
 
-            if (null != UpdateViewEvent) UpdateViewEvent();
+            UpdateViewEvent?.Invoke();
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.DB;
 using Revit.SDK.Samples.CurtainSystem.CS.Data;
 using Revit.SDK.Samples.CurtainSystem.CS.Properties;
@@ -153,12 +154,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             }
 
             // step 3: check each of the 6 normals has matched parallel normal
-            for (var i = 0; i < matchedList.Length; i++)
-                if (false == matchedList[i])
-                    return false;
-
-            // all the normals have matched parallel normals
-            return true;
+            return matchedList.All(matchedItem => matchedItem);
         }
 
         /// <summary>
@@ -315,8 +311,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             foreach (var selElementId in selection.GetElementIds())
             {
                 var selElement = m_mydocument.UIDocument.Document.GetElement(selElementId);
-                var inst = selElement as FamilyInstance;
-                if (null != inst &&
+                if (selElement is FamilyInstance inst &&
                     "Mass" == inst.Category.Name)
                 {
                     resultMass = inst;
@@ -325,9 +320,6 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             }
 
             // nothing selected or the selected element is not a mass
-            if (null == resultMass)
-                //m_mydocument.FatalErrorMsg = Properties.Resources.MSG_InvalidSelection;
-                return null;
 
             return resultMass;
         }

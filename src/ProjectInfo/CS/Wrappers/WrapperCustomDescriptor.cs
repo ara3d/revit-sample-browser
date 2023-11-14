@@ -129,7 +129,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             // get handle's properties
             var collection = TypeDescriptor.GetProperties(m_handle, attributes, false);
             // create empty collection
-            var collection2 = new PropertyDescriptorCollection(new PropertyDescriptor[0]);
+            var collection2 = new PropertyDescriptorCollection(Array.Empty<PropertyDescriptor>());
 
             // filter properties by RevitVersionAttribute.
             // if there is RevitVersionAttribute specified and the designated names does not 
@@ -139,8 +139,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                 var matchRevitVersion = true;
                 foreach (Attribute att in pd.Attributes)
                 {
-                    var pfa = att as RevitVersionAttribute;
-                    if (pfa != null)
+                    if (att is RevitVersionAttribute pfa)
                     {
                         if (!pfa.Names.Contains(RevitStartInfo.RevitProduct))
                             matchRevitVersion = false;
@@ -191,13 +190,11 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             get
             {
-                var mi = Handle.GetType().GetMethod("get_Name", new Type[0]);
+                var mi = Handle.GetType().GetMethod("get_Name", Type.EmptyTypes);
                 if (mi != null)
                 {
-                    var name = mi.Invoke(Handle, new object[0]);
-                    if (name != null)
-                        return name.ToString();
-                    return string.Empty;
+                    var name = mi.Invoke(Handle, Array.Empty<object>());
+                    return name != null ? name.ToString() : string.Empty;
                 }
 
                 return Handle.ToString();

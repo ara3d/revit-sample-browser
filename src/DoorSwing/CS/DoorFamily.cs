@@ -80,17 +80,10 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         ///     Retrieve the geometry of one door which belongs to this family and
         ///     neither flipped nor mirrored.
         /// </summary>
-        public DoorGeometry Geometry
-        {
-            get
-            {
-                if (null == m_geometry)
-                    // create one instance of DoorFamilyGeometry class.
-                    m_geometry = new DoorGeometry(m_oneInstance);
-
-                return m_geometry;
-            }
-        }
+        public DoorGeometry Geometry =>
+            m_geometry ?? (m_geometry =
+                // create one instance of DoorFamilyGeometry class.
+                new DoorGeometry(m_oneInstance));
 
         /// <summary>
         ///     Update Left/Right feature based on family's actual geometry and country's standard.

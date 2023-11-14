@@ -136,10 +136,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
             }
 
             // Get or create a definition group "Rebar Shape Parameters".
-            var group = file.Groups.get_Item("Rebar Shape Parameters");
-            if (group == null)
-                group = file.Groups.Create("Rebar Shape Parameters");
-            return group;
+            return file.Groups.get_Item("Rebar Shape Parameters") ?? file.Groups.Create("Rebar Shape Parameters");
         }
 
         /// <summary>

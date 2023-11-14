@@ -38,64 +38,79 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                 var maxCount = WinderUtil.CalculateMaxStepsCount(controlPoints, runWidth, treadDepth);
                 uint numStepsInCorner = 3;
                 var centerOffset = 0.0;
-                if (selectionIds.Count == 2)
+                switch (selectionIds.Count)
+                {
                     // Create L-Winder
-                    using (var options = new LWinderOptions())
+                    case 2:
                     {
-                        options.NumStepsAtStart = maxCount[0];
-                        options.NumStepsAtEnd = maxCount[1];
-                        options.NumStepsInCorner = numStepsInCorner;
-                        options.RunWidth = runWidth;
-                        options.CenterOffsetE = centerOffset;
-                        options.CenterOffsetF = centerOffset;
-                        if (options.ShowDialog() == DialogResult.OK)
+                        using (var options = new LWinderOptions())
                         {
-                            var lwinder = new LWinder();
-                            lwinder.NumStepsAtStart = options.NumStepsAtStart;
-                            lwinder.NumStepsInCorner = options.NumStepsInCorner;
-                            lwinder.NumStepsAtEnd = options.NumStepsAtEnd;
-                            lwinder.RunWidth = options.RunWidth;
-                            lwinder.TreadDepth = treadDepth;
-                            lwinder.CenterOffsetE = options.CenterOffsetE;
-                            lwinder.CenterOffsetF = options.CenterOffsetF;
-                            var activeid = options.DMU ? commandData.Application.ActiveAddInId : null;
-                            new WinderUpdater(lwinder,
-                                selectedIds, rvtDoc, activeid, options.Sketch);
+                            options.NumStepsAtStart = maxCount[0];
+                            options.NumStepsAtEnd = maxCount[1];
+                            options.NumStepsInCorner = numStepsInCorner;
+                            options.RunWidth = runWidth;
+                            options.CenterOffsetE = centerOffset;
+                            options.CenterOffsetF = centerOffset;
+                            if (options.ShowDialog() == DialogResult.OK)
+                            {
+                                var lwinder = new LWinder
+                                {
+                                    NumStepsAtStart = options.NumStepsAtStart,
+                                    NumStepsInCorner = options.NumStepsInCorner,
+                                    NumStepsAtEnd = options.NumStepsAtEnd,
+                                    RunWidth = options.RunWidth,
+                                    TreadDepth = treadDepth,
+                                    CenterOffsetE = options.CenterOffsetE,
+                                    CenterOffsetF = options.CenterOffsetF
+                                };
+                                var activeid = options.DMU ? commandData.Application.ActiveAddInId : null;
+                                new WinderUpdater(lwinder,
+                                    selectedIds, rvtDoc, activeid, options.Sketch);
+                            }
                         }
+
+                        break;
                     }
-                else if (selectionIds.Count == 3)
                     // Create U-Winder
-                    using (var options = new UWinderOptions())
+                    case 3:
                     {
-                        options.NumStepsAtStart = maxCount[0];
-                        options.NumStepsInMiddle = maxCount[1];
-                        options.NumStepsAtEnd = maxCount[2];
-                        options.NumStepsInCorner1 = numStepsInCorner;
-                        options.NumStepsInCorner2 = numStepsInCorner;
-                        options.RunWidth = runWidth;
-                        options.CenterOffsetE1 = centerOffset;
-                        options.CenterOffsetF1 = centerOffset;
-                        options.CenterOffsetE2 = centerOffset;
-                        options.CenterOffsetF2 = centerOffset;
-                        if (options.ShowDialog() == DialogResult.OK)
+                        using (var options = new UWinderOptions())
                         {
-                            var uwinder = new UWinder();
-                            uwinder.NumStepsAtStart = options.NumStepsAtStart;
-                            uwinder.NumStepsInCorner1 = options.NumStepsInCorner1;
-                            uwinder.NumStepsInMiddle = options.NumStepsInMiddle;
-                            uwinder.NumStepsInCorner2 = options.NumStepsInCorner2;
-                            uwinder.NumStepsAtEnd = options.NumStepsAtEnd;
-                            uwinder.RunWidth = options.RunWidth;
-                            uwinder.TreadDepth = treadDepth;
-                            uwinder.CenterOffsetE1 = options.CenterOffsetE1;
-                            uwinder.CenterOffsetF1 = options.CenterOffsetF1;
-                            uwinder.CenterOffsetE2 = options.CenterOffsetE2;
-                            uwinder.CenterOffsetF2 = options.CenterOffsetF2;
-                            var activeid = options.DMU ? commandData.Application.ActiveAddInId : null;
-                            new WinderUpdater(uwinder,
-                                selectedIds, rvtDoc, activeid, options.Sketch);
+                            options.NumStepsAtStart = maxCount[0];
+                            options.NumStepsInMiddle = maxCount[1];
+                            options.NumStepsAtEnd = maxCount[2];
+                            options.NumStepsInCorner1 = numStepsInCorner;
+                            options.NumStepsInCorner2 = numStepsInCorner;
+                            options.RunWidth = runWidth;
+                            options.CenterOffsetE1 = centerOffset;
+                            options.CenterOffsetF1 = centerOffset;
+                            options.CenterOffsetE2 = centerOffset;
+                            options.CenterOffsetF2 = centerOffset;
+                            if (options.ShowDialog() == DialogResult.OK)
+                            {
+                                var uwinder = new UWinder
+                                {
+                                    NumStepsAtStart = options.NumStepsAtStart,
+                                    NumStepsInCorner1 = options.NumStepsInCorner1,
+                                    NumStepsInMiddle = options.NumStepsInMiddle,
+                                    NumStepsInCorner2 = options.NumStepsInCorner2,
+                                    NumStepsAtEnd = options.NumStepsAtEnd,
+                                    RunWidth = options.RunWidth,
+                                    TreadDepth = treadDepth,
+                                    CenterOffsetE1 = options.CenterOffsetE1,
+                                    CenterOffsetF1 = options.CenterOffsetF1,
+                                    CenterOffsetE2 = options.CenterOffsetE2,
+                                    CenterOffsetF2 = options.CenterOffsetF2
+                                };
+                                var activeid = options.DMU ? commandData.Application.ActiveAddInId : null;
+                                new WinderUpdater(uwinder,
+                                    selectedIds, rvtDoc, activeid, options.Sketch);
+                            }
                         }
+
+                        break;
                     }
+                }
 
                 return Result.Succeeded;
             }
@@ -119,7 +134,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             if (levels.Count < 2) throw new InvalidOperationException("Need two Levels to create Stairs.");
             var levelList = new List<Element>();
             levelList.AddRange(levels);
-            levelList.Sort((a, b) => { return ((Level)a).Elevation.CompareTo(((Level)b).Elevation); });
+            levelList.Sort((a, b) => ((Level)a).Elevation.CompareTo(((Level)b).Elevation));
             using (var stairsMode = new StairsEditScope(rvtDoc, "DUMMY STAIRS SCOPE"))
             {
                 var stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);

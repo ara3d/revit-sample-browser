@@ -58,8 +58,7 @@ namespace Revit.SDK.Samples.Site.CS
             if (maxRadius <= 8)
                 throw new Exception("Pond radius must be greater than 8");
 
-            var points = new List<XYZ>();
-            points.Add(center);
+            var points = new List<XYZ> { center };
 
             GenerateCircleSurrounding(points, center, 1, maxRadius - 8);
             GenerateCircleSurrounding(points, center, 2, maxRadius - 5);

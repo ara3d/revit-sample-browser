@@ -51,10 +51,15 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 
                     // Since we keep a copy of InCanvasControlData, we can avoid creating a new one. It already has image and position set - and we can just change the position
                     var controlData = marker.InCanvasControlData;
-                    if (element.Location is LocationPoint pointLoc)
-                        controlData.Position = pointLoc.Point;
-                    else if (element.Location is LocationCurve curveLoc)
-                        controlData.Position = curveLoc.Curve.GetEndPoint(0);
+                    switch (element.Location)
+                    {
+                        case LocationPoint pointLoc:
+                            controlData.Position = pointLoc.Point;
+                            break;
+                        case LocationCurve curveLoc:
+                            controlData.Position = curveLoc.Curve.GetEndPoint(0);
+                            break;
+                    }
 
                     marker.InCanvasControlData = controlData;
 

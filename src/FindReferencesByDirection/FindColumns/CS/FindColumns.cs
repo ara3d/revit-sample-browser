@@ -95,7 +95,7 @@ namespace Revit.SDK.Samples.FindColumns.CS
                 foreach (var eId in selection.GetElementIds())
                 {
                     var e = revit.Application.ActiveUIDocument.Document.GetElement(eId);
-                    if (e is Wall) wallsToCheck.Add((Wall)e);
+                    if (e is Wall wall) wallsToCheck.Add(wall);
                 }
 
                 if (wallsToCheck.Count <= 0)
@@ -149,10 +149,10 @@ namespace Revit.SDK.Samples.FindColumns.CS
         {
             var locationCurve = wall.Location as LocationCurve;
             var wallCurve = locationCurve.Curve;
-            if (wallCurve is Line)
+            if (wallCurve is Line line)
             {
-                LogWallCurve((Line)wallCurve);
-                CheckLinearWallForEmbeddedColumns(wall, locationCurve, (Line)wallCurve);
+                LogWallCurve(line);
+                CheckLinearWallForEmbeddedColumns(wall, locationCurve, line);
             }
             else
             {
@@ -283,12 +283,11 @@ namespace Revit.SDK.Samples.FindColumns.CS
                 if (reference.Proximity < proximity)
                 {
                     var referenceElement = wall.Document.GetElement(reference.GetReference());
-                    if (referenceElement is FamilyInstance)
+                    if (referenceElement is FamilyInstance familyInstance)
                     {
-                        var familyInstance = (FamilyInstance)referenceElement;
                         var familyInstanceId = familyInstance.Id;
                         var wallId = wall.Id;
-                        var categoryValue = referenceElement.Category.BuiltInCategory;
+                        var categoryValue = familyInstance.Category.BuiltInCategory;
                         if (categoryValue == BuiltInCategory.OST_Columns ||
                             categoryValue == BuiltInCategory.OST_StructuralColumns)
                         {
@@ -301,8 +300,7 @@ namespace Revit.SDK.Samples.FindColumns.CS
                             }
                             else
                             {
-                                var columnsOnWall = new List<ElementId>();
-                                columnsOnWall.Add(familyInstanceId);
+                                var columnsOnWall = new List<ElementId> { familyInstanceId };
                                 m_columnsOnWall.Add(wallId, columnsOnWall);
                             }
 

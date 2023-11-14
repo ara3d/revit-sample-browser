@@ -385,15 +385,21 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var engineeringPlans = new ViewSet();
             while (itor.MoveNext())
             {
-                var view = itor.Current as View;
                 // skip view templates because they're invalid for import/export
-                if (view == null || view.IsTemplate)
+                if (!(itor.Current is View view) || view.IsTemplate)
                     continue;
-                if (view.ViewType == ViewType.FloorPlan)
-                    floorPlans.Insert(view);
-                else if (view.ViewType == ViewType.CeilingPlan)
-                    ceilingPlans.Insert(view);
-                else if (view.ViewType == ViewType.EngineeringPlan) engineeringPlans.Insert(view);
+                switch (view.ViewType)
+                {
+                    case ViewType.FloorPlan:
+                        floorPlans.Insert(view);
+                        break;
+                    case ViewType.CeilingPlan:
+                        ceilingPlans.Insert(view);
+                        break;
+                    case ViewType.EngineeringPlan:
+                        engineeringPlans.Insert(view);
+                        break;
+                }
             }
 
             foreach (View floorPlan in floorPlans)
@@ -407,46 +413,53 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             var activeView = m_activeDoc.ActiveView;
             var viewType = activeView.ViewType;
-            if (viewType == ViewType.FloorPlan ||
-                viewType == ViewType.CeilingPlan)
+            switch (viewType)
             {
-                m_views.Insert(activeView);
-                foreach (View view in views)
-                    if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
-                        m_views.Insert(view);
-            }
-            else if (viewType == ViewType.EngineeringPlan)
-            {
-                if (views.Contains(activeView)) m_views.Insert(activeView);
-                foreach (View view in views)
-                    if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
-                        m_views.Insert(view);
-            }
-            else //Get view of the lowest elevation
-            {
-                var i = 0;
-                double elevation = 0;
-                View viewLowestElevation = null;
-                foreach (View view in views)
+                case ViewType.FloorPlan:
+                case ViewType.CeilingPlan:
                 {
-                    if (i == 0)
+                    m_views.Insert(activeView);
+                    foreach (View view in views)
+                        if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
+                            m_views.Insert(view);
+                    break;
+                }
+                case ViewType.EngineeringPlan:
+                {
+                    if (views.Contains(activeView)) m_views.Insert(activeView);
+                    foreach (View view in views)
+                        if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
+                            m_views.Insert(view);
+                    break;
+                }
+                //Get view of the lowest elevation
+                default:
+                {
+                    var i = 0;
+                    double elevation = 0;
+                    View viewLowestElevation = null;
+                    foreach (View view in views)
                     {
-                        elevation = view.GenLevel.Elevation;
-                        viewLowestElevation = view;
-                    }
-                    else
-                    {
-                        if (view.GenLevel.Elevation <= elevation)
+                        if (i == 0)
                         {
                             elevation = view.GenLevel.Elevation;
                             viewLowestElevation = view;
                         }
+                        else
+                        {
+                            if (view.GenLevel.Elevation <= elevation)
+                            {
+                                elevation = view.GenLevel.Elevation;
+                                viewLowestElevation = view;
+                            }
+                        }
+
+                        i++;
                     }
 
-                    i++;
+                    m_views.Insert(viewLowestElevation);
+                    break;
                 }
-
-                m_views.Insert(viewLowestElevation);
             }
         }
     }

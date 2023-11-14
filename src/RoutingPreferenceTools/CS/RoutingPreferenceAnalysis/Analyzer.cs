@@ -250,9 +250,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             if (rule.NumberOfCriteria == 0) return false;
 
             var psc = rule.GetCriterion(0) as PrimarySizeCriterion;
-            if (psc.IsEqual(PrimarySizeCriterion.None()))
-                return true;
-            return false;
+            return psc.IsEqual(PrimarySizeCriterion.None());
         }
 
         private bool IsGroupSetToRangeNone(RoutingPreferenceManager routingPreferenceManager,
@@ -300,23 +298,28 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
                 var partType = (PartType)paramPartType.AsInteger();
 
-                if (partType == PartType.Tee)
-                    teeDefined = true;
-                else if (
-                    partType == PartType.TapAdjustable ||
-                    partType == PartType.TapPerpendicular ||
-                    partType == PartType.SpudPerpendicular ||
-                    partType == PartType.SpudAdjustable
-                )
-                    tapDefined = true;
+                switch (partType)
+                {
+                    case PartType.Tee:
+                        teeDefined = true;
+                        break;
+                    case PartType.TapAdjustable:
+                    case PartType.TapPerpendicular:
+                    case PartType.SpudPerpendicular:
+                    case PartType.SpudAdjustable:
+                        tapDefined = true;
+                        break;
+                }
             }
 
-            if (preferredJunctionType == PreferredJunctionType.Tap && !tapDefined)
-                return false;
-            if (preferredJunctionType == PreferredJunctionType.Tee && !teeDefined)
-                return false;
-
-            return true;
+            switch (preferredJunctionType)
+            {
+                case PreferredJunctionType.Tap when !tapDefined:
+                case PreferredJunctionType.Tee when !teeDefined:
+                    return false;
+                default:
+                    return true;
+            }
         }
 
         private string GetFittingName(ElementId id)

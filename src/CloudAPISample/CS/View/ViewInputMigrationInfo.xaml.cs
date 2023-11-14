@@ -87,11 +87,14 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.View
         [DataContract]
         internal class SerializableProjectInfo
         {
-            [DataMember] public string AccountGuid { get; set; }
+            [DataMember]
+            public string AccountGuid { get; set; }
 
-            [DataMember] public string ProjectGuid { get; set; }
+            [DataMember]
+            public string ProjectGuid { get; set; }
 
-            [DataMember] public FolderLocation[] AvailableFolders { get; set; }
+            [DataMember]
+            public FolderLocation[] AvailableFolders { get; set; }
         }
     }
 }

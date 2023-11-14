@@ -24,9 +24,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
 
                 var refObj =
                     uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part straight to start.");
-                var part = doc.GetElement(refObj) as FabricationPart;
 
-                if (part == null || part.IsAStraight() == false)
+                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAStraight() == false)
                 {
                     message = "The selected element is not a fabrication part straight.";
                     return Result.Failed;

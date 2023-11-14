@@ -41,10 +41,10 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             PlanarFace pFace1 = null;
             PlanarFace pFace2 = null;
-            if (face1 is PlanarFace)
-                pFace1 = face1 as PlanarFace;
-            if (face2 is PlanarFace)
-                pFace2 = face2 as PlanarFace;
+            if (face1 is PlanarFace planarFace)
+                pFace1 = planarFace;
+            if (face2 is PlanarFace face)
+                pFace2 = face;
             if (pFace1 != null && pFace2 != null)
             {
                 var subTransaction = new SubTransaction(m_document);

@@ -31,20 +31,23 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 return Result.Succeeded;
             }
 
-            var sfd = new SaveFileDialog();
-            sfd.DefaultExt = ".xml";
-            sfd.Filter = "RoutingPreference Builder Xml files (*.xml)|*.xml";
-            sfd.FileName =
-                Path.GetFileNameWithoutExtension(commandData.Application.ActiveUIDocument.Document.PathName) +
-                ".routingPreferences.xml";
+            var sfd = new SaveFileDialog
+            {
+                DefaultExt = ".xml",
+                Filter = "RoutingPreference Builder Xml files (*.xml)|*.xml",
+                FileName = Path.GetFileNameWithoutExtension(commandData.Application.ActiveUIDocument.Document.PathName) +
+                           ".routingPreferences.xml"
+            };
             if (sfd.ShowDialog() == true)
             {
                 var builder = new RoutingPreferenceBuilder(commandData.Application.ActiveUIDocument.Document);
                 var pathsNotFound = false;
                 var routingPreferenceBuilderDoc = builder.CreateXmlFromAllPipingPolicies(ref pathsNotFound);
-                var xmlWriterSettings = new XmlWriterSettings();
-                xmlWriterSettings.Indent = true;
-                xmlWriterSettings.NewLineOnAttributes = false;
+                var xmlWriterSettings = new XmlWriterSettings
+                {
+                    Indent = true,
+                    NewLineOnAttributes = false
+                };
                 var writer = XmlWriter.Create(sfd.FileName, xmlWriterSettings);
                 routingPreferenceBuilderDoc.WriteTo(writer);
                 writer.Flush();

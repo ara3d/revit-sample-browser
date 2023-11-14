@@ -396,22 +396,24 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                                                + " Choose Yes to commit them, or No to roll them back.",
                         TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No | TaskDialogCommonButtons.Cancel);
 
-                if (TaskDialogResult.Cancel == dialogResult)
+                switch (dialogResult)
                 {
-                    return;
-                }
-
-                if (TaskDialogResult.Yes == dialogResult)
-                {
-                    if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
-                        m_transaction.Commit();
-                    HandleNestedTransactionGroups(OperationType.CommitTransactionGroup);
-                }
-                else
-                {
-                    if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
-                        m_transaction.RollBack();
-                    HandleNestedTransactionGroups(OperationType.RollbackTransactionGroup);
+                    case TaskDialogResult.Cancel:
+                        return;
+                    case TaskDialogResult.Yes:
+                    {
+                        if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
+                            m_transaction.Commit();
+                        HandleNestedTransactionGroups(OperationType.CommitTransactionGroup);
+                        break;
+                    }
+                    default:
+                    {
+                        if (m_transaction != null && m_transaction.GetStatus() == TransactionStatus.Started)
+                            m_transaction.RollBack();
+                        HandleNestedTransactionGroups(OperationType.RollbackTransactionGroup);
+                        break;
+                    }
                 }
             }
 
@@ -538,108 +540,120 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         /// <param name="info">tree node text</param>
         private void AddNode(OperationType type, string info)
         {
-            //add tree node according to operation type 
-            if (type == OperationType.StartTransactionGroup)
+            switch (type)
             {
-                if (m_transGroupNode == null)
+                //add tree node according to operation type 
+                case OperationType.StartTransactionGroup:
                 {
-                    m_transGroupNode = new TreeNode(m_transactionGroup.GetName());
-                    var index = m_rootNode.Nodes.Add(m_transGroupNode);
-                    m_rootNode.Nodes[index].Tag = m_transactionGroup;
-                    m_rootNode.Expand();
+                    if (m_transGroupNode == null)
+                    {
+                        m_transGroupNode = new TreeNode(m_transactionGroup.GetName());
+                        var index = m_rootNode.Nodes.Add(m_transGroupNode);
+                        m_rootNode.Nodes[index].Tag = m_transactionGroup;
+                        m_rootNode.Expand();
+                        UpdateTreeNode(m_transGroupNode, type);
+                    }
+                    else
+                    {
+                        var newTransGroupNode = new TreeNode(m_transactionGroup.GetName());
+                        var index = m_transGroupNode.Nodes.Add(newTransGroupNode);
+                        m_transGroupNode.Nodes[index].Tag = m_transactionGroup;
+                        m_transGroupNode.Expand();
+                        m_transGroupNode = newTransGroupNode;
+                        m_transGroupNode.Expand();
+                        UpdateTreeNode(m_transGroupNode, type);
+                    }
+
+                    m_transNode = null;
+                    m_transaction = null;
+                    break;
+                }
+                case OperationType.RollbackTransactionGroup:
+                {
                     UpdateTreeNode(m_transGroupNode, type);
+                    if (m_transGroupNode.Parent.Equals(m_rootNode))
+                    {
+                        m_rootNode.Expand();
+                        m_transactionGroup = null;
+                        m_transGroupNode = null;
+                    }
+                    else
+                    {
+                        m_transGroupNode = m_transGroupNode.Parent;
+                        m_transGroupNode.Expand();
+                        m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
+                    }
+
+                    m_transNode = null;
+                    m_transaction = null;
+                    break;
                 }
-                else
+                case OperationType.CommitTransactionGroup:
                 {
-                    var newTransGroupNode = new TreeNode(m_transactionGroup.GetName());
-                    var index = m_transGroupNode.Nodes.Add(newTransGroupNode);
-                    m_transGroupNode.Nodes[index].Tag = m_transactionGroup;
-                    m_transGroupNode.Expand();
-                    m_transGroupNode = newTransGroupNode;
-                    m_transGroupNode.Expand();
                     UpdateTreeNode(m_transGroupNode, type);
-                }
+                    if (m_transGroupNode.Parent.Equals(m_rootNode))
+                    {
+                        m_rootNode.Expand();
+                        m_transactionGroup = null;
+                        m_transGroupNode = null;
+                    }
+                    else
+                    {
+                        m_transGroupNode.Expand();
+                        m_transGroupNode = m_transGroupNode.Parent;
+                        m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
+                    }
 
-                m_transNode = null;
-                m_transaction = null;
-            }
-            else if (type == OperationType.RollbackTransactionGroup)
-            {
-                UpdateTreeNode(m_transGroupNode, type);
-                if (m_transGroupNode.Parent.Equals(m_rootNode))
+                    m_transNode = null;
+                    m_transaction = null;
+                    break;
+                }
+                case OperationType.StartTransaction:
                 {
-                    m_rootNode.Expand();
-                    m_transactionGroup = null;
-                    m_transGroupNode = null;
+                    m_transNode = new TreeNode(m_transaction.GetName())
+                    {
+                        ForeColor = m_startedColor
+                    };
+                    var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
+                    node.Nodes.Add(m_transNode);
+                    node.Expand();
+                    UpdateTreeNode(m_transNode, type);
+                    break;
                 }
-                else
+                case OperationType.CommitTransaction:
                 {
-                    m_transGroupNode = m_transGroupNode.Parent;
-                    m_transGroupNode.Expand();
-                    m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
+                    UpdateTreeNode(m_transNode, type);
+                    var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
+                    node.Expand();
+                    m_transNode = null;
+                    break;
                 }
-
-                m_transNode = null;
-                m_transaction = null;
-            }
-            else if (type == OperationType.CommitTransactionGroup)
-            {
-                UpdateTreeNode(m_transGroupNode, type);
-                if (m_transGroupNode.Parent.Equals(m_rootNode))
+                case OperationType.RollbackTransaction:
                 {
-                    m_rootNode.Expand();
-                    m_transactionGroup = null;
-                    m_transGroupNode = null;
+                    UpdateTreeNode(m_transNode, type);
+                    var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
+                    node.Expand();
+                    m_transNode = null;
+                    break;
                 }
-                else
+                default:
                 {
-                    m_transGroupNode.Expand();
-                    m_transGroupNode = m_transGroupNode.Parent;
-                    m_transactionGroup = m_transGroupNode.Tag as TransactionGroup;
+                    string childNodeText = null;
+
+                    if (string.IsNullOrEmpty(info))
+                        childNodeText = "Operation";
+                    else
+                        childNodeText = info;
+
+                    var childNode = new TreeNode(childNodeText);
+                    if (type == OperationType.ObjectDeletion)
+                        childNode.ForeColor = m_deletedColor;
+                    else
+                        childNode.ForeColor = m_normalColor;
+                    m_transNode.Nodes.Add(childNode);
+                    m_transNode.Expand();
+                    break;
                 }
-
-                m_transNode = null;
-                m_transaction = null;
-            }
-            else if (type == OperationType.StartTransaction)
-            {
-                m_transNode = new TreeNode(m_transaction.GetName());
-                m_transNode.ForeColor = m_startedColor;
-                var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
-                node.Nodes.Add(m_transNode);
-                node.Expand();
-                UpdateTreeNode(m_transNode, type);
-            }
-            else if (type == OperationType.CommitTransaction)
-            {
-                UpdateTreeNode(m_transNode, type);
-                var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
-                node.Expand();
-                m_transNode = null;
-            }
-            else if (type == OperationType.RollbackTransaction)
-            {
-                UpdateTreeNode(m_transNode, type);
-                var node = m_transGroupNode == null ? m_rootNode : m_transGroupNode;
-                node.Expand();
-                m_transNode = null;
-            }
-            else
-            {
-                string childNodeText = null;
-
-                if (string.IsNullOrEmpty(info))
-                    childNodeText = "Operation";
-                else
-                    childNodeText = info;
-
-                var childNode = new TreeNode(childNodeText);
-                if (type == OperationType.ObjectDeletion)
-                    childNode.ForeColor = m_deletedColor;
-                else
-                    childNode.ForeColor = m_normalColor;
-                m_transNode.Nodes.Add(childNode);
-                m_transNode.Expand();
             }
         }
 

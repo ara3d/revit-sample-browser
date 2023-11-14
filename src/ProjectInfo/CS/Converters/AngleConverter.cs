@@ -44,8 +44,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var text = value as string;
-            if (!string.IsNullOrEmpty(text)) return AngleString2Double(text);
-            return base.ConvertFrom(context, culture, value);
+            return !string.IsNullOrEmpty(text) ? AngleString2Double(text) : base.ConvertFrom(context, culture, value);
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == null) throw new ArgumentNullException("destinationType");
+            if (destinationType == null) throw new ArgumentNullException(nameof(destinationType));
             if (destinationType == typeof(string))
             {
                 if (value == null) return string.Empty;

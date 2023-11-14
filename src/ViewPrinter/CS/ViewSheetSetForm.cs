@@ -34,14 +34,21 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         private void ListViewSheetSet()
         {
             VisibleType vt;
-            if (showSheetsCheckBox.Checked && showViewsCheckBox.Checked)
-                vt = VisibleType.VT_BothViewAndSheet;
-            else if (showSheetsCheckBox.Checked && !showViewsCheckBox.Checked)
-                vt = VisibleType.VT_SheetOnly;
-            else if (!showSheetsCheckBox.Checked && showViewsCheckBox.Checked)
-                vt = VisibleType.VT_ViewOnly;
-            else
-                vt = VisibleType.VT_None;
+            switch (showSheetsCheckBox.Checked)
+            {
+                case true when showViewsCheckBox.Checked:
+                    vt = VisibleType.VT_BothViewAndSheet;
+                    break;
+                case true when !showViewsCheckBox.Checked:
+                    vt = VisibleType.VT_SheetOnly;
+                    break;
+                case false when showViewsCheckBox.Checked:
+                    vt = VisibleType.VT_ViewOnly;
+                    break;
+                default:
+                    vt = VisibleType.VT_None;
+                    break;
+            }
 
             var views = m_viewSheets.AvailableViewSheetSet(vt);
             viewSheetSetListView.Items.Clear();
@@ -144,7 +151,8 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         private void checkNoneButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in viewSheetSetListView.Items) item.Checked = false;
+            foreach (ListViewItem item in viewSheetSetListView.Items) 
+                item.Checked = false;
         }
 
         private void viewSheetSetListView_ItemChecked(object sender, ItemCheckedEventArgs e)

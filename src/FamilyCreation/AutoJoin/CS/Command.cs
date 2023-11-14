@@ -42,13 +42,14 @@ namespace Revit.SDK.Samples.AutoJoin.CS
                     var element = doc.Document.GetElement(elementId);
                     Trace.WriteLine(element.GetType().ToString());
 
-                    var gf = element as GenericForm;
-                    if (null != gf && !gf.IsSolid)
-                        continue;
-
-                    var ce = element as CombinableElement;
-                    if (null != ce)
-                        solids.Append(ce);
+                    switch (element)
+                    {
+                        case GenericForm gf when !gf.IsSolid:
+                            continue;
+                        case CombinableElement ce:
+                            solids.Append(ce);
+                            break;
+                    }
                 }
 
                 if (solids.Size < 2)

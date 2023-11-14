@@ -108,7 +108,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
             set
             {
                 m_message = value;
-                if (null != MessageChanged) MessageChanged();
+                MessageChanged?.Invoke();
             }
         }
 

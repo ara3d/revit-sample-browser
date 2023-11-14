@@ -201,15 +201,17 @@ namespace Revit.SDK.Samples.Ribbon.CS
             ribbonSamplePanel.AddSeparator();
 
             var deleteWallsButtonData = new PushButtonData("deleteWalls", "Delete Walls", AddInPath,
-                "Revit.SDK.Samples.Ribbon.CS.DeleteWalls");
-            deleteWallsButtonData.ToolTip = "Delete all the walls created by the Create Wall tool.";
-            deleteWallsButtonData.Image =
-                new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "DeleteWalls.png"), UriKind.Absolute));
+                "Revit.SDK.Samples.Ribbon.CS.DeleteWalls")
+            {
+                ToolTip = "Delete all the walls created by the Create Wall tool.",
+                Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "DeleteWalls.png"), UriKind.Absolute))
+            };
 
-            var moveWallsButtonData = new PulldownButtonData("moveWalls", "Move Walls");
-            moveWallsButtonData.ToolTip = "Move all the walls in X or Y direction";
-            moveWallsButtonData.Image =
-                new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "MoveWalls.png"), UriKind.Absolute));
+            var moveWallsButtonData = new PulldownButtonData("moveWalls", "Move Walls")
+            {
+                ToolTip = "Move all the walls in X or Y direction",
+                Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "MoveWalls.png"), UriKind.Absolute))
+            };
 
             // create stackable buttons
             var ribbonItems = ribbonSamplePanel.AddStackedItems(deleteWallsButtonData, moveWallsButtonData);
@@ -266,8 +268,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         /// <param name="evnetArgs">Autodesk.Revit.UI.Events.ComboBoxDropDownOpenedEventArgs</param>
         public void AddNewLevels(object sender, ComboBoxDropDownOpenedEventArgs args)
         {
-            var comboboxLevel = sender as ComboBox;
-            if (null == comboboxLevel) return;
+            if (!(sender is ComboBox comboboxLevel)) return;
             var collector = new FilteredElementCollector(uiApplication.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Level)).ToElements();
             foreach (var elem in founds)

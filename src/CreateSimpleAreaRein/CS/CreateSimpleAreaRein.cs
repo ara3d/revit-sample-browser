@@ -81,24 +81,25 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 
             foreach (var o in elems)
             {
-                //create on floor
-                var floor = o as Floor;
-                if (null != floor)
+                switch (o)
                 {
-                    var flag = CreateAreaReinOnFloor(floor);
-                    return flag;
+                    //create on floor
+                    case Floor floor:
+                    {
+                        var flag = CreateAreaReinOnFloor(floor);
+                        return flag;
+                    }
+                    //create on wall
+                    case Wall wall:
+                    {
+                        var flag = CreateAreaReinOnWall(wall);
+                        return flag;
+                    }
+                    default:
+                        //selected element is neither wall nor floor
+                        TaskDialog.Show("Error", "Please select exactly one wall or floor.");
+                        break;
                 }
-
-                //create on wall
-                var wall = o as Wall;
-                if (null != wall)
-                {
-                    var flag = CreateAreaReinOnWall(wall);
-                    return flag;
-                }
-
-                //selected element is neither wall nor floor
-                TaskDialog.Show("Error", "Please select exactly one wall or floor.");
             }
 
             return false;

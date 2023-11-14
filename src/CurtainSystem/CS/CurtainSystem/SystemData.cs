@@ -63,14 +63,16 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             if (null == faceIndices ||
                 0 == faceIndices.Count)
             {
-                if (null != CurtainSystemChanged) CurtainSystemChanged();
+                CurtainSystemChanged?.Invoke();
                 return;
             }
 
-            var resultInfo = new SystemInfo(m_mydocument);
-            resultInfo.ByFaceArray = byFaceArray;
-            resultInfo.GridFacesIndices = faceIndices;
-            resultInfo.Index = ++m_csIndex;
+            var resultInfo = new SystemInfo(m_mydocument)
+            {
+                ByFaceArray = byFaceArray,
+                GridFacesIndices = faceIndices,
+                Index = ++m_csIndex
+            };
 
             //
             // step 1: create the curtain system
@@ -144,7 +146,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
             // step 2: update the curtain system list in the main UI
             //
             CurtainSystemInfos.Add(resultInfo);
-            if (null != CurtainSystemChanged) CurtainSystemChanged();
+            CurtainSystemChanged?.Invoke();
         }
 
         /// <summary>
@@ -178,7 +180,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
                 if (null != info.CurtainForm)
                     CurtainSystemInfos.Add(info);
 
-            if (null != CurtainSystemChanged) CurtainSystemChanged();
+            CurtainSystemChanged?.Invoke();
         }
     } // end of class
 

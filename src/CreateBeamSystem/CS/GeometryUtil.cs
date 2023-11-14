@@ -44,10 +44,10 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             if (originLines.Count < 3) return null;
 
             var lines = new List<Line>(originLines);
-            var result = new List<Line>();
+            var result = new List<Line> {
+                // sorted line end to end in order
+                lines[0] };
 
-            // sorted line end to end in order
-            result.Add(lines[0]);
             var intersectPnt = lines[0].GetEndPoint(1);
             lines[0] = null;
 
@@ -107,9 +107,9 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         {
             // all the Z coordinate of lines' start point and end point should be equal
             var firstPnt = lines[0].GetEndPoint(0);
-            for (var i = 0; i < lines.Count; i++)
-                if (!MathUtil.CompareDouble(lines[i].GetEndPoint(0).Z, firstPnt.Z) ||
-                    !MathUtil.CompareDouble(lines[i].GetEndPoint(1).Z, firstPnt.Z))
+            foreach (var line in lines)
+                if (!MathUtil.CompareDouble(line.GetEndPoint(0).Z, firstPnt.Z) ||
+                    !MathUtil.CompareDouble(line.GetEndPoint(1).Z, firstPnt.Z))
                     return false;
 
             return true;
@@ -263,9 +263,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns>minimum float</returns>
         public static float GetMin(float f1, float f2)
         {
-            if (f1 < f2) return f1;
-
-            return f2;
+            return f1 < f2 ? f1 : f2;
         }
 
         /// <summary>
@@ -276,9 +274,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns>maximum float</returns>
         public static float GetMax(float f1, float f2)
         {
-            if (f1 > f2) return f1;
-
-            return f2;
+            return f1 > f2 ? f1 : f2;
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
         /// </param>
         public void ObtainData(ExternalCommandData commandData)
         {
-            if (null == commandData) throw new ArgumentNullException("commandData");
+            if (null == commandData) throw new ArgumentNullException(nameof(commandData));
 
             var doc = commandData.Application.ActiveUIDocument;
             m_document = doc.Document;
@@ -107,9 +107,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             elements.Reset();
             while (elements.MoveNext())
             {
-                var ft = elements.Current as FloorType;
-
-                if (null == ft || null == ft.Category || !ft.Category.Name.Equals("Floors")) continue;
+                if (!(elements.Current is FloorType ft) || null == ft.Category || !ft.Category.Name.Equals("Floors")) continue;
 
                 m_floorTypes.Add(ft.Name, ft);
                 FloorTypesName.Add(ft.Name);
@@ -215,8 +213,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             var walls = new ElementSet();
             foreach (Element e in miscellanea)
             {
-                var w = e as Wall;
-                if (null != w) walls.Insert(w);
+                if (e is Wall w) walls.Insert(w);
             }
 
             if (0 == walls.Size) throw new InvalidOperationException("Please select wall first.");
@@ -283,21 +280,23 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
                     Math.Abs(c.GetEndPoint(1).Y - connected.Y) < PRECISION &&
                     Math.Abs(c.GetEndPoint(1).Z - connected.Z) < PRECISION)
                 {
-                    if (c.GetType().Name.Equals("Line"))
+                    switch (c.GetType().Name)
                     {
-                        var start = c.GetEndPoint(1);
-                        var end = c.GetEndPoint(0);
-                        return Line.CreateBound(start, end);
-                    }
+                        case "Line":
+                        {
+                            var start = c.GetEndPoint(1);
+                            var end = c.GetEndPoint(0);
+                            return Line.CreateBound(start, end);
+                        }
+                        case "Arc":
+                        {
+                            var size = c.Tessellate().Count;
+                            var start = c.Tessellate()[0];
+                            var middle = c.Tessellate()[size / 2];
+                            var end = c.Tessellate()[size];
 
-                    if (c.GetType().Name.Equals("Arc"))
-                    {
-                        var size = c.Tessellate().Count;
-                        var start = c.Tessellate()[0];
-                        var middle = c.Tessellate()[size / 2];
-                        var end = c.Tessellate()[size];
-
-                        return Arc.Create(start, end, middle);
+                            return Arc.Create(start, end, middle);
+                        }
                     }
                 }
             }

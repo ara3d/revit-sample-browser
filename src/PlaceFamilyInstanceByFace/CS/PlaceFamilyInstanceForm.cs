@@ -189,7 +189,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             }
             finally
             {
-                if (g != null) g.Dispose();
+                g?.Dispose();
             }
         }
     }

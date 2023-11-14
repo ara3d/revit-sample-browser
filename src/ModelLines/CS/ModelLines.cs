@@ -226,8 +226,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 if (null == geometryLine) // assert the creation is successful
                     throw new Exception("Create the geometry line failed.");
                 // create the ModelLine
-                var line = m_createDoc.NewModelCurve(geometryLine, workPlane) as ModelLine;
-                if (null == line) // assert the creation is successful
+                if (!(m_createDoc.NewModelCurve(geometryLine, workPlane) is ModelLine line)) // assert the creation is successful
                     throw new Exception("Create the ModelLine failed.");
                 // Add the created ModelLine into the line array
                 m_lineArray.Append(line);
@@ -266,8 +265,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 if (null == geometryArc) // assert the creation is successful
                     throw new Exception("Create the geometry arc failed.");
                 // create the ModelArc
-                var arc = m_createDoc.NewModelCurve(geometryArc, workPlane) as ModelArc;
-                if (null == arc) // assert the creation is successful
+                if (!(m_createDoc.NewModelCurve(geometryArc, workPlane) is ModelArc arc)) // assert the creation is successful
                     throw new Exception("Create the ModelArc failed.");
                 // Add the created ModelArc into the arc array
                 m_arcArray.Append(arc);
@@ -301,8 +299,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             var curves = m_createApp.NewCurveArray(); // create a geometry curve array
 
             // Get the Autodesk.Revit.DB.ElementId which used to get the corresponding element
-            var selected = GetElementById(elementId) as ModelCurve;
-            if (null == selected) throw new Exception("Don't have the element you select");
+            if (!(GetElementById(elementId) is ModelCurve selected)) throw new Exception("Don't have the element you select");
 
             // add the geometry curve of the element
             curves.Append(selected.GeometryCurve); // add the geometry ellipse
@@ -384,8 +381,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 .ToElements();
             foreach (var elem in elements)
             {
-                var sketch = elem as SketchPlane;
-                if (null != sketch)
+                if (elem is SketchPlane sketch)
                     // Add all the sketchPlane into the array
                     m_sketchArray.Add(sketch);
             }
@@ -456,8 +452,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         private SketchPlane GetSketchPlaneById(ElementId id)
         {
             // First get the sketch plane by the giving element id.
-            var workPlane = GetElementById(id) as SketchPlane;
-            if (null == workPlane) throw new Exception("Don't have the work plane you select.");
+            if (!(GetElementById(id) is SketchPlane workPlane)) throw new Exception("Don't have the work plane you select.");
             return workPlane;
         }
     }

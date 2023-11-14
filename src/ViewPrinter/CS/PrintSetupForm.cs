@@ -203,9 +203,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             m_printSetup.VerifyMarginType(marginTypeComboBox);
 
             var controlsToEnableOrNot =
-                new Collection<Control>();
-            controlsToEnableOrNot.Add(userDefinedMarginXTextBox);
-            controlsToEnableOrNot.Add(userDefinedMarginYTextBox);
+                new Collection<Control>
+                {
+                    userDefinedMarginXTextBox,
+                    userDefinedMarginYTextBox
+                };
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
                 userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * INCHES_IN_FEET).ToString();
@@ -225,9 +227,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             m_printSetup.VerifyMarginType(marginTypeComboBox);
 
             var controlsToEnableOrNot =
-                new Collection<Control>();
-            controlsToEnableOrNot.Add(userDefinedMarginXTextBox);
-            controlsToEnableOrNot.Add(userDefinedMarginYTextBox);
+                new Collection<Control>
+                {
+                    userDefinedMarginXTextBox,
+                    userDefinedMarginYTextBox
+                };
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
                 userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * INCHES_IN_FEET).ToString();
@@ -242,9 +246,11 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             m_printSetup.SelectedMarginType = (MarginType)marginTypeComboBox.SelectedItem;
 
             var controlsToEnableOrNot =
-                new Collection<Control>();
-            controlsToEnableOrNot.Add(userDefinedMarginXTextBox);
-            controlsToEnableOrNot.Add(userDefinedMarginYTextBox);
+                new Collection<Control>
+                {
+                    userDefinedMarginXTextBox,
+                    userDefinedMarginYTextBox
+                };
             if (m_printSetup.VerifyUserDefinedMargin(controlsToEnableOrNot))
             {
                 userDefinedMarginXTextBox.Text = (m_printSetup.OriginOffsetX * INCHES_IN_FEET).ToString();

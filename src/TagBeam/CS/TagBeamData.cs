@@ -65,8 +65,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
             var itor = elementSet.ForwardIterator();
             while (itor.MoveNext())
             {
-                var familyInstance = itor.Current as FamilyInstance;
-                if (familyInstance != null && familyInstance.StructuralType == StructuralType.Beam)
+                if (itor.Current is FamilyInstance familyInstance && familyInstance.StructuralType == StructuralType.Beam)
                     m_beamList.Add(familyInstance);
             }
 

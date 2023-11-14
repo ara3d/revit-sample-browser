@@ -107,8 +107,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         /// <param name="document"></param>
         public static void ProcessCommandDuplicateGraphics(Document document)
         {
-            if (s_applicationInstance != null)
-                s_applicationInstance.AddMultipleRevitElementServers(new UIDocument(document));
+            s_applicationInstance?.AddMultipleRevitElementServers(new UIDocument(document));
         }
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         /// <param name="document"></param>
         public static void ProcessCommandClearExternalGraphics(Document document)
         {
-            if (s_applicationInstance != null) s_applicationInstance.unregisterServers(null, true);
+            s_applicationInstance?.unregisterServers(null, true);
         }
 
         /// <summary>
@@ -192,16 +191,12 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         public void unregisterServers(Document document, bool updateViews)
         {
             var externalDrawerServiceId = ExternalServices.BuiltInExternalServices.DirectContext3DService;
-            var externalDrawerService =
-                ExternalServiceRegistry.GetService(externalDrawerServiceId) as MultiServerService;
-            if (externalDrawerService == null)
+            if (!(ExternalServiceRegistry.GetService(externalDrawerServiceId) is MultiServerService externalDrawerService))
                 return;
 
             foreach (var registeredServerId in externalDrawerService.GetRegisteredServerIds())
             {
-                var externalDrawServer =
-                    externalDrawerService.GetServer(registeredServerId) as RevitElementDrawingServer;
-                if (externalDrawServer == null)
+                if (!(externalDrawerService.GetServer(registeredServerId) is RevitElementDrawingServer externalDrawServer))
                     continue;
                 if (document != null && !document.Equals(externalDrawServer.Document))
                     continue;

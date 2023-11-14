@@ -102,21 +102,27 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             var creator = m_creationData.Creator;
 
-            var rootNode = new TreeNode();
-            rootNode.StateImageIndex = (int)CheckState.Unchecked;
+            var rootNode = new TreeNode
+            {
+                StateImageIndex = (int)CheckState.Unchecked
+            };
             foreach (var pair in creator.SupportEdges)
             {
                 var elem = pair.Key;
-                var elemNode = new TreeNode("[Id:" + elem.Id + "] " + elem.Name);
-                elemNode.StateImageIndex = (int)CheckState.Unchecked;
+                var elemNode = new TreeNode("[Id:" + elem.Id + "] " + elem.Name)
+                {
+                    StateImageIndex = (int)CheckState.Unchecked
+                };
                 rootNode.Nodes.Add(elemNode);
                 elemNode.Tag = elem;
                 var i = 1;
                 foreach (var edge in pair.Value)
                 {
-                    var edgeNode = new TreeNode("Edge " + i);
-                    edgeNode.StateImageIndex = (int)CheckState.Unchecked;
-                    edgeNode.Tag = edge;
+                    var edgeNode = new TreeNode("Edge " + i)
+                    {
+                        StateImageIndex = (int)CheckState.Unchecked,
+                        Tag = edge
+                    };
                     elemNode.Nodes.Add(edgeNode);
                     ++i;
                 }
@@ -217,9 +223,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         private void UpdateNodeCheckStatus(TreeNode node, CheckState state)
         {
             node.StateImageIndex = (int)state;
-            if (node.Tag != null && node.Tag is Edge && m_activeElem != null)
+            if (node.Tag != null && node.Tag is Edge edge && m_activeElem != null)
             {
-                var edge = node.Tag as Edge;
                 var elem = node.Parent.Tag as Element;
                 var elemGeom = m_creationData.Creator.ElemGeomDic[elem];
                 elemGeom.EdgeBindingDic[edge].IsSelected =
@@ -242,9 +247,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 {
                     child.StateImageIndex = node.StateImageIndex;
 
-                    if (m_activeElem != null && child.Tag != null && child.Tag is Edge)
+                    if (m_activeElem != null && child.Tag != null && child.Tag is Edge edge)
                     {
-                        var edge = child.Tag as Edge;
                         var elem = child.Parent.Tag as Element;
                         var elemGeom = m_creationData.Creator.ElemGeomDic[elem];
                         elemGeom.EdgeBindingDic[edge].IsSelected =
@@ -282,11 +286,17 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <param name="node">Tree node to active</param>
         private void ActiveNode(TreeNode node)
         {
-            if (node.Tag == null) return;
-
-            if (node.Tag is Element)
-                m_activeElem = node.Tag as Element;
-            else if (node.Tag is Edge) m_activeElem = node.Parent.Tag as Element;
+            switch (node.Tag)
+            {
+                case null:
+                    return;
+                case Element tag:
+                    m_activeElem = tag;
+                    break;
+                case Edge _:
+                    m_activeElem = node.Parent.Tag as Element;
+                    break;
+            }
         }
 
         /// <summary>
@@ -315,7 +325,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             while (todo.Count > 0)
             {
                 var node = todo.Pop();
-                if (node.Tag != null && node.Tag is Edge && node.Tag as Edge == edge)
+                if (node.Tag != null && node.Tag is Edge tag && tag == edge)
                 {
                     result = node;
                     break;
@@ -438,30 +448,31 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             if (m_activeElem == null) return;
 
             m_trackBall.OnMouseMove(e);
-            if (e.Button == MouseButtons.Left)
+            switch (e.Button)
             {
-                m_creationData.Creator.ElemGeomDic[m_activeElem].Rotation *= m_trackBall.Rotation;
-                pictureBoxPreview.Refresh();
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                m_creationData.Creator.ElemGeomDic[m_activeElem].Scale *= m_trackBall.Scale;
-                pictureBoxPreview.Refresh();
-            }
-
-            if (e.Button == MouseButtons.None)
-            {
-                ClearAllHighLight();
-                pictureBoxPreview.Refresh();
-                var mat = m_centerMatrix.Clone();
-                mat.Invert();
-                var pts = new PointF[1] { e.Location };
-                mat.TransformPoints(pts);
-                var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
-                foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
-                    if (elemGeom.EdgeBindingDic.ContainsKey(edge))
-                        if (elemGeom.EdgeBindingDic[edge].HighLight(pts[0].X, pts[0].Y))
-                            pictureBoxPreview.Refresh();
+                case MouseButtons.Left:
+                    m_creationData.Creator.ElemGeomDic[m_activeElem].Rotation *= m_trackBall.Rotation;
+                    pictureBoxPreview.Refresh();
+                    break;
+                case MouseButtons.Right:
+                    m_creationData.Creator.ElemGeomDic[m_activeElem].Scale *= m_trackBall.Scale;
+                    pictureBoxPreview.Refresh();
+                    break;
+                case MouseButtons.None:
+                {
+                    ClearAllHighLight();
+                    pictureBoxPreview.Refresh();
+                    var mat = m_centerMatrix.Clone();
+                    mat.Invert();
+                    var pts = new PointF[1] { e.Location };
+                    mat.TransformPoints(pts);
+                    var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
+                    foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
+                        if (elemGeom.EdgeBindingDic.ContainsKey(edge))
+                            if (elemGeom.EdgeBindingDic[edge].HighLight(pts[0].X, pts[0].Y))
+                                pictureBoxPreview.Refresh();
+                    break;
+                }
             }
         }
 
@@ -506,10 +517,10 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             ClearAllHighLight();
             ActiveNode(node);
             pictureBoxPreview.Refresh();
-            if (m_activeElem == null || node.Tag == null || !(node.Tag is Edge)) return;
+            if (m_activeElem == null || node.Tag == null || !(node.Tag is Edge tag)) return;
 
             var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
-            elemGeom.EdgeBindingDic[node.Tag as Edge].IsHighLighted = true;
+            elemGeom.EdgeBindingDic[tag].IsHighLighted = true;
             pictureBoxPreview.Refresh();
         }
 

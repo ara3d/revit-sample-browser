@@ -57,8 +57,7 @@ namespace Revit.SDK.Samples.DeleteDimensions.CS
             //find all unpinned dimensions in the current selection 
             foreach (Element e in selections)
             {
-                var dimesionTemp = e as Dimension;
-                if (null != dimesionTemp && !dimesionTemp.Pinned) dimsToDelete.Insert(dimesionTemp);
+                if (e is Dimension dimesionTemp && !dimesionTemp.Pinned) dimsToDelete.Insert(dimesionTemp);
             }
 
             //warning if could not find any unpinned dimension

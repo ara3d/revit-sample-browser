@@ -79,9 +79,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 { UnitTypeId.MetersCentimeters, "m" },
                 { UnitTypeId.Millimeters, "mm" }
             };
-            if (unitLabels.ContainsKey(unitTypeId))
-                return unitLabels[unitTypeId];
-            return string.Empty;
+            return unitLabels.ContainsKey(unitTypeId) 
+                ? unitLabels[unitTypeId] : string.Empty;
         }
     }
 }

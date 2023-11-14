@@ -89,26 +89,31 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
                 var geomObject1 = Objects.Current;
 
                 Solid solid = null;
-                // partial panels
-                if (geomObject1 is Solid)
+                switch (geomObject1)
                 {
-                    solid = (Solid)geomObject1;
-                    if (null == solid)
-                        continue;
-                }
-                // non-partial panels
-                else if (geomObject1 is GeometryInstance)
-                {
-                    var geomInst = geomObject1 as GeometryInstance;
-                    //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
-                    var Objects1 = geomInst.SymbolGeometry.GetEnumerator();
-                    while (Objects1.MoveNext())
+                    // partial panels
+                    case Solid object1:
                     {
-                        object geomObj = Objects1.Current;
+                        solid = object1;
+                        if (null == solid)
+                            continue;
+                        break;
+                    }
+                    // non-partial panels
+                    case GeometryInstance geomInst:
+                    {
+                        //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
+                        var Objects1 = geomInst.SymbolGeometry.GetEnumerator();
+                        while (Objects1.MoveNext())
+                        {
+                            object geomObj = Objects1.Current;
 
-                        solid = geomObj as Solid;
-                        if (solid != null)
-                            break;
+                            solid = geomObj as Solid;
+                            if (solid != null)
+                                break;
+                        }
+
+                        break;
                     }
                 }
 

@@ -50,25 +50,25 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         public override List<List<XYZ>> GetNeedPoints(List<List<Edge>> faces)
         {
             var needPoints = new List<List<XYZ>>();
-            for (var i = 0; i < faces.Count; i++)
-                foreach (var edge in faces[i])
+            foreach (var face in faces)
+            foreach (var edge in face)
+            {
+                var edgexyzs = edge.Tessellate() as List<XYZ>;
+                if (false == m_haveOpening)
                 {
-                    var edgexyzs = edge.Tessellate() as List<XYZ>;
-                    if (false == m_haveOpening)
+                    var transformedPoints = new List<XYZ>();
+                    for (var j = 0; j < edgexyzs.Count; j++)
                     {
-                        var transformedPoints = new List<XYZ>();
-                        for (var j = 0; j < edgexyzs.Count; j++)
-                        {
-                            var xyz = edgexyzs[j];
-                            var transformedXYZ = m_beamTransform.OfPoint(xyz);
-                            transformedPoints.Add(transformedXYZ);
-                        }
-
-                        edgexyzs = transformedPoints;
+                        var xyz = edgexyzs[j];
+                        var transformedXYZ = m_beamTransform.OfPoint(xyz);
+                        transformedPoints.Add(transformedXYZ);
                     }
 
-                    needPoints.Add(edgexyzs);
+                    edgexyzs = transformedPoints;
                 }
+
+                needPoints.Add(edgexyzs);
+            }
 
             return needPoints;
         }
@@ -85,9 +85,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             var bFirstPoint = true;
 
             //get the max and min point on the face
-            for (var i = 0; i < m_points.Count; i++)
+            foreach (var points in m_points)
             {
-                var points = m_points[i];
                 foreach (var point in points)
                 {
                     var v = new Vector4(point);
@@ -172,53 +171,58 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             {
                 var geo = Objects.Current;
 
-                //if beam doesn't contain opening on it, then we can get edges from instance
-                //and the points we get should be transformed by instance.Tranceform
-                if (geo is GeometryInstance)
+                switch (geo)
                 {
-                    var instance = geo as GeometryInstance;
-                    m_beamTransform = instance.Transform;
-                    var elemGeo = instance.SymbolGeometry;
-                    //GeometryObjectArray objectsGeo = elemGeo.Objects;
-                    var Objects1 = elemGeo.GetEnumerator();
-                    //foreach (GeometryObject objGeo in objectsGeo)
-                    while (Objects1.MoveNext())
+                    //if beam doesn't contain opening on it, then we can get edges from instance
+                    //and the points we get should be transformed by instance.Tranceform
+                    case GeometryInstance instance:
                     {
-                        var objGeo = Objects1.Current;
-
-                        var solid = objGeo as Solid;
-                        if (null != solid)
+                        m_beamTransform = instance.Transform;
+                        var elemGeo = instance.SymbolGeometry;
+                        //GeometryObjectArray objectsGeo = elemGeo.Objects;
+                        var Objects1 = elemGeo.GetEnumerator();
+                        //foreach (GeometryObject objGeo in objectsGeo)
+                        while (Objects1.MoveNext())
                         {
-                            var faces = solid.Faces;
-                            foreach (Face face in faces)
+                            var objGeo = Objects1.Current;
+
+                            var solid = objGeo as Solid;
+                            if (null != solid)
                             {
-                                var edgeArrarr = face.EdgeLoops;
-                                foreach (EdgeArray edgeArr in edgeArrarr)
+                                var faces = solid.Faces;
+                                foreach (Face face in faces)
                                 {
-                                    var edgesList = new List<Edge>();
-                                    foreach (Edge edge in edgeArr) edgesList.Add(edge);
-                                    faceEdges.Add(edgesList);
+                                    var edgeArrarr = face.EdgeLoops;
+                                    foreach (EdgeArray edgeArr in edgeArrarr)
+                                    {
+                                        var edgesList = new List<Edge>();
+                                        foreach (Edge edge in edgeArr) edgesList.Add(edge);
+                                        faceEdges.Add(edgesList);
+                                    }
                                 }
                             }
                         }
+
+                        break;
                     }
-                }
-                //if beam contains opening on it, then we can get edges from solid
-                //and the points we get do not need transform anymore
-                else if (geo is Solid)
-                {
-                    m_haveOpening = true;
-                    var solid = geo as Solid;
-                    var faces = solid.Faces;
-                    foreach (Face face in faces)
+                    //if beam contains opening on it, then we can get edges from solid
+                    //and the points we get do not need transform anymore
+                    case Solid solid:
                     {
-                        var edgeArrarr = face.EdgeLoops;
-                        foreach (EdgeArray edgeArr in edgeArrarr)
+                        m_haveOpening = true;
+                        var faces = solid.Faces;
+                        foreach (Face face in faces)
                         {
-                            var edgesList = new List<Edge>();
-                            foreach (Edge edge in edgeArr) edgesList.Add(edge);
-                            faceEdges.Add(edgesList);
+                            var edgeArrarr = face.EdgeLoops;
+                            foreach (EdgeArray edgeArr in edgeArrarr)
+                            {
+                                var edgesList = new List<Edge>();
+                                foreach (Edge edge in edgeArr) edgesList.Add(edge);
+                                faceEdges.Add(edgesList);
+                            }
                         }
+
+                        break;
                     }
                 }
             }
@@ -250,9 +254,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             curve = Line.CreateBound(p1, p2);
             curves.Append(curve);
 
-            if (false == m_isZaxis)
-                return m_docCreator.NewOpening(m_data, curves, eRefFace.CenterY);
-            return m_docCreator.NewOpening(m_data, curves, eRefFace.CenterZ);
+            return m_docCreator.NewOpening(m_data, curves, false == m_isZaxis ? eRefFace.CenterY : eRefFace.CenterZ);
         }
 
         /// <summary>

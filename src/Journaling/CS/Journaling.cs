@@ -122,8 +122,7 @@ namespace Revit.SDK.Samples.Journaling.CS
             iter.Reset();
             while (iter.MoveNext())
             {
-                var level = iter.Current as Level;
-                if (null == level) continue;
+                if (!(iter.Current is Level level)) continue;
                 m_levelList.Add(level);
             }
         }

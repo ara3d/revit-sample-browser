@@ -198,20 +198,18 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
 
             foreach (Element e in selection)
             {
-                var m = e as FamilyInstance;
-
                 // Use StructuralType property can judge whether it is a beam.
-                if (null != m && StructuralType.Beam == m.StructuralType)
+                if (e is FamilyInstance m && StructuralType.Beam == m.StructuralType)
                 {
                     m_beamCollection.Add(e); // store the beams
 
-                    if (!(m.Location is LocationCurve))
+                    if (!(m.Location is LocationCurve curve))
                     {
                         m_errorInformation = "The beam should have location curve.";
                         return false;
                     }
 
-                    m_lineCollection.Add((m.Location as LocationCurve).Curve);
+                    m_lineCollection.Add(curve.Curve);
                 }
             }
 
@@ -273,8 +271,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// <returns>true if two double data are the same; otherwise, false</returns>
         private bool EqualDouble(double first, double second)
         {
-            if (-PRECISION <= first - second && PRECISION >= first - second) return true;
-            return false;
+            return -PRECISION <= first - second && PRECISION >= first - second;
         }
 
         /// <summary>
@@ -343,9 +340,9 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             var pointArray = new ArrayList();
 
             // Find out all the points in the curves, the same point only count once.
-            for (var i = 0; i < m_lineCollection.Count; i++)
+            foreach (var line in m_lineCollection)
             {
-                var curve = m_lineCollection[i] as Curve;
+                var curve = line as Curve;
                 startPoint = curve.GetEndPoint(0);
                 endPoint = curve.GetEndPoint(1);
                 var hasStartpoint = false; // Judge whether start point has been counted.
@@ -372,9 +369,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
                 if (!hasEndPoint) pointArray.Add(endPoint);
             }
 
-            if (pointArray.Count != m_lineCollection.Count) return false;
-
-            return true;
+            return pointArray.Count == m_lineCollection.Count;
         }
 
         /// <summary>

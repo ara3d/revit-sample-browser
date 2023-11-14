@@ -123,9 +123,7 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
         /// <param name="e"></param>
         private void autoTagButton_Click(object sender, EventArgs e)
         {
-            var level = levelsComboBox.SelectedItem as Level;
-            var tagType = tagTypesComboBox.SelectedItem as RoomTagType;
-            if (level != null && tagType != null) m_roomsData.AutoTagRooms(level, tagType);
+            if (levelsComboBox.SelectedItem is Level level && tagTypesComboBox.SelectedItem is RoomTagType tagType) m_roomsData.AutoTagRooms(level, tagType);
 
             UpdateRoomsList();
         }

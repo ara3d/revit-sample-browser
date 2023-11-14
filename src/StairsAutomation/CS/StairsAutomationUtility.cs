@@ -161,8 +161,10 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
                 case 3:
                 {
                     var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 1,
-                        Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI / 4.0, new XYZ(-20, -20, 0)));
-                    configuration.EqualizeRuns = true;
+                        Transform.CreateRotationAtPoint(XYZ.BasisZ, Math.PI / 4.0, new XYZ(-20, -20, 0)))
+ {
+     EqualizeRuns = true
+ };
                     configuration.Initialize();
                     return configuration;
                 }
@@ -170,11 +172,13 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
                 case 4:
                 {
                     var configuration = new StairsStandardConfiguration(Stairs, BottomLevel, 3,
-                        Transform.CreateRotationAtPoint(XYZ.BasisZ, 7.0 * Math.PI / 6.0, new XYZ(15, 10, 0)));
-                    configuration.RunWidth = 6.0;
-                    configuration.RunOffset = 8.0 / 12.0;
-                    configuration.LandingWidth = 4.0;
-                    configuration.EqualizeRuns = true;
+                        Transform.CreateRotationAtPoint(XYZ.BasisZ, 7.0 * Math.PI / 6.0, new XYZ(15, 10, 0)))
+ {
+     RunWidth = 6.0,
+     RunOffset = 8.0 / 12.0,
+     LandingWidth = 4.0,
+     EqualizeRuns = true
+ };
                     configuration.Initialize();
                     return configuration;
                 }

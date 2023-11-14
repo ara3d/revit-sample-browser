@@ -250,8 +250,7 @@ namespace RvtSamples
             }
             catch (Exception e)
             {
-                var s = string.Format("{0}: n = {1}, k = {2}, lines[k] = {3}",
-                    e.Message, n, k, k < n ? lines[k] : "eof");
+                var s = $"{e.Message}: n = {n}, k = {k}, lines[k] = {(k < n ? lines[k] : "eof")}";
 
                 ErrorMsg(s);
             }
@@ -272,12 +271,18 @@ namespace RvtSamples
         private string GetEnumNameByDisplayName(string name)
         {
             string enumName = null;
-            if (name.Equals("Rooms/Spaces"))
-                enumName = DefaultPulldownMenus.RoomsAndSpaces.ToString();
-            else if (name.Equals("Data Exchange"))
-                enumName = DefaultPulldownMenus.DataExchange.ToString();
-            else
-                enumName = name;
+            switch (name)
+            {
+                case "Rooms/Spaces":
+                    enumName = DefaultPulldownMenus.RoomsAndSpaces.ToString();
+                    break;
+                case "Data Exchange":
+                    enumName = DefaultPulldownMenus.DataExchange.ToString();
+                    break;
+                default:
+                    enumName = name;
+                    break;
+            }
 
             return enumName;
         }
@@ -398,7 +403,7 @@ namespace RvtSamples
         private void AddSample(string[] lines, int n, ref int i)
         {
             if (n < i + 6)
-                throw new Exception(string.Format("Incomplete record at line {0} of {1}", i, m_fileNameStem));
+                throw new Exception($"Incomplete record at line {i} of {m_fileNameStem}");
 
             var categories = lines[i++].Trim();
             var displayName = lines[i++].Trim();
@@ -409,8 +414,7 @@ namespace RvtSamples
             var className = lines[i++].Trim();
 
             if (!File.Exists(assembly)) // jeremy
-                ErrorMsg(string.Format("Assembly '{0}' specified in line {1} of {2} not found",
-                    assembly, i, m_fileNameStem));
+                ErrorMsg($"Assembly '{assembly}' specified in line {i} of {m_fileNameStem} not found");
 
             var testClassName = false; // jeremy
             if (testClassName)
@@ -433,8 +437,7 @@ namespace RvtSamples
 
                     if (null == a)
                     {
-                        ErrorMsg(string.Format("Unable to load assembly '{0}' specified in line {1} of {2}",
-                            assembly, i, m_fileNameStem));
+                        ErrorMsg($"Unable to load assembly '{assembly}' specified in line {i} of {m_fileNameStem}");
                     }
                     else
                     {
@@ -442,25 +445,23 @@ namespace RvtSamples
                         var t = a.GetType(className);
                         if (null == t)
                         {
-                            ErrorMsg(string.Format(
-                                "External command class {0} in assembly '{1}' specified in line {2} of {3} not found",
-                                className, assembly, i, m_fileNameStem));
+                            ErrorMsg(
+                                $"External command class {className} in assembly '{assembly}' specified in line {i} of {m_fileNameStem} not found");
                         }
                         else
                         {
                             // get the method to call:
                             var m = t.GetMethod("Execute");
                             if (null == m)
-                                ErrorMsg(string.Format(
-                                    "External command class {0} in assembly '{1}' specified in line {2} of {3} does not define an Execute method",
-                                    className, assembly, i, m_fileNameStem));
+                                ErrorMsg(
+                                    $"External command class {className} in assembly '{assembly}' specified in line {i} of {m_fileNameStem} does not define an Execute method");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    ErrorMsg(string.Format("Exception '{0}' \ntesting assembly '{1}' \nspecified in line {2} of {3}",
-                        ex.Message, assembly, i, m_fileNameStem));
+                    ErrorMsg(
+                        $"Exception '{ex.Message}' \ntesting assembly '{assembly}' \nspecified in line {i} of {m_fileNameStem}");
                 }
             }
 
@@ -484,8 +485,7 @@ namespace RvtSamples
                 }
                 else
                 {
-                    var sampleItems = new List<SampleItem>();
-                    sampleItems.Add(item);
+                    var sampleItems = new List<SampleItem> { item };
                     m_customizedMenus.Add(category, sampleItems);
                 }
             }
@@ -587,22 +587,27 @@ namespace RvtSamples
                 iCount -= 3;
             }
 
-            if (iCount == 2)
+            switch (iCount)
             {
-                var name = m_customizedMenus.Keys[i++];
-                var data1 = new PulldownButtonData(name, name);
-                name = m_customizedMenus.Keys[i++];
-                var data2 = new PulldownButtonData(name, name);
-                var buttons = m_panelRvtSamples.AddStackedItems(data1, data2);
-                AddSamplesToStackedButtons(buttons);
-            }
-            else if (iCount == 1)
-            {
-                var name = m_customizedMenus.Keys[i];
-                var pulldownButtonData = new PulldownButtonData(name, name);
-                var button = m_panelRvtSamples.AddItem(pulldownButtonData) as PulldownButton;
-                var sampleItems = m_customizedMenus.Values[m_customizedMenus.IndexOfKey(button.Name)];
-                foreach (var item in sampleItems) AddSampleToPulldownMenu(button, item);
+                case 2:
+                {
+                    var name = m_customizedMenus.Keys[i++];
+                    var data1 = new PulldownButtonData(name, name);
+                    name = m_customizedMenus.Keys[i++];
+                    var data2 = new PulldownButtonData(name, name);
+                    var buttons = m_panelRvtSamples.AddStackedItems(data1, data2);
+                    AddSamplesToStackedButtons(buttons);
+                    break;
+                }
+                case 1:
+                {
+                    var name = m_customizedMenus.Keys[i];
+                    var pulldownButtonData = new PulldownButtonData(name, name);
+                    var button = m_panelRvtSamples.AddItem(pulldownButtonData) as PulldownButton;
+                    var sampleItems = m_customizedMenus.Values[m_customizedMenus.IndexOfKey(button.Name)];
+                    foreach (var item in sampleItems) AddSampleToPulldownMenu(button, item);
+                    break;
+                }
             }
         }
 

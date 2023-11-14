@@ -97,14 +97,21 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 var temp = curve as Line;
                 if (temp != null)
                 {
-                    if (counter == 0)
-                        p0 = temp.GetEndPoint(0).Subtract(offsetz).Subtract(offsetx);
-                    else if (counter == 1)
-                        p1 = temp.GetEndPoint(0).Subtract(offsetz).Add(offsetx);
-                    else if (counter == 2)
-                        p2 = temp.GetEndPoint(0).Add(offsetx).Add(offsetz);
-                    else
-                        p3 = temp.GetEndPoint(0).Subtract(offsetx).Add(offsetz);
+                    switch (counter)
+                    {
+                        case 0:
+                            p0 = temp.GetEndPoint(0).Subtract(offsetz).Subtract(offsetx);
+                            break;
+                        case 1:
+                            p1 = temp.GetEndPoint(0).Subtract(offsetz).Add(offsetx);
+                            break;
+                        case 2:
+                            p2 = temp.GetEndPoint(0).Add(offsetx).Add(offsetz);
+                            break;
+                        default:
+                            p3 = temp.GetEndPoint(0).Subtract(offsetx).Add(offsetz);
+                            break;
+                    }
                 }
 
                 counter++;

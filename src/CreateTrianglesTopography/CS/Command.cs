@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
                         triangleFacets.Add(new PolymeshFacet(facet[0], facet[1], facet[2]));
                     var topoSurface = TopographySurface.Create(document, trianglesData.Points, triangleFacets);
                     var name = topoSurface.get_Parameter(BuiltInParameter.ROOM_NAME);
-                    if (name != null)
-                        name.Set("CreateTrianglesTopography");
+                    name?.Set("CreateTrianglesTopography");
                     tran.Commit();
                 }
 

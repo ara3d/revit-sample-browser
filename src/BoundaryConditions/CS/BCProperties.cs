@@ -83,6 +83,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     /// </summary>
     public sealed class BCTypeAttribute : Attribute
     {
+        private BCType[] m_bcType;
         // Keep a variable internally ...
 
         /// <summary>
@@ -97,7 +98,11 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <summary>
         ///     property get or set internal variable m_bcTypes
         /// </summary>
-        public BCType[] BCType { get; set; }
+        public BCType[] BCType
+        {
+            get => m_bcType;
+            set => m_bcType = value;
+        }
 
         /// <summary>
         ///     override Equals method
@@ -106,8 +111,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            var temp = obj as BCTypeAttribute;
-            if (null == temp) return false;
+            if (!(obj is BCTypeAttribute temp)) return false;
 
             foreach (var t1 in temp.BCType)
             foreach (var t2 in BCType)
@@ -174,23 +178,28 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             // while the Area BC includes Pinned and User.
             set
             {
-                if (BCType.Area == BoundaryConditionsType)
+                switch (BoundaryConditionsType)
                 {
-                    if (BCState.Fixed != value && BCState.Roller != value)
-                        SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
-                }
-                else if (BCType.Line == BoundaryConditionsType)
-                {
-                    if (BCState.Roller != value)
+                    case BCType.Area:
                     {
+                        if (BCState.Fixed != value && BCState.Roller != value)
+                            SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
+                        break;
+                    }
+                    case BCType.Line:
+                    {
+                        if (BCState.Roller != value)
+                        {
+                            SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
+                            ;
+                        }
+
+                        break;
+                    }
+                    case BCType.Point:
                         SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
                         ;
-                    }
-                }
-                else if (BCType.Point == BoundaryConditionsType)
-                {
-                    SetParameterValue("State", GroupTypeId.StructuralAnalysis, value);
-                    ;
+                        break;
                 }
 
                 // other parameters do corresponding change when the State is changed.
@@ -362,38 +371,54 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         {
             using (var springModulusForm = new SpringModulusForm())
             {
-                // judge current conversion rule between the display value and inside value
-                if (BCType.Point == BoundaryConditionsType)
+                switch (BoundaryConditionsType)
                 {
-                    if (gridItemLabel.Contains("Translation"))
+                    // judge current conversion rule between the display value and inside value
+                    case BCType.Point when gridItemLabel.Contains("Translation"):
                         springModulusForm.Conversion = UnitConversion.UnitDictionary["PTSpringModulusConver"];
-                    else if (gridItemLabel.Contains("Rotation"))
-                        springModulusForm.Conversion = UnitConversion.UnitDictionary["PRSpringModulusConver"];
-                }
-                else if (BCType.Line == BoundaryConditionsType)
-                {
-                    if (gridItemLabel.Contains("Translation"))
+                        break;
+                    case BCType.Point:
+                    {
+                        if (gridItemLabel.Contains("Rotation"))
+                            springModulusForm.Conversion = UnitConversion.UnitDictionary["PRSpringModulusConver"];
+                        break;
+                    }
+                    case BCType.Line when gridItemLabel.Contains("Translation"):
                         springModulusForm.Conversion = UnitConversion.UnitDictionary["LTSpringModulusConver"];
-                    else if (gridItemLabel.Contains("Rotation"))
-                        springModulusForm.Conversion = UnitConversion.UnitDictionary["LRSpringModulusConver"];
-                }
-                else if (BCType.Area == BoundaryConditionsType && gridItemLabel.Contains("Translation"))
-                {
-                    springModulusForm.Conversion = UnitConversion.UnitDictionary["ATSpringModulusConver"];
+                        break;
+                    case BCType.Line:
+                    {
+                        if (gridItemLabel.Contains("Rotation"))
+                            springModulusForm.Conversion = UnitConversion.UnitDictionary["LRSpringModulusConver"];
+                        break;
+                    }
+                    case BCType.Area when gridItemLabel.Contains("Translation"):
+                        springModulusForm.Conversion = UnitConversion.UnitDictionary["ATSpringModulusConver"];
+                        break;
                 }
 
-                // get the old value
-                if ("XTranslation" == gridItemLabel)
-                    springModulusForm.OldStringModulus = XTranslationSpringModulus;
-                else if ("YTranslation" == gridItemLabel)
-                    springModulusForm.OldStringModulus = YTranslationSpringModulus;
-                else if ("ZTranslation" == gridItemLabel)
-                    springModulusForm.OldStringModulus = ZTranslationSpringModulus;
-                else if ("XRotation" == gridItemLabel)
-                    springModulusForm.OldStringModulus = XRotationSpringModulus;
-                else if ("YRotation" == gridItemLabel)
-                    springModulusForm.OldStringModulus = YRotationSpringModulus;
-                else if ("ZRotation" == gridItemLabel) springModulusForm.OldStringModulus = ZRotationSpringModulus;
+                switch (gridItemLabel)
+                {
+                    // get the old value
+                    case "XTranslation":
+                        springModulusForm.OldStringModulus = XTranslationSpringModulus;
+                        break;
+                    case "YTranslation":
+                        springModulusForm.OldStringModulus = YTranslationSpringModulus;
+                        break;
+                    case "ZTranslation":
+                        springModulusForm.OldStringModulus = ZTranslationSpringModulus;
+                        break;
+                    case "XRotation":
+                        springModulusForm.OldStringModulus = XRotationSpringModulus;
+                        break;
+                    case "YRotation":
+                        springModulusForm.OldStringModulus = YRotationSpringModulus;
+                        break;
+                    case "ZRotation":
+                        springModulusForm.OldStringModulus = ZRotationSpringModulus;
+                        break;
+                }
 
                 // show the spring modulus dialog to ask a positive number
                 var result = springModulusForm.ShowDialog();
@@ -401,17 +426,27 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 // set the user input number as the new value
                 if (DialogResult.OK == result)
                 {
-                    if ("XTranslation" == gridItemLabel)
-                        XTranslationSpringModulus = springModulusForm.StringModulus;
-                    else if ("YTranslation" == gridItemLabel)
-                        YTranslationSpringModulus = springModulusForm.StringModulus;
-                    else if ("ZTranslation" == gridItemLabel)
-                        ZTranslationSpringModulus = springModulusForm.StringModulus;
-                    else if ("XRotation" == gridItemLabel)
-                        XRotationSpringModulus = springModulusForm.StringModulus;
-                    else if ("YRotation" == gridItemLabel)
-                        YRotationSpringModulus = springModulusForm.StringModulus;
-                    else if ("ZRotation" == gridItemLabel) ZRotationSpringModulus = springModulusForm.StringModulus;
+                    switch (gridItemLabel)
+                    {
+                        case "XTranslation":
+                            XTranslationSpringModulus = springModulusForm.StringModulus;
+                            break;
+                        case "YTranslation":
+                            YTranslationSpringModulus = springModulusForm.StringModulus;
+                            break;
+                        case "ZTranslation":
+                            ZTranslationSpringModulus = springModulusForm.StringModulus;
+                            break;
+                        case "XRotation":
+                            XRotationSpringModulus = springModulusForm.StringModulus;
+                            break;
+                        case "YRotation":
+                            YRotationSpringModulus = springModulusForm.StringModulus;
+                            break;
+                        case "ZRotation":
+                            ZRotationSpringModulus = springModulusForm.StringModulus;
+                            break;
+                    }
                 }
             }
         }
@@ -500,32 +535,32 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         private void MatchBCValuesRule()
         {
-            if (BCState.Fixed == State)
+            switch (State)
             {
-                XTranslation = BCTranslationRotation.Fixed;
-                YTranslation = BCTranslationRotation.Fixed;
-                ZTranslation = BCTranslationRotation.Fixed;
-                XRotation = BCTranslationRotation.Fixed;
-                YRotation = BCTranslationRotation.Fixed;
-                ZRotation = BCTranslationRotation.Fixed;
-            }
-            else if (BCState.Pinned == State)
-            {
-                XTranslation = BCTranslationRotation.Fixed;
-                YTranslation = BCTranslationRotation.Fixed;
-                ZTranslation = BCTranslationRotation.Fixed;
-                ZRotation = BCTranslationRotation.Released;
-                YRotation = BCTranslationRotation.Released;
-                ZRotation = BCTranslationRotation.Released;
-            }
-            else if (BCState.Roller == State)
-            {
-                XTranslation = BCTranslationRotation.Released;
-                YTranslation = BCTranslationRotation.Released;
-                ZTranslation = BCTranslationRotation.Fixed;
-                XRotation = BCTranslationRotation.Released;
-                YRotation = BCTranslationRotation.Released;
-                ZRotation = BCTranslationRotation.Released;
+                case BCState.Fixed:
+                    XTranslation = BCTranslationRotation.Fixed;
+                    YTranslation = BCTranslationRotation.Fixed;
+                    ZTranslation = BCTranslationRotation.Fixed;
+                    XRotation = BCTranslationRotation.Fixed;
+                    YRotation = BCTranslationRotation.Fixed;
+                    ZRotation = BCTranslationRotation.Fixed;
+                    break;
+                case BCState.Pinned:
+                    XTranslation = BCTranslationRotation.Fixed;
+                    YTranslation = BCTranslationRotation.Fixed;
+                    ZTranslation = BCTranslationRotation.Fixed;
+                    ZRotation = BCTranslationRotation.Released;
+                    YRotation = BCTranslationRotation.Released;
+                    ZRotation = BCTranslationRotation.Released;
+                    break;
+                case BCState.Roller:
+                    XTranslation = BCTranslationRotation.Released;
+                    YTranslation = BCTranslationRotation.Released;
+                    ZTranslation = BCTranslationRotation.Fixed;
+                    XRotation = BCTranslationRotation.Released;
+                    YRotation = BCTranslationRotation.Released;
+                    ZRotation = BCTranslationRotation.Released;
+                    break;
             }
         }
     }

@@ -73,8 +73,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                                     return Result.Failed;
                                 }
 
-                                var itemFilesToLoad = new List<FabricationItemFile>();
-                                itemFilesToLoad.Add(nextFile);
+                                var itemFilesToLoad = new List<FabricationItemFile> { nextFile };
 
                                 // load the item file into the config
                                 var failedItems = config.LoadItemFiles(itemFilesToLoad);

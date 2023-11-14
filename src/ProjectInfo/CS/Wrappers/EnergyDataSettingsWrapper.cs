@@ -82,11 +82,10 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             get
             {
                 var eid = EnergyDataSettings.GetBuildingConstructionSetElementId(m_document);
-                var mEPBuildingConstruction = RevitStartInfo.GetElement(eid) as MEPBuildingConstruction;
                 //MEPBuildingConstruction mEPBuildingConstruction = RevitStartInfo.GetElement(m_energyDataSettings.ConstructionSetElementId) as MEPBuildingConstruction;
-                if (mEPBuildingConstruction != null)
-                    return new MEPBuildingConstructionWrapper(mEPBuildingConstruction);
-                return null;
+                return RevitStartInfo.GetElement(eid) is MEPBuildingConstruction mEPBuildingConstruction
+                    ? new MEPBuildingConstructionWrapper(mEPBuildingConstruction)
+                    : null;
             }
         }
 

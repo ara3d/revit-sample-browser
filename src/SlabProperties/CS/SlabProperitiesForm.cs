@@ -61,8 +61,10 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                if (null != components)
-                    components.Dispose();
+            {
+                components?.Dispose();
+            }
+
             base.Dispose(disposing);
         }
 

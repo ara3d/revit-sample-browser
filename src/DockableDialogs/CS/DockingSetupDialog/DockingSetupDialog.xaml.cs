@@ -30,6 +30,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         private int m_right;
         private string m_targetGuidString;
         private int m_top;
+        private DockPosition m_dockPosition;
 
         public DockingSetupDialog()
         {
@@ -92,7 +93,11 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             }
         }
 
-        public DockPosition DockPosition { get; private set; }
+        public DockPosition DockPosition
+        {
+            get => m_dockPosition;
+            private set => m_dockPosition = value;
+        }
 
         /// <summary>
         ///     Take user-input data for docking dialog choices and attempt to parse it

@@ -24,9 +24,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         {
             var collector = new FilteredElementCollector(document);
             collector.OfClass(typeof(PipeType));
-            if (collector.Count() == 0)
-                return false;
-            return true;
+            return collector.Any();
         }
 
         public static void PipesDefinedWarning()

@@ -77,35 +77,28 @@ namespace Revit.SDK.Samples.Truss.CS
             var iter = es.GetEnumerator();
             iter.Reset();
             while (iter.MoveNext())
-                if (iter.Current is Autodesk.Revit.DB.Structure.Truss)
+                switch (iter.Current)
                 {
-                    if (null == m_truss)
-                        m_truss = iter.Current as Autodesk.Revit.DB.Structure.Truss;
-                    else
+                    case Autodesk.Revit.DB.Structure.Truss truss when null == m_truss:
+                        m_truss = truss;
+                        break;
+                    case Autodesk.Revit.DB.Structure.Truss truss:
                         return false;
-                }
-                else if (iter.Current is FamilyInstance)
-                {
-                    var familyInstance = iter.Current as FamilyInstance;
-                    if (StructuralType.Column == familyInstance.StructuralType)
+                    case FamilyInstance familyInstance when StructuralType.Column == familyInstance.StructuralType:
                     {
                         if (null == column1)
                             column1 = familyInstance;
                         else
                             column2 = familyInstance;
+                        break;
                     }
-                    else
-                    {
+                    case FamilyInstance familyInstance:
                         return false;
-                    }
-                }
-                else
-                {
-                    return false;
+                    default:
+                        return false;
                 }
 
-            if (null == m_truss && (null == column1 || null == column2)) return false;
-            return true;
+            return null != m_truss || (null != column1 && null != column2);
         }
 
         /// <summary>
@@ -163,7 +156,7 @@ namespace Revit.SDK.Samples.Truss.CS
 
             // can't obtain beam types from the active document
             if (null == m_beamTypes ||
-                0 == m_beamTypes.Count())
+                !m_beamTypes.Any())
             {
                 TaskDialog.Show("Load Structural Framing Family",
                     "No Structural Framing Family loaded. Please load one of the Structure Framing Family.");
@@ -268,8 +261,8 @@ namespace Revit.SDK.Samples.Truss.CS
             //new base Line
             Curve frame1Curve = null;
             Curve frame2Curve = null;
-            if (column1.Location is LocationCurve) frame1Curve = (column1.Location as LocationCurve).Curve;
-            if (column2.Location is LocationCurve) frame2Curve = (column2.Location as LocationCurve).Curve;
+            if (column1.Location is LocationCurve curve) frame1Curve = curve.Curve;
+            if (column2.Location is LocationCurve locationCurve) frame2Curve = locationCurve.Curve;
 
             var centerPoint1 = (frame1Curve as Line).GetEndPoint(0);
 
@@ -300,7 +293,7 @@ namespace Revit.SDK.Samples.Truss.CS
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            if (trussGeometry != null) trussGeometry.Draw2D(e.Graphics, Pens.Blue);
+            trussGeometry?.Draw2D(e.Graphics, Pens.Blue);
 
             var font = new Font("Verdana", 10, FontStyle.Regular);
             var indicator = "Draw Top Chord and Bottom Chord here:";
@@ -416,7 +409,7 @@ namespace Revit.SDK.Samples.Truss.CS
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            if (trussGeometry != null) trussGeometry.Draw2D(e.Graphics, Pens.Blue);
+            trussGeometry?.Draw2D(e.Graphics, Pens.Blue);
 
             var font = new Font("Verdana", 10, FontStyle.Regular);
             var indicator = "Select a beam from the truss:";

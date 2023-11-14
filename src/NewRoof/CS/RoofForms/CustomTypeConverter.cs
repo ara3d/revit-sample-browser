@@ -49,9 +49,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(Level))
-                return true;
-            return base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(Level) || base.CanConvertTo(context, destinationType);
         }
 
         /// <summary>
@@ -66,9 +64,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == typeof(string) && value is Level)
+            if (destinationType == typeof(string) && value is Level level)
             {
-                var level = (Level)value;
                 return level.Name + "[" + level.Id + "]";
             }
 
@@ -83,9 +80,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(string))
-                return true;
-            return base.CanConvertFrom(context, sourceType);
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
         /// <summary>
@@ -97,11 +92,9 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string)
+            if (value is string levelString)
                 try
                 {
-                    var levelString = (string)value;
-
                     var leftBracket = levelString.IndexOf('[');
                     var rightBracket = levelString.IndexOf(']');
 
@@ -171,9 +164,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(FootPrintRoofLine))
-                return true;
-            return base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(FootPrintRoofLine) || base.CanConvertTo(context, destinationType);
         }
 
         /// <summary>
@@ -188,9 +179,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == typeof(string) && value is FootPrintRoofLine)
+            if (destinationType == typeof(string) && value is FootPrintRoofLine footPrintLine)
             {
-                var footPrintLine = (FootPrintRoofLine)value;
                 return footPrintLine.Name + "[" + footPrintLine.Id + "]";
             }
 
@@ -205,9 +195,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(string))
-                return true;
-            return base.CanConvertFrom(context, sourceType);
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
         /// <summary>
@@ -219,11 +207,9 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string)
+            if (value is string footPrintLineString)
                 try
                 {
-                    var footPrintLineString = (string)value;
-
                     var leftBracket = footPrintLineString.IndexOf('[');
                     var rightBracket = footPrintLineString.IndexOf(']');
 

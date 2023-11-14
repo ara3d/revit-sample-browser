@@ -188,9 +188,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             if (0 == mullions.Count)
                 foreach (var e in mullions)
                 {
-                    var mullion = m_activeDocument.GetElement(e) as Mullion;
-
-                    if (null != mullion)
+                    if (m_activeDocument.GetElement(e) is Mullion mullion)
                     {
                         MullionType = mullion.MullionType;
                         break;

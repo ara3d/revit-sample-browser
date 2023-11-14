@@ -93,12 +93,8 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 return false;
             }
 
-            var columnSymbol = columnObject as FamilySymbol;
-            var beamSymbol = beamObject as FamilySymbol;
-            var braceSymbol = braceObject as FamilySymbol;
-
             //any symbol is null then the command failed
-            if (null == columnSymbol || null == beamSymbol || null == braceSymbol) return false;
+            if (!(columnObject is FamilySymbol columnSymbol) || !(beamObject is FamilySymbol beamSymbol) || !(braceObject is FamilySymbol braceSymbol)) return false;
 
             try
             {
@@ -174,33 +170,31 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 while (i.MoveNext())
                 {
                     //add level to list
-                    var level = i.Current as Level;
-                    if (null != level) levels.Add(level.Elevation, level);
+                    if (i.Current is Level level) levels.Add(level.Elevation, level);
                 }
 
                 i = new FilteredElementCollector(m_revit.ActiveUIDocument.Document).OfClass(typeof(Family))
                     .GetElementIterator();
                 while (i.MoveNext())
                 {
-                    var f = i.Current as Family;
-                    if (f != null)
+                    if (i.Current is Family f)
                         foreach (var elementId in f.GetFamilySymbolIds())
                         {
                             object symbol = m_revit.ActiveUIDocument.Document.GetElement(elementId);
                             var familyType = symbol as FamilySymbol;
-                            if (null == familyType) continue;
-                            if (null == familyType.Category) continue;
+                            if (familyType?.Category == null) continue;
 
                             //add symbols of beams and braces to lists 
                             var categoryName = familyType.Category.Name;
-                            if ("Structural Framing" == categoryName)
+                            switch (categoryName)
                             {
-                                BeamMaps.Add(new SymbolMap(familyType));
-                                BraceMaps.Add(new SymbolMap(familyType));
-                            }
-                            else if ("Structural Columns" == categoryName)
-                            {
-                                ColumnMaps.Add(new SymbolMap(familyType));
+                                case "Structural Framing":
+                                    BeamMaps.Add(new SymbolMap(familyType));
+                                    BraceMaps.Add(new SymbolMap(familyType));
+                                    break;
+                                case "Structural Columns":
+                                    ColumnMaps.Add(new SymbolMap(familyType));
+                                    break;
                             }
                         }
                 }
@@ -250,9 +244,9 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                     topLevelParameter.Set(topLevelId);
                 }
 
-                if (null != topOffsetParameter) topOffsetParameter.Set(0.0);
+                topOffsetParameter?.Set(0.0);
 
-                if (null != baseOffsetParameter) baseOffsetParameter.Set(0.0);
+                baseOffsetParameter?.Set(0.0);
             }
         }
 
@@ -314,14 +308,14 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(line1, braceType, baseLevel, structuralType);
 
             var referenceLevel1 = firstBrace.get_Parameter(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM);
-            if (null != referenceLevel1) referenceLevel1.Set(levelId);
+            referenceLevel1?.Set(levelId);
 
             var line2 = Line.CreateBound(endPoint, middlePoint);
             var secondBrace =
                 m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(line2, braceType, baseLevel, structuralType);
 
             var referenceLevel2 = secondBrace.get_Parameter(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM);
-            if (null != referenceLevel2) referenceLevel2.Set(levelId);
+            referenceLevel2?.Set(levelId);
         }
     }
 

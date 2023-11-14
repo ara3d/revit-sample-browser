@@ -39,10 +39,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 {
                     var geoObj = Objects.Current;
 
-                    if (geoObj is Solid)
+                    if (geoObj is Solid obj)
                     {
-                        var s = geoObj as Solid;
-                        faces = s.Faces;
+                        faces = obj.Faces;
                     }
                 }
             }
@@ -77,10 +76,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 {
                     var geoObj = Objects.Current;
 
-                    if (geoObj is Solid)
+                    if (geoObj is Solid obj)
                     {
-                        var s = geoObj as Solid;
-                        faces = s.Faces;
+                        faces = obj.Faces;
                     }
                 }
 

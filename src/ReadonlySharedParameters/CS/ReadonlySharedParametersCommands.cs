@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
                 foreach (var elem in collector)
                 {
                     var p = elem.LookupParameter("ReadonlyCost");
-                    if (p != null) p.Set(valueGetter(elem, increment));
+                    p?.Set(valueGetter(elem, increment));
                     increment++;
                 }
 
@@ -148,7 +148,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
                 foreach (var elem in collector)
                 {
                     var p = elem.LookupParameter("ReadonlyId");
-                    if (p != null) p.Set(idGetter(elem));
+                    p?.Set(idGetter(elem));
                 }
 
                 t.Commit();
@@ -174,12 +174,14 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             var sharedParametersToCreate =
                 new List<SharedParameterBindingManager>();
 
-            var manager = new SharedParameterBindingManager();
-            manager.Name = "ReadonlyId";
-            manager.Type = SpecTypeId.String.Text;
-            manager.UserModifiable = false;
-            manager.Description = "A read-only instance parameter used for coordination with external content.";
-            manager.Instance = true;
+            var manager = new SharedParameterBindingManager
+            {
+                Name = "ReadonlyId",
+                Type = SpecTypeId.String.Text,
+                UserModifiable = false,
+                Description = "A read-only instance parameter used for coordination with external content.",
+                Instance = true
+            };
             manager.AddCategory(BuiltInCategory.OST_Walls);
             manager.AddCategory(BuiltInCategory.OST_Floors);
             manager.AddCategory(BuiltInCategory.OST_Ceilings);
@@ -189,12 +191,14 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             sharedParametersToCreate.Add(manager); // Look up syntax for this automatic initialization.
 
 
-            manager = new SharedParameterBindingManager();
-            manager.Name = "ReadonlyCost";
-            manager.Type = SpecTypeId.Currency;
-            manager.UserModifiable = false;
-            manager.Description = "A read-only type parameter used to list the cost of a type.";
-            manager.Instance = false;
+            manager = new SharedParameterBindingManager
+            {
+                Name = "ReadonlyCost",
+                Type = SpecTypeId.Currency,
+                UserModifiable = false,
+                Description = "A read-only type parameter used to list the cost of a type.",
+                Instance = false
+            };
 
             manager.AddCategory(BuiltInCategory.OST_Furniture);
             manager.AddCategory(BuiltInCategory.OST_Planting);

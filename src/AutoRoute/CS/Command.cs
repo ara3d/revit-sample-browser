@@ -132,10 +132,12 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 var baseConnectors = new List<Connector>();
 
                 //Get the connectors and bounding boxes
-                var ids = new List<ElementId>();
-                ids.Add(new ElementId(378728L));
-                ids.Add(new ElementId(378707L));
-                ids.Add(new ElementId(378716L));
+                var ids = new List<ElementId>
+                {
+                    new ElementId(378728L),
+                    new ElementId(378707L),
+                    new ElementId(378716L)
+                };
 
                 var instances = new FamilyInstance[3];
                 var boxes = new BoundingBoxXYZ[3];
@@ -274,16 +276,16 @@ namespace Revit.SDK.Samples.AutoRoute.CS
 
                 //Connect the system by creating the trunk line of ducts and connect them to the base connectors
                 SortConnectorsByX(baseConnectors);
-                for (var i = 0; i < baseYValues.Length; ++i)
-                    if (ConnectSystemOnXAxis(baseConnectors, baseYValues[i]))
+                foreach (var baseY in baseYValues)
+                    if (ConnectSystemOnXAxis(baseConnectors, baseY))
                     {
                         LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
                         return Result.Succeeded;
                     }
 
                 SortConnectorsByY(baseConnectors);
-                for (var i = 0; i < baseXValues.Length; ++i)
-                    if (ConnectSystemOnYAxis(baseConnectors, baseXValues[i]))
+                foreach (var baseX in baseXValues)
+                    if (ConnectSystemOnYAxis(baseConnectors, baseX))
                     {
                         LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
                         return Result.Succeeded;
@@ -917,15 +919,20 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             /// <returns>if found, return all the connectors found, or else return null</returns>
             public static ConnectorSet GetConnectors(Element element)
             {
-                if (element == null) return null;
-                var fi = element as FamilyInstance;
-                if (fi != null && fi.MEPModel != null) return fi.MEPModel.ConnectorManager.Connectors;
-                var system = element as MEPSystem;
-                if (system != null) return system.ConnectorManager.Connectors;
-
-                var duct = element as MEPCurve;
-                if (duct != null) return duct.ConnectorManager.Connectors;
-                return null;
+                switch (element)
+                {
+                    case null:
+                        return null;
+                    case FamilyInstance fi when fi.MEPModel != null:
+                        return fi.MEPModel.ConnectorManager.Connectors;
+                    case MEPSystem system:
+                        return system.ConnectorManager.Connectors;
+                    default:
+                    {
+                        var duct = element as MEPCurve;
+                        return duct?.ConnectorManager.Connectors;
+                    }
+                }
             }
 
             /// <summary>
@@ -990,12 +997,9 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             {
             }
 
-            if (objectType != null)
-            {
-                var familyNameParameter = objectType.get_Parameter(BuiltInParameter.ALL_MODEL_FAMILY_NAME);
-                if (familyNameParameter != null)
-                    familyName = familyNameParameter.AsString();
-            }
+            var familyNameParameter = objectType?.get_Parameter(BuiltInParameter.ALL_MODEL_FAMILY_NAME);
+            if (familyNameParameter != null)
+                familyName = familyNameParameter.AsString();
 
             var category = element.Category.BuiltInCategory;
 
@@ -1217,9 +1221,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                     break;
             }
 
-            return string.Format("[{0}]\t[{1}]\t[{2}]\t[{3}]\t[{4}]\t[{5}]\t[{6}]\t[{7}]\t[{8}]\t",
-                ownerId, connType, connDirection, connShape, connSize, connLocation,
-                connAType, connIsConnected, systemId);
+            return
+                $"[{ownerId}]\t[{connType}]\t[{connDirection}]\t[{connShape}]\t[{connSize}]\t[{connLocation}]\t[{connAType}]\t[{connIsConnected}]\t[{systemId}]\t";
         }
 
         /// <summary>
@@ -1236,9 +1239,9 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 case ConnectorProfileType.Oval:
                     break;
                 case ConnectorProfileType.Rectangular:
-                    return string.Format("{0}\" x {1}\"", conn.Width, conn.Height);
+                    return $"{conn.Width}\" x {conn.Height}\"";
                 case ConnectorProfileType.Round:
-                    return string.Format("{0}\"", conn.Radius);
+                    return $"{conn.Radius}\"";
             }
 
             return InvalidString;
@@ -1253,7 +1256,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         {
             if (conn.ConnectorType == ConnectorType.Logical) return InvalidString;
             var origin = conn.Origin;
-            return string.Format("{0},{1},{2}", origin.X, origin.Y, origin.Z);
+            return $"{origin.X},{origin.Y},{origin.Z}";
         }
 
         /// <summary>

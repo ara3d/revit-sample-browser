@@ -14,11 +14,12 @@ namespace Revit.SDK.Samples.DoorSwing.CS
     {
         // store door-opening types: user to decide how he wants to identify 
         // the Left, Right or others information.
-        public static List<string> OpeningTypes = new List<string>();
+        public static readonly List<string> OpeningTypes = new List<string>();
 
         // store current project's door families.
 
         private readonly UIApplication m_app;
+        private readonly List<DoorFamily> m_doorFamilies = new List<DoorFamily>();
 
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
 
         // retrieves door families.
-        public List<DoorFamily> DoorFamilies { get; } = new List<DoorFamily>();
+        public List<DoorFamily> DoorFamilies => m_doorFamilies;
 
         /// <summary>
         ///     update door instances information: Left/Right information, related rooms information.
@@ -118,9 +119,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
                 if (onlyUpdateSelect)
                 {
-                    if (null == door) continue;
-
-                    if (null == door.Category) continue;
+                    if (door?.Category == null) continue;
 
                     if (!door.Category.Name.Equals("Doors")) continue;
                 }
@@ -207,9 +206,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
                 if (onlyUpdateSelect)
                 {
-                    if (null == door) continue;
-
-                    if (null == door.Category) continue;
+                    if (door?.Category == null) continue;
 
                     if (!door.Category.Name.Equals("Doors")) continue;
                 }
@@ -376,7 +373,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// </summary>
         public void UpdateDoorFamiliesOpeningFeature()
         {
-            for (var i = 0; i < DoorFamilies.Count; i++) DoorFamilies[i].UpdateOpeningFeature();
+            foreach (var doorFamily in DoorFamilies)
+                doorFamily.UpdateOpeningFeature();
         }
 
         /// <summary>
@@ -385,7 +383,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// </summary>
         public void DeleteTempDoorInstances()
         {
-            for (var i = 0; i < DoorFamilies.Count; i++) DoorFamilies[i].DeleteTempDoorInstance();
+            foreach (var doorFamily in DoorFamilies)
+                doorFamily.DeleteTempDoorInstance();
         }
 
         /// <summary>

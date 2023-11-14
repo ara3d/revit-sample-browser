@@ -39,7 +39,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             {
                 var paraLayout = ParameterUtil.FindParaByName(
                     areaRein.Parameters, "Layout Rule");
-                if (null != paraLayout) paraLayout.Set(temp);
+                paraLayout?.Set(temp);
             }
 
             ChangeAreaReinCurves(areaRein);

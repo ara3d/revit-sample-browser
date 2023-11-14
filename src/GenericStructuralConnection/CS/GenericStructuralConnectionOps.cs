@@ -107,11 +107,10 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
             {
                 // Get information from structural connection.
                 var msgBuilder = new StringBuilder();
-                msgBuilder.AppendLine(string.Format("Connection id : {0}", conn.Id));
+                msgBuilder.AppendLine($"Connection id : {conn.Id}");
 
-                var connType = activeDoc.Document.GetElement(conn.GetTypeId()) as StructuralConnectionHandlerType;
-                if (connType != null)
-                    msgBuilder.AppendLine(string.Format("Type : {0}", connType.Name));
+                if (activeDoc.Document.GetElement(conn.GetTypeId()) is StructuralConnectionHandlerType connType)
+                    msgBuilder.AppendLine($"Type : {connType.Name}");
 
                 msgBuilder.Append("Connected elements ids : ");
                 var connectedElemIds = conn.GetConnectedElementIds();

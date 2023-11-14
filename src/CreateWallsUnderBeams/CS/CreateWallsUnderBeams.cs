@@ -55,7 +55,6 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         /// </summary>
         public bool IsSturctual { get; set; }
 
-
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
@@ -68,8 +67,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
                 selection.Insert(project.Document.GetElement(elementId));
             foreach (Element e in selection)
             {
-                var m = e as FamilyInstance;
-                if (null != m)
+                if (e is FamilyInstance m)
                     if (StructuralType.Beam == m.StructuralType)
                         // Store all the beams the user selected in Revit
                         m_beamCollection.Add(e);
@@ -118,24 +116,23 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         private bool BeginCreate(Document project)
         {
             // Begin to create walls along and under each beam
-            for (var i = 0; i < m_beamCollection.Count; i++)
+            foreach (var beam in m_beamCollection)
             {
                 // Get each selected beam.
-                var m = m_beamCollection[i] as FamilyInstance;
-                if (null == m)
+                if (!(beam is FamilyInstance m))
                 {
                     m_errorInformation = "The program should not go here.";
                     return false;
                 }
 
                 // the wall will be created using beam's model line as path.   
-                if (!(m.Location is LocationCurve))
+                if (!(m.Location is LocationCurve curve))
                 {
                     m_errorInformation = "The beam should have location curve.";
                     return false;
                 }
 
-                var beamCurve = (m.Location as LocationCurve).Curve;
+                var beamCurve = curve.Curve;
 
                 // Get the level using the beam's reference level
                 var levelId = m.get_Parameter(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM).AsElementId();
@@ -174,12 +171,12 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         /// <returns>true if each beam has horizontal analytical line; otherwise, false.</returns>
         private bool CheckBeamHorizontal()
         {
-            for (var i = 0; i < m_beamCollection.Count; i++)
+            foreach (var beam in m_beamCollection)
             {
                 // Get the analytical curve of each selected beam.
                 // And check if Z coordinate of start point and end point of the curve are same.
-                var m = m_beamCollection[i] as FamilyInstance;
-                var beamCurve = m.Location is LocationCurve ? (m.Location as LocationCurve).Curve : null;
+                var m = beam as FamilyInstance;
+                var beamCurve = m.Location is LocationCurve curve ? curve.Curve : null;
                 if (null == beamCurve)
                 {
                     m_errorInformation = "The beam should have location curve.";

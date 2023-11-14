@@ -51,9 +51,11 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             // Setup formatter for the schedule, if not setup. 
             if (theFormatter == null)
             {
-                theFormatter = new ScheduleFormatter();
-                theFormatter.Schema = schema;
-                theFormatter.AddInId = commandData.Application.ActiveAddInId;
+                theFormatter = new ScheduleFormatter
+                {
+                    Schema = schema,
+                    AddInId = commandData.Application.ActiveAddInId
+                };
             }
 
             using (var t = new Transaction(viewSchedule.Document, "Format columns"))

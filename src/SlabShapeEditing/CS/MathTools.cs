@@ -286,8 +286,10 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <returns>matrix which rotate object specific angle on X direction</returns>
         public static Matrix4 RotateX(double angle)
         {
-            var rotateX = new Matrix4();
-            rotateX.Type = MatrixType.Rotation;
+            var rotateX = new Matrix4
+            {
+                Type = MatrixType.Rotation
+            };
             rotateX.Identity();
             var sin = Math.Sin(angle);
             var cos = Math.Cos(angle);
@@ -306,8 +308,10 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <returns>matrix which rotate object specific angle on Y direction</returns>
         public static Matrix4 RotateY(double angle)
         {
-            var rotateX = new Matrix4();
-            rotateX.Type = MatrixType.Rotation;
+            var rotateX = new Matrix4
+            {
+                Type = MatrixType.Rotation
+            };
             rotateX.Identity();
             var sin = Math.Sin(angle);
             var cos = Math.Cos(angle);
@@ -326,8 +330,10 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <returns>matrix which rotate object specific angle on Z direction</returns>
         public static Matrix4 RotateZ(double angle)
         {
-            var rotateX = new Matrix4();
-            rotateX.Type = MatrixType.Rotation;
+            var rotateX = new Matrix4
+            {
+                Type = MatrixType.Rotation
+            };
             rotateX.Identity();
             var sin = Math.Sin(angle);
             var cos = Math.Cos(angle);

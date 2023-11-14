@@ -35,16 +35,17 @@ namespace Revit.SDK.Samples.WindowWizard.CS
 
                 var wizard = new WindowWizard(commandData);
                 var result = wizard.RunWizard();
-                if (1 == result) return Result.Succeeded;
-
-                if (0 == result)
+                switch (result)
                 {
-                    message = "Window Creation was cancelled.";
-                    return Result.Cancelled;
+                    case 1:
+                        return Result.Succeeded;
+                    case 0:
+                        message = "Window Creation was cancelled.";
+                        return Result.Cancelled;
+                    default:
+                        message = "Window Creation failed, please check your template and inputs then try again.";
+                        return Result.Failed;
                 }
-
-                message = "Window Creation failed, please check your template and inputs then try again.";
-                return Result.Failed;
             }
 
             message = "please make sure you have opened a family document!";

@@ -22,9 +22,9 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         {
             var activeView = commandData.View;
 
-            if (activeView is ViewSchedule)
+            if (activeView is ViewSchedule view)
             {
-                var exporter = new ScheduleHTMLExporter(activeView as ViewSchedule);
+                var exporter = new ScheduleHTMLExporter(view);
                 var revitApplication = commandData.Application.Application;
                 var bInteractive = revitApplication.IsJournalPlaying() ? false : true;
                 return exporter.ExportToHTML(bInteractive, ref message) ? Result.Succeeded : Result.Cancelled;

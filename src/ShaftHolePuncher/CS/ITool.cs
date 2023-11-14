@@ -12,10 +12,10 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     /// </summary>
     public abstract class Tool
     {
-        protected Pen m_backGroundPen; // background pen used to Erase the preview line
+        protected readonly Pen m_backGroundPen; // background pen used to Erase the preview line
         protected bool m_finished; // indicate whether user have finished drawing
-        protected Pen m_foreGroundPen; // foreground pen used to draw lines
-        protected List<Point> m_points = new List<Point>(); // Field used to store points of a line
+        protected readonly Pen m_foreGroundPen; // foreground pen used to draw lines
+        protected readonly List<Point> m_points = new List<Point>(); // Field used to store points of a line
         protected Point m_preDownPoint; // store the mouse position when right mouse button clicked in pictureBox
         protected Point m_preMovePoint; // store the mouse position when mouse move in pictureBox
 

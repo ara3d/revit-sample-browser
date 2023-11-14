@@ -70,7 +70,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             get
             {
                 var setting = m_printMgr.PrintSetup.CurrentPrintSetting;
-                return setting is PrintSetting ? (setting as PrintSetting).Name : ConstData.InSessionName;
+                return setting is PrintSetting printSetting ? printSetting.Name : ConstData.InSessionName;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             get
             {
                 var theSet = m_printMgr.ViewSheetSetting.CurrentViewSheetSet;
-                return theSet is ViewSheetSet ? (theSet as ViewSheetSet).Name : ConstData.InSessionName;
+                return theSet is ViewSheetSet set ? set.Name : ConstData.InSessionName;
             }
         }
 

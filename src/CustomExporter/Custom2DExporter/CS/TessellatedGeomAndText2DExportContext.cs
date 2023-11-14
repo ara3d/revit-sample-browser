@@ -132,11 +132,10 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
                 IList<XYZ> list = new List<XYZ>();
 
                 var curve = node.GetCurve();
-                if (curve is Line)
+                if (curve is Line line)
                 {
-                    var l = curve as Line;
-                    list.Add(l.GetEndPoint(0));
-                    list.Add(l.GetEndPoint(1));
+                    list.Add(line.GetEndPoint(0));
+                    list.Add(line.GetEndPoint(1));
                 }
                 else
                 {

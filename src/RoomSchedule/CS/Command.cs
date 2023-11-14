@@ -36,7 +36,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
             catch (Exception ex)
             {
-                if (null != tranSample) tranSample.RollBack();
+                tranSample?.RollBack();
                 // if there are something wrong, give error information and return failed
                 message = ex.Message;
                 return Result.Failed;

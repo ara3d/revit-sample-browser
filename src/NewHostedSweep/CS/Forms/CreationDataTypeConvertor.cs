@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         public override object ConvertTo(ITypeDescriptorContext context,
             CultureInfo culture, object value, Type destinationType)
         {
-            var cd = value as CreationData;
-            if (cd != null) return "Total " + cd.EdgesForHostedSweep.Count + " Edges";
+            if (value is CreationData cd) return "Total " + cd.EdgesForHostedSweep.Count + " Edges";
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }

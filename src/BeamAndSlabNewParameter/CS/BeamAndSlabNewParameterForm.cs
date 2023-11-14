@@ -46,8 +46,10 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                if (components != null)
-                    components.Dispose();
+            {
+                components?.Dispose();
+            }
+
             base.Dispose(disposing);
         }
 

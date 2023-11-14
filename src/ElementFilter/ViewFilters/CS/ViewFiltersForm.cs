@@ -297,7 +297,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             {
                 criteriaComboBox.SelectedItem = currentRule.RuleCriteria;
                 ruleValueComboBox.Text = currentRule.RuleValue;
-                epsilonTextBox.Text = string.Format("{0:N6}", currentRule.Epsilon);
+                epsilonTextBox.Text = $"{currentRule.Epsilon:N6}";
             }
             else
             {
@@ -333,7 +333,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             // 
             // Create and reserve this rule and reset controls
             m_currentFilterData.RuleData.Add(newRule);
-            var ruleName = string.Format("{0} {1}", m_ruleNamePrefix, rulesListBox.Items.Count + 1);
+            var ruleName = $"{m_ruleNamePrefix} {rulesListBox.Items.Count + 1}";
             rulesListBox.Items.Add(ruleName);
             rulesListBox.SelectedIndex = rulesListBox.Items.Count - 1;
             rulesListBox.Enabled = true;
@@ -703,18 +703,18 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="paramType"></param>
         private void ResetControlByParamType(StorageType paramType)
         {
-            if (paramType == StorageType.String)
+            switch (paramType)
             {
-                epsilonLabel.Visible = epsilonTextBox.Visible = false;
-            }
-            else if (paramType == StorageType.Double)
-            {
-                epsilonLabel.Visible = epsilonTextBox.Visible = true;
-                epsilonLabel.Enabled = epsilonTextBox.Enabled = true;
-            }
-            else
-            {
-                epsilonLabel.Visible = epsilonTextBox.Visible = false;
+                case StorageType.String:
+                    epsilonLabel.Visible = epsilonTextBox.Visible = false;
+                    break;
+                case StorageType.Double:
+                    epsilonLabel.Visible = epsilonTextBox.Visible = true;
+                    epsilonLabel.Enabled = epsilonTextBox.Enabled = true;
+                    break;
+                default:
+                    epsilonLabel.Visible = epsilonTextBox.Visible = false;
+                    break;
             }
         }
 
@@ -727,9 +727,10 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         {
             if (m_currentFilterData == null || m_currentFilterData.RuleData.Count == 0)
                 return false;
-            for (var ruleNo = 0; ruleNo < m_currentFilterData.RuleData.Count; ruleNo++)
-                if (m_currentFilterData.RuleData[ruleNo].Parameter == param)
+            foreach (var rule in m_currentFilterData.RuleData)
+                if (rule.Parameter == param)
                     return true;
+
             return false;
         }
 
@@ -744,9 +745,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             var ruleIndex = GetCurrentRuleDataIndex();
             //
             // Se current selected parameters
-            if (ruleIndex >= 0)
-                return m_currentFilterData.RuleData[ruleIndex];
-            return null;
+            return ruleIndex >= 0 ? m_currentFilterData.RuleData[ruleIndex] : null;
         }
 
         /// <summary>
@@ -823,33 +822,33 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         {
             var paramType = m_doc.get_TypeOfStorage(curParam);
             var criteria = criteriaComboBox.SelectedItem as string;
-            if (paramType == StorageType.String)
-                return new FilterRuleBuilder(curParam, criteria, ruleValueComboBox.Text);
-
-            if (paramType == StorageType.Double)
+            switch (paramType)
             {
-                double ruleValue = 0, epsilon = 0;
-                if (!GetRuleValueDouble(false, ref ruleValue)) return null;
-                if (!GetRuleValueDouble(true, ref epsilon)) return null;
-                return new FilterRuleBuilder(curParam, criteria,
-                    ruleValue, epsilon);
+                case StorageType.String:
+                    return new FilterRuleBuilder(curParam, criteria, ruleValueComboBox.Text);
+                case StorageType.Double:
+                {
+                    double ruleValue = 0, epsilon = 0;
+                    if (!GetRuleValueDouble(false, ref ruleValue)) return null;
+                    if (!GetRuleValueDouble(true, ref epsilon)) return null;
+                    return new FilterRuleBuilder(curParam, criteria,
+                        ruleValue, epsilon);
+                }
+                case StorageType.Integer:
+                {
+                    var ruleValue = 0;
+                    if (!GetRuleValueInt(ref ruleValue)) return null;
+                    return new FilterRuleBuilder(curParam, criteria, ruleValue);
+                }
+                case StorageType.ElementId:
+                {
+                    long ruleValue = 0;
+                    if (!GetRuleValueLong(ref ruleValue)) return null;
+                    return new FilterRuleBuilder(curParam, criteria, new ElementId(ruleValue));
+                }
+                default:
+                    return null;
             }
-
-            if (paramType == StorageType.Integer)
-            {
-                var ruleValue = 0;
-                if (!GetRuleValueInt(ref ruleValue)) return null;
-                return new FilterRuleBuilder(curParam, criteria, ruleValue);
-            }
-
-            if (paramType == StorageType.ElementId)
-            {
-                long ruleValue = 0;
-                if (!GetRuleValueLong(ref ruleValue)) return null;
-                return new FilterRuleBuilder(curParam, criteria, new ElementId(ruleValue));
-            }
-
-            return null;
         }
 
         /// <summary>

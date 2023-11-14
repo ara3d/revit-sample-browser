@@ -76,8 +76,7 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
         public override IDictionary<string, object> Serialize(object obj, JavaScriptSerializer serializer)
         {
             var dic = new Dictionary<string, object>();
-            var node = obj as XYZ;
-            if (node == null)
+            if (!(obj is XYZ node))
                 return null;
             dic.Add("X", node.X);
             dic.Add("Y", node.Y);

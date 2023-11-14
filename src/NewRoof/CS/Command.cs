@@ -46,9 +46,7 @@ namespace Revit.SDK.Samples.NewRoof.CS
                     }
                 }
 
-                if (result == DialogResult.OK)
-                    return Result.Succeeded;
-                return Result.Cancelled;
+                return result == DialogResult.OK ? Result.Succeeded : Result.Cancelled;
             }
             catch (Exception ex)
             {

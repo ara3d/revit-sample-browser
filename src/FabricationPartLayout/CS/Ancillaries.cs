@@ -21,8 +21,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             var doc = commandData.Application.ActiveUIDocument.Document;
             var uidoc = commandData.Application.ActiveUIDocument;
 
-            FabricationPart fabPart = null;
-            FabricationConfiguration config = null;
+            FabricationPart fabPart;
+            FabricationConfiguration config;
 
             try
             {
@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             {
                 var ancilType = ancillaryUsage.Type;
                 var usageType = ancillaryUsage.UsageType;
-                ancillaryDescriptions.Add($"{ancilType.ToString()}: {usageType.ToString()} - "
+                ancillaryDescriptions.Add($"{ancilType}: {usageType} - "
                                           + $"{config.GetAncillaryName(ancillaryUsage.AncillaryId)}");
             }
 

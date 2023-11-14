@@ -85,10 +85,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
                 return false;
 
             var exportableTypes = GetExportableViewTypes();
-            if (!exportableTypes.Contains(view.ViewType))
-                return false;
-
-            return true;
+            return exportableTypes.Contains(view.ViewType);
         }
 
         private static void ExportView(View exportableView,
@@ -108,10 +105,12 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
             exporter.Export(exportableView);
             exporter.Dispose();
 
-            resultsSummary = new ResultsSummary();
-            resultsSummary.numElements = context.NumElements;
-            resultsSummary.numTexts = context.NumTexts;
-            resultsSummary.texts = context.Texts;
+            resultsSummary = new ResultsSummary
+            {
+                numElements = context.NumElements,
+                numTexts = context.NumTexts,
+                texts = context.Texts
+            };
         }
 
         /// <summary>
@@ -121,9 +120,8 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         private static void ShowResults(ResultsSummary resultsSummary)
         {
             var td = new TaskDialog("Results of 2D export");
-            td.MainInstruction = string.Format("2D exporter exported {0} elements", resultsSummary.numElements);
-            var details = string.Format("There were {0} text nodes exported.\n\n",
-                resultsSummary.numTexts);
+            td.MainInstruction = $"2D exporter exported {resultsSummary.numElements} elements";
+            var details = $"There were {resultsSummary.numTexts} text nodes exported.\n\n";
 
             if (resultsSummary.numTexts > 0 && resultsSummary.texts.Length > 0)
                 details += "Exported text nodes:\n" + resultsSummary.texts;
@@ -139,7 +137,9 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         private class ResultsSummary
         {
             public int numElements { get; set; }
+
             public int numTexts { get; set; }
+
             public string texts { get; set; }
         }
     }

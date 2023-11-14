@@ -83,10 +83,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             // Compute the host face cover distance.
             var corbelHostData = RebarHostData.GetRebarHostData(corbelHost);
             // Get CoverType of the given host face
-            var coverType = corbelHostData.GetCoverType(hostTopFace.Reference);
             // if the host face don't have a CoverType, then try to get the common CoverType.
-            if (coverType == null)
-                coverType = corbelHostData.GetCommonCoverType();
+            var coverType = corbelHostData.GetCoverType(hostTopFace.Reference) ?? corbelHostData.GetCommonCoverType();
             // Get the Cover Distance
             var coverDistance = coverType.CoverDistance;
 
@@ -147,16 +145,12 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             rightEdge = trapezoidFaceEdges.get_Item((bottomEdgeIndex + 1) % trapezoidFaceEdges.Size);
 
             var leftEdgeDir = (leftEdge.Evaluate(1.0) - leftEdge.Evaluate(0.0)).Normalize();
-            var isLeftEdgeVertical = false;
-            if (leftEdgeDir.IsAlmostEqualTo(hostNormal) ||
-                leftEdgeDir.IsAlmostEqualTo(-hostNormal))
-                isLeftEdgeVertical = true;
+            var isLeftEdgeVertical = leftEdgeDir.IsAlmostEqualTo(hostNormal) ||
+                                     leftEdgeDir.IsAlmostEqualTo(-hostNormal);
 
             var rightEdgeDir = (rightEdge.Evaluate(1.0) - rightEdge.Evaluate(0.0)).Normalize();
-            var rightEdgeIsVertical = false;
-            if (rightEdgeDir.IsAlmostEqualTo(hostNormal) ||
-                rightEdgeDir.IsAlmostEqualTo(-hostNormal))
-                rightEdgeIsVertical = true;
+            var rightEdgeIsVertical = rightEdgeDir.IsAlmostEqualTo(hostNormal) ||
+                                      rightEdgeDir.IsAlmostEqualTo(-hostNormal);
 
             return isLeftEdgeVertical && !rightEdgeIsVertical;
         }

@@ -83,12 +83,17 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
         /// <param name="index">index of direction, 0 => start, 1 => end</param>
         public void Inflate(int index, double value)
         {
-            if (index == 0)
-                m_startFactor -= value;
-            else if (index == 1)
-                m_endFactor += value;
-            else
-                throw new ArgumentOutOfRangeException("Index should be 0 or 1.");
+            switch (index)
+            {
+                case 0:
+                    m_startFactor -= value;
+                    break;
+                case 1:
+                    m_endFactor += value;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Index should be 0 or 1.");
+            }
         }
 
         /// <summary>

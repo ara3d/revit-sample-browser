@@ -98,9 +98,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             while (itor.MoveNext())
             {
-                var view = itor.Current as View;
                 // skip view templates because they're invisible in project browser, invalid for print
-                if (null == view || view.IsTemplate || !view.CanBePrinted)
+                if (!(itor.Current is View view) || view.IsTemplate || !view.CanBePrinted)
                     continue;
                 if (view.ViewType == ViewType.DrawingSheet)
                     m_printableSheets.Insert(view);

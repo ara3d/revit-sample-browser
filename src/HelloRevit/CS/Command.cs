@@ -55,26 +55,28 @@ namespace Revit.SDK.Samples.HelloRevit.CS
 
             var tResult = mainDialog.Show();
 
-            // If the user clicks the first command link, a simple Task Dialog 
-            // with only a Close button shows information about the Revit installation. 
-            if (TaskDialogResult.CommandLink1 == tResult)
+            switch (tResult)
             {
-                var dialog_CommandLink1 = new TaskDialog("Revit Build Information");
-                dialog_CommandLink1.MainInstruction =
-                    "Revit Version Name is: " + app.VersionName + "\n"
-                    + "Revit Version Number is: " + app.VersionNumber + "\n"
-                    + "Revit Version Build is: " + app.VersionBuild;
+                // If the user clicks the first command link, a simple Task Dialog 
+                // with only a Close button shows information about the Revit installation. 
+                case TaskDialogResult.CommandLink1:
+                {
+                    var dialog_CommandLink1 = new TaskDialog("Revit Build Information");
+                    dialog_CommandLink1.MainInstruction =
+                        "Revit Version Name is: " + app.VersionName + "\n"
+                        + "Revit Version Number is: " + app.VersionNumber + "\n"
+                        + "Revit Version Build is: " + app.VersionBuild;
 
-                dialog_CommandLink1.Show();
-            }
-
-            // If the user clicks the second command link, a simple Task Dialog 
-            // created by static method shows information about the active document.
-            else if (TaskDialogResult.CommandLink2 == tResult)
-            {
-                TaskDialog.Show("Active Document Information",
-                    "Active document: " + activeDoc.Title + "\n"
-                    + "Active view name: " + activeDoc.ActiveView.Name);
+                    dialog_CommandLink1.Show();
+                    break;
+                }
+                // If the user clicks the second command link, a simple Task Dialog 
+                // created by static method shows information about the active document.
+                case TaskDialogResult.CommandLink2:
+                    TaskDialog.Show("Active Document Information",
+                        "Active document: " + activeDoc.Title + "\n"
+                        + "Active view name: " + activeDoc.ActiveView.Name);
+                    break;
             }
 
             return Result.Succeeded;

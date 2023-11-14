@@ -198,13 +198,14 @@ namespace ExtensibleStorageManager
             }
 
             //Get a pathname for an XML file from the user.
-            var sfd = new SaveFileDialog();
-            sfd.DefaultExt = ".xml";
-            sfd.Filter = "SchemaWrapper Xml files (*.xml)|*.xml";
-            sfd.InitialDirectory = GetStartingXmlPath();
-
-            sfd.FileName = m_textBox_SchemaName.Text + "_" + m_textBox_SchemaVendorId.Text + "___" +
-                           m_textBox_SchemaId.Text.Substring(31) + ".xml";
+            var sfd = new SaveFileDialog
+            {
+                DefaultExt = ".xml",
+                Filter = "SchemaWrapper Xml files (*.xml)|*.xml",
+                InitialDirectory = GetStartingXmlPath(),
+                FileName = m_textBox_SchemaName.Text + "_" + m_textBox_SchemaVendorId.Text + "___" +
+                           m_textBox_SchemaId.Text.Substring(31) + ".xml"
+            };
 
             var result = sfd.ShowDialog();
 
@@ -304,10 +305,12 @@ namespace ExtensibleStorageManager
         private void m_button_CreateSchemaFromXml_Click(object sender, RoutedEventArgs e)
         {
             //Prompt the user for an xml file containing a serialized schema.
-            var ofd = new OpenFileDialog();
-            ofd.InitialDirectory = GetStartingXmlPath();
-            ofd.DefaultExt = ".xml";
-            ofd.Filter = "SchemaWrapper Xml files (*.xml)|*.xml";
+            var ofd = new OpenFileDialog
+            {
+                InitialDirectory = GetStartingXmlPath(),
+                DefaultExt = ".xml",
+                Filter = "SchemaWrapper Xml files (*.xml)|*.xml"
+            };
             var result = ofd.ShowDialog();
 
             if (result.HasValue && result == true)

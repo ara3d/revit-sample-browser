@@ -52,8 +52,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
                 return FailureCondition.CurvesNotContigous;
             }
 
-            var loops = new List<CurveLoop>();
-            loops.Add(loop);
+            var loops = new List<CurveLoop> { loop };
 
             // Get elevation of loop
             var elevation = curves[0].GetEndPoint(0).Z;
@@ -192,11 +191,15 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             if (!SupportsLoopUtilities(orig))
                 throw new NotImplementedException("CreateReversedCurve for type " + orig.GetType().Name);
 
-            if (orig is Line)
-                return Line.CreateBound(orig.GetEndPoint(1), orig.GetEndPoint(0));
-            if (orig is Arc)
-                return Arc.Create(orig.GetEndPoint(1), orig.GetEndPoint(0), orig.Evaluate(0.5, true));
-            throw new Exception("CreateReversedCurve - Unreachable");
+            switch (orig)
+            {
+                case Line _:
+                    return Line.CreateBound(orig.GetEndPoint(1), orig.GetEndPoint(0));
+                case Arc _:
+                    return Arc.Create(orig.GetEndPoint(1), orig.GetEndPoint(0), orig.Evaluate(0.5, true));
+                default:
+                    throw new Exception("CreateReversedCurve - Unreachable");
+            }
         }
 
         /// <summary>
@@ -225,9 +228,11 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             if (!(curve is Line) && !curve.IsCyclic)
             {
                 // Create curve loop from curve and connecting line to get plane
-                var curves = new List<Curve>();
-                curves.Add(curve);
-                curves.Add(Line.CreateBound(curve.GetEndPoint(1), curve.GetEndPoint(0)));
+                var curves = new List<Curve>
+                {
+                    curve,
+                    Line.CreateBound(curve.GetEndPoint(1), curve.GetEndPoint(0))
+                };
                 var curveLoop = CurveLoop.Create(curves);
 
                 var normal = curveLoop.GetPlane().Normal.Normalize();
@@ -256,23 +261,26 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             options.DetailLevel = ViewDetailLevel.Fine;
             var geomElem = element.get_Geometry(options);
             foreach (var geomObj in geomElem)
-                if (geomObj is Solid)
+                switch (geomObj)
                 {
-                    var solid = (Solid)geomObj;
-                    if (solid.Faces.Size > 0 && solid.Volume > 0.0) solids.Add(solid);
-                    // Single-level recursive check of instances. If viable solids are more than
-                    // one level deep, this example ignores them.
-                }
-                else if (geomObj is GeometryInstance)
-                {
-                    var geomInst = (GeometryInstance)geomObj;
-                    var instGeomElem = geomInst.GetInstanceGeometry();
-                    foreach (var instGeomObj in instGeomElem)
-                        if (instGeomObj is Solid)
-                        {
-                            var solid = (Solid)instGeomObj;
-                            if (solid.Faces.Size > 0 && solid.Volume > 0.0) solids.Add(solid);
-                        }
+                    case Solid obj:
+                    {
+                        if (obj.Faces.Size > 0 && obj.Volume > 0.0) solids.Add(obj);
+                        // Single-level recursive check of instances. If viable solids are more than
+                        // one level deep, this example ignores them.
+                        break;
+                    }
+                    case GeometryInstance geomInst:
+                    {
+                        var instGeomElem = geomInst.GetInstanceGeometry();
+                        foreach (var instGeomObj in instGeomElem)
+                            if (instGeomObj is Solid solid)
+                            {
+                                if (solid.Faces.Size > 0 && solid.Volume > 0.0) solids.Add(solid);
+                            }
+
+                        break;
+                    }
                 }
 
             return solids;

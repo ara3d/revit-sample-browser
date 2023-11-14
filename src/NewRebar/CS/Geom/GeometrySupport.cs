@@ -23,12 +23,12 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     the extend or sweep path of the beam or column
         /// </summary>
-        protected Line m_drivingLine;
+        protected readonly Line m_drivingLine;
 
         /// <summary>
         ///     the director vector of beam or column
         /// </summary>
-        protected XYZ m_drivingVector;
+        protected readonly XYZ m_drivingVector;
 
         /// <summary>
         ///     a list to store the edges
@@ -48,7 +48,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     the transform value of the solid
         /// </summary>
-        protected Transform m_transform;
+        protected readonly Transform m_transform;
 
         /// <summary>
         ///     constructor

@@ -97,8 +97,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
             var cross = CrossMatrix(vector1, vector2);
             var result = DotMatrix(cross, refer);
 
-            if (result < PRECISION) return true;
-            return false;
+            return result < PRECISION;
         }
 
         /// <summary>
@@ -206,8 +205,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 
             var result = DotMatrix(vector1, vector2);
 
-            if (Math.Abs(result) < PRECISION) return true;
-            return false;
+            return Math.Abs(result) < PRECISION;
         }
 
         /// <summary>
@@ -312,8 +310,7 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         private static bool IsEqual(double d1, double d2)
         {
             var diff = Math.Abs(d1 - d2);
-            if (diff < PRECISION) return true;
-            return false;
+            return diff < PRECISION;
         }
     }
 }

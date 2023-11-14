@@ -13,12 +13,12 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         ///     The landing configurations.
         /// </summary>
-        protected List<IStairsLandingComponent> m_landingConfigurations = new List<IStairsLandingComponent>();
+        protected readonly List<IStairsLandingComponent> m_landingConfigurations = new List<IStairsLandingComponent>();
 
         /// <summary>
         ///     The run configurations.
         /// </summary>
-        protected List<IStairsRunComponent> m_runConfigurations = new List<IStairsRunComponent>();
+        protected readonly List<IStairsRunComponent> m_runConfigurations = new List<IStairsRunComponent>();
 
         /// <summary>
         ///     Implements the interface method.

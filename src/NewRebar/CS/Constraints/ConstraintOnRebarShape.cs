@@ -10,7 +10,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     A wrapper of RebarShapeDefinition.
         /// </summary>
-        protected RebarShapeDef m_shapeDef;
+        protected readonly RebarShapeDef m_shapeDef;
 
         /// <summary>
         ///     Constructor, initialize fields.

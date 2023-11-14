@@ -389,57 +389,51 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private void lineOperationsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_myDocument.ActiveOperation = (LineOperation)lineOperationsComboBox.SelectedItem;
-            // update the status hints for the different grid/grid line operations
-            if (LineOperationType.AddULine == m_myDocument.ActiveOperation.OpType)
+            switch (m_myDocument.ActiveOperation.OpType)
             {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
-            }
-            else if (LineOperationType.AddVLine == m_myDocument.ActiveOperation.OpType)
-            {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
-            }
-            else if (LineOperationType.LockOrUnlockLine == m_myDocument.ActiveOperation.OpType)
-            {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Click on an existing grid line to switch its \"Lock\" status";
-            }
-            else if (LineOperationType.MoveLine == m_myDocument.ActiveOperation.OpType)
-            {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Select a grid line & move the mouse, left-click to finish the movement";
-            }
-            else if (LineOperationType.AddSegment == m_myDocument.ActiveOperation.OpType)
-            {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Add a segment to the place where a segment has been deleted previously";
-            }
-            else if (LineOperationType.RemoveSegment == m_myDocument.ActiveOperation.OpType)
-            {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Remove the segment of the grid line";
-            }
-            else if (LineOperationType.AddAllSegments == m_myDocument.ActiveOperation.OpType)
-            {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Add all the segments of the selected grid line";
-            }
-            else if (LineOperationType.AddAllMullions == m_myDocument.ActiveOperation.OpType)
-            {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Add mullions to all segments";
-                m_myDocument.GridGeometry.AddAllMullions();
-                ResetLineOpApprearances();
-                UpdatePropertyGrid();
-            }
-            else if (LineOperationType.DeleteAllMullions == m_myDocument.ActiveOperation.OpType)
-            {
-                operationStatusLabel.ForeColor = Color.Black;
-                operationStatusLabel.Text = "Delete all the mullions of the curtain grid";
-                m_myDocument.GridGeometry.DeleteAllMullions();
-                ResetLineOpApprearances();
-                UpdatePropertyGrid();
+                // update the status hints for the different grid/grid line operations
+                case LineOperationType.AddULine:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
+                    break;
+                case LineOperationType.AddVLine:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
+                    break;
+                case LineOperationType.LockOrUnlockLine:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Click on an existing grid line to switch its \"Lock\" status";
+                    break;
+                case LineOperationType.MoveLine:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Select a grid line & move the mouse, left-click to finish the movement";
+                    break;
+                case LineOperationType.AddSegment:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Add a segment to the place where a segment has been deleted previously";
+                    break;
+                case LineOperationType.RemoveSegment:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Remove the segment of the grid line";
+                    break;
+                case LineOperationType.AddAllSegments:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Add all the segments of the selected grid line";
+                    break;
+                case LineOperationType.AddAllMullions:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Add mullions to all segments";
+                    m_myDocument.GridGeometry.AddAllMullions();
+                    ResetLineOpApprearances();
+                    UpdatePropertyGrid();
+                    break;
+                case LineOperationType.DeleteAllMullions:
+                    operationStatusLabel.ForeColor = Color.Black;
+                    operationStatusLabel.Text = "Delete all the mullions of the curtain grid";
+                    m_myDocument.GridGeometry.DeleteAllMullions();
+                    ResetLineOpApprearances();
+                    UpdatePropertyGrid();
+                    break;
             }
         }
 
@@ -479,88 +473,86 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <param name="e">event args</param>
         private void curtainGridPictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-            // add a new U line to the canvas and to Revit
-            if (LineOperationType.AddULine == m_myDocument.ActiveOperation.OpType)
+            switch (m_myDocument.ActiveOperation.OpType)
             {
-                m_myDocument.GridGeometry.AddUGridLine();
-                ResetLineOpApprearances();
-                UpdatePropertyGrid();
-                m_lastPoint = e.Location;
-            }
-            // add a new V line to the canvas and to Revit
-            else if (LineOperationType.AddVLine == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.AddVGridLine();
-                ResetLineOpApprearances();
-                UpdatePropertyGrid();
-                m_lastPoint = e.Location;
-            }
-            // toggle the Lock status of the selected grid line
-            else if (LineOperationType.LockOrUnlockLine == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.LockOrUnlockSelectedGridLine();
-                ResetLineOpApprearances();
-                UpdatePropertyGrid();
-                //m_lastPoint = e.Location;
-            }
-            // move the selected grid line to a new place
-            else if (LineOperationType.MoveLine == m_myDocument.ActiveOperation.OpType)
-            {
-                // during moving a grid line, the mouse will click twice
-                // the 1st time is to select a grid line to move
-                // the 2nd time is to determine the destination place for the selected grid line
-
-                // the 1st time, select a grid line to move
-                if (false == m_lineToMoveSelected)
+                // add a new U line to the canvas and to Revit
+                case LineOperationType.AddULine:
+                    m_myDocument.GridGeometry.AddUGridLine();
+                    ResetLineOpApprearances();
+                    UpdatePropertyGrid();
+                    m_lastPoint = e.Location;
+                    break;
+                // add a new V line to the canvas and to Revit
+                case LineOperationType.AddVLine:
+                    m_myDocument.GridGeometry.AddVGridLine();
+                    ResetLineOpApprearances();
+                    UpdatePropertyGrid();
+                    m_lastPoint = e.Location;
+                    break;
+                // toggle the Lock status of the selected grid line
+                case LineOperationType.LockOrUnlockLine:
+                    m_myDocument.GridGeometry.LockOrUnlockSelectedGridLine();
+                    ResetLineOpApprearances();
+                    UpdatePropertyGrid();
+                    //m_lastPoint = e.Location;
+                    break;
+                // move the selected grid line to a new place
+                case LineOperationType.MoveLine:
                 {
-                    // get the line which will be moved
-                    var lineObtained = m_myDocument.GridGeometry.GetLineToBeMoved();
-                    if (lineObtained)
-                    {
-                        m_lineToMoveSelected = true;
-                        operationStatusLabel.ForeColor = Color.Black;
-                        operationStatusLabel.Text =
-                            "Move the mouse to the expected location, left click to finish the operation";
-                    }
-                }
-                // the 2nd time, the to-be-moved grid line specified, specify the destination location
-                else
-                {
-                    // the destination point has been set, move to that place
-                    var succeeded = m_myDocument.GridGeometry.MoveGridLine(e.Location);
-                    if (succeeded)
-                    {
-                        m_lineToMoveSelected = false;
-                        ResetLineOpApprearances();
-                        //UpdatePropertyGrid();
-                    }
-                }
+                    // during moving a grid line, the mouse will click twice
+                    // the 1st time is to select a grid line to move
+                    // the 2nd time is to determine the destination place for the selected grid line
 
-                m_lastPoint = e.Location;
-            }
-            // add a segment to the selected place
-            else if (LineOperationType.AddSegment == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.AddSegment();
-                ResetLineOpApprearances();
-                UpdatePropertyGrid();
-                m_lastPoint = e.Location;
-            }
-            // remove the selected segment
-            else if (LineOperationType.RemoveSegment == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.RemoveSegment();
-                ResetLineOpApprearances();
-                UpdatePropertyGrid();
-                m_lastPoint = e.Location;
-            }
-            // add all the segments of the selected grid line
-            else if (LineOperationType.AddAllSegments == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.AddAllSegments();
-                ResetLineOpApprearances();
-                UpdatePropertyGrid();
-                m_lastPoint = e.Location;
+                    // the 1st time, select a grid line to move
+                    if (false == m_lineToMoveSelected)
+                    {
+                        // get the line which will be moved
+                        var lineObtained = m_myDocument.GridGeometry.GetLineToBeMoved();
+                        if (lineObtained)
+                        {
+                            m_lineToMoveSelected = true;
+                            operationStatusLabel.ForeColor = Color.Black;
+                            operationStatusLabel.Text =
+                                "Move the mouse to the expected location, left click to finish the operation";
+                        }
+                    }
+                    // the 2nd time, the to-be-moved grid line specified, specify the destination location
+                    else
+                    {
+                        // the destination point has been set, move to that place
+                        var succeeded = m_myDocument.GridGeometry.MoveGridLine(e.Location);
+                        if (succeeded)
+                        {
+                            m_lineToMoveSelected = false;
+                            ResetLineOpApprearances();
+                            //UpdatePropertyGrid();
+                        }
+                    }
+
+                    m_lastPoint = e.Location;
+                    break;
+                }
+                // add a segment to the selected place
+                case LineOperationType.AddSegment:
+                    m_myDocument.GridGeometry.AddSegment();
+                    ResetLineOpApprearances();
+                    UpdatePropertyGrid();
+                    m_lastPoint = e.Location;
+                    break;
+                // remove the selected segment
+                case LineOperationType.RemoveSegment:
+                    m_myDocument.GridGeometry.RemoveSegment();
+                    ResetLineOpApprearances();
+                    UpdatePropertyGrid();
+                    m_lastPoint = e.Location;
+                    break;
+                // add all the segments of the selected grid line
+                case LineOperationType.AddAllSegments:
+                    m_myDocument.GridGeometry.AddAllSegments();
+                    ResetLineOpApprearances();
+                    UpdatePropertyGrid();
+                    m_lastPoint = e.Location;
+                    break;
             }
         }
 
@@ -588,61 +580,53 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 m_lastPoint = Point.Empty;
             }
 
-            if (LineOperationType.AddULine == m_myDocument.ActiveOperation.OpType)
+            switch (m_myDocument.ActiveOperation.OpType)
             {
-                m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
-                m_myDocument.GridGeometry.Drawing.AddDashULine(e.Location);
-                curtainGridPictureBox.Refresh();
-            }
-            else if (LineOperationType.AddVLine == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
-                m_myDocument.GridGeometry.Drawing.AddDashVLine(e.Location);
-                curtainGridPictureBox.Refresh();
-            }
-            else if (LineOperationType.LockOrUnlockLine == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
-                m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, false, false);
-                curtainGridPictureBox.Refresh();
-            }
-            else if (LineOperationType.MoveLine == m_myDocument.ActiveOperation.OpType)
-            {
+                case LineOperationType.AddULine:
+                    m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
+                    m_myDocument.GridGeometry.Drawing.AddDashULine(e.Location);
+                    curtainGridPictureBox.Refresh();
+                    break;
+                case LineOperationType.AddVLine:
+                    m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
+                    m_myDocument.GridGeometry.Drawing.AddDashVLine(e.Location);
+                    curtainGridPictureBox.Refresh();
+                    break;
+                case LineOperationType.LockOrUnlockLine:
+                    m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
+                    m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, false, false);
+                    curtainGridPictureBox.Refresh();
+                    break;
                 // during moving a grid line, the mouse will click twice
                 // the 1st time is to select a grid line to move
                 // the 2nd time is to determine the destination place for the selected grid line
-                if (false == m_lineToMoveSelected)
-                {
+                case LineOperationType.MoveLine when false == m_lineToMoveSelected:
                     // get the line which will be moved
                     m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
                     m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, true, false);
                     curtainGridPictureBox.Refresh();
-                }
-                else
-                {
+                    break;
+                case LineOperationType.MoveLine:
                     // determine the destination place for the selected grid line
                     m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
                     m_myDocument.GridGeometry.Drawing.AddDashLine(e.Location);
                     curtainGridPictureBox.Refresh();
-                }
-            }
-            else if (LineOperationType.AddSegment == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
-                m_myDocument.GridGeometry.Drawing.SelectSegment(e.Location);
-                curtainGridPictureBox.Refresh();
-            }
-            else if (LineOperationType.RemoveSegment == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
-                m_myDocument.GridGeometry.Drawing.SelectSegment(e.Location);
-                curtainGridPictureBox.Refresh();
-            }
-            else if (LineOperationType.AddAllSegments == m_myDocument.ActiveOperation.OpType)
-            {
-                m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
-                m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, false, true);
-                curtainGridPictureBox.Refresh();
+                    break;
+                case LineOperationType.AddSegment:
+                    m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
+                    m_myDocument.GridGeometry.Drawing.SelectSegment(e.Location);
+                    curtainGridPictureBox.Refresh();
+                    break;
+                case LineOperationType.RemoveSegment:
+                    m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
+                    m_myDocument.GridGeometry.Drawing.SelectSegment(e.Location);
+                    curtainGridPictureBox.Refresh();
+                    break;
+                case LineOperationType.AddAllSegments:
+                    m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
+                    m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, false, true);
+                    curtainGridPictureBox.Refresh();
+                    break;
             }
         }
 

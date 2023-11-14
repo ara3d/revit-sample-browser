@@ -132,7 +132,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
     {
         /// <summary>
         /// </summary>
-        public static Dictionary<string, DatumPlane> datumDic = new Dictionary<string, DatumPlane>();
+        public static readonly Dictionary<string, DatumPlane> datumDic = new Dictionary<string, DatumPlane>();
 
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
@@ -216,7 +216,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
     {
         /// <summary>
         /// </summary>
-        public static Dictionary<string, ElementId> viewDic = new Dictionary<string, ElementId>();
+        public static readonly Dictionary<string, ElementId> viewDic = new Dictionary<string, ElementId>();
 
         /// <summary>
         ///     Implement this method as an external command for Revit.

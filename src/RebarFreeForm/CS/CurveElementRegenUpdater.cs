@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                     var elemBars = collector.OfClass(typeof(Rebar)).ToElements();
                     foreach (var elem in elemBars)
                     {
-                        var bar = elem as Rebar;
-                        if (bar == null)
+                        if (!(elem is Rebar bar))
                             continue;
                         if (!bar.IsRebarFreeForm()) // only need free form bars
                             continue;

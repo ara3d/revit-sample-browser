@@ -122,82 +122,93 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         public FilterRule AsFilterRule()
         {
             var paramId = new ElementId(Parameter);
-            if (ParamType == StorageType.String)
-                switch (RuleCriteria)
-                {
-                    case RuleCriteraNames.BeginWith:
-                        return PFRF.CreateBeginsWithRule(paramId, RuleValue);
-                    case RuleCriteraNames.Contains:
-                        return PFRF.CreateContainsRule(paramId, RuleValue);
-                    case RuleCriteraNames.EndsWith:
-                        return PFRF.CreateEndsWithRule(paramId, RuleValue);
-                    case RuleCriteraNames.Equals_:
-                        return PFRF.CreateEqualsRule(paramId, RuleValue);
-                    case RuleCriteraNames.Greater:
-                        return PFRF.CreateGreaterRule(paramId, RuleValue);
-                    case RuleCriteraNames.GreaterOrEqual:
-                        return PFRF.CreateGreaterOrEqualRule(paramId, RuleValue);
-                    case RuleCriteraNames.Less:
-                        return PFRF.CreateLessRule(paramId, RuleValue);
-                    case RuleCriteraNames.LessOrEqual:
-                        return PFRF.CreateLessOrEqualRule(paramId, RuleValue);
-                    case RuleCriteraNames.NotBeginWith:
-                        return PFRF.CreateNotBeginsWithRule(paramId, RuleValue);
-                    case RuleCriteraNames.NotContains:
-                        return PFRF.CreateNotContainsRule(paramId, RuleValue);
-                    case RuleCriteraNames.NotEndsWith:
-                        return PFRF.CreateNotEndsWithRule(paramId, RuleValue);
-                    case RuleCriteraNames.NotEquals:
-                        return PFRF.CreateNotEqualsRule(paramId, RuleValue);
-                }
-            else if (ParamType == StorageType.Double)
-                switch (RuleCriteria)
-                {
-                    case RuleCriteraNames.Equals_:
-                        return PFRF.CreateEqualsRule(paramId, double.Parse(RuleValue), Epsilon);
-                    case RuleCriteraNames.Greater:
-                        return PFRF.CreateGreaterRule(paramId, double.Parse(RuleValue), Epsilon);
-                    case RuleCriteraNames.GreaterOrEqual:
-                        return PFRF.CreateGreaterOrEqualRule(paramId, double.Parse(RuleValue), Epsilon);
-                    case RuleCriteraNames.Less:
-                        return PFRF.CreateLessRule(paramId, double.Parse(RuleValue), Epsilon);
-                    case RuleCriteraNames.LessOrEqual:
-                        return PFRF.CreateLessOrEqualRule(paramId, double.Parse(RuleValue), Epsilon);
-                    case RuleCriteraNames.NotEquals:
-                        return PFRF.CreateNotEqualsRule(paramId, double.Parse(RuleValue), Epsilon);
-                }
-            else if (ParamType == StorageType.Integer)
-                switch (RuleCriteria)
-                {
-                    case RuleCriteraNames.Equals_:
-                        return PFRF.CreateEqualsRule(paramId, int.Parse(RuleValue));
-                    case RuleCriteraNames.Greater:
-                        return PFRF.CreateGreaterRule(paramId, int.Parse(RuleValue));
-                    case RuleCriteraNames.GreaterOrEqual:
-                        return PFRF.CreateGreaterOrEqualRule(paramId, int.Parse(RuleValue));
-                    case RuleCriteraNames.Less:
-                        return PFRF.CreateLessRule(paramId, int.Parse(RuleValue));
-                    case RuleCriteraNames.LessOrEqual:
-                        return PFRF.CreateLessOrEqualRule(paramId, int.Parse(RuleValue));
-                    case RuleCriteraNames.NotEquals:
-                        return PFRF.CreateNotEqualsRule(paramId, int.Parse(RuleValue));
-                }
-            else if (ParamType == StorageType.ElementId)
-                switch (RuleCriteria)
-                {
-                    case RuleCriteraNames.Equals_:
-                        return PFRF.CreateEqualsRule(paramId, ElementId.Parse(RuleValue));
-                    case RuleCriteraNames.Greater:
-                        return PFRF.CreateGreaterRule(paramId, ElementId.Parse(RuleValue));
-                    case RuleCriteraNames.GreaterOrEqual:
-                        return PFRF.CreateGreaterOrEqualRule(paramId, ElementId.Parse(RuleValue));
-                    case RuleCriteraNames.Less:
-                        return PFRF.CreateLessRule(paramId, ElementId.Parse(RuleValue));
-                    case RuleCriteraNames.LessOrEqual:
-                        return PFRF.CreateLessOrEqualRule(paramId, ElementId.Parse(RuleValue));
-                    case RuleCriteraNames.NotEquals:
-                        return PFRF.CreateNotEqualsRule(paramId, ElementId.Parse(RuleValue));
-                }
+            switch (ParamType)
+            {
+                case StorageType.String:
+                    switch (RuleCriteria)
+                    {
+                        case RuleCriteraNames.BeginWith:
+                            return PFRF.CreateBeginsWithRule(paramId, RuleValue);
+                        case RuleCriteraNames.Contains:
+                            return PFRF.CreateContainsRule(paramId, RuleValue);
+                        case RuleCriteraNames.EndsWith:
+                            return PFRF.CreateEndsWithRule(paramId, RuleValue);
+                        case RuleCriteraNames.Equals_:
+                            return PFRF.CreateEqualsRule(paramId, RuleValue);
+                        case RuleCriteraNames.Greater:
+                            return PFRF.CreateGreaterRule(paramId, RuleValue);
+                        case RuleCriteraNames.GreaterOrEqual:
+                            return PFRF.CreateGreaterOrEqualRule(paramId, RuleValue);
+                        case RuleCriteraNames.Less:
+                            return PFRF.CreateLessRule(paramId, RuleValue);
+                        case RuleCriteraNames.LessOrEqual:
+                            return PFRF.CreateLessOrEqualRule(paramId, RuleValue);
+                        case RuleCriteraNames.NotBeginWith:
+                            return PFRF.CreateNotBeginsWithRule(paramId, RuleValue);
+                        case RuleCriteraNames.NotContains:
+                            return PFRF.CreateNotContainsRule(paramId, RuleValue);
+                        case RuleCriteraNames.NotEndsWith:
+                            return PFRF.CreateNotEndsWithRule(paramId, RuleValue);
+                        case RuleCriteraNames.NotEquals:
+                            return PFRF.CreateNotEqualsRule(paramId, RuleValue);
+                    }
+
+                    break;
+                case StorageType.Double:
+                    switch (RuleCriteria)
+                    {
+                        case RuleCriteraNames.Equals_:
+                            return PFRF.CreateEqualsRule(paramId, double.Parse(RuleValue), Epsilon);
+                        case RuleCriteraNames.Greater:
+                            return PFRF.CreateGreaterRule(paramId, double.Parse(RuleValue), Epsilon);
+                        case RuleCriteraNames.GreaterOrEqual:
+                            return PFRF.CreateGreaterOrEqualRule(paramId, double.Parse(RuleValue), Epsilon);
+                        case RuleCriteraNames.Less:
+                            return PFRF.CreateLessRule(paramId, double.Parse(RuleValue), Epsilon);
+                        case RuleCriteraNames.LessOrEqual:
+                            return PFRF.CreateLessOrEqualRule(paramId, double.Parse(RuleValue), Epsilon);
+                        case RuleCriteraNames.NotEquals:
+                            return PFRF.CreateNotEqualsRule(paramId, double.Parse(RuleValue), Epsilon);
+                    }
+
+                    break;
+                case StorageType.Integer:
+                    switch (RuleCriteria)
+                    {
+                        case RuleCriteraNames.Equals_:
+                            return PFRF.CreateEqualsRule(paramId, int.Parse(RuleValue));
+                        case RuleCriteraNames.Greater:
+                            return PFRF.CreateGreaterRule(paramId, int.Parse(RuleValue));
+                        case RuleCriteraNames.GreaterOrEqual:
+                            return PFRF.CreateGreaterOrEqualRule(paramId, int.Parse(RuleValue));
+                        case RuleCriteraNames.Less:
+                            return PFRF.CreateLessRule(paramId, int.Parse(RuleValue));
+                        case RuleCriteraNames.LessOrEqual:
+                            return PFRF.CreateLessOrEqualRule(paramId, int.Parse(RuleValue));
+                        case RuleCriteraNames.NotEquals:
+                            return PFRF.CreateNotEqualsRule(paramId, int.Parse(RuleValue));
+                    }
+
+                    break;
+                case StorageType.ElementId:
+                    switch (RuleCriteria)
+                    {
+                        case RuleCriteraNames.Equals_:
+                            return PFRF.CreateEqualsRule(paramId, ElementId.Parse(RuleValue));
+                        case RuleCriteraNames.Greater:
+                            return PFRF.CreateGreaterRule(paramId, ElementId.Parse(RuleValue));
+                        case RuleCriteraNames.GreaterOrEqual:
+                            return PFRF.CreateGreaterOrEqualRule(paramId, ElementId.Parse(RuleValue));
+                        case RuleCriteraNames.Less:
+                            return PFRF.CreateLessRule(paramId, ElementId.Parse(RuleValue));
+                        case RuleCriteraNames.LessOrEqual:
+                            return PFRF.CreateLessOrEqualRule(paramId, ElementId.Parse(RuleValue));
+                        case RuleCriteraNames.NotEquals:
+                            return PFRF.CreateNotEqualsRule(paramId, ElementId.Parse(RuleValue));
+                    }
+
+                    break;
+            }
 
             //
             // Throw exception for others

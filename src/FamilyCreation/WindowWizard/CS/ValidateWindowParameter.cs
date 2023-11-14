@@ -43,9 +43,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <returns>the validation result message</returns>
         public string IsDouble(string value, ref double result)
         {
-            if (double.TryParse("0" + value, out result))
-                return string.Empty;
-            return "Please input a double value.";
+            return double.TryParse("0" + value, out result) ? string.Empty : "Please input a double value.";
         }
 
         /// <summary>
@@ -78,14 +76,10 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             if (IsMetric)
             {
                 value = Utility.MetricToImperial(value);
-                if (value >= 0.23)
-                    return string.Empty;
-                return "The height should > 69";
+                return value >= 0.23 ? string.Empty : "The height should > 69";
             }
 
-            if (value >= 0.4)
-                return string.Empty;
-            return "The height should > 0.4";
+            return value >= 0.4 ? string.Empty : "The height should > 0.4";
         }
 
         /// <summary>
@@ -97,9 +91,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             if (IsMetric)
                 value = Utility.MetricToImperial(value);
-            if (value >= 0)
-                return string.Empty;
-            return "The Inset should > 0";
+            return value >= 0 ? string.Empty : "The Inset should > 0";
         }
 
         /// <summary>

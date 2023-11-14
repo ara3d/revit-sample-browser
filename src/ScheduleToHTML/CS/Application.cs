@@ -57,9 +57,10 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
 
             var pbd = new PushButtonData("ScheduleToHTML", "Export to HTML",
                 addAssemblyPath,
-                typeof(ScheduleHTMLExportCommand).FullName);
-
-            pbd.LongDescription = "Export the active schedule to HTML.";
+                typeof(ScheduleHTMLExportCommand).FullName)
+            {
+                LongDescription = "Export the active schedule to HTML."
+            };
 
             var duplicateAllPB = rp.AddItem(pbd) as PushButton;
             SetIconsForPushButton(duplicateAllPB, Resources.ScheduleExport);

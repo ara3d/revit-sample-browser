@@ -41,18 +41,17 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                 iter.Reset();
                 if (iter.MoveNext()) selectElem = (Element)iter.Current;
 
-                if (selectElem is Wall)
+                switch (selectElem)
                 {
-                    wall = selectElem as Wall;
-                }
-                else if (selectElem is Floor)
-                {
-                    floor = selectElem as Floor;
-                }
-                else
-                {
-                    message = errorMessage;
-                    return Result.Cancelled;
+                    case Wall elem:
+                        wall = elem;
+                        break;
+                    case Floor elem1:
+                        floor = elem1;
+                        break;
+                    default:
+                        message = errorMessage;
+                        return Result.Cancelled;
                 }
 
                 try

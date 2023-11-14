@@ -54,8 +54,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
 
             foreach (var element in levels)
             {
-                var level = element as Level;
-                if (level != null) levelsComboBox.Items.Add(level);
+                if (element is Level level) levelsComboBox.Items.Add(level);
             }
 
             if (levelsComboBox.Items.Count > 0)
@@ -69,8 +68,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             filteredElementCollector.OfClass(typeof(WallType));
             foreach (var element in filteredElementCollector)
             {
-                var wallType = element as WallType;
-                if (null == wallType) continue;
+                if (!(element is WallType wallType)) continue;
                 wallTypesComboBox.Items.Add(wallType);
             }
 

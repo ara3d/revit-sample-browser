@@ -673,25 +673,23 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                     var path = pathList[j];
                     if (path.IsOutlineVisible(mousePosition, redPen))
                     {
-                        if (LineOperationType.AddSegment == m_myDocument.ActiveOperation.OpType)
+                        switch (m_myDocument.ActiveOperation.OpType)
                         {
                             // the operation is add segment, but the selected segment hasn't been removed
                             // so skip this segment
-                            if (false == segLine2D.Removed)
+                            case LineOperationType.AddSegment when false == segLine2D.Removed:
                             {
                                 var msg = "It's only allowed to add segment on a removed segment";
                                 var statusMsg = new KeyValuePair<string, bool>(msg, true);
                                 m_myDocument.Message = statusMsg;
                                 return;
                             }
-                        }
-                        else if (LineOperationType.RemoveSegment == m_myDocument.ActiveOperation.OpType)
-                        {
                             // the operation is remove segment, but the selected segment has been removed
                             // so skip this segment
-                            if (segLine2D.Removed) return;
+                            case LineOperationType.RemoveSegment when segLine2D.Removed:
+                                return;
                             // if there's only segment existing, forbid to delete it
-                            if (gridLine2D.RemovedNumber == gridLine2D.Segments.Count - 1)
+                            case LineOperationType.RemoveSegment when gridLine2D.RemovedNumber == gridLine2D.Segments.Count - 1:
                             {
                                 var msg = "It's not allowed to delete the last segment";
                                 var statusMsg = new KeyValuePair<string, bool>(msg, true);
@@ -747,25 +745,23 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
                     if (path.IsOutlineVisible(mousePosition, redPen))
                     {
-                        if (LineOperationType.AddSegment == m_myDocument.ActiveOperation.OpType)
+                        switch (m_myDocument.ActiveOperation.OpType)
                         {
                             // the operation is add segment, but the selected segment hasn't been removed
                             // so skip this segment
-                            if (false == segLine2D.Removed)
+                            case LineOperationType.AddSegment when false == segLine2D.Removed:
                             {
                                 var msg = "It's only allowed to add segment on a removed segment";
                                 var statusMsg = new KeyValuePair<string, bool>(msg, true);
                                 m_myDocument.Message = statusMsg;
                                 return;
                             }
-                        }
-                        else if (LineOperationType.RemoveSegment == m_myDocument.ActiveOperation.OpType)
-                        {
                             // the operation is remove segment, but the selected segment has been removed
                             // so skip this segment
-                            if (segLine2D.Removed) return;
+                            case LineOperationType.RemoveSegment when segLine2D.Removed:
+                                return;
                             // if there's only segment existing, forbid to delete it
-                            if (gridLine2D.RemovedNumber == gridLine2D.Segments.Count - 1)
+                            case LineOperationType.RemoveSegment when gridLine2D.RemovedNumber == gridLine2D.Segments.Count - 1:
                             {
                                 var msg = "It's not allowed to delete the last segment";
                                 var statusMsg = new KeyValuePair<string, bool>(msg, true);
@@ -888,11 +884,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             v2 = Coordinates.TransformMatrix.Transform(v2);
 
             // create a new line in GridLine2D format
-            var line2D = new GridLine2D();
-            line2D.StartPoint = new Point((int)v1.X, (int)v1.Y);
-            line2D.EndPoint = new Point((int)v2.X, (int)v2.Y);
-            line2D.Locked = line.Lock;
-            line2D.IsUGridLine = line.IsUGridLine;
+            var line2D = new GridLine2D
+            {
+                StartPoint = new Point((int)v1.X, (int)v1.Y),
+                EndPoint = new Point((int)v2.X, (int)v2.Y),
+                Locked = line.Lock,
+                IsUGridLine = line.IsUGridLine
+            };
             // get which segments are skipped
             var skippedSegments = ConvertCurveToSegment(line.SkippedSegmentCurves);
             // get all the segments for the curtain grid (and tag the skipped ones out)
@@ -927,9 +925,11 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 v2 = Coordinates.TransformMatrix.Transform(v2);
 
                 // add the segment data
-                var segLine2D = new SegmentLine2D();
-                segLine2D.StartPoint = new Point((int)v1.X, (int)v1.Y);
-                segLine2D.EndPoint = new Point((int)v2.X, (int)v2.Y);
+                var segLine2D = new SegmentLine2D
+                {
+                    StartPoint = new Point((int)v1.X, (int)v1.Y),
+                    EndPoint = new Point((int)v2.X, (int)v2.Y)
+                };
                 resultList.Add(segLine2D);
             }
 
@@ -1005,9 +1005,11 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 v2 = Coordinates.TransformMatrix.Transform(v2);
 
                 // add the segment data
-                var segLine2D = new SegmentLine2D();
-                segLine2D.StartPoint = new Point((int)v1.X, (int)v1.Y);
-                segLine2D.EndPoint = new Point((int)v2.X, (int)v2.Y);
+                var segLine2D = new SegmentLine2D
+                {
+                    StartPoint = new Point((int)v1.X, (int)v1.Y),
+                    EndPoint = new Point((int)v2.X, (int)v2.Y)
+                };
                 // if the segment is contained in the skipped list, set the Removed flag to true; otherwise false
                 segLine2D.Removed = IsSegLineContained(skippedSegments, segLine2D);
                 // if the segment is in a U grid line, set it true; otherwise false
@@ -1103,9 +1105,11 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 if (v2Y < m_minY) m_minY = v2Y;
 
                 // create the boundary line
-                var line2D = new GridLine2D();
-                line2D.StartPoint = new Point((int)v1.X, (int)v1.Y);
-                line2D.EndPoint = new Point((int)v2.X, (int)v2.Y);
+                var line2D = new GridLine2D
+                {
+                    StartPoint = new Point((int)v1.X, (int)v1.Y),
+                    EndPoint = new Point((int)v2.X, (int)v2.Y)
+                };
                 BoundLines2D.Add(line2D);
 
                 // add the line to the mapped GraphicsPath list
@@ -1202,7 +1206,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         private void DrawAssistLine(Graphics graphics)
         {
-            if (null != DrawObject) DrawObject.Draw(graphics);
+            DrawObject?.Draw(graphics);
         }
 
         /// <summary>
@@ -1227,14 +1231,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             {
                 // set the cursor to the default cursor
                 // indicating that the mouse is outside the curtain grid area, and disables to draw U line
-                if (null != MouseOutGridEvent) MouseOutGridEvent();
+                MouseOutGridEvent?.Invoke();
 
                 return false;
             }
 
             // set the cursor to the cursor of "Cross"
             // indicating that the mouse is inside the curtain grid area, and enables to draw U line
-            if (null != MouseInGridEvent) MouseInGridEvent();
+            MouseInGridEvent?.Invoke();
             return true;
         }
 
@@ -1312,25 +1316,30 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 vSegIndexes = GetOutlineIndexes(segList, point);
             }
 
-            // TODO: improve the comments
-            // there's only 1 v segment contains the point and no u segment, so the segment is an isolated one
-            if (0 == uSegIndexes.Count && 1 == vSegIndexes.Count)
+            switch (uSegIndexes.Count)
             {
-                var seg = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
-                seg.Isolated = true;
+                // TODO: improve the comments
+                // there's only 1 v segment contains the point and no u segment, so the segment is an isolated one
+                case 0 when 1 == vSegIndexes.Count:
+                {
+                    var seg = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
+                    seg.Isolated = true;
 
-                // recursive check
-                IsPointIsolate(seg.StartPoint);
-                IsPointIsolate(seg.EndPoint);
-            }
-            else if (1 == uSegIndexes.Count && 0 == vSegIndexes.Count)
-            {
-                var seg = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
-                seg.Isolated = true;
+                    // recursive check
+                    IsPointIsolate(seg.StartPoint);
+                    IsPointIsolate(seg.EndPoint);
+                    break;
+                }
+                case 1 when 0 == vSegIndexes.Count:
+                {
+                    var seg = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
+                    seg.Isolated = true;
 
-                // recursive check
-                IsPointIsolate(seg.StartPoint);
-                IsPointIsolate(seg.EndPoint);
+                    // recursive check
+                    IsPointIsolate(seg.StartPoint);
+                    IsPointIsolate(seg.EndPoint);
+                    break;
+                }
             }
 
             return false;
@@ -1396,10 +1405,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             float result = (ax - bx) * (ax - bx) + (ay - by) * (ay - by);
 
             // the distance of the 2 points is greater than 0, they're not equal
-            if ( /*result > 1*/result != 0)
-                return false;
-            // the distance of the 2 points is 0, they're equal
-            return true;
+            return result == 0;
         }
 
         /// <summary>
@@ -1471,19 +1477,24 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 vSegIndexes = GetOutlineIndexes(segList, point);
             }
 
-            if (0 == uSegIndexes.Count && 1 == vSegIndexes.Count)
+            switch (uSegIndexes.Count)
             {
-                // the source segment is an V segment, and the result segment is a V segment too.
-                // they're connected and in one line, so the result V segment should be removed, 
-                // according to the UI rule
-                if (false == isUSegment) removeSegLine = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
-            }
-            else if (1 == uSegIndexes.Count && 0 == vSegIndexes.Count)
-            {
-                // the source segment is an U segment, and the result segment is a U segment too.
-                // they're connected and in one line, so the result U segment should be removed, 
-                // according to the UI rule
-                if (isUSegment) removeSegLine = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
+                case 0 when 1 == vSegIndexes.Count:
+                {
+                    // the source segment is an V segment, and the result segment is a V segment too.
+                    // they're connected and in one line, so the result V segment should be removed, 
+                    // according to the UI rule
+                    if (false == isUSegment) removeSegLine = VGridLines2D[vIndex].Segments[vSegIndexes[0]];
+                    break;
+                }
+                case 1 when 0 == vSegIndexes.Count:
+                {
+                    // the source segment is an U segment, and the result segment is a U segment too.
+                    // they're connected and in one line, so the result U segment should be removed, 
+                    // according to the UI rule
+                    if (isUSegment) removeSegLine = UGridLines2D[uIndex].Segments[uSegIndexes[0]];
+                    break;
+                }
             }
         }
     } // end of class
@@ -1522,8 +1533,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </param>
         public DrawObject(Line2D line, Pen pen)
         {
-            Lines2D = new List<KeyValuePair<Line2D, Pen>>();
-            Lines2D.Add(new KeyValuePair<Line2D, Pen>(new Line2D(line), pen));
+            Lines2D = new List<KeyValuePair<Line2D, Pen>> { new KeyValuePair<Line2D, Pen>(new Line2D(line), pen) };
             Text = string.Empty;
             m_textPosition = Point.Empty;
         }

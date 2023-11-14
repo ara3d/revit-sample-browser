@@ -157,8 +157,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             CitiesName = new List<string>();
             TimeZones = new List<string>();
 
-            if (InitCities(cities) && InitTimeZone()) return true;
-            return false;
+            return InitCities(cities) && InitTimeZone();
         }
 
         /// <summary>
@@ -266,10 +265,11 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             }
 
             //try to find string in list m_timeZones contains string get above
-            for (var i = 0; i < TimeZones.Count; i++)
-                if (TimeZones[i].Contains(temp))
+            foreach (var timeZone in TimeZones)
+                if (timeZone.Contains(temp))
                     //here, use last member of list contains that string as result.
-                    timeZoneString = TimeZones[i];
+                    timeZoneString = timeZone;
+
             return timeZoneString;
         }
 
@@ -370,7 +370,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             finally
             {
                 //close file resource
-                if (null != streamReader) streamReader.Close();
+                streamReader?.Close();
             }
 
             m_isTimeZonesValid = true;

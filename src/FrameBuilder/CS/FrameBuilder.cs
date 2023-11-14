@@ -29,7 +29,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         {
             // initialize members
             if (null == data)
-                throw new ArgumentNullException("data",
+                throw new ArgumentNullException(nameof(data),
                     "constructor FrameBuilder(FrameData data)'s parameter shouldn't be null ");
             m_data = data;
 
@@ -190,9 +190,11 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             var secondBaseLine = Line.CreateBound(endPoint, middlePoint);
             var secondBrace =
                 m_docCreator.NewFamilyInstance(secondBaseLine, m_data.BraceSymbol, topLevel, StructuralType.Brace);
-            var result = new List<FamilyInstance>();
-            result.Add(firstBrace);
-            result.Add(secondBrace);
+            var result = new List<FamilyInstance>
+            {
+                firstBrace,
+                secondBrace
+            };
             return result;
         }
 

@@ -38,16 +38,8 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
         ///     Retrieval if regression test is running now.
         ///     If the ExpectedSelectionChanged.log exists in the assembly folder returns true, else returns false.
         /// </summary>
-        public static bool RegressionTestNow
-        {
-            get
-            {
-                var expectedLogFile = Path.Combine(AssemblyLocation, "ExpectedSelectionChanged.log");
-                if (File.Exists(expectedLogFile)) return true;
-
-                return false;
-            }
-        }
+        public static bool RegressionTestNow 
+            => File.Exists(Path.Combine(AssemblyLocation, "ExpectedSelectionChanged.log"));
 
         /// <summary>
         ///     Finalize and close the output log.

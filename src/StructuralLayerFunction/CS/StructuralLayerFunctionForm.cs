@@ -38,8 +38,10 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                if (null != components)
-                    components.Dispose();
+            {
+                components?.Dispose();
+            }
+
             base.Dispose(disposing);
         }
 

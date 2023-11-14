@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                 iter.MoveNext();
 
                 // we need verify the selected element is a family instance
-                var famIns = iter.Current as FamilyInstance;
-                if (famIns == null)
+                if (!(iter.Current is FamilyInstance famIns))
                 {
                     TaskDialog.Show("Revit", "Not a type of FamilyInsance!");
                     res = Result.Failed;

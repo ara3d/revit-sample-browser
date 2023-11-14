@@ -68,17 +68,8 @@ namespace Revit.SDK.Samples.WorkThread.CS
         /// <value>
         ///     Id of the element of which face the analysis was set up for.
         /// </value>
-        public ElementId AnalyzedElementId
-        {
-            get
-            {
-                var faceref = GetReference();
-
-                if (faceref != null) return faceref.ElementId;
-
-                return ElementId.InvalidElementId;
-            }
-        }
+        public ElementId AnalyzedElementId 
+            => GetReference()?.ElementId ?? ElementId.InvalidElementId;
 
         /// <summary>
         ///     Simple convention method to get an actual reference object
@@ -121,11 +112,10 @@ namespace Revit.SDK.Samples.WorkThread.CS
         {
             // create of get field manager for the view
 
-            m_SFManager = SpatialFieldManager.GetSpatialFieldManager(m_view);
-            if (m_SFManager == null) m_SFManager = SpatialFieldManager.CreateSpatialFieldManager(m_view, 1);
+            m_SFManager = SpatialFieldManager.GetSpatialFieldManager(m_view) 
+                          ?? SpatialFieldManager.CreateSpatialFieldManager(m_view, 1);
 
             // For the sake of simplicity, we remove any previous results
-
             m_SFManager.Clear();
 
             // register schema for the results

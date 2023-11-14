@@ -28,18 +28,17 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == null) throw new ArgumentNullException("destinationType");
+            if (destinationType == null) throw new ArgumentNullException(nameof(destinationType));
             if (destinationType == typeof(string))
             {
                 if (value == null) return "(null)";
 
                 // get its name
                 var type = value.GetType();
-                var mi = type.GetMethod("get_Name", new Type[0]);
-                if (mi != null) return mi.Invoke(value, new object[0]).ToString();
-
-                // if no name
-                return "(...)";
+                var mi = type.GetMethod("get_Name", Type.EmptyTypes);
+                return mi != null ? mi.Invoke(value, Array.Empty<object>()).ToString() :
+                    // if no name
+                    "(...)";
             }
 
             return base.ConvertTo(context, culture, value, destinationType);

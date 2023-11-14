@@ -95,14 +95,13 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
             var filter = new ElementCategoryFilter(category);
             collector.WherePasses(filter);
             var symbollList = collector.ToElements().ToList();
-            if (symbollList.Count() == 0)
+            if (!symbollList.Any())
                 return null;
 
             var famSymbolList = new List<FamilySymbol>();
             foreach (var elem in symbollList)
             {
-                var famSymbol = elem as FamilySymbol;
-                if (famSymbol != null)
+                if (elem is FamilySymbol famSymbol)
                     famSymbolList.Add(famSymbol);
             }
 

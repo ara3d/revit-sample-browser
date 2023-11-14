@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.DeckProperties.CS
                     foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
                     {
                         var element = revit.ActiveUIDocument.Document.GetElement(elementId);
-                        var floor = element as Floor;
-                        if (floor != null) floorList.Add(floor);
+                        if (element is Floor floor) floorList.Add(floor);
                     }
 
                     if (floorList.Count <= 0)
@@ -159,8 +158,7 @@ namespace Revit.SDK.Samples.DeckProperties.CS
             // Display the name of the material. More detailed material properties can
             // be found form the material object
             m_displayForm.WriteLine("Dumping Layer");
-            var material = m_document.GetElement(layer.MaterialId) as Material;
-            if (material != null) m_displayForm.WriteLine("Layer material = " + material.Name);
+            if (m_document.GetElement(layer.MaterialId) is Material material) m_displayForm.WriteLine("Layer material = " + material.Name);
 
             // display the thickness of the layer in inches.
             m_displayForm.WriteLine("Layer Thickness = " + layer.Width);

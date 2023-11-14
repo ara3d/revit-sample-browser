@@ -53,10 +53,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// <param name="drawPen">The pen to draw curves.</param>
         public void DrawGraphics(Graphics graphics, Pen drawPen)
         {
-            for (var i = 0; i < m_curve3Ds.Count; i++)
+            foreach (var points in m_curve3Ds)
             {
-                var points = m_curve3Ds[i];
-
                 for (var j = 0; j < points.Count - 1; j++)
                 {
                     // ignore xyz.Z value, drawn as top view.
@@ -81,9 +79,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 let viewPlan = elem as ViewPlan
                 where viewPlan != null && !viewPlan.IsTemplate && viewPlan.GenLevel.Id == door.LevelId
                 select viewPlan;
-            if (viewPlans.Count() > 0)
-                return viewPlans.First();
-            return null;
+            return viewPlans.Count() > 0 ? viewPlans.First() : null;
         }
 
         /// <summary>
@@ -102,21 +98,33 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             {
                 var geoObj = Objects.Current;
 
-                if (geoObj is Curve)
-                    AddCurve(geoObj);
-                else if (geoObj is Edge)
-                    AddEdge(geoObj);
-                else if (geoObj is GeometryElement)
-                    AddElement(geoObj);
-                else if (geoObj is Face)
-                    AddFace(geoObj);
-                else if (geoObj is GeometryInstance)
-                    AddInstance(geoObj);
-                else if (geoObj is Mesh)
-                    AddMesh(geoObj);
-                else if (geoObj is Profile)
-                    AddProfile(geoObj);
-                else if (geoObj is Solid) AddSolid(geoObj);
+                switch (geoObj)
+                {
+                    case Curve _:
+                        AddCurve(geoObj);
+                        break;
+                    case Edge _:
+                        AddEdge(geoObj);
+                        break;
+                    case GeometryElement _:
+                        AddElement(geoObj);
+                        break;
+                    case Face _:
+                        AddFace(geoObj);
+                        break;
+                    case GeometryInstance _:
+                        AddInstance(geoObj);
+                        break;
+                    case Mesh _:
+                        AddMesh(geoObj);
+                        break;
+                    case Profile _:
+                        AddProfile(geoObj);
+                        break;
+                    case Solid _:
+                        AddSolid(geoObj);
+                        break;
+                }
             }
         }
 

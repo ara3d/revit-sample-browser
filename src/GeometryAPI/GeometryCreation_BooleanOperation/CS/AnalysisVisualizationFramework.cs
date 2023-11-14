@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// <returns>The singleton instance of AnalysisVisualizationFramework</returns>
         public static AnalysisVisualizationFramework getInstance(Document doc)
         {
-            if (Instance == null) Instance = new AnalysisVisualizationFramework(doc);
-            return Instance;
+            return Instance ?? (Instance = new AnalysisVisualizationFramework(doc));
         }
 
         /// <summary>
@@ -79,8 +78,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
                     .Where(e => e.Name == viewName).First();
             }
 
-            var sfm = SpatialFieldManager.GetSpatialFieldManager(view);
-            if (sfm == null) sfm = SpatialFieldManager.CreateSpatialFieldManager(view, 1);
+            var sfm = SpatialFieldManager.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 1);
 
             if (SchemaId != -1)
             {

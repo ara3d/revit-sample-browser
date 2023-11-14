@@ -21,15 +21,20 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             Roof = roof;
             SubItems.Add(roof.Name);
 
-            if (Roof is FootPrintRoof)
+            switch (Roof)
             {
-                var para = roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
-                SubItems.Add(LevelConverter.GetLevelByID(para.AsElementId()).Name);
-            }
-            else if (Roof is ExtrusionRoof)
-            {
-                var para = roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
-                SubItems.Add(LevelConverter.GetLevelByID(para.AsElementId()).Name);
+                case FootPrintRoof _:
+                {
+                    var para = roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
+                    SubItems.Add(LevelConverter.GetLevelByID(para.AsElementId()).Name);
+                    break;
+                }
+                case ExtrusionRoof _:
+                {
+                    var para = roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
+                    SubItems.Add(LevelConverter.GetLevelByID(para.AsElementId()).Name);
+                    break;
+                }
             }
 
             SubItems.Add(roof.RoofType.Name);
@@ -50,15 +55,20 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             {
                 SubItems[1].Text = Roof.Name;
 
-                if (Roof is FootPrintRoof)
+                switch (Roof)
                 {
-                    var para = Roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
-                    SubItems[2].Text = LevelConverter.GetLevelByID(para.AsElementId()).Name;
-                }
-                else if (Roof is ExtrusionRoof)
-                {
-                    var para = Roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
-                    SubItems[2].Text = LevelConverter.GetLevelByID(para.AsElementId()).Name;
+                    case FootPrintRoof _:
+                    {
+                        var para = Roof.get_Parameter(BuiltInParameter.ROOF_BASE_LEVEL_PARAM);
+                        SubItems[2].Text = LevelConverter.GetLevelByID(para.AsElementId()).Name;
+                        break;
+                    }
+                    case ExtrusionRoof _:
+                    {
+                        var para = Roof.get_Parameter(BuiltInParameter.ROOF_CONSTRAINT_LEVEL_PARAM);
+                        SubItems[2].Text = LevelConverter.GetLevelByID(para.AsElementId()).Name;
+                        break;
+                    }
                 }
 
                 SubItems[3].Text = Roof.RoofType.Name;

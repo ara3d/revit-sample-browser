@@ -589,16 +589,26 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             var planes = Utility.GetElements<Autodesk.Revit.DB.ReferencePlane>(m_application, m_document);
             foreach (var p in planes)
             {
-                if (p.Name.Equals("Sash"))
-                    m_sashPlane = p;
-                if (p.Name.Equals("Exterior"))
-                    m_exteriorPlane = p;
-                if (p.Name.Equals("Center (Front/Back)"))
-                    m_centerPlane = p;
-                if (p.Name.Equals("Top") || p.Name.Equals("Head"))
-                    m_topPlane = p;
-                if (p.Name.Equals("Sill") || p.Name.Equals("Bottom"))
-                    m_sillPlane = p;
+                switch (p.Name)
+                {
+                    case "Sash":
+                        m_sashPlane = p;
+                        break;
+                    case "Exterior":
+                        m_exteriorPlane = p;
+                        break;
+                    case "Center (Front/Back)":
+                        m_centerPlane = p;
+                        break;
+                    case "Top":
+                    case "Head":
+                        m_topPlane = p;
+                        break;
+                    case "Sill":
+                    case "Bottom":
+                        m_sillPlane = p;
+                        break;
+                }
             }
         }
 

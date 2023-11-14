@@ -207,8 +207,8 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
                 var geoSolid = geoObject as Solid;
                 if (null == geoSolid) continue;
                 foreach (Face geoFace in geoSolid.Faces)
-                    if (geoFace is PlanarFace)
-                        m_planarFaces.Add(geoFace as PlanarFace);
+                    if (geoFace is PlanarFace face)
+                        m_planarFaces.Add(face);
             }
 
             return m_planarFaces;

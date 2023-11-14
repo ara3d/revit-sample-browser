@@ -59,24 +59,30 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
 
             var pbd1 = new PushButtonData("CreateCube", "Create Cube",
                 addinAssmeblyPath,
-                "Revit.SDK.Samples.BRepBuilderExample.CS.CreateCube");
-            pbd1.LargeImage = convertFromBitmap(Resources.large_shape);
-            pbd1.Image = convertFromBitmap(Resources.small_shape);
+                "Revit.SDK.Samples.BRepBuilderExample.CS.CreateCube")
+            {
+                LargeImage = convertFromBitmap(Resources.large_shape),
+                Image = convertFromBitmap(Resources.small_shape)
+            };
             _ = rp.AddItem(pbd1) as PushButton;
 
 
             var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
                 addinAssmeblyPath,
-                "Revit.SDK.Samples.BRepBuilderExample.CS.CreateNURBS");
-            pbd2.LargeImage = convertFromBitmap(Resources.large_shape);
-            pbd2.Image = convertFromBitmap(Resources.small_shape);
+                "Revit.SDK.Samples.BRepBuilderExample.CS.CreateNURBS")
+            {
+                LargeImage = convertFromBitmap(Resources.large_shape),
+                Image = convertFromBitmap(Resources.small_shape)
+            };
             _ = rp.AddItem(pbd2) as PushButton;
 
             var pbd3 = new PushButtonData("CreatePeriodic", "Create Periodic Surface",
                 addinAssmeblyPath,
-                "Revit.SDK.Samples.BRepBuilderExample.CS.CreatePeriodic");
-            pbd3.LargeImage = convertFromBitmap(Resources.large_shape);
-            pbd3.Image = convertFromBitmap(Resources.small_shape);
+                "Revit.SDK.Samples.BRepBuilderExample.CS.CreatePeriodic")
+            {
+                LargeImage = convertFromBitmap(Resources.large_shape),
+                Image = convertFromBitmap(Resources.small_shape)
+            };
             _ = rp.AddItem(pbd3) as PushButton;
         }
     }

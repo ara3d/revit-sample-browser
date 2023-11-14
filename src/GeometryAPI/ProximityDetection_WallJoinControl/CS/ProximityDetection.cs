@@ -52,8 +52,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
             Application app,
             Document doc)
         {
-            if (Instance == null) Instance = new ProximityDetection(app, doc);
-            return Instance;
+            return Instance ?? (Instance = new ProximityDetection(app, doc));
         }
 
         /// <summary>
@@ -74,9 +73,11 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
 
                     // Iterate to find columns and structural columns
                     var collector = new FilteredElementCollector(m_doc);
-                    var columnCategories = new List<BuiltInCategory>();
-                    columnCategories.Add(BuiltInCategory.OST_Columns);
-                    columnCategories.Add(BuiltInCategory.OST_StructuralColumns);
+                    var columnCategories = new List<BuiltInCategory>
+                    {
+                        BuiltInCategory.OST_Columns,
+                        BuiltInCategory.OST_StructuralColumns
+                    };
                     collector.WherePasses(new ElementMulticategoryFilter(columnCategories));
 
                     // Apply element intersection filter
@@ -135,10 +136,8 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                     {
                         var egressGObj = Objects1.Current;
 
-                        if (egressGObj is Solid)
+                        if (egressGObj is Solid egressVolume)
                         {
-                            var egressVolume = egressGObj as Solid; //calculated from shape and location of a given door
-
                             var solidNode = new XElement("ElementSolid" + count);
                             // Iterate to find all instance types
                             var blockingcollector = new FilteredElementCollector(m_doc);
@@ -152,8 +151,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                             IEnumerable<Element> blockingElement = blockingcollector;
 
                             // Exclude the door itself  
-                            var exclusions = new List<ElementId>();
-                            exclusions.Add(egressElement.Id);
+                            var exclusions = new List<ElementId> { egressElement.Id };
                             blockingcollector.Excluding(exclusions);
 
                             var blockingegressNode = new XElement("blocking_egress_elements",
@@ -207,8 +205,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                     var collector = nearbyWallsFilter(wallEndPoint, wallHeight, 10.0); // 10 ft
 
                     // Exclude the wall itself
-                    var exclusions = new List<ElementId>();
-                    exclusions.Add(wall.Id);
+                    var exclusions = new List<ElementId> { wall.Id };
                     collector.Excluding(exclusions);
 
                     var nearbyWalls = collector.OfType<Wall>();
@@ -231,8 +228,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                     collector = nearbyWallsFilter(wallEndPoint, wallHeight, 10.0);
 
                     // Exclude the wall itself
-                    exclusions = new List<ElementId>();
-                    exclusions.Add(wall.Id);
+                    exclusions = new List<ElementId> { wall.Id };
                     collector.Excluding(exclusions);
 
                     nearbyWalls = collector.OfType<Wall>();

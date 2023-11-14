@@ -39,15 +39,14 @@ namespace Revit.SDK.Samples.AutoJoin.CS
         /// <param name="faces">the face list</param>
         private static void GetAllFaces(GeometryObject geometry, List<Face> faces)
         {
-            if (geometry is GeometryElement)
+            switch (geometry)
             {
-                GetAllFaces(geometry as GeometryElement, faces);
-                return;
-            }
-
-            if (geometry is Solid)
-            {
-                GetAllFaces(geometry as Solid, faces);
+                case GeometryElement element:
+                    GetAllFaces(element, faces);
+                    return;
+                case Solid solid:
+                    GetAllFaces(solid, faces);
+                    break;
             }
         }
 
@@ -70,15 +69,14 @@ namespace Revit.SDK.Samples.AutoJoin.CS
 
         private static void GetAllCurves(GeometryObject geometry, List<Curve> curves)
         {
-            if (geometry is GeometryElement)
+            switch (geometry)
             {
-                GetAllCurves(geometry as GeometryElement, curves);
-                return;
-            }
-
-            if (geometry is Solid)
-            {
-                GetAllCurves(geometry as Solid, curves);
+                case GeometryElement element:
+                    GetAllCurves(element, curves);
+                    return;
+                case Solid solid:
+                    GetAllCurves(solid, curves);
+                    break;
             }
         }
 

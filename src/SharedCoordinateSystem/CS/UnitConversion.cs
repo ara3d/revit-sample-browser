@@ -37,9 +37,11 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// <returns>conversion result</returns>
         public static CityInfoString ConvertFrom(CityInfo cityInfo)
         {
-            var cityInfoString = new CityInfoString();
-            cityInfoString.Latitude = DoubleToString(cityInfo.Latitude, ValueType.Angle);
-            cityInfoString.Longitude = DoubleToString(cityInfo.Longitude, ValueType.Angle);
+            var cityInfoString = new CityInfoString
+            {
+                Latitude = DoubleToString(cityInfo.Latitude, ValueType.Angle),
+                Longitude = DoubleToString(cityInfo.Longitude, ValueType.Angle)
+            };
             return cityInfoString;
         }
 
@@ -233,8 +235,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
             //double.TryParse's return value:
             //true if s is converted successfully; otherwise, false.
-            if (double.TryParse(newValue, out result)) return true;
-            return false;
+            return double.TryParse(newValue, out result);
         }
 
         /// <summary>

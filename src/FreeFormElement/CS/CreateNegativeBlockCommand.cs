@@ -94,18 +94,15 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
         public bool AllowElement(Element element)
         {
             // Allow only curve elements
-            var curveElement = element as CurveElement;
-            if (curveElement == null)
+            if (!(element is CurveElement curveElement))
                 return false;
 
             var curve = curveElement.GeometryCurve;
 
             // Curves must support the utilities used by the tool (e.g. ReverseCurve)
-            if (!FreeFormElementUtils.SupportsLoopUtilities(curve))
-                return false;
-
-            // Curves must be in XY plane
-            return FreeFormElementUtils.IsCurveInXYPlane(curve);
+            return FreeFormElementUtils.SupportsLoopUtilities(curve) &&
+                   // Curves must be in XY plane
+                   FreeFormElementUtils.IsCurveInXYPlane(curve);
         }
 
         public bool AllowReference(Reference refer, XYZ point)

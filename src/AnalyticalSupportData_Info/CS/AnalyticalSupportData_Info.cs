@@ -71,8 +71,8 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
                     if (associatedElementId != ElementId.InvalidElementId)
                     {
                         var associatedElement = document.GetElement(associatedElementId);
-                        if (associatedElement != null && associatedElement is AnalyticalElement)
-                            analyticalModel = associatedElement as AnalyticalElement;
+                        if (associatedElement != null && associatedElement is AnalyticalElement analyticalElement)
+                            analyticalModel = analyticalElement;
                     }
                 }
 

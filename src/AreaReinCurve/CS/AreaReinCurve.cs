@@ -99,8 +99,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
             var curveIds = m_areaRein.GetBoundaryCurveIds();
             foreach (var o in curveIds)
             {
-                var areaCurve = m_doc.GetElement(o) as AreaReinforcementCurve;
-                if (null == areaCurve)
+                if (!(m_doc.GetElement(o) is AreaReinforcementCurve areaCurve))
                 {
                     var appEx = new ApplicationException
                         ("There is unexpected error with selected AreaReinforcement.");

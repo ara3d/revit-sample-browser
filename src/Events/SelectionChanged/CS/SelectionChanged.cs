@@ -49,8 +49,10 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
 
             var ribbonPanel = m_ctrlApp.CreateRibbonPanel("SelectionChanged Event");
             var showInfoWindowButton = new PushButtonData("showInfoWindow", "Show Event Info", AddInPath,
-                "Revit.SDK.Samples.SelectionChanged.CS.Command");
-            showInfoWindowButton.ToolTip = "Show Event Monitor window";
+                "Revit.SDK.Samples.SelectionChanged.CS.Command")
+            {
+                ToolTip = "Show Event Monitor window"
+            };
             ribbonPanel.AddItem(showInfoWindowButton);
 
 
@@ -113,7 +115,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
             // write to log file. 
             LogManager.WriteLog(args.GetInfo());
 
-            if (InfoWindow != null) InfoWindow.RevitUIApp_SelectionChanged(sender, args);
+            InfoWindow?.RevitUIApp_SelectionChanged(sender, args);
         }
     }
 }

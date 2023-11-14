@@ -174,14 +174,17 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 var cell = m_storedCells[i];
                 var filterResult = rFilter.TestCell(cell.LowerLeft, cell.UpperRight);
 
-                // Filter result == -1 means the cell is entirely out of scope, skip it.
-                if (filterResult == -1)
-                    continue;
-
-                // Filter result == 0 means some part of the cell is in scope.
-                // Prepare for cell is called to process the cell's points.
-                if (filterResult == 0)
-                    rFilter.PrepareForCell(fullOutline.MinimumPoint, fullOutline.MaximumPoint, cell.NumberOfPoints);
+                switch (filterResult)
+                {
+                    // Filter result == -1 means the cell is entirely out of scope, skip it.
+                    case -1:
+                        continue;
+                    // Filter result == 0 means some part of the cell is in scope.
+                    // Prepare for cell is called to process the cell's points.
+                    case 0:
+                        rFilter.PrepareForCell(fullOutline.MinimumPoint, fullOutline.MaximumPoint, cell.NumberOfPoints);
+                        break;
+                }
 
                 // Loop through all points in the cell.
                 for (var j = currentIndex; j < cell.NumberOfPoints; j++)

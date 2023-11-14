@@ -25,7 +25,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         private readonly WallGeometry m_refGeometry;
 
         // zoom the baseline to a suitable length
-        public double SCALEFACTOR = 5.0;
+        public readonly double SCALEFACTOR = 5.0;
 
 
         /// <summary>

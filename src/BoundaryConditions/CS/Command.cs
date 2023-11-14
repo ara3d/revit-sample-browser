@@ -58,17 +58,15 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                     using (var displayForm = new BoundaryConditionsForm(dataBuffer))
                     {
                         var result = displayForm.ShowDialog();
-                        if (DialogResult.OK == result)
+                        switch (result)
                         {
-                            tran.Commit();
-                            return Result.Succeeded;
-                        }
-
-                        if (DialogResult.Retry == result)
-                        {
-                            message = "failed to create BoundaryConditions.";
-                            tran.RollBack();
-                            return Result.Failed;
+                            case DialogResult.OK:
+                                tran.Commit();
+                                return Result.Succeeded;
+                            case DialogResult.Retry:
+                                message = "failed to create BoundaryConditions.";
+                                tran.RollBack();
+                                return Result.Failed;
                         }
                     }
                 }
@@ -101,21 +99,25 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = element.Document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalElement)
-                        elemAnalytical = associatedElement as AnalyticalElement;
+                    if (associatedElement != null && associatedElement is AnalyticalElement analyticalElement)
+                        elemAnalytical = analyticalElement;
                 }
             }
 
             if (null == elemAnalytical) return false;
-            var familyInstance = element as FamilyInstance;
-            if (null != familyInstance &&
-                StructuralType.Footing ==
-                familyInstance.StructuralType) return false; // if selected a isolated foundation not create BC
-
-            if (element is FamilyInstance || element is Wall || element is Floor || element is WallFoundation)
-                return true;
-
-            return false;
+            switch (element)
+            {
+                case FamilyInstance familyInstance when StructuralType.Footing ==
+                                                        familyInstance.StructuralType:
+                    return false; // if selected a isolated foundation not create BC
+                case FamilyInstance _:
+                case Wall _:
+                case Floor _:
+                case WallFoundation _:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

@@ -115,8 +115,8 @@ namespace Revit.SDK.Samples.Truss.CS
                     var familyInstace = (FamilyInstance)elem;
                     Curve frame1Curve = null;
 
-                    if (familyInstace.Location is LocationCurve)
-                        frame1Curve = (familyInstace.Location as LocationCurve).Curve;
+                    if (familyInstace.Location is LocationCurve curve)
+                        frame1Curve = curve.Curve;
 
                     var line = (Line)frame1Curve;
                     xyzArray.Add(line.GetEndPoint(0));

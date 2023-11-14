@@ -112,8 +112,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
                     // to the list of values, while the UV is added
                     // to the list of points.
 
-                    var doubleList = new List<double>();
-                    doubleList.Add(value);
+                    var doubleList = new List<double> { value };
                     m_values.Add(new ValueAtPoint(doubleList));
                     m_points.Add(point);
                     accepted = true;

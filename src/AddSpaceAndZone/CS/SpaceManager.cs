@@ -50,8 +50,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
                     m_commandData.Application.ActiveUIDocument.Document.ActiveView);
                 foreach (var elem in elements)
                 {
-                    var space = m_commandData.Application.ActiveUIDocument.Document.GetElement(elem) as Space;
-                    if (space != null) m_spaceDictionary[level.Id].Add(space);
+                    if (m_commandData.Application.ActiveUIDocument.Document.GetElement(elem) is Space space) m_spaceDictionary[level.Id].Add(space);
                 }
 
                 if (elements == null || elements.Count == 0)

@@ -58,12 +58,16 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             if (m_targetGuid == Guid.Empty)
                 targetPane = null;
             else targetPane = new DockablePaneId(m_targetGuid);
-            if (m_position == DockPosition.Tabbed)
-                data.InitialState.TabBehind = targetPane;
+            switch (m_position)
+            {
+                case DockPosition.Tabbed:
+                    data.InitialState.TabBehind = targetPane;
+                    break;
+                case DockPosition.Floating:
+                    data.InitialState.SetFloatingRectangle(new Rectangle(m_left, m_top, m_right, m_bottom));
+                    break;
+            }
 
-
-            if (m_position == DockPosition.Floating)
-                data.InitialState.SetFloatingRectangle(new Rectangle(m_left, m_top, m_right, m_bottom));
 
             Log.Message("***Intial docking parameters***");
             Log.Message(APIUtility.GetDockStateSummary(data.InitialState));
@@ -110,9 +114,9 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
                 var child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is childItem)
+                if (child != null && child is childItem item)
                 {
-                    return (childItem)child;
+                    return item;
                 }
 
                 var childOfChild = FindVisualChild<childItem>(child);
@@ -134,17 +138,21 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
 
         private void RaisePrintSummaryCommand()
         {
-            var data = new ModelessCommandData();
-            data.CommandType = ModelessCommandType.PrintMainPageStatistics;
+            var data = new ModelessCommandData
+            {
+                CommandType = ModelessCommandType.PrintMainPageStatistics
+            };
             ThisApplication.thisApp.GetDockableAPIUtility().RunModelessCommand(data);
             m_exEvent.Raise();
         }
 
         private void RaisePrintSpecificSummaryCommand(string guid)
         {
-            var data = new ModelessCommandData();
-            data.CommandType = ModelessCommandType.PrintSelectedPageStatistics;
-            data.SelectedPaneId = guid;
+            var data = new ModelessCommandData
+            {
+                CommandType = ModelessCommandType.PrintSelectedPageStatistics,
+                SelectedPaneId = guid
+            };
             ThisApplication.thisApp.GetDockableAPIUtility().RunModelessCommand(data);
             m_exEvent.Raise();
         }

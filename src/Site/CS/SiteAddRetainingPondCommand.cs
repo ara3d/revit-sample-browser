@@ -80,13 +80,14 @@ namespace Revit.SDK.Samples.Site.CS
             var mat = collector.Cast<Material>().FirstOrDefault(m => m.Name == "Water");
 
             // Create subregion curves
-            var curves = new List<Curve>();
-            curves.Add(Arc.Create(point, pondRadius, 0, Math.PI, XYZ.BasisX, XYZ.BasisY));
-            curves.Add(Arc.Create(point, pondRadius, Math.PI, 2 * Math.PI, XYZ.BasisX, XYZ.BasisY));
+            var curves = new List<Curve>
+            {
+                Arc.Create(point, pondRadius, 0, Math.PI, XYZ.BasisX, XYZ.BasisY),
+                Arc.Create(point, pondRadius, Math.PI, 2 * Math.PI, XYZ.BasisX, XYZ.BasisY)
+            };
 
             var curveLoop = CurveLoop.Create(curves);
-            var curveLoops = new List<CurveLoop>();
-            curveLoops.Add(curveLoop);
+            var curveLoops = new List<CurveLoop> { curveLoop };
 
             // All changes are added to one transaction group - will create one undo item
             using (var addGroup = new TransactionGroup(doc, "Add pond group"))

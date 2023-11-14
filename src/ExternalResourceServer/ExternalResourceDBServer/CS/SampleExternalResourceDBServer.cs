@@ -308,22 +308,22 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             // The following checks can help with testing.  However, they should not be necessary, since Revit checks all input paramters
             // before calling this method.
             if (loadRequestId == null)
-                throw new ArgumentNullException("loadRequestId");
+                throw new ArgumentNullException(nameof(loadRequestId));
             ;
             if (resourceType == null)
-                throw new ArgumentNullException("resourceType");
+                throw new ArgumentNullException(nameof(resourceType));
             ;
             if (resourceReference == null)
-                throw new ArgumentNullException("resourceReference");
+                throw new ArgumentNullException(nameof(resourceReference));
             ;
             if (loadContext == null)
-                throw new ArgumentNullException("loadContext");
+                throw new ArgumentNullException(nameof(loadContext));
             ;
             if (loadContent == null)
-                throw new ArgumentNullException("loadContent");
+                throw new ArgumentNullException(nameof(loadContent));
             ;
             if (!SupportsExternalResourceType(resourceType))
-                throw new ArgumentOutOfRangeException("resourceType",
+                throw new ArgumentOutOfRangeException(nameof(resourceType),
                     "The specified resource type is not supported by this server.");
 
 
@@ -409,49 +409,66 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         {
             var folderPath = browserData.FolderPath;
 
-            // To make this demonstration simple and clear, this code creates two sub-folders with names hard-coded
-            // in French and German, and one keynote data source (must have the extension *.txt) under each of
-            // these sub-folders.
-            // To make subsequent recognition of these resources easier (in the server's LoadResource method and
-            // elsewhere), a database "key" is stored in each resource's string-string Dictionary.
-            if (currentCultureName == "de-DE")
+            switch (currentCultureName)
             {
-                if (folderPath == "/") // Top-level
-                {
+                // To make this demonstration simple and clear, this code creates two sub-folders with names hard-coded
+                // in French and German, and one keynote data source (must have the extension *.txt) under each of
+                // these sub-folders.
+                // To make subsequent recognition of these resources easier (in the server's LoadResource method and
+                // elsewhere), a database "key" is stored in each resource's string-string Dictionary.
+                // Top-level
+                case "de-DE" when folderPath == "/":
                     browserData.AddSubFolder("Unterordner1");
                     browserData.AddSubFolder("Unterordner2");
-                }
-                else if (folderPath.EndsWith("/Unterordner1"))
+                    break;
+                case "de-DE" when folderPath.EndsWith("/Unterordner1"):
                 {
-                    var refMap = new Dictionary<string, string>();
-                    refMap[RefMapDBKeyEntry] = "1";
+                    var refMap = new Dictionary<string, string>
+                    {
+                        [RefMapDBKeyEntry] = "1"
+                    };
                     browserData.AddResource("Keynotes1_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
+                    break;
                 }
-                else if (folderPath.EndsWith("/Unterordner2"))
+                case "de-DE":
                 {
-                    var refMap = new Dictionary<string, string>();
-                    refMap[RefMapDBKeyEntry] = "2";
-                    browserData.AddResource("Keynotes2_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
+                    if (folderPath.EndsWith("/Unterordner2"))
+                    {
+                        var refMap = new Dictionary<string, string>
+                        {
+                            [RefMapDBKeyEntry] = "2"
+                        };
+                        browserData.AddResource("Keynotes2_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
+                    }
+
+                    break;
                 }
-            }
-            else if (currentCultureName == "fr-FR")
-            {
-                if (folderPath == "/") // Top-level
-                {
+                // Top-level
+                case "fr-FR" when folderPath == "/":
                     browserData.AddSubFolder("Sous-dossier1");
                     browserData.AddSubFolder("Sous-dossier2");
-                }
-                else if (folderPath.EndsWith("/Sous-dossier1"))
+                    break;
+                case "fr-FR" when folderPath.EndsWith("/Sous-dossier1"):
                 {
-                    var refMap = new Dictionary<string, string>();
-                    refMap[RefMapDBKeyEntry] = "3";
+                    var refMap = new Dictionary<string, string>
+                    {
+                        [RefMapDBKeyEntry] = "3"
+                    };
                     browserData.AddResource("Keynotes1_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
+                    break;
                 }
-                else if (folderPath.EndsWith("/Sous-dossier2"))
+                case "fr-FR":
                 {
-                    var refMap = new Dictionary<string, string>();
-                    refMap[RefMapDBKeyEntry] = "4";
-                    browserData.AddResource("Keynotes2_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
+                    if (folderPath.EndsWith("/Sous-dossier2"))
+                    {
+                        var refMap = new Dictionary<string, string>
+                        {
+                            [RefMapDBKeyEntry] = "4"
+                        };
+                        browserData.AddResource("Keynotes2_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
+                    }
+
+                    break;
                 }
             }
         }
@@ -528,10 +545,12 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                     }
                     else
                     {
-                        var refMap = new Dictionary<string, string>();
-                        // Relative Path of Link File is Stored in the ExternalResourceReference that
-                        // Will Be Addded to the BrowserData.
-                        refMap[RefMapLinkPathEntry] = folderPath.TrimEnd('/') + '/' + file.Name;
+                        var refMap = new Dictionary<string, string>
+                        {
+                            // Relative Path of Link File is Stored in the ExternalResourceReference that
+                            // Will Be Addded to the BrowserData.
+                            [RefMapLinkPathEntry] = folderPath.TrimEnd('/') + '/' + file.Name
+                        };
                         browserData.AddResource(file.Name, GetFileVersion(file.FullName), refMap);
                     }
             }
@@ -557,7 +576,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             if (kdrlc == null)
                 throw new ArgumentException(
                     "Wrong type of ExternalResourceLoadContent (expecting a KeyBasedTreeEntriesLoadContent) for keynote data.",
-                    "loadContent");
+                    nameof(loadContent));
 
             kdrlc.Reset();
 
@@ -606,7 +625,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             if (linkLoadContent == null)
                 throw new ArgumentException(
                     "Wrong type of ExternalResourceLoadContent (expecting a LinkLoadContent) for Revit links.",
-                    "loadContent");
+                    nameof(loadContent));
 
             try
             {

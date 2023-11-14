@@ -39,8 +39,7 @@ namespace Revit.SDK.Samples.SpanDirection.CS
                 elemIter.Reset();
                 while (elemIter.MoveNext())
                 {
-                    var floor = elemIter.Current as Floor;
-                    if (floor != null) GetSpanDirectionAndSymobls(floor);
+                    if (elemIter.Current is Floor floor) GetSpanDirectionAndSymobls(floor);
                 }
             }
             catch (Exception ex)

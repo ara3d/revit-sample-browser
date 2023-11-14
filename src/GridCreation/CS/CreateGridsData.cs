@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <summary>
         ///     Resource manager
         /// </summary>
-        protected static ResourceManager resManager = Resources.ResourceManager;
+        protected static readonly ResourceManager resManager = Resources.ResourceManager;
 
         /// <summary>
         ///     Application Creation object to create new elements
@@ -39,12 +39,12 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <summary>
         ///     The active document of Revit
         /// </summary>
-        protected Autodesk.Revit.DB.Document m_revitDoc;
+        protected readonly Autodesk.Revit.DB.Document m_revitDoc;
 
         /// <summary>
         ///     Current display unit type
         /// </summary>
-        protected ForgeTypeId m_unit;
+        protected readonly ForgeTypeId m_unit;
 
 
         /// <summary>
@@ -135,17 +135,20 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 var startDegree = arc.GetEndParameter(0);
                 var endDegree = arc.GetEndParameter(1);
 
-                // Handle the case that the arc is clockwise
-                if (clockwise && startDegree > 0 && endDegree > 0)
+                switch (clockwise)
                 {
-                    startDegree = 2 * Values.PI - startDegree;
-                    endDegree = 2 * Values.PI - endDegree;
-                }
-                else if (clockwise && startDegree < 0)
-                {
-                    var temp = endDegree;
-                    endDegree = -1 * startDegree;
-                    startDegree = -1 * temp;
+                    // Handle the case that the arc is clockwise
+                    case true when startDegree > 0 && endDegree > 0:
+                        startDegree = 2 * Values.PI - startDegree;
+                        endDegree = 2 * Values.PI - endDegree;
+                        break;
+                    case true when startDegree < 0:
+                    {
+                        var temp = endDegree;
+                        endDegree = -1 * startDegree;
+                        startDegree = -1 * temp;
+                        break;
+                    }
                 }
 
                 var sumDegree = (startDegree + endDegree) / 2;

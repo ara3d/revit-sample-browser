@@ -153,11 +153,13 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
         {
             var profile = new ReferenceArray();
             // Prepare points to create lines
-            var points = new List<XYZ>();
-            points.Add(new XYZ(-1 * length / 2, -1 * width / 2, height));
-            points.Add(new XYZ(length / 2, -1 * width / 2, height));
-            points.Add(new XYZ(length / 2, width / 2, height));
-            points.Add(new XYZ(-1 * length / 2, width / 2, height));
+            var points = new List<XYZ>
+            {
+                new XYZ(-1 * length / 2, -1 * width / 2, height),
+                new XYZ(length / 2, -1 * width / 2, height),
+                new XYZ(length / 2, width / 2, height),
+                new XYZ(-1 * length / 2, width / 2, height)
+            };
 
             // Prepare sketch plane to create model line
             var normal = new XYZ(0, 0, 1);

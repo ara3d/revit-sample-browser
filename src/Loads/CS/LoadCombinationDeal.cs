@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.Loads.CS
             var elements = new FilteredElementCollector(m_document).OfClass(typeof(LoadCombination)).ToElements();
             foreach (var elem in elements)
             {
-                var combination = elem as LoadCombination;
-                if (null != combination)
+                if (elem is LoadCombination combination)
                 {
                     // Add the Load Combination name.
                     m_dataBuffer.LoadCombinationNames.Add(combination.Name);
@@ -60,8 +59,7 @@ namespace Revit.SDK.Samples.Loads.CS
             foreach (var elem in elements)
             {
                 // Add Load Combination Usage information
-                var usage = elem as LoadUsage;
-                if (null != usage)
+                if (elem is LoadUsage usage)
                 {
                     // Add the Load Usage name
                     m_dataBuffer.LoadUsageNames.Add(usage.Name);

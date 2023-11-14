@@ -65,14 +65,11 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
                 !DockablePane.PaneExists(DefaultElementTypes.PaneId))
                 return;
 
-            var uiApp = sender as UIApplication;
-            if (uiApp == null)
+            if (!(sender is UIApplication uiApp))
                 return;
 
-            if (DefaultFamilyTypesPane != null)
-                DefaultFamilyTypesPane.SetDocument(e.Document);
-            if (DefaultElementTypesPane != null)
-                DefaultElementTypesPane.SetDocument(e.Document);
+            DefaultFamilyTypesPane?.SetDocument(e.Document);
+            DefaultElementTypesPane?.SetDocument(e.Document);
         }
     }
 }

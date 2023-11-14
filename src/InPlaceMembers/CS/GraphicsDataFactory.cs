@@ -22,9 +22,15 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         public static GraphicsData CreateGraphicsData(AnalyticalElement model)
         {
             IList<Curve> curveList = new List<Curve>();
-            if (model is AnalyticalMember)
-                curveList.Add(model.GetCurve());
-            else if (model is AnalyticalPanel) curveList = (model as AnalyticalPanel).GetOuterContour().ToList();
+            switch (model)
+            {
+                case AnalyticalMember _:
+                    curveList.Add(model.GetCurve());
+                    break;
+                case AnalyticalPanel panel:
+                    curveList = panel.GetOuterContour().ToList();
+                    break;
+            }
 
             if (curveList.Count > 0)
             {

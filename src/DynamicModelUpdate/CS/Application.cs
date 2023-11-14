@@ -68,9 +68,8 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                     if (referModel != null)
                     {
                         var model = m_document.GetElement(referModel);
-                        if (model != null)
-                            if (model is FamilyInstance)
-                                modelId = model.Id;
+                        if (model is FamilyInstance)
+                            modelId = model.Id;
                     }
                 }
                 catch (OperationCanceledException)

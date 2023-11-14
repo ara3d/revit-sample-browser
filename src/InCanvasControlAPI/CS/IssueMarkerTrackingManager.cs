@@ -38,8 +38,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns>An instance of IssueMarkerTrackingManager</returns>
         public static IssueMarkerTrackingManager GetInstance()
         {
-            if (manager == null) manager = new IssueMarkerTrackingManager();
-            return manager;
+            return manager ?? (manager = new IssueMarkerTrackingManager());
         }
 
         /// <summary>

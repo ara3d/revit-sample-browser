@@ -102,9 +102,11 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 m_application.ActiveUIDocument.Document);
             var results = routingPrefernceAnalyzer.GetWarnings();
 
-            var xmlWriterSettings = new XmlWriterSettings();
-            xmlWriterSettings.Indent = true;
-            xmlWriterSettings.NewLineOnAttributes = false;
+            var xmlWriterSettings = new XmlWriterSettings
+            {
+                Indent = true,
+                NewLineOnAttributes = false
+            };
             var output = new StringBuilder();
             var writer = XmlWriter.Create(output, xmlWriterSettings);
             results.WriteTo(writer);
@@ -124,9 +126,11 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 GetSelectedSize(), m_application.ActiveUIDocument.Document);
             var results = routingPrefernceAnalyzer.GetSpecificSizeQuery();
 
-            var xmlWriterSettings = new XmlWriterSettings();
-            xmlWriterSettings.Indent = true;
-            xmlWriterSettings.NewLineOnAttributes = false;
+            var xmlWriterSettings = new XmlWriterSettings
+            {
+                Indent = true,
+                NewLineOnAttributes = false
+            };
             var output = new StringBuilder();
             var writer = XmlWriter.Create(output, xmlWriterSettings);
             results.WriteTo(writer);

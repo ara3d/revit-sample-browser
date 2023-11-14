@@ -18,13 +18,13 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     public abstract class Profile
     {
         // used to create new instances of utility objects. 
-        protected Application m_appCreator;
+        protected readonly Application m_appCreator;
 
         // object which contains reference to Revit Application
-        protected ExternalCommandData m_commandData;
+        protected readonly ExternalCommandData m_commandData;
 
         // used to create new instances of elements
-        protected Document m_docCreator;
+        protected readonly Document m_docCreator;
 
         // store the Matrix used to move points to center
         protected Matrix4 m_moveToCenterMatrix = null;
@@ -99,9 +99,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                 1, 0, 0, 1, m_sizePictureBox.Width / 2, m_sizePictureBox.Height / 2);
 
             //draw profile
-            for (var i = 0; i < m_points.Count; i++)
+            foreach (var points in m_points)
             {
-                var points = m_points[i];
                 for (var j = 0; j < points.Count - 1; j++)
                 {
                     var point1 = points[j];
@@ -218,9 +217,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             var bFirstPoint = true;
 
             //get the max and min point on the face
-            for (var i = 0; i < m_points.Count; i++)
+            foreach (var points in m_points)
             {
-                var points = m_points[i];
                 foreach (var point in points)
                 {
                     var v = new Vector4(point);

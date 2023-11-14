@@ -114,14 +114,15 @@ namespace Revit.SDK.Samples.Toposolid.CS
                     var ge = gInstance.GetSymbolGeometry();
                     var glist = ge.ToList();
                     foreach (var obj in glist)
-                        if (obj is PolyLine polyLine)
+                        switch (obj)
                         {
-                            ptList.AddRange(polyLine.GetCoordinates());
-                        }
-                        else if (obj is Line line)
-                        {
-                            ptList.Add(line.GetEndPoint(0));
-                            ptList.Add(line.GetEndPoint(1));
+                            case PolyLine polyLine:
+                                ptList.AddRange(polyLine.GetCoordinates());
+                                break;
+                            case Line line:
+                                ptList.Add(line.GetEndPoint(0));
+                                ptList.Add(line.GetEndPoint(1));
+                                break;
                         }
                 }
             }

@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
 
                     foreach (var elementId in collection)
                     {
-                        var part = doc.GetElement(elementId) as FabricationPart;
-                        if (part != null)
+                        if (doc.GetElement(elementId) is FabricationPart part)
                         {
                             hasFabricationPart = true;
                             part.SpoolName = "My Spool";

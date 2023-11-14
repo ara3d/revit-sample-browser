@@ -93,12 +93,10 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
         {
             var position = XYZ.Zero;
             var fOrientation = XYZ.Zero;
-            if (elem is FamilyInstance)
+            if (elem is FamilyInstance familyInstance)
             {
-                var familyInstance = elem as FamilyInstance;
-                if (familyInstance.Location != null && familyInstance.Location is LocationPoint)
+                if (familyInstance.Location != null && familyInstance.Location is LocationPoint locationPoint)
                 {
-                    var locationPoint = familyInstance.Location as LocationPoint;
                     position = locationPoint.Point;
                 }
 

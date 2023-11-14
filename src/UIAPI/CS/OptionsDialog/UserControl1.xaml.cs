@@ -19,13 +19,15 @@ namespace Revit.SDK.Samples.UIAPI.CS
             InitializeComponent();
 
 
-            var memberData = new ObservableCollection<Member>();
-            memberData.Add(new Member
-                { Name = "Joe", Age = "23", Pass = true, Email = new Uri("mailto:Joe@school.com") });
-            memberData.Add(new Member
-                { Name = "Mike", Age = "20", Pass = false, Email = new Uri("mailto:Mike@school.com") });
-            memberData.Add(new Member
-                { Name = "Lucy", Age = "25", Pass = true, Email = new Uri("mailto:Lucy@school.com") });
+            var memberData = new ObservableCollection<Member>
+            {
+                new Member
+                    { Name = "Joe", Age = "23", Pass = true, Email = new Uri("mailto:Joe@school.com") },
+                new Member
+                    { Name = "Mike", Age = "20", Pass = false, Email = new Uri("mailto:Mike@school.com") },
+                new Member
+                    { Name = "Lucy", Age = "25", Pass = true, Email = new Uri("mailto:Lucy@school.com") }
+            };
             dataGrid1.DataContext = memberData;
             _name = "WPF components";
         }
@@ -60,8 +62,11 @@ namespace Revit.SDK.Samples.UIAPI.CS
     public class Member
     {
         public string Name { get; set; }
+
         public string Age { get; set; }
+
         public bool Pass { get; set; }
+
         public Uri Email { get; set; }
     }
 }

@@ -114,10 +114,12 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_exportObjectData = true;
             m_exportAreas = false;
             m_exportMergeFiles = true;
-            m_ImageQualities = new List<DWFImageQuality>();
-            m_ImageQualities.Add(DWFImageQuality.Low);
-            m_ImageQualities.Add(DWFImageQuality.Medium);
-            m_ImageQualities.Add(DWFImageQuality.High);
+            m_ImageQualities = new List<DWFImageQuality>
+            {
+                DWFImageQuality.Low,
+                DWFImageQuality.Medium,
+                DWFImageQuality.High
+            };
 
             // Export DWF
             if (m_exportFormat == ExportFormat.DWF)
@@ -154,23 +156,27 @@ namespace Revit.SDK.Samples.ImportExport.CS
             // Export DWFx
             if (m_exportFormat == ExportFormat.DWFx)
             {
-                var options = new DWFXExportOptions();
-                options.ExportObjectData = m_exportObjectData;
-                options.ExportingAreas = m_exportAreas;
-                options.MergedViews = m_exportMergeFiles;
-                options.ImageFormat = m_dwfImageFormat;
-                options.ImageQuality = m_dwfImageQuality;
+                var options = new DWFXExportOptions
+                {
+                    ExportObjectData = m_exportObjectData,
+                    ExportingAreas = m_exportAreas,
+                    MergedViews = m_exportMergeFiles,
+                    ImageFormat = m_dwfImageFormat,
+                    ImageQuality = m_dwfImageQuality
+                };
                 exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, options);
             }
             // Export DWF
             else
             {
-                var options = new DWFExportOptions();
-                options.ExportObjectData = m_exportObjectData;
-                options.ExportingAreas = m_exportAreas;
-                options.MergedViews = m_exportMergeFiles;
-                options.ImageFormat = m_dwfImageFormat;
-                options.ImageQuality = m_dwfImageQuality;
+                var options = new DWFExportOptions
+                {
+                    ExportObjectData = m_exportObjectData,
+                    ExportingAreas = m_exportAreas,
+                    MergedViews = m_exportMergeFiles,
+                    ImageFormat = m_dwfImageFormat,
+                    ImageQuality = m_dwfImageQuality
+                };
                 exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, options);
             }
 

@@ -88,9 +88,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             break;
                     }
 
-                    if (result == DialogResult.OK)
-                        return Result.Succeeded;
-                    return Result.Cancelled;
+                    return result == DialogResult.OK 
+                        ? Result.Succeeded : Result.Cancelled;
                 }
             }
             catch (Exception ex)
@@ -113,17 +112,24 @@ namespace Revit.SDK.Samples.GridCreation.CS
             foreach (var elementId in newUIdocument.Selection.GetElementIds())
                 elements.Insert(newUIdocument.Document.GetElement(elementId));
             foreach (Element element in elements)
-                if (element is ModelLine || element is ModelArc)
+                switch (element)
                 {
-                    var modelCurve = element as ModelCurve;
-                    var curve = modelCurve.GeometryCurve;
-                    if (curve != null) selectedCurves.Append(curve);
-                }
-                else if (element is DetailLine || element is DetailArc)
-                {
-                    var detailCurve = element as DetailCurve;
-                    var curve = detailCurve.GeometryCurve;
-                    if (curve != null) selectedCurves.Append(curve);
+                    case ModelLine _:
+                    case ModelArc _:
+                    {
+                        var modelCurve = element as ModelCurve;
+                        var curve = modelCurve.GeometryCurve;
+                        if (curve != null) selectedCurves.Append(curve);
+                        break;
+                    }
+                    case DetailLine _:
+                    case DetailArc _:
+                    {
+                        var detailCurve = element as DetailCurve;
+                        var curve = detailCurve.GeometryCurve;
+                        if (curve != null) selectedCurves.Append(curve);
+                        break;
+                    }
                 }
 
             return selectedCurves;
@@ -180,8 +186,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             itor.Reset();
             for (; itor.MoveNext();)
             {
-                var grid = itor.Current as Grid;
-                if (null != grid) labels.Add(grid.Name);
+                if (itor.Current is Grid grid) labels.Add(grid.Name);
             }
 
             return labels;

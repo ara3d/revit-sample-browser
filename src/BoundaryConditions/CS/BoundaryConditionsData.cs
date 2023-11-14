@@ -48,8 +48,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <summary>
         ///     get all the BCs correspond with current host
         /// </summary>
-        public Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs { get; } =
-            new Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions>();
+        public Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs { get; } = new Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions>();
 
         /// <summary>
         ///     According to the selected element create corresponding Boundary Conditions.
@@ -59,35 +58,40 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         {
             CreateBCHandler createBCH = null;
 
-            // judge the type of the HostElement
-            if (HostElement is FamilyInstance)
+            switch (HostElement)
             {
-                var familyInstance = HostElement as FamilyInstance;
-                var structuralType = familyInstance.StructuralType;
+                // judge the type of the HostElement
+                case FamilyInstance familyInstance:
+                {
+                    var structuralType = familyInstance.StructuralType;
 
-                if (structuralType == StructuralType.Beam)
-                    // create Line BC for beam
+                    switch (structuralType)
+                    {
+                        // create Line BC for beam
+                        case StructuralType.Beam:
+                            createBCH = CreateLineBC;
+                            break;
+                        case StructuralType.Brace:
+                        case StructuralType.Column:
+                        // create point BC for Column/brace
+                        case StructuralType.Footing:
+                            createBCH = CreatePointBC;
+                            break;
+                    }
+                    break;
+                }
+                case Wall _:
+                    // create line BC for wall
                     createBCH = CreateLineBC;
-                else if (structuralType == StructuralType.Brace ||
-                         structuralType == StructuralType.Column ||
-                         structuralType == StructuralType.Footing)
-                    // create point BC for Column/brace
-                    createBCH = CreatePointBC;
-            }
-            else if (HostElement is Wall)
-            {
-                // create line BC for wall
-                createBCH = CreateLineBC;
-            }
-            else if (HostElement is Floor)
-            {
-                // create area BC for Floor
-                createBCH = CreateAreaBC;
-            }
-            else if (HostElement is WallFoundation)
-            {
-                // create line BC for WallFoundation
-                createBCH = CreateLineBC;
+                    break;
+                case Floor _:
+                    // create area BC for Floor
+                    createBCH = CreateAreaBC;
+                    break;
+                case WallFoundation _:
+                    // create line BC for WallFoundation
+                    createBCH = CreateLineBC;
+                    break;
             }
 
             // begin create
@@ -139,8 +143,8 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalElement)
-                        analyticalModel = associatedElement as AnalyticalElement;
+                    if (associatedElement != null && associatedElement is AnalyticalElement analyticalElement)
+                        analyticalModel = analyticalElement;
                 }
             }
 

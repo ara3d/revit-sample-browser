@@ -15,17 +15,17 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     All the dimensions will be added to RebarShapeDefinition.
         /// </summary>
-        protected List<ConstraintOnRebarShape> m_constraints;
+        protected readonly List<ConstraintOnRebarShape> m_constraints;
 
         /// <summary>
         ///     All the parameters will be added to RebarShapeDefinition.
         /// </summary>
-        protected List<RebarShapeParameter> m_parameters;
+        protected readonly List<RebarShapeParameter> m_parameters;
 
         /// <summary>
         ///     RebarShape definition, the real object to be wrapped.
         /// </summary>
-        protected RebarShapeDefinition m_rebarshapeDefinition;
+        protected readonly RebarShapeDefinition m_rebarshapeDefinition;
 
         /// <summary>
         ///     Constructor, initialize the fields.
@@ -114,9 +114,11 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <returns>All the parameter types supported by RebarShape definition</returns>
         public List<Type> AllParameterTypes()
         {
-            var types = new List<Type>();
-            types.Add(typeof(RebarShapeParameterDouble));
-            types.Add(typeof(RebarShapeParameterFormula));
+            var types = new List<Type>
+            {
+                typeof(RebarShapeParameterDouble),
+                typeof(RebarShapeParameterFormula)
+            };
             return types;
         }
 

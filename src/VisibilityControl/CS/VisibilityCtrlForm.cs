@@ -21,7 +21,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
         public VisibilityCtrlForm(VisibilityCtrl visibilityCtrl)
         {
             if (null == visibilityCtrl)
-                throw new ArgumentNullException("visibilityCtrl");
+                throw new ArgumentNullException(nameof(visibilityCtrl));
             m_visibilityCtrl = visibilityCtrl;
 
             InitializeComponent();
@@ -39,8 +39,10 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
             foreach (string name in m_visibilityCtrl.AllCategories.Keys)
             {
                 var check = m_visibilityCtrl.AllCategories[name].ToString().Equals("True") ? true : false;
-                var item = new ListViewItem(name);
-                item.Checked = check;
+                var item = new ListViewItem(name)
+                {
+                    Checked = check
+                };
                 allCategoriesListView.Items.Add(item);
             }
 

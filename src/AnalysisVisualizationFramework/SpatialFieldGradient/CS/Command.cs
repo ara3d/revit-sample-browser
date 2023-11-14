@@ -36,11 +36,9 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
             var trans = new Transaction(doc, "Revit.SDK.Samples.AnalysisVisualizationFramework");
             trans.Start();
 
-            var sfm = SpatialFieldManager.GetSpatialFieldManager(doc.ActiveView);
-            if (sfm == null) sfm = SpatialFieldManager.CreateSpatialFieldManager(doc.ActiveView, 1);
+            var sfm = SpatialFieldManager.GetSpatialFieldManager(doc.ActiveView) ?? SpatialFieldManager.CreateSpatialFieldManager(doc.ActiveView, 1);
 
-            IList<Reference> refList = new List<Reference>();
-            refList = uiDoc.Selection.PickObjects(ObjectType.Face);
+            var refList = uiDoc.Selection.PickObjects(ObjectType.Face);
             foreach (var reference in refList)
             {
                 IList<UV> uvPts = new List<UV>();

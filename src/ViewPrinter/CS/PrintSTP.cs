@@ -235,7 +235,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             get
             {
                 var setting = m_printMgr.PrintSetup.CurrentPrintSetting;
-                return setting is PrintSetting ? (setting as PrintSetting).Name : ConstData.InSessionName;
+                return setting is PrintSetting printSetting ? printSetting.Name : ConstData.InSessionName;
             }
             set
             {

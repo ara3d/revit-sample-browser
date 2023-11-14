@@ -101,8 +101,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
             }
             finally
             {
-                if (stringWriter != null)
-                    stringWriter.Close();
+                stringWriter?.Close();
             }
 
             // Show the created file, but only if in interactive mode.

@@ -86,17 +86,16 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         {
             using (var stairsMode = new StairsEditScope(rvtDoc, GetType().Name))
             {
-                var winderOldRun = rvtDoc.GetElement(winderRunId) as StairsRun;
-                var stairsId = ElementId.InvalidElementId;
+                ElementId stairsId;
                 // Non-existed stairs, create a new one.
-                if (winderOldRun == null)
+                if (!(rvtDoc.GetElement(winderRunId) is StairsRun winderOldRun))
                 {
                     // Find two levels to create a stairs between them
                     var filterLevels = new FilteredElementCollector(rvtDoc);
                     var levels = filterLevels.OfClass(typeof(Level)).ToElements();
                     var levelList = new List<Element>();
                     levelList.AddRange(levels);
-                    levelList.Sort((a, b) => { return ((Level)a).Elevation.CompareTo(((Level)b).Elevation); });
+                    levelList.Sort((a, b) => ((Level)a).Elevation.CompareTo(((Level)b).Elevation));
                     // Start the stairs edit mode
                     stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);
                 }

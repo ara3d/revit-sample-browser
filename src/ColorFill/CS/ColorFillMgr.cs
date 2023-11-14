@@ -189,7 +189,7 @@ namespace Revit.SDK.Samples.ColorFill.CS
                     entry.SetDoubleValue(doubleValue);
                     break;
                 case StorageType.String:
-                    var strValue = string.Format("New entry {0}", entries.Count);
+                    var strValue = $"New entry {entries.Count}";
                     entry.SetStringValue(strValue);
                     break;
                 case StorageType.Integer:

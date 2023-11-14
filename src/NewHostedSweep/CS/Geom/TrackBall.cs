@@ -154,10 +154,16 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             // avoid any zero axis conditions
             if (currentPosition == m_previousPosition2D) return;
 
-            // Prefer tracking to zooming if both buttons are pressed.
-            if (e.Button == MouseButtons.Left)
-                Track(currentPosition);
-            else if (e.Button == MouseButtons.Right) Zoom(currentPosition);
+            switch (e.Button)
+            {
+                // Prefer tracking to zooming if both buttons are pressed.
+                case MouseButtons.Left:
+                    Track(currentPosition);
+                    break;
+                case MouseButtons.Right:
+                    Zoom(currentPosition);
+                    break;
+            }
 
             m_previousPosition2D = currentPosition;
         }

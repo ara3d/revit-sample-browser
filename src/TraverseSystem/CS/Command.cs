@@ -92,20 +92,14 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         {
             MEPSystem system = null;
 
-            if (selectedElement is MEPSystem)
+            switch (selectedElement)
             {
-                if (selectedElement is MechanicalSystem || selectedElement is PipingSystem)
-                {
-                    system = selectedElement as MEPSystem;
+                case MEPSystem element when element is MechanicalSystem || element is PipingSystem:
+                    system = element;
                     return system;
-                }
-            }
-            else // Selected element is not a system
-            {
-                var fi = selectedElement as FamilyInstance;
                 //
                 // If selected element is a family instance, iterate its connectors and get the expected system
-                if (fi != null)
+                case FamilyInstance fi:
                 {
                     var mepModel = fi.MEPModel;
                     ConnectorSet connectors = null;
@@ -119,18 +113,16 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                     }
 
                     system = ExtractSystemFromConnectors(connectors);
+                    break;
                 }
-                else
+                //
+                // If selected element is a MEPCurve (e.g. pipe or duct), 
+                // iterate its connectors and get the expected system
+                case MEPCurve mepCurve:
                 {
-                    //
-                    // If selected element is a MEPCurve (e.g. pipe or duct), 
-                    // iterate its connectors and get the expected system
-                    var mepCurve = selectedElement as MEPCurve;
-                    if (mepCurve != null)
-                    {
-                        var connectors = mepCurve.ConnectorManager.Connectors;
-                        system = ExtractSystemFromConnectors(connectors);
-                    }
+                    var connectors = mepCurve.ConnectorManager.Connectors;
+                    system = ExtractSystemFromConnectors(connectors);
+                    break;
                 }
             }
 
@@ -153,17 +145,18 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             foreach (Connector connector in connectors)
             {
                 var tmpSystem = connector.MEPSystem;
-                if (tmpSystem == null) continue;
-
-                var ms = tmpSystem as MechanicalSystem;
-                if (ms != null)
+                switch (tmpSystem)
                 {
-                    if (ms.IsWellConnected) systems.Add(tmpSystem);
-                }
-                else
-                {
-                    var ps = tmpSystem as PipingSystem;
-                    if (ps != null && ps.IsWellConnected) systems.Add(tmpSystem);
+                    case null:
+                        continue;
+                    case MechanicalSystem ms:
+                    {
+                        if (ms.IsWellConnected) systems.Add(tmpSystem);
+                        break;
+                    }
+                    case PipingSystem ps when ps.IsWellConnected:
+                        systems.Add(tmpSystem);
+                        break;
                 }
             }
 

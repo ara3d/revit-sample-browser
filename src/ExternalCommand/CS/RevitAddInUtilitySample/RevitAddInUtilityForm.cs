@@ -40,16 +40,17 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
             //And this command will be disabled if user selected a wall. 
             var command1 = new RevitAddInCommand(
                 fileInfo.FullName, Guid.NewGuid(),
-                "Revit.SDK.Samples.ExternalCommandRegistration.CS.ExternalCommandCreateWall", "adsk");
-            command1.Description = "A simple external command which is used to create a wall.";
-            command1.Text = "@createWallText";
-            command1.AvailabilityClassName = "Revit.SDK.Samples.ExternalCommandRegistration.CS.WallSelection";
-            command1.LanguageType = LanguageType.English_USA;
-            command1.LargeImage = "@CreateWall";
-            command1.TooltipImage = "@CreateWallTooltip";
-            command1.VisibilityMode = VisibilityMode.NotVisibleWhenNoActiveDocument;
-            command1.LongDescription =
-                "This command will not be visible in Revit Structure or there is no active document.";
+                "Revit.SDK.Samples.ExternalCommandRegistration.CS.ExternalCommandCreateWall", "adsk")
+ {
+     Description = "A simple external command which is used to create a wall.",
+     Text = "@createWallText",
+     AvailabilityClassName = "Revit.SDK.Samples.ExternalCommandRegistration.CS.WallSelection",
+     LanguageType = LanguageType.English_USA,
+     LargeImage = "@CreateWall",
+     TooltipImage = "@CreateWallTooltip",
+     VisibilityMode = VisibilityMode.NotVisibleWhenNoActiveDocument,
+     LongDescription = "This command will not be visible in Revit Structure or there is no active document."
+ };
             command1.LongDescription += " And this command will be disabled if user selected a wall. ";
 
             //create an external command to show a message box
@@ -57,15 +58,16 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
             //And this command will be disabled if the active view is not a 3D view. ";
             var command2 = new RevitAddInCommand(
                 fileInfo.FullName, Guid.NewGuid(),
-                "Revit.SDK.Samples.ExternalCommandRegistration.CS.ExternalCommand3DView", "adsk");
-            command2.Description = "A simple external command which show a message box.";
-            command2.Text = "@view3DText";
-            command2.AvailabilityClassName = "Revit.SDK.Samples.ExternalCommandRegistration.CS.View3D";
-            command2.LargeImage = "@View3D";
-            command2.LanguageType = LanguageType.English_USA;
-            command2.VisibilityMode = VisibilityMode.NotVisibleInFamily | VisibilityMode.NotVisibleWhenNoActiveDocument;
-            command2.LongDescription =
-                "This command will not be visible in Revit MEP, Family Document or no active document.";
+                "Revit.SDK.Samples.ExternalCommandRegistration.CS.ExternalCommand3DView", "adsk")
+            {
+                Description = "A simple external command which show a message box.",
+                Text = "@view3DText",
+                AvailabilityClassName = "Revit.SDK.Samples.ExternalCommandRegistration.CS.View3D",
+                LargeImage = "@View3D",
+                LanguageType = LanguageType.English_USA,
+                VisibilityMode = VisibilityMode.NotVisibleInFamily | VisibilityMode.NotVisibleWhenNoActiveDocument,
+                LongDescription = "This command will not be visible in Revit MEP, Family Document or no active document."
+            };
             command2.LongDescription += " And this command will be disabled if the active view is not a 3D view. ";
 
             //add both applications and commands into addin manifest

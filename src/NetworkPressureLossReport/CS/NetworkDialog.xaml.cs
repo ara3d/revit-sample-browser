@@ -50,7 +50,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
                 foreach (var item in NetworkList.SelectedItems)
                 {
                     var net = item as NetworkInfo;
-                    if (net != null) net.UpdateView(viewer);
+                    net?.UpdateView(viewer);
                 }
 
                 viewer.FinishDisplayStyle();

@@ -48,8 +48,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                if (null != newTran)
-                    newTran.RollBack();
+                newTran?.RollBack();
                 message = ex.ToString();
                 return Result.Failed;
             }

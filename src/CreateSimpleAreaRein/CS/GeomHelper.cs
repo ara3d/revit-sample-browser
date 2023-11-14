@@ -33,9 +33,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         public bool GetWallGeom(Wall wall, ref Reference refer, ref IList<Curve> curves)
         {
             var faces = GeomUtil.GetFaces(wall);
-            var locCurve = wall.Location as LocationCurve;
             //unless API has bug, locCurve can't be null
-            if (null == locCurve) return false;
+            if (!(wall.Location is LocationCurve locCurve)) return false;
             //check the location is line
             var locLine = locCurve.Curve as Line;
             if (null == locLine) return false;
@@ -61,8 +60,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel)
-                        model = associatedElement as AnalyticalPanel;
+                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                        model = panel;
                 }
             }
 
@@ -70,9 +69,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 
             curves = model.GetOuterContour().ToList();
 
-            if (!GeomUtil.IsRectangular(curves)) return false;
-
-            return true;
+            return GeomUtil.IsRectangular(curves);
         }
 
         /// <summary>
@@ -108,17 +105,15 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel)
-                        model = associatedElement as AnalyticalPanel;
+                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                        model = panel;
                 }
             }
 
             if (null == model) return false;
             curves = model.GetOuterContour().ToList();
 
-            if (!GeomUtil.IsRectangular(curves)) return false;
-
-            return true;
+            return GeomUtil.IsRectangular(curves);
         }
     }
 }

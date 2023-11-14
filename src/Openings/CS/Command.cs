@@ -34,10 +34,9 @@ namespace Revit.SDK.Samples.Openings.CS
                 while (iter.MoveNext())
                 {
                     object obj = iter.Current;
-                    if (obj is Opening)
+                    if (obj is Opening opening)
                     {
                         haveOpening = true;
-                        var opening = obj as Opening;
                         var openingInfo = new OpeningInfo(opening, commandData.Application);
                         openingInfos.Add(openingInfo);
                     }

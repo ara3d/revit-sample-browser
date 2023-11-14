@@ -54,25 +54,28 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             panel.AddSeparator();
 
             var pushButtonRegisterPageData = new PushButtonData(Globals.RegisterPage, Globals.RegisterPage,
-                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandRegisterPage).FullName);
-            pushButtonRegisterPageData.LargeImage =
-                new BitmapImage(new Uri(FileUtility.GetApplicationResourcesPath() + "Register.png"));
+                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandRegisterPage).FullName)
+            {
+                LargeImage = new BitmapImage(new Uri(FileUtility.GetApplicationResourcesPath() + "Register.png"))
+            };
             var pushButtonRegisterPage = panel.AddItem(pushButtonRegisterPageData) as PushButton;
             pushButtonRegisterPage.AvailabilityClassName = typeof(ExternalCommandRegisterPage).FullName;
 
 
             var pushButtonShowPageData = new PushButtonData(Globals.ShowPage, Globals.ShowPage,
-                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandShowPage).FullName);
-            pushButtonShowPageData.LargeImage =
-                new BitmapImage(new Uri(FileUtility.GetApplicationResourcesPath() + "Show.png"));
+                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandShowPage).FullName)
+            {
+                LargeImage = new BitmapImage(new Uri(FileUtility.GetApplicationResourcesPath() + "Show.png"))
+            };
             var pushButtonShowPage = panel.AddItem(pushButtonShowPageData) as PushButton;
             pushButtonShowPage.AvailabilityClassName = typeof(ExternalCommandShowPage).FullName;
 
 
             var pushButtonHidePageData = new PushButtonData(Globals.HidePage, Globals.HidePage,
-                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandHidePage).FullName);
-            pushButtonHidePageData.LargeImage =
-                new BitmapImage(new Uri(FileUtility.GetApplicationResourcesPath() + "Hide.png"));
+                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandHidePage).FullName)
+            {
+                LargeImage = new BitmapImage(new Uri(FileUtility.GetApplicationResourcesPath() + "Hide.png"))
+            };
             var pushButtonHidePage = panel.AddItem(pushButtonHidePageData) as PushButton;
             pushButtonHidePage.AvailabilityClassName = typeof(ExternalCommandHidePage).FullName;
 

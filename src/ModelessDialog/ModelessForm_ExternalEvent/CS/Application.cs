@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         /// </summary>
         public void WakeFormUp()
         {
-            if (m_MyForm != null) m_MyForm.WakeUp();
+            m_MyForm?.WakeUp();
         }
     }
 }

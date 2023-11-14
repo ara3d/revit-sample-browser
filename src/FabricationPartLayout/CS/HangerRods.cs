@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+﻿// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
 using System;
 using Autodesk.Revit.Attributes;
@@ -21,9 +21,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
-                var part = doc.GetElement(refObj) as FabricationPart;
 
-                if (part == null || part.IsAHanger() == false)
+                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
@@ -63,9 +62,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
-                var part = doc.GetElement(refObj) as FabricationPart;
 
-                if (part == null || part.IsAHanger() == false)
+                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
@@ -114,9 +112,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
-                var part = doc.GetElement(refObj) as FabricationPart;
 
-                if (part == null || part.IsAHanger() == false)
+                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
@@ -165,9 +162,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
-                var part = doc.GetElement(refObj) as FabricationPart;
 
-                if (part == null || part.IsAHanger() == false)
+                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;
@@ -216,9 +212,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 var doc = uiDoc.Document;
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part hanger to start.");
-                var part = doc.GetElement(refObj) as FabricationPart;
 
-                if (part == null || part.IsAHanger() == false)
+                if (!(doc.GetElement(refObj) is FabricationPart part) || part.IsAHanger() == false)
                 {
                     message = "The selected element is not a fabrication part hanger.";
                     return Result.Failed;

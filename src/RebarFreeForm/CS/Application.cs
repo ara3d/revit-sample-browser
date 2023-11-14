@@ -32,12 +32,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
 
             //Register the RebarUpdateServer
             var service = ExternalServiceRegistry.GetService(m_server.GetServiceId());
-            if (service != null)
-            {
-                service.AddServer(m_server);
-                return Result.Succeeded;
-            }
-
+            service?.AddServer(m_server);
             return Result.Succeeded;
         }
     }

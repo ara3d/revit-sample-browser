@@ -72,23 +72,20 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
                     object o = i.Current;
 
                     // add level to list
-                    var level = o as Level;
-                    if (null != level)
+                    if (o is Level level)
                     {
                         LevelMaps.Add(new LevelMap(level));
                         goto nextLoop;
                     }
 
                     // get
-                    var f = o as Family;
-                    if (null == f) goto nextLoop;
+                    if (!(o is Family f)) goto nextLoop;
 
                     foreach (var elementId in f.GetFamilySymbolIds())
                     {
                         object symbol = m_revit.ActiveUIDocument.Document.GetElement(elementId);
                         var familyType = symbol as FamilySymbol;
-                        if (null == familyType) goto nextLoop;
-                        if (null == familyType.Category) goto nextLoop;
+                        if (familyType?.Category == null) goto nextLoop;
 
                         // add symbols of beams and braces to lists 
                         var categoryName = familyType.Category.Name;
@@ -198,11 +195,9 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
                     fsBeam.Activate();
                 var beam = m_revit.ActiveUIDocument.Document.Create.NewFamilyInstance(curve, fsBeam, level,
                     StructuralType.Beam);
-                if (null == beam) return false;
 
                 // get beam location curve
-                var beamCurve = beam.Location as LocationCurve;
-                if (null == beamCurve) return false;
+                if (!(beam?.Location is LocationCurve beamCurve)) return false;
             }
             catch (Exception ex)
             {

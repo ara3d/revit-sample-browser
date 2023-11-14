@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
         public VisibilityCtrl(UIDocument document)
         {
             if (null == document)
-                throw new ArgumentNullException("document");
+                throw new ArgumentNullException(nameof(document));
             m_document = document;
 
             // initialize the two table

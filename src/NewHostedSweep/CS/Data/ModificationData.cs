@@ -130,9 +130,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             get
             {
                 var length = GetParameter("Length");
-                if (length != null)
-                    return length.AsValueString();
-                return m_elemToModify.Length.ToString();
+                return length != null ? length.AsValueString() : m_elemToModify.Length.ToString();
             }
         }
 
@@ -170,9 +168,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             get
             {
                 var horiOff = GetParameter("Horizontal Profile Offset");
-                if (horiOff != null)
-                    return horiOff.AsValueString();
-                return m_elemToModify.HorizontalOffset.ToString();
+                return horiOff != null ? horiOff.AsValueString() : m_elemToModify.HorizontalOffset.ToString();
             }
             set
             {
@@ -227,9 +223,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             get
             {
                 var vertOff = GetParameter("Vertical Profile Offset");
-                if (vertOff != null)
-                    return vertOff.AsValueString();
-                return m_elemToModify.VerticalOffset.ToString();
+                return vertOff != null ? vertOff.AsValueString() : m_elemToModify.VerticalOffset.ToString();
             }
             set
             {
@@ -295,11 +289,18 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             try
             {
                 StartTransaction();
-                if (m_elemToModify is Fascia)
-                    (m_elemToModify as Fascia).AddSegment(edge.Reference);
-                else if (m_elemToModify is Gutter)
-                    (m_elemToModify as Gutter).AddSegment(edge.Reference);
-                else if (m_elemToModify is SlabEdge) (m_elemToModify as SlabEdge).AddSegment(edge.Reference);
+                switch (m_elemToModify)
+                {
+                    case Fascia fascia:
+                        fascia.AddSegment(edge.Reference);
+                        break;
+                    case Gutter gutter:
+                        gutter.AddSegment(edge.Reference);
+                        break;
+                    case SlabEdge slabEdge:
+                        slabEdge.AddSegment(edge.Reference);
+                        break;
+                }
                 CommitTransaction();
             }
             catch

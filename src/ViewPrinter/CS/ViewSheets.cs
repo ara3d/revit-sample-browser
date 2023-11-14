@@ -78,7 +78,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             get
             {
                 var theSet = m_viewSheetSetting.CurrentViewSheetSet;
-                return theSet is ViewSheetSet ? (theSet as ViewSheetSet).Name : ConstData.InSessionName;
+                return theSet is ViewSheetSet set ? set.Name : ConstData.InSessionName;
             }
             set
             {

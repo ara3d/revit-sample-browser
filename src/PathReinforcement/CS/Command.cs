@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 Element selectElem = null;
                 foreach (Element e in elems) selectElem = e;
 
-                if (!(selectElem is Autodesk.Revit.DB.Structure.PathReinforcement))
+                if (!(selectElem is Autodesk.Revit.DB.Structure.PathReinforcement pathRein))
                 {
                     message = "please select one PathReinforcement.";
                     return Result.Cancelled;
@@ -58,8 +58,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 itor.Reset();
                 while (itor.MoveNext())
                 {
-                    var bartype = itor.Current as RebarBarType;
-                    if (null != bartype)
+                    if (itor.Current is RebarBarType bartype)
                     {
                         var id = bartype.Id;
                         var name = bartype.Name;
@@ -68,8 +67,6 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 }
 
                 //Create a form to view the path reinforcement.
-                var pathRein = selectElem as
-                    Autodesk.Revit.DB.Structure.PathReinforcement;
                 using (var form = new PathReinforcementForm(pathRein, commandData))
                 {
                     form.ShowDialog();

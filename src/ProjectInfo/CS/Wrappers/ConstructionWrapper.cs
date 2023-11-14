@@ -39,9 +39,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// </returns>
         public int CompareTo(object obj)
         {
-            var wrapper = obj as ConstructionWrapper;
-            if (wrapper != null) return Name.CompareTo(wrapper.Name);
-            return 1;
+            return obj is ConstructionWrapper wrapper ? Name.CompareTo(wrapper.Name) : 1;
         }
 
 

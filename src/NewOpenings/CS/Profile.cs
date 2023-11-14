@@ -20,27 +20,27 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <summary>
         ///     Application creator
         /// </summary>
-        protected Application m_appCreator;
+        protected readonly Application m_appCreator;
 
         /// <summary>
         ///     command data
         /// </summary>
-        protected ExternalCommandData m_commandData;
+        protected readonly ExternalCommandData m_commandData;
 
         /// <summary>
         ///     Wall or Floor element
         /// </summary>
-        protected Element m_dataProfile;
+        protected readonly Element m_dataProfile;
 
         /// <summary>
         ///     Document creator
         /// </summary>
-        protected Document m_docCreator;
+        protected readonly Document m_docCreator;
 
         /// <summary>
         ///     geometry object [face]
         /// </summary>
-        protected List<Edge> m_face;
+        protected readonly List<Edge> m_face;
 
         /// <summary>
         ///     Constructor
@@ -166,8 +166,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="faces">edges in all faces</param>
         private List<Edge> GetNeedFace(List<List<Edge>> faces)
         {
-            if (m_dataProfile is Wall) return GetWallFace(faces);
-            return faces[0];
+            return m_dataProfile is Wall ? GetWallFace(faces) : faces[0];
         }
 
         /// <summary>

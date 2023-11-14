@@ -51,8 +51,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
             Application app,
             Document doc)
         {
-            if (Instance == null) Instance = new WallJoinControl(app, doc);
-            return Instance;
+            return Instance ?? (Instance = new WallJoinControl(app, doc));
         }
 
         /// <summary>
@@ -74,8 +73,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                         new XAttribute("name", wall.Name),
                         new XAttribute("Type", wall.WallType.Kind.ToString()));
 
-                    var locationCurve = wall.Location as LocationCurve;
-                    if (null == locationCurve)
+                    if (!(wall.Location is LocationCurve locationCurve))
                     {
                         wallNode.Add(new XElement("Error",
                             new XAttribute("Exception", "This wall has not a LocationCurve!")));

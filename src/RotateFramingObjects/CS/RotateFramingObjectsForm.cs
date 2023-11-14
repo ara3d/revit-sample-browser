@@ -48,8 +48,10 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                if (m_components != null)
-                    m_components.Dispose();
+            {
+                m_components?.Dispose();
+            }
+
             base.Dispose(disposing);
         }
 

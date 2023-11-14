@@ -65,8 +65,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
 
             var result = DotMatrix(vector1, vector2);
 
-            if (Math.Abs(result) < PRECISION) return true;
-            return false;
+            return Math.Abs(result) < PRECISION;
         }
 
         /// <summary>
@@ -115,8 +114,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         private static bool IsEqual(double d1, double d2)
         {
             var diff = Math.Abs(d1 - d2);
-            if (diff < PRECISION) return true;
-            return false;
+            return diff < PRECISION;
         }
     }
 }

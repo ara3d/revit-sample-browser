@@ -87,9 +87,8 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// <param name="element">The current element being checked</param>
         public void ExecuteElementCheck(Document document, Element element)
         {
-            if (element is FamilyInstance)
+            if (element is FamilyInstance doorCurrent)
             {
-                var doorCurrent = element as FamilyInstance;
                 if (doorCurrent.FacingFlipped)
                     m_FlippedDoors.Add(doorCurrent.Id);
             }

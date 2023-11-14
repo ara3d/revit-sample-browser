@@ -69,10 +69,12 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             treeViewLinePattern.Nodes.Add(iniNode2);
 
             var lstLinePatterns = GetAllElements<LinePatternElement>();
-            for (var i = 0; i < lstLinePatterns.Count; i++)
+            foreach (var t in lstLinePatterns)
             {
-                var node = new TreeNode(lstLinePatterns[i].Name);
-                node.Name = lstLinePatterns[i].Id.ToString();
+                var node = new TreeNode(t.Name)
+                {
+                    Name = t.Id.ToString()
+                };
                 iniNode2.Nodes.Add(node);
             }
 
@@ -83,8 +85,10 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             var lstFillPatterns = GetAllElements<FillPatternElement>();
             for (var i = 0; i < lstFillPatterns.Count; i++)
             {
-                var node = new TreeNode(lstFillPatterns[i].Name);
-                node.Name = i.ToString();
+                var node = new TreeNode(lstFillPatterns[i].Name)
+                {
+                    Name = i.ToString()
+                };
                 iniNode1.Nodes.Add(node);
             }
         }
@@ -131,15 +135,15 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
                     FillPatternHostOrientation.ToHost);
 
                 // Add grids
-                var grids = new List<FillGrid>();
-
-                //Horizontal lines.  
-                grids.Add(CreateGrid(new UV(0, 0.1), 0.5, 0, 0.55, 1.0, 0.1));
-                grids.Add(CreateGrid(new UV(0, 0.5), 0.5, 0, 0.55, 1.0, 0.1));
-
-                // Vertical lines.  
-                grids.Add(CreateGrid(new UV(0, 0.1), 0.55, Math.PI / 2, 0.5, 0.4, 0.6));
-                grids.Add(CreateGrid(new UV(1.0, 0.1), 0.55, Math.PI / 2, 0.5, 0.4, 0.6));
+                var grids = new List<FillGrid>
+                {
+                    //Horizontal lines.  
+                    CreateGrid(new UV(0, 0.1), 0.5, 0, 0.55, 1.0, 0.1),
+                    CreateGrid(new UV(0, 0.5), 0.5, 0, 0.55, 1.0, 0.1),
+                    // Vertical lines.  
+                    CreateGrid(new UV(0, 0.1), 0.55, Math.PI / 2, 0.5, 0.4, 0.6),
+                    CreateGrid(new UV(1.0, 0.1), 0.55, Math.PI / 2, 0.5, 0.4, 0.6)
+                };
 
                 fillPattern.SetFillGrids(grids);
 
@@ -191,11 +195,13 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
         private LinePatternElement CreateLinePatternElement(string patternName)
         {
             //Create list of segments which define the line pattern
-            var lstSegments = new List<LinePatternSegment>();
-            lstSegments.Add(new LinePatternSegment(LinePatternSegmentType.Dot, 0.0));
-            lstSegments.Add(new LinePatternSegment(LinePatternSegmentType.Space, 0.02));
-            lstSegments.Add(new LinePatternSegment(LinePatternSegmentType.Dash, 0.03));
-            lstSegments.Add(new LinePatternSegment(LinePatternSegmentType.Space, 0.02));
+            var lstSegments = new List<LinePatternSegment>
+            {
+                new LinePatternSegment(LinePatternSegmentType.Dot, 0.0),
+                new LinePatternSegment(LinePatternSegmentType.Space, 0.02),
+                new LinePatternSegment(LinePatternSegmentType.Dash, 0.03),
+                new LinePatternSegment(LinePatternSegmentType.Space, 0.02)
+            };
 
             var linePattern = new LinePattern(patternName);
             linePattern.SetSegments(lstSegments);
@@ -410,8 +416,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             foreach (var elemId in docUI.Selection.GetElementIds())
             {
                 var elem = doc.GetElement(elemId);
-                var grid = elem as Grid;
-                if (grid != null)
+                if (elem is Grid grid)
                 {
                     var gridTypeId = grid.GetTypeId();
                     if (!lstGridTypeIds.Contains(gridTypeId))

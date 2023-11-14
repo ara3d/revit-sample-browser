@@ -31,12 +31,14 @@ namespace Revit.SDK.Samples.ImportExport.CS
         private void Initialize()
         {
             //Image type
-            m_imageType = new List<string>();
-            m_imageType.Add("(*.bmp)");
-            m_imageType.Add("(*.jpeg)");
-            m_imageType.Add("(*.png)");
-            m_imageType.Add("(*.tga)");
-            m_imageType.Add("(*.tif)");
+            m_imageType = new List<string>
+            {
+                "(*.bmp)",
+                "(*.jpeg)",
+                "(*.png)",
+                "(*.tga)",
+                "(*.tif)"
+            };
 
             var tmp = new StringBuilder();
             tmp.Append(m_imageType[0] + "|*.bmp|");

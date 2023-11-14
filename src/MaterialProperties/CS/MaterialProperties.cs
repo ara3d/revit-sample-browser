@@ -55,8 +55,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 if (material != null) materialId = material.Id;
                 if (materialId == ElementId.InvalidElementId) return StructuralAssetClass.Generic;
                 var materialElem = (Material)m_allMaterialMap[materialId];
-                if (null == materialElem) return StructuralAssetClass.Generic;
-                return GetMaterialType(materialElem);
+                return null == materialElem ? StructuralAssetClass.Generic : GetMaterialType(materialElem);
             }
         }
 
@@ -89,16 +88,18 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
         {
             get
             {
-                var typeAL = new ArrayList();
-                typeAL.Add("Undefined");
-                typeAL.Add("Basic");
-                typeAL.Add("Generic");
-                typeAL.Add("Metal");
-                typeAL.Add("Concrete");
-                typeAL.Add("Wood");
-                typeAL.Add("Liquid");
-                typeAL.Add("Gas");
-                typeAL.Add("Plastic");
+                var typeAL = new ArrayList
+                {
+                    "Undefined",
+                    "Basic",
+                    "Generic",
+                    "Metal",
+                    "Concrete",
+                    "Wood",
+                    "Liquid",
+                    "Gas",
+                    "Plastic"
+                };
                 return typeAL;
             }
         }
@@ -143,8 +144,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             //create an empty datatable
             var parameterTable = CreateTable();
             //if failed to convert object
-            var material = o as Material;
-            if (material == null) return parameterTable;
+            if (!(o is Material material)) return parameterTable;
 
 
             //- Behavior
@@ -236,44 +236,44 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
             }
 
-            // For Steel only: 
-            if (StructuralAssetClass.Metal == substanceKind)
+            switch (substanceKind)
             {
-                //- Minimum Yield Stress
-                temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_MINIMUM_YIELD_STRESS);
-                temporaryValue = temporaryAttribute.AsValueString();
-                AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
+                // For Steel only: 
+                case StructuralAssetClass.Metal:
+                    //- Minimum Yield Stress
+                    temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_MINIMUM_YIELD_STRESS);
+                    temporaryValue = temporaryAttribute.AsValueString();
+                    AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
 
-                //- Minimum Tensile Strength
-                temporaryAttribute =
-                    material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_MINIMUM_TENSILE_STRENGTH);
-                temporaryValue = temporaryAttribute.AsValueString();
-                AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
+                    //- Minimum Tensile Strength
+                    temporaryAttribute =
+                        material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_MINIMUM_TENSILE_STRENGTH);
+                    temporaryValue = temporaryAttribute.AsValueString();
+                    AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
 
-                //- Reduction Factor
-                temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_REDUCTION_FACTOR);
-                temporaryValue = temporaryAttribute.AsValueString();
-                AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
-            }
+                    //- Reduction Factor
+                    temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_REDUCTION_FACTOR);
+                    temporaryValue = temporaryAttribute.AsValueString();
+                    AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
+                    break;
+                // For Concrete only:
+                case StructuralAssetClass.Concrete:
+                    //- Concrete Compression     
+                    temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_CONCRETE_COMPRESSION);
+                    temporaryValue = temporaryAttribute.AsValueString();
+                    AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
 
-            // For Concrete only:
-            if (StructuralAssetClass.Concrete == substanceKind)
-            {
-                //- Concrete Compression     
-                temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_CONCRETE_COMPRESSION);
-                temporaryValue = temporaryAttribute.AsValueString();
-                AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
+                    //- Lightweight
+                    temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_LIGHT_WEIGHT);
+                    temporaryValue = temporaryAttribute.AsValueString();
+                    AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
 
-                //- Lightweight
-                temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_LIGHT_WEIGHT);
-                temporaryValue = temporaryAttribute.AsValueString();
-                AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
-
-                //- Shear Strength Reduction
-                temporaryAttribute =
-                    material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_SHEAR_STRENGTH_REDUCTION);
-                temporaryValue = temporaryAttribute.AsValueString();
-                AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
+                    //- Shear Strength Reduction
+                    temporaryAttribute =
+                        material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_SHEAR_STRENGTH_REDUCTION);
+                    temporaryValue = temporaryAttribute.AsValueString();
+                    AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
+                    break;
             }
 
             return parameterTable;
@@ -376,8 +376,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             //if the selection is a beam, column or brace, find out its parameters for display
             foreach (var o in componentCollection)
             {
-                var component = o as FamilyInstance;
-                if (component == null) continue;
+                if (!(o is FamilyInstance component)) continue;
 
                 if (component.StructuralType == StructuralType.Beam
                     || component.StructuralType == StructuralType.Brace
@@ -388,8 +387,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 //selection is a beam, column or brace, find out its parameters
                 foreach (var p in component.Parameters)
                 {
-                    var attribute = p as Parameter;
-                    if (attribute == null) continue;
+                    if (!(p is Parameter attribute)) continue;
 
                     var parameterName = attribute.Definition.Name;
                     // The "Beam Material" and "Column Material" family parameters have been replaced
@@ -417,8 +415,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             var moreValue = i.MoveNext();
             while (moreValue)
             {
-                var material = i.Current as Material;
-                if (material == null)
+                if (!(i.Current is Material material))
                 {
                     moreValue = i.MoveNext();
                     continue;

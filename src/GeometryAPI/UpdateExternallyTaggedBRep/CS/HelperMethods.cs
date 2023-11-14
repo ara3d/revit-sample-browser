@@ -29,10 +29,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
                     return Result.Failed;
 
                 // Retrieve the ExternallyTaggedBRep by its ExternalId from the DirectShape and check that the returned BRep is valid.
-                var retrievedBRep =
-                    CreateBRep.CreatedDirectShape.GetExternallyTaggedGeometry(taggedBRep.ExternalId) as
-                        ExternallyTaggedBRep;
-                if (null == retrievedBRep)
+                if (!(CreateBRep.CreatedDirectShape.GetExternallyTaggedGeometry(taggedBRep.ExternalId) is ExternallyTaggedBRep retrievedBRep))
                     return Result.Failed;
 
                 // Retrieve the Face by its ExternalGeometryId from the ExternallyTaggedBRep and check that the returned face is valid.

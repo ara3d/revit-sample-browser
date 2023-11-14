@@ -62,8 +62,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 foreach (var eid in parts)
                 {
                     // get all rods and kist with rods 
-                    var part = doc.GetElement(eid) as FabricationPart;
-                    if (part != null)
+                    if (doc.GetElement(eid) is FabricationPart part)
                     {
                         var options = new Options();
                         options.DetailLevel = ViewDetailLevel.Coarse;
@@ -92,7 +91,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 }
 
                 var res = exported > 0 ? "Export was successful" : "Nothing was exported";
-                var manywritten = string.Format("{0} Parts were exported", exported);
+                var manywritten = $"{exported} Parts were exported";
 
                 var td = new TaskDialog("Export Part Mesh Geometry")
                 {
@@ -155,9 +154,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                     var p2 = mesh.Vertices[(int)tri.get_Index(1)];
                     var p3 = mesh.Vertices[(int)tri.get_Index(2)];
 
-                    var tstr = string.Format(
-                        "{0:0.000}, {1:0.000}, {2:0.000}, {3:0.000}, {4:0.000}, {5:0.000}, {6:0.000}, {7:0.000}, {8:0.000}",
-                        p1.X, p1.Y, p1.Z, p2.X, p2.Y, p2.Z, p3.X, p3.Y, p3.Z);
+                    var tstr =
+                        $"{p1.X:0.000}, {p1.Y:0.000}, {p1.Z:0.000}, {p2.X:0.000}, {p2.Y:0.000}, {p2.Z:0.000}, {p3.X:0.000}, {p3.Y:0.000}, {p3.Z:0.000}";
                     sout.WriteLine(tstr);
                 }
 

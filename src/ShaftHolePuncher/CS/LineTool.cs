@@ -32,15 +32,18 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <param name="e">mouse event args</param>
         public override void OnMouseDown(MouseEventArgs e)
         {
-            //when user click right button of mouse,
-            //finish the curve if the number of points is more than 2
-            if (MouseButtons.Right == e.Button && m_points.Count > 2) m_finished = true;
-
-            if (MouseButtons.Left == e.Button && !m_finished
-                                              && GetDistance(m_preDownPoint, e.Location) > 2)
+            switch (e.Button)
             {
-                m_preDownPoint = e.Location;
-                m_points.Add(e.Location);
+                //when user click right button of mouse,
+                //finish the curve if the number of points is more than 2
+                case MouseButtons.Right when m_points.Count > 2:
+                    m_finished = true;
+                    break;
+                case MouseButtons.Left when !m_finished 
+                                            && GetDistance(m_preDownPoint, e.Location) > 2:
+                    m_preDownPoint = e.Location;
+                    m_points.Add(e.Location);
+                    break;
             }
         }
 

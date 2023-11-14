@@ -72,13 +72,12 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <param name="arg">a vector which need to transform</param>
         public Vector LC2GC(Vector arg)
         {
-            var result = new Vector();
-            result.X =
-                arg.X * m_xAxis.X + arg.Y * m_yAxis.X + arg.Z * m_zAxis.X + m_origin.X;
-            result.Y =
-                arg.X * m_xAxis.Y + arg.Y * m_yAxis.Y + arg.Z * m_zAxis.Y + m_origin.Y;
-            result.Z =
-                arg.X * m_xAxis.Z + arg.Y * m_yAxis.Z + arg.Z * m_zAxis.Z + m_origin.Z;
+            var result = new Vector
+            {
+                X = arg.X * m_xAxis.X + arg.Y * m_yAxis.X + arg.Z * m_zAxis.X + m_origin.X,
+                Y = arg.X * m_xAxis.Y + arg.Y * m_yAxis.Y + arg.Z * m_zAxis.Y + m_origin.Y,
+                Z = arg.X * m_xAxis.Z + arg.Y * m_yAxis.Z + arg.Z * m_zAxis.Z + m_origin.Z
+            };
             return result;
         }
 

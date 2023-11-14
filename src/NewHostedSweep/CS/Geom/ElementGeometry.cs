@@ -290,11 +290,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 points[i] = new PointF((float)tmpPt.X, (float)tmpPt.Y);
             }
 
-            if (m_gdiEdge != null) m_gdiEdge.Dispose();
+            m_gdiEdge?.Dispose();
             m_gdiEdge = new GraphicsPath();
             m_gdiEdge.AddLines(points);
 
-            if (m_region != null) m_region.Dispose();
+            m_region?.Dispose();
             m_region = null;
         }
 

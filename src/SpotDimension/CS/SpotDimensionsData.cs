@@ -56,8 +56,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
             while (elementIterator.MoveNext())
             {
                 //find all the SpotDimensions and views
-                var tmpSpotDimension = elementIterator.Current as Autodesk.Revit.DB.SpotDimension;
-                if (null != tmpSpotDimension)
+                if (elementIterator.Current is Autodesk.Revit.DB.SpotDimension tmpSpotDimension)
                 {
                     m_spotDimensions.Add(tmpSpotDimension);
                     if (m_views.Contains(tmpSpotDimension.View.Name) == false) m_views.Add(tmpSpotDimension.View.Name);

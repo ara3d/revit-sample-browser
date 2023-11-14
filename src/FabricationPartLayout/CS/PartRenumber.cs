@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                     var fabParts = new List<FabricationPart>();
                     foreach (var elementId in collection)
                     {
-                        var part = doc.GetElement(elementId) as FabricationPart;
-                        if (part != null)
+                        if (doc.GetElement(elementId) is FabricationPart part)
                         {
                             part.ItemNumber = string.Empty; // wipe the item number
                             fabParts.Add(part);
@@ -52,10 +51,12 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                     }
 
                     // ignore certain fields
-                    var ignoreFields = new List<FabricationPartCompareType>();
-                    ignoreFields.Add(FabricationPartCompareType.Notes);
-                    ignoreFields.Add(FabricationPartCompareType.OrderNo);
-                    ignoreFields.Add(FabricationPartCompareType.Service);
+                    var ignoreFields = new List<FabricationPartCompareType>
+                    {
+                        FabricationPartCompareType.Notes,
+                        FabricationPartCompareType.OrderNo,
+                        FabricationPartCompareType.Service
+                    };
 
                     for (var i = 0; i < fabParts.Count; i++)
                     {

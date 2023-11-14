@@ -39,12 +39,10 @@ namespace Revit.SDK.Samples.AutoJoin.CS
             itor.Reset();
             while (itor.MoveNext())
             {
-                var gf = itor.Current as GenericForm;
-                if (null != gf && !gf.IsSolid)
+                if (itor.Current is GenericForm gf && !gf.IsSolid)
                     continue;
 
-                var ce = itor.Current as CombinableElement;
-                if (null == ce)
+                if (!(itor.Current is CombinableElement ce))
                     continue;
                 m_elements.Add(ce);
             }

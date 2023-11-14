@@ -81,10 +81,15 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
         private ForgeTypeId GetFlowTypeId()
         {
             ForgeTypeId typeId = null;
-            if (m_connType == ConnectorDomainType.Piping)
-                typeId = SpecTypeId.Flow;
-            else if (m_connType == ConnectorDomainType.Hvac)
-                typeId = SpecTypeId.AirFlow;
+            switch (m_connType)
+            {
+                case ConnectorDomainType.Piping:
+                    typeId = SpecTypeId.Flow;
+                    break;
+                case ConnectorDomainType.Hvac:
+                    typeId = SpecTypeId.AirFlow;
+                    break;
+            }
             return typeId;
         }
 
@@ -103,10 +108,15 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
         private ForgeTypeId GetSizeTypeId()
         {
             ForgeTypeId typeId = null;
-            if (m_connType == ConnectorDomainType.Piping)
-                typeId = SpecTypeId.PipeSize;
-            else if (m_connType == ConnectorDomainType.Hvac)
-                typeId = SpecTypeId.DuctSize;
+            switch (m_connType)
+            {
+                case ConnectorDomainType.Piping:
+                    typeId = SpecTypeId.PipeSize;
+                    break;
+                case ConnectorDomainType.Hvac:
+                    typeId = SpecTypeId.DuctSize;
+                    break;
+            }
             return typeId;
         }
 
@@ -125,10 +135,15 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
         private ForgeTypeId GetVelocityTypeId()
         {
             ForgeTypeId typeId = null;
-            if (m_connType == ConnectorDomainType.Piping)
-                typeId = SpecTypeId.PipingVelocity;
-            else if (m_connType == ConnectorDomainType.Hvac)
-                typeId = SpecTypeId.HvacVelocity;
+            switch (m_connType)
+            {
+                case ConnectorDomainType.Piping:
+                    typeId = SpecTypeId.PipingVelocity;
+                    break;
+                case ConnectorDomainType.Hvac:
+                    typeId = SpecTypeId.HvacVelocity;
+                    break;
+            }
             return typeId;
         }
 
@@ -147,10 +162,15 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
         private ForgeTypeId GetPressureTypeId()
         {
             ForgeTypeId typeId = null;
-            if (m_connType == ConnectorDomainType.Piping)
-                typeId = SpecTypeId.PipingPressure;
-            else if (m_connType == ConnectorDomainType.Hvac)
-                typeId = SpecTypeId.HvacPressure;
+            switch (m_connType)
+            {
+                case ConnectorDomainType.Piping:
+                    typeId = SpecTypeId.PipingPressure;
+                    break;
+                case ConnectorDomainType.Hvac:
+                    typeId = SpecTypeId.HvacPressure;
+                    break;
+            }
             return typeId;
         }
 
@@ -169,10 +189,15 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
         private ForgeTypeId GetFrictionTypeId()
         {
             ForgeTypeId typeId = null;
-            if (m_connType == ConnectorDomainType.Piping)
-                typeId = SpecTypeId.PipingFriction;
-            else if (m_connType == ConnectorDomainType.Hvac)
-                typeId = SpecTypeId.HvacFriction;
+            switch (m_connType)
+            {
+                case ConnectorDomainType.Piping:
+                    typeId = SpecTypeId.PipingFriction;
+                    break;
+                case ConnectorDomainType.Hvac:
+                    typeId = SpecTypeId.HvacFriction;
+                    break;
+            }
             return typeId;
         }
 

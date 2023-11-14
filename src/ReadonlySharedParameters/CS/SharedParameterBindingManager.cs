@@ -21,11 +21,17 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
         }
 
         public string Name { get; set; }
+
         public ForgeTypeId Type { get; set; }
+
         public bool UserModifiable { get; set; }
+
         public string Description { get; set; }
+
         public bool Instance { get; set; }
+
         public Definition Definition { get; set; }
+
         public ForgeTypeId ParameterGroup { get; set; }
 
         public ExternalDefinitionCreationOptions GetCreationOptions()

@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <returns>String parsed from input TEnum.</returns>
         public static string Parse(TEnum enumVal)
         {
-            if (!typeof(TEnum).IsEnum) return string.Empty;
-            return Enum.GetName(typeof(TEnum), enumVal);
+            return !typeof(TEnum).IsEnum ? string.Empty : Enum.GetName(typeof(TEnum), enumVal);
         }
 
         /// <summary>
@@ -40,8 +39,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <returns>String parsed from input TEnum(integer type)</returns>
         public static string Parse(int enumValInt)
         {
-            if (!typeof(TEnum).IsEnum) return string.Empty;
-            return Enum.GetName(typeof(TEnum), enumValInt);
+            return !typeof(TEnum).IsEnum ? string.Empty : Enum.GetName(typeof(TEnum), enumValInt);
         }
     }
 

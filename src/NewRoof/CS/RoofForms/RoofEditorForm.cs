@@ -51,8 +51,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             m_footPrintRoofWrapper = null;
             m_extrusionRoofWrapper = null;
 
-            if (m_roof is FootPrintRoof)
-                m_footPrintRoofWrapper = new FootPrintRoofWrapper(m_roof as FootPrintRoof);
+            if (m_roof is FootPrintRoof printRoof)
+                m_footPrintRoofWrapper = new FootPrintRoofWrapper(printRoof);
             else
                 m_extrusionRoofWrapper = new ExtrusionRoofWrapper(m_roof as ExtrusionRoof);
         }

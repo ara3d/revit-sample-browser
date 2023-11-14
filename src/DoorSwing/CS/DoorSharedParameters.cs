@@ -44,12 +44,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
             // Access an existing or create a new group in the shared parameters file
             var defGroups = defFile.Groups;
-            var defGroup = defGroups.get_Item("DoorProjectSharedParameters");
-
-            if (null == defGroup) defGroup = defGroups.Create("DoorProjectSharedParameters");
+            var defGroup = defGroups.get_Item("DoorProjectSharedParameters") ?? defGroups.Create("DoorProjectSharedParameters");
 
             // Access an existing or create a new external parameter definition belongs to a specific group.
-
             // for "BasalOpening"
             if (!AlreadyAddedSharedParameter(app.ActiveUIDocument.Document, "BasalOpening", BuiltInCategory.OST_Doors))
             {

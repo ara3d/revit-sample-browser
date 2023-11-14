@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <returns>true if two Autodesk.Revit.DB.XYZ point is equal, otherwise false</returns>
         public static bool IsEqual(XYZ first, XYZ second)
         {
-            var flag = true;
-            flag = flag && IsEqual(first.X, second.X);
+            var flag = IsEqual(first.X, second.X);
             flag = flag && IsEqual(first.Y, second.Y);
             flag = flag && IsEqual(first.Z, second.Z);
             return flag;

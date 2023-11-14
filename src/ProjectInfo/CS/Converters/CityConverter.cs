@@ -14,7 +14,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     {
         public const string UserDefined = "User Defined";
 
-        public static List<City> Cities;
+        public static readonly List<City> Cities;
 
         static CityConverter()
         {
@@ -107,14 +107,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == null) throw new ArgumentNullException("destinationType");
+            if (destinationType == null) throw new ArgumentNullException(nameof(destinationType));
             if (destinationType == typeof(string))
             {
                 if (value == null) return UserDefined;
                 var city = value as City;
-                if (city != null)
-                    return city.Name;
-                return null;
+                return city?.Name;
             }
 
             return base.ConvertTo(context, culture, value, destinationType);

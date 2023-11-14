@@ -15,7 +15,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     Parameter name string.
         /// </summary>
-        protected string m_name;
+        protected readonly string m_name;
 
         /// <summary>
         ///     Parameter id. It is the result of commit.
@@ -25,7 +25,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         ///     RebarShape definition proxy object.
         /// </summary>
-        protected RebarShapeDef m_rebarShapeDef;
+        protected readonly RebarShapeDef m_rebarShapeDef;
 
         /// <summary>
         ///     Constructor.
@@ -57,10 +57,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <returns>External definition</returns>
         protected ExternalDefinition GetOrCreateDef(DefinitionGroup group)
         {
-            var Bdef =
-                group.Definitions.get_Item(m_name) as ExternalDefinition;
-
-            if (Bdef == null)
+            if (!(group.Definitions.get_Item(m_name) is ExternalDefinition Bdef))
             {
                 var ExternalDefinitionCreationOptions =
                     new ExternalDefinitionCreationOptions(m_name, SpecTypeId.ReinforcementLength);

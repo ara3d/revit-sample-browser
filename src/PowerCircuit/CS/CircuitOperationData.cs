@@ -152,8 +152,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             foreach (var elementId in m_selection.GetElementIds())
             {
                 var element = m_revitDoc.Document.GetElement(elementId);
-                var fi = element as FamilyInstance;
-                if (null == fi)
+                if (!(element is FamilyInstance fi))
                 {
                     m_canCreateCircuit = false;
                     return;
@@ -223,10 +222,9 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             foreach (var elementId in m_selection.GetElementIds())
             {
                 var element = m_revitDoc.Document.GetElement(elementId);
-                var fi = element as FamilyInstance;
                 MEPModel mepModel;
 
-                if (fi != null && (mepModel = fi.MEPModel) != null)
+                if (element is FamilyInstance fi && (mepModel = fi.MEPModel) != null)
                 {
                     //
                     // If the element is a family instance and its MEP model is not null,
@@ -439,8 +437,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
 
             // Get the MEP model of selected element
             MEPModel mepModel = null;
-            var fi = selectedElement as FamilyInstance;
-            if (null == fi || null == (mepModel = fi.MEPModel))
+            if (!(selectedElement is FamilyInstance fi) || null == (mepModel = fi.MEPModel))
             {
                 ShowErrorMessage("SelectElectricalComponent");
                 return;
@@ -492,8 +489,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
 
             // Get the MEP model of selected element
             MEPModel mepModel = null;
-            var fi = selectedElement as FamilyInstance;
-            if (null == fi || null == (mepModel = fi.MEPModel))
+            if (!(selectedElement is FamilyInstance fi) || null == (mepModel = fi.MEPModel))
             {
                 ShowErrorMessage("SelectElectricalComponent");
                 return;
@@ -524,9 +520,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             ElectricalSystem selectedElectricalSystem)
         {
             var ess = mepModel.GetElectricalSystems();
-            if (null == ess || !ess.Contains(selectedElectricalSystem)) return false;
-
-            return true;
+            return null != ess && ess.Contains(selectedElectricalSystem);
         }
 
         /// <summary>
@@ -545,8 +539,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                 foreach (var elementId in m_selection.GetElementIds())
                 {
                     var element = m_revitDoc.Document.GetElement(elementId);
-                    var fi = element as FamilyInstance;
-                    if (fi != null) m_selectedElectricalSystem.SelectPanel(fi);
+                    if (element is FamilyInstance fi) m_selectedElectricalSystem.SelectPanel(fi);
                 }
             }
             catch (Exception)

@@ -188,12 +188,14 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             if (m_para.m_template == "DoubleHung")
             {
-                var dbhungPara = new DoubleHungWinPara(m_para.Validator.IsMetric);
-                dbhungPara.Height = Convert.ToDouble(m_height.Text);
-                dbhungPara.Width = Convert.ToDouble(m_width.Text);
-                dbhungPara.Inset = Convert.ToDouble(m_inset.Text);
-                dbhungPara.SillHeight = Convert.ToDouble(m_sillHeight.Text);
-                dbhungPara.Type = m_comboType.Text;
+                var dbhungPara = new DoubleHungWinPara(m_para.Validator.IsMetric)
+                {
+                    Height = Convert.ToDouble(m_height.Text),
+                    Width = Convert.ToDouble(m_width.Text),
+                    Inset = Convert.ToDouble(m_inset.Text),
+                    SillHeight = Convert.ToDouble(m_sillHeight.Text),
+                    Type = m_comboType.Text
+                };
                 m_para.CurrentPara = dbhungPara;
                 if (!m_para.WinParaTab.Contains(dbhungPara.Type))
                 {
@@ -282,8 +284,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             paraList.Clear();
             foreach (string key in m_para.WinParaTab.Keys)
             {
-                var para = m_para.WinParaTab[key] as DoubleHungWinPara;
-                if (null == para) continue;
+                if (!(m_para.WinParaTab[key] is DoubleHungWinPara para)) continue;
                 paraList.Add(para);
             }
 
@@ -374,8 +375,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 return false;
             }
 
-            var textbox = control as TextBox;
-            if (null == textbox) return true;
+            if (!(control is TextBox textbox)) return true;
             var value = 0.0;
             var result = m_para.Validator.IsDouble(textbox.Text, ref value);
             if (!string.IsNullOrEmpty(result))

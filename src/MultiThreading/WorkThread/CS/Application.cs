@@ -41,7 +41,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
         public Result OnShutdown(UIControlledApplication application)
         {
-            if (m_analyzer != null) m_analyzer.StopCalculation();
+            m_analyzer?.StopCalculation();
             if (m_hIdling != null) application.Idling -= m_hIdling;
             if (m_hDocChanged != null) application.ControlledApplication.DocumentChanged -= m_hDocChanged;
 

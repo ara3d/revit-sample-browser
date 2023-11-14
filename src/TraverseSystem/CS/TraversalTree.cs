@@ -117,29 +117,27 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         {
             // Write node information
             var element = GetElementById(m_Id);
-            var fi = element as FamilyInstance;
-            if (fi != null)
+            if (element is FamilyInstance fi)
             {
                 var mepModel = fi.MEPModel;
                 var type = string.Empty;
-                if (mepModel is MechanicalEquipment)
+                switch (mepModel)
                 {
-                    type = "MechanicalEquipment";
-                    writer.WriteStartElement(type);
-                }
-                else if (mepModel is MechanicalFitting)
-                {
-                    var mf = mepModel as MechanicalFitting;
-                    type = "MechanicalFitting";
-                    writer.WriteStartElement(type);
-                    writer.WriteAttributeString("Category", element.Category.Name);
-                    writer.WriteAttributeString("PartType", mf.PartType.ToString());
-                }
-                else
-                {
-                    type = "FamilyInstance";
-                    writer.WriteStartElement(type);
-                    writer.WriteAttributeString("Category", element.Category.Name);
+                    case MechanicalEquipment _:
+                        type = "MechanicalEquipment";
+                        writer.WriteStartElement(type);
+                        break;
+                    case MechanicalFitting mf:
+                        type = "MechanicalFitting";
+                        writer.WriteStartElement(type);
+                        writer.WriteAttributeString("Category", element.Category.Name);
+                        writer.WriteAttributeString("PartType", mf.PartType.ToString());
+                        break;
+                    default:
+                        type = "FamilyInstance";
+                        writer.WriteStartElement(type);
+                        writer.WriteAttributeString("Category", element.Category.Name);
+                        break;
                 }
 
                 writer.WriteAttributeString("Name", element.Name);
@@ -273,9 +271,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             ConnectorManager cm = null;
             //
             // Get the connector manager of the element
-            if (element is FamilyInstance)
+            if (element is FamilyInstance fi)
             {
-                var fi = element as FamilyInstance;
                 cm = fi.MEPModel.ConnectorManager;
             }
             else
@@ -342,8 +339,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             //
             // Get connector manager
             var element = GetElementById(elementNode.Id);
-            var fi = element as FamilyInstance;
-            if (fi != null)
+            if (element is FamilyInstance fi)
             {
                 connectors = fi.MEPModel.ConnectorManager.Connectors;
             }
@@ -381,14 +377,16 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 var connectedConnector = GetConnectedConnector(connector);
                 if (connectedConnector != null)
                 {
-                    var node = new TreeNode(m_document, connectedConnector.Owner.Id);
-                    node.InputConnector = connector;
-                    node.Parent = elementNode;
+                    var node = new TreeNode(m_document, connectedConnector.Owner.Id)
+                    {
+                        InputConnector = connector,
+                        Parent = elementNode
+                    };
                     nodes.Add(node);
                 }
             }
 
-            nodes.Sort(delegate(TreeNode t1, TreeNode t2) { return t1.Id > t2.Id ? 1 : t1.Id < t2.Id ? -1 : 0; }
+            nodes.Sort((t1, t2) => t1.Id > t2.Id ? 1 : t1.Id < t2.Id ? -1 : 0
             );
         }
 
@@ -429,9 +427,11 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// <param name="fileName">Name of the XML file</param>
         public void DumpIntoXML(string fileName)
         {
-            var settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.IndentChars = "    ";
+            var settings = new XmlWriterSettings
+            {
+                Indent = true,
+                IndentChars = "    "
+            };
             var writer = XmlWriter.Create(fileName, settings);
 
             // Write the root element

@@ -174,9 +174,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </returns>
         public bool DocMappedSheetInfo(int hashCode, ref SheetInfo sheetInfo)
         {
-            if (!DocMonitored(hashCode))
-                return false;
-            return m_docMapDict.TryGetValue(hashCode, out sheetInfo);
+            return DocMonitored(hashCode) && m_docMapDict.TryGetValue(hashCode, out sheetInfo);
         }
 
         /// <summary>
@@ -260,7 +258,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 var externalId = string.Empty;
                 if (!ValidateRevitRoom(activeDocument, room, ref roomArea, ref externalId))
                 {
-                    DumpLog(string.Format("#{0}--> Room:{1} was skipped.", stepNo, room.Number));
+                    DumpLog($"#{stepNo}--> Room:{room.Number} was skipped.");
                     continue;
                 }
 
@@ -285,14 +283,8 @@ namespace Revit.SDK.Samples.RoomSchedule
 
                     // create update SQL clause, 
                     // when filtering row to be updated, use Room.Id if "External Room ID" is null.
-                    var updateStr = string.Format(
-                        "Update [{0}$] SET [{1}] = '{2}', [{3}] = '{4}', [{5}] = '{6}', [{7}] = '{8:N3}' Where [{9}] = {10}",
-                        mappedXlsAndTable.SheetName, // mapped table name
-                        RoomsData.RoomName, room.Name,
-                        RoomsData.RoomNumber, room.Number,
-                        RoomsData.RoomComments, comments,
-                        RoomsData.RoomArea, roomArea,
-                        RoomsData.RoomID, string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId);
+                    var updateStr =
+                        $"Update [{mappedXlsAndTable.SheetName}$] SET [{RoomsData.RoomName}] = '{room.Name}', [{RoomsData.RoomNumber}] = '{room.Number}', [{RoomsData.RoomComments}] = '{comments}', [{RoomsData.RoomArea}] = '{roomArea:N3}' Where [{RoomsData.RoomID}] = {(string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId)}";
 
                     // execute the command and check the size of updated rows 
                     var afftectedRows = dbConnector.ExecuteCommnand(updateStr);
@@ -303,7 +295,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                     else
                     {
                         // count how many rows were updated
-                        DumpLog(string.Format("#{0}--> {1}", stepNo, updateStr));
+                        DumpLog($"#{stepNo}--> {updateStr}");
                         updatedRows += afftectedRows;
 
                         // if "External Room ID" is null but update successfully, which means:
@@ -323,23 +315,15 @@ namespace Revit.SDK.Samples.RoomSchedule
                         //    else, use constant string: "<Added from Revit>" for Comments column in spreadsheet.
 
                         var insertStr =
-                            string.Format(
-                                "Insert Into [{0}$] ([{1}], [{2}], [{3}], [{4}], [{5}]) Values('{6}', '{7}', '{8}', '{9}', '{10:N3}')",
-                                mappedXlsAndTable.SheetName, // mapped table name
-                                RoomsData.RoomID, RoomsData.RoomComments, RoomsData.RoomName, RoomsData.RoomNumber,
-                                RoomsData.RoomArea,
-                                string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId, // Room id
-                                bCommnetIsNull || string.IsNullOrEmpty(comments) ? "<Added from Revit>" : comments,
-                                room.Name, room.Number, roomArea);
+                            $"Insert Into [{mappedXlsAndTable.SheetName}$] ([{RoomsData.RoomID}], [{RoomsData.RoomComments}], [{RoomsData.RoomName}], [{RoomsData.RoomNumber}], [{RoomsData.RoomArea}]) Values('{(string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId)}', '{(bCommnetIsNull || string.IsNullOrEmpty(comments) ? "<Added from Revit>" : comments)}', '{room.Name}', '{room.Number}', '{roomArea:N3}')";
 
                         // try to insert it 
                         afftectedRows = dbConnector.ExecuteCommnand(insertStr);
                         if (afftectedRows != 0)
                         {
                             // remember the number of new rows
-                            var succeedMsg = string.Format(
-                                "#{0}--> Succeeded to insert spreadsheet Room - Name:{1}, Number:{2}, Area:{3:N3}",
-                                stepNo, room.Name, room.Number, roomArea);
+                            var succeedMsg =
+                                $"#{stepNo}--> Succeeded to insert spreadsheet Room - Name:{room.Name}, Number:{room.Number}, Area:{roomArea:N3}";
                             DumpLog(succeedMsg);
                             newRows += afftectedRows;
 
@@ -350,14 +334,14 @@ namespace Revit.SDK.Samples.RoomSchedule
                         }
                         else
                         {
-                            DumpLog(string.Format("#{0}--> Failed: {1}", stepNo, insertStr));
+                            DumpLog($"#{stepNo}--> Failed: {insertStr}");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     // close the connection 
-                    DumpLog(string.Format("#{0}--> Exception: {1}", stepNo, ex.Message));
+                    DumpLog($"#{stepNo}--> Exception: {ex.Message}");
                     dbConnector.Dispose();
                     RoomScheduleForm.MyMessageBox(ex.Message, MessageBoxIcon.Warning);
                     return;
@@ -368,8 +352,8 @@ namespace Revit.SDK.Samples.RoomSchedule
             dbConnector.Dispose();
 
             // output the affected result message
-            var sumMsg = string.Format("{0}:[{1}]: {2} rows were updated and {3} rows were added into successfully.",
-                Path.GetFileName(mappedXlsAndTable.FileName), mappedXlsAndTable.SheetName, updatedRows, newRows);
+            var sumMsg =
+                $"{Path.GetFileName(mappedXlsAndTable.FileName)}:[{mappedXlsAndTable.SheetName}]: {updatedRows} rows were updated and {newRows} rows were added into successfully.";
             DumpLog(sumMsg);
             DumpLog("Finish updating spreadsheet room." + Environment.NewLine);
         }

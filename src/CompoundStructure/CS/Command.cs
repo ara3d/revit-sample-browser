@@ -54,8 +54,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
 
                 foreach (Element elem in selectedElements)
                 {
-                    var wall = elem as Wall;
-                    if (wall != null)
+                    if (elem is Wall wall)
                     {
                         CreateCSforWall(wall);
                         break;
@@ -203,7 +202,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
                 where element.Name == name
                 select element;
 
-            if (MaterialElement.Count() == 0)
+            if (!MaterialElement.Any())
                 return null;
             return MaterialElement.First() as Material;
         }

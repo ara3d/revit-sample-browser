@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             if (s_oldViewId != null) oldView = doc.GetElement(s_oldViewId) as View;
             if (oldView != null) oldSfm = SpatialFieldManager.GetSpatialFieldManager(oldView);
             // If a previous SFM was being managed, delete it
-            if (oldSfm != null) oldSfm.RemoveSpatialFieldPrimitive(s_oldSpatialFieldId);
+            oldSfm?.RemoveSpatialFieldPrimitive(s_oldSpatialFieldId);
 
             // Setup container object for executing the calculation
             var container = CreateContainer(element);
@@ -93,8 +93,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             var biggestFace = GetBiggestFaceFacingUser(element, viewDirection);
 
             // Get or create SpatialFieldManager for AVF results
-            var sfm = SpatialFieldManager.GetSpatialFieldManager(activeView);
-            if (sfm == null) sfm = SpatialFieldManager.CreateSpatialFieldManager(activeView, 1);
+            var sfm = SpatialFieldManager.GetSpatialFieldManager(activeView) ?? SpatialFieldManager.CreateSpatialFieldManager(activeView, 1);
 
             // Reference the target face
             s_spatialFieldId = sfm.AddSpatialFieldPrimitive(biggestFace.Reference);
@@ -138,8 +137,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
                         }
                         else
                         {
-                            var faces = new List<Face>();
-                            faces.Add(face);
+                            var faces = new List<Face> { face };
                             faceAreas.Add(area, faces);
                         }
                     }
@@ -297,10 +295,9 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
                 // Get SpatialFieldManager
 
                 var resultSchema = new AnalysisResultSchema("Schema Name", "Description");
-                var sfm = SpatialFieldManager.GetSpatialFieldManager(uiApp.ActiveUIDocument.Document.ActiveView);
+                var sfm = SpatialFieldManager.GetSpatialFieldManager(uiApp.ActiveUIDocument.Document.ActiveView) ??
+                          SpatialFieldManager.CreateSpatialFieldManager(uiApp.ActiveUIDocument.Document.ActiveView, 1);
 
-                if (sfm == null)
-                    sfm = SpatialFieldManager.CreateSpatialFieldManager(uiApp.ActiveUIDocument.Document.ActiveView, 1);
                 var schemaIndex = sfm.RegisterResult(resultSchema);
                 // If stopping, clear results and unset event.
                 if (m_stop)
@@ -401,8 +398,8 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
         // Represents a set of results for the calculation
         public class ResultsData
         {
-            public UV UV;
-            public double Value;
+            public readonly UV UV;
+            public readonly double Value;
 
             public ResultsData(UV uv, double value)
             {

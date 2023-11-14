@@ -20,12 +20,12 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <summary>
         ///     reserve lines that form the profile
         /// </summary>
-        protected List<ObjectSketch> m_objects = new List<ObjectSketch>();
+        protected readonly List<ObjectSketch> m_objects = new List<ObjectSketch>();
 
         /// <summary>
         ///     pen to draw the object
         /// </summary>
-        protected Pen m_pen = new Pen(Color.DarkGreen);
+        protected readonly Pen m_pen = new Pen(Color.DarkGreen);
 
         /// <summary>
         ///     defines a local geometric transform

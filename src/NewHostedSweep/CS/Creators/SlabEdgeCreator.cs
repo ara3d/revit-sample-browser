@@ -121,9 +121,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         protected override HostedSweep CreateHostedSweep(ElementType symbol, ReferenceArray refArr)
         {
             var slabEdge = m_rvtDoc.Create.NewSlabEdge(symbol as SlabEdgeType, refArr);
-            if (slabEdge != null)
-                // Avoid the Revit warning, flip the direction in horizontal direction.
-                slabEdge.HorizontalFlip();
+            slabEdge?.HorizontalFlip();
             return slabEdge;
         }
     }

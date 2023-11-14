@@ -112,9 +112,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             //i.e. convert "(GMT-12:00) International Date Line West" to 12.0
             //i.e. convert "(GMT-03:30) Newfoundland" to 3.30
             var timeZoneDouble = value.Substring(4, value.IndexOf(')') - 4).Replace(':', '.').Trim();
-            if (string.IsNullOrEmpty(timeZoneDouble))
-                return 0d;
-            return double.Parse(timeZoneDouble);
+            return string.IsNullOrEmpty(timeZoneDouble) ? 0d : double.Parse(timeZoneDouble);
         }
 
         /// <summary>

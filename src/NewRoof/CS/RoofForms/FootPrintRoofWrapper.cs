@@ -191,7 +191,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         ///     Get/Set the current footprint roof line which will be edited in the PropertyGrid.
         /// </summary>
-        [TypeConverterAttribute(typeof(FootPrintRoofLineConverter))]
+        [TypeConverter(typeof(FootPrintRoofLineConverter))]
         [Category("Footprint Roof Line Information")]
         public FootPrintRoofLine FootPrintLine
         {
@@ -206,7 +206,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         ///     The base level of the footprint roof.
         /// </summary>
-        [TypeConverterAttribute(typeof(LevelConverter))]
+        [TypeConverter(typeof(LevelConverter))]
         [Category("Constrains")]
         [DisplayName("Base Level")]
         public Level BaseLevel

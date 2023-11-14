@@ -79,32 +79,32 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         ///     Time Zone Array
         /// </summary>
-        public static string[] TimeZones;
+        public static readonly string[] TimeZones;
 
         /// <summary>
         ///     BuildingType and its display string map.
         /// </summary>
-        public static Dictionary<object, string> BuildingTypeMap;
+        public static readonly Dictionary<object, string> BuildingTypeMap;
 
         /// <summary>
         ///     ServiceType and its display string map.
         /// </summary>
-        public static Dictionary<object, string> ServiceTypeMap;
+        public static readonly Dictionary<object, string> ServiceTypeMap;
 
         /// <summary>
         ///     ExportComplexity and its display string map.
         /// </summary>
-        public static Dictionary<object, string> ExportComplexityMap;
+        public static readonly Dictionary<object, string> ExportComplexityMap;
 
         /// <summary>
         ///     HVACLoadLoadsReportType and its display string map.
         /// </summary>
-        public static Dictionary<object, string> HVACLoadLoadsReportTypeMap;
+        public static readonly Dictionary<object, string> HVACLoadLoadsReportTypeMap;
 
         /// <summary>
         ///     HVACLoadConstructionClass and its display string map.
         /// </summary>
-        public static Dictionary<object, string> HVACLoadConstructionClassMap;
+        public static readonly Dictionary<object, string> HVACLoadConstructionClassMap;
 
         /// <summary>
         ///     Initialize some static members
@@ -199,95 +199,104 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                 "(GMT+13:00) Nubu'alofa"
             };
 
-            BuildingTypeMap = new Dictionary<object, string>();
-            BuildingTypeMap.Add(gbXMLBuildingType.AutomotiveFacility, "Automotive Facility");
-            BuildingTypeMap.Add(gbXMLBuildingType.ConventionCenter, "Convention Center");
-            BuildingTypeMap.Add(gbXMLBuildingType.Courthouse, "Courthouse");
-            BuildingTypeMap.Add(gbXMLBuildingType.DiningBarLoungeOrLeisure, "Dining Bar Lounge or Leisure");
-            BuildingTypeMap.Add(gbXMLBuildingType.DiningCafeteriaFastFood, "Dining Cafeteria Fast Food");
-            BuildingTypeMap.Add(gbXMLBuildingType.DiningFamily, "Dining Family");
-            BuildingTypeMap.Add(gbXMLBuildingType.Dormitory, "Dormitory");
-            BuildingTypeMap.Add(gbXMLBuildingType.ExerciseCenter, "Exercise Center");
-            BuildingTypeMap.Add(gbXMLBuildingType.FireStation, "Fire Station");
-            BuildingTypeMap.Add(gbXMLBuildingType.Gymnasium, "Gymnasium");
-            BuildingTypeMap.Add(gbXMLBuildingType.HospitalOrHealthcare, "Hospital or Healthcare");
-            BuildingTypeMap.Add(gbXMLBuildingType.Hotel, "Hotel");
-            BuildingTypeMap.Add(gbXMLBuildingType.Library, "Library");
-            BuildingTypeMap.Add(gbXMLBuildingType.Manufacturing, "Manufacturing");
-            BuildingTypeMap.Add(gbXMLBuildingType.Motel, "Motel");
-            BuildingTypeMap.Add(gbXMLBuildingType.MotionPictureTheatre, "Motion Picture Theatre");
-            BuildingTypeMap.Add(gbXMLBuildingType.MultiFamily, "Multi Family");
-            BuildingTypeMap.Add(gbXMLBuildingType.Museum, "Museum");
-            BuildingTypeMap.Add(gbXMLBuildingType.NoOfBuildingTypes, "None");
-            BuildingTypeMap.Add(gbXMLBuildingType.Office, "Office");
-            BuildingTypeMap.Add(gbXMLBuildingType.ParkingGarage, "Parking Garage");
-            BuildingTypeMap.Add(gbXMLBuildingType.Penitentiary, "Penitentiary");
-            BuildingTypeMap.Add(gbXMLBuildingType.PerformingArtsTheater, "Performing Arts Theater");
-            BuildingTypeMap.Add(gbXMLBuildingType.PoliceStation, "Police Station");
-            BuildingTypeMap.Add(gbXMLBuildingType.PostOffice, "Post Office");
-            BuildingTypeMap.Add(gbXMLBuildingType.ReligiousBuilding, "Religious Building");
-            BuildingTypeMap.Add(gbXMLBuildingType.Retail, "Retail");
-            BuildingTypeMap.Add(gbXMLBuildingType.SchoolOrUniversity, "School or University");
-            BuildingTypeMap.Add(gbXMLBuildingType.SingleFamily, "Single Family");
-            BuildingTypeMap.Add(gbXMLBuildingType.SportsArena, "Sports Arena");
-            BuildingTypeMap.Add(gbXMLBuildingType.TownHall, "Town Hall");
-            BuildingTypeMap.Add(gbXMLBuildingType.Transportation, "Transportation");
-            BuildingTypeMap.Add(gbXMLBuildingType.Warehouse, "Warehouse");
-            BuildingTypeMap.Add(gbXMLBuildingType.Workshop, "Workshop");
+            BuildingTypeMap = new Dictionary<object, string>
+            {
+                { gbXMLBuildingType.AutomotiveFacility, "Automotive Facility" },
+                { gbXMLBuildingType.ConventionCenter, "Convention Center" },
+                { gbXMLBuildingType.Courthouse, "Courthouse" },
+                { gbXMLBuildingType.DiningBarLoungeOrLeisure, "Dining Bar Lounge or Leisure" },
+                { gbXMLBuildingType.DiningCafeteriaFastFood, "Dining Cafeteria Fast Food" },
+                { gbXMLBuildingType.DiningFamily, "Dining Family" },
+                { gbXMLBuildingType.Dormitory, "Dormitory" },
+                { gbXMLBuildingType.ExerciseCenter, "Exercise Center" },
+                { gbXMLBuildingType.FireStation, "Fire Station" },
+                { gbXMLBuildingType.Gymnasium, "Gymnasium" },
+                { gbXMLBuildingType.HospitalOrHealthcare, "Hospital or Healthcare" },
+                { gbXMLBuildingType.Hotel, "Hotel" },
+                { gbXMLBuildingType.Library, "Library" },
+                { gbXMLBuildingType.Manufacturing, "Manufacturing" },
+                { gbXMLBuildingType.Motel, "Motel" },
+                { gbXMLBuildingType.MotionPictureTheatre, "Motion Picture Theatre" },
+                { gbXMLBuildingType.MultiFamily, "Multi Family" },
+                { gbXMLBuildingType.Museum, "Museum" },
+                { gbXMLBuildingType.NoOfBuildingTypes, "None" },
+                { gbXMLBuildingType.Office, "Office" },
+                { gbXMLBuildingType.ParkingGarage, "Parking Garage" },
+                { gbXMLBuildingType.Penitentiary, "Penitentiary" },
+                { gbXMLBuildingType.PerformingArtsTheater, "Performing Arts Theater" },
+                { gbXMLBuildingType.PoliceStation, "Police Station" },
+                { gbXMLBuildingType.PostOffice, "Post Office" },
+                { gbXMLBuildingType.ReligiousBuilding, "Religious Building" },
+                { gbXMLBuildingType.Retail, "Retail" },
+                { gbXMLBuildingType.SchoolOrUniversity, "School or University" },
+                { gbXMLBuildingType.SingleFamily, "Single Family" },
+                { gbXMLBuildingType.SportsArena, "Sports Arena" },
+                { gbXMLBuildingType.TownHall, "Town Hall" },
+                { gbXMLBuildingType.Transportation, "Transportation" },
+                { gbXMLBuildingType.Warehouse, "Warehouse" },
+                { gbXMLBuildingType.Workshop, "Workshop" }
+            };
 
-            ServiceTypeMap = new Dictionary<object, string>();
-            ServiceTypeMap.Add(gbXMLServiceType.ActiveChilledBeams, "Active Chilled Beams");
-            ServiceTypeMap.Add(gbXMLServiceType.CentralHeatingConvectors, "Central Heating: Convectors");
-            ServiceTypeMap.Add(gbXMLServiceType.CentralHeatingHotAir, "Central Heating: Hot Air");
-            ServiceTypeMap.Add(gbXMLServiceType.CentralHeatingRadiantFloor, "Central Heating: Radiant Floor");
-            ServiceTypeMap.Add(gbXMLServiceType.CentralHeatingRadiators, "Central Heating: Radiators");
-            ServiceTypeMap.Add(gbXMLServiceType.ConstantVolumeDualDuct, "Constant Volume - Dual Duct");
-            ServiceTypeMap.Add(gbXMLServiceType.ConstantVolumeFixedOA, "Constant Volume - Fixed OA");
-            ServiceTypeMap.Add(gbXMLServiceType.ConstantVolumeTerminalReheat, "Constant Volume - Terminal Reheat");
-            ServiceTypeMap.Add(gbXMLServiceType.ConstantVolumeVariableOA, "Constant Volume - Variable OA");
-            ServiceTypeMap.Add(gbXMLServiceType.FanCoilSystem, "Fan Coil System");
-            ServiceTypeMap.Add(gbXMLServiceType.ForcedConvectionHeaterFlue, "Forced Convection Heater - Flue");
-            ServiceTypeMap.Add(gbXMLServiceType.ForcedConvectionHeaterNoFlue, "Forced Convection Heater - No Flue");
-            ServiceTypeMap.Add(gbXMLServiceType.InductionSystem, "Induction System");
-            ServiceTypeMap.Add(gbXMLServiceType.MultizoneHotDeckColdDeck, "Multi-zone - Hot Deck / Cold Deck");
-            ServiceTypeMap.Add(gbXMLServiceType.NoServiceType, "None");
-            ServiceTypeMap.Add(gbXMLServiceType.OtherRoomHeater, "Other Room Heater");
-            ServiceTypeMap.Add(gbXMLServiceType.RadiantCooledCeilings, "Radiant Cooled Ceilings");
-            ServiceTypeMap.Add(gbXMLServiceType.RadiantHeaterFlue, "Radiant Heater - Flue");
-            ServiceTypeMap.Add(gbXMLServiceType.RadiantHeaterMultiburner, "Radiant Heater - Multi-burner");
-            ServiceTypeMap.Add(gbXMLServiceType.RadiantHeaterNoFlue, "Radiant Heater - No Flue");
-            ServiceTypeMap.Add(gbXMLServiceType.SplitSystemsWithMechanicalVentilation,
-                "Split System(s) with Mechanical Ventilation");
-            ServiceTypeMap.Add(gbXMLServiceType.SplitSystemsWithMechanicalVentilationWithCooling,
-                "Split System(s) with Mechanical Ventilation with Cooling");
-            ServiceTypeMap.Add(gbXMLServiceType.SplitSystemsWithNaturalVentilation,
-                "Split System(s) with Natural Ventilation");
-            ServiceTypeMap.Add(gbXMLServiceType.VariableRefrigerantFlow, "Variable Refrigerant Flow");
-            ServiceTypeMap.Add(gbXMLServiceType.VAVDualDuct, "VAV - Dual Duct");
-            ServiceTypeMap.Add(gbXMLServiceType.VAVIndoorPackagedCabinet, "VAV - Indoor Packaged Cabinet");
-            ServiceTypeMap.Add(gbXMLServiceType.VAVSingleDuct, "VAV - Single Duct");
-            ServiceTypeMap.Add(gbXMLServiceType.VAVTerminalReheat, "VAV - Terminal Reheat");
-            ServiceTypeMap.Add(gbXMLServiceType.WaterLoopHeatPump, "Water Loop Heat Pump");
+            ServiceTypeMap = new Dictionary<object, string>
+            {
+                { gbXMLServiceType.ActiveChilledBeams, "Active Chilled Beams" },
+                { gbXMLServiceType.CentralHeatingConvectors, "Central Heating: Convectors" },
+                { gbXMLServiceType.CentralHeatingHotAir, "Central Heating: Hot Air" },
+                { gbXMLServiceType.CentralHeatingRadiantFloor, "Central Heating: Radiant Floor" },
+                { gbXMLServiceType.CentralHeatingRadiators, "Central Heating: Radiators" },
+                { gbXMLServiceType.ConstantVolumeDualDuct, "Constant Volume - Dual Duct" },
+                { gbXMLServiceType.ConstantVolumeFixedOA, "Constant Volume - Fixed OA" },
+                { gbXMLServiceType.ConstantVolumeTerminalReheat, "Constant Volume - Terminal Reheat" },
+                { gbXMLServiceType.ConstantVolumeVariableOA, "Constant Volume - Variable OA" },
+                { gbXMLServiceType.FanCoilSystem, "Fan Coil System" },
+                { gbXMLServiceType.ForcedConvectionHeaterFlue, "Forced Convection Heater - Flue" },
+                { gbXMLServiceType.ForcedConvectionHeaterNoFlue, "Forced Convection Heater - No Flue" },
+                { gbXMLServiceType.InductionSystem, "Induction System" },
+                { gbXMLServiceType.MultizoneHotDeckColdDeck, "Multi-zone - Hot Deck / Cold Deck" },
+                { gbXMLServiceType.NoServiceType, "None" },
+                { gbXMLServiceType.OtherRoomHeater, "Other Room Heater" },
+                { gbXMLServiceType.RadiantCooledCeilings, "Radiant Cooled Ceilings" },
+                { gbXMLServiceType.RadiantHeaterFlue, "Radiant Heater - Flue" },
+                { gbXMLServiceType.RadiantHeaterMultiburner, "Radiant Heater - Multi-burner" },
+                { gbXMLServiceType.RadiantHeaterNoFlue, "Radiant Heater - No Flue" },
+                { gbXMLServiceType.SplitSystemsWithMechanicalVentilation, "Split System(s) with Mechanical Ventilation" },
+                { gbXMLServiceType.SplitSystemsWithMechanicalVentilationWithCooling, "Split System(s) with Mechanical Ventilation with Cooling" },
+                { gbXMLServiceType.SplitSystemsWithNaturalVentilation, "Split System(s) with Natural Ventilation" },
+                { gbXMLServiceType.VariableRefrigerantFlow, "Variable Refrigerant Flow" },
+                { gbXMLServiceType.VAVDualDuct, "VAV - Dual Duct" },
+                { gbXMLServiceType.VAVIndoorPackagedCabinet, "VAV - Indoor Packaged Cabinet" },
+                { gbXMLServiceType.VAVSingleDuct, "VAV - Single Duct" },
+                { gbXMLServiceType.VAVTerminalReheat, "VAV - Terminal Reheat" },
+                { gbXMLServiceType.WaterLoopHeatPump, "Water Loop Heat Pump" }
+            };
 
-            ExportComplexityMap = new Dictionary<object, string>();
-            ExportComplexityMap.Add(gbXMLExportComplexity.Complex, "Complex");
-            ExportComplexityMap.Add(gbXMLExportComplexity.ComplexWithMullionsAndShadingSurfaces,
-                "Complex With Mullions And Shading Surfaces");
-            ExportComplexityMap.Add(gbXMLExportComplexity.ComplexWithShadingSurfaces, "Complex With Shading Surfaces");
-            ExportComplexityMap.Add(gbXMLExportComplexity.Simple, "Simple");
-            ExportComplexityMap.Add(gbXMLExportComplexity.SimpleWithShadingSurfaces, "Simple With Shading Surfaces");
+            ExportComplexityMap = new Dictionary<object, string>
+            {
+                { gbXMLExportComplexity.Complex, "Complex" },
+                {
+                    gbXMLExportComplexity.ComplexWithMullionsAndShadingSurfaces,
+                    "Complex With Mullions And Shading Surfaces"
+                },
+                { gbXMLExportComplexity.ComplexWithShadingSurfaces, "Complex With Shading Surfaces" },
+                { gbXMLExportComplexity.Simple, "Simple" },
+                { gbXMLExportComplexity.SimpleWithShadingSurfaces, "Simple With Shading Surfaces" }
+            };
 
-            HVACLoadLoadsReportTypeMap = new Dictionary<object, string>();
-            HVACLoadLoadsReportTypeMap.Add(HVACLoadLoadsReportType.DetailedReport, "Detailed");
-            HVACLoadLoadsReportTypeMap.Add(HVACLoadLoadsReportType.NoReport, "No");
-            HVACLoadLoadsReportTypeMap.Add(HVACLoadLoadsReportType.SimpleReport, "Simple");
-            HVACLoadLoadsReportTypeMap.Add(HVACLoadLoadsReportType.StandardReport, "Standard");
+            HVACLoadLoadsReportTypeMap = new Dictionary<object, string>
+            {
+                { HVACLoadLoadsReportType.DetailedReport, "Detailed" },
+                { HVACLoadLoadsReportType.NoReport, "No" },
+                { HVACLoadLoadsReportType.SimpleReport, "Simple" },
+                { HVACLoadLoadsReportType.StandardReport, "Standard" }
+            };
 
-            HVACLoadConstructionClassMap = new Dictionary<object, string>();
-            HVACLoadConstructionClassMap.Add(HVACLoadConstructionClass.LooseConstruction, "Loose");
-            HVACLoadConstructionClassMap.Add(HVACLoadConstructionClass.NoneConstruction, "None");
-            HVACLoadConstructionClassMap.Add(HVACLoadConstructionClass.MediumConstruction, "Medium");
-            HVACLoadConstructionClassMap.Add(HVACLoadConstructionClass.TightConstruction, "Tight");
+            HVACLoadConstructionClassMap = new Dictionary<object, string>
+            {
+                { HVACLoadConstructionClass.LooseConstruction, "Loose" },
+                { HVACLoadConstructionClass.NoneConstruction, "None" },
+                { HVACLoadConstructionClass.MediumConstruction, "Medium" },
+                { HVACLoadConstructionClass.TightConstruction, "Tight" }
+            };
         }
 
         public static Element GetElement(ElementId elementId)

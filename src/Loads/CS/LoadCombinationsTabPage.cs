@@ -288,8 +288,8 @@ namespace Revit.SDK.Samples.Loads.CS
                 var newName = e.FormattedValue as string;
                 var oldName = usageDataGridView.CurrentCell.FormattedValue as string;
                 if (newName != oldName)
-                    for (var i = 0; i < m_dataBuffer.UsageMap.Count; i++)
-                        if (m_dataBuffer.UsageMap[i].Name == newName)
+                    foreach (var usageMap in m_dataBuffer.UsageMap)
+                        if (usageMap.Name == newName)
                             e.Cancel = true;
             }
         }

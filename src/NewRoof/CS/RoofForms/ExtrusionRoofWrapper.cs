@@ -83,7 +83,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         ///     The reference level of the extrusion roof.
         /// </summary>
-        [TypeConverterAttribute(typeof(LevelConverter))]
+        [TypeConverter(typeof(LevelConverter))]
         [Category("Constrains")]
         [DisplayName("Reference Level")]
         [Description("The reference level of the extrusion roof.")]

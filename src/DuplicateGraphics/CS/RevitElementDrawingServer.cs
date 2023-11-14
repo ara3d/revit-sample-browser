@@ -183,9 +183,8 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
             var allSolids = new List<Solid>();
 
             foreach (var geomObj in geomElem)
-                if (geomObj is Solid)
+                if (geomObj is Solid solid)
                 {
-                    var solid = (Solid)geomObj;
                     if (solid.Volume > 1e-06)
                         allSolids.Add(solid);
                 }
@@ -362,8 +361,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
             bufferStorage.FormatBits = VertexFormatBits.Position;
 
             var edgeVertexBufferSizeInFloats = VertexPosition.GetSizeInFloats() * bufferStorage.VertexBufferCount;
-            var numVerticesInEdgesBefore = new List<int>();
-            numVerticesInEdgesBefore.Add(0);
+            var numVerticesInEdgesBefore = new List<int> { 0 };
 
             bufferStorage.VertexBuffer = new VertexBuffer(edgeVertexBufferSizeInFloats);
             bufferStorage.VertexBuffer.Map(edgeVertexBufferSizeInFloats);
@@ -435,14 +433,21 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
             public VertexFormatBits FormatBits { get; set; }
 
             public List<MeshInfo> Meshes { get; }
+
             public List<IList<XYZ>> EdgeXYZs { get; }
 
             public int PrimitiveCount { get; set; }
+
             public int VertexBufferCount { get; set; }
+
             public int IndexBufferCount { get; set; }
+
             public VertexBuffer VertexBuffer { get; set; }
+
             public IndexBuffer IndexBuffer { get; set; }
+
             public VertexFormat VertexFormat { get; set; }
+
             public EffectInstance EffectInstance { get; set; }
 
             public bool needsUpdate(DisplayStyle newDisplayStyle)

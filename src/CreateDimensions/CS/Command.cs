@@ -27,18 +27,14 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
             {
                 m_revit = revit;
                 var view = m_revit.Application.ActiveUIDocument.Document.ActiveView;
-                var view3D = view as View3D;
-                if (null != view3D)
+                switch (view)
                 {
-                    message += "Only create dimensions in 2D";
-                    return Result.Failed;
-                }
-
-                var viewSheet = view as ViewSheet;
-                if (null != viewSheet)
-                {
-                    message += "Only create dimensions in 2D";
-                    return Result.Failed;
+                    case View3D view3D:
+                        message += "Only create dimensions in 2D";
+                        return Result.Failed;
+                    case ViewSheet viewSheet:
+                        message += "Only create dimensions in 2D";
+                        return Result.Failed;
                 }
 
                 //try too adds a dimension from the start of the wall to the end of the wall into the project
@@ -75,8 +71,7 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
             //find out wall
             foreach (Element e in selections)
             {
-                var wall = e as Wall;
-                if (null != wall)
+                if (e is Wall wall)
                 {
                     if ("Basic" != wall.WallType.Kind.ToString()) continue;
                     m_walls.Add(wall);
@@ -104,15 +99,13 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
             var transaction = new Transaction(m_revit.Application.ActiveUIDocument.Document, "Add Dimensions");
             transaction.Start();
             //get out all the walls in this array, and create a dimension from its start to its end
-            for (var i = 0; i < m_walls.Count; i++)
+            foreach (var wall in m_walls)
             {
-                var wallTemp = m_walls[i] as Wall;
-                if (null == wallTemp) continue;
+                if (!(wall is Wall wallTemp)) continue;
 
                 //get location curve
                 var location = wallTemp.Location;
-                var locationline = location as LocationCurve;
-                if (null == locationline) continue;
+                if (!(location is LocationCurve locationline)) continue;
 
                 //New Line
 
@@ -131,8 +124,8 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
                     if (associatedElementId != ElementId.InvalidElementId)
                     {
                         var associatedElement = document.GetElement(associatedElementId);
-                        if (associatedElement != null && associatedElement is AnalyticalPanel)
-                            analyticalModel = associatedElement as AnalyticalPanel;
+                        if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                            analyticalModel = panel;
                     }
                 }
 

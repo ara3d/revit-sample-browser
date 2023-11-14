@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        [CategoryAttribute("Exterior Major Layers")]
+        [Category("Exterior Major Layers")]
         [TypeConverter(typeof(BarTypeItem))]
         public ElementId Exterior_Major_Bar_Type
         {
@@ -59,7 +59,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_exteriorMajorBarType.Set(value);
         }
 
-        [CategoryAttribute("Exterior Major Layers")]
+        [Category("Exterior Major Layers")]
         [TypeConverter(typeof(HookTypeItem))]
         public ElementId Exterior_Major_Hook_Type
         {
@@ -67,7 +67,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_exteriorMajorHookType.Set(value);
         }
 
-        [CategoryAttribute("Exterior Major Layers")]
+        [Category("Exterior Major Layers")]
         public WallHookOrientations Exterior_Major_Hook_Orientation
         {
             get
@@ -82,7 +82,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        [CategoryAttribute("Exterior Minor Layers")]
+        [Category("Exterior Minor Layers")]
         [TypeConverter(typeof(BarTypeItem))]
         public ElementId Exterior_Minor_Bar_Type
         {
@@ -90,7 +90,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_exteriorMinorBarType.Set(value);
         }
 
-        [CategoryAttribute("Exterior Minor Layers")]
+        [Category("Exterior Minor Layers")]
         [TypeConverter(typeof(HookTypeItem))]
         public ElementId Exterior_Minor_Hook_Type
         {
@@ -98,7 +98,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_exteriorMinorHookType.Set(value);
         }
 
-        [CategoryAttribute("Exterior Minor Layers")]
+        [Category("Exterior Minor Layers")]
         public WallHookOrientations Exterior_Minor_Hook_Orientation
         {
             get
@@ -113,7 +113,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        [CategoryAttribute("Interior Major Layers")]
+        [Category("Interior Major Layers")]
         [TypeConverter(typeof(BarTypeItem))]
         public ElementId Interior_Major_Bar_Type
         {
@@ -121,7 +121,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_interiorMajorBarType.Set(value);
         }
 
-        [CategoryAttribute("Interior Major Layers")]
+        [Category("Interior Major Layers")]
         [TypeConverter(typeof(HookTypeItem))]
         public ElementId Interior_Major_Hook_Type
         {
@@ -129,7 +129,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_interiorMajorHookType.Set(value);
         }
 
-        [CategoryAttribute("Interior Major Layers")]
+        [Category("Interior Major Layers")]
         public WallHookOrientations Interior_Major_Hook_Orientation
         {
             get
@@ -144,7 +144,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        [CategoryAttribute("Interior Minor Layers")]
+        [Category("Interior Minor Layers")]
         [TypeConverter(typeof(BarTypeItem))]
         public ElementId Interior_Minor_Bar_Type
         {
@@ -152,7 +152,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_interiorMinorBarType.Set(value);
         }
 
-        [CategoryAttribute("Interior Minor Layers")]
+        [Category("Interior Minor Layers")]
         [TypeConverter(typeof(HookTypeItem))]
         public ElementId Interior_Minor_Hook_Type
         {
@@ -160,7 +160,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             set => m_interiorMinorHookType.Set(value);
         }
 
-        [CategoryAttribute("Interior Minor Layers")]
+        [Category("Interior Minor Layers")]
         public WallHookOrientations Interior_Minor_Hook_Orientation
         {
             get

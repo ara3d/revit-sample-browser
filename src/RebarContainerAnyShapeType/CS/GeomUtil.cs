@@ -292,9 +292,13 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
                 tempVec = CrossMatrix(tempVec, curveVec);
                 if (IsSameDirection(tempVec, hookVec))
                 {
-                    if (i == 0)
-                        return RebarHookOrientation.Right;
-                    if (i == 2) return RebarHookOrientation.Left;
+                    switch (i)
+                    {
+                        case 0:
+                            return RebarHookOrientation.Right;
+                        case 2:
+                            return RebarHookOrientation.Left;
+                    }
                 }
             }
 

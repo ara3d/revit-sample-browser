@@ -18,12 +18,12 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <summary>
         ///     the extend or sweep path of the beam or column
         /// </summary>
-        protected Line m_drivingLine;
+        protected readonly Line m_drivingLine;
 
         /// <summary>
         ///     the director vector of beam or column
         /// </summary>
-        protected XYZ m_drivingVector;
+        protected readonly XYZ m_drivingVector;
 
         /// <summary>
         ///     a list to store the edges
@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <summary>
         ///     a list to store the point
         /// </summary>
-        protected List<XYZ> m_points = new List<XYZ>();
+        protected readonly List<XYZ> m_points = new List<XYZ>();
 
         /// <summary>
         ///     store the solid of beam or column
@@ -43,7 +43,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <summary>
         ///     the transform value of the solid
         /// </summary>
-        protected Transform m_transform;
+        protected readonly Transform m_transform;
 
         /// <summary>
         ///     constructor

@@ -49,9 +49,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
 
                 if (element != null)
                 {
-                    var lineLoc = element.Location as LocationCurve;
-
-                    if (null == lineLoc)
+                    if (!(element.Location is LocationCurve lineLoc))
                     {
                         TaskDialog.Show("MoveLinear", "Please select an element which based on a Line");
                         trans.Commit();

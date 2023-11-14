@@ -2,7 +2,6 @@
 
 using System;
 using System.IO;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
 namespace Revit.Samples.DirectionCalculation
@@ -13,9 +12,13 @@ namespace Revit.Samples.DirectionCalculation
     public class FindSouthFacingBase
     {
         private TextWriter m_writer;
-        protected Application Application { get; set; }
+        private Document m_document;
 
-        protected Document Document { get; set; }
+        protected Document Document
+        {
+            get => m_document;
+            set => m_document = value;
+        }
 
 
         /// <summary>
@@ -91,8 +94,7 @@ namespace Revit.Samples.DirectionCalculation
         /// </summary>
         protected void CloseFile()
         {
-            if (m_writer != null)
-                m_writer.Close();
+            m_writer?.Close();
         }
     }
 }

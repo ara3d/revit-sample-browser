@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
                         return Result.Failed;
                     dsCubed.ApplicationId = "TestCreateCube";
                     dsCubed.ApplicationDataId = "Cube";
-                    var shapes = new List<GeometryObject>();
-                    shapes.Add(mySolid);
+                    var shapes = new List<GeometryObject> { mySolid };
                     dsCubed.SetShape(shapes, DirectShapeTargetViewType.Default);
 
                     tran.Commit();

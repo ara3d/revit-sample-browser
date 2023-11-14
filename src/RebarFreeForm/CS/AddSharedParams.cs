@@ -16,12 +16,12 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// <summary>
         ///     Updated: is used to start the regeneration
         /// </summary>
-        public static string m_paramName = "Updated";
+        public static readonly string m_paramName = "Updated";
 
         /// <summary>
         ///     CurveElementId: is used to store the id of a model curve
         /// </summary>
-        public static string m_CurveIdName = "CurveElementId";
+        public static readonly string m_CurveIdName = "CurveElementId";
 
         /// <summary>
         ///     Add two shared parameters to the rebar category instance elements:

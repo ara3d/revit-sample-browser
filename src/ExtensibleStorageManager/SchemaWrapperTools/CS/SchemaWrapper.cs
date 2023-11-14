@@ -97,18 +97,24 @@ namespace SchemaWrapperTools
                     new[] { typeof(string), typeof(ForgeTypeId), typeof(SchemaWrapper) });
                 Type[] methodGenericParameters = null;
 
-                //Get the generic type parameters.  The type will either be a single type, an IList<> of a single type, or an IDictionary<> of a key type and a value type.
-                if (currentField.ContainerType == ContainerType.Simple)
-                    methodGenericParameters = new[] { currentField.ValueType };
-                else if (currentField.ContainerType == ContainerType.Array)
-                    methodGenericParameters = new[]
-                        { typeof(IList<int>).GetGenericTypeDefinition().MakeGenericType(currentField.ValueType) };
-                else
-                    methodGenericParameters = new[]
-                    {
-                        typeof(Dictionary<int, int>).GetGenericTypeDefinition()
-                            .MakeGenericType(currentField.KeyType, currentField.ValueType)
-                    };
+                switch (currentField.ContainerType)
+                {
+                    //Get the generic type parameters.  The type will either be a single type, an IList<> of a single type, or an IDictionary<> of a key type and a value type.
+                    case ContainerType.Simple:
+                        methodGenericParameters = new[] { currentField.ValueType };
+                        break;
+                    case ContainerType.Array:
+                        methodGenericParameters = new[]
+                            { typeof(IList<int>).GetGenericTypeDefinition().MakeGenericType(currentField.ValueType) };
+                        break;
+                    default:
+                        methodGenericParameters = new[]
+                        {
+                            typeof(Dictionary<int, int>).GetGenericTypeDefinition()
+                                .MakeGenericType(currentField.KeyType, currentField.ValueType)
+                        };
+                        break;
+                }
 
                 //Instantiate a new generic method from the "AddField" method we got before with the generic parameters we got
                 //from the current field we are querying.
@@ -362,7 +368,7 @@ namespace SchemaWrapperTools
                 //dynamically create a method with parameters from the current field we want to extract data from
 
 
-                var pmodifiers = new ParameterModifier[0]; //a Dummy parameter needed for GetMethod() call, empty
+                var pmodifiers = Array.Empty<ParameterModifier>(); //a Dummy parameter needed for GetMethod() call, empty
 
                 //Get the method.
                 var getFieldDataAsStringMethod = typeof(SchemaWrapper).GetMethod("GetFieldDataAsString",
@@ -376,14 +382,18 @@ namespace SchemaWrapperTools
                 //The 'key' type is only used for dictionary/map types, so pass an int type as a placeholder when
                 //processing simple and array fields.
                 Type[] methodGenericParameters = null;
-                if (currentField.ContainerType == ContainerType.Simple)
-                    methodGenericParameters =
-                        new[] { typeof(int), currentField.ValueType }; //dummy int types for non dictionary type
-                else if (currentField.ContainerType == ContainerType.Array)
-                    methodGenericParameters =
-                        new[] { typeof(int), currentField.ValueType }; //dummy int types for non dictionary type
-                else
-                    methodGenericParameters = new[] { currentField.KeyType, currentField.ValueType };
+                switch (currentField.ContainerType)
+                {
+                    case ContainerType.Simple:
+                    //dummy int types for non dictionary type
+                    case ContainerType.Array:
+                        methodGenericParameters =
+                            new[] { typeof(int), currentField.ValueType }; //dummy int types for non dictionary type
+                        break;
+                    default:
+                        methodGenericParameters = new[] { currentField.KeyType, currentField.ValueType };
+                        break;
+                }
 
                 //Instantiate a generic version of "GetFieldDataAsString" with the type parameters we just got from our field.
                 var genericGetFieldDataAsStringmethodInstantiated =
@@ -411,17 +421,24 @@ namespace SchemaWrapperTools
             Type[] methodGenericParameters = null;
             object[] invokeParams = null;
             Type[] methodOverloadSelectionParams = null;
-            if (field.ContainerType == ContainerType.Simple)
-                methodGenericParameters = new[] { field.ValueType };
-            else if (field.ContainerType == ContainerType.Array)
-                methodGenericParameters = new[]
-                    { typeof(IList<int>).GetGenericTypeDefinition().MakeGenericType(field.ValueType) };
-            else //map
-                methodGenericParameters = new[]
-                {
-                    typeof(IDictionary<int, int>).GetGenericTypeDefinition()
-                        .MakeGenericType(field.KeyType, field.ValueType)
-                };
+            switch (field.ContainerType)
+            {
+                case ContainerType.Simple:
+                    methodGenericParameters = new[] { field.ValueType };
+                    break;
+                case ContainerType.Array:
+                    methodGenericParameters = new[]
+                        { typeof(IList<int>).GetGenericTypeDefinition().MakeGenericType(field.ValueType) };
+                    break;
+                //map
+                default:
+                    methodGenericParameters = new[]
+                    {
+                        typeof(IDictionary<int, int>).GetGenericTypeDefinition()
+                            .MakeGenericType(field.KeyType, field.ValueType)
+                    };
+                    break;
+            }
 
             if (fieldUnit.Empty())
             {
@@ -436,71 +453,81 @@ namespace SchemaWrapperTools
 
             var instantiatedGenericGetMethod = entity.GetType().GetMethod("Get", methodOverloadSelectionParams)
                 .MakeGenericMethod(methodGenericParameters);
-            if (field.ContainerType == ContainerType.Simple)
+            switch (field.ContainerType)
             {
-                var retval = (FieldType)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
-                if (fieldType == typeof(Entity))
+                case ContainerType.Simple:
                 {
-                    var subSchema = Schema.Lookup(field.SubSchemaGUID);
-                    strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                          " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
-                                          ", ContainerType: " + field.ContainerType);
-                    DumpAllSchemaEntityData(retval, subSchema, strBuilder);
-                }
-                else
-                {
-                    strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                          retval + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
-                                          field.ContainerType);
-                }
-            }
-            else if (field.ContainerType == ContainerType.Array)
-            {
-                var listRetval = (IList<FieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
-                if (fieldType == typeof(Entity))
-                {
-                    strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                          " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
-                                          ", ContainerType: " + field.ContainerType);
+                    var retval = (FieldType)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                    if (fieldType == typeof(Entity))
+                    {
+                        var subSchema = Schema.Lookup(field.SubSchemaGUID);
+                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
+                                              " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
+                                              ", ContainerType: " + field.ContainerType);
+                        DumpAllSchemaEntityData(retval, subSchema, strBuilder);
+                    }
+                    else
+                    {
+                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
+                                              retval + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
+                                              field.ContainerType);
+                    }
 
-                    foreach (var fa in listRetval)
-                    {
-                        strBuilder.Append("  Array Value: ");
-                        DumpAllSchemaEntityData(fa, Schema.Lookup(field.SubSchemaGUID), strBuilder);
-                    }
+                    break;
                 }
-                else
+                case ContainerType.Array:
                 {
-                    strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                          " {Array} " + ", Unit: " + field.GetSpecTypeId().TypeId +
-                                          ", ContainerType: " + field.ContainerType);
-                    foreach (var fa in listRetval) strBuilder.AppendLine("  Array value: " + fa);
-                }
-            }
-            else //Map
-            {
-                strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                      " {Map} " + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
-                                      field.ContainerType);
-                var mapRetval =
-                    (IDictionary<KeyType, FieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
-                if (fieldType == typeof(Entity))
-                {
-                    strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                          " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
-                                          ", ContainerType: " + field.ContainerType);
-                    foreach (var fa in mapRetval.Values)
+                    var listRetval = (IList<FieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                    if (fieldType == typeof(Entity))
                     {
-                        strBuilder.Append("  Map Value: ");
-                        DumpAllSchemaEntityData(fa, Schema.Lookup(field.SubSchemaGUID), strBuilder);
+                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
+                                              " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
+                                              ", ContainerType: " + field.ContainerType);
+
+                        foreach (var fa in listRetval)
+                        {
+                            strBuilder.Append("  Array Value: ");
+                            DumpAllSchemaEntityData(fa, Schema.Lookup(field.SubSchemaGUID), strBuilder);
+                        }
                     }
+                    else
+                    {
+                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
+                                              " {Array} " + ", Unit: " + field.GetSpecTypeId().TypeId +
+                                              ", ContainerType: " + field.ContainerType);
+                        foreach (var fa in listRetval) strBuilder.AppendLine("  Array value: " + fa);
+                    }
+
+                    break;
                 }
-                else
+                //Map
+                default:
                 {
                     strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
                                           " {Map} " + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
                                           field.ContainerType);
-                    foreach (var fa in mapRetval.Values) strBuilder.AppendLine("  Map value: " + fa);
+                    var mapRetval =
+                        (IDictionary<KeyType, FieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
+                    if (fieldType == typeof(Entity))
+                    {
+                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
+                                              " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
+                                              ", ContainerType: " + field.ContainerType);
+                        foreach (var fa in mapRetval.Values)
+                        {
+                            strBuilder.Append("  Map Value: ");
+                            DumpAllSchemaEntityData(fa, Schema.Lookup(field.SubSchemaGUID), strBuilder);
+                        }
+                    }
+                    else
+                    {
+                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
+                                              " {Map} " + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
+                                              field.ContainerType);
+                        foreach (var fa in mapRetval.Values) strBuilder.AppendLine("  Map value: " + fa);
+                    }
+
+                    break;
                 }
             }
         }

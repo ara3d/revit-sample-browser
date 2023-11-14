@@ -267,14 +267,14 @@ namespace Revit.SDK.Samples.PrintLog.CS
             if (isViewWatch)
             {
                 watches.ViewPrintWatch.Stop();
-                m_printLog.WriteLine(string.Format("Succeeded to print view, costs {0} ms.",
-                    watches.ViewPrintWatch.Elapsed.TotalMilliseconds));
+                m_printLog.WriteLine(
+                    $"Succeeded to print view, costs {watches.ViewPrintWatch.Elapsed.TotalMilliseconds} ms.");
             }
             else
             {
                 watches.DocPrintWatch.Stop();
-                m_printLog.WriteLine(string.Format("Succeeded to print document, totally costs {0} ms.",
-                    watches.DocPrintWatch.Elapsed.TotalMilliseconds));
+                m_printLog.WriteLine(
+                    $"Succeeded to print document, totally costs {watches.DocPrintWatch.Elapsed.TotalMilliseconds} ms.");
             }
         }
 
@@ -302,7 +302,7 @@ namespace Revit.SDK.Samples.PrintLog.CS
         {
             // ensure log file has been specified
             SetupLogFiles();
-            m_printLog.WriteLine(string.Format("{0} Time: {1}", prefix, DateTime.Now.ToString()));
+            m_printLog.WriteLine($"{prefix} Time: {DateTime.Now}");
         }
 
         /// <summary>
@@ -394,8 +394,7 @@ namespace Revit.SDK.Samples.PrintLog.CS
             var index = 0;
             foreach (var id in viewIds)
             {
-                var curView = activeDoc.GetElement(id) as View;
-                if (null != curView) DumpViewInfo(curView, string.Format("{0}#{1}", prefix, index++));
+                if (activeDoc.GetElement(id) is View curView) DumpViewInfo(curView, $"{prefix}#{index++}");
             }
         }
 
@@ -407,8 +406,7 @@ namespace Revit.SDK.Samples.PrintLog.CS
         /// <param name="prefix">Prefix mark for each line dumped to log files.</param>
         private static void DumpViewInfo(View view, string prefix)
         {
-            Trace.WriteLine(string.Format("{0} ViewName: {1}, ViewType: {2}",
-                prefix, view.Name, view.ViewType));
+            Trace.WriteLine($"{prefix} ViewName: {view.Name}, ViewType: {view.ViewType}");
         }
     }
 }

@@ -81,8 +81,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
         private Connector GetValidConnectorToStretchAndFitFrom(Document doc, ElementId elementId)
         {
             // must be a fabrication part
-            var part = doc.GetElement(elementId) as FabricationPart;
-            if (part == null)
+            if (!(doc.GetElement(elementId) is FabricationPart part))
                 return null;
 
             // must not be a straight, hanger or tap
@@ -106,8 +105,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
         private Connector GetValidConnectorToStretchAndFitTo(Document doc, ElementId elementId)
         {
             // connect to another fabrication part - will work also with families.
-            var part = doc.GetElement(elementId) as FabricationPart;
-            if (part == null)
+            if (!(doc.GetElement(elementId) is FabricationPart part))
                 return null;
 
             // must not be a fabrication part hanger

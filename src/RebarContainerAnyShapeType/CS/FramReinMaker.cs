@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <summary>
         ///     the family instance to places reinforcement on
         /// </summary>
-        protected FamilyInstance m_hostObject;
+        protected readonly FamilyInstance m_hostObject;
 
         protected List<RebarBarType> m_rebarBottomTypes = new List<RebarBarType>();
         protected List<RebarBarType> m_rebarTopCenterTypes = new List<RebarBarType>();
@@ -56,7 +56,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <summary>
         ///     the API create handle
         /// </summary>
-        protected Document m_revitDoc;
+        protected readonly Document m_revitDoc;
 
         protected List<RebarHookType> m_topHookTypes = new List<RebarHookType>();
         protected List<RebarHookType> m_transverseHookTypes = new List<RebarHookType>();
@@ -119,8 +119,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             if (!DisplayForm()) return false;
 
             // At last, begin to create the reinforcement 
-            if (!FillWithBars()) return false;
-            return true;
+            return FillWithBars();
         }
 
 

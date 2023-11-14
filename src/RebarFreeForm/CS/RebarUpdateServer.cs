@@ -310,8 +310,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
             // add each curve as separate bar in the set.
             for (var ii = 0; ii < curves.Count; ii++)
             {
-                var barCurve = new List<Curve>();
-                barCurve.Add(curves[ii]);
+                var barCurve = new List<Curve> { curves[ii] };
                 data.AddBarGeometry(barCurve);
 
                 // set the hook normals for each bar added
@@ -388,8 +387,8 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                     }
 
                     // for each bar try to find the closest face that intersects with it, or its extension, at the specified end
-                    for (var idx = 0; idx < allbars.Count; idx++)
-                        faces.Add(searchForFace(allbars[idx], hostFaces, iBarEnd));
+                    foreach (var bar in allbars)
+                        faces.Add(searchForFace(bar, hostFaces, iBarEnd));
 
                     // gather valid references for constraint creation
                     var refs = new List<Reference>();
@@ -477,8 +476,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
             // add each curve as separate bar in the set.
             for (var ii = 0; ii < allbars.Count; ii++)
             {
-                var barCurve = new List<Curve>();
-                barCurve.Add(allbars[ii]);
+                var barCurve = new List<Curve> { allbars[ii] };
                 data.AddBarGeometry(barCurve);
                 // hook normals are reset when adding new bar geometry, so  we need to
                 // set the hook normals for each bar that was modified
@@ -633,9 +631,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
             var curveTangent = curve.ComputeDerivatives(iEnd, true).BasisX.Normalize();
             var refPoint = curve.GetEndPoint(iEnd);
             var proj = face.Face.Project(face.Transform.Inverse.OfPoint(refPoint));
-            if (proj == null)
-                return null;
-            return face.Face.ComputeNormal(proj.UVPoint).Negate().CrossProduct(curveTangent);
+            return proj == null ? null : face.Face.ComputeNormal(proj.UVPoint).Negate().CrossProduct(curveTangent);
         }
 
         /// <summary>
@@ -703,12 +699,16 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                 var barNumber = nbOfBars - 2;
                 //see how many bar we can fit
                 var numberOfBarsWhichCanFit = (int)((startLine.Length - double.Epsilon) / spacing) + 2;
-                if (layout == RebarLayoutRule.NumberWithSpacing &&
-                    numberOfBarsWhichCanFit != nbOfBars) //check if required number of bars fits between ends  
-                    return false;
-                if (layout == RebarLayoutRule.MaximumSpacing ||
-                    layout == RebarLayoutRule.MinimumClearSpacing)
-                    barNumber = numberOfBarsWhichCanFit - 2;
+                switch (layout)
+                {
+                    //check if required number of bars fits between ends  
+                    case RebarLayoutRule.NumberWithSpacing when numberOfBarsWhichCanFit != nbOfBars:
+                        return false;
+                    case RebarLayoutRule.MaximumSpacing:
+                    case RebarLayoutRule.MinimumClearSpacing:
+                        barNumber = numberOfBarsWhichCanFit - 2;
+                        break;
+                }
 
                 for (var ii = 0; ii < barNumber; ii++)
                 {

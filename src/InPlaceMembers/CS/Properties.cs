@@ -38,43 +38,43 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <summary>
         ///     the value of the element id as an integer
         /// </summary>
-        [CategoryAttribute("Identity")]
+        [Category("Identity")]
         public long ID { get; }
 
         /// <summary>
         ///     a human readable name for the Element.
         /// </summary>
-        [CategoryAttribute("Identity")]
+        [Category("Identity")]
         public string Name { get; }
 
         /// <summary>
         ///     a human readable name for the family name.
         /// </summary>
-        [CategoryAttribute("Category")]
+        [Category("Category")]
         public string Family { get; }
 
         /// <summary>
         ///     a human readable name for the family type name.
         /// </summary>
-        [CategoryAttribute("Category")]
+        [Category("Category")]
         public string Type { get; }
 
         /// <summary>
         ///     the primary structural type of the instance, such as beam or column etc.
         /// </summary>
-        [CategoryAttribute("Structural")]
+        [Category("Structural")]
         public string StructuralType { get; }
 
         /// <summary>
         ///     the primary structural usage of the instance, such as brace, girder etc.
         /// </summary>
-        [CategoryAttribute("Structural")]
+        [Category("Structural")]
         public string StructuralUsage { get; }
 
         /// <summary>
         ///     the physical material from which the instance is made.
         /// </summary>
-        [CategoryAttribute("Structural")]
+        [Category("Structural")]
         public string Material { get; }
     }
 }

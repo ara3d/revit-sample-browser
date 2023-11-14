@@ -74,9 +74,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                     .ToElements();
                 foreach (var e in elems)
                 {
-                    var v = e as ViewFamilyType;
-
-                    if (v != null && v.ViewFamily == ViewFamily.Detail)
+                    if (e is ViewFamilyType v && v.ViewFamily == ViewFamily.Detail)
                     {
                         DetailViewId = e.Id;
                         break;
@@ -126,43 +124,38 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             // Get the selected element.
             foreach (Element e in collection) m_currentComponent = e;
 
-            // Make sure the element to be a wall, beam or a floor.
-            if (m_currentComponent is Wall)
+            switch (m_currentComponent)
             {
-                // Check whether the wall is a linear wall
-                var location = m_currentComponent.Location as LocationCurve;
-                if (null == location)
+                // Make sure the element to be a wall, beam or a floor.
+                case Wall _:
                 {
+                    // Check whether the wall is a linear wall
+                    if (!(m_currentComponent.Location is LocationCurve location))
+                    {
+                        m_errorInformation = "The selected wall should be linear.";
+                        return false;
+                    }
+
+                    if (location.Curve is Line)
+                    {
+                        m_type = SelectType.WALL; // when the element is a linear wall
+                        return true;
+                    }
+
                     m_errorInformation = "The selected wall should be linear.";
                     return false;
                 }
-
-                if (location.Curve is Line)
-                {
-                    m_type = SelectType.WALL; // when the element is a linear wall
+                case FamilyInstance beam when StructuralType.Beam == beam.StructuralType:
+                    m_type = SelectType.BEAM; // when the element is a beam
                     return true;
-                }
-
-                m_errorInformation = "The selected wall should be linear.";
-                return false;
+                case Floor _:
+                    m_type = SelectType.FLOOR; // when the element is a floor.
+                    return true;
+                default:
+                    // If it is not a wall, a beam or a floor, give error information.
+                    m_errorInformation = "Please select an element, such as a wall, a beam or a floor.";
+                    return false;
             }
-
-            var beam = m_currentComponent as FamilyInstance;
-            if (null != beam && StructuralType.Beam == beam.StructuralType)
-            {
-                m_type = SelectType.BEAM; // when the element is a beam
-                return true;
-            }
-
-            if (m_currentComponent is Floor)
-            {
-                m_type = SelectType.FLOOR; // when the element is a floor.
-                return true;
-            }
-
-            // If it is not a wall, a beam or a floor, give error information.
-            m_errorInformation = "Please select an element, such as a wall, a beam or a floor.";
-            return false;
         }
 
 
@@ -201,19 +194,20 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         /// <returns>the reference of Transform, return null if it can't be generated</returns>
         private Transform GenerateTransform()
         {
-            // Because different element have different ways to create Transform.
-            // So, this method just call corresponding method.
-            if (SelectType.WALL == m_type) return GenerateWallTransform();
-
-            if (SelectType.BEAM == m_type) return GenerateBeamTransform();
-
-            if (SelectType.FLOOR == m_type)
+            switch (m_type)
             {
-                return GenerateFloorTransform();
+                // Because different element have different ways to create Transform.
+                // So, this method just call corresponding method.
+                case SelectType.WALL:
+                    return GenerateWallTransform();
+                case SelectType.BEAM:
+                    return GenerateBeamTransform();
+                case SelectType.FLOOR:
+                    return GenerateFloorTransform();
+                default:
+                    m_errorInformation = "The program should never go here.";
+                    return null;
             }
-
-            m_errorInformation = "The program should never go here.";
-            return null;
         }
 
 
@@ -274,13 +268,13 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 return transform;
             }
 
-            if (!(instance.Location is LocationCurve))
+            if (!(instance.Location is LocationCurve locationCurve))
             {
                 m_errorInformation = "The program should never go here.";
                 return transform;
             }
 
-            var curve = (instance.Location as LocationCurve).Curve;
+            var curve = locationCurve.Curve;
             if (null == curve)
             {
                 m_errorInformation = "The program should never go here.";
@@ -329,8 +323,8 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel)
-                        model = associatedElement as AnalyticalPanel;
+                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                        model = panel;
                 }
             }
 

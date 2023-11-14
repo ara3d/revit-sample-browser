@@ -43,9 +43,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 var graphicsData = GraphicsDataFactory.CreateGraphicsData(model);
                 var instanceProperties = new Properties(inPlace);
                 var form = new InPlaceMembersForm(instanceProperties, graphicsData);
-                if (form.ShowDialog() == DialogResult.Abort) return Result.Failed;
-
-                return Result.Succeeded;
+                return form.ShowDialog() == DialogResult.Abort ? Result.Failed : Result.Succeeded;
             }
             catch (Exception e)
             {
@@ -87,14 +85,12 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalElement)
-                        model = associatedElement as AnalyticalElement;
+                    if (associatedElement != null && associatedElement is AnalyticalElement element)
+                        model = element;
                 }
             }
 
-            if (null == model) return false;
-
-            return true;
+            return null != model;
         }
     }
 }

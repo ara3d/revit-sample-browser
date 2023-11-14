@@ -32,9 +32,11 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 return Result.Succeeded;
             }
 
-            var ofd = new OpenFileDialog();
-            ofd.DefaultExt = ".xml";
-            ofd.Filter = "RoutingPreference Builder Xml files (*.xml)|*.xml";
+            var ofd = new OpenFileDialog
+            {
+                DefaultExt = ".xml",
+                Filter = "RoutingPreference Builder Xml files (*.xml)|*.xml"
+            };
 
             if (ofd.ShowDialog() == true)
             {

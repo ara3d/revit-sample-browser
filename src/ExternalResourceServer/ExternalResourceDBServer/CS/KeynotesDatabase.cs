@@ -52,10 +52,10 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         public static void LoadKeynoteEntries(string key, ref KeyBasedTreeEntriesLoadContent kdrlc)
         {
             if (!IsValidDBKey(key))
-                throw new ArgumentOutOfRangeException("key", key, "The specified key cannot be found in the database");
+                throw new ArgumentOutOfRangeException(nameof(key), key, "The specified key cannot be found in the database");
 
             if (kdrlc == null)
-                throw new ArgumentNullException("kdrlc");
+                throw new ArgumentNullException(nameof(kdrlc));
 
             switch (key)
             {

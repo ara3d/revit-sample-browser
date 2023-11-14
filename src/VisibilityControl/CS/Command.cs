@@ -24,7 +24,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
                 if (null == commandData)
                 {
                     trans.RollBack();
-                    throw new ArgumentNullException("commandData");
+                    throw new ArgumentNullException(nameof(commandData));
                 }
 
                 // create an instance of VisibilityCtrl
@@ -36,18 +36,16 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
                     // show dialog
                     var result = dlg.ShowDialog();
 
-                    if (result == DialogResult.OK)
+                    switch (result)
                     {
-                        trans.Commit();
-                        return Result.Succeeded;
-                    }
-
-                    if (result == DialogResult.Yes)
-                    {
-                        // isolate the selected element(s)
-                        visiController.Isolate();
-                        trans.Commit();
-                        return Result.Succeeded;
+                        case DialogResult.OK:
+                            trans.Commit();
+                            return Result.Succeeded;
+                        case DialogResult.Yes:
+                            // isolate the selected element(s)
+                            visiController.Isolate();
+                            trans.Commit();
+                            return Result.Succeeded;
                     }
                 }
 

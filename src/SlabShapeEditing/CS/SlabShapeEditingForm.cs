@@ -174,30 +174,33 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void SlabShapePictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-            if (EditorState.AddCrease == editorState)
+            switch (editorState)
             {
-                if (!m_slabProfile.CanCreateVertex(new PointF(e.X, e.Y))) return;
-                m_lineTool.Points.Add(new PointF(e.X, e.Y));
-                var lineSize = m_lineTool.Points.Count;
-                if (0 == m_lineTool.Points.Count % 2)
-                    m_createCreases.Add(
-                        m_slabProfile.AddCrease((PointF)m_lineTool.Points[lineSize - 2],
-                            (PointF)m_lineTool.Points[lineSize - 1]));
-                CreateGraphicsPath(); //create graphic path for all the vertex and crease
-            }
-            else if (EditorState.AddVertex == editorState)
-            {
-                var vertex = m_slabProfile.AddVertex(new PointF(e.X, e.Y));
-                if (null == vertex) return;
-                m_pointTool.Points.Add(new PointF(e.X, e.Y));
-                //draw point as a short line, so add two points here
-                m_pointTool.Points.Add(new PointF(e.X + 2, e.Y + 2));
-                m_createdVertices.Add(vertex);
-                CreateGraphicsPath(); //create graphic path for all the vertex and crease
-            }
-            else if (EditorState.Select == editorState)
-            {
-                if (m_selectIndex >= 0)
+                case EditorState.AddCrease when !m_slabProfile.CanCreateVertex(new PointF(e.X, e.Y)):
+                    return;
+                case EditorState.AddCrease:
+                {
+                    m_lineTool.Points.Add(new PointF(e.X, e.Y));
+                    var lineSize = m_lineTool.Points.Count;
+                    if (0 == m_lineTool.Points.Count % 2)
+                        m_createCreases.Add(
+                            m_slabProfile.AddCrease((PointF)m_lineTool.Points[lineSize - 2],
+                                (PointF)m_lineTool.Points[lineSize - 1]));
+                    CreateGraphicsPath(); //create graphic path for all the vertex and crease
+                    break;
+                }
+                case EditorState.AddVertex:
+                {
+                    var vertex = m_slabProfile.AddVertex(new PointF(e.X, e.Y));
+                    if (null == vertex) return;
+                    m_pointTool.Points.Add(new PointF(e.X, e.Y));
+                    //draw point as a short line, so add two points here
+                    m_pointTool.Points.Add(new PointF(e.X + 2, e.Y + 2));
+                    m_createdVertices.Add(vertex);
+                    CreateGraphicsPath(); //create graphic path for all the vertex and crease
+                    break;
+                }
+                case EditorState.Select when m_selectIndex >= 0:
                 {
                     m_clickedIndex = m_selectIndex;
                     if (m_selectIndex <= m_createCreases.Count - 1)
@@ -212,13 +215,14 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                         m_selectedVertex = (SlabShapeVertex)m_createdVertices[index];
                         m_selectedCrease = null;
                     }
+
+                    break;
                 }
-                else
-                {
+                case EditorState.Select:
                     m_selectedVertex = null;
                     m_selectedCrease = null;
                     m_clickedIndex = -1;
-                }
+                    break;
             }
 
             SlabShapePictureBox.Refresh();

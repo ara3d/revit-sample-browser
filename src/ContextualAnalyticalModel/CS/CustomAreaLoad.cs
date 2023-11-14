@@ -41,8 +41,7 @@ namespace ContextualAnalyticalModel
                 profileloop.Append(Line.CreateBound(
                     new XYZ(start.X, end.Y, 0), start));
 
-                var loops = new List<CurveLoop>();
-                loops.Add(profileloop);
+                var loops = new List<CurveLoop> { profileloop };
 
                 using (var transaction = new Transaction(document, "Create custom AreaLoad"))
                 {

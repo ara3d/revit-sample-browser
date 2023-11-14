@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
@@ -30,15 +31,16 @@ namespace Revit.SDK.Samples.Loads.CS
         {
             m_dataBuffer = dataBuffer;
             m_revit = dataBuffer.RevitApplication;
-            m_newLoadNaturesName = new List<string>();
-
-            m_newLoadNaturesName.Add("EQ1");
-            m_newLoadNaturesName.Add("EQ2");
-            m_newLoadNaturesName.Add("W1");
-            m_newLoadNaturesName.Add("W2");
-            m_newLoadNaturesName.Add("W3");
-            m_newLoadNaturesName.Add("W4");
-            m_newLoadNaturesName.Add("Other");
+            m_newLoadNaturesName = new List<string>
+            {
+                "EQ1",
+                "EQ2",
+                "W1",
+                "W2",
+                "W3",
+                "W4",
+                "Other"
+            };
         }
 
         /// <summary>
@@ -58,8 +60,7 @@ namespace Revit.SDK.Samples.Loads.CS
             iter.Reset();
             while (iter.MoveNext())
             {
-                var temp = iter.Current as Category;
-                if (null == temp)
+                if (!(iter.Current is Category temp))
                     continue;
 
                 m_dataBuffer.LoadCaseCategories.Add(temp);
@@ -70,8 +71,7 @@ namespace Revit.SDK.Samples.Loads.CS
                 .OfClass(typeof(LoadNature)).ToElements();
             foreach (var e in elements)
             {
-                var nature = e as LoadNature;
-                if (null != nature)
+                if (e is LoadNature nature)
                 {
                     m_dataBuffer.LoadNatures.Add(nature);
                     var newLoadNaturesMap = new LoadNaturesMap(nature);
@@ -84,8 +84,7 @@ namespace Revit.SDK.Samples.Loads.CS
             foreach (var e in elements)
             {
                 //get all the loadcases
-                var loadCase = e as LoadCase;
-                if (null != loadCase)
+                if (e is LoadCase loadCase)
                 {
                     m_dataBuffer.LoadCases.Add(loadCase);
                     var newLoadCaseMap = new LoadCasesMap(loadCase);
@@ -252,13 +251,9 @@ namespace Revit.SDK.Samples.Loads.CS
         public bool IsCaseNameUnique(string name)
         {
             //compare the name with the name of each case in the map
-            for (var i = 0; i < m_dataBuffer.LoadCasesMap.Count; i++)
-            {
-                var nameTemp = m_dataBuffer.LoadCasesMap[i].LoadCasesName;
-                if (name == nameTemp) return false;
-            }
-
-            return true;
+            return m_dataBuffer.LoadCasesMap
+                .Select(loadCasesMap => loadCasesMap.LoadCasesName)
+                .All(nameTemp => name != nameTemp);
         }
 
         /// <summary>

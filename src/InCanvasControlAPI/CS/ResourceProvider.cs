@@ -47,8 +47,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         /// <returns>Instance of the provider</returns>
         public static ResourceProvider GetInstance()
         {
-            if (provider == null) provider = new ResourceProvider();
-            return provider;
+            return provider ?? (provider = new ResourceProvider());
         }
     }
 }

@@ -56,20 +56,17 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// <returns>The solids materials list</returns>
         private List<Solid> prepareSolids(GeometryCreation geometrycreation)
         {
-            var resultSolids = new List<Solid>();
-
-            resultSolids.Add(geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25));
-
-            resultSolids.Add(geometrycreation.CreateCenterbasedSphere(XYZ.Zero, 20));
-
-            resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
-                GeometryCreation.CylinderDirection.BasisX));
-
-            resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
-                GeometryCreation.CylinderDirection.BasisY));
-
-            resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
-                GeometryCreation.CylinderDirection.BasisZ));
+            var resultSolids = new List<Solid>
+            {
+                geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25),
+                geometrycreation.CreateCenterbasedSphere(XYZ.Zero, 20),
+                geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
+                    GeometryCreation.CylinderDirection.BasisX),
+                geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
+                    GeometryCreation.CylinderDirection.BasisY),
+                geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
+                    GeometryCreation.CylinderDirection.BasisZ)
+            };
 
             return resultSolids;
         }

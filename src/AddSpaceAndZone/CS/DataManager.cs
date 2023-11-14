@@ -60,8 +60,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             levelsIterator.Reset();
             while (levelsIterator.MoveNext())
             {
-                var level = levelsIterator.Current as Level;
-                if (level != null)
+                if (levelsIterator.Current is Level level)
                 {
                     m_levels.Add(level);
                     spaceDictionary.Add(level.Id, new List<Space>());
@@ -72,15 +71,13 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             spacesIterator.Reset();
             while (spacesIterator.MoveNext())
             {
-                var space = spacesIterator.Current as Space;
-                if (space != null) spaceDictionary[space.LevelId].Add(space);
+                if (spacesIterator.Current is Space space) spaceDictionary[space.LevelId].Add(space);
             }
 
             zonesIterator.Reset();
             while (zonesIterator.MoveNext())
             {
-                var zone = zonesIterator.Current as Zone;
-                if (zone != null && activeDoc.GetElement(zone.LevelId) != null) zoneDictionary[zone.LevelId].Add(zone);
+                if (zonesIterator.Current is Zone zone && activeDoc.GetElement(zone.LevelId) != null) zoneDictionary[zone.LevelId].Add(zone);
             }
 
             m_spaceManager = new SpaceManager(m_commandData, spaceDictionary);

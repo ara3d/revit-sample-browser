@@ -164,10 +164,12 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <returns>negative of vector</returns>
         public static Vector operator -(Vector lhs)
         {
-            var result = new Vector(lhs);
-            result.X = -lhs.X;
-            result.Y = -lhs.Y;
-            result.Z = -lhs.Z;
+            var result = new Vector(lhs)
+            {
+                X = -lhs.X,
+                Y = -lhs.Y,
+                Z = -lhs.Z
+            };
             return result;
         }
 
@@ -315,9 +317,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <returns> whether two are equal</returns>
         private static bool IsEqual(Vector lhs, Vector rhs)
         {
-            if (lhs.X == rhs.X && lhs.X == rhs.X && lhs.X == rhs.X)
-                return true;
-            return false;
+            return lhs.X == rhs.X && lhs.X == rhs.X && lhs.X == rhs.X;
         }
     }
 }

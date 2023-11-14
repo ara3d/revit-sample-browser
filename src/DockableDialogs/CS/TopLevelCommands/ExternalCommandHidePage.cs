@@ -33,9 +33,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         /// </summary>
         public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
         {
-            if (applicationData.ActiveUIDocument == null)
-                return false;
-            return true;
+            return applicationData.ActiveUIDocument != null;
         }
     }
 }

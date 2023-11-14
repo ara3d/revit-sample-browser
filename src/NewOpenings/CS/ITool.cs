@@ -46,22 +46,22 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <summary>
         ///     Background pen used to erase the preview line
         /// </summary>
-        protected Pen m_backGroundPen;
+        protected readonly Pen m_backGroundPen;
 
         /// <summary>
         ///     Foreground pen used to draw lines
         /// </summary>
-        protected Pen m_foreGroundPen;
+        protected readonly Pen m_foreGroundPen;
 
         /// <summary>
         ///     Field used to store lines
         /// </summary>
-        protected List<List<Point>> m_lines = new List<List<Point>>();
+        protected readonly List<List<Point>> m_lines = new List<List<Point>>();
 
         /// <summary>
         ///     Field used to store points of a line
         /// </summary>
-        protected List<Point> m_points = new List<Point>();
+        protected readonly List<Point> m_points = new List<Point>();
 
         /// <summary>
         ///     Store the mouse position when mouse move in pictureBox

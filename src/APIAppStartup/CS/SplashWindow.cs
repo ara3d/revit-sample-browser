@@ -31,7 +31,7 @@ namespace APIAppStartup
         //kill the thread
         public static void StopSplash()
         {
-            if (m_instance != null) m_instance.Invoke(m_instance.m_delegateClose);
+            m_instance?.Invoke(m_instance.m_delegateClose);
         }
 
         //show Revit version info

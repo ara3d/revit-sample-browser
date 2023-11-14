@@ -28,8 +28,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
         private string projectGuid;
 
         /// <inheritdoc />
-        public ObservableCollection<FolderLocation> AvailableFolders { get; set; } =
-            new ObservableCollection<FolderLocation>();
+        public ObservableCollection<FolderLocation> AvailableFolders { get; set; } = new ObservableCollection<FolderLocation>();
 
         /// <inheritdoc />
         public ObservableCollection<MigrationRule> Rules { get; set; } = new ObservableCollection<MigrationRule>();
@@ -70,7 +69,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
 
         private void NotifyPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

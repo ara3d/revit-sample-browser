@@ -53,8 +53,8 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel)
-                        model = associatedElement as AnalyticalPanel;
+                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                        model = panel;
                 }
             }
 

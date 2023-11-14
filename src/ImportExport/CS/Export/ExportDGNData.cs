@@ -144,9 +144,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_enumLayerMapping.Add("BS1192");
 
             //Export format:
-            m_exportFileVersions = new List<string>();
-            m_exportFileVersions.Add("MicroStation V8 Format");
-            m_exportFileVersions.Add("MicroStation V7 Format");
+            m_exportFileVersions = new List<string>
+            {
+                "MicroStation V8 Format",
+                "MicroStation V7 Format"
+            };
 
             m_filter = "Microstation DGN Files |*.dgn";
             m_title = "Export DGN";

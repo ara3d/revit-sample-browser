@@ -36,7 +36,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
             var collector = new FilteredElementCollector(doc);
             collector.WherePasses(new ElementClassFilter(typeof(FamilyInstance)));
             var sphereElements = from element in collector where element.Name == "sphere" select element;
-            if (sphereElements.Count() == 0)
+            if (!sphereElements.Any())
             {
                 TaskDialog.Show("Error", "Sphere family must be loaded");
                 return;
@@ -46,7 +46,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
             var viewCollector = new FilteredElementCollector(doc);
             viewCollector.OfClass(typeof(View3D)).ToElements();
             var viewElements = from element in viewCollector where element.Name == "AVF" select element;
-            if (viewElements.Count() == 0)
+            if (!viewElements.Any())
             {
                 TaskDialog.Show("Error", "A 3D view named 'AVF' must exist to run this application.");
                 return;
@@ -94,9 +94,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
             var sphereLP = sphere.Location as LocationPoint;
             var sphereXYZ = sphereLP.Point;
 
-            var sfm = SpatialFieldManager.GetSpatialFieldManager(view);
-            if (sfm == null)
-                sfm = SpatialFieldManager.CreateSpatialFieldManager(view, 3); // Three measurement values for each point
+            var sfm = SpatialFieldManager.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 3); // Three measurement values for each point
             sfm.Clear();
 
             var collector = new FilteredElementCollector(doc, view.Id);

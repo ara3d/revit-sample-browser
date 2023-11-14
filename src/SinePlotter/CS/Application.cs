@@ -244,8 +244,10 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         private void AddRunButton(RibbonPanel panel)
         {
             var pushButtonData = new PushButtonData("arrayPrisms", "run",
-                assemblyPath + "\\" + assemblyName, "Revit.SDK.Samples.SinePlotter.CS.Command");
-            pushButtonData.LargeImage = new BitmapImage(new Uri(imageFolder + "Start.png"));
+                assemblyPath + "\\" + assemblyName, "Revit.SDK.Samples.SinePlotter.CS.Command")
+            {
+                LargeImage = new BitmapImage(new Uri(imageFolder + "Start.png"))
+            };
             _ = panel.AddItem(pushButtonData) as PushButton;
         }
 

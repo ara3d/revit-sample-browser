@@ -152,33 +152,24 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             var iterator = collector.WherePasses(orFilter).GetElementIterator();
             while (iterator.MoveNext())
             {
-                // Find out all levels.
-                var level = iterator.Current as Level;
-                if (null != level)
+                switch (iterator.Current)
                 {
-                    m_levelList.Add(level.Elevation, level);
-                    continue;
-                }
-
-                // Find out all views.
-                var view = iterator.Current as View;
-                if (null != view && !view.IsTemplate)
-                {
-                    m_viewList.Add(view);
-                    continue;
-                }
-
-                // Find out all floors.
-                var floor = iterator.Current as Floor;
-                if (null != floor)
-                {
-                    m_floorList.Add(floor);
-                    continue;
+                    // Find out all levels.
+                    case Level level:
+                        m_levelList.Add(level.Elevation, level);
+                        continue;
+                    // Find out all views.
+                    case View view when !view.IsTemplate:
+                        m_viewList.Add(view);
+                        continue;
+                    // Find out all floors.
+                    case Floor floor:
+                        m_floorList.Add(floor);
+                        continue;
                 }
 
                 // Find out all foundation slab types.
-                var floorType = iterator.Current as FloorType;
-                if (null == floorType) continue;
+                if (!(iterator.Current is FloorType floorType)) continue;
                 if ("Structural Foundations" == floorType.Category.Name) m_slabTypeList.Add(floorType);
             }
         }
@@ -217,9 +208,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                 }
 
             // Getting regular slabs.
-            if (0 != m_allBaseSlabList.Count)
-                return true;
-            return false;
+            return 0 != m_allBaseSlabList.Count;
         }
 
         /// <summary>
@@ -240,9 +229,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             var boundThickness = Math.Abs(bbXYZ.Max.Z - bbXYZ.Min.Z);
 
             // Planar or not.
-            if (Math.Abs(boundThickness - floorThickness) < PlanarPrecision)
-                return true;
-            return false;
+            return Math.Abs(boundThickness - floorThickness) < PlanarPrecision;
         }
 
         /// <summary>
@@ -263,8 +250,8 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                 if (associatedElementId != ElementId.InvalidElementId)
                 {
                     var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalPanel)
-                        analyticalModel = associatedElement as AnalyticalPanel;
+                    if (associatedElement != null && associatedElement is AnalyticalPanel panel)
+                        analyticalModel = panel;
                 }
             }
 
@@ -272,7 +259,8 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             {
                 IList<Curve> curveList = analyticalModel.GetOuterContour().ToList();
 
-                for (var i = 0; i < curveList.Count; i++) floorProfile.Append(curveList[i]);
+                foreach (var curve in curveList)
+                    floorProfile.Append(curve);
 
                 return floorProfile;
             }

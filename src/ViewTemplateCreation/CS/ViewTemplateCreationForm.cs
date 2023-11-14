@@ -47,7 +47,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
                 {
                     m_views.Add(curView);
                     // add view type to prevent duplication of names with different view types 
-                    var extendedViewName = string.Format("{0}:{1}", curView.ViewType.ToString(), curView.Name);
+                    var extendedViewName = $"{curView.ViewType}:{curView.Name}";
                     viewNameComboBox.Items.Add(extendedViewName);
                 }
         }
@@ -84,16 +84,15 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
 
                     var selectedView = GetSelectedView();
                     var viewTemplate = selectedView.CreateViewTemplate();
-                    Utils.ShowInformationMessageBox(string.Format("View template '{0}' has been created.",
-                        viewTemplate.Name));
+                    Utils.ShowInformationMessageBox($"View template '{viewTemplate.Name}' has been created.");
 
                     SetPartsVisibilityIncludeState(viewTemplate);
                     SetDetailLevelValue(viewTemplate);
                     ChangeVgOverridesModelSettings(viewTemplate);
 
                     selectedView.ViewTemplateId = viewTemplate.Id;
-                    Utils.ShowInformationMessageBox(string.Format(
-                        "View template '{0}' has been assigned to '{1}' view.", viewTemplate.Name, selectedView.Name));
+                    Utils.ShowInformationMessageBox(
+                        $"View template '{viewTemplate.Name}' has been assigned to '{selectedView.Name}' view.");
 
                     transaction.Commit();
                 }
@@ -131,15 +130,13 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
         {
             if (!view.HasDetailLevel())
             {
-                Utils.ShowWarningMessageBox(string.Format("'{0}' view does not have '{1}' parameter.", view.Name,
-                    "Detail level"));
+                Utils.ShowWarningMessageBox($"'{view.Name}' view does not have '{"Detail level"}' parameter.");
                 return;
             }
 
             if (!view.CanModifyDetailLevel())
             {
-                Utils.ShowWarningMessageBox(string.Format("'{0}' can not be modified in view '{1}'.", "Detail level",
-                    view.Name));
+                Utils.ShowWarningMessageBox($"'{"Detail level"}' can not be modified in view '{view.Name}'.");
                 return;
             }
 
@@ -162,8 +159,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
         {
             if (!view.AreGraphicsOverridesAllowed())
             {
-                Utils.ShowWarningMessageBox(string.Format("Graphic overrides are not alowed for the '{0}' view",
-                    view.Name));
+                Utils.ShowWarningMessageBox($"Graphic overrides are not alowed for the '{view.Name}' view");
                 return;
             }
 
@@ -186,15 +182,15 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
             var ogSettings = view.GetCategoryOverrides(categoryId);
             if (ogSettings == null || !ogSettings.IsValidObject)
             {
-                Utils.ShowWarningMessageBox(string.Format(
-                    "Graphic overrides category '{0}' is not found or is not valid", buildInCategory.ToString()));
+                Utils.ShowWarningMessageBox(
+                    $"Graphic overrides category '{buildInCategory}' is not found or is not valid");
                 return;
             }
 
             if (!view.IsCategoryOverridable(categoryId))
             {
-                Utils.ShowWarningMessageBox(string.Format("Graphic overrides category '{0}' is not overridable",
-                    buildInCategory.ToString()));
+                Utils.ShowWarningMessageBox(
+                    $"Graphic overrides category '{buildInCategory}' is not overridable");
                 return;
             }
 

@@ -43,38 +43,18 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         ///     Gets Fascia creator.
         /// </summary>
-        public FasciaCreator FasciaCreator
-        {
-            get
-            {
-                if (m_fasciaCreator == null) m_fasciaCreator = new FasciaCreator(m_rvtDoc);
-                return m_fasciaCreator;
-            }
-        }
+        public FasciaCreator FasciaCreator => m_fasciaCreator ?? (m_fasciaCreator = new FasciaCreator(m_rvtDoc));
 
         /// <summary>
         ///     Gets Gutter creator.
         /// </summary>
-        public GutterCreator GutterCreator
-        {
-            get
-            {
-                if (m_gutterCreator == null) m_gutterCreator = new GutterCreator(m_rvtDoc);
-                return m_gutterCreator;
-            }
-        }
+        public GutterCreator GutterCreator => m_gutterCreator ?? (m_gutterCreator = new GutterCreator(m_rvtDoc));
 
         /// <summary>
         ///     Gets SlabEdge creator.
         /// </summary>
-        public SlabEdgeCreator SlabEdgeCreator
-        {
-            get
-            {
-                if (m_slabEdgeCreator == null) m_slabEdgeCreator = new SlabEdgeCreator(m_rvtDoc);
-                return m_slabEdgeCreator;
-            }
-        }
+        public SlabEdgeCreator SlabEdgeCreator 
+            => m_slabEdgeCreator ?? (m_slabEdgeCreator = new SlabEdgeCreator(m_rvtDoc));
 
         /// <summary>
         ///     Show the main form, it is the UI entry.

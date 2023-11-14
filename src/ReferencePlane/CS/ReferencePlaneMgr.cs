@@ -44,9 +44,11 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
             m_options.View = m_document.Document.ActiveView;
 
 
-            m_createHandler = new Dictionary<Type, CreateDelegate>();
-            m_createHandler.Add(typeof(Wall), OperateWall);
-            m_createHandler.Add(typeof(Floor), OperateSlab);
+            m_createHandler = new Dictionary<Type, CreateDelegate>
+            {
+                { typeof(Wall), OperateWall },
+                { typeof(Floor), OperateSlab }
+            };
 
             InitializeDataTable();
         }
@@ -154,8 +156,7 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
             itor.Reset();
             while (itor.MoveNext())
             {
-                var refPlane = itor.Current as Autodesk.Revit.DB.ReferencePlane;
-                if (null == refPlane) continue;
+                if (!(itor.Current is Autodesk.Revit.DB.ReferencePlane refPlane)) continue;
 
                 var row = m_referencePlanes.NewRow();
                 row["ID"] = refPlane.Id.Value;

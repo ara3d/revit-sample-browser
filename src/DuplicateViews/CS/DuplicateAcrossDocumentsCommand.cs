@@ -59,9 +59,11 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
             // Collect schedules and drafting views
             var collector = new FilteredElementCollector(doc);
 
-            var viewTypes = new List<Type>();
-            viewTypes.Add(typeof(ViewSchedule));
-            viewTypes.Add(typeof(ViewDrafting));
+            var viewTypes = new List<Type>
+            {
+                typeof(ViewSchedule),
+                typeof(ViewDrafting)
+            };
             var filter = new ElementMulticlassFilter(viewTypes);
             collector.WherePasses(filter);
 

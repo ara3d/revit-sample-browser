@@ -386,8 +386,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
                 list.AddRange(collector.WherePasses(filter).ToElements());
                 foreach (var e in list)
                 {
-                    var mc = e as ModelCurve;
-                    if (mc != null)
+                    if (e is ModelCurve mc)
                         if (mc.LineStyle.Name == "bounce" || mc.LineStyle.Name == "normal")
                             m_app.ActiveUIDocument.Document.Delete(e.Id);
                 }

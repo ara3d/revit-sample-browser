@@ -51,7 +51,7 @@ namespace Revit.SDK.Samples.ColorFill.CS
                 {
                     var colorFillScheme = lstSchemes.SelectedItem as ColorFillScheme;
                     m_colorFillMgr.DuplicateScheme(colorFillScheme, tbSchemeName.Text, tbSchemeTitle.Text);
-                    lbSchemeResults.Text = string.Format("New scheme {0} is created.", tbSchemeName.Text);
+                    lbSchemeResults.Text = $"New scheme {tbSchemeName.Text} is created.";
                     GetData();
                 }
                 catch (Exception ex)
@@ -72,7 +72,7 @@ namespace Revit.SDK.Samples.ColorFill.CS
                     var colorFillScheme = lstSchemes.SelectedItem as ColorFillScheme;
                     var view = lstViews.SelectedItem as View;
                     m_colorFillMgr.CreateAndPlaceLegend(colorFillScheme, view);
-                    lbLegendResults.Text = string.Format("Color Fill legend is placed on view {0}.", view.Name);
+                    lbLegendResults.Text = $"Color Fill legend is placed on view {view.Name}.";
                 }
                 catch (Exception ex)
                 {
@@ -91,7 +91,7 @@ namespace Revit.SDK.Samples.ColorFill.CS
                 var colorFillScheme = lstSchemes.SelectedItem as ColorFillScheme;
                 m_colorFillMgr.ModifyByValueScheme(colorFillScheme);
 
-                lbSchemeResults.Text = string.Format("Entries for {0} have been updated.", colorFillScheme.Name);
+                lbSchemeResults.Text = $"Entries for {colorFillScheme.Name} have been updated.";
             }
             catch (Exception ex)
             {

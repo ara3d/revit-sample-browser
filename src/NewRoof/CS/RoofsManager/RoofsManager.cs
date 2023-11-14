@@ -165,9 +165,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
         /// <returns>A curve array to hold the footprint roof lines or extrusion profile lines.</returns>
         public CurveArray WindowSelect()
         {
-            if (RoofKind == CreateRoofKind.FootPrintRoof)
-                return SelectFootPrint();
-            return SelectProfile();
+            return RoofKind == CreateRoofKind.FootPrintRoof ? SelectFootPrint() : SelectProfile();
         }
 
         /// <summary>
@@ -198,16 +196,18 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
                 {
                     foreach (var element in selectResult)
                     {
-                        var wall = element as Wall;
-                        if (wall != null)
+                        switch (element)
                         {
-                            var wallCurve = wall.Location as LocationCurve;
-                            FootPrint.Append(wallCurve.Curve);
-                            continue;
+                            case Wall wall:
+                            {
+                                var wallCurve = wall.Location as LocationCurve;
+                                FootPrint.Append(wallCurve.Curve);
+                                continue;
+                            }
+                            case ModelCurve modelCurve:
+                                FootPrint.Append(modelCurve.GeometryCurve);
+                                break;
                         }
-
-                        var modelCurve = element as ModelCurve;
-                        if (modelCurve != null) FootPrint.Append(modelCurve.GeometryCurve);
                     }
 
                     break;
@@ -260,8 +260,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
                 {
                     foreach (var element in selectResult)
                     {
-                        var modelCurve = element as ModelCurve;
-                        if (modelCurve != null)
+                        if (element is ModelCurve modelCurve)
                         {
                             Profile.Append(modelCurve.GeometryCurve);
                         }

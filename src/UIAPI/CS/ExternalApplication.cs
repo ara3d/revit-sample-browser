@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+﻿// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
 
 using System;
@@ -19,9 +19,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
     public class ExternalApp : IExternalApplication
     {
         private static readonly string addinAssmeblyPath = typeof(ExternalApp).Assembly.Location;
-
-        public UIControlledApplication UIControlledApplication { get; private set; }
-
+        private UIControlledApplication m_uiControlledApplication;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -30,7 +28,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
         public Result OnStartup(UIControlledApplication application)
         {
-            UIControlledApplication = application;
             ApplicationOptions.Initialize(this);
 
             createCommandBinding(application);
@@ -101,8 +98,10 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 "Revit.SDK.Samples.UIAPI.CS.CalcCommand");
 
             var ch2 = new ContextualHelp(ContextualHelpType.ChmFile,
-                Path.GetDirectoryName(addinAssmeblyPath) + @"\RevitAddInUtility.chm");
-            ch2.HelpTopicUrl = @"html/3374f8f0-dccc-e1df-d269-229ed8c60e93.htm";
+                Path.GetDirectoryName(addinAssmeblyPath) + @"\RevitAddInUtility.chm")
+            {
+                HelpTopicUrl = @"html/3374f8f0-dccc-e1df-d269-229ed8c60e93.htm"
+            };
             pbd2.SetContextualHelp(ch2);
             pbd2.LongDescription = "Go to Revit Add-In Utility.";
             pbd2.LargeImage = convertFromBitmap(Resources.StrcturalWall);
@@ -113,17 +112,21 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
             var pbd3 = new PushButtonData("PreviewControl", "Preview all views",
                 addinAssmeblyPath,
-                "Revit.SDK.Samples.UIAPI.CS.PreviewCommand");
-            pbd3.LargeImage = convertFromBitmap(Resources.StrcturalWall);
-            pbd3.Image = convertFromBitmap(Resources.StrcturalWall_S);
+                "Revit.SDK.Samples.UIAPI.CS.PreviewCommand")
+            {
+                LargeImage = convertFromBitmap(Resources.StrcturalWall),
+                Image = convertFromBitmap(Resources.StrcturalWall_S)
+            };
             var pb3 = rp.AddItem(pbd3) as PushButton;
             pb3.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
 
             var pbd5 = new PushButtonData("Drag_And_Drop", "Drag and Drop", addinAssmeblyPath,
-                "Revit.SDK.Samples.UIAPI.CS.DragAndDropCommand");
-            pbd5.LargeImage = convertFromBitmap(Resources.StrcturalWall);
-            pbd5.Image = convertFromBitmap(Resources.StrcturalWall_S);
+                "Revit.SDK.Samples.UIAPI.CS.DragAndDropCommand")
+            {
+                LargeImage = convertFromBitmap(Resources.StrcturalWall),
+                Image = convertFromBitmap(Resources.StrcturalWall_S)
+            };
             var pb5 = rp.AddItem(pbd5) as PushButton;
             pb5.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
         }
@@ -135,8 +138,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
         private void binding_Executed(object sender, ExecutedEventArgs e)
         {
-            var uiApp = sender as UIApplication;
-            if (uiApp == null)
+            if (!(sender is UIApplication uiApp))
                 return;
 
             var famTemplatePath = uiApp.Application.FamilyTemplatePath;
@@ -162,8 +164,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
                 var views = query.ToList();
 
-                var view3D = views[0] as View3D;
-                if (view3D != null)
+                if (views[0] is View3D view3D)
                     uiApp.ActiveUIDocument.ActiveView = view3D;
             }
         }

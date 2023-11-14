@@ -73,17 +73,18 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
                         ex.ConvertFromInternalLength(segInfo.Length), segInfo.Coefficients,
                         ex.ConvertFromInternalFriction(segInfo.Friction),
                         ex.ConvertFromInternalPressure(segInfo.PressureDrop), sNull);
-                if (segInfo.SegmentType == MEPAnalyticalSegmentType.Segment)
+                switch (segInfo.SegmentType)
                 {
-                    straightCount++;
-                    totalStraightLength += segInfo.Length;
-                    totalStraightLoss += segInfo.PressureDrop;
-                }
-                else if (segInfo.SegmentType == MEPAnalyticalSegmentType.Fitting)
-                {
-                    fittingCount++;
-                    totalFittingCoeff += segInfo.Coefficients;
-                    totalFittingLoss = segInfo.PressureDrop;
+                    case MEPAnalyticalSegmentType.Segment:
+                        straightCount++;
+                        totalStraightLength += segInfo.Length;
+                        totalStraightLoss += segInfo.PressureDrop;
+                        break;
+                    case MEPAnalyticalSegmentType.Fitting:
+                        fittingCount++;
+                        totalFittingCoeff += segInfo.Coefficients;
+                        totalFittingLoss = segInfo.PressureDrop;
+                        break;
                 }
             }
 

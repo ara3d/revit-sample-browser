@@ -111,12 +111,16 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
             Type destinationType)
         {
-            if (destinationType == null) throw new ArgumentNullException("destinationType");
+            if (destinationType == null) throw new ArgumentNullException(nameof(destinationType));
             if (destinationType == typeof(string))
             {
-                if (value == null) return string.Empty;
-                var construction = value as ConstructionWrapper;
-                if (construction != null) return construction.Name;
+                switch (value)
+                {
+                    case null:
+                        return string.Empty;
+                    case ConstructionWrapper construction:
+                        return construction.Name;
+                }
             }
 
             return base.ConvertTo(context, culture, value, destinationType);

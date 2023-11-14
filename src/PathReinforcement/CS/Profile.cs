@@ -210,9 +210,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             {
                 var geo = Objects.Current;
 
-                if (geo is Curve)
+                if (geo is Curve curve)
                 {
-                    var curve = geo as Curve;
                     m_curves.Add(curve.Tessellate() as List<XYZ>);
                 }
             }

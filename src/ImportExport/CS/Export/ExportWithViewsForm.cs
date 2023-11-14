@@ -37,16 +37,20 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             // Initialize the title
             Text = m_exportData.Title;
-            if (m_exportData.ExportFormat == ExportFormat.SAT)
+            switch (m_exportData.ExportFormat)
             {
-                buttonOptions.Visible = false;
-            }
-            else if (m_exportData.ExportFormat == ExportFormat.Image)
-            {
-                Hide();
-                using (var exportOptionsForm = new ExportIMGOptionsForm(m_exportData))
+                case ExportFormat.SAT:
+                    buttonOptions.Visible = false;
+                    break;
+                case ExportFormat.Image:
                 {
-                    exportOptionsForm.ShowDialog();
+                    Hide();
+                    using (var exportOptionsForm = new ExportIMGOptionsForm(m_exportData))
+                    {
+                        exportOptionsForm.ShowDialog();
+                    }
+
+                    break;
                 }
             }
         }
@@ -58,75 +62,87 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="e"></param>
         private void buttonOptions_Click(object sender, EventArgs e)
         {
-            // Export dwg
-            if (m_exportData.ExportFormat == ExportFormat.DWG)
+            switch (m_exportData.ExportFormat)
             {
-                var contain3DView = false;
+                // Export dwg
+                case ExportFormat.DWG:
+                {
+                    var contain3DView = false;
 
-                if (radioButtonCurrentView.Checked)
-                {
-                    if (m_exportData.Is3DView) contain3DView = true;
-                }
-                else
-                {
-                    if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
-                }
+                    if (radioButtonCurrentView.Checked)
+                    {
+                        if (m_exportData.Is3DView) contain3DView = true;
+                    }
+                    else
+                    {
+                        if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
+                    }
 
-                var exportDWGData = m_exportData as ExportDWGData;
-                using (var exportOptionsForm = new ExportBaseOptionsForm(exportDWGData.ExportOptionsData,
-                           contain3DView, "DWG"))
-                {
-                    exportOptionsForm.ShowDialog();
-                }
-            }
-            //Export dxf
-            else if (m_exportData.ExportFormat == ExportFormat.DXF)
-            {
-                var contain3DView = false;
+                    var exportDWGData = m_exportData as ExportDWGData;
+                    using (var exportOptionsForm = new ExportBaseOptionsForm(exportDWGData.ExportOptionsData,
+                               contain3DView, "DWG"))
+                    {
+                        exportOptionsForm.ShowDialog();
+                    }
 
-                if (radioButtonCurrentView.Checked)
-                {
-                    if (m_exportData.Is3DView) contain3DView = true;
+                    break;
                 }
-                else
+                //Export dxf
+                case ExportFormat.DXF:
                 {
-                    if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
-                }
+                    var contain3DView = false;
 
-                var exportDXFData = m_exportData as ExportDXFData;
+                    if (radioButtonCurrentView.Checked)
+                    {
+                        if (m_exportData.Is3DView) contain3DView = true;
+                    }
+                    else
+                    {
+                        if (m_exportData.SelectViewsData.Contain3DView) contain3DView = true;
+                    }
 
-                using (var exportOptionsForm = new ExportBaseOptionsForm(exportDXFData.ExportOptionsData,
-                           contain3DView, "DXF"))
-                {
-                    exportOptionsForm.ShowDialog();
-                }
-            }
-            // Export dgn
-            else if (m_exportData.ExportFormat == ExportFormat.DGN)
-            {
-                var exportDGNData = m_exportData as ExportDGNData;
-                using (var exportOptionsForm = new ExportDGNOptionsForm(exportDGNData))
-                {
-                    exportOptionsForm.ShowDialog();
-                }
-            }
-            // Export PDF
-            else if (m_exportData.ExportFormat == ExportFormat.PDF)
-            {
-                var exportPDFData = m_exportData as ExportPDFData;
-                using (var exportOptionsForm = new ExportPDFOptionsForm(exportPDFData))
-                {
-                    exportOptionsForm.ShowDialog();
-                }
-            }
+                    var exportDXFData = m_exportData as ExportDXFData;
 
-            // Export DWF
-            else
-            {
-                var exportDWFData = m_exportData as ExportDWFData;
-                using (var exportOptionsForm = new ExportDWFOptionForm(exportDWFData))
+                    using (var exportOptionsForm = new ExportBaseOptionsForm(exportDXFData.ExportOptionsData,
+                               contain3DView, "DXF"))
+                    {
+                        exportOptionsForm.ShowDialog();
+                    }
+
+                    break;
+                }
+                // Export dgn
+                case ExportFormat.DGN:
                 {
-                    exportOptionsForm.ShowDialog();
+                    var exportDGNData = m_exportData as ExportDGNData;
+                    using (var exportOptionsForm = new ExportDGNOptionsForm(exportDGNData))
+                    {
+                        exportOptionsForm.ShowDialog();
+                    }
+
+                    break;
+                }
+                // Export PDF
+                case ExportFormat.PDF:
+                {
+                    var exportPDFData = m_exportData as ExportPDFData;
+                    using (var exportOptionsForm = new ExportPDFOptionsForm(exportPDFData))
+                    {
+                        exportOptionsForm.ShowDialog();
+                    }
+
+                    break;
+                }
+                // Export DWF
+                default:
+                {
+                    var exportDWFData = m_exportData as ExportDWFData;
+                    using (var exportOptionsForm = new ExportDWFOptionForm(exportDWFData))
+                    {
+                        exportOptionsForm.ShowDialog();
+                    }
+
+                    break;
                 }
             }
         }
@@ -163,15 +179,20 @@ namespace Revit.SDK.Samples.ImportExport.CS
             if (result != DialogResult.Cancel)
             {
                 textBoxSaveAs.Text = fileName;
-                if (m_exportData.ExportFormat == ExportFormat.DWG)
+                switch (m_exportData.ExportFormat)
                 {
-                    var exportDWGData = m_exportData as ExportDWGData;
-                    exportDWGData.ExportFileVersion = exportDWGData.EnumFileVersion[filterIndex - 1];
-                }
-                else if (m_exportData.ExportFormat == ExportFormat.DXF)
-                {
-                    var exportDXFData = m_exportData as ExportDXFData;
-                    exportDXFData.ExportFileVersion = exportDXFData.EnumFileVersion[filterIndex - 1];
+                    case ExportFormat.DWG:
+                    {
+                        var exportDWGData = m_exportData as ExportDWGData;
+                        exportDWGData.ExportFileVersion = exportDWGData.EnumFileVersion[filterIndex - 1];
+                        break;
+                    }
+                    case ExportFormat.DXF:
+                    {
+                        var exportDXFData = m_exportData as ExportDXFData;
+                        exportDXFData.ExportFileVersion = exportDXFData.EnumFileVersion[filterIndex - 1];
+                        break;
+                    }
                 }
             }
         }

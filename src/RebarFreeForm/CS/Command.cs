@@ -88,8 +88,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                             if (reference == null)
                                 continue;
                             // create constraint using the picked faces and set it to the associated handle
-                            var refs = new List<Reference>();
-                            refs.Add(reference);
+                            var refs = new List<Reference> { reference };
                             var constraint = RebarConstraint.Create(handle, refs, true, 0.0);
                             rManager.SetPreferredConstraintForHandle(handle, constraint);
                         }

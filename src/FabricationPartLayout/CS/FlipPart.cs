@@ -22,9 +22,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                 var doc = uiDoc.Document;
 
                 var refObj = uiDoc.Selection.PickObject(ObjectType.Element, "Pick a fabrication part to flip.");
-                var part = doc.GetElement(refObj) as FabricationPart;
 
-                if (part == null)
+                if (!(doc.GetElement(refObj) is FabricationPart part))
                 {
                     message = "The selected element is not a fabrication part.";
                     return Result.Failed;

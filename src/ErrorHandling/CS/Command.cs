@@ -269,29 +269,31 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
             if (fmas.Count == 0) return FailureProcessingResult.Continue;
 
             var transactionName = failuresAccessor.GetTransactionName();
-            if (transactionName.Equals("Warning_FailurePreproccessor"))
+            switch (transactionName)
             {
-                foreach (var fma in fmas)
+                case "Warning_FailurePreproccessor":
                 {
-                    var id = fma.GetFailureDefinitionId();
-                    if (id == Command.m_idWarning) failuresAccessor.DeleteWarning(fma);
+                    foreach (var fma in fmas)
+                    {
+                        var id = fma.GetFailureDefinitionId();
+                        if (id == Command.m_idWarning) failuresAccessor.DeleteWarning(fma);
+                    }
+
+                    return FailureProcessingResult.ProceedWithCommit;
                 }
-
-                return FailureProcessingResult.ProceedWithCommit;
-            }
-
-            if (transactionName.Equals("Warning_FailurePreproccessor_OverlappedWall"))
-            {
-                foreach (var fma in fmas)
+                case "Warning_FailurePreproccessor_OverlappedWall":
                 {
-                    var id = fma.GetFailureDefinitionId();
-                    if (id == BuiltInFailures.OverlapFailures.WallsOverlap) failuresAccessor.DeleteWarning(fma);
+                    foreach (var fma in fmas)
+                    {
+                        var id = fma.GetFailureDefinitionId();
+                        if (id == BuiltInFailures.OverlapFailures.WallsOverlap) failuresAccessor.DeleteWarning(fma);
+                    }
+
+                    return FailureProcessingResult.ProceedWithCommit;
                 }
-
-                return FailureProcessingResult.ProceedWithCommit;
+                default:
+                    return FailureProcessingResult.Continue;
             }
-
-            return FailureProcessingResult.Continue;
         }
     }
 

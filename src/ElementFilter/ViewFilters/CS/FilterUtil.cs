@@ -43,38 +43,34 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             // Note that the rule may be inversed more than once.
             var inverted = false;
             var innerRule = ReflectToInnerRule(rule, out inverted);
-            if (innerRule is FilterStringRule)
+            switch (innerRule)
             {
-                var strRule = innerRule as FilterStringRule;
-                var evaluator = strRule.GetEvaluator();
-                return new FilterRuleBuilder(param, GetEvaluatorCriteriaName(evaluator, inverted), strRule.RuleString);
+                case FilterStringRule strRule:
+                {
+                    var evaluator = strRule.GetEvaluator();
+                    return new FilterRuleBuilder(param, GetEvaluatorCriteriaName(evaluator, inverted), strRule.RuleString);
+                }
+                case FilterDoubleRule dbRule:
+                {
+                    var evaluator = dbRule.GetEvaluator();
+                    return new FilterRuleBuilder(param, GetEvaluatorCriteriaName(evaluator, inverted), dbRule.RuleValue,
+                        dbRule.Epsilon);
+                }
+                case FilterIntegerRule intRule:
+                {
+                    var evaluator = intRule.GetEvaluator();
+                    return new FilterRuleBuilder(param, GetEvaluatorCriteriaName(evaluator, inverted), intRule.RuleValue);
+                }
+                case FilterElementIdRule idRule:
+                {
+                    var evaluator = idRule.GetEvaluator();
+                    return new FilterRuleBuilder(param, GetEvaluatorCriteriaName(evaluator, inverted), idRule.RuleValue);
+                }
+                default:
+                    // 
+                    // for other rule, not supported yet
+                    throw new NotImplementedException("The filter rule is not recognizable and supported yet!");
             }
-
-            if (innerRule is FilterDoubleRule)
-            {
-                var dbRule = innerRule as FilterDoubleRule;
-                var evaluator = dbRule.GetEvaluator();
-                return new FilterRuleBuilder(param, GetEvaluatorCriteriaName(evaluator, inverted), dbRule.RuleValue,
-                    dbRule.Epsilon);
-            }
-
-            if (innerRule is FilterIntegerRule)
-            {
-                var intRule = innerRule as FilterIntegerRule;
-                var evaluator = intRule.GetEvaluator();
-                return new FilterRuleBuilder(param, GetEvaluatorCriteriaName(evaluator, inverted), intRule.RuleValue);
-            }
-
-            if (innerRule is FilterElementIdRule)
-            {
-                var idRule = innerRule as FilterElementIdRule;
-                var evaluator = idRule.GetEvaluator();
-                return new FilterRuleBuilder(param, GetEvaluatorCriteriaName(evaluator, inverted), idRule.RuleValue);
-            }
-
-            // 
-            // for other rule, not supported yet
-            throw new NotImplementedException("The filter rule is not recognizable and supported yet!");
         }
 
         /// <summary>
@@ -90,23 +86,27 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         {
             // indicate if inverse criteria should be returned
             var isInverseRule = inverted;
-            if (fsre is FilterStringBeginsWith)
-                return isInverseRule ? RuleCriteraNames.NotBeginWith : RuleCriteraNames.BeginWith;
-            if (fsre is FilterStringContains)
-                return isInverseRule ? RuleCriteraNames.NotContains : RuleCriteraNames.Contains;
-            if (fsre is FilterStringEndsWith)
-                return isInverseRule ? RuleCriteraNames.NotEndsWith : RuleCriteraNames.EndsWith;
-            if (fsre is FilterStringEquals)
-                return isInverseRule ? RuleCriteraNames.NotEquals : RuleCriteraNames.Equals_;
-            if (fsre is FilterStringGreater)
-                return isInverseRule ? RuleCriteraNames.LessOrEqual : RuleCriteraNames.Greater;
-            if (fsre is FilterStringGreaterOrEqual)
-                return isInverseRule ? RuleCriteraNames.Less : RuleCriteraNames.GreaterOrEqual;
-            if (fsre is FilterStringLess)
-                return isInverseRule ? RuleCriteraNames.GreaterOrEqual : RuleCriteraNames.Less;
-            if (fsre is FilterStringLessOrEqual)
-                return isInverseRule ? RuleCriteraNames.Greater : RuleCriteraNames.LessOrEqual;
-            return RuleCriteraNames.Invalid;
+            switch (fsre)
+            {
+                case FilterStringBeginsWith _:
+                    return isInverseRule ? RuleCriteraNames.NotBeginWith : RuleCriteraNames.BeginWith;
+                case FilterStringContains _:
+                    return isInverseRule ? RuleCriteraNames.NotContains : RuleCriteraNames.Contains;
+                case FilterStringEndsWith _:
+                    return isInverseRule ? RuleCriteraNames.NotEndsWith : RuleCriteraNames.EndsWith;
+                case FilterStringEquals _:
+                    return isInverseRule ? RuleCriteraNames.NotEquals : RuleCriteraNames.Equals_;
+                case FilterStringGreater _:
+                    return isInverseRule ? RuleCriteraNames.LessOrEqual : RuleCriteraNames.Greater;
+                case FilterStringGreaterOrEqual _:
+                    return isInverseRule ? RuleCriteraNames.Less : RuleCriteraNames.GreaterOrEqual;
+                case FilterStringLess _:
+                    return isInverseRule ? RuleCriteraNames.GreaterOrEqual : RuleCriteraNames.Less;
+                case FilterStringLessOrEqual _:
+                    return isInverseRule ? RuleCriteraNames.Greater : RuleCriteraNames.LessOrEqual;
+                default:
+                    return RuleCriteraNames.Invalid;
+            }
         }
 
         /// <summary>
@@ -122,17 +122,21 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         {
             // indicate if inverse criteria should be returned
             var isInverseRule = inverted;
-            if (fsre is FilterNumericEquals)
-                return isInverseRule ? RuleCriteraNames.NotEquals : RuleCriteraNames.Equals_;
-            if (fsre is FilterNumericGreater)
-                return isInverseRule ? RuleCriteraNames.LessOrEqual : RuleCriteraNames.Greater;
-            if (fsre is FilterNumericGreaterOrEqual)
-                return isInverseRule ? RuleCriteraNames.Less : RuleCriteraNames.GreaterOrEqual;
-            if (fsre is FilterNumericLess)
-                return isInverseRule ? RuleCriteraNames.GreaterOrEqual : RuleCriteraNames.Less;
-            if (fsre is FilterNumericLessOrEqual)
-                return isInverseRule ? RuleCriteraNames.Greater : RuleCriteraNames.LessOrEqual;
-            return RuleCriteraNames.Invalid;
+            switch (fsre)
+            {
+                case FilterNumericEquals _:
+                    return isInverseRule ? RuleCriteraNames.NotEquals : RuleCriteraNames.Equals_;
+                case FilterNumericGreater _:
+                    return isInverseRule ? RuleCriteraNames.LessOrEqual : RuleCriteraNames.Greater;
+                case FilterNumericGreaterOrEqual _:
+                    return isInverseRule ? RuleCriteraNames.Less : RuleCriteraNames.GreaterOrEqual;
+                case FilterNumericLess _:
+                    return isInverseRule ? RuleCriteraNames.GreaterOrEqual : RuleCriteraNames.Less;
+                case FilterNumericLessOrEqual _:
+                    return isInverseRule ? RuleCriteraNames.Greater : RuleCriteraNames.LessOrEqual;
+                default:
+                    return RuleCriteraNames.Invalid;
+            }
         }
 
         /// <summary>
@@ -147,10 +151,10 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <returns>Inner rule of source rule, the inner rule is FilterValueRule type for this sample.</returns>
         public static FilterRule ReflectToInnerRule(FilterRule srcRule, out bool inverted)
         {
-            if (srcRule is FilterInverseRule)
+            if (srcRule is FilterInverseRule rule)
             {
                 inverted = true;
-                var innerRule = (srcRule as FilterInverseRule).GetInnerRule();
+                var innerRule = rule.GetInnerRule();
                 var invertedAgain = false;
                 var returnRule = ReflectToInnerRule(innerRule, out invertedAgain);
                 if (invertedAgain)
@@ -199,8 +203,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             // The ElementFilter is assumed to have been created by CreateElementFilterFromFilterRules,
             // which creates a LogicalAndFilter with each child being an ElementParameterFilter containing
             // just one FilterRule.
-            var logicalAndFilter = elemFilter as LogicalAndFilter;
-            if (null == logicalAndFilter)
+            if (!(elemFilter is LogicalAndFilter logicalAndFilter))
                 return null; // Error
 
             var childElemFilters = logicalAndFilter.GetFilters();
@@ -211,8 +214,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             IList<FilterRule> filterRules = new List<FilterRule>();
             foreach (var childElemFilter in childElemFilters)
             {
-                var elemParamFilter = childElemFilter as ElementParameterFilter;
-                if (null == elemParamFilter)
+                if (!(childElemFilter is ElementParameterFilter elemParamFilter))
                     return null;
                 var rules = elemParamFilter.GetRules();
                 if (1 != rules.Count)

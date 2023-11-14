@@ -103,9 +103,9 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
                 var elem = doc.GetElement(aRef.ElementId);
                 if (elem != null) sb.AppendFormat(" Name:{0}.", elem.Name);
 
-                if (aRef.LinkedElementId != ElementId.InvalidElementId && elem is RevitLinkInstance)
+                if (aRef.LinkedElementId != ElementId.InvalidElementId && elem is RevitLinkInstance instance)
                 {
-                    var linkedElem = ((RevitLinkInstance)elem).GetLinkDocument().GetElement(aRef.LinkedElementId);
+                    var linkedElem = instance.GetLinkDocument().GetElement(aRef.LinkedElementId);
                     if (linkedElem != null) sb.AppendFormat("Linked Element Name:{0}.", linkedElem.Name);
                 }
 
@@ -147,9 +147,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
 
             // Remove the extension 
             var pos = orgTitle.LastIndexOf('.');
-            if (-1 != pos)
-                return orgTitle.Remove(pos);
-            return orgTitle;
+            return -1 != pos ? orgTitle.Remove(pos) : orgTitle;
         }
     }
 }

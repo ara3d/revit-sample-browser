@@ -19,7 +19,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class CreateWall : IExternalCommand
     {
-        public static ElementSet CreatedWalls = new ElementSet(); //restore all the walls created by API.
+        public static readonly ElementSet CreatedWalls = new ElementSet(); //restore all the walls created by API.
 
         public Result Execute(ExternalCommandData revit,
             ref string message,
@@ -55,9 +55,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         protected WallType GetNewWallType(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];
-            var radioGroupTypeSelector =
-                GetRibbonItemByName(myPanel, "WallTypeSelector") as RadioButtonGroup;
-            if (null == radioGroupTypeSelector) throw new InvalidCastException("Cannot get Wall Type selector!");
+            if (!(GetRibbonItemByName(myPanel, "WallTypeSelector") is RadioButtonGroup radioGroupTypeSelector)) throw new InvalidCastException("Cannot get Wall Type selector!");
             var wallTypeName = radioGroupTypeSelector.Current.ItemText;
             WallType newWallType = null;
             var collector = new FilteredElementCollector(app.ActiveUIDocument.Document);
@@ -78,9 +76,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         protected Level GetNewWallLevel(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];
-            var comboboxLevel =
-                GetRibbonItemByName(myPanel, "LevelsSelector") as ComboBox;
-            if (null == comboboxLevel) throw new InvalidCastException("Cannot get Level selector!");
+            if (!(GetRibbonItemByName(myPanel, "LevelsSelector") is ComboBox comboboxLevel)) throw new InvalidCastException("Cannot get Level selector!");
             var wallLevel = comboboxLevel.Current.ItemText;
             //find wall type in document
             Level newWallLevel = null;
@@ -102,25 +98,25 @@ namespace Revit.SDK.Samples.Ribbon.CS
         protected List<Curve> GetNewWallShape(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];
-            var comboboxWallShape =
-                GetRibbonItemByName(myPanel, "WallShapeComboBox") as ComboBox;
-            if (null == comboboxWallShape) throw new InvalidCastException("Cannot get Wall Shape Gallery!");
+            if (!(GetRibbonItemByName(myPanel, "WallShapeComboBox") is ComboBox comboboxWallShape)) throw new InvalidCastException("Cannot get Wall Shape Gallery!");
             var wallShape = comboboxWallShape.Current.ItemText;
-            if ("SquareWall" == wallShape)
-                return GetSquareWallShape(app.Application.Create);
-            if ("CircleWall" == wallShape)
-                return GetCircleWallShape(app.Application.Create);
-            if ("TriangleWall" == wallShape)
-                return GetTriangleWallShape(app.Application.Create);
-            return GetRectangleWallShape(app.Application.Create);
+            switch (wallShape)
+            {
+                case "SquareWall":
+                    return GetSquareWallShape(app.Application.Create);
+                case "CircleWall":
+                    return GetCircleWallShape(app.Application.Create);
+                case "TriangleWall":
+                    return GetTriangleWallShape(app.Application.Create);
+                default:
+                    return GetRectangleWallShape(app.Application.Create);
+            }
         }
 
         protected string GetNewWallMark(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];
-            var textBox =
-                GetRibbonItemByName(myPanel, "WallMark") as TextBox;
-            if (null == textBox) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
+            if (!(GetRibbonItemByName(myPanel, "WallMark") is TextBox textBox)) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
 
             var newWallIndex = 0;
             var collector = new FilteredElementCollector(app.ActiveUIDocument.Document);
@@ -281,7 +277,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
             while (iter.MoveNext())
             {
                 var wall = iter.Current as Wall;
-                if (null != wall) wall.Location.Move(new XYZ(12, 0, 0));
+                wall?.Location.Move(new XYZ(12, 0, 0));
             }
 
             trans.Commit();
@@ -307,7 +303,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
             while (iter.MoveNext())
             {
                 var wall = iter.Current as Wall;
-                if (null != wall) wall.Location.Move(new XYZ(0, 12, 0));
+                wall?.Location.Move(new XYZ(0, 12, 0));
             }
 
             trans.Commit();
@@ -329,15 +325,11 @@ namespace Revit.SDK.Samples.Ribbon.CS
         {
             var myPanel = revit.Application.GetRibbonPanels()[0];
             //reset wall type
-            var radioGroupTypeSelector =
-                GetRibbonItemByName(myPanel, "WallTypeSelector") as RadioButtonGroup;
-            if (null == radioGroupTypeSelector) throw new InvalidCastException("Cannot get Wall Type selector!");
+            if (!(GetRibbonItemByName(myPanel, "WallTypeSelector") is RadioButtonGroup radioGroupTypeSelector)) throw new InvalidCastException("Cannot get Wall Type selector!");
             radioGroupTypeSelector.Current = radioGroupTypeSelector.GetItems()[0];
 
             //reset level
-            var comboboxLevel =
-                GetRibbonItemByName(myPanel, "LevelsSelector") as ComboBox;
-            if (null == comboboxLevel) throw new InvalidCastException("Cannot get Level selector!");
+            if (!(GetRibbonItemByName(myPanel, "LevelsSelector") is ComboBox comboboxLevel)) throw new InvalidCastException("Cannot get Level selector!");
             comboboxLevel.Current = comboboxLevel.GetItems()[0];
 
             //reset wall shape
@@ -347,9 +339,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
             comboboxWallShape.Current = comboboxWallShape.GetItems()[0];
 
             //get wall mark
-            var textBox =
-                GetRibbonItemByName(myPanel, "WallMark") as TextBox;
-            if (null == textBox) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
+            if (!(GetRibbonItemByName(myPanel, "WallMark") is TextBox textBox)) throw new InvalidCastException("Cannot get Wall Mark TextBox!");
             textBox.Value = "new wall";
 
             return Result.Succeeded;

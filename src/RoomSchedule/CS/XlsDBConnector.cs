@@ -138,7 +138,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                                 bHasColumn[col] = true;
                             else
                                 // this column is duplicate, reserve it
-                                duplicateColumns += string.Format("[{0}], ", constantNames[col]);
+                                duplicateColumns += $"[{constantNames[col]}], ";
                         }
                     }
                 }
@@ -147,8 +147,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 if (duplicateColumns.Length > 0)
                 {
                     // duplicate columns are not allowed
-                    var message = string.Format("There are duplicate column(s) in the spread sheet: {0}.",
-                        duplicateColumns);
+                    var message = $"There are duplicate column(s) in the spread sheet: {duplicateColumns}.";
                     throw new Exception(message);
                 }
 
@@ -157,13 +156,13 @@ namespace Revit.SDK.Samples.RoomSchedule
                 var missingColumns = string.Empty; // reserve all column names which are missing.
                 for (var col = 0; col < bHasColumn.Length; col++)
                     if (bHasColumn[col] == false)
-                        missingColumns += string.Format("[{0}], ", constantNames[col]);
+                        missingColumns += $"[{constantNames[col]}], ";
 
                 // check to see whether any required columns are missing.
                 if (missingColumns.Length != 0)
                 {
                     // some columns are missing, pop up these column names
-                    var message = string.Format("Required columns are missing: {0}.", missingColumns);
+                    var message = $"Required columns are missing: {missingColumns}.";
                     throw new Exception(message);
                 }
 
@@ -223,9 +222,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <returns>true, the two names are same; false, they are different.</returns>
         private static bool CheckSameColName(string baseName, string compName)
         {
-            if (string.Compare(baseName, compName) == 0)
-                return true;
-            return false;
+            return string.Compare(baseName, compName) == 0;
         }
     }
 }

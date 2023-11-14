@@ -455,12 +455,15 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <returns>The center location.</returns>
         private static XYZ GetNominalCenterLocation(Element e)
         {
-            var lp = e.Location as LocationPoint;
-            if (lp != null) return MoveToElevationZero(lp.Point);
-
-            var lc = e.Location as LocationCurve;
-            if (lc != null) return MoveToElevationZero(lc.Curve.Evaluate(0.5, true));
-            return XYZ.Zero;
+            switch (e.Location)
+            {
+                case LocationPoint lp:
+                    return MoveToElevationZero(lp.Point);
+                case LocationCurve lc:
+                    return MoveToElevationZero(lc.Curve.Evaluate(0.5, true));
+                default:
+                    return XYZ.Zero;
+            }
         }
     }
 }

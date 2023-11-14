@@ -65,9 +65,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <returns></returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(string)) return true;
-
-            return base.CanConvertFrom(context, sourceType);
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
         /// <summary>
@@ -95,8 +93,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         {
             if (destinationType == typeof(string))
             {
-                var symbol = v as FamilySymbol;
-                if (null == symbol) return "";
+                if (!(v is FamilySymbol symbol)) return "";
 
                 foreach (var kvp in m_hash)
                     if (kvp.Value.Id == symbol.Id)

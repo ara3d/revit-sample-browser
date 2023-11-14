@@ -150,9 +150,8 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <param name="args"></param>
         private void HideDocumentNotSaved(object sender, DialogBoxShowingEventArgs args)
         {
-            var tdArgs = args as TaskDialogShowingEventArgs;
             // The "Document not saved" dialog does not have a usable id, so we are forced to look at the text instead. 
-            if (tdArgs != null && tdArgs.Message.Contains("not saved"))
+            if (args is TaskDialogShowingEventArgs tdArgs && tdArgs.Message.Contains("not saved"))
                 args.OverrideResult(0x0008);
         }
 
@@ -163,8 +162,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <param name="args"></param>
         private void ReactToRevisionsAndSchedulesCommand(object sender, BeforeExecutedEventArgs args)
         {
-            if (externalEvent != null)
-                externalEvent.Raise();
+            externalEvent?.Raise();
         }
 
 

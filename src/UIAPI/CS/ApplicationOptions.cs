@@ -28,8 +28,10 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
         public static void Initialize(ExternalApp application)
         {
-            s_options = new ApplicationOptions();
-            s_options.m_eApplication = application;
+            s_options = new ApplicationOptions
+            {
+                m_eApplication = application
+            };
         }
 
         public static ApplicationOptions Get()

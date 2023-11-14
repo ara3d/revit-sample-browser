@@ -62,13 +62,10 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         /// <returns>If the data are integrated return true, otherwise false</returns>
         public bool AssertPointIntegrity()
         {
-            if (string.IsNullOrEmpty(xCoordinateTextBox.Text) // x coordinate empty
-                || string.IsNullOrEmpty(yCoordinateTextBox.Text) // y coordinate empty
-                || string.IsNullOrEmpty(zCoordinateTextBox.Text)) // z coordinate empty
-                return false;
-
+            return !string.IsNullOrEmpty(xCoordinateTextBox.Text) && ! // x coordinate empty
+                string.IsNullOrEmpty(yCoordinateTextBox.Text) && ! // y coordinate empty
+                string.IsNullOrEmpty(zCoordinateTextBox.Text); // z coordinate empty
             // If all coordinates are not empty, return true
-            return true;
         }
 
 
@@ -80,8 +77,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         private void CoordinateTextBox_Validating(object sender, CancelEventArgs e)
         {
             // Check whether the sender is a TextBox reference
-            var numberTextBox = sender as TextBox;
-            if (null == numberTextBox)
+            if (!(sender is TextBox numberTextBox))
                 // If it is not a TextBox, just return
                 return;
 

@@ -175,8 +175,8 @@ namespace Revit.SDK.Samples.AutoParameter.CS
             }
             finally
             {
-                if (null != reader) reader.Close();
-                if (null != file) file.Close();
+                reader?.Close();
+                file?.Close();
             }
 
             return true;
@@ -229,9 +229,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
 
             // add the loaded shared parameters to the family
             succeeded = AddSharedParameter();
-            if (!succeeded) return false;
-
-            return true;
+            return succeeded;
         }
 
         /// <summary>

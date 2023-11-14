@@ -115,8 +115,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             foreach (var elementId in doc.Selection.GetElementIds())
             {
                 object obj = doc.Document.GetElement(elementId);
-                var beam = obj as FamilyInstance;
-                if (null == beam) continue;
+                if (!(obj is FamilyInstance beam)) continue;
 
                 // add beam to lists according to category name
                 var categoryName = beam.Category.Name;
@@ -131,8 +130,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             while (itor.MoveNext())
             {
                 // get Family to get FamilySymbols
-                var aFamily = itor.Current as Family;
-                if (null == aFamily) continue;
+                if (!(itor.Current is Family aFamily)) continue;
 
                 foreach (var symbolId in aFamily.GetFamilySymbolIds())
                 {
@@ -201,7 +199,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <param name="e"></param>
         protected virtual void OnParamsUpdated(EventArgs e)
         {
-            if (null != ParamsUpdated) ParamsUpdated(this, e);
+            ParamsUpdated?.Invoke(this, e);
         }
     }
 }

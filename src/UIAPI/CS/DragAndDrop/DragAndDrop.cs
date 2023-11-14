@@ -72,9 +72,11 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
             foreach (var familySymbol in collector.Cast<FamilySymbol>())
             {
-                var item = new ListViewItem();
-                item.Tag = familySymbol.Id;
-                item.Text = familySymbol.Family.Name + "::" + familySymbol.Name;
+                var item = new ListViewItem
+                {
+                    Tag = familySymbol.Id,
+                    Text = familySymbol.Family.Name + "::" + familySymbol.Name
+                };
                 item.ToolTipText = "Drag to place instances of " + item.Text + " in the active document.";
 
                 var bitmap = familySymbol.GetPreviewImage(size);
@@ -116,8 +118,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 var member = (FamilyListBoxMember)listBox1.SelectedItem;
 
                 // Use standard Revit drag and drop behavior
-                var data = new List<string>();
-                data.Add(member.FullPath);
+                var data = new List<string> { member.FullPath };
                 UIApplication.DoDragDrop(data);
             }
         }
@@ -160,9 +161,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             {
                 var familySymbolId = (ElementId)data;
 
-                var symbol = document.Document.GetElement(familySymbolId) as FamilySymbol;
-
-                if (symbol != null) document.PromptForFamilyInstancePlacement(symbol);
+                if (document.Document.GetElement(familySymbolId) is FamilySymbol symbol) document.PromptForFamilyInstancePlacement(symbol);
             }
             catch (OperationCanceledException)
             {

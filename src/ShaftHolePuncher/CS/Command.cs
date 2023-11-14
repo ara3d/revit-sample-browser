@@ -48,30 +48,31 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                     iter.Reset();
                     if (iter.MoveNext()) selectElem = (Element)iter.Current;
 
-                    if (selectElem is Wall)
+                    switch (selectElem)
                     {
-                        wall = selectElem as Wall;
-                    }
-                    else if (selectElem is Floor)
-                    {
-                        floor = selectElem as Floor;
-                    }
-                    else if (selectElem is FamilyInstance)
-                    {
-                        familyInstance = selectElem as FamilyInstance;
-                        if (familyInstance.StructuralType !=
-                            StructuralType.Beam)
+                        case Wall elem:
+                            wall = elem;
+                            break;
+                        case Floor elem1:
+                            floor = elem1;
+                            break;
+                        case FamilyInstance instance:
                         {
+                            familyInstance = instance;
+                            if (familyInstance.StructuralType !=
+                                StructuralType.Beam)
+                            {
+                                message = errorMessage;
+                                trans.RollBack();
+                                return Result.Cancelled;
+                            }
+
+                            break;
+                        }
+                        default:
                             message = errorMessage;
                             trans.RollBack();
                             return Result.Cancelled;
-                        }
-                    }
-                    else
-                    {
-                        message = errorMessage;
-                        trans.RollBack();
-                        return Result.Cancelled;
                     }
                 }
 

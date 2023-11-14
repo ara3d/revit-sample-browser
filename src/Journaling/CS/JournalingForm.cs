@@ -62,15 +62,13 @@ namespace Revit.SDK.Samples.Journaling.CS
                 return;
             }
 
-            var level = levelComboBox.SelectedItem as Level; // level information
-            if (null == level) // assert it isn't null
+            if (!(levelComboBox.SelectedItem is Level level)) // assert it isn't null
             {
                 TaskDialog.Show("Revit", "The selected level is null or incorrect.");
                 return;
             }
 
-            var type = typeComboBox.SelectedItem as WallType; // wall type
-            if (null == type) // assert it isn't null
+            if (!(typeComboBox.SelectedItem is WallType type)) // assert it isn't null
             {
                 TaskDialog.Show("Revit", "The selected wall type is null or incorrect.");
                 return;

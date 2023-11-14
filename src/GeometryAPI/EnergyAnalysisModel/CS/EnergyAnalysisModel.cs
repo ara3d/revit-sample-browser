@@ -16,6 +16,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         // Options for Energy Analysis process
         // revit document
         private readonly Document RevitDoc;
+        private EnergyAnalysisDetailModelOptions m_options;
 
         /// <summary>
         ///     Constructor
@@ -28,7 +29,11 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         }
 
         // Options Property
-        public EnergyAnalysisDetailModelOptions Options { get; set; }
+        public EnergyAnalysisDetailModelOptions Options
+        {
+            get => m_options;
+            set => m_options = value;
+        }
 
         /// <summary>
         ///     Get EnergyAnalysisDetailModel object and Initialize it.

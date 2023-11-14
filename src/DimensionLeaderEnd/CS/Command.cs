@@ -32,9 +32,7 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
                 else
                     foreach (var id in selectedIds)
                     {
-                        var dim = doc.GetElement(id) as Dimension;
-
-                        if (null != dim)
+                        if (doc.GetElement(id) is Dimension dim)
                         {
                             var dimLine = dim.Curve as Line;
                             if (dimLine != null)
@@ -103,8 +101,7 @@ namespace Revit.SDK.Samples.DimensionLeaderEnd.CS
                 else
                     foreach (var id in selectedIds)
                     {
-                        var dim = doc.GetElement(id) as Dimension;
-                        if (null != dim)
+                        if (doc.GetElement(id) is Dimension dim)
                         {
                             var startPoint = selection.PickPoint(ObjectSnapTypes.None, "Pick start");
                             _transaction_.Start("Set leader end point");
