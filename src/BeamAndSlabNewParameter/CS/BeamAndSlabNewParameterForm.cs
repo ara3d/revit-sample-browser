@@ -21,10 +21,6 @@
 //
 
 
-using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 using Autodesk.Revit.UI;
@@ -34,13 +30,13 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
     /// <summary>
     /// User Interface.
     /// </summary>
-    public class BeamAndSlabParametersForm : System.Windows.Forms.Form
+    public class BeamAndSlabParametersForm : Form
     {
-        private System.Windows.Forms.Button addParameterButton;
-        private System.Windows.Forms.Button  displayValueButton;
-        private System.Windows.Forms.Button  exitButton;
-        private System.Windows.Forms.ListBox attributeValueListBox;
-        private System.Windows.Forms.Label    attributeValueLabel;
+        private Button addParameterButton;
+        private Button  displayValueButton;
+        private Button  exitButton;
+        private ListBox attributeValueListBox;
+        private Label    attributeValueLabel;
         private Button findButton;
         /// <summary>
         /// Required designer variable.
@@ -169,7 +165,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         #endregion
     
         // an instance of Command class
-        Command m_dataBuffer = null;
+        Command m_dataBuffer;
 
         /// <summary>
         /// Call SetNewParameterToBeamsAndSlabs function 
@@ -183,13 +179,13 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 
             if (successAddParameter)
             {
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
                 m_dataBuffer.SetValueToUniqueIDParameter();
                 TaskDialog.Show("Revit", "Done");
             }
             else
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
                 m_dataBuffer.SetValueToUniqueIDParameter();
                 TaskDialog.Show("Revit", "Unique ID parameter exist");
             }
@@ -238,7 +234,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         /// <param name="e"></param>
         private void exitButton_Click(object sender, System.EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

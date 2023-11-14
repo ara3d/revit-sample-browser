@@ -21,12 +21,7 @@
 //  
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -38,7 +33,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
     public class CoordinateSystemData
    {
       ExternalCommandData m_command; // the ExternalCommandData reference
-      Autodesk.Revit.UI.UIApplication m_application; //the revit application reference
+      UIApplication m_application; //the revit application reference
 
       const double Modulus = 0.0174532925199433; //a modulus for degree convert to pi 
       const int Precision = 3; //default precision 
@@ -53,72 +48,36 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
       /// <summary>
       /// the value of the angle form true north
       /// </summary>
-      public double AngleOffset
-      {
-         get
-         {
-            return m_angle;
-         }
-      }
+      public double AngleOffset => m_angle;
 
       /// <summary>
       /// return the East to West offset
       /// </summary>
-      public double EastWestOffset
-      {
-         get
-         {
-            return m_eastWest;
-         }
-      }
+      public double EastWestOffset => m_eastWest;
 
       /// <summary>
       /// return the North to South offset
       /// </summary>
-      public double NorthSouthOffset
-      {
-         get
-         {
-            return m_northSouth;
-         }
-      }
+      public double NorthSouthOffset => m_northSouth;
 
       /// <summary>
       /// return the Elevation above ground level
       /// </summary>
-      public double PositionElevation
-      {
-         get
-         {
-            return m_elevation;
-         }
-      }
+      public double PositionElevation => m_elevation;
 
       /// <summary>
       /// get and set the current project location name of the project
       /// </summary>
       public string LocationName
       {
-         get
-         {
-            return m_currentLocationName;
-         }
-         set
-         {
-            m_currentLocationName = value;
-         }
+         get => m_currentLocationName;
+         set => m_currentLocationName = value;
       }
 
       /// <summary>
       /// get all the project locations' name of the project
       /// </summary>
-      public List<string> LocationNames
-      {
-         get
-         {
-            return m_locationnames;
-         }
-      }
+      public List<string> LocationNames => m_locationnames;
 
       /// <summary>
       /// constructor
@@ -136,7 +95,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
       /// </summary>
       public void GatData()
       {
-         this.GetLocationData();
+         GetLocationData();
       }
 
       /// <summary>
@@ -216,7 +175,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             if (projectLocation.Name == locationName ||
                         projectLocation.Name + " (current)" == locationName)
             {
-               var origin = new Autodesk.Revit.DB.XYZ (0, 0, 0);
+               var origin = new XYZ (0, 0, 0);
                //get the project position
                var pp = projectLocation.GetProjectPosition(origin);
                m_angle = (pp.Angle /= Modulus); //convert to unit degree  
@@ -226,7 +185,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                break;
             }
          }
-         this.ChangePrecision();
+         ChangePrecision();
       }
 
 
@@ -248,7 +207,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                         location.Name + " (current)" == locationName)
             {
                //get the project position
-               var origin = new Autodesk.Revit.DB.XYZ (0, 0, 0);
+               var origin = new XYZ (0, 0, 0);
                var projectPosition = location.GetProjectPosition(origin);
                //change the offset value of the project position
                projectPosition.Angle = newAngle * Modulus; //convert the unit 

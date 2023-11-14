@@ -81,10 +81,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         public override IList<XYZ> ControlPoints
         {
-            get
-            {
-                return base.ControlPoints;
-            }
+            get => base.ControlPoints;
             set
             {
                 if (value.Count != 4)

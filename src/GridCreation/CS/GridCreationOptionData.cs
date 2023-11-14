@@ -20,13 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
-
 namespace Revit.SDK.Samples.GridCreation.CS
 {
     /// <summary>
@@ -47,26 +40,15 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public CreateMode CreateGridsMode
         {
-            get
-            {
-                return m_createGridsMode;
-            }
-            set 
-            { 
-                m_createGridsMode = value; 
-            }
+            get => m_createGridsMode;
+            set => m_createGridsMode = value;
         }
 
         /// <summary>
         /// State whether lines/arcs have been selected
         /// </summary>
-        public bool HasSelectedLinesOrArcs
-        {
-            get
-            {
-                return m_hasSelectedLinesOrArcs;
-            }
-        }
+        public bool HasSelectedLinesOrArcs => m_hasSelectedLinesOrArcs;
+
         #endregion
 
         #region Methods

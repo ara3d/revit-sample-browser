@@ -21,13 +21,6 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
-using System.Configuration;
-using System.Reflection;
-
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.GridCreation.CS

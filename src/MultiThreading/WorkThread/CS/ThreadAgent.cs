@@ -38,7 +38,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
     {
         #region class member variables
         // The main method for calculating results for the face analysis
-        private Thread m_thread = null;
+        private Thread m_thread;
         // Results
         private SharedResults m_results;
         // BoundingBoxUV
@@ -74,7 +74,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 return false;
             }
 
-            m_thread = new Thread(new ParameterizedThreadStart(this.Run));
+            m_thread = new Thread(new ParameterizedThreadStart(Run));
             m_thread.Start(m_results);
             return true;
         }
@@ -84,13 +84,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         ///   A property to test whether the calculation thread is still alive.
         /// </summary>
         /// 
-        public bool IsThreadAlive
-        {
-            get
-            {
-                return (m_thread != null) && (m_thread.IsAlive);
-            }
-        }
+        public bool IsThreadAlive => (m_thread != null) && (m_thread.IsAlive);
 
 
         /// <summary>
@@ -120,7 +114,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         ///   the process or are asked to stop.
         /// </param>
         /// 
-        private void Run(Object data)
+        private void Run(object data)
         {
             var results = data as SharedResults;
 

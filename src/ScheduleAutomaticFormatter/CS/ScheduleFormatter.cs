@@ -20,10 +20,6 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
@@ -164,10 +160,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// <summary>
         /// GUID of the updater.
         /// </summary>
-        private static System.Guid UpdaterGUID
-        {
-            get { return new System.Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}"); }
-        }
+        private static System.Guid UpdaterGUID => new System.Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
 
         #endregion
     }

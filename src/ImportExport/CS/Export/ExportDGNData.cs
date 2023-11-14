@@ -21,12 +21,8 @@
 // 
 
 using System;
-using System.Text;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Diagnostics;
@@ -43,146 +39,98 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         /// String list of Layer Settings used in UI
         /// </summary>
-        List<String> m_layerMapping;
+        List<string> m_layerMapping;
         /// <summary>
         /// String list of layer settings values defined in Revit 
         /// </summary>
-        List<String> m_enumLayerMapping;
+        List<string> m_enumLayerMapping;
         /// <summary>
         /// String list of exported format version defined in Revit 
         /// </summary>
-        List<String> m_exportFileVersions;
+        List<string> m_exportFileVersions;
       
         /// <summary>
         /// Layer setting option to export
         /// </summary>
-        private String m_exportLayerMapping;
+        private string m_exportLayerMapping;
         /// <summary>
         /// Exported format version
         /// </summary>
-        private String m_exportFileVersion;
+        private string m_exportFileVersion;
         /// <summary>
         /// Whether to hide scope box
         /// </summary>
-        private Boolean m_hideScopeBox;
+        private bool m_hideScopeBox;
         /// <summary>
         /// Whether to hide unreference view tags
         /// </summary>
-        private Boolean m_hideUnreferenceViewTags;
+        private bool m_hideUnreferenceViewTags;
         /// <summary>
         /// Whether to hide reference plane
         /// </summary>
-        private Boolean m_hideReferencePlane;
+        private bool m_hideReferencePlane;
         #endregion
 
         #region Class Properties
         /// <summary>
         /// Layer setting option to export
         /// </summary>
-        public String ExportLayerMapping
+        public string ExportLayerMapping
         {
-            get
-            {
-                return m_exportLayerMapping;
-            }
-            set
-            {
-                m_exportLayerMapping = value;
-            }
+            get => m_exportLayerMapping;
+            set => m_exportLayerMapping = value;
         }
 
         /// <summary>
         /// Whether to hide scope box
         /// </summary>
-        public Boolean HideScopeBox
+        public bool HideScopeBox
         {
-            get 
-            { 
-                return m_hideScopeBox; 
-            }
-            set 
-            {
-                m_hideScopeBox = value; 
-            }
+            get => m_hideScopeBox;
+            set => m_hideScopeBox = value;
         }
 
         /// <summary>
         /// Whether to hide unreference view tags
         /// </summary>
-        public Boolean HideUnreferenceViewTags
+        public bool HideUnreferenceViewTags
         {
-            get 
-            { 
-                return m_hideUnreferenceViewTags;
-            }
-            set 
-            { 
-                m_hideUnreferenceViewTags = value;
-            }
+            get => m_hideUnreferenceViewTags;
+            set => m_hideUnreferenceViewTags = value;
         }
 
         /// <summary>
         /// Whether to hide reference plane
         /// </summary>
-        public Boolean HideReferencePlane
+        public bool HideReferencePlane
         {
-            get 
-            { 
-                return m_hideReferencePlane;
-            }
-            set 
-            { 
-                m_hideReferencePlane = value; 
-            }
+            get => m_hideReferencePlane;
+            set => m_hideReferencePlane = value;
         }
 
         /// <summary>
         /// Exported format version
         /// </summary>
-        public String ExportFileVersion
+        public string ExportFileVersion
         {
-            get 
-            { 
-                return m_exportFileVersion; 
-            }
-            set 
-            { 
-                m_exportFileVersion = value; 
-            }
+            get => m_exportFileVersion;
+            set => m_exportFileVersion = value;
         }
 
         /// <summary>
         /// String collection of Layer Settings used in UI
         /// </summary>
-        public ReadOnlyCollection<String> LayerMapping
-        {
-            get
-            {
-                return new ReadOnlyCollection<String>(m_layerMapping);
-            }
-        }
+        public ReadOnlyCollection<string> LayerMapping => new ReadOnlyCollection<string>(m_layerMapping);
 
         /// <summary>
         /// String list of exported format version defined in Revit 
         /// </summary>
-        public List<String> ExportFileVersions
-        {
-            get 
-            { 
-                return m_exportFileVersions; 
-            }
-        }
+        public List<string> ExportFileVersions => m_exportFileVersions;
 
         /// <summary>
         /// String collection of layer settings values defined in Revit  
         /// </summary>
-        public ReadOnlyCollection<String> EnumLayerMapping
-        {
-            get
-            {
-                return new ReadOnlyCollection<String>(m_enumLayerMapping);
-            }
-        }
+        public ReadOnlyCollection<string> EnumLayerMapping => new ReadOnlyCollection<string>(m_enumLayerMapping);
 
         #endregion
 
@@ -204,8 +152,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         private void Initialize()
         {
             //Layer Settings:
-            m_layerMapping = new List<String>();
-            m_enumLayerMapping = new List<String>();
+            m_layerMapping = new List<string>();
+            m_enumLayerMapping = new List<string>();
             m_layerMapping.Add("AIA - American Institute of Architects standard");
             m_enumLayerMapping.Add("AIA");
             m_layerMapping.Add("ISO13567 - ISO standard 13567");

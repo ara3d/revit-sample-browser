@@ -22,10 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -65,7 +61,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
             if(null == mySolid)
                return Result.Failed;
 
-            using (var tran = new Autodesk.Revit.DB.Transaction(_dbdocument, "CreateCube"))
+            using (var tran = new Transaction(_dbdocument, "CreateCube"))
             {
                tran.Start();
                var dsCubed = DirectShape.CreateElement(_dbdocument, new ElementId(BuiltInCategory.OST_Walls));
@@ -213,7 +209,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
          return brepBuilder;
       }
 
-      private Document _dbdocument = null;
+      private Document _dbdocument;
 
    }
 }

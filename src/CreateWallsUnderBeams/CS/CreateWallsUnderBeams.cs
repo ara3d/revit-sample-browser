@@ -22,12 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
-using System.Text;
 using System.Windows.Forms;
 using System.Linq;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -47,46 +43,31 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         ArrayList m_beamCollection;             // Store the selection of beams in Revit
         WallType m_selectedWallType;            // Store the selected wall type
         Level m_level;                          // Store the level which wall create on
-        Boolean m_isStructural;                 // Indicate whether create structural walls
-        String m_errorInformation;              // Store the error information
-        const Double PRECISION = 0.0000000001;  // Define a precision of double data
+        bool m_isStructural;                 // Indicate whether create structural walls
+        string m_errorInformation;              // Store the error information
+        const double PRECISION = 0.0000000001;  // Define a precision of double data
 
         // Properties
         /// <summary>
         /// Inform all the wall types can be created in current document
         /// </summary>
-        public IList<WallType> WallTypes
-        {
-            get
-            {
-                return m_wallTypeCollection;
-            }
-        }
+        public IList<WallType> WallTypes => m_wallTypeCollection;
 
         /// <summary>
         /// Inform the wall type selected by the user
         /// </summary>
-        public Object SelectedWallType
+        public object SelectedWallType
         {
-            set
-            {
-                m_selectedWallType = value as WallType;
-            }
+            set => m_selectedWallType = value as WallType;
         }
 
         /// <summary>
         /// Inform whether the user want to create structural or architecture walls
         /// </summary>
-        public Boolean IsSturctual
+        public bool IsSturctual
         {
-            get
-            {
-                return m_isStructural;
-            }
-            set
-            {
-                m_isStructural = value;
-            }
+            get => m_isStructural;
+            set => m_isStructural = value;
         }
 
         // Methods
@@ -101,24 +82,9 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
         }
 
         #region IExternalCommand Members Implementation
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-                                                    ref string message, Autodesk.Revit.DB.ElementSet elements)
+        
+        public Result Execute(ExternalCommandData commandData,
+                                                    ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
             var project = revit.ActiveUIDocument;
@@ -129,7 +95,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             {
                selection.Insert(project.Document.GetElement(elementId));
             }
-            foreach (Autodesk.Revit.DB.Element e in selection)
+            foreach (Element e in selection)
             {
                 var m = e as FamilyInstance;
                 if (null != m)
@@ -144,14 +110,14 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             if (0 == m_beamCollection.Count)
             {
                 message = "Can not find any beams.";
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             // Make sure all the beams have horizontal analytical line
             if (!CheckBeamHorizontal())
             {
                 message = m_errorInformation;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             // Search all the wall types in the Revit
@@ -164,7 +130,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             {
                 if (DialogResult.OK != displayForm.ShowDialog())
                 {
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
             }
 
@@ -172,11 +138,11 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             if (!BeginCreate(project.Document))
             {
                 message = m_errorInformation;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             // If everything goes right, return succeeded.
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
       #endregion IExternalCommand Members Implementation
 
@@ -185,7 +151,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
       /// </summary>
       /// <param name="project"> A reference of current document</param>
       /// <returns>true if there is no error in process; otherwise, false.</returns>
-      Boolean BeginCreate(Autodesk.Revit.DB.Document project)
+      bool BeginCreate(Document project)
       {
          // Begin to create walls along and under each beam
          for (var i = 0; i < m_beamCollection.Count; i++)
@@ -240,7 +206,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
       /// Check whether all the beams have horizontal analytical line 
       /// </summary>
       /// <returns>true if each beam has horizontal analytical line; otherwise, false.</returns>
-      Boolean CheckBeamHorizontal()
+      bool CheckBeamHorizontal()
       {
          for (var i = 0; i < m_beamCollection.Count; i++)
          {

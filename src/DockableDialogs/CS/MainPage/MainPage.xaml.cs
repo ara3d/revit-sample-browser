@@ -21,42 +21,29 @@
 //
 
 using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.Win32;
-using System.Windows.Navigation;
-using System.Windows.Controls.Primitives;
-using System.Reflection;
-using System.Drawing;
-using System.Configuration;
-using System.Collections.Generic;
 using Autodesk.Revit.UI;
 using System.Text;
 
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
 
-   public partial class MainPage : Page, Autodesk.Revit.UI.IDockablePaneProvider
+   public partial class MainPage : Page, IDockablePaneProvider
     {
       public MainPage()
         {
            InitializeComponent();
-           m_exEvent  = Autodesk.Revit.UI.ExternalEvent.Create(m_handler);
+           m_exEvent  = ExternalEvent.Create(m_handler);
            m_textWriter = new StandardIORouter(tb_output); 
            Console.SetOut(m_textWriter);  //Send all standard output to the text rerouter.
         }
       UIApplication Application
       {
-         set { m_application = value; }
+         set => m_application = value;
       }
       #region UI State
 
@@ -68,9 +55,9 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       private void EnableCommands(bool status)
       {
          if (status == false)
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
          else
-            this.Cursor = Cursors.Arrow;
+            Cursor = Cursors.Arrow;
       }
 
       public void WakeUp()
@@ -128,8 +115,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
 
         #endregion
       #region Data
-        private Autodesk.Revit.UI.UIApplication m_application;
-         private Autodesk.Revit.UI.ExternalEvent m_exEvent;
+        private UIApplication m_application;
+         private ExternalEvent m_exEvent;
          private APIExternalEventHandler m_handler=  new APIExternalEventHandler();
          private System.IO.TextWriter m_textWriter; //Used to re-route any standard IO to the WPF UI.
 
@@ -140,13 +127,13 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       /// Called by Revit to initialize dockable pane settings set in DockingSetupDialog.
       /// </summary>
       /// <param name="data"></param>
-        public void SetupDockablePane(Autodesk.Revit.UI.DockablePaneProviderData data)
+        public void SetupDockablePane(DockablePaneProviderData data)
         {
             data.FrameworkElement = this as FrameworkElement;
             var d = new DockablePaneProviderData();
 
 
-            data.InitialState = new Autodesk.Revit.UI.DockablePaneState(); 
+            data.InitialState = new DockablePaneState(); 
             data.InitialState.DockPosition = m_position;
            DockablePaneId targetPane;
            if (m_targetGuid == Guid.Empty)
@@ -194,8 +181,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
        {
           var sb = new StringBuilder();
           sb.AppendLine("-WFP Page Info-");
-          sb.AppendLine("FrameWorkElement.Width=" + this.Width);
-          sb.AppendLine("FrameWorkElement.Height=" + this.Height);
+          sb.AppendLine("FrameWorkElement.Width=" + Width);
+          sb.AppendLine("FrameWorkElement.Height=" + Height);
 
           return sb.ToString();
        }
@@ -238,12 +225,12 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
        {
           Log.Message("***Dockable dialogs***");
         Log.Message(" Main dialog: " + Globals.sm_UserDockablePaneId.Guid.ToString());
-        Log.Message(" Element View: " + Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.ElementView.Guid.ToString());
-        Log.Message(" System Navigator: " + Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid.ToString());
-        Log.Message(" Link Navigator: " + Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid.ToString());
-        Log.Message(" Project Browser: " + Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid.ToString());
-        Log.Message(" Properties Palette: " + Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid.ToString());
-        Log.Message(" Rebar Browser: " + Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid.ToString());
+        Log.Message(" Element View: " + DockablePanes.BuiltInDockablePanes.ElementView.Guid.ToString());
+        Log.Message(" System Navigator: " + DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid.ToString());
+        Log.Message(" Link Navigator: " + DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid.ToString());
+        Log.Message(" Project Browser: " + DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid.ToString());
+        Log.Message(" Properties Palette: " + DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid.ToString());
+        Log.Message(" Rebar Browser: " + DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid.ToString());
 
 
        }

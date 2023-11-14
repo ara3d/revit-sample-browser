@@ -21,14 +21,8 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Reflection;
 using System.Diagnostics;
 
 using Autodesk.Revit.UI;
@@ -38,7 +32,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     /// Provide a dialog which provides the options for exporting dgn format
     /// </summary>
-    public partial class ExportDGNOptionsForm : System.Windows.Forms.Form
+    public partial class ExportDGNOptionsForm : Form
     {
         /// <summary>
         /// data class
@@ -77,7 +71,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(textBox2DSeedFile.Text))
+            if (string.IsNullOrEmpty(textBox2DSeedFile.Text))
             {
                 TaskDialog.Show("Specify 2D seed file", "Please specify the 2D seed file.", TaskDialogCommonButtons.Ok);
                 button2DSeedFile.Focus();
@@ -91,7 +85,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 return;
             }
 
-            if (String.IsNullOrEmpty(textBox3DSeedFile.Text))
+            if (string.IsNullOrEmpty(textBox3DSeedFile.Text))
             {
                 TaskDialog.Show("Specify 3D seed file", "Please specify the 3D seed file.", TaskDialogCommonButtons.Ok);
                 button3DSeedFile.Focus();
@@ -111,7 +105,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_data.HideScopeBox = checkBoxHideScopeBoxes.Checked;
             m_data.HideReferencePlane = checkBoxHideReferencePlanes.Checked;
             m_data.HideUnreferenceViewTags = checkBoxHideUnrefereceViewTag.Checked;
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -121,7 +115,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="e"></param>
         private void button2DSeedFile_Click(object sender, EventArgs e)
         {
-            var fileName = String.Empty;
+            var fileName = string.Empty;
             var result = ShowOpenDialog(ref fileName);
             if (result != DialogResult.Cancel)
             {
@@ -134,7 +128,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         /// <param name="returnFileName"></param>
         /// <returns></returns>
-        public static DialogResult ShowOpenDialog(ref String returnFileName)
+        public static DialogResult ShowOpenDialog(ref string returnFileName)
         {
             var mainModule = Process.GetCurrentProcess().MainModule;
             var folderRevit = Path.GetDirectoryName(mainModule.FileName);
@@ -164,7 +158,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
         private void button3DSeedFile_Click(object sender, EventArgs e)
         {
-            var fileName = String.Empty;
+            var fileName = string.Empty;
             var result = ShowOpenDialog(ref fileName);
             if (result != DialogResult.Cancel)
             {

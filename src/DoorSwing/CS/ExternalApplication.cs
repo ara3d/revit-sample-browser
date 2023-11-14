@@ -21,15 +21,9 @@
 //
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
 
@@ -65,7 +59,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// some point.
         /// If false is returned then Revit should inform the user that the external application 
         /// failed to load and the release the internal reference.</returns> 
-        public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
             m_controlApp = application;
 
@@ -124,7 +118,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
             #endregion
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -138,9 +132,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// Cancelled can be used to signify that the user cancelled the external operation at some point.
         /// If false is returned then the Revit user should be warned of the failure of the external 
         /// application to shut down correctly.</returns>
-        public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         #endregion
@@ -151,7 +145,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="args">An DocumentSavingEventArgs that contains the DocumentSaving event data.</param>
-        private void DocumentSavingHandler(Object sender, DocumentSavingEventArgs args)
+        private void DocumentSavingHandler(object sender, DocumentSavingEventArgs args)
         {
             var message = "";
             Transaction tran = null;
@@ -161,7 +155,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 var doc = args.Document;
                 if (doc.IsModifiable)
                 {
-                    if (DoorSwingData.UpdateDoorsInfo(args.Document, false, false, ref message) != Autodesk.Revit.UI.Result.Succeeded)
+                    if (DoorSwingData.UpdateDoorsInfo(args.Document, false, false, ref message) != Result.Succeeded)
                         TaskDialog.Show("Door Swing", message);
                 }
                 else
@@ -169,7 +163,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                     tran = new Transaction(doc, "Update parameters in Saving event");
                     tran.Start();
 
-                    if (DoorSwingData.UpdateDoorsInfo(args.Document, false, false, ref message) != Autodesk.Revit.UI.Result.Succeeded)
+                    if (DoorSwingData.UpdateDoorsInfo(args.Document, false, false, ref message) != Result.Succeeded)
                         TaskDialog.Show("Door Swing", message);
 
                     tran.Commit();
@@ -195,7 +189,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="args">An DocumentSavingAsEventArgs that contains the DocumentSavingAs event data.</param>
-        private void DocumentSavingAsHandler(Object sender, DocumentSavingAsEventArgs args)
+        private void DocumentSavingAsHandler(object sender, DocumentSavingAsEventArgs args)
         {
             var message = "";
             Transaction tran = null;
@@ -204,7 +198,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 var doc = args.Document;
                 if (doc.IsModifiable)
                 {
-                    if (DoorSwingData.UpdateDoorsInfo(args.Document, false, false, ref message) != Autodesk.Revit.UI.Result.Succeeded)
+                    if (DoorSwingData.UpdateDoorsInfo(args.Document, false, false, ref message) != Result.Succeeded)
                         TaskDialog.Show("Door Swing", message);
                 }
                 else
@@ -212,7 +206,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                     tran = new Transaction(doc, "Update parameters in Saving event");
                     tran.Start();
 
-                    if (DoorSwingData.UpdateDoorsInfo(args.Document, false, false, ref message) != Autodesk.Revit.UI.Result.Succeeded)
+                    if (DoorSwingData.UpdateDoorsInfo(args.Document, false, false, ref message) != Result.Succeeded)
                         TaskDialog.Show("Door Swing", message);
 
                     tran.Commit();

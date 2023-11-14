@@ -67,7 +67,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
          {
             // Register events. 
             application.ControlledApplication.DocumentClosing += new EventHandler
-                <Autodesk.Revit.DB.Events.DocumentClosingEventArgs>(OnDocumentClosing);
+                <DocumentClosingEventArgs>(OnDocumentClosing);
             m_servers = new List<RevitElementDrawingServer>();
             m_documents = new HashSet<Document>();
 

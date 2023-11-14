@@ -23,8 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -45,7 +43,7 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
         /// <param name="message"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var application = commandData.Application.Application;
             var doc = commandData.Application.ActiveUIDocument.Document;
@@ -93,7 +91,7 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
 
             // Show results
             TaskDialog.Show("Statistics",
-                   String.Format("Copied: \n" + 
+                   string.Format("Copied: \n" + 
                                 "\t{0} schedules.\n" +
                                 "\t{1} drafting views.\n"+
                                 "\t{2} new drafting elements created.",

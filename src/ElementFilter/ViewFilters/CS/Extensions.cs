@@ -21,13 +21,7 @@
 //
 
 using System;
-using System.Text;
-using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Diagnostics;
 
 namespace Revit.SDK.Samples.ViewFilters.CS
 {
@@ -53,9 +47,9 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// </summary>
         /// <param name="enumVal">TEnum value to be parsed.</param>
         /// <returns>String parsed from input TEnum.</returns>
-        public static String Parse(TEnum enumVal)
+        public static string Parse(TEnum enumVal)
         {
-            if (!typeof(TEnum).IsEnum) return String.Empty;
+            if (!typeof(TEnum).IsEnum) return string.Empty;
             return Enum.GetName(typeof(TEnum), enumVal);
         }
 
@@ -64,9 +58,9 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// </summary>
         /// <param name="enumValInt">Integer value to be parsed.</param>
         /// <returns>String parsed from input TEnum(integer type)</returns>
-        public static String Parse(int enumValInt)
+        public static string Parse(int enumValInt)
         {
-            if (!typeof(TEnum).IsEnum) return String.Empty;
+            if (!typeof(TEnum).IsEnum) return string.Empty;
             return Enum.GetName(typeof(TEnum), enumValInt);
         }
     }

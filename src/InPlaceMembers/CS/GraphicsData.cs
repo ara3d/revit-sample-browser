@@ -23,11 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-
-using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.InPlaceMembers.CS
@@ -70,22 +66,22 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <summary>
         ///3D max point after transfered 
         /// </summary>
-        protected Autodesk.Revit.DB.XYZ m_transferedMax;    
+        protected XYZ m_transferedMax;    
 
         /// <summary>
         ///3D min point after transfered 
         /// </summary>
-        protected Autodesk.Revit.DB.XYZ m_transferedMin;    
+        protected XYZ m_transferedMin;    
 
         /// <summary>
         /// origin max define
         /// </summary>
-        protected Autodesk.Revit.DB.XYZ m_originMax = new Autodesk.Revit.DB.XYZ (double.MinValue, double.MinValue, double.MinValue);    
+        protected XYZ m_originMax = new XYZ (double.MinValue, double.MinValue, double.MinValue);    
 
         /// <summary>
         /// origin min define
         /// </summary>
-        protected Autodesk.Revit.DB.XYZ m_originMin = new Autodesk.Revit.DB.XYZ (double.MaxValue, double.MaxValue, double.MaxValue);
+        protected XYZ m_originMin = new XYZ (double.MaxValue, double.MaxValue, double.MaxValue);
 
         /// <summary>
         /// origin define
@@ -100,7 +96,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <summary>
         /// default angle when rotate around X,Y,Z axis
         /// </summary>
-        public const double ROTATEANGLE = System.Math.PI / 90;    
+        public const double ROTATEANGLE = Math.PI / 90;    
 
         /// <summary>
         /// update view event
@@ -124,8 +120,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
 
             RotateX(ref m_origin, INITANGLE);
             RotateY(ref m_origin, INITANGLE);
-            m_transferedMax = new Autodesk.Revit.DB.XYZ (double.MinValue, double.MinValue, double.MinValue);
-            m_transferedMin = new Autodesk.Revit.DB.XYZ (double.MaxValue, double.MaxValue, double.MaxValue);
+            m_transferedMax = new XYZ (double.MinValue, double.MinValue, double.MinValue);
+            m_transferedMin = new XYZ (double.MaxValue, double.MaxValue, double.MaxValue);
         }
 
         /// <summary>
@@ -373,7 +369,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        private Autodesk.Revit.DB.XYZ TransferRotate(Autodesk.Revit.DB.XYZ point)
+        private XYZ TransferRotate(XYZ point)
         {
             var x = point.X;
             var y = point.Y;
@@ -391,7 +387,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// </summary>
         /// <param name="point">points to be moved</param>
         /// <returns>moved result</returns>
-        private Autodesk.Revit.DB.XYZ TransferMove(Autodesk.Revit.DB.XYZ point)
+        private XYZ TransferMove(XYZ point)
         {
             //transform the origin of the old coordinate system in the new coordinate system
             

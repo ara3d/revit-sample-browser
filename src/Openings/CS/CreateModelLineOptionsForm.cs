@@ -23,11 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.Openings.CS
 {
@@ -85,12 +80,12 @@ namespace Revit.SDK.Samples.Openings.CS
                 }
             }
 
-            this.Close();
+            Close();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

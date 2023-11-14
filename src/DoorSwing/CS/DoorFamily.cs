@@ -19,15 +19,11 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-using Autodesk.Revit;
+using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.ApplicationServices;
 
 
 namespace Revit.SDK.Samples.DoorSwing.CS
@@ -57,13 +53,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       /// <summary>
       /// Retrieval the name of this family.
       /// </summary>
-      public string FamilyName
-      {
-         get
-         {
-            return m_family.Name;
-         }
-      }
+      public string FamilyName => m_family.Name;
 
       /// <summary>
       /// Retrieve opening value of one of this family's door which neither flipped nor mirrored.
@@ -77,7 +67,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                var paramValue = DoorSwingResource.Undefined;
 
                // get current opening value.  
-               var fss = new System.Collections.Generic.List<FamilySymbol>(); 
+               var fss = new List<FamilySymbol>(); 
                foreach (var elementId in m_family.GetFamilySymbolIds())
                {
                   fss.Add((FamilySymbol)(m_app.ActiveUIDocument.Document.GetElement(elementId)));
@@ -96,10 +86,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
             return m_basalOpeningValue;
          }
-         set
-         {
-            m_basalOpeningValue = value;
-         }
+         set => m_basalOpeningValue = value;
       }
 
       /// <summary>
@@ -184,7 +171,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          var level = new FilteredElementCollector(doc).OfClass(typeof(Level)).FirstElement() as Level;
 
          // create one wall as door's host
-         var wallCurve = Line.CreateBound(new Autodesk.Revit.DB.XYZ(0, 0, 0), new Autodesk.Revit.DB.XYZ(100, 0, 0));
+         var wallCurve = Line.CreateBound(new XYZ(0, 0, 0), new XYZ(100, 0, 0));
          var host = Wall.Create(doc, wallCurve, level.Id, false);
          doc.Regenerate();
 
@@ -197,7 +184,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          var doorSymbol = ffs[0];
 
          // create the door
-         var createdFamilyInstance = creDoc.NewFamilyInstance(new Autodesk.Revit.DB.XYZ(0, 0, 0), doorSymbol, host, level,
+         var createdFamilyInstance = creDoc.NewFamilyInstance(new XYZ(0, 0, 0), doorSymbol, host, level,
                                                 StructuralType.NonStructural);
          doc.Regenerate();
 

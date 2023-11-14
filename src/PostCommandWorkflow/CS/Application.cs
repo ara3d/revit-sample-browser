@@ -21,16 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
@@ -76,10 +67,10 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             var rp = application.CreateRibbonPanel("UI");
             var setupMonitor = new PushButtonData("Setup_Revision_Monitor", "Setup Revision Monitor",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.PostCommandWorkflow.CS.PostCommandRevisionMonitorCommand).FullName);
+                                                            typeof(PostCommandRevisionMonitorCommand).FullName);
             var setupMonitorPB = rp.AddItem(setupMonitor) as PushButton;
 
-            SetIconsForPushButton(setupMonitorPB, Revit.SDK.Samples.PostCommandWorkflow.CS.Properties.Resources.RevisionIcon);
+            SetIconsForPushButton(setupMonitorPB, Properties.Resources.RevisionIcon);
 
             // Pass the pushbutton handle to the command class, so that the text can be changed when pressed
             PostCommandRevisionMonitorCommand.SetPushButton(setupMonitorPB);
@@ -126,6 +117,6 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <summary>
         /// The path to this add-in assembly.
         /// </summary>
-        static String addAssemblyPath = typeof(Revit.SDK.Samples.PostCommandWorkflow.CS.Application).Assembly.Location;
+        static string addAssemblyPath = typeof(Application).Assembly.Location;
     }
 }

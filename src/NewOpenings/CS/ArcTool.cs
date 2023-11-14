@@ -23,9 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
@@ -35,7 +33,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// </summary>
     class ArcTool : ITool
     {
-        private bool m_isFinished = false;
+        private bool m_isFinished;
 
         /// <summary>
         /// Default constructor
@@ -49,7 +47,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// Draw Arcs
         /// </summary>
         /// <param name="graphic">Graphics object</param>
-        public override void Draw(System.Drawing.Graphics graphic)
+        public override void Draw(Graphics graphic)
         {
             foreach (var line in m_lines)
             {

@@ -21,16 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
@@ -73,12 +64,12 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
          
             var pbd = new PushButtonData("ScheduleFormatter", "Format schedule",
                     addAssemblyPath,
-                    typeof(Revit.SDK.Samples.ScheduleAutomaticFormatter.CS.ScheduleFormatterCommand).FullName);
+                    typeof(ScheduleFormatterCommand).FullName);
 
             pbd.LongDescription = "Format the active schedule background columns.";
 
             var formatSchedulePB = rp.AddItem(pbd) as PushButton;
-            SetIconsForPushButton(formatSchedulePB, Revit.SDK.Samples.ScheduleAutomaticFormatter.CS.Properties.Resources.ScheduleFormatter);
+            SetIconsForPushButton(formatSchedulePB, Properties.Resources.ScheduleFormatter);
         }
 
         /// <summary>
@@ -122,6 +113,6 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// <summary>
         /// Path to this assembly.
         /// </summary>
-        static String addAssemblyPath = typeof(Revit.SDK.Samples.ScheduleAutomaticFormatter.CS.Application).Assembly.Location;
+        static string addAssemblyPath = typeof(Application).Assembly.Location;
     }
 }

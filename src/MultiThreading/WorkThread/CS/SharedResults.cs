@@ -43,11 +43,11 @@ namespace Revit.SDK.Samples.WorkThread.CS
         // List of UV points
         private IList<UV> m_points = new List<UV>();
         // lock object
-        private Object mylock = new Object();
+        private object mylock = new object();
         // If completed
-        private bool m_completed = false;
+        private bool m_completed;
         // Last read number
-        private int m_NumberWhenLastRead = 0;
+        private int m_NumberWhenLastRead;
         #endregion
 
         #region class member methods

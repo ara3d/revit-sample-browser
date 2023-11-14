@@ -21,15 +21,8 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
 {
@@ -67,10 +60,10 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         public  GraphicsControl(FootPrintRoofWrapper footPrintRoofWrapper)
         {
             InitializeComponent();
-            this.Load += new EventHandler(GraphicsControl_Load);
+            Load += new EventHandler(GraphicsControl_Load);
             
-            m_displayPen = new Pen(System.Drawing.Color.Green, 0);
-            m_highLightPen = new Pen(System.Drawing.Color.Red, 0);
+            m_displayPen = new Pen(Color.Green, 0);
+            m_highLightPen = new Pen(Color.Red, 0);
             m_footPrintRoofWrapper = footPrintRoofWrapper;                      
         }
 
@@ -84,7 +77,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         {
             var picturebox = new PictureBox();
             picturebox.Dock = DockStyle.Fill;
-            this.Controls.Add(picturebox);
+            Controls.Add(picturebox);
             picturebox.Paint += new PaintEventHandler(picturebox_Paint);
 
             // initialize the draw center and scale value
@@ -114,7 +107,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="e"></param>
         void m_footPrintRoofWrapper_OnFootPrintRoofLineChanged(object sender, EventArgs e)
         {
-            this.Refresh();
+            Refresh();
         }
 
         /// <summary>
@@ -125,7 +118,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         void picturebox_Paint(object sender, PaintEventArgs e)
         {
             var graphics = e.Graphics;
-            graphics.Clear(System.Drawing.Color.White);
+            graphics.Clear(Color.White);
             graphics.TranslateTransform(m_drawCenter.X, m_drawCenter.Y);
             graphics.ScaleTransform(m_scale, m_scale);
             graphics.PageUnit = GraphicsUnit.Pixel;

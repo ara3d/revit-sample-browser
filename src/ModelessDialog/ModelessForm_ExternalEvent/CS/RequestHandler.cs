@@ -42,15 +42,12 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         /// <summary>
         /// A public property to access the current request value
         /// </summary>
-        public Request Request
-        {
-            get { return m_request; }
-        }
+        public Request Request => m_request;
 
         /// <summary>
         ///   A method to identify this External Event Handler
         /// </summary>
-        public String GetName()
+        public string GetName()
         {
             return "R2014 External Event Sample";
         }
@@ -144,7 +141,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
         /// <param name="text">Caption of the transaction for the operation.</param>
         /// <param name="operation">A delegate to perform the operation on an instance of a door.</param>
         /// 
-        private void ModifySelectedDoors(UIApplication uiapp, String text, DoorOperation operation)
+        private void ModifySelectedDoors(UIApplication uiapp, string text, DoorOperation operation)
         {
             var uidoc = uiapp.ActiveUIDocument;
 

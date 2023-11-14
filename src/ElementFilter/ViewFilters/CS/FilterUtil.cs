@@ -20,19 +20,9 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Text;
-using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Diagnostics;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Architecture;
 
 namespace Revit.SDK.Samples.ViewFilters.CS
 {
@@ -50,7 +40,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
       /// Get all view filters(ParameterFilterElement) within current document
       /// </summary>
       /// <returns>All existing filters.</returns>
-      public static ICollection<ParameterFilterElement> GetViewFilters(Autodesk.Revit.DB.Document doc)
+      public static ICollection<ParameterFilterElement> GetViewFilters(Document doc)
       {
          var filter = new ElementClassFilter(typeof(ParameterFilterElement));
          var collector = new FilteredElementCollector(doc);

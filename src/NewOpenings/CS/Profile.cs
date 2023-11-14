@@ -21,13 +21,9 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit;
 using System.Drawing;
 using Point = System.Drawing.Point;
 
@@ -43,7 +39,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       /// <summary>
       ///Wall or Floor element 
       /// </summary>
-      protected Autodesk.Revit.DB.Element m_dataProfile;
+      protected Element m_dataProfile;
 
       /// <summary>
       /// geometry object [face]
@@ -53,7 +49,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       /// <summary>
       ///  command data
       /// </summary>
-      protected Autodesk.Revit.UI.ExternalCommandData m_commandData;
+      protected ExternalCommandData m_commandData;
 
       /// <summary>
       /// Application creator
@@ -103,7 +99,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       /// </summary>
       /// <param name="elem">Selected element</param>
       /// <param name="commandData">ExternalCommandData</param>
-      public Profile(Autodesk.Revit.DB.Element elem, ExternalCommandData commandData)
+      public Profile(Element elem, ExternalCommandData commandData)
       {
          m_dataProfile = elem;
          m_commandData = commandData;
@@ -118,7 +114,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       /// Get edges of element's profile
       /// </summary>
       /// <param name="elem">Selected element</param>
-      public List<List<Edge>> GetFaces(Autodesk.Revit.DB.Element elem)
+      public List<List<Edge>> GetFaces(Element elem)
       {
          var faceEdges = new List<List<Edge>>();
          var options = m_appCreator.NewGeometryOptions();

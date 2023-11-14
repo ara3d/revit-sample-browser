@@ -23,13 +23,8 @@
 using System;
 using System.Windows.Forms;
 using System.Collections;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Application = Autodesk.Revit.ApplicationServices.Application;
-using Element = Autodesk.Revit.DB.Element;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
@@ -57,8 +52,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public virtual Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData
-            , ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
         {
             try
             {
@@ -74,7 +69,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                     var result = gridCreationOptForm.ShowDialog();
                     if (result == DialogResult.Cancel)
                     {
-                        return Autodesk.Revit.UI.Result.Cancelled;
+                        return Result.Cancelled;
                     }
 
                     var labels = GetAllLabelsOfGrids(document);
@@ -132,18 +127,18 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
                     if (result == DialogResult.OK)
                     {
-                        return Autodesk.Revit.UI.Result.Succeeded;
+                        return Result.Succeeded;
                     }
                     else
                     {
-                        return Autodesk.Revit.UI.Result.Cancelled;
+                        return Result.Cancelled;
                     }                    
                 }
             }
             catch (Exception ex)
             {
                 message = ex.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
 
@@ -161,7 +156,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             {
                elements.Insert(newUIdocument.Document.GetElement(elementId));
             }
-            foreach (Autodesk.Revit.DB.Element element in elements)
+            foreach (Element element in elements)
             {
                 if ((element is ModelLine) || (element is ModelArc))
                 {
@@ -200,7 +195,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                elements.Insert(newUIdocument.Document.GetElement(elementId));
             }
             var tmpSet = new ElementSet();
-            foreach (Autodesk.Revit.DB.Element element in elements)
+            foreach (Element element in elements)
             {
                 if ((element is ModelLine) || (element is ModelArc) || (element is DetailLine) || (element is DetailArc))
                 {
@@ -225,7 +220,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 var formatOption = projectUnit.GetFormatOptions(specTypeId);
                 return formatOption.GetUnitTypeId();
             }
-            catch (System.Exception /*e*/)
+            catch (Exception /*e*/)
             {
                 return UnitTypeId.Feet;
             }

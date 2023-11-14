@@ -22,11 +22,8 @@
 
 using System;
 using System.Text;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -41,17 +38,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
       /// <summary>
       /// String list of AutoCAD versions
       /// </summary>
-      private List<String> m_fileVersion;
+      private List<string> m_fileVersion;
 
       /// <summary>
       /// List of Autodesk.Revit.DB.ACADVersion defined in Revit
       /// </summary>
-      private List<Autodesk.Revit.DB.ACADVersion> m_enumFileVersion;
+      private List<ACADVersion> m_enumFileVersion;
 
       /// <summary>
       /// File version option to export
       /// </summary>
-      private Autodesk.Revit.DB.ACADVersion m_exportFileVersion;
+      private ACADVersion m_exportFileVersion;
       #endregion
 
       #region Class Properties
@@ -59,38 +56,20 @@ namespace Revit.SDK.Samples.ImportExport.CS
       /// <summary>
       /// String collection of AutoCAD versions
       /// </summary>
-      public ReadOnlyCollection<String> FileVersion
-      {
-         get
-         {
-            return new ReadOnlyCollection<String>(m_fileVersion);
-         }
-      }
+      public ReadOnlyCollection<string> FileVersion => new ReadOnlyCollection<string>(m_fileVersion);
 
       /// <summary>
       /// Collection of Autodesk.Revit.DB.ACADVersion defined in Revit
       /// </summary>
-      public ReadOnlyCollection<Autodesk.Revit.DB.ACADVersion> EnumFileVersion
-      {
-         get
-         {
-            return new ReadOnlyCollection<Autodesk.Revit.DB.ACADVersion>(m_enumFileVersion);
-         }
-      }
+      public ReadOnlyCollection<ACADVersion> EnumFileVersion => new ReadOnlyCollection<ACADVersion>(m_enumFileVersion);
 
       /// <summary>
       /// File version option to export
       /// </summary>
-      public Autodesk.Revit.DB.ACADVersion ExportFileVersion
+      public ACADVersion ExportFileVersion
       {
-         get
-         {
-            return m_exportFileVersion;
-         }
-         set
-         {
-            m_exportFileVersion = value;
-         }
+         get => m_exportFileVersion;
+         set => m_exportFileVersion = value;
       }
       #endregion
 
@@ -112,14 +91,14 @@ namespace Revit.SDK.Samples.ImportExport.CS
       private void Initialize()
       {
          //AutoCAD versions
-         m_fileVersion = new List<String>();
-         m_enumFileVersion = new List<Autodesk.Revit.DB.ACADVersion>();
+         m_fileVersion = new List<string>();
+         m_enumFileVersion = new List<ACADVersion>();
          m_fileVersion.Add("AutoCAD 2013 DXF Files (*.sat)");
-         m_enumFileVersion.Add(Autodesk.Revit.DB.ACADVersion.R2013);
+         m_enumFileVersion.Add(ACADVersion.R2013);
          m_fileVersion.Add("AutoCAD 2010 DXF Files (*.sat)");
-         m_enumFileVersion.Add(Autodesk.Revit.DB.ACADVersion.R2010);
+         m_enumFileVersion.Add(ACADVersion.R2010);
          m_fileVersion.Add("AutoCAD 2007 DXF Files (*.sat)");
-         m_enumFileVersion.Add(Autodesk.Revit.DB.ACADVersion.R2007);
+         m_enumFileVersion.Add(ACADVersion.R2007);
 
          var tmp = new StringBuilder();
          foreach (var version in m_fileVersion)

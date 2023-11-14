@@ -20,15 +20,10 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
 {
@@ -59,8 +54,8 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.EnergyAnalysisModel");
             trans.Start();

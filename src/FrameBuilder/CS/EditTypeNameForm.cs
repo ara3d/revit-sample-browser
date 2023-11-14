@@ -23,27 +23,17 @@
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Text;
     using System.Windows.Forms;
 
     /// <summary>
     /// form to edit Type's name
     /// </summary>
-    public partial class EditTypeNameForm : System.Windows.Forms.Form
+    public partial class EditTypeNameForm : Form
     {
         /// <summary>
         /// Type name to be edited
         /// </summary>
-        public string TypeName
-        {
-            get
-            {
-                return typeNameTextBox.Text;
-            }
-        }
+        public string TypeName => typeNameTextBox.Text;
 
         /// <summary>
         /// constructor

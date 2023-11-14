@@ -21,12 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.UI;
@@ -56,46 +50,46 @@ namespace Revit.SDK.Samples.Units.CS
             try
             {
                 // Initialize the combo box and list view. 
-                this.disciplineCombox.BeginUpdate();
+                disciplineCombox.BeginUpdate();
                 foreach (var disciplineTypeId in Autodesk.Revit.DB.UnitUtils.GetAllDisciplines())
                 {
-                    this.disciplineCombox.Items.AddRange(new object[] { Autodesk.Revit.DB.LabelUtils.GetLabelForDiscipline(disciplineTypeId) });
+                    disciplineCombox.Items.AddRange(new object[] { Autodesk.Revit.DB.LabelUtils.GetLabelForDiscipline(disciplineTypeId) });
                 }
-                this.disciplineCombox.SelectedItem = disciplineCombox.Items[0];
-                this.disciplineCombox.EndUpdate();
+                disciplineCombox.SelectedItem = disciplineCombox.Items[0];
+                disciplineCombox.EndUpdate();
 
-                this.DecimalSymbolComboBox.BeginUpdate();
+                DecimalSymbolComboBox.BeginUpdate();
                 foreach (Autodesk.Revit.DB.DecimalSymbol ds in Enum.GetValues(typeof(
                          Autodesk.Revit.DB.DecimalSymbol)))
                 {
-                    this.DecimalSymbolComboBox.Items.AddRange(new object[] { ds });
+                    DecimalSymbolComboBox.Items.AddRange(new object[] { ds });
                 }
-                this.DecimalSymbolComboBox.EndUpdate();
-                this.DecimalSymbolComboBox.SelectedItem = m_units.DecimalSymbol;
+                DecimalSymbolComboBox.EndUpdate();
+                DecimalSymbolComboBox.SelectedItem = m_units.DecimalSymbol;
 
-                this.DigitGroupingAmountComboBox.BeginUpdate();
+                DigitGroupingAmountComboBox.BeginUpdate();
                 foreach (Autodesk.Revit.DB.DigitGroupingAmount dga in Enum.GetValues(typeof(
                          Autodesk.Revit.DB.DigitGroupingAmount)))
                 {
-                    this.DigitGroupingAmountComboBox.Items.AddRange(new object[] { dga });
+                    DigitGroupingAmountComboBox.Items.AddRange(new object[] { dga });
                 }
-                this.DigitGroupingAmountComboBox.EndUpdate();
-                this.DigitGroupingAmountComboBox.SelectedItem = m_units.DigitGroupingAmount;
+                DigitGroupingAmountComboBox.EndUpdate();
+                DigitGroupingAmountComboBox.SelectedItem = m_units.DigitGroupingAmount;
 
-                this.DigitGroupingSymbolComboBox.BeginUpdate();
+                DigitGroupingSymbolComboBox.BeginUpdate();
                 foreach (var enumName in Enum.GetNames(typeof(
                          Autodesk.Revit.DB.DigitGroupingSymbol)))
                 {
-                    this.DigitGroupingSymbolComboBox.Items.AddRange(new object[] { enumName });
+                    DigitGroupingSymbolComboBox.Items.AddRange(new object[] { enumName });
                 }
-                this.DigitGroupingSymbolComboBox.EndUpdate();
-                this.DigitGroupingSymbolComboBox.SelectedItem = Enum.GetName(typeof(Autodesk.Revit.DB.DigitGroupingSymbol), m_units.DigitGroupingSymbol);
+                DigitGroupingSymbolComboBox.EndUpdate();
+                DigitGroupingSymbolComboBox.SelectedItem = Enum.GetName(typeof(Autodesk.Revit.DB.DigitGroupingSymbol), m_units.DigitGroupingSymbol);
 
-                this.DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
+                DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
 
-                this.DigitGroupingSymbolComboBox.SelectedIndexChanged += new System.EventHandler(this.DigitGroupingSymbolComboBox_SelectedIndexChanged);
-                this.DigitGroupingAmountComboBox.SelectedIndexChanged += new System.EventHandler(this.DigitGroupingAmountComboBox_SelectedIndexChanged);
-                this.DecimalSymbolComboBox.SelectedIndexChanged += new System.EventHandler(this.DecimalSymbolComboBox_SelectedIndexChanged);
+                DigitGroupingSymbolComboBox.SelectedIndexChanged += new EventHandler(DigitGroupingSymbolComboBox_SelectedIndexChanged);
+                DigitGroupingAmountComboBox.SelectedIndexChanged += new EventHandler(DigitGroupingAmountComboBox_SelectedIndexChanged);
+                DecimalSymbolComboBox.SelectedIndexChanged += new EventHandler(DecimalSymbolComboBox_SelectedIndexChanged);
             }
             catch
             {
@@ -105,7 +99,7 @@ namespace Revit.SDK.Samples.Units.CS
 
         private void disciplineCombox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.dataGridView.Rows.Clear();
+            dataGridView.Rows.Clear();
             FillGrid();
         }
 
@@ -120,12 +114,12 @@ namespace Revit.SDK.Samples.Units.CS
                 var count = 0;
                 foreach (var specTypeId in Autodesk.Revit.DB.UnitUtils.GetAllMeasurableSpecs())
                 {
-                    if (Autodesk.Revit.DB.LabelUtils.GetLabelForDiscipline(Autodesk.Revit.DB.UnitUtils.GetDiscipline(specTypeId)) == this.disciplineCombox.SelectedItem.ToString())
+                    if (Autodesk.Revit.DB.LabelUtils.GetLabelForDiscipline(Autodesk.Revit.DB.UnitUtils.GetDiscipline(specTypeId)) == disciplineCombox.SelectedItem.ToString())
                     {
-                        this.dataGridView.Rows.Add();
-                        this.dataGridView["UnitType", count].Value = specTypeId;
-                        this.dataGridView["Label_UnitType", count].Value = Autodesk.Revit.DB.LabelUtils.GetLabelForSpec(specTypeId);
-                        this.dataGridView["FormatOptions", count].Value =
+                        dataGridView.Rows.Add();
+                        dataGridView["UnitType", count].Value = specTypeId;
+                        dataGridView["Label_UnitType", count].Value = Autodesk.Revit.DB.LabelUtils.GetLabelForSpec(specTypeId);
+                        dataGridView["FormatOptions", count].Value =
                            Autodesk.Revit.DB.UnitFormatUtils.Format(m_units, specTypeId, 1234.56789, false);
                         count++;
                     }
@@ -143,7 +137,7 @@ namespace Revit.SDK.Samples.Units.CS
             if (e.ColumnIndex == 2)
             {
                 // show UI
-                var specTypeId = (Autodesk.Revit.DB.ForgeTypeId)this.dataGridView["UnitType", e.RowIndex].Value;
+                var specTypeId = (Autodesk.Revit.DB.ForgeTypeId)dataGridView["UnitType", e.RowIndex].Value;
                 using (var displayForm = new FormatForm(specTypeId, m_units.GetFormatOptions(specTypeId)))
                 {
                     DialogResult result;
@@ -153,12 +147,12 @@ namespace Revit.SDK.Samples.Units.CS
                         {
                             try
                             {
-                                this.m_units.SetFormatOptions((Autodesk.Revit.DB.ForgeTypeId)this.dataGridView["UnitType", e.RowIndex].Value, displayForm.FormatOptions);
-                                this.dataGridView["FormatOptions", e.RowIndex].Value =
-                                   Autodesk.Revit.DB.UnitFormatUtils.Format(m_units, (Autodesk.Revit.DB.ForgeTypeId)this.dataGridView["UnitType", e.RowIndex].Value, 1234.56789, false);
+                                m_units.SetFormatOptions((Autodesk.Revit.DB.ForgeTypeId)dataGridView["UnitType", e.RowIndex].Value, displayForm.FormatOptions);
+                                dataGridView["FormatOptions", e.RowIndex].Value =
+                                   Autodesk.Revit.DB.UnitFormatUtils.Format(m_units, (Autodesk.Revit.DB.ForgeTypeId)dataGridView["UnitType", e.RowIndex].Value, 1234.56789, false);
                                 break;
                             }
-                            catch (System.Exception ex)
+                            catch (Exception ex)
                             {
                                 TaskDialog.Show(ex.GetType().ToString(), "Set FormatOptions error : \n" + ex.Message, TaskDialogCommonButtons.Ok);
                             }
@@ -195,11 +189,11 @@ namespace Revit.SDK.Samples.Units.CS
             try
             {
                 m_units.DecimalSymbol = (Autodesk.Revit.DB.DecimalSymbol)DecimalSymbolComboBox.SelectedItem;
-                this.DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
+                DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
             }
             catch
             {
-                this.DecimalSymbolComboBox.SelectedItem = m_units.DecimalSymbol;
+                DecimalSymbolComboBox.SelectedItem = m_units.DecimalSymbol;
             }
         }
 
@@ -208,11 +202,11 @@ namespace Revit.SDK.Samples.Units.CS
             try
             {
                 m_units.DigitGroupingAmount = (Autodesk.Revit.DB.DigitGroupingAmount)DigitGroupingAmountComboBox.SelectedItem;
-                this.DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
+                DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
             }
             catch
             {
-                this.DigitGroupingAmountComboBox.SelectedItem = m_units.DigitGroupingAmount;
+                DigitGroupingAmountComboBox.SelectedItem = m_units.DigitGroupingAmount;
             }
         }
 
@@ -221,11 +215,11 @@ namespace Revit.SDK.Samples.Units.CS
             try
             {
                 m_units.DigitGroupingSymbol = (Autodesk.Revit.DB.DigitGroupingSymbol)Enum.Parse(typeof(Autodesk.Revit.DB.DigitGroupingSymbol), (string)DigitGroupingSymbolComboBox.SelectedItem);
-                this.DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
+                DecimalSymbolAndGroupingtextBox.Text = getDecimalSymbolAndGroupingstring();
             }
             catch
             {
-                this.DigitGroupingSymbolComboBox.SelectedItem = Enum.GetName(typeof(Autodesk.Revit.DB.DigitGroupingSymbol), m_units.DigitGroupingSymbol);
+                DigitGroupingSymbolComboBox.SelectedItem = Enum.GetName(typeof(Autodesk.Revit.DB.DigitGroupingSymbol), m_units.DigitGroupingSymbol);
             }
         }
     }

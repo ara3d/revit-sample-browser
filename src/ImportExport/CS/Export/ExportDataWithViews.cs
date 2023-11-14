@@ -20,11 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -58,14 +53,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public SelectViewsData SelectViewsData
         {
-            get 
-            { 
-                return m_selectViewsData; 
-            }
-            set 
-            { 
-                m_selectViewsData = value; 
-            }
+            get => m_selectViewsData;
+            set => m_selectViewsData = value;
         }
 
         /// <summary>
@@ -73,14 +62,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public ViewSet ExportViews
         {
-            get 
-            { 
-                return m_exportViews; 
-            }
-            set 
-            { 
-                m_exportViews = value; 
-            }
+            get => m_exportViews;
+            set => m_exportViews = value;
         } 
 
         /// <summary>
@@ -88,14 +71,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public bool CurrentViewOnly
         {
-            get 
-            { 
-                return m_currentViewOnly; 
-            }
-            set 
-            { 
-                m_currentViewOnly = value; 
-            }
+            get => m_currentViewOnly;
+            set => m_currentViewOnly = value;
         }
         #endregion
 

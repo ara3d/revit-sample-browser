@@ -20,9 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
@@ -46,14 +44,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public Point StartPoint
       {
-         get
-         {
-            return m_startPoint;
-         }
-         set
-         {
-            m_startPoint = value;
-         }
+         get => m_startPoint;
+         set => m_startPoint = value;
       }
 
       /// <summary>
@@ -61,14 +53,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public Point EndPoint
       {
-         get
-         {
-            return m_endPoint;
-         }
-         set
-         {
-            m_endPoint = value;
-         }
+         get => m_endPoint;
+         set => m_endPoint = value;
       }
       #endregion
 
@@ -127,14 +113,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public Point AssistantPoint
       {
-         get
-         {
-            return m_assistantPoint;
-         }
-         set
-         {
-            m_assistantPoint = value;
-         }
+         get => m_assistantPoint;
+         set => m_assistantPoint = value;
       }
       #endregion
 
@@ -182,8 +162,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public void Clear()
       {
-         this.StartPoint = Point.Empty;
-         this.EndPoint = Point.Empty;
+         StartPoint = Point.Empty;
+         EndPoint = Point.Empty;
          m_assistantPoint = Point.Empty;
       }
       #endregion
@@ -214,40 +194,22 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public bool Locked
       {
-         get
-         {
-            return m_locked;
-         }
-         set
-         {
-            m_locked = value;
-         }
+         get => m_locked;
+         set => m_locked = value;
       }
 
       /// <summary>
       /// all the segments for the grid line
       /// </summary>
-      public List<SegmentLine2D> Segments
-      {
-         get
-         {
-            return m_segments;
-         }
-      }
+      public List<SegmentLine2D> Segments => m_segments;
 
       /// <summary>
       /// indicate how many segments have been removed from the grid line
       /// </summary>
       public int RemovedNumber
       {
-         get
-         {
-            return m_removedNumber;
-         }
-         set
-         {
-            m_removedNumber = value;
-         }
+         get => m_removedNumber;
+         set => m_removedNumber = value;
       }
 
       /// <summary>
@@ -255,14 +217,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public bool IsUGridLine
       {
-         get
-         {
-            return m_isUGridLine;
-         }
-         set
-         {
-            m_isUGridLine = value;
-         }
+         get => m_isUGridLine;
+         set => m_isUGridLine = value;
       }
       #endregion
 
@@ -346,14 +302,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public bool Isolated
       {
-         get
-         {
-            return m_isolated;
-         }
-         set
-         {
-            m_isolated = value;
-         }
+         get => m_isolated;
+         set => m_isolated = value;
       }
       #endregion
 
@@ -363,14 +313,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public bool Removed
       {
-         get
-         {
-            return m_removed;
-         }
-         set
-         {
-            m_removed = value;
-         }
+         get => m_removed;
+         set => m_removed = value;
       }
 
       /// <summary>
@@ -378,14 +322,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public int SegmentIndex
       {
-         get
-         {
-            return m_segmentIndex;
-         }
-         set
-         {
-            m_segmentIndex = value;
-         }
+         get => m_segmentIndex;
+         set => m_segmentIndex = value;
       }
 
       /// <summary>
@@ -393,14 +331,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public int GridLineIndex
       {
-         get
-         {
-            return m_gridLineIndex;
-         }
-         set
-         {
-            m_gridLineIndex = value;
-         }
+         get => m_gridLineIndex;
+         set => m_gridLineIndex = value;
       }
 
       /// <summary>
@@ -408,14 +340,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public bool IsUSegment
       {
-         get
-         {
-            return m_isUSegment;
-         }
-         set
-         {
-            m_isUSegment = value;
-         }
+         get => m_isUSegment;
+         set => m_isUSegment = value;
       }
       #endregion
 

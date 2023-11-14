@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.GridCreation.CS
@@ -33,7 +28,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
     /// <summary>
     ///  The dialog which provides the options of creating orthogonal grids
     /// </summary>
-    public partial class CreateOrthogonalGridsForm : System.Windows.Forms.Form
+    public partial class CreateOrthogonalGridsForm : Form
     {
         // data class object
         private CreateOrthogonalGridsData m_data;
@@ -83,7 +78,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             }
             else
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
             }
         }
 

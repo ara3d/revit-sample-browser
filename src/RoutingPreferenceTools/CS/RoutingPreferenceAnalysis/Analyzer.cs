@@ -24,7 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
@@ -38,8 +37,8 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
     internal class Analyzer
     {
         #region Data
-        private Autodesk.Revit.DB.Document m_document;
-        private Autodesk.Revit.DB.RoutingPreferenceManager m_routingPreferenceManager;
+        private Document m_document;
+        private RoutingPreferenceManager m_routingPreferenceManager;
         private double m_mepSize;
         #endregion
 
@@ -98,7 +97,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// Get all segments from a the currently selected pipe type, get each size from each segment,
         /// collect, sort, and return.
         /// </summary>
-        public static List<double> GetAvailableSegmentSizes(RoutingPreferenceManager routingPreferenceManager, Autodesk.Revit.DB.Document document)
+        public static List<double> GetAvailableSegmentSizes(RoutingPreferenceManager routingPreferenceManager, Document document)
         {
 
             var sizes = new HashSet<double>();
@@ -245,7 +244,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             if (segmentId == ElementId.InvalidElementId)
                 throw new Exception("Invalid segment ElementId");
 
-            var segment = this.m_document.GetElement(segmentId) as PipeSegment;
+            var segment = m_document.GetElement(segmentId) as PipeSegment;
             foreach (var size in segment.GetSizes())
             {
                 //skip sizes outside of rp bounds
@@ -328,7 +327,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 if (rule.MEPPartId == ElementId.InvalidElementId)
                     continue;
 
-                var familySymbol = this.m_document.GetElement(rule.MEPPartId) as FamilySymbol;
+                var familySymbol = m_document.GetElement(rule.MEPPartId) as FamilySymbol;
 
                 var paramPartType = familySymbol.Family.get_Parameter(BuiltInParameter.FAMILY_CONTENT_PART_TYPE);
                 if (paramPartType == null)

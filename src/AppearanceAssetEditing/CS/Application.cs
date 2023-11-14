@@ -35,12 +35,12 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
    public class Application : IExternalApplication
    {
       // class instance
-      internal static Application thisApp = null;
+      internal static Application thisApp;
 
       #region Class member variables
       // ModelessForm instance
       private AppearanceAssetEditingForm m_MyForm;
-      Autodesk.Revit.UI.UIApplication m_revit;
+      UIApplication m_revit;
       Document m_document;
       Material m_currentMaterial;
       ElementId m_currentAppearanceAssetElementId;
@@ -123,7 +123,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
       /// </summary>
       private class IsPaintedFaceSelectionFilter : ISelectionFilter
       {
-         Document selectedDocument = null;
+         Document selectedDocument;
 
          public bool AllowElement(Element element)
          {
@@ -197,10 +197,10 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
       /// <returns>True if the selected material supports "tint" or not.</returns>
       private bool SupportTintColor()
       {
-         if (this.m_currentAppearanceAssetElementId == ElementId.InvalidElementId)
+         if (m_currentAppearanceAssetElementId == ElementId.InvalidElementId)
             return false;
 
-         var assetElem = m_document.GetElement(this.m_currentAppearanceAssetElementId) as AppearanceAssetElement;
+         var assetElem = m_document.GetElement(m_currentAppearanceAssetElementId) as AppearanceAssetElement;
          if (assetElem == null)
             return false;
 
@@ -276,7 +276,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
          if (!SupportTintColor())
             return false;
 
-         var assetElem = m_document.GetElement(this.m_currentAppearanceAssetElementId) as AppearanceAssetElement;
+         var assetElem = m_document.GetElement(m_currentAppearanceAssetElementId) as AppearanceAssetElement;
          if (assetElem == null)
             return false;
 
@@ -351,7 +351,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
       /// <param name="text">Caption of the transaction for the operation.</param>
       /// <param name="lighter">Increase the tint color property or not.</param>
       /// 
-      internal void ModifySelectedMaterial(String text, bool lighter)
+      internal void ModifySelectedMaterial(string text, bool lighter)
       {
          // Since we'll modify the document, we need a transaction
          // It's best if a transaction is scoped by a 'using' block

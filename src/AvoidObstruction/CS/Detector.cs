@@ -23,10 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
-using Autodesk.Revit;
-using Element = Autodesk.Revit.DB.Element;
 
 namespace Revit.SDK.Samples.AvoidObstruction.CS
 {
@@ -69,7 +66,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
         /// <param name="origin">Ray's origin</param>
         /// <param name="dir">Ray's direction</param>
         /// <returns>Obstructions intersected with the given ray</returns>
-        public List<ReferenceWithContext> Obstructions(Autodesk.Revit.DB.XYZ origin, Autodesk.Revit.DB.XYZ dir)
+        public List<ReferenceWithContext> Obstructions(XYZ origin, XYZ dir)
         {
             var result = new List<ReferenceWithContext>();
             var referenceIntersector = new ReferenceIntersector(m_view3d);

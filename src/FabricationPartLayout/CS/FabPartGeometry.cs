@@ -23,12 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Fabrication;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
@@ -67,7 +63,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
          return rv;
       }
 
-      private bool exportMesh(String filename, Mesh mesh)
+      private bool exportMesh(string filename, Mesh mesh)
       {
          var bSaved = false;
 
@@ -83,7 +79,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                var p2 = mesh.Vertices[(int)tri.get_Index(1)];
                var p3 = mesh.Vertices[(int)tri.get_Index(2)];
 
-               var tstr = String.Format("{0:0.000}, {1:0.000}, {2:0.000}, {3:0.000}, {4:0.000}, {5:0.000}, {6:0.000}, {7:0.000}, {8:0.000}", new object[] { p1.X, p1.Y, p1.Z, p2.X, p2.Y, p2.Z, p3.X, p3.Y, p3.Z });
+               var tstr = string.Format("{0:0.000}, {1:0.000}, {2:0.000}, {3:0.000}, {4:0.000}, {5:0.000}, {6:0.000}, {7:0.000}, {8:0.000}", new object[] { p1.X, p1.Y, p1.Z, p2.X, p2.Y, p2.Z, p3.X, p3.Y, p3.Z });
                sout.WriteLine(tstr);
             }
             sout.Close();
@@ -176,7 +172,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                   var mlp = 0;
                   foreach (var mesh in main)
                   {
-                     var file = String.Concat( filename, partcount.ToString(), "-main-", (++mlp).ToString(), ext);
+                     var file = string.Concat( filename, partcount.ToString(), "-main-", (++mlp).ToString(), ext);
                      if (exportMesh(file, mesh))
                         exported++;
                   }
@@ -184,7 +180,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                   var ilp = 0;
                   foreach (var mesh in ins)
                   {
-                     var file = String.Concat(filename, partcount.ToString(), "-ins-", (++ilp).ToString(), ext);
+                     var file = string.Concat(filename, partcount.ToString(), "-ins-", (++ilp).ToString(), ext);
                      if (exportMesh(file, mesh))
                         exported++;
                   }
@@ -193,7 +189,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             }
 
             var res = (exported > 0) ? "Export was successful" : "Nothing was exported";
-            var manywritten = String.Format("{0} Parts were exported", exported);
+            var manywritten = string.Format("{0} Parts were exported", exported);
 
             var td = new TaskDialog("Export Part Mesh Geometry")
             {

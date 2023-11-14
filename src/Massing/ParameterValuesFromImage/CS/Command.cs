@@ -22,10 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 
@@ -106,7 +103,7 @@ namespace Revit.SDK.Samples.ParameterValuesFromImage.CS
                                             param.Set(grayscale / 255);
                                         }
                                     }
-                                    catch (System.Exception)
+                                    catch (Exception)
                                     {
                                         //       TaskDialog.Show("Revit", "Exception: " + u + ", " + v);                                        
                                     }

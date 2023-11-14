@@ -22,17 +22,10 @@
 
 
 using System;
-using System.IO;
 using System.Collections;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Events;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.Creation;
-
 using ELEMENT = Autodesk.Revit.DB.Element;
 using STRUCTURALTYPE = Autodesk.Revit.DB.Structure.StructuralType;
 
@@ -46,65 +39,31 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        Autodesk.Revit.UI.UIApplication m_revit = null;
+        UIApplication m_revit;
 
         ArrayList m_columnMaps = new ArrayList();        //list of columns' type
         ArrayList m_beamMaps = new ArrayList();        //list of beams' type
         ArrayList m_braceMaps = new ArrayList();        //list of braces' type
         SortedList levels = new SortedList();        //list of list sorted by their elevations
 
-        Autodesk.Revit.DB.UV[,] m_matrixUV;        //2D coordinates of matrix
+        UV[,] m_matrixUV;        //2D coordinates of matrix
 
         /// <summary>
         /// list of all type of columns
         /// </summary>
-        public ArrayList ColumnMaps
-        {
-            get
-            {
-                return m_columnMaps;
-            }
-        }
+        public ArrayList ColumnMaps => m_columnMaps;
 
         /// <summary>
         /// list of all type of beams
         /// </summary>
-        public ArrayList BeamMaps
-        {
-            get
-            {
-                return m_beamMaps;
-            }
-        }
+        public ArrayList BeamMaps => m_beamMaps;
 
         /// <summary>
         /// list of all type of braces
         /// </summary>
-        public ArrayList BraceMaps
-        {
-            get
-            {
-                return m_braceMaps;
-            }
-        }
+        public ArrayList BraceMaps => m_braceMaps;
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="revit">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData revit, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
         {
             m_revit = revit.Application;
             var tran = new Transaction(m_revit.ActiveUIDocument.Document, "CreateBeamsColumnsBraces");
@@ -117,7 +76,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 if (!initializeOK)
                 {
                     tran.RollBack();
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 using (var displayForm = new CreateBeamsColumnsBracesForm(this))
@@ -125,18 +84,18 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                     if (displayForm.ShowDialog() != DialogResult.OK)
                     {
                         tran.RollBack();
-                        return Autodesk.Revit.UI.Result.Cancelled;
+                        return Result.Cancelled;
                     }
                 }
 
                 tran.Commit();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
                 message = ex.Message;
                 tran.RollBack();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
 
@@ -234,13 +193,13 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <param name="distance">Distance between columns</param>
         public void CreateMatrix(int xNumber, int yNumber, double distance)
         {
-            m_matrixUV = new Autodesk.Revit.DB.UV[xNumber, yNumber];
+            m_matrixUV = new UV[xNumber, yNumber];
 
             for (var i = 0; i < xNumber; i++)
             {
                 for (var j = 0; j < yNumber; j++)
                 {
-                    m_matrixUV[i, j] = new Autodesk.Revit.DB.UV(i * distance, j * distance);
+                    m_matrixUV[i, j] = new UV(i * distance, j * distance);
                 }
             }
         }
@@ -319,10 +278,10 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <param name="columnType">type of column</param>
         /// <param name="baseLevel">the base level of the column</param>
         /// <param name="topLevel">the top level of the column</param>
-        private void PlaceColumn(Autodesk.Revit.DB.UV point2D, FamilySymbol columnType, Level baseLevel, Level topLevel)
+        private void PlaceColumn(UV point2D, FamilySymbol columnType, Level baseLevel, Level topLevel)
         {
             //create column of certain type in certain level and start point 
-            var point = new Autodesk.Revit.DB.XYZ(point2D.U, point2D.V, 0);
+            var point = new XYZ(point2D.U, point2D.V, 0);
             STRUCTURALTYPE structuralType;
             structuralType = Autodesk.Revit.DB.Structure.StructuralType.Column;
             if (!columnType.IsActive)
@@ -332,21 +291,21 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             //set base level & top level of the column
             if (null != column)
             {
-                var baseLevelParameter = column.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.FAMILY_BASE_LEVEL_PARAM);
-                var topLevelParameter = column.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.FAMILY_TOP_LEVEL_PARAM);
+                var baseLevelParameter = column.get_Parameter(BuiltInParameter.FAMILY_BASE_LEVEL_PARAM);
+                var topLevelParameter = column.get_Parameter(BuiltInParameter.FAMILY_TOP_LEVEL_PARAM);
                 var topOffsetParameter = column.get_Parameter(BuiltInParameter.FAMILY_TOP_LEVEL_OFFSET_PARAM);
                 var baseOffsetParameter = column.get_Parameter(BuiltInParameter.FAMILY_BASE_LEVEL_OFFSET_PARAM);
 
                 if (null != baseLevelParameter)
                 {
-                    Autodesk.Revit.DB.ElementId baseLevelId;
+                    ElementId baseLevelId;
                     baseLevelId = baseLevel.Id;
                     baseLevelParameter.Set(baseLevelId);
                 }
 
                 if (null != topLevelParameter)
                 {
-                    Autodesk.Revit.DB.ElementId topLevelId;
+                    ElementId topLevelId;
                     topLevelId = topLevel.Id;
                     topLevelParameter.Set(topLevelId);
                 }
@@ -372,11 +331,11 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <param name="topLevel">the top level of the beam</param>
         /// <param name="beamType">type of beam</param>
         /// <returns>nothing</returns>
-        private void PlaceBeam(Autodesk.Revit.DB.UV point2D1, Autodesk.Revit.DB.UV point2D2, Level baseLevel, Level topLevel, FamilySymbol beamType)
+        private void PlaceBeam(UV point2D1, UV point2D2, Level baseLevel, Level topLevel, FamilySymbol beamType)
         {
             var height = topLevel.Elevation;
-            var startPoint = new Autodesk.Revit.DB.XYZ(point2D1.U, point2D1.V, height);
-            var endPoint = new Autodesk.Revit.DB.XYZ(point2D2.U, point2D2.V, height);
+            var startPoint = new XYZ(point2D1.U, point2D1.V, height);
+            var endPoint = new XYZ(point2D2.U, point2D2.V, height);
             var topLevelId = topLevel.Id;
 
             var line = Line.CreateBound(startPoint, endPoint);
@@ -395,24 +354,24 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <param name="topLevel">the top level of the brace</param>
         /// <param name="braceType">type of beam</param>
         /// <param name="isXDirection">whether the location line is in x direction</param>
-        private void PlaceBrace(Autodesk.Revit.DB.UV point2D1, Autodesk.Revit.DB.UV point2D2, Level baseLevel, Level topLevel, FamilySymbol braceType, bool isXDirection)
+        private void PlaceBrace(UV point2D1, UV point2D2, Level baseLevel, Level topLevel, FamilySymbol braceType, bool isXDirection)
         {
             //get the start points and end points of location lines of two braces
             var topHeight = topLevel.Elevation;
             var baseHeight = baseLevel.Elevation;
             var middleElevation = (topHeight + baseHeight) / 2;
             var middleHeight = (topHeight - baseHeight) / 2;
-            var startPoint = new Autodesk.Revit.DB.XYZ(point2D1.U, point2D1.V, middleElevation);
-            var endPoint = new Autodesk.Revit.DB.XYZ(point2D2.U, point2D2.V, middleElevation);
-            Autodesk.Revit.DB.XYZ middlePoint;
+            var startPoint = new XYZ(point2D1.U, point2D1.V, middleElevation);
+            var endPoint = new XYZ(point2D2.U, point2D2.V, middleElevation);
+            XYZ middlePoint;
 
             if (isXDirection)
             {
-                middlePoint = new Autodesk.Revit.DB.XYZ((point2D1.U + point2D2.U) / 2, point2D2.V, topHeight);
+                middlePoint = new XYZ((point2D1.U + point2D2.U) / 2, point2D2.V, topHeight);
             }
             else
             {
-                middlePoint = new Autodesk.Revit.DB.XYZ(point2D2.U, (point2D1.V + point2D2.V) / 2, topHeight);
+                middlePoint = new XYZ(point2D2.U, (point2D1.V + point2D2.V) / 2, topHeight);
             }
 
             //create two brace and set their location line
@@ -449,7 +408,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
     public class SymbolMap
     {
         string m_symbolName = "";
-        FamilySymbol m_symbol = null;
+        FamilySymbol m_symbol;
 
         /// <summary>
         /// constructor without parameter is forbidden
@@ -476,22 +435,11 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// <summary>
         /// SymbolName property
         /// </summary>
-        public string SymbolName
-        {
-            get
-            {
-                return m_symbolName;
-            }
-        }
+        public string SymbolName => m_symbolName;
+
         /// <summary>
         /// ElementType property
         /// </summary>
-        public FamilySymbol ElementType
-        {
-            get
-            {
-                return m_symbol;
-            }
-        }
+        public FamilySymbol ElementType => m_symbol;
     }
 }

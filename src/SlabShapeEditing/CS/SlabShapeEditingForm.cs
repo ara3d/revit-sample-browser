@@ -20,13 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit;
 using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -94,7 +89,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void SlabShapePictureBox_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
             m_slabProfile.Draw2D(e.Graphics, m_profilePen);
 
@@ -163,7 +158,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                     m_selectIndex = -1;
                 }
             }
-            this.SlabShapePictureBox.Refresh();
+            SlabShapePictureBox.Refresh();
         }
 
         /// <summary>
@@ -231,7 +226,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
                 }
                 else { m_selectedVertex = null; m_selectedCrease = null; m_clickedIndex = -1; }
             }
-            this.SlabShapePictureBox.Refresh();
+            SlabShapePictureBox.Refresh();
         }
 
         /// <summary>
@@ -243,7 +238,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         {
             editorState = EditorState.AddVertex;
             m_slabProfile.ClearRotateMatrix();
-            this.SlabShapePictureBox.Cursor = Cursors.Cross;
+            SlabShapePictureBox.Cursor = Cursors.Cross;
         }
 
         /// <summary>
@@ -255,7 +250,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         {
             editorState = EditorState.AddCrease;
             m_slabProfile.ClearRotateMatrix();
-            this.SlabShapePictureBox.Cursor = Cursors.Cross;
+            SlabShapePictureBox.Cursor = Cursors.Cross;
         }
 
         /// <summary>
@@ -267,7 +262,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         {
             editorState = EditorState.Select;
             m_slabProfile.ClearRotateMatrix();
-            this.SlabShapePictureBox.Cursor = Cursors.Arrow;
+            SlabShapePictureBox.Cursor = Cursors.Arrow;
         }
 
         /// <summary>
@@ -280,7 +275,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             if (-1 == m_clickedIndex) { TaskDialog.Show("Revit", selectFirst); return; }
 
             double moveDistance = 0;
-            try { moveDistance = Convert.ToDouble(this.DistanceTextBox.Text); }
+            try { moveDistance = Convert.ToDouble(DistanceTextBox.Text); }
             catch (Exception) { TaskDialog.Show("Revit", justNumber); return; }
 
             var transaction = new Transaction(
@@ -293,7 +288,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             transaction.Commit();
             //re-calculate geometry info
             m_slabProfile.GetSlabProfileInfo();
-            this.SlabShapePictureBox.Refresh();
+            SlabShapePictureBox.Refresh();
         }
 
         /// <summary>
@@ -336,7 +331,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void MoveButton_MouseHover(object sender, EventArgs e)
         {
-            this.toolTip.SetToolTip(this.MoveButton, "Select Vertex or Crease");
+            toolTip.SetToolTip(MoveButton, "Select Vertex or Crease");
         }
 
         /// <summary>
@@ -346,7 +341,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void PointButton_MouseHover(object sender, EventArgs e)
         {
-            this.toolTip.SetToolTip(this.PointButton, "Add Vertex");
+            toolTip.SetToolTip(PointButton, "Add Vertex");
         }
 
         /// <summary>
@@ -356,7 +351,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// <param name="e">event args</param>
         private void LineButton_MouseHover(object sender, EventArgs e)
         {
-            this.toolTip.SetToolTip(this.LineButton, "Add Crease");
+            toolTip.SetToolTip(LineButton, "Add Crease");
         }
 
         /// <summary>
@@ -369,13 +364,13 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             switch (editorState)
             {
                 case EditorState.AddVertex:
-                    this.SlabShapePictureBox.Cursor = Cursors.Cross; break;
+                    SlabShapePictureBox.Cursor = Cursors.Cross; break;
                 case EditorState.AddCrease:
-                    this.SlabShapePictureBox.Cursor = Cursors.Cross; break;
+                    SlabShapePictureBox.Cursor = Cursors.Cross; break;
                 case EditorState.Select:
-                    this.SlabShapePictureBox.Cursor = Cursors.Arrow; break;
+                    SlabShapePictureBox.Cursor = Cursors.Arrow; break;
                 default:
-                    this.SlabShapePictureBox.Cursor = Cursors.Default; break;
+                    SlabShapePictureBox.Cursor = Cursors.Default; break;
             }
         }
     }

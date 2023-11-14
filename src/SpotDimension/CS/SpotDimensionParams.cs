@@ -23,11 +23,8 @@
 
 using System;
 using System.Data;
-using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.SpotDimension.CS
@@ -118,7 +115,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                     dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_LEADER_ARROWHEAD);
                 var elementId = temporaryParam.AsElementId();
                 //if not found that element, add string "None" to DataTable
-                if (Autodesk.Revit.DB.ElementId.InvalidElementId == elementId)
+                if (ElementId.InvalidElementId == elementId)
                 {
                     temporaryValue = "None";
                 }
@@ -143,7 +140,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 temporaryParam = dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_SYMBOL);
                 elementId = temporaryParam.AsElementId();
                 //if not found that element, add string "None" to DataTable
-                if (Autodesk.Revit.DB.ElementId.InvalidElementId == elementId)
+                if (ElementId.InvalidElementId == elementId)
                 {
                     temporaryValue = "None";
                 }
@@ -269,7 +266,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
 
             // Create parameter column and add to the DataTable.
             var paraDataColumn = new DataColumn();
-            paraDataColumn.DataType = System.Type.GetType("System.String");
+            paraDataColumn.DataType = Type.GetType("System.String");
             paraDataColumn.ColumnName = "Parameter";
             paraDataColumn.Caption = "Parameter";
             paraDataColumn.ReadOnly = true;
@@ -278,7 +275,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
 
             // Create value column and add to the DataTable.
             var valueDataColumn = new DataColumn();
-            valueDataColumn.DataType = System.Type.GetType("System.String");
+            valueDataColumn.DataType = Type.GetType("System.String");
             valueDataColumn.ColumnName = "Value";
             valueDataColumn.Caption = "Value";
             valueDataColumn.ReadOnly = true;

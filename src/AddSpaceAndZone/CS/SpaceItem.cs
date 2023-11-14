@@ -20,11 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 
 namespace Revit.SDK.Samples.AddSpaceAndZone.CS
@@ -40,26 +36,20 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         public SpaceItem(Space space) : base(space.Name)
         {
             m_space = space;
-            base.Text = space.Name;
+            Text = space.Name;
             if (space.Zone != null)
             {
-                base.SubItems.Add(space.Zone.Name);
+                SubItems.Add(space.Zone.Name);
             }
             else
             {
-                base.SubItems.Add("Default");
+                SubItems.Add("Default");
             }
         }
 
         /// <summary>
         /// Get the Space element in the SpaceItem.
         /// </summary>
-        public Space Space
-        {
-            get
-            {
-                return m_space;
-            }
-        }
+        public Space Space => m_space;
     }
 }

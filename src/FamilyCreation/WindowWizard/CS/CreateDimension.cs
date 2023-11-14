@@ -20,8 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.ApplicationServices;
 
@@ -67,8 +65,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       public Dimension AddDimension(View view, Autodesk.Revit.DB.ReferencePlane refPlane1, Autodesk.Revit.DB.ReferencePlane refPlane2, Autodesk.Revit.DB.ReferencePlane refPlane)
       {
          Dimension dim;
-         var startPoint = new Autodesk.Revit.DB.XYZ();
-         var endPoint = new Autodesk.Revit.DB.XYZ();
+         var startPoint = new XYZ();
+         var endPoint = new XYZ();
          Line line;
          Reference ref1;
          Reference ref2;
@@ -103,8 +101,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       public Dimension AddDimension(View view, Autodesk.Revit.DB.ReferencePlane refPlane, Face face)
       {
          Dimension dim;
-         var startPoint = new Autodesk.Revit.DB.XYZ();
-         var endPoint = new Autodesk.Revit.DB.XYZ();
+         var startPoint = new XYZ();
+         var endPoint = new XYZ();
          Line line;
          Reference ref1;
          Reference ref2;
@@ -118,7 +116,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             refArray.Append(ref2);
          }
          startPoint = refPlane.FreeEnd;
-         endPoint = new Autodesk.Revit.DB.XYZ(startPoint.X, pFace.Origin.Y, startPoint.Z);
+         endPoint = new XYZ(startPoint.X, pFace.Origin.Y, startPoint.Z);
          var subTransaction = new SubTransaction(m_document);
          subTransaction.Start();
          line = Line.CreateBound(startPoint, endPoint);
@@ -137,8 +135,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       public Dimension AddDimension(View view, Face face1, Face face2)
       {
          Dimension dim;
-         var startPoint = new Autodesk.Revit.DB.XYZ();
-         var endPoint = new Autodesk.Revit.DB.XYZ();
+         var startPoint = new XYZ();
+         var endPoint = new XYZ();
          Line line;
          Reference ref1;
          Reference ref2;
@@ -153,7 +151,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             refArray.Append(ref2);
          }
          startPoint = pFace1.Origin;
-         endPoint = new Autodesk.Revit.DB.XYZ(startPoint.X, pFace2.Origin.Y, startPoint.Z);
+         endPoint = new XYZ(startPoint.X, pFace2.Origin.Y, startPoint.Z);
          var subTransaction = new SubTransaction(m_document);
          subTransaction.Start();
          line = Line.CreateBound(startPoint, endPoint);

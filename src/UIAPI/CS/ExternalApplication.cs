@@ -22,14 +22,9 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
 using Autodesk.Revit.DB;
@@ -41,7 +36,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
    public class ExternalApp : IExternalApplication
     {
 
-        static String addinAssmeblyPath = typeof(ExternalApp).Assembly.Location;
+        static string addinAssmeblyPath = typeof(ExternalApp).Assembly.Location;
 
         /// <summary>
         /// Loads the default Mass template automatically rather than showing UI.
@@ -77,8 +72,8 @@ namespace Revit.SDK.Samples.UIAPI.CS
             var ch = new ContextualHelp(ContextualHelpType.ContextId, "HID_OBJECTS_WALL");
             pbd.SetContextualHelp(ch);
             pbd.LongDescription = "We redirect the wiki help for this button to Wall creation.";
-            pbd.LargeImage = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall);
-            pbd.Image = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall_S);
+            pbd.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
+            pbd.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
             
             var pb = rp.AddItem(pbd) as PushButton;
             pb.Enabled = true;
@@ -90,8 +85,8 @@ namespace Revit.SDK.Samples.UIAPI.CS
             var ch1 = new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
             pbd1.SetContextualHelp(ch1);
             pbd1.LongDescription = "Go to google.";
-            pbd1.LargeImage = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall);
-            pbd1.Image = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall_S);
+            pbd1.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
+            pbd1.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
             var pb1 = rp.AddItem(pbd1) as PushButton;
             pb1.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
@@ -103,8 +98,8 @@ namespace Revit.SDK.Samples.UIAPI.CS
             ch2.HelpTopicUrl = @"html/3374f8f0-dccc-e1df-d269-229ed8c60e93.htm";    
             pbd2.SetContextualHelp(ch2);
             pbd2.LongDescription = "Go to Revit Add-In Utility.";
-            pbd2.LargeImage = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall);
-            pbd2.Image = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall_S);
+            pbd2.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
+            pbd2.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
             var pb2 = rp.AddItem(pbd2) as PushButton;
             pb2.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
@@ -112,16 +107,16 @@ namespace Revit.SDK.Samples.UIAPI.CS
             var pbd3 = new PushButtonData("PreviewControl", "Preview all views",
                 addinAssmeblyPath,
                 "Revit.SDK.Samples.UIAPI.CS.PreviewCommand");
-            pbd3.LargeImage = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall);
-            pbd3.Image = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall_S);
+            pbd3.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
+            pbd3.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
             var pb3 = rp.AddItem(pbd3) as PushButton;
             pb3.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
 
             var pbd5 = new PushButtonData("Drag_And_Drop", "Drag and Drop", addinAssmeblyPath,
                                                      "Revit.SDK.Samples.UIAPI.CS.DragAndDropCommand");
-            pbd5.LargeImage = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall);
-            pbd5.Image = convertFromBitmap(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.StrcturalWall_S);
+            pbd5.LargeImage = convertFromBitmap(Properties.Resources.StrcturalWall);
+            pbd5.Image = convertFromBitmap(Properties.Resources.StrcturalWall_S);
             var pb5 = rp.AddItem(pbd5) as PushButton;
             pb5.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
         }
@@ -169,10 +164,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             return Result.Succeeded;
         }
 
-        public UIControlledApplication UIControlledApplication
-        {
-            get { return s_uiApplication; }
-        }
+        public UIControlledApplication UIControlledApplication => s_uiApplication;
 
         private UIControlledApplication s_uiApplication;
 
@@ -189,7 +181,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
            var famTemplatePath = uiApp.Application.FamilyTemplatePath;
            var conceptualmassTemplatePath = famTemplatePath + @"\Conceptual Mass\Mass.rft";
-           if (System.IO.File.Exists(conceptualmassTemplatePath))
+           if (File.Exists(conceptualmassTemplatePath))
            {
               //uiApp.OpenAndActivateDocument(conceptualmassTemplatePath);
               var familyDocument = uiApp.Application.NewFamilyDocument(conceptualmassTemplatePath);
@@ -213,7 +205,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 
                           select element; // Linq query  
 
-              var views = query.ToList<Autodesk.Revit.DB.Element>();
+              var views = query.ToList<Element>();
 
               var view3D = views[0] as View3D;
               if(view3D != null)

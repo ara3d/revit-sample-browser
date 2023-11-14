@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Windows.Forms;
@@ -70,7 +69,7 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
         {
@@ -92,13 +91,13 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
                 {
                     msgForm.StartPosition = FormStartPosition.Manual;
                     CheckTypeRegeneration(msgForm);                    
-                    return Autodesk.Revit.UI.Result.Succeeded;                   
+                    return Result.Succeeded;                   
                }
             }
             else
             {
                 message = "please make sure you have opened a family document!";
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
         #endregion

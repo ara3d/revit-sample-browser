@@ -22,11 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.VersionChecking.CS
@@ -34,7 +30,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
     /// <summary>
     /// UI that display the version information
     /// </summary>
-    public partial class versionCheckingForm : System.Windows.Forms.Form
+    public partial class versionCheckingForm : Form
     {
         /// <summary>
         /// constructor
@@ -76,7 +72,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
         /// <param name="e"></param>
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -85,10 +81,10 @@ namespace Revit.SDK.Samples.VersionChecking.CS
         private void SetDialogLocation()
         {
            // set dialog's display location
-           var left             = (Screen.PrimaryScreen.WorkingArea.Right - this.Width) / 2;
-           var top              = (Screen.PrimaryScreen.WorkingArea.Bottom - this.Height) / 2;
+           var left             = (Screen.PrimaryScreen.WorkingArea.Right - Width) / 2;
+           var top              = (Screen.PrimaryScreen.WorkingArea.Bottom - Height) / 2;
            var windowLocation = new Point(left, top);
-           this.Location        = windowLocation;
+           Location        = windowLocation;
         }
     }
 }

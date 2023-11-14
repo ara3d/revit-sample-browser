@@ -20,14 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
- 
-using System;
-using System.Data;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
-using Autodesk.Revit;
+using System.Data;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -43,19 +37,13 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
     public class Command: IExternalCommand
     {
 
-        ExternalCommandData m_revit    = null;  // application of Revit
-        DataTable m_elementInformation = null;  // store all required information
+        ExternalCommandData m_revit;  // application of Revit
+        DataTable m_elementInformation;  // store all required information
 
         /// <summary>
         /// property to get private member variable m_elementInformation.
         /// </summary>
-        public DataTable ElementInformation
-        {
-            get
-            {
-                return m_elementInformation;
-            }
-        }
+        public DataTable ElementInformation => m_elementInformation;
 
         /// <summary>
         /// Implement this method as an external command for Revit.
@@ -73,7 +61,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData revit,
+        public Result Execute(ExternalCommandData revit,
                                                               ref string message,
                                                               ElementSet elements)
         {
@@ -93,7 +81,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
             var displayForm = new AnalyticalSupportData_InfoForm(this);
             displayForm.ShowDialog();
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
       /// <summary>
@@ -190,7 +178,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
 
             // Create element id column and add to the DataTable.
             var idColumn = new DataColumn();
-            idColumn.DataType   = typeof(System.String);
+            idColumn.DataType   = typeof(string);
             idColumn.ColumnName = "Id";
             idColumn.Caption    = "Id";
             idColumn.ReadOnly   = true;
@@ -198,7 +186,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
 
             // Create element type column and add to the DataTable.
             var typeColumn = new DataColumn();
-            typeColumn.DataType   = typeof(System.String);
+            typeColumn.DataType   = typeof(string);
             typeColumn.ColumnName = "Element Type";
             typeColumn.Caption    = "Element Type";
             typeColumn.ReadOnly   = true;
@@ -206,7 +194,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
 
             // Create support column and add to the DataTable.
             var supportColumn = new DataColumn();
-            supportColumn.DataType   = typeof(System.String);
+            supportColumn.DataType   = typeof(string);
             supportColumn.ColumnName = "Support Type";
             supportColumn.Caption    = "Support Type";
             supportColumn.ReadOnly   = true;
@@ -214,7 +202,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
 
             // Create a column which can note others information
             var remarkColumn = new DataColumn();
-            remarkColumn.DataType   = typeof(System.String);
+            remarkColumn.DataType   = typeof(string);
             remarkColumn.ColumnName = "Remark";
             remarkColumn.Caption    = "Remark";
             remarkColumn.ReadOnly   = true;

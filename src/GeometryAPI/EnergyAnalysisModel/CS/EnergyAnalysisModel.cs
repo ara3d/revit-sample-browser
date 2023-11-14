@@ -21,14 +21,11 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml.Linq;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
 {
@@ -44,14 +41,8 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         // Options Property
         public EnergyAnalysisDetailModelOptions Options
         {
-            get
-            {
-                return m_options;
-            }
-            set
-            {
-                m_options = value;
-            }
+            get => m_options;
+            set => m_options = value;
         }
 
         /// <summary>
@@ -217,7 +208,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         /// This method converts UI selected string to EnergyAnalysisDetailModelTier enum
         /// </summary>
         /// <param name="tierValue">Selected string from UI</param>
-        public void SetTier(String tierValue)
+        public void SetTier(string tierValue)
         {
             switch (tierValue)
             {
@@ -231,11 +222,11 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
                     m_options.Tier = EnergyAnalysisDetailModelTier.NotComputed;
                     break;
                 case "SecondLevelBoundaries":
-                    m_options.Tier = Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
+                    m_options.Tier = EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
                     break;
                 // the default Tier is SecondLevelBoundaries
                 default:
-                    m_options.Tier = Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
+                    m_options.Tier = EnergyAnalysisDetailModelTier.SecondLevelBoundaries;
                     break;
             }
         }

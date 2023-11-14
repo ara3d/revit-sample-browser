@@ -21,10 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 
@@ -38,7 +34,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
     public class PredefinedPointCloud : PointCloudAccessBase, IPointCloudAccess
     {
         #region  Class Member Variables
-        String m_identifier;
+        string m_identifier;
         #endregion
 
         #region Class Methods
@@ -46,7 +42,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// Constructs a new predefined point cloud access instance.
         /// </summary>
         /// <param name="identifier">The identifier of the point cloud.</param>
-        public PredefinedPointCloud(String identifier)
+        public PredefinedPointCloud(string identifier)
         {
             m_identifier = identifier;
 
@@ -58,7 +54,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// </summary>
         /// <param name="identifier">The identifier of the point cloud.</param>
         /// <param name="randomizedPoints">True to use randomization for the point location and number, false otherwise.</param>
-        public PredefinedPointCloud(String identifier, bool randomizedPoints)
+        public PredefinedPointCloud(string identifier, bool randomizedPoints)
         {
             m_identifier = identifier;
 
@@ -93,7 +89,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// The implementation of IPointCloudAccess.GetName().
         /// </summary>
         /// <returns>The name (the file name).</returns>
-        public String GetName()
+        public string GetName()
         {
             return "apipc: " + m_identifier;
         }
@@ -115,7 +111,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <returns>The new iterator.</returns>
         public IPointSetIterator CreatePointSetIterator(PointCloudFilter rFilter, ElementId viewId)
         {
-            return new PointCloudAccessBase.PointCloudAccessBaseIterator(this, rFilter);
+            return new PointCloudAccessBaseIterator(this, rFilter);
         }
 
         /// <summary>

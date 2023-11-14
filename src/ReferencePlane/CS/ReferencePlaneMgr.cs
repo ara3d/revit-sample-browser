@@ -23,8 +23,6 @@ using System;
 using System.Diagnostics;
 using System.Data;
 using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -119,28 +117,28 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
          // Create new DataColumn, set DataType, 
          // ColumnName and add to DataTable.    
          column = new DataColumn();
-         column.DataType = System.Type.GetType("System.Int32");
+         column.DataType = Type.GetType("System.Int32");
          column.ColumnName = "ID";
          // Add the Column to the DataColumnCollection.
          m_referencePlanes.Columns.Add(column);
 
          // Create second column.
          column = new DataColumn();
-         column.DataType = System.Type.GetType("System.String");
+         column.DataType = Type.GetType("System.String");
          column.ColumnName = "BubbleEnd";
          // Add the column to the table.
          m_referencePlanes.Columns.Add(column);
 
          // Create third column.
          column = new DataColumn();
-         column.DataType = System.Type.GetType("System.String");
+         column.DataType = Type.GetType("System.String");
          column.ColumnName = "FreeEnd";
          // Add the column to the table.
          m_referencePlanes.Columns.Add(column);
 
          // Create fourth column.
          column = new DataColumn();
-         column.DataType = System.Type.GetType("System.String");
+         column.DataType = Type.GetType("System.String");
          column.ColumnName = "Normal";
          // Add the column to the table.
          m_referencePlanes.Columns.Add(column);
@@ -157,7 +155,7 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
       /// </summary>
       /// <param name="point">A point to show in UI.</param>
       /// <returns>The display string for a point.</returns>
-      private string Format(Autodesk.Revit.DB.XYZ point)
+      private string Format(XYZ point)
       {
          return "(" + Math.Round(point.X, 2).ToString() +
                  ", " + Math.Round(point.Y, 2).ToString() +
@@ -205,9 +203,9 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
       private void OperateWall(Element host)
       {
          var wall = host as Wall;
-         var bubbleEnd = new Autodesk.Revit.DB.XYZ();
-         var freeEnd = new Autodesk.Revit.DB.XYZ();
-         var cutVec = new Autodesk.Revit.DB.XYZ();
+         var bubbleEnd = new XYZ();
+         var freeEnd = new XYZ();
+         var cutVec = new XYZ();
 
          LocateWall(wall, ref bubbleEnd, ref freeEnd, ref cutVec);
          m_document.Document.Create.NewReferencePlane(bubbleEnd, freeEnd, cutVec, m_document.Document.ActiveView);
@@ -220,9 +218,9 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
       private void OperateSlab(Element host)
       {
          var floor = host as Floor;
-         var bubbleEnd = new Autodesk.Revit.DB.XYZ();
-         var freeEnd = new Autodesk.Revit.DB.XYZ();
-         var thirdPnt = new Autodesk.Revit.DB.XYZ();
+         var bubbleEnd = new XYZ();
+         var freeEnd = new XYZ();
+         var thirdPnt = new XYZ();
          LocateSlab(floor, ref bubbleEnd, ref freeEnd, ref thirdPnt);
          m_document.Document.Create.NewReferencePlane2(bubbleEnd, freeEnd, thirdPnt, m_document.Document.ActiveView);
       }
@@ -234,7 +232,7 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
       /// <param name="bubbleEnd">The bubble end of new reference plane.</param>
       /// <param name="freeEnd">The free end of new reference plane.</param>
       /// <param name="cutVec">The cut vector of new reference plane.</param>
-      private void LocateWall(Wall wall, ref Autodesk.Revit.DB.XYZ bubbleEnd, ref Autodesk.Revit.DB.XYZ freeEnd, ref Autodesk.Revit.DB.XYZ cutVec)
+      private void LocateWall(Wall wall, ref XYZ bubbleEnd, ref XYZ freeEnd, ref XYZ cutVec)
       {
          var location = wall.Location as LocationCurve;
          var locaCurve = location.Curve;
@@ -279,11 +277,11 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
          }
 
          //Three necessary parameters for generate a reference plane.
-         bubbleEnd = new Autodesk.Revit.DB.XYZ(locaCurve.GetEndPoint(0).X + xOffset,
+         bubbleEnd = new XYZ(locaCurve.GetEndPoint(0).X + xOffset,
              locaCurve.GetEndPoint(0).Y + yOffset, locaCurve.GetEndPoint(0).Z);
-         freeEnd = new Autodesk.Revit.DB.XYZ(locaCurve.GetEndPoint(1).X + xOffset,
+         freeEnd = new XYZ(locaCurve.GetEndPoint(1).X + xOffset,
              locaCurve.GetEndPoint(1).Y + yOffset, locaCurve.GetEndPoint(1).Z);
-         cutVec = new Autodesk.Revit.DB.XYZ(0, 0, 1);
+         cutVec = new XYZ(0, 0, 1);
       }
 
       /// <summary>
@@ -293,7 +291,7 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
       /// <param name="bubbleEnd">The bubble end of new reference plane.</param>
       /// <param name="freeEnd">The free end of new reference plane.</param>
       /// <param name="thirdPnt">The third point of new reference plane.</param>
-      private void LocateSlab(Floor floor, ref Autodesk.Revit.DB.XYZ bubbleEnd, ref Autodesk.Revit.DB.XYZ freeEnd, ref Autodesk.Revit.DB.XYZ thirdPnt)
+      private void LocateSlab(Floor floor, ref XYZ bubbleEnd, ref XYZ freeEnd, ref XYZ thirdPnt)
       {
          //Obtain the geometry data of the floor.
          var geometry = floor.get_Geometry(m_options);

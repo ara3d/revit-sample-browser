@@ -21,12 +21,8 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 {
@@ -119,7 +115,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             {
                 var curve = location.Curve;
 
-                if (!(curve is Autodesk.Revit.DB.Line))
+                if (!(curve is Line))
                 {
                     throw new Exception("Opening cannot build on this Wall");
                 }
@@ -151,8 +147,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         public override Opening CreateOpening(List<Vector4> points)
         {
             //create Opening on wall
-            var p1 = new Autodesk.Revit.DB.XYZ (points[0].X, points[0].Y, points[0].Z);
-            var p2 = new Autodesk.Revit.DB.XYZ (points[1].X, points[1].Y, points[1].Z);
+            var p1 = new XYZ (points[0].X, points[0].Y, points[0].Z);
+            var p2 = new XYZ (points[1].X, points[1].Y, points[1].Z);
             return m_docCreator.NewOpening(m_data, p1, p2);
         }
     }

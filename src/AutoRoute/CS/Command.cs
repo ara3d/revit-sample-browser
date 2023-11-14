@@ -23,10 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Diagnostics;
-using Autodesk.Revit;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -66,7 +64,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         /// <summary>
         /// The type id of the duct
         /// </summary>
-        Autodesk.Revit.DB.ElementId ductTypeId = new Autodesk.Revit.DB.ElementId(139191L);
+        ElementId ductTypeId = new ElementId(139191L);
 
         /// <summary>
         ///  The system type id of the duct
@@ -76,7 +74,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         /// <summary>
         /// The level of the duct
         /// </summary>
-        Level lvl =null;
+        Level lvl;
 
 
         /// <summary>
@@ -111,27 +109,11 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         private const double min1Duct2FittingsLength = min1FittingLength * 2 + minDuctLength;
 
         #region IExternalCommand Members
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message,
+        public Result Execute(ExternalCommandData commandData, ref string message,
             ElementSet elements)
         {
             // set out default result to Failed.
-            var retRes = Autodesk.Revit.UI.Result.Failed;
+            var retRes = Result.Failed;
 
             m_application = commandData.Application.Application;
             m_document = commandData.Application.ActiveUIDocument.Document;
@@ -180,7 +162,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 ids.Add(new ElementId(378716L));
 
                 var instances = new FamilyInstance[3];
-                var boxes = new Autodesk.Revit.DB.BoundingBoxXYZ[3];
+                var boxes = new BoundingBoxXYZ[3];
                 var conns = new Connector[3];
                 ConnectorSetIterator csi = null;
                 for (var i = 0; i < ids.Count; ++i)
@@ -189,7 +171,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                     if (null == element)
                     {
                         message = "Element " + ids[i].ToString() + " can't be found.";
-                        return Autodesk.Revit.UI.Result.Failed;
+                        return Result.Failed;
                     }
                     instances[i] = element as FamilyInstance;
                     csi = ConnectorInfo.GetConnectors(ids[i]).ForwardIterator();
@@ -308,7 +290,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                     if (ConnectSystemOnXAxis(baseConnectors, baseYValues[i]))
                     {
                         LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
-                        return Autodesk.Revit.UI.Result.Succeeded;
+                        return Result.Succeeded;
                     }
                 }
 
@@ -318,7 +300,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                     if (ConnectSystemOnYAxis(baseConnectors, baseXValues[i]))
                     {
                         LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
-                        return Autodesk.Revit.UI.Result.Succeeded;
+                        return Result.Succeeded;
                     }
                 }
 
@@ -327,14 +309,14 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 if (ConnectSystemOnXAxis(baseConnectors, maxY + horizontalOptionalTrunkOffset))
                 {
                     LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
-                    return Autodesk.Revit.UI.Result.Succeeded;
+                    return Result.Succeeded;
                 }
 
                 SortConnectorsByY(baseConnectors);
                 if (ConnectSystemOnYAxis(baseConnectors, maxX + horizontalOptionalTrunkOffset))
                 {
                     LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
-                    return Autodesk.Revit.UI.Result.Succeeded;
+                    return Result.Succeeded;
                 }
 
                 //If there's no path for the connection, choose one path and let Revit report the error
@@ -351,7 +333,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             {
                 Trace.WriteLine(ex.ToString());
                 message = ex.Message;
-                retRes = Autodesk.Revit.UI.Result.Failed;
+                retRes = Result.Failed;
             }
             finally
             {
@@ -858,8 +840,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             /// </summary>
             public Connector Connector
             {
-                get { return m_connector; }
-                set { m_connector = value; }
+                get => m_connector;
+                set => m_connector = value;
             }
 
             /// <summary>
@@ -867,8 +849,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             /// </summary>
             public ElementId OwnerId
             {
-                get { return m_ownerId; }
-                set { m_ownerId = value; }
+                get => m_ownerId;
+                set => m_ownerId = value;
             }
 
             /// <summary>
@@ -876,8 +858,8 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             /// </summary>
             public GXYZ Origin
             {
-                get { return m_origin; }
-                set { m_origin = value; }
+                get => m_origin;
+                set => m_origin = value;
             }
 
             /// <summary>
@@ -889,7 +871,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             {
                 m_ownerId = ownerId;
                 m_origin = origin;
-                m_connector = ConnectorInfo.GetConnector(m_ownerId, origin);
+                m_connector = GetConnector(m_ownerId, origin);
             }
 
             /// <summary>
@@ -939,7 +921,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             /// </summary>
             /// <param name="element">the owner of the connector</param>
             /// <returns>if found, return all the connectors found, or else return null</returns>
-            public static ConnectorSet GetConnectors(Autodesk.Revit.DB.Element element)
+            public static ConnectorSet GetConnectors(Element element)
             {
                 if (element == null) return null;
                 var fi = element as FamilyInstance;
@@ -1017,9 +999,9 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             }
             var elementId = element.Id;
             var familyId = element.get_Parameter(BuiltInParameter.ELEM_FAMILY_PARAM).AsElementId();
-            var familyName = LogUtility.InvalidString;
+            var familyName = InvalidString;
             var objectType = GetElement<Element>(element.Document, familyId);
-            var elementName = LogUtility.InvalidString;
+            var elementName = InvalidString;
             try { elementName = element.Name; }
             catch { }
             if (objectType != null)
@@ -1054,7 +1036,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             Trace.Indent();
             foreach (Element element in system.DuctNetwork)
             {
-                LogUtility.WriteElement(element, false);
+                WriteElement(element, false);
                 Trace.WriteLine("");
             }
             Trace.Unindent();
@@ -1067,7 +1049,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         /// <param name="document">the owner document of the element</param>
         /// <param name="eid">the id of the element</param>
         /// <returns>the element of the specified type</returns>
-        public static T GetElement<T>(Document document, ElementId eid) where T : Autodesk.Revit.DB.Element
+        public static T GetElement<T>(Document document, ElementId eid) where T : Element
         {
             return document.GetElement(eid) as T;
         }

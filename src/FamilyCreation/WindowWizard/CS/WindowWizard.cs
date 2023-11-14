@@ -20,9 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Windows.Forms;
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.WindowWizard.CS

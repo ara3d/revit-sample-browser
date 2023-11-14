@@ -22,10 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewRebar.CS
@@ -33,7 +29,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
     /// <summary>
     /// This form provides an entrance for user to add constraints to RebarShape.
     /// </summary>
-    public partial class AddConstraint : System.Windows.Forms.Form
+    public partial class AddConstraint : Form
     {
         /// <summary>
         /// Default constructor.
@@ -57,13 +53,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Return the type from constraintTypesComboBox selection.
         /// </summary>
-        public Type ConstraintType
-        {
-            get
-            {
-                return constraintTypesComboBox.SelectedItem as Type;
-            }
-        }
+        public Type ConstraintType => constraintTypesComboBox.SelectedItem as Type;
 
         /// <summary>
         /// OK Button, Return DialogResult.OK and close this form. 
@@ -72,8 +62,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>
@@ -83,8 +73,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

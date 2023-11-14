@@ -21,8 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
@@ -40,7 +38,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <returns></returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            return destinationType == typeof(String);
+            return destinationType == typeof(string);
         }
 
         /// <summary>

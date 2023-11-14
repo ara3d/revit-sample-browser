@@ -22,14 +22,8 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
 {
@@ -91,9 +85,9 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         /// <returns>If the data are integrated return true, otherwise false</returns>
         public bool AssertPointIntegrity()
         {
-            if (String.IsNullOrEmpty(xCoordinateTextBox.Text)       // x coordinate empty
-                || String.IsNullOrEmpty(yCoordinateTextBox.Text)    // y coordinate empty
-                || String.IsNullOrEmpty(zCoordinateTextBox.Text))   // z coordinate empty
+            if (string.IsNullOrEmpty(xCoordinateTextBox.Text)       // x coordinate empty
+                || string.IsNullOrEmpty(yCoordinateTextBox.Text)    // y coordinate empty
+                || string.IsNullOrEmpty(zCoordinateTextBox.Text))   // z coordinate empty
             {
                 return false;
             }
@@ -133,10 +127,10 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         /// </summary>
         /// <param name="number">The test string</param>
         /// <returns>If the string can represent a number return true, otherwise false</returns>
-        static public bool IsNumber(String number)
+        static public bool IsNumber(string number)
         {
             // First check whether the string is empty
-            if (String.IsNullOrEmpty(number))
+            if (string.IsNullOrEmpty(number))
             {
                 // If the string is empty, return true
                 return true;

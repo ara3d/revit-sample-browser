@@ -20,8 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System.Collections.Generic;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.NetworkPressureLossReport
@@ -36,7 +34,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
     {
         #region IExternalCommand Members
 
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
 
             // Get the application and document from external command data.
@@ -45,7 +43,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             var dlg = new NetworkDialog(activeDoc);
             dlg.ShowDialog();
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
     }

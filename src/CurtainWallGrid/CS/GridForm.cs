@@ -21,14 +21,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
@@ -46,13 +41,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
       // store whether the line to be moved has been selected
       // if the line to be moved has been selected, it's true; otherwise false
-      private bool m_lineToMoveSelected = false;
+      private bool m_lineToMoveSelected;
 
       // store the mouse location of last execution operation (happened when the mouse clicks down)
       private System.Drawing.Point m_lastPoint = System.Drawing.Point.Empty;
 
       // stores the Ctrl key status: if Ctrl is down, the value of the variable true; otherwise false
-      private bool m_ctrlKeyDown = false;
+      private bool m_ctrlKeyDown;
       #endregion
 
       #region Constructors
@@ -67,7 +62,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          m_myDocument = myDoc;
          if (null == m_myDocument.UIDocument)
          {
-            this.Close();
+            Close();
          }
 
          InitializeComponent();
@@ -145,15 +140,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          var message = m_myDocument.Message;
          if (true == message.Value)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Red;
+            operationStatusLabel.ForeColor = System.Drawing.Color.Red;
          }
          // it's a common hint message, set the color to black
          else
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
          }
-         this.operationStatusLabel.Text = message.Key;
-         this.statusStrip.Refresh();
+         operationStatusLabel.Text = message.Key;
+         statusStrip.Refresh();
       }
 
       /// <summary>
@@ -167,10 +162,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       private void GridForm_Load(object sender, EventArgs e)
       {
-         this.viewComboBox.SelectedIndex = 0;
-         this.wallTypeComboBox.SelectedIndex = 0;
-         this.operationStatusLabel.Text = "Specify the baseline of the curtain wall by clicking in the canvas area";
-         this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+         viewComboBox.SelectedIndex = 0;
+         wallTypeComboBox.SelectedIndex = 0;
+         operationStatusLabel.Text = "Specify the baseline of the curtain wall by clicking in the canvas area";
+         operationStatusLabel.ForeColor = System.Drawing.Color.Black;
       }
 
       /// <summary>
@@ -235,11 +230,11 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          if (System.Drawing.Point.Empty != m_myDocument.WallGeometry.Drawing.WallLine2D.StartPoint &&
              System.Drawing.Point.Empty != m_myDocument.WallGeometry.Drawing.WallLine2D.EndPoint)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Click \"Create Curtain Wall\" button to create the curtain wall.";
-            this.createButton.Enabled = true;
-            this.clearButton.Enabled = true;
-            this.curtainWallPictureBox.Refresh();
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Click \"Create Curtain Wall\" button to create the curtain wall.";
+            createButton.Enabled = true;
+            clearButton.Enabled = true;
+            curtainWallPictureBox.Refresh();
          }
       }
 
@@ -262,7 +257,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
          // record the mouse location and draw an assistant line and draw hint text to show the current corrdinate
          m_myDocument.WallGeometry.Drawing.AddMousePosition(e.Location);
-         this.curtainWallPictureBox.Refresh();
+         curtainWallPictureBox.Refresh();
       }
 
       /// <summary>
@@ -293,13 +288,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          // clear the baseline of the curtain wall
          m_myDocument.WallGeometry.Drawing.RemovePoints();
-         this.curtainWallPictureBox.Refresh();
+         curtainWallPictureBox.Refresh();
 
          // disable the "create curtain wall" button and update the status hint
-         this.clearButton.Enabled = false;
-         this.createButton.Enabled = false;
-         this.operationStatusLabel.Text = "Specify the baseline of the curtain wall by clicking in the canvas area";
-         this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+         clearButton.Enabled = false;
+         createButton.Enabled = false;
+         operationStatusLabel.Text = "Specify the baseline of the curtain wall by clicking in the canvas area";
+         operationStatusLabel.ForeColor = System.Drawing.Color.Black;
       }
 
       /// <summary>
@@ -332,12 +327,12 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          m_myDocument.GridGeometry.ReloadGeometryData();
 
          // refresh the UI components' status
-         this.wallTypeComboBox.Enabled = false;
-         this.viewComboBox.Enabled = false;
-         this.clearButton.Enabled = false;
-         this.createButton.Enabled = false;
-         this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-         this.operationStatusLabel.Text = "Switch to \"Curtain Grid\" tab page to manipulate the curtain grid.";
+         wallTypeComboBox.Enabled = false;
+         viewComboBox.Enabled = false;
+         clearButton.Enabled = false;
+         createButton.Enabled = false;
+         operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+         operationStatusLabel.Text = "Switch to \"Curtain Grid\" tab page to manipulate the curtain grid.";
       }
 
       /// <summary>
@@ -351,7 +346,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          }
 
          m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
-         this.Cursor = Cursors.Default;
+         Cursor = Cursors.Default;
       }
 
       /// <summary>
@@ -364,7 +359,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             return;
          }
 
-         this.Cursor = Cursors.Cross;
+         Cursor = Cursors.Cross;
       }
 
       /// <summary>
@@ -382,7 +377,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          // if no curtain wall is created, limits the tab pages to the 1st tab page
          if (false == m_myDocument.WallCreated)
          {
-            this.mainTabControl.SelectedIndex = 0;
+            mainTabControl.SelectedIndex = 0;
          }
       }
 
@@ -407,8 +402,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          if (mainTabControl.SelectedTab == curtainGridTabPage)
          {
             UpdatePropertyGrid();
-            this.operationStatusLabel.Text = "Operate the curtain grid by selecting an item from the bottom-left drop down list";
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Operate the curtain grid by selecting an item from the bottom-left drop down list";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
          }
          // change back to the curtain wall tab page, update the hint
          else
@@ -418,8 +413,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             ResetLineOpApprearances();
 
             // update the status hint
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Switch to \"Curtain Grid\" tab page to manipulate the curtain grid.";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Switch to \"Curtain Grid\" tab page to manipulate the curtain grid.";
          }
       }
 
@@ -452,52 +447,52 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          // update the status hints for the different grid/grid line operations
          if (LineOperationType.AddULine == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
          }
          else if (LineOperationType.AddVLine == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Specify a point within the curtain grid to locate new grid line";
          }
          else if (LineOperationType.LockOrUnlockLine == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Click on an existing grid line to switch its \"Lock\" status";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Click on an existing grid line to switch its \"Lock\" status";
          }
          else if (LineOperationType.MoveLine == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Select a grid line & move the mouse, left-click to finish the movement";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Select a grid line & move the mouse, left-click to finish the movement";
          }
          else if (LineOperationType.AddSegment == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Add a segment to the place where a segment has been deleted previously";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Add a segment to the place where a segment has been deleted previously";
          }
          else if (LineOperationType.RemoveSegment == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Remove the segment of the grid line";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Remove the segment of the grid line";
 
          }
          else if (LineOperationType.AddAllSegments == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Add all the segments of the selected grid line";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Add all the segments of the selected grid line";
          }
          else if (LineOperationType.AddAllMullions == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Add mullions to all segments";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Add mullions to all segments";
             m_myDocument.GridGeometry.AddAllMullions();
             ResetLineOpApprearances();
             UpdatePropertyGrid();
          }
          else if (LineOperationType.DeleteAllMullions == m_myDocument.ActiveOperation.OpType)
          {
-            this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.operationStatusLabel.Text = "Delete all the mullions of the curtain grid";
+            operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+            operationStatusLabel.Text = "Delete all the mullions of the curtain grid";
             m_myDocument.GridGeometry.DeleteAllMullions();
             ResetLineOpApprearances();
             UpdatePropertyGrid();
@@ -513,7 +508,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          if (false == m_ctrlKeyDown)
          {
             m_myDocument.ActiveOperation = new LineOperation(LineOperationType.Waiting);
-            this.Cursor = Cursors.Default;
+            Cursor = Cursors.Default;
          }
          // cancel the hanged operation : for example: the line to-be-moved has been selected
          // and press "Esc", cancel the selection
@@ -578,8 +573,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                if (true == lineObtained)
                {
                   m_lineToMoveSelected = true;
-                  this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
-                  this.operationStatusLabel.Text = "Move the mouse to the expected location, left click to finish the operation";
+                  operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+                  operationStatusLabel.Text = "Move the mouse to the expected location, left click to finish the operation";
                }
             }
             // the 2nd time, the to-be-moved grid line specified, specify the destination location
@@ -658,19 +653,19 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          {
             m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
             m_myDocument.GridGeometry.Drawing.AddDashULine(e.Location);
-            this.curtainGridPictureBox.Refresh();
+            curtainGridPictureBox.Refresh();
          }
          else if (LineOperationType.AddVLine == m_myDocument.ActiveOperation.OpType)
          {
             m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
             m_myDocument.GridGeometry.Drawing.AddDashVLine(e.Location);
-            this.curtainGridPictureBox.Refresh();
+            curtainGridPictureBox.Refresh();
          }
          else if (LineOperationType.LockOrUnlockLine == m_myDocument.ActiveOperation.OpType)
          {
             m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
             m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, false, false);
-            this.curtainGridPictureBox.Refresh();
+            curtainGridPictureBox.Refresh();
          }
          else if (LineOperationType.MoveLine == m_myDocument.ActiveOperation.OpType)
          {
@@ -682,14 +677,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                // get the line which will be moved
                m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
                m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, true, false);
-               this.curtainGridPictureBox.Refresh();
+               curtainGridPictureBox.Refresh();
             }
             else
             {
                // determine the destination place for the selected grid line
                m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
                m_myDocument.GridGeometry.Drawing.AddDashLine(e.Location);
-               this.curtainGridPictureBox.Refresh();
+               curtainGridPictureBox.Refresh();
             }
 
          }
@@ -697,19 +692,19 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          {
             m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
             m_myDocument.GridGeometry.Drawing.SelectSegment(e.Location);
-            this.curtainGridPictureBox.Refresh();
+            curtainGridPictureBox.Refresh();
          }
          else if (LineOperationType.RemoveSegment == m_myDocument.ActiveOperation.OpType)
          {
             m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
             m_myDocument.GridGeometry.Drawing.SelectSegment(e.Location);
-            this.curtainGridPictureBox.Refresh();
+            curtainGridPictureBox.Refresh();
          }
          else if (LineOperationType.AddAllSegments == m_myDocument.ActiveOperation.OpType)
          {
             m_myDocument.GridGeometry.Drawing.DrawObject.Clear();
             m_myDocument.GridGeometry.Drawing.SelectLine(e.Location, false, true);
-            this.curtainGridPictureBox.Refresh();
+            curtainGridPictureBox.Refresh();
          }
       }
 
@@ -799,7 +794,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       private void exitButton_Click(object sender, EventArgs e)
       {
-         this.Close();
+         Close();
       }
 
       /// <summary>
@@ -813,7 +808,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       private void gridExitButton_Click(object sender, EventArgs e)
       {
-         this.Close();
+         Close();
       }
       #endregion
    }// end of class
@@ -849,13 +844,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// <summary>
       /// the current line operation type
       /// </summary>
-      public LineOperationType OpType
-      {
-         get
-         {
-            return m_opType;
-         }
-      }
+      public LineOperationType OpType => m_opType;
+
       #endregion
 
       #region Constructors
@@ -867,7 +857,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </param>
       public LineOperation(LineOperationType type)
       {
-         this.m_opType = type;
+         m_opType = type;
       }
       #endregion
 

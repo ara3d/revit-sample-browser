@@ -22,13 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using System.Xml.Linq;
-using System.IO;
-using System.Xml;
-using System.Diagnostics;
 
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
@@ -44,7 +40,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         private IEnumerable<Material> m_materials;
         private IEnumerable<PipeScheduleType> m_pipeSchedules;
         private IEnumerable<PipeType> m_pipeTypes;
-        private Autodesk.Revit.DB.Document m_document;
+        private Document m_document;
         #endregion
 
         #region Public interface
@@ -194,7 +190,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
          var unitStringRoughness = formatOptionRoughness.GetUnitTypeId().TypeId;
          xroot.Add(new XAttribute(XName.Get("pipeRoughnessUnits"), unitStringRoughness));
 
-         foreach (var familySymbol in this.m_fittings)
+         foreach (var familySymbol in m_fittings)
          {
             xroot.Add(CreateXmlFromFamily(familySymbol, findFolderUtility, ref pathsNotFound));
          }
@@ -252,7 +248,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             if (!m_document.LoadFamily(familyPath))
                return;  //returns false if already loaded.
          }
-         catch (System.Exception ex)
+         catch (Exception ex)
          {
             throw new RoutingPreferenceDataException("Cannot load family: " + xafilename.Value + ": " + ex.ToString());
          }
@@ -307,7 +303,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
        /// <param name="pipeType"></param>
       private static void ClearRoutingPreferenceRules(PipeType pipeType)
       {
-         foreach ( RoutingPreferenceRuleGroupType group in System.Enum.GetValues(typeof(RoutingPreferenceRuleGroupType)))
+         foreach ( RoutingPreferenceRuleGroupType group in Enum.GetValues(typeof(RoutingPreferenceRuleGroupType)))
          {
             var ruleCount = pipeType.RoutingPreferenceManager.GetNumberOfRules(group);
             for (var index = 0; index != ruleCount; ++index)
@@ -428,7 +424,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
        /// <param name="sizeXElement"></param>
        /// <param name="document"></param>
        /// <returns></returns>
-      private static MEPSize ParseMEPSizeFromXml(XElement sizeXElement, Autodesk.Revit.DB.Document document)
+      private static MEPSize ParseMEPSizeFromXml(XElement sizeXElement, Document document)
       {
          var xaNominal = sizeXElement.Attribute(XName.Get("nominalDiameter"));
          var xaInner = sizeXElement.Attribute(XName.Get("innerDiameter"));
@@ -469,7 +465,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
        /// <param name="size"></param>
        /// <param name="document"></param>
        /// <returns></returns>
-      private static XElement CreateXmlFromMEPSize(MEPSize size, Autodesk.Revit.DB.Document document)
+      private static XElement CreateXmlFromMEPSize(MEPSize size, Document document)
       {
          var xMEPSize = new XElement(XName.Get("MEPSize"));
 
@@ -622,7 +618,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             {
                xaMaxSize = ruleXElement.Attribute(XName.Get("maximumSize"));
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                throw new RoutingPreferenceDataException("Cannot get maximumSize attribute in: " + ruleXElement.ToString());
             }
@@ -919,8 +915,8 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         public IEnumerable<PipeScheduleType> GetAllPipeScheduleTypes(Document document)
         {
             var fec = new FilteredElementCollector(document);
-            fec.OfClass(typeof(Autodesk.Revit.DB.Plumbing.PipeScheduleType));
-            var pipeScheduleTypes = fec.ToElements().Cast<Autodesk.Revit.DB.Plumbing.PipeScheduleType>();
+            fec.OfClass(typeof(PipeScheduleType));
+            var pipeScheduleTypes = fec.ToElements().Cast<PipeScheduleType>();
             return pipeScheduleTypes;
         }
 

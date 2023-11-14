@@ -19,17 +19,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using Autodesk.Revit;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Reference = Autodesk.Revit.DB.Reference;
 using Exceptions = Autodesk.Revit.Exceptions;
 
 namespace Revit.SDK.Samples.Selections.CS
@@ -89,14 +81,8 @@ namespace Revit.SDK.Samples.Selections.CS
         /// </summary>
         public SelectionType SelectionType
         {
-            get 
-            { 
-                return m_selectionType; 
-            }
-            set 
-            { 
-                m_selectionType = value; 
-            }
+            get => m_selectionType;
+            set => m_selectionType = value;
         }
 
         Element m_selectedElement;
@@ -105,14 +91,8 @@ namespace Revit.SDK.Samples.Selections.CS
         /// </summary>
         public Element SelectedElement
         {
-            get
-            { 
-                return m_selectedElement;
-            }
-            set 
-            { 
-                m_selectedElement = value; 
-            }
+            get => m_selectedElement;
+            set => m_selectedElement = value;
         }
 
         XYZ m_selectedPoint;
@@ -122,10 +102,7 @@ namespace Revit.SDK.Samples.Selections.CS
         /// </summary>
         public XYZ SelectedPoint
         {
-            get 
-            { 
-                return m_selectedPoint; 
-            }
+            get => m_selectedPoint;
             set 
             { 
                 m_selectedPoint = value; 

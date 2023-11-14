@@ -20,12 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit.DB;
-
 namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
 {
    /// <summary>
@@ -45,14 +39,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
       /// </summary>
       public double X
       {
-         get
-         {
-            return m_x;
-         }
-         set
-         {
-            m_x = value;
-         }
+         get => m_x;
+         set => m_x = value;
       }
 
       /// <summary>
@@ -60,14 +48,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
       /// </summary>
       public double Y
       {
-         get
-         {
-            return m_y;
-         }
-         set
-         {
-            m_y = value;
-         }
+         get => m_y;
+         set => m_y = value;
       }
 
       /// <summary>
@@ -75,14 +57,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
       /// </summary>
       public double Z
       {
-         get
-         {
-            return m_z;
-         }
-         set
-         {
-            m_z = value;
-         }
+         get => m_z;
+         set => m_z = value;
       }
 
       /// <summary>
@@ -90,14 +66,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
       /// </summary>
       public double W
       {
-         get
-         {
-            return m_w;
-         }
-         set
-         {
-            m_w = value;
-         }
+         get => m_w;
+         set => m_w = value;
       }
       #endregion
 
@@ -106,7 +76,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
       /// </summary>
       public Vector4(double x, double y, double z)
       {
-         this.X = x; this.Y = y; this.Z = z;
+         X = x; Y = y; Z = z;
       }
 
       /// <summary>
@@ -115,7 +85,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
       /// <param name="v">Autodesk.Revit.DB.XYZ structure which needs to be transfered</param>
       public Vector4(Autodesk.Revit.DB.XYZ v)
       {
-         this.X = (double)v.X; this.Y = (double)v.Y; this.Z = (double)v.Z;
+         X = (double)v.X; Y = (double)v.Y; Z = (double)v.Z;
       }
 
 
@@ -126,8 +96,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
       /// <returns> normal vector of two vectors</returns>
       public Vector4 CrossProduct(Vector4 v)
       {
-         return new Vector4(this.Y * v.Z - this.Z * v.Y, this.Z * v.X
-             - this.X * v.Z, this.X * v.Y - this.Y * v.X);
+         return new Vector4(Y * v.Z - Z * v.Y, Z * v.X
+             - X * v.Z, X * v.Y - Y * v.X);
       }
 
       /// <summary>

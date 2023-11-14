@@ -22,10 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -46,13 +42,13 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       // Creation application
       private Autodesk.Revit.Creation.Application m_appCreator;
       // all face names
-      private List<String> m_faceNameList = new List<String>();
+      private List<string> m_faceNameList = new List<string>();
       // all face instances
       private List<Face> m_faceList = new List<Face>();
       // all family symbols
       private List<FamilySymbol> m_familySymbolList = new List<FamilySymbol>();
       // all family symbol names
-      private List<String> m_familySymbolNameList = new List<String>();
+      private List<string> m_familySymbolNameList = new List<string>();
       // the index default family symbol in family list
       private int m_defaultIndex = -1;
       #endregion
@@ -61,57 +57,27 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       /// <summary>
       /// Store the all face names, they will be displayed in a combo box
       /// </summary>
-      public List<String> FaceNameList
-      {
-         get
-         {
-            return m_faceNameList;
-         }
-      }
+      public List<string> FaceNameList => m_faceNameList;
 
       /// <summary>
       /// Revit document
       /// </summary>
-      public UIDocument RevitDoc
-      {
-         get
-         {
-            return m_revitDoc;
-         }
-      }
+      public UIDocument RevitDoc => m_revitDoc;
 
       /// <summary>
       /// Store all face instances for convenience to create a face-based family instance 
       /// </summary>
-      public List<Face> FaceList
-      {
-         get
-         {
-            return m_faceList;
-         }
-      }
+      public List<Face> FaceList => m_faceList;
 
       /// <summary>
       /// Store all family symbol in current Revit document
       /// </summary>
-      public List<FamilySymbol> FamilySymbolList
-      {
-         get
-         {
-            return m_familySymbolList;
-         }
-      }
+      public List<FamilySymbol> FamilySymbolList => m_familySymbolList;
 
       /// <summary>
       /// Store all family symbol names
       /// </summary>
-      public List<String> FamilySymbolNameList
-      {
-         get
-         {
-            return m_familySymbolNameList;
-         }
-      }
+      public List<string> FamilySymbolNameList => m_familySymbolNameList;
 
       /// <summary>
       /// The index of default family symbol, will set it as default value when initializing UI 
@@ -119,13 +85,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       /// For based line, its name is "Line-based"
       /// The prepared rfa files provide them 
       /// </summary>
-      public int DefaultFamilySymbolIndex
-      {
-         get
-         {
-            return m_defaultIndex;
-         }
-      }
+      public int DefaultFamilySymbolIndex => m_defaultIndex;
 
       #endregion
 
@@ -134,7 +94,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       /// Constructor, Store the Revit application
       /// </summary>
       /// <param name="app"></param>
-      public FamilyInstanceCreator(Autodesk.Revit.UI.UIApplication app)
+      public FamilyInstanceCreator(UIApplication app)
       {
          m_revitDoc = app.ActiveUIDocument;
          m_appCreator = app.Application.Create;
@@ -159,7 +119,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
          var familySymbolItor =
              new FilteredElementCollector(m_revitDoc.Document).OfClass(typeof(FamilySymbol)).GetElementIterator();
 
-         var defaultSymbolName = String.Empty;
+         var defaultSymbolName = string.Empty;
          switch (type)
          {
             case BasedType.Point:
@@ -183,7 +143,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                continue;
             }
 
-            if (!hasDefaultSymbol && 0 == String.Compare(defaultSymbolName, symbol.Name))
+            if (!hasDefaultSymbol && 0 == string.Compare(defaultSymbolName, symbol.Name))
             {
                hasDefaultSymbol = true;
                m_defaultIndex = ii;
@@ -193,12 +153,12 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             m_familySymbolList.Add(symbol);
 
             // family symbol name
-            var familyCategoryname = String.Empty;
+            var familyCategoryname = string.Empty;
             if (null != symbol.Family.FamilyCategory)
             {
                familyCategoryname = symbol.Family.FamilyCategory.Name + " : ";
             }
-            m_familySymbolNameList.Add(String.Format("{0}{1} : {2}"
+            m_familySymbolNameList.Add(string.Format("{0}{1} : {2}"
                 , familyCategoryname, symbol.Family.Name, symbol.Name));
             ii++;
          }
@@ -208,7 +168,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             FamilySymbol loadedfamilySymbol = null;
             try
             {
-               m_revitDoc.Document.LoadFamilySymbol(String.Format(@"{0}.rfa", defaultSymbolName)
+               m_revitDoc.Document.LoadFamilySymbol(string.Format(@"{0}.rfa", defaultSymbolName)
                    , defaultSymbolName
                    , out loadedfamilySymbol);
             }
@@ -224,12 +184,12 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             }
             m_familySymbolList.Add(loadedfamilySymbol);
 
-            var familyCategoryname = String.Empty;
+            var familyCategoryname = string.Empty;
             if (null != loadedfamilySymbol.Family.FamilyCategory)
             {
                familyCategoryname = loadedfamilySymbol.Family.FamilyCategory.Name + ": ";
             }
-            m_familySymbolNameList.Add(String.Format("{0}{1}: {2}"
+            m_familySymbolNameList.Add(string.Format("{0}{1}: {2}"
                 , familyCategoryname, loadedfamilySymbol.Family.Name, loadedfamilySymbol.Name));
             m_defaultIndex = m_familySymbolList.Count - 1;
          }
@@ -245,7 +205,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       /// <param name="faceIndex">the index of the selected face</param>
       /// <param name="familySymbolIndex">the index of the selected family symbol</param>
       /// <returns></returns>
-      public bool CreatePointFamilyInstance(Autodesk.Revit.DB.XYZ locationP, Autodesk.Revit.DB.XYZ directionP, int faceIndex
+      public bool CreatePointFamilyInstance(XYZ locationP, XYZ directionP, int faceIndex
           , int familySymbolIndex)
       {
          var face = m_faceList[faceIndex];
@@ -270,7 +230,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       /// <param name="faceIndex">the index of the selected face</param>
       /// <param name="familySymbolIndex">the index of the selected family symbol</param>
       /// <returns></returns>
-      public bool CreateLineFamilyInstance(Autodesk.Revit.DB.XYZ startP, Autodesk.Revit.DB.XYZ endP, int faceIndex
+      public bool CreateLineFamilyInstance(XYZ startP, XYZ endP, int faceIndex
           , int familySymbolIndex)
       {
          var face = m_faceList[faceIndex];
@@ -341,8 +301,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       {
          var mesh = m_faceList[indexFace].Triangulate();
 
-         var maxP = new Autodesk.Revit.DB.XYZ(double.MinValue, double.MinValue, double.MinValue);
-         var minP = new Autodesk.Revit.DB.XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
+         var maxP = new XYZ(double.MinValue, double.MinValue, double.MinValue);
+         var minP = new XYZ(double.MaxValue, double.MaxValue, double.MaxValue);
          foreach (var tempXYZ in mesh.Vertices)
          {
 
@@ -374,7 +334,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
          {
             return false;
          }
-         var opts = new Autodesk.Revit.DB.Options();
+         var opts = new Options();
          opts.View = m_revitDoc.Document.ActiveView;
          opts.ComputeReferences = true;
          // Get geometry of the element
@@ -439,7 +399,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             }
 
             // get the face name list
-            var category = String.Empty;
+            var category = string.Empty;
             if (null != elem.Category && null != elem.Name)
             {
                category = elem.Category.Name;
@@ -451,7 +411,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                if (tempFace is PlanarFace)
                {
                   m_faceNameList.Add(
-                      String.Format("{0} : {1} ({2})", category, elem.Name, ii));
+                      string.Format("{0} : {1} ({2})", category, elem.Name, ii));
                   m_faceList.Add(tempFace);
                   ii++;
                }
@@ -466,7 +426,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       /// <param name="xyzArray">the face points, them fix a face </param>
       /// <param name="point">the point</param>
       /// <returns>the projected point on this face</returns>
-      static private Autodesk.Revit.DB.XYZ Project(List<XYZ> xyzArray, Autodesk.Revit.DB.XYZ point)
+      static private XYZ Project(List<XYZ> xyzArray, XYZ point)
       {
          var a = xyzArray[0] - xyzArray[1];
          var b = xyzArray[0] - xyzArray[2];
@@ -480,7 +440,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
          }
          catch (Exception)
          {
-            normal = Autodesk.Revit.DB.XYZ.Zero;
+            normal = XYZ.Zero;
          }
 
          var retProjectedPoint = point - (normal.DotProduct(c)) * normal;

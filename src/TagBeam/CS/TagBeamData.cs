@@ -21,14 +21,9 @@
 //
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
-using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.TagBeam.CS
 {
@@ -38,7 +33,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
     public class TagBeamData
     {
         //Required designer variable.
-        private Autodesk.Revit.DB.View m_view; // current view
+        private View m_view; // current view
         private Autodesk.Revit.Creation.Document m_docCreator; // document creation
         private UIDocument m_revitDoc;
         /// <summary>
@@ -177,7 +172,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
             foreach(var beam in m_beamList)
             {
                 //Get the start point and end point of the selected beam.
-                var location = beam.Location as Autodesk.Revit.DB.LocationCurve;
+                var location = beam.Location as LocationCurve;
                 var curve = location.Curve;
 
                 var t = new Transaction(m_revitDoc.Document);

@@ -20,13 +20,10 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
 
@@ -70,7 +67,7 @@ namespace Revit.SDK.Samples.ExtensibleStorageUtility.CS
          {
             foreach (var schema in schemas)
             {
-               sBuilder.Append(StorageUtility.GetElementsWithSchema(doc, schema));
+               sBuilder.Append(GetElementsWithSchema(doc, schema));
             }
             return sBuilder.ToString();
          }

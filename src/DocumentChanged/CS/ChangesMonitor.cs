@@ -21,13 +21,7 @@
 //
 
 using System;
-using System.IO;
 using System.Data;
-using System.Text;
-using System.Reflection;
-using System.Diagnostics;
-using System.Collections.Generic;
-
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.ApplicationServices;
@@ -69,8 +63,8 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
         /// </summary>
         public static DataTable ChangesInfoTable
         {
-            get { return m_ChangesInfoTable; }
-            set { m_ChangesInfoTable = value; }
+            get => m_ChangesInfoTable;
+            set => m_ChangesInfoTable = value;
         }
 
         /// <summary>
@@ -78,8 +72,8 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
         /// </summary>
         public static ChangesInformationForm InfoForm
         {
-            get { return ExternalApplication.m_InfoForm; }
-            set { ExternalApplication.m_InfoForm = value; }
+            get => m_InfoForm;
+            set => m_InfoForm = value;
         }
         #endregion
         
@@ -212,27 +206,27 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             var changesInfoTable = new DataTable("ChangesInfoTable");
 
             // Create a "ChangeType" column. It will be "Added", "Deleted" and "Modified".
-            var styleColumn = new DataColumn("ChangeType", typeof(System.String));
+            var styleColumn = new DataColumn("ChangeType", typeof(string));
             styleColumn.Caption = "ChangeType";
             changesInfoTable.Columns.Add(styleColumn);
 
             // Create a "Id" column. It will be the Element ID
-            var idColum = new DataColumn("Id", typeof(System.String));
+            var idColum = new DataColumn("Id", typeof(string));
             idColum.Caption = "Id";
             changesInfoTable.Columns.Add(idColum);
 
             // Create a "Name" column. It will be the Element Name
-            var nameColum = new DataColumn("Name", typeof(System.String));
+            var nameColum = new DataColumn("Name", typeof(string));
             nameColum.Caption = "Name";
             changesInfoTable.Columns.Add(nameColum);
 
             // Create a "Category" column. It will be the Category Name of the element.
-            var categoryColum = new DataColumn("Category", typeof(System.String));
+            var categoryColum = new DataColumn("Category", typeof(string));
             categoryColum.Caption = "Category";
             changesInfoTable.Columns.Add(categoryColum);
 
             // Create a "Document" column. It will be the document which own the changed element.
-            var docColum = new DataColumn("Document", typeof(System.String));
+            var docColum = new DataColumn("Document", typeof(string));
             docColum.Caption = "Document";
             changesInfoTable.Columns.Add(docColum);
 
@@ -250,22 +244,6 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
     public class Command : IExternalCommand
     {
         #region IExternalCommand Members
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application
-        /// which contains data related to the command,
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application
-        /// which will be displayed if a failure or cancellation is returned by
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command.
-        /// A result of Succeeded means that the API external method functioned as expected.
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with
-        /// the operation.</returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             if (ExternalApplication.InfoForm == null)

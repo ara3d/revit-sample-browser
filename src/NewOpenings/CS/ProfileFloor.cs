@@ -21,14 +21,9 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
@@ -82,19 +77,19 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       /// <param name="points">Points use to create Opening</param>
       private void DrawPlineOpening(List<Vector4> points)
       {
-         Autodesk.Revit.DB.XYZ p1, p2; Line curve;
+         XYZ p1, p2; Line curve;
          var curves = m_appCreator.NewCurveArray();
          for (var i = 0; i < points.Count - 1; i++)
          {
-            p1 = new Autodesk.Revit.DB.XYZ(points[i].X, points[i].Y, points[i].Z);
-            p2 = new Autodesk.Revit.DB.XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
+            p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
+            p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
             curve = Line.CreateBound(p1, p2);
             curves.Append(curve);
          }
 
-         p1 = new Autodesk.Revit.DB.XYZ(points[points.Count - 1].X,
+         p1 = new XYZ(points[points.Count - 1].X,
              points[points.Count - 1].Y, points[points.Count - 1].Z);
-         p2 = new Autodesk.Revit.DB.XYZ(points[0].X, points[0].Y, points[0].Z);
+         p2 = new XYZ(points[0].X, points[0].Y, points[0].Z);
          curve = Line.CreateBound(p1, p2);
          curves.Append(curve);
 
@@ -108,10 +103,10 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       private void DrawCircleOpening(List<Vector4> points)
       {
          var curves = m_appCreator.NewCurveArray();
-         var p1 = new Autodesk.Revit.DB.XYZ(points[0].X, points[0].Y, points[0].Z);
-         var p2 = new Autodesk.Revit.DB.XYZ(points[1].X, points[1].Y, points[1].Z);
-         var p3 = new Autodesk.Revit.DB.XYZ(points[2].X, points[2].Y, points[2].Z);
-         var p4 = new Autodesk.Revit.DB.XYZ(points[3].X, points[3].Y, points[3].Z);
+         var p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
+         var p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
+         var p3 = new XYZ(points[2].X, points[2].Y, points[2].Z);
+         var p4 = new XYZ(points[3].X, points[3].Y, points[3].Z);
          var arc = Arc.Create(p1, p3, p2);
          var arc2 = Arc.Create(p1, p3, p4);
          curves.Append(arc);
@@ -126,17 +121,17 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       private void DrawArcOpening(List<Vector4> points)
       {
          var curves = m_appCreator.NewCurveArray();
-         Arc arc; Autodesk.Revit.DB.XYZ p1, p2, p3;
-         p1 = new Autodesk.Revit.DB.XYZ(points[0].X, points[0].Y, points[0].Z);
-         p2 = new Autodesk.Revit.DB.XYZ(points[1].X, points[1].Y, points[1].Z);
-         p3 = new Autodesk.Revit.DB.XYZ(points[2].X, points[2].Y, points[2].Z);
+         Arc arc; XYZ p1, p2, p3;
+         p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
+         p2 = new XYZ(points[1].X, points[1].Y, points[1].Z);
+         p3 = new XYZ(points[2].X, points[2].Y, points[2].Z);
          arc = Arc.Create(p1, p2, p3);
          curves.Append(arc);
          for (var i = 1; i < points.Count - 3; i += 2)
          {
-            p1 = new Autodesk.Revit.DB.XYZ(points[i].X, points[i].Y, points[i].Z);
-            p2 = new Autodesk.Revit.DB.XYZ(points[i + 2].X, points[i + 2].Y, points[i + 2].Z);
-            p3 = new Autodesk.Revit.DB.XYZ(points[i + 3].X, points[i + 3].Y, points[i + 3].Z);
+            p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
+            p2 = new XYZ(points[i + 2].X, points[i + 2].Y, points[i + 2].Z);
+            p3 = new XYZ(points[i + 3].X, points[i + 3].Y, points[i + 3].Z);
             arc = Arc.Create(p1, p2, p3);
             curves.Append(arc);
          }

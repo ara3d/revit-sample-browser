@@ -21,9 +21,7 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Revit.SDK.Samples.BoundaryConditions.CS
 {
@@ -54,35 +52,17 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <summary>
         /// get the precision of the diaplay value
         /// </summary>
-        public int Precision
-        {
-            get 
-            {
-                return m_precision;
-            }
-        }
+        public int Precision => m_precision;
 
         /// <summary>
         /// get the unit of the display value
         /// </summary>
-        public string UnitName
-        {
-            get 
-            {
-                return m_unitName;
-            }
-        }
+        public string UnitName => m_unitName;
 
         /// <summary>
         /// get the radio of inside value to display value
         /// </summary>
-        public double Ratio
-        {
-            get 
-            {
-                return m_ratio;
-            }
-        }
+        public double Ratio => m_ratio;
     };
 
     /// <summary>
@@ -97,13 +77,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <summary>
         /// get the value dictionary
         /// </summary>
-        public static Dictionary<string, ConversionValue> UnitDictionary
-        {
-            get
-            {
-                return m_unitDictionary;
-            }
-        }
+        public static Dictionary<string, ConversionValue> UnitDictionary => m_unitDictionary;
 
         /// <summary>
         /// static constructor to initialize the value conversion dictionary which we will used 

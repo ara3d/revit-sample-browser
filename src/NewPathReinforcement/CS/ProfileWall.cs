@@ -21,13 +21,9 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewPathReinforcement.CS
 {
@@ -118,7 +114,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             {
                 var curve = location.Curve;
 
-                if (!(curve is Autodesk.Revit.DB.Line))
+                if (!(curve is Line))
                 {
                     throw new Exception("Path Reinforcement cannot build on this Wall");
                 }
@@ -152,12 +148,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <returns>new created PathReinforcement</returns>
         public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points, bool flip)
         {
-            Autodesk.Revit.DB.XYZ p1, p2; Line curve;
+            XYZ p1, p2; Line curve;
             IList<Curve> curves = new List<Curve>();
             for (var i = 0; i < points.Count - 1; i++)
             {
-                p1 = new Autodesk.Revit.DB.XYZ(points[i].X, points[i].Y, points[i].Z);
-                p2 = new Autodesk.Revit.DB.XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
+                p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
+                p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
                 curve = Line.CreateBound(p1, p2);
                 curves.Add(curve);
             }

@@ -22,12 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Drawing.Drawing2D;
@@ -63,7 +59,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Active element displayed in the preview.
         /// </summary>
-        private Autodesk.Revit.DB.Element m_activeElem;
+        private Element m_activeElem;
 
         /// <summary>
         /// Yield rotation and scale transformation for current geometry display.
@@ -111,7 +107,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 objects.Add(obj);
                 if (m_creationData.Symbol != null)
                 {
-                    if ((obj as Autodesk.Revit.DB.ElementType).Id == m_creationData.Symbol.Id)
+                    if ((obj as ElementType).Id == m_creationData.Symbol.Id)
                     {
                         selected = obj;
                     }
@@ -213,9 +209,9 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         private void InitializeText()
         {
-            this.Text = "Pick edges for " + m_creationData.Creator.Name;
-            this.label.Text = "Select a type for " + m_creationData.Creator.Name;
-            this.groupBoxEdges.Text = "All edges for " + m_creationData.Creator.Name;
+            Text = "Pick edges for " + m_creationData.Creator.Name;
+            label.Text = "Select a type for " + m_creationData.Creator.Name;
+            groupBoxEdges.Text = "All edges for " + m_creationData.Creator.Name;
         }
 
         /// <summary>
@@ -225,7 +221,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             m_centerMatrix = new Matrix(1, 0, 0, -1,
                (float)pictureBoxPreview.Width / 2.0f, (float)pictureBoxPreview.Height / 2.0f);
-            this.KeyPreview = true;
+            KeyPreview = true;
 
             foreach (var elem in m_creationData.Creator.ElemGeomDic.Keys)
             {
@@ -253,7 +249,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                         m_creationData.EdgesForHostedSweep.Add(edgeNode.Tag as Edge);
                 }
             }
-            m_creationData.Symbol = comboBoxTypes.SelectedItem as Autodesk.Revit.DB.ElementType;
+            m_creationData.Symbol = comboBoxTypes.SelectedItem as ElementType;
         }
 
         /// <summary>
@@ -267,7 +263,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             if(node.Tag != null && node.Tag is Edge && m_activeElem != null)
             {
                 var edge = node.Tag as Edge;
-                var elem = node.Parent.Tag as Autodesk.Revit.DB.Element;
+                var elem = node.Parent.Tag as Element;
                 var elemGeom = m_creationData.Creator.ElemGeomDic[elem];
                 elemGeom.EdgeBindingDic[edge].IsSelected =
                     (node.StateImageIndex == (int)CheckState.Checked);
@@ -291,7 +287,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                     if(m_activeElem != null && child.Tag != null && child.Tag is Edge)
                     {
                         var edge  = child.Tag as Edge;
-                        var elem = child.Parent.Tag as Autodesk.Revit.DB.Element;
+                        var elem = child.Parent.Tag as Element;
                         var elemGeom = m_creationData.Creator.ElemGeomDic[elem];
                         elemGeom.EdgeBindingDic[edge].IsSelected = 
                             (child.StateImageIndex == (int)CheckState.Checked);
@@ -330,11 +326,11 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             if (node.Tag == null) return;
 
-            if (node.Tag is Autodesk.Revit.DB.Element)
-                m_activeElem = node.Tag as Autodesk.Revit.DB.Element;
+            if (node.Tag is Element)
+                m_activeElem = node.Tag as Element;
             else if (node.Tag is Edge)
             {
-                m_activeElem = node.Parent.Tag as Autodesk.Revit.DB.Element;
+                m_activeElem = node.Parent.Tag as Element;
             }
         }
 
@@ -399,8 +395,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 TaskDialog.Show("Revit", "At least one edge should be selected!");
                 return;
             }
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>
@@ -410,8 +406,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         /// <summary>

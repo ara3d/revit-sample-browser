@@ -19,11 +19,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
+
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 
 namespace Revit.SDK.Samples.NewPathReinforcement.CS
@@ -46,35 +44,23 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// </summary>
         public bool Finished
         {
-            get
-            {
-                return m_finished;
-            }
-            set
-            {
-                m_finished = value;
-            }
+            get => m_finished;
+            set => m_finished = value;
         }
 
         /// <summary>
         /// PointsNumber property to get the number of points stored
         /// </summary>
-        public int PointsNumber
-        {
-            get
-            {
-                return m_points.Count;
-            }
-        }
+        public int PointsNumber => m_points.Count;
 
         /// <summary>
         /// default constructor
         /// </summary>
         public LineTool()
         {
-            m_backGroundPen = new Pen(System.Drawing.Color.White);
+            m_backGroundPen = new Pen(Color.White);
             m_backGroundPen.Width *= 2;
-            m_foreGroundPen = new Pen(System.Drawing.Color.Black);
+            m_foreGroundPen = new Pen(Color.Black);
             m_foreGroundPen.Width *= 2;
             m_finished = false;
         }
@@ -100,7 +86,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// </summary>
         /// <param name="graphic">graphic object, used to draw geometry</param>
         /// <param name="e">mouse event args</param>
-        public void OnMouseMove(System.Drawing.Graphics graphic, System.Windows.Forms.MouseEventArgs e)
+        public void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
             if(m_points.Count != 0 && !m_finished)
             {                
@@ -114,7 +100,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// restore the location point where mouse click
         /// </summary>
         /// <param name="e">mouse event args</param>
-        public void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
+        public void OnMouseDown(MouseEventArgs e)
         {
             //when user click right button of mouse, then erase last line
             if (MouseButtons.Right == e.Button && m_points.Count >= 2)

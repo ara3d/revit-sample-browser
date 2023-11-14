@@ -20,10 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System.Text;
-
-using Autodesk.Revit;
-
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>

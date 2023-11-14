@@ -1,13 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Threading;
-using System.IO;
-using System.Diagnostics;
 
 namespace APIAppStartup
 {
@@ -45,15 +37,15 @@ namespace APIAppStartup
       }
 
       //show Revit version info
-      public static void ShowVersion(String version)
+      public static void ShowVersion(string version)
       {
          m_instance.Version.Text = version;
       }
 
       void InternalCloseSplash()
       {
-         this.Close();
-         this.Dispose();
+         Close();
+         Dispose();
       }
 
       // this is called by the new thread to show the splash screen

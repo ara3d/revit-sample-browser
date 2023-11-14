@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 using System.Globalization;
 
@@ -67,7 +66,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture,
             object value, Type destinationType)
         {
-            if (destinationType == typeof(String) && value is RebarShapeParameter)
+            if (destinationType == typeof(string) && value is RebarShapeParameter)
             {
                 var param = value as RebarShapeParameter;
                 if (null != param)
@@ -106,10 +105,10 @@ namespace Revit.SDK.Samples.NewRebar.CS
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture,
             object value)
         {
-            if(value is String)
+            if(value is string)
             {
                 foreach(var param in
-                    TypeConverterRebarShapeParameter.RebarShapeParameters)
+                    RebarShapeParameters)
                 {
                     if(param.Name.Equals(value))
                     {

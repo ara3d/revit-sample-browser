@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
@@ -23,29 +22,22 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
          m_domainType = ConnectorDomainType.Undefined;
          m_sections = new SortedDictionary<int, SectionInfo>();
       }
-      public int NumberOfSections
-      {
-         get { return m_sections.Count; }
-      }
-      public Document Document
-      {
-         get { return m_doc; }
-      }
+      public int NumberOfSections => m_sections.Count;
+
+      public Document Document => m_doc;
+
       public string Name
       {
-         get { return m_name; }
-         set { m_name = value; }
+         get => m_name;
+         set => m_name = value;
       }
 
-      public string FlowDisplay
-      {
-         get { return m_flow; }
-      }
+      public string FlowDisplay => m_flow;
 
       public ConnectorDomainType DomainType
       {
-         get { return m_domainType; }
-         set { m_domainType = value; }
+         get => m_domainType;
+         set => m_domainType = value;
       }
 
       public static IList<NetworkInfo> FindValidNetworks(Document doc)

@@ -22,10 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -43,7 +40,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Revit UI document
         /// </summary>
-        Autodesk.Revit.UI.UIDocument m_rvtUIDoc;
+        UIDocument m_rvtUIDoc;
 
         /// <summary>
         /// Revit FamilyInstance object, it will be the host of Rebar.
@@ -58,7 +55,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Newly created Rebar.
         /// </summary>
-        Rebar m_createdRebar = null;
+        Rebar m_createdRebar;
 
         /// <summary>
         /// Constructor, initialize fields and do some assert.

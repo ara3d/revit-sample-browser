@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
@@ -16,7 +14,7 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
       private int m_schemaIdx;
       private XYZ m_maxCorner;
       const string DisplayStyleName = "NetworkFlowDisplayStyle";
-      const String SchemaName = "NetworkFlowSchema";
+      const string SchemaName = "NetworkFlowSchema";
       
       public AVFViewer(View view, bool? isItemized)
       {
@@ -29,20 +27,14 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
             m_sfm = SpatialFieldManager.CreateSpatialFieldManager(view, 1); 
          }
          m_sfm.Clear();
-         m_maxCorner = new XYZ(-Double.MaxValue, -Double.MaxValue, -Double.MaxValue);
+         m_maxCorner = new XYZ(-double.MaxValue, -double.MaxValue, -double.MaxValue);
       }
-      public Document Document
-      {
-         get { return m_view.Document; }
-      }
-      public double Scale
-      {
-         get { return m_view.Scale; }
-      }
-      public bool IsItemized
-      {
-         get { return m_isItemzied == true; }
-      }
+      public Document Document => m_view.Document;
+
+      public double Scale => m_view.Scale;
+
+      public bool IsItemized => m_isItemzied == true;
+
       public void InitAVF()  
       {
          m_view.EnableTemporaryViewPropertiesMode(m_view.Id);

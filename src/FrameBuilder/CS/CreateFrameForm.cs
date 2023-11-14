@@ -23,21 +23,15 @@
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Drawing;
-    using System.Text;
     using System.Diagnostics;
     using System.Windows.Forms;
-    using System.Reflection;
-
-    using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
 
     /// <summary>
     /// main form to create framing
     /// </summary>
-    public partial class CreateFrameForm : System.Windows.Forms.Form
+    public partial class CreateFrameForm : Form
     {
         private FrameData m_frameData;        // necessary data to create framing
 
@@ -126,7 +120,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <param name="typesMgr">data manager of FamilySymbols</param>
         /// <param name="symbol">FamilySymbol to be copied</param>
         /// <returns>does duplicate</returns>
-        private static bool DuplicateSymbol(FrameTypesMgr typesMgr, Object symbol)
+        private static bool DuplicateSymbol(FrameTypesMgr typesMgr, object symbol)
         {
             var result = false;
             using (var typeFrm = new DuplicateTypeForm(symbol, typesMgr))

@@ -20,11 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
-using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.PanelSchedule.CS
 {
@@ -66,7 +63,7 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
         /// <param name="sectionType">the exporting section of the panel schedule.</param>
         /// <param name="nRows">the number of rows.</param>
         /// <param name="nCols">the number of columns.</param>
-        protected void getNumberOfRowsAndColumns(Autodesk.Revit.DB.Document doc, PanelScheduleView psView, SectionType sectionType, ref int nRows, ref int nCols)
+        protected void getNumberOfRowsAndColumns(Document doc, PanelScheduleView psView, SectionType sectionType, ref int nRows, ref int nCols)
         {
             var openSectionData = new Transaction(doc, "openSectionData");
             openSectionData.Start();

@@ -21,8 +21,6 @@
 //
 
 using System;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 
@@ -55,8 +53,8 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData,
-                                               ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+                                               ref string message, ElementSet elements)
         {
             Transaction tranSample = null;
             try
@@ -69,14 +67,14 @@ namespace Revit.SDK.Samples.RoomSchedule
                     infoForm.ShowDialog();
                 }
                 tranSample.Commit();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
                 if (null != tranSample) tranSample.RollBack();
                 // if there are something wrong, give error information and return failed
                 message = ex.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
     }

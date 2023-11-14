@@ -21,14 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
@@ -49,17 +41,17 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             printerNameLabel.Text = m_printSetup.PrinterName;
             printSetupsComboBox.DataSource = m_printSetup.PrintSettingNames;
             printSetupsComboBox.SelectedItem = m_printSetup.SettingName;
-            this.printSetupsComboBox.SelectedValueChanged += new System.EventHandler(this.printSetupsComboBox_SelectedValueChanged);
+            printSetupsComboBox.SelectedValueChanged += new EventHandler(printSetupsComboBox_SelectedValueChanged);
             renameButton.Enabled = deleteButton.Enabled =
                 m_printSetup.SettingName.Equals("<In-Session>") ? false : true;
 
             paperSizeComboBox.DataSource = m_printSetup.PaperSizes;
             paperSizeComboBox.SelectedItem = m_printSetup.PaperSize;
-            this.paperSizeComboBox.SelectedValueChanged += new System.EventHandler(this.sizeComboBox_SelectedValueChanged);
+            paperSizeComboBox.SelectedValueChanged += new EventHandler(sizeComboBox_SelectedValueChanged);
             
             paperSourceComboBox.DataSource = m_printSetup.PaperSources;
             paperSourceComboBox.SelectedItem = m_printSetup.PaperSource;
-            this.paperSourceComboBox.SelectedValueChanged += new System.EventHandler(this.sourceComboBox_SelectedValueChanged);
+            paperSourceComboBox.SelectedValueChanged += new EventHandler(sourceComboBox_SelectedValueChanged);
             
             if (m_printSetup.PageOrientation == PageOrientationType.Landscape)
             {
@@ -69,17 +61,17 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             {
                 portraitRadioButton.Checked = true;
             }
-            this.landscapeRadioButton.CheckedChanged += new System.EventHandler(this.landscapeRadioButton_CheckedChanged);
-            this.portraitRadioButton.CheckedChanged += new System.EventHandler(this.portraitRadioButton_CheckedChanged);
+            landscapeRadioButton.CheckedChanged += new EventHandler(landscapeRadioButton_CheckedChanged);
+            portraitRadioButton.CheckedChanged += new EventHandler(portraitRadioButton_CheckedChanged);
             
             marginTypeComboBox.DataSource = m_printSetup.MarginTypes;
-            this.offsetRadioButton.CheckedChanged += new System.EventHandler(this.offsetRadioButton_CheckedChanged);
-            this.centerRadioButton.CheckedChanged += new System.EventHandler(this.centerRadioButton_CheckedChanged);
-            this.userDefinedMarginYTextBox.TextChanged += new System.EventHandler(this.userDefinedMarginYTextBox_TextChanged);
-            this.userDefinedMarginXTextBox.TextChanged += new System.EventHandler(this.userDefinedMarginXTextBox_TextChanged);
+            offsetRadioButton.CheckedChanged += new EventHandler(offsetRadioButton_CheckedChanged);
+            centerRadioButton.CheckedChanged += new EventHandler(centerRadioButton_CheckedChanged);
+            userDefinedMarginYTextBox.TextChanged += new EventHandler(userDefinedMarginYTextBox_TextChanged);
+            userDefinedMarginXTextBox.TextChanged += new EventHandler(userDefinedMarginXTextBox_TextChanged);
 
             marginTypeComboBox.SelectedItem = m_printSetup.SelectedMarginType;
-            this.marginTypeComboBox.SelectedValueChanged += new System.EventHandler(this.marginTypeComboBox_SelectedValueChanged);
+            marginTypeComboBox.SelectedValueChanged += new EventHandler(marginTypeComboBox_SelectedValueChanged);
             
             if (m_printSetup.PaperPlacement == PaperPlacementType.Center)
             {
@@ -100,8 +92,8 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             {
                 vectorRadioButton.Checked = true;
             }
-            this.rasterRadioButton.CheckedChanged += new System.EventHandler(this.rasterRadioButton_CheckedChanged);
-            this.vectorRadioButton.CheckedChanged += new System.EventHandler(this.vectorRadioButton_CheckedChanged);
+            rasterRadioButton.CheckedChanged += new EventHandler(rasterRadioButton_CheckedChanged);
+            vectorRadioButton.CheckedChanged += new EventHandler(vectorRadioButton_CheckedChanged);
 
             if (m_printSetup.ZoomType == ZoomType.Zoom)
             {
@@ -112,32 +104,32 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             {
                 fitToPageRadioButton.Checked = true;
             }
-            this.zoomRadioButton.CheckedChanged += new System.EventHandler(this.zoomRadioButton_CheckedChanged);
-            this.fitToPageRadioButton.CheckedChanged += new System.EventHandler(this.fitToPageRadioButton_CheckedChanged);
+            zoomRadioButton.CheckedChanged += new EventHandler(zoomRadioButton_CheckedChanged);
+            fitToPageRadioButton.CheckedChanged += new EventHandler(fitToPageRadioButton_CheckedChanged);
             
 
             rasterQualityComboBox.DataSource = m_printSetup.RasterQualities;
             rasterQualityComboBox.SelectedItem = m_printSetup.RasterQuality;
-            this.rasterQualityComboBox.SelectedValueChanged += new System.EventHandler(this.rasterQualityComboBox_SelectedValueChanged);
+            rasterQualityComboBox.SelectedValueChanged += new EventHandler(rasterQualityComboBox_SelectedValueChanged);
             
             colorsComboBox.DataSource = m_printSetup.Colors;
             colorsComboBox.SelectedItem = m_printSetup.Color;
-            this.colorsComboBox.SelectedValueChanged += new System.EventHandler(this.colorsComboBox_SelectedValueChanged);
+            colorsComboBox.SelectedValueChanged += new EventHandler(colorsComboBox_SelectedValueChanged);
 
             ViewLinksInBlueCheckBox.Checked = m_printSetup.ViewLinksinBlue;
-            this.ViewLinksInBlueCheckBox.CheckedChanged += new System.EventHandler(this.ViewLinksInBlueCheckBox_CheckedChanged);
+            ViewLinksInBlueCheckBox.CheckedChanged += new EventHandler(ViewLinksInBlueCheckBox_CheckedChanged);
 
             hideScopeBoxedCheckBox.Checked = m_printSetup.HideScopeBoxes;
-            this.hideScopeBoxedCheckBox.CheckedChanged += new System.EventHandler(this.hideScopeBoxedCheckBox_CheckedChanged);
+            hideScopeBoxedCheckBox.CheckedChanged += new EventHandler(hideScopeBoxedCheckBox_CheckedChanged);
 
             hideRefWorkPlanesCheckBox.Checked = m_printSetup.HideReforWorkPlanes;
-            this.hideRefWorkPlanesCheckBox.CheckedChanged += new System.EventHandler(this.hideRefWorkPlanesCheckBox_CheckedChanged);
+            hideRefWorkPlanesCheckBox.CheckedChanged += new EventHandler(hideRefWorkPlanesCheckBox_CheckedChanged);
 
             hideCropBoundariesCheckBox.Checked = m_printSetup.HideCropBoundaries;
-            this.hideCropBoundariesCheckBox.CheckedChanged += new System.EventHandler(this.hideCropBoundariesCheckBox_CheckedChanged);
+            hideCropBoundariesCheckBox.CheckedChanged += new EventHandler(hideCropBoundariesCheckBox_CheckedChanged);
 
             hideUnreferencedViewTagsCheckBox.Checked = m_printSetup.HideUnreferencedViewTags;
-            this.hideUnreferencedViewTagsCheckBox.CheckedChanged += new System.EventHandler(this.hideUnreferencedViewTagsCheckBox_CheckedChanged);
+            hideUnreferencedViewTagsCheckBox.CheckedChanged += new EventHandler(hideUnreferencedViewTagsCheckBox_CheckedChanged);
             
         }
 

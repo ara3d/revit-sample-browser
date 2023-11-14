@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -44,7 +39,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       private WallDrawing m_drawing;
 
       // the selected ViewPlan used for curtain wall creation
-      Autodesk.Revit.DB.ViewPlan m_selectedView;
+      ViewPlan m_selectedView;
 
       // the selected wall type
       WallType m_selectedWallType;
@@ -53,51 +48,33 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       PointD m_startPointD;
 
       //store the start point of baseline (in Autodesk.Revit.DB.XYZ format)
-      Autodesk.Revit.DB.XYZ m_startXYZ;
+      XYZ m_startXYZ;
 
       // store the end point of baseline (in PointD format)
       PointD m_endPointD;
 
       //store the end point of baseline (in Autodesk.Revit.DB.XYZ format)
-      Autodesk.Revit.DB.XYZ m_endXYZ;
+      XYZ m_endXYZ;
       #endregion
 
       #region Properties
       /// <summary>
       /// the document of this sample
       /// </summary>
-      public MyDocument MyDocument
-      {
-         get
-         {
-            return m_myDocument;
-         }
-      }
+      public MyDocument MyDocument => m_myDocument;
 
       /// <summary>
       /// the refferred drawing class for the curtain wall
       /// </summary>
-      public WallDrawing Drawing
-      {
-         get
-         {
-            return m_drawing;
-         }
-      }
+      public WallDrawing Drawing => m_drawing;
 
       /// <summary>
       /// the selected ViewPlan used for curtain wall creation
       /// </summary>
-      public Autodesk.Revit.DB.ViewPlan SelectedView
+      public ViewPlan SelectedView
       {
-         get
-         {
-            return m_selectedView;
-         }
-         set
-         {
-            m_selectedView = value;
-         }
+         get => m_selectedView;
+         set => m_selectedView = value;
       }
 
       /// <summary>
@@ -105,14 +82,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public WallType SelectedWallType
       {
-         get
-         {
-            return m_selectedWallType;
-         }
-         set
-         {
-            m_selectedWallType = value;
-         }
+         get => m_selectedWallType;
+         set => m_selectedWallType = value;
       }
 
       /// <summary>
@@ -120,29 +91,17 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public PointD StartPointD
       {
-         get
-         {
-            return m_startPointD;
-         }
-         set
-         {
-            m_startPointD = value;
-         }
+         get => m_startPointD;
+         set => m_startPointD = value;
       }
 
       /// <summary>
       /// Get start point of baseline
       /// </summary>
-      public Autodesk.Revit.DB.XYZ StartXYZ
+      public XYZ StartXYZ
       {
-         get
-         {
-            return m_startXYZ;
-         }
-         set
-         {
-            m_startXYZ = value;
-         }
+         get => m_startXYZ;
+         set => m_startXYZ = value;
       }
 
       /// <summary>
@@ -150,29 +109,17 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public PointD EndPointD
       {
-         get
-         {
-            return m_endPointD;
-         }
-         set
-         {
-            m_endPointD = value;
-         }
+         get => m_endPointD;
+         set => m_endPointD = value;
       }
 
       /// <summary>
       /// Get end point of baseline
       /// </summary>
-      public Autodesk.Revit.DB.XYZ EndXYZ
+      public XYZ EndXYZ
       {
-         get
-         {
-            return m_endXYZ;
-         }
-         set
-         {
-            m_endXYZ = value;
-         }
+         get => m_endXYZ;
+         set => m_endXYZ = value;
       }
       #endregion
 
@@ -210,14 +157,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          var point0 = m_drawing.WallLine2D.StartPoint;
          var point1 = m_drawing.WallLine2D.EndPoint;
          //new baseline and transform coordinate on windows UI to Revit UI
-         m_startXYZ = new Autodesk.Revit.DB.XYZ(m_startPointD.X, m_startPointD.Y, 0);
-         m_endXYZ = new Autodesk.Revit.DB.XYZ(m_endPointD.X, m_endPointD.Y, 0);
-         Autodesk.Revit.DB.Line baseline = null;
+         m_startXYZ = new XYZ(m_startPointD.X, m_startPointD.Y, 0);
+         m_endXYZ = new XYZ(m_endPointD.X, m_endPointD.Y, 0);
+         Line baseline = null;
          try
          {
             baseline = Line.CreateBound(m_startXYZ, m_endXYZ);
          }
-         catch (System.ArgumentException)
+         catch (ArgumentException)
          {
             TaskDialog.Show("Revit", "The start point and the end point of the line are too close, please re-draw it.");
          }

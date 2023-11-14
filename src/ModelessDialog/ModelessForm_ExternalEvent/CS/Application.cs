@@ -20,17 +20,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
 {
@@ -40,7 +30,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
     public class Application : IExternalApplication
     {
         // class instance
-        internal static Application thisApp = null;
+        internal static Application thisApp;
         // ModelessForm instance
         private ModelessForm m_MyForm;
 

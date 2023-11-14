@@ -22,12 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
@@ -58,7 +53,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
                                                ref string message,
                                                ElementSet elements)
         {
@@ -77,7 +72,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 {
                     message = "Please select one structural element which is listed as follows: \r\n" +
                               "Columns/braces/Beams/Walls/Wall Foundations/Slabs/Foundation Slabs";
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
 
 
@@ -93,7 +88,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                         message = "Please select one structural element which is listed as follows: \r\n" +
                                   "Columns/braces/Beams/Walls/Wall Foundations/ \r\n" +
                                   "Slabs/Foundation Slabs";
-                        return Autodesk.Revit.UI.Result.Cancelled;
+                        return Result.Cancelled;
                     }
 
                     // prepare the relative data
@@ -106,25 +101,25 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                         if (DialogResult.OK == result)
                         {
                             tran.Commit();
-                            return Autodesk.Revit.UI.Result.Succeeded;
+                            return Result.Succeeded;
                         }
                         else if (DialogResult.Retry == result)
                         {
                             message = "failed to create BoundaryConditions.";
                             tran.RollBack();
-                            return Autodesk.Revit.UI.Result.Failed;
+                            return Result.Failed;
                         }
                     }    
                 }
 
                 tran.RollBack();
                 // user cancel the operation
-                return Autodesk.Revit.UI.Result.Cancelled;                
+                return Result.Cancelled;                
             }
             catch (Exception e)
             {
                 message = e.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
 

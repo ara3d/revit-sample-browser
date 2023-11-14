@@ -20,20 +20,9 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using Autodesk.Revit.DB;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Revit.SDK.Samples.SelectionChanged.CS
 {
@@ -66,9 +55,9 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
 
       private void Window_Loaded(object sender, RoutedEventArgs e)
       {
-         var desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
-         this.Left = desktopWorkingArea.Right - this.Width;
-         this.Top = desktopWorkingArea.Bottom - this.Height;
+         var desktopWorkingArea = SystemParameters.WorkArea;
+         Left = desktopWorkingArea.Right - Width;
+         Top = desktopWorkingArea.Bottom - Height;
       }
 
       private void Button_Click(object sender, RoutedEventArgs e)

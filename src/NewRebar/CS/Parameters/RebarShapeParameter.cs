@@ -21,9 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using System.ComponentModel;
 
@@ -49,7 +46,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Parameter name string.
         /// </summary>
-        protected String m_name;
+        protected string m_name;
 
         /// <summary>
         /// Constructor.
@@ -67,18 +64,12 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// Parameter, it is the result of commit.
         /// </summary>
         [Browsable(false)]
-        public ElementId Parameter
-        {
-            get { return m_parameterId; }
-        }
+        public ElementId Parameter => m_parameterId;
 
         /// <summary>
         /// Parameter name string.
         /// </summary>
-        public String Name
-        {
-            get { return m_name; }
-        }
+        public string Name => m_name;
 
         /// <summary>
         /// Get a external definition if there exists one, otherwise create a new one.
@@ -104,6 +95,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// Yield the Parameter.
         /// </summary>
         /// <param name="defGroup">Definition group</param>
-        public abstract void Commit(Autodesk.Revit.DB.Document doc, DefinitionGroup defGroup);
+        public abstract void Commit(Document doc, DefinitionGroup defGroup);
     }
 }

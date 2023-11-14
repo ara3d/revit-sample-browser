@@ -21,9 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.PathReinforcement.CS
 {
@@ -59,14 +56,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         public float X 
         {
-            get
-            {
-                return m_x;
-            }
-            set
-            {
-                m_x = value;
-            }
+            get => m_x;
+            set => m_x = value;
         }
 
         /// <summary>
@@ -74,14 +65,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         public float Y
         {
-            get
-            {
-                return m_y;
-            }
-            set
-            {
-                m_y = value;
-            }
+            get => m_y;
+            set => m_y = value;
         }
 
         /// <summary>
@@ -89,14 +74,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         public float Z
         {
-            get
-            {
-                return m_z;
-            }
-            set
-            {
-                m_z = value;
-            }
+            get => m_z;
+            set => m_z = value;
         }
 
         /// <summary>
@@ -104,14 +83,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         public float W
         {
-            get
-            {
-                return m_w;
-            }
-            set
-            {
-                m_w = value;
-            }
+            get => m_w;
+            set => m_w = value;
         }
         #endregion
 
@@ -120,9 +93,9 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         public Vector4(float x, float y, float z)
         {
-            this.X = x; 
-            this.Y = y; 
-            this.Z = z;
+            X = x; 
+            Y = y; 
+            Z = z;
         }
 
         /// <summary>
@@ -130,9 +103,9 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         public Vector4(Autodesk.Revit.DB.XYZ v)
         {
-            this.X = (float)v.X; 
-            this.Y = (float)v.Y; 
-            this.Z = (float)v.Z;
+            X = (float)v.X; 
+            Y = (float)v.Y; 
+            Z = (float)v.Z;
         }
 
         /// <summary>
@@ -186,7 +159,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <returns> dot multiply result of two vectors </returns>
         public float DotProduct(Vector4 v)
         {
-            return (this.X * v.X + this.Y * v.Y + this.Z * v.Z);
+            return (X * v.X + Y * v.Y + Z * v.Z);
         }
 
         /// <summary>
@@ -196,8 +169,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <returns> cross multiply result of two vectors</returns>
         public Vector4 CrossProduct(Vector4 v)
         {
-            return new Vector4(this.Y * v.Z - this.Z * v.Y,this.Z * v.X
-                - this.X * v.Z,this.X * v.Y - this.Y * v.X);
+            return new Vector4(Y * v.Z - Z * v.Y,Z * v.X
+                - X * v.Z,X * v.Y - Y * v.X);
         }
 
         /// <summary>
@@ -233,9 +206,9 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             {
                 length = 1;
             }
-            this.X /= length;
-            this.Y /= length;
-            this.Z /= length;            
+            X /= length;
+            Y /= length;
+            Z /= length;            
         }
 
         /// <summary>
@@ -244,7 +217,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <returns>length of this vector</returns>
         public float Length()
         {
-            return (float)Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z);
+            return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
         }
     };
 
@@ -359,14 +332,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <returns></returns>
         public float this[int row, int column]
         {
-            get
-            {
-                return this.m_matrix[row, column];
-            }
-            set
-            {
-                this.m_matrix[row, column] = value;
-            }
+            get => m_matrix[row, column];
+            set => m_matrix[row, column] = value;
         }
 
         /// <summary>
@@ -378,13 +345,13 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             {
                 for (var j = 0; j < 4; j++)
                 {
-                    this.m_matrix[i, j] = 0.0f;
+                    m_matrix[i, j] = 0.0f;
                 }
             }
-            this.m_matrix[0, 0] = 1.0f;
-            this.m_matrix[1, 1] = 1.0f;
-            this.m_matrix[2, 2] = 1.0f;
-            this.m_matrix[3, 3] = 1.0f;
+            m_matrix[0, 0] = 1.0f;
+            m_matrix[1, 1] = 1.0f;
+            m_matrix[2, 2] = 1.0f;
+            m_matrix[3, 3] = 1.0f;
         }
 
         /// <summary>

@@ -21,9 +21,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.UI;
 
 
 namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
@@ -166,22 +163,16 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// <returns>The Rule ID of this rule</returns>
         public Autodesk.Revit.DB.PerformanceAdviserRuleId getRuleId()
         {
-           return FlippedDoorCheck.Id;
+           return Id;
         }
         #endregion
 
         /// <summary>
         /// The rule ID for this rule;
         /// </summary>
-        public static Autodesk.Revit.DB.PerformanceAdviserRuleId Id
-        {
-           get
-           {
-              return m_Id;
-           }
-        }
+        public static Autodesk.Revit.DB.PerformanceAdviserRuleId Id => m_Id;
 
-       #region Data
+        #region Data
         /// <summary>
        /// A list of all family instances in the document that have the FaceFlipped property set to true;
        /// </summary>

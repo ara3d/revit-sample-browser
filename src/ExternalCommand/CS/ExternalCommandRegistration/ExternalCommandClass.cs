@@ -19,12 +19,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
@@ -40,7 +37,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
         #region IExternalCommand Members
 
         public Result Execute(ExternalCommandData commandData,
-           ref string message, Autodesk.Revit.DB.ElementSet elements)
+           ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.ExternalCommandRegistration");
             trans.Start();
@@ -49,14 +46,14 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             var creDoc = uiDoc.Document.Create;
             var curves = new List<Curve>();
             //create rectangular curve: wall length: 60 , wall width: 40
-            var line1 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(0, 0, 0),
-               new Autodesk.Revit.DB.XYZ(0, 60, 0));
-            var line2 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(0, 60, 0),
-               new Autodesk.Revit.DB.XYZ(0, 60, 40));
-            var line3 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(0, 60, 40),
-               new Autodesk.Revit.DB.XYZ(0, 0, 40));
-            var line4 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(0, 0, 40),
-               new Autodesk.Revit.DB.XYZ(0, 0, 0));
+            var line1 = Line.CreateBound(new XYZ(0, 0, 0),
+               new XYZ(0, 60, 0));
+            var line2 = Line.CreateBound(new XYZ(0, 60, 0),
+               new XYZ(0, 60, 40));
+            var line3 = Line.CreateBound(new XYZ(0, 60, 40),
+               new XYZ(0, 0, 40));
+            var line4 = Line.CreateBound(new XYZ(0, 0, 40),
+               new XYZ(0, 0, 0));
             curves.Add(line1);
             curves.Add(line2);
             curves.Add(line3);
@@ -65,7 +62,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             Wall.Create(uiDoc.Document, curves, false);
 
             trans.Commit();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         #endregion
@@ -81,11 +78,11 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
         #region IExternalCommand Members
 
         public Result Execute(ExternalCommandData commandData,
-           ref string message, Autodesk.Revit.DB.ElementSet elements)
+           ref string message, ElementSet elements)
         {
             TaskDialog.Show("External Command Registration Sample", "Hello, 3D View!");
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         #endregion

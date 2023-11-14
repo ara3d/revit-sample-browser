@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -69,37 +68,37 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
       /// <summary>
       /// Data to create extrusions and connectors
       /// </summary>
-      private Autodesk.Revit.DB.XYZ[,] profileData = new Autodesk.Revit.DB.XYZ[5, 4]
+      private XYZ[,] profileData = new XYZ[5, 4]
         {
             // In Array 0 to 2, the data is the points that defines the edges of the profile
             {
-                new Autodesk.Revit.DB.XYZ (-17.28, -0.53, 0.9),
-                new Autodesk.Revit.DB.XYZ (-17.28, 11, 0.9),
-                new Autodesk.Revit.DB.XYZ (-0.57, 11, 0.9),
-                new Autodesk.Revit.DB.XYZ (-0.57, -0.53, 0.9)
+                new XYZ (-17.28, -0.53, 0.9),
+                new XYZ (-17.28, 11, 0.9),
+                new XYZ (-0.57, 11, 0.9),
+                new XYZ (-0.57, -0.53, 0.9)
             },
             {
-                new Autodesk.Revit.DB.XYZ (-0.57, 7, 6.58),
-                new Autodesk.Revit.DB.XYZ (-0.57, 7, 3),
-                new Autodesk.Revit.DB.XYZ (-0.57, 3.6, 3),
-                new Autodesk.Revit.DB.XYZ (-0.57, 3.6, 6.58)
+                new XYZ (-0.57, 7, 6.58),
+                new XYZ (-0.57, 7, 3),
+                new XYZ (-0.57, 3.6, 3),
+                new XYZ (-0.57, 3.6, 6.58)
             },
             {
-                new Autodesk.Revit.DB.XYZ (-17.28, -0.073, 7.17),
-                new Autodesk.Revit.DB.XYZ (-17.28, 10.76, 7.17),
-                new Autodesk.Revit.DB.XYZ (-17.28, 10.76, 3.58),
-                new Autodesk.Revit.DB.XYZ (-17.28, -0.073, 3.58)
+                new XYZ (-17.28, -0.073, 7.17),
+                new XYZ (-17.28, 10.76, 7.17),
+                new XYZ (-17.28, 10.76, 3.58),
+                new XYZ (-17.28, -0.073, 3.58)
             },
             // In Array 3 and 4, the data is the normal and origin of the plane of the arc profile
             {
-                new Autodesk.Revit.DB.XYZ (0, -1, 0),
-                new Autodesk.Revit.DB.XYZ (-9, 0.53, 7.17),
+                new XYZ (0, -1, 0),
+                new XYZ (-9, 0.53, 7.17),
                 null,
                 null
             },
             {
-                new Autodesk.Revit.DB.XYZ (0, -1, 0),
-                new Autodesk.Revit.DB.XYZ (-8.24, 0.53, 0.67),
+                new XYZ (0, -1, 0),
+                new XYZ (-8.24, 0.53, 0.67),
                 null,
                 null
             }
@@ -108,13 +107,13 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
       /// <summary>
       /// the normal and origin of the sketch plane
       /// </summary>
-      private Autodesk.Revit.DB.XYZ[,] sketchPlaneData = new Autodesk.Revit.DB.XYZ[5, 2]
+      private XYZ[,] sketchPlaneData = new XYZ[5, 2]
         {
-            {new Autodesk.Revit.DB.XYZ (0, 0, 1), new Autodesk.Revit.DB.XYZ (0, 0, 0.9)},
-            {new Autodesk.Revit.DB.XYZ (1, 0, 0), new Autodesk.Revit.DB.XYZ (-0.57, 0, 0)},
-            {new Autodesk.Revit.DB.XYZ (-1, 0, 0), new Autodesk.Revit.DB.XYZ (-17.28, 0, 0)},
-            {new Autodesk.Revit.DB.XYZ (0, -1, 0), new Autodesk.Revit.DB.XYZ (0, 0.53, 0)},
-            {new Autodesk.Revit.DB.XYZ (0, -1, 0), new Autodesk.Revit.DB.XYZ (0, 0.53, 0)}
+            {new XYZ (0, 0, 1), new XYZ (0, 0, 0.9)},
+            {new XYZ (1, 0, 0), new XYZ (-0.57, 0, 0)},
+            {new XYZ (-1, 0, 0), new XYZ (-17.28, 0, 0)},
+            {new XYZ (0, -1, 0), new XYZ (0, 0.53, 0)},
+            {new XYZ (0, -1, 0), new XYZ (0, 0.53, 0)}
         };
 
       /// <summary>
@@ -176,11 +175,11 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message,
+      public Result Execute(ExternalCommandData commandData, ref string message,
           ElementSet elements)
       {
          // set out default result to failure.
-         var retRes = Autodesk.Revit.UI.Result.Failed;
+         var retRes = Result.Failed;
          m_application = commandData.Application.Application;
          m_document = commandData.Application.ActiveUIDocument.Document;
          f = m_document.FamilyCreate;
@@ -215,7 +214,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
 
          m_transaction.Commit();
 
-         retRes = Autodesk.Revit.UI.Result.Succeeded;
+         retRes = Result.Succeeded;
          return retRes;
       }
       #endregion

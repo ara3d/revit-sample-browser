@@ -18,7 +18,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <param name="message"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
             var activeView = commandData.View;

@@ -22,13 +22,7 @@
 
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
     using System.ComponentModel;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
 
     /// <summary>
@@ -45,14 +39,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         [CategoryAttribute("Dimensions")]
         public double h
         {
-            get
-            {
-                return m_hDimension.AsDouble();
-            }
-            set
-            {
-                m_hDimension.Set(value);
-            }
+            get => m_hDimension.AsDouble();
+            set => m_hDimension.Set(value);
         }
 
         /// <summary>
@@ -61,14 +49,8 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         [CategoryAttribute("Dimensions")]
         public double b
         {
-            get
-            {
-                return m_bDimension.AsDouble();
-            }
-            set
-            {
-                m_bDimension.Set(value);
-            }
+            get => m_bDimension.AsDouble();
+            set => m_bDimension.Set(value);
         }
 
         /// <summary>

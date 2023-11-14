@@ -30,7 +30,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         {
             // Setup file location in temp directory
             var folder = Environment.GetEnvironmentVariable("TEMP");
-            var htmlFile = System.IO.Path.Combine(folder, ReplaceIllegalCharacters(theSchedule.Name) + ".html");
+            var htmlFile = Path.Combine(folder, ReplaceIllegalCharacters(theSchedule.Name) + ".html");
 
             // Initialize StringWriter instance, but handle any io exceptions and close as appropriate. 
             StreamWriter stringWriter = null;
@@ -53,7 +53,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
                     writer.RenderEndTag();
                 }
             }
-            catch(System.IO.IOException e)
+            catch(IOException e)
             {
                 // set error message and return failure,  finally will close stringWriter if necessary. 
                 errMessage = "Exception occured generating HTML: " + e.Message + " Command canceled.";
@@ -128,32 +128,20 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// </summary>
         /// <param name="color">he color.</param>
         /// <returns>The color string.</returns>
-        private static String GetColorHtmlString(Color color)
+        private static string GetColorHtmlString(Color color)
         {
-            return String.Format("#{0}{1}{2}", color.Red.ToString("X"), color.Green.ToString("X"), color.Blue.ToString("X"));
+            return string.Format("#{0}{1}{2}", color.Red.ToString("X"), color.Green.ToString("X"), color.Blue.ToString("X"));
         }
 
         /// <summary>
         /// A predefined color value used for comparison.
         /// </summary>
-        private static Color Black
-        {
-            get
-            {
-                return new Color(0, 0, 0);
-            }
-        }
+        private static Color Black => new Color(0, 0, 0);
 
         /// <summary>
         /// A predefined color value used for comparison.
         /// </summary>
-        private static Color White
-        {
-            get
-            {
-                return new Color(255, 255, 255);
-            }
-        }
+        private static Color White => new Color(255, 255, 255);
 
         /// <summary>
         /// Compares two colors.
@@ -171,7 +159,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// </summary>
         /// <param name="style">The horizontal alignment.</param>
         /// <returns>The related string.</returns>
-        private static String GetAlignString(HorizontalAlignmentStyle style)
+        private static string GetAlignString(HorizontalAlignmentStyle style)
         {
             switch (style)
             {
@@ -318,7 +306,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <returns>The updated string without illegal characters.</returns>
         private static string ReplaceIllegalCharacters(string stringWithIllegalChar)
         {
-            var illegalChars = System.IO.Path.GetInvalidFileNameChars();
+            var illegalChars = Path.GetInvalidFileNameChars();
 
             var updated = stringWithIllegalChar;
             foreach (var ch in illegalChars)

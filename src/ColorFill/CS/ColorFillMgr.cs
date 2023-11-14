@@ -60,7 +60,7 @@ namespace Revit.SDK.Samples.ColorFill.CS
         /// <summary>
         /// DB Views from the document
         /// </summary>
-        public List<Autodesk.Revit.DB.View> Views { get; private set; } 
+        public List<View> Views { get; private set; } 
 
       /// <summary>
       /// Get Data from document
@@ -78,8 +78,8 @@ namespace Revit.SDK.Samples.ColorFill.CS
                 .ToList();
          //Select all floor views and elevation views.
          Views = new FilteredElementCollector(document)
-                   .OfClass(typeof(Autodesk.Revit.DB.View))
-                   .OfType<Autodesk.Revit.DB.View>().
+                   .OfClass(typeof(View))
+                   .OfType<View>().
                    Where(v => !v.IsTemplate && 
                    (v.ViewType == ViewType.FloorPlan || v.ViewType==ViewType.Elevation)).
                    ToList();
@@ -112,7 +112,7 @@ namespace Revit.SDK.Samples.ColorFill.CS
       /// </summary>
       /// <param name="scheme"></param>
       /// <param name="view"></param>
-      public void CreateAndPlaceLegend(ColorFillScheme scheme, Autodesk.Revit.DB.View view)
+      public void CreateAndPlaceLegend(ColorFillScheme scheme, View view)
       {
          using (var transaction = new Transaction(document))
          {
@@ -180,9 +180,9 @@ namespace Revit.SDK.Samples.ColorFill.CS
       private Color GenerateRandomColor(int seed)
       {
          var r = new Random(seed);
-         var red = Byte.Parse(r.Next(0, 256).ToString());
-         var green = Byte.Parse(r.Next(0, 256).ToString());
-         var blue = Byte.Parse(r.Next(0, 256).ToString());
+         var red = byte.Parse(r.Next(0, 256).ToString());
+         var green = byte.Parse(r.Next(0, 256).ToString());
+         var blue = byte.Parse(r.Next(0, 256).ToString());
          var randomColor = new Color(red, green, blue);
          return randomColor;
       }
@@ -200,23 +200,23 @@ namespace Revit.SDK.Samples.ColorFill.CS
 
          switch (type)
          {
-            case Autodesk.Revit.DB.StorageType.Double:
+            case StorageType.Double:
                double doubleValue = 0;
                if (lastEntry != null)
                   doubleValue = lastEntry.GetDoubleValue() + 20.00;
                entry.SetDoubleValue(doubleValue);
                break;
-            case Autodesk.Revit.DB.StorageType.String:
+            case StorageType.String:
                var strValue = string.Format("New entry {0}", entries.Count);
                entry.SetStringValue(strValue);
                break;
-            case Autodesk.Revit.DB.StorageType.Integer:
+            case StorageType.Integer:
                var intValue = 0;
                if (lastEntry != null)
                   intValue = lastEntry.GetIntegerValue() + 20;
                entry.SetIntegerValue(intValue);
                break;
-            case Autodesk.Revit.DB.StorageType.ElementId:
+            case StorageType.ElementId:
                var level = new FilteredElementCollector(document)
                 .OfClass(typeof(Level))
                 .Where(lv => !levelIds.Contains(lv.Id) && lv.Name != "Level 1")

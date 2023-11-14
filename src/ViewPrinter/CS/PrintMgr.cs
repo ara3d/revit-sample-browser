@@ -23,11 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Printing;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -75,10 +72,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public string PrinterName
         {
-            get
-            {
-                return m_printMgr.PrinterName;
-            }
+            get => m_printMgr.PrinterName;
             set
             {
                 try
@@ -104,10 +98,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public bool IsPrintToFile
         {
-            get
-            {
-                return m_printMgr.PrintToFile;
-            }
+            get => m_printMgr.PrintToFile;
             set
             {
                 m_printMgr.PrintToFile = value;
@@ -117,10 +108,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public bool IsCombinedFile
         {
-            get
-            {
-                return m_printMgr.CombinedFile;
-            }
+            get => m_printMgr.CombinedFile;
             set
             {
                 // CombinedFile property cannot be setted to false when the Print Range is Current/Visable!
@@ -129,13 +117,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             }
         }
 
-        public string PrintToFileName
-        {
-            get
-            {
-                return m_printMgr.PrintToFileName;
-            }
-        }
+        public string PrintToFileName => m_printMgr.PrintToFileName;
 
         public string ChangePrintToFileName()
         {
@@ -145,15 +127,15 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
                 switch (m_printMgr.IsVirtual)
                 {
-                    case Autodesk.Revit.DB.VirtualPrinterType.AdobePDF:
+                    case VirtualPrinterType.AdobePDF:
                         saveDlg.Filter = "pdf files (*.pdf)|*.pdf";
                         postfix = ".pdf";
                         break;
-                    case Autodesk.Revit.DB.VirtualPrinterType.DWFWriter:
+                    case VirtualPrinterType.DWFWriter:
                         saveDlg.Filter = "dwf files (*.dwf)|*.dwf";
                         postfix = ".dwf";
                         break;
-                    case Autodesk.Revit.DB.VirtualPrinterType.None:
+                    case VirtualPrinterType.None:
                         saveDlg.Filter = "prn files (*.prn)|*.prn";
                         postfix = ".prn";
                         break;
@@ -189,10 +171,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public Autodesk.Revit.DB.PrintRange PrintRange
         {
-            get
-            {
-                return m_printMgr.PrintRange;
-            }
+            get => m_printMgr.PrintRange;
             set
             {
                 m_printMgr.PrintRange = value;
@@ -202,10 +181,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public bool Collate
         {
-            get
-            {
-                return m_printMgr.Collate;
-            }
+            get => m_printMgr.Collate;
             set
             {
                 m_printMgr.Collate = value;
@@ -215,10 +191,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public int CopyNumber
         {
-            get
-            {
-                return m_printMgr.CopyNumber;
-            }
+            get => m_printMgr.CopyNumber;
             set
             {
                 m_printMgr.CopyNumber = value;
@@ -228,10 +201,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public bool PrintOrderReverse
         {
-            get
-            {
-                return m_printMgr.PrintOrderReverse;
-            }
+            get => m_printMgr.PrintOrderReverse;
             set
             {
                 m_printMgr.PrintOrderReverse = value;
@@ -272,16 +242,16 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 string postfix = null;
                 switch (m_printMgr.IsVirtual)
                 {
-                    case Autodesk.Revit.DB.VirtualPrinterType.AdobePDF:
+                    case VirtualPrinterType.AdobePDF:
                         postfix = ".pdf";
                         break;
-                    case Autodesk.Revit.DB.VirtualPrinterType.DWFWriter:
+                    case VirtualPrinterType.DWFWriter:
                         postfix = ".dwf";
                         break;
-                    case Autodesk.Revit.DB.VirtualPrinterType.XPSWriter:
+                    case VirtualPrinterType.XPSWriter:
                         postfix = ".xps";
                         break;
-                    case Autodesk.Revit.DB.VirtualPrinterType.None:
+                    case VirtualPrinterType.None:
                         postfix = ".prn";
                         break;
                     default:

@@ -23,11 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
@@ -38,13 +35,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
 {
    public partial class FurnitureFamilyDragAndDropForm : System.Windows.Forms.Form
    {
-      public static BuiltInCategory FamilyCategory
-      {
-          get
-          {
-            return BuiltInCategory.OST_Furniture;
-          }
-      }
+      public static BuiltInCategory FamilyCategory => BuiltInCategory.OST_Furniture;
 
       private static FurnitureFamilyDragAndDropForm s_form;
       public static FurnitureFamilyDragAndDropForm GetTheForm(Document document)
@@ -70,7 +61,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             Name = name;
          }
 
-         public override String ToString()
+         public override string ToString()
          {
             return Name;
          }
@@ -96,9 +87,9 @@ namespace Revit.SDK.Samples.UIAPI.CS
          var libraryPaths = m_document.Application.GetLibraryPaths();
          foreach (var libraryPath in libraryPaths.Values)
          {
-             foreach (var directory in System.IO.Directory.EnumerateDirectories(libraryPath, "*Furniture", SearchOption.AllDirectories))
+             foreach (var directory in Directory.EnumerateDirectories(libraryPath, "*Furniture", SearchOption.AllDirectories))
              {
-                 foreach (var familyFile in System.IO.Directory.EnumerateFiles(directory, "*.rfa", SearchOption.AllDirectories))
+                 foreach (var familyFile in Directory.EnumerateFiles(directory, "*.rfa", SearchOption.AllDirectories))
                  {
                      // Add each Furniture family to the listbox
                      var fileName = Path.GetFileName(familyFile);
@@ -148,9 +139,9 @@ namespace Revit.SDK.Samples.UIAPI.CS
       // Drag action from list view
       private void listView_MouseMove(object sender, MouseEventArgs e)
       {
-          if (System.Windows.Forms.Control.MouseButtons == MouseButtons.Left)
+          if (MouseButtons == MouseButtons.Left)
           {
-              var selectedItem = this.listView1.SelectedItems.Cast<ListViewItem>().FirstOrDefault<ListViewItem>();
+              var selectedItem = listView1.SelectedItems.Cast<ListViewItem>().FirstOrDefault<ListViewItem>();
               
               if (selectedItem != null)
               {
@@ -164,12 +155,12 @@ namespace Revit.SDK.Samples.UIAPI.CS
       // Drag action from list box
       private void listBox1_MouseMove(object sender, MouseEventArgs e)
       {
-          if (System.Windows.Forms.Control.MouseButtons == MouseButtons.Left)
+          if (MouseButtons == MouseButtons.Left)
           {
               var member = (FamilyListBoxMember)listBox1.SelectedItem;
 
               // Use standard Revit drag and drop behavior
-              var data = new List<String>();
+              var data = new List<string>();
               data.Add(member.FullPath);
               UIApplication.DoDragDrop(data);
           }

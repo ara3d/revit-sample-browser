@@ -41,24 +41,9 @@ namespace Revit.SDK.Samples.AllViews.CS
     public class Command : IExternalCommand
     {
         #region IExternalCommand Members Implementation
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-       public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData,
-         ref string message, Autodesk.Revit.DB.ElementSet elements)
+        
+       public Result Execute(ExternalCommandData commandData,
+         ref string message, ElementSet elements)
        {
            if (null == commandData)
            {
@@ -80,10 +65,10 @@ namespace Revit.SDK.Samples.AllViews.CS
            catch (Exception e)
            {
                message = e.Message;
-               return Autodesk.Revit.UI.Result.Failed;
+               return Result.Failed;
            }
 
-           return Autodesk.Revit.UI.Result.Succeeded;
+           return Result.Succeeded;
       }
 
       #endregion IExternalCommand Members Implementation
@@ -237,38 +222,20 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <summary>
         /// Tree node store all views' names.
         /// </summary>
-        public TreeNode AllViewsNames
-        {
-            get
-            {
-                return m_allViewsNames;
-            }
-        }
+        public TreeNode AllViewsNames => m_allViewsNames;
 
         /// <summary>
         /// List of all title blocks' names.
         /// </summary>
-        public ArrayList AllTitleBlocksNames
-        {
-            get
-            {
-                return m_allTitleBlocksNames;
-            }
-        }
+        public ArrayList AllTitleBlocksNames => m_allTitleBlocksNames;
 
         /// <summary>
         /// The selected sheet's name.
         /// </summary>
         public string SheetName
         {
-            get
-            {
-                return m_sheetName;
-            }
-            set
-            {
-                m_sheetName = value;
-            }
+            get => m_sheetName;
+            set => m_sheetName = value;
         }
 
         /// <summary>
@@ -380,7 +347,7 @@ namespace Revit.SDK.Samples.AllViews.CS
       /// Generate sheet in active document.
       /// </summary>
       /// <param name="doc">the currently active document</param>
-      public Autodesk.Revit.UI.Result GenerateSheet(Document doc)
+      public Result GenerateSheet(Document doc)
       {
          if (null == doc)
          {
@@ -488,7 +455,7 @@ namespace Revit.SDK.Samples.AllViews.CS
             var n = 1;
             foreach (Autodesk.Revit.DB.View v in views)
             {
-                var location = new Autodesk.Revit.DB.UV(tempU, tempV);
+                var location = new UV(tempU, tempV);
                 var view = v;
                 Rescale(view, xDistance, yDistance);
                 try
@@ -521,9 +488,9 @@ namespace Revit.SDK.Samples.AllViews.CS
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        private Autodesk.Revit.DB.UV GetOffSet(BoundingBoxUV bBox, double x, double y)
+        private UV GetOffSet(BoundingBoxUV bBox, double x, double y)
         {
-            return new Autodesk.Revit.DB.UV(bBox.Min.U + x * GOLDENSECTION, bBox.Min.V + y * GOLDENSECTION);
+            return new UV(bBox.Min.U + x * GOLDENSECTION, bBox.Min.V + y * GOLDENSECTION);
         }
 
         /// <summary>
@@ -571,7 +538,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         static private void Rescale(Autodesk.Revit.DB.View view, double x, double y)
         {
             double Rescale = 2;
-            var outline = new Autodesk.Revit.DB.UV(view.Outline.Max.U - view.Outline.Min.U,
+            var outline = new UV(view.Outline.Max.U - view.Outline.Min.U,
                 view.Outline.Max.V - view.Outline.Min.V);
 
             if (outline.U > outline.V)

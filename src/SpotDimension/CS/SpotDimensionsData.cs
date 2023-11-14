@@ -21,16 +21,10 @@
 //
 
 
-using System;
-using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 
 namespace Revit.SDK.Samples.SpotDimension.CS
@@ -48,24 +42,12 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         /// <summary>
         /// a list of all the SpotDimensions in the project
         /// </summary>
-        public ReadOnlyCollection<Autodesk.Revit.DB.SpotDimension> SpotDimensions
-        {
-            get
-            {
-                return new ReadOnlyCollection<Autodesk.Revit.DB.SpotDimension>(m_spotDimensions);
-            }
-        }
+        public ReadOnlyCollection<Autodesk.Revit.DB.SpotDimension> SpotDimensions => new ReadOnlyCollection<Autodesk.Revit.DB.SpotDimension>(m_spotDimensions);
 
         /// <summary>
         /// a list of all the views that have SpotDimentions in the project
         /// </summary>
-        public ReadOnlyCollection<string> Views
-        {
-            get
-            {
-                return new ReadOnlyCollection<string>(m_views);
-            }
-        }
+        public ReadOnlyCollection<string> Views => new ReadOnlyCollection<string>(m_views);
 
         /// <summary>
         /// Constructor

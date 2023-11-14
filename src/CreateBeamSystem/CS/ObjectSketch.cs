@@ -23,9 +23,7 @@
 
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Drawing;
     using System.Drawing.Drawing2D;
 
@@ -42,18 +40,12 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <summary>
         /// bounding box of the geometry object 
         /// </summary>
-        public RectangleF BoundingBox
-        {
-            get 
-            { 
-                return m_boundingBox; 
-            }
-        }
+        public RectangleF BoundingBox => m_boundingBox;
 
         /// <summary>
         /// pen to draw the object
         /// </summary>
-        protected Pen m_pen = new Pen(System.Drawing.Color.DarkGreen);
+        protected Pen m_pen = new Pen(Color.DarkGreen);
 
         /// <summary>
         /// defines a local geometric transform

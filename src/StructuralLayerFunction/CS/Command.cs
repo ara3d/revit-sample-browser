@@ -21,16 +21,9 @@
 //
 
 
-using System;
 using System.Collections;
-using System.Windows.Forms;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 
 namespace Revit.SDK.Samples.StructuralLayerFunction.CS
@@ -45,7 +38,7 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
     public class Command : IExternalCommand
     {
         #region Private data members
-        Autodesk.Revit.DB.Floor m_slab = null;    //Store the selected floor
+        Floor m_slab;    //Store the selected floor
         ArrayList m_functions;                            //Store the function of each floor
         #endregion
 
@@ -54,13 +47,8 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
         /// <summary>
         /// With the selected floor, export the function of each of its structural layers
         /// </summary>
-        public ArrayList Functions
-        {
-            get
-            {
-                return m_functions;
-            }
-        }
+        public ArrayList Functions => m_functions;
+
         #endregion
 
 
@@ -93,8 +81,8 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData,
-                                                ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+                                                ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
 
@@ -111,15 +99,15 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
             if (1 != collection.Size)
             {
                 message = "Please select a floor.";
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             foreach (Element e in collection)
             {
-                m_slab = e as Autodesk.Revit.DB.Floor;
+                m_slab = e as Floor;
                 if (null == m_slab)
                 {
                     message = "Please select a floor.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
             }
 
@@ -143,7 +131,7 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
             var displayForm = new StructuralLayerFunctionForm(this);
             displayForm.ShowDialog();
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
     }

@@ -23,9 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
@@ -201,7 +198,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             var movedPoints = OffsetPoints(offset);
 
             // Translate curves points
-            var translatedPoints = new List<Autodesk.Revit.DB.XYZ >();
+            var translatedPoints = new List<XYZ >();
             foreach (var point in movedPoints)
             {
                 translatedPoints.Add(GeomUtil.OffsetPoint(point, m_drivingVector, curveOffset));
@@ -227,7 +224,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// Get the down direction, which stand for the top hook direction
         /// </summary>
         /// <returns>the down direction</returns>
-        public Autodesk.Revit.DB.XYZ GetDownDirection()
+        public XYZ GetDownDirection()
         {
             var comparer = new XYZHeightComparer();
             m_points.Sort(comparer);

@@ -22,11 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -44,16 +40,16 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       BeamGeometrySupport m_geometry;   // The geometry support for beam rebar creation
 
       // The rebar type, hook type and spacing information
-      RebarBarType m_topEndType = null;       //type of the end rebar in the top of beam  
-      RebarBarType m_topCenterType = null;    //type of the center rebar in the center of beam
-      RebarBarType m_bottomType = null; //type of the rebar on bottom of the beam
-      RebarBarType m_transverseType = null;   //type of the transverse rebar
+      RebarBarType m_topEndType;       //type of the end rebar in the top of beam  
+      RebarBarType m_topCenterType;    //type of the center rebar in the center of beam
+      RebarBarType m_bottomType; //type of the rebar on bottom of the beam
+      RebarBarType m_transverseType;   //type of the transverse rebar
 
-      RebarHookType m_topHookType = null;     //type of the hook in the top end rebar
-      RebarHookType m_transverseHookType = null;  // type of the hook in the transverse rebar
+      RebarHookType m_topHookType;     //type of the hook in the top end rebar
+      RebarHookType m_transverseHookType;  // type of the hook in the transverse rebar
 
-      double m_transverseEndSpacing = 0;      //the spacing value of end transverse rebar
-      double m_transverseCenterSpacing = 0;   //the spacing value of center transverse rebar
+      double m_transverseEndSpacing;      //the spacing value of end transverse rebar
+      double m_transverseCenterSpacing;   //the spacing value of center transverse rebar
 
       #endregion
 
@@ -63,14 +59,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarBarType TopEndRebarType
       {
-         get
-         {
-            return m_topEndType;
-         }
-         set
-         {
-            m_topEndType = value;
-         }
+         get => m_topEndType;
+         set => m_topEndType = value;
       }
 
       /// <summary>
@@ -78,14 +68,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarBarType TopCenterRebarType
       {
-         get
-         {
-            return m_topCenterType;
-         }
-         set
-         {
-            m_topCenterType = value;
-         }
+         get => m_topCenterType;
+         set => m_topCenterType = value;
       }
 
       /// <summary>
@@ -93,14 +77,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarBarType BottomRebarType
       {
-         get
-         {
-            return m_bottomType;
-         }
-         set
-         {
-            m_bottomType = value;
-         }
+         get => m_bottomType;
+         set => m_bottomType = value;
       }
 
       /// <summary>
@@ -108,14 +86,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarBarType TransverseRebarType
       {
-         get
-         {
-            return m_transverseType;
-         }
-         set
-         {
-            m_transverseType = value;
-         }
+         get => m_transverseType;
+         set => m_transverseType = value;
       }
 
       /// <summary>
@@ -123,10 +95,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public double TransverseEndSpacing
       {
-         get
-         {
-            return m_transverseEndSpacing;
-         }
+         get => m_transverseEndSpacing;
          set
          {
             if (0 > value)
@@ -142,10 +111,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public double TransverseCenterSpacing
       {
-         get
-         {
-            return m_transverseCenterSpacing;
-         }
+         get => m_transverseCenterSpacing;
          set
          {
             if (0 > value)
@@ -161,14 +127,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarHookType TopHookType
       {
-         get
-         {
-            return m_topHookType;
-         }
-         set
-         {
-            m_topHookType = value;
-         }
+         get => m_topHookType;
+         set => m_topHookType = value;
       }
 
       /// <summary>
@@ -176,14 +136,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarHookType TransverseHookType
       {
-         get
-         {
-            return m_transverseHookType;
-         }
-         set
-         {
-            m_transverseHookType = value;
-         }
+         get => m_transverseHookType;
+         set => m_transverseHookType = value;
       }
 
       #endregion

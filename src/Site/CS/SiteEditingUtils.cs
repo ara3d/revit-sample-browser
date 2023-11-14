@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -70,7 +69,7 @@ namespace Revit.SDK.Samples.Site.CS
             if (maxRadius <= 8)
                 throw new Exception("Pond radius must be greater than 8");
 
-            List<XYZ> points = new List<XYZ>();
+            var points = new List<XYZ>();
             points.Add(center);
 
             GenerateCircleSurrounding(points, center, 1, maxRadius - 8);
@@ -91,7 +90,7 @@ namespace Revit.SDK.Samples.Site.CS
         {
             for (double theta = 0; theta < 2 * Math.PI; theta += Math.PI / 6.0)
             {
-                XYZ targetPoint = center + new XYZ(radius * Math.Cos(theta), radius * Math.Sin(theta), deltaElevation);
+                var targetPoint = center + new XYZ(radius * Math.Cos(theta), radius * Math.Sin(theta), deltaElevation);
                 points.Add(targetPoint);
             }
         }
@@ -103,7 +102,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <returns>The center of the bounding box.</returns>
         public static XYZ GetCenterOf(Element element)
         {
-            BoundingBoxXYZ bbox = element.get_BoundingBox(null);
+            var bbox = element.get_BoundingBox(null);
 
             return (bbox.Min + bbox.Max) / 2.0;
         }
@@ -115,13 +114,13 @@ namespace Revit.SDK.Samples.Site.CS
         /// <returns>The points.</returns>
         public static IList<XYZ> GetPointsFromSubregionRough(TopographySurface subregion)
         {
-            BoundingBoxXYZ bbox = subregion.get_BoundingBox(null);
+            var bbox = subregion.get_BoundingBox(null);
 
             // Get toposurface points
-            TopographySurface toposurface = GetTopographySurfaceHost(subregion);
+            var toposurface = GetTopographySurfaceHost(subregion);
 
-            Outline outline = new Outline(bbox.Min, bbox.Max);
-            IList<XYZ> points = toposurface.FindPoints(outline);
+            var outline = new Outline(bbox.Min, bbox.Max);
+            var points = toposurface.FindPoints(outline);
 
             return points;
         }
@@ -143,7 +142,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <returns>The host TopographySurface.</returns>
         public static TopographySurface GetTopographySurfaceHost(TopographySurface subregion)
         {
-            TopographySurface toposurface = subregion.Document.GetElement(subregion.AsSiteSubRegion().HostId) as TopographySurface;
+            var toposurface = subregion.Document.GetElement(subregion.AsSiteSubRegion().HostId) as TopographySurface;
             return toposurface;
         }
 

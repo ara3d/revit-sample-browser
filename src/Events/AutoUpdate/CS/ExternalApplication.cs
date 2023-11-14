@@ -21,15 +21,10 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Diagnostics;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.AutoUpdate.CS
@@ -55,12 +50,12 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
         /// <summary>
         /// get assembly path.
         /// </summary>
-        private static String m_directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        private static string m_directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         
         /// <summary>
         /// create the temp file name.
         /// </summary>
-        private String m_tempFile = Path.Combine(m_directory, "temp.log");
+        private string m_tempFile = Path.Combine(m_directory, "temp.log");
  
         #endregion
 
@@ -75,7 +70,7 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
         /// some point.
         /// If false is returned then Revit should inform the user that the external application 
         /// failed to load and the release the internal reference.</returns>
-        public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
             try
             {
@@ -86,14 +81,14 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
                 // Register event. In this sample, we trigger this event from UI, so it must 
                 // be registered on ControlledApplication. 
                 application.ControlledApplication.DocumentOpened += new EventHandler
-                    <Autodesk.Revit.DB.Events.DocumentOpenedEventArgs>(application_DocumentOpened);            
+                    <DocumentOpenedEventArgs>(application_DocumentOpened);            
             }
             catch (Exception)
             {
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -108,12 +103,12 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
         /// some point.
         /// If false is returned then the Revit user should be warned of the failure of the external 
         /// application to shut down correctly.</returns>
-        public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
             // remove the event.
             application.ControlledApplication.DocumentOpened -= application_DocumentOpened;
             CloseLogFile();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
 

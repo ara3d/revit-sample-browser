@@ -20,9 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Diagnostics;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -55,7 +52,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
         {
@@ -68,29 +65,29 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                     // FamilyCategory.Name is not "Windows".
                 {
                     message = "Please make sure you opened a template of Window.";
-                    return Autodesk.Revit.UI.Result.Failed;                   
+                    return Result.Failed;                   
                 }
                 var wizard = new WindowWizard(commandData);
                 var result = wizard.RunWizard();
                 if (1 == result)
                 {
-                    return Autodesk.Revit.UI.Result.Succeeded;
+                    return Result.Succeeded;
                 }
                 else if (0 == result)
                 {
                     message = "Window Creation was cancelled.";
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
                 else
                 {
                     message = "Window Creation failed, please check your template and inputs then try again.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }              
             }
             else
             {
                 message = "please make sure you have opened a family document!";
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
         #endregion

@@ -22,18 +22,13 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
    // using GeoInstance as Autodesk.Revit.DB.Instance
-   using GeoInstance = Autodesk.Revit.DB.GeometryInstance;
-   using Autodesk.Revit.DB.Structure;
+   using GeoInstance = GeometryInstance;
 
    /// <summary>
    /// Compute geometry information and store geometry information.
@@ -53,7 +48,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
       /// <summary>
       /// the director vector of beam or column
       /// </summary>
-      protected Autodesk.Revit.DB.XYZ m_drivingVector;
+      protected XYZ m_drivingVector;
 
       /// <summary>
       /// a list to store the edges 
@@ -63,15 +58,15 @@ namespace Revit.SDK.Samples.NewRebar.CS
       /// <summary>
       /// a list to store the point
       /// </summary>
-      private List<Autodesk.Revit.DB.XYZ> m_points = new List<Autodesk.Revit.DB.XYZ>();
+      private List<XYZ> m_points = new List<XYZ>();
 
       /// <summary>
       /// Return profile points
       /// </summary>
-      public List<Autodesk.Revit.DB.XYZ> ProfilePoints
+      public List<XYZ> ProfilePoints
       {
-         get { return m_points; }
-         set { m_points = value; }
+         get => m_points;
+         set => m_points = value;
       }
 
       /// <summary>
@@ -87,13 +82,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
       /// <summary>
       /// Return driving length
       /// </summary>
-      public double DrivingLength
-      {
-         get
-         {
-            return m_drivingLength;
-         }
-      }
+      public double DrivingLength => m_drivingLength;
 
       /// <summary>
       /// constructor
@@ -187,7 +176,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
       /// </summary>
       /// <param name="point">The point need to transform</param>
       /// <returns>The changed point</returns>
-      protected Autodesk.Revit.DB.XYZ Transform(Autodesk.Revit.DB.XYZ point)
+      protected XYZ Transform(XYZ point)
       {
          // only invoke the TransformPoint() method.
          return GeomUtil.TransformPoint(point, m_transform);
@@ -209,10 +198,10 @@ namespace Revit.SDK.Samples.NewRebar.CS
       /// </summary>
       /// <param name="point">A point of the swept profile</param>
       /// <returns>Two vectors indicate edge direction</returns>
-      protected List<Autodesk.Revit.DB.XYZ> GetRelatedVectors(Autodesk.Revit.DB.XYZ point)
+      protected List<XYZ> GetRelatedVectors(XYZ point)
       {
          // Initialize the return vector list.
-         var vectors = new List<Autodesk.Revit.DB.XYZ>();
+         var vectors = new List<XYZ>();
 
          // Get all the edges which contain this point.
          // And get the vector from this point to another point
@@ -245,10 +234,10 @@ namespace Revit.SDK.Samples.NewRebar.CS
       /// </summary>
       /// <param name="offset">Indicate how long to offset on two directions</param>
       /// <returns>The offset points</returns>
-      public List<Autodesk.Revit.DB.XYZ> OffsetPoints(double offset)
+      public List<XYZ> OffsetPoints(double offset)
       {
          // Initialize the offset point list.
-         var points = new List<Autodesk.Revit.DB.XYZ>();
+         var points = new List<XYZ>();
 
          // Get all points of the swept profile, and offset it in two related directions
          foreach (var point in m_points)
@@ -307,7 +296,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
       private Face GetSweptProfileFace(Solid solid)
       {
          // Get a point on the swept profile from all points in solid
-         var refPoint = new Autodesk.Revit.DB.XYZ();   // the point on swept profile
+         var refPoint = new XYZ();   // the point on swept profile
          foreach (Edge edge in solid.Edges)
          {
             var points = edge.Tessellate() as List<XYZ>;    //get end points of the edge

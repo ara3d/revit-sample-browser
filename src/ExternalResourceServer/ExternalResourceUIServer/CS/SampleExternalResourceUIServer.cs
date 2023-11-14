@@ -22,10 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
@@ -43,7 +39,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
       /// <summary>
       /// Return the Id of the server. 
       /// </summary>
-      public System.Guid GetServerId()
+      public Guid GetServerId()
       {
          return m_myServerId;
       }
@@ -59,7 +55,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
       /// <summary>
       /// Return the server's name. 
       /// </summary>
-      public System.String GetName()
+      public string GetName()
       {
          return "SDK Sample ExtRes UI Server";
       }
@@ -67,7 +63,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
       /// <summary>
       /// Return the server's vendor Id. 
       /// </summary>
-      public System.String GetVendorId()
+      public string GetVendorId()
       {
          return "ADSK";
       }
@@ -75,7 +71,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
       /// <summary>
       /// Return the description of the server. 
       /// </summary>
-      public System.String GetDescription()
+      public string GetDescription()
       {
          return "Simple UI server for the Revit SDK sample external resource server";
       }
@@ -90,7 +86,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
       /// Return the Id of the related DB server. 
       /// </summary>
       /// 
-      public System.Guid GetDBServerId()
+      public Guid GetDBServerId()
       {
          return m_myDBServerId;
       }
@@ -115,7 +111,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
             var resourceType = data.ExternalResourceType;
 
             // This message will be posted in a dialog box at the end of this method.
-            var myMessage = String.Empty;
+            var myMessage = string.Empty;
 
             var loadContext = data.GetLoadContext();
             var desiredRef = data.GetExternalResourceReference();
@@ -228,7 +224,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
          }
          // ... Retrieve detailed failure information from SampleExternalResourceServer here.
 
-         var message = String.Format("The browse result for <{0}> was: <{1}>.", browsingItemPath, resultString);
+         var message = string.Format("The browse result for <{0}> was: <{1}>.", browsingItemPath, resultString);
          System.Windows.Forms.MessageBox.Show(message);
       }
 

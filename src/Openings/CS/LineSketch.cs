@@ -21,13 +21,8 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-
-using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.Openings.CS
 {
@@ -46,7 +41,7 @@ namespace Revit.SDK.Samples.Openings.CS
         {
             m_line = line;
             m_boundingBox = line.BoundingBox;
-            m_pen.Color = System.Drawing.Color.Yellow;
+            m_pen.Color = Color.Yellow;
             m_pen.Width = 1f;
         }
 

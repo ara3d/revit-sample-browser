@@ -22,17 +22,12 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 {
-   using GeoInstance = Autodesk.Revit.DB.GeometryInstance;
-   using Autodesk.Revit.DB.Structure;
+   using GeoInstance = GeometryInstance;
 
    /// <summary>
    /// The base class which support beamGeometrySupport and ColumnGeometrySupport etc.
@@ -53,7 +48,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       /// <summary>
       /// the director vector of beam or column
       /// </summary>
-      protected Autodesk.Revit.DB.XYZ m_drivingVector;
+      protected XYZ m_drivingVector;
 
       /// <summary>
       /// a list to store the edges 
@@ -63,7 +58,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       /// <summary>
       /// a list to store the point
       /// </summary>
-      protected List<Autodesk.Revit.DB.XYZ> m_points = new List<Autodesk.Revit.DB.XYZ>();
+      protected List<XYZ> m_points = new List<XYZ>();
 
       /// <summary>
       /// the transform value of the solid
@@ -161,7 +156,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       /// </summary>
       /// <param name="point">the point need to transform</param>
       /// <returns>the changed point</returns>
-      protected Autodesk.Revit.DB.XYZ Transform(Autodesk.Revit.DB.XYZ point)
+      protected XYZ Transform(XYZ point)
       {
          // only invoke the TransformPoint() method.
          return GeomUtil.TransformPoint(point, m_transform);
@@ -183,10 +178,10 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       /// </summary>
       /// <param name="point">a point of the swept profile</param>
       /// <returns>two vectors indicate edge direction</returns>
-      protected List<Autodesk.Revit.DB.XYZ> GetRelatedVectors(Autodesk.Revit.DB.XYZ point)
+      protected List<XYZ> GetRelatedVectors(XYZ point)
       {
          // Initialize the return vector list.
-         var vectors = new List<Autodesk.Revit.DB.XYZ>();
+         var vectors = new List<XYZ>();
 
          // Get all the edge which contain this point.
          // And get the vector from this point to another point
@@ -219,10 +214,10 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       /// </summary>
       /// <param name="offset">indicate how long to offset on two directions</param>
       /// <returns>the offset points</returns>
-      protected List<Autodesk.Revit.DB.XYZ> OffsetPoints(double offset)
+      protected List<XYZ> OffsetPoints(double offset)
       {
          // Initialize the offset point list.
-         var points = new List<Autodesk.Revit.DB.XYZ>();
+         var points = new List<XYZ>();
 
          // Get all points of the swept profile, and offset it in two related direction
          foreach (var point in m_points)
@@ -281,7 +276,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       private Face GetSweptProfileFace(Solid solid)
       {
          // Get a point on the swept profile from all points in solid
-         var refPoint = new Autodesk.Revit.DB.XYZ();   // the point on swept profile
+         var refPoint = new XYZ();   // the point on swept profile
          foreach (Edge edge in solid.Edges)
          {
             var points = edge.Tessellate() as List<XYZ>;    //get end points of the edge

@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB;
@@ -43,26 +41,26 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="elevationDelta">The change in elevation.</param>
         public static void ChangeSubregionAndPointsElevation(UIDocument uiDoc, double elevationDelta)
         {
-            Document doc = uiDoc.Document;
+            var doc = uiDoc.Document;
 
             // Pick subregion
-            TopographySurface subregion = PickSubregion(uiDoc);
-            TopographySurface toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
+            var subregion = PickSubregion(uiDoc);
+            var toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
 
             // Get points
-            IList<XYZ> points = SiteEditingUtils.GetNonBoundaryPoints(subregion);
+            var points = SiteEditingUtils.GetNonBoundaryPoints(subregion);
             if (points.Count == 0)
                 return;
 
             // Change in elevation
-            XYZ delta = elevationDelta * XYZ.BasisZ;
+            var delta = elevationDelta * XYZ.BasisZ;
 
             // Edit scope for all changes
-            using (TopographyEditScope editScope = new TopographyEditScope(doc, "Raise/lower terrain"))
+            using (var editScope = new TopographyEditScope(doc, "Raise/lower terrain"))
             {
                 editScope.Start(toposurface.Id);
 
-                using (Transaction t = new Transaction(doc, "Raise/lower terrain"))
+                using (var t = new Transaction(doc, "Raise/lower terrain"))
                 {
                     t.Start();
 
@@ -82,11 +80,11 @@ namespace Revit.SDK.Samples.Site.CS
         /// <returns>The selected subregion.</returns>
         public static TopographySurface PickSubregion(UIDocument uiDoc)
         {
-            Reference subregRef = uiDoc.Selection.PickObject(ObjectType.Element,
+            var subregRef = uiDoc.Selection.PickObject(ObjectType.Element,
                                                              new SubRegionSelectionFilter(),
                                                              "Select subregion");
 
-            TopographySurface subregion = uiDoc.Document.GetElement(subregRef) as TopographySurface;
+            var subregion = uiDoc.Document.GetElement(subregRef) as TopographySurface;
             return subregion;
         }
 
@@ -97,11 +95,11 @@ namespace Revit.SDK.Samples.Site.CS
         /// <returns>The selected TopographySurface.</returns>
         public static TopographySurface PickTopographySurface(UIDocument uiDoc)
         {
-            Reference toposurfRef = uiDoc.Selection.PickObject(ObjectType.Element,
+            var toposurfRef = uiDoc.Selection.PickObject(ObjectType.Element,
                                                              new TopographySurfaceSelectionFilter(),
                                                              "Select topography surface");
 
-            TopographySurface toposurface = uiDoc.Document.GetElement(toposurfRef) as TopographySurface;
+            var toposurface = uiDoc.Document.GetElement(toposurfRef) as TopographySurface;
             return toposurface;
         }
 
@@ -112,18 +110,18 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="toposurface">The target topography surface.</param>
         /// <param name="message">The selection message.</param>
         /// <returns>The point.</returns>
-        public static XYZ PickPointNearToposurface(UIDocument uiDoc, TopographySurface toposurface, String message)
+        public static XYZ PickPointNearToposurface(UIDocument uiDoc, TopographySurface toposurface, string message)
         {
             // Pick the point
-            XYZ point = uiDoc.Selection.PickPoint(message);
+            var point = uiDoc.Selection.PickPoint(message);
 
             // Get the average elevation for the host topography surface
-            double elevation = SiteEditingUtils.GetAverageElevation(toposurface.GetPoints());
+            var elevation = SiteEditingUtils.GetAverageElevation(toposurface.GetPoints());
 
             // Project the point onto the Z = average elevation plane
-            XYZ viewDirection = uiDoc.ActiveView.ViewDirection.Normalize();
+            var viewDirection = uiDoc.ActiveView.ViewDirection.Normalize();
 
-            double elevationDelta = (elevation - point.Z) / viewDirection.Z;
+            var elevationDelta = (elevation - point.Z) / viewDirection.Z;
             point = point + viewDirection * elevationDelta;
 
             return point;
@@ -141,7 +139,7 @@ namespace Revit.SDK.Samples.Site.CS
             /// <returns></returns>
             public bool AllowElement(Element element)
             {
-                TopographySurface ts = element as TopographySurface;
+                var ts = element as TopographySurface;
 
                 return ts != null && ts.IsSiteSubRegion;
             }
@@ -170,7 +168,7 @@ namespace Revit.SDK.Samples.Site.CS
             /// <returns></returns>
             public bool AllowElement(Element element)
             {
-                TopographySurface ts = element as TopographySurface;
+                var ts = element as TopographySurface;
 
                 return ts != null && !ts.IsSiteSubRegion;
             }

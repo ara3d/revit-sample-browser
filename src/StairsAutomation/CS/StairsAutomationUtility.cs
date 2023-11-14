@@ -21,12 +21,9 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.StairsAutomation.CS
 {
@@ -35,51 +32,39 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
     /// </summary>
     public class StairsAutomationUtility
     {
-        private Autodesk.Revit.DB.Document document;
+        private Document document;
         private Stairs m_stairs;
         private int m_stairsNumber;
 
         /// <summary>
         /// The bottom level for the stairs assembly.
         /// </summary>
-        public Autodesk.Revit.DB.Level BottomLevel { get; set; }
+        public Level BottomLevel { get; set; }
 
         /// <summary>
         /// The top level for the stairs assembly.
         /// </summary>
-        public Autodesk.Revit.DB.Level TopLevel { get; set; }
+        public Level TopLevel { get; set; }
 
         /// <summary>
         /// The document.
         /// </summary>
-        protected Autodesk.Revit.DB.Document Document
-        {
-            get
-            {
-                return document;
-            }
-        }
+        protected Document Document => document;
 
         /// <summary>
         /// The stairs.
         /// </summary>
-        protected Autodesk.Revit.DB.Architecture.Stairs Stairs
-        {
-            get
-            {
-                return m_stairs;
-            }
-        }
+        protected Stairs Stairs => m_stairs;
 
         /// <summary>
         /// Creates a new instance of this class for a given stairs congfiguration. 
         /// </summary>
         /// <param name="document">The document.</param>
         /// <param name="stairsNumber">The stairs configuration number.</param>
-        protected StairsAutomationUtility(Autodesk.Revit.DB.Document document, int stairsNumber)
+        protected StairsAutomationUtility(Document document, int stairsNumber)
         {
             this.document = document;
-            this.m_stairsNumber = stairsNumber;
+            m_stairsNumber = stairsNumber;
         }
 
         /// <summary>
@@ -88,7 +73,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <param name="document">The document in which the stairs will be created.</param>
         /// <param name="stairsNumber">The predefined stairs configuration number.</param>
         /// <returns></returns>
-        public static StairsAutomationUtility Create(Autodesk.Revit.DB.Document document, int stairsNumber)
+        public static StairsAutomationUtility Create(Document document, int stairsNumber)
         {
             var utility = new StairsAutomationUtility(document, stairsNumber);
             return utility;
@@ -119,7 +104,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             }
         }
 
-        private static Tuple<Level, Level, Level> FindTargetLevels(Document doc, String name1, String name2, String name3)
+        private static Tuple<Level, Level, Level> FindTargetLevels(Document doc, string name1, string name2, string name3)
         {
             var collector = new FilteredElementCollector(doc);
             collector.OfClass(typeof(Level));

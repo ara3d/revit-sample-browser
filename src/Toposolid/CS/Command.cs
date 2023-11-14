@@ -20,15 +20,11 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using Autodesk.Revit.Attributes;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Linq;
 using Autodesk.Revit.DB.Architecture;
 
@@ -407,7 +403,7 @@ namespace Revit.SDK.Samples.Toposolid.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var uidoc = commandData.Application.ActiveUIDocument;
          var doc = uidoc.Document;
@@ -453,7 +449,7 @@ namespace Revit.SDK.Samples.Toposolid.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var uidoc = commandData.Application.ActiveUIDocument;
          var doc = uidoc.Document;

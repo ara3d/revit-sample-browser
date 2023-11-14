@@ -71,22 +71,22 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
          // Create the show all detail groups pushbutton.
          var pbdShowAllDetailGroups = new PushButtonData("ShowAttachedDetailGroups", "Show Attached\nDetail Groups",
                   addAssemblyPath,
-                  typeof(Revit.SDK.Samples.AttachedDetailGroup.CS.AttachedDetailGroupShowAllCommand).FullName);
+                  typeof(AttachedDetailGroupShowAllCommand).FullName);
 
          pbdShowAllDetailGroups.LongDescription = "Show all of the selected element group's attached detail groups that are compatible with the current view.";
 
          var pbShowAllDetailGroups = rp.AddItem(pbdShowAllDetailGroups) as PushButton;
-         SetIconsForPushButton(pbShowAllDetailGroups, Revit.SDK.Samples.AttachedDetailGroup.CS.Properties.Resources.ShowAllDetailGroupsIcon);
+         SetIconsForPushButton(pbShowAllDetailGroups, Properties.Resources.ShowAllDetailGroupsIcon);
 
          // Create the hide all detail groups pushbutton.
          var pbdHideAllDetailGroups = new PushButtonData("HideAttachedDetailGroups", "Hide Attached\nDetail Groups",
                   addAssemblyPath,
-                  typeof(Revit.SDK.Samples.AttachedDetailGroup.CS.AttachedDetailGroupHideAllCommand).FullName);
+                  typeof(AttachedDetailGroupHideAllCommand).FullName);
 
          pbdHideAllDetailGroups.LongDescription = "Hide all of the selected element group's attached detail groups that are compatible with the current view.";
 
          var pbHideAllDetailGroups = rp.AddItem(pbdHideAllDetailGroups) as PushButton;
-         SetIconsForPushButton(pbHideAllDetailGroups, Revit.SDK.Samples.AttachedDetailGroup.CS.Properties.Resources.HideAllDetailGroupsIcon);
+         SetIconsForPushButton(pbHideAllDetailGroups, Properties.Resources.HideAllDetailGroupsIcon);
       }
 
       /// <summary>
@@ -130,6 +130,6 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
       /// <summary>
       /// The path to this add-in assembly.
       /// </summary>
-      static String addAssemblyPath = typeof(Revit.SDK.Samples.AttachedDetailGroup.CS.Application).Assembly.Location;
+      static string addAssemblyPath = typeof(Application).Assembly.Location;
    }
 }

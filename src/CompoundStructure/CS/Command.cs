@@ -23,13 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.CompoundStructureCreation.CS
 {
@@ -39,7 +34,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
     /// </summary>
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    public class WallCompoundStructure : Autodesk.Revit.UI.IExternalCommand
+    public class WallCompoundStructure : IExternalCommand
     {
         /// <summary>
         /// store the application
@@ -66,7 +61,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             m_application = commandData.Application;
             m_document = m_application.ActiveUIDocument;
@@ -84,7 +79,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
                 if (selectedElements.IsEmpty)
                 {
                     TaskDialog.Show("Error","Please select one wall at least.");
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
                 
                 // Create the CompoundStructure for wall.
@@ -251,7 +246,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         /// <returns>The specific material</returns>
         private Material CreateSampleBrickMaterial()
         {
-           var createMaterial = new SubTransaction(this.m_document.Document);
+           var createMaterial = new SubTransaction(m_document.Document);
            createMaterial.Start();
            Material materialNew = null;
 
@@ -267,21 +262,21 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
            {
               var idNew = Material.Create(m_document.Document, "New Brick Sample");
               materialNew = m_document.Document.GetElement(idNew) as Material;
-              materialNew.Color = new Autodesk.Revit.DB.Color(255, 0, 0);
+              materialNew.Color = new Color(255, 0, 0);
            }
            createMaterial.Commit();
 
-           var createPropertySets = new SubTransaction(this.m_document.Document);
+           var createPropertySets = new SubTransaction(m_document.Document);
            createPropertySets.Start();
 
            //Create a new structural asset and set properties on it.
-           var structuralAsssetBrick = new StructuralAsset("BrickStructuralAsset" , Autodesk.Revit.DB.StructuralAssetClass.Generic);
+           var structuralAsssetBrick = new StructuralAsset("BrickStructuralAsset" , StructuralAssetClass.Generic);
 
            var pseStructural = PropertySetElement.Create(m_document.Document, structuralAsssetBrick);
 
 
            //Create a new thermal asset and set properties on it.
-           var thermalAssetBrick = new ThermalAsset("BrickThermalAsset", Autodesk.Revit.DB.ThermalMaterialType.Solid);
+           var thermalAssetBrick = new ThermalAsset("BrickThermalAsset", ThermalMaterialType.Solid);
            thermalAssetBrick.Porosity = 0.1;
            thermalAssetBrick.Permeability = 0.2;
            thermalAssetBrick.Compressibility = .5;
@@ -290,7 +285,7 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
            //Create PropertySets from assets and assign them to the material.
            var pseThermal = PropertySetElement.Create(m_document.Document, thermalAssetBrick);
            createPropertySets.Commit();
-           var setPropertySets = new SubTransaction(this.m_document.Document);
+           var setPropertySets = new SubTransaction(m_document.Document);
            setPropertySets.Start();
            materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Structural, pseStructural.Id);
            materialNew.SetMaterialAspectByPropertySet(MaterialAspect.Thermal, pseThermal.Id);
@@ -321,15 +316,15 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
            {
               var idNew = Material.Create(m_document.Document, "New Concrete Sample");
               materialNew = m_document.Document.GetElement(idNew) as Material;
-              materialNew.Color = new Autodesk.Revit.DB.Color(130, 150, 120);
+              materialNew.Color = new Color(130, 150, 120);
            }
 
            //Create a new structural asset and set properties on it.
-           var structuralAsssetConcrete= new StructuralAsset("ConcreteStructuralAsset", Autodesk.Revit.DB.StructuralAssetClass.Concrete);
+           var structuralAsssetConcrete= new StructuralAsset("ConcreteStructuralAsset", StructuralAssetClass.Concrete);
            structuralAsssetConcrete.ConcreteBendingReinforcement = .5;
 
            //Create a new thermal asset and set properties on it.
-           var thermalAssetConcrete= new ThermalAsset("ConcreteThermalAsset", Autodesk.Revit.DB.ThermalMaterialType.Solid);
+           var thermalAssetConcrete= new ThermalAsset("ConcreteThermalAsset", ThermalMaterialType.Solid);
            thermalAssetConcrete.Porosity = 0.2;
            thermalAssetConcrete.Permeability = 0.3;
            thermalAssetConcrete.Compressibility = .5;

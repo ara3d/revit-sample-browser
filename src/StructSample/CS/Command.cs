@@ -22,12 +22,7 @@
 
 
 using System;
-using System.Windows.Forms;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.StructSample.CS
@@ -65,7 +60,7 @@ namespace Revit.SDK.Samples.StructSample.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref String message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          try
          {
@@ -83,12 +78,12 @@ namespace Revit.SDK.Samples.StructSample.CS
             var walls = rvtApp.Application.Create.NewElementSet();
 
             //  iterate through a selection set, and collect walls which are constrained at the top and the bottom.
-            foreach (Autodesk.Revit.DB.Element elem in ss)
+            foreach (Element elem in ss)
             {
-               if (elem.GetType() == typeof(Autodesk.Revit.DB.Wall))
+               if (elem.GetType() == typeof(Wall))
                {
-                  if (elem.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.WALL_HEIGHT_TYPE) != null
-                      && elem.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.WALL_BASE_CONSTRAINT) != null)
+                  if (elem.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE) != null
+                      && elem.get_Parameter(BuiltInParameter.WALL_BASE_CONSTRAINT) != null)
                   {
                      walls.Insert(elem);
                   }
@@ -100,7 +95,7 @@ namespace Revit.SDK.Samples.StructSample.CS
             if (walls.Size == 0)
             {
                message = "You must select some walls that are constrained top or bottom";
-               return Autodesk.Revit.UI.Result.Failed;
+               return Result.Failed;
             }
 
             //  next, we need a column symbol. For simplicity, the symbol name is hard-coded here. 
@@ -110,24 +105,24 @@ namespace Revit.SDK.Samples.StructSample.CS
                TaskDialog.Show("Revit", "failed to got a symbol. Please load the M_Wood Timber Column : 191 x 292mm family");
                message = "Please load the M_Wood Timber Column : 191 x 292mm family";
 
-               return Autodesk.Revit.UI.Result.Failed;
+               return Result.Failed;
             }
 
             //  place columns.
             double spacing = 5;  //  Spacing in feet hard coded. Note: Revit's internal length unit is feet. 
-            foreach (Autodesk.Revit.DB.Wall wall in walls)
+            foreach (Wall wall in walls)
             {
                FrameWall(rvtApp.Application, wall, spacing, colType);
             }
             tran.Commit();
 
             //  return succeeded info. 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
          }
          catch (Exception ex)
          {
             message = ex.ToString();
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
       }
       #endregion
@@ -147,15 +142,15 @@ namespace Revit.SDK.Samples.StructSample.CS
          itr.Reset();
          while (itr.MoveNext())
          {
-            var elem = (Autodesk.Revit.DB.Element)itr.Current;
-            if (elem.GetType() == typeof(Autodesk.Revit.DB.Family))
+            var elem = (Element)itr.Current;
+            if (elem.GetType() == typeof(Family))
             {
                if (elem.Name == familyName)
                {
-                  var family = (Autodesk.Revit.DB.Family)elem;
+                  var family = (Family)elem;
                   foreach (var symbolId in family.GetFamilySymbolIds())
                   {
-                     var symbol = (Autodesk.Revit.DB.FamilySymbol)rvtDoc.GetElement(symbolId);
+                     var symbol = (FamilySymbol)rvtDoc.GetElement(symbolId);
                      if (symbol.Name == symbolName)
                      {
                         return symbol;
@@ -175,23 +170,23 @@ namespace Revit.SDK.Samples.StructSample.CS
       /// <param name="wall">Wall as host to place column objects</param>
       /// <param name="spacing">spacing between two columns</param>
       /// <param name="columnType">column type</param>
-      private void FrameWall(Autodesk.Revit.ApplicationServices.Application rvtApp, Autodesk.Revit.DB.Wall wall,
-          double spacing, Autodesk.Revit.DB.FamilySymbol columnType)
+      private void FrameWall(Autodesk.Revit.ApplicationServices.Application rvtApp, Wall wall,
+          double spacing, FamilySymbol columnType)
       {
          var rvtDoc = wall.Document;
 
          // get wall location
-         var loc = (Autodesk.Revit.DB.LocationCurve)wall.Location;
+         var loc = (LocationCurve)wall.Location;
          var startPt = loc.Curve.GetEndPoint(0);
          var endPt = loc.Curve.GetEndPoint(1);
 
          // get wall's vector
-         var wallVec = new Autodesk.Revit.DB.UV(
+         var wallVec = new UV(
              endPt.X - startPt.X,
              endPt.Y - startPt.Y);
 
          // get the axis vector
-         var axis = new Autodesk.Revit.DB.UV(1.0, 0.0);
+         var axis = new UV(1.0, 0.0);
 
          var baseLevelId = wall.get_Parameter(BuiltInParameter.WALL_BASE_CONSTRAINT).AsElementId();
          var topLevelId = wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE).AsElementId();
@@ -236,8 +231,8 @@ namespace Revit.SDK.Samples.StructSample.CS
       /// <param name="columnType">column type placed in Wall</param>
       /// <param name="baseLevelId">level id for base level where column is placed</param>
       /// <param name="topLevelId">level id for top level where column is placed</param>
-      private void PlaceColumn(Autodesk.Revit.ApplicationServices.Application rvtApp, Document rvtDoc, Autodesk.Revit.DB.XYZ point2,
-          double angle, FamilySymbol columnType, Autodesk.Revit.DB.ElementId baseLevelId, Autodesk.Revit.DB.ElementId topLevelId)
+      private void PlaceColumn(Autodesk.Revit.ApplicationServices.Application rvtApp, Document rvtDoc, XYZ point2,
+          double angle, FamilySymbol columnType, ElementId baseLevelId, ElementId topLevelId)
       {
          var point = point2;
 
@@ -254,13 +249,13 @@ namespace Revit.SDK.Samples.StructSample.CS
          }
 
          // rotate column to place it to right location
-         var zVec = new Autodesk.Revit.DB.XYZ(0, 0, 1);
+         var zVec = new XYZ(0, 0, 1);
          var axis = Line.CreateUnbound(point, zVec);
          column.Location.Rotate(axis, angle);
 
          // Set the level Ids
-         var baseLevelParameter = column.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.FAMILY_BASE_LEVEL_PARAM);
-         var topLevelParameter = column.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.FAMILY_TOP_LEVEL_PARAM); ;
+         var baseLevelParameter = column.get_Parameter(BuiltInParameter.FAMILY_BASE_LEVEL_PARAM);
+         var topLevelParameter = column.get_Parameter(BuiltInParameter.FAMILY_TOP_LEVEL_PARAM); ;
          baseLevelParameter.Set(baseLevelId);
          topLevelParameter.Set(topLevelId);
       }

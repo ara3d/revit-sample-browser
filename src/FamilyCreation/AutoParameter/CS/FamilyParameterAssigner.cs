@@ -22,12 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Reflection;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.AutoParameter.CS
@@ -40,7 +37,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
    {
       #region Memeber Fields
       private Autodesk.Revit.ApplicationServices.Application m_app;
-      private FamilyManager m_manager = null;
+      private FamilyManager m_manager;
       string m_assemblyPath;
       // indicate whether the parameter files have been loaded. If yes, no need to load again.
       bool m_paramLoaded;
@@ -203,7 +200,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
                m_familyParams.Add(paramName, param);
             }
          }
-         catch (System.Exception e)
+         catch (Exception e)
          {
             MessageManager.MessageBuff.AppendLine(e.Message);
             return false;
@@ -247,7 +244,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
          {
             m_sharedFile = m_app.OpenSharedParameterFile();
          }
-         catch (System.Exception e)
+         catch (Exception e)
          {
             MessageManager.MessageBuff.AppendLine(e.Message);
             return false;
@@ -360,7 +357,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
                {
                   m_manager.AddParameter(def, def.GetGroupTypeId(), true);
                }
-               catch (System.Exception e)
+               catch (Exception e)
                {
                   MessageManager.MessageBuff.AppendLine(e.Message);
                   return false;
@@ -382,46 +379,31 @@ namespace Revit.SDK.Samples.AutoParameter.CS
       /// <summary>
       /// the caption of the parameter
       /// </summary>
-      public string Name
-      {
-         get { return m_name; }
-      }
+      public string Name => m_name;
 
       ForgeTypeId m_group;
       /// <summary>
       /// the group of the parameter
       /// </summary>
-      public ForgeTypeId Group
-      {
-         get { return m_group; }
-      }
+      public ForgeTypeId Group => m_group;
 
       ForgeTypeId m_type;
       /// <summary>
       /// the type of the parameter
       /// </summary>
-      public ForgeTypeId Type
-      {
-         get { return m_type; }
-      }
+      public ForgeTypeId Type => m_type;
 
       bool m_isInstance;
       /// <summary>
       /// indicate whether the parameter is an instance parameter or a type parameter
       /// </summary>
-      public bool IsInstance
-      {
-         get { return m_isInstance; }
-      }
+      public bool IsInstance => m_isInstance;
 
       int m_line;
       /// <summary>
       /// record the location of this parameter in the family parameter file
       /// </summary>
-      public int Line
-      {
-         get { return m_line; }
-      }
+      public int Line => m_line;
 
       /// <summary>
       /// default constructor, hide this by making it "private"

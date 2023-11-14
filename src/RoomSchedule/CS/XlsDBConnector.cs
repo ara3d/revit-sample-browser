@@ -35,16 +35,16 @@ namespace Revit.SDK.Samples.RoomSchedule
     {
         #region Class Memeber Variables
         // The connection created
-        private System.Data.OleDb.OleDbConnection m_objConn;
+        private OleDbConnection m_objConn;
 
         // One command for this connection
         private OleDbCommand m_command;
 
         // The connection string
-        private String m_connectStr;
+        private string m_connectStr;
 
         // All available tables(work sheets) in xls data source
-        private List<String> m_tables = new List<String>();
+        private List<string> m_tables = new List<string>();
         #endregion
 
 
@@ -54,7 +54,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="strXlsFile">The .xls file to be connected. 
         /// This file should exist and it can be writable.</param>
-        public XlsDBConnector(String strXlsFile)
+        public XlsDBConnector(string strXlsFile)
         {
             // Validate the specified
             if (!ValidateFile(strXlsFile)) {
@@ -66,7 +66,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 "\"; Extended Properties = \"Excel 8.0;HDR=YES;\"";
 
             // create the .xls connection
-            m_objConn = new System.Data.OleDb.OleDbConnection(m_connectStr);
+            m_objConn = new OleDbConnection(m_connectStr);
             m_objConn.Open();
         }
 
@@ -99,7 +99,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <summary>
         /// Get all available table names from .xls data source
         /// </summary>
-        public List<String> RetrieveAllTables()
+        public List<string> RetrieveAllTables()
         {
             // clear the old tables list firstly 
             m_tables.Clear();
@@ -122,7 +122,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="tableName">Table name to be retrieved </param>
         /// <returns>The generated DataTable from work sheet</returns>
-        public DataTable GenDataTable(String tableName)
+        public DataTable GenDataTable(string tableName)
         {
             // Get all data via command and then fill data to table
             var strCom = "Select * From [" + tableName + "$]";
@@ -141,11 +141,11 @@ namespace Revit.SDK.Samples.RoomSchedule
                 Array.Clear(bHasColumn, 0, 5); // clear the variable to false
 
                 // five constant columns which must exist and to be checked
-                String[] constantNames = { RoomsData.RoomID, RoomsData.RoomName, 
+                string[] constantNames = { RoomsData.RoomID, RoomsData.RoomName, 
                     RoomsData.RoomNumber, RoomsData.RoomArea, RoomsData.RoomComments };
 
                 // remember all duplicate columns, used to pop up error message
-                var duplicateColumns = String.Empty; 
+                var duplicateColumns = string.Empty; 
                 for (var i = 0; i < myDataSet.Tables[0].Columns.Count; i++)
                 {
                     // get each column and check it
@@ -164,7 +164,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                             else
                             {
                                 // this column is duplicate, reserve it
-                                duplicateColumns += String.Format("[{0}], ", constantNames[col]); 
+                                duplicateColumns += string.Format("[{0}], ", constantNames[col]); 
                             }
                         }
                     }
@@ -174,18 +174,18 @@ namespace Revit.SDK.Samples.RoomSchedule
                 if (duplicateColumns.Length > 0)
                 {
                     // duplicate columns are not allowed
-                    var message = String.Format("There are duplicate column(s) in the spread sheet: {0}.", duplicateColumns);
+                    var message = string.Format("There are duplicate column(s) in the spread sheet: {0}.", duplicateColumns);
                     throw new Exception(message);
                 }
 
 
                 // check whether all required columns are there.
-                var missingColumns = String.Empty; // reserve all column names which are missing.
+                var missingColumns = string.Empty; // reserve all column names which are missing.
                 for (var col = 0; col < bHasColumn.Length; col++)
                 {
                     if (bHasColumn[col] == false)
                     {
-                        missingColumns += String.Format("[{0}], ", constantNames[col]);
+                        missingColumns += string.Format("[{0}], ", constantNames[col]);
                     }
                 }
 
@@ -193,7 +193,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 if (missingColumns.Length != 0)
                 {
                     // some columns are missing, pop up these column names
-                    var message = String.Format("Required columns are missing: {0}.", missingColumns);
+                    var message = string.Format("Required columns are missing: {0}.", missingColumns);
                     throw new Exception(message);
                 }
 
@@ -213,7 +213,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="strCmd">command to be executed</param>
         /// <returns>the number of rows affected by this command</returns>
-        public int ExecuteCommnand(String strCmd)
+        public int ExecuteCommnand(string strCmd)
         {
             try
             {
@@ -240,7 +240,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="strFile"></param>
         /// <returns></returns>
-        private bool ValidateFile(String strFile)
+        private bool ValidateFile(string strFile)
         {
             // exists check
             if(!File.Exists(strFile)) {
@@ -257,9 +257,9 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <param name="baseName">first name</param>
         /// <param name="compName">second name</param>
         /// <returns>true, the two names are same; false, they are different.</returns>
-        private static bool CheckSameColName(String baseName, String compName)
+        private static bool CheckSameColName(string baseName, string compName)
         {
-            if (String.Compare(baseName, compName) == 0)
+            if (string.Compare(baseName, compName) == 0)
             {
                 return true;
             }

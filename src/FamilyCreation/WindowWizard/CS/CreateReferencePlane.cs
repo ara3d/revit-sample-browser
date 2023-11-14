@@ -20,8 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
@@ -42,10 +40,10 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="cutVec">the cutVec of the ReferencePlane</param>
         /// <param name="name">the name of the ReferencePlane</param>
         /// <returns>ReferencePlane</returns>
-        public Autodesk.Revit.DB.ReferencePlane Create(Document doc, Autodesk.Revit.DB.ReferencePlane host, View view, Autodesk.Revit.DB.XYZ offSet, Autodesk.Revit.DB.XYZ cutVec, string name)
+        public Autodesk.Revit.DB.ReferencePlane Create(Document doc, Autodesk.Revit.DB.ReferencePlane host, View view, XYZ offSet, XYZ cutVec, string name)
         {
-            var bubbleEnd = new Autodesk.Revit.DB.XYZ ();
-            var freeEnd = new Autodesk.Revit.DB.XYZ ();
+            var bubbleEnd = new XYZ ();
+            var freeEnd = new XYZ ();
             Autodesk.Revit.DB.ReferencePlane refPlane;
             try
             {

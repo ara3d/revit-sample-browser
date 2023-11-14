@@ -21,11 +21,8 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing.Design;
 using System.Windows.Forms.Design;
-using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {

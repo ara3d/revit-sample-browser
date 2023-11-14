@@ -21,17 +21,9 @@
 //
 
 using System;
-using System.Data;
-using System.Collections.ObjectModel;
 using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 
 namespace Revit.SDK.Samples.ViewFilters.CS
 {
@@ -45,12 +37,12 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         /// Revit active document
         /// </summary>
-        Autodesk.Revit.DB.Document m_doc;
+        Document m_doc;
 
         /// <summary>
         /// Dictionary of filter and its filter data(categories, filter rules)
         /// </summary>
-        Dictionary<String, FilterData> m_dictFilters = new Dictionary<String, FilterData>();
+        Dictionary<string, FilterData> m_dictFilters = new Dictionary<string, FilterData>();
 
         /// <summary>
         /// Current filter data maps active Revit filter.
@@ -66,12 +58,12 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         /// Const name for invalid parameter 
         /// </summary>
-        const String m_noneParam = "(none)";
+        const string m_noneParam = "(none)";
 
         /// <summary>
         /// Sample custom rule name prefix, filter rules will be displayed with this name + #(1, 2, ...)
         /// </summary>
-        const String m_ruleNamePrefix = "Filter Rule ";
+        const string m_ruleNamePrefix = "Filter Rule ";
         #endregion
 
         /// <summary>
@@ -91,7 +83,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="e"></param>
         private void ViewFiltersForm_Load(object sender, EventArgs e)
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // Get all existing filters and initialize class members
             InitializeFilterData();
             //
@@ -103,7 +95,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 filtersListBox.SetSelected(0, true);  // set first item to be selected to raise control event
             else
                 ResetControls_NoFilter();
-            this.ResumeLayout();
+            ResumeLayout();
         }
 
         /// <summary>
@@ -118,7 +110,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 return;
             //
             // Get current selected filter, use 1st item because only one item can be selected for control.
-            var filterName = filtersListBox.SelectedItems[0] as String;
+            var filterName = filtersListBox.SelectedItems[0] as string;
             if (!m_dictFilters.TryGetValue(filterName, out m_currentFilterData))
                 return;
             //
@@ -168,7 +160,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 return;
             // 
             // Remove selected items
-            var curFilter = filtersListBox.Items[filtersListBox.SelectedIndex] as String;
+            var curFilter = filtersListBox.Items[filtersListBox.SelectedIndex] as string;
             m_dictFilters.Remove(curFilter);
             filtersListBox.Items.Remove(curFilter);
             if (filtersListBox.Items.Count > 0)
@@ -328,13 +320,13 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             {
                 criteriaComboBox.SelectedItem = currentRule.RuleCriteria;
                 ruleValueComboBox.Text = currentRule.RuleValue;
-                epsilonTextBox.Text = String.Format("{0:N6}", currentRule.Epsilon);
+                epsilonTextBox.Text = string.Format("{0:N6}", currentRule.Epsilon);
             }
             else
             {
                 // set with default value
                 criteriaComboBox.SelectedIndex = 0;
-                ruleValueComboBox.Text = String.Empty;
+                ruleValueComboBox.Text = string.Empty;
                 epsilonTextBox.Text = "0.0";
             }
         }
@@ -350,7 +342,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 return;
             //
             // check if rule value is specified or exist
-            var curParam = EnumParseUtility<BuiltInParameter>.Parse(paramerComboBox.SelectedItem as String);
+            var curParam = EnumParseUtility<BuiltInParameter>.Parse(paramerComboBox.SelectedItem as string);
             if (ParameterAlreadyExist(curParam))
             {
                 MyMessageBox("Filter rule for this parameter already exists, no sense to add new rule for this parameter again.");
@@ -362,7 +354,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             // 
             // Create and reserve this rule and reset controls
             m_currentFilterData.RuleData.Add(newRule);
-            var ruleName = String.Format(String.Format("{0} {1}", m_ruleNamePrefix, rulesListBox.Items.Count + 1));
+            var ruleName = string.Format(string.Format("{0} {1}", m_ruleNamePrefix, rulesListBox.Items.Count + 1));
             rulesListBox.Items.Add(ruleName);
             rulesListBox.SelectedIndex = rulesListBox.Items.Count - 1;
             rulesListBox.Enabled = true;
@@ -426,7 +418,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             {
                 updateButton.Enabled = deleRuleButton.Enabled = false;
                 if (!HasFilterData() || null == paramerComboBox.SelectedItem ||
-                    (paramerComboBox.SelectedItem as String) == m_noneParam)
+                    (paramerComboBox.SelectedItem as string) == m_noneParam)
                     newRuleButton.Enabled = false;
                 else
                     newRuleButton.Enabled = true;
@@ -434,7 +426,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             else
             {
                 var selParam = currentRule.Parameter;
-                var selComboxParam = EnumParseUtility<BuiltInParameter>.Parse(paramerComboBox.SelectedItem as String);
+                var selComboxParam = EnumParseUtility<BuiltInParameter>.Parse(paramerComboBox.SelectedItem as string);
                 var paramEquals = (selParam == selComboxParam);
                 //
                 // new button is available only when user select new parameter
@@ -451,7 +443,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
       private void okButton_Click(object sender, EventArgs e)
         {
             // Reserve how many Revit filters need to be updated/removed
-            ICollection<String> updatedFilters = new List<String>();
+            ICollection<string> updatedFilters = new List<string>();
             ICollection<ElementId> deleteElemIds = new List<ElementId>();
             var collector = new FilteredElementCollector(m_doc);
             ICollection<Element> oldFilters = collector.OfClass(typeof(ParameterFilterElement)).ToElements();
@@ -536,7 +528,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             }
             catch (Exception ex)
             {
-                var failMsg = String.Format("Revit filters update failed and was aborted: " + ex.ToString());
+                var failMsg = string.Format("Revit filters update failed and was aborted: " + ex.ToString());
                 MyMessageBox(failMsg);
                 tran.RollBack();
             }
@@ -661,7 +653,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 {
                     // set all to unchecked firstly
                     categoryCheckedListBox.SetItemChecked(ii, false);
-                    var catName = categoryCheckedListBox.Items[ii] as String;
+                    var catName = categoryCheckedListBox.Items[ii] as string;
                     var curCat = EnumParseUtility<BuiltInCategory>.Parse(catName);
                     if (filterCat.Contains(curCat))
                         categoryCheckedListBox.SetItemChecked(ii, true);
@@ -873,7 +865,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         FilterRuleBuilder CreateNewFilterRule(BuiltInParameter curParam)
         {
             var paramType = m_doc.get_TypeOfStorage(curParam);
-            var criteria = criteriaComboBox.SelectedItem as String;
+            var criteria = criteriaComboBox.SelectedItem as string;
             if (paramType == StorageType.String)
             {
                 return new FilterRuleBuilder(curParam, criteria, ruleValueComboBox.Text);
@@ -913,7 +905,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             {
                 ruleValue = int.Parse(ruleValueComboBox.Text);
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 MyMessageBox("Rule value is wrong, please input valid value.");
                 ruleValueComboBox.Focus();
@@ -933,7 +925,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
          {
             ruleValue = long.Parse(ruleValueComboBox.Text);
          }
-         catch (System.Exception)
+         catch (Exception)
          {
             MyMessageBox("Rule value is wrong, please input valid value.");
             ruleValueComboBox.Focus();
@@ -957,7 +949,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 else
                     ruleValue = double.Parse(ruleValueComboBox.Text);
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 if (isEpsilon)
                 {
@@ -987,7 +979,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// Custom MessageBox for this sample, with special caption/button/icon.
         /// </summary>
         /// <param name="strMsg">Message to be displayed.</param>
-        public static void MyMessageBox(String strMsg)
+        public static void MyMessageBox(string strMsg)
         {
             Autodesk.Revit.UI.TaskDialog.Show("View Filters", strMsg, Autodesk.Revit.UI.TaskDialogCommonButtons.Ok | Autodesk.Revit.UI.TaskDialogCommonButtons.Cancel);
         }

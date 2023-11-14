@@ -23,13 +23,7 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FrameBuilder.CS
 {
-    using System;
-    using System.Text;
     using System.Windows.Forms;
-    using System.Diagnostics;
-    using System.Collections.Generic;
-
-    using Autodesk.Revit;
 
     /// <summary>
     /// Implements the Revit add-in interface IExternalCommand
@@ -56,7 +50,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
             ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
 
@@ -74,11 +68,11 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
               else
               {
                  // cancel the command
-                 return Autodesk.Revit.UI.Result.Cancelled;
+                 return Result.Cancelled;
               }
            }
             
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion IExternalCommand Members Implementation
     }

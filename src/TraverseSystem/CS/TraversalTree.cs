@@ -21,10 +21,7 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
@@ -40,7 +37,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// <summary>
         /// Id of the element
         /// </summary>
-        private Autodesk.Revit.DB.ElementId m_Id;
+        private ElementId m_Id;
         /// <summary>
         /// Flow direction of the node
         /// For the starting element of the traversal, the direction will be the same as the connector
@@ -70,27 +67,15 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// <summary>
         /// Id of the element
         /// </summary>
-        public Autodesk.Revit.DB.ElementId Id
-        {
-            get
-            {
-                return m_Id;
-            }
-        }
+        public ElementId Id => m_Id;
 
         /// <summary>
         /// Flow direction of the node
         /// </summary>
         public FlowDirectionType Direction
         {
-            get
-            {
-                return m_direction;
-            }
-            set
-            {
-                m_direction = value;
-            }
+            get => m_direction;
+            set => m_direction = value;
         }
 
         /// <summary>
@@ -98,14 +83,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// </summary>
         public TreeNode Parent
         {
-            get
-            {
-                return m_parent;
-            }
-            set
-            {
-                m_parent = value;
-            }
+            get => m_parent;
+            set => m_parent = value;
         }
 
         /// <summary>
@@ -113,14 +92,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// </summary>
         public List<TreeNode> ChildNodes
         {
-            get
-            {
-                return m_childNodes;
-            }
-            set
-            {
-                m_childNodes = value;
-            }
+            get => m_childNodes;
+            set => m_childNodes = value;
         }
 
         /// <summary>
@@ -128,14 +101,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// </summary>
         public Connector InputConnector
         {
-            get
-            {
-                return m_inputConnector;
-            }
-            set
-            {
-                m_inputConnector = value;
-            }
+            get => m_inputConnector;
+            set => m_inputConnector = value;
         }
         #endregion
 
@@ -145,7 +112,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// </summary>
         /// <param name="doc">Revit document</param>
         /// <param name="id">Element's Id</param>
-        public TreeNode(Document doc, Autodesk.Revit.DB.ElementId id)
+        public TreeNode(Document doc, ElementId id)
         {
             m_document = doc;
             m_Id = id;
@@ -157,7 +124,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// </summary>
         /// <param name="eid">Element's Id</param>
         /// <returns>Element</returns>
-        private Element GetElementById(Autodesk.Revit.DB.ElementId eid)
+        private Element GetElementById(ElementId eid)
         {
             return m_document.GetElement(eid);
         }
@@ -174,7 +141,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             if (fi != null)
             {
                 var mepModel = fi.MEPModel;
-                var type = String.Empty;
+                var type = string.Empty;
                 if (mepModel is MechanicalEquipment)
                 {
                     type = "MechanicalEquipment";
@@ -240,7 +207,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         // The MEP system of the traversal
         private MEPSystem m_system;
         // The flag whether the MEP system of the traversal is a mechanical system or piping system
-        private Boolean m_isMechanicalSystem;
+        private bool m_isMechanicalSystem;
         // The starting element node
         private TreeNode m_startingElementNode;
         #endregion
@@ -508,7 +475,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// <summary>
         /// Get element by its id
         /// </summary>
-        private Element GetElementById(Autodesk.Revit.DB.ElementId eid)
+        private Element GetElementById(ElementId eid)
         {
             return m_document.GetElement(eid);
         }
@@ -517,7 +484,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// Dump the traversal into an XML file
         /// </summary>
         /// <param name="fileName">Name of the XML file</param>
-        public void DumpIntoXML(String fileName)
+        public void DumpIntoXML(string fileName)
         {
             var settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -525,7 +492,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             var writer = XmlWriter.Create(fileName, settings);
 
             // Write the root element
-            var mepSystemType = String.Empty;
+            var mepSystemType = string.Empty;
             mepSystemType = (m_system is MechanicalSystem ? "MechanicalSystem" : "PipingSystem");
             writer.WriteStartElement(mepSystemType);
 

@@ -21,9 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewRebar.CS
@@ -37,15 +34,15 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Parameter double value.
         /// </summary>
-        private Double m_value;
+        private double m_value;
 
         /// <summary>
         /// Parameter double value.
         /// </summary>
-        public Double Value
+        public double Value
         {
-            get { return m_value; }
-            set { m_value = value; }
+            get => m_value;
+            set => m_value = value;
         }
 
         /// <summary>
@@ -54,7 +51,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="shapeDef">RebarShapeDefinition proxy</param>
         /// <param name="name">Parameter name</param>
         /// <param name="value">Parameter double value</param>
-        public RebarShapeParameterDouble(RebarShapeDef shapeDef, String name, Double value)
+        public RebarShapeParameterDouble(RebarShapeDef shapeDef, string name, double value)
             : base(shapeDef, name)
         {
             m_value = value;
@@ -64,7 +61,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// Add a double parameter to RebarShapeDefinition.
         /// </summary>
         /// <param name="defGroup">Definition group</param>
-        public override void Commit(Autodesk.Revit.DB.Document doc, DefinitionGroup defGroup)
+        public override void Commit(Document doc, DefinitionGroup defGroup)
         {
             var def = GetOrCreateDef(defGroup);
             m_parameterId = Autodesk.Revit.DB.Structure.RebarShapeParameters.GetOrCreateElementIdForExternalDefinition(doc, def);

@@ -22,13 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using System.Xml.Linq;
-using System.IO;
-using System.Xml;
 using System.Diagnostics;
 using Autodesk.Revit.DB.Events;
 
@@ -42,14 +36,14 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// <summary>
         /// ProgressItem stack
         /// </summary>
-        public System.Collections.Generic.Stack<ProgressItem> m_itemStack;
+        public Stack<ProgressItem> m_itemStack;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public ProgressStack()
         {
-            this.m_itemStack = new Stack<ProgressItem>();
+            m_itemStack = new Stack<ProgressItem>();
         }
 
         /// <summary>
@@ -57,7 +51,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// </summary>
         /// <param name="progressEvent"></param>
         /// <returns></returns>
-        public ProgressItem AddEventData(Autodesk.Revit.DB.Events.ProgressChangedEventArgs progressEvent)
+        public ProgressItem AddEventData(ProgressChangedEventArgs progressEvent)
         {
             ProgressItem currentProgressItem = null;
 
@@ -131,7 +125,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                 Debug.WriteLine("Stack empty");
             }
             else
-                Debug.WriteLine(this.ToString());
+                Debug.WriteLine(ToString());
 
             return currentProgressItem;
         }
@@ -157,7 +151,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// </summary>
         /// <param name="padDepth"></param>
         /// <returns></returns>
-        public List<String> ToStringList(int padDepth = 0)
+        public List<string> ToStringList(int padDepth = 0)
         {
             var itemList = new List<string>();
 

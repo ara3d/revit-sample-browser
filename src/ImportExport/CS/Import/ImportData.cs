@@ -21,12 +21,8 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
 using System.IO;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -50,11 +46,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         /// Directory where to import the file
         /// </summary>
-        protected String m_importFolder;
+        protected string m_importFolder;
         /// <summary>
         /// File Name or Prefix to be used
         /// </summary>
-        protected String m_importFileFullName;
+        protected string m_importFileFullName;
 
         /// <summary>
         /// The format to be exported
@@ -64,39 +60,27 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         /// The filter which will be used in file saving dialog
         /// </summary>
-        protected String m_filter;
+        protected string m_filter;
 
         /// <summary>
         /// The title of importing dialog
         /// </summary>
-        protected String m_title;
+        protected string m_title;
         #endregion
 
         #region Class Properties
         /// <summary>
         /// Revit command data
         /// </summary>
-        public ExternalCommandData CommandData
-        {
-            get 
-            { 
-                return m_commandData; 
-            }
-        }
+        public ExternalCommandData CommandData => m_commandData;
 
         /// <summary>
         /// File Name or Prefix to be used
         /// </summary>
-        public String ImportFileFullName
+        public string ImportFileFullName
         {
-            get 
-            {
-                return m_importFileFullName; 
-            }
-            set 
-            {
-                m_importFileFullName = value; 
-            }
+            get => m_importFileFullName;
+            set => m_importFileFullName = value;
         }  
 
         /// <summary>
@@ -104,52 +88,29 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public ImportFormat ImportFormat
         {
-            get 
-            { 
-                return m_importFormat; 
-            }
-            set 
-            { 
-                m_importFormat = value; 
-            }
+            get => m_importFormat;
+            set => m_importFormat = value;
         }
 
         /// <summary>
         /// The filter which will be used in file saving dialog
         /// </summary>
-        public String Filter
-        {
-            get 
-            { 
-                return m_filter; 
-            }
-        }
+        public string Filter => m_filter;
 
         /// <summary>
         /// Directory where to import the file
         /// </summary>
-        public String ImportFolder
+        public string ImportFolder
         {
-            get
-            {
-                return m_importFolder;
-            }
-            set
-            {
-                m_importFolder = value;
-            }
+            get => m_importFolder;
+            set => m_importFolder = value;
         }
 
         /// <summary>
         /// The title of importing dialog
         /// </summary>
-        public String Title
-        {
-            get
-            {
-                return m_title;
-            }
-        }
+        public string Title => m_title;
+
         #endregion
 
         #region Class Member Methods
@@ -163,7 +124,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_commandData = commandData;
             m_activeDoc = commandData.Application.ActiveUIDocument.Document;
             m_importFormat = importFormat;
-            m_filter = String.Empty;
+            m_filter = string.Empty;
             Initialize();
         }
 
@@ -175,7 +136,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             //The directory into which the file will be imported
             var dllFilePath = Assembly.GetExecutingAssembly().Location;
             m_importFolder = Path.GetDirectoryName(dllFilePath);
-            m_importFileFullName = String.Empty;
+            m_importFileFullName = string.Empty;
         }
 
         /// <summary>

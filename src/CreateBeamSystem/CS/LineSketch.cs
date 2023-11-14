@@ -23,13 +23,8 @@
 
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Drawing;
     using System.Drawing.Drawing2D;
-
-    using Autodesk.Revit.DB;
 
     /// <summary>
     /// sketch line and any tag on it
@@ -52,14 +47,8 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// </summary>
         public bool IsDirection
         {
-            get 
-            {
-                return m_isDirection;
-            }
-            set 
-            { 
-                m_isDirection = value; 
-            }
+            get => m_isDirection;
+            set => m_isDirection = value;
         }
 
         /// <summary>
@@ -70,7 +59,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         {
             m_line        = line;
             m_boundingBox = line.BoundingBox;
-            m_pen.Color   = System.Drawing.Color.DarkGreen;
+            m_pen.Color   = Color.DarkGreen;
             m_pen.Width   = 1f;
         }
 

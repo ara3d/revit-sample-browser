@@ -21,15 +21,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
@@ -44,7 +38,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
       // Whether to delete selected lines/arc after creation
       private bool m_deleteSelectedElements;
       // Label of first grid
-      private String m_firstLabel;
+      private string m_firstLabel;
       // Bubble location of grids
       private BubbleLocation m_bubbleLocation;
       #endregion
@@ -55,14 +49,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
       /// </summary>
       public bool DeleteSelectedElements
       {
-         get
-         {
-            return m_deleteSelectedElements;
-         }
-         set
-         {
-            m_deleteSelectedElements = value;
-         }
+         get => m_deleteSelectedElements;
+         set => m_deleteSelectedElements = value;
       }
 
       /// <summary>
@@ -70,29 +58,17 @@ namespace Revit.SDK.Samples.GridCreation.CS
       /// </summary>
       public BubbleLocation BubbleLocation
       {
-         get
-         {
-            return m_bubbleLocation;
-         }
-         set
-         {
-            m_bubbleLocation = value;
-         }
+         get => m_bubbleLocation;
+         set => m_bubbleLocation = value;
       }
 
       /// <summary>
       /// Label of first grid
       /// </summary>
-      public String FirstLabel
+      public string FirstLabel
       {
-         get
-         {
-            return m_firstLabel;
-         }
-         set
-         {
-            m_firstLabel = value;
-         }
+         get => m_firstLabel;
+         set => m_firstLabel = value;
       }
       #endregion
 
@@ -139,7 +115,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         // Set label of first grid
                         grid.Name = m_firstLabel;
                      }
-                     catch (System.ArgumentException)
+                     catch (ArgumentException)
                      {
                         ShowMessage(resManager.GetString("FailedToSetLabel") + m_firstLabel + "!",
                                     resManager.GetString("FailureCaptionSetLabel"));
@@ -171,7 +147,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                               // Set label of first grid
                               grid.Name = m_firstLabel;
                            }
-                           catch (System.ArgumentException)
+                           catch (ArgumentException)
                            {
                               ShowMessage(resManager.GetString("FailedToSetLabel") + m_firstLabel + "!",
                                           resManager.GetString("FailureCaptionSetLabel"));
@@ -204,7 +180,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                               // Set label of first grid
                               gridUpper.Name = m_firstLabel;
                            }
-                           catch (System.ArgumentException)
+                           catch (ArgumentException)
                            {
                               ShowMessage(resManager.GetString("FailedToSetLabel") + m_firstLabel + "!",
                                           resManager.GetString("FailureCaptionSetLabel"));

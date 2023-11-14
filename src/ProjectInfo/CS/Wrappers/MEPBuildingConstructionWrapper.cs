@@ -36,14 +36,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Roofs")]
         public ConstructionWrapper Roof
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Roof));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Roof, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Roof));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Roof, value.Handle as Construction);
         }
 
         /// <summary>
@@ -52,14 +46,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Exterior Walls")]
         public ConstructionWrapper ExteriorWall
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.ExteriorWall));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.ExteriorWall, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.ExteriorWall));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.ExteriorWall, value.Handle as Construction);
         }
 
         /// <summary>
@@ -68,14 +56,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Interior Walls")]
         public ConstructionWrapper InteriorWall
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.InteriorWall));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.InteriorWall, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.InteriorWall));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.InteriorWall, value.Handle as Construction);
         }
 
         /// <summary>
@@ -84,14 +66,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Ceilings")]
         public ConstructionWrapper Ceiling
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Ceiling));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Ceiling, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Ceiling));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Ceiling, value.Handle as Construction);
         }
 
         /// <summary>
@@ -100,14 +76,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Doors")]
         public ConstructionWrapper Door
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Door));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Door, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Door));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Door, value.Handle as Construction);
         }
 
         /// <summary>
@@ -116,14 +86,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Slabs")]
         public ConstructionWrapper Slab
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Slab));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Slab, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Slab));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Slab, value.Handle as Construction);
         }
 
         /// <summary>
@@ -132,14 +96,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Floors")]
         public ConstructionWrapper Floor
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Floor));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Floor, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Floor));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Floor, value.Handle as Construction);
         }
 
         /// <summary>
@@ -148,14 +106,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Exterior Windows")]
         public ConstructionWrapper ExteriorWindow
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.ExteriorWindow));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.ExteriorWindow, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.ExteriorWindow));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.ExteriorWindow, value.Handle as Construction);
         }
 
         /// <summary>
@@ -164,14 +116,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Interior Windows")]
         public ConstructionWrapper InteriorWindow
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.ExteriorWindow));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.ExteriorWindow, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.ExteriorWindow));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.ExteriorWindow, value.Handle as Construction);
         }
 
         /// <summary>
@@ -180,14 +126,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Skylights")]
         public ConstructionWrapper Skylight
         {
-            get
-            {
-                return new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Skylight));
-            }
-            set
-            {
-                m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Skylight, value.Handle as Construction);
-            }
+            get => new ConstructionWrapper(m_mEPBuildingConstruction.GetBuildingConstruction(ConstructionType.Skylight));
+            set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Skylight, value.Handle as Construction);
         }
 
         #region IWrapper Members
@@ -196,13 +136,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// Gets the handle object.
         /// </summary>
         [Browsable(false)]
-        public object Handle
-        {
-            get
-            {
-                return m_mEPBuildingConstruction;
-            }
-        }
+        public object Handle => m_mEPBuildingConstruction;
 
         /// <summary>
         /// Gets the name of the handle.
@@ -210,14 +144,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [Browsable(false)]
         public string Name
         {
-            get
-            {
-                return m_mEPBuildingConstruction.Name;
-            }
-            set
-            {
-                m_mEPBuildingConstruction.Name = value;
-            }
+            get => m_mEPBuildingConstruction.Name;
+            set => m_mEPBuildingConstruction.Name = value;
         }
         #endregion
         #endregion

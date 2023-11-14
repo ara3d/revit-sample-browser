@@ -21,14 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ModelLines.CS
@@ -36,7 +29,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
     /// <summary>
     /// This UserControl is used to collect the information for sketch plane creation
     /// </summary>
-    public partial class SketchPlaneForm : System.Windows.Forms.Form
+    public partial class SketchPlaneForm : Form
     {
         // Private members
         ModelLines m_dataBuffer;   // A reference of ModelLines.
@@ -90,8 +83,8 @@ namespace Revit.SDK.Samples.ModelLines.CS
             }
 
             // If the creation is successful, close this form
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>
@@ -99,8 +92,8 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

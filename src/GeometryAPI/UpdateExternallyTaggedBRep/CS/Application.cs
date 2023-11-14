@@ -37,7 +37,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
     {
       #region IExternalApplication Members
 
-      static String m_addinAssemblyPath = typeof(Application).Assembly.Location;
+      static string m_addinAssemblyPath = typeof(Application).Assembly.Location;
 
       /// <summary>
       /// Implements the OnShutdown event.
@@ -77,16 +77,16 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
          var pbd1 = new PushButtonData("CreateTaggedBRep", "Create tagged BRep",
                                                   m_addinAssemblyPath,
                                                   "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.CreateBRep");
-         pbd1.LargeImage = convertFromBitmap(Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.Properties.Resources.large_shape);
-         pbd1.Image = convertFromBitmap(Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.Properties.Resources.small_shape);
+         pbd1.LargeImage = convertFromBitmap(Properties.Resources.large_shape);
+         pbd1.Image = convertFromBitmap(Properties.Resources.small_shape);
          var pb1 = rp.AddItem(pbd1) as PushButton;
 
          // Create and add the new ribbon button "Update tagged BRep".
          var pbd2 = new PushButtonData("UpdateTaggedBRep", "Update tagged BRep",
                                                   m_addinAssemblyPath,
                                                   "Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.UpdateBRep");
-         pbd2.LargeImage = convertFromBitmap(Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.Properties.Resources.large_shape);
-         pbd2.Image = convertFromBitmap(Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS.Properties.Resources.small_shape);
+         pbd2.LargeImage = convertFromBitmap(Properties.Resources.large_shape);
+         pbd2.Image = convertFromBitmap(Properties.Resources.small_shape);
          var pb2 = rp.AddItem(pbd2) as PushButton;
       }
 

@@ -23,9 +23,6 @@
 
 using System;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -88,33 +85,33 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
 
             try
             {
                 // function initialization and find out a slab's Level, Type name, and set the Span Direction properties.
-                var isInitialization = this.Initialize(revit);
+                var isInitialization = Initialize(revit);
                 if (false == isInitialization)
                 {
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // show a displayForm to display the properties of the slab
                 var slabForm = new SlabPropertiesForm(this);
                 if (DialogResult.OK != slabForm.ShowDialog())
                 {
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
             }
             catch (Exception displayProblem)
             {
                 TaskDialog.Show("Revit", displayProblem.ToString());
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
 
@@ -123,109 +120,56 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         /// <summary>
         /// Level property, read only.
         /// </summary>
-        public string Level
-        {
-            get
-            {
-                return m_level;
-            }
-        }
+        public string Level => m_level;
 
 
         /// <summary>
         /// TypeName property, read only.
         /// </summary>
-        public string TypeName
-        {
-            get
-            {
-                return m_typeName;
-            }
-        }
+        public string TypeName => m_typeName;
 
 
         /// <summary>
         /// SpanDirection property, read only.
         /// </summary>
-        public string SpanDirection
-        {
-            get
-            {
-                return m_spanDirection;
-            }
-        }
+        public string SpanDirection => m_spanDirection;
 
 
         /// <summary>
         /// NumberOfLayers property, read only.
         /// </summary>
-        public int NumberOfLayers
-        {
-            get
-            {
-                return m_numberOfLayers;
-            }
-        }
+        public int NumberOfLayers => m_numberOfLayers;
 
 
         /// <summary>
         /// LayerThickness property, read only.
         /// </summary>
-        public string LayerThickness
-        {
-            get
-            {
-                return m_thickness;
-            }
-        }
+        public string LayerThickness => m_thickness;
 
 
         /// <summary>
         /// LayerMaterialName property, read only.
         /// </summary>
-        public string LayerMaterialName
-        {
-            get
-            {
-                return m_materialName;
-            }
-        }
+        public string LayerMaterialName => m_materialName;
 
 
         /// <summary>
         /// LayerYoungModulusX property, read only.
         /// </summary>
-        public string LayerYoungModulusX
-        {
-            get
-            {
-                return m_youngModulusX;
-            }
-        }
+        public string LayerYoungModulusX => m_youngModulusX;
 
 
         /// <summary>
         /// LayerYoungModulusY property, read only.
         /// </summary>
-        public string LayerYoungModulusY
-        {
-            get
-            {
-                return m_youngModulusY;
-            }
-        }
+        public string LayerYoungModulusY => m_youngModulusY;
 
 
         /// <summary>
         /// LayerYoungModulusZ property, read only.
         /// </summary>
-        public string LayerYoungModulusZ
-        {
-            get
-            {
-                return m_youngModulusZ;
-            }
-        }
+        public string LayerYoungModulusZ => m_youngModulusZ;
+
         #endregion
 
 
@@ -292,7 +236,7 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         /// </summary>
         /// <param name="revit">The revit object for the active instance of Autodesk Revit.</param>
         /// <returns>A value that signifies if your initialization was successful for true or failed for false.</returns>
-        private bool Initialize(Autodesk.Revit.UI.UIApplication revit)
+        private bool Initialize(UIApplication revit)
         {
             m_slabComponent = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
@@ -346,7 +290,7 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 if (null != spanDirectionAttribute)
                 {
                     // Set the Span Direction property
-                    this.SetSpanDirection(spanDirectionAttribute.AsDouble());
+                    SetSpanDirection(spanDirectionAttribute.AsDouble());
                 }
             }
             return true;

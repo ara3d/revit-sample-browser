@@ -20,13 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
 
@@ -67,7 +60,7 @@ namespace Revit.SDK.Samples.Selections.CS
     public class WallFaceFilter : ISelectionFilter
     {
         // Revit document.
-        Document m_doc = null;
+        Document m_doc;
 
         /// <summary>
         /// Constructor the filter and initialize the document.
@@ -108,7 +101,7 @@ namespace Revit.SDK.Samples.Selections.CS
     public class PlanarFaceFilter : ISelectionFilter
     {
         // Revit document.
-        Document m_doc = null;
+        Document m_doc;
 
         /// <summary>
         /// Constructor the filter and initialize the document.

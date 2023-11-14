@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
@@ -38,7 +37,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <summary>
         /// To store the levels element
         /// </summary>
-        static private Dictionary<String, Level> m_levels = new Dictionary<String, Level>();
+        static private Dictionary<string, Level> m_levels = new Dictionary<string, Level>();
 
         /// <summary>
         /// Initialize the levels data.
@@ -86,7 +85,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == typeof(String) && value is Level)
+            if (destinationType == typeof(string) && value is Level)
             {
                 var level = (Level)value;
                 return level.Name + "[" + level.Id.ToString() + "]";
@@ -102,7 +101,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(String))
+            if (sourceType == typeof(string))
                 return true;
             return base.CanConvertFrom(context, sourceType);
         }
@@ -116,11 +115,11 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
         {
-            if (value is String)
+            if (value is string)
             {
                 try
                 {
-                    var levelString = (String)value;
+                    var levelString = (string)value;
 
                     var leftBracket = levelString.IndexOf('[');
                     var rightBracket = levelString.IndexOf(']');
@@ -165,7 +164,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
     public class FootPrintRoofLineConverter : ExpandableObjectConverter
     {
         // To store the FootPrintRoofLines data.
-        static private Dictionary<String, FootPrintRoofLine> m_footPrintLines = new Dictionary<String, FootPrintRoofLine>();
+        static private Dictionary<string, FootPrintRoofLine> m_footPrintLines = new Dictionary<string, FootPrintRoofLine>();
         
         /// <summary>
         /// Initialize the FootPrintRoofLines data. 
@@ -205,7 +204,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == typeof(System.String) && value is FootPrintRoofLine)
+            if (destinationType == typeof(string) && value is FootPrintRoofLine)
             {
                 var footPrintLine = (FootPrintRoofLine)value;
                 return footPrintLine.Name + "[" + footPrintLine.Id.ToString() + "]";
@@ -235,11 +234,11 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
         {
-            if (value is String)
+            if (value is string)
             {
                 try
                 {
-                    var footPrintLineString = (String)value;
+                    var footPrintLineString = (string)value;
 
                     var leftBracket = footPrintLineString.IndexOf('[');
                     var rightBracket = footPrintLineString.IndexOf(']');

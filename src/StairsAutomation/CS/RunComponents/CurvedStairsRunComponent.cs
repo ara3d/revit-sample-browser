@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -103,13 +102,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// Implements the interface property.
       /// </summary>
-      public double RunElevation
-      {
-         get
-         {
-            return m_bottomElevation;
-         }
-      }
+      public double RunElevation => m_bottomElevation;
 
       /// <summary>
       /// Implements the interface property.
@@ -166,18 +159,12 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// Implements the interface property.
       /// </summary>
-      private double Radius
-      {
-         get
-         {
-            return (m_innerRadius + m_outerRadius) / 2.0;
-         }
-      }
+      private double Radius => (m_innerRadius + m_outerRadius) / 2.0;
 
       /// <summary>
       /// Implements the interface method.
       /// </summary>
-      public Autodesk.Revit.DB.Architecture.StairsRun CreateStairsRun(Document document, ElementId stairsId)
+      public StairsRun CreateStairsRun(Document document, ElementId stairsId)
       {
          m_stairsRun = StairsRun.CreateSpiralRun(document, stairsId, TransformPoint(m_center),
                                           Radius, 0, m_includedAngle, true, StairsRunJustification.Center);
@@ -191,10 +178,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// </summary>
       public double Width
       {
-         get
-         {
-            return m_outerRadius - m_innerRadius;
-         }
+         get => m_outerRadius - m_innerRadius;
          set
          {
             m_outerRadius = value + m_innerRadius;

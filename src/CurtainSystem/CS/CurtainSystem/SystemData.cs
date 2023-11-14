@@ -22,9 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Revit.SDK.Samples.CurtainSystem.CS.Data;
 
@@ -46,13 +43,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// <summary>
         /// all the created curtain systems and their data
         /// </summary>
-        public List<SystemInfo> CurtainSystemInfos
-        {
-            get
-            {
-                return m_curtainSystemInfos;
-            }
-        }
+        public List<SystemInfo> CurtainSystemInfos => m_curtainSystemInfos;
 
         /// <summary>
         /// occurs only when new curtain system added/removed
@@ -121,7 +112,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
                 {
                     curtainSystem = m_mydocument.Document.Create.NewCurtainSystem(faceArray, m_mydocument.CurtainSystemType);
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
                     m_mydocument.FatalErrorMsg = Properties.Resources.MSG_CreateCSFailed;
                     t.RollBack();
@@ -148,7 +139,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
                 {
                     curtainSystems = m_mydocument.Document.Create.NewCurtainSystem2(refArray, m_mydocument.CurtainSystemType);
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
                     m_mydocument.FatalErrorMsg = Properties.Resources.MSG_CreateCSFailed;
                     t.RollBack();
@@ -239,14 +230,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </summary>
         public Autodesk.Revit.DB.CurtainSystem CurtainForm
         {
-            get
-            {
-                return m_curtainSystem;
-            }
-            set
-            {
-                m_curtainSystem = value;
-            }
+            get => m_curtainSystem;
+            set => m_curtainSystem = value;
         }
 
         // indicates which faces the curtain system covers
@@ -256,10 +241,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </summary>
         public List<int> GridFacesIndices
         {
-            get
-            {
-                return m_gridFacesIndices;
-            }
+            get => m_gridFacesIndices;
             set
             {
                 m_gridFacesIndices = value;
@@ -280,13 +262,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// <summary>
         /// the uncovered faces
         /// </summary>
-        public List<int> UncoverFacesIndices
-        {
-            get
-            {
-                return m_uncoverFacesIndices;
-            }
-        }
+        public List<int> UncoverFacesIndices => m_uncoverFacesIndices;
 
         // indicates whether the curtain system is created by face array
         private bool m_byFaceArray;
@@ -295,14 +271,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </summary>
         public bool ByFaceArray
         {
-            get
-            {
-                return m_byFaceArray;
-            }
-            set
-            {
-                m_byFaceArray = value;
-            }
+            get => m_byFaceArray;
+            set => m_byFaceArray = value;
         }
 
         // the name of the curtain system, identified by its index
@@ -310,13 +280,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// <summary>
         /// the name of the curtain system, identified by its index
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return m_name;
-            }
-        }
+        public string Name => m_name;
 
         // the index of the curtain systems
         private int m_index;
@@ -325,10 +289,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </summary>
         public int Index
         {
-            get
-            {
-                return m_index;
-            }
+            get => m_index;
             set
             {
                 m_index = value;
@@ -375,7 +336,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
                     m_curtainSystem.AddCurtainGrid(refFace);
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 m_mydocument.FatalErrorMsg = Properties.Resources.MSG_AddCGFailed;
                 t.RollBack();
@@ -415,7 +376,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
                     m_curtainSystem.RemoveCurtainGrid(refFace);
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 m_mydocument.FatalErrorMsg = Properties.Resources.MSG_RemoveCGFailed;
                 t.RollBack();
@@ -455,14 +416,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </summary>
         public int FaceIndex
         {
-            get
-            {
-                return m_faceIndex;
-            }
-            set
-            {
-                m_faceIndex = value;
-            }
+            get => m_faceIndex;
+            set => m_faceIndex = value;
         }
 
         /// <summary>
@@ -500,14 +455,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
         /// </summary>
         public int Index
         {
-            get
-            {
-                return m_faceIndex;
-            }
-            set
-            {
-                m_faceIndex = value;
-            }
+            get => m_faceIndex;
+            set => m_faceIndex = value;
         }
 
         /// <summary>

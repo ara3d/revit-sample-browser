@@ -23,11 +23,6 @@
 
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Structure;
 
     /// <summary>

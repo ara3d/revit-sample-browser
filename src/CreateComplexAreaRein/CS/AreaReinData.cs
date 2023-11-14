@@ -21,18 +21,10 @@
 //
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
-    using System.ComponentModel;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Structure;
 
     using GeoElement = Autodesk.Revit.DB.GeometryElement;
-    using Element = Autodesk.Revit.DB.Element;
 
 
     /// <summary>
@@ -57,14 +49,8 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         /// </summary>
         public LayoutRules LayoutRule
         {
-            get
-            {
-                return m_layoutRule;
-            }
-            set
-            {
-                m_layoutRule = value;
-            }
+            get => m_layoutRule;
+            set => m_layoutRule = value;
         }
 
         /// <summary>

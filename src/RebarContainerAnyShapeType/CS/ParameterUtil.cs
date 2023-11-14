@@ -22,11 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
@@ -139,7 +134,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       /// <param name="parameterName">parameter name</param>
       /// <param name="value">the value of the parameter with Autodesk.Revit.DB.ElementId type</param>
       /// <returns>if find the parameter return true</returns>
-      public static bool SetParameter(Element element, string parameterName, ref Autodesk.Revit.DB.ElementId value)
+      public static bool SetParameter(Element element, string parameterName, ref ElementId value)
       {
          var parameters = element.Parameters;
          var findParameter = FindParameter(parameters, parameterName);
@@ -259,7 +254,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       /// <param name="value">the value of the parameter with Autodesk.Revit.DB.ElementId type</param>
       /// <returns>if find the parameter return true</returns>
       public static bool SetParameter(Element element, 
-          BuiltInParameter paraIndex, ref Autodesk.Revit.DB.ElementId value)
+          BuiltInParameter paraIndex, ref ElementId value)
       {
          var parameter = element.get_Parameter(paraIndex);
          if (null == parameter)

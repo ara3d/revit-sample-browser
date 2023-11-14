@@ -22,11 +22,8 @@
 
 
 using System;
-using System.Text;
 using System.IO;
 using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -41,24 +38,8 @@ namespace Revit.SDK.Samples.PrintLog.CS
     public class Command: IExternalCommand
     {
         #region IExternalCommand Members
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application
-        /// which contains data related to the command,
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application
-        /// which will be displayed if a failure or cancellation is returned by
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command.
-        /// A result of Succeeded means that the API external method functioned as expected.
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, 
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, 
+            ref string message, ElementSet elements)
         {
             // Filter all printable views in current document and print them,
             // the print will raise events registered in controlled application.
@@ -66,7 +47,7 @@ namespace Revit.SDK.Samples.PrintLog.CS
             var document = commandData.Application.ActiveUIDocument.Document;
             try
             {
-                var viewElems = new List<Autodesk.Revit.DB.Element>();
+                var viewElems = new List<Element>();
                 var collector = new FilteredElementCollector(document);
                 viewElems.AddRange(collector.OfClass(typeof(View)).ToElements());
                 //
@@ -94,11 +75,11 @@ namespace Revit.SDK.Samples.PrintLog.CS
             catch(Exception ex)
             {
                 message = ex.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             //
             // return succeed by default
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
     }

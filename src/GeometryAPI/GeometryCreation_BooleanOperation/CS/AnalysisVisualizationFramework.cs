@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
@@ -39,12 +38,12 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// <summary>
         /// revit document
         /// </summary>
-        private Autodesk.Revit.DB.Document m_doc;
+        private Document m_doc;
 
         /// <summary>
         /// The created view list
         /// </summary>
-        private List<String> viewNameList = new List<string>();
+        private List<string> viewNameList = new List<string>();
 
         /// <summary>
         /// The ID of schema which SpatialFieldManager register
@@ -55,7 +54,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// Constructor
         /// </summary>
         /// <param name="doc">Revit document</param>
-        private AnalysisVisualizationFramework(Autodesk.Revit.DB.Document doc)
+        private AnalysisVisualizationFramework(Document doc)
         {
             m_doc = doc;
         }
@@ -65,7 +64,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// </summary>
         /// <param name="doc">Revit document</param>
         /// <returns>The singleton instance of AnalysisVisualizationFramework</returns>
-        public static AnalysisVisualizationFramework getInstance(Autodesk.Revit.DB.Document doc)
+        public static AnalysisVisualizationFramework getInstance(Document doc)
         {
             if (Instance == null)
             {
@@ -79,7 +78,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         /// </summary>
         /// <param name="s">solid</param>
         /// <param name="viewName">Given the name of view</param>
-        public void PaintSolid(Solid s, String viewName)
+        public void PaintSolid(Solid s, string viewName)
         {
             View view;
             if (!viewNameList.Contains(viewName))

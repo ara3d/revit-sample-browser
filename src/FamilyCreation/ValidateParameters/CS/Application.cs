@@ -22,13 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.ValidateParameters.CS
 {
@@ -54,7 +50,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         /// some point.
         /// If false is returned then Revit should inform the user that the external application 
         /// failed to load and the release the internal reference.</returns>
-        public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
             try
             {               
@@ -63,9 +59,9 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
             }
             catch (Exception)
             {
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -80,7 +76,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         /// some point.
         /// If false is returned then the Revit user should be warned of the failure of the external 
         /// application to shut down correctly.</returns>
-        public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
             try
             {
@@ -89,9 +85,9 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
             }
             catch (Exception)
             {
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -99,7 +95,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">The event argument used by DocumentSaving event. </param>
-        private void application_DocumentSaving(Object sender, Autodesk.Revit.DB.Events.DocumentSavingEventArgs e)
+        private void application_DocumentSaving(object sender, Autodesk.Revit.DB.Events.DocumentSavingEventArgs e)
         {
             validateParameters(e.Document);
         }
@@ -109,7 +105,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">The event argument used by DocumentSavingAs event.</param>
-        private void application_DocumentSavingAs(Object sender, Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs e)
+        private void application_DocumentSavingAs(object sender, Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs e)
         {   
             validateParameters(e.Document);
         }

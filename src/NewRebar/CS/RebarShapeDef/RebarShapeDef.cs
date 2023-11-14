@@ -22,11 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
@@ -53,26 +50,17 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Return the real object RebarShapeDefinition.
         /// </summary>
-        public RebarShapeDefinition RebarshapeDefinition
-        {
-            get { return m_rebarshapeDefinition; }
-        }
+        public RebarShapeDefinition RebarshapeDefinition => m_rebarshapeDefinition;
 
         /// <summary>
         /// Return all the parameters.
         /// </summary>
-        public List<RebarShapeParameter> Parameters
-        {
-            get { return m_parameters; }
-        }
+        public List<RebarShapeParameter> Parameters => m_parameters;
 
         /// <summary>
         /// Return all the dimensions.
         /// </summary>
-        public List<ConstraintOnRebarShape> Constraints
-        {
-            get { return m_constraints; }
-        }
+        public List<ConstraintOnRebarShape> Constraints => m_constraints;
 
         /// <summary>
         /// Constructor, initialize the fields.

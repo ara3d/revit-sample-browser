@@ -25,12 +25,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 {
@@ -43,26 +39,10 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        Autodesk.Revit.UI.UIApplication m_revit; // application of Revit
+        UIApplication m_revit; // application of Revit
         ElementSet m_elements; // correspond to elements parameter in Execute(...)
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="revit">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData revit, 
+        public Result Execute(ExternalCommandData revit, 
                                                ref string message, 
                                                ElementSet elements)
         {
@@ -80,7 +60,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             }
 
             tran.Commit();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -125,7 +105,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                 
             if (null == information)
             {
-               var ExternalDefinitionCreationOptions = new ExternalDefinitionCreationOptions("Unique ID", Autodesk.Revit.DB.SpecTypeId.String.Text);
+               var ExternalDefinitionCreationOptions = new ExternalDefinitionCreationOptions("Unique ID", SpecTypeId.String.Text);
                informationCollection.Definitions.Create(ExternalDefinitionCreationOptions);
                 information = informationCollection.Definitions.get_Item("Unique ID");
             }
@@ -178,7 +158,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
                 iter.Reset();
                 while (iter.MoveNext())
                 {
-                    var attribute = iter.Current as Autodesk.Revit.DB.Parameter;
+                    var attribute = iter.Current as Parameter;
                     var information = attribute.Definition;
 
                     if ((null != information)&&("Unique ID" == information.Name) && (null == attribute.AsString()) )
@@ -196,7 +176,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
         /// Display the value of Unique ID parameter in a list box
         /// </summary>
         /// <returns></returns>
-        public System.Collections.ArrayList SendValueToListBox()
+        public ArrayList SendValueToListBox()
         {
            var elements = new ElementSet();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
@@ -216,7 +196,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             while (moreElements)
             {
                 // Get beams and slabs from selections
-                var component = i.Current as Autodesk.Revit.DB.Element;
+                var component = i.Current as Element;
 
                 if (null == component)
                 {
@@ -285,7 +265,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             while (moreElements)
             {
                 // Get beams and slabs from selections
-                var component = i.Current as Autodesk.Revit.DB.Element;
+                var component = i.Current as Element;
 
                 if (null == component)
                 {

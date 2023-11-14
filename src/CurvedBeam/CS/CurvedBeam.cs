@@ -22,12 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-using System.Windows.Forms;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -43,7 +38,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     public class Command : IExternalCommand
     {
         #region Class memeber variables
-        Autodesk.Revit.UI.UIApplication m_revit = null;
+        UIApplication m_revit;
         ArrayList m_beamMaps = new ArrayList();    // list of beams' type
         ArrayList m_levels = new ArrayList();    // list of levels
         #endregion
@@ -53,45 +48,18 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// <summary>
         /// list of all type of beams
         /// </summary>
-        public ArrayList BeamMaps
-        {
-            get
-            {
-                return m_beamMaps;
-            }
-        }
+        public ArrayList BeamMaps => m_beamMaps;
 
         /// <summary>
         /// list of all levels
         /// </summary>
-        public ArrayList LevelMaps
-        {
-            get
-            {
-                return m_levels;
-            }
-        }
+        public ArrayList LevelMaps => m_levels;
+
         #endregion
 
 
         #region IExternalCommand interface implementation
-        ///<summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             m_revit = commandData.Application;
             var tran = new Transaction(m_revit.ActiveUIDocument.Document, "CurvedBeam");
@@ -101,7 +69,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             var initializeOK = Initialize();
             if (!initializeOK)
             {
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             // pop up new beam form
@@ -109,7 +77,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             displayForm.ShowDialog();
             tran.Commit();
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
 
@@ -184,12 +152,12 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// </summary>
         public Arc CreateArc(double z)
         {
-            var center = new Autodesk.Revit.DB.XYZ(0, 0, z);
+            var center = new XYZ(0, 0, z);
             var radius = 20.0;
             var startAngle = 0.0;
             var endAngle = 5.0;
-            var xAxis = new Autodesk.Revit.DB.XYZ(1, 0, 0);
-            var yAxis = new Autodesk.Revit.DB.XYZ(0, 1, 0);
+            var xAxis = new XYZ(1, 0, 0);
+            var yAxis = new XYZ(0, 1, 0);
             return Arc.Create(center, radius, startAngle, endAngle, xAxis, yAxis);
         }
 
@@ -199,11 +167,11 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// </summary>
         public Curve CreateEllipse(double z)
         {
-            var center = new Autodesk.Revit.DB.XYZ(0, 0, z);
+            var center = new XYZ(0, 0, z);
             double radX = 30;
             double radY = 50;
-            var xVec = new Autodesk.Revit.DB.XYZ(1, 0, 0);
-            var yVec = new Autodesk.Revit.DB.XYZ(0, 1, 0);
+            var xVec = new XYZ(1, 0, 0);
+            var yVec = new XYZ(0, 1, 0);
             var param0 = 0.0;
             var param1 = 3.1415;
             var ellpise = Ellipse.CreateCurve(center, radX, radY, xVec, yVec, param0, param1);
@@ -219,10 +187,10 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         {
             // create control points with same z value
             var ctrPoints = new List<XYZ>();
-            var xyz1 = new Autodesk.Revit.DB.XYZ(-41.887503610431267, -9.0290629129782189, z);
-            var xyz2 = new Autodesk.Revit.DB.XYZ(-9.27600019217055, 0.32213521486563046, z);
-            var xyz3 = new Autodesk.Revit.DB.XYZ(9.27600019217055, 0.32213521486563046, z);
-            var xyz4 = new Autodesk.Revit.DB.XYZ(41.887503610431267, 9.0290629129782189, z);
+            var xyz1 = new XYZ(-41.887503610431267, -9.0290629129782189, z);
+            var xyz2 = new XYZ(-9.27600019217055, 0.32213521486563046, z);
+            var xyz3 = new XYZ(9.27600019217055, 0.32213521486563046, z);
+            var xyz4 = new XYZ(41.887503610431267, 9.0290629129782189, z);
 
             ctrPoints.Add(xyz1); ctrPoints.Add(xyz2); ctrPoints.Add(xyz3);
             ctrPoints.Add(xyz4);
@@ -293,7 +261,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     {
         #region SymbolMap class member variables
         string m_symbolName = "";
-        FamilySymbol m_symbol = null;
+        FamilySymbol m_symbol;
         #endregion
 
 
@@ -325,25 +293,13 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// <summary>
         /// SymbolName property
         /// </summary>
-        public string SymbolName
-        {
-            get
-            {
-                return m_symbolName;
-            }
-        }
+        public string SymbolName => m_symbolName;
 
 
         /// <summary>
         /// ElementType property
         /// </summary>
-        public FamilySymbol ElementType
-        {
-            get
-            {
-                return m_symbol;
-            }
-        }
+        public FamilySymbol ElementType => m_symbol;
     }
 
 
@@ -354,7 +310,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     {
         #region LevelMap class member variable
         string m_levelName = "";
-        Level m_level = null;
+        Level m_level;
         #endregion
 
 
@@ -384,24 +340,13 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// <summary>
         /// LevelName property
         /// </summary>
-        public string LevelName
-        {
-            get
-            {
-                return m_levelName;
-            }
-        }
+        public string LevelName => m_levelName;
 
         /// <summary>
         /// Level property
         /// </summary>
-        public Level Level
-        {
-            get
-            {
-                return m_level;
-            }
-        }
+        public Level Level => m_level;
+
         #endregion
     }
 }

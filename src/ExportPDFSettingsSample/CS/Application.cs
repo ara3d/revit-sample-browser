@@ -22,13 +22,8 @@
 
 using System;
 using System.Linq;
-using System.Collections.Generic;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
 {

@@ -21,13 +21,10 @@
 //
 
 
-using System;
 using System.Collections.Generic;
 using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ParameterUtils.CS
@@ -57,11 +54,11 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message,
+        public Result Execute(ExternalCommandData commandData, ref string message,
             ElementSet elements)
         {
             // set out default result to failure.
-            var retRes = Autodesk.Revit.UI.Result.Failed;
+            var retRes = Result.Failed;
 
             var app = commandData.Application;
 
@@ -108,11 +105,11 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
                     // Switch based on the storage type
                     switch (param.StorageType)
                     {
-                        case Autodesk.Revit.DB.StorageType.Double:
+                        case StorageType.Double:
                             // append the type and value
                             sb.AppendFormat("double\t{0}", param.AsDouble());
                             break;
-                        case Autodesk.Revit.DB.StorageType.ElementId:
+                        case StorageType.ElementId:
                             // for element ids, we will try and retrieve the element from the 
                             // document if it can be found we will display its name.
                             sb.Append("Element\t");
@@ -126,15 +123,15 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
                             // otherwise display the fact that it is not set
                             sb.Append(elem != null ? elem.Name : "Not set");
                             break;
-                        case Autodesk.Revit.DB.StorageType.Integer:
+                        case StorageType.Integer:
                             // append the type and value
                             sb.AppendFormat("int\t{0}", param.AsInteger());
                             break;
-                        case Autodesk.Revit.DB.StorageType.String:
+                        case StorageType.String:
                             // append the type and value
                             sb.AppendFormat("string\t{0}", param.AsString());
                             break;
-                        case Autodesk.Revit.DB.StorageType.None:
+                        case StorageType.None:
                             // append the type and value
                             sb.AppendFormat("none\t{0}", param.AsValueString());
                             break;
@@ -150,7 +147,7 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
                 var propertiesForm = new PropertiesForm(parameterItems.ToArray());
                 propertiesForm.StartPosition = FormStartPosition.CenterParent;
                 propertiesForm.ShowDialog();
-                retRes = Autodesk.Revit.UI.Result.Succeeded;
+                retRes = Result.Succeeded;
             }
             else
             {

@@ -22,12 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.DeckProperties.CS
 {
@@ -38,9 +32,9 @@ namespace Revit.SDK.Samples.DeckProperties.CS
             InitializeComponent();
         }
 
-        public void WriteLine(String message)
+        public void WriteLine(string message)
         {
-            this.propertyListBox.Items.Add(message);
+            propertyListBox.Items.Add(message);
         }
     }
 }

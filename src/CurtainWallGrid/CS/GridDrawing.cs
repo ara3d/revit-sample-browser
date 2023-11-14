@@ -22,15 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Resources;
-using System.Reflection;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
 {
@@ -85,10 +80,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         DrawObject m_drawObject;
 
         // stores the boundary coordinate of the curtain grid of the curtain wall
-        int m_minX = 0;
-        int m_minY = 0;
-        int m_maxX = 0;
-        int m_maxY = 0;
+        int m_minX;
+        int m_minY;
+        int m_maxX;
+        int m_maxY;
 
         // stores the index of the currently selected U grid line
         private int m_selectedUIndex = -1;
@@ -109,7 +104,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // if the current operation is "Move grid line" and the destination location to be moved (indicated by the mouse location)
         // is on another grid line, it's invalid (it's not allowed to move a grid line to lap over another)
         // except these, the mouse location is valid
-        private bool m_mouseLocationValid = false;
+        private bool m_mouseLocationValid;
 
         // specify the pen width used in different kind of lines
         //////////////////////////////////////////////////////////////////////////
@@ -136,27 +131,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         /// stores the reference to the parent geometry
         /// </summary>
-        public GridGeometry Geometry
-        {
-            get
-            {
-                return m_geometry;
-            }
-        }
+        public GridGeometry Geometry => m_geometry;
 
         /// <summary>
         /// stores the matrix transform system used in the image drawing
         /// </summary>
         public GridCoordinates Coordinates
         {
-            get
-            {
-                return m_coordinates;
-            }
-            set
-            {
-                m_coordinates = value;
-            }
+            get => m_coordinates;
+            set => m_coordinates = value;
         }
 
         /// <summary>
@@ -164,14 +147,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public System.Drawing.Rectangle Boundary
         {
-            get
-            {
-                return m_boundary;
-            }
-            set
-            {
-                m_boundary = value;
-            }
+            get => m_boundary;
+            set => m_boundary = value;
         }
 
         /// <summary>
@@ -179,149 +156,71 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public System.Drawing.Point Center
         {
-            get
-            {
-                return m_center;
-            }
-            set
-            {
-                m_center = value;
-            }
+            get => m_center;
+            set => m_center = value;
         }
 
         /// <summary>
         /// all the grid lines of U ("Horizontal" in curtain wall) direction (in GridLine2D format)
         /// </summary>
-        public List<GridLine2D> UGridLines2D
-        {
-            get
-            {
-                return m_uGridLines2D;
-            }
-        }
+        public List<GridLine2D> UGridLines2D => m_uGridLines2D;
 
         /// <summary>
         /// all the grid lines of V ("Vertical" in curtain wall) direction (in GridLine2D format)
         /// </summary>
-        public List<GridLine2D> VGridLines2D
-        {
-            get
-            {
-                return m_vGridLines2D;
-            }
-        }
+        public List<GridLine2D> VGridLines2D => m_vGridLines2D;
 
         /// <summary>
         /// stores the boundary lines of the curtain grid of the curtain wall(in GridLine2D format)
         /// </summary>
-        public List<GridLine2D> BoundLines2D
-        {
-            get
-            {
-                return m_boundLines2D;
-            }
-        }
+        public List<GridLine2D> BoundLines2D => m_boundLines2D;
 
         /// <summary>
         /// stores the graphics path of all the U ("Horizontal") lines
         /// </summary>
-        public List<GraphicsPath> ULinePathList
-        {
-            get
-            {
-                return m_uLinePathList;
-            }
-        }
+        public List<GraphicsPath> ULinePathList => m_uLinePathList;
 
         /// <summary>
         /// stores the graphics paths of all the segments of the U lines, 
         /// each element in the "m_uSegLinePathListList" is a list, which contains all the segments of a grid line
         /// </summary>
-        public List<List<GraphicsPath>> USegLinePathListList
-        {
-            get
-            {
-                return m_uSegLinePathListList;
-            }
-        }
+        public List<List<GraphicsPath>> USegLinePathListList => m_uSegLinePathListList;
 
         /// <summary>
         /// stores the graphics path of all the V ("Vertical") lines
         /// </summary>
-        public List<GraphicsPath> VLinePathList
-        {
-            get
-            {
-                return m_vLinePathList;
-            }
-        }
+        public List<GraphicsPath> VLinePathList => m_vLinePathList;
 
         /// <summary>
         /// stores the graphics paths of all the segments of the V lines, 
         /// each element in the "m_uSegLinePathListList" is a list, which contains all the segments of a grid line
         /// </summary>
-        public List<List<GraphicsPath>> VSegLinePathListList
-        {
-            get
-            {
-                return m_vSegLinePathListList;
-            }
-        }
+        public List<List<GraphicsPath>> VSegLinePathListList => m_vSegLinePathListList;
 
         /// <summary>
         /// stores all the assistant lines & hints
         /// </summary>
-        public DrawObject DrawObject
-        {
-            get
-            {
-                return m_drawObject;
-            }
-        }
+        public DrawObject DrawObject => m_drawObject;
 
         /// <summary>
         /// stores the index of the currently selected U grid line
         /// </summary>
-        public int SelectedUIndex
-        {
-            get
-            {
-                return m_selectedUIndex;
-            }
-        }
+        public int SelectedUIndex => m_selectedUIndex;
 
         /// <summary>
         /// stores the index of the currently selected V grid line
         /// </summary>
-        public int SelectedVIndex
-        {
-            get
-            {
-                return m_selectedVIndex;
-            }
-        }
+        public int SelectedVIndex => m_selectedVIndex;
 
         /// <summary>
         /// stores the index of the currently selected segment of a specified U grid line
         /// </summary>
-        public int SelectedUSegmentIndex
-        {
-            get
-            {
-                return m_selectedUSegmentIndex;
-            }
-        }
+        public int SelectedUSegmentIndex => m_selectedUSegmentIndex;
 
         /// <summary>
         /// stores the index of the currently selected segment of a specified V grid line
         /// </summary>
-        public int SelectedVSegmentIndex
-        {
-            get
-            {
-                return m_selectedVSegmentIndex;
-            }
-        }
+        public int SelectedVSegmentIndex => m_selectedVSegmentIndex;
 
         /// <summary>
         /// indicates whether the current mouse is valid
@@ -332,13 +231,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// is on another grid line, it's invalid (it's not allowed to move a grid line to lap over another)
         /// except these, the mouse location is valid
         /// </summary>
-        public bool MouseLocationValid
-        {
-            get
-            {
-                return m_mouseLocationValid;
-            }
-        }
+        public bool MouseLocationValid => m_mouseLocationValid;
+
         #endregion
 
         #region Delegates & Events
@@ -619,7 +513,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 m_geometry.MoveOffset = mousePosition.Y - line.StartPoint.Y;
 
                 // convert the 2D data to 3D
-                var xyz = new Autodesk.Revit.DB.XYZ(mousePosition.X, mousePosition.Y, 0);
+                var xyz = new XYZ(mousePosition.X, mousePosition.Y, 0);
                 var vec = new Vector4(xyz);
                 vec = m_coordinates.RestoreMatrix.Transform(vec);
                 offset = vec.Z - m_geometry.LineToBeMoved.FullCurve.GetEndPoint(0).Z;
@@ -648,7 +542,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 m_drawObject.Lines2D.Add(new KeyValuePair<Line2D, Pen>(line, redPen));
                 m_geometry.MoveOffset = mousePosition.X - line.StartPoint.X;
                 // convert the 2D data to 3D
-                var xyz = new Autodesk.Revit.DB.XYZ(mousePosition.X, mousePosition.Y, 0);
+                var xyz = new XYZ(mousePosition.X, mousePosition.Y, 0);
                 var vec = new Vector4(xyz);
                 vec = m_coordinates.RestoreMatrix.Transform(vec);
                 offset = vec.X - m_geometry.LineToBeMoved.FullCurve.GetEndPoint(0).X;
@@ -1265,7 +1159,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         {
             for (var i = 0; i < m_geometry.GridVertexesXYZ.Count; i += 1)
             {
-                Autodesk.Revit.DB.XYZ point1, point2;
+                XYZ point1, point2;
 
                 // connect the last point with the first point as a boundary line
                 if (i == m_geometry.GridVertexesXYZ.Count - 1)
@@ -1807,14 +1701,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public List<KeyValuePair<Line2D, Pen>> Lines2D
         {
-            get
-            {
-                return m_lines2D;
-            }
-            set
-            {
-                m_lines2D = value;
-            }
+            get => m_lines2D;
+            set => m_lines2D = value;
         }
 
         /// <summary>
@@ -1822,14 +1710,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public string Text
         {
-            get
-            {
-                return m_text;
-            }
-            set
-            {
-                m_text = value;
-            }
+            get => m_text;
+            set => m_text = value;
         }
 
         /// <summary>
@@ -1837,14 +1719,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public System.Drawing.Point TextPosition
         {
-            get
-            {
-                return m_textPosition;
-            }
-            set
-            {
-                m_textPosition = value;
-            }
+            get => m_textPosition;
+            set => m_textPosition = value;
         }
 
         /// <summary>
@@ -1852,14 +1728,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public Pen TextPen
         {
-            get
-            {
-                return m_textPen;
-            }
-            set
-            {
-                m_textPen = value;
-            }
+            get => m_textPen;
+            set => m_textPen = value;
         }
         #endregion
 

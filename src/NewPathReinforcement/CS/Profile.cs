@@ -19,13 +19,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
+
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit;
 using System.Drawing;
 using Point = System.Drawing.Point;
 
@@ -46,7 +43,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
       /// <summary>
       /// object which contains reference to Revit Application
       /// </summary>
-      protected Autodesk.Revit.UI.ExternalCommandData m_commandData;
+      protected ExternalCommandData m_commandData;
 
       /// <summary>
       /// used to create new instances of utility objects. 
@@ -56,7 +53,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
       /// <summary>
       /// Revit DB document
       /// </summary>
-      protected Autodesk.Revit.DB.Document m_document;
+      protected Document m_document;
 
       /// <summary>
       /// store the Matrix used to transform 3D points to 2D
@@ -67,24 +64,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
       /// <summary>
       /// CommandData property get object which contains reference to Revit Application
       /// </summary>
-      public Autodesk.Revit.UI.ExternalCommandData CommandData
-      {
-         get
-         {
-            return m_commandData;
-         }
-      }
+      public ExternalCommandData CommandData => m_commandData;
 
       /// <summary>
       /// To2DMatrix property to get Matrix used to transform 3D points to 2D
       /// </summary>
-      public Matrix4 To2DMatrix
-      {
-         get
-         {
-            return m_to2DMatrix;
-         }
-      }
+      public Matrix4 To2DMatrix => m_to2DMatrix;
 
       /// <summary>
       /// constructor
@@ -150,7 +135,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
       /// </summary>
       /// <param name="elem">selected element</param>
       /// <returns>all the faces in the selected Element</returns>
-      public List<List<Edge>> GetFaces(Autodesk.Revit.DB.Element elem)
+      public List<List<Edge>> GetFaces(Element elem)
       {
          var faceEdges = new List<List<Edge>>();
          var options = m_appCreator.NewGeometryOptions();

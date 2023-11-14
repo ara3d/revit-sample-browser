@@ -20,17 +20,10 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Autodesk.RevitAddIns;
 using System.IO;
 using System.Diagnostics;
-using Autodesk.Revit.ApplicationServices;
 using LanguageType = Autodesk.RevitAddIns.LanguageType;
 
 namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
@@ -43,8 +36,8 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
       public RevitAddInUtilitySampleForm()
       {
          InitializeComponent();
-         this.AddInsInfoButton.Enabled = false;
-         this.OpenAddInFileButton.Enabled = false;
+         AddInsInfoButton.Enabled = false;
+         OpenAddInFileButton.Enabled = false;
       }
 
       /// <summary>
@@ -102,8 +95,8 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
          fileInfo = new FileInfo("ExteranlCommand.Sample.addin");
          Manifest.SaveAs(fileInfo.FullName);
          AddInsInfoButton_Click(null, null); //show addins information in the tree view
-         this.AddInsInfoButton.Enabled = true;
-         this.OpenAddInFileButton.Enabled = true;
+         AddInsInfoButton.Enabled = true;
+         OpenAddInFileButton.Enabled = true;
       }
 
       /// <summary>
@@ -113,12 +106,12 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
       {
          var fileInfo = new FileInfo("ExteranlCommand.Sample.addin");
          var revitAddInManifest =
-               Autodesk.RevitAddIns.AddInManifestUtility.GetRevitAddInManifest(fileInfo.FullName);
+               AddInManifestUtility.GetRevitAddInManifest(fileInfo.FullName);
 
-         this.treeView1.Nodes.Clear();
+         treeView1.Nodes.Clear();
          if (revitAddInManifest.AddInApplications.Count >= 1)
          {
-            var apps= this.treeView1.Nodes.Add("External Applications");
+            var apps= treeView1.Nodes.Add("External Applications");
             foreach (var app in revitAddInManifest.AddInApplications)
             {
                var appNode = apps.Nodes.Add(app.Name);
@@ -131,7 +124,7 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
 
          if (revitAddInManifest.AddInCommands.Count >= 1)
          {
-            var cmds = this.treeView1.Nodes.Add("External Commands");
+            var cmds = treeView1.Nodes.Add("External Commands");
             foreach (var cmd in revitAddInManifest.AddInCommands)
             {
                var cmdNode = cmds.Nodes.Add(cmd.Text);
@@ -155,8 +148,8 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
       /// </summary>
       private void RevitProductsButton_Click(object sender, EventArgs e)
       {
-         this.treeView1.Nodes.Clear();
-         var allProductsNode = this.treeView1.Nodes.Add("Installed Revit Products: ");
+         treeView1.Nodes.Clear();
+         var allProductsNode = treeView1.Nodes.Add("Installed Revit Products: ");
          foreach (var revitProduct in RevitProductUtility.GetAllInstalledRevitProducts())
          {
             var productNode = allProductsNode.Nodes.Add(revitProduct.Name);

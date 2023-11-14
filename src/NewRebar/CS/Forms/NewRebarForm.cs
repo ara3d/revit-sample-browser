@@ -22,17 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Reflection;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
@@ -86,7 +78,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// Constructor, initialize fields of RebarBarTypes and RebarShapes.
         /// </summary>
         /// <param name="rvtApp"></param>
-        public NewRebarForm(Autodesk.Revit.DB.Document rvtDoc)
+        public NewRebarForm(Document rvtDoc)
             : this()
         {
             m_rvtDoc = rvtDoc;
@@ -103,24 +95,12 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Return RebarBarType from selection of barTypesComboBox.
         /// </summary>
-        public RebarBarType RebarBarType
-        {
-            get
-            {
-                return barTypesComboBox.SelectedItem as RebarBarType;
-            }
-        }
+        public RebarBarType RebarBarType => barTypesComboBox.SelectedItem as RebarBarType;
 
         /// <summary>
         /// Return RebarShape from selection of shapesComboBox.
         /// </summary>
-        public RebarShape RebarShape
-        {
-            get
-            {
-                return shapesComboBox.SelectedItem as RebarShape;
-            }
-        }
+        public RebarShape RebarShape => shapesComboBox.SelectedItem as RebarShape;
 
 
         /// <summary>
@@ -131,8 +111,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         private void okButton_Click(object sender, EventArgs e)
         {
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>
@@ -142,8 +122,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         /// <summary>

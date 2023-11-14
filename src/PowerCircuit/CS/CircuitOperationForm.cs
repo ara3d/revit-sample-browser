@@ -21,12 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.PowerCircuit.CS
 {
@@ -81,25 +75,25 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         private void buttonCreate_Click(object sender, EventArgs e)
         {
             m_optionData.Operation = Operation.CreateCircuit;
-            this.Close();
+            Close();
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
             m_optionData.Operation = Operation.EditCircuit;
-            this.Close();
+            Close();
         }
 
         private void buttonSelectPanel_Click(object sender, EventArgs e)
         {
             m_optionData.Operation = Operation.SelectPanel;
-            this.Close();
+            Close();
         }
 
         private void buttonDisconnectPanel_Click(object sender, EventArgs e)
         {
             m_optionData.Operation = Operation.DisconnectPanel;
-            this.Close();
+            Close();
         }
     }
 }

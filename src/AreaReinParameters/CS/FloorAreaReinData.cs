@@ -23,13 +23,7 @@
 
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
     using System.ComponentModel;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Structure;
 
@@ -42,24 +36,24 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         //member
         Parameter m_layoutRule;
         //top major layer
-        Parameter m_topMajorBarType = null;
-        Parameter m_topMajorHookType = null;
-        Parameter m_topMajorHookOrientation = null;
+        Parameter m_topMajorBarType;
+        Parameter m_topMajorHookType;
+        Parameter m_topMajorHookOrientation;
 
         //top minor layer
-        Parameter m_topMinorBarType = null;
-        Parameter m_topMinorHookType = null;
-        Parameter m_topMinorHookOrientation = null;
+        Parameter m_topMinorBarType;
+        Parameter m_topMinorHookType;
+        Parameter m_topMinorHookOrientation;
 
         //bottom major layer
-        Parameter m_bottomMajorBarType = null;
-        Parameter m_bottomMajorHookType = null;
-        Parameter m_bottomMajorHookOrientation = null;
+        Parameter m_bottomMajorBarType;
+        Parameter m_bottomMajorHookType;
+        Parameter m_bottomMajorHookOrientation;
 
         //bottom minor layer
-        Parameter m_bottomMinorBarType = null;
-        Parameter m_bottomMinorHookType = null;
-        Parameter m_bottomMinorHookOrientation = null;
+        Parameter m_bottomMinorBarType;
+        Parameter m_bottomMinorHookType;
+        Parameter m_bottomMinorHookOrientation;
 
         /// <summary>
         /// fill in data with given AreaReinforcement
@@ -138,29 +132,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         #region top major layer
         [CategoryAttribute("Top Major Layer"), TypeConverter(typeof(BarTypeItem))]
-        public Autodesk.Revit.DB.ElementId Top_Major_Bar_Type
+        public ElementId Top_Major_Bar_Type
         {
-            get
-            { 
-                return m_topMajorBarType.AsElementId();
-            }
-            set
-            {
-                m_topMajorBarType.Set(value); 
-            }
+            get => m_topMajorBarType.AsElementId();
+            set => m_topMajorBarType.Set(value);
         }
 
         [CategoryAttribute("Top Major Layer"), TypeConverter(typeof(HookTypeItem))]
-        public Autodesk.Revit.DB.ElementId Top_Major_Hook_Type
+        public ElementId Top_Major_Hook_Type
         {
-            get
-            { 
-                return m_topMajorHookType.AsElementId();
-            }
-            set
-            { 
-                m_topMajorHookType.Set(value);
-            }
+            get => m_topMajorHookType.AsElementId();
+            set => m_topMajorHookType.Set(value);
         }
 
         [CategoryAttribute("Top Major Layer")]
@@ -181,29 +163,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         #region top minor layer
         [CategoryAttribute("Top Minor Layer"), TypeConverter(typeof(BarTypeItem))]
-        public Autodesk.Revit.DB.ElementId Top_Minor_Bar_Type
+        public ElementId Top_Minor_Bar_Type
         {
-            get
-            {
-                return m_topMinorBarType.AsElementId();
-            }
-            set
-            {
-                m_topMinorBarType.Set(value);
-            }
+            get => m_topMinorBarType.AsElementId();
+            set => m_topMinorBarType.Set(value);
         }
 
         [CategoryAttribute("Top Minor Layer"), TypeConverter(typeof(HookTypeItem))]
-        public Autodesk.Revit.DB.ElementId Top_Minor_Hook_Type
+        public ElementId Top_Minor_Hook_Type
         {
-            get
-            {
-                return m_topMinorHookType.AsElementId();
-            }
-            set
-            {
-                m_topMinorHookType.Set(value);
-            }
+            get => m_topMinorHookType.AsElementId();
+            set => m_topMinorHookType.Set(value);
         }
 
         [CategoryAttribute("Top Minor Layer")]
@@ -224,29 +194,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         #region bottom major layer
         [CategoryAttribute("Bottom Major Layer"), TypeConverter(typeof(BarTypeItem))]
-        public Autodesk.Revit.DB.ElementId Bottom_Major_Bar_Type
+        public ElementId Bottom_Major_Bar_Type
         {
-            get
-            {
-                return m_bottomMajorBarType.AsElementId();
-            }
-            set
-            {
-                m_bottomMajorBarType.Set(value);
-            }
+            get => m_bottomMajorBarType.AsElementId();
+            set => m_bottomMajorBarType.Set(value);
         }
 
         [CategoryAttribute("Bottom Major Layer"), TypeConverter(typeof(HookTypeItem))]
-        public Autodesk.Revit.DB.ElementId Bottom_Major_Hook_Type
+        public ElementId Bottom_Major_Hook_Type
         {
-            get
-            {
-                return m_bottomMajorHookType.AsElementId();
-            }
-            set
-            {
-                m_bottomMajorHookType.Set(value);
-            }
+            get => m_bottomMajorHookType.AsElementId();
+            set => m_bottomMajorHookType.Set(value);
         }
 
         [CategoryAttribute("Bottom Major Layer")]
@@ -267,29 +225,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         #region bottom minor layer
         [CategoryAttribute("Bottom Minor Layer"), TypeConverter(typeof(BarTypeItem))]
-        public Autodesk.Revit.DB.ElementId Bottom_Minor_Bar_Type
+        public ElementId Bottom_Minor_Bar_Type
         {
-            get
-            {
-                return m_bottomMinorBarType.AsElementId();
-            }
-            set
-            {
-                m_bottomMinorBarType.Set(value);
-            }
+            get => m_bottomMinorBarType.AsElementId();
+            set => m_bottomMinorBarType.Set(value);
         }
 
         [CategoryAttribute("Bottom Minor Layer"), TypeConverter(typeof(HookTypeItem))]
-        public Autodesk.Revit.DB.ElementId Bottom_Minor_Hook_Type
+        public ElementId Bottom_Minor_Hook_Type
         {
-            get
-            {
-                return m_bottomMinorHookType.AsElementId();
-            }
-            set
-            {
-                m_bottomMinorHookType.Set(value);
-            }
+            get => m_bottomMinorHookType.AsElementId();
+            set => m_bottomMinorHookType.Set(value);
         }
 
         [CategoryAttribute("Bottom Minor Layer")]

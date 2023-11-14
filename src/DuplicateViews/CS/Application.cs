@@ -21,16 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
@@ -74,12 +65,12 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
 
             var pbd2 = new PushButtonData("DuplicateAll", "Duplicate across documents",
                    addAssemblyPath,
-                   typeof(Revit.SDK.Samples.DuplicateViews.CS.DuplicateAcrossDocumentsCommand).FullName);
+                   typeof(DuplicateAcrossDocumentsCommand).FullName);
 
             pbd2.LongDescription = "Duplicate all duplicatable drafting views and schedules.";
 
             var duplicateAllPB = rp.AddItem(pbd2) as PushButton;
-            SetIconsForPushButton(duplicateAllPB, Revit.SDK.Samples.DuplicateViews.CS.Properties.Resources.ViewCopyAcrossFiles);
+            SetIconsForPushButton(duplicateAllPB, Properties.Resources.ViewCopyAcrossFiles);
         }
 
 
@@ -124,6 +115,6 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
         /// <summary>
         /// The path to this add-in assembly.
         /// </summary>
-        static String addAssemblyPath = typeof(Revit.SDK.Samples.DuplicateViews.CS.Application).Assembly.Location;
+        static string addAssemblyPath = typeof(Application).Assembly.Location;
     }
 }

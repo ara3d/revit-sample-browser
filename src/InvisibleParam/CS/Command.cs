@@ -24,11 +24,8 @@
 using System;
 using System.IO;
 using System.Reflection;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 
 namespace Revit.SDK.Samples.InvisibleParam.CS
@@ -60,8 +57,8 @@ namespace Revit.SDK.Samples.InvisibleParam.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(
-            ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(
+            ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
@@ -116,13 +113,13 @@ namespace Revit.SDK.Samples.InvisibleParam.CS
             {
                 transaction.RollBack();
                 message = e.ToString();
-                return Autodesk.Revit.UI.Result.Cancelled;
+                return Result.Cancelled;
             }
             finally
             {
                 transaction.Commit();
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         #endregion

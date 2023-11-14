@@ -22,14 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
@@ -38,10 +31,10 @@ namespace Revit.SDK.Samples.Reinforcement.CS
    /// <summary>
    /// The form is used for collecting information of beam reinforcement creation 
    /// </summary>
-   public partial class BeamFramReinMakerForm : System.Windows.Forms.Form
+   public partial class BeamFramReinMakerForm : Form
    {
       // Private members
-      BeamFramReinMaker m_dataBuffer = null;
+      BeamFramReinMaker m_dataBuffer;
 
       /// <summary>
       /// constructor
@@ -145,8 +138,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             return;
          }
 
-         this.DialogResult = DialogResult.OK;    // set dialog result
-         this.Close();                           // close the form
+         DialogResult = DialogResult.OK;    // set dialog result
+         Close();                           // close the form
       }
 
       /// <summary>
@@ -154,8 +147,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       private void cancelButton_Click(object sender, EventArgs e)
       {
-         this.DialogResult = DialogResult.Cancel;// set dialog result
-         this.Close();                           // close the form
+         DialogResult = DialogResult.Cancel;// set dialog result
+         Close();                           // close the form
       }
    }
 }

@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -106,13 +105,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// Implements the interface property.
       /// </summary>
-      public double RunElevation
-      {
-         get
-         {
-            return m_bottomElevation;
-         }
-      }
+      public double RunElevation => m_bottomElevation;
 
       /// <summary>
       /// Implements the interface property.
@@ -140,7 +133,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// Implements the interface method.
       /// </summary>
-      public IList<Autodesk.Revit.DB.Curve> GetStairsPath()
+      public IList<Curve> GetStairsPath()
       {
          var ret = new List<Curve>();
          var arc = Arc.Create(m_center, (m_innerRadius + m_outerRadius) / 2.0, 0, m_includedAngle, XYZ.BasisX, XYZ.BasisY);
@@ -168,7 +161,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// Implements the interface method.
       /// </summary>
-      public IList<Autodesk.Revit.DB.Curve> GetRunRiserCurves()
+      public IList<Curve> GetRunRiserCurves()
       {
          var incAngle = 0.0;
          var center = XYZ.Zero;
@@ -203,7 +196,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// Implements the interface method.
       /// </summary>
-      public IList<Autodesk.Revit.DB.Curve> GetRunBoundaryCurves()
+      public IList<Curve> GetRunBoundaryCurves()
       {
          var ret = new List<Curve>();
          var arc = Arc.Create(m_center, m_innerRadius, 0, m_includedAngle, XYZ.BasisX, XYZ.BasisY);
@@ -218,7 +211,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// Implements the interface method.
       /// </summary>
-      public Autodesk.Revit.DB.Architecture.StairsRun CreateStairsRun(Document document, ElementId stairsId)
+      public StairsRun CreateStairsRun(Document document, ElementId stairsId)
       {
          m_stairsRun = StairsRun.CreateSketchedRun(document, stairsId, GetRunElevation(),
                                             Transform(GetRunBoundaryCurves()), Transform(GetRunRiserCurves()),
@@ -232,10 +225,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// </summary>
       public double Width
       {
-         get
-         {
-            return m_outerRadius - m_innerRadius;
-         }
+         get => m_outerRadius - m_innerRadius;
          set
          {
             if (m_stairsRun != null)

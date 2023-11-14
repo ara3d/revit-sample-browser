@@ -21,15 +21,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
@@ -42,7 +36,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <summary>
         /// The active document of Revit
         /// </summary>
-        protected Autodesk.Revit.DB.Document m_revitDoc;
+        protected Document m_revitDoc;
         /// <summary>
         /// Document Creation object to create new elements 
         /// </summary>
@@ -69,24 +63,13 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <summary>
         /// Current display unit type
         /// </summary>
-        public ForgeTypeId Unit
-        {
-            get
-            {
-                return m_unit;
-            }
-        }
+        public ForgeTypeId Unit => m_unit;
 
         /// <summary>
         /// Get array list contains all grid labels in current document
         /// </summary>
-        public ArrayList LabelsList
-        {
-            get
-            {
-                return m_labelsList;
-            }
-        }
+        public ArrayList LabelsList => m_labelsList;
+
         #endregion
 
         #region Methods
@@ -192,7 +175,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                     sumDegree += 2 * Values.PI;
                 }
 
-                var midPoint = new Autodesk.Revit.DB.XYZ(arc.Center.X + arc.Radius * Math.Cos(sumDegree),
+                var midPoint = new XYZ(arc.Center.X + arc.Radius * Math.Cos(sumDegree),
                     arc.Center.Y + arc.Radius * Math.Sin(sumDegree), 0);
 
                 arcToCreate = Arc.Create(endPoint, startPoint, midPoint);
@@ -210,16 +193,16 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <param name="endDegree">Arc grid's end degree</param>
         /// <param name="bubLoc">Arc grid's Bubble location</param>
         /// <returns>The expected arc to create grid</returns>
-        protected Arc TransformArc(Autodesk.Revit.DB.XYZ origin, double radius, double startDegree, double endDegree,
+        protected Arc TransformArc(XYZ origin, double radius, double startDegree, double endDegree,
             BubbleLocation bubLoc)
         {
             Arc arcToCreate;
             // Get start point and end point of the arc and the middle point on the arc
-            var startPoint = new Autodesk.Revit.DB.XYZ(origin.X + radius * Math.Cos(startDegree),
+            var startPoint = new XYZ(origin.X + radius * Math.Cos(startDegree),
                 origin.Y + radius * Math.Sin(startDegree), origin.Z);
-            var midPoint = new Autodesk.Revit.DB.XYZ(origin.X + radius * Math.Cos((startDegree + endDegree) / 2),
+            var midPoint = new XYZ(origin.X + radius * Math.Cos((startDegree + endDegree) / 2),
                 origin.Y + radius * Math.Sin((startDegree + endDegree) / 2), origin.Z);
-            var endPoint = new Autodesk.Revit.DB.XYZ(origin.X + radius * Math.Cos(endDegree),
+            var endPoint = new XYZ(origin.X + radius * Math.Cos(endDegree),
                 origin.Y + radius * Math.Sin(endDegree), origin.Z);
 
             if (bubLoc == BubbleLocation.StartPoint)
@@ -245,10 +228,10 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             var center = arc.Center;
             var radius = arc.Radius;
-            var XRightPoint = new Autodesk.Revit.DB.XYZ(center.X + radius, center.Y, 0);
-            var XLeftPoint = new Autodesk.Revit.DB.XYZ(center.X - radius, center.Y, 0);
-            var YUpperPoint = new Autodesk.Revit.DB.XYZ(center.X, center.Y + radius, 0);
-            var YLowerPoint = new Autodesk.Revit.DB.XYZ(center.X, center.Y - radius, 0);
+            var XRightPoint = new XYZ(center.X + radius, center.Y, 0);
+            var XLeftPoint = new XYZ(center.X - radius, center.Y, 0);
+            var YUpperPoint = new XYZ(center.X, center.Y + radius, 0);
+            var YLowerPoint = new XYZ(center.X, center.Y - radius, 0);
             if (bubLoc == BubbleLocation.StartPoint)
             {
                 upperArc = Arc.Create(XRightPoint, XLeftPoint, YUpperPoint);
@@ -267,7 +250,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <param name="start">start point of line</param>
         /// <param name="end">end point of line</param>
         /// <returns></returns>
-        protected Line NewLine(Autodesk.Revit.DB.XYZ start, Autodesk.Revit.DB.XYZ end)
+        protected Line NewLine(XYZ start, XYZ end)
         {
             return Line.CreateBound(start, end);
         }
@@ -341,7 +324,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="caption">title of message box</param>
-        public static void ShowMessage(String message, String caption)
+        public static void ShowMessage(string message, string caption)
         {
             TaskDialog.Show(caption, message, TaskDialogCommonButtons.Ok);
         }

@@ -20,11 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
@@ -55,7 +51,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
         ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             try
@@ -64,7 +60,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 if (null == commandData.Application.ActiveUIDocument.Document)
                 {
                     message = "Active view is null.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
                 
                 var mainData = new MainData(commandData);
@@ -73,17 +69,17 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 {
                     if (mainForm.ShowDialog() == DialogResult.Cancel)
                     {
-                        return Autodesk.Revit.UI.Result.Cancelled;
+                        return Result.Cancelled;
                     }
                 }
             }
             catch (Exception ex)
             {
                 message = ex.ToString();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
     }
 }

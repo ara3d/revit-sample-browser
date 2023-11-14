@@ -21,11 +21,8 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
@@ -48,7 +45,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
-        public override void OnMouseMove(System.Drawing.Graphics graphic, MouseEventArgs e)
+        public override void OnMouseMove(Graphics graphic, MouseEventArgs e)
         {
             if(m_points.Count != 0)
             {                
@@ -63,7 +60,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// </summary>
         /// <param name="graphic">Graphics object, used to draw geometry</param>
         /// <param name="e">Mouse event argument</param>
-        public override void OnMouseDown(System.Drawing.Graphics graphic, MouseEventArgs e)
+        public override void OnMouseDown(Graphics graphic, MouseEventArgs e)
         {
             if(e.Button == MouseButtons.Left)
             {

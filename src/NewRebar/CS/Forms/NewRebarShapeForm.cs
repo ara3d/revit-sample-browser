@@ -22,11 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
@@ -55,7 +50,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Autodesk Revit Document Object.
         /// </summary>
-        private Autodesk.Revit.DB.Document m_rvtDoc;
+        private Document m_rvtDoc;
 
         /// <summary>
         /// Binding source for parameters ListBox.
@@ -80,7 +75,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         /// <param name="rvtApp">Revit Application object</param>
         /// <param name="shapeDef">RebarShapeDef object</param>
-        public NewRebarShapeForm(Autodesk.Revit.DB.Document rvtDoc, RebarShapeDef shapeDef)
+        public NewRebarShapeForm(Document rvtDoc, RebarShapeDef shapeDef)
             : this()
         {
             m_rebarShapeDef = shapeDef;
@@ -91,59 +86,31 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// If this return true, the hook of RebarShape will be set, otherwise not.
         /// </summary>
-        public bool NeedSetHooks
-        {
-            get
-            {
-                return useHooksCheckBox.Checked;
-            }
-        }
+        public bool NeedSetHooks => useHooksCheckBox.Checked;
 
         /// <summary>
         /// Return start hook angle.
         /// </summary>
-        public int StartHookAngle
-        {
-            get
-            {
-                return  int.Parse(startHookAngleComboBox.Text);
-            }
-        }
+        public int StartHookAngle => int.Parse(startHookAngleComboBox.Text);
 
         /// <summary>
         /// Return end hook angle.
         /// </summary>
-        public int EndHookAngle
-        {
-            get
-            {
-                return int.Parse(endHookAngleComboBox.Text);
-            }
-        }
+        public int EndHookAngle => int.Parse(endHookAngleComboBox.Text);
 
         /// <summary>
         /// Return start hook orientation.
         /// </summary>
-        public RebarHookOrientation StartHookOrientation
-        {
-            get
-            {
-                return (RebarHookOrientation)Enum.Parse(
-                    typeof(RebarHookOrientation), startHookOrientationComboBox.Text);
-            }
-        }
+        public RebarHookOrientation StartHookOrientation =>
+            (RebarHookOrientation)Enum.Parse(
+                typeof(RebarHookOrientation), startHookOrientationComboBox.Text);
 
         /// <summary>
         /// Return end hook orientation.
         /// </summary>
-        public RebarHookOrientation EndHookOrientation
-        {
-            get
-            {
-                return (RebarHookOrientation)Enum.Parse(
-                    typeof(RebarHookOrientation), endHookOrientationcomboBox.Text);
-            }
-        }
+        public RebarHookOrientation EndHookOrientation =>
+            (RebarHookOrientation)Enum.Parse(
+                typeof(RebarHookOrientation), endHookOrientationcomboBox.Text);
 
         /// <summary>
         /// Get a definition group if there exists one, otherwise, a new one will be created. 

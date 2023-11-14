@@ -22,11 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.PathReinforcement.CS
@@ -35,7 +31,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
     /// Main form,it contains a picture box to display the path of path reinforcement and
     /// a property grid to display the parameters of path reinforcement.
     /// </summary>
-    public partial class PathReinforcementForm : System.Windows.Forms.Form
+    public partial class PathReinforcementForm : Form
     {
         /// <summary>
         /// path reinforcement object
@@ -68,7 +64,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             m_pathRein = pathRein;
             m_properties = new PathReinProperties(pathRein);
             m_properties.UpdateSelectObjEvent += new PathReinProperties.UpdateSelectObjEventHandler(UpdatePropSelectedObject);
-            this.propertyGrid.SelectedObject = m_properties;
+            propertyGrid.SelectedObject = m_properties;
             m_profile = new Profile(pathRein, commandData);            
         }
 
@@ -77,9 +73,9 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         void UpdatePropSelectedObject()
         {
-            this.propertyGrid.SelectedObject = null;
-            this.propertyGrid.SelectedObject = m_properties;
-            this.propertyGrid.Update();
+            propertyGrid.SelectedObject = null;
+            propertyGrid.SelectedObject = m_properties;
+            propertyGrid.Update();
         }
 
         /// <summary>
@@ -100,7 +96,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         private void okButton1_Click(object sender, EventArgs e)
         {
             m_properties.Update();
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -110,7 +106,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <param name="e">event args</param>
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            var size = this.pictureBox.Size;
+            var size = pictureBox.Size;
             m_profile.Draw(e.Graphics, size, Pens.Red);
         }
     }

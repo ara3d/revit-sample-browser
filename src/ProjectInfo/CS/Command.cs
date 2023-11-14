@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -57,7 +55,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             // initialize global information
             RevitStartInfo.RevitApp = commandData.Application.Application;

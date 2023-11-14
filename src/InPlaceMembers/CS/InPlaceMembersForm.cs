@@ -22,11 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.InPlaceMembers.CS
@@ -34,7 +29,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
     /// <summary>
     /// Main form class, use to diaplay the preview picture box and property grid.
     /// </summary>
-    public partial class InPlaceMembersForm : System.Windows.Forms.Form,IMessageFilter
+    public partial class InPlaceMembersForm : Form,IMessageFilter
     {
         /// <summary>
         /// Properties instance
@@ -91,7 +86,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             if (m.Msg == WM_KEYDOWN)
             {
 
-                var k = (System.Windows.Forms.Keys)(int)m.WParam;
+                var k = (Keys)(int)m.WParam;
                 var e = new KeyEventArgs(k);
                 switch (e.KeyCode)
                 {
@@ -146,7 +141,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <param name="e"></param>
         private void OKbutton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -156,7 +151,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
     }

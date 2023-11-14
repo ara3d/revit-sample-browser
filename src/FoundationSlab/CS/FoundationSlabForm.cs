@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.FoundationSlab.CS
@@ -33,7 +28,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
     /// <summary>
     /// A class to show properties and profiles of the foundation slabs.
     /// </summary>
-    public partial class FoundationSlabForm : System.Windows.Forms.Form
+    public partial class FoundationSlabForm : Form
     {
         // Revit datas for UI to display and operate.
         SlabData m_datas;
@@ -134,7 +129,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             if ((e.ColumnIndex >= 0) && ("CheckBoxes" == dataGridView.Columns[e.ColumnIndex].Name))
             {
                 var newE = new EventArgs();
-                this.dataGridView_CurrentCellDirtyStateChanged(this, newE);
+                dataGridView_CurrentCellDirtyStateChanged(this, newE);
             }
         }
 
@@ -170,9 +165,9 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         {
             var IsSuccess = m_datas.CreateFoundationSlabs();
             if (IsSuccess)
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
             else
-                this.DialogResult = DialogResult.Cancel;
+                DialogResult = DialogResult.Cancel;
             Close();
         }
 

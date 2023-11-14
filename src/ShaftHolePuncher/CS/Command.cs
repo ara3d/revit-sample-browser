@@ -20,14 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections;
-using System.Drawing;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 {
@@ -56,8 +50,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.ShaftHolePuncher");
             trans.Start();
@@ -80,17 +74,17 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                 {
                     message = errorMessage;
                     trans.RollBack();
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
 
-                Autodesk.Revit.DB.Element selectElem = null;
+                Element selectElem = null;
                 if (1 == elems.Size)
                 {
                     var iter = elems.GetEnumerator();
                     iter.Reset();
                     if (iter.MoveNext())
                     {
-                        selectElem = (Autodesk.Revit.DB.Element)iter.Current;
+                        selectElem = (Element)iter.Current;
                     }
 
                     if (selectElem is Wall)
@@ -109,14 +103,14 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                         {
                             message = errorMessage;
                             trans.RollBack();
-                            return Autodesk.Revit.UI.Result.Cancelled;
+                            return Result.Cancelled;
                         }
                     }
                     else
                     {
                         message = errorMessage;
                         trans.RollBack();
-                        return Autodesk.Revit.UI.Result.Cancelled;
+                        return Result.Cancelled;
                     }
                 }
                 #endregion
@@ -156,16 +150,16 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                 {
                     message = ex.Message;
                     trans.RollBack();
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
                 trans.Commit();
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception e)
             {
                 message = e.Message;
                 trans.RollBack();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
         #endregion

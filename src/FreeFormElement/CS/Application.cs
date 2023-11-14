@@ -21,16 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
@@ -77,10 +68,10 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             var rp = application.CreateRibbonPanel("FreeForm");
             var freeform = new PushButtonData("Negative_block", "Create negative block",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.FreeFormElement.CS.CreateNegativeBlockCommand).FullName);
+                                                            typeof(CreateNegativeBlockCommand).FullName);
             var freeformPB = rp.AddItem(freeform) as PushButton;
 
-            SetIconsForPushButton(freeformPB, Revit.SDK.Samples.FreeFormElement.CS.Properties.Resources.CreateNegative);
+            SetIconsForPushButton(freeformPB, Properties.Resources.CreateNegative);
         }
 
         /// <summary>
@@ -124,7 +115,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
         /// <summary>
         /// The path to this add-in assembly.
         /// </summary>
-        static String addAssemblyPath = typeof(Revit.SDK.Samples.FreeFormElement.CS.Application).Assembly.Location;
+        static string addAssemblyPath = typeof(Application).Assembly.Location;
 
     }
 }

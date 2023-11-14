@@ -33,7 +33,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
     /// <summary>
     /// The wizard form
     /// </summary>
-    public partial class WizardForm : System.Windows.Forms.Form
+    public partial class WizardForm : Form
     {
         #region Class Memeber Variables
         /// <summary>
@@ -44,7 +44,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         /// store the family types list
         /// </summary>
-        List<String> m_types = new List<string>();
+        List<string> m_types = new List<string>();
 
         /// <summary>
         /// store the bindSource
@@ -101,25 +101,25 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="e">EventArgs</param>
         private void Step1_NextButton_Click(object sender, EventArgs e)
         {
-            if (this.panel1.Visible)
+            if (panel1.Visible)
             {
                 InitializePara();
                 SetPanelVisibility(2);
             }
-            else if (this.panel2.Visible)
+            else if (panel2.Visible)
             {
                 transforData();
                 SetPanelVisibility(3);
             }
-            else if (this.panel3.Visible)
+            else if (panel3.Visible)
             {
                 SetPanelVisibility(4);
                 SetGridData();
             }
-            else if (this.panel4.Visible)
+            else if (panel4.Visible)
             {
-                m_para.PathName = this.m_pathName.Text;
-                this.DialogResult = DialogResult.OK;
+                m_para.PathName = m_pathName.Text;
+                DialogResult = DialogResult.OK;
                 Close();
             }
         }
@@ -133,52 +133,52 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             switch (panelNum)
             {
                 case 1:
-                    this.panel1.Visible = true;
-                    this.panel2.Visible = false;
-                    this.panel3.Visible = false;
-                    this.panel4.Visible = false;
-                    this.Step1_BackButton.Enabled = false;
+                    panel1.Visible = true;
+                    panel2.Visible = false;
+                    panel3.Visible = false;
+                    panel4.Visible = false;
+                    Step1_BackButton.Enabled = false;
                     break;
                 case 2:
-                    this.panel1.Visible = false;
-                    this.panel2.Visible = true;
-                    this.panel3.Visible = false;
-                    this.panel4.Visible = false;                    
-                    this.Step1_BackButton.Enabled = false;
-                    this.InputDimensionLabel.ForeColor = System.Drawing.Color.Black;
-                    this.InputDimensionLabel.Font = m_highFont;
-                    this.WindowPropertyLabel.ForeColor = System.Drawing.Color.Gray;
-                    this.WindowPropertyLabel.Font = m_commonFont;
-                    this.InputPathLabel.ForeColor = System.Drawing.Color.Gray;
-                    this.InputPathLabel.Font = m_commonFont;
+                    panel1.Visible = false;
+                    panel2.Visible = true;
+                    panel3.Visible = false;
+                    panel4.Visible = false;                    
+                    Step1_BackButton.Enabled = false;
+                    InputDimensionLabel.ForeColor = Color.Black;
+                    InputDimensionLabel.Font = m_highFont;
+                    WindowPropertyLabel.ForeColor = Color.Gray;
+                    WindowPropertyLabel.Font = m_commonFont;
+                    InputPathLabel.ForeColor = Color.Gray;
+                    InputPathLabel.Font = m_commonFont;
                     break;
                 case 3:
-                    this.panel3.Visible = true;
-                    this.panel1.Visible = false;
-                    this.panel2.Visible = false;                    
-                    this.panel4.Visible = false;
-                    this.Step1_BackButton.Enabled = true;
-                    this.Step1_NextButton.Text = "Next >";                    
-                    this.InputPathLabel.ForeColor = System.Drawing.Color.Gray;
-                    this.InputDimensionLabel.Font = m_commonFont;
-                    this.WindowPropertyLabel.ForeColor = System.Drawing.Color.Black;
-                    this.WindowPropertyLabel.Font = m_highFont;
-                    this.InputPathLabel.ForeColor = System.Drawing.Color.Gray;
-                    this.InputPathLabel.Font = m_commonFont;
+                    panel3.Visible = true;
+                    panel1.Visible = false;
+                    panel2.Visible = false;                    
+                    panel4.Visible = false;
+                    Step1_BackButton.Enabled = true;
+                    Step1_NextButton.Text = "Next >";                    
+                    InputPathLabel.ForeColor = Color.Gray;
+                    InputDimensionLabel.Font = m_commonFont;
+                    WindowPropertyLabel.ForeColor = Color.Black;
+                    WindowPropertyLabel.Font = m_highFont;
+                    InputPathLabel.ForeColor = Color.Gray;
+                    InputPathLabel.Font = m_commonFont;
                     break;
                 case 4:
-                    this.panel1.Visible = false;
-                    this.panel2.Visible = false;
-                    this.panel3.Visible = false;
-                    this.panel4.Visible = true;
-                    this.Step1_BackButton.Enabled = true;
-                    this.Step1_NextButton.Text = "Finish";
-                    this.InputPathLabel.ForeColor = System.Drawing.Color.Gray;
-                    this.InputDimensionLabel.Font = m_commonFont;
-                    this.WindowPropertyLabel.ForeColor = System.Drawing.Color.Gray;
-                    this.WindowPropertyLabel.Font = m_commonFont;
-                    this.InputPathLabel.ForeColor = System.Drawing.Color.Black;
-                    this.InputPathLabel.Font = m_highFont;
+                    panel1.Visible = false;
+                    panel2.Visible = false;
+                    panel3.Visible = false;
+                    panel4.Visible = true;
+                    Step1_BackButton.Enabled = true;
+                    Step1_NextButton.Text = "Finish";
+                    InputPathLabel.ForeColor = Color.Gray;
+                    InputDimensionLabel.Font = m_commonFont;
+                    WindowPropertyLabel.ForeColor = Color.Gray;
+                    WindowPropertyLabel.Font = m_commonFont;
+                    InputPathLabel.ForeColor = Color.Black;
+                    InputPathLabel.Font = m_highFont;
                     break;
             }
         }
@@ -190,15 +190,15 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="e">EventArgs</param>
         private void Step1_BackButton_Click(object sender, EventArgs e)
         {
-            if (this.panel2.Visible)
+            if (panel2.Visible)
             {
                 SetPanelVisibility(1);
             }
-            else if (this.panel3.Visible)
+            else if (panel3.Visible)
             {
                 SetPanelVisibility(2);
             }
-            else if (this.panel4.Visible)
+            else if (panel4.Visible)
             {
                 SetPanelVisibility(3);
             }
@@ -247,11 +247,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 m_para.WinParaTab[dbhungPara.Type] = dbhungPara;
             }           
             bindSource.DataSource = m_types;            
-            this.m_comboType.Items.Add(m_para.CurrentPara.Type);
-            this.m_comboType.SelectedIndex = 0;
-            this.m_glassMat.DataSource = m_para.GlassMaterials;
-            this.m_sashMat.DataSource = m_para.FrameMaterials;
-            this.m_pathName.Text = m_para.PathName;
+            m_comboType.Items.Add(m_para.CurrentPara.Type);
+            m_comboType.SelectedIndex = 0;
+            m_glassMat.DataSource = m_para.GlassMaterials;
+            m_sashMat.DataSource = m_para.FrameMaterials;
+            m_pathName.Text = m_para.PathName;
             SetParaText(dbhungPara);
         }
 
@@ -265,7 +265,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             transforData();
             var newPara = new DoubleHungWinPara(m_para.Validator.IsMetric);
             SetParaText(newPara);
-            this.m_comboType.Focus();
+            m_comboType.Focus();
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             transforData();
             var copyPara = new DoubleHungWinPara((DoubleHungWinPara)m_para.CurrentPara);
             SetParaText(copyPara);
-            this.m_comboType.Focus();
+            m_comboType.Focus();
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         private void SetGridData()
         {
             paraList.Clear();
-            foreach (String key in m_para.WinParaTab.Keys)
+            foreach (string key in m_para.WinParaTab.Keys)
             { 
                 var para = m_para.WinParaTab[key] as DoubleHungWinPara;
                 if (null == para)
@@ -310,7 +310,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 }
                 paraList.Add(para);
             }
-            this.dataGridView1.DataSource = paraList;
+            dataGridView1.DataSource = paraList;
         }
 
         /// <summary>
@@ -394,9 +394,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             {
                 return true;
             }
-            if (String.IsNullOrEmpty(control.Text))
+            if (string.IsNullOrEmpty(control.Text))
             {
-                this.Step1_NextButton.Enabled = false;
+                Step1_NextButton.Enabled = false;
                 return false;
             }
             var textbox = control as TextBox;
@@ -406,11 +406,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             }
             var value = 0.0;
             var result = m_para.Validator.IsDouble(textbox.Text, ref value);
-            if (!String.IsNullOrEmpty(result))
+            if (!string.IsNullOrEmpty(result))
             {
                 m_errorTip.SetToolTip(textbox, result);
-                textbox.Text = String.Empty;
-                this.Step1_NextButton.Enabled = false;
+                textbox.Text = string.Empty;
+                Step1_NextButton.Enabled = false;
                 return false;
             }
             m_errorTip.RemoveAll();
@@ -431,14 +431,14 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 default:
                     break;
             }
-            if (!String.IsNullOrEmpty(result))
+            if (!string.IsNullOrEmpty(result))
             {
                 m_errorTip.SetToolTip(textbox, result);
-                this.Step1_NextButton.Enabled = false;
+                Step1_NextButton.Enabled = false;
                 return false;
             }
             m_errorTip.RemoveAll();
-            this.Step1_NextButton.Enabled = true;
+            Step1_NextButton.Enabled = true;
             return true;
         }
 
@@ -458,7 +458,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             saveDialog.FilterIndex = 2;
             if (DialogResult.OK == saveDialog.ShowDialog())
             {
-                if (!String.IsNullOrEmpty(saveDialog.FileName))
+                if (!string.IsNullOrEmpty(saveDialog.FileName))
                 {
                     m_pathName.Text = saveDialog.FileName;
                 }
@@ -481,7 +481,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="control">the host control</param>
         private void CheckValue(Control control)
         {
-            if (String.IsNullOrEmpty(control.Text))
+            if (string.IsNullOrEmpty(control.Text))
             {
                 control.Focus();
                 m_errorTip.SetToolTip(control, "Please input a valid value");
@@ -489,7 +489,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             if (!ValidateInput(control))
             {
                 control.Focus();
-                control.Text = String.Empty;
+                control.Text = string.Empty;
             }
         }
 
@@ -541,7 +541,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         private void Step1_HelpButton_Click(object sender, EventArgs e)
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var sp = System.IO.Path.DirectorySeparatorChar;//{'\\'};
+            var sp = Path.DirectorySeparatorChar;//{'\\'};
             path = path.Substring(0, path.LastIndexOf(sp));
             path = path.Substring(0, path.LastIndexOf(sp)) + sp + "ReadMe_WindowWizard.rtf";
             System.Diagnostics.Process.Start(path);            

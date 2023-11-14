@@ -21,11 +21,6 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
@@ -64,17 +59,17 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
         private void AutoTagRoomsForm_Load(object sender, EventArgs e)
         {
             // levelsComboBox
-            this.levelsComboBox.DataSource = m_roomsData.Levels;
-            this.levelsComboBox.DisplayMember = "Name";
-            this.levelsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.levelsComboBox.Sorted = true;
-            this.levelsComboBox.DropDown += new EventHandler(levelsComboBox_DropDown);
+            levelsComboBox.DataSource = m_roomsData.Levels;
+            levelsComboBox.DisplayMember = "Name";
+            levelsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            levelsComboBox.Sorted = true;
+            levelsComboBox.DropDown += new EventHandler(levelsComboBox_DropDown);
 
             // tagTypesComboBox
-            this.tagTypesComboBox.DataSource = m_roomsData.RoomTagTypes;
-            this.tagTypesComboBox.DisplayMember = "Name";
-            this.tagTypesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.tagTypesComboBox.DropDown += new EventHandler(tagTypesComboBox_DropDown);
+            tagTypesComboBox.DataSource = m_roomsData.RoomTagTypes;
+            tagTypesComboBox.DisplayMember = "Name";
+            tagTypesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            tagTypesComboBox.DropDown += new EventHandler(tagTypesComboBox_DropDown);
         }
 
         /// <summary>
@@ -102,17 +97,17 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
         /// </summary>
         private void InitRoomListView()
         {
-            this.roomsListView.Columns.Clear();
+            roomsListView.Columns.Clear();
 
             // Create the columns of the roomsListView
-            this.roomsListView.Columns.Add("Room Name");
+            roomsListView.Columns.Add("Room Name");
             foreach (var type in m_roomsData.RoomTagTypes)
             {
-                this.roomsListView.Columns.Add(type.Name);
+                roomsListView.Columns.Add(type.Name);
             }
 
-            this.roomsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            this.roomsListView.FullRowSelect = true;
+            roomsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            roomsListView.FullRowSelect = true;
         }
 
         /// <summary>
@@ -121,11 +116,11 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
         private void UpdateRoomsList()
         {
             // when update the RoomsListView, clear all the items first
-            this.roomsListView.Items.Clear();
+            roomsListView.Items.Clear();
 
             foreach (var tmpRoom in m_roomsData.Rooms)
             {
-                var level = this.levelsComboBox.SelectedItem as Level;
+                var level = levelsComboBox.SelectedItem as Level;
                 
                 if (tmpRoom.LevelId == level.Id)
                 {
@@ -139,7 +134,7 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
                         item.SubItems.Add(str);
                     }
 
-                    this.roomsListView.Items.Add(item);
+                    roomsListView.Items.Add(item);
                 }
             }
         }
@@ -151,8 +146,8 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
         /// <param name="e"></param>
         private void autoTagButton_Click(object sender, EventArgs e)
         {
-            var level = this.levelsComboBox.SelectedItem as Level;
-            var tagType = this.tagTypesComboBox.SelectedItem as RoomTagType;
+            var level = levelsComboBox.SelectedItem as Level;
+            var tagType = tagTypesComboBox.SelectedItem as RoomTagType;
             if (level != null && tagType != null)
             {
                 m_roomsData.AutoTagRooms(level, tagType);
@@ -177,7 +172,7 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AdjustWidthComboBox_DropDown(object sender, System.EventArgs e)
+        private void AdjustWidthComboBox_DropDown(object sender, EventArgs e)
         {
             var senderComboBox = (ComboBox)sender;
             var width = senderComboBox.DropDownWidth;
@@ -188,7 +183,7 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
                 ? SystemInformation.VerticalScrollBarWidth : 0;
 
             int newWidth;
-            foreach (Autodesk.Revit.DB.Element element in ((ComboBox)sender).Items)
+            foreach (Element element in ((ComboBox)sender).Items)
             {
                 var s = element.Name;
                 newWidth = (int)g.MeasureString(s, font).Width

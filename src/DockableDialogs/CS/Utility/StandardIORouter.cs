@@ -20,21 +20,9 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System.Windows.Media.Imaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
-using System.IO.MemoryMappedFiles;
 
 
 namespace Revit.SDK.Samples.DockableDialogs.CS
@@ -68,14 +56,11 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       /// <summary>
       /// A default override to use UTF8 text
       /// </summary>
-      public override Encoding Encoding
-      {
-         get { return System.Text.Encoding.UTF8; }
-      }
-      
+      public override Encoding Encoding => Encoding.UTF8;
+
       /// <summary>
       /// A stored reference of a textbox to output to.
       /// </summary>
-      private TextBox m_outputTextBox = null;
+      private TextBox m_outputTextBox;
    }
 }

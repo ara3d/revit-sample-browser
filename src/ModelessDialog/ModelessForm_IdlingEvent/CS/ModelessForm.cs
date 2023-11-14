@@ -48,14 +48,8 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         /// </summary>
         public Request Request
         {
-            get 
-            { 
-                return m_request; 
-            }
-            private set 
-            { 
-                m_request = value; 
-            }
+            get => m_request;
+            private set => m_request = value;
         }
 
 
@@ -76,13 +70,13 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         ///
         private void EnableCommands(bool status)
         {
-            foreach (Control ctrl in this.Controls)
+            foreach (Control ctrl in Controls)
             {
                 ctrl.Enabled = status;
             }
             if (!status)
             {
-                this.btnExit.Enabled = true;
+                btnExit.Enabled = true;
             }
         }
 

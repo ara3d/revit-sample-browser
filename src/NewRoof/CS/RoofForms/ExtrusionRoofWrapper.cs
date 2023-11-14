@@ -21,12 +21,7 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
-using System.Collections.ObjectModel;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
@@ -56,7 +51,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// </summary>
         [Category("Constrains")]
         [Description("The reference plane of the extrusion roof.")]
-        public String WorkPlane
+        public string WorkPlane
         {
             get
             {
@@ -71,7 +66,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Category("Constrains")]
         [DisplayName("Extrusion Start")]
         [Description("The extrusion of a roof can extend in either direction along the reference plane. If the extrusion extends away from the plane, the start and end points are positive values. If the extrusion extends toward the plane, the start and end points are negative.")]
-        public String ExtrusionStart
+        public string ExtrusionStart
         {
             get
             {
@@ -94,7 +89,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Category("Constrains")]
         [DisplayName("Extrusion End")]
         [Description("The extrusion of a roof can extend in either direction along the reference plane. If the extrusion extends away from the plane, the start and end points are positive values. If the extrusion extends toward the plane, the start and end points are negative.")]
-        public String ExtrusionEnd
+        public string ExtrusionEnd
         {
             get
             {
@@ -138,7 +133,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Category("Constrains")]
         [DisplayName("Level Offset")]
         [Description("The offset from the reference level.")]
-        public String LevelOffset
+        public string LevelOffset
         {
             get
             {

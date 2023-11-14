@@ -21,11 +21,7 @@
 //
 
 
-using System;
-using System.Text;
 using System.Diagnostics;
-
-using Autodesk.Revit;
 
 namespace Revit.SDK.Samples.PrintLog.CS
 {
@@ -58,14 +54,8 @@ namespace Revit.SDK.Samples.PrintLog.CS
         /// </summary>
         public Stopwatch ViewPrintWatch
         {
-            get 
-            { 
-                return m_viewPrintWatch; 
-            }
-            set
-            { 
-                m_viewPrintWatch = value; 
-            }
+            get => m_viewPrintWatch;
+            set => m_viewPrintWatch = value;
         }
 
         /// <summary>
@@ -73,14 +63,8 @@ namespace Revit.SDK.Samples.PrintLog.CS
         /// </summary>
         public Stopwatch DocPrintWatch
         {
-            get 
-            { 
-                return m_docPrintWatch;
-            }
-            set 
-            { 
-                m_docPrintWatch = value;
-            }
+            get => m_docPrintWatch;
+            set => m_docPrintWatch = value;
         }
         #endregion
     }

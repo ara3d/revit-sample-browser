@@ -22,14 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.FoundationSlab.CS
@@ -42,7 +38,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
       const double PlanarPrecision = 0.00033;
 
       // For finding elements and creating foundations slabs.
-      public static Autodesk.Revit.UI.UIApplication m_revit;
+      public static UIApplication m_revit;
       public static Autodesk.Revit.Creation.Application CreApp;
       // Foundation slab type for creating foundation slabs.
       FloorType m_foundationSlabType;
@@ -65,19 +61,13 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
       /// BaseSlabList property.
       /// This property is for UI. It can be edited by user.
       /// </summary>
-      public Collection<RegularSlab> BaseSlabList
-      {
-         get { return new Collection<RegularSlab>(m_allBaseSlabList); }
-      }
+      public Collection<RegularSlab> BaseSlabList => new Collection<RegularSlab>(m_allBaseSlabList);
 
       /// <summary>
       /// FoundationSlabTypeList property.
       /// This property is for UI. It can not be edited by user.
       /// </summary>
-      public ReadOnlyCollection<FloorType> FoundationSlabTypeList
-      {
-         get { return new ReadOnlyCollection<FloorType>(m_slabTypeList); }
-      }
+      public ReadOnlyCollection<FloorType> FoundationSlabTypeList => new ReadOnlyCollection<FloorType>(m_slabTypeList);
 
       /// <summary>
       /// FoundationSlabType property.
@@ -85,7 +75,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
       /// </summary>
       public object FoundationSlabType
       {
-         set { m_foundationSlabType = value as FloorType; }
+         set => m_foundationSlabType = value as FloorType;
       }
 
       /// <summary>

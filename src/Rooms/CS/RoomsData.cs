@@ -22,13 +22,8 @@
 
 
 using System;
-using System.Text;
-using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Architecture;
@@ -41,7 +36,7 @@ namespace Revit.SDK.Samples.Rooms.CS
     public class RoomsData
     {
         #region class member variables
-        Autodesk.Revit.UI.UIApplication m_revit;  // Store the reference of the application in revit
+        UIApplication m_revit;  // Store the reference of the application in revit
 
         List<Room> m_rooms = new List<Room>();    // a list to store all rooms in the project
         List<RoomTag> m_roomTags = new List<RoomTag>(); // a list to store all room tags
@@ -57,48 +52,30 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         public struct DepartmentInfo
         {
-            String m_departmentName;
+            string m_departmentName;
             int m_roomAmount;
             double m_departmentAreaValue;
 
             /// <summary>
             /// the name of department
             /// </summary>
-            public String DepartmentName
-            {
-                get
-                {
-                    return m_departmentName;
-                }
-            }
+            public string DepartmentName => m_departmentName;
 
 
             /// <summary>
             /// get the amount of rooms in the department
             /// </summary>
-            public int RoomsAmount
-            {
-                get
-                {
-                    return m_roomAmount;
-                }
-            }
+            public int RoomsAmount => m_roomAmount;
 
             /// <summary>
             /// the total area of the rooms in department
             /// </summary>
-            public double DepartmentAreaValue
-            {
-                get
-                {
-                    return m_departmentAreaValue;
-                }
-            }
+            public double DepartmentAreaValue => m_departmentAreaValue;
 
             /// <summary>
             /// constructor
             /// </summary>
-            public DepartmentInfo(String departmentName, int roomAmount, double areaValue)
+            public DepartmentInfo(string departmentName, int roomAmount, double areaValue)
             {
                 m_departmentName = departmentName;
                 m_roomAmount = roomAmount;
@@ -110,61 +87,31 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// <summary>
         /// a list of all department
         /// </summary>
-        public ReadOnlyCollection<DepartmentInfo> DepartmentInfos
-        {
-            get
-            {
-                return new ReadOnlyCollection<DepartmentInfo>(m_departmentInfos);
-            }
-        }
+        public ReadOnlyCollection<DepartmentInfo> DepartmentInfos => new ReadOnlyCollection<DepartmentInfo>(m_departmentInfos);
 
 
         /// <summary>
         /// a list of all the rooms in the project
         /// </summary>
-        public ReadOnlyCollection<Room> Rooms
-        {
-            get
-            {
-                return new ReadOnlyCollection<Room>(m_rooms);
-            }
-        }
+        public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
 
 
         /// <summary>
         /// a list of all the room tags in the project
         /// </summary>
-        public ReadOnlyCollection<RoomTag> RoomTags
-        {
-            get
-            {
-                return new ReadOnlyCollection<RoomTag>(m_roomTags);
-            }
-        }
+        public ReadOnlyCollection<RoomTag> RoomTags => new ReadOnlyCollection<RoomTag>(m_roomTags);
 
 
         /// <summary>
         /// a list of the rooms that had tag
         /// </summary>
-        public ReadOnlyCollection<Room> RoomsWithTag
-        {
-            get
-            {
-                return new ReadOnlyCollection<Room>(m_roomsWithTag);
-            }
-        }
+        public ReadOnlyCollection<Room> RoomsWithTag => new ReadOnlyCollection<Room>(m_roomsWithTag);
 
 
         /// <summary>
         /// a list of the rooms which lack room tag
         /// </summary>
-        public ReadOnlyCollection<Room> RoomsWithoutTag
-        {
-            get
-            {
-                return new ReadOnlyCollection<Room>(m_roomsWithoutTag);
-            }
-        }
+        public ReadOnlyCollection<Room> RoomsWithoutTag => new ReadOnlyCollection<Room>(m_roomsWithoutTag);
 
 
         /// <summary>
@@ -202,7 +149,7 @@ namespace Revit.SDK.Samples.Rooms.CS
                     }
 
                     // create a instance of Autodesk.Revit.DB.UV class
-                    var point = new Autodesk.Revit.DB.UV(locPoint.Point.X, locPoint.Point.Y);
+                    var point = new UV(locPoint.Point.X, locPoint.Point.Y);
 
                     //create room tag
                     RoomTag tmpTag;
@@ -234,7 +181,7 @@ namespace Revit.SDK.Samples.Rooms.CS
             var result = false;
 
             // sort all the rooms by ascending order according their coordinate
-            result = this.SortRooms();
+            result = SortRooms();
 
             // fault to reorder rooms' number
             if (!result)
@@ -266,9 +213,9 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         /// <param name="room">a instance of room class</param>
         /// <param name="paraEnum">the property name</param>
-        public String GetProperty(Room room, BuiltInParameter paraEnum)
+        public string GetProperty(Room room, BuiltInParameter paraEnum)
         {
-            String propertyValue = null;  //the value of parameter 
+            string propertyValue = null;  //the value of parameter 
 
             // get the parameter via the parameterId
             var param = room.get_Parameter(paraEnum);
@@ -305,7 +252,7 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         /// <param name="departName">the department name</param>
         /// <param name="areaValue">the value of room area</param>
-        public void CalculateDepartmentArea(String departName, Double areaValue)
+        public void CalculateDepartmentArea(string departName, double areaValue)
         {
             //if the list is empty, add a new  DepartmentArea instance
             if (0 == m_departmentInfos.Count)
@@ -345,7 +292,7 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// export data into an Excel file
         /// </summary>
         /// <param name="fileName"></param>
-        public void ExportFile(String fileName)
+        public void ExportFile(string fileName)
         {
             // store all the information that to be exported
             var allData = "";

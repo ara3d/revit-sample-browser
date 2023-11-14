@@ -20,13 +20,9 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit;
-using System.Windows.Forms;
 using System.Collections;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
@@ -48,15 +44,15 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Dictionary to store the roof=>edges for fascia creation.
         /// </summary>
-        private Dictionary<Autodesk.Revit.DB.Element, List<Edge>> m_roofFasciaEdges;
+        private Dictionary<Element, List<Edge>> m_roofFasciaEdges;
 
         /// <summary>
         /// Filter all the edges of the given element for fascia creation.
         /// </summary>
         /// <param name="elem">Element used to filter edges which fascia can be created on</param>
-        private void FilterEdgesForFascia(Autodesk.Revit.DB.Element elem)
+        private void FilterEdgesForFascia(Element elem)
         {
-            var transaction = new Transaction(this.RvtDocument, "FilterEdgesForFascia");
+            var transaction = new Transaction(RvtDocument, "FilterEdgesForFascia");
             transaction.Start();
 
             // Note: This method will create a Fascia with no references.
@@ -89,13 +85,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// A string indicates this creator just for Roof Fascia creation.
         /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return "Roof Fascia";
-            }
-        }
+        public override string Name => "Roof Fascia";
 
         /// <summary>
         /// All fascia types in Revit active document.
@@ -113,13 +103,13 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Dictionary to store all the Roof=>Edges which Fascia can be created on.
         /// </summary>
-        public override Dictionary<Autodesk.Revit.DB.Element, List<Edge>> SupportEdges
+        public override Dictionary<Element, List<Edge>> SupportEdges
         {
             get
             {
                 if (m_roofFasciaEdges == null)
                 {
-                    m_roofFasciaEdges = new Dictionary<Autodesk.Revit.DB.Element, List<Edge>>();
+                    m_roofFasciaEdges = new Dictionary<Element, List<Edge>>();
                     var collector = new FilteredElementCollector(m_rvtDoc);
                     collector.OfClass(typeof(FootPrintRoof));
                     var elements = collector.ToElements();

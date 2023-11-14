@@ -22,11 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI.Selection;
 using Revit.SDK.Samples.CurtainSystem.CS.Data;
 
 namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
@@ -308,12 +304,12 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.CurtainSystem
          var opt = m_mydocument.CommandData.Application.Application.Create.NewGeometryOptions();
          opt.DetailLevel = ViewDetailLevel.Fine;
          opt.ComputeReferences = true;
-         Autodesk.Revit.DB.GeometryElement geoElement = null;
+         GeometryElement geoElement = null;
          try
          {
             geoElement = mass.get_Geometry(opt);
          }
-         catch (System.Exception)
+         catch (Exception)
          {
             return null;
          }

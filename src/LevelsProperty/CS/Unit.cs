@@ -21,10 +21,6 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.LevelsProperty.CS

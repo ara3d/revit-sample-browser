@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using Autodesk.Revit.DB;
 
@@ -52,7 +51,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
         /// <param name="boundaries">The selected curve element boundaries.</param>
         /// <param name="familyLoadOptions">The family load options when loading the new family.</param>
         /// <param name="familyTemplate">The family template.</param>
-        public static FailureCondition CreateNegativeBlock(Element targetElement, IList<Reference> boundaries, IFamilyLoadOptions familyLoadOptions, String familyTemplate)
+        public static FailureCondition CreateNegativeBlock(Element targetElement, IList<Reference> boundaries, IFamilyLoadOptions familyLoadOptions, string familyTemplate)
         {
             var doc = targetElement.Document;
             var app = doc.Application;
@@ -326,21 +325,21 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
         /// </summary>
         /// <param name="familyPath">The family template directory path.</param>
         /// <returns>The template path, or empty string if not found.</returns>
-        public static String FindGenericModelTemplate(String familyPath)
+        public static string FindGenericModelTemplate(string familyPath)
         {
-			var hardCodedResult = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(typeof(CreateNegativeBlockCommand).Assembly.Location), "Generic Model.rft");
+			var hardCodedResult = Path.Combine(Path.GetDirectoryName(typeof(CreateNegativeBlockCommand).Assembly.Location), "Generic Model.rft");
 			try
 			{
 				var files = Directory.EnumerateFiles(familyPath, "Generic Model.rft", SearchOption.AllDirectories);
 
 				var result = files.FirstOrDefault<string>();
-				if (!String.IsNullOrEmpty(result))
+				if (!string.IsNullOrEmpty(result))
 					return result;
 
 				files = Directory.EnumerateFiles(familyPath, "Metric Generic Model.rft", SearchOption.AllDirectories);
 
 				result = files.FirstOrDefault<string>();
-				if (!String.IsNullOrEmpty(result))
+				if (!string.IsNullOrEmpty(result))
 					return result;
 				return hardCodedResult;
 			}

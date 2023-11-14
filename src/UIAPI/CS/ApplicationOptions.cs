@@ -22,10 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {
@@ -56,7 +52,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             return s_options;
         }
 
-        private static ApplicationOptions s_options = null;
+        private static ApplicationOptions s_options;
         private ExternalApp m_eApplication;
 
         private ApplicationOptions()

@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -87,13 +86,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// Implements the interface property.
         /// </summary>
-        public double RunElevation
-        {
-        	get
-        	{
-        		return m_bottomElevation;
-        	}
-        }
+        public double RunElevation => m_bottomElevation;
 
         /// <summary>
         /// Implements the interface property.
@@ -121,7 +114,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// Implements the interface method.
         /// </summary>
-        public IList<Autodesk.Revit.DB.Curve> GetStairsPath()
+        public IList<Curve> GetStairsPath()
         {
             // Proceed up the middle of the run to the run extent
             var start = new XYZ(m_width / 2.0, 0, m_bottomElevation);
@@ -160,7 +153,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// Implements the interface method.
         /// </summary>
-        public IList<Autodesk.Revit.DB.Curve> GetRunBoundaryCurves()
+        public IList<Curve> GetRunBoundaryCurves()
         {
         	return Transform(GenerateUntransformedRunBoundaryCurves());
         }
@@ -168,7 +161,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// Implements the interface method.
         /// </summary>
-		public Autodesk.Revit.DB.Architecture.StairsRun CreateStairsRun(Document document, ElementId stairsId)
+		public StairsRun CreateStairsRun(Document document, ElementId stairsId)
 		{
 			m_stairsRun = StairsRun.CreateSketchedRun(document, stairsId, GetRunElevation(), 
 			                                   GetRunBoundaryCurves(), GenerateRunRiserCurves(), 
@@ -183,11 +176,8 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
 		public double Width
 		{
-			get
-			{
-				return m_width;
-			}
-			set
+			get => m_width;
+            set
 			{
 				if (m_stairsRun != null)
 				{
@@ -202,7 +192,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// Generates the run boundary curves (not transformed by the stored transformation).
         /// </summary>
         /// <returns></returns>
-        private IList<Autodesk.Revit.DB.Curve> GenerateUntransformedRunBoundaryCurves()
+        private IList<Curve> GenerateUntransformedRunBoundaryCurves()
         {
             // Start at 0, 0 and extend to the run extent
             var start = new XYZ(0, 0, m_bottomElevation);
@@ -225,7 +215,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// Generates the riser curves for the sketch.
         /// </summary>
         /// <returns></returns>
-        private IList<Autodesk.Revit.DB.Curve> GenerateRunRiserCurves()
+        private IList<Curve> GenerateRunRiserCurves()
         {
             var ret = new List<Curve>();
 

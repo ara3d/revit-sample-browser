@@ -21,13 +21,9 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 using Revit.SDK.Samples.NewRoof.RoofForms.CS;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -47,13 +43,7 @@ namespace Revit.SDK.Samples.NewRoof.CS
         /// <summary>
         /// singleton in the external application
         /// </summary>
-        public static Autodesk.Revit.DB.View ActiveView
-        {
-            get
-            {
-                return m_activeView;
-            }
-        }
+        public static Autodesk.Revit.DB.View ActiveView => m_activeView;
 
         /// <summary>
         /// Implement this method as an external command for Revit.
@@ -71,7 +61,7 @@ namespace Revit.SDK.Samples.NewRoof.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
                                                ref string message,
                                                ElementSet elements)
         {
@@ -84,7 +74,7 @@ namespace Revit.SDK.Samples.NewRoof.CS
                 LevelConverter.SetStandardValues(roofsManager.Levels);
 
                 // Create a form to create and edit a roof.
-                var result = System.Windows.Forms.DialogResult.None;
+                var result = DialogResult.None;
                 while (result == DialogResult.None || result == DialogResult.Retry)
                 {
                     if (result == DialogResult.Retry)
@@ -92,26 +82,26 @@ namespace Revit.SDK.Samples.NewRoof.CS
                         roofsManager.WindowSelect();
                     }
                     
-                    using (var mainForm = new RoofForms.CS.RoofForm(roofsManager))
+                    using (var mainForm = new RoofForm(roofsManager))
                     {
                         result = mainForm.ShowDialog();
                     }
                 }
 
-                if (result == System.Windows.Forms.DialogResult.OK)
+                if (result == DialogResult.OK)
                 {
-                    return Autodesk.Revit.UI.Result.Succeeded;
+                    return Result.Succeeded;
                 }
                 else
                 {
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
             }
             catch (Exception ex)
             {
                 // If there are something wrong, give error information and return failed
                 message = ex.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
     }

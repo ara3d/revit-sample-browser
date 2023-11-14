@@ -20,19 +20,13 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Windows.Forms;
-using System.Collections;
 using System.Reflection;
 using System.IO;
 using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
-using Autodesk.Revit.UI.Selection;
-using Application = Autodesk.Revit.ApplicationServices.Application;
 using Element = Autodesk.Revit.DB.Element;
 
 namespace Revit.SDK.Samples.TraverseSystem.CS
@@ -61,8 +55,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public virtual Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData
-            , ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
         {
             try
             {
@@ -71,7 +65,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 if (activeDoc == null)
                 {
                     TaskDialog.Show("No Active Document", "There's no active document in Revit.", TaskDialogCommonButtons.Ok);
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Verify the number of selected elements
@@ -83,7 +77,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 if (selElements.Size != 1)
                 {
                     message = "Please select ONLY one element from current project.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Get the selected element
@@ -108,22 +102,22 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                         "- Some elements in a non-well-connected system may get lost when traversing the system in the " +
                         "direction of flow" + Environment.NewLine +
                         "- Flow direction of elements in a non-well-connected system may not be right";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Traverse the system and dump the traversal into an XML file
                 var tree = new TraversalTree(activeDoc.Document, system);
                 tree.Traverse();
-                String fileName;
+                string fileName;
                 fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "traversal.xml");
                 tree.DumpIntoXML(fileName);
 
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
                 message = ex.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
 
@@ -157,7 +151,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                     {
                         connectors = mepModel.ConnectorManager.Connectors;
                     }
-                    catch (System.Exception)
+                    catch (Exception)
                     {
                         system = null;
                     }

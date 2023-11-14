@@ -22,12 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using System.Diagnostics;
-using System.IO;
-using System.Collections;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Ribbon.CS
@@ -44,7 +39,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
       public static ElementSet CreatedWalls = new ElementSet(); //restore all the walls created by API.
 
       #region IExternalCommand Members Implementation
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit,
+      public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -58,7 +53,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
          var newWallMark = GetNewWallMark(app); //get mark of new wall from Text box - WallMark
 
          Wall newWall = null;
-         if ("CreateStructureWall" == this.GetType().Name) //decided by SplitButton
+         if ("CreateStructureWall" == GetType().Name) //decided by SplitButton
          { newWall = Wall.Create(app.ActiveUIDocument.Document, newWallShape, newWallType.Id, newWallLevel.Id, true); }
          else { newWall = Wall.Create(app.ActiveUIDocument.Document, newWallShape, newWallType.Id, newWallLevel.Id, false); }
          if (null != newWall)
@@ -67,13 +62,13 @@ namespace Revit.SDK.Samples.Ribbon.CS
             CreatedWalls.Insert(newWall);
          }
          trans.Commit();
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       #endregion IExternalCommand Members Implementation
 
       #region protected methods
-      protected WallType GetNewWallType(Autodesk.Revit.UI.UIApplication app)
+      protected WallType GetNewWallType(UIApplication app)
       {
          var myPanel = app.GetRibbonPanels()[0];
          var radioGroupTypeSelector =
@@ -95,11 +90,11 @@ namespace Revit.SDK.Samples.Ribbon.CS
          return newWallType;
       }
 
-      protected Level GetNewWallLevel(Autodesk.Revit.UI.UIApplication app)
+      protected Level GetNewWallLevel(UIApplication app)
       {
          var myPanel = app.GetRibbonPanels()[0];
          var comboboxLevel =
-             GetRibbonItemByName(myPanel, "LevelsSelector") as Autodesk.Revit.UI.ComboBox;
+             GetRibbonItemByName(myPanel, "LevelsSelector") as ComboBox;
          if (null == comboboxLevel) { throw new InvalidCastException("Cannot get Level selector!"); }
          var wallLevel = comboboxLevel.Current.ItemText;
          //find wall type in document
@@ -118,11 +113,11 @@ namespace Revit.SDK.Samples.Ribbon.CS
          return newWallLevel;
       }
 
-      protected List<Curve> GetNewWallShape(Autodesk.Revit.UI.UIApplication app)
+      protected List<Curve> GetNewWallShape(UIApplication app)
       {
          var myPanel = app.GetRibbonPanels()[0];
          var comboboxWallShape =
-             GetRibbonItemByName(myPanel, "WallShapeComboBox") as Autodesk.Revit.UI.ComboBox;
+             GetRibbonItemByName(myPanel, "WallShapeComboBox") as ComboBox;
          if (null == comboboxWallShape) { throw new InvalidCastException("Cannot get Wall Shape Gallery!"); }
          var wallShape = comboboxWallShape.Current.ItemText;
          if ("SquareWall" == wallShape) { return GetSquareWallShape(app.Application.Create); }
@@ -131,13 +126,13 @@ namespace Revit.SDK.Samples.Ribbon.CS
          else { return GetRectangleWallShape(app.Application.Create); }
       }
 
-      protected String GetNewWallMark(Autodesk.Revit.UI.UIApplication app)
+      protected string GetNewWallMark(UIApplication app)
       {
          var myPanel = app.GetRibbonPanels()[0];
          var textBox =
-             GetRibbonItemByName(myPanel, "WallMark") as Autodesk.Revit.UI.TextBox;
+             GetRibbonItemByName(myPanel, "WallMark") as TextBox;
          if (null == textBox) { throw new InvalidCastException("Cannot get Wall Mark TextBox!"); }
-         String newWallMark;
+         string newWallMark;
          var newWallIndex = 0;
          var collector = new FilteredElementCollector(app.ActiveUIDocument.Document);
          ICollection<Element> founds = collector.OfClass(typeof(Wall)).ToElements();
@@ -157,7 +152,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
                      var index = Convert.ToInt32(strings[strings.Length - 1]);
                      if (index > newWallIndex) { newWallIndex = index; }
                   }
-                  catch (System.Exception)
+                  catch (Exception)
                   {
                      continue;
                   }
@@ -171,13 +166,13 @@ namespace Revit.SDK.Samples.Ribbon.CS
       protected List<Curve> GetRectangleWallShape(Autodesk.Revit.Creation.Application creApp)
       {
          //calculate size of Structural and NonStructural walls
-         var WallsSize = CreateStructureWall.CreatedWalls.Size + CreatedWalls.Size;
+         var WallsSize = CreatedWalls.Size + CreatedWalls.Size;
          var curves = new List<Curve>();
          //15: distance from each wall, 60: wall length , 60: wall width 
-         var line1 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 0), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 60, 0));
-         var line2 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 60, 0), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 60, 40));
-         var line3 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 60, 40), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 40));
-         var line4 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 40), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 0));
+         var line1 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 0), new XYZ(WallsSize * 15, 60, 0));
+         var line2 = Line.CreateBound(new XYZ(WallsSize * 15, 60, 0), new XYZ(WallsSize * 15, 60, 40));
+         var line3 = Line.CreateBound(new XYZ(WallsSize * 15, 60, 40), new XYZ(WallsSize * 15, 0, 40));
+         var line4 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 40), new XYZ(WallsSize * 15, 0, 0));
          curves.Add(line1);
          curves.Add(line2);
          curves.Add(line3);
@@ -188,13 +183,13 @@ namespace Revit.SDK.Samples.Ribbon.CS
       protected List<Curve> GetSquareWallShape(Autodesk.Revit.Creation.Application creApp)
       {
          //calculate size of Structural and NonStructural walls
-         var WallsSize = CreateStructureWall.CreatedWalls.Size + CreatedWalls.Size;
+         var WallsSize = CreatedWalls.Size + CreatedWalls.Size;
          var curves = new List<Curve>();
          //15: distance from each wall, 40: wall length  
-         var line1 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 0), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 40, 0));
-         var line2 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 40, 0), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 40, 40));
-         var line3 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 40, 40), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 40));
-         var line4 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 40), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 0));
+         var line1 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 0), new XYZ(WallsSize * 15, 40, 0));
+         var line2 = Line.CreateBound(new XYZ(WallsSize * 15, 40, 0), new XYZ(WallsSize * 15, 40, 40));
+         var line3 = Line.CreateBound(new XYZ(WallsSize * 15, 40, 40), new XYZ(WallsSize * 15, 0, 40));
+         var line4 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 40), new XYZ(WallsSize * 15, 0, 0));
          curves.Add(line1);
          curves.Add(line2);
          curves.Add(line3);
@@ -205,11 +200,11 @@ namespace Revit.SDK.Samples.Ribbon.CS
       protected List<Curve> GetCircleWallShape(Autodesk.Revit.Creation.Application creApp)
       {
          //calculate size of Structural and NonStructural walls
-         var WallsSize = CreateStructureWall.CreatedWalls.Size + CreatedWalls.Size;
+         var WallsSize = CreatedWalls.Size + CreatedWalls.Size;
          var curves = new List<Curve>();
          //15: distance from each wall, 40: diameter of circle  
-         var arc = Arc.Create(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 20, 0), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 20, 40), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 40, 20));
-         var arc2 = Arc.Create(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 20, 0), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 20, 40), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 20));
+         var arc = Arc.Create(new XYZ(WallsSize * 15, 20, 0), new XYZ(WallsSize * 15, 20, 40), new XYZ(WallsSize * 15, 40, 20));
+         var arc2 = Arc.Create(new XYZ(WallsSize * 15, 20, 0), new XYZ(WallsSize * 15, 20, 40), new XYZ(WallsSize * 15, 0, 20));
          curves.Add(arc);
          curves.Add(arc2);
          return curves;
@@ -218,12 +213,12 @@ namespace Revit.SDK.Samples.Ribbon.CS
       protected List<Curve> GetTriangleWallShape(Autodesk.Revit.Creation.Application creApp)
       {
          //calculate size of Structural and NonStructural walls
-         var WallsSize = CreateStructureWall.CreatedWalls.Size + CreatedWalls.Size;
+         var WallsSize = CreatedWalls.Size + CreatedWalls.Size;
          var curves = new List<Curve>();
          //15: distance from each wall, 40: height of triangle  
-         var line1 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 0), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 40, 0));
-         var line2 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 40, 0), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 20, 40));
-         var line3 = Line.CreateBound(new Autodesk.Revit.DB.XYZ(WallsSize * 15, 20, 40), new Autodesk.Revit.DB.XYZ(WallsSize * 15, 0, 0));
+         var line1 = Line.CreateBound(new XYZ(WallsSize * 15, 0, 0), new XYZ(WallsSize * 15, 40, 0));
+         var line2 = Line.CreateBound(new XYZ(WallsSize * 15, 40, 0), new XYZ(WallsSize * 15, 20, 40));
+         var line3 = Line.CreateBound(new XYZ(WallsSize * 15, 20, 40), new XYZ(WallsSize * 15, 0, 0));
          curves.Add(line1);
          curves.Add(line2);
          curves.Add(line3);
@@ -237,7 +232,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
       /// <param name="panelRibbon">RibbonPanel which contains the RibbonItem </param>
       /// <param name="itemName">name of RibbonItem</param>
       /// <return>RibbonItem whose name is same with input string</param>
-      public RibbonItem GetRibbonItemByName(RibbonPanel panelRibbon, String itemName)
+      public RibbonItem GetRibbonItemByName(RibbonPanel panelRibbon, string itemName)
       {
          foreach (var item in panelRibbon.GetItems())
          {
@@ -270,7 +265,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    public class DeleteWalls : IExternalCommand
    {
       #region IExternalCommand Members Implementation
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit,
+      public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -284,7 +279,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
          }
          CreateWall.CreatedWalls.Clear();
          trans.Commit();
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion IExternalCommand Members Implementation
    }
@@ -298,7 +293,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    {
       #region IExternalCommand Members Implementation
 
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit,
+      public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -311,11 +306,11 @@ namespace Revit.SDK.Samples.Ribbon.CS
             var wall = iter.Current as Wall;
             if (null != wall)
             {
-               wall.Location.Move(new Autodesk.Revit.DB.XYZ(12, 0, 0));
+               wall.Location.Move(new XYZ(12, 0, 0));
             }
          }
          trans.Commit();
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion IExternalCommand Members Implementation
    }
@@ -329,7 +324,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    {
       #region IExternalCommand Members Implementation
 
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit,
+      public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -342,11 +337,11 @@ namespace Revit.SDK.Samples.Ribbon.CS
             var wall = iter.Current as Wall;
             if (null != wall)
             {
-               wall.Location.Move(new Autodesk.Revit.DB.XYZ(0, 12, 0));
+               wall.Location.Move(new XYZ(0, 12, 0));
             }
          }
         trans.Commit();
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion IExternalCommand Members Implementation
    }
@@ -361,7 +356,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    {
       #region IExternalCommand Members Implementation
 
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit,
+      public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -374,23 +369,23 @@ namespace Revit.SDK.Samples.Ribbon.CS
 
          //reset level
          var comboboxLevel =
-             GetRibbonItemByName(myPanel, "LevelsSelector") as Autodesk.Revit.UI.ComboBox;
+             GetRibbonItemByName(myPanel, "LevelsSelector") as ComboBox;
          if (null == comboboxLevel) { throw new InvalidCastException("Cannot get Level selector!"); }
          comboboxLevel.Current = comboboxLevel.GetItems()[0];
 
          //reset wall shape
          var comboboxWallShape =
-             GetRibbonItemByName(myPanel, "WallShapeComboBox") as Autodesk.Revit.UI.ComboBox;
+             GetRibbonItemByName(myPanel, "WallShapeComboBox") as ComboBox;
          if (null == comboboxLevel) { throw new InvalidCastException("Cannot get wall shape combo box!"); }
          comboboxWallShape.Current = comboboxWallShape.GetItems()[0];
 
          //get wall mark
          var textBox =
-             GetRibbonItemByName(myPanel, "WallMark") as Autodesk.Revit.UI.TextBox;
+             GetRibbonItemByName(myPanel, "WallMark") as TextBox;
          if (null == textBox) { throw new InvalidCastException("Cannot get Wall Mark TextBox!"); }
          textBox.Value = "new wall";
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       /// <summary>
@@ -399,7 +394,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
       /// <param name="panelRibbon">RibbonPanel which contains the RibbonItem </param>
       /// <param name="itemName">name of RibbonItem</param>
       /// <return>RibbonItem whose name is same with input string</param>
-      public RibbonItem GetRibbonItemByName(RibbonPanel panelRibbon, String itemName)
+      public RibbonItem GetRibbonItemByName(RibbonPanel panelRibbon, string itemName)
       {
          foreach (var item in panelRibbon.GetItems())
          {
@@ -425,11 +420,11 @@ namespace Revit.SDK.Samples.Ribbon.CS
    {
       #region IExternalCommand Members Implementation
 
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit,
+      public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
       {
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       #endregion IExternalCommand Members Implementation

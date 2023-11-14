@@ -23,8 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Mechanical;
@@ -53,7 +51,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             m_levels = new List<Level>();
             Initialize();
             m_currentLevel = m_levels[0];
-            var para = commandData.Application.ActiveUIDocument.Document.ActiveView.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.VIEW_PHASE);
+            var para = commandData.Application.ActiveUIDocument.Document.ActiveView.get_Parameter(BuiltInParameter.VIEW_PHASE);
             var phaseId = para.AsElementId();
             m_defaultPhase = commandData.Application.ActiveUIDocument.Document.GetElement(phaseId) as Phase;
         }
@@ -111,13 +109,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         /// <summary>
         /// Get the Level elements.
         /// </summary>
-        public ReadOnlyCollection<Level> Levels
-        {
-            get
-            {
-                return new ReadOnlyCollection<Level>(m_levels);
-            }
-        }
+        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
 
         /// <summary>
         /// Create a Zone element.
@@ -126,16 +118,16 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         {
             if (m_defaultPhase == null)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Revit", "The phase of the active view is null, you can't create zone in a null phase");
+                TaskDialog.Show("Revit", "The phase of the active view is null, you can't create zone in a null phase");
                 return;
             }
             try
             {
-                this.m_zoneManager.CreateZone(m_currentLevel, m_defaultPhase);
+                m_zoneManager.CreateZone(m_currentLevel, m_defaultPhase);
             }
             catch (Exception ex)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Revit", ex.Message);
+                TaskDialog.Show("Revit", ex.Message);
             }         
         }
 
@@ -146,24 +138,24 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         {           
             if (m_defaultPhase == null)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Revit", "The phase of the active view is null, you can't create spaces in a null phase");
+                TaskDialog.Show("Revit", "The phase of the active view is null, you can't create spaces in a null phase");
                 return;
             }
 
             try
             {
-                if (m_commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == Autodesk.Revit.DB.ViewType.FloorPlan)
+                if (m_commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == ViewType.FloorPlan)
                 {
                     m_spaceManager.CreateSpaces(m_currentLevel, m_defaultPhase);
                 }
                 else
                 {
-                    Autodesk.Revit.UI.TaskDialog.Show("Revit", "You can not create spaces in this plan view");
+                    TaskDialog.Show("Revit", "You can not create spaces in this plan view");
                 }
             }
             catch (Exception ex)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Revit", ex.Message);
+                TaskDialog.Show("Revit", ex.Message);
             }               
         }
 
@@ -191,7 +183,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         /// <param name="level"></param>
         public void Update(Level level)
         {
-            this.m_currentLevel = level;
+            m_currentLevel = level;
         }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
@@ -23,13 +19,11 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
       }
       public double TotalPressureLoss
       {
-         get { return m_totalLoss; }
-         set { m_totalLoss = value; }
+         get => m_totalLoss;
+         set => m_totalLoss = value;
       }
-      public int NumberOfSegments
-      {
-         get { return m_segments.Count; }
-      }
+      public int NumberOfSegments => m_segments.Count;
+
       public int NumberOfStraights
       {
          get { return m_segments.Count(x => x.SegmentType == MEPAnalyticalSegmentType.Segment); }
@@ -38,30 +32,17 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
       {
          get { return m_segments.Count(x => x.SegmentType == MEPAnalyticalSegmentType.Fitting); }
       }
-      public double Flow
-      {
-         get { return m_segments.FirstOrDefault().Flow; }
-      }
-      public double Size
-      {
-         get { return m_segments.FirstOrDefault().Size; }
-      }
-      public double Velocity
-      {
-         get { return m_segments.FirstOrDefault().Velocity; }
-      }
-      public double VelocityPressure
-      {
-         get { return m_segments.FirstOrDefault().VelocityPressure; }
-      }
-      public double Friction
-      {
-         get { return m_segments.FirstOrDefault().Friction; }
-      }
-      public bool IsCriticalPath
-      {
-         get { return m_segments.FirstOrDefault().IsCriticalPath; }
-      }
+      public double Flow => m_segments.FirstOrDefault().Flow;
+
+      public double Size => m_segments.FirstOrDefault().Size;
+
+      public double Velocity => m_segments.FirstOrDefault().Velocity;
+
+      public double VelocityPressure => m_segments.FirstOrDefault().VelocityPressure;
+
+      public double Friction => m_segments.FirstOrDefault().Friction;
+
+      public bool IsCriticalPath => m_segments.FirstOrDefault().IsCriticalPath;
 
       public SegmentInfo AddSegment(Document doc, MEPAnalyticalSegment segment, MEPNetworkSegmentData segmentData)
       {
@@ -119,9 +100,9 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
       {
          var coeff = viewer.Scale / 12.0;
 
-         var maxX = -Double.MaxValue;
-         var maxY = -Double.MaxValue;
-         var maxZ = -Double.MaxValue;
+         var maxX = -double.MaxValue;
+         var maxY = -double.MaxValue;
+         var maxZ = -double.MaxValue;
 
          foreach (var seg in m_segments)
          {

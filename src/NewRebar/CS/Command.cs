@@ -21,17 +21,11 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using GElement = Autodesk.Revit.DB.GeometryElement;
 using CElement = Autodesk.Revit.DB.Element;
 using GInstance = Autodesk.Revit.DB.Instance;
-using System.Diagnostics;
-using System.Windows.Forms;
-using Autodesk.Revit.DB.Structure;
 
 
 namespace Revit.SDK.Samples.NewRebar.CS
@@ -60,7 +54,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
 
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
@@ -73,13 +67,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
             catch(Exception e)
             {
                 message = e.Message.ToString();
-                return Autodesk.Revit.UI.Result.Cancelled;
+                return Result.Cancelled;
             }
             finally
             {
                 transaction.Commit();
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         } 
     }
 }

@@ -23,9 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DuplicateViews.CS
 {
@@ -140,7 +138,7 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
                 {
                     var e = fromDocument.GetElement(id);
                     var name = e.Name;
-                    if (!String.IsNullOrEmpty(name))
+                    if (!string.IsNullOrEmpty(name))
                         nameToFromElementsMap.Add(name, id);
                 }
 
@@ -151,7 +149,7 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
                 {
                     var e = toDocument.GetElement(id);
                     var name = e.Name;
-                    if (!String.IsNullOrEmpty(name))
+                    if (!string.IsNullOrEmpty(name))
                         nameToToElementsMap.Add(name, id);
                 }
 

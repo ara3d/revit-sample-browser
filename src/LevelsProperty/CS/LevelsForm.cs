@@ -23,10 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.UI;
@@ -36,7 +32,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
     /// <summary>
     /// form for new levels
     /// </summary>  
-    public partial class LevelsForm : System.Windows.Forms.Form
+    public partial class LevelsForm : Form
     {
         /// <summary>
         /// form for new levels
@@ -68,7 +64,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
             levelsDataGridView.Columns.AddRange(new DataGridViewColumn[] { LevelName, LevelElevation });
 
-            bindingSource1.DataSource = typeof(Revit.SDK.Samples.LevelsProperty.CS.LevelsDataSource);
+            bindingSource1.DataSource = typeof(LevelsDataSource);
             //Must place below code on the code "dataGridView1.DataSource = bindingSource1"
             levelsDataGridView.AutoGenerateColumns = false;
             levelsDataGridView.DataSource = bindingSource1;
@@ -101,7 +97,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         /// <param name="e"></param>
         private void addButton_Click(object sender, EventArgs e)
         {
-            System.String newLevelName;
+            string newLevelName;
             double newLevelElevation;
 
             //If it exists some Levels on Revit, 
@@ -182,7 +178,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
             if (bindingSource1.Position < 0)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Revit", "No have Level.");
+                TaskDialog.Show("Revit", "No have Level.");
             }
         }
 
@@ -200,7 +196,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         {
             if (0 == levelsDataGridView.CurrentCell.ColumnIndex)
             {
-                var newName = e.FormattedValue as System.String;
+                var newName = e.FormattedValue as string;
 
                 var newNameArray = new char[newName.Length];
                 newNameArray = newName.ToCharArray();
@@ -221,7 +217,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                     }
                 }
 
-                var oldName = levelsDataGridView.CurrentCell.FormattedValue as System.String;
+                var oldName = levelsDataGridView.CurrentCell.FormattedValue as string;
                 if (newName != oldName)
                 {
                     for (var i = 0; i < m_objectReference.SystemLevelsDatum.Count; i++)
@@ -243,7 +239,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         /// <param name="e"></param>
         private void levelsDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            Autodesk.Revit.UI.TaskDialog.Show("Revit", e.Exception.Message);
+            TaskDialog.Show("Revit", e.Exception.Message);
         }
 
         /// <summary>
@@ -262,7 +258,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
         //Record changed item
         int[] m_changedItemsFlag;
-        int m_systemLevelChangedFlag = 0;
+        int m_systemLevelChangedFlag;
         #endregion
 
         #region okButton

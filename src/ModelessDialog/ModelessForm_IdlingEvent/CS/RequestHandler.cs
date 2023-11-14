@@ -112,7 +112,7 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         /// <param name="text">Caption of the transaction for the operation.</param>
         /// <param name="operation">A delegate to perform the operation on an instance of a door.</param>
         /// 
-        private static void ModifySelectedDoors(UIApplication uiapp, String text, DoorOperation operation)
+        private static void ModifySelectedDoors(UIApplication uiapp, string text, DoorOperation operation)
         {
             var uidoc = uiapp.ActiveUIDocument;
 

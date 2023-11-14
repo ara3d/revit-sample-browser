@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -68,8 +67,8 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
             var log = assemblyLocation + "." + DateTime.Now.ToString("yyyyMMdd") + ".log";
@@ -104,13 +103,13 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                     commandData.JournalData[DataKey] = message;
                 }
 
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
                 Trace.WriteLine(ex.ToString());
                 message = ex.ToString();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             finally
             {
@@ -127,7 +126,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
         /// <param name="message">Error message to be dumped.</param>
         /// <param name="elements">Some elements to return.</param>
         /// <returns></returns>
-        private bool FindRoomBoundingRoofs(ref string message, Autodesk.Revit.DB.ElementSet elements)
+        private bool FindRoomBoundingRoofs(ref string message, ElementSet elements)
         {
             // Get all rooms
             var rooms = GetRoomsElements();
@@ -193,7 +192,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
             // Format results
             if (roomsAndRoofs.Count > 0)
             {
-                var logs = String.Format("Rooms that have a bounding roof:");
+                var logs = string.Format("Rooms that have a bounding roof:");
                 message += logs + "\t\r\n";
                 Trace.WriteLine(logs);
                 foreach (var kvp in roomsAndRoofs)
@@ -202,13 +201,13 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                     rooms.Remove(kvp.Key);
 
                     var roofs = kvp.Value;
-                    String roofsString;
+                    string roofsString;
 
                     // Single roof boundary
                     if (roofs.Count == 1)
                     {
                         var roof = m_document.GetElement(roofs[0]);
-                        roofsString = String.Format("Roof: Id = {0}, Name = {1}", roof.Id.ToString(), roof.Name);
+                        roofsString = string.Format("Roof: Id = {0}, Name = {1}", roof.Id.ToString(), roof.Name);
                     }
                     // Multiple roofs
                     else
@@ -217,7 +216,7 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
                     }
 
                     // Save results
-                    logs = String.Format(
+                    logs = string.Format(
                         "  Room: Id = {0}, Name = {1} --> {2}",
                         kvp.Key.Id.ToString(), kvp.Key.Name, roofsString);
                     message += logs + "\t\r\n";
@@ -229,13 +228,13 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
             Trace.WriteLine("Geometry relationship checking finished...");
             if (rooms.Count != 0)
             {
-                var logs = String.Format("Below rooms don't have bounding roofs:");
+                var logs = string.Format("Below rooms don't have bounding roofs:");
                 message += logs + "\t\r\n";
                 Trace.WriteLine(logs);
                 foreach (var room in rooms)
                 {
                     elements.Insert(room);
-                    logs = String.Format("  Room Id: {0}, Room Name: {1}",
+                    logs = string.Format("  Room Id: {0}, Room Name: {1}",
                         room.Id.ToString(), room.Name);
                     message += logs + "\t\r\n";
                     Trace.WriteLine(logs);

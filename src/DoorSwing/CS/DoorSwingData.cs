@@ -21,13 +21,9 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Windows.Forms;
 
 
 namespace Revit.SDK.Samples.DoorSwing.CS
@@ -41,25 +37,19 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
         // store door-opening types: user to decide how he wants to identify 
         // the Left, Right or others information.
-        public static List<String> OpeningTypes = new List<string>();
+        public static List<string> OpeningTypes = new List<string>();
 
         // store current project's door families.
         List<DoorFamily> m_doorFamilies = new List<DoorFamily>();
 
-        Autodesk.Revit.UI.UIApplication m_app;
+        UIApplication m_app;
 
         #endregion
 
         #region "Properties"
 
         // retrieves door families.
-        public List<DoorFamily> DoorFamilies
-        {
-            get
-            {
-                return m_doorFamilies;
-            }
-        }
+        public List<DoorFamily> DoorFamilies => m_doorFamilies;
 
         #endregion
 
@@ -88,7 +78,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// constructor.
         /// </summary>
         /// <param name="app"> Revit application</param>
-        public DoorSwingData(Autodesk.Revit.UI.UIApplication app)
+        public DoorSwingData(UIApplication app)
         {
             m_app = app;
 
@@ -112,7 +102,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// this parameter is used for invoking this method in Application's events (document save and document saveAs).
         /// update door infos in Application level events should not show unnecessary messageBox.
         /// </param>
-        public static Autodesk.Revit.UI.Result UpdateDoorsInfo(Document doc, bool onlyUpdateSelect,
+        public static Result UpdateDoorsInfo(Document doc, bool onlyUpdateSelect,
                                            bool showUpdateResultMessage, ref string message)
         {
             if ((!AssignedAllRooms(doc)) && showUpdateResultMessage)
@@ -125,7 +115,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 if (TaskDialogResult.No == dialogResult)
                 {
                     message = "Update cancelled. Please assign rooms for all eligible areas first.";
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
             }
 
@@ -186,7 +176,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                           door.ParametersMap.Contains("Internal Door")))
                     {
                         message = "Cannot update door parameters. Please customize door opening expression first.";
-                        return Autodesk.Revit.UI.Result.Failed;
+                        return Result.Failed;
                     }
                 }
 
@@ -194,10 +184,10 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 doorCount++;
 
                 // update one door's Opening parameter value.
-                if (UpdateOpeningFeatureOfOneDoor(door) == Autodesk.Revit.UI.Result.Failed)
+                if (UpdateOpeningFeatureOfOneDoor(door) == Result.Failed)
                 {
                     message = "Cannot update door parameters. Please customize door opening expression first.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // update one door's from/to room.
@@ -212,18 +202,18 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
                 if (onlyUpdateSelect)
                 {
-                    Autodesk.Revit.UI.TaskDialog.Show("Door Swing", "Updated all selected doors of " + doc.Title +
+                    TaskDialog.Show("Door Swing", "Updated all selected doors of " + doc.Title +
                                                          " (" + doorCount + " doors).\r\n (Selection may " +
                                                          "include miscellaneous elements.)");
                 }
                 else
                 {
-                    Autodesk.Revit.UI.TaskDialog.Show("Door Swing", "Updated all doors of " + doc.Title + " (" +
+                    TaskDialog.Show("Door Swing", "Updated all doors of " + doc.Title + " (" +
                                                          doorCount + " doors).");
                 }
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -291,12 +281,12 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
             if (onlyUpdateSelect)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Door Swing", "Updated all selected doors (" + doorCount +
+                TaskDialog.Show("Door Swing", "Updated all selected doors (" + doorCount +
                                                      " doors).\r\n (Selection may include miscellaneous elements.)");
             }
             else
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Door Swing", "Updated all doors of this project (" +
+                TaskDialog.Show("Door Swing", "Updated all doors of this project (" +
                                                      doorCount + " doors).");
             }
         }
@@ -305,7 +295,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         /// Update doors' Left/Right information.
         /// </summary>
         /// <param name="door">one door instance.</param>
-        private static Autodesk.Revit.UI.Result UpdateOpeningFeatureOfOneDoor(FamilyInstance door)
+        private static Result UpdateOpeningFeatureOfOneDoor(FamilyInstance door)
         {
             // flag whether the opening value should switch from its corresponding family's basic opening value.
             var switchesOpeningValueFlag = false;
@@ -353,7 +343,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 }
                 else
                 {
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
             }
             else
@@ -364,13 +354,13 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 }
                 else
                 {
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
             }
 
             // update door's Opening param.
             openingParam.Set(rightOpeningValue);
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>

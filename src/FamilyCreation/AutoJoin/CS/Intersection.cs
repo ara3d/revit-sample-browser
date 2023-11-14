@@ -20,10 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-
-using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 
 using GeometryElement = Autodesk.Revit.DB.GeometryElement;
@@ -54,7 +51,7 @@ namespace Revit.SDK.Samples.AutoJoin.CS
          {
             foreach (var curve in curvesOfB)
             {
-               if (face.Intersect(curve) == Autodesk.Revit.DB.SetComparisonResult.Overlap)
+               if (face.Intersect(curve) == SetComparisonResult.Overlap)
                {
                   return true;
                }
@@ -147,7 +144,7 @@ namespace Revit.SDK.Samples.AutoJoin.CS
          {
             foreach (Edge edge in loop)
             {
-               var points = edge.Tessellate() as List<Autodesk.Revit.DB.XYZ>;
+               var points = edge.Tessellate() as List<XYZ>;
                for (var ii = 0; ii + 1 < points.Count; ii++)
                {
                   var line = Line.CreateBound(points[ii], points[ii + 1]);

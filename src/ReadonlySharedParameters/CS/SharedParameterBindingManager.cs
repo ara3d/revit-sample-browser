@@ -22,21 +22,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
 {
     class SharedParameterBindingManager
 		{
-			public String Name { get; set; }
+			public string Name { get; set; }
 			public ForgeTypeId Type { get; set; }
 			public bool UserModifiable  { get; set; }
-			public String Description { get; set; }
+			public string Description { get; set; }
 			public bool Instance { get; set; }
 			public Definition Definition { get; set; }
 			public ForgeTypeId ParameterGroup { get; set; }

@@ -22,11 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.BoundaryConditions.CS
@@ -34,7 +29,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     /// <summary>
     /// user enter a positive number as the SpringModulus
     /// </summary>
-    public partial class SpringModulusForm : System.Windows.Forms.Form
+    public partial class SpringModulusForm : Form
     {
         // member
         private double m_springModulus; // new value
@@ -47,40 +42,22 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         public ConversionValue Conversion
         {
-            get
-            {
-                return m_conversion;
-            }
-            set
-            {
-                m_conversion = value;
-            }
+            get => m_conversion;
+            set => m_conversion = value;
         }
 
         /// <summary>
         /// get the new value after interact with user
         /// </summary>
-        public double StringModulus
-        {
-            get
-            {
-                return m_springModulus; 
-            }
-        }
+        public double StringModulus => m_springModulus;
 
         /// <summary>
         /// set the old value before interact with user
         /// </summary>
         public double OldStringModulus
         {
-            get
-            {
-                return m_oldSpringModulus;
-            }
-            set
-            {
-                m_oldSpringModulus = value;
-            }
+            get => m_oldSpringModulus;
+            set => m_oldSpringModulus = value;
         }
 
         /// <summary>
@@ -122,7 +99,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         {
             if (!springModulusTextBox.Focused)
             {
-                this.DialogResult = DialogResult.OK; 
+                DialogResult = DialogResult.OK; 
             }                    
         }
 
@@ -175,7 +152,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             try
             {
                 // the spring modulus should be a double number
-                var temp = Double.Parse(springModulusText);
+                var temp = double.Parse(springModulusText);
 
                 // deal with the input with the given precision
                 temp = Math.Round(temp, m_conversion.Precision);

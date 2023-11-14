@@ -21,13 +21,8 @@
 // 
 
 using System;
-using System.Text;
 using System.Reflection;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -52,22 +47,22 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         /// File Name or Prefix to be used
         /// </summary>
-        protected String m_exportFileName;
+        protected string m_exportFileName;
 
         /// <summary>
         /// Directory to store the exported file
         /// </summary>
-        protected String m_exportFolder;
+        protected string m_exportFolder;
 
         /// <summary>
         /// ActiveDocument Name
         /// </summary>
-        protected String m_activeDocName;
+        protected string m_activeDocName;
 
         /// <summary>
         /// ActiveView Name
         /// </summary>
-        protected String m_activeViewName;
+        protected string m_activeViewName;
 
 
         /// <summary>
@@ -83,99 +78,60 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         /// The filter which will be used in file saving dialog
         /// </summary>
-        protected String m_filter;
+        protected string m_filter;
 
         /// <summary>
         /// The title of exporting dialog
         /// </summary>
-        protected String m_title;
+        protected string m_title;
         #endregion
 
         #region Class Properties
         /// <summary>
         /// Revit command data
         /// </summary>
-        public ExternalCommandData CommandData
-        {
-            get 
-            { 
-                return m_commandData; 
-            }
-        }
+        public ExternalCommandData CommandData => m_commandData;
 
         /// <summary>
         /// ActiveDocument
         /// </summary>
-        public Document ActiveDocument
-        {
-
-            get
-            {
-                return m_activeDoc;
-            }
-
-        }
+        public Document ActiveDocument => m_activeDoc;
 
         /// <summary>
         /// File Name or Prefix to be used
         /// </summary>
-        public String ExportFileName
+        public string ExportFileName
         {
-            get 
-            { 
-                return m_exportFileName; 
-            }
-            set 
-            { 
-                m_exportFileName = value; 
-            }
+            get => m_exportFileName;
+            set => m_exportFileName = value;
         }  
 
         /// <summary>
         /// Directory to store the exported file
         /// </summary>
-        public String ExportFolder
+        public string ExportFolder
         {
-            get 
-            { 
-                return m_exportFolder; 
-            }
-            set 
-            { 
-                m_exportFolder = value; 
-            }
+            get => m_exportFolder;
+            set => m_exportFolder = value;
         }
 
 
         /// <summary>
         /// ActiveDocument Name
         /// </summary>
-        public String ActiveDocName
+        public string ActiveDocName
         {
-            get
-            {
-                return m_activeDocName;
-            }
-            set
-            {
-                m_activeDocName = value;
-            }
-        
+            get => m_activeDocName;
+            set => m_activeDocName = value;
         }
 
         /// <summary>
         /// ActiveView Name
         /// </summary>
-        public String ActiveViewName
+        public string ActiveViewName
         {
-            get
-            {
-                return m_activeViewName;
-            }
-            set
-            {
-                m_activeViewName = value;
-            }
+            get => m_activeViewName;
+            set => m_activeViewName = value;
         }
 
 
@@ -184,14 +140,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public bool Is3DView
         {
-            get
-            {
-                return m_is3DView;
-            }
-            set
-            {
-                m_is3DView = value;
-            }
+            get => m_is3DView;
+            set => m_is3DView = value;
         }
 
         /// <summary>
@@ -199,37 +149,20 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public ExportFormat ExportFormat
         {
-            get 
-            { 
-                return m_exportFormat; 
-            }
-            set 
-            { 
-                m_exportFormat = value; 
-            }
+            get => m_exportFormat;
+            set => m_exportFormat = value;
         }
 
         /// <summary>
         /// The filter which will be used in file saving dialog
         /// </summary>
-        public String Filter
-        {
-            get 
-            { 
-                return m_filter; 
-            }
-        }
+        public string Filter => m_filter;
 
         /// <summary>
         /// The title of exporting dialog
         /// </summary>
-        public String Title
-        {
-            get 
-            { 
-                return m_title; 
-            }
-        }
+        public string Title => m_title;
+
         #endregion
 
 
@@ -244,7 +177,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_commandData = commandData;
             m_activeDoc = commandData.Application.ActiveUIDocument.Document;
             m_exportFormat = exportFormat;
-            m_filter = String.Empty;
+            m_filter = string.Empty;
             Initialize();
         }
 
@@ -264,7 +197,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_exportFileName = m_activeDocName + "-" + viewType + "-" + m_activeViewName + "." + getExtension().ToString();
 
             //Whether current active view is 3D view
-            if (m_activeDoc.ActiveView.ViewType == Autodesk.Revit.DB.ViewType.ThreeD)
+            if (m_activeDoc.ActiveView.ViewType == ViewType.ThreeD)
             {
                 m_is3DView = true;
             }
@@ -278,9 +211,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Get the extension of the file to export
         /// </summary>
         /// <returns></returns>
-        private String getExtension()
+        private string getExtension()
         {
-            String extension = null;
+            string extension = null;
             switch (m_exportFormat)
             {
                 case ExportFormat.DWG:

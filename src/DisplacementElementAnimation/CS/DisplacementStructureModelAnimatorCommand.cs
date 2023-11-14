@@ -20,10 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DisplacementElementAnimation.CS

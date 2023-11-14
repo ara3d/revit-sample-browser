@@ -20,14 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
     /// <summary>
@@ -39,7 +31,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Wrapper for ProjectInfo
         /// </summary>
-        ProjectInfoWrapper m_projectInfoWrapper = null; 
+        ProjectInfoWrapper m_projectInfoWrapper; 
         #endregion
 
         #region Constructors

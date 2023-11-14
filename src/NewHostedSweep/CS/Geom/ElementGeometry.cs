@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -86,7 +85,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         public XYZ Translation
         {
-            get { return m_translation; }
+            get => m_translation;
             set
             {
                 m_isDirty = true;
@@ -99,7 +98,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         public double Scale
         {
-            get { return m_scale; }
+            get => m_scale;
             set
             {
                 m_isDirty = true;
@@ -112,7 +111,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         public Transform Rotation
         {
-            get { return m_rotation; }
+            get => m_rotation;
             set
             {
                 m_isDirty = true;
@@ -123,19 +122,13 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Element's Solid
         /// </summary>
-        public Solid Solid
-        {
-            get { return m_solid; }
-        }
+        public Solid Solid => m_solid;
 
         /// <summary>
         /// Solid's Edge to EdgeBinding dictionary. It is intent to store all the edges
         /// of solid.
         /// </summary>
-        public Dictionary<Edge, EdgeBinding> EdgeBindingDic
-        {
-            get { return m_edgeBindinDic; }
-        }
+        public Dictionary<Edge, EdgeBinding> EdgeBindingDic => m_edgeBindinDic;
 
         /// <summary>
         /// Constructor, Construct a new object with an element's geometry Solid,
@@ -263,8 +256,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         public bool IsHighLighted
         {
-            get { return m_isHighLighted; }
-            set { m_isHighLighted = value; }
+            get => m_isHighLighted;
+            set => m_isHighLighted = value;
         }
 
         /// <summary>
@@ -272,8 +265,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         public bool IsSelected
         {
-            get { return m_isSelected; }
-            set { m_isSelected = value; }
+            get => m_isSelected;
+            set => m_isSelected = value;
         }
 
         /// <summary>
@@ -368,7 +361,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <returns></returns>
         private bool HitTest(float x, float y)
         {
-            return this.GetRegion().IsVisible(x, y);
+            return GetRegion().IsVisible(x, y);
         }
 
         /// <summary>

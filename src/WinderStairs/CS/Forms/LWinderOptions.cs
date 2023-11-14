@@ -46,14 +46,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         public uint NumStepsAtStart
         {
-            get
-            {
-                return uint.Parse(numAtStartTextBox.Text);
-            }
-            set
-            {
-                numAtStartTextBox.Text = value.ToString();
-            }
+            get => uint.Parse(numAtStartTextBox.Text);
+            set => numAtStartTextBox.Text = value.ToString();
         }
 
         /// <summary>
@@ -61,14 +55,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         public uint NumStepsInCorner
         {
-            get
-            {
-                return uint.Parse(numInCornerTextBox.Text);
-            }
-            set
-            {
-                numInCornerTextBox.Text = value.ToString();
-            }
+            get => uint.Parse(numInCornerTextBox.Text);
+            set => numInCornerTextBox.Text = value.ToString();
         }
 
         /// <summary>
@@ -76,14 +64,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         public uint NumStepsAtEnd
         {
-            get
-            {
-                return uint.Parse(numAtEndTextBox.Text);
-            }
-            set
-            {
-                numAtEndTextBox.Text = value.ToString();
-            }
+            get => uint.Parse(numAtEndTextBox.Text);
+            set => numAtEndTextBox.Text = value.ToString();
         }
 
         /// <summary>
@@ -91,14 +73,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         public double RunWidth
         {
-            get
-            {
-                return double.Parse(runWidthTextBox.Text);
-            }
-            set
-            {
-                runWidthTextBox.Text = value.ToString();
-            }
+            get => double.Parse(runWidthTextBox.Text);
+            set => runWidthTextBox.Text = value.ToString();
         }
 
         /// <summary>
@@ -106,14 +82,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         public double CenterOffsetE
         {
-            get
-            {
-                return double.Parse(centerOffsetETextBox.Text);
-            }
-            set
-            {
-                centerOffsetETextBox.Text = value.ToString();
-            }
+            get => double.Parse(centerOffsetETextBox.Text);
+            set => centerOffsetETextBox.Text = value.ToString();
         }
 
         /// <summary>
@@ -121,37 +91,19 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         public double CenterOffsetF
         {
-            get
-            {
-                return double.Parse(centerOffsetFTextBox.Text);
-            }
-            set
-            {
-                centerOffsetFTextBox.Text = value.ToString();
-            }
+            get => double.Parse(centerOffsetFTextBox.Text);
+            set => centerOffsetFTextBox.Text = value.ToString();
         }
 
         /// <summary>
         /// A switch indicates whether to support DMU(dynamic model update).
         /// </summary>
-        public bool DMU
-        {
-            get
-            {
-                return dmuCheckBox.Checked;
-            }
-        }
+        public bool DMU => dmuCheckBox.Checked;
 
         /// <summary>
         /// A switch to control the sketch drawing of winder stairs.
         /// </summary>
-        public bool Sketch
-        {
-            get
-            {
-                return sketchCheckBox.Checked;
-            }
-        }
+        public bool Sketch => sketchCheckBox.Checked;
 
         /// <summary>
         /// Validate the UI input and it will warn if there are invalid user inputs.
@@ -223,8 +175,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         {
             if (ValidateInput())
             {
-                this.Close();
-                this.DialogResult = DialogResult.OK;
+                Close();
+                DialogResult = DialogResult.OK;
             }
         }
 
@@ -233,8 +185,8 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
-            this.DialogResult = DialogResult.Cancel;
+            Close();
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

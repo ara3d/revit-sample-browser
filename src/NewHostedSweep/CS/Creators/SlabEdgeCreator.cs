@@ -20,12 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
-using Autodesk.Revit;
-using System.Windows.Forms;
 using System.Collections;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
@@ -47,15 +43,15 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Edges which SlabEdge can be created on.
         /// </summary>
-        private Dictionary<Autodesk.Revit.DB.Element, List<Edge>> m_floorSlabEdges;
+        private Dictionary<Element, List<Edge>> m_floorSlabEdges;
 
         /// <summary>
         /// Filter all the edges from the element which SlabEdge can be created on.
         /// </summary>
         /// <param name="elem"></param>
-        private void FilterEdgesForSlabEdge(Autodesk.Revit.DB.Element elem)
+        private void FilterEdgesForSlabEdge(Element elem)
         {
-            var transaction = new Transaction(this.RvtDocument, "FilterEdgesForSlabEdge");
+            var transaction = new Transaction(RvtDocument, "FilterEdgesForSlabEdge");
             transaction.Start();
 
             // Note: This method will create a SlabEdge with no reference.
@@ -88,13 +84,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// A string indicates this creator just for Floor SlabEdge creation.
         /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return "Floor Slab Edge";
-            }
-        }
+        public override string Name => "Floor Slab Edge";
 
         /// <summary>
         /// All SlabEdge types in Revit active document.
@@ -127,13 +117,13 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Dictionary to store all the Floor=>Edges which SlabEdge can be created on.
         /// </summary>
-        public override Dictionary<Autodesk.Revit.DB.Element, List<Edge>> SupportEdges
+        public override Dictionary<Element, List<Edge>> SupportEdges
         {
             get
             {
                 if (m_floorSlabEdges == null)
                 {
-                    m_floorSlabEdges = new Dictionary<Autodesk.Revit.DB.Element, List<Edge>>();
+                    m_floorSlabEdges = new Dictionary<Element, List<Edge>>();
 
                     var collector = new FilteredElementCollector(m_rvtDoc);
                     collector.OfClass(typeof(Floor));

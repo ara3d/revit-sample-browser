@@ -37,13 +37,13 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
     //
 
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    public class AssociativeSectionUpdater : Autodesk.Revit.UI.IExternalCommand
+    public class AssociativeSectionUpdater : IExternalCommand
     {
         Document m_document;
         UIDocument m_documentUI;
 
         // application's private data
-        private static SectionUpdater m_sectionUpdater = null;
+        private static SectionUpdater m_sectionUpdater;
         private AddInId m_thisAppId;
 
         private static List<ElementId> idsToWatch = new List<ElementId>();
@@ -119,7 +119,7 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                                    where element.Name == name
                                    select element;
 
-                var sectionViews = viewElements.ToList<Autodesk.Revit.DB.Element>();
+                var sectionViews = viewElements.ToList<Element>();
                 if (sectionViews.Count == 0)
                 {
                     TaskDialog.Show("Message", "Cannot find the view name " + name + "\n The operation will be canceled.");
@@ -146,7 +146,7 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
 
                 return Result.Succeeded;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 message = ex.ToString();
                 return Result.Failed;

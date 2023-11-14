@@ -21,17 +21,8 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.IO;
-using System.Reflection;
-using System.Reflection.Emit;
 using System.Windows.Media.Imaging;
-using System.Configuration;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.Attributes;
-using System.Text;
-using System.Collections.Generic;
-using System.Xml.Linq;
 
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
@@ -57,7 +48,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
        public void RegisterDockableWindow(UIApplication  application, Guid mainPageGuid)
        {
           Globals.sm_UserDockablePaneId = new DockablePaneId(mainPageGuid);
-          application.RegisterDockablePane(Globals.sm_UserDockablePaneId, Globals.ApplicationName, ThisApplication.thisApp.GetMainWindow() as IDockablePaneProvider);
+          application.RegisterDockablePane(Globals.sm_UserDockablePaneId, Globals.ApplicationName, thisApp.GetMainWindow() as IDockablePaneProvider);
        }
 
        /// <summary>
@@ -66,7 +57,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
        public void RegisterDockableWindow(UIControlledApplication application, Guid mainPageGuid)
        {
           Globals.sm_UserDockablePaneId = new DockablePaneId(mainPageGuid);
-          application.RegisterDockablePane(Globals.sm_UserDockablePaneId, Globals.ApplicationName, ThisApplication.thisApp.GetMainWindow() as IDockablePaneProvider);
+          application.RegisterDockablePane(Globals.sm_UserDockablePaneId, Globals.ApplicationName, thisApp.GetMainWindow() as IDockablePaneProvider);
        }
 
        /// <summary>
@@ -114,7 +105,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
        /// <summary>
        /// Show or hide a dockable pane.
        /// </summary>
-       public void SetWindowVisibility(Autodesk.Revit.UI.UIApplication application, bool state) 
+       public void SetWindowVisibility(UIApplication application, bool state) 
        {
           var pane = application.GetDockablePane(Globals.sm_UserDockablePaneId);
           if (pane != null)
@@ -156,16 +147,12 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
 
    
 
-       public Autodesk.Revit.UI.DockablePaneId MainPageDockablePaneId
-       {
-
-          get { return Globals.sm_UserDockablePaneId; }
-       }
+       public DockablePaneId MainPageDockablePaneId => Globals.sm_UserDockablePaneId;
 
        #region Data
 
         MainPage m_mainPage;
-        internal static ThisApplication thisApp = null;
+        internal static ThisApplication thisApp;
         private APIUtility m_APIUtility;
 
 

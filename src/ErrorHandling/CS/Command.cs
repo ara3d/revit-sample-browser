@@ -22,10 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.ApplicationServices;
@@ -104,7 +100,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
             m_fdError.AddResolutionType(FailureResolutionType.DeleteElements, "DeleteElements", typeof(DeleteElements));
             m_fdError.SetDefaultResolutionType(FailureResolutionType.DeleteElements);
          }
-         catch (System.Exception)
+         catch (Exception)
          {
             return Result.Failed;
          }
@@ -114,24 +110,8 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
       #endregion
 
       #region IExternalApplication Members
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-      ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData,
+      ref string message, ElementSet elements)
       {
          m_revitApp = commandData.Application.Application;
          m_doc = commandData.Application.ActiveUIDocument.Document;
@@ -158,7 +138,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                m_doc.PostFailure(fm);
                transaction.Commit();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                message = "Failed to commit transaction Warning_FailurePreproccessor";
                return Result.Failed;
@@ -182,7 +162,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
 
                transaction.Commit();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                message = "Failed to commit transaction Warning_FailurePreproccessor_OverlappedWall";
                return Result.Failed;
@@ -206,7 +186,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                m_doc.PostFailure(fm);
                transaction.Commit();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                message = "Failed to commit transaction Error_FailuresProcessingEvent";
                return Result.Failed;
@@ -231,7 +211,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
                m_doc.PostFailure(fm);
                transaction.Commit();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                message = "Failed to commit transaction Error_FailuresProcessor";
                return Result.Failed;
@@ -269,7 +249,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
             foreach (var fma in fmas)
             {
                var id = fma.GetFailureDefinitionId();
-               if (id == Command.m_idError)
+               if (id == m_idError)
                {
                   failuresAccessor.ResolveFailure(fma);
                }

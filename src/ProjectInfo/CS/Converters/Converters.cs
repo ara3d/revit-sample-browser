@@ -22,9 +22,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Reflection;
-using Autodesk.Revit;
 
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
@@ -40,7 +37,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <returns>true if destinationType is string, otherwise false</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            return destinationType.Equals(typeof(System.String)) || base.CanConvertTo(context, destinationType);
+            return destinationType.Equals(typeof(string)) || base.CanConvertTo(context, destinationType);
         }
 
         /// <summary>

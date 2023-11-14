@@ -23,12 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
-using System.Drawing;
-using Autodesk.Revit;
 using System.Collections.ObjectModel;
 
 namespace Revit.SDK.Samples.Openings.CS
@@ -54,10 +50,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public UIApplication Revit
         {
-            get
-            {
-                return m_revit;
-            }
+            get => m_revit;
             set
             {
                 if (value != m_revit)
@@ -68,25 +61,13 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <summary>
         /// Property to get Opening store in OpeningInfo
         /// </summary>
-        public Opening Opening
-        {
-            get
-            {
-                return m_opening;
-            }
-        }
+        public Opening Opening => m_opening;
 
         /// <summary>
         /// Property to get Name and Id 
         /// eg: "Opening Cut (114389)"
         /// </summary>
-        public string NameAndId
-        {
-            get
-            {
-                return String.Concat(m_opening.Name, " (", m_opening.Id.ToString(), ")");
-            }
-        }
+        public string NameAndId => string.Concat(m_opening.Name, " (", m_opening.Id.ToString(), ")");
 
         /// <summary>
         /// Property to get bool the define whether opening is Shaft Opening
@@ -115,35 +96,17 @@ namespace Revit.SDK.Samples.Openings.CS
         /// Property to get OpeningProperty class 
         /// which can use in PropertyGrid control
         /// </summary>
-        public OpeningProperty Property
-        {
-            get
-            {
-                return m_property;
-            }
-        }
+        public OpeningProperty Property => m_property;
 
         /// <summary>
         /// Property to get Profile information of opening
         /// </summary>
-        public WireFrame Sketch
-        {
-            get
-            {
-                return m_sketch;
-            }
-        }
+        public WireFrame Sketch => m_sketch;
 
         /// <summary>
         /// Property to get BoundingBox of Opening
         /// </summary>
-        public BoundingBox BoundingBox
-        {
-            get
-            {
-                return m_boundingBox;
-            }
-        }
+        public BoundingBox BoundingBox => m_boundingBox;
 
         /// <summary>
         /// The default constructor, 
@@ -215,7 +178,7 @@ namespace Revit.SDK.Samples.Openings.CS
             var p1 = boundRect[0];
             points.Add(p1);
 
-            var p2 = new Autodesk.Revit.DB.XYZ(
+            var p2 = new XYZ(
                 boundRect[0].X,
                 boundRect[0].Y,
                 boundRect[1].Z);
@@ -224,7 +187,7 @@ namespace Revit.SDK.Samples.Openings.CS
             var p3 = boundRect[1];
             points.Add(p3);
 
-            var p4 = new Autodesk.Revit.DB.XYZ (
+            var p4 = new XYZ (
                 boundRect[1].X,
                 boundRect[1].Y,
                 boundRect[0].Z);
@@ -248,12 +211,12 @@ namespace Revit.SDK.Samples.Openings.CS
                 return;
             }
 
-            Autodesk.Revit.DB.XYZ previousPoint;
+            XYZ previousPoint;
             previousPoint = points[0];
 
             for (var i = 1; i < points.Count; i++)
             {
-                Autodesk.Revit.DB.XYZ point;
+                XYZ point;
                 point = points[i];
 
                 var line = new Line3D();

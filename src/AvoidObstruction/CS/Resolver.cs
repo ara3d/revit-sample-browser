@@ -23,16 +23,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.DB.Mechanical;
-using System.Diagnostics;
-using Element = Autodesk.Revit.DB.Element;
-using System.Collections;
 
 namespace Revit.SDK.Samples.AvoidObstruction.CS
 {
@@ -87,7 +82,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
       /// </summary>
       public void Resolve()
       {
-         var pipes = new List<Autodesk.Revit.DB.Element>();
+         var pipes = new List<Element>();
          var collector = new FilteredElementCollector(m_rvtDoc);
          pipes.AddRange(collector.OfClass(typeof(Pipe)).ToElements());
          foreach (var pipe in pipes)
@@ -102,10 +97,10 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
       /// <param name="dir">Direction to calculate</param>
       /// <param name="count">How many perpendicular directions will be calculated</param>
       /// <returns>The calculated perpendicular directions with dir</returns>
-      private List<Autodesk.Revit.DB.XYZ> PerpendicularDirs(Autodesk.Revit.DB.XYZ dir, int count)
+      private List<XYZ> PerpendicularDirs(XYZ dir, int count)
       {
-         var dirs = new List<Autodesk.Revit.DB.XYZ>();
-         var plane = Plane.CreateByNormalAndOrigin(dir, Autodesk.Revit.DB.XYZ.Zero);
+         var dirs = new List<XYZ>();
+         var plane = Plane.CreateByNormalAndOrigin(dir, XYZ.Zero);
          var arc = Arc.Create(plane, 1.0, 0, 6.28);
 
          var delta = 1.0 / (double)count;
@@ -276,8 +271,8 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
          var jumpStep = pipe.Diameter;
 
          // Calculate the directions in which to find the solution.
-         var dirs = new List<Autodesk.Revit.DB.XYZ>();
-         Autodesk.Revit.DB.XYZ crossDir = null;
+         var dirs = new List<XYZ>();
+         XYZ crossDir = null;
          foreach (var gref in section.Refs)
          {
             var elem = m_rvtDoc.GetElement(gref.GetReference());
@@ -367,7 +362,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
       /// <param name="dir">Offset Direction of the parallel line</param>
       /// <param name="maxLength">Maximum offset distance</param>
       /// <returns>Parallel line which can avoid the obstruction</returns>
-      private Line FindParallelLine(Pipe pipe, Section section, Autodesk.Revit.DB.XYZ dir, double maxLength)
+      private Line FindParallelLine(Pipe pipe, Section section, XYZ dir, double maxLength)
       {
          var step = pipe.Diameter;
          var hight = 2 * pipe.Diameter;
@@ -496,7 +491,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
       /// <param name="pipe">Pipe to find the connector</param>
       /// <param name="conXYZ">Specified point</param>
       /// <returns>Connector whose origin is conXYZ</returns>
-      private Connector FindConnector(Pipe pipe, Autodesk.Revit.DB.XYZ conXYZ)
+      private Connector FindConnector(Pipe pipe, XYZ conXYZ)
       {
          var conns = pipe.ConnectorManager.Connectors;
          foreach (Connector conn in conns)
@@ -516,7 +511,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
       /// <param name="pipe">Pipe to find the connector</param>
       /// <param name="conXYZ">Specified point</param>
       /// <returns>Connector whose origin is conXYZ</returns>
-      private Connector FindConnectedTo(Pipe pipe, Autodesk.Revit.DB.XYZ conXYZ)
+      private Connector FindConnectedTo(Pipe pipe, XYZ conXYZ)
       {
          var connItself = FindConnector(pipe, conXYZ);
          var connSet = connItself.AllRefs;

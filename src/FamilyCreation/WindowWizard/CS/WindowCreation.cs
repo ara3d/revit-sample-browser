@@ -20,8 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-
 namespace Revit.SDK.Samples.WindowWizard.CS
 {
     /// <summary>

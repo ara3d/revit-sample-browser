@@ -23,7 +23,6 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.Analysis;
@@ -185,7 +184,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
                   var inst = geomObj as GeometryInstance;
                   if (inst != null) // in-place family walls
                   {
-                     foreach (Object o in inst.SymbolGeometry)
+                     foreach (object o in inst.SymbolGeometry)
                      {
                         var s = o as Solid;
                         if (s != null)

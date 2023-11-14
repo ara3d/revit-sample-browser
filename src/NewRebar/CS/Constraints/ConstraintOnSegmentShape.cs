@@ -20,9 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 
 using Autodesk.Revit.DB.Structure;
@@ -66,13 +63,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Get RebarShapeDefinitionBySegments object.
         /// </summary>
-        protected RebarShapeDefinitionBySegments GetRebarShapeDefinitionBySegments
-        {
-            get
-            {
-                return m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionBySegments;
-            }
-        }
+        protected RebarShapeDefinitionBySegments GetRebarShapeDefinitionBySegments => m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionBySegments;
     }
 
     /// <summary>
@@ -118,10 +109,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -129,14 +117,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public RebarShapeVertexTurn Turn
         {
-            get
-            {
-                return m_turn;
-            }
-            set
-            {
-                m_turn = value;
-            }
+            get => m_turn;
+            set => m_turn = value;
         }
 
         /// <summary>
@@ -144,14 +126,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public RebarShapeBendAngle BendAngle
         {
-            get
-            {
-                return m_bendAngle;
-            }
-            set
-            {
-                m_bendAngle = value;
-            }
+            get => m_bendAngle;
+            set => m_bendAngle = value;
         }
 
         /// <summary>
@@ -215,10 +191,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -226,8 +199,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public RebarShapeVertexTurn Turn
         {
-            get { return m_turn; }
-            set { m_turn = value; }
+            get => m_turn;
+            set => m_turn = value;
         }
 
         /// <summary>
@@ -235,8 +208,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public RebarShapeBendAngle BendAngle
         {
-            get { return m_bendAngle; }
-            set { m_bendAngle = value; }
+            get => m_bendAngle;
+            set => m_bendAngle = value;
         }
 
         /// <summary>
@@ -250,10 +223,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateParameterTypeConverter();
                 return m_radiusParameter;
             }
-            set
-            {
-                m_radiusParameter = value;
-            }
+            set => m_radiusParameter = value;
         }
 
 
@@ -262,14 +232,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public bool MeasureIncludingBarThickness
         {
-            get
-            {
-                return m_measureIncludingBarThickness;
-            }
-            set
-            {
-                m_measureIncludingBarThickness = value;
-            }
+            get => m_measureIncludingBarThickness;
+            set => m_measureIncludingBarThickness = value;
         }
 
         /// <summary>
@@ -332,10 +296,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -349,7 +310,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateParameterTypeConverter();
                 return m_parameter;
             }
-            set { m_parameter = value; }
+            set => m_parameter = value;
         }
 
         /// <summary>
@@ -357,8 +318,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public bool MeasureToOutsideOfBend0
         {
-            get { return m_measureToOutsideOfBend0; }
-            set { m_measureToOutsideOfBend0 = value; }
+            get => m_measureToOutsideOfBend0;
+            set => m_measureToOutsideOfBend0 = value;
         }
 
         /// <summary>
@@ -366,8 +327,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public bool MeasureToOutsideOfBend1
         {
-            get { return m_measureToOutsideOfBend1; }
-            set { m_measureToOutsideOfBend1 = value; }
+            get => m_measureToOutsideOfBend1;
+            set => m_measureToOutsideOfBend1 = value;
         }
 
         /// <summary>
@@ -442,10 +403,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -459,7 +417,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateParameterTypeConverter();
                 return m_parameter;
             }
-            set { m_parameter = value; }
+            set => m_parameter = value;
         }
 
         /// <summary>
@@ -467,8 +425,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double ConstraintDirCoordX
         {
-            get { return m_constraintDirCoordX; }
-            set { m_constraintDirCoordX = value; }
+            get => m_constraintDirCoordX;
+            set => m_constraintDirCoordX = value;
         }
 
         /// <summary>
@@ -476,8 +434,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double ConstraintDirCoordY
         {
-            get { return m_constraintDirCoordY; }
-            set { m_constraintDirCoordY = value; }
+            get => m_constraintDirCoordY;
+            set => m_constraintDirCoordY = value;
         }
 
         /// <summary>
@@ -485,8 +443,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public int SignOfZCoordOfCrossProductOfConstraintDirBySegmentDir
         {
-            get { return m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir; }
-            set { m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir = value; }
+            get => m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir;
+            set => m_signOfZCoordOfCrossProductOfConstraintDirBySegmentDir = value;
         }
 
         /// <summary>
@@ -494,8 +452,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public bool MeasureToOutsideOfBend0
         {
-            get { return m_measureToOutsideOfBend0; }
-            set { m_measureToOutsideOfBend0 = value; }
+            get => m_measureToOutsideOfBend0;
+            set => m_measureToOutsideOfBend0 = value;
         }
 
         /// <summary>
@@ -503,8 +461,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public bool MeasureToOutsideOfBend1
         {
-            get { return m_measureToOutsideOfBend1; }
-            set { m_measureToOutsideOfBend1 = value; }
+            get => m_measureToOutsideOfBend1;
+            set => m_measureToOutsideOfBend1 = value;
         }
 
         /// <summary>
@@ -581,7 +539,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_parameter;
             }
-            set { m_parameter = value; }
+            set => m_parameter = value;
         }
 
         /// <summary>
@@ -589,8 +547,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double ConstraintDirCoordX
         {
-            get { return m_constraintDirCoordX; }
-            set { m_constraintDirCoordX = value; }
+            get => m_constraintDirCoordX;
+            set => m_constraintDirCoordX = value;
         }
 
         /// <summary>
@@ -598,8 +556,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double ConstraintDirCoordY
         {
-            get { return m_constraintDirCoordY; }
-            set { m_constraintDirCoordY = value; }
+            get => m_constraintDirCoordY;
+            set => m_constraintDirCoordY = value;
         }
 
         /// <summary>
@@ -615,10 +573,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -626,8 +581,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public EndReference End0
         {
-            get { return m_end; }
-            set { m_end = value; }
+            get => m_end;
+            set => m_end = value;
         }
 
         /// <summary>
@@ -642,7 +597,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment1;
             }
-            set { m_segment1 = value; }
+            set => m_segment1 = value;
         }
 
         /// <summary>
@@ -650,8 +605,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public EndReference End1
         {
-            get { return m_end1; }
-            set { m_end1 = value; }
+            get => m_end1;
+            set => m_end1 = value;
         }
 
         /// <summary>
@@ -721,10 +676,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateParameterTypeConverter();
                 return m_parameter;
             }
-            set
-            {
-                m_parameter = value;
-            }
+            set => m_parameter = value;
         }
 
         /// <summary>
@@ -732,14 +684,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double ConstraintDirCoordX
         {
-            get
-            {
-                return m_constraintDirCoordX;
-            }
-            set
-            {
-                m_constraintDirCoordX = value;
-            }
+            get => m_constraintDirCoordX;
+            set => m_constraintDirCoordX = value;
         }
 
         /// <summary>
@@ -747,14 +693,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double ConstraintDirCoordY
         {
-            get
-            {
-                return m_constraintDirCoordY;
-            }
-            set
-            {
-                m_constraintDirCoordY = value;
-            }
+            get => m_constraintDirCoordY;
+            set => m_constraintDirCoordY = value;
         }
 
         /// <summary>
@@ -769,7 +709,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set { m_segment = value; }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -784,7 +724,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment1;
             }
-            set { m_segment1 = value; }
+            set => m_segment1 = value;
         }
 
         /// <summary>
@@ -792,8 +732,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public EndReference End1
         {
-            get { return m_end1; }
-            set { m_end1 = value; }
+            get => m_end1;
+            set => m_end1 = value;
         }
 
         /// <summary>
@@ -857,10 +797,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateParameterTypeConverter();
                 return m_parameter;
             }
-            set
-            {
-                m_parameter = value;
-            }
+            set => m_parameter = value;
         }
 
         /// <summary>
@@ -868,14 +805,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double ConstraintDirCoordX
         {
-            get
-            {
-                return m_constraintDirCoordX;
-            }
-            set
-            {
-                m_constraintDirCoordX = value;
-            }
+            get => m_constraintDirCoordX;
+            set => m_constraintDirCoordX = value;
         }
 
         /// <summary>
@@ -883,14 +814,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double ConstraintDirCoordY
         {
-            get
-            {
-                return m_constraintDirCoordY;
-            }
-            set
-            {
-                m_constraintDirCoordY = value;
-            }
+            get => m_constraintDirCoordY;
+            set => m_constraintDirCoordY = value;
         }
 
         /// <summary>
@@ -904,7 +829,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateSegmentIdTypeConverter();
                 return m_segment;
             }
-            set { m_segment = value; }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -918,7 +843,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateSegmentIdTypeConverter();
                 return m_segment1;
             }
-            set { m_segment1 = value; }
+            set => m_segment1 = value;
         }
 
         /// <summary>
@@ -965,10 +890,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -982,10 +904,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateParameterTypeConverter();
                 return m_radiusParameter;
             }
-            set
-            {
-                m_radiusParameter = value;
-            }
+            set => m_radiusParameter = value;
         }
 
         /// <summary>
@@ -1037,10 +956,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -1054,7 +970,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 UpdateParameterTypeConverter();
                 return m_radiusParameter;
             }
-            set { m_radiusParameter = value; }
+            set => m_radiusParameter = value;
         }
 
         /// <summary>
@@ -1062,8 +978,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public bool MeasureToOutsideOfBend
         {
-            get { return m_measureToOutsideOfBend; }
-            set { m_measureToOutsideOfBend = value; }
+            get => m_measureToOutsideOfBend;
+            set => m_measureToOutsideOfBend = value;
         }
 
         /// <summary>
@@ -1116,10 +1032,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>
@@ -1127,14 +1040,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double VecCoordX
         {
-            get
-            {
-                return m_vecCoordX;
-            }
-            set
-            {
-                m_vecCoordX = value;
-            }
+            get => m_vecCoordX;
+            set => m_vecCoordX = value;
         }
 
         /// <summary>
@@ -1142,14 +1049,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double VecCoordY
         {
-            get
-            {
-                return m_vecCoordY;
-            }
-            set
-            {
-                m_vecCoordY = value;
-            }
+            get => m_vecCoordY;
+            set => m_vecCoordY = value;
         }
 
         /// <summary>
@@ -1190,10 +1091,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_segment;
             }
-            set
-            {
-                m_segment = value;
-            }
+            set => m_segment = value;
         }
 
         /// <summary>

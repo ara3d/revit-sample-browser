@@ -21,13 +21,6 @@
 //
 namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
-    using System.ComponentModel;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
 
     using GeoElement = Autodesk.Revit.DB.GeometryElement;

@@ -20,15 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Windows.Forms;
-using System.Collections;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 
 namespace Revit.SDK.Samples.StairsAutomation.CS
@@ -65,7 +57,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 
         #endregion
 
-        private static int stairsIndex = 0;
+        private static int stairsIndex;
         private static int[] stairsConfigs = { 0, 3, 4, 1, 2 };
     }
 }

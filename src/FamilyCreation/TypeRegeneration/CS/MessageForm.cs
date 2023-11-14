@@ -20,16 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.Threading;
-using System.Runtime.InteropServices;
-
 namespace Revit.SDK.Samples.TypeRegeneration.CS
 {
     /// <summary>
@@ -48,7 +38,7 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         public MessageForm()
         {
             InitializeComponent();
-            this.Text = "Type Regeneration Message Form";
+            Text = "Type Regeneration Message Form";
             //set the timer elapsed event
             timer.Elapsed += new System.Timers.ElapsedEventHandler(onTimeOut);//Set the executed event when time is out          
             timer.Enabled = false;
@@ -74,7 +64,7 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         private void onTimeOut(object source, System.Timers.ElapsedEventArgs e)
         {            
             timer.Enabled = false;
-            this.Close();
+            Close();
         }        
     }
 }

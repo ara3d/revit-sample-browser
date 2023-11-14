@@ -73,7 +73,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <returns>the validation result message</returns>
         public string IsDouble(string value, ref double result)
         {
-            if (Double.TryParse("0" + value, out result))
+            if (double.TryParse("0" + value, out result))
             {
                 return string.Empty;
             }

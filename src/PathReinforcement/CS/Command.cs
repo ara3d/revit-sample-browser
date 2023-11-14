@@ -22,12 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-using System.Drawing;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -50,13 +45,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <summary>
         /// static property corresponding to s_rebarBarTypes field.
         /// </summary>
-        public static Hashtable BarTypes
-        {
-            get
-            {
-                return s_rebarBarTypes;
-            }
-        }
+        public static Hashtable BarTypes => s_rebarBarTypes;
 
         #region IExternalCommand Members Implementation
         /// <summary>
@@ -75,8 +64,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
@@ -92,11 +81,11 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 if (1 != elems.Size)
                 {
                     message = "please select one PathReinforcement.";
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
 
-                Autodesk.Revit.DB.Element selectElem = null;
-                foreach (Autodesk.Revit.DB.Element e in elems)
+                Element selectElem = null;
+                foreach (Element e in elems)
                 {
                     selectElem = e;
                 }
@@ -104,7 +93,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 if (!(selectElem is Autodesk.Revit.DB.Structure.PathReinforcement))
                 {
                     message = "please select one PathReinforcement.";
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
                 #endregion
 
@@ -141,13 +130,13 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             {
                 transaction.RollBack();
                 message = e.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             finally
             {
                 transaction.Commit();
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         #endregion

@@ -22,11 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -42,14 +38,14 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
       ColumnGeometrySupport m_geometry; // The geometry support for column rebar creation
 
-      RebarBarType m_transverseEndType = null;      //type of the end transverse rebar
-      RebarBarType m_transverseCenterType = null;   //type of the center transverse rebar
-      RebarBarType m_verticalType = null;           //type of the vertical rebar
-      RebarHookType m_transverseHookType = null;    //type of the hook
+      RebarBarType m_transverseEndType;      //type of the end transverse rebar
+      RebarBarType m_transverseCenterType;   //type of the center transverse rebar
+      RebarBarType m_verticalType;           //type of the vertical rebar
+      RebarHookType m_transverseHookType;    //type of the hook
 
-      double m_transverseEndSpacing = 0;    //the space value of end transverse rebar
-      double m_transverseCenterSpacing = 0; //the space value of center transverse rebar
-      int m_verticalRebarNumber = 0;        //the number of the vertical rebar
+      double m_transverseEndSpacing;    //the space value of end transverse rebar
+      double m_transverseCenterSpacing; //the space value of center transverse rebar
+      int m_verticalRebarNumber;        //the number of the vertical rebar
 
       #endregion
 
@@ -60,14 +56,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarBarType TransverseEndType
       {
-         get
-         {
-            return m_transverseEndType;
-         }
-         set
-         {
-            m_transverseEndType = value;
-         }
+         get => m_transverseEndType;
+         set => m_transverseEndType = value;
       }
 
       /// <summary>
@@ -75,14 +65,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarBarType TransverseCenterType
       {
-         get
-         {
-            return m_transverseCenterType;
-         }
-         set
-         {
-            m_transverseCenterType = value;
-         }
+         get => m_transverseCenterType;
+         set => m_transverseCenterType = value;
       }
 
       /// <summary>
@@ -90,14 +74,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarBarType VerticalRebarType
       {
-         get
-         {
-            return m_verticalType;
-         }
-         set
-         {
-            m_verticalType = value;
-         }
+         get => m_verticalType;
+         set => m_verticalType = value;
       }
 
       /// <summary>
@@ -105,10 +83,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public double TransverseEndSpacing
       {
-         get
-         {
-            return m_transverseEndSpacing;
-         }
+         get => m_transverseEndSpacing;
          set
          {
             if (0 > value)  // spacing data must be above 0
@@ -124,10 +99,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public double TransverseCenterSpacing
       {
-         get
-         {
-            return m_transverseCenterSpacing;
-         }
+         get => m_transverseCenterSpacing;
          set
          {
             if (0 > value)  // spacing data must be above 0
@@ -143,10 +115,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public int VerticalRebarNumber
       {
-         get
-         {
-            return m_verticalRebarNumber;
-         }
+         get => m_verticalRebarNumber;
          set
          {
             if (4 > value)  // vertical rebar number must be above 3
@@ -162,14 +131,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarHookType TransverseHookType
       {
-         get
-         {
-            return m_transverseHookType;
-         }
-         set
-         {
-            m_transverseHookType = value;
-         }
+         get => m_transverseHookType;
+         set => m_transverseHookType = value;
       }
 
       #endregion

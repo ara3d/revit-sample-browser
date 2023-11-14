@@ -22,12 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Text;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.Loads.CS
@@ -38,69 +33,39 @@ namespace Revit.SDK.Samples.Loads.CS
     public class LoadCombinationMap
     {
         // Private Members
-        String m_name;      // Indicate name column of LoadCombination DataGridView control
-        String m_formula;   // Indicate formula column of LoadCombination DataGridView control
-        String m_type;      // Indicate type column of LoadCombination DataGridView control
-        String m_state;     // Indicate state column of LoadCombination DataGridView control
-        String m_usage;     // Indicate usage column of LoadCombination DataGridView control
+        string m_name;      // Indicate name column of LoadCombination DataGridView control
+        string m_formula;   // Indicate formula column of LoadCombination DataGridView control
+        string m_type;      // Indicate type column of LoadCombination DataGridView control
+        string m_state;     // Indicate state column of LoadCombination DataGridView control
+        string m_usage;     // Indicate usage column of LoadCombination DataGridView control
 
         /// <summary>
         /// Name property of LoadCombinationMap
         /// </summary>
-        public String Name
-        {
-            get
-            {
-                return m_name;
-            }
-        }
+        public string Name => m_name;
 
         /// <summary>
         /// Formula property of LoadCombinationMap
         /// </summary>
-        public String Formula
-        {
-            get
-            {
-                return m_formula;
-            }
-        }
+        public string Formula => m_formula;
 
         /// <summary>
         /// Type property of LoadCombinationMap
         /// </summary>
-        public String Type
-        {
-            get
-            {
-                return m_type;
-            }
-        }
+        public string Type => m_type;
 
         /// <summary>
         /// State property of LoadCombinationMap
         /// </summary>
-        public String State
-        {
-            get
-            {
-                return m_state;
-            }
-        }
+        public string State => m_state;
 
         /// <summary>
         /// Usage property of LoadCombinationMap
         /// </summary>
-        public String Usage
+        public string Usage
         {
-            get
-            {
-                return m_usage;
-            }
-            set
-            {
-                m_usage = value;
-            }
+            get => m_usage;
+            set => m_usage = value;
         }
 
         /// <summary>

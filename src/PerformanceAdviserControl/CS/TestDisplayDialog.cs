@@ -20,12 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 
@@ -44,7 +38,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
          m_PerformanceAdviser = performanceAdviser;
          m_document = document;
          InitializeComponent();
-         this.FormBorderStyle = FormBorderStyle.Fixed3D;
+         FormBorderStyle = FormBorderStyle.Fixed3D;
 
       }
       #endregion
@@ -56,14 +50,14 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
       private void btn_RunTests_Click(object sender, EventArgs e)
       {
 
-         this.Close();
+         Close();
 
          //Iterate through each item in the dialog data grid.
          //Check to see if the user selected a specific rule to be enabled.
          //Set the rule to the same enabled state in PerformanceAdviser using
          //PerformanceAdviser::SetRuleDisabled.
          var testIndex = 0;
-         foreach (DataGridViewRow row in this.testData.Rows)
+         foreach (DataGridViewRow row in testData.Rows)
          {
             var isEnabled = (bool)row.Cells[0].Value;
             m_PerformanceAdviser.SetRuleEnabled(testIndex, isEnabled);
@@ -89,7 +83,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
       {
       
          //Set the first column value (the enabled status) to true;
-         foreach (DataGridViewRow row in this.testData.Rows)
+         foreach (DataGridViewRow row in testData.Rows)
          {
             row.Cells[0].Value = (object) true;
          }
@@ -101,7 +95,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
       private void btn_DeselectAll_Click(object sender, EventArgs e)
       {
          //Set the first column value (the enabled status) to false;
-         foreach (DataGridViewRow row in this.testData.Rows)
+         foreach (DataGridViewRow row in testData.Rows)
          {
             row.Cells[0].Value = (object)false;
          }
@@ -112,7 +106,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
       /// </summary>
       private void btn_Cancel_Click(object sender, EventArgs e)
       {
-         this.Close();
+         Close();
       }
       #endregion
 
@@ -132,13 +126,13 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
          data[2] = isOurRule ? "Yes" : "No";
 
 
-         this.testData.Rows.Add(data);
+         testData.Rows.Add(data);
       }
       #endregion
 
       #region Data
-      private Autodesk.Revit.DB.Document m_document;
-      private Autodesk.Revit.DB.PerformanceAdviser m_PerformanceAdviser;
+      private Document m_document;
+      private PerformanceAdviser m_PerformanceAdviser;
 #endregion      
 
      

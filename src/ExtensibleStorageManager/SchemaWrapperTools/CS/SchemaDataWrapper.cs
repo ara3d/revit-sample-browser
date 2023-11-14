@@ -22,15 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using System.Xml.Serialization;
-using System.Runtime.Serialization;
-using System.IO;
-using System.ComponentModel;
 
 namespace SchemaWrapperTools
 {
@@ -59,7 +52,7 @@ namespace SchemaWrapperTools
       /// <param name="documentation">Descriptive details on the schema</param>
       public SchemaDataWrapper(Guid schemaId, AccessLevel  readAccess, AccessLevel writeAccess, string vendorId, string applicationId, string name, string documentation)
       {
-         DataList = new System.Collections.Generic.List<FieldData >();
+         DataList = new List<FieldData >();
          SchemaId = schemaId.ToString();
          ReadAccess = readAccess;
          WriteAccess = writeAccess;
@@ -78,7 +71,7 @@ namespace SchemaWrapperTools
       /// <param name="typeIn">the data type of the field</param>
       /// <param name="spec">The unit type of the Field (set to UT_Undefined for non-floating point types</param>
       /// <param name="subSchema">The SchemaWrapper of the field's subSchema, if the field is of type "Entity"</param>
-       public void AddData(string name, System.Type typeIn, ForgeTypeId spec, SchemaWrapper subSchema)
+       public void AddData(string name, Type typeIn, ForgeTypeId spec, SchemaWrapper subSchema)
       {
          m_DataList.Add(new FieldData(name, typeIn.FullName, spec.TypeId, subSchema));
       }
@@ -91,8 +84,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public List<FieldData> DataList
       {
-         get { return m_DataList; }
-         set { m_DataList = value; }
+         get => m_DataList;
+         set => m_DataList = value;
       }
 
 
@@ -101,8 +94,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public string SchemaId
       {
-         get { return m_schemaId; }
-         set { m_schemaId = value; }
+         get => m_schemaId;
+         set => m_schemaId = value;
       }
 
  
@@ -111,8 +104,8 @@ namespace SchemaWrapperTools
        /// </summary>
       public AccessLevel ReadAccess
       {
-          get { return m_ReadAccess; }
-          set { m_ReadAccess = value; }
+          get => m_ReadAccess;
+          set => m_ReadAccess = value;
       }
 
       /// <summary>
@@ -120,8 +113,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public AccessLevel WriteAccess
       {
-          get { return m_WriteAccess; }
-          set { m_WriteAccess = value; }
+          get => m_WriteAccess;
+          set => m_WriteAccess = value;
       }
 
       /// <summary>
@@ -129,11 +122,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public string VendorId
       {
-         get { return m_vendorId; }
-         set 
-         {
-            m_vendorId = value;
-         }
+         get => m_vendorId;
+         set => m_vendorId = value;
       }
 
 
@@ -142,8 +132,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public string ApplicationId
       {
-         get { return m_applicationId; }
-         set { m_applicationId = value; }
+         get => m_applicationId;
+         set => m_applicationId = value;
       }
 
       /// <summary>
@@ -151,12 +141,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public string Documentation
       {
-         get { return m_Documentation; }
-         set
-         {
-            m_Documentation = value;
-         }
-
+         get => m_Documentation;
+         set => m_Documentation = value;
       }
 
       /// <summary>
@@ -164,11 +150,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public string Name
       {
-         get { return m_Name; }
-         set
-         {
-            m_Name = value;
-         }
+         get => m_Name;
+         set => m_Name = value;
       }
 
       #endregion
@@ -176,7 +159,7 @@ namespace SchemaWrapperTools
       #region Data
       private AccessLevel m_ReadAccess;
       private AccessLevel m_WriteAccess;
-      private System.Collections.Generic.List<FieldData> m_DataList;
+      private List<FieldData> m_DataList;
       private string m_applicationId;
       private string m_schemaId;
       private string m_vendorId;

@@ -1,12 +1,8 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.RebarFreeForm.CS
@@ -122,7 +118,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
       /// <param name="doc"></param>
       /// <param name="paramName"></param>
       /// <returns></returns>
-      private bool ShareParameterExists(Document doc, String paramName)
+      private bool ShareParameterExists(Document doc, string paramName)
       {
          var bindingMap = doc.ParameterBindings;
          var iter = bindingMap.ForwardIterator();
@@ -133,7 +129,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
             var tempDefinition = iter.Key;
 
             // find the definition of which the name is the appointed one
-            if (String.Compare(tempDefinition.Name, paramName) != 0)
+            if (string.Compare(tempDefinition.Name, paramName) != 0)
             {
                continue;
             }

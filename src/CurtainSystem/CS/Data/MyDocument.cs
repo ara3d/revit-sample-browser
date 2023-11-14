@@ -20,14 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -45,35 +38,20 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         /// </summary>
         public ExternalCommandData CommandData
         {
-            get
-            {
-                return m_commandData;
-            }
-            set
-            {
-                m_commandData = value;
-            }
+            get => m_commandData;
+            set => m_commandData = value;
         }
 
         // the active UI document of Revit
-        Autodesk.Revit.UI.UIDocument m_uiDocument;
+        UIDocument m_uiDocument;
 
         /// <summary>
         /// the active document of Revit
         /// </summary>
-        public Autodesk.Revit.UI.UIDocument UIDocument
-        {
-            get
-            {
-                return m_uiDocument;
-            }
-        }
+        public UIDocument UIDocument => m_uiDocument;
 
-        Autodesk.Revit.DB.Document m_document;
-        public Autodesk.Revit.DB.Document Document
-        {
-            get { return m_document; }
-        }
+        Document m_document;
+        public Document Document => m_document;
 
         // the data of the created curtain systems
         CurtainSystem.SystemData m_systemData;
@@ -82,14 +60,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         /// </summary>
         public CurtainSystem.SystemData SystemData
         {
-            get
-            {
-                return m_systemData;
-            }
-            set
-            {
-                m_systemData = value;
-            }
+            get => m_systemData;
+            set => m_systemData = value;
         }
 
         // all the faces of  the parallelepiped mass
@@ -99,14 +71,8 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         /// </summary>
         public FaceArray MassFaceArray
         {
-            get
-            {
-                return m_massFaceArray;
-            }
-            set
-            {
-                m_massFaceArray = value;
-            }
+            get => m_massFaceArray;
+            set => m_massFaceArray = value;
         }
 
         // the curtain system type of the active Revit document, used for curtain system creation
@@ -116,26 +82,17 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         /// </summary>
         public CurtainSystemType CurtainSystemType
         {
-            get
-            {
-                return m_curtainSystemType;
-            }
-            set
-            {
-                m_curtainSystemType = value;
-            }
+            get => m_curtainSystemType;
+            set => m_curtainSystemType = value;
         }
         // the message shown when there's a fatal error in the sample
-        string m_fatalErrorMsg = null;
+        string m_fatalErrorMsg;
         /// <summary>
         /// the message shown when there's a fatal error in the sample
         /// </summary>
         public string FatalErrorMsg
         {
-            get
-            {
-                return m_fatalErrorMsg;
-            }
+            get => m_fatalErrorMsg;
             set
             {
                 m_fatalErrorMsg = value;
@@ -176,10 +133,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Data
         /// </summary>
         public KeyValuePair<string/*msgText*/, bool/*is warningOrError*/> Message
         {
-            get
-            {
-                return m_message;
-            }
+            get => m_message;
             set
             {
                 m_message = value;

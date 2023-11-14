@@ -23,13 +23,7 @@
 using System;
 using System.IO;
 using System.Data;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
-using System.Reflection;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB.Events;
 
 namespace Revit.SDK.Samples.EventsMonitor.CS
 {
@@ -68,13 +62,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// <summary>
         /// Property to get and set private member variables of Event log information.
         /// </summary>
-        public DataTable EventsLog
-        {
-            get
-            {
-                return m_eventsLog;
-            }
-        }
+        public DataTable EventsLog => m_eventsLog;
+
         #endregion
 
         #region Class Constructor and Destructor
@@ -128,17 +117,17 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             var eventsInfoLogTable = new DataTable("EventsLogInfoTable");
 
             // Create a "Time" column
-            var timeColumn = new DataColumn("Time", typeof(System.String));
+            var timeColumn = new DataColumn("Time", typeof(string));
             timeColumn.Caption = "Time";
             eventsInfoLogTable.Columns.Add(timeColumn);
 
             // Create a "Event" column
-            var eventColum = new DataColumn("Event", typeof(System.String));
+            var eventColum = new DataColumn("Event", typeof(string));
             eventColum.Caption = "Event";
             eventsInfoLogTable.Columns.Add(eventColum);
 
             // Create a "Type" column
-            var typeColum = new DataColumn("Type", typeof(System.String));
+            var typeColum = new DataColumn("Type", typeof(string));
             typeColum.Caption = "Type";
             eventsInfoLogTable.Columns.Add(typeColum);
 
@@ -152,12 +141,12 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         /// <param name="sender"> Event sender.</param>
         /// <param name="args">EventArgs of this event.</param>
-        public void TrackEvent(Object sender, EventArgs args)
+        public void TrackEvent(object sender, EventArgs args)
         {
             var newRow = m_eventsLog.NewRow();
 
             // set the relative information of this event into the table.
-            newRow["Time"] = System.DateTime.Now.ToString();
+            newRow["Time"] = DateTime.Now.ToString();
             newRow["Event"] = GetEventsName(args.GetType());
             newRow["Type"] = sender.GetType().ToString();
 
@@ -169,7 +158,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="args">EventArgs of this event.</param>
-        public void WriteLogFile(Object sender, EventArgs args)
+        public void WriteLogFile(object sender, EventArgs args)
         {
             Trace.WriteLine("*********************************************************");
             if (null == args)
@@ -209,7 +198,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                     }
                     else
                     {
-                        Object propertyValue;
+                        object propertyValue;
                         var propertyName = propertyInfo.Name;
                         switch(propertyName)
                         {
@@ -240,7 +229,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         /// <param name="type">Generic event type.</param>
         /// <returns></returns>
-        private String GetEventsName(Type type)
+        private string GetEventsName(Type type)
         {
             var argName = type.ToString();
             var tail = "EventArgs";

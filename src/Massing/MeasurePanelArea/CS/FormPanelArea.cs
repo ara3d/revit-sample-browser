@@ -22,18 +22,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Panel = Autodesk.Revit.DB.Panel;
 using Element = Autodesk.Revit.DB.Element;
-using Instance = Autodesk.Revit.DB.Instance;
 
 namespace Revit.SDK.Samples.MeasurePanelArea.CS
 {
@@ -45,7 +38,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
       /// <summary>
       /// The revit application instance
       /// </summary>
-      Autodesk.Revit.UI.UIApplication m_uiApp;
+      UIApplication m_uiApp;
       /// <summary>
       /// The active Revit document
       /// </summary>
@@ -68,23 +61,23 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
       /// <summary>
       /// Record the minimum value of the desired panel area
       /// </summary>
-      double m_minValue = 0;
+      double m_minValue;
       /// <summary>
       /// Record the maximum value of the desired panel area
       /// </summary>
-      double m_maxValue = 0;
+      double m_maxValue;
       /// <summary>
       /// Record how many panels have an area larger than the maximum value
       /// </summary>
-      int m_maxCounter = 0;
+      int m_maxCounter;
       /// <summary>
       /// Record how many panels have an area smaller than the minimum value
       /// </summary>
-      int m_minCounter = 0;
+      int m_minCounter;
       /// <summary>
       /// Record how many panels have an area in the range [m_minValue, m_maxValue] 
       /// </summary>
-      int m_okCounter = 0;
+      int m_okCounter;
       /// <summary>
       /// Store all the divided surface selected by user or store all the divided surface in the document if user selects nothing
       /// </summary>
@@ -92,7 +85,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
       /// <summary>
       /// A stream used to record the panel's element id and area to a text file
       /// </summary>
-      StreamWriter m_writeFile = null;
+      StreamWriter m_writeFile;
 
       /// <summary>
       /// Constructor
@@ -254,7 +247,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
                var Objects1 = geomInst.SymbolGeometry.GetEnumerator();
                while (Objects1.MoveNext())
                {
-                  Object geomObj = Objects1.Current;
+                  object geomObj = Objects1.Current;
 
                   solid = geomObj as Solid;
                   if (solid != null)

@@ -20,10 +20,6 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
@@ -245,17 +241,17 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <summary>
         /// Storage to remember the number of revisions when last checked.
         /// </summary>
-        private int storedRevisionCount = 0;
+        private int storedRevisionCount;
 
         /// <summary>
         /// The handle to the external event instance to be invoked after the revision editing completes.
         /// </summary>
-        private Autodesk.Revit.UI.ExternalEvent externalEvent = null;
+        private ExternalEvent externalEvent;
 
         /// <summary>
         /// The binding to the revision command.
         /// </summary>
-        private AddInCommandBinding binding = null;
+        private AddInCommandBinding binding;
 
         /// <summary>
         /// The document.

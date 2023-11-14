@@ -22,10 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
@@ -61,8 +57,8 @@ namespace Revit.SDK.Samples.Loads.CS
         void InitializeLoadCombinationPage()
         {
             // Add the Items in combinationType and combinationState comboBox
-            this.combinationTypeComboBox.Items.AddRange(new object[] { "Combination", "Envelope" });
-            this.combinationStateComboBox.Items.AddRange(new object[] { "Serviceability", "Ultimate" });
+            combinationTypeComboBox.Items.AddRange(new object[] { "Combination", "Envelope" });
+            combinationStateComboBox.Items.AddRange(new object[] { "Serviceability", "Ultimate" });
 
             // Initialize the loadCombination DataGridView control
             InitializeCombinationGrid();
@@ -208,7 +204,7 @@ namespace Revit.SDK.Samples.Loads.CS
             // Disable the CheckAll button, enable CheckNone button and refresh.
             usageCheckAllButton.Enabled = false;
             usageCheckNoneButton.Enabled = true;
-            this.usageDataGridView.Refresh();
+            usageDataGridView.Refresh();
         }
 
         /// <summary>
@@ -224,7 +220,7 @@ namespace Revit.SDK.Samples.Loads.CS
             // Disable the CheckNone button, enable CheckAll button and refresh.
             usageCheckAllButton.Enabled = true;
             usageCheckNoneButton.Enabled = false;
-            this.usageDataGridView.Refresh();
+            usageDataGridView.Refresh();
         }
 
         /// <summary>
@@ -275,7 +271,7 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // Change the state of the buttons and refresh.
             CombinationsTabPageButtonEnable();
-            this.usageDataGridView.Refresh();
+            usageDataGridView.Refresh();
         }
 
         /// <summary>
@@ -304,7 +300,7 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // Set the state of the button on this page and refresh.
             CombinationsTabPageButtonEnable();
-            this.Refresh();
+            Refresh();
         }
 
         /// <summary>
@@ -317,8 +313,8 @@ namespace Revit.SDK.Samples.Loads.CS
             // Modifying the usage name
             if (1 == usageDataGridView.CurrentCell.ColumnIndex)
             {
-                var newName = e.FormattedValue as System.String;
-                var oldName = usageDataGridView.CurrentCell.FormattedValue as System.String;
+                var newName = e.FormattedValue as string;
+                var oldName = usageDataGridView.CurrentCell.FormattedValue as string;
                 if (newName != oldName)
                 {
                     for (var i = 0; i < m_dataBuffer.UsageMap.Count; i++)
@@ -368,14 +364,14 @@ namespace Revit.SDK.Samples.Loads.CS
             combinationNameTextBox.Text = null;
             combinationTypeComboBox.SelectedIndex = 0;
             combinationStateComboBox.SelectedIndex = 0;
-            this.combinationDataGridView.DataSource = null;
-            this.combinationDataGridView.DataSource = m_dataBuffer.LoadCombinationMap;
-            this.formulaDataGridView.DataSource = null;
-            this.formulaDataGridView.DataSource = m_dataBuffer.FormulaMap;
+            combinationDataGridView.DataSource = null;
+            combinationDataGridView.DataSource = m_dataBuffer.LoadCombinationMap;
+            formulaDataGridView.DataSource = null;
+            formulaDataGridView.DataSource = m_dataBuffer.FormulaMap;
 
             // Set the state of the button on this page and refresh.
             CombinationsTabPageButtonEnable();
-            this.Refresh();
+            Refresh();
         }
 
         /// <summary>
@@ -399,12 +395,12 @@ namespace Revit.SDK.Samples.Loads.CS
             }
 
             // After deleting combination, refresh combination DataGridView
-            this.combinationDataGridView.DataSource = null;
-            this.combinationDataGridView.DataSource = m_dataBuffer.LoadCombinationMap;
+            combinationDataGridView.DataSource = null;
+            combinationDataGridView.DataSource = m_dataBuffer.LoadCombinationMap;
 
             // Set the state of the button on this page and refresh.
             CombinationsTabPageButtonEnable();
-            this.Refresh();
+            Refresh();
         }
 
         /// <summary>
@@ -420,12 +416,12 @@ namespace Revit.SDK.Samples.Loads.CS
             }
 
             // After adding formula, refresh formula DataGridView
-            this.formulaDataGridView.DataSource = null;
-            this.formulaDataGridView.DataSource = m_dataBuffer.FormulaMap;
+            formulaDataGridView.DataSource = null;
+            formulaDataGridView.DataSource = m_dataBuffer.FormulaMap;
 
             // Set the state of the button on this page and refresh.
             CombinationsTabPageButtonEnable();
-            this.Refresh();
+            Refresh();
         }
 
         /// <summary>
@@ -449,12 +445,12 @@ namespace Revit.SDK.Samples.Loads.CS
             }
 
             // After deleting formula, refresh formula DataGridView
-            this.formulaDataGridView.DataSource = null;
-            this.formulaDataGridView.DataSource = m_dataBuffer.FormulaMap;
+            formulaDataGridView.DataSource = null;
+            formulaDataGridView.DataSource = m_dataBuffer.FormulaMap;
 
             // Set the state of the button on this page and refresh.
             CombinationsTabPageButtonEnable();
-            this.Refresh();
+            Refresh();
         }
 
         // The following is the event when the DataGridView got focus

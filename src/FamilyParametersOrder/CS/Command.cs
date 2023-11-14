@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Windows.Forms;
-using System.Collections;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -73,7 +68,7 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
                m_SortDialogIsOpened = false;
                form.ShowDialog();
                m_SortDialogIsOpened = true;
-               return Autodesk.Revit.UI.Result.Succeeded;
+               return Result.Succeeded;
             }
          }
          catch (Exception ex)

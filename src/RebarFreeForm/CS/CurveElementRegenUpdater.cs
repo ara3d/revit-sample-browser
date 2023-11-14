@@ -2,11 +2,8 @@
 using Autodesk.Revit.DB;
 using RvtUpdaterId = Autodesk.Revit.DB.UpdaterId;
 using RvtAddinId = Autodesk.Revit.DB.AddInId;
-using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 using Autodesk.Revit.DB.Structure;
-using System.Collections.ObjectModel;
 
 namespace Revit.SDK.Samples.RebarFreeForm.CS
 {

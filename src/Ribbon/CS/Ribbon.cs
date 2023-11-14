@@ -21,17 +21,10 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit;
-using System.Diagnostics;
 using System.IO;
-using System.Windows.Media;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI.Events;
 
 namespace Revit.SDK.Samples.Ribbon.CS
@@ -59,7 +52,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         // Button icons directory
         static string ButtonIconsFolder = Path.GetDirectoryName(AddInPath);
         // uiApplication
-        static UIApplication uiApplication = null;
+        static UIApplication uiApplication;
 
         #region IExternalApplication Members
         /// <summary>
@@ -74,20 +67,20 @@ namespace Revit.SDK.Samples.Ribbon.CS
         /// some point.
         /// If Failed is returned then Revit should inform the user that the external application 
         /// failed to load and the release the internal reference.</returns>
-        public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
             try
             {
                 // create customer Ribbon Items
                 CreateRibbonSamplePanel(application);
 
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
                 TaskDialog.Show("Ribbon Sample", ex.ToString());
 
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
 
@@ -103,18 +96,18 @@ namespace Revit.SDK.Samples.Ribbon.CS
         /// some point.
         /// If Failed is returned then the Revit user should be warned of the failure of the external 
         /// application to shut down correctly.</returns>
-        public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
             //remove events
             var myPanels = application.GetRibbonPanels();
-            var comboboxLevel = (Autodesk.Revit.UI.ComboBox)(myPanels[0].GetItems()[2]);
+            var comboboxLevel = (ComboBox)(myPanels[0].GetItems()[2]);
             application.ControlledApplication.DocumentCreated -= new EventHandler<
                Autodesk.Revit.DB.Events.DocumentCreatedEventArgs>(DocumentCreated);
-            var textBox = myPanels[0].GetItems()[5] as Autodesk.Revit.UI.TextBox;
+            var textBox = myPanels[0].GetItems()[5] as TextBox;
             textBox.EnterPressed -= new EventHandler<
-               Autodesk.Revit.UI.Events.TextBoxEnterPressedEventArgs>(SetTextBoxValue);
+               TextBoxEnterPressedEventArgs>(SetTextBoxValue);
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
 
@@ -159,7 +152,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
             var ribbonItemsStacked = ribbonSamplePanel.AddStackedItems(pushButtonData, comboBoxDataLevel, comboBoxDataShape);
             ((PushButton)(ribbonItemsStacked[0])).Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Reset.png"), UriKind.Absolute));
             //Add options to WallShapeComboBox
-            var comboboxWallShape = (Autodesk.Revit.UI.ComboBox)(ribbonItemsStacked[2]);
+            var comboboxWallShape = (ComboBox)(ribbonItemsStacked[2]);
             var comboBoxMemberData = new ComboBoxMemberData("RectangleWall", "RectangleWall");
             var comboboxMember = comboboxWallShape.AddItem(comboBoxMemberData);
             comboboxMember.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "RectangleWall.png"), UriKind.Absolute));
@@ -192,12 +185,12 @@ namespace Revit.SDK.Samples.Ribbon.CS
 
             #region add a Text box to set the mark for new wall
             var testBoxData = new TextBoxData("WallMark");
-            var textBox = (Autodesk.Revit.UI.TextBox)(ribbonSamplePanel.AddItem(testBoxData));
+            var textBox = (TextBox)(ribbonSamplePanel.AddItem(testBoxData));
             textBox.Value = "new wall"; //default wall mark
             textBox.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "WallMark.png"), UriKind.Absolute));
             textBox.ToolTip = "Set the mark for new wall";
             textBox.ShowImageAsButton = true;
-            textBox.EnterPressed += new EventHandler<Autodesk.Revit.UI.Events.TextBoxEnterPressedEventArgs>(SetTextBoxValue);
+            textBox.EnterPressed += new EventHandler<TextBoxEnterPressedEventArgs>(SetTextBoxValue);
             #endregion
 
             ribbonSamplePanel.AddSeparator();
@@ -240,7 +233,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
             uiApplication = new UIApplication(e.Document.Application);
             var myPanels = uiApplication.GetRibbonPanels();
 
-            var comboboxLevel = (Autodesk.Revit.UI.ComboBox)(myPanels[0].GetItems()[2]);
+            var comboboxLevel = (ComboBox)(myPanels[0].GetItems()[2]);
             if (null == comboboxLevel) { return; }
             var collector = new FilteredElementCollector(uiApplication.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Level)).ToElements();
@@ -261,7 +254,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         /// <param name="evnetArgs">Autodesk.Revit.UI.Events.ComboBoxDropDownOpenedEventArgs</param>
         public void AddNewLevels(object sender, ComboBoxDropDownOpenedEventArgs args)
         {
-            var comboboxLevel = sender as Autodesk.Revit.UI.ComboBox;
+            var comboboxLevel = sender as ComboBox;
             if (null == comboboxLevel) { return; }
             var collector = new FilteredElementCollector(uiApplication.ActiveUIDocument.Document);
             ICollection<Element> founds = collector.OfClass(typeof(Level)).ToElements();

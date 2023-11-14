@@ -20,9 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.TagBeam.CS
@@ -37,18 +34,12 @@ namespace Revit.SDK.Samples.TagBeam.CS
         /// <summary>
         /// Family symbol
         /// </summary>
-        public FamilySymbol FamilySymbol
-        {
-            get { return m_familySymbol; }
-        }
+        public FamilySymbol FamilySymbol => m_familySymbol;
 
         /// <summary>
         /// Display name
         /// </summary>
-        public string Name
-        {
-            get { return m_familySymbol.Family.Name + " : " + m_familySymbol.Name; }
-        }
+        public string Name => m_familySymbol.Family.Name + " : " + m_familySymbol.Name;
 
         /// <summary>
         /// Constructor

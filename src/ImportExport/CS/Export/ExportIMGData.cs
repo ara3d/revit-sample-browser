@@ -22,13 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Collections.ObjectModel;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
@@ -40,7 +34,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         /// String list of image type
         /// </summary>
-        private List<String> m_imageType;
+        private List<string> m_imageType;
 
         #endregion
 
@@ -62,7 +56,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         private void Initialize()
         {
             //Image type
-            m_imageType = new List<String>();
+            m_imageType = new List<string>();
             m_imageType.Add("(*.bmp)");
             m_imageType.Add("(*.jpeg)");
             m_imageType.Add("(*.png)");

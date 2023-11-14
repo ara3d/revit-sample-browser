@@ -20,11 +20,9 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Threading;
 using System.Collections.Generic;
 
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Analysis;
 
 
@@ -55,17 +53,17 @@ namespace Revit.SDK.Samples.WorkThread.CS
     {
         #region class member variables
         // ActiveView
-        private View m_view = null;
+        private View m_view;
         // string representation of reference object
-        private String m_sreference = null;
+        private string m_sreference;
         // SpatialFieldManager
-        private SpatialFieldManager m_SFManager = null;
+        private SpatialFieldManager m_SFManager;
         // schema Id
         private int m_schemaId = -1;
         // field Id
         private int m_fieldId = -1;
         // ThreadAgent
-        private ThreadAgent m_threadAgent = null;
+        private ThreadAgent m_threadAgent;
         // Results
         private SharedResults m_results;
         // If the result manager needs to be initialized
@@ -77,7 +75,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         ///   Constructor
         /// </summary>
         /// 
-        public FaceAnalyzer(View view, String sref)
+        public FaceAnalyzer(View view, string sref)
         {
             m_sreference = sref;
             m_view = view;

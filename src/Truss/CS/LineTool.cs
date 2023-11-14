@@ -19,9 +19,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using System.Drawing;
 using System.Collections;
 
@@ -42,14 +40,8 @@ namespace Revit.SDK.Samples.Truss.CS
         /// </summary>
         public ArrayList Points
         {
-            get
-            {
-                return m_Points;
-            }
-            set
-            {
-                m_Points = value;
-            }
+            get => m_Points;
+            set => m_Points = value;
         }
 
         /// <summary>
@@ -57,14 +49,8 @@ namespace Revit.SDK.Samples.Truss.CS
         /// </summary>
         public Point MovePoint
         {
-            get
-            {
-                return m_movePoint;
-            }
-            set
-            {
-                m_movePoint = value;
-            }
+            get => m_movePoint;
+            set => m_movePoint = value;
         }
 
         /// <summary>

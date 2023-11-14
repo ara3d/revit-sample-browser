@@ -21,11 +21,8 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using System.Text;
 using System.IO;
 
 using Autodesk.Revit.DB;
@@ -62,7 +59,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
     class FileBasedPointCloud : PointCloudAccessBase, IPointCloudAccess
     {
         #region  Class Member Variables
-        String m_fileName;
+        string m_fileName;
         #endregion
 
         #region Class Methods
@@ -70,7 +67,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// Constructs a new XML-based point cloud access.
         /// </summary>
         /// <param name="fileName">The full path to the file.</param>
-        public FileBasedPointCloud(String fileName)
+        public FileBasedPointCloud(string fileName)
         {
             m_fileName = fileName;
 
@@ -99,7 +96,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// The implementation of IPointCloudAccess.GetName().
         /// </summary>
         /// <returns>The name (the file name).</returns>
-        public String GetName()
+        public string GetName()
         {
             return m_fileName;
         }
@@ -121,7 +118,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <returns>The new iterator.</returns>
         public IPointSetIterator CreatePointSetIterator(PointCloudFilter rFilter, ElementId viewId)
         {
-            return new PointCloudAccessBase.PointCloudAccessBaseIterator(this, rFilter);
+            return new PointCloudAccessBaseIterator(this, rFilter);
         }
 
         /// <summary>

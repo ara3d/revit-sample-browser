@@ -22,8 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Revit.SDK.Samples.Openings.CS
 {
@@ -40,46 +38,22 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <summary>
         /// Property to get origin of user coordinate system
         /// </summary>
-        public Vector Origin
-        {
-            get
-            {
-                return m_origin;
-            }
-        }
+        public Vector Origin => m_origin;
 
         /// <summary>
         /// Property to get X Axis of user coordinate system
         /// </summary>
-        public Vector XAxis
-        {
-            get
-            {
-                return m_xAxis;
-            }
-        }
+        public Vector XAxis => m_xAxis;
 
         /// <summary>
         /// Property to get Y Axis of user coordinate system
         /// </summary>
-        public Vector YAxis
-        {
-            get
-            {
-                return m_yAxis;
-            }
-        }
+        public Vector YAxis => m_yAxis;
 
         /// <summary>
         /// Property to get Z Axis of user coordinate system
         /// </summary>
-        public Vector ZAxis
-        {
-            get
-            {
-                return m_zAxis;
-            }
-        }
+        public Vector ZAxis => m_zAxis;
 
         /// <summary>
         /// The default constructor, 

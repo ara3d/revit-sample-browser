@@ -22,11 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
@@ -50,7 +45,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
       void Command_DisplayingOptionDialog(object sender, Autodesk.Revit.UI.Events.DisplayingOptionsDialogEventArgs e)
       {
           // Actual options
-          var optionsControl = new Revit.SDK.Samples.UIAPI.CS.OptionsDialog.Options();
+          var optionsControl = new OptionsDialog.Options();
           var ch = new ContextualHelp(ContextualHelpType.Url, "http://www.autodesk.com/");
           var extension = new TabbedDialogExtension(optionsControl, optionsControl.OnOK);
           extension.OnRestoreDefaultsAction = optionsControl.OnRestoreDefaults;
@@ -83,6 +78,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
             e.AddTab("WPF components", tdext1);               
       }
 
-      private UIControlledApplication _application = null;
+      private UIControlledApplication _application;
    }
 }

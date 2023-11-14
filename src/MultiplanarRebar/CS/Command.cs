@@ -21,11 +21,7 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-using System.IO;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Windows.Forms;
@@ -55,8 +51,8 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             // A List to store the Corbels which are suitable to be reinforced.
             var corbelsToReinforce = new List<CorbelFrame>();            

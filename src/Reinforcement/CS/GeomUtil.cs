@@ -23,16 +23,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.Reinforcement.CS
 {
-    using GeoElement = Autodesk.Revit.DB.GeometryElement;
-    using Element = Autodesk.Revit.DB.Element;
+    using GeoElement = GeometryElement;
 
 
     /// <summary>
@@ -62,7 +58,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="first">The first Autodesk.Revit.DB.XYZ point</param>
         /// <param name="second">The second Autodesk.Revit.DB.XYZ point</param>
         /// <returns>true if two Autodesk.Revit.DB.XYZ point is equal, otherwise false</returns>
-        public static bool IsEqual(Autodesk.Revit.DB.XYZ first, Autodesk.Revit.DB.XYZ second)
+        public static bool IsEqual(XYZ first, XYZ second)
         {
             var flag = true;
             flag = flag && IsEqual(first.X, second.X);
@@ -138,7 +134,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="firstVec">the first vector</param>
         /// <param name="secondVec">the second vector</param>
         /// <returns>true if the two vector is in same direction, otherwise false</returns>
-        public static bool IsSameDirection(Autodesk.Revit.DB.XYZ firstVec, Autodesk.Revit.DB.XYZ secondVec)
+        public static bool IsSameDirection(XYZ firstVec, XYZ secondVec)
         {
             // get the unit vector for two vectors
             var first = UnitVector(firstVec);
@@ -155,7 +151,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="firstVec">the first vector</param>
         /// <param name="secondVec">the second vector</param>
         /// <returns>true if the two vector is in opposite direction, otherwise false</returns>
-        public static bool IsOppositeDirection(Autodesk.Revit.DB.XYZ firstVec, Autodesk.Revit.DB.XYZ secondVec)
+        public static bool IsOppositeDirection(XYZ firstVec, XYZ secondVec)
         {
             // get the unit vector for two vectors
             var first = UnitVector(firstVec);
@@ -172,7 +168,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="p1">The first XYZ</param>
         /// <param name="p2">The second XYZ</param>
         /// <returns>the normal vector of the face which first and secend vector lie on</returns>
-        public static Autodesk.Revit.DB.XYZ CrossMatrix(Autodesk.Revit.DB.XYZ p1, Autodesk.Revit.DB.XYZ p2)
+        public static XYZ CrossMatrix(XYZ p1, XYZ p2)
         {
             //get the coordinate of the XYZ
             var u1 = p1.X;
@@ -187,7 +183,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             var y = v1 * u3 - v3 * u1;
             var z = v2 * u1 - v1 * u2;
 
-            return new Autodesk.Revit.DB.XYZ (x, y, z);
+            return new XYZ (x, y, z);
         }
 
 
@@ -198,7 +194,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// </summary>
         /// <param name="vector">the input vector</param>
         /// <returns>the vector in unit length</returns>
-        public static Autodesk.Revit.DB.XYZ UnitVector(Autodesk.Revit.DB.XYZ vector)
+        public static XYZ UnitVector(XYZ vector)
         {
             // calculate the distance from grid origin to the XYZ
             var length = GetLength(vector);
@@ -207,7 +203,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             var x = vector.X / length;
             var y = vector.Y / length;
             var z = vector.Z / length;
-            return new Autodesk.Revit.DB.XYZ (x, y, z);
+            return new XYZ (x, y, z);
         }
 
         /// <summary>
@@ -215,7 +211,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// </summary>
         /// <param name="vector">the input vector</param>
         /// <returns>the length of the vector</returns>
-        public static double GetLength(Autodesk.Revit.DB.XYZ vector)
+        public static double GetLength(XYZ vector)
         {
             var x = vector.X;
             var y = vector.Y;
@@ -229,13 +225,13 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="p1">the first point(vector)</param>
         /// <param name="p2">the second point(vector)</param>
         /// <returns>return a new vector from point p2 to p1</returns>
-        public static Autodesk.Revit.DB.XYZ SubXYZ(Autodesk.Revit.DB.XYZ p1, Autodesk.Revit.DB.XYZ p2)
+        public static XYZ SubXYZ(XYZ p1, XYZ p2)
         {
             var x = p1.X - p2.X;
             var y = p1.Y - p2.Y;
             var z = p1.Z - p2.Z;
 
-            return new Autodesk.Revit.DB.XYZ (x, y, z);
+            return new XYZ (x, y, z);
         }
 
         /// <summary>
@@ -244,13 +240,13 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="p1">the first point(vector)</param>
         /// <param name="p2">the first point(vector)</param>
         /// <returns>a new vector(point)</returns>
-        public static Autodesk.Revit.DB.XYZ AddXYZ(Autodesk.Revit.DB.XYZ p1, Autodesk.Revit.DB.XYZ p2)
+        public static XYZ AddXYZ(XYZ p1, XYZ p2)
         {
             var x = p1.X + p2.X;
             var y = p1.Y + p2.Y;
             var z = p1.Z + p2.Z;
 
-            return new Autodesk.Revit.DB.XYZ (x, y, z);
+            return new XYZ (x, y, z);
         }
 
         /// <summary>
@@ -259,13 +255,13 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="vector">a vector</param>
         /// <param name="rate">the rate number</param>
         /// <returns></returns>
-        public static Autodesk.Revit.DB.XYZ MultiplyVector(Autodesk.Revit.DB.XYZ vector, double rate)
+        public static XYZ MultiplyVector(XYZ vector, double rate)
         {
             var x = vector.X * rate;
             var y = vector.Y * rate;
             var z = vector.Z * rate;
 
-            return new Autodesk.Revit.DB.XYZ (x, y, z);
+            return new XYZ (x, y, z);
         }
 
         /// <summary>
@@ -274,7 +270,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="point">the Autodesk.Revit.DB.XYZ which need to be transformed</param>
         /// <param name="transform">the value of the coordinate system to be transformed</param>
         /// <returns>the new Autodesk.Revit.DB.XYZ which has been transformed</returns>
-        public static Autodesk.Revit.DB.XYZ TransformPoint(Autodesk.Revit.DB.XYZ point, Transform transform)
+        public static XYZ TransformPoint(XYZ point, Transform transform)
         {
             //get the coordinate value in X, Y, Z axis
             var x = point.X;
@@ -292,7 +288,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             var yTemp = x * b0.Y + y * b1.Y + z * b2.Y + origin.Y;
             var zTemp = x * b0.Z + y * b1.Z + z * b2.Z + origin.Z;
 
-            return new Autodesk.Revit.DB.XYZ (xTemp, yTemp, zTemp);
+            return new XYZ (xTemp, yTemp, zTemp);
         }
 
         /// <summary>
@@ -302,7 +298,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="direction">the direction the point move to</param>
         /// <param name="offset">indicate how long to move</param>
         /// <returns>the moved point</returns>
-        public static Autodesk.Revit.DB.XYZ OffsetPoint(Autodesk.Revit.DB.XYZ point, Autodesk.Revit.DB.XYZ direction, double offset)
+        public static XYZ OffsetPoint(XYZ point, XYZ direction, double offset)
         {
             var directUnit = UnitVector(direction);
             var offsetVect = MultiplyVector(directUnit, offset);
@@ -316,14 +312,14 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="normal">rebar normal direction</param>
         /// <param name="hookVec">the hook direction</param>
         /// <returns>the orient of the hook</returns>
-        public static RebarHookOrientation GetHookOrient(Autodesk.Revit.DB.XYZ curveVec, Autodesk.Revit.DB.XYZ normal, Autodesk.Revit.DB.XYZ hookVec)
+        public static RebarHookOrientation GetHookOrient(XYZ curveVec, XYZ normal, XYZ hookVec)
         {
             var tempVec = normal;
 
             for (var i = 0; i < 4; i++)
             {
-                tempVec = GeomUtil.CrossMatrix(tempVec, curveVec);
-                if (GeomUtil.IsSameDirection(tempVec, hookVec))
+                tempVec = CrossMatrix(tempVec, curveVec);
+                if (IsSameDirection(tempVec, hookVec))
                 {
                     if (i == 0)
                     {
@@ -344,7 +340,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// </summary>
         /// <param name="normal">The unit vector need to be judged its direction</param>
         /// <returns>if in right dircetion return true, otherwise return false</returns>
-        public static bool IsInRightDir(Autodesk.Revit.DB.XYZ normal)
+        public static bool IsInRightDir(XYZ normal)
         {
             var eps = 1.0e-8;
             if (Math.Abs(normal.X) <= eps)
@@ -363,7 +359,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="p1">The first XYZ</param>
         /// <param name="p2">The second XYZ</param>
         /// <returns>the cosine value of the angle between vector p1 an p2</returns>
-        private static double DotMatrix(Autodesk.Revit.DB.XYZ p1, Autodesk.Revit.DB.XYZ p2)
+        private static double DotMatrix(XYZ p1, XYZ p2)
         {
             //get the coordinate of the Autodesk.Revit.DB.XYZ 
             var v1 = p1.X;

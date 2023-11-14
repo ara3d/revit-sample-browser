@@ -23,11 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows;
-
-using Autodesk.Revit;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -47,7 +42,7 @@ namespace Revit.SDK.Samples.Selections.CS
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   public class PickforDeletion : Autodesk.Revit.UI.IExternalCommand
+   public class PickforDeletion : IExternalCommand
    {
       /// <summary>
       /// store the application
@@ -74,7 +69,7 @@ namespace Revit.SDK.Samples.Selections.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          m_application = commandData.Application;
          m_document = m_application.ActiveUIDocument;
@@ -84,7 +79,7 @@ namespace Revit.SDK.Samples.Selections.CS
          {
             // Select elements. Click "Finish" or "Cancel" buttons on the dialog bar to complete the selection operation.
             var elemDeleteList = new List<ElementId>();
-            var eRefList = m_document.Selection.PickObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, "Please pick some element to delete. ESC for Cancel.");
+            var eRefList = m_document.Selection.PickObjects(ObjectType.Element, "Please pick some element to delete. ESC for Cancel.");
             foreach (var eRef in eRefList)
             {
                if (eRef != null && eRef.ElementId != ElementId.InvalidElementId)
@@ -121,7 +116,7 @@ namespace Revit.SDK.Samples.Selections.CS
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class PlaceAtPointOnWallFace : Autodesk.Revit.UI.IExternalCommand
+   public class PlaceAtPointOnWallFace : IExternalCommand
    {
       /// <summary>
       /// store the application
@@ -148,7 +143,7 @@ namespace Revit.SDK.Samples.Selections.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          try
          {
@@ -233,7 +228,7 @@ namespace Revit.SDK.Samples.Selections.CS
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class PlaceAtPickedFaceWorkplane : Autodesk.Revit.UI.IExternalCommand
+   public class PlaceAtPickedFaceWorkplane : IExternalCommand
    {
       /// <summary>
       /// store the application.
@@ -264,7 +259,7 @@ namespace Revit.SDK.Samples.Selections.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          try
          {
@@ -308,7 +303,7 @@ namespace Revit.SDK.Samples.Selections.CS
             // Selection Cancelled. For picking face and picking point.
             return Result.Cancelled;
          }
-         catch (System.Exception ex)
+         catch (Exception ex)
          {
             // If any error, give error information and return failed
             message = ex.Message;
@@ -322,7 +317,7 @@ namespace Revit.SDK.Samples.Selections.CS
       /// <param name="normal">The vector for normal of sketch plane.</param>
       /// <param name="origin">The vector for origin of sketch plane.</param>
       /// <returns>The new sketch plane created by specific normal and origin.</returns>
-      internal SketchPlane CreateSketchPlane(Autodesk.Revit.DB.XYZ normal, Autodesk.Revit.DB.XYZ origin)
+      internal SketchPlane CreateSketchPlane(XYZ normal, XYZ origin)
       {
          // First create a Geometry.Plane which need in NewSketchPlane() method
          var geometryPlane = Plane.CreateByNormalAndOrigin(normal, origin);
@@ -344,7 +339,7 @@ namespace Revit.SDK.Samples.Selections.CS
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-   public class SelectionDialog : Autodesk.Revit.UI.IExternalCommand
+   public class SelectionDialog : IExternalCommand
    {
       /// <summary>
       /// Implement this method as an external command for Revit.
@@ -362,13 +357,13 @@ namespace Revit.SDK.Samples.Selections.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          try
          {
             var manager = new SelectionManager(commandData);
             // Create a form to select objects.
-            var result = System.Windows.Forms.DialogResult.None;
+            var result = DialogResult.None;
             while (result == DialogResult.None || result == DialogResult.Retry)
             {
                // Picking Objects.
@@ -383,13 +378,13 @@ namespace Revit.SDK.Samples.Selections.CS
                }
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
          }
          catch (Exception ex)
          {
             // If any error, give error information and return failed
             message = ex.Message;
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
       }
    }

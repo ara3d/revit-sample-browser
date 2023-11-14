@@ -22,17 +22,11 @@
 namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
     using System.ComponentModel;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Structure;
 
     using GeoElement = Autodesk.Revit.DB.GeometryElement;
-    using Element = Autodesk.Revit.DB.Element;
 
 
     /// <summary>
@@ -55,14 +49,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
             LayoutRules.Maximum_Spacing)]
         public LayoutRules LayoutRule
         {
-            get
-            {
-                return m_layoutRule;
-            }
-            set
-            {
-                m_layoutRule = value;
-            }
+            get => m_layoutRule;
+            set => m_layoutRule = value;
         }
 
         /// <summary>
@@ -103,14 +91,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         [CategoryAttribute("Layers")]
         public bool ExteriorMajorDirection
         {
-            get
-            {
-                return m_exteriorMajorDirection;
-            }
-            set
-            {
-                m_exteriorMajorDirection = value;
-            }
+            get => m_exteriorMajorDirection;
+            set => m_exteriorMajorDirection = value;
         }
 
         /// <summary>
@@ -119,14 +101,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         [CategoryAttribute("Layers")]
         public bool ExteriorMinorDirection
         {
-            get
-            {
-                return m_exteriorMinorDirection;
-            }
-            set
-            {
-                m_exteriorMinorDirection = value;
-            }
+            get => m_exteriorMinorDirection;
+            set => m_exteriorMinorDirection = value;
         }
 
         /// <summary>
@@ -135,14 +111,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         [CategoryAttribute("Layers")]
         public bool InteriorMajorDirection
         {
-            get
-            {
-                return m_interiorMajorDirection;
-            }
-            set
-            {
-                m_interiorMajorDirection = value;
-            }
+            get => m_interiorMajorDirection;
+            set => m_interiorMajorDirection = value;
         }
 
         /// <summary>
@@ -151,14 +121,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         [CategoryAttribute("Layers")]
         public bool InteriorMinorDirection
         {
-            get
-            {
-                return m_interiorMinorDirection;
-            }
-            set
-            {
-                m_interiorMinorDirection = value;
-            }
+            get => m_interiorMinorDirection;
+            set => m_interiorMinorDirection = value;
         }
 
         /// <summary>
@@ -211,14 +175,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         [CategoryAttribute("Layers")]
         public bool TopMajorDirection
         {
-            get
-            {
-                return m_topMajorDirection;
-            }
-            set
-            {
-                m_topMajorDirection = value;
-            }
+            get => m_topMajorDirection;
+            set => m_topMajorDirection = value;
         }
 
         /// <summary>
@@ -227,14 +185,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         [CategoryAttribute("Layers")]
         public bool TopMinorDirection
         {
-            get
-            {
-                return m_topMinorDirection;
-            }
-            set
-            {
-                m_topMinorDirection = value;
-            }
+            get => m_topMinorDirection;
+            set => m_topMinorDirection = value;
         }
 
         /// <summary>
@@ -243,14 +195,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         [CategoryAttribute("Layers")]
         public bool BottomMajorDirection
         {
-            get
-            {
-                return m_bottomMajorDirection;
-            }
-            set
-            {
-                m_bottomMajorDirection = value;
-            }
+            get => m_bottomMajorDirection;
+            set => m_bottomMajorDirection = value;
         }
 
         /// <summary>
@@ -259,14 +205,8 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         [CategoryAttribute("Layers")]
         public bool BottomMinorDirection
         {
-            get
-            {
-                return m_bottomMinorDirection;
-            }
-            set
-            {
-                m_bottomMinorDirection = value;
-            }
+            get => m_bottomMinorDirection;
+            set => m_bottomMinorDirection = value;
         }
 
         /// <summary>

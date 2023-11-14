@@ -21,12 +21,8 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
@@ -115,27 +111,15 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <summary>
         /// Revit command data
         /// </summary>
-        public ExternalCommandData CommandData
-        {
-            get
-            {
-                return m_commandData;
-            }
-        }
+        public ExternalCommandData CommandData => m_commandData;
 
         /// <summary>
         /// Whether current view is a 3D view
         /// </summary>
         public bool Is3DView
         {
-            get
-            {
-                return m_is3DView;
-            }
-            set
-            {
-                m_is3DView = value;
-            }
+            get => m_is3DView;
+            set => m_is3DView = value;
         }
 
         /// <summary>
@@ -294,7 +278,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="data"></param>
         private static DialogResult Export(ExportData data)
         {
-            var returnFilename = String.Empty;
+            var returnFilename = string.Empty;
             var filterIndex = -1;
 
             var result = ShowSaveDialog(data, ref returnFilename, ref filterIndex);
@@ -319,7 +303,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="returnFileName">File name will be returned</param>
         /// <param name="filterIndex">Selected filter index will be returned</param>
         /// <returns></returns>
-        public static DialogResult ShowSaveDialog(ExportData exportData, ref String returnFileName,
+        public static DialogResult ShowSaveDialog(ExportData exportData, ref string returnFileName,
             ref int filterIndex)
         {
             using (var saveDialog = new SaveFileDialog())
@@ -419,7 +403,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="data"></param>
         private static DialogResult Import(ImportData data)
         {
-            var returnFilename = String.Empty;
+            var returnFilename = string.Empty;
             var result = ShowOpenDialog(data, ref returnFilename);
             if (result != DialogResult.Cancel)
             {
@@ -440,7 +424,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="importData">Data to import</param>
         /// <param name="returnFileName">File name will be returned</param>
         /// <returns>Dialog result</returns>
-        public static DialogResult ShowOpenDialog(ImportData importData, ref String returnFileName)
+        public static DialogResult ShowOpenDialog(ImportData importData, ref string returnFileName)
         {
             using (var importDialog = new OpenFileDialog())
             {

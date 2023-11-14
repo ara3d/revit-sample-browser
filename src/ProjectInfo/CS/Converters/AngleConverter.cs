@@ -79,7 +79,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             {
                 value = value.Substring(0, n);
             }
-            return Double.Parse(value) * 0.0174532925199433;
+            return double.Parse(value) * 0.0174532925199433;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// </summary>
         /// <param name="value">Angle value</param>
         /// <returns>Angle string, the unit is degree.</returns>
-        private static string Double2AngleString(Double value)
+        private static string Double2AngleString(double value)
         {
             // 0xb0 is ASCII for unit flag of "degree"
             return ((object)Math.Round(value / 0.0174532925199433, 3)).ToString() + (char)0xb0;

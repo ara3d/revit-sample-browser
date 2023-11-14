@@ -22,9 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -46,7 +43,7 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
       /// <summary>
       /// The active Revit document
       /// </summary>
-      Autodesk.Revit.DB.Document m_doc;
+      Document m_doc;
 
       /// <summary>
       /// Implement this method as an external command for Revit.
@@ -64,7 +61,7 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          m_app = commandData.Application.Application;
          m_doc = commandData.Application.ActiveUIDocument.Document;
@@ -84,7 +81,7 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
                SetParams(edges, instParams);
             }
          }
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       /// <summary>
@@ -136,14 +133,14 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
                   continue;
             }
             // non-partial panels
-            else if (geomObject1 is Autodesk.Revit.DB.GeometryInstance)
+            else if (geomObject1 is GeometryInstance)
             {
                var geomInst = geomObject1 as GeometryInstance;
                //foreach (Object geomObj in geomInst.SymbolGeometry.Objects)
                var Objects1 = geomInst.SymbolGeometry.GetEnumerator();
                while (Objects1.MoveNext())
                {
-                  Object geomObj = Objects1.Current;
+                  object geomObj = Objects1.Current;
 
                   solid = geomObj as Solid;
                   if (solid != null)
@@ -212,8 +209,8 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
       /// <returns>The angle of the 2 edges</returns>
       private double AngleBetweenEdges(Edge edgeA, Edge edgeB)
       {
-         Autodesk.Revit.DB.XYZ vectorA = null;
-         Autodesk.Revit.DB.XYZ vectorB = null;
+         XYZ vectorA = null;
+         XYZ vectorB = null;
 
          // find coincident vertices
          var A_0 = edgeA.Evaluate(0);
@@ -315,14 +312,8 @@ namespace Revit.SDK.Samples.PanelEdgeLengthAngle.CS
       /// <returns>The parameter which matches the name</returns>
       public Parameter this[string index]
       {
-         get
-         {
-            return m_parameters[index];
-         }
-         set
-         {
-            m_parameters[index] = value;
-         }
+         get => m_parameters[index];
+         set => m_parameters[index] = value;
       }
    }
 }

@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
@@ -63,9 +58,9 @@ namespace Revit.SDK.Samples.TagBeam.CS
             tagOrientationComboBox.DataSource = Enum.GetValues(typeof(TagOrientation));
 
             //Set DropDownStyle of combo boxes to "DropDownList"
-            this.tagComboBox.DropDownStyle =
-            this.tagSymbolComboBox.DropDownStyle =
-            this.tagOrientationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            tagComboBox.DropDownStyle =
+            tagSymbolComboBox.DropDownStyle =
+            tagOrientationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         /// <summary>
@@ -77,11 +72,11 @@ namespace Revit.SDK.Samples.TagBeam.CS
         {
             try
             {
-                if (this.tagSymbolComboBox.SelectedItem != null)
+                if (tagSymbolComboBox.SelectedItem != null)
                 {
                     m_dataBuffer.CreateTag((TagMode)tagComboBox.SelectedItem,
                         tagSymbolComboBox.SelectedItem as FamilySymbolWrapper,
-                        this.leadercheckBox.Checked,
+                        leadercheckBox.Checked,
                         (TagOrientation)tagOrientationComboBox.SelectedItem);
                 }
                 else
@@ -89,7 +84,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
                     throw new ApplicationException("No tag type selected.");
                 }
     
-                this.Close();
+                Close();
             }
             catch(Exception ex)
             {
@@ -104,7 +99,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>

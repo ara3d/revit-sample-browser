@@ -23,13 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.EventsMonitor.CS
 {
@@ -74,7 +69,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// This list is used to store what user selected.
         /// It can be got from the selectionDialog.
         /// </summary>
-        private static List<String> m_appEventsSelection;
+        private static List<string> m_appEventsSelection;
 
         /// <summary>
         /// This object is used to manager the events in application level.
@@ -111,10 +106,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                 }
                 return m_infWindows;
             }
-            set
-            {
-                m_infWindows = value;
-            }
+            set => m_infWindows = value;
         }
 
         /// <summary>
@@ -150,7 +142,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// <summary>
         /// Property to get and set private member variable of application events selection.
         /// </summary>
-        public static List<String> ApplicationEvents
+        public static List<string> ApplicationEvents
         {
             get
             {
@@ -160,10 +152,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                 }
                 return m_appEventsSelection;
             }
-            set
-            {
-                m_appEventsSelection = value;
-            }
+            set => m_appEventsSelection = value;
         }
 
         /// <summary>
@@ -213,7 +202,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// some point.
         /// If false is returned then Revit should inform the user that the external application 
         /// failed to load and the release the internal reference.</returns>
-        public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
             // initialize member variables.
             m_ctrlApp = application;
@@ -266,10 +255,10 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             }
             catch (Exception)
             {
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -284,11 +273,11 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// some point.
         /// If false is returned then the Revit user should be warned of the failure of the external 
         /// application to shut down correctly.</returns>
-        public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
             // dispose some resource.
             Dispose();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
 

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Revit.SDK.Samples.FabricationPartLayout.CS
 {
@@ -74,7 +73,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                         return Result.Failed;
                      }
 
-                     using (var trans = new Autodesk.Revit.DB.Transaction(doc, "Load And Place Next Item File"))
+                     using (var trans = new Transaction(doc, "Load And Place Next Item File"))
                      {
                         trans.Start();
 

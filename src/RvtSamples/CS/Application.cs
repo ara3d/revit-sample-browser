@@ -25,13 +25,9 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace RvtSamples
 {
@@ -126,7 +122,7 @@ namespace RvtSamples
         /// <summary>
         /// Assembly directory
         /// </summary>
-        static string s_assemblyDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        static string s_assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         /// <summary>
         /// Name of file which contains information required for menu items
         /// </summary>
@@ -166,10 +162,10 @@ namespace RvtSamples
         /// some point.
         /// If false is returned then Revit should inform the user that the external application 
         /// failed to load and the release the internal reference.</returns>
-        public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
             m_application = application;
-            var rc = Autodesk.Revit.UI.Result.Failed;
+            var rc = Result.Failed;
             string[] lines = null;
             var n = 0;
             var k = 0;
@@ -246,7 +242,7 @@ namespace RvtSamples
                 AddSamplesToDefaultPulldownMenus();
                 AddCustomizedPulldownMenus();
 
-                rc = Autodesk.Revit.UI.Result.Succeeded;
+                rc = Result.Succeeded;
             }
             catch (Exception e)
             {
@@ -318,9 +314,9 @@ namespace RvtSamples
         /// some point.
         /// If false is returned then the Revit user should be warned of the failure of the external 
         /// application to shut down correctly.</returns>
-        public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion // IExternalApplication Members
 

@@ -21,15 +21,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
@@ -62,9 +56,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Bubble location of radial grids
         private BubbleLocation m_lineFirstBubbleLoc;
         // Label of first arc grid
-        private String m_arcFirstLabel;
+        private string m_arcFirstLabel;
         // Label of first radial grid
-        private String m_lineFirstLabel;
+        private string m_lineFirstLabel;
         #endregion
 
         #region Properties
@@ -73,14 +67,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double XOrigin
         {
-            get
-            {
-                return m_xOrigin;
-            }
-            set 
-            { 
-                m_xOrigin = value; 
-            }
+            get => m_xOrigin;
+            set => m_xOrigin = value;
         }
 
         /// <summary>
@@ -88,14 +76,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double YOrigin
         {
-            get
-            {
-                return m_yOrigin;
-            }
-            set 
-            { 
-                m_yOrigin = value; 
-            }
+            get => m_yOrigin;
+            set => m_yOrigin = value;
         }
 
         /// <summary>
@@ -103,14 +85,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double StartDegree
         {
-            get
-            {
-                return m_startDegree;
-            }
-            set 
-            { 
-                m_startDegree = value; 
-            }
+            get => m_startDegree;
+            set => m_startDegree = value;
         }
 
         /// <summary>
@@ -118,14 +94,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double EndDegree
         {
-            get
-            {
-                return m_endDegree;
-            }
-            set 
-            { 
-                m_endDegree = value; 
-            }
+            get => m_endDegree;
+            set => m_endDegree = value;
         }
 
         /// <summary>
@@ -133,14 +103,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double ArcSpacing
         {
-            get
-            {
-                return m_arcSpacing;
-            }
-            set 
-            { 
-                m_arcSpacing = value; 
-            }
+            get => m_arcSpacing;
+            set => m_arcSpacing = value;
         }
 
         /// <summary>
@@ -148,14 +112,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public uint ArcNumber
         {
-            get
-            {
-                return m_arcNumber;
-            }
-            set 
-            { 
-                m_arcNumber = value; 
-            }
+            get => m_arcNumber;
+            set => m_arcNumber = value;
         }
 
         /// <summary>
@@ -163,14 +121,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public uint LineNumber
         {
-            get
-            {
-                return m_lineNumber;
-            }
-            set 
-            { 
-                m_lineNumber = value; 
-            }
+            get => m_lineNumber;
+            set => m_lineNumber = value;
         }
 
         /// <summary>
@@ -178,14 +130,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double ArcFirstRadius
         {
-            get
-            {
-                return m_arcFirstRadius;
-            }
-            set 
-            { 
-                m_arcFirstRadius = value; 
-            }
+            get => m_arcFirstRadius;
+            set => m_arcFirstRadius = value;
         }
 
         /// <summary>
@@ -193,14 +139,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double LineFirstDistance
         {
-            get
-            {
-                return m_LineFirstDistance;
-            }
-            set 
-            { 
-                m_LineFirstDistance = value; 
-            }
+            get => m_LineFirstDistance;
+            set => m_LineFirstDistance = value;
         }
 
         /// <summary>
@@ -208,14 +148,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public BubbleLocation ArcFirstBubbleLoc
         {
-            get
-            {
-                return m_arcFirstBubbleLoc;
-            }
-            set 
-            { 
-                m_arcFirstBubbleLoc = value; 
-            }
+            get => m_arcFirstBubbleLoc;
+            set => m_arcFirstBubbleLoc = value;
         }
 
         /// <summary>
@@ -223,44 +157,26 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public BubbleLocation LineFirstBubbleLoc
         {
-            get
-            {
-                return m_lineFirstBubbleLoc;
-            }
-            set 
-            { 
-                m_lineFirstBubbleLoc = value; 
-            }
+            get => m_lineFirstBubbleLoc;
+            set => m_lineFirstBubbleLoc = value;
         }
 
         /// <summary>
         /// Label of first arc grid
         /// </summary>
-        public String ArcFirstLabel
+        public string ArcFirstLabel
         {
-            get
-            {
-                return m_arcFirstLabel;
-            }
-            set 
-            { 
-                m_arcFirstLabel = value; 
-            }
+            get => m_arcFirstLabel;
+            set => m_arcFirstLabel = value;
         }
 
         /// <summary>
         /// Label of first radial grid
         /// </summary>
-        public String LineFirstLabel
+        public string LineFirstLabel
         {
-            get
-            {
-                return m_lineFirstLabel;
-            }
-            set 
-            { 
-                m_lineFirstLabel = value; 
-            }
+            get => m_lineFirstLabel;
+            set => m_lineFirstLabel = value;
         }
         #endregion
 
@@ -297,7 +213,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 if (failureReasons.Count != 0)
                 {
                     failureReason += "\r";
-                    foreach (String reason in failureReasons)
+                    foreach (string reason in failureReasons)
                     {
                         failureReason += reason + "\r";
                     }                   
@@ -342,22 +258,22 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         }
                     }                    
 
-                    Autodesk.Revit.DB.XYZ startPoint;
-                    Autodesk.Revit.DB.XYZ endPoint;
+                    XYZ startPoint;
+                    XYZ endPoint;
                     var cos = Math.Cos(angel);
                     var sin = Math.Sin(angel);
 
                     if (m_arcNumber != 0)
                     {
                         // Grids will have an extension distance of m_ySpacing / 2
-                        startPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + m_LineFirstDistance * cos, m_yOrigin + m_LineFirstDistance * sin, 0);
-                        endPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + (m_arcFirstRadius + (m_arcNumber - 1) * m_arcSpacing + m_arcSpacing / 2) * cos,
+                        startPoint = new XYZ (m_xOrigin + m_LineFirstDistance * cos, m_yOrigin + m_LineFirstDistance * sin, 0);
+                        endPoint = new XYZ (m_xOrigin + (m_arcFirstRadius + (m_arcNumber - 1) * m_arcSpacing + m_arcSpacing / 2) * cos,
                             m_yOrigin + (m_arcFirstRadius + (m_arcNumber - 1) * m_arcSpacing + m_arcSpacing / 2) * sin, 0);
                     }
                     else
                     {
-                        startPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + m_LineFirstDistance * cos, m_yOrigin + m_LineFirstDistance * sin, 0);
-                        endPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + (m_arcFirstRadius + 5) * cos, m_yOrigin + (m_arcFirstRadius + 5) * sin, 0);
+                        startPoint = new XYZ (m_xOrigin + m_LineFirstDistance * cos, m_yOrigin + m_LineFirstDistance * sin, 0);
+                        endPoint = new XYZ (m_xOrigin + (m_arcFirstRadius + 5) * cos, m_yOrigin + (m_arcFirstRadius + 5) * sin, 0);
                     }
 
                     Line line;
@@ -381,7 +297,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             // Set label of first radial grid
                             grid.Name = m_lineFirstLabel;
                         }
-                        catch (System.ArgumentException)
+                        catch (ArgumentException)
                         {
                             ShowMessage(resManager.GetString("FailedToSetLabel") + m_lineFirstLabel + "!",
                                         resManager.GetString("FailureCaptionSetLabel"));
@@ -422,7 +338,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             {
                 try
                 {
-                    var origin = new Autodesk.Revit.DB.XYZ (m_xOrigin, m_yOrigin, 0);
+                    var origin = new XYZ (m_xOrigin, m_yOrigin, 0);
                     var radius = m_arcFirstRadius + i * m_arcSpacing;
 
                     // In Revit UI user can select a circle to create a grid, but actually two grids 
@@ -447,7 +363,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                     // Set label of first grid
                                     gridUpper.Name = m_arcFirstLabel;
                                 }
-                                catch (System.ArgumentException)
+                                catch (ArgumentException)
                                 {
                                     ShowMessage(resManager.GetString("FailedToSetLabel") + m_arcFirstLabel + "!",
                                                 resManager.GetString("FailureCaptionSetLabel"));
@@ -488,7 +404,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                 {
                                     arcToCreate = TransformArc(origin, radius, m_startDegree, m_endDegree, m_arcFirstBubbleLoc);
                                 }
-                                catch (System.ArgumentException)
+                                catch (ArgumentException)
                                 {
                                     var failureReason = resManager.GetString("EndPointsTooClose");
                                     if (!failureReasons.Contains(failureReason))
@@ -506,7 +422,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             {
                                 arcToCreate = TransformArc(origin, radius, m_startDegree, m_endDegree, m_arcFirstBubbleLoc);
                             }
-                            catch (System.ArgumentException)
+                            catch (ArgumentException)
                             {
                                 var failureReason = resManager.GetString("EndPointsTooClose");
                                 if (!failureReasons.Contains(failureReason))
@@ -528,7 +444,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                 {
                                     grid.Name = m_arcFirstLabel;
                                 }
-                                catch (System.ArgumentException)
+                                catch (ArgumentException)
                                 {
                                     ShowMessage(resManager.GetString("FailedToSetLabel") + m_arcFirstLabel + "!",
                                                 resManager.GetString("FailureCaptionSetLabel"));

@@ -23,9 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Fabrication;
@@ -39,22 +36,6 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ChangeService : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
       public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {
@@ -125,23 +106,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ChangeSize : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
-      public virtual Result Execute(ExternalCommandData commandData
+       public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {
          try
@@ -155,7 +120,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
             if (collection.Count > 0)
             {
                // FabricationNetworkChangeService needs an ISet<ElementId>
-               ISet<ElementId> selIds = new HashSet<ElementId>();
+               var selIds = new HashSet<ElementId>();
                foreach (var id in collection)
                {
                   selIds.Add(id);
@@ -171,12 +136,12 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                   var allLoadedServices = config.GetAllLoadedServices();
 
                   // Create a map of sizes to swap the current sizes to a new size
-                  var sizeMappings = new HashSet<Autodesk.Revit.DB.Fabrication.FabricationPartSizeMap>();
-                  var mapping = new Autodesk.Revit.DB.Fabrication.FabricationPartSizeMap("12x12", 1.0, 1.0, false, ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0 );
+                  var sizeMappings = new HashSet<FabricationPartSizeMap>();
+                  var mapping = new FabricationPartSizeMap("12x12", 1.0, 1.0, false, ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0 );
                   mapping.MappedWidthDiameter = 1.5;
                   mapping.MappedDepth = 1.5;
                   sizeMappings.Add( mapping );
-                  var mapping1 = new Autodesk.Revit.DB.Fabrication.FabricationPartSizeMap("18x18", 1.5, 1.5, false, ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0 );
+                  var mapping1 = new FabricationPartSizeMap("18x18", 1.5, 1.5, false, ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0 );
                   mapping1.MappedWidthDiameter = 2.0;
                   mapping1.MappedDepth = 2.0;
                   sizeMappings.Add( mapping1 );
@@ -227,23 +192,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ApplyChange : IExternalCommand
    {
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
-      public virtual Result Execute(ExternalCommandData commandData
+       public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {
          try
@@ -295,7 +244,7 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                   applychange.SetMapOfSizesForStraights( sizeMappings );
 
                   // Get the in-line element type identiers
-                  var inlineRevIds = new HashSet<Autodesk.Revit.DB.ElementId>();
+                  var inlineRevIds = new HashSet<ElementId>();
                   var inlineIds = applychange.GetInLinePartTypes();
                   for ( var ii = inlineIds.Count() - 1; ii > -1; ii-- )
                   {

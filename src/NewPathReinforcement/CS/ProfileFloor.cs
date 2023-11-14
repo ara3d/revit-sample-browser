@@ -19,16 +19,12 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
+
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace Revit.SDK.Samples.NewPathReinforcement.CS
 {
@@ -38,7 +34,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
     /// </summary>
     public class ProfileFloor : Profile
     {
-        private Floor m_data = null;
+        private Floor m_data;
 
         /// <summary>
         /// constructor
@@ -105,12 +101,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <returns>new created PathReinforcement</returns>
         public override Autodesk.Revit.DB.Structure.PathReinforcement CreatePathReinforcement(List<Vector4> points, bool flip)
         {
-            Autodesk.Revit.DB.XYZ p1, p2; Line curve;
+            XYZ p1, p2; Line curve;
             IList<Curve> curves = new List<Curve>();
             for (var i = 0; i < points.Count - 1; i++)
             {
-                p1 = new Autodesk.Revit.DB.XYZ(points[i].X, points[i].Y, points[i].Z);
-                p2 = new Autodesk.Revit.DB.XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
+                p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
+                p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
                 curve = Line.CreateBound(p1, p2);
                 curves.Add(curve);
             }

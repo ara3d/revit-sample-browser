@@ -24,15 +24,9 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
 {
    using System;
    using System.Collections.Generic;
-   using System.Text;
-   using System.Diagnostics;
-
-   using Autodesk.Revit;
    using Autodesk.Revit.DB;
    using Autodesk.Revit.UI;
    using Autodesk.Revit.DB.Structure;
-   using Autodesk.Revit.ApplicationServices;
-
    using ModelElement = Autodesk.Revit.DB.Element;
 
    /// <summary>
@@ -146,15 +140,15 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
       /// <param name="xNumber">number of Columns in the X direction</param>
       /// <param name="yNumber">number of Columns in the Y direction</param>
       /// <param name="distance">distance between columns</param>
-      private static Autodesk.Revit.DB.UV[,] CreateMatrix(int xNumber, int yNumber, double distance)
+      private static UV[,] CreateMatrix(int xNumber, int yNumber, double distance)
       {
-         var result = new Autodesk.Revit.DB.UV[xNumber, yNumber];
+         var result = new UV[xNumber, yNumber];
 
          for (var i = 0; i < xNumber; i++)
          {
             for (var j = 0; j < yNumber; j++)
             {
-               result[i, j] = new Autodesk.Revit.DB.UV(i * distance, j * distance);
+               result[i, j] = new UV(i * distance, j * distance);
             }
          }
          return result;
@@ -167,10 +161,10 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
       /// <param name="columnType">specified type of the column</param>
       /// <param name="baseLevel">base level of the column</param>
       /// <param name="topLevel">top level of the colunm</param>
-      private FamilyInstance NewColumn(Autodesk.Revit.DB.UV point2D, Level baseLevel, Level topLevel)
+      private FamilyInstance NewColumn(UV point2D, Level baseLevel, Level topLevel)
       {
          //create column of specified type with certain level and start point 
-         var point = new Autodesk.Revit.DB.XYZ(point2D.U, point2D.V, 0);
+         var point = new XYZ(point2D.U, point2D.V, 0);
 
          if (!m_data.ColumnSymbol.IsActive)
             m_data.ColumnSymbol.Activate();
@@ -193,12 +187,12 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
       /// <param name="baseLevel">base level of the beam</param>
       /// <param name="topLevel">top level of the beam</param>
       /// <returns>nothing</returns>
-      private FamilyInstance NewBeam(Autodesk.Revit.DB.UV point2D1, Autodesk.Revit.DB.UV point2D2, Level topLevel)
+      private FamilyInstance NewBeam(UV point2D1, UV point2D2, Level topLevel)
       {
          // calculate the start point and end point of Beam's location line in 3D
          var height = topLevel.Elevation;
-         var startPoint = new Autodesk.Revit.DB.XYZ(point2D1.U, point2D1.V, height);
-         var endPoint = new Autodesk.Revit.DB.XYZ(point2D2.U, point2D2.V, height);
+         var startPoint = new XYZ(point2D1.U, point2D1.V, height);
+         var endPoint = new XYZ(point2D2.U, point2D2.V, height);
          // create Beam and set its location
          var baseLine = Line.CreateBound(startPoint, endPoint);
          if (!m_data.BeamSymbol.IsActive)
@@ -215,15 +209,15 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
       /// <param name="point2D2">second point of the location line in 2D</param>
       /// <param name="baseLevel">the base level of the brace</param>
       /// <param name="topLevel">the top level of the brace</param>
-      private List<FamilyInstance> NewBraces(Autodesk.Revit.DB.UV point2D1, Autodesk.Revit.DB.UV point2D2, Level baseLevel, Level topLevel)
+      private List<FamilyInstance> NewBraces(UV point2D1, UV point2D2, Level baseLevel, Level topLevel)
       {
          // calculate the start point and end point of the location lines of two braces
          var topHeight = topLevel.Elevation;
          var baseHeight = baseLevel.Elevation;
          var middleElevation = (topHeight + baseHeight) / 2;
-         var startPoint = new Autodesk.Revit.DB.XYZ(point2D1.U, point2D1.V, middleElevation);
-         var endPoint = new Autodesk.Revit.DB.XYZ(point2D2.U, point2D2.V, middleElevation);
-         var middlePoint = new Autodesk.Revit.DB.XYZ((point2D1.U + point2D2.U) / 2, (point2D1.V + point2D2.V) / 2, topHeight);
+         var startPoint = new XYZ(point2D1.U, point2D1.V, middleElevation);
+         var endPoint = new XYZ(point2D2.U, point2D2.V, middleElevation);
+         var middlePoint = new XYZ((point2D1.U + point2D2.U) / 2, (point2D1.V + point2D2.V) / 2, topHeight);
 
          var levelId = topLevel.Id;
          // create two brace; then set their location line and reference level
@@ -250,7 +244,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
       /// <param name="value">value to set</param>
       /// <returns>is successful</returns>
       private bool SetParameter(ModelElement elem,
-          BuiltInParameter builtInPara, Autodesk.Revit.DB.ElementId value)
+          BuiltInParameter builtInPara, ElementId value)
       {
          var para = elem.get_Parameter(builtInPara);
          if (null != para && para.StorageType == StorageType.ElementId && !para.IsReadOnly)
@@ -302,9 +296,9 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
       /// <param name="elem">element to be moved</param>
       /// <param name="translation2D">the 2D vector by which the element is to be moved</param>
       /// <returns>is successful</returns>
-      private void MoveElement(Document doc, Autodesk.Revit.DB.Element elem, Autodesk.Revit.DB.UV translation2D)
+      private void MoveElement(Document doc, Element elem, UV translation2D)
       {
-         var translation3D = new Autodesk.Revit.DB.XYZ(translation2D.U, translation2D.V, 0.0);
+         var translation3D = new XYZ(translation2D.U, translation2D.V, 0.0);
          ElementTransformUtils.MoveElement(doc, elem.Id, translation3D);
       }
 
@@ -317,10 +311,10 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
       /// <param name="angle">the number of degrees, in radians, 
       /// by which the element is to be rotated around the specified axis</param>
       /// <returns>is successful</returns>
-      private void RotateElement(UIApplication app, Autodesk.Revit.DB.Element elem, Autodesk.Revit.DB.UV center, double angle)
+      private void RotateElement(UIApplication app, Element elem, UV center, double angle)
       {
-         var axisPnt1 = new Autodesk.Revit.DB.XYZ(center.U, center.V, 0.0);
-         var axisPnt2 = new Autodesk.Revit.DB.XYZ(center.U, center.V, 1.0);
+         var axisPnt1 = new XYZ(center.U, center.V, 0.0);
+         var axisPnt2 = new XYZ(center.U, center.V, 1.0);
          var axis = Line.CreateBound(axisPnt1, axisPnt2);
          //axis.
          ElementTransformUtils.RotateElement(elem.Document, elem.Id, axis, angle);

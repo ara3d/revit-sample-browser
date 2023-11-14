@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Autodesk.Revit.DB;
 using ConstructionType = Autodesk.Revit.DB.Analysis.ConstructionType;
 
 namespace Revit.SDK.Samples.ProjectInfo.CS
@@ -74,7 +73,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <returns>true if destinationType is string, otherwise false</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            return destinationType.Equals(typeof(System.String)) || base.CanConvertTo(context, destinationType);
+            return destinationType.Equals(typeof(string)) || base.CanConvertTo(context, destinationType);
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             var text = value as string;
             if (!string.IsNullOrEmpty(text))
             {
-                foreach (ConstructionWrapper con in this.GetStandardValues(context))
+                foreach (ConstructionWrapper con in GetStandardValues(context))
                 {
                     if (con.Name == text)
                     {

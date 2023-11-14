@@ -23,14 +23,9 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB.Events;
-using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.RevitAddIns;
 
 namespace Revit.SDK.Samples.CancelSave.CS
@@ -63,7 +58,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
         /// </summary>
         /// <param name="application">Controlled application to be loaded to Revit process.</param>
         /// <returns>The status of the external application</returns>
-        public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
             // subscribe to DocumentOpened, DocumentCreated, DocumentSaving and DocumentSavingAs events
             application.ControlledApplication.DocumentOpened   += new EventHandler<DocumentOpenedEventArgs>(ReservePojectOriginalStatus);
@@ -73,7 +68,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
             application.ControlledApplication.DocumentClosing += new EventHandler<DocumentClosingEventArgs>(MemClosingDocumentHashCode);
             application.ControlledApplication.DocumentClosed += new EventHandler<DocumentClosedEventArgs>(RemoveStatusofClosedDocument);
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -81,7 +76,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
         /// </summary>
         /// <param name="application">Controlled application to be shutdown.</param>
         /// <returns>The status of the external application.</returns>
-        public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
             // unsubscribe to DocumentOpened, DocumentCreated, DocumentSaving and DocumentSavingAs events
             application.ControlledApplication.DocumentOpened   -= new EventHandler<DocumentOpenedEventArgs>(ReservePojectOriginalStatus);
@@ -92,7 +87,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
             // finalize the log file.
             LogManager.LogFinalize();
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         #endregion
@@ -105,7 +100,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="args">Event arguments that contains the event data.</param>
-        private void ReservePojectOriginalStatus(Object sender, RevitAPIPostDocEventArgs args)
+        private void ReservePojectOriginalStatus(object sender, RevitAPIPostDocEventArgs args)
         {
             // The document associated with the event. Here means which document has been created or opened.
             var doc = args.Document;
@@ -137,7 +132,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="args">Event arguments that contains the event data.</param>
-        private void CheckProjectStatusUpdate(Object sender, RevitAPIPreDocEventArgs args)
+        private void CheckProjectStatusUpdate(object sender, RevitAPIPreDocEventArgs args)
         {
             // The document associated with the event. Here means which document is about to save / save as.
             var doc = args.Document;
@@ -173,12 +168,12 @@ namespace Revit.SDK.Samples.CancelSave.CS
             documentOriginalStatusDic.Add(doc.GetHashCode(), currentProjectStatus);
         }
 
-        private void MemClosingDocumentHashCode(Object sender, DocumentClosingEventArgs args)
+        private void MemClosingDocumentHashCode(object sender, DocumentClosingEventArgs args)
         {
            hashcodeofCurrentClosingDoc = args.Document.GetHashCode();
         }
 
-        private void RemoveStatusofClosedDocument(Object sender, DocumentClosedEventArgs args)
+        private void RemoveStatusofClosedDocument(object sender, DocumentClosedEventArgs args)
         {
            if (args.Status.Equals(RevitAPIEventStatus.Succeeded) && (documentOriginalStatusDic.ContainsKey(hashcodeofCurrentClosingDoc)))
            {

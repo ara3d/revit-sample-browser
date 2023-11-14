@@ -24,12 +24,8 @@
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Collections;
     using System.Windows.Forms;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
     using Autodesk.Revit.DB.Structure;
@@ -63,7 +59,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(
+        public Result Execute(
           ExternalCommandData revit,
           ref string message,
           ElementSet elements)
@@ -76,7 +72,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 message = "Please select only one AreaReinforcement and ";
                 message += "make sure there are Hook Types and Bar Types in current project.";
                 trans.RollBack();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             IAreaReinData data = new WallAreaReinData();
@@ -87,7 +83,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 {
                     message = "Failed to get properties of selected AreaReinforcement.";
                     trans.RollBack();
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
             }
 
@@ -95,46 +91,28 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             if (form.ShowDialog() == DialogResult.Cancel)
             {
                 trans.RollBack();
-                return Autodesk.Revit.UI.Result.Cancelled;
+                return Result.Cancelled;
             }
             trans.Commit();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
         /// it is convenient for other class to get
         /// </summary>
-        public static ExternalCommandData CommandData
-        {
-            get
-            {
-                return m_commandData;
-            }
-        }
+        public static ExternalCommandData CommandData => m_commandData;
 
         /// <summary>
         /// all hook types in current project
         /// it is static because of IConverter limitation
         /// </summary>
-        public static Hashtable HookTypes
-        {
-            get
-            {
-                return m_hookTypes;
-            }
-        }
+        public static Hashtable HookTypes => m_hookTypes;
 
         /// <summary>
         /// all hook types in current project
         /// it is static because of IConverter limitation
         /// </summary>
-        public static Hashtable BarTypes
-        {
-            get
-            {
-                return m_barTypes;
-            }
-        }
+        public static Hashtable BarTypes => m_barTypes;
 
         /// <summary>
         /// check whether the selected is expected, find all hooktypes in current project
@@ -206,7 +184,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     class RebarParas : IExternalCommand
     {
-        public Autodesk.Revit.UI.Result Execute(
+        public Result Execute(
           ExternalCommandData revit,
           ref string message,
           ElementSet elements)
@@ -223,7 +201,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                     if (elem is Rebar)
                     {
                         var str = "";
-                        var rebar = (Autodesk.Revit.DB.Structure.Rebar)elem;
+                        var rebar = (Rebar)elem;
                         var pars = rebar.Parameters;
                         foreach (Parameter param in pars)
                         {
@@ -232,19 +210,19 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                             var type = param.StorageType;
                             switch (type)
                             {
-                                case Autodesk.Revit.DB.StorageType.Double:
+                                case StorageType.Double:
                                     val = param.AsDouble().ToString();
                                     break;
-                                case Autodesk.Revit.DB.StorageType.ElementId:
+                                case StorageType.ElementId:
                                     var id = param.AsElementId();
                                     var paraElem = revitDoc.Document.GetElement(id);
                                     if (paraElem != null)
                                         val = paraElem.Name;
                                     break;
-                                case Autodesk.Revit.DB.StorageType.Integer:
+                                case StorageType.Integer:
                                     val = param.AsInteger().ToString();
                                     break;
-                                case Autodesk.Revit.DB.StorageType.String:
+                                case StorageType.String:
                                     val = param.AsString();
                                     break;
                                 default:
@@ -253,16 +231,16 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                             str = str + name + ": " + val + "\r\n";
                         }
                         TaskDialog.Show("Rebar parameters", str);
-                        return Autodesk.Revit.UI.Result.Succeeded;
+                        return Result.Succeeded;
                     }
                 }
                 message = "No rebar selected!";
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             catch (Exception e)
             {
                 message = e.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
     }

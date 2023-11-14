@@ -25,12 +25,8 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
-    using System.Collections;
     using System.ComponentModel;
     using System.Globalization;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
 
     /// <summary>

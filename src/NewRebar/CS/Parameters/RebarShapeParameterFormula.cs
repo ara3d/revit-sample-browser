@@ -20,10 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewRebar.CS
@@ -44,8 +40,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public string Formula
         {
-            get { return m_formula; }
-            set { m_formula = value; }
+            get => m_formula;
+            set => m_formula = value;
         }
 
         /// <summary>
@@ -64,7 +60,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// Add a formula parameter to RebarShapeDefinition.
         /// </summary>
         /// <param name="defGroup">Definition group</param>
-        public override void Commit(Autodesk.Revit.DB.Document doc, DefinitionGroup defGroup)
+        public override void Commit(Document doc, DefinitionGroup defGroup)
         {
             var def = GetOrCreateDef(defGroup);
             m_parameterId = Autodesk.Revit.DB.Structure.RebarShapeParameters.GetOrCreateElementIdForExternalDefinition(doc, def);

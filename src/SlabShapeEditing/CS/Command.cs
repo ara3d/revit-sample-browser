@@ -19,15 +19,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
-using System.Windows.Forms;
+
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using System.Collections;
 
 namespace Revit.SDK.Samples.SlabShapeEditing.CS
 {
@@ -56,21 +50,21 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             var selectFloor = GetSelectFloor(commandData);
             if (null == selectFloor)
             {
                 message = "Make sure selected only one floor (Slab) in Revit.";
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             var slabShapeEditingForm = 
                 new SlabShapeEditingForm(selectFloor, commandData);
             slabShapeEditingForm.ShowDialog();
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>

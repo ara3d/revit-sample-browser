@@ -25,8 +25,6 @@ using System.Linq;
 
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.Attributes;
 
 
 namespace Revit.SDK.Samples.SinePlotter.CS
@@ -89,7 +87,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
                 //place the instances of the family objects along a curve         
                 plotter.PlaceInstancesOnCurve(partitions, period, amplitude, numOfCircles);
 
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {

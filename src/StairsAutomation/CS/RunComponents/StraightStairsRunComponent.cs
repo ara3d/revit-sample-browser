@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -78,7 +77,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         private double m_width;
         private XYZ m_runOffset;
         private XYZ m_widthOffset;
-        private StairsRun m_stairsRun = null;
+        private StairsRun m_stairsRun;
 
         #region IStairsRunConfiguration Members
 
@@ -105,13 +104,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// Implements the interface method.
         /// </summary>
-        public double RunElevation
-        {
-        	get
-        	{
-        		return m_bottomElevation;
-        	}
-        }
+        public double RunElevation => m_bottomElevation;
 
         /// <summary>
         /// Implements the interface method.
@@ -168,7 +161,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// <summary>
         /// Implements the interface method.
         /// </summary>
-		public Autodesk.Revit.DB.Architecture.StairsRun CreateStairsRun(Document document, ElementId stairsId)
+		public StairsRun CreateStairsRun(Document document, ElementId stairsId)
 		{
 			m_stairsRun = StairsRun.CreateStraightRun(document, stairsId, 
 			                                   Transform(GetRunStairsPath()), StairsRunJustification.Center);
@@ -182,11 +175,8 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
 		public double Width
 		{
-			get
-			{
-				return m_width;
-			}
-			set
+			get => m_width;
+            set
 			{
 				m_width = value;
 				if (m_stairsRun != null)

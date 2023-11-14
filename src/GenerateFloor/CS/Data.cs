@@ -25,8 +25,6 @@ using System.Collections.Generic;
 
 using System.Collections;
 using System.Drawing;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -45,7 +43,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       private Level m_level;
       private CurveArray m_profile;
       private bool m_structural;
-      private System.Drawing.PointF[] m_points;
+      private PointF[] m_points;
       private double m_maxLength;
       private const double PRECISION = 0.00000001;
       private Autodesk.Revit.Creation.Application m_creApp;
@@ -56,14 +54,8 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// </summary>
       public FloorType FloorType
       {
-         get
-         {
-            return m_floorType;
-         }
-         set
-         {
-            m_floorType = value;
-         }
+         get => m_floorType;
+         set => m_floorType = value;
       }
 
       /// <summary>
@@ -71,14 +63,8 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// </summary>
       public Level Level
       {
-         get
-         {
-            return m_level;
-         }
-         set
-         {
-            m_level = value;
-         }
+         get => m_level;
+         set => m_level = value;
       }
 
       /// <summary>
@@ -86,14 +72,8 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// </summary>
       public CurveArray Profile
       {
-         get
-         {
-            return m_profile;
-         }
-         set
-         {
-            m_profile = value;
-         }
+         get => m_profile;
+         set => m_profile = value;
       }
 
       /// <summary>
@@ -101,29 +81,17 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// </summary>
       public bool Structural
       {
-         get
-         {
-            return m_structural;
-         }
-         set
-         {
-            m_structural = value;
-         }
+         get => m_structural;
+         set => m_structural = value;
       }
 
       /// <summary>
       /// Points to be draw.
       /// </summary>
-      public System.Drawing.PointF[] Points
+      public PointF[] Points
       {
-         get
-         {
-            return m_points;
-         }
-         set
-         {
-            m_points = value;
-         }
+         get => m_points;
+         set => m_points = value;
       }
 
       /// <summary>
@@ -131,14 +99,8 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// </summary>
       public double MaxLength
       {
-         get
-         {
-            return m_maxLength;
-         }
-         set
-         {
-            m_maxLength = value;
-         }
+         get => m_maxLength;
+         set => m_maxLength = value;
       }
 
       /// <summary>
@@ -146,14 +108,8 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// </summary>
       public List<string> FloorTypesName
       {
-         get
-         {
-            return m_floorTypesName;
-         }
-         set
-         {
-            m_floorTypesName = value;
-         }
+         get => m_floorTypesName;
+         set => m_floorTypesName = value;
       }
 
       /// <summary>
@@ -209,7 +165,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
          elements.Reset();
          while (elements.MoveNext())
          {
-            var ft = elements.Current as Autodesk.Revit.DB.FloorType;
+            var ft = elements.Current as FloorType;
 
             if (null == ft || null == ft.Category || !ft.Category.Name.Equals("Floors"))
             {
@@ -228,7 +184,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// <param name="walls">the selection of walls that make a closed outline </param>
       private void ObtainLevel(ElementSet walls)
       {
-         Autodesk.Revit.DB.Level temp = null;
+         Level temp = null;
 
          foreach (Wall w in walls)
          {
@@ -276,7 +232,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             var xyzArray = c.Tessellate() as List<XYZ>;
             foreach (var xyz in xyzArray)
             {
-               var temp = new Autodesk.Revit.DB.XYZ(xyz.X, -xyz.Y, xyz.Z);
+               var temp = new XYZ(xyz.X, -xyz.Y, xyz.Z);
                FindMinMax(temp, ref xMin, ref xMax, ref yMin, ref yMax);
                tempArray.Add(temp);
             }
@@ -287,7 +243,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
          Points = new PointF[tempArray.Count / 2 + 1];
          for (var i = 0; i < tempArray.Count; i = i + 2)
          {
-            var point = (Autodesk.Revit.DB.XYZ)tempArray[i];
+            var point = (XYZ)tempArray[i];
             Points.SetValue(new PointF((float)(point.X - xMin), (float)(point.Y - yMin)), i / 2);
          }
          var end = (PointF)Points.GetValue(0);
@@ -302,7 +258,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// <param name="xMax">right</param>
       /// <param name="yMin">bottom</param>
       /// <param name="yMax">up</param>
-      static private void FindMinMax(Autodesk.Revit.DB.XYZ point, ref double xMin, ref double xMax, ref double yMin, ref double yMax)
+      static private void FindMinMax(XYZ point, ref double xMin, ref double xMax, ref double yMin, ref double yMax)
       {
          if (point.X < xMin)
          {
@@ -330,7 +286,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       static private ElementSet WallFilter(ElementSet miscellanea)
       {
          var walls = new ElementSet();
-         foreach (Autodesk.Revit.DB.Element e in miscellanea)
+         foreach (Element e in miscellanea)
          {
             var w = e as Wall;
             if (null != w)
@@ -391,7 +347,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
       /// <param name="connected">current curve's end point</param>
       /// <param name="line">current curve</param>
       /// <returns>a appropriate curve for generate floor</returns>
-      private Curve GetNext(CurveArray profile, Autodesk.Revit.DB.XYZ connected, Curve line)
+      private Curve GetNext(CurveArray profile, XYZ connected, Curve line)
       {
          foreach (Curve c in profile)
          {

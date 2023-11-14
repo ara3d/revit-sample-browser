@@ -21,14 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -99,26 +92,26 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         /// <summary>
         /// The currently active transaction group
         /// </summary>
-        private TransactionGroup m_transactionGroup = null;
+        private TransactionGroup m_transactionGroup;
         /// The main, hidden outer transaction group
         /// </summary>
-        private TransactionGroup m_mainTtransactionGroup = null;
+        private TransactionGroup m_mainTtransactionGroup;
         /// <summary>
         /// The active transaction
         /// </summary>
-        private Transaction m_transaction = null;
+        private Transaction m_transaction;
         /// <summary>
         /// The number of transactions
         /// </summary>
-        private int m_transCount = 0;
+        private int m_transCount;
         /// <summary>
         /// The number of transaction groups
         /// </summary>
-        private int m_transGroupCount = 0;
+        private int m_transGroupCount;
         /// <summary>
         /// The last created wall in the active transaction
         /// </summary>
-        private Wall m_lastCreatedWall = null;
+        private Wall m_lastCreatedWall;
 
         /// <summary>
         /// Constructor
@@ -137,7 +130,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
 
             // created the root node
             m_rootNode = new TreeNode("Command history");
-            this.transactionsTreeView.Nodes.Add(m_rootNode);
+            transactionsTreeView.Nodes.Add(m_rootNode);
 
             // set availability of form buttons
             UpdateButtonsStatus();
@@ -263,7 +256,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                         }
                     }
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     TaskDialog.Show("Revit", "Exception when creating a wall: " + ex.Message);
                 }
@@ -290,7 +283,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 {
                     if (subTransaction.Start() == TransactionStatus.Started)
                     {
-                        var translationVec = new Autodesk.Revit.DB.XYZ(10, 10, 0);
+                        var translationVec = new XYZ(10, 10, 0);
                         ElementTransformUtils.MoveElement(m_document, m_lastCreatedWall.Id, translationVec);
                         updateModel(true);  // immediately update the view to see the changes
 
@@ -301,7 +294,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                         }
                     }
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     TaskDialog.Show("Revit", "Exception when moving a wall: " + ex.Message);
                 }
@@ -349,7 +342,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                         }
                     }
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     TaskDialog.Show("Revit", "Exception when deleting a wall: " + ex.Message);
                 }
@@ -452,8 +445,8 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 m_mainTtransactionGroup.Assimilate();
             }
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>
@@ -469,7 +462,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                    TaskDialog.Show("Warning", "By canceling this dialog, all modifications to the model will be discarded."
                     + " Do you want to proceed?", TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No))
                 {
-                    this.DialogResult = DialogResult.None;
+                    DialogResult = DialogResult.None;
                     return;
                 }
             }
@@ -492,8 +485,8 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 m_mainTtransactionGroup.RollBack();
             }
 
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         /// <summary>
@@ -527,7 +520,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 }
                 else
                 {
-                    throw new System.ApplicationException("Could not end a transaction group");
+                    throw new ApplicationException("Could not end a transaction group");
                 }
             }
         }
@@ -669,7 +662,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             {
                 string childNodeText = null;
 
-                if (String.IsNullOrEmpty(info))
+                if (string.IsNullOrEmpty(info))
                 {
                     childNodeText = "Operation";
                 }

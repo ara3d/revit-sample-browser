@@ -21,11 +21,8 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
 using Autodesk.Revit.DB.Architecture;
 using System.Drawing.Design;
 using System.ComponentModel;
@@ -88,13 +85,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Name of the Creator.
         /// </summary>
-        public string CreatorName
-        {
-            get
-            {
-                return m_creationData.Creator.Name;
-            }
-        }
+        public string CreatorName => m_creationData.Creator.Name;
 
         /// <summary>
         /// Change the symbol of the HostedSweep.
@@ -183,7 +174,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// Name will be displayed in property grid.
         /// </summary>
         [Category("Identity Data")]
-        public String Name
+        public string Name
         {
             get
             {
@@ -196,7 +187,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// HostedSweep Angle property.
         /// </summary>
         [Category("Profile")]
-        public String Angle
+        public string Angle
         {
             get
             {
@@ -232,13 +223,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         [TypeConverter(typeof(CreationDataTypeConverter)),
         Editor(typeof(EdgeFormUITypeEditor), typeof(UITypeEditor)),
         Category("Profile"), DisplayName("Profile Edges")]
-        public CreationData AddOrRemoveSegments
-        {
-            get
-            {
-                return m_creationData;
-            }
-        }
+        public CreationData AddOrRemoveSegments => m_creationData;
 
         /// <summary>
         /// HostedSweep Length property.
@@ -262,7 +247,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         [Category("Constraints"), DisplayName("Horizontal Profile Flipped")]
         public bool HorizontalFlipped
         {
-            get { return m_elemToModify.HorizontalFlipped; }
+            get => m_elemToModify.HorizontalFlipped;
             set
             {
                 if (value != m_elemToModify.HorizontalFlipped)
@@ -285,7 +270,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// HostedSweep HorizontalOffset property.
         /// </summary>
         [Category("Constraints"), DisplayName("Horizontal Profile Offset")]
-        public String HorizontalOffset
+        public string HorizontalOffset
         {
             get
             {
@@ -320,10 +305,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         [Category("Constraints"), DisplayName("Vertical Profile Flipped")]
         public bool VerticalFlipped
         {
-            get
-            { 
-                return m_elemToModify.VerticalFlipped; 
-            }
+            get => m_elemToModify.VerticalFlipped;
             set
             {
                 if (value != m_elemToModify.VerticalFlipped)
@@ -346,7 +328,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// HostedSweep VerticalOffset property.
         /// </summary>
         [Category("Constraints"), DisplayName("Vertical Profile Offset")]
-        public String VerticalOffset
+        public string VerticalOffset
         {
             get
             {
@@ -380,7 +362,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         /// <param name="name">name of parameter</param>
         /// <returns>parameter whose definition name is the given name.</returns>
-        protected Parameter GetParameter(String name)
+        protected Parameter GetParameter(string name)
         {
             return m_elemToModify.LookupParameter(name);
         }

@@ -21,11 +21,6 @@
 //  
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.UI;
@@ -35,7 +30,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
     /// <summary>
     /// dupliate coordiante data form
     /// </summary>
-    public partial class DuplicateForm : System.Windows.Forms.Form
+    public partial class DuplicateForm : Form
     {
         CoordinateSystemData m_data; //the reference of the CoordinateSystemData class 
         CoordinateSystemDataForm m_dataForm; //the reference of the CoordinateSystemDataForm class
@@ -85,8 +80,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                 return;
             }
 
-            this.DialogResult = DialogResult.OK;    // set dialog result
-            this.Close();                           // close the form
+            DialogResult = DialogResult.OK;    // set dialog result
+            Close();                           // close the form
         }
 
         /// <summary>
@@ -96,8 +91,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;// set dialog result
-            this.Close();                           // close the form
+            DialogResult = DialogResult.Cancel;// set dialog result
+            Close();                           // close the form
         }
 
         /// <summary>

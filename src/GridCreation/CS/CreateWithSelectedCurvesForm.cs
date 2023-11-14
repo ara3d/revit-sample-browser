@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.GridCreation.CS
@@ -33,7 +28,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
     /// <summary>
     /// The dialog which provides the options of creating grids with selected lines/arcs
     /// </summary>
-    public partial class CreateWithSelectedCurvesForm : System.Windows.Forms.Form
+    public partial class CreateWithSelectedCurvesForm : Form
     {
         // data class object
         private CreateWithSelectedCurvesData m_data;
@@ -69,7 +64,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             }
             else
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
             }
         }
 

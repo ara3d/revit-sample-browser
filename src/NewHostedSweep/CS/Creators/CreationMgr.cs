@@ -20,11 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>

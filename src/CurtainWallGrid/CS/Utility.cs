@@ -20,12 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
@@ -64,7 +60,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// <summary>
    /// compare 2 views and sort them by their type names
    /// </summary>
-   class ViewComparer : IComparer<Autodesk.Revit.DB.View>
+   class ViewComparer : IComparer<View>
    {
       #region IComparer<View> Members
 
@@ -80,7 +76,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// <returns>
       /// returns the result by comparing their names with CaseInsensitiveComparer
       /// </returns>
-      public int Compare(Autodesk.Revit.DB.View x, Autodesk.Revit.DB.View y)
+      public int Compare(View x, View y)
       {
          var xName = x.ViewType.ToString() + " : " + x.Name;
          var yName = y.ViewType.ToString() + " : " + y.Name;

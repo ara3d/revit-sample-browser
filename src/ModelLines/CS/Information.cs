@@ -22,10 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ModelLines.CS
@@ -36,34 +32,22 @@ namespace Revit.SDK.Samples.ModelLines.CS
     public class ModelCurveCounter
     {
         // Private members
-        String m_typeName; // type name
+        string m_typeName; // type name
         int m_number;               // the number of corresponding type
 
         // Properties
         /// <summary>
         /// Indicate the type name, such ModelArc, ModelLine, etc
         /// </summary>
-        public String TypeName
-        {
-            get
-            {
-                return m_typeName;
-            }
-        }
+        public string TypeName => m_typeName;
 
         /// <summary>
         /// Indicate the number of the corresponding type which name stored in type name
         /// </summary>
         public int Number
         {
-            get
-            {
-                return m_number;
-            }
-            set
-            {
-                m_number = value;
-            }
+            get => m_number;
+            set => m_number = value;
         }
 
         // Methods
@@ -71,7 +55,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// The constructor of ModelCurveCounter
         /// </summary>
         /// <param name="typeName">The type name</param>
-        public ModelCurveCounter(String typeName)
+        public ModelCurveCounter(string typeName)
         {
             m_typeName = typeName;
         }
@@ -84,31 +68,19 @@ namespace Revit.SDK.Samples.ModelLines.CS
     public class IdInfo
     {
         // Private members
-        String m_text;     // The display text
+        string m_text;     // The display text
         ElementId m_id;          // The real value - id
 
         // Properties
         /// <summary>
         /// The text displayed in the comboBox, as the DisplayMember
         /// </summary>
-        public String DisplayText
-        {
-            get
-            {
-                return m_text;
-            }
-        }
+        public string DisplayText => m_text;
 
         /// <summary>
         /// The real value of the comboBox, as the ValueMember
         /// </summary>
-        public ElementId Id
-        {
-            get
-            {
-                return m_id;
-            }
-        }
+        public ElementId Id => m_id;
 
         // Methods
         /// <summary>
@@ -116,7 +88,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// </summary>
         /// <param name="typeName">indicate model curve type</param>
         /// <param name="id">the element id</param>
-        public IdInfo(String typeName, ElementId id)
+        public IdInfo(string typeName, ElementId id)
         {
             m_id = id;          // Store the element id
             

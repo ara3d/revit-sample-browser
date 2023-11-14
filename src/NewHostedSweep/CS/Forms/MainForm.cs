@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
@@ -34,7 +29,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
     /// This is the main form. It is the entry to create a new hosted sweep or to modify
     /// a created hosted sweep.
     /// </summary>
-    public partial class MainForm : System.Windows.Forms.Form
+    public partial class MainForm : Form
     {
         /// <summary>
         /// Encapsulates the data source for a form.
@@ -145,8 +140,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>

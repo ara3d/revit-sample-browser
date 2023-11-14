@@ -25,7 +25,6 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
    using System;
    using System.Collections.Generic;
-   using System.Text;
    using System.Drawing;
 
    using Autodesk.Revit.DB;
@@ -46,7 +45,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
       /// <param name="pnt1">first XYZ</param>
       /// <param name="pnt2">second XYZ</param>
       /// <returns>is equal</returns>
-      public static bool CompareXYZ(Autodesk.Revit.DB.XYZ pnt1, Autodesk.Revit.DB.XYZ pnt2)
+      public static bool CompareXYZ(XYZ pnt1, XYZ pnt2)
       {
          return (MathUtil.CompareDouble(pnt1.X, pnt2.X) &&
                  MathUtil.CompareDouble(pnt1.Y, pnt2.Y) &&

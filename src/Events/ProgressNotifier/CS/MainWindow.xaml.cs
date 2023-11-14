@@ -21,18 +21,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Revit.SDK.Samples.ProgressNotifier.CS
 {
@@ -67,9 +58,9 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         {
 
            if ((e.Stage == Autodesk.Revit.DB.Events.ProgressStage.Unchanged) || ((e.Stage == Autodesk.Revit.DB.Events.ProgressStage.PositionChanged) && e.Cancellable))
-              this.button_Cancel.IsEnabled = true;
+              button_Cancel.IsEnabled = true;
            else
-              this.button_Cancel.IsEnabled = false;
+              button_Cancel.IsEnabled = false;
 
             System.Windows.Forms.Application.DoEvents();
 
@@ -94,7 +85,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
             var itemReturn = m_progressStack.AddEventData(e);
 
-            this.stackPanel_ProgressData.Children.Clear();
+            stackPanel_ProgressData.Children.Clear();
             var progressItems = m_progressStack.ToStringList(6);
             foreach (var progressItem in progressItems)
             {
@@ -104,7 +95,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                {
                   tbProgressItem.Foreground = Brushes.LightSlateGray;
                }
-                this.stackPanel_ProgressData.Children.Add(tbProgressItem);
+                stackPanel_ProgressData.Children.Add(tbProgressItem);
             }
 
 
@@ -146,9 +137,9 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
             try
             {
                 document = m_application.OpenDocumentFile(ofd.FileName);
-                this.textBox_log.Text += "Opened filename = " + document.Title + Environment.NewLine;
+                textBox_log.Text += "Opened filename = " + document.Title + Environment.NewLine;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 if (m_receivedCancelEvent)
                 {
@@ -158,12 +149,12 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                     else
                         isNull = " is not null.";
 
-                    this.textBox_log.Text += "Open Document has thrown an exception." + Environment.NewLine;
-                    this.textBox_log.Text += "We just got a cancel event, so this exception is likely from 'Open' being canceled. Returned document" + isNull + Environment.NewLine;
+                    textBox_log.Text += "Open Document has thrown an exception." + Environment.NewLine;
+                    textBox_log.Text += "We just got a cancel event, so this exception is likely from 'Open' being canceled. Returned document" + isNull + Environment.NewLine;
                     m_receivedCancelEvent = false;
                 }
                 else
-                    this.textBox_log.Text += ex.ToString() + Environment.NewLine;
+                    textBox_log.Text += ex.ToString() + Environment.NewLine;
             }
 
 

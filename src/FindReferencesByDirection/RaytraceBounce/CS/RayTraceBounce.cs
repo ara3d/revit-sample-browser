@@ -22,14 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Threading;
-using System.IO;
-using System.Xml;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -49,12 +41,12 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// <summary>
       /// revit application
       /// </summary>
-      Autodesk.Revit.UI.UIApplication m_app;
+      UIApplication m_app;
 
       /// <summary>
       /// a 3D View
       /// </summary>
-      Autodesk.Revit.DB.View3D m_view = null;
+      View3D m_view;
       #endregion
 
       #region Class Interface Implementation
@@ -74,7 +66,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          try
          {
@@ -84,19 +76,19 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             if (m_view == null)
             {
                TaskDialog.Show("Revit", "A default 3D view (named {3D}) must exist before running this command");
-               return Autodesk.Revit.UI.Result.Cancelled;
+               return Result.Cancelled;
             }
             else
             {
                var form = new RayTraceBounceForm(commandData, m_view);
                form.ShowDialog();
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
          }
          catch (Exception e)
          {
             message = e.ToString();
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
       }
       #endregion
@@ -107,15 +99,15 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// </summary>
       public void Get3DView()
       {
-         var list = new List<Autodesk.Revit.DB.Element>();
+         var list = new List<Element>();
          var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
          list.AddRange(collector.OfClass(typeof(View3D)).ToElements());
-         foreach (Autodesk.Revit.DB.View3D v in list)
+         foreach (View3D v in list)
          {
              // skip view template here because view templates are invisible in project browsers
              if (v != null && !v.IsTemplate && v.Name == "{3D}")
             {
-               m_view = v as Autodesk.Revit.DB.View3D;
+               m_view = v as View3D;
                break;
             }
          }

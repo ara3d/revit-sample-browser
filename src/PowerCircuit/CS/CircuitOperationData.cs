@@ -21,14 +21,8 @@
 //
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Electrical;
@@ -101,63 +95,33 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// </summary>
         public Operation Operation
         {
-            get
-            {
-                return m_operation;
-            }
+            get => m_operation;
 
-            set
-            {
-                m_operation = value;
-            }
+            set => m_operation = value;
         }
 
         /// <summary>
         /// Get the information whether new circuit can be created
         /// </summary>
-        public bool CanCreateCircuit
-        {
-            get
-            {
-                return m_canCreateCircuit;
-            }
-        }
+        public bool CanCreateCircuit => m_canCreateCircuit;
 
         /// <summary>
         /// Get the value of whether there are circuits in selected elements
         /// </summary>
-        public bool HasCircuit
-        {
-            get
-            {
-                return m_hasCircuit;
-            }
-        }
+        public bool HasCircuit => m_hasCircuit;
 
         /// <summary>
         /// Get the information whether the circuit in selected elements has panel
         /// </summary>
-        public bool HasPanel
-        {
-            get
-            {
-                return m_hasPanel;
-            }
-        }
+        public bool HasPanel => m_hasPanel;
 
         /// <summary>
         /// Edit options
         /// </summary>
         public EditOption EditOption
         {
-            get
-            {
-                return m_editOption;
-            }
-            set
-            {
-                m_editOption = value;
-            }
+            get => m_editOption;
+            set => m_editOption = value;
         }
 
         /// <summary>
@@ -180,13 +144,8 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// <summary>
         /// Number of electrical systems contain selected elements
         /// </summary>
-        public int ElectricalSystemCount
-        {
-            get
-            {
-                return m_electricalSystemSet.Count;
-            }
-        }
+        public int ElectricalSystemCount => m_electricalSystemSet.Count;
+
         #endregion
 
         #region Methods
@@ -225,7 +184,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                     return;
                 }
 
-                if (!String.Equals(fi.Category.Name, "Lighting Devices"))
+                if (!string.Equals(fi.Category.Name, "Lighting Devices"))
                 {
                     allLightingDevices = false;
                 }
@@ -424,7 +383,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
 
                 foreach (var es in m_electricalSystemSet)
                 {
-                    if (!String.IsNullOrEmpty(es.PanelName))
+                    if (!string.IsNullOrEmpty(es.PanelName))
                     {
                         m_hasPanel = true;
                         break;
@@ -740,7 +699,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// Show message box with specified string
         /// </summary>
         /// <param name="message">specified string to show</param>
-        static private void ShowErrorMessage(String message)
+        static private void ShowErrorMessage(string message)
         {
             TaskDialog.Show(Properties.Resources.ResourceManager.GetString("OperationFailed"), Properties.Resources.ResourceManager.GetString(message), TaskDialogCommonButtons.Ok);
         }

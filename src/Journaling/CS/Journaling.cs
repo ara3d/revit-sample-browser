@@ -24,15 +24,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Creation = Autodesk.Revit.Creation;
 
 namespace Revit.SDK.Samples.Journaling.CS
 {
@@ -45,7 +41,7 @@ namespace Revit.SDK.Samples.Journaling.CS
         {
             int IComparer<WallType>.Compare(WallType first, WallType second)
             {
-                return String.Compare(first.Name, second.Name);
+                return string.Compare(first.Name, second.Name);
             }
         }
 
@@ -53,8 +49,8 @@ namespace Revit.SDK.Samples.Journaling.CS
         ExternalCommandData m_commandData;  // Store the reference of command data
         bool m_canReadData;                 // Indicate whether has journal data
 
-        Autodesk.Revit.DB.XYZ m_startPoint;       // Store the start point of the created wall
-        Autodesk.Revit.DB.XYZ m_endPoint;         // Store the end point of the created wall
+        XYZ m_startPoint;       // Store the start point of the created wall
+        XYZ m_endPoint;         // Store the end point of the created wall
         Level m_createlevel;    // Store the level which the created wall on
         WallType m_createType;  // Store the type of the created wall
 
@@ -66,25 +62,13 @@ namespace Revit.SDK.Samples.Journaling.CS
         /// <summary>
         /// Give all levels in revit, and this information can be showed in UI
         /// </summary>
-        public ReadOnlyCollection<Level> Levels
-        {
-            get
-            {
-                return new ReadOnlyCollection<Level>(m_levelList);
-            }
-        }
+        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levelList);
 
 
         /// <summary>
         /// Give all wall types in revit, and this information can be showed in UI
         /// </summary>
-        public ReadOnlyCollection<WallType> WallTypes
-        {
-            get
-            {
-                return new ReadOnlyCollection<WallType>(m_wallTypeList);
-            }
-        }
+        public ReadOnlyCollection<WallType> WallTypes => new ReadOnlyCollection<WallType>(m_wallTypeList);
 
 
         // Methods
@@ -138,7 +122,7 @@ namespace Revit.SDK.Samples.Journaling.CS
         /// <param name="endPoint">the end point of the wall</param>
         /// <param name="level">the level which the wall base on</param>
         /// <param name="type">the type of the wall</param>
-        public void SetNecessaryData(Autodesk.Revit.DB.XYZ startPoint, Autodesk.Revit.DB.XYZ endPoint, Level level, WallType type)
+        public void SetNecessaryData(XYZ startPoint, XYZ endPoint, Level level, WallType type)
         {
             m_startPoint = startPoint;  // start point
             m_endPoint = endPoint;      // end point
@@ -193,7 +177,7 @@ namespace Revit.SDK.Samples.Journaling.CS
             var doc = m_commandData.Application.ActiveUIDocument.Document;
             var dataMap = m_commandData.JournalData;
 
-            String dataValue = null;    // store the journal data value temporarily
+            string dataValue = null;    // store the journal data value temporarily
 
             // Get the wall type from the journal
             dataValue = GetSpecialData(dataMap, "Wall Type Name"); // get wall type name
@@ -212,7 +196,7 @@ namespace Revit.SDK.Samples.Journaling.CS
 
             // Get the level information from the journal
             dataValue = GetSpecialData(dataMap, "Level Id");   // get the level id
-            var id = Autodesk.Revit.DB.ElementId.Parse(dataValue);     // get the level by its id
+            var id = ElementId.Parse(dataValue);     // get the level by its id
 
             m_createlevel = doc.GetElement(id) as Level;
             if (null == m_createlevel)  // assert the level is exist
@@ -304,13 +288,13 @@ namespace Revit.SDK.Samples.Journaling.CS
         /// </summary>
         /// <param name="pointString">a format string</param>
         /// <returns>the converted Autodesk.Revit.DB.XYZ point</returns>
-        private static Autodesk.Revit.DB.XYZ StirngToXYZ(String pointString)
+        private static XYZ StirngToXYZ(string pointString)
         {
             // Define some temporary data
             double x = 0;   // Store the temporary x coordinate
             double y = 0;   // Store the temporary y coordinate
             double z = 0;   // Store the temporary z coordinate
-            String subString;   // A part of the format string 
+            string subString;   // A part of the format string 
 
             // Get the data string from the format string
             subString = pointString.TrimStart('(');
@@ -332,7 +316,7 @@ namespace Revit.SDK.Samples.Journaling.CS
             {
                 throw new InvalidDataException("The point information in journal is incorrect");
             }
-            return new Autodesk.Revit.DB.XYZ(x, y, z);
+            return new XYZ(x, y, z);
         }
 
 
@@ -341,7 +325,7 @@ namespace Revit.SDK.Samples.Journaling.CS
         /// </summary>
         /// <param name="point">A Autodesk.Revit.DB.XYZ point</param>
         /// <returns>The format string which store the information of the point</returns>
-        private static String XYZToString(Autodesk.Revit.DB.XYZ point)
+        private static string XYZToString(XYZ point)
         {
 
             var pointString = "(" + point.X.ToString() + "," + point.Y.ToString() + ","
@@ -356,11 +340,11 @@ namespace Revit.SDK.Samples.Journaling.CS
         /// <param name="dataMap">the map which store the journal data</param>
         /// <param name="key">a key which indicate which data to get</param>
         /// <returns>The gotten data in string format</returns>
-        private static String GetSpecialData(IDictionary<string, string> dataMap, String key)
+        private static string GetSpecialData(IDictionary<string, string> dataMap, string key)
         {
             var dataValue = dataMap[key];
 
-            if (String.IsNullOrEmpty(dataValue))
+            if (string.IsNullOrEmpty(dataValue))
             {
                 throw new Exception(key + "information is not exist in journal.");
             }

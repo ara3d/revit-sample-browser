@@ -21,14 +21,9 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.ComponentModel;
 using System.Windows.Forms;
-using System.Windows.Forms.ComponentModel;
 
 namespace Revit.SDK.Samples.InPlaceMembers.CS
 {
@@ -55,8 +50,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
 
             //prepare data
             var g = pe.Graphics;
-            g.Clear(System.Drawing.Color.White);
-            var pen = new Pen(System.Drawing.Color.DarkGreen);
+            g.Clear(Color.White);
+            var pen = new Pen(Color.DarkGreen);
             var path = new GraphicsPath();
 
             //draw curves one by one
@@ -132,10 +127,7 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// </summary>
         public IGraphicsData DataSource
         {
-            get
-            {
-                return m_sourceData;
-            }
+            get => m_sourceData;
             set
             {
                 if (null != value)
@@ -158,8 +150,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
             var rec = m_sourceData.Region;
             const float MARGIN = 8.0f;
 
-            var realWidth = this.Width - MARGIN *2;
-            var realHeight = this.Height - MARGIN*2;
+            var realWidth = Width - MARGIN *2;
+            var realHeight = Height - MARGIN*2;
             var minX = MARGIN;
             var minY = MARGIN;
             var ratioRec = rec.Height / rec.Width;
@@ -178,8 +170,8 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 minY = (temp - realHeight) / 2.0f;    
             }
 
-            if (rec.Width < (GraphicsData.MINEDGElENGTH + 1) && 
-                rec.Height < (GraphicsData.MINEDGElENGTH + 1))
+            if (rec.Width < (GraphicsDataBase.MINEDGElENGTH + 1) && 
+                rec.Height < (GraphicsDataBase.MINEDGElENGTH + 1))
             {
                 minX = realWidth / 2.0f;
                 minY = realHeight / 2.0f;

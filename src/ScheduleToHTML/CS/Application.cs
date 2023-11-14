@@ -21,19 +21,9 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.ScheduleToHTML.CS
 {
@@ -78,12 +68,12 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
 
             var pbd = new PushButtonData("ScheduleToHTML", "Export to HTML",
                     addAssemblyPath,
-                    typeof(Revit.SDK.Samples.ScheduleToHTML.CS.ScheduleHTMLExportCommand).FullName);
+                    typeof(ScheduleHTMLExportCommand).FullName);
 
             pbd.LongDescription = "Export the active schedule to HTML.";
 
             var duplicateAllPB = rp.AddItem(pbd) as PushButton;
-            SetIconsForPushButton(duplicateAllPB, Revit.SDK.Samples.ScheduleToHTML.CS.Properties.Resources.ScheduleExport);
+            SetIconsForPushButton(duplicateAllPB, Properties.Resources.ScheduleExport);
         }
 
         /// <summary>
@@ -127,7 +117,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// <summary>
         /// The path to this add-in assembly.
         /// </summary>
-        static String addAssemblyPath = typeof(Revit.SDK.Samples.ScheduleToHTML.CS.Application).Assembly.Location;
+        static string addAssemblyPath = typeof(Application).Assembly.Location;
 
     }
 }

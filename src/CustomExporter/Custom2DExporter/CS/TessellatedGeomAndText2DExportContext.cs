@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.Custom2DExporter.CS
@@ -33,39 +28,22 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
       /// <summary>
       /// The number of all processed elements, as well as breakdown by some element kinds
       /// </summary>
-      private int m_numElements = 0;
-      private int m_numTexts = 0;
+      private int m_numElements;
+      private int m_numTexts;
 
       /// <summary>
       /// All text collected in the view, with a newline between each TextNode.
       /// </summary>
       private string m_texts;
 
-      Element m_currentElem = null;
+      Element m_currentElem;
 
-      public int NumElements
-      {
-         get
-         {
-            return m_numElements;
-         }
-      }
+      public int NumElements => m_numElements;
 
-      public int NumTexts
-      {
-         get
-         {
-            return m_numTexts;
-         }
-      }
+      public int NumTexts => m_numTexts;
 
-      public string Texts
-      {
-         get
-         {
-            return m_texts;
-         }
-      }
+      public string Texts => m_texts;
+
       #endregion
 
       #region IExportContext2DOverrides
@@ -209,7 +187,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
          return RenderNodeAction.Proceed;
       }
 
-      public void OnText(Autodesk.Revit.DB.TextNode node)
+      public void OnText(TextNode node)
       {
          m_texts += "\n" + node.Text;
          ++m_numTexts;

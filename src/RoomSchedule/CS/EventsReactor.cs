@@ -22,12 +22,7 @@
 
 using System;
 using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.Architecture;
@@ -60,7 +55,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="fileName">Full path name file.</param>
         /// <param name="sheetName">The sheet name of spreadsheet which was opened.</param>
-        public SheetInfo(String fileName, String sheetName)
+        public SheetInfo(string fileName, string sheetName)
         {
             m_fileName = fileName;
             m_sheetName = sheetName;
@@ -71,8 +66,8 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         public string FileName
         {
-            get { return m_fileName; }
-            set { m_fileName = value; }
+            get => m_fileName;
+            set => m_fileName = value;
         }
 
         /// <summary>
@@ -80,8 +75,8 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         public string SheetName
         {
-            get { return m_sheetName; }
-            set { m_sheetName = value; }
+            get => m_sheetName;
+            set => m_sheetName = value;
         }
         #endregion
     }
@@ -106,7 +101,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <summary>
         /// Specified log file name
         /// </summary>
-        private String m_logFile;
+        private string m_logFile;
 
         /// <summary>
         /// Logging writer used to write logging to log specified log file.
@@ -122,7 +117,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// This class will dump information to log file to tell user what happened
         /// </summary>
         /// <param name="logFile"></param>
-        public EventsReactor(String logFile)
+        public EventsReactor(string logFile)
         {
             m_logFile = logFile;
         }
@@ -266,7 +261,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             SheetInfo mappedXlsAndTable;
             var hasValue = m_docMapDict.TryGetValue(activeDocument.GetHashCode(), out mappedXlsAndTable);
             if (!hasValue || null == mappedXlsAndTable ||
-                String.IsNullOrEmpty(mappedXlsAndTable.FileName) || String.IsNullOrEmpty(mappedXlsAndTable.SheetName))
+                string.IsNullOrEmpty(mappedXlsAndTable.FileName) || string.IsNullOrEmpty(mappedXlsAndTable.SheetName))
             {
                 DumpLog("This document isn't mapped to spreadsheet yet.");
                 return;
@@ -289,16 +284,16 @@ namespace Revit.SDK.Samples.RoomSchedule
             // check whether there is room table. 
             // get all available rooms in current document once more
             var stepNo = -1;
-            DumpLog(System.Environment.NewLine + "Start to update spreadsheet room......");
+            DumpLog(Environment.NewLine + "Start to update spreadsheet room......");
             foreach (var room in roomData.Rooms)
             {
                 // check Whether We Update This Room
                 stepNo++;
                 double roomArea = 0.0f;
-                var externalId = String.Empty;
+                var externalId = string.Empty;
                 if (!ValidateRevitRoom(activeDocument, room, ref roomArea, ref externalId))
                 {
-                    DumpLog(String.Format("#{0}--> Room:{1} was skipped.", stepNo, room.Number));
+                    DumpLog(string.Format("#{0}--> Room:{1} was skipped.", stepNo, room.Number));
                     continue;
                 }
 
@@ -313,10 +308,10 @@ namespace Revit.SDK.Samples.RoomSchedule
                     var bCommnetIsNull = false;
 
                     // get comments of room
-                    String comments;
+                    string comments;
                     var param = room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
                     comments = (null != param) ? (param.AsString()) : ("");
-                    if (String.IsNullOrEmpty(comments))
+                    if (string.IsNullOrEmpty(comments))
                     {
                         // this room doesn't have comment value
                         bCommnetIsNull = true;
@@ -326,14 +321,14 @@ namespace Revit.SDK.Samples.RoomSchedule
 
                     // create update SQL clause, 
                     // when filtering row to be updated, use Room.Id if "External Room ID" is null.
-                    var updateStr = String.Format(
+                    var updateStr = string.Format(
                         "Update [{0}$] SET [{1}] = '{2}', [{3}] = '{4}', [{5}] = '{6}', [{7}] = '{8:N3}' Where [{9}] = {10}",
                         mappedXlsAndTable.SheetName, // mapped table name
                         RoomsData.RoomName, room.Name,
                         RoomsData.RoomNumber, room.Number,
                         RoomsData.RoomComments, comments,
                         RoomsData.RoomArea, roomArea,
-                        RoomsData.RoomID, String.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId);
+                        RoomsData.RoomID, string.IsNullOrEmpty(externalId) ? room.Id.ToString() : externalId);
 
                     // execute the command and check the size of updated rows 
                     var afftectedRows = dbConnector.ExecuteCommnand(updateStr);
@@ -344,13 +339,13 @@ namespace Revit.SDK.Samples.RoomSchedule
                     else
                     {
                         // count how many rows were updated
-                        DumpLog(String.Format("#{0}--> {1}", stepNo, updateStr));
+                        DumpLog(string.Format("#{0}--> {1}", stepNo, updateStr));
                         updatedRows += afftectedRows;
 
                         // if "External Room ID" is null but update successfully, which means:
                         // in spreadsheet there is existing row whose "ID" value equals to room.Id, so we should
                         // set Revit room's "External Room ID" value to Room.Id for consistence after update .
-                        if (String.IsNullOrEmpty(externalId))
+                        if (string.IsNullOrEmpty(externalId))
                         {
                             SetExternalRoomIdToRoomId(room);
                         }
@@ -370,11 +365,11 @@ namespace Revit.SDK.Samples.RoomSchedule
                         //    else, use constant string: "<Added from Revit>" for Comments column in spreadsheet.
 
                         var insertStr =
-                            String.Format("Insert Into [{0}$] ([{1}], [{2}], [{3}], [{4}], [{5}]) Values('{6}', '{7}', '{8}', '{9}', '{10:N3}')",
+                            string.Format("Insert Into [{0}$] ([{1}], [{2}], [{3}], [{4}], [{5}]) Values('{6}', '{7}', '{8}', '{9}', '{10:N3}')",
                             mappedXlsAndTable.SheetName, // mapped table name
                             RoomsData.RoomID, RoomsData.RoomComments, RoomsData.RoomName, RoomsData.RoomNumber, RoomsData.RoomArea,
-                            (String.IsNullOrEmpty(externalId)) ? (room.Id.ToString()) : (externalId), // Room id
-                            (bCommnetIsNull || String.IsNullOrEmpty(comments)) ? ("<Added from Revit>") : (comments),
+                            (string.IsNullOrEmpty(externalId)) ? (room.Id.ToString()) : (externalId), // Room id
+                            (bCommnetIsNull || string.IsNullOrEmpty(comments)) ? ("<Added from Revit>") : (comments),
                             room.Name, room.Number, roomArea);
 
                         // try to insert it 
@@ -382,7 +377,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                         if (afftectedRows != 0)
                         {
                             // remember the number of new rows
-                            var succeedMsg = String.Format("#{0}--> Succeeded to insert spreadsheet Room - Name:{1}, Number:{2}, Area:{3:N3}",
+                            var succeedMsg = string.Format("#{0}--> Succeeded to insert spreadsheet Room - Name:{1}, Number:{2}, Area:{3:N3}",
                                 stepNo, room.Name, room.Number, roomArea);
                             DumpLog(succeedMsg);
                             newRows += afftectedRows;
@@ -390,14 +385,14 @@ namespace Revit.SDK.Samples.RoomSchedule
                             // if the Revit room doesn't have external id value(may be a room created manually)
                             // set its "External Room ID" value to Room.Id, because the room was added/mapped to spreadsheet, 
                             // and the value of ID column in sheet is just the Room.Id, we should keep this consistence.
-                            if (String.IsNullOrEmpty(externalId))
+                            if (string.IsNullOrEmpty(externalId))
                             {
                                 SetExternalRoomIdToRoomId(room);
                             }
                         }
                         else
                         {
-                            DumpLog(String.Format("#{0}--> Failed: {1}", stepNo, insertStr));
+                            DumpLog(string.Format("#{0}--> Failed: {1}", stepNo, insertStr));
                         }
                     }
                     #endregion
@@ -405,7 +400,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 catch (Exception ex)
                 {
                     // close the connection 
-                    DumpLog(String.Format("#{0}--> Exception: {1}", stepNo, ex.Message));
+                    DumpLog(string.Format("#{0}--> Exception: {1}", stepNo, ex.Message));
                     dbConnector.Dispose();
                     RoomScheduleForm.MyMessageBox(ex.Message, MessageBoxIcon.Warning);
                     return;
@@ -415,10 +410,10 @@ namespace Revit.SDK.Samples.RoomSchedule
             dbConnector.Dispose();
 
             // output the affected result message
-            var sumMsg = String.Format("{0}:[{1}]: {2} rows were updated and {3} rows were added into successfully.",
+            var sumMsg = string.Format("{0}:[{1}]: {2} rows were updated and {3} rows were added into successfully.",
                 Path.GetFileName(mappedXlsAndTable.FileName), mappedXlsAndTable.SheetName, updatedRows, newRows);
             DumpLog(sumMsg);
-            DumpLog("Finish updating spreadsheet room." + System.Environment.NewLine);
+            DumpLog("Finish updating spreadsheet room." + Environment.NewLine);
         }
 
 
@@ -434,10 +429,10 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <param name="roomArea">Room area of this Revit room.</param>
         /// <param name="externalId">The value of custom shared parameter of this room.</param>
         /// <returns>Indicates whether it succeeded to get room area and shared parameter value.</returns>
-        private static bool ValidateRevitRoom(Document activeDocument, Room room, ref double roomArea, ref String externalId)
+        private static bool ValidateRevitRoom(Document activeDocument, Room room, ref double roomArea, ref string externalId)
         {
             roomArea = 0.0f;
-            externalId = String.Empty;
+            externalId = string.Empty;
             if (null == room.Location || null == activeDocument.GetElement(room.LevelId))
             {
                 return false;
@@ -449,7 +444,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             {
                 // get area without unit, then converting it to double will be ok.
                 var areaStr = RoomsData.GetProperty(activeDocument, room, BuiltInParameter.ROOM_AREA, false);
-                roomArea = Double.Parse(areaStr);
+                roomArea = double.Parse(areaStr);
                 if (roomArea <= double.Epsilon)
                 {
                     return false;
@@ -499,7 +494,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <summary>
         /// Dump log file now
         /// </summary>
-        private void DumpLog(String strLog)
+        private void DumpLog(string strLog)
         {
             // Create writer only when there is dump
             if(null == m_logWriter) {

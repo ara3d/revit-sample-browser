@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 using System.Windows.Interop;
@@ -25,13 +15,13 @@ namespace Revit.SDK.Samples.UIAPI.CS
    /// </summary>
    public partial class UserControl3 : UserControl
    {
-      public UserControl3(String name)
+      public UserControl3(string name)
       {
          InitializeComponent();
 
          _name = name;
 
-         this.image1.Source = getBitmapAsImageSource(Revit.SDK.Samples.UIAPI.CS.Properties.Resources.autodesk);
+         image1.Source = getBitmapAsImageSource(Properties.Resources.autodesk);
       }
 
       public static ImageSource getBitmapAsImageSource(System.Drawing.Bitmap bitmap)
@@ -55,6 +45,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
          TaskDialog.Show("OnRestoreDefaults", _name);
       }
 
-      String _name;
+      string _name;
    }
 }

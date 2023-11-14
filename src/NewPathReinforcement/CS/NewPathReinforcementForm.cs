@@ -21,13 +21,9 @@
 //
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
 using Point = System.Drawing.Point;
 
 using Autodesk.Revit.UI;
@@ -47,8 +43,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         private Matrix4 m_moveToCenterMatrix;  //save the matrix use to move point to origin
         private Matrix4 m_scaleMatrix; //save the matrix use to scale
         private Matrix4 m_transMatrix; //save the final matrix
-        private LineTool m_tool = null; //current using tool
-        private bool m_previewMode = false; //indicate whether in the Preview Mode
+        private LineTool m_tool; //current using tool
+        private bool m_previewMode; //indicate whether in the Preview Mode
         private List<List<XYZ>> m_pointsPreview; //store all the points of the preview
         Size m_sizePictureBox; //size of picture box
         #endregion
@@ -72,9 +68,9 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             m_to2DMatrix = m_profile.To2DMatrix;
             m_moveToCenterMatrix = m_profile.ToCenterMatrix();
             m_tool = new LineTool();
-            this.KeyPreview = true; //respond Form events first
+            KeyPreview = true; //respond Form events first
             m_pointsPreview = new List<List<XYZ>>();
-            m_sizePictureBox = this.pictureBox.Size;
+            m_sizePictureBox = pictureBox.Size;
         }
 
         /// <summary>
@@ -86,13 +82,13 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         {
             if (!m_previewMode)
             {
-                var graphics = this.pictureBox.CreateGraphics();
+                var graphics = pictureBox.CreateGraphics();
                 graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                 m_tool.OnMouseDown(e);
-                this.pictureBox.Refresh();
+                pictureBox.Refresh();
                 if (m_tool.PointsNumber >= 2)
                 {
-                    this.previewButton.Enabled = true;
+                    previewButton.Enabled = true;
                 }
             }
         }
@@ -104,8 +100,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <param name="e">event args</param>
         private void PictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            this.pictureBox.Refresh();
-            var graphics = this.pictureBox.CreateGraphics();
+            pictureBox.Refresh();
+            var graphics = pictureBox.CreateGraphics();
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             m_tool.OnMouseMove(graphics, e);
         }
@@ -169,13 +165,13 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             var transaction = new Transaction(m_profile.CommandData.Application.ActiveUIDocument.Document, "CreatePathReinforcement");
             transaction.Start();
 
-            var pathRein = m_profile.CreatePathReinforcement(ps3D, this.flipCheckBox.Checked);
+            var pathRein = m_profile.CreatePathReinforcement(ps3D, flipCheckBox.Checked);
             m_pointsPreview = GetGeometry(pathRein);
 
             //Abort Transaction here, cancel what RevitAPI do after begin Transaction
             transaction.RollBack();
 
-            this.pictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         /// <summary>
@@ -201,8 +197,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             m_tool.Clear();
             m_tool.Finished = false;
             m_previewMode = false;
-            this.previewButton.Enabled = false;
-            this.pictureBox.Refresh();
+            previewButton.Enabled = false;
+            pictureBox.Refresh();
         }
 
         /// <summary>
@@ -216,12 +212,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             if (27 == (int)e.KeyChar && m_tool.PointsNumber >= 2 && !m_tool.Finished)
             {
                 m_tool.Finished = true;
-                this.pictureBox.Refresh();
+                pictureBox.Refresh();
             }
             //Close form if sketch has finished when press "Escape"
             else if (27 == (int)e.KeyChar && (m_tool.Finished || 0 == m_tool.PointsNumber))
             {
-                this.Close();
+                Close();
             }
         }
 
@@ -245,11 +241,11 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             transaction.Start();
 
             var ps3D = Transform2DTo3D(points.ToArray());
-            m_profile.CreatePathReinforcement(ps3D, this.flipCheckBox.Checked);
+            m_profile.CreatePathReinforcement(ps3D, flipCheckBox.Checked);
 
             transaction.Commit();
 
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -259,7 +255,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// <param name="e">event args</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -313,7 +309,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         private void TransformPoints(Point[] pts)
         {
             var matrix = new System.Drawing.Drawing2D.Matrix(
-                1, 0, 0, 1, this.pictureBox.Width / 2, this.pictureBox.Height / 2);
+                1, 0, 0, 1, pictureBox.Width / 2, pictureBox.Height / 2);
             matrix.Invert();
             matrix.TransformPoints(pts);
         }

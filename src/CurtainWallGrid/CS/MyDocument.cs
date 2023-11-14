@@ -20,16 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Text;
-using System.Windows.Forms;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -46,45 +38,27 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         /// object which contains reference of Revit Application
         /// </summary>
-        public ExternalCommandData CommandData
-        {
-            get
-            {
-                return m_commandData;
-            }
-        }
+        public ExternalCommandData CommandData => m_commandData;
 
         // the active document of Revit
         UIDocument m_uiDocument;
         /// <summary>
         /// the active document of Revit
         /// </summary>
-        public UIDocument UIDocument
-        {
-            get
-            {
-                return m_uiDocument;
-            }
-        }
+        public UIDocument UIDocument => m_uiDocument;
 
         // the active document of Revit
         Document m_document;
         /// <summary>
         /// the active document of Revit
         /// </summary>
-        public Document Document
-        {
-            get
-            {
-                return m_document;
-            }
-        }
+        public Document Document => m_document;
 
         // stores all the Curtain WallTypes in the active Revit document
         List<WallType> m_wallTypes;
 
         // stores all the ViewPlans in the active Revit document
-        List<Autodesk.Revit.DB.View> m_views;
+        List<View> m_views;
 
         // stores the wall creation related data and operations
         WallGeometry m_wallGeometry;
@@ -113,49 +87,25 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// <summary>
         /// stores all the Curtain WallTypes in the active Revit document 
         /// </summary>
-        public List<WallType> WallTypes
-        {
-            get
-            {
-                return m_wallTypes;
-            }
-        }
+        public List<WallType> WallTypes => m_wallTypes;
 
         /// <summary>
         /// stores all the ViewPlans in the active Revit document
         /// </summary>
-        public List<Autodesk.Revit.DB.View> Views
-        {
-            get
-            {
-                return m_views;
-            }
-        }
+        public List<View> Views => m_views;
 
         /// <summary>
         /// stores the wall creation related data and operations
         /// </summary>
-        public WallGeometry WallGeometry
-        {
-            get
-            {
-                return m_wallGeometry;
-            }
-        }
+        public WallGeometry WallGeometry => m_wallGeometry;
 
         /// <summary>
         /// stores the curtain wall created
         /// </summary>
         public Wall CurtainWall
         {
-            get
-            {
-                return m_curtainWall;
-            }
-            set
-            {
-                m_curtainWall = value;
-            }
+            get => m_curtainWall;
+            set => m_curtainWall = value;
         }
 
         /// <summary>
@@ -163,59 +113,32 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public bool WallCreated
         {
-            get
-            {
-                return m_wallCreated;
-            }
-            set
-            {
-                m_wallCreated = value;
-            }
+            get => m_wallCreated;
+            set => m_wallCreated = value;
         }
 
         /// <summary>
         /// store the grid information of the created curtain wall
         /// </summary>
-        public GridGeometry GridGeometry
-        {
-            get
-            {
-                return m_gridGeometry;
-            }
-        }
+        public GridGeometry GridGeometry => m_gridGeometry;
 
         /// <summary>
         /// store the active grid line operation
         /// </summary>
         public LineOperation ActiveOperation
         {
-            get
-            {
-                return m_activeOperation;
-            }
-            set
-            {
-                m_activeOperation = value;
-            }
+            get => m_activeOperation;
+            set => m_activeOperation = value;
         }
 
-        public ForgeTypeId LengthUnit
-        {
-            get
-            {
-                return m_LengthUnit;
-            }
-        }
+        public ForgeTypeId LengthUnit => m_LengthUnit;
 
         /// <summary>
         /// store the message of the sample
         /// </summary>
         public KeyValuePair<string/*msgText*/, bool/*is warningOrError*/> Message
         {
-            get
-            {
-                return m_message;
-            }
+            get => m_message;
             set
             {
                 m_message = value;
@@ -247,7 +170,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 m_commandData = commandData;
                 m_uiDocument = m_commandData.Application.ActiveUIDocument;
                 m_document = m_uiDocument.Document;
-                m_views = new List<Autodesk.Revit.DB.View>();
+                m_views = new List<View>();
                 m_wallTypes = new List<WallType>();
                 m_wallGeometry = new WallGeometry(this);
                 m_wallCreated = false;
@@ -300,7 +223,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             m_wallTypes.Sort(wallComp);
 
             // get all the ViewPlans
-            m_views = SkipTemplateViews(GetElements<Autodesk.Revit.DB.View>());
+            m_views = SkipTemplateViews(GetElements<View>());
 
             // sort them alphabetically
             var viewComp = new ViewComparer();
@@ -346,10 +269,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         /// <param name="views"></param>
         /// <returns></returns>
-        private List<T> SkipTemplateViews<T>(List<T> views) where T : Autodesk.Revit.DB.View
+        private List<T> SkipTemplateViews<T>(List<T> views) where T : View
         {
             var returns = new List<T>();
-            foreach (Autodesk.Revit.DB.View curView in views)
+            foreach (View curView in views)
             {
                 if (null != curView && !curView.IsTemplate)
                     returns.Add(curView as T);

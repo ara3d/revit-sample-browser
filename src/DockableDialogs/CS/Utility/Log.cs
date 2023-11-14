@@ -22,12 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
-using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DockableDialogs.CS

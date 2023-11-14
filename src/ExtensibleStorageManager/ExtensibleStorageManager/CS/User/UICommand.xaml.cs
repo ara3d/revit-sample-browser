@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 
@@ -20,12 +18,12 @@ namespace ExtensibleStorageManager
       {
 
          InitializeComponent();
-         this.Closing += new System.ComponentModel.CancelEventHandler(UICommand_Closing);
+         Closing += new System.ComponentModel.CancelEventHandler(UICommand_Closing);
          m_Document = doc;
 
          //Create a new empty schemaWrapper.
-         m_SchemaWrapper = SchemaWrapperTools.SchemaWrapper.NewSchema(Guid.Empty, Autodesk.Revit.DB.ExtensibleStorage.AccessLevel.Public, Autodesk.Revit.DB.ExtensibleStorage.AccessLevel.Public, "adsk", applicationId, "schemaName", "Schema documentation");
-         this.m_label_applicationAppId.Content = applicationId;
+         m_SchemaWrapper = SchemaWrapperTools.SchemaWrapper.NewSchema(Guid.Empty, AccessLevel.Public, AccessLevel.Public, "adsk", applicationId, "schemaName", "Schema documentation");
+         m_label_applicationAppId.Content = applicationId;
          UpdateUI();
       }
       #endregion
@@ -36,7 +34,7 @@ namespace ExtensibleStorageManager
       /// </summary>
       private string GetStartingXmlPath()
       {
-         var currentAssemby = System.Reflection.Assembly.GetAssembly(this.GetType()).Location;
+         var currentAssemby = System.Reflection.Assembly.GetAssembly(GetType()).Location;
          return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(currentAssemby), "schemas"); 
     
       }
@@ -47,14 +45,14 @@ namespace ExtensibleStorageManager
       private void UpdateUI()
       {
 
-         this.m_textBox_SchemaApplicationId.Text = m_SchemaWrapper.Data.ApplicationId;
-         this.m_textBox_SchemaVendorId.Text = m_SchemaWrapper.Data.VendorId;
-         this.m_textBox_SchemaPath.Content = m_SchemaWrapper.GetXmlPath();
-         this.m_textBox_SchemaName.Text = m_SchemaWrapper.Data.Name;
-         this.m_textBox_SchemaDocumentation.Text = m_SchemaWrapper.Data.Documentation;
-         this.m_textBox_SchemaId.Text = m_SchemaWrapper.Data.SchemaId;
-         if (this.m_textBox_SchemaId.Text == Guid.Empty.ToString())
-            this.m_textBox_SchemaId.Text = Application.LastGuid;
+         m_textBox_SchemaApplicationId.Text = m_SchemaWrapper.Data.ApplicationId;
+         m_textBox_SchemaVendorId.Text = m_SchemaWrapper.Data.VendorId;
+         m_textBox_SchemaPath.Content = m_SchemaWrapper.GetXmlPath();
+         m_textBox_SchemaName.Text = m_SchemaWrapper.Data.Name;
+         m_textBox_SchemaDocumentation.Text = m_SchemaWrapper.Data.Documentation;
+         m_textBox_SchemaId.Text = m_SchemaWrapper.Data.SchemaId;
+         if (m_textBox_SchemaId.Text == Guid.Empty.ToString())
+            m_textBox_SchemaId.Text = Application.LastGuid;
 
          switch (m_SchemaWrapper.Data.ReadAccess)
          {
@@ -131,8 +129,8 @@ namespace ExtensibleStorageManager
          var retval = true;
          try
          {
-            var schemaId = new Guid(this.m_textBox_SchemaId.Text);
-            var applicationId = new Guid(this.m_textBox_SchemaApplicationId.Text);
+            var schemaId = new Guid(m_textBox_SchemaId.Text);
+            var applicationId = new Guid(m_textBox_SchemaApplicationId.Text);
          }
          catch (Exception)
          {
@@ -200,7 +198,7 @@ namespace ExtensibleStorageManager
          sfd.Filter = "SchemaWrapper Xml files (*.xml)|*.xml";
          sfd.InitialDirectory = GetStartingXmlPath();
 
-         sfd.FileName = this.m_textBox_SchemaName.Text + "_" + this.m_textBox_SchemaVendorId.Text + "___" + this.m_textBox_SchemaId.Text.Substring(31) + ".xml";
+         sfd.FileName = m_textBox_SchemaName.Text + "_" + m_textBox_SchemaVendorId.Text + "___" + m_textBox_SchemaId.Text.Substring(31) + ".xml";
          
          var result = sfd.ShowDialog();
          
@@ -209,7 +207,7 @@ namespace ExtensibleStorageManager
             try
             {
                //Create a new sample SchemaWrapper, schema, and Entity and store it in the current document's ProjectInformation element.
-               m_SchemaWrapper = StorageCommand.CreateSetAndExport(m_Document.ProjectInformation, sfd.FileName, new Guid(this.m_textBox_SchemaId.Text), read, write, this.m_textBox_SchemaVendorId.Text, this.m_textBox_SchemaApplicationId.Text, this.m_textBox_SchemaName.Text, this.m_textBox_SchemaDocumentation.Text, schemaComplexity);
+               m_SchemaWrapper = StorageCommand.CreateSetAndExport(m_Document.ProjectInformation, sfd.FileName, new Guid(m_textBox_SchemaId.Text), read, write, m_textBox_SchemaVendorId.Text, m_textBox_SchemaApplicationId.Text, m_textBox_SchemaName.Text, m_textBox_SchemaDocumentation.Text, schemaComplexity);
             }
             catch (Exception ex)
             {
@@ -221,9 +219,9 @@ namespace ExtensibleStorageManager
             UpdateUI();
 
             //Display the schema fields and sample data we just created in a dialog.
-            var dataDialog = new ExtensibleStorageManager.UIData();
-            var schemaData = this.m_SchemaWrapper.ToString();
-            var entityData = this.m_SchemaWrapper.GetSchemaEntityData(m_Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
+            var dataDialog = new UIData();
+            var schemaData = m_SchemaWrapper.ToString();
+            var entityData = m_SchemaWrapper.GetSchemaEntityData(m_Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
             var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine + Environment.NewLine + "Entity" + Environment.NewLine + entityData;
             dataDialog.SetData(allData);
             dataDialog.ShowDialog();
@@ -250,7 +248,7 @@ namespace ExtensibleStorageManager
             return;
          }
          //Display all of the schema's field data in a separate dialog.
-         var dataDialog = new ExtensibleStorageManager.UIData();
+         var dataDialog = new UIData();
          dataDialog.SetData(m_SchemaWrapper.ToString());
          dataDialog.ShowDialog();
       }
@@ -272,11 +270,11 @@ namespace ExtensibleStorageManager
             return;
          }
          UpdateUI();
-         var dataDialog = new ExtensibleStorageManager.UIData();
+         var dataDialog = new UIData();
          
          //Get and display the schema field data and the actual entity data in a separate dialog.
-         var schemaData = this.m_SchemaWrapper.ToString();
-         var entityData = this.m_SchemaWrapper.GetSchemaEntityData(m_Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
+         var schemaData = m_SchemaWrapper.ToString();
+         var entityData = m_SchemaWrapper.GetSchemaEntityData(m_Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
          var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine + Environment.NewLine + "Entity" + Environment.NewLine + entityData;
 
          dataDialog.SetData(allData);
@@ -313,7 +311,7 @@ namespace ExtensibleStorageManager
             UpdateUI();
 
             //Display the field data of the schema in a separate dialog.
-            var dataDialog = new ExtensibleStorageManager.UIData();
+            var dataDialog = new UIData();
             dataDialog.SetData(m_SchemaWrapper.ToString());
             dataDialog.ShowDialog();
          }
@@ -339,9 +337,9 @@ namespace ExtensibleStorageManager
          UpdateUI();
          
          ///Display the schema fields and new data in a separate dialog.
-         var dataDialog = new ExtensibleStorageManager.UIData();
-         var schemaData = this.m_SchemaWrapper.ToString();
-         var entityData = this.m_SchemaWrapper.GetSchemaEntityData(m_Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
+         var dataDialog = new UIData();
+         var schemaData = m_SchemaWrapper.ToString();
+         var entityData = m_SchemaWrapper.GetSchemaEntityData(m_Document.ProjectInformation.GetEntity(m_SchemaWrapper.GetSchema()));
          var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine + Environment.NewLine + "Entity" + Environment.NewLine + entityData;
 
          dataDialog.SetData(allData);
@@ -355,8 +353,8 @@ namespace ExtensibleStorageManager
       /// </summary>
       public Autodesk.Revit.DB.Document Document
       {
-         get { return m_Document; }
-         set { m_Document = value; }
+         get => m_Document;
+         set => m_Document = value;
       }
       #endregion
 

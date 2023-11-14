@@ -21,15 +21,9 @@
 //
 
 using System;
-using System.IO;
 using System.Collections;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -45,28 +39,12 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        ExternalCommandData m_revit = null;    //store external command
+        ExternalCommandData m_revit;    //store external command
         string m_errorMessage = " ";           // store error message
         ArrayList m_walls = new ArrayList();   //store the wall of selected
         const double precision = 0.0000001;         //store the precision   
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
         {
             try
             {
@@ -76,28 +54,28 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
                 if (null != view3D)
                 {
                     message += "Only create dimensions in 2D";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 var viewSheet = view as ViewSheet;
                 if (null != viewSheet)
                 {
                     message += "Only create dimensions in 2D";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 //try too adds a dimension from the start of the wall to the end of the wall into the project
                 if (!AddDimension())
                 {
                     message = m_errorMessage;
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception e)
             {
                 message = e.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
 
@@ -119,7 +97,7 @@ namespace Revit.SDK.Samples.CreateDimensions.CS
             }
 
             //find out wall
-            foreach (Autodesk.Revit.DB.Element e in selections)
+            foreach (Element e in selections)
             {
                 var wall = e as Wall;
                 if (null != wall)

@@ -20,13 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Visual;
-using Autodesk.Revit.UI.Selection;
-using Autodesk.Revit.UI;
-using System.Diagnostics;
-
 namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
 {
    /// <summary>

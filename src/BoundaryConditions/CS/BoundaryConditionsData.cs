@@ -22,13 +22,8 @@
  
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
@@ -45,12 +40,12 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         #region "Members"
 
         // the selected Element
-        private Autodesk.Revit.DB.Element m_hostElement;
+        private Element m_hostElement;
 
         // store all the corresponding BCs of the current selected host element 
         // and use the BC Id value as the key
-        private Dictionary<Autodesk.Revit.DB.ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> m_bCsDictionary =
-                new Dictionary<Autodesk.Revit.DB.ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions>();
+        private Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> m_bCsDictionary =
+                new Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions>();
 
         // the object for which the grid in UI displays.
         private BCProperties m_bCProperties;
@@ -64,37 +59,19 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         public BCProperties BCProperties
         {
-            get
-            {
-                return m_bCProperties;
-            }
-            set
-            {
-                m_bCProperties = value;
-            }
+            get => m_bCProperties;
+            set => m_bCProperties = value;
         }
 
         /// <summary>
         /// get current host element
         /// </summary>
-        public Autodesk.Revit.DB.Element HostElement
-        {
-            get
-            {
-                return m_hostElement;
-            }
-        }
+        public Element HostElement => m_hostElement;
 
         /// <summary>
         /// get all the BCs correspond with current host
         /// </summary>
-        public Dictionary<Autodesk.Revit.DB.ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs
-        {
-            get
-            {
-                return m_bCsDictionary;
-            }
-        }
+        public Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs => m_bCsDictionary;
 
         #endregion
 
@@ -102,7 +79,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
 
         //A delegate for create boundary condition with different type
         private delegate Autodesk.Revit.DB.Structure.BoundaryConditions
-                CreateBCHandler(Autodesk.Revit.DB.Element HostElement);
+                CreateBCHandler(Element HostElement);
 
         #endregion
 
@@ -112,7 +89,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// construct function
         /// </summary>
         /// <param name="element"> host element</param>
-        public BoundaryConditionsData(Autodesk.Revit.DB.Element element)
+        public BoundaryConditionsData(Element element)
         {
             // store the selected element and its BCs
             SetBCHostMap(element);   
@@ -185,7 +162,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// store the selected element and its corresponding BCs
         /// </summary>
         /// <param name="element"> use selected element in Revit UI(the host element)</param>
-        private void SetBCHostMap(Autodesk.Revit.DB.Element element)
+        private void SetBCHostMap(Element element)
         {
             // set the Host element with current selected element
             m_hostElement = element;
@@ -203,7 +180,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             }
         }
 
-      AnalyticalElement GetAnalyticalElement(Autodesk.Revit.DB.Element element)
+      AnalyticalElement GetAnalyticalElement(Element element)
       {
          AnalyticalElement analyticalModel = null;
          var document = element.Document;
@@ -231,7 +208,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
       /// structural element which provide the analytical line end reference
       /// </param>
       /// <returns> the created Point BoundaryConditions Element</returns>
-      private Autodesk.Revit.DB.Structure.BoundaryConditions CreatePointBC(Autodesk.Revit.DB.Element hostElement)
+      private Autodesk.Revit.DB.Structure.BoundaryConditions CreatePointBC(Element hostElement)
       {
          if (!(hostElement is FamilyInstance))
          {
@@ -266,7 +243,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
       /// </summary>
       /// <param name="hostElement">structural element which provide the hostElementId</param>
       /// <returns>the created Point BoundaryConditions Element</returns>
-      private Autodesk.Revit.DB.Structure.BoundaryConditions CreateLineBC(Autodesk.Revit.DB.Element hostElement)
+      private Autodesk.Revit.DB.Structure.BoundaryConditions CreateLineBC(Element hostElement)
       {
          var createDoc = hostElement.Document.Create;
          // invoke Document.NewLineBoundaryConditions Method
@@ -282,7 +259,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
       /// </summary>
       /// <param name="hostElement">structural element which provide the hostElementId</param>
       /// <returns>the created Point BoundaryConditions Element</returns>
-      private Autodesk.Revit.DB.Structure.BoundaryConditions CreateAreaBC(Autodesk.Revit.DB.Element hostElement)
+      private Autodesk.Revit.DB.Structure.BoundaryConditions CreateAreaBC(Element hostElement)
         {
             var createDoc = hostElement.Document.Create;
 

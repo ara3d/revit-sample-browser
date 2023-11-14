@@ -21,11 +21,6 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ImportExport.CS
@@ -33,7 +28,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     /// Provide a dialog which lets user choose the operation(export or import)
     /// </summary>
-    public partial class MainForm : System.Windows.Forms.Form
+    public partial class MainForm : Form
     {
         /// <summary>
         /// Data class
@@ -99,7 +94,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            var selectedFormat = String.Empty;
+            var selectedFormat = string.Empty;
             var result = DialogResult.OK;
 
             if (radioButtonExport.Checked == true)
@@ -113,7 +108,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 result = m_mainData.Import(selectedFormat);
             }
 
-            this.DialogResult = (result != DialogResult.Cancel ? DialogResult.OK : DialogResult.None);
+            DialogResult = (result != DialogResult.Cancel ? DialogResult.OK : DialogResult.None);
         }
 
         private void radioButtonExport_CheckedChanged(object sender, EventArgs e)
@@ -124,7 +119,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
       
     }

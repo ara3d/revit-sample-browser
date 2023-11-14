@@ -22,10 +22,6 @@
 
 
 using System;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -57,7 +53,7 @@ namespace Revit.SDK.Samples.SpanDirection.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var application = commandData.Application;
             m_docment = application.ActiveUIDocument.Document;
@@ -67,7 +63,7 @@ namespace Revit.SDK.Samples.SpanDirection.CS
                 if (application.ActiveUIDocument.Selection.GetElementIds().Count == 0)
                 {
                     TaskDialog.Show("Revit", "Please select one slab firstly.", TaskDialogCommonButtons.Ok);
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
 
                 // get the selected slab and show its span direction
@@ -90,9 +86,9 @@ namespace Revit.SDK.Samples.SpanDirection.CS
             catch (Exception ex)
             {
                 message = ex.ToString();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
 

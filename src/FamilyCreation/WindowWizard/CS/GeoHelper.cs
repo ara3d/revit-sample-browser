@@ -22,10 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using Element = Autodesk.Revit.DB.Element;
 using GElement = Autodesk.Revit.DB.GeometryElement;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
@@ -179,7 +176,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// <param name="startPoint">Create a new instance of ReferencePlane.</param>
       /// <param name="endPoint">The free end apply to reference plane.</param>
       /// <param name="thirdPnt">A third point needed to define the reference plane.</param>
-      static public void Distribute(Mesh mesh, ref Autodesk.Revit.DB.XYZ startPoint, ref Autodesk.Revit.DB.XYZ endPoint, ref Autodesk.Revit.DB.XYZ thirdPnt)
+      static public void Distribute(Mesh mesh, ref XYZ startPoint, ref XYZ endPoint, ref XYZ thirdPnt)
       {
          var count = mesh.Vertices.Count;
          startPoint = mesh.Vertices[0];
@@ -195,7 +192,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       static public bool IsVerticalEdge(Edge edge)
       {
          var polyline = edge.Tessellate() as List<XYZ>;
-         var verticalVct = new Autodesk.Revit.DB.XYZ(0, 0, 1);
+         var verticalVct = new XYZ(0, 0, 1);
          var pointBuffer = polyline[0];
 
          for (var i = 1; i < polyline.Count; i = i + 1)
@@ -220,9 +217,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// <param name="startPoint">The start point.</param>
       /// <param name="endPoint">The end point.</param>
       /// <returns>The vector between two points.</returns>
-      static public Autodesk.Revit.DB.XYZ GetVector(Autodesk.Revit.DB.XYZ startPoint, Autodesk.Revit.DB.XYZ endPoint)
+      static public XYZ GetVector(XYZ startPoint, XYZ endPoint)
       {
-         return new Autodesk.Revit.DB.XYZ(endPoint.X - startPoint.X,
+         return new XYZ(endPoint.X - startPoint.X,
              endPoint.Y - startPoint.Y, endPoint.Z - startPoint.Z);
       }
 
@@ -232,7 +229,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// <param name="vectorA">The vector A.</param>
       /// <param name="vectorB">The vector B.</param>
       /// <returns>Return true if two vector are equals, or else return false.</returns>
-      static public bool Equal(Autodesk.Revit.DB.XYZ vectorA, Autodesk.Revit.DB.XYZ vectorB)
+      static public bool Equal(XYZ vectorA, XYZ vectorB)
       {
          var isNotEqual = (Precision < Math.Abs(vectorA.X - vectorB.X)) ||
                           (Precision < Math.Abs(vectorA.Y - vectorB.Y));

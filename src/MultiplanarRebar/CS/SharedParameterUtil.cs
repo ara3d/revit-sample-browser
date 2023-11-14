@@ -20,7 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB.Structure;

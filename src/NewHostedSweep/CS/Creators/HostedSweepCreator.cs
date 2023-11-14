@@ -22,11 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
-using System.Windows.Forms;
 using System.Collections;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
@@ -42,18 +39,12 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
       /// <summary>
       /// A string indicates which type this creator can create.
       /// </summary>
-      virtual public String Name
-      {
-         get
-         {
-            return "Hosted Sweep";
-         }
-      }
+      virtual public string Name => "Hosted Sweep";
 
       /// <summary>
       /// A dictionary stores all the element=>edges which hosted-sweep can be created on.
       /// </summary>
-      public abstract Dictionary<Autodesk.Revit.DB.Element, List<Edge>> SupportEdges
+      public abstract Dictionary<Element, List<Edge>> SupportEdges
       {
          get;
       }
@@ -69,10 +60,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
       /// <summary>
       /// A dictionary stores all the element=>geometry which hosted-sweep can be created on.
       /// </summary>
-      public Dictionary<Autodesk.Revit.DB.Element, ElementGeometry> ElemGeomDic
-      {
-         get { return m_elemGeom; }
-      }
+      public Dictionary<Element, ElementGeometry> ElemGeomDic => m_elemGeom;
 
       /// <summary>
       /// Create a hosted-sweep according to the CreationData parameter.
@@ -114,32 +102,18 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
       /// <summary>
       /// A list to store all the created hosted-sweep by this creator.
       /// </summary>
-      public List<ModificationData> CreatedHostedSweeps
-      {
-         get { return m_createdHostedSweeps; }
-      }
+      public List<ModificationData> CreatedHostedSweeps => m_createdHostedSweeps;
 
       /// <summary>
       /// Revit active document.
       /// </summary>
-      public Document RvtDocument
-      {
-         get
-         {
-            return m_rvtDoc;
-         }
-      }
+      public Document RvtDocument => m_rvtDoc;
 
       /// <summary>
       /// Revit UI document.
       /// </summary>
-      public UIDocument RvtUIDocument
-      {
-         get
-         {
-            return m_rvtUIDoc;
-         }
-      }
+      public UIDocument RvtUIDocument => m_rvtUIDoc;
+
       #endregion
 
       #region Fields and Constructor
@@ -161,17 +135,17 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
       /// <summary>
       /// Dictionary to store element's geometry which this creator can be used.
       /// </summary>
-      protected Dictionary<Autodesk.Revit.DB.Element, ElementGeometry> m_elemGeom;
+      protected Dictionary<Element, ElementGeometry> m_elemGeom;
 
       /// <summary>
       /// Constructor which takes a Revit.Document as parameter.
       /// </summary>
       /// <param name="rvtDoc">Revit.Document parameter</param>
-      protected HostedSweepCreator(Autodesk.Revit.UI.UIDocument rvtDoc)
+      protected HostedSweepCreator(UIDocument rvtDoc)
       {
          m_rvtUIDoc = rvtDoc;
          m_rvtDoc = rvtDoc.Document;
-         m_elemGeom = new Dictionary<Autodesk.Revit.DB.Element, ElementGeometry>();
+         m_elemGeom = new Dictionary<Element, ElementGeometry>();
          m_createdHostedSweeps = new List<ModificationData>();
       }
       #endregion
@@ -191,7 +165,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
       /// </summary>
       /// <param name="elem">Element parameter</param>
       /// <returns>Element's geometry</returns>
-      protected ElementGeometry ExtractGeom(Autodesk.Revit.DB.Element elem)
+      protected ElementGeometry ExtractGeom(Element elem)
       {
          Solid result = null;
          var options = new Options();

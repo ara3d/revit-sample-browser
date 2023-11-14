@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.PathOfTravelCreation.CS
 {
@@ -30,13 +22,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
       /// <summary>
       /// The option for creating Path of Travel.
       /// </summary>
-      public PathCreateOptions PathCreateOption
-      {
-         get
-         {
-            return m_createOption;
-         }
-      }
+      public PathCreateOptions PathCreateOption => m_createOption;
 
       /// <summary>
       /// Set the CreateOptions.SingleRoomCornersToSingleDoor option.

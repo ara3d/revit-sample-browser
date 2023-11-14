@@ -20,10 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.MeasurePanelArea.CS
@@ -53,7 +49,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
       {
          using (var form = new frmPanelArea(commandData))
          {
@@ -64,7 +60,7 @@ namespace Revit.SDK.Samples.MeasurePanelArea.CS
             }
          }
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
    }
 }

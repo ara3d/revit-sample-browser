@@ -22,15 +22,8 @@
 
 using System;
 using System.IO;
-using System.Data;
 using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-using System.Reflection;
 using System.Xml.Serialization;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB.Events;
 
 namespace Revit.SDK.Samples.EventsMonitor.CS
 {
@@ -62,7 +55,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// <summary>
         /// events deserialized from xml file.
         /// </summary>
-        private List<String> m_eventsInFile;
+        private List<string> m_eventsInFile;
 
         /// <summary>
         /// direcotory of xml file.
@@ -74,24 +67,13 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// <summary>
         /// Property to get private member variables to check the stauts is playing or recording.
         /// </summary>
-        public bool IsReplay
-        {
-            get
-            {
-                return m_isReplay;
-            }
-        }
+        public bool IsReplay => m_isReplay;
 
         /// <summary>
         /// Property to get private member variables of Event list.
         /// </summary>
-        public List<String> EventsList
-        {
-            get
-            {
-                return m_eventsInFile;
-            }
-        }
+        public List<string> EventsList => m_eventsInFile;
+
         #endregion
 
         #region Class Constructor and Destructor
@@ -100,7 +82,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         public JournalProcessor()
         {
-            m_xs = new XmlSerializer(typeof(List<String>));
+            m_xs = new XmlSerializer(typeof(List<string>));
             m_directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             m_xmlFile = Path.Combine(m_directory,"Current.xml");
             
@@ -131,7 +113,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             if (m_isReplay)
             {
                 Stream stream = new FileStream(m_xmlFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                m_eventsInFile = (List<String>)m_xs.Deserialize(stream);
+                m_eventsInFile = (List<string>)m_xs.Deserialize(stream);
                 stream.Close();
             }
             else
@@ -145,7 +127,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// This method is used in ExternalApplication.
         /// </summary>
         /// <param name="eventList"></param>
-        public void DumpEventsListToFile(List<String> eventList)
+        public void DumpEventsListToFile(List<string> eventList)
         {
             if (!m_isReplay)
             {
@@ -163,7 +145,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public List<String> GetEventsListFromJournalData(IDictionary<String, String> data)
+        public List<string> GetEventsListFromJournalData(IDictionary<string, string> data)
         {
             var eventList = new List<string>();
             foreach (var kvp in data)
@@ -179,7 +161,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         /// <param name="eventList"></param>
         /// <param name="data"></param>
-        public void DumpEventListToJournalData(List<String> eventList, ref IDictionary<String, String> data)
+        public void DumpEventListToJournalData(List<string> eventList, ref IDictionary<string, string> data)
         {
             foreach (var eventname in eventList)
             {

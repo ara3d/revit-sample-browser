@@ -22,11 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
@@ -59,7 +54,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         {
             m_exportOptions = new ImageExportOptions();
             InitializeComponent();
-            this.m_exportData = exportData;
+            m_exportData = exportData;
             InitializeFormats();
         }
 
@@ -130,7 +125,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
         private void Cannel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Select_Click(object sender, EventArgs e)
@@ -162,7 +157,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
         private void Change_Click(object sender, EventArgs e)
         {
-            var fileName = String.Empty;
+            var fileName = string.Empty;
             var filterIndex = -1;
             var result = ShowSaveDialog(m_exportData, ref fileName, ref filterIndex);
             if (result != DialogResult.Cancel)
@@ -172,7 +167,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             }
         }
 
-        private DialogResult ShowSaveDialog(ExportData exportData, ref String returnFileName, ref int filterIndex)
+        private DialogResult ShowSaveDialog(ExportData exportData, ref string returnFileName, ref int filterIndex)
         {
             using (var saveDialog = new SaveFileDialog())
             {
@@ -231,7 +226,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 var errorMessage = "Failed to export img" + ex.ToString();
                 TaskDialog.Show("Error", errorMessage, TaskDialogCommonButtons.Ok);
             }
-            this.Close();
+            Close();
         }
 
         private void Vertical_CheckedChanged(object sender, EventArgs e)

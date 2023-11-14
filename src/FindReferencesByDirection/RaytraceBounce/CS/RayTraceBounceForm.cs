@@ -22,15 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -70,7 +63,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// <summary>
       /// revit application
       /// </summary>
-      private Autodesk.Revit.UI.UIApplication m_app;
+      private UIApplication m_app;
 
       /// <summary>
       /// current document
@@ -80,37 +73,37 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// <summary>
       /// closet geometry reference between origin/intersection and ray/intersection
       /// </summary>
-      private Autodesk.Revit.DB.ReferenceWithContext m_rClosest = null;
+      private ReferenceWithContext m_rClosest;
 
       /// <summary>
       /// 3D view
       /// </summary>
-      private Autodesk.Revit.DB.View3D m_view = null;
+      private View3D m_view;
 
       /// <summary>
       /// the count of line between origin/intersection and ray/intersection
       /// </summary>
-      private int m_LineCount = 0;
+      private int m_LineCount;
 
       /// <summary>
       /// the count of ray between origin/intersection and ray/intersection
       /// </summary>
-      private int m_RayCount = 0;
+      private int m_RayCount;
 
       /// <summary>
       /// the face which the ray intersect with
       /// </summary>
-      private Face m_face = null;
+      private Face m_face;
 
       /// <summary>
       /// ray start from here
       /// </summary>
-      private Autodesk.Revit.DB.XYZ m_origin = new Autodesk.Revit.DB.XYZ(0, 0, 0);
+      private XYZ m_origin = new XYZ(0, 0, 0);
 
       /// <summary>
       /// ray direction
       /// </summary>
-      private Autodesk.Revit.DB.XYZ m_direction = new Autodesk.Revit.DB.XYZ(0, 0, 0);
+      private XYZ m_direction = new XYZ(0, 0, 0);
 
       /// <summary>
       /// for time calculation
@@ -125,7 +118,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// <summary>
       /// trace listener
       /// </summary>
-      private TraceListener m_txtListener = null;
+      private TraceListener m_txtListener;
       #endregion
 
       /// <summary>
@@ -133,7 +126,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// </summary>
       /// <param name="commandData">Revit application</param>
       /// <param name="v">3D View</param>
-      public RayTraceBounceForm(ExternalCommandData commandData, Autodesk.Revit.DB.View3D v)
+      public RayTraceBounceForm(ExternalCommandData commandData, View3D v)
       {
          InitializeComponent();
 
@@ -226,7 +219,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
          transaction.Commit();
          m_stopWatch.Stop();
          var ts = m_stopWatch.Elapsed;
-         var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+         var elapsedTime = string.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
          m_outputInfo.Add(elapsedTime + "\n" + "Lines = " + m_LineCount + "\n" + "Rays = " + m_RayCount);
          m_stopWatch.Reset();
          OutputInformation();
@@ -297,7 +290,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             }
             return true;
          }
-         catch (System.Exception)
+         catch (Exception)
          {
             return false;
          }
@@ -307,10 +300,10 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// </summary>
       /// <param name="references"></param>
       /// <returns></returns>
-      public Autodesk.Revit.DB.ReferenceWithContext FindClosestReference(IList<ReferenceWithContext> references)
+      public ReferenceWithContext FindClosestReference(IList<ReferenceWithContext> references)
       {
-         var face_prox = Double.PositiveInfinity;
-         var edge_prox = Double.PositiveInfinity;
+         var face_prox = double.PositiveInfinity;
+         var edge_prox = double.PositiveInfinity;
          foreach (var r in references)
          {
             var reference = r.GetReference();
@@ -351,7 +344,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// <param name="endpt">end point</param>
       /// <param name="direction">the direction which decide the plane</param>
       /// <param name="style">line style name</param>
-      public void MakeLine(Autodesk.Revit.DB.XYZ startpt, Autodesk.Revit.DB.XYZ endpt, Autodesk.Revit.DB.XYZ direction, string style)
+      public void MakeLine(XYZ startpt, XYZ endpt, XYZ direction, string style)
       {
          try
          {
@@ -384,7 +377,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             }
             m_app.ActiveUIDocument.Document.Regenerate();
          }
-         catch (System.Exception ex)
+         catch (Exception ex)
          {
             m_outputInfo.Add("Failed to create lines: " + ex.ToString());
          }
@@ -399,8 +392,8 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
          {
             var transaction = new SubTransaction(m_app.ActiveUIDocument.Document);
             transaction.Start();
-            var list = new List<Autodesk.Revit.DB.Element>();
-            var filter = new ElementClassFilter(typeof(Autodesk.Revit.DB.CurveElement));
+            var list = new List<Element>();
+            var filter = new ElementClassFilter(typeof(CurveElement));
             var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
             list.AddRange(collector.WherePasses(filter).ToElements());
             foreach (var e in list)
@@ -417,7 +410,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             }
             transaction.Commit();
          }
-         catch (System.Exception)
+         catch (Exception)
          {
          }
       }

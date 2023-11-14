@@ -40,7 +40,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
       {
          InitializeComponent();
 
-         this.Text = Utils.SampleName;
+         Text = Utils.SampleName;
          m_activeDocument = activeDocument;
          InitViewNameComboBox();
          InitPartVisibilityComboBox();
@@ -62,7 +62,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
             {
                m_views.Add(curView);
                // add view type to prevent duplication of names with different view types 
-               var extendedViewName = String.Format("{0}:{1}", curView.ViewType.ToString(), curView.Name);
+               var extendedViewName = string.Format("{0}:{1}", curView.ViewType.ToString(), curView.Name);
                viewNameComboBox.Items.Add(extendedViewName);
             }
          }
@@ -85,7 +85,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
       #region EventHandlers
       private void CancelButton_Click(object sender, EventArgs e)
       {
-         this.Close();
+         Close();
       }
 
       /// <summary>
@@ -117,7 +117,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
          {
             Utils.ShowWarningMessageBox(ex.ToString());
          }
-         this.Close();
+         Close();
       }
       #endregion EventHandlers
 
@@ -180,7 +180,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
             return;
          }
 
-         var blackColor = new Autodesk.Revit.DB.Color(0, 0, 0);
+         var blackColor = new Color(0, 0, 0);
          var foregroundFillPattern = FillPatternElement.GetFillPatternElementByName(view.Document, FillPatternTarget.Drafting, "<Solid fill>");
 
          SetCutPatternSettings(view, BuiltInCategory.OST_Columns, blackColor, foregroundFillPattern);
@@ -189,7 +189,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
          SetCutPatternSettings(view, BuiltInCategory.OST_Windows, blackColor, foregroundFillPattern);
       }
 
-      private void SetCutPatternSettings(View view, BuiltInCategory buildInCategory, Autodesk.Revit.DB.Color backgroundColor, FillPatternElement foregroundFillPattern)
+      private void SetCutPatternSettings(View view, BuiltInCategory buildInCategory, Color backgroundColor, FillPatternElement foregroundFillPattern)
       {
          var categoryId = new ElementId(buildInCategory);
 

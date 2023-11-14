@@ -22,12 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
@@ -43,7 +40,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="pointXYZ">A Revit 3D point</param>
         /// <param name="boundingbox">The boundingbox of the roof whose footprint lines will be displayed in GDI.</param>
         /// <returns>A windows 2D point.</returns>
-        static public PointF Translate(Autodesk.Revit.DB.XYZ pointXYZ, BoundingBoxXYZ boundingbox)
+        static public PointF Translate(XYZ pointXYZ, BoundingBoxXYZ boundingbox)
         {
             var centerX = (boundingbox.Min.X + boundingbox.Max.X) / 2;
             var centerY = (boundingbox.Min.Y + boundingbox.Max.Y) / 2;
@@ -79,7 +76,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// </summary>
         /// <param name="graphics"></param>
         /// <param name="pen"></param>
-        public void Draw(System.Drawing.Graphics graphics, System.Drawing.Pen pen)
+        public void Draw(Graphics graphics, Pen pen)
         {
             var curve = m_curve.GeometryCurve;
             DrawCurve(graphics, pen, curve);
@@ -91,7 +88,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="graphics"></param>
         /// <param name="pen"></param>
         /// <param name="curve"></param>
-        private void DrawCurve(Graphics graphics, System.Drawing.Pen pen, Curve curve)
+        private void DrawCurve(Graphics graphics, Pen pen, Curve curve)
         {
             var poinsts = new List<PointF>();
             foreach (var point in curve.Tessellate())
@@ -105,37 +102,19 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// Get the model curve data which the foot print data stand for.
         /// </summary>
         [Browsable(false)]
-        public ModelCurve ModelCurve
-        {
-            get
-            {
-                return m_curve;
-            }
-        }
+        public ModelCurve ModelCurve => m_curve;
 
         /// <summary>
         /// Get the id value of the model curve.
         /// </summary>
         [Browsable(false)]
-        public ElementId Id
-        {
-            get
-            {
-                return m_curve.Id;
-            }
-        }
+        public ElementId Id => m_curve.Id;
 
         /// <summary>
         /// Get the name of the model curve.
         /// </summary>
         [Browsable(false)]
-        public String Name
-        {
-            get
-            {
-                return m_curve.Name;
-            }
-        }
+        public string Name => m_curve.Name;
 
         /// <summary>
         /// Get/Set the slope definition of a model curve of the roof.
@@ -143,14 +122,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The slope definition of the FootPrintRoof line.")]
         public bool DefinesSlope
         {
-            get
-            {
-                return m_roof.get_DefinesSlope(m_curve);
-            }
-            set
-            {
-                m_roof.set_DefinesSlope(m_curve, value);
-            }
+            get => m_roof.get_DefinesSlope(m_curve);
+            set => m_roof.set_DefinesSlope(m_curve, value);
         }
 
         /// <summary>
@@ -159,14 +132,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The slope angle of the FootPrintRoof line.")]
         public double SlopeAngle
         {
-            get
-            {
-                return m_roof.get_SlopeAngle(m_curve);
-            }
-            set
-            {
-                m_roof.set_SlopeAngle(m_curve, value);
-            }
+            get => m_roof.get_SlopeAngle(m_curve);
+            set => m_roof.set_SlopeAngle(m_curve, value);
         }
 
         /// <summary>
@@ -175,14 +142,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The offset of the FootPrintRoof line.")]
         public double Offset
         {
-            get
-            {
-                return m_roof.get_Offset(m_curve);
-            }
-            set
-            {
-                m_roof.set_Offset(m_curve, value);
-            }
+            get => m_roof.get_Offset(m_curve);
+            set => m_roof.set_Offset(m_curve, value);
         }
 
         /// <summary>
@@ -191,14 +152,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The overhang value of the FootPrintRoof line if the roof is created by picked wall.")]
         public double Overhang
         {
-            get
-            {
-                return m_roof.get_Overhang(m_curve);
-            }
-            set
-            {
-                m_roof.set_Overhang(m_curve, value);
-            }
+            get => m_roof.get_Overhang(m_curve);
+            set => m_roof.set_Overhang(m_curve, value);
         }
 
         /// <summary>
@@ -207,14 +162,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("whether you want the overhang to be measured from the core of the wall or not.")]
         public bool ExtendIntoWall
         {
-            get
-            {
-                return m_roof.get_ExtendIntoWall(m_curve);
-            }
-            set
-            {
-                m_roof.set_ExtendIntoWall(m_curve, value);
-            }
+            get => m_roof.get_ExtendIntoWall(m_curve);
+            set => m_roof.set_ExtendIntoWall(m_curve, value);
         }
     };
 
@@ -265,13 +214,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// Get the bounding box of the roof.
         /// </summary>
         [Browsable(false)]
-        public BoundingBoxXYZ Boundingbox
-        {
-            get
-            {
-                return m_boundingbox;
-            }
-        }
+        public BoundingBoxXYZ Boundingbox => m_boundingbox;
 
         /// <summary>
         /// Get/Set the current footprint roof line which will be edited in the PropertyGrid.
@@ -279,10 +222,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [TypeConverterAttribute(typeof(FootPrintRoofLineConverter)), Category("Footprint Roof Line Information")]
         public FootPrintRoofLine FootPrintLine
         {
-            get
-            {
-                return m_footPrintLine;
-            }
+            get => m_footPrintLine;
             set
             {
                 m_footPrintLine = value;
@@ -318,27 +258,15 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         [Description("The eave cutter type of the footprint roof.")]
         public EaveCutterType EaveCutterType
         {
-            get
-            {
-                return m_roof.EaveCuts;
-            }
-            set
-            {
-                m_roof.EaveCuts = value;
-            }
+            get => m_roof.EaveCuts;
+            set => m_roof.EaveCuts = value;
         }
 
         /// <summary>
         /// Get the footprint roof lines data.
         /// </summary>
         [Browsable(false)]
-        public ReadOnlyCollection<FootPrintRoofLine> FootPrintRoofLines
-        {
-            get
-            {
-                return new ReadOnlyCollection<FootPrintRoofLine>(m_roofLines);
-            }
-        }
+        public ReadOnlyCollection<FootPrintRoofLine> FootPrintRoofLines => new ReadOnlyCollection<FootPrintRoofLine>(m_roofLines);
 
         /// <summary>
         /// Draw the footprint lines.

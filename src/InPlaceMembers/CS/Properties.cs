@@ -44,85 +44,43 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
         /// the value of the element id as an integer
         /// </summary>
         [CategoryAttribute("Identity")]
-        public long ID
-        {
-            get
-            {
-                return m_ID;
-            }
-        }
+        public long ID => m_ID;
 
         /// <summary>
         /// a human readable name for the Element.
         /// </summary>
         [CategoryAttribute("Identity")]
-        public string Name
-        {
-            get
-            {
-                return m_Name;
-            }
-        }
+        public string Name => m_Name;
 
         /// <summary>
         /// a human readable name for the family name.
         /// </summary>
         [CategoryAttribute("Category")]
-        public string Family
-        {
-            get
-            {
-                return m_Family;
-            }
-        }
+        public string Family => m_Family;
 
         /// <summary>
         /// a human readable name for the family type name.
         /// </summary>
         [CategoryAttribute("Category")]
-        public string Type
-        {
-            get
-            {
-                return m_Type;
-            }
-        }
+        public string Type => m_Type;
 
         /// <summary>
         /// the primary structural type of the instance, such as beam or column etc.
         /// </summary>
         [CategoryAttribute("Structural")]
-        public string StructuralType
-        {
-            get
-            {
-                return m_StructuralType;
-            }
-        }
+        public string StructuralType => m_StructuralType;
 
         /// <summary>
         /// the primary structural usage of the instance, such as brace, girder etc.
         /// </summary>
         [CategoryAttribute("Structural")]
-        public string StructuralUsage
-        {
-            get
-            {
-                return m_StructuralUsage;
-            }
-        }
+        public string StructuralUsage => m_StructuralUsage;
 
         /// <summary>
         /// the physical material from which the instance is made.
         /// </summary>
         [CategoryAttribute("Structural")]
-        public string Material
-        {
-            get
-            {
-                return m_Material;
-            }
-        }
+        public string Material => m_Material;
 
         /// <summary>
         /// get this family instance's properties to display.

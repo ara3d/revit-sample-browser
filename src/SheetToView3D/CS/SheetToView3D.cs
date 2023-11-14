@@ -20,14 +20,9 @@
 //
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.SheetToView3D.CS
 {
@@ -56,8 +51,8 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData,
-        ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData,
+        ref string message, ElementSet elements)
       {
          if (null == commandData)
          {
@@ -72,7 +67,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
          catch (Exception e)
          {
             message = e.Message;
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
 
          return result;
@@ -93,7 +88,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
       /// </summary>
       /// <param name="uidoc">the currently active uidocument</param>
       /// <param name="doc">the currently active document</param>
-      public static Autodesk.Revit.UI.Result MakeFromViewportClick(UIDocument uidoc)
+      public static Result MakeFromViewportClick(UIDocument uidoc)
       {
          if (null == uidoc)
          {

@@ -21,12 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Diagnostics;
 
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
@@ -57,7 +52,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, 
+        public Result Execute(ExternalCommandData commandData, 
             ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             try
@@ -68,10 +63,10 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             catch(Exception e)
             {
                 message += e.StackTrace;
-                return Autodesk.Revit.UI.Result.Cancelled;
+                return Result.Cancelled;
             }            
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         #endregion

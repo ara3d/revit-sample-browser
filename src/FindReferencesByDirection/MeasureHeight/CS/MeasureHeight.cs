@@ -22,11 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -138,7 +134,7 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
             var curve = m_doc.Create.NewModelCurve(line, sketchPlane);
 
             // Show a message with the length value
-            TaskDialog.Show("Distance", "Distance to floor: " + String.Format("{0:f2}", line.Length));
+            TaskDialog.Show("Distance", "Distance to floor: " + string.Format("{0:f2}", line.Length));
 
             trans.Commit();
             return Result.Succeeded;
@@ -163,7 +159,7 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
             var referenceIntersector = new ReferenceIntersector(m_floor.Id, FindReferenceTarget.Face, m_view3D);
             var references = referenceIntersector.Find(center, rayDirection);
 
-            var distance = Double.PositiveInfinity;
+            var distance = double.PositiveInfinity;
             XYZ intersection = null;
             foreach (var referenceWithContext in references)
             {

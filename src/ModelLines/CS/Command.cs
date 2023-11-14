@@ -21,10 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -54,7 +50,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
                                                ref string message,
                                                ElementSet elements)
         {
@@ -73,13 +69,13 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 documentTransaction.Commit();
 
                 // if everything goes well, return succeeded.
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
                 // If any error, give error information and return failed
                 message = ex.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }           
         }
     }

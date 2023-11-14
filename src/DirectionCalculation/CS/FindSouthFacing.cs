@@ -22,10 +22,8 @@
 
 using System;
 using System.IO;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
+
 namespace Revit.Samples.DirectionCalculation
 {
     /// <summary>
@@ -36,26 +34,14 @@ namespace Revit.Samples.DirectionCalculation
         #region Helper properties
         protected Autodesk.Revit.ApplicationServices.Application Application
         {
-            get
-            {
-                return m_app;
-            }
-            set
-            {
-                m_app = value;
-            }
+            get => m_app;
+            set => m_app = value;
         }
 
         protected Document Document
         {
-            get
-            {
-                return m_doc;
-            }
-            set
-            {
-                m_doc = value;
-            }
+            get => m_doc;
+            set => m_doc = value;
         }
         #endregion
 
@@ -108,14 +94,14 @@ namespace Revit.Samples.DirectionCalculation
         /// </summary>
         /// <param name="label"></param>
         /// <param name="curve"></param>
-        protected void Write(String label, Curve curve)
+        protected void Write(string label, Curve curve)
         {
             if (m_writer == null)
                 m_writer = new StreamWriter(@"c:\Directions.txt");
             var start = curve.GetEndPoint(0);
             var end = curve.GetEndPoint(1);
 
-            m_writer.WriteLine(String.Format(label + " {0} {1}", XYZToString(start), XYZToString(end)));
+            m_writer.WriteLine(string.Format(label + " {0} {1}", XYZToString(start), XYZToString(end)));
         }
 
         /// <summary>
@@ -123,7 +109,7 @@ namespace Revit.Samples.DirectionCalculation
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        private String XYZToString(XYZ point)
+        private string XYZToString(XYZ point)
         {
             return "( " + point.X + ", " + point.Y + ", " + point.Z + ")";
         }
@@ -140,6 +126,6 @@ namespace Revit.Samples.DirectionCalculation
 
         private Autodesk.Revit.ApplicationServices.Application m_app;
         private Document m_doc;
-        private System.IO.TextWriter m_writer;
+        private TextWriter m_writer;
     }
 }

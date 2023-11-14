@@ -21,14 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -46,18 +39,12 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         /// <summary>
         /// The created wall
         /// </summary>
-        private Wall m_createdWall = null;
+        private Wall m_createdWall;
 
         /// <summary>
         /// The created wall
         /// </summary>
-        public Wall CreatedWall
-        {
-            get
-            {
-                return m_createdWall;
-            }
-        }
+        public Wall CreatedWall => m_createdWall;
 
         /// <summary>
         /// Constructor
@@ -88,14 +75,14 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 var level = element as Level;
                 if (level != null)
                 {
-                    this.levelsComboBox.Items.Add(level);
+                    levelsComboBox.Items.Add(level);
                 }
             }
 
-            if (this.levelsComboBox.Items.Count > 0)
+            if (levelsComboBox.Items.Count > 0)
             {
-                this.levelsComboBox.DisplayMember = "Name";
-                this.levelsComboBox.SelectedIndex = 0;
+                levelsComboBox.DisplayMember = "Name";
+                levelsComboBox.SelectedIndex = 0;
             }
 
             //add wall types to combo box wallTypesComboBox
@@ -108,12 +95,12 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 {
                     continue;
                 }
-                this.wallTypesComboBox.Items.Add(wallType);
+                wallTypesComboBox.Items.Add(wallType);
             }
-            if (this.wallTypesComboBox.Items.Count > 0)
+            if (wallTypesComboBox.Items.Count > 0)
             {
-                this.wallTypesComboBox.DisplayMember = "Name";
-                this.wallTypesComboBox.SelectedIndex = 0;
+                wallTypesComboBox.DisplayMember = "Name";
+                wallTypesComboBox.SelectedIndex = 0;
             }
 
         }
@@ -130,14 +117,14 @@ namespace Revit.SDK.Samples.TransactionControl.CS
             {
                 var document = m_commandData.Application.ActiveUIDocument.Document;
                 double x, y, z;
-                Autodesk.Revit.DB.XYZ sPoint;
+                XYZ sPoint;
 
                 //try to convert string to double, and return without closing dialog if failed
-                if (Double.TryParse(this.spXTextBox.Text, out x) &&
-                   Double.TryParse(this.spYTextBox.Text, out y) &&
-                   Double.TryParse(this.spZTextBox.Text, out z))
+                if (double.TryParse(spXTextBox.Text, out x) &&
+                   double.TryParse(spYTextBox.Text, out y) &&
+                   double.TryParse(spZTextBox.Text, out z))
                 {
-                    sPoint = new Autodesk.Revit.DB.XYZ(x, y, z);
+                    sPoint = new XYZ(x, y, z);
                 }
                 else
                 {
@@ -146,12 +133,12 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 }
 
                 //try to convert string to double, and return without closing dialog if failed
-                Autodesk.Revit.DB.XYZ ePoint;
-                if (Double.TryParse(this.epXTextBox.Text, out x) &&
-                    Double.TryParse(this.epYTextBox.Text, out y) &&
-                    Double.TryParse(this.epZTextBox.Text, out z))
+                XYZ ePoint;
+                if (double.TryParse(epXTextBox.Text, out x) &&
+                    double.TryParse(epYTextBox.Text, out y) &&
+                    double.TryParse(epZTextBox.Text, out z))
                 {
-                    ePoint = new Autodesk.Revit.DB.XYZ(x, y, z);
+                    ePoint = new XYZ(x, y, z);
                 }
                 else
                 {
@@ -167,8 +154,8 @@ namespace Revit.SDK.Samples.TransactionControl.CS
 
                 var line = Line.CreateBound(sPoint, ePoint);
 
-                var level = this.levelsComboBox.SelectedItem as Level;
-                var wallType = this.wallTypesComboBox.SelectedItem as WallType;
+                var level = levelsComboBox.SelectedItem as Level;
+                var wallType = wallTypesComboBox.SelectedItem as WallType;
 
                 //check whether parameters used to create wall are not null
                 if (null == line)
@@ -185,8 +172,8 @@ namespace Revit.SDK.Samples.TransactionControl.CS
 
                 m_createdWall = Wall.Create(document, line, wallType.Id, level.Id, 10, 0, true, true);
                 document.Regenerate();
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
             catch (Exception ex)
             {

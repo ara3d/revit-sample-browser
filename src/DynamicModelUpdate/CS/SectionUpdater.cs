@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.DynamicModelUpdate.CS
@@ -79,7 +78,7 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                 }
 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 TaskDialog.Show("Exception", ex.ToString());
             }
@@ -190,10 +189,10 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
 
         // private data:
 
-        private UpdaterId m_updaterId = null;
-        private ElementId m_windowId = null;
-        private ElementId m_sectionId = null;   // The real ViewSection that contains the Origin and ViewDirection
-        private Element m_sectionElement = null;    // The view section element to move and rotate
+        private UpdaterId m_updaterId;
+        private ElementId m_windowId;
+        private ElementId m_sectionId;   // The real ViewSection that contains the Origin and ViewDirection
+        private Element m_sectionElement;    // The view section element to move and rotate
     }
 
 }

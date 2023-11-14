@@ -22,11 +22,8 @@
 
 
 using System;
-using System.Data;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -68,8 +65,8 @@ namespace Revit.SDK.Samples.Rooms.CS
         /// </summary>
         private void DisplayRooms(ReadOnlyCollection<Room> roomList, bool isHaveTag)
         {
-            String propertyValue = null;   //value of department
-            String departmentName = null;  //department name 
+            string propertyValue = null;   //value of department
+            string departmentName = null;  //department name 
             var areaValue = 0.0;        //room area
 
             // add rooms to the listview
@@ -97,7 +94,7 @@ namespace Revit.SDK.Samples.Rooms.CS
                 propertyValue = m_data.GetProperty(tmpRoom, BuiltInParameter.ROOM_AREA);
 
                 // get the area value
-                areaValue = Double.Parse(propertyValue);
+                areaValue = double.Parse(propertyValue);
                 tmpItem.SubItems.Add(propertyValue + " SF");
 
                 // display whether the room with tag or not
@@ -129,13 +126,13 @@ namespace Revit.SDK.Samples.Rooms.CS
             roomsListView.Items.Clear();
 
             // add rooms in the list roomsWithoutTag to the listview
-            this.DisplayRooms(m_data.RoomsWithoutTag, false);
+            DisplayRooms(m_data.RoomsWithoutTag, false);
 
             // add rooms in the list roomsWithTag to the listview
-            this.DisplayRooms(m_data.RoomsWithTag, true);
+            DisplayRooms(m_data.RoomsWithTag, true);
 
             // display the total area of each department
-            this.DisplayDartmentsInfo();
+            DisplayDartmentsInfo();
 
             // if all the rooms have tags ,the button will be set to disable
             if (0 == m_data.RoomsWithoutTag.Count)
@@ -153,8 +150,8 @@ namespace Revit.SDK.Samples.Rooms.CS
             m_data.CreateTags();
 
             roomsListView.Items.Clear();
-            this.DisplayRooms(m_data.RoomsWithTag, true);
-            this.DisplayRooms(m_data.RoomsWithoutTag, false);
+            DisplayRooms(m_data.RoomsWithTag, true);
+            DisplayRooms(m_data.RoomsWithoutTag, false);
 
             // if all the rooms have tags ,the button will be set to disable
             if (0 == m_data.RoomsWithoutTag.Count)
@@ -173,8 +170,8 @@ namespace Revit.SDK.Samples.Rooms.CS
 
             // refresh the listview
             roomsListView.Items.Clear();
-            this.DisplayRooms(m_data.RoomsWithTag, true);
-            this.DisplayRooms(m_data.RoomsWithoutTag, false);
+            DisplayRooms(m_data.RoomsWithTag, true);
+            DisplayRooms(m_data.RoomsWithoutTag, false);
         }
 
 

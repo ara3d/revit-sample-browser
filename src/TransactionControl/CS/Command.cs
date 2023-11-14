@@ -22,12 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.TransactionControl.CS
@@ -56,7 +51,7 @@ namespace Revit.SDK.Samples.TransactionControl.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
         ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             try
@@ -66,16 +61,16 @@ namespace Revit.SDK.Samples.TransactionControl.CS
                 {
                     if (transactionFrm.ShowDialog() == DialogResult.OK)
                     {
-                        return Autodesk.Revit.UI.Result.Succeeded;
+                        return Result.Succeeded;
                     }
                 }
             }
             catch (Exception ex)
             {
                 message = ex.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
-            return Autodesk.Revit.UI.Result.Cancelled;
+            return Result.Cancelled;
         }
     }
 }

@@ -21,22 +21,13 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 {
@@ -56,7 +47,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             if (m_application.ActiveUIDocument == null)
             {
                 Autodesk.Revit.UI.TaskDialog.Show("RP Analysis", "Null Document");
-                this.Close();
+                Close();
             }
             PopulatePipeTypeList();
             PopulateSizeList();
@@ -126,7 +117,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// </summary>
         private void button_CheckWarnings_Click(object sender, RoutedEventArgs e)
         {
-            var routingPrefernceAnalyzer = new Analyzer(GetSelectedPipeType().RoutingPreferenceManager, this.m_application.ActiveUIDocument.Document);
+            var routingPrefernceAnalyzer = new Analyzer(GetSelectedPipeType().RoutingPreferenceManager, m_application.ActiveUIDocument.Document);
             var results = routingPrefernceAnalyzer.GetWarnings();
 
             var xmlWriterSettings = new XmlWriterSettings();
@@ -137,7 +128,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             results.WriteTo(writer);
             writer.Flush();
             writer.Close();
-            this.textBox_output.Text = output.ToString();
+            textBox_output.Text = output.ToString();
 
         }
 
@@ -148,7 +139,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// <param name="e"></param>
         private void button_CheckSpecificSize_Click(object sender, RoutedEventArgs e)
         {
-            var routingPrefernceAnalyzer = new Analyzer(GetSelectedPipeType().RoutingPreferenceManager, GetSelectedSize(), this.m_application.ActiveUIDocument.Document);
+            var routingPrefernceAnalyzer = new Analyzer(GetSelectedPipeType().RoutingPreferenceManager, GetSelectedSize(), m_application.ActiveUIDocument.Document);
             var results = routingPrefernceAnalyzer.GetSpecificSizeQuery();
 
             var xmlWriterSettings = new XmlWriterSettings();
@@ -159,7 +150,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             results.WriteTo(writer);
             writer.Flush();
             writer.Close();
-            this.textBox_output.Text = output.ToString();
+            textBox_output.Text = output.ToString();
         }
 
         /// <summary>

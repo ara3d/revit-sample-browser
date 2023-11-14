@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
@@ -63,7 +58,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
             while (docIter.MoveNext())
             {
                 var dbDoc = docIter.Current as Document;
-                String documentName = null;
+                string documentName = null;
                 DBDocumentItem item = null;
                 if (dbDoc != null)
                 {
@@ -74,9 +69,9 @@ namespace Revit.SDK.Samples.UIAPI.CS
                     else
                     {
                         var projName = dbDoc.ProjectInformation.Name;
-                        if (String.IsNullOrEmpty(projName) || projName.ToLower().CompareTo("project name") == 0)
+                        if (string.IsNullOrEmpty(projName) || projName.ToLower().CompareTo("project name") == 0)
                         {
-                            if (String.IsNullOrEmpty(dbDoc.PathName))
+                            if (string.IsNullOrEmpty(dbDoc.PathName))
                                 documentName = projName;
                             else
                                 documentName = new System.IO.FileInfo(dbDoc.PathName).Name;
@@ -127,10 +122,10 @@ namespace Revit.SDK.Samples.UIAPI.CS
         }
 
 
-        private ElementId _currentDBViewId = null;
-        private Document _dbDocument = null;
-        private RApplication _application = null;
-        private UIApplication _uiApplication = null;
+        private ElementId _currentDBViewId;
+        private Document _dbDocument;
+        private RApplication _application;
+        private UIApplication _uiApplication;
 
         private void cbDocs_SelIdxChanged(object sender, EventArgs e)
         {
@@ -143,13 +138,13 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 var ofd = new OpenFileDialog();
                 ofd.DefaultExt = "rvt";
                 ofd.Filter = "Revit project files (*.rvt)|*.rvt|Revit family files (*.rfa)|*.rfa|Revit family template files (*.rft)|*.rft";
-                if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
                         _dbDocument = _application.OpenDocumentFile(ofd.FileName);
                     }
-                    catch (System.Exception)
+                    catch (Exception)
                     {
 
                     }
@@ -162,11 +157,11 @@ namespace Revit.SDK.Samples.UIAPI.CS
                 else
                 {
                     // the combobox should show the current document item.
-                    String documentName;
+                    string documentName;
                     var projName = _dbDocument.ProjectInformation.Name;
-                    if (String.IsNullOrEmpty(projName) || projName.ToLower().CompareTo("project name") == 0)
+                    if (string.IsNullOrEmpty(projName) || projName.ToLower().CompareTo("project name") == 0)
                     {
-                        if (String.IsNullOrEmpty(_dbDocument.PathName))
+                        if (string.IsNullOrEmpty(_dbDocument.PathName))
                             documentName = projName;
                         else
                             documentName = new System.IO.FileInfo(_dbDocument.PathName).Name;
@@ -205,22 +200,22 @@ namespace Revit.SDK.Samples.UIAPI.CS
             UniqueId = dbView.UniqueId;
         }
 
-        public override String ToString()
+        public override string ToString()
         {
             return Name;
         }
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         public ElementId Id { get; set; }
 
-        public String UniqueId { get; set; }
+        public string UniqueId { get; set; }
     }
 
 
     public class DBDocumentItem
     {
-        public DBDocumentItem(String name, Document doc)
+        public DBDocumentItem(string name, Document doc)
         {
             Name = name;
             Document = doc;
@@ -240,7 +235,7 @@ namespace Revit.SDK.Samples.UIAPI.CS
         }
 
         public bool IsNull { get; set; }
-        public String Name { get; set; }
+        public string Name { get; set; }
         public Document Document { get; set; }
     }
 

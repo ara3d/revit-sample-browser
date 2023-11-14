@@ -21,14 +21,10 @@
 //
 
 using System;
-using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -43,33 +39,33 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <summary>
         /// Constant name for RoomID, this column must exist in first row.
         /// </summary>
-        public const String RoomID = "ID";
+        public const string RoomID = "ID";
 
         /// <summary>
         /// Constant name for room area, this column must exist in first row
         /// </summary>
-        public const String RoomArea = "Room Area";
+        public const string RoomArea = "Room Area";
 
         /// <summary>
         /// Constant named for room name, this column must exist in first row
         /// </summary>
-        public const String RoomName = "Room Name";
+        public const string RoomName = "Room Name";
 
         /// <summary>
         /// Constant name for room number, this column must exist in first row
         /// </summary>
-        public const String RoomNumber = "Room Number";
+        public const string RoomNumber = "Room Number";
 
         /// <summary>
         /// Constant name for room number, this column must exist in first row
         /// </summary>
-        public const String RoomComments = "Room Comments";
+        public const string RoomComments = "Room Comments";
 
         /// <summary>
         /// Constant name for shared parameter, 
         /// the mapped room id of spread sheet will saved in this parameter.
         /// </summary>
-        public const String SharedParam = "External Room ID";
+        public const string SharedParam = "External Room ID";
         #endregion
 
 
@@ -92,7 +88,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <summary>
         /// a list to store column names of Rooms
         /// </summary>
-        List<String> m_columnNames = new List<string>();
+        List<string> m_columnNames = new List<string>();
         #endregion
 
 
@@ -100,13 +96,8 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <summary>
         /// A list of all the rooms in the project
         /// </summary>
-        public ReadOnlyCollection<Room> Rooms
-        {
-            get
-            {
-                return new ReadOnlyCollection<Room>(m_rooms);
-            }
-        }
+        public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
+
         #endregion
 
 
@@ -191,7 +182,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 var column = new DataColumn();
                 column.ColumnName = col;
                 column.ReadOnly = true;
-                column.DataType = System.Type.GetType("System.String");
+                column.DataType = Type.GetType("System.String");
                 newTable.Columns.Add(column);
             }
 
@@ -199,7 +190,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             var constantCol = new DataColumn();
             constantCol.ColumnName = SharedParam;
             constantCol.ReadOnly = true;
-            constantCol.DataType = System.Type.GetType("System.String");
+            constantCol.DataType = Type.GetType("System.String");
             newTable.Columns.Add(constantCol);
 
             // filter rooms by level
@@ -217,7 +208,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                     // add constant column value: External Room ID
                     Parameter param = null;
                     var bExist = ShareParameterExists(room, SharedParam, ref param);
-                    if (bExist && null != param && false == String.IsNullOrEmpty(param.AsString()))
+                    if (bExist && null != param && false == string.IsNullOrEmpty(param.AsString()))
                     {
                         dataRow[m_parameters.Count] = param.AsString();
                     }
@@ -245,9 +236,9 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// if true, the value of parameter will be with unit.
         /// if false, the value of parameter will be without unit.</param>
         /// <returns>the string value of property specified by shared parameter</returns>
-        public static String GetProperty(Document activeDoc, Room room, BuiltInParameter paraEnum, bool useValue)
+        public static string GetProperty(Document activeDoc, Room room, BuiltInParameter paraEnum, bool useValue)
         {
-            String propertyValue = null;  //the value of parameter 
+            string propertyValue = null;  //the value of parameter 
 
             // Assuming the build in parameter is legal for room.
             // if the room is not placed, some properties are not available, i.g. Level name, Area ...
@@ -320,7 +311,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <param name="paramName">parameter name to be checked</param>
         /// <param name="sharedParam">shared parameter returned</param>
         /// <returns>true, the parameter exists; false, the parameter doesn't exist</returns>
-        public static bool ShareParameterExists(Room roomObj, String paramName, ref Parameter sharedParam)
+        public static bool ShareParameterExists(Room roomObj, string paramName, ref Parameter sharedParam)
         {
             // get the parameter
             try

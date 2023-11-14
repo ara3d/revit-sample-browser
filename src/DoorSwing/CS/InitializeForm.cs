@@ -19,12 +19,8 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.DoorSwing.CS
@@ -33,7 +29,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    /// A class inherit from Form is used to list all the door family exist in current project and 
    /// initialize each door type's Left/Right feature.
    /// </summary>
-   public partial class InitializeForm : System.Windows.Forms.Form
+   public partial class InitializeForm : Form
    {
       DoorSwingData m_dataBuffer; 
       DoorGeometry m_currentGraphic;
@@ -129,7 +125,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          // Transform the object of graphics.
          graphics.Transform = matrix; 
          // The pen for drawing profiles
-         var drawPen        = new Pen(System.Drawing.Color.Red, (float)0.05); 
+         var drawPen        = new Pen(Color.Red, (float)0.05); 
 
          // Draw profiles.
          m_currentGraphic.DrawGraphics(graphics, drawPen);

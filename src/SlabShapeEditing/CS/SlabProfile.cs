@@ -19,15 +19,11 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
+
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Drawing;
-using Autodesk.Revit;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.SlabShapeEditing.CS
 {
@@ -41,25 +37,25 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
 
       ExternalCommandData m_commandData; //contains reference of Revit Application
 
-      Autodesk.Revit.DB.Floor m_floor; //object of truss in Revit
+      Floor m_floor; //object of truss in Revit
 
       EdgeArray m_edges; // store all the edges of floor
 
       PointF[] m_boundPoints; // store array store bound point of Slab
 
-      Matrix4 m_to2DMatrix = null; // store the Matrix used to transform 3D points to 2D
+      Matrix4 m_to2DMatrix; // store the Matrix used to transform 3D points to 2D
 
-      Matrix4 m_moveToCenterMatrix = null; // store the Matrix used to move points to center
+      Matrix4 m_moveToCenterMatrix; // store the Matrix used to move points to center
 
-      Matrix4 m_scaleMatrix = null; // store the Matrix used to scale profile fit to pictureBox
+      Matrix4 m_scaleMatrix; // store the Matrix used to scale profile fit to pictureBox
 
-      Matrix4 m_MoveToPictureBoxCenter = null; // store the Matrix used to move profile to center of pictureBox
+      Matrix4 m_MoveToPictureBoxCenter; // store the Matrix used to move profile to center of pictureBox
 
-      Matrix4 m_transformMatrix = null; // store the Matrix used to transform Revit coordinate to window UI
+      Matrix4 m_transformMatrix; // store the Matrix used to transform Revit coordinate to window UI
 
-      Matrix4 m_restoreMatrix = null; // store the Matrix used to transform window UI coordinate to Revit
+      Matrix4 m_restoreMatrix; // store the Matrix used to transform window UI coordinate to Revit
 
-      Matrix4 m_rotateMatrix = null; //store the matrix which rotate object
+      Matrix4 m_rotateMatrix; //store the matrix which rotate object
 
       const int m_sizeXPictureBox = 354; //save picture box's size.X
 
@@ -67,9 +63,9 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
 
       SlabShapeEditor m_slabShapeEditor; //SlabShapeEditor which use to editor shape of slab
 
-      double m_rotateAngleX = 0; //rotate angle in X direction
+      double m_rotateAngleX; //rotate angle in X direction
 
-      double m_rotateAngleY = 0; //rotate angle in Y direction
+      double m_rotateAngleY; //rotate angle in Y direction
 
       #endregion
 
@@ -78,7 +74,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
       /// </summary>
       /// <param name="floor">Floor object in Revit</param>
       /// <param name="commandData">contains reference of Revit Application</param>
-      public SlabProfile(Autodesk.Revit.DB.Floor floor, ExternalCommandData commandData)
+      public SlabProfile(Floor floor, ExternalCommandData commandData)
       {
          m_floor = floor;
          m_commandData = commandData;
@@ -365,9 +361,9 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
          var transaction = new Transaction(
             m_commandData.Application.ActiveUIDocument.Document, "AddVertex");
          transaction.Start();
-         var v1 = new Vector4(new Autodesk.Revit.DB.XYZ(point.X, point.Y, 0));
+         var v1 = new Vector4(new XYZ(point.X, point.Y, 0));
          v1 = m_restoreMatrix.Transform(v1);
-         var vertex = m_slabShapeEditor.DrawPoint(new Autodesk.Revit.DB.XYZ(v1.X, v1.Y, v1.Z));
+         var vertex = m_slabShapeEditor.DrawPoint(new XYZ(v1.X, v1.Y, v1.Z));
          transaction.Commit();
          //re-calculate geometry info
          GetSlabProfileInfo();
@@ -387,13 +383,13 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
          var transaction = new Transaction(
             m_commandData.Application.ActiveUIDocument.Document, "AddCrease");
          transaction.Start();
-         var v1 = new Vector4(new Autodesk.Revit.DB.XYZ(point1.X, point1.Y, 0));
+         var v1 = new Vector4(new XYZ(point1.X, point1.Y, 0));
          v1 = m_restoreMatrix.Transform(v1);
-         var vertex1 = m_slabShapeEditor.DrawPoint(new Autodesk.Revit.DB.XYZ(v1.X, v1.Y, v1.Z));
+         var vertex1 = m_slabShapeEditor.DrawPoint(new XYZ(v1.X, v1.Y, v1.Z));
          //create second vertex
-         var v2 = new Vector4(new Autodesk.Revit.DB.XYZ(point2.X, point2.Y, 0));
+         var v2 = new Vector4(new XYZ(point2.X, point2.Y, 0));
          v2 = m_restoreMatrix.Transform(v2);
-         var vertex2 = m_slabShapeEditor.DrawPoint(new Autodesk.Revit.DB.XYZ(v2.X, v2.Y, v2.Z));
+         var vertex2 = m_slabShapeEditor.DrawPoint(new XYZ(v2.X, v2.Y, v2.Z));
          //create crease
          var creases = m_slabShapeEditor.DrawSplitLine(vertex1, vertex2);
 
@@ -415,9 +411,9 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
          var transaction = new Transaction(
             m_commandData.Application.ActiveUIDocument.Document, "CanCreateVertex");
          transaction.Start();
-         var v1 = new Vector4(new Autodesk.Revit.DB.XYZ(pointF.X, pointF.Y, 0));
+         var v1 = new Vector4(new XYZ(pointF.X, pointF.Y, 0));
          v1 = m_restoreMatrix.Transform(v1);
-         var vertex = m_slabShapeEditor.DrawPoint(new Autodesk.Revit.DB.XYZ(v1.X, v1.Y, v1.Z));
+         var vertex = m_slabShapeEditor.DrawPoint(new XYZ(v1.X, v1.Y, v1.Z));
          if (null != vertex) { createSuccess = true; }
          transaction.RollBack();
          //re-calculate geometry info 

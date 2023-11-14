@@ -21,16 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
@@ -76,10 +67,10 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             var rp = application.CreateRibbonPanel("Displacement");
             var setupMonitor = new PushButtonData("Displacement_Animiation", "Displacement Animation",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.DisplacementElementAnimation.CS.DisplacementStructureModelAnimatorCommand).FullName);
+                                                            typeof(DisplacementStructureModelAnimatorCommand).FullName);
             var setupMonitorPB = rp.AddItem(setupMonitor) as PushButton;
 
-            SetIconsForPushButton(setupMonitorPB, Revit.SDK.Samples.DisplacementElementAnimation.CS.Properties.Resources.DisplacementPlay);
+            SetIconsForPushButton(setupMonitorPB, Properties.Resources.DisplacementPlay);
         }
 
         /// <summary>
@@ -123,6 +114,6 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <summary>
         /// The path to this add-in assembly.
         /// </summary>
-        static String addAssemblyPath = typeof(Revit.SDK.Samples.DisplacementElementAnimation.CS.Application).Assembly.Location;
+        static string addAssemblyPath = typeof(Application).Assembly.Location;
     }
 }

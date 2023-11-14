@@ -21,17 +21,10 @@
 //
 
 using System;
-using System.Data;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
-
-using Element = Autodesk.Revit.DB.Element;
 using View = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.CreateTruss.CS
@@ -53,7 +46,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
       /// <summary>
       /// The current document of the application
       /// </summary>
-      private static Autodesk.Revit.DB.Document m_document;
+      private static Document m_document;
 
       /// <summary>
       /// The Application Creation object is used to create new instances of utility objects.
@@ -82,7 +75,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData revit, ref string message, ElementSet elements)
+      public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
       {
          try
          {
@@ -94,7 +87,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
                 || m_document.OwnerFamily.FamilyCategory.BuiltInCategory != BuiltInCategory.OST_Truss)
             {
                message = "Cannot execute truss creation in non-truss family document";
-               return Autodesk.Revit.UI.Result.Failed;
+               return Result.Failed;
             }
 
             m_appCreator = m_application.Create;
@@ -111,9 +104,9 @@ namespace Revit.SDK.Samples.CreateTruss.CS
          catch (Exception ex)
          {
             message = ex.ToString();
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       /// <summary>
@@ -126,12 +119,12 @@ namespace Revit.SDK.Samples.CreateTruss.CS
          // Constants for arranging the angular truss members
          var webAngle = 35.0;
          var webAngleRadians = (180 - webAngle) * Math.PI / 180.0;
-         var angleDirection = new Autodesk.Revit.DB.XYZ(Math.Cos(webAngleRadians), Math.Sin(webAngleRadians), 0);
+         var angleDirection = new XYZ(Math.Cos(webAngleRadians), Math.Sin(webAngleRadians), 0);
 
          // Look up the reference planes and view in which to sketch 
          Autodesk.Revit.DB.ReferencePlane top = null, bottom = null, left = null, right = null, center = null;
          View level1 = null;
-         var elements = new List<Autodesk.Revit.DB.Element>();
+         var elements = new List<Element>();
          var refPlaneFilter = new ElementClassFilter(typeof(Autodesk.Revit.DB.ReferencePlane));
          var viewFilter = new ElementClassFilter(typeof(View));
          var filter = new LogicalOrFilter(refPlaneFilter, viewFilter);
@@ -212,7 +205,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
 
          // Add a dimension to force the angle to be stable even when truss length and height are modified
          var dimensionArc = Arc.Create(
-             bottomMidPoint, angledWeb.GeometryCurve.Length / 2, webAngleRadians, Math.PI, Autodesk.Revit.DB.XYZ.BasisX, Autodesk.Revit.DB.XYZ.BasisY);
+             bottomMidPoint, angledWeb.GeometryCurve.Length / 2, webAngleRadians, Math.PI, XYZ.BasisX, XYZ.BasisY);
          var createdDim = m_familyCreator.NewAngularDimension(
              level1, dimensionArc, angledWeb.GeometryCurve.Reference, bottomChord.GeometryCurve.Reference);
          if (null != createdDim)
@@ -226,7 +219,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
 
          // Add a dimension to force the angle to be stable even when truss length and height are modified
          dimensionArc = Arc.Create(
-             bottomRight, angledWeb2.GeometryCurve.Length / 2, webAngleRadians, Math.PI, Autodesk.Revit.DB.XYZ.BasisX, Autodesk.Revit.DB.XYZ.BasisY);
+             bottomRight, angledWeb2.GeometryCurve.Length / 2, webAngleRadians, Math.PI, XYZ.BasisX, XYZ.BasisY);
          createdDim = m_familyCreator.NewAngularDimension(
              level1, dimensionArc, angledWeb2.GeometryCurve.Reference, bottomChord.GeometryCurve.Reference);
          if (null != createdDim)
@@ -244,7 +237,7 @@ namespace Revit.SDK.Samples.CreateTruss.CS
       /// <param name="sketchPlane">The sketch plane for the new curve.</param>
       /// <param name="type">The type of truss curve.</param>
       /// <returns>the created truss model curve.</returns>
-      private ModelCurve MakeTrussCurve(Autodesk.Revit.DB.XYZ start, Autodesk.Revit.DB.XYZ end, SketchPlane sketchPlane, TrussCurveType type)
+      private ModelCurve MakeTrussCurve(XYZ start, XYZ end, SketchPlane sketchPlane, TrussCurveType type)
       {
          var line = Line.CreateBound(start, end);
          var trussCurve = m_familyCreator.NewModelCurve(line, sketchPlane);
@@ -280,12 +273,12 @@ namespace Revit.SDK.Samples.CreateTruss.CS
       /// <param name="line2">The second line.</param>
       /// <returns>The intersection point.</returns>
       /// <exception cref="InvalidOperationException">Thrown when an intersection can't be found.</exception>
-      private Autodesk.Revit.DB.XYZ GetIntersection(Line line1, Line line2)
+      private XYZ GetIntersection(Line line1, Line line2)
       {
          IntersectionResultArray results;
          var result = line1.Intersect(line2, out results);
 
-         if (result != Autodesk.Revit.DB.SetComparisonResult.Overlap)
+         if (result != SetComparisonResult.Overlap)
             throw new InvalidOperationException("Input lines did not intersect.");
 
          if (results == null || results.Size != 1)

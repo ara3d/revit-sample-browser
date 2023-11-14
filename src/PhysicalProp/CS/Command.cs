@@ -22,11 +22,8 @@
 
 
 using System;
-using System.Windows.Forms;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.PhysicalProp.CS
 {
@@ -37,7 +34,7 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    public class DumpMaterialPhysicalParameters : Autodesk.Revit.UI.IExternalCommand
+    public class DumpMaterialPhysicalParameters : IExternalCommand
     {
         /// <summary>
         /// Implement this method as an external command for Revit.
@@ -55,10 +52,10 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            var res = Autodesk.Revit.UI.Result.Succeeded;
+            var res = Result.Succeeded;
             try
             {
                 var activeDoc = commandData.Application.ActiveUIDocument;
@@ -74,7 +71,7 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                 if (selection.Size != 1)
                 {
                     message = "Please select only one element.";
-                    res = Autodesk.Revit.UI.Result.Failed;
+                    res = Result.Failed;
                     return res;
                 }
 
@@ -92,7 +89,7 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                 if (famIns == null)
                 {
                     TaskDialog.Show("Revit", "Not a type of FamilyInsance!");
-                    res = Autodesk.Revit.UI.Result.Failed;
+                    res = Result.Failed;
                     return res;
                 }
 
@@ -114,7 +111,7 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
                 if (materialElement == null)
                 {
                     TaskDialog.Show("Revit", "Not a column!");
-                    res = Autodesk.Revit.UI.Result.Failed;
+                    res = Result.Failed;
                     return res;
                 }
 
@@ -245,7 +242,7 @@ namespace Revit.SDK.Samples.PhysicalProp.CS
             catch (Exception ex)
             {
                 TaskDialog.Show("PhysicalProp", ex.Message);
-                res = Autodesk.Revit.UI.Result.Failed;
+                res = Result.Failed;
             }
             finally
             {

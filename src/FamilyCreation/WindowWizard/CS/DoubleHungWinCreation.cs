@@ -22,11 +22,8 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
 {
@@ -89,7 +86,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         /// store the right view of the document
         /// </summary>
-        Autodesk.Revit.DB.View m_rightView;
+        View m_rightView;
 
         /// <summary>
         /// store the frame category
@@ -167,10 +164,10 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 para.Validator = new ValidateWindowParameter(m_wallHeight, m_wallWidth);
                 switch (m_document.DisplayUnitSystem)
                 {
-                    case Autodesk.Revit.DB.DisplayUnit.METRIC:
+                    case DisplayUnit.METRIC:
                         para.Validator.IsMetric = true;
                         break;
-                    case Autodesk.Revit.DB.DisplayUnit.IMPERIAL:
+                    case DisplayUnit.IMPERIAL:
                         para.Validator.IsMetric = false;
                         break;
                 }
@@ -195,9 +192,9 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             //create sash referenceplane and exterior referenceplane
             var refPlaneCreator = new CreateRefPlane();
             if (m_sashPlane == null)
-                m_sashPlane = refPlaneCreator.Create(m_document, m_centerPlane, m_rightView, new Autodesk.Revit.DB.XYZ(0, m_wallThickness / 2 - m_windowInset, 0), new Autodesk.Revit.DB.XYZ(0, 0, 1), "Sash");
+                m_sashPlane = refPlaneCreator.Create(m_document, m_centerPlane, m_rightView, new XYZ(0, m_wallThickness / 2 - m_windowInset, 0), new XYZ(0, 0, 1), "Sash");
             if (m_exteriorPlane == null)
-                m_exteriorPlane = refPlaneCreator.Create(m_document, m_centerPlane, m_rightView, new Autodesk.Revit.DB.XYZ(0, m_wallThickness / 2, 0), new Autodesk.Revit.DB.XYZ(0, 0, 1), "MyExterior");
+                m_exteriorPlane = refPlaneCreator.Create(m_document, m_centerPlane, m_rightView, new XYZ(0, m_wallThickness / 2, 0), new XYZ(0, 0, 1), "MyExterior");
             m_document.Regenerate();
 
             //get the wall in the document and retrieve the exterior face
@@ -298,7 +295,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
 
             //add a middle reference plane between the top referenceplane and sill referenceplane
             var refPlaneCreator = new CreateRefPlane();
-            var middlePlane = refPlaneCreator.Create(m_document, m_topPlane, exteriorView, new Autodesk.Revit.DB.XYZ(0, 0, -m_height / 2), new Autodesk.Revit.DB.XYZ(0, -1, 0), "tempmiddle");
+            var middlePlane = refPlaneCreator.Create(m_document, m_topPlane, exteriorView, new XYZ(0, 0, -m_height / 2), new XYZ(0, -1, 0), "tempmiddle");
             m_document.Regenerate();
 
             //add dimension between top, sill, and middle reference plane, make the dimension segment equal
@@ -450,7 +447,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         {
             var subTransaction = new SubTransaction(m_document);
             subTransaction.Start();
-            foreach (String type in m_para.WinParaTab.Keys)
+            foreach (string type in m_para.WinParaTab.Keys)
             {
                 var para = m_para.WinParaTab[type] as WindowParameter;
 
@@ -471,11 +468,11 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 try
                 {
                     trans.Start();
-                    this.CreateMaterial();
-                    this.CreateFrame();
-                    this.CreateSash();
-                    this.CreateGlass();
-                    this.CombineAndBuild();
+                    CreateMaterial();
+                    CreateFrame();
+                    CreateSash();
+                    CreateGlass();
+                    CombineAndBuild();
                     trans.Commit();
                 }
                 catch (Exception ee)
@@ -624,7 +621,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             var windowInset = dbhungPara.Inset;
             switch (m_document.DisplayUnitSystem)
             {
-                case Autodesk.Revit.DB.DisplayUnit.METRIC:
+                case DisplayUnit.METRIC:
                     height = Utility.MetricToImperial(height);
                     width = Utility.MetricToImperial(width);
                     sillHeight = Utility.MetricToImperial(sillHeight);

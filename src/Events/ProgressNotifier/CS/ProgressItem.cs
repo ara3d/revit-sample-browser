@@ -20,16 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using System.Xml.Linq;
-using System.IO;
-using System.Xml;
-using System.Diagnostics;
 using Autodesk.Revit.DB.Events;
 
 
@@ -95,10 +85,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                 else
                     return m_name;
             }
-            set 
-            { 
-                m_name = value;
-            }
+            set => m_name = value;
         }
 
         /// <summary>
@@ -106,14 +93,8 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// </summary>
         public bool IsDone
         {
-            get 
-            {
-                return m_done;
-            }
-            set 
-            { 
-                m_done = value;
-            }
+            get => m_done;
+            set => m_done = value;
         }
 
         /// <summary>
@@ -121,14 +102,8 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// </summary>
         public int Lower
         {
-            get 
-            { 
-                return m_lower; 
-            }
-            set 
-            { 
-                m_lower = value; 
-            }
+            get => m_lower;
+            set => m_lower = value;
         }
 
         /// <summary>
@@ -136,14 +111,8 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// </summary>
         public int Upper
         {
-            get 
-            { 
-                return m_upper;
-            }
-            set 
-            { 
-                m_upper = value;
-            }
+            get => m_upper;
+            set => m_upper = value;
         }
 
         /// <summary>
@@ -151,14 +120,8 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// </summary>
         public int Position
         {
-            get 
-            { 
-                return m_position; 
-            }
-            set 
-            { 
-                m_position = value;
-            }
+            get => m_position;
+            set => m_position = value;
         }
 
         /// <summary>
@@ -166,14 +129,8 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// </summary>
         public ProgressStage Stage
         {
-            get 
-            { 
-                return m_stage; 
-            }
-            set 
-            { 
-                m_stage = value; 
-            }
+            get => m_stage;
+            set => m_stage = value;
         }
 
         /// <summary>
@@ -191,7 +148,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         /// <returns></returns>
         public override string ToString()
         {
-            return "Name: " + Name + ", Stage: " + m_stage.ToString() + ", Percent Done: " + this.PercentDone().ToString("F") + ", Upper: " + m_upper + ", Position: " + m_position;
+            return "Name: " + Name + ", Stage: " + m_stage.ToString() + ", Percent Done: " + PercentDone().ToString("F") + ", Upper: " + m_upper + ", Position: " + m_position;
         }
     }
 }

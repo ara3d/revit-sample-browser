@@ -22,12 +22,10 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Media.Imaging;
 
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Events;
 
 
@@ -75,7 +73,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// <returns>Indicates if the application completes its work successfully.</returns>
         public Result OnStartup(UIControlledApplication application)
         {
-            assemblyPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             assemblyName = Assembly.GetExecutingAssembly().GetName().Name + ".dll";
             imageFolder = GetProjectDirectory() + "/Resources/";
 
@@ -100,7 +98,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// Gets the name of the currently selected family symbol.
         /// </summary>
         /// <returns>A string representing the name of the currently selected family symbol</returns>
-        public static String GetFamilySymbolName()
+        public static string GetFamilySymbolName()
         {
             return prismComboBox.Current.Name;
         }
@@ -254,8 +252,8 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         }
 
 
-        private void CustomizeTextBox(RibbonPanel panel, TextBox txtBox, String tip, String displayedText,
-            double defaultVal, Boolean isEnabled, int width)
+        private void CustomizeTextBox(RibbonPanel panel, TextBox txtBox, string tip, string displayedText,
+            double defaultVal, bool isEnabled, int width)
         {
             txtBox.Value = displayedText;
             txtBox.ToolTip = tip;
@@ -264,7 +262,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
 
             if (isEnabled)
             {
-                txtBox.EnterPressed += new EventHandler<Autodesk.Revit.UI.Events.TextBoxEnterPressedEventArgs>(TextBoxEnterPressed);
+                txtBox.EnterPressed += new EventHandler<TextBoxEnterPressedEventArgs>(TextBoxEnterPressed);
             }
         }
 
@@ -321,7 +319,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         /// Returns the path of the main project directory.
         /// </summary>
         /// <returns>A string object corresponding to the full path of the main project directory.</returns>
-        private String GetProjectDirectory()
+        private string GetProjectDirectory()
         {
             //get the absolut path of the assembly
             var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

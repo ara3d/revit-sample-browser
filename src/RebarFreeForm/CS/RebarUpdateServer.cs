@@ -22,11 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.Revit.DB.ExternalService;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
@@ -67,14 +63,14 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
    /// - Last bar is the intersection of First Handle target with Third Handle target;
    /// - All other bars are created between the first and last bar so that they have equal distance between them.
    /// </summary>
-   class RebarUpdateServer : Autodesk.Revit.DB.Structure.IRebarUpdateServer
+   class RebarUpdateServer : IRebarUpdateServer
    {
       #region Class Members
       /// <summary>
       /// SampleGuid represents the Guid used by the Revit ExternalService framework to identify this custom IRebarUpdateServer
       /// For a Rebar to use this custom external server, pass this Guid to the Rebar.CreateFreeForm(..) function.
       /// </summary>
-      public static System.Guid SampleGuid = new Guid("64D176BA-EB3E-4E96-877D-46A3B0C17B93");
+      public static Guid SampleGuid = new Guid("64D176BA-EB3E-4E96-877D-46A3B0C17B93");
       #endregion
 
       #region Class Interface Implementation
@@ -82,7 +78,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
       /// <summary>
       /// Returns the unique id of this server
       /// </summary>
-      public System.Guid GetServerId()
+      public Guid GetServerId()
       {
          return SampleGuid;
       }
@@ -96,21 +92,21 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
       /// <summary>
       /// Returns name of the server
       /// </summary>
-      public System.String GetName()
+      public string GetName()
       {
          return "RebarUpdateServerSample";
       }
       /// <summary>
       /// Returns information about the vendor.
       /// </summary>
-      public System.String GetVendorId()
+      public string GetVendorId()
       {
          return "ADSK";
       }
       /// <summary>
       /// Returns description of this server.
       /// </summary>
-      public System.String GetDescription()
+      public string GetDescription()
       {
          return "Sample to demonstrate implementing an external server to handle rebar constraints calculation";
       }
@@ -547,7 +543,7 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
       private TargetFace searchForFace(Curve curve, List<TargetFace> faces, int iEnd)
       {
          var bestFace = new TargetFace();
-         var minDistance = Double.MaxValue;
+         var minDistance = double.MaxValue;
          // create tangent to find intersections on the curve's extension
          var tangent = Line.CreateUnbound(curve.GetEndPoint(iEnd), curve.ComputeDerivatives(iEnd, true).BasisX.Normalize() * (iEnd == 0 ? -1 : 1));
          // iterate through faces and keep the face closest to the specified end of the curve        

@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.Custom2DExporter.CS
 {
@@ -26,18 +18,12 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
          m_exportOptions.ExportPatternLines = false;
       }
 
-      ExportOptions m_exportOptions = null;
+      ExportOptions m_exportOptions;
 
       /// <summary>
       /// Property containing the options chosen for export. 
       /// </summary>
-      public ExportOptions ViewExportOptions
-      {
-         get
-         {
-            return m_exportOptions;
-         }
-      }
+      public ExportOptions ViewExportOptions => m_exportOptions;
 
       /// <summary>
       /// The option for creating Path of Travel.
@@ -52,14 +38,8 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
          /// </summary>
          public bool ExportAnnotationObjects
          {
-            get
-            {
-               return m_exportAnnotationObjects;
-            }
-            set
-            {
-               m_exportAnnotationObjects = value;
-            }
+            get => m_exportAnnotationObjects;
+            set => m_exportAnnotationObjects = value;
          }
 
          /// <summary>
@@ -67,14 +47,8 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
          /// </summary>
          public bool ExportPatternLines
          {
-            get
-            {
-               return m_exportPatternLines;
-            }
-            set
-            {
-               m_exportPatternLines = value;
-            }
+            get => m_exportPatternLines;
+            set => m_exportPatternLines = value;
          }
       }
 

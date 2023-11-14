@@ -24,16 +24,11 @@
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Data;
-    using System.Drawing;
-    using System.Text;
     using System.Windows.Forms;
 
-    public partial class AreaReinParametersForm : System.Windows.Forms.Form
+    public partial class AreaReinParametersForm : Form
     {
-        IAreaReinData m_data = null;
+        IAreaReinData m_data;
 
         /// <summary>
         /// initialize datasource
@@ -62,8 +57,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         /// <param name="e"></param>
         private void OKButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>
@@ -73,8 +68,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

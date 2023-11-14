@@ -34,32 +34,26 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         ///store the family type name
         /// </summary>
-        String m_type = String.Empty;
+        string m_type = string.Empty;
         
         /// <summary>
         /// store the height of opening
         /// </summary>
-        double m_height = 0.0;
+        double m_height;
 
         /// <summary>
         /// store the width of opening
         /// </summary>
-        double m_width = 0.0;       
+        double m_width;       
 
         #region Properties
         /// <summary>
         /// get/set the Type property
         /// </summary>
-        public String Type
+        public string Type
         {
-            set
-            {
-                m_type = value;
-            }
-            get
-            {
-                return m_type;
-            }
+            set => m_type = value;
+            get => m_type;
         }
 
         /// <summary>
@@ -67,14 +61,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         public double Height
         {
-            set
-            {
-                m_height = value;
-            }
-            get
-            {
-                return m_height;
-            }
+            set => m_height = value;
+            get => m_height;
         }
 
         /// <summary>
@@ -82,14 +70,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         public double Width
         {
-            set
-            {
-                m_width = value;
-            }
-            get
-            {
-                return m_width;
-            }
+            set => m_width = value;
+            get => m_width;
         }
         #endregion 
 
@@ -119,7 +101,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="para">the WindowParameter</param>
         public WindowParameter(WindowParameter para)
         {
-            if (String.IsNullOrEmpty(para.m_type))
+            if (string.IsNullOrEmpty(para.m_type))
             {
                 m_type = "NewType";
             }
@@ -139,7 +121,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         /// store the template name
         /// </summary>
-        public String m_template = String.Empty;
+        public string m_template = string.Empty;
 
         /// <summary>
         /// store the current WindowParameter
@@ -154,22 +136,22 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         /// store the frame material list
         /// </summary>
-        private List<String> m_frameMats = new List<string>();
+        private List<string> m_frameMats = new List<string>();
         
         /// <summary>
         /// store the glass material list
         /// </summary>
-        private List<String> m_GlassMats = new List<string>();
+        private List<string> m_GlassMats = new List<string>();
         
         /// <summary>
         /// store the glass material
         /// </summary>
-        String m_glassMat = String.Empty;
+        string m_glassMat = string.Empty;
 
         /// <summary>
         /// store the sash material
         /// </summary>
-        String m_sashMat = String.Empty;
+        string m_sashMat = string.Empty;
 
         /// <summary>
         /// store the ValidateWindowParameter
@@ -179,7 +161,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         /// store the temp path
         /// </summary>
-        private String m_pathName = System.IO.Path.GetTempPath();
+        private string m_pathName = System.IO.Path.GetTempPath();
       
         #region
         /// <summary>
@@ -187,74 +169,44 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         public ValidateWindowParameter Validator
         {
-            get
-            {
-                return m_validator;
-            }
-            set
-            {
-                m_validator = value;
-            }
+            get => m_validator;
+            set => m_validator = value;
         }
 
         /// <summary>
         /// get/set FrameMaterials property
         /// </summary>
-        public List<String> FrameMaterials
+        public List<string> FrameMaterials
         {
-            set
-            {
-                m_frameMats = value;
-            }
-            get
-            {
-                return m_frameMats;
-            }
+            set => m_frameMats = value;
+            get => m_frameMats;
         }
 
         /// <summary>
         /// get/set GlassMaterials property
         /// </summary>
-        public List<String> GlassMaterials
+        public List<string> GlassMaterials
         {
-            set
-            {
-                m_GlassMats = value;
-            }
-            get
-            {
-                return m_GlassMats;
-            }
+            set => m_GlassMats = value;
+            get => m_GlassMats;
         }
 
         /// <summary>
         /// get/set GlassMat property
         /// </summary>
-        public String GlassMat
+        public string GlassMat
         {
-            set
-            {
-                m_glassMat = value;
-            }
-            get
-            {
-                return m_glassMat;
-            }
+            set => m_glassMat = value;
+            get => m_glassMat;
         }
 
         /// <summary>
         /// get/set SashMat property
         /// </summary>
-        public String SashMat
+        public string SashMat
         {
-            set
-            {
-                m_sashMat = value;
-            }
-            get
-            {
-                return m_sashMat;
-            }
+            set => m_sashMat = value;
+            get => m_sashMat;
         }
 
         /// <summary>
@@ -262,14 +214,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         public Hashtable WinParaTab
         {
-            get
-            {
-                return m_winParas;
-            }
-            set
-            {
-                m_winParas = value;
-            }
+            get => m_winParas;
+            set => m_winParas = value;
         }
 
         /// <summary>
@@ -277,29 +223,17 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         public WindowParameter CurrentPara
         {
-            get
-            {
-                return m_curPara;
-            }
-            set
-            {
-                m_curPara = value;
-            }
+            get => m_curPara;
+            set => m_curPara = value;
         }
 
         /// <summary>
         /// get/set PathName property
         /// </summary>
-        public String PathName
+        public string PathName
         {
-            get
-            {
-                return m_pathName;
-            }
-            set
-            {
-                m_pathName = value;
-            }
+            get => m_pathName;
+            set => m_pathName = value;
         }       
         #endregion    
     }
@@ -312,12 +246,12 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <summary>
         /// store the m_inset
         /// </summary>
-        double m_inset = 0.0;
+        double m_inset;
 
         /// <summary>
         /// store the m_sillHeight
         /// </summary>
-        double m_sillHeight = 0.0; 
+        double m_sillHeight; 
 
         #region
         /// <summary>
@@ -325,14 +259,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         public double Inset
         {
-            set
-            {
-                m_inset = value;
-            }
-            get
-            {
-                return m_inset;
-            }
+            set => m_inset = value;
+            get => m_inset;
         }
 
         /// <summary>
@@ -340,14 +268,8 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         public double SillHeight
         {
-            set
-            {
-                m_sillHeight = value;
-            }
-            get
-            {
-                return m_sillHeight;
-            }
+            set => m_sillHeight = value;
+            get => m_sillHeight;
         }
         #endregion
 

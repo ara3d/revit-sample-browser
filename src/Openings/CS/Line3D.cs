@@ -21,10 +21,6 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Revit.SDK.Samples.Openings.CS
 {
     /// <summary>
@@ -44,10 +40,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public double Length
         {
-            get
-            {
-                return m_length;
-            }
+            get => m_length;
             set
             {
                 if (m_length == value)
@@ -64,10 +57,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public Vector StartPoint
         {
-            get
-            {
-                return m_startPnt;
-            }
+            get => m_startPnt;
             set
             {
                 if (m_startPnt == value)
@@ -84,10 +74,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public Vector EndPoint
         {
-            get
-            {
-                return m_endPnt;
-            }
+            get => m_endPnt;
             set
             {
                 if (m_endPnt == value)
@@ -104,10 +91,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public Vector Normal
         {
-            get
-            {
-                return m_normal;
-            }
+            get => m_normal;
             set
             {
                 if (m_normal == value)

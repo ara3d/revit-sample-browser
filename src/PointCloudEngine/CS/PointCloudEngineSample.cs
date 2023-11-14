@@ -202,7 +202,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
       /// <param name="engineType">The engine identifier string.</param>
       /// <param name="identifier">The identifier for the particular point cloud.</param>
       /// <param name="trf">The transform to apply to the new point cloud instance.</param>
-      public void AddInstance(Document doc, String engineType, String identifier, Transform trf)
+      public void AddInstance(Document doc, string engineType, string identifier, Transform trf)
       {
          var t = new Transaction(doc, "Create PC instance");
          t.Start();

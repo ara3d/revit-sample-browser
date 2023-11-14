@@ -22,11 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
@@ -113,21 +109,9 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             }
         }
 
-        public string Prefix
-        {
-            get
-            {
-                return "Set ";
-            }
-        }
+        public string Prefix => "Set ";
 
-        public int SettingCount
-        {
-            get
-            {
-                return (new FilteredElementCollector(m_doc)).OfClass(typeof(ViewSheetSet)).ToElementIds().Count;
-            }
-        }
+        public int SettingCount => (new FilteredElementCollector(m_doc)).OfClass(typeof(ViewSheetSet)).ToElementIds().Count;
 
         public bool SaveAs(string newName)
         {
@@ -211,20 +195,20 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         }
 
-        public List<Autodesk.Revit.DB.View> AvailableViewSheetSet(VisibleType visibleType)
+        public List<View> AvailableViewSheetSet(VisibleType visibleType)
         {
             if (visibleType == VisibleType.VT_None)
                 return null;
 
-            var views = new List<Autodesk.Revit.DB.View>();
-            foreach (Autodesk.Revit.DB.View view in m_viewSheetSetting.AvailableViews)
+            var views = new List<View>();
+            foreach (View view in m_viewSheetSetting.AvailableViews)
             {
-                if (view.ViewType == Autodesk.Revit.DB.ViewType.DrawingSheet
+                if (view.ViewType == ViewType.DrawingSheet
                     && visibleType == VisibleType.VT_ViewOnly)
                 {
                     continue;   // filter out sheets.
                 }
-                if (view.ViewType != Autodesk.Revit.DB.ViewType.DrawingSheet
+                if (view.ViewType != ViewType.DrawingSheet
                     && visibleType == VisibleType.VT_SheetOnly)
                 {
                     continue;   // filter out views.
@@ -238,7 +222,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
         public bool IsSelected(string viewName)
         {
-            foreach (Autodesk.Revit.DB.View view in m_viewSheetSetting.CurrentViewSheetSet.Views)
+            foreach (View view in m_viewSheetSetting.CurrentViewSheetSet.Views)
             {
                 if (viewName.Equals(view.ViewType.ToString() + ": " + view.Name))
                 {
@@ -255,7 +239,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
 
             if (null != names && 0 < names.Count)
             {
-                foreach (Autodesk.Revit.DB.View view in m_viewSheetSetting.AvailableViews)
+                foreach (View view in m_viewSheetSetting.AvailableViews)
                 {
                     if (names.Contains(view.ViewType.ToString() + ": " + view.Name))
                     {

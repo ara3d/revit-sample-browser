@@ -22,9 +22,6 @@
 
 
 using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 using Autodesk.Revit.UI;
@@ -34,16 +31,16 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
     /// <summary>
     /// Summary description for PutDialog.
     /// </summary>
-    public class RotateFramingObjectsForm : System.Windows.Forms.Form
+    public class RotateFramingObjectsForm : Form
     {
         
         private RotateFramingObjects m_instance;
         private System.ComponentModel.Container m_components = null;
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Button okButton;
-        public System.Windows.Forms.RadioButton absoluteRadio;
-        private System.Windows.Forms.RadioButton relativeRadio;
-        private System.Windows.Forms.Label rotationLabel;
+        private Button cancelButton;
+        private Button okButton;
+        public RadioButton absoluteRadio;
+        private RadioButton relativeRadio;
+        private Label rotationLabel;
         public System.Windows.Forms.TextBox rotationTextBox;
         private bool m_isReset;
         
@@ -52,14 +49,8 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
         /// </summary>
         public bool IsReset
         {
-            get 
-            {
-                return m_isReset;
-            }
-            set
-            {
-                m_isReset = value;
-            }
+            get => m_isReset;
+            set => m_isReset = value;
         }
 
         /// <summary>
@@ -188,49 +179,49 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
         }
         #endregion
 
-        private void okButton_Click(object sender, System.EventArgs e)
+        private void okButton_Click(object sender, EventArgs e)
         {
             if(IsReset)
             {
                 m_instance.RotateElement();
                 
             }
-            this.DialogResult=DialogResult.OK;
-            this.Close();
+            DialogResult=DialogResult.OK;
+            Close();
 
         }
 
-        private void cancelButton_Click(object sender, System.EventArgs e)
+        private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult=DialogResult.Cancel;
-            this.Close();
+            DialogResult=DialogResult.Cancel;
+            Close();
         
         }
-        private void singleRadio_CheckedChanged(object sender, System.EventArgs e)
+        private void singleRadio_CheckedChanged(object sender, EventArgs e)
         {
             m_isReset = true;
             m_instance.IsAbsoluteChecked = false;
         }
 
-        private void allRadio_CheckedChanged(object sender, System.EventArgs e)
+        private void allRadio_CheckedChanged(object sender, EventArgs e)
         {
             m_isReset = true;
             m_instance.IsAbsoluteChecked = true;
         }
 
-        private void rotationTextBox_TextChanged(object sender, System.EventArgs e)
+        private void rotationTextBox_TextChanged(object sender, EventArgs e)
         {
-            if("" != this.rotationTextBox.Text)
+            if("" != rotationTextBox.Text)
             {
                 try
                 {
-                    m_instance.ReceiveRotationTextBox = Convert.ToDouble(this.rotationTextBox.Text);
+                    m_instance.ReceiveRotationTextBox = Convert.ToDouble(rotationTextBox.Text);
                 }
                 catch (Exception)
                 {
                     //this.DialogResult=DialogResult.Cancel;
                     TaskDialog.Show("Revit", "Please input number.");
-                    this.rotationTextBox.Clear();
+                    rotationTextBox.Clear();
                 }
 
             }

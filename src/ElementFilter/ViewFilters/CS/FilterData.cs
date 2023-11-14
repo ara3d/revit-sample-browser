@@ -21,18 +21,8 @@
 //
 
 using System;
-using System.Text;
-using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Diagnostics;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Architecture;
 using PFRF = Autodesk.Revit.DB.ParameterFilterRuleFactory;
 
 namespace Revit.SDK.Samples.ViewFilters.CS
@@ -53,12 +43,12 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         /// Filter rule criteria(in String type)
         /// </summary>
-        public String RuleCriteria { get; private set; }
+        public string RuleCriteria { get; private set; }
 
         /// <summary>
         /// Rule values in string 
         /// </summary>
-        public String RuleValue { get; private set; }
+        public string RuleValue { get; private set; }
 
         /// <summary>
         /// Parameter storage type of current FilterRule.
@@ -77,10 +67,8 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         /// Get ElementId of current parameter 
         /// </summary>
-        public ElementId ParamId
-        {
-            get { return new ElementId(Parameter); }
-        }
+        public ElementId ParamId => new ElementId(Parameter);
+
         #endregion
 
         #region Class Public Methods
@@ -90,7 +78,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="param">Parameter of FilterRule.</param>
         /// <param name="ruleCriteria">Rule criteria.</param>
         /// <param name="ruleValue">Rule value.</param>
-        public FilterRuleBuilder(BuiltInParameter param, String ruleCriteria, String ruleValue)
+        public FilterRuleBuilder(BuiltInParameter param, string ruleCriteria, string ruleValue)
         {
             InitializeMemebers();
             //
@@ -108,7 +96,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="ruleCriteria">Rule criteria.</param>
         /// <param name="ruleValue">Rule value.</param>
         /// <param name="tolerance">Epsilon for double values comparison.</param>
-        public FilterRuleBuilder(BuiltInParameter param, String ruleCriteria, double ruleValue, double tolearance)
+        public FilterRuleBuilder(BuiltInParameter param, string ruleCriteria, double ruleValue, double tolearance)
         {
             InitializeMemebers();
             //
@@ -126,7 +114,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="param">Parameter of FilterRule.</param>
         /// <param name="ruleCriteria">Rule criteria.</param>
         /// <param name="ruleValue">Rule value.</param>
-        public FilterRuleBuilder(BuiltInParameter param, String ruleCriteria, int ruleValue)
+        public FilterRuleBuilder(BuiltInParameter param, string ruleCriteria, int ruleValue)
         {
             InitializeMemebers();
             //
@@ -143,7 +131,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="param">Parameter of FilterRule.</param>
         /// <param name="ruleCriteria">Rule criteria.</param>
         /// <param name="ruleValue">Rule value.</param>
-        public FilterRuleBuilder(BuiltInParameter param, String ruleCriteria, ElementId ruleValue)
+        public FilterRuleBuilder(BuiltInParameter param, string ruleCriteria, ElementId ruleValue)
         {
             InitializeMemebers();
             //
@@ -247,7 +235,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             }
             //
             // Throw exception for others
-            throw new System.NotImplementedException("This filter rule or criteria is not implemented yet.");
+            throw new NotImplementedException("This filter rule or criteria is not implemented yet.");
         }
         #endregion
 
@@ -258,8 +246,8 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         private void InitializeMemebers()
         {
             Parameter = BuiltInParameter.INVALID;
-            RuleCriteria = String.Empty;
-            RuleValue = String.Empty;
+            RuleCriteria = string.Empty;
+            RuleValue = string.Empty;
             ParamType = StorageType.None;
             Epsilon = 0.0f;
         }
@@ -276,7 +264,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         /// Reserves current active document
         /// </summary>
-        Autodesk.Revit.DB.Document m_doc;
+        Document m_doc;
 
         /// <summary>
         /// BuiltInCategories of filter
@@ -293,10 +281,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         /// Get BuiltInCategories of filter
         /// </summary>
-        public List<BuiltInCategory> FilterCategories
-        {
-            get { return m_filterCategories; }
-        }
+        public List<BuiltInCategory> FilterCategories => m_filterCategories;
 
         /// <summary>
         /// Get BuiltInCategory Ids of filter
@@ -350,10 +335,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         /// Get FilterRuleBuilder of API filter's rules
         /// </summary>
-        public List<FilterRuleBuilder> RuleData
-        {
-            get { return m_filterRules; }
-        }
+        public List<FilterRuleBuilder> RuleData => m_filterRules;
 
         /// <summary>
         /// Create sample custom FilterData with specified categories and FilterRuleBuilder
@@ -361,7 +343,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="doc">Revit active document.</param>
         /// <param name="categories">BuilInCategories of filter.</param>
         /// <param name="filterRules">FilterRuleBuilder set of filter.</param>
-        public FilterData(Autodesk.Revit.DB.Document doc,
+        public FilterData(Document doc,
             ICollection<BuiltInCategory> categories, ICollection<FilterRuleBuilder> filterRules)
         {
             m_doc = doc;
@@ -377,7 +359,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <param name="doc">Revit active document.</param>
         /// <param name="categories">BuilInCategory ids of filter.</param>
         /// <param name="filterRules">FilterRuleBuilder set of filter.</param>
-        public FilterData(Autodesk.Revit.DB.Document doc,
+        public FilterData(Document doc,
             ICollection<ElementId> categories, ICollection<FilterRuleBuilder> filterRules)
         {
             m_doc = doc;
@@ -399,67 +381,67 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// <summary>
         /// String represents BeginWith criteria
         /// </summary>
-        public const String BeginWith = "begins with";
+        public const string BeginWith = "begins with";
 
         /// <summary>
         /// String represents Contains criteria
         /// </summary>
-        public const String Contains = "contains";
+        public const string Contains = "contains";
 
         /// <summary>
         /// String represents EndWith criteria
         /// </summary>
-        public const String EndsWith = "ends with";
+        public const string EndsWith = "ends with";
 
         /// <summary>
         /// String represents Equals criteria
         /// </summary>
-        public const String Equals_ = "equals";
+        public const string Equals_ = "equals";
 
         /// <summary>
         /// String represents GreaterThan criteria
         /// </summary>
-        public const String Greater = "is greater than";
+        public const string Greater = "is greater than";
 
         /// <summary>
         /// String represents GreaterOrEqual criteria
         /// </summary>
-        public const String GreaterOrEqual = "is greater than or equal to";
+        public const string GreaterOrEqual = "is greater than or equal to";
 
         /// <summary>
         /// String represents LessOrEqual criteria
         /// </summary>
-        public const String LessOrEqual = "is less than or equal to";
+        public const string LessOrEqual = "is less than or equal to";
 
         /// <summary>
         /// String represents Less criteria
         /// </summary>
-        public const String Less = "is less than";
+        public const string Less = "is less than";
 
         /// <summary>
         /// String represents NotBeginWith criteria
         /// </summary>
-        public const String NotBeginWith = "does not begin with";
+        public const string NotBeginWith = "does not begin with";
 
         /// <summary>
         /// String represents NotContains criteria
         /// </summary>
-        public const String NotContains = "does not contain";
+        public const string NotContains = "does not contain";
 
         /// <summary>
         /// String represents NotEndsWith criteria
         /// </summary>
-        public const String NotEndsWith = "does not end with";
+        public const string NotEndsWith = "does not end with";
 
         /// <summary>
         /// String represents NotEquals criteria
         /// </summary>
-        public const String NotEquals = "does not equal";
+        public const string NotEquals = "does not equal";
 
         /// <summary>
         /// Invalid criteria 
         /// </summary>
-        public const String Invalid = "n/a";
+        public const string Invalid = "n/a";
         #endregion
                       
         /// <summary>
@@ -472,9 +454,9 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// </summary>
         /// <param name="paramType">Parameter type.</param>
         /// <returns>String list of criteria supported for specified parameter type.</returns>
-        public static ICollection<String> Criterions(StorageType paramType)
+        public static ICollection<string> Criterions(StorageType paramType)
         {
-            ICollection<String> returns = new List<String>();
+            ICollection<string> returns = new List<string>();
             //
             // all parameter supports following criteria
             returns.Add(Equals_);

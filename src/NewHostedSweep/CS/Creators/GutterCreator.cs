@@ -20,13 +20,9 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit;
-using System.Windows.Forms;
 using System.Collections;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
@@ -48,15 +44,15 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Edges which gutter can be created on.
         /// </summary>
-        private Dictionary<Autodesk.Revit.DB.Element, List<Edge>> m_roofGutterEdges;
+        private Dictionary<Element, List<Edge>> m_roofGutterEdges;
 
         /// <summary>
         /// Filter all the edges from the element which gutter can be created on.
         /// </summary>
         /// <param name="elem"></param>
-        private void FilterEdgesForGutter(Autodesk.Revit.DB.Element elem)
+        private void FilterEdgesForGutter(Element elem)
         {
-            var transaction = new Transaction(this.RvtDocument, "FilterEdgesForGutter");
+            var transaction = new Transaction(RvtDocument, "FilterEdgesForGutter");
             transaction.Start();
 
             // Note: This method will create a Gutter with no reference.
@@ -89,13 +85,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// A string indicates this creator just for Roof Gutter creation.
         /// </summary>
-        public override string Name
-        {
-            get
-            {
-                return "Roof Gutter";
-            }
-        }
+        public override string Name => "Roof Gutter";
 
         /// <summary>
         /// All Gutter types in Revit active document.
@@ -113,13 +103,13 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Dictionary to store all the Roof=>Edges which Gutter can be created on.
         /// </summary>
-        public override Dictionary<Autodesk.Revit.DB.Element, List<Edge>> SupportEdges
+        public override Dictionary<Element, List<Edge>> SupportEdges
         {
             get
             {
                 if (m_roofGutterEdges == null)
                 {
-                    m_roofGutterEdges = new Dictionary<Autodesk.Revit.DB.Element, List<Edge>>();
+                    m_roofGutterEdges = new Dictionary<Element, List<Edge>>();
 
                     var collector = new FilteredElementCollector(m_rvtDoc);
                     collector.OfClass(typeof(FootPrintRoof));

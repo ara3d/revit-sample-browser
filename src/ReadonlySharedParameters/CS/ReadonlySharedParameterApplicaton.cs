@@ -20,11 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
@@ -43,26 +38,26 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             var panel = application.CreateRibbonPanel("Shared parameters");
 
             var data = new PushButtonData("BindSP", "Bind Shared\nParameters", 
-                                    this.GetType().Assembly.Location, typeof(BindNewReadonlySharedParametersToDocument).FullName);
+                                    GetType().Assembly.Location, typeof(BindNewReadonlySharedParametersToDocument).FullName);
             panel.AddItem(data);
 
             panel.AddSeparator();
 
             var data1 = new PushButtonData("SetIds1", "Set ids: GUID",
-                                    this.GetType().Assembly.Location, typeof(SetReadonlyId1).FullName);
+                                    GetType().Assembly.Location, typeof(SetReadonlyId1).FullName);
 
             var data2 = new PushButtonData("SetIds2", "Set ids: short",
-                                    this.GetType().Assembly.Location, typeof(SetReadonlyId2).FullName);
+                                    GetType().Assembly.Location, typeof(SetReadonlyId2).FullName);
 
             panel.AddStackedItems(data1, data2);
 
             panel.AddSeparator();
 
             data1 = new PushButtonData("SetCosts1", "Set cost: random",
-                                    this.GetType().Assembly.Location, typeof(SetReadonlyCost1).FullName);
+                                    GetType().Assembly.Location, typeof(SetReadonlyCost1).FullName);
 
             data2 = new PushButtonData("SetCosts2", "Set cost: sequence",
-                                    this.GetType().Assembly.Location, typeof(SetReadonlyCost2).FullName);
+                                    GetType().Assembly.Location, typeof(SetReadonlyCost2).FullName);
 
             panel.AddStackedItems(data1, data2);
 

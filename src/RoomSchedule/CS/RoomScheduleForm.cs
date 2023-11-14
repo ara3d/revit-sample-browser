@@ -26,13 +26,9 @@ using System.Data;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
-using System.Data.OleDb;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.DB.Events;
 
 namespace Revit.SDK.Samples.RoomSchedule
 {
@@ -44,7 +40,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         #region Class Member Variables
 
         // Reserve name of data source
-        private String m_dataBaseName;
+        private string m_dataBaseName;
 
         // Revit external command data
         private ExternalCommandData m_commandData;
@@ -62,7 +58,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         private List<Phase> m_allPhases = new List<Phase>();
 
         // Room work sheet name
-        private String m_roomTableName;
+        private string m_roomTableName;
 
         // All rooms data from spread sheet
         private DataTable m_spreadRoomsTable;
@@ -88,13 +84,13 @@ namespace Revit.SDK.Samples.RoomSchedule
             GetAllLevelsAndPhases();
 
             // list all levels and phases
-            this.levelComboBox.DisplayMember = "Name";
-            this.levelComboBox.DataSource = m_allLevels;
-            this.levelComboBox.SelectedIndex = 0;
+            levelComboBox.DisplayMember = "Name";
+            levelComboBox.DataSource = m_allLevels;
+            levelComboBox.SelectedIndex = 0;
 
-            this.phaseComboBox.DisplayMember = "Name";
-            this.phaseComboBox.DataSource = m_allPhases;
-            this.phaseComboBox.SelectedIndex = 0;
+            phaseComboBox.DisplayMember = "Name";
+            phaseComboBox.DataSource = m_allPhases;
+            phaseComboBox.SelectedIndex = 0;
 
             // if there is no phase, newRoomButton will be disabled.
             if (m_allPhases.Count == 0)
@@ -198,7 +194,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="paramName">Parameter name to be checked</param>
         /// <returns>true, the definition exists, false, doesn't exist.</returns>
-        private bool ShareParameterExists(String paramName)
+        private bool ShareParameterExists(string paramName)
         {
             var bindingMap = m_document.ParameterBindings;
             var iter = bindingMap.ForwardIterator();
@@ -209,7 +205,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 var tempDefinition = iter.Key;
 
                 // find the definition of which the name is the appointed one
-                if (String.Compare(tempDefinition.Name, paramName) != 0)
+                if (string.Compare(tempDefinition.Name, paramName) != 0)
                 {
                     continue;
                 }
@@ -238,7 +234,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="strMsg">message to be popped up</param>
         /// <param name="icon">icon to be displayed</param>
-        public static void MyMessageBox(String strMsg, MessageBoxIcon icon)
+        public static void MyMessageBox(string strMsg, MessageBoxIcon icon)
         {
             TaskDialog.Show("Room Schedule", strMsg, TaskDialogCommonButtons.Ok);
         }
@@ -313,7 +309,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 foreach (var room in m_roomData.Rooms)
                 {
                    var sharedParameter = room.LookupParameter(RoomsData.SharedParam);
-                    if (null != sharedParameter && false == String.IsNullOrEmpty(sharedParameter.AsString()))
+                    if (null != sharedParameter && false == string.IsNullOrEmpty(sharedParameter.AsString()))
                     {
                         existingRooms.Add(room.Id, sharedParameter.AsString());
                     }
@@ -434,7 +430,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             // get phase used to create room
             foreach (var phase in m_allPhases)
             {
-                if (String.Compare(phase.Name, phaseComboBox.Text) == 0)
+                if (string.Compare(phase.Name, phaseComboBox.Text) == 0)
                 {
                     curPhase = phase;
                     break;
@@ -456,7 +452,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <param name="index">The index of row in spreadsheet, use values of this row to update the new room.</param>
         private void UpdateNewRoom(Room newRoom, int row)
         {
-            String[] constantColumns = { RoomsData.RoomName, RoomsData.RoomNumber, RoomsData.RoomComments };
+            string[] constantColumns = { RoomsData.RoomName, RoomsData.RoomNumber, RoomsData.RoomComments };
             for (var col = 0; col < constantColumns.Length; col++)
             {
                 // check to see whether the column exists in table
@@ -464,7 +460,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 {
                     // if value is not null or empty, set new rooms related parameter.
                     var colValue = m_spreadRoomsTable.Rows[row][constantColumns[col]].ToString();
-                    if (String.IsNullOrEmpty(colValue))
+                    if (string.IsNullOrEmpty(colValue))
                     {
                         continue;
                     }
@@ -510,7 +506,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 //
                 // initialize the default file name
                 var hashCode = m_document.GetHashCode();
-                var xlsAndTable = new SheetInfo(String.Empty, String.Empty);
+                var xlsAndTable = new SheetInfo(string.Empty, string.Empty);
                 if (CrtlApplication.EventReactor.DocMappedSheetInfo(hashCode, ref xlsAndTable))
                 {
                     sfdlg.FileName = xlsAndTable.FileName;
@@ -550,7 +546,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         {
             // update spread sheet based rooms
             sheetDataGridView.DataSource = null;
-            m_roomTableName = tablesComboBox.SelectedValue as String;
+            m_roomTableName = tablesComboBox.SelectedValue as string;
             XlsDBConnector xlsCon = null;
             try
             {
@@ -604,7 +600,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             Level selLevel = null;
             foreach (var level in m_allLevels)
             {
-                if (0 == String.Compare(level.Name, levelComboBox.Text))
+                if (0 == string.Compare(level.Name, levelComboBox.Text))
                 {
                     selLevel = level;
                     break;
@@ -617,8 +613,8 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
 
             // update data source of DataGridView
-            this.revitRoomDataGridView.DataSource = null;
-            this.revitRoomDataGridView.DataSource = new DataView(m_roomData.GenRoomsDataTable(selLevel));
+            revitRoomDataGridView.DataSource = null;
+            revitRoomDataGridView.DataSource = new DataView(m_roomData.GenRoomsDataTable(selLevel));
         }
 
         /// <summary>
@@ -680,7 +676,7 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// <param name="e"></param>
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -696,9 +692,9 @@ namespace Revit.SDK.Samples.RoomSchedule
             {
                 Parameter param = null;
                 var bExist = RoomsData.ShareParameterExists(room, RoomsData.SharedParam, ref param);
-                if (bExist && null != param && false == String.IsNullOrEmpty(param.AsString()))
+                if (bExist && null != param && false == string.IsNullOrEmpty(param.AsString()))
                 {
-                    param.Set(String.Empty);
+                    param.Set(string.Empty);
                     nCount++;
                 }
             }

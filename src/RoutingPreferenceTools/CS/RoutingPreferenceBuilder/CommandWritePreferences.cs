@@ -20,16 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Plumbing;
-using System.Xml.Linq;
-using System.IO;
 using System.Xml;
-using System.Diagnostics;
 
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS

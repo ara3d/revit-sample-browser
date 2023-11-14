@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
 using Autodesk.Revit.ApplicationServices;
 
@@ -44,10 +43,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Gets Revit version names
         /// </summary>
-        public ReadOnlyCollection<ProductType> Names
-        {
-            get { return m_products.AsReadOnly(); }
-        } 
+        public ReadOnlyCollection<ProductType> Names => m_products.AsReadOnly();
+
         #endregion
 
         #region Constructors

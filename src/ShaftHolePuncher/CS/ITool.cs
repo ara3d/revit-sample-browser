@@ -21,9 +21,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
@@ -47,35 +44,23 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// </summary>
         public virtual bool Finished
         {
-            get
-            {
-                return m_finished;
-            }
-            set
-            {
-                m_finished = value;
-            }
+            get => m_finished;
+            set => m_finished = value;
         }
 
         /// <summary>
         /// get all lines drawn in pictureBox
         /// </summary>
-        public virtual List<Point> Points
-        {
-            get
-            {
-                return m_points;
-            }
-        }
+        public virtual List<Point> Points => m_points;
 
         /// <summary>
         /// default constructor
         /// </summary>
         public ITool()
         {
-            m_backGroundPen = new Pen(System.Drawing.Color.White);
+            m_backGroundPen = new Pen(Color.White);
             m_backGroundPen.Width *= 2;
-            m_foreGroundPen = new Pen(System.Drawing.Color.Black);
+            m_foreGroundPen = new Pen(Color.Black);
             m_foreGroundPen.Width *= 2;
             m_finished = false;
         }
@@ -106,7 +91,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// </summary>
         /// <param name="graphic">Graphics object,used to draw geometry</param>
         /// <param name="e">mouse event args</param>
-        public virtual void OnMouseMove(System.Drawing.Graphics graphic, 
+        public virtual void OnMouseMove(Graphics graphic, 
             System.Windows.Forms.MouseEventArgs e) { }
 
         /// <summary>

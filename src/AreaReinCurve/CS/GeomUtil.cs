@@ -22,16 +22,8 @@
 namespace Revit.SDK.Samples.AreaReinCurve.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
-    using Autodesk.Revit.DB.Structure;
-
     using GeoElement = Autodesk.Revit.DB.GeometryElement;
-    using Element = Autodesk.Revit.DB.Element;
 
     /// <summary>
     /// provide some common geometry judgement and calculate method
@@ -117,13 +109,13 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static Autodesk.Revit.DB.XYZ  SubXYZ (Autodesk.Revit.DB.XYZ  p1, Autodesk.Revit.DB.XYZ  p2)
+        private static XYZ  SubXYZ (XYZ  p1, XYZ  p2)
         {
             var x = p1.X - p2.X;
             var y = p1.Y - p2.Y;
             var z = p1.Z - p2.Z;
 
-            var  result = new Autodesk.Revit.DB.XYZ (x, y, z);
+            var  result = new XYZ (x, y, z);
             return result;
         }
 
@@ -133,7 +125,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static double DotMatrix(Autodesk.Revit.DB.XYZ  p1, Autodesk.Revit.DB.XYZ  p2)
+        private static double DotMatrix(XYZ  p1, XYZ  p2)
         {
             var v1 = p1.X;
             var v2 = p1.Y;

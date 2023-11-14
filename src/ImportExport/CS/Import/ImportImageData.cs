@@ -21,11 +21,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -81,7 +76,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
                // ImagePlacementOptions
                var placementOptions = new ImagePlacementOptions();
-               placementOptions.PlacementPoint = Autodesk.Revit.DB.BoxPlacement.TopLeft;
+               placementOptions.PlacementPoint = BoxPlacement.TopLeft;
                placementOptions.Location = new XYZ(1, 1, 1);
 
                var imageInstance = ImageInstance.Create(m_activeDoc, view, imageType.Id, placementOptions);

@@ -22,10 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.DB;
@@ -40,7 +36,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
     {
         #region IExternalCommand Members
 
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var uiDoc = commandData.Application.ActiveUIDocument;
             var doc = uiDoc.Document;
@@ -61,7 +57,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
                                                                       "Select boundary");
 			var familyPath = FreeFormElementUtils.FindGenericModelTemplate(doc.Application.FamilyTemplatePath);
 
-            if (String.IsNullOrEmpty(familyPath))
+            if (string.IsNullOrEmpty(familyPath))
             {
 				message = "Unable to find a template named 'GenericModel.rft' in family template path.";
 				return Result.Failed;

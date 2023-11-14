@@ -20,13 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
 {
@@ -93,14 +87,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(CurtainGridAlign.Beginning), ReadOnlyAttribute(true)]
       public CurtainGridAlign VerticalJustification
       {
-         get
-         {
-            return m_verticalJustification;
-         }
-         set
-         {
-            m_verticalJustification = value;
-         }
+         get => m_verticalJustification;
+         set => m_verticalJustification = value;
       }
 
       /// <summary>
@@ -109,14 +97,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(0.0), ReadOnlyAttribute(true)]
       public double VerticalAngle
       {
-         get
-         {
-            return m_verticalAngle;
-         }
-         set
-         {
-            m_verticalAngle = value;
-         }
+         get => m_verticalAngle;
+         set => m_verticalAngle = value;
       }
 
       /// <summary>
@@ -125,14 +107,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(0.0), ReadOnlyAttribute(true)]
       public double VerticalOffset
       {
-         get
-         {
-            return m_verticalOffset;
-         }
-         set
-         {
-            m_verticalOffset = value;
-         }
+         get => m_verticalOffset;
+         set => m_verticalOffset = value;
       }
 
       /// <summary>
@@ -141,14 +117,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
       public int VerticalLinesNumber
       {
-         get
-         {
-            return m_verticalLinesNumber;
-         }
-         set
-         {
-            m_verticalLinesNumber = value;
-         }
+         get => m_verticalLinesNumber;
+         set => m_verticalLinesNumber = value;
       }
 
       /// <summary>
@@ -157,14 +127,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Horizontal Grid Pattern"), DefaultValueAttribute(CurtainGridAlign.Beginning), ReadOnlyAttribute(true)]
       public CurtainGridAlign HorizontalJustification
       {
-         get
-         {
-            return m_horizontalJustification;
-         }
-         set
-         {
-            m_horizontalJustification = value;
-         }
+         get => m_horizontalJustification;
+         set => m_horizontalJustification = value;
       }
 
       /// <summary>
@@ -173,14 +137,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Horizontal Grid Pattern"), DefaultValueAttribute(0.0), ReadOnlyAttribute(true)]
       public double HorizontalAngle
       {
-         get
-         {
-            return m_horizontalAngle;
-         }
-         set
-         {
-            m_horizontalAngle = value;
-         }
+         get => m_horizontalAngle;
+         set => m_horizontalAngle = value;
       }
 
       /// <summary>
@@ -189,14 +147,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Horizontal Grid Pattern"), DefaultValueAttribute(0.0), ReadOnlyAttribute(true)]
       public double HorizontalOffset
       {
-         get
-         {
-            return m_horizontalOffset;
-         }
-         set
-         {
-            m_horizontalOffset = value;
-         }
+         get => m_horizontalOffset;
+         set => m_horizontalOffset = value;
       }
 
       /// <summary>
@@ -205,14 +157,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Horizontal Grid Pattern"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
       public int HorizontalLinesNumber
       {
-         get
-         {
-            return m_horizontalLinesNumber;
-         }
-         set
-         {
-            m_horizontalLinesNumber = value;
-         }
+         get => m_horizontalLinesNumber;
+         set => m_horizontalLinesNumber = value;
       }
 
       /// <summary>
@@ -221,14 +167,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
       public int PanelNumber
       {
-         get
-         {
-            return m_panelNumber;
-         }
-         set
-         {
-            m_panelNumber = value;
-         }
+         get => m_panelNumber;
+         set => m_panelNumber = value;
       }
 
       /// <summary>
@@ -237,14 +177,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
       public int CellNumber
       {
-         get
-         {
-            return m_cellNumber;
-         }
-         set
-         {
-            m_cellNumber = value;
-         }
+         get => m_cellNumber;
+         set => m_cellNumber = value;
       }
 
       /// <summary>
@@ -253,14 +187,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
       public int UnlockedPanelsNumber
       {
-         get
-         {
-            return m_unlockedPanelsNumber;
-         }
-         set
-         {
-            m_unlockedPanelsNumber = value;
-         }
+         get => m_unlockedPanelsNumber;
+         set => m_unlockedPanelsNumber = value;
       }
 
       /// <summary>
@@ -269,14 +197,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
       public int MullionsNumber
       {
-         get
-         {
-            return m_mullionsNumber;
-         }
-         set
-         {
-            m_mullionsNumber = value;
-         }
+         get => m_mullionsNumber;
+         set => m_mullionsNumber = value;
       }
 
       /// <summary>
@@ -285,14 +207,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
       public int UnlockedmullionsNumber
       {
-         get
-         {
-            return m_unlockedmullionsNumber;
-         }
-         set
-         {
-            m_unlockedmullionsNumber = value;
-         }
+         get => m_unlockedmullionsNumber;
+         set => m_unlockedmullionsNumber = value;
       }
       #endregion
    } // end of class

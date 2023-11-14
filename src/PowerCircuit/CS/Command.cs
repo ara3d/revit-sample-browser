@@ -21,14 +21,7 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.PowerCircuit.CS
@@ -59,7 +52,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
         ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             try
@@ -68,14 +61,14 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                 if (null == commandData.Application.ActiveUIDocument.Document)
                 {
                     message = Properties.Resources.ResourceManager.GetString("NullActiveDocument");
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Quit if no elements selected
                 if (commandData.Application.ActiveUIDocument.Selection.GetElementIds().Count == 0)
                 {
                     message = Properties.Resources.ResourceManager.GetString("SelectPowerElements");
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Collect information from selected elements and show operation dialog
@@ -84,7 +77,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                 {
                     if (mainForm.ShowDialog() == DialogResult.Cancel)
                     {
-                        return Autodesk.Revit.UI.Result.Cancelled;
+                        return Result.Cancelled;
                     }
                 }
 
@@ -96,7 +89,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                     {
                         if (selectForm.ShowDialog() == DialogResult.Cancel)
                         {
-                            return Autodesk.Revit.UI.Result.Cancelled;
+                            return Result.Cancelled;
                         }
                     }
                 }
@@ -108,7 +101,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
                     {
                         if (editForm.ShowDialog() == DialogResult.Cancel)
                         {
-                            return Autodesk.Revit.UI.Result.Cancelled;
+                            return Result.Cancelled;
                         }
                     }
                 }
@@ -119,10 +112,10 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             catch (Exception ex)
             {
                 message = ex.ToString();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
     }
 }

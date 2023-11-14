@@ -21,11 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
@@ -87,34 +83,34 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="e"></param>
         private void RoofEditorForm_Load(object sender, EventArgs e)
         {
-            this.roofTypesComboBox.DataSource = m_roofsManager.RoofTypes;
-            this.roofTypesComboBox.DisplayMember = "Name";
-            this.roofTypesComboBox.ValueMember = "Id";
-            this.roofTypesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            roofTypesComboBox.DataSource = m_roofsManager.RoofTypes;
+            roofTypesComboBox.DisplayMember = "Name";
+            roofTypesComboBox.ValueMember = "Id";
+            roofTypesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this.roofTypesComboBox.SelectedValue = m_roof.RoofType.Id;
+            roofTypesComboBox.SelectedValue = m_roof.RoofType.Id;
 
             if (m_roof is FootPrintRoof)
             {
-                this.roofEditorPropertyGrid.SelectedObject = m_footPrintRoofWrapper;
-                this.Size = new Size(814, 515);
+                roofEditorPropertyGrid.SelectedObject = m_footPrintRoofWrapper;
+                Size = new Size(814, 515);
 
                 var label = new Label();
                 label.Text = "Footprint roof lines:";
                 label.AutoSize = true;
                 label.Location = new System.Drawing.Point(398, 12);
-                this.Controls.Add(label);
+                Controls.Add(label);
 
                 m_graphicsControl = new GraphicsControl(m_footPrintRoofWrapper);
                 m_graphicsControl.Location = new System.Drawing.Point(398, 36);
                 m_graphicsControl.Size = new Size(400, 440);
-                this.Controls.Add(m_graphicsControl);
+                Controls.Add(m_graphicsControl);
             }
             else
             {
-                this.roofEditorPropertyGrid.SelectedObject = m_extrusionRoofWrapper;
+                roofEditorPropertyGrid.SelectedObject = m_extrusionRoofWrapper;
             }
-            this.roofEditorPropertyGrid.ExpandAllGridItems();
+            roofEditorPropertyGrid.ExpandAllGridItems();
         }
 
         /// <summary>
@@ -124,7 +120,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            m_roof.RoofType = this.roofTypesComboBox.SelectedItem as Autodesk.Revit.DB.RoofType;
+            m_roof.RoofType = roofTypesComboBox.SelectedItem as RoofType;
         }
     }
 }

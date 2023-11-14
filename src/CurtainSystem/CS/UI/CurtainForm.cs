@@ -22,12 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Revit.SDK.Samples.CurtainSystem.CS.Data;
 
@@ -36,7 +31,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
     /// <summary>
     /// the main window form for UI operations
     /// </summary>
-    public partial class CurtainForm : System.Windows.Forms.Form
+    public partial class CurtainForm : Form
     {
         // the document containing all the data used in the sample
         MyDocument m_mydocument;
@@ -63,9 +58,9 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         /// </summary>
         private void InitializeCustomComponent()
         {
-            this.deleteCSButton.Enabled = false;
-            this.addCGButton.Enabled = false;
-            this.removeCGButton.Enabled = false;
+            deleteCSButton.Enabled = false;
+            addCGButton.Enabled = false;
+            removeCGButton.Enabled = false;
         }
 
         /// <summary>
@@ -92,7 +87,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             // the user has read the hint and clicked the "OK" button, close the dialog
             if (TaskDialogResult.Ok == result)
             {
-                this.Close();
+                Close();
             }
         }
 
@@ -113,10 +108,10 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             if (null == csInfos ||
                 0 == csInfos.Count)
             {
-                this.deleteCSButton.Enabled = false;
-                this.addCGButton.Enabled = false;
-                this.removeCGButton.Enabled = false;
-                this.Show();
+                deleteCSButton.Enabled = false;
+                addCGButton.Enabled = false;
+                removeCGButton.Enabled = false;
+                Show();
                 return;
             }
 
@@ -130,14 +125,14 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             // this will invoke the selectedIndexChanged event, then to update the other 2 list boxes
             csListBox.SetSelected(csInfos.Count - 1, true);
             // enable the buttons and show  the dialog
-            this.deleteCSButton.Enabled = true;
+            deleteCSButton.Enabled = true;
             // only curtain system which created by reference array supports curtain grid operations
             if (false == csInfo.ByFaceArray)
             {
-                this.addCGButton.Enabled = true;
-                this.removeCGButton.Enabled = true;
+                addCGButton.Enabled = true;
+                removeCGButton.Enabled = true;
             }
-            this.Show();
+            Show();
         }
 
         /// <summary>
@@ -149,15 +144,15 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             var message = m_mydocument.Message;
             if (true == message.Value)
             {
-                this.operationStatusLabel.ForeColor = System.Drawing.Color.Red;
+                operationStatusLabel.ForeColor = System.Drawing.Color.Red;
             }
             // it's a common hint message, set the color to black
             else
             {
-                this.operationStatusLabel.ForeColor = System.Drawing.Color.Black;
+                operationStatusLabel.ForeColor = System.Drawing.Color.Black;
             }
-            this.operationStatusLabel.Text = message.Key;
-            this.statusStrip.Refresh();
+            operationStatusLabel.Text = message.Key;
+            statusStrip.Refresh();
         }
 
         /// <summary>
@@ -173,7 +168,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
         /// </param>
         private void createCSButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
 
             // show the "create curtain system" dialog
             using (var dlg = new CreateCurtainSystemDialog(m_mydocument))
@@ -275,10 +270,10 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             if (true == csInfo.ByFaceArray)
             {
                 // disable the buttons
-                this.addCGButton.Enabled = false;
-                this.removeCGButton.Enabled = false;
-                this.facesCheckedListBox.Enabled = false;
-                this.cgCheckedListBox.Enabled = false;
+                addCGButton.Enabled = false;
+                removeCGButton.Enabled = false;
+                facesCheckedListBox.Enabled = false;
+                cgCheckedListBox.Enabled = false;
                 // update the status hints
                 var hint = Properties.Resources.HINT_CSIsByFaceArray;
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, false);
@@ -291,24 +286,24 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
                 if (null == facesCheckedListBox.Items ||
                     0 == facesCheckedListBox.Items.Count)
                 {
-                    this.addCGButton.Enabled = false;
+                    addCGButton.Enabled = false;
                 }
                 else
                 {
-                    this.addCGButton.Enabled = true;
+                    addCGButton.Enabled = true;
                 }
                 // at least one curtain grid must be kept
                 if (null == cgCheckedListBox.Items ||
                     2 > cgCheckedListBox.Items.Count)
                 {
-                    this.removeCGButton.Enabled = false;
+                    removeCGButton.Enabled = false;
                 }
                 else
                 {
-                    this.removeCGButton.Enabled = true;
+                    removeCGButton.Enabled = true;
                 }
-                this.facesCheckedListBox.Enabled = true;
-                this.cgCheckedListBox.Enabled = true;
+                facesCheckedListBox.Enabled = true;
+                cgCheckedListBox.Enabled = true;
                 // update the status hints
                 var hint = "";
                 m_mydocument.Message = new KeyValuePair<string, bool>(hint, false);

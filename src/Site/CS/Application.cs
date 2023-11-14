@@ -21,16 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
@@ -69,39 +60,39 @@ namespace Revit.SDK.Samples.Site.CS
 
         private void CreateSitePanel(UIControlledApplication application)
         {
-            RibbonPanel rp = application.CreateRibbonPanel("Site");
-            PushButtonData addPond = new PushButtonData("Site_Add_Pond", "Add Pond",
+            var rp = application.CreateRibbonPanel("Site");
+            var addPond = new PushButtonData("Site_Add_Pond", "Add Pond",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.Site.CS.SiteAddRetainingPondCommand).FullName);
-            SetIconsForPushButtonData(addPond, Revit.SDK.Samples.Site.CS.Properties.Resources.AddPond);
-            PushButton pondPB = rp.AddItem(addPond) as PushButton;
+                                                            typeof(SiteAddRetainingPondCommand).FullName);
+            SetIconsForPushButtonData(addPond, Properties.Resources.AddPond);
+            var pondPB = rp.AddItem(addPond) as PushButton;
 
-            PushButtonData moveRegion = new PushButtonData("Site_Move_Region", "Move Region",
+            var moveRegion = new PushButtonData("Site_Move_Region", "Move Region",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.Site.CS.SiteMoveRegionAndPointsCommand).FullName);
-            SetIconsForPushButtonData(moveRegion, Revit.SDK.Samples.Site.CS.Properties.Resources.MoveRegion);
+                                                            typeof(SiteMoveRegionAndPointsCommand).FullName);
+            SetIconsForPushButtonData(moveRegion, Properties.Resources.MoveRegion);
 
-            PushButtonData deleteRegion = new PushButtonData("Site_Delete_Region", "Delete Region",
+            var deleteRegion = new PushButtonData("Site_Delete_Region", "Delete Region",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.Site.CS.SiteDeleteRegionAndPointsCommand).FullName);
-            SetIconsForPushButtonData(deleteRegion, Revit.SDK.Samples.Site.CS.Properties.Resources.DeleteRegion);
+                                                            typeof(SiteDeleteRegionAndPointsCommand).FullName);
+            SetIconsForPushButtonData(deleteRegion, Properties.Resources.DeleteRegion);
 
             rp.AddStackedItems(moveRegion, deleteRegion);
 
-            PushButtonData raiseTerrain = new PushButtonData("Site_Raise_Terrain", "Raise Terrain",
+            var raiseTerrain = new PushButtonData("Site_Raise_Terrain", "Raise Terrain",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.Site.CS.SiteRaiseTerrainInRegionCommand).FullName);
-            SetIconsForPushButtonData(raiseTerrain, Revit.SDK.Samples.Site.CS.Properties.Resources.RaiseTerrain);
+                                                            typeof(SiteRaiseTerrainInRegionCommand).FullName);
+            SetIconsForPushButtonData(raiseTerrain, Properties.Resources.RaiseTerrain);
 
-            PushButtonData lowerTerrain = new PushButtonData("Site_Lower_Terrain", "Lower Terrain",
+            var lowerTerrain = new PushButtonData("Site_Lower_Terrain", "Lower Terrain",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.Site.CS.SiteLowerTerrainInRegionCommand).FullName);
-            SetIconsForPushButtonData(lowerTerrain, Revit.SDK.Samples.Site.CS.Properties.Resources.LowerTerrain);
+                                                            typeof(SiteLowerTerrainInRegionCommand).FullName);
+            SetIconsForPushButtonData(lowerTerrain, Properties.Resources.LowerTerrain);
 
-            PushButtonData normalizeTerrain = new PushButtonData("Site_Normalize_Terrain", "Normalize Terrain",
+            var normalizeTerrain = new PushButtonData("Site_Normalize_Terrain", "Normalize Terrain",
                                                             addAssemblyPath,
-                                                            typeof(Revit.SDK.Samples.Site.CS.SiteNormalizeTerrainInRegionCommand).FullName);
-            SetIconsForPushButtonData(normalizeTerrain, Revit.SDK.Samples.Site.CS.Properties.Resources.SiteNormalize);
+                                                            typeof(SiteNormalizeTerrainInRegionCommand).FullName);
+            SetIconsForPushButtonData(normalizeTerrain, Properties.Resources.SiteNormalize);
 
             rp.AddStackedItems(raiseTerrain, lowerTerrain, normalizeTerrain);
         }
@@ -137,7 +128,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <returns>The BitmapSource.</returns>
         private static BitmapSource GetSmallIcon(System.Drawing.Icon icon)
         {
-            System.Drawing.Icon smallIcon = new System.Drawing.Icon(icon, new System.Drawing.Size(16, 16));
+            var smallIcon = new System.Drawing.Icon(icon, new System.Drawing.Size(16, 16));
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
                 smallIcon.Handle,
                 Int32Rect.Empty,
@@ -147,6 +138,6 @@ namespace Revit.SDK.Samples.Site.CS
         /// <summary>
         /// The path to this add-in assembly.
         /// </summary>
-        static String addAssemblyPath = typeof(Revit.SDK.Samples.Site.CS.Application).Assembly.Location;
+        static string addAssemblyPath = typeof(Application).Assembly.Location;
     }
 }

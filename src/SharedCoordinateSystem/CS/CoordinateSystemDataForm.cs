@@ -21,14 +21,7 @@
 //   
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -52,22 +45,16 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         private CityInfo m_currentCityInfo;      //current CityInfo
         private const int DecimalNumber = 3;     //number of decimal
         private bool m_isFormLoading = true;     //indicate whether called when Form loading
-        private bool m_isLatitudeChanged = false;//indicate whether user change Latitude value
-        private bool m_isLongitudeChanged = false;//indicate whether user change Longitude value
+        private bool m_isLatitudeChanged;//indicate whether user change Latitude value
+        private bool m_isLongitudeChanged;//indicate whether user change Longitude value
 
         /// <summary>
         /// get and set the new location's name
         /// </summary>
         public string NewLocationName
         {
-            get
-            {
-                return m_newLocationName;
-            }
-            set
-            {
-                m_newLocationName = value;
-            }
+            get => m_newLocationName;
+            set => m_newLocationName = value;
         }
 
         /// <summary>
@@ -128,7 +115,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             //get the offset values of the selected item 
             var selecteName = locationListBox.SelectedItem.ToString();
             m_data.GetOffset(selecteName);
-            this.ShowOffsetValue();
+            ShowOffsetValue();
 
             //set control in placeTabPage
             //convert values get from API and set them to controls
@@ -163,9 +150,9 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// <param name="e"></param>
         private void CoordinateSystemDataForm_Load(object sender, EventArgs e)
         {
-            this.DisplayInformation();
+            DisplayInformation();
 
-            this.CheckSelecteCurrent();
+            CheckSelecteCurrent();
         }
 
         /// <summary>
@@ -188,7 +175,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             //refresh the form
             locationListBox.Items.Clear();
             m_data.GatData();
-            this.DisplayInformation();
+            DisplayInformation();
 
             //make the new project location is the selected item after it was duplicated
             for (var i = 0; i < locationListBox.Items.Count; i++)
@@ -216,7 +203,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             //get the offset values of the selected item 
             var selecteName = locationListBox.SelectedItem.ToString();
             m_data.GetOffset(selecteName);
-            this.ShowOffsetValue();
+            ShowOffsetValue();
         }
 
         /// <summary>
@@ -250,7 +237,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// <param name="e"></param>
         private void locationListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.CheckSelecteCurrent();
+            CheckSelecteCurrent();
         }
 
         /// <summary>
@@ -260,13 +247,13 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            if (!this.CheckModify())
+            if (!CheckModify())
             {
                 return;
             }
             SaveSiteLocation();
-            this.DialogResult = DialogResult.OK;    // set dialog result
-            this.Close();                           // close the form
+            DialogResult = DialogResult.OK;    // set dialog result
+            Close();                           // close the form
         }
 
         /// <summary>
@@ -280,7 +267,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             var newCurrentName = locationListBox.SelectedItem.ToString();//get location name
             m_data.ChangeCurrentLocation(newCurrentName);
             //refresh the form
-            this.DisplayInformation();
+            DisplayInformation();
             locationListBox.SelectedIndex = selectIndex;
         }
 

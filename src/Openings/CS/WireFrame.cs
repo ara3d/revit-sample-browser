@@ -21,10 +21,6 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Collections.ObjectModel;
@@ -60,7 +56,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// <returns></returns>
         public void Draw2D(float previewWidth, float previewHeigh, Graphics graphics)
         {
-            graphics.Clear(System.Drawing.Color.Black);
+            graphics.Clear(Color.Black);
             CalculateTransform(previewWidth, previewHeigh);
             foreach (var sketch in m_objects)
             {

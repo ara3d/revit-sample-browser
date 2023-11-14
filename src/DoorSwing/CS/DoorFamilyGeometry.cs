@@ -19,12 +19,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
-using Autodesk.Revit;
+using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.DB;
 
 
@@ -52,14 +49,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       /// <summary>
       /// BoundingBox of the 2D geometry.
       /// </summary>
-      public System.Drawing.RectangleF BBOX2D
-      {
-         get
-         {
-            return new System.Drawing.RectangleF((float)m_bbox.Min.X, (float)m_bbox.Min.Y,
-                  (float)(m_bbox.Max.X - m_bbox.Min.X), (float)(m_bbox.Max.Y - m_bbox.Min.Y));
-         }
-      }
+      public System.Drawing.RectangleF BBOX2D =>
+          new System.Drawing.RectangleF((float)m_bbox.Min.X, (float)m_bbox.Min.Y,
+              (float)(m_bbox.Max.X - m_bbox.Min.X), (float)(m_bbox.Max.Y - m_bbox.Min.Y));
 
       #endregion
 
@@ -69,7 +61,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       /// construct function.
       /// </summary>
       /// <param name="door">of which geometry data is wanted.</param>
-      public DoorGeometry(Autodesk.Revit.DB.Element door)
+      public DoorGeometry(Element door)
       {
          m_options = new Options();
          m_options.View = GetPlanform2DView(door);
@@ -108,7 +100,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       /// one door whose level is corresponding to the retrieved ViewPlan.
       /// </param>
       /// <returns>One ViewPlan</returns>
-      static private ViewPlan GetPlanform2DView(Autodesk.Revit.DB.Element door)
+      static private ViewPlan GetPlanform2DView(Element door)
       {
          var viewPlans = from elem in
                                               new FilteredElementCollector(door.Document).OfClass(typeof(ViewPlan)).ToElements()
@@ -127,7 +119,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       /// iterate GeometryObject in GeometryObjectArray and generate data accordingly.
       /// </summary>
       /// <param name="geoEle">a geometry object of element</param>
-      private void AddGeometryElement(Autodesk.Revit.DB.GeometryElement geoEle)
+      private void AddGeometryElement(GeometryElement geoEle)
       {
          // get all geometric primitives contained in the Geometry Element
          //GeometryObjectArray geoObjArray = geoEle.Objects;
@@ -147,7 +139,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             {
                AddEdge(geoObj);
             }
-            else if (geoObj is Autodesk.Revit.DB.GeometryElement)
+            else if (geoObj is GeometryElement)
             {
                AddElement(geoObj);
             }
@@ -155,7 +147,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             {
                AddFace(geoObj);
             }
-            else if (geoObj is Autodesk.Revit.DB.GeometryInstance)
+            else if (geoObj is GeometryInstance)
             {
                AddInstance(geoObj);
             }
@@ -213,7 +205,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       /// <param name="obj">a geometry object of element.</param>
       private void AddElement(GeometryObject obj)
       {
-         var geoEle = obj as Autodesk.Revit.DB.GeometryElement;
+         var geoEle = obj as GeometryElement;
          AddGeometryElement(geoEle);
       }
 
@@ -239,7 +231,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       /// <param name="obj">a geometry object of element.</param>
       private void AddInstance(GeometryObject obj)
       {
-         var instance = obj as Autodesk.Revit.DB.GeometryInstance;
+         var instance = obj as GeometryInstance;
          var geoElement = instance.SymbolGeometry;
 
          AddGeometryElement(geoElement);

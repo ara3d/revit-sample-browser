@@ -24,9 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Text.RegularExpressions;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -42,7 +39,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
    public class AddParameterToFamily : IExternalCommand
    {
       // the active Revit application
-      private Autodesk.Revit.UI.UIApplication m_app;
+      private UIApplication m_app;
 
       /// <summary>
       /// Implement this method as an external command for Revit.
@@ -60,7 +57,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+      public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -73,18 +70,18 @@ namespace Revit.SDK.Samples.AutoParameter.CS
 
             if (succeeded)
             {
-               return Autodesk.Revit.UI.Result.Succeeded;
+               return Result.Succeeded;
             }
             else
             {
                message = MessageManager.MessageBuff.ToString();
-               return Autodesk.Revit.UI.Result.Failed;
+               return Result.Failed;
             }
          }
          catch (Exception e)
          {
             message = e.Message;
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
       }
 
@@ -161,7 +158,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+      public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -174,18 +171,18 @@ namespace Revit.SDK.Samples.AutoParameter.CS
 
             if (succeeded)
             {
-               return Autodesk.Revit.UI.Result.Succeeded;
+               return Result.Succeeded;
             }
             else
             {
                message = MessageManager.MessageBuff.ToString();
-               return Autodesk.Revit.UI.Result.Failed;
+               return Result.Failed;
             }
          }
          catch (Exception e)
          {
             message = e.Message;
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
       }
 
@@ -279,14 +276,8 @@ namespace Revit.SDK.Samples.AutoParameter.CS
       /// </summary>
       public static StringBuilder MessageBuff
       {
-         get 
-         { 
-            return m_messageBuff; 
-         }
-         set 
-         { 
-            m_messageBuff = value; 
-         }
+         get => m_messageBuff;
+         set => m_messageBuff = value;
       }
    }
 }

@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -53,8 +52,8 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
            var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Generate Floor");
            tran.Start();
@@ -76,19 +75,19 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
                     CreateFloor(data, commandData.Application.ActiveUIDocument.Document);
 
                     tran.Commit();
-                    return Autodesk.Revit.UI.Result.Succeeded;
+                    return Result.Succeeded;
                 }
                 else
                 {
                    tran.RollBack();
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }                
             }
             catch (Exception e)
             {
                 message = e.Message;
                 tran.RollBack();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
 

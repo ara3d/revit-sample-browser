@@ -21,7 +21,6 @@
 //
 
 
-using System;
 using System.Collections.Generic;
 
 using Autodesk.Revit.DB;
@@ -178,7 +177,7 @@ namespace Revit.SDK.Samples.ComputedSymbolGeometry.CS
          {
             var resultSchema1 = new AnalysisResultSchema("PaintedSolid " + viewName, "Description");
 
-            var displayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(this.RevitDoc, "Real_Color_Surface" + viewName, new AnalysisDisplayColoredSurfaceSettings(), new AnalysisDisplayColorSettings(), new AnalysisDisplayLegendSettings());
+            var displayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(RevitDoc, "Real_Color_Surface" + viewName, new AnalysisDisplayColoredSurfaceSettings(), new AnalysisDisplayColorSettings(), new AnalysisDisplayLegendSettings());
 
             resultSchema1.AnalysisDisplayStyleId = displayStyle.Id;
 

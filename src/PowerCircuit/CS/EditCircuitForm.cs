@@ -21,12 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.PowerCircuit.CS
 {
@@ -68,19 +62,19 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             m_data.EditOption = EditOption.Add;
-            this.Close();           
+            Close();           
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
             m_data.EditOption = EditOption.Remove;
-            this.Close();
+            Close();
         }
 
         private void buttonSelectPanel_Click(object sender, EventArgs e)
         {
             m_data.EditOption = EditOption.SelectPanel;
-            this.Close();
+            Close();
         }
     }
 }

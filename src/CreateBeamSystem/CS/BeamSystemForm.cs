@@ -24,17 +24,12 @@
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Data;
-    using System.Drawing;
-    using System.Text;
     using System.Windows.Forms;
 
     /// <summary>
     /// display beam system to be created and allow user to set its properties
     /// </summary>
-    public partial class BeamSystemForm : System.Windows.Forms.Form
+    public partial class BeamSystemForm : Form
     {
         /// <summary>
         /// buffer of data related to UI

@@ -21,11 +21,6 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
@@ -36,7 +31,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     /// It contains a dialog which provides the options of common information for export
     /// </summary>
-    public partial class ExportWithViewsForm : System.Windows.Forms.Form
+    public partial class ExportWithViewsForm : Form
     {
         // Data class object of ExportDataWithViews
         private ExportDataWithViews m_exportData;
@@ -62,14 +57,14 @@ namespace Revit.SDK.Samples.ImportExport.CS
             radioButtonCurrentView.Checked = true;
 
             // Initialize the title
-            this.Text = m_exportData.Title;
+            Text = m_exportData.Title;
             if (m_exportData.ExportFormat == ExportFormat.SAT)
             {
                 buttonOptions.Visible = false;
             }
             else if (m_exportData.ExportFormat == ExportFormat.Image)
             {
-                this.Hide();
+                Hide();
                 var exportIMGData = m_exportData as ExportIMGData;
                 using (var exportOptionsForm = new ExportIMGOptionsForm(m_exportData))
                 {
@@ -201,7 +196,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="e"></param>
         private void buttonBrowser_Click(object sender, EventArgs e)
         {
-            var fileName = String.Empty;
+            var fileName = string.Empty;
             var filterIndex = -1;
 
             var result = MainData.ShowSaveDialog(m_exportData, ref fileName, ref filterIndex);
@@ -257,8 +252,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     TaskDialog.Show("Export Failed", ex.ToString(), TaskDialogCommonButtons.Ok);
                 }
 
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
         }
 
@@ -266,11 +261,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Check whether the folder specified is valid
         /// </summary>
         /// <returns></returns>
-        private Boolean ValidateExportFolder()
+        private bool ValidateExportFolder()
         {
             var fileNameFull = textBoxSaveAs.Text;
             //If the textBoxSaveAs is empty
-            if (String.IsNullOrEmpty(fileNameFull))
+            if (string.IsNullOrEmpty(fileNameFull))
             {
                 TaskDialog.Show("Information", "Please specify the folder and file name!", TaskDialogCommonButtons.Ok);
                 textBoxSaveAs.Focus();

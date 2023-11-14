@@ -61,34 +61,23 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <summary>
         /// The number of points in the cell.
         /// </summary>
-        public int NumberOfPoints
-        {
-            get { return m_numberOfPoints; }
-        }
+        public int NumberOfPoints => m_numberOfPoints;
 
         /// <summary>
         /// The lower left point of the cell.
         /// </summary>
-        public XYZ LowerLeft
-        {
-            get { return m_lowerLeft; }
-        }
+        public XYZ LowerLeft => m_lowerLeft;
 
         /// <summary>
         /// The upper right point of the cell.
         /// </summary>
-        public XYZ UpperRight
-        {
-            get { return m_upperRight; }
-        }
+        public XYZ UpperRight => m_upperRight;
 
         /// <summary>
         /// The points in the cell.
         /// </summary>
-        public CloudPoint[] PointsBuffer
-        {
-            get { return m_pointsBuffer; }
-        }
+        public CloudPoint[] PointsBuffer => m_pointsBuffer;
+
         #endregion
 
         #region Class Methods

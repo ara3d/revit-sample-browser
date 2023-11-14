@@ -22,11 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.BoundaryConditions.CS
@@ -34,7 +30,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     /// <summary>
     /// UI which display the information and interact with users
     /// </summary>
-    public partial class BoundaryConditionsForm : System.Windows.Forms.Form
+    public partial class BoundaryConditionsForm : Form
     { 
         // an instance of BoundaryConditionsData class which deal with the need data
         private BoundaryConditionsData m_dataBuffer;
@@ -71,7 +67,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
 
                 if (!isCreatedSuccessful)
                 {
-                    this.DialogResult = DialogResult.Retry;
+                    DialogResult = DialogResult.Retry;
                     return;
                 }     
             }
@@ -149,7 +145,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
     }
 }

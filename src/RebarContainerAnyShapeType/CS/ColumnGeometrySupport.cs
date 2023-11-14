@@ -22,11 +22,7 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
@@ -107,7 +103,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
          // get the profile of the transverse reinforcement
          var movedPoints = OffsetPoints(offset);
 
-         var translatedPoints = new List<Autodesk.Revit.DB.XYZ>();
+         var translatedPoints = new List<XYZ>();
          foreach (var point in movedPoints)
          {
             translatedPoints.Add(GeomUtil.OffsetPoint(point, m_drivingVector, curveOffset));
@@ -150,28 +146,28 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
          var movedPoints = OffsetPoints(offset);
          movedPoints.Sort(comparer);
 
-         var normal = new Autodesk.Revit.DB.XYZ(); // the normal parameter
+         var normal = new XYZ(); // the normal parameter
          double rebarOffset = 0; // rebar offset, equal to rebarNumber* spacing 
          // get the normal, start point and reinforcement vertical offset
          switch (location)
          {
             case VerticalRebarLocation.East:   //vertical reinforcement in east 
-               normal = new Autodesk.Revit.DB.XYZ(0, 1, 0);
+               normal = new XYZ(0, 1, 0);
                rebarOffset = m_columnWidth - 2 * offset;
                startPoint = movedPoints[1];
                break;
             case VerticalRebarLocation.North: //vertical reinforcement in north
-               normal = new Autodesk.Revit.DB.XYZ(-1, 0, 0);
+               normal = new XYZ(-1, 0, 0);
                rebarOffset = m_columnLength - 2 * offset;
                startPoint = movedPoints[3];
                break;
             case VerticalRebarLocation.West: //vertical reinforcement in west
-               normal = new Autodesk.Revit.DB.XYZ(0, -1, 0);
+               normal = new XYZ(0, -1, 0);
                rebarOffset = m_columnWidth - 2 * offset;
                startPoint = movedPoints[2];
                break;
             case VerticalRebarLocation.South: //vertical reinforcement in south
-               normal = new Autodesk.Revit.DB.XYZ(1, 0, 0);
+               normal = new XYZ(1, 0, 0);
                rebarOffset = m_columnLength - 2 * offset;
                startPoint = movedPoints[0];
                break;

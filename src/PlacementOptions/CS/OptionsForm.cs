@@ -21,12 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.PlacementOptions.CS
@@ -51,13 +45,7 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <summary>
         /// The option for choosing the face based family instance or sketch based family instance.
         /// </summary>
-        public PlacementOptionsEnum OptionType
-        {
-            get
-            {
-                return m_optionType;
-            }
-        }
+        public PlacementOptionsEnum OptionType => m_optionType;
 
         /// <summary>
         /// Use the PlacementOptionsEnum.FaceBased option or not.

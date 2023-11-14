@@ -21,12 +21,7 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
-using System.Configuration;
-using System.Reflection;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {

@@ -21,13 +21,8 @@
 //
 
 
-using System;
 using System.Data;
-using System.Drawing;
 using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -86,7 +81,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             base.Dispose(disposing);
         }
 
-        private MaterialProperties m_dataBuffer = null;
+        private MaterialProperties m_dataBuffer;
 
         #region Windows Form Designer generated code
         /// <summary>
@@ -284,7 +279,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, System.EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
 
@@ -300,7 +295,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 m_dataBuffer.UpdateMaterial(subTypeComboBox.SelectedValue);
                 m_dataBuffer.SetMaterial();
             }
-            this.Close();
+            Close();
         }
 
 
@@ -350,7 +345,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             {
                 return;
             }
-            var tmp = m_dataBuffer.CurrentMaterial as Autodesk.Revit.DB.Material;
+            var tmp = m_dataBuffer.CurrentMaterial as Material;
             if (null == tmp)
                 return;
 

@@ -296,7 +296,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
 
          brepBuilder.Finish();
 
-         return brepBuilder.GetResult(Podium.ExternalId, persistentIds);
+         return brepBuilder.GetResult(ExternalId, persistentIds);
       }
 
       /// <summary>

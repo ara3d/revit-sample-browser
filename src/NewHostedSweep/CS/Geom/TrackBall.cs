@@ -21,9 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
 using Autodesk.Revit.DB;
 using System.Windows.Forms;
 using Point = System.Drawing.Point;
@@ -71,8 +68,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         public Transform Rotation
         {
-            get { return m_rotation; }
-            set { m_rotation = value; }
+            get => m_rotation;
+            set => m_rotation = value;
         }
 
         /// <summary>
@@ -80,8 +77,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         public double Scale
         {
-            get { return m_scale; }
-            set { m_scale = value; }
+            get => m_scale;
+            set => m_scale = value;
         }
 
         /// <summary>

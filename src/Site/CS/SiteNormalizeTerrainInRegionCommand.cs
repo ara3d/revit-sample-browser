@@ -20,10 +20,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
@@ -45,7 +42,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="message"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             NormalizeSubregionAndPoints(commandData.Application.ActiveUIDocument);
 
@@ -60,23 +57,23 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="uiDoc">The document.</param>
         private void NormalizeSubregionAndPoints(UIDocument uiDoc)
         {
-            Document doc = uiDoc.Document;
+            var doc = uiDoc.Document;
 
             // Pick subregion
-            TopographySurface subregion = SiteUIUtils.PickSubregion(uiDoc);
-            TopographySurface toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
-            IList<XYZ> points = SiteEditingUtils.GetPointsFromSubregionExact(subregion);
+            var subregion = SiteUIUtils.PickSubregion(uiDoc);
+            var toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
+            var points = SiteEditingUtils.GetPointsFromSubregionExact(subregion);
 
             // Get elevation of all points on the toposurface
-            IList<XYZ> allPoints = toposurface.GetPoints();
-            double elevation = SiteEditingUtils.GetAverageElevation(allPoints);
+            var allPoints = toposurface.GetPoints();
+            var elevation = SiteEditingUtils.GetAverageElevation(allPoints);
 
             // Edit scope for all changes
-            using (TopographyEditScope editScope = new TopographyEditScope(doc, "Edit TS"))
+            using (var editScope = new TopographyEditScope(doc, "Edit TS"))
             {
                 editScope.Start(toposurface.Id);
 
-                using (Transaction t = new Transaction(doc, "Normalize terrain"))
+                using (var t = new Transaction(doc, "Normalize terrain"))
                 {
                     t.Start();
 

@@ -19,11 +19,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
+
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Truss.CS
@@ -53,7 +49,7 @@ namespace Revit.SDK.Samples.Truss.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
             ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             var trussForm = new TrussForm(commandData);
@@ -63,7 +59,7 @@ namespace Revit.SDK.Samples.Truss.CS
                 trussForm.ShowDialog();
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         #endregion

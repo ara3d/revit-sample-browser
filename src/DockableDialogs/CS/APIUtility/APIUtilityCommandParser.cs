@@ -20,32 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Net;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using Microsoft.Win32;
-using System.Windows.Navigation;
-using System.Windows.Controls.Primitives;
-using System.Reflection;
-using System.Drawing;
-using System.Configuration;
-using System.Collections.Generic;
-using Autodesk.Revit.DB.Macros;
-using Autodesk.Revit.UI.Macros;
-using System.Collections.Specialized;
-
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
    public partial class APIUtility

@@ -68,7 +68,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
                   return Result.Failed;
             }
 
-            using (var transaction = new Autodesk.Revit.DB.Transaction(dbDocument, "UpdateExternallyTaggedBRep"))
+            using (var transaction = new Transaction(dbDocument, "UpdateExternallyTaggedBRep"))
             {
                transaction.Start();
 

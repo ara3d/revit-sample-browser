@@ -13,7 +13,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Dictionary contains enum and string map
         /// </summary>
-        Dictionary<object, string> m_map = null;
+        Dictionary<object, string> m_map;
         #endregion
 
         #region Properties
@@ -83,7 +83,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
         {
             var enumValue = base.ConvertTo(context, culture, value, destinationType);
-            var enumObject = Enum.Parse(this.EnumType, enumValue.ToString());
+            var enumObject = Enum.Parse(EnumType, enumValue.ToString());
             return m_map[enumObject];
         } 
         #endregion
@@ -106,13 +106,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Gets the enum-string map
         /// </summary>
-        protected override Dictionary<object, string> EnumMap
-        {
-            get
-            {
-                return RevitStartInfo.BuildingTypeMap;
-            }
-        }
+        protected override Dictionary<object, string> EnumMap => RevitStartInfo.BuildingTypeMap;
+
         #endregion
     };
 
@@ -133,13 +128,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Gets the enum-string map
         /// </summary>
-        protected override Dictionary<object, string> EnumMap
-        {
-            get
-            {
-                return RevitStartInfo.ExportComplexityMap;
-            }
-        }
+        protected override Dictionary<object, string> EnumMap => RevitStartInfo.ExportComplexityMap;
+
         #endregion
     };
 
@@ -160,13 +150,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Gets the enum-string map
         /// </summary>
-        protected override Dictionary<object, string> EnumMap
-        {
-            get
-            {
-                return RevitStartInfo.ServiceTypeMap;
-            }
-        }
+        protected override Dictionary<object, string> EnumMap => RevitStartInfo.ServiceTypeMap;
+
         #endregion
     };
 
@@ -187,13 +172,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Gets the enum-string map
         /// </summary>
-        protected override Dictionary<object, string> EnumMap
-        {
-            get
-            {
-                return RevitStartInfo.HVACLoadLoadsReportTypeMap;
-            }
-        }
+        protected override Dictionary<object, string> EnumMap => RevitStartInfo.HVACLoadLoadsReportTypeMap;
+
         #endregion
     };
 
@@ -214,13 +194,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Gets the enum-string map
         /// </summary>
-        protected override Dictionary<object, string> EnumMap
-        {
-            get
-            {
-                return RevitStartInfo.HVACLoadConstructionClassMap;
-            }
-        }
+        protected override Dictionary<object, string> EnumMap => RevitStartInfo.HVACLoadConstructionClassMap;
+
         #endregion
     };
     

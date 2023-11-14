@@ -20,8 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
-using System.Linq;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -43,14 +41,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
       public bool Combine
       {
-         get
-         {
-            return m_combine;
-         }
-         set
-         {
-            m_combine = value;
-         }
+         get => m_combine;
+         set => m_combine = value;
       }
 
       #endregion

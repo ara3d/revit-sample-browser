@@ -22,16 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 
@@ -40,7 +32,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
    /// <summary>
    /// Interaction logic for DefaultElementTypes.xaml
    /// </summary>
-   public partial class DefaultElementTypes : Page, Autodesk.Revit.UI.IDockablePaneProvider
+   public partial class DefaultElementTypes : Page, IDockablePaneProvider
    {
       public static DockablePaneId PaneId = new DockablePaneId(new Guid("{B6579F42-2F4A-4552-92EF-24B3A897757D}"));
 
@@ -49,7 +41,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
          InitializeComponent();
 
          _handler = new DefaultElementTypeCommandHandler();
-         _event = Autodesk.Revit.UI.ExternalEvent.Create(_handler);
+         _event = ExternalEvent.Create(_handler);
 
          //TODO: add enums that validators have been correctly set up to the array
          //this will be removed when all enums have been done
@@ -171,17 +163,17 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
 
       #region IDockablePaneProvider Members
 
-      public void SetupDockablePane(Autodesk.Revit.UI.DockablePaneProviderData data)
+      public void SetupDockablePane(DockablePaneProviderData data)
       {
          data.FrameworkElement = this as FrameworkElement;
 
-         data.InitialState = new Autodesk.Revit.UI.DockablePaneState();
-         data.InitialState.DockPosition = Autodesk.Revit.UI.DockPosition.Top;
+         data.InitialState = new DockablePaneState();
+         data.InitialState.DockPosition = DockPosition.Top;
       }
 
       #endregion
 
-      private ExternalEvent _event = null;
+      private ExternalEvent _event;
       private DefaultElementTypeCommandHandler _handler;
       private Document _document;
       private IList<ElementTypeGroup> _finishedTypeGroup = new List<ElementTypeGroup>();
@@ -219,7 +211,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
       /// <summary>
       /// The name.
       /// </summary>
-      public String Name
+      public string Name
       {
          get;
          set;
@@ -257,7 +249,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
       /// <summary>
       /// The type group name.
       /// </summary>
-      public String ElementTypeGroupName
+      public string ElementTypeGroupName
       {
          get;
          set;
@@ -301,7 +293,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
       }
 
 
-      public void Execute(Autodesk.Revit.UI.UIApplication revitApp)
+      public void Execute(UIApplication revitApp)
       {
          using (var tran = new Transaction(revitApp.ActiveUIDocument.Document, "Set Default element type to " + _defaultTypeId.ToString()))
          {

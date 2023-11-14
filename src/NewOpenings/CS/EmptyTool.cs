@@ -21,10 +21,6 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
     /// <summary>

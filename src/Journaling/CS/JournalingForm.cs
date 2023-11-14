@@ -22,11 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
@@ -106,8 +101,8 @@ namespace Revit.SDK.Samples.Journaling.CS
             m_dataBuffer.SetNecessaryData(startPoint, endPoint, level, type);
 
             // Set result information and close the form
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
 
@@ -117,8 +112,8 @@ namespace Revit.SDK.Samples.Journaling.CS
         private void cancelButton_Click(object sender, EventArgs e)
         {
             // Only set result to be cancel and close the form
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

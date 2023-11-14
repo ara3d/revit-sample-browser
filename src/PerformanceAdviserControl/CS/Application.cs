@@ -20,12 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
 using System.Windows.Media.Imaging;
-using Autodesk.Revit.DB;
 
 
 namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
@@ -33,7 +29,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
    /// <summary>
    /// Implements the Revit add-in interface IExternalApplication,
    /// </summary>
-    public class Application : Autodesk.Revit.UI.IExternalApplication
+    public class Application : IExternalApplication
     {
          #region Constructor
        /// <summary>
@@ -67,11 +63,11 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// (m_FlippedDoorApiRule) with PerformanceAdviser.
         /// 
         /// </returns>
-        public Autodesk.Revit.UI.Result OnStartup(Autodesk.Revit.UI.UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
            #region Add command button
            var rp = application.CreateRibbonPanel("PerformanceAdviserControl");
-           var currentAssembly = System.Reflection.Assembly.GetAssembly(this.GetType()).Location;
+           var currentAssembly = System.Reflection.Assembly.GetAssembly(GetType()).Location;
            var pb = rp.AddItem(new PushButtonData("Performance Adviser", "Performance Adviser", currentAssembly, "Revit.SDK.Samples.PerformanceAdviserControl.CS.UICommand")) as PushButton;
            var uriImage = new Uri(System.IO.Path.GetDirectoryName(currentAssembly) + "\\Button32.png");
            var largeImage = new BitmapImage(uriImage);
@@ -83,7 +79,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
            Autodesk.Revit.DB.PerformanceAdviser.GetPerformanceAdviser().AddRule(m_FlippedDoorApiRule.getRuleId(), m_FlippedDoorApiRule);
            #endregion
 
-           return Autodesk.Revit.UI.Result.Succeeded;
+           return Result.Succeeded;
 
         }
         /// <summary>
@@ -102,14 +98,14 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// This method also unregisters a the IPerformanceAdviserRule-implementing class
         /// (m_FlippedDoorApiRule) with PerformanceAdviser.
         /// </returns>
-        public Autodesk.Revit.UI.Result OnShutdown(Autodesk.Revit.UI.UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
            #region Unregister API rule
            Autodesk.Revit.DB.PerformanceAdviser.GetPerformanceAdviser().DeleteRule(m_FlippedDoorApiRule.getRuleId());
            m_FlippedDoorApiRule = null;
            #endregion
 
-           return Autodesk.Revit.UI.Result.Succeeded;
+           return Result.Succeeded;
         }
 #endregion
 

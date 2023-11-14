@@ -22,13 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using System.Xml.Serialization;
-using System.Runtime.Serialization;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
@@ -84,7 +81,7 @@ namespace SchemaWrapperTools
               if (currentField.ValueType == typeof(Entity))
               {
                  var subSchema = Schema.Lookup(currentField.SubSchemaGUID);
-                  swSub = SchemaWrapper.FromSchema(subSchema);  
+                  swSub = FromSchema(subSchema);  
               }
               //Invoke the "AddField" method with the generic parameters from the current field.
               genericAddFieldMethodInstantiated.Invoke(swReturn, new object[] { currentField.FieldName, currentField.GetSpecTypeId(), swSub });  
@@ -149,7 +146,7 @@ namespace SchemaWrapperTools
 
       private SchemaWrapper(Schema schema) : this(schema.GUID, schema.ReadAccessLevel, schema.WriteAccessLevel, schema.VendorId, schema.ApplicationGUID.ToString(), schema.SchemaName, schema.Documentation)
       {
-         this.SetSchema(schema);
+         SetSchema(schema);
       }
 
       #endregion
@@ -259,12 +256,12 @@ namespace SchemaWrapperTools
          }
 
          //Set all the top level data in the schema we are generating.
-         m_SchemaBuilder.SetReadAccessLevel(this.Data.ReadAccess);
-         m_SchemaBuilder.SetWriteAccessLevel(this.Data.WriteAccess);
-         m_SchemaBuilder.SetVendorId(this.Data.VendorId);
-         m_SchemaBuilder.SetApplicationGUID(new Guid(this.Data.ApplicationId));
-         m_SchemaBuilder.SetDocumentation(this.Data.Documentation);
-         m_SchemaBuilder.SetSchemaName(this.Data.Name);
+         m_SchemaBuilder.SetReadAccessLevel(Data.ReadAccess);
+         m_SchemaBuilder.SetWriteAccessLevel(Data.WriteAccess);
+         m_SchemaBuilder.SetVendorId(Data.VendorId);
+         m_SchemaBuilder.SetApplicationGUID(new Guid(Data.ApplicationId));
+         m_SchemaBuilder.SetDocumentation(Data.Documentation);
+         m_SchemaBuilder.SetSchemaName(Data.Name);
 
 
          //Actually finish creating the Autodesk.Revit.DB.ExtensibleStorage.Schema.
@@ -288,8 +285,8 @@ namespace SchemaWrapperTools
       public override string ToString()
       {
           var strBuilder = new StringBuilder();
-          strBuilder.AppendLine("--Start Schema--  " + " Name: " + this.Data.Name + ", Description: " + this.Data.Documentation + ", Id: " + this.Data.SchemaId + ", ReadAccess: " + this.Data.ReadAccess.ToString() + ", WriteAccess: " + this.Data.WriteAccess.ToString());
-          foreach (var fd in this.Data.DataList)
+          strBuilder.AppendLine("--Start Schema--  " + " Name: " + Data.Name + ", Description: " + Data.Documentation + ", Id: " + Data.SchemaId + ", ReadAccess: " + Data.ReadAccess.ToString() + ", WriteAccess: " + Data.WriteAccess.ToString());
+          foreach (var fd in Data.DataList)
           {
               strBuilder.AppendLine(fd.ToString());
           }
@@ -334,7 +331,7 @@ namespace SchemaWrapperTools
              var pmodifiers = new ParameterModifier[0]; //a Dummy parameter needed for GetMethod() call, empty
 
              //Get the method.
-             var getFieldDataAsStringMethod = typeof(SchemaWrapper).GetMethod("GetFieldDataAsString", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod, System.Type.DefaultBinder, new Type[] { typeof(Field), typeof(Entity), typeof(StringBuilder) }, pmodifiers);
+             var getFieldDataAsStringMethod = typeof(SchemaWrapper).GetMethod("GetFieldDataAsString", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod, Type.DefaultBinder, new Type[] { typeof(Field), typeof(Entity), typeof(StringBuilder) }, pmodifiers);
              
              //Determine if our field type is a simple field, an array field, or a map field.  Then, create an array
              //of type parameters corresponding to the key and value types of the field.
@@ -465,7 +462,7 @@ namespace SchemaWrapperTools
       /// </summary>
       private void SetRevitAssembly()
       {
-         m_Assembly = System.Reflection.Assembly.GetAssembly(typeof(XYZ));
+         m_Assembly = Assembly.GetAssembly(typeof(XYZ));
       }
 
       #endregion
@@ -490,8 +487,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public SchemaDataWrapper Data
       {
-          get { return m_SchemaDataWrapper; }
-          set { m_SchemaDataWrapper = value; }
+          get => m_SchemaDataWrapper;
+          set => m_SchemaDataWrapper = value;
       }
 
       /// <summary>
@@ -522,7 +519,7 @@ namespace SchemaWrapperTools
       private SchemaBuilder m_SchemaBuilder;
 
       [NonSerialized]
-      private System.Reflection.Assembly m_Assembly;
+      private Assembly m_Assembly;
 
       [NonSerialized]
       private string m_xmlPath;

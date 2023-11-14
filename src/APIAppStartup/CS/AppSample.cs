@@ -20,17 +20,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace APIAppStartup
 {
@@ -41,13 +31,13 @@ namespace APIAppStartup
    {
       #region IExternalApplication Members
 
-      public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+      public Result OnShutdown(UIControlledApplication application)
       {
          TaskDialog.Show("Revit", "Quit External Application!");
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
-       public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+       public Result OnStartup(UIControlledApplication application)
       {
          var version = application.ControlledApplication.VersionName;
 
@@ -57,7 +47,7 @@ namespace APIAppStartup
          System.Threading.Thread.Sleep(10000);
          SplashWindow.StopSplash();
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       #endregion

@@ -20,10 +20,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
@@ -44,7 +41,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="message"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             DeleteSubregionAndPoints(commandData.Application.ActiveUIDocument);
 
@@ -57,27 +54,27 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="uiDoc">The document.</param>
         public void DeleteSubregionAndPoints(UIDocument uiDoc)
         {
-            Document doc = uiDoc.Document;
+            var doc = uiDoc.Document;
 
             // Select subregion
-            TopographySurface subregion = SiteUIUtils.PickSubregion(uiDoc);
-            TopographySurface toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
-            IList<XYZ> points = SiteEditingUtils.GetNonBoundaryPoints(subregion);
+            var subregion = SiteUIUtils.PickSubregion(uiDoc);
+            var toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
+            var points = SiteEditingUtils.GetNonBoundaryPoints(subregion);
 
             // All changes are added to one transaction group - will create one undo item
-            using (TransactionGroup deleteGroup = new TransactionGroup(doc, "Delete region"))
+            using (var deleteGroup = new TransactionGroup(doc, "Delete region"))
             {
                 deleteGroup.Start();
 
                 // Edit scope to delete points- if there are points in the region
                 if (points.Count > 0)
                 {
-                    using (TopographyEditScope editScope = new TopographyEditScope(doc, "Edit TS"))
+                    using (var editScope = new TopographyEditScope(doc, "Edit TS"))
                     {
                         editScope.Start(toposurface.Id);
 
                         // Transaction for point deletion
-                        using (Transaction t = new Transaction(doc, "Delete points"))
+                        using (var t = new Transaction(doc, "Delete points"))
                         {
                             t.Start();
                             toposurface.DeletePoints(points);
@@ -90,7 +87,7 @@ namespace Revit.SDK.Samples.Site.CS
                 }
 
                 // Transaction to delete subregion
-                using (Transaction t2 = new Transaction(doc, "Delete subregion"))
+                using (var t2 = new Transaction(doc, "Delete subregion"))
                 {
                     t2.Start();
                     doc.Delete(subregion.Id);

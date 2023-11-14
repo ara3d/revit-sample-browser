@@ -22,11 +22,7 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Diagnostics;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB;
 
@@ -58,12 +54,12 @@ namespace Revit.SDK.Samples.AutoStamp.CS
         /// <summary>
         /// Current assembly path
         /// </summary>
-        String m_assemblyPath;
+        string m_assemblyPath;
 
         /// <summary>
         /// Reserves the id of TextNote created by ViewPrinting and delete it in ViewPrinted event.
         /// </summary>
-        Autodesk.Revit.DB.ElementId m_newTextNoteId; 
+        ElementId m_newTextNoteId; 
         #endregion
 
 
@@ -107,7 +103,7 @@ namespace Revit.SDK.Samples.AutoStamp.CS
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments of ViewPrinting event.</param>
-        public void AppViewPrinting(object sender, Autodesk.Revit.DB.Events.ViewPrintingEventArgs e)
+        public void AppViewPrinting(object sender, ViewPrintingEventArgs e)
         {
             // Setup log file if it still is empty
             if (null == m_eventsLog)
@@ -116,7 +112,7 @@ namespace Revit.SDK.Samples.AutoStamp.CS
             } 
             //
             // header information
-            Trace.WriteLine(System.Environment.NewLine + "View Print Start: ------------------------");
+            Trace.WriteLine(Environment.NewLine + "View Print Start: ------------------------");
             //
             // Dump the events arguments
             DumpEventArguments(e);
@@ -125,8 +121,8 @@ namespace Revit.SDK.Samples.AutoStamp.CS
             var failureOccured = false; // Reserves whether failure occurred when create TextNote
             try
             {
-                var strText = String.Format("Printer Name: {0}{1}User Name: {2}",
-                    e.Document.PrintManager.PrinterName, System.Environment.NewLine, System.Environment.UserName);
+                var strText = string.Format("Printer Name: {0}{1}User Name: {2}",
+                    e.Document.PrintManager.PrinterName, Environment.NewLine, Environment.UserName);
                 //
                 // Use non-debug compile symbol to write constant text note
 #if !(Debug || DEBUG)
@@ -153,7 +149,7 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                failureOccured = true;
                 Trace.WriteLine("Exception occurred when creating TextNote, print will be canceled, ex: " + ex.Message);
@@ -174,10 +170,10 @@ namespace Revit.SDK.Samples.AutoStamp.CS
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments of ViewPrinted event.</param>
-        public void AppViewPrinted(object sender, Autodesk.Revit.DB.Events.ViewPrintedEventArgs e)
+        public void AppViewPrinted(object sender, ViewPrintedEventArgs e)
         {
             // header information
-            Trace.WriteLine(System.Environment.NewLine + "View Print End: -------");
+            Trace.WriteLine(Environment.NewLine + "View Print End: -------");
             //
             // Dump the events arguments 
             DumpEventArguments(e);
@@ -266,9 +262,9 @@ namespace Revit.SDK.Samples.AutoStamp.CS
         /// </summary>
         /// <param name="view">View element to be dumped to log files.</param>
         /// <param name="prefix">Prefix mark for each line dumped to log files.</param>
-        private static void DumpViewInfo(View view, String prefix)
+        private static void DumpViewInfo(View view, string prefix)
         {
-            Trace.WriteLine(String.Format("{0} ViewName: {1}, ViewType: {2}", 
+            Trace.WriteLine(string.Format("{0} ViewName: {1}, ViewType: {2}", 
                 prefix, view.Name, view.ViewType));
         }
         #endregion

@@ -21,18 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
@@ -44,7 +33,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       public DockingSetupDialog()
       {
          InitializeComponent();
-         this.tb_newGuid.Text = Globals.sm_UserDockablePaneId.Guid.ToString();
+         tb_newGuid.Text = Globals.sm_UserDockablePaneId.Guid.ToString();
       }
 
       /// <summary>
@@ -53,16 +42,16 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       /// </summary>
       private void btn_ok_Click(object sender, RoutedEventArgs e)
       {
-         int.TryParse(this.tb_left.Text, out m_left);
-         int.TryParse(this.tb_right.Text, out m_right);
-         int.TryParse(this.tb_top.Text, out m_top);
-         int.TryParse(this.tb_bottom.Text, out m_bottom);
+         int.TryParse(tb_left.Text, out m_left);
+         int.TryParse(tb_right.Text, out m_right);
+         int.TryParse(tb_top.Text, out m_top);
+         int.TryParse(tb_bottom.Text, out m_bottom);
 
-         if (!string.IsNullOrEmpty(this.tb_newGuid.Text))
-            m_mainPageGuid = this.tb_newGuid.Text;
+         if (!string.IsNullOrEmpty(tb_newGuid.Text))
+            m_mainPageGuid = tb_newGuid.Text;
 
-         if (!string.IsNullOrEmpty(this.tb_targetGuid.Text))
-            m_targetGuidString = this.tb_targetGuid.Text;
+         if (!string.IsNullOrEmpty(tb_targetGuid.Text))
+            m_targetGuidString = tb_targetGuid.Text;
 
          else if (rb_ElementView.IsChecked == true)
             m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.ElementView.Guid.ToString();
@@ -73,13 +62,13 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
          else if (rb_HostByLinkNavigator.IsChecked == true)
             m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid.ToString();
 
-         else if (this.rb_ProjectBrowser.IsChecked == true)
+         else if (rb_ProjectBrowser.IsChecked == true)
             m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid.ToString();
 
-         else if (this.rb_PropertiesPalette.IsChecked == true)
+         else if (rb_PropertiesPalette.IsChecked == true)
             m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid.ToString();
 
-         else if (this.rb_RebarBrowser.IsChecked == true)
+         else if (rb_RebarBrowser.IsChecked == true)
             m_targetGuidString = Autodesk.Revit.UI.DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid.ToString();
 
          else
@@ -98,8 +87,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
          else
             m_dockPosition = Autodesk.Revit.UI.DockPosition.Floating;
 
-         this.DialogResult = true;
-         this.Close();
+         DialogResult = true;
+         Close();
       }
 
       private int m_left;
@@ -110,10 +99,10 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       private string m_mainPageGuid;
       private  Autodesk.Revit.UI.DockPosition m_dockPosition;
 
-      public int FloatLeft { get { return m_left; } }
-      public int FloatRight { get { return m_right; } }
-      public int FloatTop { get { return m_top; } }
-      public int FloatBottom { get { return m_bottom; } }
+      public int FloatLeft => m_left;
+      public int FloatRight => m_right;
+      public int FloatTop => m_top;
+      public int FloatBottom => m_bottom;
 
       /// <summary>
       /// The guid of the main docking page.
@@ -167,8 +156,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
          }
       }
 
-      public Autodesk.Revit.UI.DockPosition DockPosition { get { return m_dockPosition; } }
-     
+      public Autodesk.Revit.UI.DockPosition DockPosition => m_dockPosition;
+
       private void SetFloatingCoordsStates(bool enabled)
       {
          tb_right.IsEnabled = enabled;

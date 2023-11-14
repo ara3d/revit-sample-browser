@@ -22,11 +22,7 @@
 
 using System;
 using System.Linq;
-using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -81,10 +77,10 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
                 // Set the view which display the solid active
                 commandData.Application.ActiveUIDocument.ActiveView = 
                    (((new FilteredElementCollector(document).
-                   OfClass(typeof(Autodesk.Revit.DB.View))).
-                   Cast<Autodesk.Revit.DB.View>()).
+                   OfClass(typeof(View))).
+                   Cast<View>()).
                    Where(e => e.Name == "CSGTree")).
-                   First<Autodesk.Revit.DB.View>();
+                   First<View>();
 
                 return Result.Succeeded;
             }
@@ -104,17 +100,17 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
         {
            var resultSolids = new List<Solid>();
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedBox(Autodesk.Revit.DB.XYZ.Zero, 25));
+           resultSolids.Add(geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25));
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedSphere(Autodesk.Revit.DB.XYZ.Zero, 20));
+           resultSolids.Add(geometrycreation.CreateCenterbasedSphere(XYZ.Zero, 20));
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(Autodesk.Revit.DB.XYZ.Zero, 5, 40, 
+           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, 
               GeometryCreation.CylinderDirection.BasisX));
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(Autodesk.Revit.DB.XYZ.Zero, 5, 40, 
+           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, 
               GeometryCreation.CylinderDirection.BasisY));
 
-           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(Autodesk.Revit.DB.XYZ.Zero, 5, 40, 
+           resultSolids.Add(geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, 
               GeometryCreation.CylinderDirection.BasisZ));
 
            return resultSolids;

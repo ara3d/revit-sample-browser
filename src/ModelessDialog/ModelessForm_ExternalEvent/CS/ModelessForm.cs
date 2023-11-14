@@ -79,13 +79,13 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
       ///
       private void EnableCommands(bool status)
       {
-         foreach (Control ctrl in this.Controls)
+         foreach (Control ctrl in Controls)
          {
             ctrl.Enabled = status;
          }
          if (!status)
          {
-            this.btnExit.Enabled = true;
+            btnExit.Enabled = true;
          }
       }
 

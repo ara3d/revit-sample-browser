@@ -20,12 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
-
 using Autodesk.Revit.DB.Mechanical;
 
 namespace Revit.SDK.Samples.AddSpaceAndZone.CS
@@ -47,18 +42,12 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             : base(space.Name)
         {
             m_space = space;
-            base.Text = space.Name;
+            Text = space.Name;
         }
 
         /// <summary>
         /// Get the Zone element in the ZoneNode.
         /// </summary>
-        public Space Space
-        {
-            get
-            {
-                return m_space;
-            }
-        }
+        public Space Space => m_space;
     }
 }

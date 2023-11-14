@@ -23,12 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
-using System.Text;
 using System.Windows.Forms;
 using System.Linq;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -49,47 +45,32 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         ArrayList m_lineCollection;   // Store the lines of all the beams
         WallType m_selectedWallType;            // Store the selected wall type
         Level m_level;                          // Store the level which wall create on
-        Boolean m_isStructural;                 // Indicate whether create structural walls
-        String m_errorInformation;              // Store the error information
-        const Double PRECISION = 0.0000000001;  // Define a precision of double data
+        bool m_isStructural;                 // Indicate whether create structural walls
+        string m_errorInformation;              // Store the error information
+        const double PRECISION = 0.0000000001;  // Define a precision of double data
 
 
         // Properties
         /// <summary>
         /// Inform all the wall types can be created in current document
         /// </summary>
-        public IList<WallType> WallTypes
-        {
-            get
-            {
-                return m_wallTypeCollection;
-            }
-        }
+        public IList<WallType> WallTypes => m_wallTypeCollection;
 
         /// <summary>
         /// Inform the wall type selected by the user
         /// </summary>
-        public Object SelectedWallType
+        public object SelectedWallType
         {
-            set
-            {
-                m_selectedWallType = value as WallType;
-            }
+            set => m_selectedWallType = value as WallType;
         }
 
         /// <summary>
         /// Inform whether the user want to create structual or architecture walls
         /// </summary>
-        public Boolean IsSturctual
+        public bool IsSturctual
         {
-            get
-            {
-                return m_isStructural;
-            }
-            set
-            {
-                m_isStructural = value;
-            }
+            get => m_isStructural;
+            set => m_isStructural = value;
         }
 
         // Methods
@@ -104,24 +85,8 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             m_isStructural = true;
         }
         #region IExternalCommand Members Implementation
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-                                                    ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+                                                    ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
             var project = revit.ActiveUIDocument;
@@ -130,14 +95,14 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             if (!PrepareData(project))
             {
                 message = m_errorInformation;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             // Check whether the selected beams can make a a vertical profile
             if (!IsVerticalProfile())
             {
                 message = m_errorInformation;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             // Show the dialog for the user select the wall style
@@ -145,7 +110,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             {
                 if (DialogResult.OK != displayForm.ShowDialog())
                 {
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
             }
 
@@ -153,11 +118,11 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             if (!BeginCreate(project.Document))
             {
                 message = m_errorInformation;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             // If everything goes right, return succeeded.
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion IExternalCommand Members Implementation
 
@@ -166,11 +131,11 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// </summary>
         /// <param name="project"> A reference of current document</param>
         /// <returns>true if no error happens; otherwise, false.</returns>
-        Boolean BeginCreate(Autodesk.Revit.DB.Document project)
+        bool BeginCreate(Document project)
         {
             //CurveArray curveArray = new CurveArray();   // store the curves used to create wall
             var curveArray = new List<Curve>();
-            Autodesk.Revit.DB.XYZ point;      // used to store the end point of the curve temporarily
+            XYZ point;      // used to store the end point of the curve temporarily
             var curve = m_lineCollection[0] as Curve;
             curveArray.Add(curve);
             point = curve.GetEndPoint(1);
@@ -259,7 +224,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
       /// </summary>
       /// <param name="project">A reference of current document</param>
       /// <returns>true if no error happens; otherwise, false.</returns>
-      Boolean PrepareData(Autodesk.Revit.UI.UIDocument project)
+      bool PrepareData(UIDocument project)
       {
          // Search all the wall types in the Revit
          var filteredElementCollector = new FilteredElementCollector(project.Document);
@@ -273,7 +238,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             selection.Insert(project.Document.GetElement(elementId));
          }
 
-         foreach (Autodesk.Revit.DB.Element e in selection)
+         foreach (Element e in selection)
          {
             var m = e as FamilyInstance;
 
@@ -306,7 +271,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
       /// Check whether the selected beams can make a a vertical profile.
       /// </summary>
       /// <returns>true if selected beams create a vertical profile; otherwise, false.</returns>
-      Boolean IsVerticalProfile()
+      bool IsVerticalProfile()
         {
             // First check whether all the beams are in a same vertical plane
             if (!IsInVerticalPlane())
@@ -331,7 +296,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// <param name="first"> The first point</param>
         /// <param name="second"> The second point</param>
         /// <returns>true if two points are the same; otherwise, false</returns>
-        Boolean EqualPoint(Autodesk.Revit.DB.XYZ first, Autodesk.Revit.DB.XYZ second)
+        bool EqualPoint(XYZ first, XYZ second)
         {
             if ((-PRECISION <= first.X - second.X && PRECISION >= first.X - second.X)
                 && (-PRECISION <= first.Y - second.Y && PRECISION >= first.Y - second.Y)
@@ -348,7 +313,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// <param name="first">The first double data</param>
         /// <param name="second">The second double data</param>
         /// <returns>true if two double data are the same; otherwise, false</returns>
-        Boolean EqualDouble(Double first, Double second)
+        bool EqualDouble(double first, double second)
         {
             if (-PRECISION <= first - second && PRECISION >= first - second)
             {
@@ -361,12 +326,12 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// Check whether all the beams are in a same vertical plane
         /// </summary>
         /// <returns>true if they are in same vertical plane; otherwise, false</returns>
-        Boolean IsInVerticalPlane()
+        bool IsInVerticalPlane()
         {
-            var startPoint = new Autodesk.Revit.DB.XYZ();
-            var endPoint = new Autodesk.Revit.DB.XYZ();
+            var startPoint = new XYZ();
+            var endPoint = new XYZ();
             var sign = 0;               // used as a symbol,
-            Double slope = 0;           // record slope of the lines' projection on X-Y plane
+            double slope = 0;           // record slope of the lines' projection on X-Y plane
 
             // When all the beams in the X-Z plane or Y-Z plane, the deal is especial
             // So I use 3 ways to judge whether all the beams are in same vertical plane
@@ -426,14 +391,14 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// Check whether a closed profile can be created by all the beams
         /// </summary>
         /// <returns>true if one profile found; otherwise, false</returns>
-        Boolean CanCreateProfile()
+        bool CanCreateProfile()
         {
             // Only allow all the beams compose a close profile.
             // As we all know, a close profile is composed by borders and points,
             // and the number of borders should be equal to points'.
             // So, the judgement use this way. 
-            var startPoint = new Autodesk.Revit.DB.XYZ();
-            var endPoint = new Autodesk.Revit.DB.XYZ();
+            var startPoint = new XYZ();
+            var endPoint = new XYZ();
             Curve curve = null;
             var pointArray = new ArrayList();
             bool hasStartpoint;      // indicate whether start point is in the array
@@ -458,7 +423,7 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
                 // Judge whether the points of this curve have been counted.
                 foreach (var o in pointArray)
                 {
-                    var point = (Autodesk.Revit.DB.XYZ)o;
+                    var point = (XYZ)o;
                     if (EqualPoint(startPoint, point))
                     {
                         hasStartpoint = true;
@@ -492,11 +457,11 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// Find the offset from the elevation of the lowest point to m_level's elevation 
         /// </summary>
         /// <returns> The length of the offset </returns>
-        Double FindBaseOffset()
+        double FindBaseOffset()
         {
             // Initialize the data.
-            Double baseOffset = 0;  // the offset from the m_level's elevation
-            Double lowestElevation = 0; // the elevation of the lowest point
+            double baseOffset = 0;  // the offset from the m_level's elevation
+            double lowestElevation = 0; // the elevation of the lowest point
             var curve = m_lineCollection[0] as Curve;
             lowestElevation = curve.GetEndPoint(0).Z;
 
@@ -522,11 +487,11 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
         /// Find the offset from the elevation of the highest point to m_level's elevation
         /// </summary>
         /// <returns>The length of the offset</returns>
-        Double FindTopOffset()
+        double FindTopOffset()
         {
             // Initialize the data
-            Double topOffset = 0;   // the offset from the m_level's elevation
-            Double highestElevation = 0;    // the elevation of the highest point
+            double topOffset = 0;   // the offset from the m_level's elevation
+            double highestElevation = 0;    // the elevation of the highest point
             var curve = m_lineCollection[0] as Curve;
             highestElevation = curve.GetEndPoint(0).Z;
 

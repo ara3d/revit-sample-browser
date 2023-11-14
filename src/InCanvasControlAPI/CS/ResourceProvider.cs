@@ -54,12 +54,12 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// <summary>
       /// Path to marker's bitmap for unselected issues
       /// </summary>
-      public string IssueImage { get => issueImage; }
+      public string IssueImage => issueImage;
 
       /// <summary>
       /// Path to marker's bitmap for selected issues
       /// </summary>
-      public string SelectedIssueImage { get => selectedIssueImage; }
+      public string SelectedIssueImage => selectedIssueImage;
 
       #endregion
 

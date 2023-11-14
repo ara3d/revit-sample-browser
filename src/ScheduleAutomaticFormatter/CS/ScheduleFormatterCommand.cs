@@ -21,9 +21,6 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
@@ -47,7 +44,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// <param name="message"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var viewSchedule = commandData.View as ViewSchedule;
 
@@ -113,7 +110,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             {
                 var builder = new SchemaBuilder(schemaId);
                 builder.SetSchemaName("ScheduleFormatterFlag");
-                builder.AddSimpleField("Formatted", typeof(Boolean));
+                builder.AddSimpleField("Formatted", typeof(bool));
                 schema = builder.Finish();
             }
 
@@ -143,6 +140,6 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// The formatter used by the command when updating the schedule.
         /// Created upon first use. 
         /// </summary>
-        private ScheduleFormatter theFormatter = null;
+        private ScheduleFormatter theFormatter;
     }
 }

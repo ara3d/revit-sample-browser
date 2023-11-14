@@ -21,11 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -127,7 +123,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
             transaction.Start();
             var start = new XYZ(0, 0, 0);
             var end = new XYZ(50, 50, 0);
-            var line = Autodesk.Revit.DB.Line.CreateBound(start, end);
+            var line = Line.CreateBound(start, end);
             var geometryPlane = Plane.CreateByNormalAndOrigin(XYZ.BasisZ, start);
             var skplane = SketchPlane.Create(doc, geometryPlane);
             var modelcurve = doc.FamilyCreate.NewModelCurve(line, skplane);
@@ -178,7 +174,7 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
             var transaction = new Transaction(doc, "PointsParabola");
             transaction.Start();
             var filename = "sphere.csv";
-            var filepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var filepath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             if (File.Exists(filepath + "\\" + filename))
             {
                 var readFile = new StreamReader(filepath + "\\" + filename);

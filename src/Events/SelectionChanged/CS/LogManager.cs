@@ -20,14 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.IO;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI.Events;
-using System.Reflection;
 
 namespace Revit.SDK.Samples.SelectionChanged.CS
 {

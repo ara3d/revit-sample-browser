@@ -20,13 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Plumbing;
 using System.Xml.Linq;
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
@@ -46,18 +41,12 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// <summary>
         /// Id
         /// </summary>
-        public List<ElementId> Id
-        {
-            get { return m_ids; }
-        }
+        public List<ElementId> Id => m_ids;
 
         /// <summary>
         ///  Group type
         /// </summary>
-        public RoutingPreferenceRuleGroupType GroupType
-        {
-            get { return m_groupType; }
-        }
+        public RoutingPreferenceRuleGroupType GroupType => m_groupType;
 
         /// <summary>
         /// Constructor
@@ -76,7 +65,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
-        public XElement GetXml(Autodesk.Revit.DB.Document document)
+        public XElement GetXml(Document document)
         {
             var xPartInfo = new XElement(XName.Get("PartInfo"));
             xPartInfo.Add(new XAttribute(XName.Get("groupType"), m_groupType.ToString()));

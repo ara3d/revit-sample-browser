@@ -21,16 +21,10 @@
 //
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
-using Element = Autodesk.Revit.DB.Element;
 
 namespace Revit.SDK.Samples.ManipulateForm.CS
 {
@@ -107,8 +101,8 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public virtual Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData
-          , ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public virtual Result Execute(ExternalCommandData commandData
+          , ref string message, ElementSet elements)
       {
          m_revitApp = commandData.Application.Application;
          m_revitDoc = commandData.Application.ActiveUIDocument.Document;
@@ -137,7 +131,7 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
             var edgeReference = AddEdge(form);
             m_revitDoc.Regenerate();
             // Move the added edge
-            var offset = new Autodesk.Revit.DB.XYZ(0, -40, 0);
+            var offset = new XYZ(0, -40, 0);
             MoveSubElement(form, edgeReference, offset);
             m_revitDoc.Regenerate();
             // Move the vertex on added profile
@@ -150,10 +144,10 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
          {
             message = ex.Message;
             transaction.RollBack();
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       /// <summary>
@@ -187,14 +181,14 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
          var profile = new ReferenceArray();
          // Prepare points to create lines
          var points = new List<XYZ>();
-         points.Add(new Autodesk.Revit.DB.XYZ(-1 * length / 2, -1 * width / 2, height));
-         points.Add(new Autodesk.Revit.DB.XYZ(length / 2, -1 * width / 2, height));
-         points.Add(new Autodesk.Revit.DB.XYZ(length / 2, width / 2, height));
-         points.Add(new Autodesk.Revit.DB.XYZ(-1 * length / 2, width / 2, height));
+         points.Add(new XYZ(-1 * length / 2, -1 * width / 2, height));
+         points.Add(new XYZ(length / 2, -1 * width / 2, height));
+         points.Add(new XYZ(length / 2, width / 2, height));
+         points.Add(new XYZ(-1 * length / 2, width / 2, height));
 
          // Prepare sketch plane to create model line
-         var normal = new Autodesk.Revit.DB.XYZ(0, 0, 1);
-         var origin = new Autodesk.Revit.DB.XYZ(0, 0, height);
+         var normal = new XYZ(0, 0, 1);
+         var origin = new XYZ(0, 0, height);
          var geometryPlane = Plane.CreateByNormalAndOrigin(normal, origin);
          var sketchPlane = SketchPlane.Create(m_revitDoc, geometryPlane);
 
@@ -219,8 +213,8 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       private int AddProfile(Form form)
       {
          // Get a connecting edge from the form
-         var startOfTop = new Autodesk.Revit.DB.XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
-         var startOfBottom = new Autodesk.Revit.DB.XYZ(-1 * m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
+         var startOfTop = new XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
+         var startOfBottom = new XYZ(-1 * m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
          var connectingEdge = GetEdgeByEndPoints(form, startOfTop, startOfBottom);
 
          // Add an profile with specific parameters
@@ -235,7 +229,7 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       /// <param name="profileIndex">Index of the profile to be moved</param>
       private void MoveProfile(Form form, int profileIndex)
       {
-         var offset = new Autodesk.Revit.DB.XYZ(0, 0, 5);
+         var offset = new XYZ(0, 0, 5);
          if (form.CanManipulateProfile(profileIndex))
          {
             form.MoveProfile(profileIndex, offset);
@@ -249,9 +243,9 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       /// <param name="profileIndex">Index of the profile to be moved</param>
       private void MoveEdgesOnProfile(Form form, int profileIndex)
       {
-         var startOfTop = new Autodesk.Revit.DB.XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
-         var offset1 = new Autodesk.Revit.DB.XYZ(m_profileOffset, 0, 0);
-         var offset2 = new Autodesk.Revit.DB.XYZ(-m_profileOffset, 0, 0);
+         var startOfTop = new XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
+         var offset1 = new XYZ(m_profileOffset, 0, 0);
+         var offset2 = new XYZ(-m_profileOffset, 0, 0);
          Reference r1 = null;
          Reference r2 = null;
          var ra = form.get_CurveLoopReferencesOnProfile(profileIndex, 0);
@@ -290,11 +284,11 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       /// <param name="form">The form contains the vertexes</param>
       private void MoveVertexesOnBottomProfile(Form form)
       {
-         var offset1 = new Autodesk.Revit.DB.XYZ(-m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
-         var offset2 = new Autodesk.Revit.DB.XYZ(m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
+         var offset1 = new XYZ(-m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
+         var offset2 = new XYZ(m_vertexOffsetOnBottomProfile, -m_vertexOffsetOnBottomProfile, 0);
 
-         var startOfBottom = new Autodesk.Revit.DB.XYZ(-1 * m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
-         var endOfBottom = new Autodesk.Revit.DB.XYZ(m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
+         var startOfBottom = new XYZ(-1 * m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
+         var endOfBottom = new XYZ(m_bottomLength / 2, -1 * m_bottomWidth / 2, m_bottomHeight);
          var bottomEdge = GetEdgeByEndPoints(form, startOfBottom, endOfBottom);
          var pntsRef = form.GetControlPoints(bottomEdge.Reference);
          Reference r1 = null;
@@ -322,7 +316,7 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       /// <param name="profileIndex">Index of added profile</param>
       private void MoveVertexesOnAddedProfile(Form form, int profileIndex)
       {
-         var offset = new Autodesk.Revit.DB.XYZ(0, m_vertexOffsetOnMiddleProfile, 0);
+         var offset = new XYZ(0, m_vertexOffsetOnMiddleProfile, 0);
 
          var ra = form.get_CurveLoopReferencesOnProfile(profileIndex, 0);
          foreach (Reference r in ra)
@@ -348,11 +342,11 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       private Reference AddEdge(Form form)
       {
          // Get two specific edges from the form
-         var startOfTop = new Autodesk.Revit.DB.XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
-         var endOfTop = new Autodesk.Revit.DB.XYZ(m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
+         var startOfTop = new XYZ(-1 * m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
+         var endOfTop = new XYZ(m_topLength / 2, -1 * m_topWidth / 2, m_topHeight);
          var topEdge = GetEdgeByEndPoints(form, startOfTop, endOfTop);
-         var startOfBottom = new Autodesk.Revit.DB.XYZ(-1 * (m_bottomLength / 2 + m_vertexOffsetOnBottomProfile), -1 * (m_bottomWidth / 2 + m_vertexOffsetOnBottomProfile), m_bottomHeight);
-         var endOfBottom = new Autodesk.Revit.DB.XYZ((m_bottomLength / 2 + m_vertexOffsetOnBottomProfile), -1 * (m_bottomWidth / 2 + m_vertexOffsetOnBottomProfile), m_bottomHeight);
+         var startOfBottom = new XYZ(-1 * (m_bottomLength / 2 + m_vertexOffsetOnBottomProfile), -1 * (m_bottomWidth / 2 + m_vertexOffsetOnBottomProfile), m_bottomHeight);
+         var endOfBottom = new XYZ((m_bottomLength / 2 + m_vertexOffsetOnBottomProfile), -1 * (m_bottomWidth / 2 + m_vertexOffsetOnBottomProfile), m_bottomHeight);
          var bottomEdge = GetEdgeByEndPoints(form, startOfBottom, endOfBottom);
 
          // Add an edge between the two edges with specific parameters
@@ -374,7 +368,7 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       /// <param name="startPoint">Start point of the edge</param>
       /// <param name="endPoint">End point of the edge</param>
       /// <returns>The edge found</returns>
-      private Edge GetEdgeByEndPoints(Form form, Autodesk.Revit.DB.XYZ startPoint, Autodesk.Revit.DB.XYZ endPoint)
+      private Edge GetEdgeByEndPoints(Form form, XYZ startPoint, XYZ endPoint)
       {
          Edge edge = null;
 
@@ -417,7 +411,7 @@ namespace Revit.SDK.Samples.ManipulateForm.CS
       /// <param name="form">The form contains the sub element</param>
       /// <param name="subElemReference">Reference of the sub element to be moved</param>
       /// <param name="offset">offset to be moved</param>
-      private void MoveSubElement(Form form, Reference subElemReference, Autodesk.Revit.DB.XYZ offset)
+      private void MoveSubElement(Form form, Reference subElemReference, XYZ offset)
       {
          if (form.CanManipulateSubElement(subElemReference))
          {

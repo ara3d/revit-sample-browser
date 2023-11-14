@@ -20,9 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 
 using Autodesk.Revit.DB.Structure;
@@ -56,22 +53,13 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
                 return m_rebarShapeParameter;
             }
-            set
-            {
-                m_rebarShapeParameter = value;
-            }
+            set => m_rebarShapeParameter = value;
         }
 
         /// <summary>
         /// Get RebarShapeDefinitionByArc object.
         /// </summary>
-        protected RebarShapeDefinitionByArc GetRebarShapeDefinitionByArc
-        {
-            get
-            {
-                return m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionByArc;
-            }
-        }
+        protected RebarShapeDefinitionByArc GetRebarShapeDefinitionByArc => m_shapeDef.RebarshapeDefinition as RebarShapeDefinitionByArc;
     }
 
     /// <summary>
@@ -136,8 +124,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public RebarShapeArcReferenceType ArcReferenceType
         {
-            get { return m_arcReferenceType; }
-            set { m_arcReferenceType = value; }
+            get => m_arcReferenceType;
+            set => m_arcReferenceType = value;
         }
 
         /// <summary>
@@ -171,8 +159,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public RebarShapeArcReferenceType ArcReferenceType
         {
-            get { return m_arcReferenceType; }
-            set { m_arcReferenceType = value; }
+            get => m_arcReferenceType;
+            set => m_arcReferenceType = value;
         }
 
         /// <summary>
@@ -207,8 +195,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public RebarShapeArcReferenceType ArcReferenceType
         {
-            get { return m_arcReferenceType; }
-            set { m_arcReferenceType = value; }
+            get => m_arcReferenceType;
+            set => m_arcReferenceType = value;
         }
 
         /// <summary>

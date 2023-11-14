@@ -21,11 +21,6 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
@@ -122,7 +117,7 @@ namespace Revit.SDK.Samples.DisableCommand.CS
         /// id string will be toward the end of the journal, look for the "Jrn.Command" entry that was recorded
         /// when it was selected.
         /// </summary>
-        static String s_commandToDisable = "ID_EDIT_DESIGNOPTIONS";
+        static string s_commandToDisable = "ID_EDIT_DESIGNOPTIONS";
 
         /// <summary>
         /// The command id, stored statically to allow for removal of the command binding.

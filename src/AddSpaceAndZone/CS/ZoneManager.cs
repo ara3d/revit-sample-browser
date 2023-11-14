@@ -20,10 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Mechanical;
@@ -61,7 +58,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             var zone = m_commandData.Application.ActiveUIDocument.Document.Create.NewZone(level, phase);
             if (zone != null)
             {
-                this.m_zoneDictionary[level.Id].Add(zone);
+                m_zoneDictionary[level.Id].Add(zone);
             }
         }
 
@@ -99,14 +96,8 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         /// </summary>
         public Zone CurrentZone
         {
-            get
-            {
-                return CurrentZone;
-            }
-            set
-            {
-                m_currentZone = value;
-            }
+            get => CurrentZone;
+            set => m_currentZone = value;
         }
     }
 }

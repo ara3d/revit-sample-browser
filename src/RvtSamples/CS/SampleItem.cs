@@ -19,11 +19,8 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace RvtSamples
+    namespace RvtSamples
 {
     /// <summary>
     /// The class contains information of a sample item to be added into samples menu
@@ -65,73 +62,38 @@ namespace RvtSamples
         /// <summary>
         /// category
         /// </summary>
-        public string Category
-        {
-            get 
-            { 
-                return m_category; 
-            }
-        }
+        public string Category => m_category;
+
         /// <summary>
         /// display name
         /// </summary>
-        public string DisplayName
-        {
-            get 
-            { 
-                return m_displayName; 
-            }
-        }
+        public string DisplayName => m_displayName;
+
         /// <summary>
         /// path of large image
         /// </summary>
-        public string LargeImage
-        {
-            get 
-            { 
-                return m_largeImage; 
-            }
-        }
+        public string LargeImage => m_largeImage;
+
         /// <summary>
         /// path of image
         /// </summary>
-        public string Image
-        {
-            get 
-            { 
-                return m_image; 
-            }
-        }
+        public string Image => m_image;
+
         /// <summary>
         /// description
         /// </summary>
-        public string Description
-        {
-            get 
-            { 
-                return m_description; 
-            }
-        }
+        public string Description => m_description;
+
         /// <summary>
         /// path of assembly
         /// </summary>
-        public string Assembly
-        {
-            get 
-            { 
-                return m_assembly; 
-            }
-        }
+        public string Assembly => m_assembly;
+
         /// <summary>
         /// class name
         /// </summary>
-        public string ClassName
-        {
-            get 
-            { 
-                return m_className; 
-            }
-        }
+        public string ClassName => m_className;
+
         #endregion
 
         # region Methods

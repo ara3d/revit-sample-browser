@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.NetworkPressureLossReport
@@ -15,21 +11,17 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
       private ConnectorDomainType m_connType;
       private StreamWriter m_streamWriter;
 
-      public StreamWriter Writer
-      {
-         get { return m_streamWriter; }
-      }
-      public bool? IsItemized
-      {
-         get { return m_isItemized; }
-      }
+      public StreamWriter Writer => m_streamWriter;
+
+      public bool? IsItemized => m_isItemized;
+
       public Document Document
       {
-         set { m_doc = value; }
+         set => m_doc = value;
       }
       public ConnectorDomainType DomainType
       {
-         set { m_connType = value; }
+         set => m_connType = value;
       }
       public CSVExporter(string csvFilePath, bool? isItemized)
       {

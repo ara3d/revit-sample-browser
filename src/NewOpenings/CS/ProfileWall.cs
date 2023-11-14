@@ -21,13 +21,9 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
-using System.Drawing;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
 {
@@ -58,8 +54,8 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         public override void DrawOpening(List<Vector4> points, ToolType type)
         {
             //get the rectangle two points
-            var p1 = new Autodesk.Revit.DB.XYZ (points[0].X, points[0].Y, points[0].Z);
-            var p2 = new Autodesk.Revit.DB.XYZ (points[2].X, points[2].Y, points[2].Z);
+            var p1 = new XYZ (points[0].X, points[0].Y, points[0].Z);
+            var p2 = new XYZ (points[2].X, points[2].Y, points[2].Z);
 
             //draw opening on wall
             m_docCreator.NewOpening(m_data, p1, p2);

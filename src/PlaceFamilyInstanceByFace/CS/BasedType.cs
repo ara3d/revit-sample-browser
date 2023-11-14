@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
@@ -33,7 +28,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
     /// <summary>
     ///  This form class is for user choose a based-type of creating family instance
     /// </summary>
-    public partial class BasedTypeForm : System.Windows.Forms.Form
+    public partial class BasedTypeForm : Form
     {
         #region Fields
         // based-type
@@ -44,13 +39,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         /// <summary>
         /// based-type
         /// </summary>
-        public BasedType BaseType
-        {
-            get
-            {
-                return m_baseType;
-            }
-        }
+        public BasedType BaseType => m_baseType;
+
         #endregion
 
         #region Constructor
@@ -83,8 +73,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             {
                 throw new Exception("An error occured in selecting based type.");
             }
-            this.Close();
-            this.DialogResult = DialogResult.OK;
+            Close();
+            DialogResult = DialogResult.OK;
         }
 
         /// <summary>
@@ -94,8 +84,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
-            this.DialogResult = DialogResult.Cancel;
+            Close();
+            DialogResult = DialogResult.Cancel;
         }
         #endregion
     }

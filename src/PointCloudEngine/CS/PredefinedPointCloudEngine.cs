@@ -20,9 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 
 namespace Revit.SDK.Samples.CS.PointCloudEngine

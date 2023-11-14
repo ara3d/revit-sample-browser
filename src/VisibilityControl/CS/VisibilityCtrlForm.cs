@@ -21,14 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.VisibilityControl.CS
@@ -36,7 +29,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
     /// <summary>
     /// the user interface form
     /// </summary>
-    public partial class VisibilityCtrlForm : System.Windows.Forms.Form
+    public partial class VisibilityCtrlForm : Form
     {
         // an object control visibility by category
         private VisibilityCtrl m_visibilityCtrl;
@@ -121,7 +114,7 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
             }
 
             // close the form
-            this.Close();
+            Close();
         }
 
         private void checkAllButton_Click(object sender, EventArgs e)

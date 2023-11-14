@@ -19,13 +19,10 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
+
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit;
 using System.Drawing;
 using Point = System.Drawing.Point;
 
@@ -42,7 +39,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
       protected List<List<XYZ>> m_points;
 
       // object which contains reference to Revit Application
-      protected Autodesk.Revit.UI.ExternalCommandData m_commandData;
+      protected ExternalCommandData m_commandData;
 
       // used to create new instances of utility objects. 
       protected Autodesk.Revit.Creation.Application m_appCreator;
@@ -57,10 +54,10 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
       protected Matrix4 m_moveToCenterMatrix = null;
 
       // store the Matrix used to scale profile fit to pictureBox
-      protected Matrix4 m_scaleMatrix = null;
+      protected Matrix4 m_scaleMatrix;
 
       // store the Matrix used to transform Revit coordinate to window UI
-      protected Matrix4 m_transformMatrix = null;
+      protected Matrix4 m_transformMatrix;
 
       // store the Matrix used to transform window UI coordinate to Revit
       protected Matrix4 m_restoreMatrix = null;
@@ -143,7 +140,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
       /// </summary>
       /// <param name="elem">selected element</param>
       /// <returns>all the faces in the selected Element</returns>
-      public virtual List<List<Edge>> GetFaces(Autodesk.Revit.DB.Element elem)
+      public virtual List<List<Edge>> GetFaces(Element elem)
       {
          var faceEdges = new List<List<Edge>>();
          var options = m_appCreator.NewGeometryOptions();

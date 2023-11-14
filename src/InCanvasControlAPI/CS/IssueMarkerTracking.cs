@@ -86,12 +86,12 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// <summary>
       /// Document this object tracks
       /// </summary>
-      public Document Document { get => document; }
+      public Document Document => document;
 
       /// <summary>
       /// Tracker's GUID. This is needed to safely clean up after document closes.
       /// </summary>
-      public Guid Id { get => guid; }
+      public Guid Id => guid;
 
       /// <summary>
       /// Gets the index of selected marker. This is used by selector

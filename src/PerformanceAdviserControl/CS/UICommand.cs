@@ -19,12 +19,9 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
@@ -32,7 +29,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-   class UICommand : Autodesk.Revit.UI.IExternalCommand
+   class UICommand : IExternalCommand
    {
       #region IExternalCommand implementation
 
@@ -54,7 +51,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
     /// at some point. Failure should be returned if the application is unable to proceed with 
     /// the operation.
     /// </returns>
-      public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
 
          //A list of rule information to be used below
@@ -101,7 +98,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
           tdd.ShowDialog();
             #endregion
 
-          return Autodesk.Revit.UI.Result.Succeeded;
+          return Result.Succeeded;
       }
       #endregion
    }

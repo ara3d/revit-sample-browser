@@ -23,15 +23,12 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
-using System.Diagnostics;
 
 namespace Revit.SDK.Samples.MultithreadedCalculation.CS
 {
@@ -50,7 +47,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
         static ElementId s_oldViewId;
         static ElementId s_activeViewId;
 
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var uiApp = commandData.Application;
             var uiDoc = uiApp.ActiveUIDocument;
@@ -62,7 +59,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             {
                 element = doc.GetElement(uiDoc.Selection.PickObject(ObjectType.Element, "Select an element for the AVF demonstration."));
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 message = "User aborted the tool.";
                 return Result.Cancelled;
@@ -96,7 +93,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             var thread = new Thread(new ThreadStart(container.Run));
             thread.Start();
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -235,7 +232,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
 
                 // Restart the multithread calculation with a new container
                 var modifiedElem = doc.GetElement(data.GetModifiedElementIds().First<ElementId>());
-                var container = MultithreadedCalculation.CreateContainer(modifiedElem);
+                var container = CreateContainer(modifiedElem);
                 containerOld = container;
 
                 // Setup the new idling callback
@@ -257,7 +254,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
         /// </summary>
         public class MultithreadedCalculationContainer
         {
-            private volatile bool m_stop = false;
+            private volatile bool m_stop;
             UV m_min;
             UV m_max;
             
@@ -410,7 +407,7 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
             public double Value;
             public ResultsData(UV uv, double value)
             {
-                this.UV = uv;
+                UV = uv;
                 Value = value;
             }
         }

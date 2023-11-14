@@ -23,11 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ModelLines.CS
@@ -56,13 +53,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
       /// <summary>
       /// The type-number map, store the number of each model line type
       /// </summary>
-      public ReadOnlyCollection<ModelCurveCounter> InformationMap
-      {
-         get
-         {
-            return new ReadOnlyCollection<ModelCurveCounter>(m_informationMap);
-         }
-      }
+      public ReadOnlyCollection<ModelCurveCounter> InformationMap => new ReadOnlyCollection<ModelCurveCounter>(m_informationMap);
 
       /// <summary>
       /// Get the id information of all ModelEllipses in revit,
@@ -205,7 +196,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
       /// </summary>
       /// <param name="normal"></param>
       /// <param name="origin"></param>
-      public void CreateSketchPlane(Autodesk.Revit.DB.XYZ normal, Autodesk.Revit.DB.XYZ origin)
+      public void CreateSketchPlane(XYZ normal, XYZ origin)
       {
          try
          {
@@ -238,7 +229,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
       /// <param name="sketchId">the id of the sketch plane</param>
       /// <param name="startPoint">the start point of the line</param>
       /// <param name="endPoint">the end point of the line</param>
-      public void CreateLine(ElementId sketchId, Autodesk.Revit.DB.XYZ startPoint, Autodesk.Revit.DB.XYZ endPoint)
+      public void CreateLine(ElementId sketchId, XYZ startPoint, XYZ endPoint)
       {
          try
          {
@@ -284,7 +275,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
       /// <param name="startPoint">the start point of the arc</param>
       /// <param name="endPoint">the end point of the arc</param>
       /// <param name="thirdPoint">the third point which is on the arc</param>
-      public void CreateArc(ElementId sketchId, Autodesk.Revit.DB.XYZ startPoint, Autodesk.Revit.DB.XYZ endPoint, Autodesk.Revit.DB.XYZ thirdPoint)
+      public void CreateArc(ElementId sketchId, XYZ startPoint, XYZ endPoint, XYZ thirdPoint)
       {
          try
          {
@@ -329,7 +320,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
       /// <param name="sketchId">the id of the sketch plane</param>
       /// <param name="elementId">the element id which copy the curve from</param>
       /// <param name="offsetPoint">the offset direction from the copied line</param>
-      public void CreateOthers(ElementId sketchId, ElementId elementId, Autodesk.Revit.DB.XYZ offsetPoint)
+      public void CreateOthers(ElementId sketchId, ElementId elementId, XYZ offsetPoint)
       {
          // First get the sketch plane by the giving element id.
          var workPlane = GetSketchPlaneById(sketchId);
@@ -502,7 +493,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
       /// </summary>
       /// <param name="id">the element id value</param>
       /// <returns>the corresponding element</returns>
-      Autodesk.Revit.DB.Element GetElementById(ElementId id)
+      Element GetElementById(ElementId id)
       {
          // Get the corresponding element
          return m_revit.ActiveUIDocument.Document.GetElement(id);

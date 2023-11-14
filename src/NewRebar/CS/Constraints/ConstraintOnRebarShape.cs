@@ -21,10 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
-using System.ComponentModel;
 
 namespace Revit.SDK.Samples.NewRebar.CS
 {
@@ -58,13 +54,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Name of the constraint.
         /// </summary>
-        public String Name
-        {
-            get
-            {
-                return this.GetType().Name;
-            }
-        }
+        public string Name => GetType().Name;
 
         /// <summary>
         /// Commit the dimension.

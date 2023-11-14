@@ -21,11 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -72,59 +68,59 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         {
             foreach (FootPrintRoof roof in m_roofsManager.FootPrintRoofs)
             {
-                this.footPrintRoofsListView.Items.Add(new RoofItem(roof));
+                footPrintRoofsListView.Items.Add(new RoofItem(roof));
             }
 
             foreach (ExtrusionRoof roof in m_roofsManager.ExtrusionRoofs)
             {
-                this.extrusionRoofsListView.Items.Add(new RoofItem(roof));
+                extrusionRoofsListView.Items.Add(new RoofItem(roof));
             }
 
-            this.levelsComboBox.DataSource = m_roofsManager.Levels;
-            this.levelsComboBox.DisplayMember = "Name";
-            this.levelsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            levelsComboBox.DataSource = m_roofsManager.Levels;
+            levelsComboBox.DisplayMember = "Name";
+            levelsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this.roofTypesComboBox.DataSource = m_roofsManager.RoofTypes;
-            this.roofTypesComboBox.DisplayMember = "Name";
-            this.roofTypesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            roofTypesComboBox.DataSource = m_roofsManager.RoofTypes;
+            roofTypesComboBox.DisplayMember = "Name";
+            roofTypesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this.refLevelComboBox.DataSource = m_roofsManager.Levels;
-            this.refLevelComboBox.DisplayMember = "Name";
-            this.refLevelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            refLevelComboBox.DataSource = m_roofsManager.Levels;
+            refLevelComboBox.DisplayMember = "Name";
+            refLevelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this.extrusionRoofTypesComboBox.DataSource = m_roofsManager.RoofTypes;
-            this.extrusionRoofTypesComboBox.DisplayMember = "Name";
-            this.extrusionRoofTypesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            extrusionRoofTypesComboBox.DataSource = m_roofsManager.RoofTypes;
+            extrusionRoofTypesComboBox.DisplayMember = "Name";
+            extrusionRoofTypesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this.refPanesComboBox.DataSource = m_roofsManager.ReferencePlanes;
-            this.refPanesComboBox.DisplayMember = "Name";
-            this.refPanesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            refPanesComboBox.DataSource = m_roofsManager.ReferencePlanes;
+            refPanesComboBox.DisplayMember = "Name";
+            refPanesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             // Book Select Button Click Event
-            this.selectFootPrintButton.Click += new EventHandler(selectFootPrintButton_Click);
-            this.selectProfileButton.Click += new EventHandler(selectProfileButton_Click);
+            selectFootPrintButton.Click += new EventHandler(selectFootPrintButton_Click);
+            selectProfileButton.Click += new EventHandler(selectProfileButton_Click);
 
-            if (m_roofsManager.RoofKind == Revit.SDK.Samples.NewRoof.RoofsManager.CS.CreateRoofKind.FootPrintRoof)
+            if (m_roofsManager.RoofKind == RoofsManager.CS.CreateRoofKind.FootPrintRoof)
             {
-                this.roofsTabControl.SelectedTab = this.footprintRoofTabPage;
+                roofsTabControl.SelectedTab = footprintRoofTabPage;
             }
             else
             {
-                this.roofsTabControl.SelectedTab = this.extrusionRoofTabPage;
+                roofsTabControl.SelectedTab = extrusionRoofTabPage;
             }
 
-            this.footPrintRoofsListView.MultiSelect = false;
-            this.footPrintRoofsListView.FullRowSelect = true;
-            this.footPrintRoofsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            this.footPrintRoofsListView.MouseDoubleClick += new MouseEventHandler(roofsListView_MouseDoubleClick);
+            footPrintRoofsListView.MultiSelect = false;
+            footPrintRoofsListView.FullRowSelect = true;
+            footPrintRoofsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            footPrintRoofsListView.MouseDoubleClick += new MouseEventHandler(roofsListView_MouseDoubleClick);
 
-            this.extrusionRoofsListView.MultiSelect = false;
-            this.extrusionRoofsListView.FullRowSelect = true;
-            this.extrusionRoofsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            this.extrusionRoofsListView.MouseDoubleClick += new MouseEventHandler(roofsListView_MouseDoubleClick);
+            extrusionRoofsListView.MultiSelect = false;
+            extrusionRoofsListView.FullRowSelect = true;
+            extrusionRoofsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            extrusionRoofsListView.MouseDoubleClick += new MouseEventHandler(roofsListView_MouseDoubleClick);
 
-            this.extrusionStartTextBox.Text = m_start.ToString();
-            this.extrusionEndTextBox.Text = m_end.ToString();
+            extrusionStartTextBox.Text = m_start.ToString();
+            extrusionEndTextBox.Text = m_end.ToString();
         }
 
         /// <summary>
@@ -134,8 +130,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="e"></param>
         void selectFootPrintButton_Click(object sender, EventArgs e)
         {
-            this.m_roofsManager.RoofKind = Revit.SDK.Samples.NewRoof.RoofsManager.CS.CreateRoofKind.FootPrintRoof;
-            this.Close();
+            m_roofsManager.RoofKind = RoofsManager.CS.CreateRoofKind.FootPrintRoof;
+            Close();
         }
 
         /// <summary>
@@ -145,8 +141,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="e"></param>
         void selectProfileButton_Click(object sender, EventArgs e)
         {
-            this.m_roofsManager.RoofKind = Revit.SDK.Samples.NewRoof.RoofsManager.CS.CreateRoofKind.ExtrusionRoof;
-            this.Close();
+            m_roofsManager.RoofKind = RoofsManager.CS.CreateRoofKind.ExtrusionRoof;
+            Close();
         }
 
         /// <summary>
@@ -156,7 +152,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="e"></param>
         private void createRoofButton_Click(object sender, EventArgs e)
         {
-            if (this.roofsTabControl.SelectedTab == this.footprintRoofTabPage)
+            if (roofsTabControl.SelectedTab == footprintRoofTabPage)
             {
                 createFootPrintRoof();
             }
@@ -173,17 +169,17 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
         /// <param name="e"></param>
         private void editRoofButton_Click(object sender, EventArgs e)
         {
-            if (this.footPrintRoofsListView.SelectedItems.Count != 0
-                || this.extrusionRoofsListView.SelectedItems.Count != 0)
+            if (footPrintRoofsListView.SelectedItems.Count != 0
+                || extrusionRoofsListView.SelectedItems.Count != 0)
             {
                 RoofItem item = null;
-                if (this.roofsTabControl.SelectedTab == this.footprintRoofTabPage)
+                if (roofsTabControl.SelectedTab == footprintRoofTabPage)
                 {
-                    item = this.footPrintRoofsListView.SelectedItems[0] as RoofItem;
+                    item = footPrintRoofsListView.SelectedItems[0] as RoofItem;
                 }
                 else
                 {
-                    item = this.extrusionRoofsListView.SelectedItems[0] as RoofItem;
+                    item = extrusionRoofsListView.SelectedItems[0] as RoofItem;
                 }
 
                 if (item != null)
@@ -206,8 +202,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             {
                 if (m_roofsManager.FootPrint.Size != 0)
                 {
-                    var level = levelsComboBox.SelectedItem as Autodesk.Revit.DB.Level;
-                    var roofType = roofTypesComboBox.SelectedItem as Autodesk.Revit.DB.RoofType;
+                    var level = levelsComboBox.SelectedItem as Level;
+                    var roofType = roofTypesComboBox.SelectedItem as RoofType;
                     if (level != null && roofType != null)
                     {
                         var roof = m_roofsManager.CreateFootPrintRoof(level, roofType);
@@ -217,8 +213,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
                         }
                         else
                         {
-                            this.footPrintRoofsListView.Items.Add(new RoofItem(roof));
-                            this.footPrintRoofsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                            footPrintRoofsListView.Items.Add(new RoofItem(roof));
+                            footPrintRoofsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                         }
                     }
                 }
@@ -242,8 +238,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             {
                 if (m_roofsManager.Profile.Size != 0)
                 {
-                    var level = this.refLevelComboBox.SelectedItem as Autodesk.Revit.DB.Level;
-                    var roofType = this.extrusionRoofTypesComboBox.SelectedItem as Autodesk.Revit.DB.RoofType;
+                    var level = refLevelComboBox.SelectedItem as Level;
+                    var roofType = extrusionRoofTypesComboBox.SelectedItem as RoofType;
                     var refPlane = refPanesComboBox.SelectedItem as Autodesk.Revit.DB.ReferencePlane;
                     if (level != null && roofType != null && refPlane != null)
                     {
@@ -254,8 +250,8 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
                         }
                         else
                         {
-                            this.extrusionRoofsListView.Items.Add(new RoofItem(roof));
-                            this.extrusionRoofsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                            extrusionRoofsListView.Items.Add(new RoofItem(roof));
+                            extrusionRoofsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                         }
                     }
                 }
@@ -327,13 +323,13 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             if (e.Button == MouseButtons.Left)
             {
                 RoofItem item = null;
-                if (this.roofsTabControl.SelectedTab == this.footprintRoofTabPage)
+                if (roofsTabControl.SelectedTab == footprintRoofTabPage)
                 {
-                    item = this.footPrintRoofsListView.GetItemAt(e.X, e.Y) as RoofItem;
+                    item = footPrintRoofsListView.GetItemAt(e.X, e.Y) as RoofItem;
                 }
                 else
                 {
-                    item = this.extrusionRoofsListView.GetItemAt(e.X, e.Y) as RoofItem;
+                    item = extrusionRoofsListView.GetItemAt(e.X, e.Y) as RoofItem;
                 }
 
                 if (item != null)

@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -79,7 +74,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
       /// </summary>
       /// <param name="myBRepBuilder"> The BRepBuilder object.</param>
       /// <param name="name"> Name of the BRepBuilder object, which will be passed on to the DirectShape creation method.</param>
-      private void createDirectShapeElementFromBrepBuilderObject(BRepBuilder myBRepBuilder, String name)
+      private void createDirectShapeElementFromBrepBuilderObject(BRepBuilder myBRepBuilder, string name)
       {
          if (!myBRepBuilder.IsResultAvailable())
             return;
@@ -256,7 +251,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
          createDirectShapeElementFromBrepBuilderObject(brepBuilder, "Cone surface");
       }
 
-      private Document _dbdocument = null;
+      private Document _dbdocument;
 
    }
 }

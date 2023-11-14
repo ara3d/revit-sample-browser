@@ -21,21 +21,10 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
-using System.Timers;
 using Autodesk.Revit.UI.Events;
 using System.Windows.Media.Imaging;
 using System.Windows;
-
-using Autodesk.Revit;
-using System.Net;
 using System.IO;
 using System.Reflection;
 
@@ -91,7 +80,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
       /// <summary>
       /// Show dockable panes when view active.
       /// </summary>
-      void application_ViewActivated(object sender, Autodesk.Revit.UI.Events.ViewActivatedEventArgs e)
+      void application_ViewActivated(object sender, ViewActivatedEventArgs e)
       {
          if (!DockablePane.PaneExists(DefaultFamilyTypes.PaneId) ||
              !DockablePane.PaneExists(DefaultElementTypes.PaneId))

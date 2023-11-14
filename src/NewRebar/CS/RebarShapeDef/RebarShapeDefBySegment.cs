@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-
 using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.NewRebar.CS

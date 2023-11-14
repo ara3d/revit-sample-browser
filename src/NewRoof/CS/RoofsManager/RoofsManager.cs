@@ -23,16 +23,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Forms;
-using System.Text;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-
-using Revit.SDK.Samples.NewRoof.RoofForms.CS;
 
 namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
 {
@@ -69,10 +63,10 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
         ElementSet m_extrusionRoofs;
 
         // To store the footprint roof lines.
-        Autodesk.Revit.DB.CurveArray m_footPrint;
+        CurveArray m_footPrint;
 
         // To store the profile lines.
-        Autodesk.Revit.DB.CurveArray m_profile;
+        CurveArray m_profile;
 
         // Reference Plane for creating extrusion roof
         List<Autodesk.Revit.DB.ReferencePlane> m_referencePlanes;
@@ -149,7 +143,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
             {
                 var plane = iter.Current as Autodesk.Revit.DB.ReferencePlane;
                 // just use the vertical plane
-                if (Math.Abs(plane.Normal.DotProduct(Autodesk.Revit.DB.XYZ.BasisZ)) < 1.0e-09)
+                if (Math.Abs(plane.Normal.DotProduct(XYZ.BasisZ)) < 1.0e-09)
                 {
                     if (plane.Name == "Reference Plane")
                     {
@@ -164,79 +158,37 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
         /// <summary>
         /// Get the Level elements.
         /// </summary>
-        public ReadOnlyCollection<Level> Levels
-        {
-            get
-            {
-                return new ReadOnlyCollection<Level>(m_levels);
-            }
-        }
+        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
 
         /// <summary>
         /// Get the RoofTypes.
         /// </summary>
-        public ReadOnlyCollection<RoofType> RoofTypes
-        {
-            get
-            {
-                return new ReadOnlyCollection<RoofType>(m_roofTypes);
-            }
-        }
+        public ReadOnlyCollection<RoofType> RoofTypes => new ReadOnlyCollection<RoofType>(m_roofTypes);
 
         /// <summary>
         /// Get the RoofTypes.
         /// </summary>
-        public ReadOnlyCollection<Autodesk.Revit.DB.ReferencePlane> ReferencePlanes
-        {
-            get
-            {
-                return new ReadOnlyCollection<Autodesk.Revit.DB.ReferencePlane>(m_referencePlanes);
-            }
-        }
+        public ReadOnlyCollection<Autodesk.Revit.DB.ReferencePlane> ReferencePlanes => new ReadOnlyCollection<Autodesk.Revit.DB.ReferencePlane>(m_referencePlanes);
 
         /// <summary>
         /// Get all the footprint roofs in Revit.
         /// </summary>
-        public ElementSet FootPrintRoofs
-        {
-            get
-            {
-                return m_footPrintRoofs;
-            }
-        }
+        public ElementSet FootPrintRoofs => m_footPrintRoofs;
 
         /// <summary>
         /// Get all the extrusion roofs in Revit.
         /// </summary>
-        public ElementSet ExtrusionRoofs
-        {
-            get
-            {
-                return m_extrusionRoofs;
-            }
-        }
+        public ElementSet ExtrusionRoofs => m_extrusionRoofs;
 
         /// <summary>
         /// Get the footprint roof lines.
         /// </summary>
-        public CurveArray FootPrint
-        {
-            get
-            {
-                return m_footPrint;
-            }
-        }
+        public CurveArray FootPrint => m_footPrint;
 
         /// <summary>
         /// Get the extrusion profile lines.
         /// </summary>
-        public CurveArray Profile
-        {
-            get
-            {
-                return m_profile;
-            }
-        }
+        public CurveArray Profile => m_profile;
 
         /// <summary>
         /// Select elements in Revit to obtain the footprint roof lines or extrusion profile lines.
@@ -327,7 +279,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofsManager.CS
             roof = m_footPrintRoofManager.CreateFootPrintRoof(m_footPrint, level, roofType);
             if (roof != null)
             {
-                this.m_footPrintRoofs.Insert(roof);
+                m_footPrintRoofs.Insert(roof);
             }
             return roof;
         }

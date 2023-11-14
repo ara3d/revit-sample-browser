@@ -23,13 +23,7 @@
 
 namespace Revit.SDK.Samples.AreaReinParameters.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
     using System.ComponentModel;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Structure;
 
@@ -42,24 +36,24 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         //member
         Parameter m_layoutRule;
         //exterior major layer
-        Parameter m_exteriorMajorBarType = null;
-        Parameter m_exteriorMajorHookType = null;
-        Parameter m_exteriorMajorHookOrientation = null;
+        Parameter m_exteriorMajorBarType;
+        Parameter m_exteriorMajorHookType;
+        Parameter m_exteriorMajorHookOrientation;
 
         //exterior minor layer
-        Parameter m_exteriorMinorBarType = null;
-        Parameter m_exteriorMinorHookType = null;
-        Parameter m_exteriorMinorHookOrientation = null;
+        Parameter m_exteriorMinorBarType;
+        Parameter m_exteriorMinorHookType;
+        Parameter m_exteriorMinorHookOrientation;
 
         //interior major layer
-        Parameter m_interiorMajorBarType = null;
-        Parameter m_interiorMajorHookType = null;
-        Parameter m_interiorMajorHookOrientation = null;
+        Parameter m_interiorMajorBarType;
+        Parameter m_interiorMajorHookType;
+        Parameter m_interiorMajorHookOrientation;
 
         //interior minor layer
-        Parameter m_interiorMinorBarType = null;
-        Parameter m_interiorMinorHookType = null;
-        Parameter m_interiorMinorHookOrientation = null;
+        Parameter m_interiorMinorBarType;
+        Parameter m_interiorMinorHookType;
+        Parameter m_interiorMinorHookOrientation;
 
         public bool FillInData(AreaReinforcement areaRein)
         {
@@ -132,29 +126,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         #region exterior major layer
         [CategoryAttribute("Exterior Major Layers"), TypeConverter(typeof(BarTypeItem))]
-        public Autodesk.Revit.DB.ElementId Exterior_Major_Bar_Type
+        public ElementId Exterior_Major_Bar_Type
         {
-            get
-            {
-                return m_exteriorMajorBarType.AsElementId();
-            }
-            set
-            {
-                m_exteriorMajorBarType.Set(value);
-            }
+            get => m_exteriorMajorBarType.AsElementId();
+            set => m_exteriorMajorBarType.Set(value);
         }
 
         [CategoryAttribute("Exterior Major Layers"), TypeConverter(typeof(HookTypeItem))]
-        public Autodesk.Revit.DB.ElementId Exterior_Major_Hook_Type
+        public ElementId Exterior_Major_Hook_Type
         {
-            get
-            {
-                return m_exteriorMajorHookType.AsElementId();
-            }
-            set
-            {
-                m_exteriorMajorHookType.Set(value);
-            }
+            get => m_exteriorMajorHookType.AsElementId();
+            set => m_exteriorMajorHookType.Set(value);
         }
 
         [CategoryAttribute("Exterior Major Layers")]
@@ -175,29 +157,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         #region exterior minor layer
         [CategoryAttribute("Exterior Minor Layers"), TypeConverter(typeof(BarTypeItem))]
-        public Autodesk.Revit.DB.ElementId Exterior_Minor_Bar_Type
+        public ElementId Exterior_Minor_Bar_Type
         {
-            get
-            {
-                return m_exteriorMinorBarType.AsElementId();
-            }
-            set
-            {
-                m_exteriorMinorBarType.Set(value);
-            }
+            get => m_exteriorMinorBarType.AsElementId();
+            set => m_exteriorMinorBarType.Set(value);
         }
 
         [CategoryAttribute("Exterior Minor Layers"), TypeConverter(typeof(HookTypeItem))]
-        public Autodesk.Revit.DB.ElementId Exterior_Minor_Hook_Type
+        public ElementId Exterior_Minor_Hook_Type
         {
-            get
-            {
-                return m_exteriorMinorHookType.AsElementId();
-            }
-            set
-            {
-                m_exteriorMinorHookType.Set(value);
-            }
+            get => m_exteriorMinorHookType.AsElementId();
+            set => m_exteriorMinorHookType.Set(value);
         }
 
         [CategoryAttribute("Exterior Minor Layers")]
@@ -218,29 +188,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         #region interior major layer
         [CategoryAttribute("Interior Major Layers"), TypeConverter(typeof(BarTypeItem))]
-        public Autodesk.Revit.DB.ElementId Interior_Major_Bar_Type
+        public ElementId Interior_Major_Bar_Type
         {
-            get
-            {
-                return m_interiorMajorBarType.AsElementId();
-            }
-            set
-            {
-                m_interiorMajorBarType.Set(value);
-            }
+            get => m_interiorMajorBarType.AsElementId();
+            set => m_interiorMajorBarType.Set(value);
         }
 
         [CategoryAttribute("Interior Major Layers"), TypeConverter(typeof(HookTypeItem))]
-        public Autodesk.Revit.DB.ElementId Interior_Major_Hook_Type
+        public ElementId Interior_Major_Hook_Type
         {
-            get
-            {
-                return m_interiorMajorHookType.AsElementId();
-            }
-            set
-            {
-                m_interiorMajorHookType.Set(value);
-            }
+            get => m_interiorMajorHookType.AsElementId();
+            set => m_interiorMajorHookType.Set(value);
         }
 
         [CategoryAttribute("Interior Major Layers")]
@@ -261,29 +219,17 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
 
         #region interior minor layer
         [CategoryAttribute("Interior Minor Layers"), TypeConverter(typeof(BarTypeItem))]
-        public Autodesk.Revit.DB.ElementId Interior_Minor_Bar_Type
+        public ElementId Interior_Minor_Bar_Type
         {
-            get
-            {
-                return m_interiorMinorBarType.AsElementId();
-            }
-            set
-            {
-                m_interiorMinorBarType.Set(value);
-            }
+            get => m_interiorMinorBarType.AsElementId();
+            set => m_interiorMinorBarType.Set(value);
         }
 
         [CategoryAttribute("Interior Minor Layers"), TypeConverter(typeof(HookTypeItem))]
-        public Autodesk.Revit.DB.ElementId Interior_Minor_Hook_Type
+        public ElementId Interior_Minor_Hook_Type
         {
-            get
-            {
-                return m_interiorMinorHookType.AsElementId();
-            }
-            set
-            {
-                m_interiorMinorHookType.Set(value);
-            }
+            get => m_interiorMinorHookType.AsElementId();
+            set => m_interiorMinorHookType.Set(value);
         }
 
         [CategoryAttribute("Interior Minor Layers"),]

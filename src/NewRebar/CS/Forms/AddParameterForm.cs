@@ -22,10 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
@@ -36,7 +32,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
     /// <summary>
     /// This form provides an entrance for user to add parameters to RebarShape.
     /// </summary>
-    public partial class AddParameter : System.Windows.Forms.Form
+    public partial class AddParameter : Form
     {
         List<RebarShapeParameter> m_parameterList;
 
@@ -61,35 +57,17 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <summary>
         /// Is it formula parameter or not?
         /// </summary>
-        public bool IsFormula
-        {
-            get
-            {
-                return paramFormulaRadioButton.Checked;
-            }
-        }
+        public bool IsFormula => paramFormulaRadioButton.Checked;
 
         /// <summary>
         /// Parameter name from paramNameTextBox.
         /// </summary>
-        public string ParamName
-        {
-            get
-            {
-                return paramNameTextBox.Text;
-            }
-        }
+        public string ParamName => paramNameTextBox.Text;
 
         /// <summary>
         /// Parameter value from paramValueTextBox.
         /// </summary>
-        public string ParamValue
-        {
-            get
-            {
-                return paramValueTextBox.Text;
-            }
-        }
+        public string ParamValue => paramValueTextBox.Text;
 
         /// <summary>
         /// Cancel Button, Return DialogResult.Cancel and close this form.
@@ -98,8 +76,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         /// <summary>
@@ -120,7 +98,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
             {
                 try
                 {
-                    Double.Parse(ParamValue);
+                    double.Parse(ParamValue);
                 }
                 catch
                 {
@@ -150,8 +128,8 @@ namespace Revit.SDK.Samples.NewRebar.CS
                 }
             }
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

@@ -21,13 +21,8 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.NewForm.CS
 {
@@ -57,7 +52,7 @@ namespace Revit.SDK.Samples.NewForm.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var cdata = commandData;
          var app = commandData.Application.Application;
@@ -70,29 +65,29 @@ namespace Revit.SDK.Samples.NewForm.CS
          // Create one profile
          var ref_ar = new ReferenceArray();
 
-         var ptA = new Autodesk.Revit.DB.XYZ(10, 10, 0);
-         var ptB = new Autodesk.Revit.DB.XYZ(90, 10, 0);
+         var ptA = new XYZ(10, 10, 0);
+         var ptB = new XYZ(90, 10, 0);
          var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(90, 10, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(10, 90, 0);
+         ptA = new XYZ(90, 10, 0);
+         ptB = new XYZ(10, 90, 0);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(10, 90, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(10, 10, 0);
+         ptA = new XYZ(10, 90, 0);
+         ptB = new XYZ(10, 10, 0);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
          // The extrusion form direction
-         var direction = new Autodesk.Revit.DB.XYZ(0, 0, 50);
+         var direction = new XYZ(0, 0, 50);
 
          var form = doc.FamilyCreate.NewExtrusionForm(true, ref_ar, direction);
 
          transaction.Commit();
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion
    }
@@ -122,7 +117,7 @@ namespace Revit.SDK.Samples.NewForm.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var cdata = commandData;
          var app = commandData.Application.Application;
@@ -135,19 +130,19 @@ namespace Revit.SDK.Samples.NewForm.CS
          // Create one profile
          var ref_ar = new ReferenceArray();
 
-         var ptA = new Autodesk.Revit.DB.XYZ(10, 10, 0);
-         var ptB = new Autodesk.Revit.DB.XYZ(100, 10, 0);
+         var ptA = new XYZ(10, 10, 0);
+         var ptB = new XYZ(100, 10, 0);
          var line = Line.CreateBound(ptA, ptB);
          var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(100, 10, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(50, 50, 0);
+         ptA = new XYZ(100, 10, 0);
+         ptB = new XYZ(50, 50, 0);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(50, 50, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(10, 10, 0);
+         ptA = new XYZ(50, 50, 0);
+         ptB = new XYZ(10, 10, 0);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
@@ -155,7 +150,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          transaction.Commit();
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion
    }
@@ -185,7 +180,7 @@ namespace Revit.SDK.Samples.NewForm.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var cdata = commandData;
          var app = commandData.Application.Application;
@@ -197,26 +192,26 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          // Create one profile
          var ref_ar = new ReferenceArray();
-         var norm = Autodesk.Revit.DB.XYZ.BasisZ;
+         var norm = XYZ.BasisZ;
 
-         var ptA = new Autodesk.Revit.DB.XYZ(0, 0, 10);
-         var ptB = new Autodesk.Revit.DB.XYZ(100, 0, 10);
+         var ptA = new XYZ(0, 0, 10);
+         var ptB = new XYZ(100, 0, 10);
          var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(100, 0, 10);
-         ptB = new Autodesk.Revit.DB.XYZ(100, 100, 10);
+         ptA = new XYZ(100, 0, 10);
+         ptB = new XYZ(100, 100, 10);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(100, 100, 10);
-         ptB = new Autodesk.Revit.DB.XYZ(0, 0, 10);
+         ptA = new XYZ(100, 100, 10);
+         ptB = new XYZ(0, 0, 10);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
          // Create axis for revolve form
-         ptA = new Autodesk.Revit.DB.XYZ(-5, 0, 10);
-         ptB = new Autodesk.Revit.DB.XYZ(-5, 10, 10);
+         ptA = new XYZ(-5, 0, 10);
+         ptB = new XYZ(-5, 10, 10);
          var axis = FormUtils.MakeLine(commandData.Application, ptA, ptB, norm);
          axis.ChangeToReferenceLine();
 
@@ -224,7 +219,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          transaction.Commit();
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion
    }
@@ -254,7 +249,7 @@ namespace Revit.SDK.Samples.NewForm.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var cdata = commandData;
          var app = commandData.Application.Application;
@@ -266,35 +261,35 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          // Create first profile
          var ref_ar = new ReferenceArray();
-         var ptA = new Autodesk.Revit.DB.XYZ(10, 10, 0);
-         var ptB = new Autodesk.Revit.DB.XYZ(50, 10, 0);
+         var ptA = new XYZ(10, 10, 0);
+         var ptB = new XYZ(50, 10, 0);
          var modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(50, 10, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(10, 50, 0);
+         ptA = new XYZ(50, 10, 0);
+         ptB = new XYZ(10, 50, 0);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(10, 50, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(10, 10, 0);
+         ptA = new XYZ(10, 50, 0);
+         ptB = new XYZ(10, 10, 0);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
 
          // Create second profile
          var ref_ar2 = new ReferenceArray();
-         ptA = new Autodesk.Revit.DB.XYZ(10, 10, 90);
-         ptB = new Autodesk.Revit.DB.XYZ(80, 10, 90);
+         ptA = new XYZ(10, 10, 90);
+         ptB = new XYZ(80, 10, 90);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar2.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(80, 10, 90);
-         ptB = new Autodesk.Revit.DB.XYZ(10, 50, 90);
+         ptA = new XYZ(80, 10, 90);
+         ptB = new XYZ(10, 50, 90);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar2.Append(modelcurve.GeometryCurve.Reference);
 
-         ptA = new Autodesk.Revit.DB.XYZ(10, 50, 90);
-         ptB = new Autodesk.Revit.DB.XYZ(10, 10, 90);
+         ptA = new XYZ(10, 50, 90);
+         ptB = new XYZ(10, 10, 90);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          ref_ar2.Append(modelcurve.GeometryCurve.Reference);
 
@@ -305,8 +300,8 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          // Create path for swept blend form
          var path = new ReferenceArray();
-         ptA = new Autodesk.Revit.DB.XYZ(10, 10, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(10, 10, 90);
+         ptA = new XYZ(10, 10, 0);
+         ptB = new XYZ(10, 10, 90);
          modelcurve = FormUtils.MakeLine(commandData.Application, ptA, ptB);
          path.Append(modelcurve.GeometryCurve.Reference);
 
@@ -314,7 +309,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          transaction.Commit();
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion
    }
@@ -344,7 +339,7 @@ namespace Revit.SDK.Samples.NewForm.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var cdata = commandData;
          var app = commandData.Application.Application;
@@ -362,9 +357,9 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          var y = 100;
          var x = 50;
-         var ptA = new Autodesk.Revit.DB.XYZ(-x, y, 0);
-         var ptB = new Autodesk.Revit.DB.XYZ(x, y, 0);
-         var ptC = new Autodesk.Revit.DB.XYZ(0, y + 10, 10);
+         var ptA = new XYZ(-x, y, 0);
+         var ptB = new XYZ(x, y, 0);
+         var ptC = new XYZ(0, y + 10, 10);
          var modelcurve = FormUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
          ref_ar_ar.Append(ref_ar);
@@ -374,9 +369,9 @@ namespace Revit.SDK.Samples.NewForm.CS
          ref_ar = new ReferenceArray();
 
          y = 40;
-         ptA = new Autodesk.Revit.DB.XYZ(-x, y, 5);
-         ptB = new Autodesk.Revit.DB.XYZ(x, y, 5);
-         ptC = new Autodesk.Revit.DB.XYZ(0, y, 25);
+         ptA = new XYZ(-x, y, 5);
+         ptB = new XYZ(x, y, 5);
+         ptC = new XYZ(0, y, 25);
          modelcurve = FormUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
          ref_ar_ar.Append(ref_ar);
@@ -385,9 +380,9 @@ namespace Revit.SDK.Samples.NewForm.CS
          ref_ar = new ReferenceArray();
 
          y = -20;
-         ptA = new Autodesk.Revit.DB.XYZ(-x, y, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(x, y, 0);
-         ptC = new Autodesk.Revit.DB.XYZ(0, y, 15);
+         ptA = new XYZ(-x, y, 0);
+         ptB = new XYZ(x, y, 0);
+         ptC = new XYZ(0, y, 15);
          modelcurve = FormUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
          ref_ar_ar.Append(ref_ar);
@@ -396,9 +391,9 @@ namespace Revit.SDK.Samples.NewForm.CS
          ref_ar = new ReferenceArray();
 
          y = -60;
-         ptA = new Autodesk.Revit.DB.XYZ(-x, y, 0);
-         ptB = new Autodesk.Revit.DB.XYZ(x, y, 0);
-         ptC = new Autodesk.Revit.DB.XYZ(0, y + 10, 20);
+         ptA = new XYZ(-x, y, 0);
+         ptB = new XYZ(x, y, 0);
+         ptC = new XYZ(0, y + 10, 20);
          modelcurve = FormUtils.MakeArc(commandData.Application, ptA, ptB, ptC);
          ref_ar.Append(modelcurve.GeometryCurve.Reference);
          ref_ar_ar.Append(ref_ar);
@@ -409,7 +404,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          transaction.Commit();
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion
    }
@@ -428,7 +423,7 @@ namespace Revit.SDK.Samples.NewForm.CS
       /// <param name="ptB">point b</param>
       /// <param name="ptC">point c</param>
       /// <returns></returns>
-      public static ModelCurve MakeArc(UIApplication app, Autodesk.Revit.DB.XYZ ptA, Autodesk.Revit.DB.XYZ ptB, Autodesk.Revit.DB.XYZ ptC)
+      public static ModelCurve MakeArc(UIApplication app, XYZ ptA, XYZ ptB, XYZ ptC)
       {
          var doc = app.ActiveUIDocument.Document;
          var arc = Arc.Create(ptA, ptB, ptC);
@@ -455,13 +450,13 @@ namespace Revit.SDK.Samples.NewForm.CS
       /// <param name="ptA">start point</param>
       /// <param name="ptB">end point</param>
       /// <returns></returns>
-      public static ModelCurve MakeLine(UIApplication app, Autodesk.Revit.DB.XYZ ptA, Autodesk.Revit.DB.XYZ ptB)
+      public static ModelCurve MakeLine(UIApplication app, XYZ ptA, XYZ ptB)
       {
          var doc = app.ActiveUIDocument.Document;
          // Create plane by the points
          var line = Line.CreateBound(ptA, ptB);
          var norm = ptA.CrossProduct(ptB);
-         if (norm.GetLength() == 0) norm = Autodesk.Revit.DB.XYZ.BasisZ;
+         if (norm.GetLength() == 0) norm = XYZ.BasisZ;
          var plane = Plane.CreateByNormalAndOrigin(norm, ptB);
          var skplane = SketchPlane.Create(doc, plane);
          // Create line here
@@ -476,7 +471,7 @@ namespace Revit.SDK.Samples.NewForm.CS
       /// <param name="ptA">start point</param>
       /// <param name="ptB">end point</param>
       /// <returns></returns>
-      public static ModelCurve MakeLine(UIApplication app, Autodesk.Revit.DB.XYZ ptA, Autodesk.Revit.DB.XYZ ptB, Autodesk.Revit.DB.XYZ norm)
+      public static ModelCurve MakeLine(UIApplication app, XYZ ptA, XYZ ptB, XYZ norm)
       {
          var doc = app.ActiveUIDocument.Document;
          // Create plane by the points

@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Windows.Forms;
-using System.Collections;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -101,7 +96,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         ///   Otherwise returns Succeeded or Failed depending on whether
         ///   a face on a wall or face-wall was picked as expected
         /// </returns>
-        private Result PickWallFace(UIDocument uidoc, out String sref)
+        private Result PickWallFace(UIDocument uidoc, out string sref)
         {
             sref = null;
             Reference faceref = null;

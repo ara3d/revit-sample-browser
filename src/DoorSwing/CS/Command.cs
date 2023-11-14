@@ -20,10 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Windows.Forms;
@@ -32,7 +28,6 @@ using System.Windows.Forms;
 namespace Revit.SDK.Samples.DoorSwing.CS
 {
    /// <summary>
-   /// A ExternalCommand class inherited IExternalCommand interface.
    /// This command will add needed shared parameters and initialize them. 
    /// It will initialize door opening parameter based on family's actual geometry and 
    /// country's standard. It will initialize each door instance's opening, ToRoom, FromRoom and 
@@ -45,27 +40,11 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    {
       #region IExternalCommand Members
 
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, 
+      public Result Execute(ExternalCommandData commandData, 
                                              ref string message, 
                                              ElementSet elements)
       {
-         var returnCode = Autodesk.Revit.UI.Result.Cancelled;  
+         var returnCode = Result.Cancelled;  
 
          var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Initialize Command");
          tran.Start();
@@ -97,10 +76,10 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          {
             // if there is anything wrong, give error information and return failed.
             message    = ex.Message;
-            returnCode = Autodesk.Revit.UI.Result.Failed;
+            returnCode = Result.Failed;
          }
 
-         if (Autodesk.Revit.UI.Result.Succeeded == returnCode)
+         if (Result.Succeeded == returnCode)
          {
             tran.Commit();
          }
@@ -125,25 +104,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    {
       #region IExternalCommand Members
 
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
-         var returnCode = Autodesk.Revit.UI.Result.Succeeded;
+         var returnCode = Result.Succeeded;
          var app = commandData.Application;
          var doc = app.ActiveUIDocument;
          var tran = new Transaction(doc.Document, "Update Parameters Command");
@@ -169,10 +132,10 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          {
             // if there is anything wrong, give error information and return failed.
             message = ex.Message;
-            returnCode = Autodesk.Revit.UI.Result.Failed;
+            returnCode = Result.Failed;
          }
 
-         if (Autodesk.Revit.UI.Result.Succeeded == returnCode)
+         if (Result.Succeeded == returnCode)
          {
             tran.Commit();
          }
@@ -197,25 +160,9 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    {
       #region IExternalCommand Members
 
-      /// <summary>
-      /// Implement this method as an external command for Revit.
-      /// </summary>
-      /// <param name="commandData">An object that is passed to the external application 
-      /// which contains data related to the command, 
-      /// such as the application object and active view.</param>
-      /// <param name="message">A message that can be set by the external application 
-      /// which will be displayed if a failure or cancellation is returned by 
-      /// the external command.</param>
-      /// <param name="elements">A set of elements to which the external application 
-      /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-      /// <returns>Return the status of the external command. 
-      /// A result of Succeeded means that the API external method functioned as expected. 
-      /// Cancelled can be used to signify that the user cancelled the external operation 
-      /// at some point. Failure should be returned if the application is unable to proceed with 
-      /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
-         var returnCode = Autodesk.Revit.UI.Result.Succeeded;
+         var returnCode = Result.Succeeded;
          var app = commandData.Application;
          var doc = app.ActiveUIDocument;
          var tran = new Transaction(doc.Document, "Update Geometry Command");
@@ -237,16 +184,16 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                DoorSwingData.UpdateDoorsGeometry(doc.Document, true);
             }
 
-            returnCode =  Autodesk.Revit.UI.Result.Succeeded;
+            returnCode =  Result.Succeeded;
          }
          catch (Exception ex)
          {
             // if there is anything wrong, give error information and return failed.
             message = ex.Message;
-            returnCode = Autodesk.Revit.UI.Result.Failed;
+            returnCode = Result.Failed;
          }
 
-         if (Autodesk.Revit.UI.Result.Succeeded == returnCode)
+         if (Result.Succeeded == returnCode)
          {
             tran.Commit();
          }

@@ -21,11 +21,8 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
@@ -118,13 +115,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <summary>
         /// Get the tool type
         /// </summary>
-        public virtual ToolType ToolType
-        {
-            get
-            {
-                return m_type;
-            }
-        }
+        public virtual ToolType ToolType => m_type;
 
         /// <summary>
         /// Right mouse click event handler  
@@ -161,7 +152,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="e">Mouse event argument</param>
         public virtual void OnMidMouseDown(Graphics graphic, MouseEventArgs e)
         {
-            this.m_points.Clear();
+            m_points.Clear();
         }
 
         /// <summary>

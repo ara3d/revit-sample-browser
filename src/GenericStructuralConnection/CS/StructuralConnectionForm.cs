@@ -21,12 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.GenericStructuralConnection.CS
@@ -51,25 +45,25 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (this.rbCreateGeneric.Checked)
+            if (rbCreateGeneric.Checked)
                 UserOption = CommandOption.CreateGeneric;
-            else if (this.rbDeleteGeneric.Checked)
+            else if (rbDeleteGeneric.Checked)
                 UserOption = CommandOption.DeleteGeneric;
-            else if (this.rbReadGeneric.Checked)
+            else if (rbReadGeneric.Checked)
                 UserOption = CommandOption.ReadGeneric;
-            else if (this.rbDeleteGeneric.Checked)
+            else if (rbDeleteGeneric.Checked)
                 UserOption = CommandOption.DeleteGeneric;
-            else if (this.rbUpdateGeneric.Checked)
+            else if (rbUpdateGeneric.Checked)
                 UserOption = CommandOption.UpdateGeneric;
-            else if (this.rbCreateDetailed.Checked)
+            else if (rbCreateDetailed.Checked)
                 UserOption = CommandOption.CreateDetailed;
-            else if (this.rbChangedDetail.Checked)
+            else if (rbChangedDetail.Checked)
                 UserOption = CommandOption.ChangeDetailed;
-            else if (this.rbCopyDetailed.Checked)
+            else if (rbCopyDetailed.Checked)
                 UserOption = CommandOption.CopyDetailed;
-            else if (this.rbMatchPropDetailed.Checked)
+            else if (rbMatchPropDetailed.Checked)
                 UserOption = CommandOption.MatchPropDetailed;
-            else if (this.rbResetDetailed.Checked)
+            else if (rbResetDetailed.Checked)
                 UserOption = CommandOption.ResetDetailed;
         }
     }

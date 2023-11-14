@@ -22,7 +22,6 @@
 
 using System;
 using Autodesk.Revit.DB;
-using Autodesk.Revit;
 using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
@@ -76,10 +75,10 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          var curveArray = m_appCreator.NewCurveArray();
          try
          {
-            var p0 = new Autodesk.Revit.DB.XYZ(left, y_coordinate, top);
-            var p1 = new Autodesk.Revit.DB.XYZ(right, y_coordinate, top);
-            var p2 = new Autodesk.Revit.DB.XYZ(right, y_coordinate, bottom);
-            var p3 = new Autodesk.Revit.DB.XYZ(left, y_coordinate, bottom);
+            var p0 = new XYZ(left, y_coordinate, top);
+            var p1 = new XYZ(right, y_coordinate, top);
+            var p2 = new XYZ(right, y_coordinate, bottom);
+            var p3 = new XYZ(left, y_coordinate, bottom);
             var line1 = Line.CreateBound(p0, p1);
             var line2 = Line.CreateBound(p1, p2);
             var line3 = Line.CreateBound(p2, p3);
@@ -109,12 +108,12 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          Line temp;
          var counter = 0;
          var curveArr = m_appCreator.NewCurveArray();
-         var offsetx = new Autodesk.Revit.DB.XYZ(offset, 0, 0);
-         var offsetz = new Autodesk.Revit.DB.XYZ(0, 0, offset);
-         var p0 = new Autodesk.Revit.DB.XYZ();
-         var p1 = new Autodesk.Revit.DB.XYZ(); ;
-         var p2 = new Autodesk.Revit.DB.XYZ();
-         var p3 = new Autodesk.Revit.DB.XYZ();
+         var offsetx = new XYZ(offset, 0, 0);
+         var offsetz = new XYZ(0, 0, offset);
+         var p0 = new XYZ();
+         var p1 = new XYZ(); ;
+         var p2 = new XYZ();
+         var p3 = new XYZ();
          foreach (Curve curve in origin)
          {
             temp = curve as Line;

@@ -22,12 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.ApplicationServices;
 using System.IO;
 
 namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
@@ -37,7 +33,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
     {
         #region IExternalCommand Members
 
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
 
@@ -54,7 +50,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
     {
         #region IExternalCommand Members
 
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
 
@@ -124,7 +120,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
     {
         #region IExternalCommand Members
 
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
 
@@ -141,7 +137,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
     {
         #region IExternalCommand Members
 
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
 
@@ -207,7 +203,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
     {
         #region IExternalCommand Members
 
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
 
@@ -278,10 +274,10 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
         }
 
    
-        private String GetRandomSharedParameterFileName()
+        private string GetRandomSharedParameterFileName()
         {
 
-            var randomFileName = System.IO.Path.GetRandomFileName();
+            var randomFileName = Path.GetRandomFileName();
             var fileRoot = Path.GetFileNameWithoutExtension(randomFileName);
             var spFile = Path.ChangeExtension(randomFileName, "txt");
             var filePath = Path.Combine(@"c:\tmp\Meridian\", spFile);

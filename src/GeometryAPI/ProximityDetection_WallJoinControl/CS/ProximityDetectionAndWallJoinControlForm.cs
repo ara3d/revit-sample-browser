@@ -22,15 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
 {
@@ -42,7 +37,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
       /// <summary>
       /// revit document
       /// </summary>
-      private Autodesk.Revit.DB.Document m_doc;
+      private Document m_doc;
       /// <summary>
       /// The object that is responsible for proximity detection
       /// </summary>
@@ -58,7 +53,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
       /// <param name="doc">Revit document</param>
       /// <param name="proximityDetection">The object that is responsible for proximity detection</param>
       /// <param name="walljoinControl">The object that is responsible for controlling the joint of walls</param>
-      public ProximityDetectionAndWallJoinControlForm(Autodesk.Revit.DB.Document doc, 
+      public ProximityDetectionAndWallJoinControlForm(Document doc, 
          ProximityDetection proximityDetection, 
          WallJoinControl walljoinControl)
       {
@@ -74,7 +69,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
       /// </summary>
       private void ClearTreeviewData()
       {
-         this.treeViewResults.Nodes.Clear();
+         treeViewResults.Nodes.Clear();
       }
 
       /// <summary>
@@ -84,11 +79,11 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
       /// <param name="element">The given XML</param>
       private void RefreshTreeviewData(string operation, XElement element)
       {
-         this.treeViewResults.Nodes.Clear();
+         treeViewResults.Nodes.Clear();
 
          //treeView.Nodes adds first level node
          var node = new TreeNode(operation);
-         this.treeViewResults.Nodes.Add(node);
+         treeViewResults.Nodes.Add(node);
 
          // append node
          var spaceNode = XElementToTreeNode(element);
@@ -202,7 +197,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
          }
 
          // expand all child
-         this.treeViewResults.ExpandAll();
+         treeViewResults.ExpandAll();
 
          tran.Commit();
       }

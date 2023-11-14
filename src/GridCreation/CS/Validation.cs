@@ -21,8 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Resources;
 using System.Collections;
@@ -111,7 +109,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <param name="typeName">Type of length</param>
         /// <param name="canBeZero">Whether the length can be zero</param>
         /// <returns>Whether the length value is validated</returns>
-        public static bool ValidateLength(Control lengthCtrl, String typeName, bool canBeZero)
+        public static bool ValidateLength(Control lengthCtrl, string typeName, bool canBeZero)
         {
             if (!ValidateNotNull(lengthCtrl, typeName))
             {
@@ -187,7 +185,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 return false;
             }
 
-            if (Math.Abs(Convert.ToDouble(startDegree.Text) - Convert.ToDouble(endDegree.Text)) <= Double.Epsilon)
+            if (Math.Abs(Convert.ToDouble(startDegree.Text) - Convert.ToDouble(endDegree.Text)) <= double.Epsilon)
             {
                 ShowWarningMessage(resManager.GetString("DegreesAreTooClose"),
                                    Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
@@ -254,7 +252,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             }
 
             var labelToBeValidated = labelCtrl.Text;
-            foreach (String label in allLabels)
+            foreach (string label in allLabels)
             {
                 if (label == labelToBeValidated)
                 {
@@ -274,9 +272,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// <param name="control">Control contains information needs to be checked</param>
         /// <param name="typeName">Type of information</param>
         /// <returns>Whether the value is not null</returns>
-        public static bool ValidateNotNull(Control control, String typeName)
+        public static bool ValidateNotNull(Control control, string typeName)
         {
-            if (String.IsNullOrEmpty(control.Text.TrimStart(' ').TrimEnd(' ')))
+            if (string.IsNullOrEmpty(control.Text.TrimStart(' ').TrimEnd(' ')))
             {
                 ShowWarningMessage(resManager.GetString(typeName + "CannotBeNull"),
                                    Properties.Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
@@ -311,7 +309,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="caption">title of message box</param>
-        public static void ShowWarningMessage(String message, String caption)
+        public static void ShowWarningMessage(string message, string caption)
         {
             TaskDialog.Show(caption, message, TaskDialogCommonButtons.Ok);
         }

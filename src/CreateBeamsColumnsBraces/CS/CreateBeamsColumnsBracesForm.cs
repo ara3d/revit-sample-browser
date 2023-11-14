@@ -22,9 +22,6 @@
 
 
 using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 using Autodesk.Revit.UI;
@@ -34,32 +31,32 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
     /// <summary>
     /// UI
     /// </summary>
-    public class CreateBeamsColumnsBracesForm : System.Windows.Forms.Form
+    public class CreateBeamsColumnsBracesForm : Form
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.Container components = null;
-        private System.Windows.Forms.Button OKButton;
+        private Button OKButton;
         private System.Windows.Forms.TextBox XTextBox;
         private System.Windows.Forms.TextBox DistanceTextBox;
         private System.Windows.Forms.TextBox YTextBox;
         private System.Windows.Forms.ComboBox columnComboBox;
         private System.Windows.Forms.ComboBox beamComboBox;
         private System.Windows.Forms.ComboBox braceComboBox;
-        private System.Windows.Forms.Button cancelButton;
+        private Button cancelButton;
         private System.Windows.Forms.TextBox floornumberTextBox;
-        private System.Windows.Forms.Label columnLabel;
-        private System.Windows.Forms.Label beamLabel;
-        private System.Windows.Forms.Label braceLabel;
-        private System.Windows.Forms.Label DistanceLabel;
-        private System.Windows.Forms.Label YLabel;
-        private System.Windows.Forms.Label XLabel;
-        private System.Windows.Forms.Label floornumberLabel;
-        private System.Windows.Forms.Label unitLabel;
+        private Label columnLabel;
+        private Label beamLabel;
+        private Label braceLabel;
+        private Label DistanceLabel;
+        private Label YLabel;
+        private Label XLabel;
+        private Label floornumberLabel;
+        private Label unitLabel;
 
         // To store the datas
-        Command m_dataBuffer = null;
+        Command m_dataBuffer;
 
         /// <summary>
         /// constructor
@@ -298,15 +295,15 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// </summary>
         private void TextBoxRefresh()
         {
-            this.XTextBox.Text = "2";
-            this.YTextBox.Text = "2";
-            this.DistanceTextBox.Text = 20.0.ToString("0.0");
-            this.floornumberTextBox.Text = "1";
+            XTextBox.Text = "2";
+            YTextBox.Text = "2";
+            DistanceTextBox.Text = 20.0.ToString("0.0");
+            floornumberTextBox.Text = "1";
         }
 
-        private void CreateBeamsColumnsBracesForm_Load(object sender, System.EventArgs e)
+        private void CreateBeamsColumnsBracesForm_Load(object sender, EventArgs e)
         {
-            this.TextBoxRefresh();
+            TextBoxRefresh();
 
             var notLoadSymbol = false;
             if (0 == m_dataBuffer.ColumnMaps.Count)
@@ -322,22 +319,22 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
 
             if (notLoadSymbol)
             {
-                this.DialogResult = DialogResult.Cancel;
-                this.Close();
+                DialogResult = DialogResult.Cancel;
+                Close();
                 return;
             }
 
-            this.columnComboBox.DataSource = m_dataBuffer.ColumnMaps;
-            this.columnComboBox.DisplayMember = "SymbolName";
-            this.columnComboBox.ValueMember = "ElementType";
+            columnComboBox.DataSource = m_dataBuffer.ColumnMaps;
+            columnComboBox.DisplayMember = "SymbolName";
+            columnComboBox.ValueMember = "ElementType";
 
-            this.beamComboBox.DataSource = m_dataBuffer.BeamMaps;
-            this.beamComboBox.DisplayMember = "SymbolName";
-            this.beamComboBox.ValueMember = "ElementType";
+            beamComboBox.DataSource = m_dataBuffer.BeamMaps;
+            beamComboBox.DisplayMember = "SymbolName";
+            beamComboBox.ValueMember = "ElementType";
 
-            this.braceComboBox.DataSource = m_dataBuffer.BraceMaps;
-            this.braceComboBox.DisplayMember = "SymbolName";
-            this.braceComboBox.ValueMember = "ElementType";
+            braceComboBox.DataSource = m_dataBuffer.BraceMaps;
+            braceComboBox.DisplayMember = "SymbolName";
+            braceComboBox.ValueMember = "ElementType";
         }
 
         /// <summary>
@@ -345,14 +342,14 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OKButton_Click(object sender, System.EventArgs e)
+        private void OKButton_Click(object sender, EventArgs e)
         {
             //check whether the input is correct and create elements
             try
             {
-                var xNumber = int.Parse(this.XTextBox.Text);
-                var yNumber = int.Parse(this.YTextBox.Text);
-                var distance = double.Parse(this.DistanceTextBox.Text);
+                var xNumber = int.Parse(XTextBox.Text);
+                var yNumber = int.Parse(YTextBox.Text);
+                var distance = double.Parse(DistanceTextBox.Text);
                 var columnType = columnComboBox.SelectedValue;
                 var beamType = beamComboBox.SelectedValue;
                 var braceType = braceComboBox.SelectedValue;
@@ -361,8 +358,8 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
                 m_dataBuffer.CreateMatrix(xNumber, yNumber, distance);
                 m_dataBuffer.AddInstance(columnType, beamType, braceType, floorNumber);
 
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
             catch (Exception)
             {
@@ -375,10 +372,10 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void cancelButton_Click(object sender, System.EventArgs e)
+        private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         /// <summary>
@@ -391,29 +388,29 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var distance = 0.1;
             try
             {
-                distance = double.Parse(this.DistanceTextBox.Text);
+                distance = double.Parse(DistanceTextBox.Text);
             }
             catch (Exception)
             {
                 TaskDialog.Show("Revit", "Please enter a value larger than 5 and less than 30000.");
-                this.DistanceTextBox.Text = "";
-                this.DistanceTextBox.Focus();
+                DistanceTextBox.Text = "";
+                DistanceTextBox.Focus();
                 return;
             }
 
             if (distance <= 5)
             {
                 TaskDialog.Show("Revit", "Please enter a value larger than 5.");
-                this.DistanceTextBox.Text = "";
-                this.DistanceTextBox.Focus();
+                DistanceTextBox.Text = "";
+                DistanceTextBox.Focus();
                 return;
             }
 
             if (distance > 30000)
             {
                 TaskDialog.Show("Revit", "Please enter a value less than 30000.");
-                this.DistanceTextBox.Text = "";
-                this.DistanceTextBox.Focus();
+                DistanceTextBox.Text = "";
+                DistanceTextBox.Focus();
                 return;
             }
         }
@@ -428,17 +425,17 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var xNumber = 1;
             try
             {
-                xNumber = int.Parse(this.XTextBox.Text);
+                xNumber = int.Parse(XTextBox.Text);
             }
             catch (Exception)
             {
                 TaskDialog.Show("Revit", "Please input an integer for X direction between 1 to 20.");
-                this.XTextBox.Text = "";
+                XTextBox.Text = "";
             }
             if (xNumber < 1 || xNumber > 20)
             {
                 TaskDialog.Show("Revit", "Please input an integer for X direction between 1 to 20.");
-                this.XTextBox.Text = "";
+                XTextBox.Text = "";
             }
         }
 
@@ -452,17 +449,17 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             var yNumber = 1;
             try
             {
-                yNumber = int.Parse(this.YTextBox.Text);
+                yNumber = int.Parse(YTextBox.Text);
             }
             catch (Exception)
             {
                 TaskDialog.Show("Revit", "Please input an integer for Y direction between 1 to 20.");
-                this.YTextBox.Text = "";
+                YTextBox.Text = "";
             }
             if (yNumber < 1 || yNumber > 20)
             {
                 TaskDialog.Show("Revit", "Please input an integer for Y direction between 1 to 20.");
-                this.YTextBox.Text = "";
+                YTextBox.Text = "";
             }
         }
 
@@ -481,12 +478,12 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             catch (Exception)
             {
                 TaskDialog.Show("Revit", "Please input an integer for the number of floors between 1 to 10.");
-                this.floornumberTextBox.Text = "";
+                floornumberTextBox.Text = "";
             }
             if (floorNumber < 1 || floorNumber > 10)
             {
                 TaskDialog.Show("Revit", "Please input an integer for the number of floors between 1 to 10.");
-                this.floornumberTextBox.Text = "";
+                floornumberTextBox.Text = "";
             }
         }
     }

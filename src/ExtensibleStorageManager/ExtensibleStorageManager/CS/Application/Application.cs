@@ -20,8 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace ExtensibleStorageManager
@@ -47,7 +45,7 @@ namespace ExtensibleStorageManager
         {
 
             var rp = application.CreateRibbonPanel("Extensible Storage Manager");
-            var currentAssembly = System.Reflection.Assembly.GetAssembly(this.GetType()).Location;
+            var currentAssembly = System.Reflection.Assembly.GetAssembly(GetType()).Location;
         
             var pb = rp.AddItem(new PushButtonData("Extensible Storage Manager", "Extensible Storage Manager", currentAssembly, "ExtensibleStorageManager.Command")) as PushButton;
           
@@ -62,8 +60,8 @@ namespace ExtensibleStorageManager
        /// </summary>
         public static string LastGuid
         {
-           get { return m_lastGuid; }
-           set { m_lastGuid = value; }
+           get => m_lastGuid;
+           set => m_lastGuid = value;
         }
         private static string m_lastGuid;
 

@@ -21,11 +21,6 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
@@ -72,12 +67,12 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         private void MainForm_Load(object sender, EventArgs e)
         {
             // levelComboBox
-            this.levelComboBox.DataSource = m_dataManager.Levels;
-            this.levelComboBox.DisplayMember = "Name";
-            this.levelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            levelComboBox.DataSource = m_dataManager.Levels;
+            levelComboBox.DisplayMember = "Name";
+            levelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             // EditZoneButton
-            this.editZoneButton.Enabled = false;
+            editZoneButton.Enabled = false;
         }
 
         /// <summary>
@@ -98,7 +93,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         /// <param name="e"></param>
         private void editZoneButton_Click(object sender, EventArgs e)
         {
-            var zoneNode = this.zonesTreeView.SelectedNode as ZoneNode;
+            var zoneNode = zonesTreeView.SelectedNode as ZoneNode;
             if (zoneNode != null)
             {
                 using (var zoneEditorForm = new ZoneEditorForm(m_dataManager, zoneNode))
@@ -107,7 +102,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
                 }
             }
 
-            Update(this.levelComboBox.SelectedItem as Level);
+            Update(levelComboBox.SelectedItem as Level);
         }   
 
         /// <summary>
@@ -116,8 +111,8 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         /// <param name="level"></param>
         private void Update(Level level)
         {
-            this.spacesListView.Items.Clear();
-            this.zonesTreeView.Nodes.Clear();
+            spacesListView.Items.Clear();
+            zonesTreeView.Nodes.Clear();
             
             // DataManager
             m_dataManager.Update(level);
@@ -126,23 +121,23 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             var spaces = m_dataManager.GetSpaces();
             foreach (var space in spaces)
             {
-                this.spacesListView.Items.Add(new SpaceItem(space));
+                spacesListView.Items.Add(new SpaceItem(space));
             }
 
             // zonesTreeView
             var zones = m_dataManager.GetZones();
             foreach (var zone in zones)
             {
-                var nodeIndex = this.zonesTreeView.Nodes.Add(new ZoneNode(zone));
+                var nodeIndex = zonesTreeView.Nodes.Add(new ZoneNode(zone));
                 foreach (Space spaceInZone in zone.Spaces)
                 {
-                    this.zonesTreeView.Nodes[nodeIndex].Nodes.Add(new SpaceNode(spaceInZone));
+                    zonesTreeView.Nodes[nodeIndex].Nodes.Add(new SpaceNode(spaceInZone));
                 }
             }
-            this.zonesTreeView.ExpandAll();
+            zonesTreeView.ExpandAll();
 
-            this.zonesTreeView.Update();
-            this.spacesListView.Update();          
+            zonesTreeView.Update();
+            spacesListView.Update();          
         }
 
         /// <summary>
@@ -152,7 +147,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         /// <param name="e"></param>
         private void createZoneButton_Click(object sender, EventArgs e)
         {
-            this.m_dataManager.CreateZone();
+            m_dataManager.CreateZone();
             Update(levelComboBox.SelectedItem as Level);
         }
 
@@ -160,11 +155,11 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
         {
             if (e.Node is ZoneNode)
             {
-                this.editZoneButton.Enabled = true;
+                editZoneButton.Enabled = true;
             }
             else
             {
-                this.editZoneButton.Enabled = false;
+                editZoneButton.Enabled = false;
             }
         }
     }

@@ -21,9 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
@@ -35,7 +33,7 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
    public class SpatialFieldGradient : IExternalCommand
    {
       static AddInId m_appId = new AddInId(new Guid("CF099951-E66B-4a35-BF7F-2959CA87A42D"));
-      public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var cdata = commandData;
          var app = commandData.Application.Application;

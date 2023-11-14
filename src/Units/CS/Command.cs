@@ -22,10 +22,6 @@
 
 using System;
 using System.Windows.Forms;
-using System.Collections;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -70,7 +66,7 @@ namespace Revit.SDK.Samples.Units.CS
                    var result = displayForm.ShowDialog();
                    if (DialogResult.OK == result)
                    {
-                      using (var tran = new Autodesk.Revit.DB.Transaction(document, "SetUnits"))
+                      using (var tran = new Transaction(document, "SetUnits"))
                       {
                          tran.Start();
                          document.SetUnits(units);
@@ -79,7 +75,7 @@ namespace Revit.SDK.Samples.Units.CS
                    }
                    else
                    {
-                      return Autodesk.Revit.UI.Result.Cancelled;
+                      return Result.Cancelled;
                    }
                 }
 

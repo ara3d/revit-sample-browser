@@ -20,17 +20,11 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB.Architecture;
 
 namespace Revit.SDK.Samples.AutoTagRooms.CS
@@ -66,35 +60,17 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
         /// <summary>
         /// Get all the rooms in the current document
         /// </summary>
-        public ReadOnlyCollection<Room> Rooms
-        {
-            get
-            {
-                return new ReadOnlyCollection<Room>(m_rooms);
-            }
-        }
+        public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
 
         /// <summary>
         /// Get all the levels which have rooms in the current document
         /// </summary>
-        public ReadOnlyCollection<Level> Levels
-        {
-            get
-            {
-                return new ReadOnlyCollection<Level>(m_levels);
-            }
-        }
+        public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levels);
 
         /// <summary>
         /// Get all the RoomTagTypes in the current document
         /// </summary>
-        public ReadOnlyCollection<RoomTagType> RoomTagTypes
-        {
-            get
-            {
-                return new ReadOnlyCollection<RoomTagType>(m_roomTagTypes);
-            }
-        }
+        public ReadOnlyCollection<RoomTagType> RoomTagTypes => new ReadOnlyCollection<RoomTagType>(m_roomTagTypes);
 
         /// <summary>
         /// Find all the rooms in the current document
@@ -172,7 +148,7 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
                 {
                     // Create a specified type RoomTag to tag a room
                     var locationPoint = tmpRoom.Location as LocationPoint;
-                    var point = new Autodesk.Revit.DB.UV(locationPoint.Point.X, locationPoint.Point.Y);
+                    var point = new UV(locationPoint.Point.X, locationPoint.Point.Y);
                     var newTag = m_revit.ActiveUIDocument.Document.Create.NewRoomTag(new LinkElementId(tmpRoom.Id), point, null);
                     newTag.RoomTagType = tagType;
 

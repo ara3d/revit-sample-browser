@@ -21,10 +21,7 @@
 //
 
 using System;
-using System.IO;
 using System.Windows.Forms;
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
@@ -42,7 +39,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class RotateFramingObjects : IExternalCommand
    {
-      Autodesk.Revit.UI.UIApplication m_revit = null;    // application of Revit
+      UIApplication m_revit;    // application of Revit
       double m_receiveRotationTextBox;            // receive change of Angle     
       bool m_isAbsoluteChecked;                    // true if moving absolute
       const string AngleDefinitionName = "Cross-Section Rotation";
@@ -52,14 +49,8 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
       /// </summary>
       public double ReceiveRotationTextBox
       {
-         get
-         {
-            return m_receiveRotationTextBox;
-         }
-         set
-         {
-            m_receiveRotationTextBox = value;
-         }
+         get => m_receiveRotationTextBox;
+         set => m_receiveRotationTextBox = value;
       }
 
       /// <summary>
@@ -67,14 +58,8 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
       /// </summary>
       public bool IsAbsoluteChecked
       {
-         get
-         {
-            return m_isAbsoluteChecked;
-         }
-         set
-         {
-            m_isAbsoluteChecked = value;
-         }
+         get => m_isAbsoluteChecked;
+         set => m_isAbsoluteChecked = value;
       }
 
       /// <summary>
@@ -99,8 +84,8 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
       /// Cancelled can be used to signify that the user cancelled the external operation 
       /// at some point. Failure should be returned if the application is unable to proceed with 
       /// the operation.</returns>
-      public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData commandData,
-          ref string message, Autodesk.Revit.DB.ElementSet elements)
+      public Result Execute(ExternalCommandData commandData,
+          ref string message, ElementSet elements)
       {
          var revit = commandData.Application;
 
@@ -120,7 +105,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
          {
             // nothing selected
             message = "Please select some beams, braces or columns.";
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
          else if (1 != selection.Size)
          {
@@ -129,19 +114,19 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
             {
                if (DialogResult.OK != displayForm.ShowDialog())
                {
-                  return Autodesk.Revit.UI.Result.Cancelled;
+                  return Result.Cancelled;
                }
             }
             catch (Exception)
             {
-               return Autodesk.Revit.UI.Result.Failed;
+               return Result.Failed;
             }
             //    return Autodesk.Revit.UI.Result.Succeeded;
             // more than one object selected            
          }
 
          // if the selected elements are familyInstances, try to get their existing rotation
-         foreach (Autodesk.Revit.DB.Element e in selection)
+         foreach (Element e in selection)
          {
             var familyComponent = e as FamilyInstance;
             if (familyComponent != null)
@@ -150,7 +135,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
             || StructuralType.Brace == familyComponent.StructuralType)
                {
                   // selection is a beam or brace
-                  var returnValue = this.FindParameter(AngleDefinitionName, familyComponent);
+                  var returnValue = FindParameter(AngleDefinitionName, familyComponent);
                   displayForm.rotationTextBox.Text = returnValue.ToString();
                }
                else if (StructuralType.Column == familyComponent.StructuralType)
@@ -167,7 +152,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                   // other familyInstance can not be rotated
                   message = "It is not a beam, brace or column.";
                   elements.Insert(familyComponent);
-                  return Autodesk.Revit.UI.Result.Failed;
+                  return Result.Failed;
                }
             }
             else
@@ -176,7 +161,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                {
                   message = "It is not a FamilyInstance.";
                   elements.Insert(e);
-                  return Autodesk.Revit.UI.Result.Failed;
+                  return Result.Failed;
                }
                // there is some objects is not familyInstance
                message = "They are not FamilyInstances";
@@ -191,23 +176,23 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
             {
                if (DialogResult.OK != displayForm.ShowDialog())
                {
-                  return Autodesk.Revit.UI.Result.Cancelled;
+                  return Result.Cancelled;
                }
             }
             catch (Exception)
             {
-               return Autodesk.Revit.UI.Result.Failed;
+               return Result.Failed;
             }
          }
 
          if (isAllFamilyInstance)
          {
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
          }
          else
          {
             //output error information
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
       }
       /// <summary>
@@ -225,7 +210,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
             {
                selection.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
             }
-            foreach (Autodesk.Revit.DB.Element e in selection)
+            foreach (Element e in selection)
             {
                var familyComponent = e as FamilyInstance;
                if (familyComponent == null)
@@ -270,7 +255,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
                   // get the location point
                   var temp = pointLocation.Rotation;
                   //existing rotation
-                  var directionPoint = new Autodesk.Revit.DB.XYZ(0, 0, 1);
+                  var directionPoint = new XYZ(0, 0, 1);
                   // define the vector of axis
                   var rotateAxis = Line.CreateUnbound(insertPoint, directionPoint);
                   var rotateDegree = m_receiveRotationTextBox * Math.PI / 180;

@@ -22,15 +22,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
 {
-    public partial class viewSheetSetForm : System.Windows.Forms.Form
+    public partial class viewSheetSetForm : Form
     {
         public viewSheetSetForm(ViewSheets viewSheets)
         {            
@@ -45,13 +41,13 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         private void ViewSheetSetForm_Load(object sender, EventArgs e)
         {
             viewSheetSetNameComboBox.DataSource = m_viewSheets.ViewSheetSetNames;            
-            this.viewSheetSetNameComboBox.SelectedValueChanged += new System.EventHandler(this.viewSheetSetNameComboBox_SelectedValueChanged);
+            viewSheetSetNameComboBox.SelectedValueChanged += new EventHandler(viewSheetSetNameComboBox_SelectedValueChanged);
             viewSheetSetNameComboBox.SelectedItem = m_viewSheets.SettingName;
 
             showSheetsCheckBox.Checked = true;
             showViewsCheckBox.Checked = true;
             ListViewSheetSet();
-            this.viewSheetSetListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.viewSheetSetListView_ItemChecked);
+            viewSheetSetListView.ItemChecked += new ItemCheckedEventHandler(viewSheetSetListView_ItemChecked);
         }
 
         private void ListViewSheetSet()

@@ -23,10 +23,6 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
     using Autodesk.Revit.DB.Structure;
@@ -40,24 +36,8 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         List<AreaReinforcementCurve> m_areaReinCurves;
         Document m_doc;
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData revit,
+            ref string message, ElementSet elements)
         {
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.AreaReinCurve");
             trans.Start();
@@ -76,7 +56,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
                 {
                     message = "Please select only one rectangular AreaReinforcement.";
                     trans.RollBack();
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 //fail to turn off layers
@@ -84,7 +64,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
                 {
                     message = "Can't turn off layers as expected or can't find these layers.";
                     trans.RollBack();
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 //fail to remove hooks
@@ -92,20 +72,20 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
                 {
                     message = "Can't remove HookTypes as expected.";
                     trans.RollBack();
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
             }
             catch (ApplicationException appEx)
             {
                 message = appEx.ToString();
                 trans.RollBack();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             catch
             {
                 message = "Unexpected error happens.";
                 trans.RollBack();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
             //command is successful
@@ -115,7 +95,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
             msg += "or Exterior Direction Layer.";
             TaskDialog.Show("Revit", msg);
             trans.Commit();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>

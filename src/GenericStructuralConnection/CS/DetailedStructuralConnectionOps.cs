@@ -23,15 +23,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-
-using Autodesk.Revit;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace Revit.SDK.Samples.GenericStructuralConnection.CS

@@ -21,15 +21,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
@@ -56,9 +50,9 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Bubble location of vertical grids
         private BubbleLocation m_yBubbleLoc;
         // Label of first horizontal grid
-        private String m_xFirstLabel;
+        private string m_xFirstLabel;
         // Label of first vertical grid
-        private String m_yFirstLabel;
+        private string m_yFirstLabel;
         #endregion
 
         #region Properties
@@ -67,14 +61,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double XOrigin
         {
-            get
-            {
-                return m_xOrigin;
-            }
-            set 
-            {
-                m_xOrigin = value; 
-            }
+            get => m_xOrigin;
+            set => m_xOrigin = value;
         }
 
         /// <summary>
@@ -82,14 +70,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double YOrigin
         {
-            get
-            {
-                return m_yOrigin;
-            }
-            set
-            {
-                m_yOrigin = value;
-            }
+            get => m_yOrigin;
+            set => m_yOrigin = value;
         }
 
         /// <summary>
@@ -97,14 +79,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double XSpacing
         {
-            get
-            {
-                return m_xSpacing;
-            }
-            set 
-            { 
-                m_xSpacing = value; 
-            }
+            get => m_xSpacing;
+            set => m_xSpacing = value;
         }
 
         /// <summary>
@@ -112,14 +88,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public double YSpacing
         {
-            get
-            {
-                return m_ySpacing;
-            }
-            set 
-            { 
-                m_ySpacing = value; 
-            }
+            get => m_ySpacing;
+            set => m_ySpacing = value;
         }
 
         /// <summary>
@@ -127,14 +97,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public uint XNumber
         {
-            get
-            {
-                return m_xNumber;
-            }
-            set 
-            { 
-                m_xNumber = value; 
-            }
+            get => m_xNumber;
+            set => m_xNumber = value;
         }
 
         /// <summary>
@@ -142,14 +106,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public uint YNumber
         {
-            get
-            {
-                return m_yNumber;
-            }
-            set 
-            { 
-                m_yNumber = value; 
-            }
+            get => m_yNumber;
+            set => m_yNumber = value;
         }
 
         /// <summary>
@@ -157,14 +115,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public BubbleLocation XBubbleLoc
         {
-            get
-            {
-                return m_xBubbleLoc;
-            }
-            set 
-            { 
-                m_xBubbleLoc = value; 
-            }
+            get => m_xBubbleLoc;
+            set => m_xBubbleLoc = value;
         }
 
         /// <summary>
@@ -172,44 +124,26 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public BubbleLocation YBubbleLoc
         {
-            get
-            {
-                return m_yBubbleLoc;
-            }
-            set 
-            { 
-                m_yBubbleLoc = value; 
-            }
+            get => m_yBubbleLoc;
+            set => m_yBubbleLoc = value;
         }
 
         /// <summary>
         /// Label of first horizontal grid
         /// </summary>
-        public String XFirstLabel
+        public string XFirstLabel
         {
-            get
-            {
-                return m_xFirstLabel;
-            }
-            set 
-            { 
-                m_xFirstLabel = value; 
-            }
+            get => m_xFirstLabel;
+            set => m_xFirstLabel = value;
         }
 
         /// <summary>
         /// Label of first vertical grid
         /// </summary>
-        public String YFirstLabel
+        public string YFirstLabel
         {
-            get
-            {
-                return m_yFirstLabel;
-            }
-            set 
-            { 
-                m_yFirstLabel = value; 
-            }
+            get => m_yFirstLabel;
+            set => m_yFirstLabel = value;
         }
         #endregion
 
@@ -238,7 +172,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                 {
                     failureReason += resManager.GetString("Reasons") + "\r";
                     failureReason += "\r";
-                    foreach (String reason in failureReasons)
+                    foreach (string reason in failureReasons)
                     {
                         failureReason += reason + "\r";
                     }
@@ -264,8 +198,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             for (var i = 0; i < m_xNumber; ++i)
             {
-                Autodesk.Revit.DB.XYZ startPoint;
-                Autodesk.Revit.DB.XYZ endPoint;
+                XYZ startPoint;
+                XYZ endPoint;
                 Line line;
 
                 try
@@ -273,13 +207,13 @@ namespace Revit.SDK.Samples.GridCreation.CS
                     if (m_yNumber != 0)
                     {
                         // Grids will have an extension distance of m_ySpacing / 2
-                        startPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin - m_ySpacing / 2, m_yOrigin + i * m_xSpacing, 0);
-                        endPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + (m_yNumber - 1) * m_ySpacing + m_ySpacing / 2, m_yOrigin + i * m_xSpacing, 0);
+                        startPoint = new XYZ (m_xOrigin - m_ySpacing / 2, m_yOrigin + i * m_xSpacing, 0);
+                        endPoint = new XYZ (m_xOrigin + (m_yNumber - 1) * m_ySpacing + m_ySpacing / 2, m_yOrigin + i * m_xSpacing, 0);
                     }
                     else
                     {
-                        startPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin, m_yOrigin + i * m_xSpacing, 0);
-                        endPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + m_xSpacing / 2, m_yOrigin + i * m_xSpacing, 0);
+                        startPoint = new XYZ (m_xOrigin, m_yOrigin + i * m_xSpacing, 0);
+                        endPoint = new XYZ (m_xOrigin + m_xSpacing / 2, m_yOrigin + i * m_xSpacing, 0);
 
                     }
 
@@ -295,7 +229,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             line = NewLine(endPoint, startPoint);
                         }
                     }
-                    catch (System.ArgumentException)
+                    catch (ArgumentException)
                     {
                         var failureReason = resManager.GetString("SpacingsTooSmall");
                         if (!failureReasons.Contains(failureReason))
@@ -317,7 +251,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             // Set the label of first horizontal grid
                             grid.Name = m_xFirstLabel;
                         }
-                        catch (System.ArgumentException)
+                        catch (ArgumentException)
                         {
                             ShowMessage(resManager.GetString("FailedToSetLabel") + m_xFirstLabel + "!",
                                         resManager.GetString("FailureCaptionSetLabel"));
@@ -356,21 +290,21 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             for (var j = 0; j < m_yNumber; ++j)
             {
-                Autodesk.Revit.DB.XYZ startPoint;
-                Autodesk.Revit.DB.XYZ endPoint;
+                XYZ startPoint;
+                XYZ endPoint;
                 Line line;
 
                 try
                 {
                     if (m_xNumber != 0)
                     {
-                        startPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin - m_xSpacing / 2, 0);
-                        endPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin + (m_xNumber - 1) * m_xSpacing + m_xSpacing / 2, 0);
+                        startPoint = new XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin - m_xSpacing / 2, 0);
+                        endPoint = new XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin + (m_xNumber - 1) * m_xSpacing + m_xSpacing / 2, 0);
                     }
                     else
                     {
-                        startPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin, 0);
-                        endPoint = new Autodesk.Revit.DB.XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin + m_ySpacing / 2, 0);
+                        startPoint = new XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin, 0);
+                        endPoint = new XYZ (m_xOrigin + j * m_ySpacing, m_yOrigin + m_ySpacing / 2, 0);
                     }
 
                     try
@@ -385,7 +319,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             line = NewLine(endPoint, startPoint);
                         }
                     }
-                    catch (System.ArgumentException)
+                    catch (ArgumentException)
                     {
                         var failureReason = resManager.GetString("SpacingsTooSmall");
                         if (!failureReasons.Contains(failureReason))
@@ -407,7 +341,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
                             // Set label of first vertical grid
                             grid.Name = m_yFirstLabel;
                         }
-                        catch (System.ArgumentException)
+                        catch (ArgumentException)
                         {
                             ShowMessage(resManager.GetString("FailedToSetLabel") + m_yFirstLabel + "!",
                                         resManager.GetString("FailureCaptionSetLabel"));

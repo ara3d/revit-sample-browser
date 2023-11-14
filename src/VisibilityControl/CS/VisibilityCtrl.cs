@@ -50,27 +50,15 @@ namespace Revit.SDK.Samples.VisibilityControl.CS
         /// <summary>
         /// get all categories name with its visibility
         /// </summary>
-        public Hashtable AllCategories
-        {
-            get
-            {
-                return m_allCategories;
-            }
-        }
+        public Hashtable AllCategories => m_allCategories;
 
         /// <summary>
         /// get and set the mode to select element(s)
         /// </summary>
         public IsolateMode IsolateMode
         {
-            get
-            {
-                return m_isolateMode;
-            }
-            set
-            {
-                m_isolateMode = value;
-            }
+            get => m_isolateMode;
+            set => m_isolateMode = value;
         }
 
         /// <summary>

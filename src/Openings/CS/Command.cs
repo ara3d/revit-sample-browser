@@ -23,12 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
 
 
 namespace Revit.SDK.Samples.Openings.CS
@@ -59,8 +55,8 @@ namespace Revit.SDK.Samples.Openings.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, 
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, 
+            ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
             try
@@ -75,7 +71,7 @@ namespace Revit.SDK.Samples.Openings.CS
                 iter.Reset();
                 while (iter.MoveNext())
                 {
-                    Object obj = iter.Current;
+                    object obj = iter.Current;
                     if (obj is Opening)
                     {
                         haveOpening = true;
@@ -88,7 +84,7 @@ namespace Revit.SDK.Samples.Openings.CS
                 if (!haveOpening)
                 {
                     message = "don't have opening in the project";
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
 
                 //show dialogue
@@ -100,14 +96,14 @@ namespace Revit.SDK.Samples.Openings.CS
             catch (Exception e)
             {
                 message = e.ToString();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             finally
             {
                 transaction.Commit();
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
     }

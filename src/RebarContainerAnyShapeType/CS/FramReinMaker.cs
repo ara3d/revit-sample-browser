@@ -23,11 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -57,7 +53,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <summary>
         /// the API create handle
         /// </summary>
-        protected Autodesk.Revit.DB.Document m_revitDoc;
+        protected Document m_revitDoc;
 
         /// <summary>
         /// the family instance to places reinforcement on
@@ -86,88 +82,28 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <summary>
         /// Show all the reinforcement bar types in Revit
         /// </summary>
-        public IList<RebarBarType> VerticalRebarTypes
-        {
-           get
-           {
-              return m_rebarVerticalTypes;
-           }
-        }
+        public IList<RebarBarType> VerticalRebarTypes => m_rebarVerticalTypes;
 
-        public IList<RebarBarType> TransverseCenterRebarTypes
-        {
-           get
-           {
-              return m_rebarTransverseCenterTypes;
-           }
-        }
+        public IList<RebarBarType> TransverseCenterRebarTypes => m_rebarTransverseCenterTypes;
 
-        public IList<RebarBarType> TransverseEndRebarTypes
-        {
-           get
-           {
-              return m_rebarTransverseEndTypes;
-           }
-        }
+        public IList<RebarBarType> TransverseEndRebarTypes => m_rebarTransverseEndTypes;
 
-       public IList<RebarBarType> TopEndRebarTypes
-        {
-           get
-           {
-              return m_rebarTopEndTypes;
-           }
-        }
+        public IList<RebarBarType> TopEndRebarTypes => m_rebarTopEndTypes;
 
-        public IList<RebarBarType> TopCenterRebarTypes
-        {
-           get
-           {
-              return m_rebarTopCenterTypes;
-           }
-        }
+        public IList<RebarBarType> TopCenterRebarTypes => m_rebarTopCenterTypes;
 
-        public IList<RebarBarType> BottomRebarTypes
-        {
-           get
-           {
-              return m_rebarBottomTypes;
-           }
-        }
+        public IList<RebarBarType> BottomRebarTypes => m_rebarBottomTypes;
 
-        public IList<RebarBarType> TransverseRebarTypes
-        {
-           get
-           {
-              return m_rebarTransverseTypes;
-           }
-        }
+        public IList<RebarBarType> TransverseRebarTypes => m_rebarTransverseTypes;
 
         /// <summary>
         /// Show all the rebar hook types in revit
         /// </summary>
-        public IList<RebarHookType> HookTypes
-        {
-            get
-            {
-                return m_hookTypes;
-            }
-        }
+        public IList<RebarHookType> HookTypes => m_hookTypes;
 
-        public IList<RebarHookType> TopHookTypes
-        {
-           get
-           {
-              return m_topHookTypes;
-           }
-        }
+        public IList<RebarHookType> TopHookTypes => m_topHookTypes;
 
-        public IList<RebarHookType> TransversHookTypes
-        {
-           get
-           {
-              return m_transverseHookTypes;
-           }
-        }
+        public IList<RebarHookType> TransversHookTypes => m_transverseHookTypes;
 
         /// <summary>
         /// Implement the Run() method of IFrameReinMaker interface.

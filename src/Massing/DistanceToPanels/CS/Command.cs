@@ -22,12 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Instance = Autodesk.Revit.DB.Instance;
 
 namespace Revit.SDK.Samples.DistanceToPanels.CS
 {
@@ -43,11 +39,11 @@ namespace Revit.SDK.Samples.DistanceToPanels.CS
         /// <summary>
         /// The Revit application instance
         /// </summary>
-        Autodesk.Revit.UI.UIApplication m_uiApp;
+        UIApplication m_uiApp;
         /// <summary>
         /// The active Revit document
         /// </summary>
-        Autodesk.Revit.UI.UIDocument m_uiDoc;
+        UIDocument m_uiDoc;
 
         /// <summary>
         /// Implement this method as an external command for Revit.
@@ -65,7 +61,7 @@ namespace Revit.SDK.Samples.DistanceToPanels.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             m_uiApp = commandData.Application;
             m_uiDoc = m_uiApp.ActiveUIDocument;
@@ -127,7 +123,7 @@ namespace Revit.SDK.Samples.DistanceToPanels.CS
                     u = u + 1;
                 }
             }
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -135,7 +131,7 @@ namespace Revit.SDK.Samples.DistanceToPanels.CS
         /// </summary>
         /// <param name="collection">Selected elements</param>
         /// <returns>the Autodesk.Revit.DB.XYZ point of the selected target element</returns>
-        Autodesk.Revit.DB.XYZ getTargetPoint(ElementSet collection)
+        XYZ getTargetPoint(ElementSet collection)
         {
             FamilyInstance targetElement = null;
             if (collection.Size != 1)
@@ -144,7 +140,7 @@ namespace Revit.SDK.Samples.DistanceToPanels.CS
             }
             else
             {
-                foreach (Autodesk.Revit.DB.Element e in collection)
+                foreach (Element e in collection)
                 {
                     targetElement = e as FamilyInstance;
                 }

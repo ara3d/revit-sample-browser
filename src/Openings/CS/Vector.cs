@@ -22,8 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Revit.SDK.Samples.Openings.CS
 {
@@ -53,14 +51,8 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public double X
         {
-            get
-            {
-                return m_x;
-            }
-            set
-            {
-                m_x = value;
-            }
+            get => m_x;
+            set => m_x = value;
         }
 
         /// <summary>
@@ -68,14 +60,8 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public double Y
         {
-            get
-            {
-                return m_y;
-            }
-            set
-            {
-                m_y = value;
-            }
+            get => m_y;
+            set => m_y = value;
         }
 
         /// <summary>
@@ -83,14 +69,8 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public double Z
         {
-            get
-            {
-                return m_z;
-            }
-            set
-            {
-                m_z = value;
-            }
+            get => m_z;
+            set => m_z = value;
         }
 
         /// <summary>

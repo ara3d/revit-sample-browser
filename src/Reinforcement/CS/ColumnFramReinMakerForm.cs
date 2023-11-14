@@ -22,14 +22,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
@@ -38,10 +31,10 @@ namespace Revit.SDK.Samples.Reinforcement.CS
     /// <summary>
     /// The form is used for collecting information of column reinforcement creation 
     /// </summary>
-    public partial class ColumnFramReinMakerForm : System.Windows.Forms.Form
+    public partial class ColumnFramReinMakerForm : Form
     {
         // Private members
-        ColumnFramReinMaker m_dataBuffer = null;
+        ColumnFramReinMaker m_dataBuffer;
 
         /// <summary>
         /// constructor for ColumnFramReinMakerForm
@@ -132,8 +125,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
                 TaskDialog.Show("Revit", ex.Message);
             }
 
-            this.DialogResult = DialogResult.OK;    // set dialog result
-            this.Close();                           // close the form
+            DialogResult = DialogResult.OK;    // set dialog result
+            Close();                           // close the form
         }
 
 
@@ -142,8 +135,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// </summary>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;// set dialog result
-            this.Close();                           // close the form
+            DialogResult = DialogResult.Cancel;// set dialog result
+            Close();                           // close the form
         }
     }
 }

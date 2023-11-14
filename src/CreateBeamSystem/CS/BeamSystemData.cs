@@ -24,13 +24,8 @@
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
-    using System.Collections;
-    using System.Diagnostics;
     using System.Collections.ObjectModel;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
     using Autodesk.Revit.DB.Structure;
@@ -71,35 +66,17 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// <summary>
         /// properties of beam system
         /// </summary>
-        public BeamSystemParam Param
-        {
-            get
-            {
-                return m_param; 
-            }
-        }
+        public BeamSystemParam Param => m_param;
 
         /// <summary>
         /// lines form the profile of beam system
         /// </summary>
-        public ReadOnlyCollection<Line> Lines
-        {
-            get
-            {
-                return new ReadOnlyCollection<Line>(m_lines);
-            }
-        }
+        public ReadOnlyCollection<Line> Lines => new ReadOnlyCollection<Line>(m_lines);
 
         /// <summary>
         /// buffer of ExternalCommandData
         /// </summary>
-        public ExternalCommandData CommandData
-        {
-            get
-            {
-                return m_commandData;
-            }
-        }
+        public ExternalCommandData CommandData => m_commandData;
 
         /// <summary>
         /// the data used to show in UI is updated

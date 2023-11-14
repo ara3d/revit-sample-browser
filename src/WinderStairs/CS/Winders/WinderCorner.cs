@@ -75,12 +75,12 @@ namespace Revit.SDK.Samples.WinderStairs.CS
         /// <summary>
         /// Start delimiter of the winder region.
         /// </summary>
-        public XYZ StartPoint { get { return CornerPoint - Direction1 * Distance1; } }
+        public XYZ StartPoint => CornerPoint - Direction1 * Distance1;
 
         /// <summary>
         /// End delimiter of the winder region.
         /// </summary>
-        public XYZ EndPoint { get { return CornerPoint + Direction2 * Distance2; } }
+        public XYZ EndPoint => CornerPoint + Direction2 * Distance2;
 
         /// <summary>
         /// Constructor to initialize the basic fields of a winder region.

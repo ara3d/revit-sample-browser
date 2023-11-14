@@ -22,48 +22,39 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-
-using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ViewFilters.CS
 {
     /// <summary>
     /// Form used to create new filter
     /// </summary>
-    public partial class NewFilterForm : System.Windows.Forms.Form
+    public partial class NewFilterForm : Form
     {
         #region Class Memeber
         /// <summary>
         /// In-use filter names
         /// </summary>
-        ICollection<String> m_inUseFilterNames;
+        ICollection<string> m_inUseFilterNames;
 
         /// <summary>
         /// New filter name 
         /// </summary>
-        private String m_filterName;
+        private string m_filterName;
 
         /// <summary>
         /// Get new filter name
         /// </summary>
-        public String FilterName
-        {
-            get { return m_filterName; }
-        }
+        public string FilterName => m_filterName;
+
         #endregion
 
         /// <summary>
         /// Show form for new filter name
         /// </summary>
         /// <param name="inUseNames">Filter names should be excluded.</param>
-        public NewFilterForm(ICollection<String> inUseNames)
+        public NewFilterForm(ICollection<string> inUseNames)
         {
             InitializeComponent();
             m_inUseFilterNames = inUseNames;
@@ -78,7 +69,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         {
             // Check name is not empty
             var newName = newFilterNameTextBox.Text.Trim();
-            if (String.IsNullOrEmpty(newName))
+            if (string.IsNullOrEmpty(newName))
             {
                 ViewFiltersForm.MyMessageBox("Filter name is empty!");
                 newFilterNameTextBox.Focus();
@@ -107,8 +98,8 @@ namespace Revit.SDK.Samples.ViewFilters.CS
                 return;
             }
             m_filterName = newName;
-            this.Close();
-            this.DialogResult = DialogResult.OK;
+            Close();
+            DialogResult = DialogResult.OK;
         }
     }
 }

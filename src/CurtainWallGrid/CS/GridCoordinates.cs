@@ -20,13 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Windows.Forms;
-
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
@@ -48,26 +43,26 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         // stores the client rectangle of the canvas of the curtain grid
         // will be used in the scale matrix and move-to-center matrix
-        private System.Drawing.Rectangle m_boundary;
+        private Rectangle m_boundary;
 
         // stores the midpoint of the client rectangle 
         // will be used in the scale matrix and move-to-center matrix
-        private System.Drawing.Point m_center;
+        private Point m_center;
 
         // store the Matrix used to transform 3D points to 2D
-        Matrix4 m_to2DMatrix = null;
+        Matrix4 m_to2DMatrix;
 
         // store the Matrix used to move points to center
-        Matrix4 m_moveToCenterMatrix = null;
+        Matrix4 m_moveToCenterMatrix;
 
         // store the Matrix used to scale profile fit to pictureBox
-        Matrix4 m_scaleMatrix = null;
+        Matrix4 m_scaleMatrix;
 
         // store the Matrix used to transform Revit coordinate to window UI
-        Matrix4 m_transformMatrix = null;
+        Matrix4 m_transformMatrix;
 
         // store the Matrix used to transform window UI coordinate to Revit
-        Matrix4 m_restoreMatrix = null;
+        Matrix4 m_restoreMatrix;
 
         // stores the boundary of the curtain grid
         List<PointF> m_boundPoints;
@@ -80,48 +75,25 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public GridDrawing Drawing
         {
-            get
-            {
-                return m_drawing;
-            }
-            set
-            {
-                m_drawing = value;
-            }
+            get => m_drawing;
+            set => m_drawing = value;
         }
 
         /// <summary>
         /// store the Matrix used to transform 3D points to 2D
         /// </summary>
-        public Matrix4 To2DMatrix
-        {
-            get
-            {
-                return m_to2DMatrix;
-            }
-        }
+        public Matrix4 To2DMatrix => m_to2DMatrix;
 
         /// <summary>
         /// store the Matrix used to transform Revit coordinate to window UI
         /// </summary>
-        public Matrix4 TransformMatrix
-        {
-            get
-            {
-                return m_transformMatrix;
-            }
-        }
+        public Matrix4 TransformMatrix => m_transformMatrix;
 
         /// <summary>
         /// store the Matrix used to transform window UI coordinate to Revit
         /// </summary>
-        public Matrix4 RestoreMatrix
-        {
-            get
-            {
-                return m_restoreMatrix;
-            }
-        }
+        public Matrix4 RestoreMatrix => m_restoreMatrix;
+
         #endregion
 
         #region Constructors

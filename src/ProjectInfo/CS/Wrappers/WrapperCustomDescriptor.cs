@@ -21,10 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
-using System.Reflection;
 
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
@@ -37,7 +34,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Handle object
         /// </summary>
-        object m_handle = null; 
+        object m_handle; 
         #endregion
 
         #region Constructors
@@ -56,10 +53,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <summary>
         /// Gets handle object
         /// </summary>
-        public object Handle
-        {
-            get { return m_handle; }
-        }
+        public object Handle => m_handle;
 
         /// <summary>
         /// Gets the name of the handle object if it has the Name property,
@@ -69,10 +63,10 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             get
             {
-                var mi = this.Handle.GetType().GetMethod("get_Name", new Type[0]);
+                var mi = Handle.GetType().GetMethod("get_Name", new Type[0]);
                 if (mi != null)
                 {
-                    var name = mi.Invoke(this.Handle, new object[0]);
+                    var name = mi.Invoke(Handle, new object[0]);
                     if (name != null)
                     {
                         return name.ToString();
@@ -240,7 +234,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// <returns>The name of the handle object</returns>
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         } 
         #endregion
     }

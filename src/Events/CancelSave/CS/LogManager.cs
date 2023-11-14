@@ -21,8 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.IO;
 using Autodesk.Revit.DB;
@@ -133,10 +131,10 @@ namespace Revit.SDK.Samples.CancelSave.CS
         /// </summary>
         /// <param name="orgTitle">Origin file name to be revised.</param>
         /// <returns>New file name without extension name.</returns>
-        private static string TitleNoExt(String orgTitle)
+        private static string TitleNoExt(string orgTitle)
         {
             // return null directly if it's null
-            if (String.IsNullOrEmpty(orgTitle))
+            if (string.IsNullOrEmpty(orgTitle))
             {
                 return "";
             }

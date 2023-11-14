@@ -25,10 +25,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Collections.ObjectModel;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
 
     /// <summary>
@@ -37,7 +34,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
     public class FrameTypesMgr
     {
         // map list pairs FamilySymbol object and its Name 
-        private Dictionary<String, FamilySymbol> m_symbolMaps;    
+        private Dictionary<string, FamilySymbol> m_symbolMaps;    
         // list of FamilySymbol objects
         private List<FamilySymbol> m_symbols;                    
         private ExternalCommandData m_commandData;
@@ -45,24 +42,12 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <summary>
         /// command data pass from entry point
         /// </summary>
-        public ExternalCommandData CommandData
-        {
-            get
-            {
-                return m_commandData;
-            }
-        }
+        public ExternalCommandData CommandData => m_commandData;
 
         /// <summary>
         /// size of FamilySymbol objects in current Revit document
         /// </summary>
-        public int Size
-        {
-            get
-            {
-                return m_symbolMaps.Count;
-            }
-        }
+        public int Size => m_symbolMaps.Count;
 
         /// <summary>
         /// constructor
@@ -71,7 +56,7 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         public FrameTypesMgr(ExternalCommandData commandData)
         {
             m_commandData = commandData;
-            m_symbolMaps = new Dictionary<String, FamilySymbol>();
+            m_symbolMaps = new Dictionary<string, FamilySymbol>();
             m_symbols = new List<FamilySymbol>();
         }
 
@@ -85,20 +70,14 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
         /// <summary>
         /// get list of FamilySymbol objects in current Revit document
         /// </summary>
-        public ReadOnlyCollection<FamilySymbol> FramingSymbols
-        {
-            get
-            {
-                return new ReadOnlyCollection<FamilySymbol>(m_symbols);
-            }
-        }
+        public ReadOnlyCollection<FamilySymbol> FramingSymbols => new ReadOnlyCollection<FamilySymbol>(m_symbols);
 
         /// <summary>
         /// add one FamilySymbol object to the lists
         /// </summary>
         /// <param name="framingSymbol"></param>
         /// <returns></returns>
-        public bool AddSymbol(Autodesk.Revit.DB.FamilySymbol framingSymbol)
+        public bool AddSymbol(FamilySymbol framingSymbol)
         {
             if (ContainsSymbolName(framingSymbol.Name))
             {

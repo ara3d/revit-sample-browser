@@ -22,10 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.Loads.CS
@@ -37,33 +33,24 @@ namespace Revit.SDK.Samples.Loads.CS
     {
         // Private Members
         Loads m_dataBuffer; // A reference of Loads
-        Boolean m_set;      // Indicate the set column of Usage DataGridView control
-        String m_name;      // Indicate the name column of Usage DataGridView control
+        bool m_set;      // Indicate the set column of Usage DataGridView control
+        string m_name;      // Indicate the name column of Usage DataGridView control
 
         /// <summary>
         /// is selected in Usage DataGridView control
         /// </summary>
-        public Boolean Set
+        public bool Set
         {
-            get
-            {
-                return m_set;
-            }
-            set
-            {
-                m_set = value;
-            }
+            get => m_set;
+            set => m_set = value;
         }
 
         /// <summary>
         /// usage name
         /// </summary>
-        public String Name
+        public string Name
         {
-            get
-            {
-                return m_name;
-            }
+            get => m_name;
             set
             {
                 if (null == value)
@@ -99,7 +86,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         /// <param name="dataBuffer">The reference of Loads</param>
         /// <param name="name">The value set to Name property</param>
-        public UsageMap(Loads dataBuffer, String name)
+        public UsageMap(Loads dataBuffer, string name)
         {
             m_dataBuffer = dataBuffer;
             m_set = false;
@@ -112,7 +99,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <param name="dataBuffer">The reference of Loads</param>
         /// <param name="set">The value set to Set property</param>
         /// <param name="name">The value set to Name property</param>
-        public UsageMap(Loads dataBuffer, Boolean set, String name)
+        public UsageMap(Loads dataBuffer, bool set, string name)
         {
             m_dataBuffer = dataBuffer;
             m_set = set;

@@ -21,14 +21,8 @@
 //
 
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.VersionChecking.CS
 {   
@@ -48,35 +42,17 @@ namespace Revit.SDK.Samples.VersionChecking.CS
         /// <summary>
         /// get product name of Revit main program
         /// </summary>
-        public string ProductName
-        {
-            get
-            {
-                return m_productName;
-            }
-        }
+        public string ProductName => m_productName;
 
         /// <summary>
         /// get version number of current Revit main program
         /// </summary>
-        public string ProductVersion
-        {
-            get
-            {
-                return m_version;
-            }
-        }
+        public string ProductVersion => m_version;
 
         /// <summary>
         /// get build number of current Revit main program
         /// </summary>
-        public string BuildNumner
-        {
-            get
-            {
-                return m_buildNumber;
-            }
-        }
+        public string BuildNumner => m_buildNumber;
 
         /// <summary>
         /// Implement this method as an external command for Revit.
@@ -94,7 +70,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(Autodesk.Revit.UI.ExternalCommandData revit,
+        public Result Execute(ExternalCommandData revit,
                                                ref string message,
                                                ElementSet elements)
         {
@@ -113,7 +89,7 @@ namespace Revit.SDK.Samples.VersionChecking.CS
                 displayForm.ShowDialog();
             }
             
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
     }

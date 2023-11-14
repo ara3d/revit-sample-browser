@@ -24,7 +24,6 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
    using System;
    using System.Collections.Generic;
-   using System.Text;
    using System.Drawing;
    using System.Drawing.Drawing2D;
    using System.Windows.Forms;
@@ -69,7 +68,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
       {
          Initialize(profile);
          CalculateTransform();
-         m_canvas.Paint += new PaintEventHandler(this.Paint);
+         m_canvas.Paint += new PaintEventHandler(Paint);
          m_canvas.Refresh();
       }
 
@@ -91,7 +90,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
       /// </summary>
       /// <param name="sender">canvas control</param>
       /// <param name="e">data for the Paint event</param>
-      protected void Paint(Object sender, PaintEventArgs e)
+      protected void Paint(object sender, PaintEventArgs e)
       {
          var g = e.Graphics;
          g.Clear(System.Drawing.Color.White);

@@ -20,8 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -51,7 +49,7 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
             ref string message,
             ElementSet elements)
         {
@@ -68,13 +66,13 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
                     {
                         // Done some actions, ask revit to execute it.
                         trans.Commit();
-                        return Autodesk.Revit.UI.Result.Succeeded;
+                        return Result.Succeeded;
                     }
                     else
                     {
                         // Revit need to do nothing.
                         trans.RollBack();
-                        return Autodesk.Revit.UI.Result.Cancelled;
+                        return Result.Cancelled;
                     }
                 }
             }
@@ -83,7 +81,7 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
                 // Exception raised, report it by revit error reporting mechanism. 
                 message = e.ToString();
                 trans.RollBack();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             
         }

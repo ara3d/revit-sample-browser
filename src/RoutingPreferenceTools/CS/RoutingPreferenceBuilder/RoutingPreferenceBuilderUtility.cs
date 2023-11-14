@@ -22,9 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Plumbing;
 using System.Xml.Linq;
 using System.IO;
 using System.Xml;
@@ -45,7 +42,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
       {
          m_application = application;
          m_basePath = GetFamilyBasePath();
-         var extraFamilyPaths = FindFolderUtility.GetAdditionalFamilyPaths();
+         var extraFamilyPaths = GetAdditionalFamilyPaths();
          m_Familyfiles = new Dictionary<string, string>();
          GetAllFiles(m_basePath, m_Familyfiles);
          //Get additional .rfa files in user-defined paths specified in familypaths.xml
@@ -67,7 +64,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
          {
             reader = new StreamReader(Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).FullName + "\\familypaths.xml");
          }
-         catch (System.Exception)
+         catch (Exception)
          {
             return pathsList;
          }
@@ -110,12 +107,12 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
         private static void GetAllFiles(string basePath, Dictionary<string, string> allPaths)
         {
-            if (!System.IO.Directory.Exists(basePath))
+            if (!Directory.Exists(basePath))
                 return;
             var paths = (Directory.GetFiles(basePath, "*.rfa"));
             foreach (var path in paths)
             {
-                var filename = System.IO.Path.GetFileName(path);
+                var filename = Path.GetFileName(path);
                 allPaths[filename] = path;
             }
 
@@ -139,7 +136,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 {
                     basePath = basePath.Substring(0, basePath.Length - 1);
                 }
-                basePath = (System.IO.Directory.GetParent(basePath)).ToString();
+                basePath = (Directory.GetParent(basePath)).ToString();
                 if (!(string.IsNullOrEmpty(basePath)))
                     return basePath;
             }
@@ -155,7 +152,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 {
                     basePath = basePath.Substring(0, basePath.Length - 1);
                 }
-                basePath = System.IO.Directory.GetParent((System.IO.Directory.GetParent(basePath)).ToString()).ToString();
+                basePath = Directory.GetParent((Directory.GetParent(basePath)).ToString()).ToString();
                 if (!(string.IsNullOrEmpty(basePath)))
                     return basePath;
             }
@@ -166,8 +163,8 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
             try
             {
-                var exe = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-                basePath = System.IO.Directory.GetParent(System.IO.Path.GetDirectoryName(exe)).ToString();
+                var exe = Process.GetCurrentProcess().MainModule.FileName;
+                basePath = Directory.GetParent(Path.GetDirectoryName(exe)).ToString();
             }
             catch (Exception)
             {
@@ -187,7 +184,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
     /// <summary>
     /// A simple exception class to help identify errors related to this application.
     /// </summary>
-    internal class RoutingPreferenceDataException : System.Exception
+    internal class RoutingPreferenceDataException : Exception
     {
         public RoutingPreferenceDataException(string message)
         {
@@ -222,7 +219,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 doc.Validate(schemas, null);
                 return true;
             }
-            catch (System.Xml.Schema.XmlSchemaValidationException ex)
+            catch (XmlSchemaValidationException ex)
             {
                 message = ex.Message + ", " + ex.LineNumber + ", " + ex.LinePosition;
                 return false;

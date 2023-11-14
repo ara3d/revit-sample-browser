@@ -21,12 +21,6 @@
 //
 namespace Revit.SDK.Samples.AreaReinCurve.CS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
 
     /// <summary>
@@ -113,7 +107,7 @@ namespace Revit.SDK.Samples.AreaReinCurve.CS
         /// <returns></returns>
         public static bool SetParaNullId(Parameter para)
         {
-            var id = Autodesk.Revit.DB.ElementId.InvalidElementId;
+            var id = ElementId.InvalidElementId;
 
             if (!para.IsReadOnly)
             {

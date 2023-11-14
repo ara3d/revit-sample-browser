@@ -21,15 +21,8 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.SolidSolidCut.CS
 {
@@ -58,8 +51,8 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             // NOTES: Anything can be done in this method, such as the solid-solid cut operation.
 
@@ -81,7 +74,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             {
                 TaskDialog.Show("Notice", "Please open the family file SolidSolidCut.rfa, then try to run this command.");
 
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
 
             //Check whether the cuttingSolid can cut the solidToBeCut
@@ -103,7 +96,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
 
             #endregion
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
     }
@@ -133,8 +126,8 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             // NOTES: Anything can be done in this method, such as the solid-solid uncut operation.
 
@@ -156,7 +149,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             {
                 TaskDialog.Show("Notice", "Please open the family file SolidSolidCut.rfa, then try to run this command.");
 
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
 
             //Remove the solid-solid cut (Uncut)
@@ -171,7 +164,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
 
             #endregion
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
     }

@@ -22,8 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Revit.SDK.Samples.LevelsProperty.CS
 {
@@ -32,23 +30,17 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
     /// </summary>
     public class LevelsDataSource
     {
-        String m_levelName;
+        string m_levelName;
         double m_levelElevation;
         Autodesk.Revit.DB.ElementId m_levelIDValue;
 
         /// <summary>
         /// First column used to store Level's Name
         /// </summary>
-        public String Name
+        public string Name
         {
-            get
-            {
-                return m_levelName;
-            }
-            set
-            {
-                m_levelName = value;
-            }
+            get => m_levelName;
+            set => m_levelName = value;
         }
 
 
@@ -57,14 +49,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         /// </summary>
         public double Elevation
         {
-            get
-            {
-                return m_levelElevation;
-            }
-            set
-            {
-                m_levelElevation = value;
-            }
+            get => m_levelElevation;
+            set => m_levelElevation = value;
         }
 
         /// <summary>
@@ -72,14 +58,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         /// </summary>
         public Autodesk.Revit.DB.ElementId LevelIDValue
         {
-            get
-            {
-                return m_levelIDValue;
-            }
-            set
-            {
-                m_levelIDValue = value;
-            }
+            get => m_levelIDValue;
+            set => m_levelIDValue = value;
         }
 
     }

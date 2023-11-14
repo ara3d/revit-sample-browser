@@ -21,11 +21,7 @@
 //
 
 using System;
-using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Architecture;
@@ -39,42 +35,26 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user canceled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
         public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
-                Document document = commandData.Application.ActiveUIDocument.Document;
+                var document = commandData.Application.ActiveUIDocument.Document;
 
-                TrianglesData trianglesData = TrianglesData.Load();
+                var trianglesData = TrianglesData.Load();
 
-                using (Transaction tran = new Transaction(document, "CreateTrianglesTopography"))
+                using (var tran = new Transaction(document, "CreateTrianglesTopography"))
                 {
 
                     tran.Start();
                     // Creates a new topography surface element from facets and adds it to the document.
-                    IList<PolymeshFacet> triangleFacets = new List<PolymeshFacet>();
-                    foreach (List<int> facet in trianglesData.Facets)
+                    var triangleFacets = new List<PolymeshFacet>();
+                    foreach (var facet in trianglesData.Facets)
                     {
                        triangleFacets.Add(new PolymeshFacet(facet[0], facet[1], facet[2]));
                     }
-                    TopographySurface topoSurface = TopographySurface.Create(document, trianglesData.Points, triangleFacets);
-                    Parameter name = topoSurface.get_Parameter(Autodesk.Revit.DB.BuiltInParameter.ROOM_NAME);
+                    var topoSurface = TopographySurface.Create(document, trianglesData.Points, triangleFacets);
+                    var name = topoSurface.get_Parameter(BuiltInParameter.ROOM_NAME);
                     if (name != null)
                         name.Set("CreateTrianglesTopography");
                     tran.Commit();

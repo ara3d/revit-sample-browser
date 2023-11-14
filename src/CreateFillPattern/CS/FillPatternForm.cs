@@ -22,14 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -83,7 +77,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
       /// <param name="e">A object contains the event data</param>
       private void buttonCancel_Click(object sender, EventArgs e)
       {
-         this.Close();
+         Close();
       }
 
       /// <summary>
@@ -91,7 +85,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
       /// </summary>
       private void IniTreeView()
       {
-         this.treeViewLinePattern.Nodes.Clear();
+         treeViewLinePattern.Nodes.Clear();
          var iniNode2 = new TreeNode("LinePatterns");
          treeViewLinePattern.Nodes.Add(iniNode2);
 
@@ -103,7 +97,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             iniNode2.Nodes.Add(node);
          }
 
-         this.treeViewFillPattern.Nodes.Clear();
+         treeViewFillPattern.Nodes.Clear();
          var iniNode1 = new TreeNode("FillPatterns");
          treeViewFillPattern.Nodes.Add(iniNode1);
 
@@ -248,7 +242,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          {
             TaskDialog.Show("Create Fill Pattern",
                 "Before applying a FillPattern to a wall's surfaces, you must first select a wall.");
-            this.Close();
+            Close();
             return;
          }
 
@@ -258,7 +252,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          trans.Start("Apply fillpattern to surface");
          targetMaterial.SurfaceForegroundPatternId = mySurfacePattern.Id;
          trans.Commit();
-         this.Close();
+         Close();
       }
 
       /// <summary>
@@ -274,7 +268,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          {
             TaskDialog.Show("Apply To Grids",
                 "Before applying a LinePattern to Grids, you must first select at least one grid.");
-            this.Close();
+            Close();
             return;
          }
 
@@ -285,7 +279,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             //set the parameter value of End Segment Pattern
             SetParameter("End Segment Pattern", myLinePatternElement.Id, gridType);
          }
-         this.Close();
+         Close();
       }
 
       /// <summary>
@@ -321,7 +315,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          {
             TaskDialog.Show("Apply To Surface",
                 "Before applying a FillPattern to a wall's surfaces, you must first select a wall.");
-            this.Close();
+            Close();
             return;
          }
 
@@ -340,7 +334,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          targetMaterial.SurfaceForegroundPatternId = lstPatterns[patternIndex].Id;
          trans.Commit();
 
-         this.Close();
+         Close();
       }
 
       /// <summary>
@@ -372,7 +366,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          {
             TaskDialog.Show("Apply To CutSurface",
                 "Before applying a FillPattern to a wall's cut surfaces, you must first select a wall.");
-            this.Close();
+            Close();
             return;
          }
 
@@ -392,7 +386,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          targetMaterial.CutForegroundPatternId = lstPatterns[patternIndex].Id;
          trans.Commit();
 
-         this.Close();
+         Close();
       }
 
       /// <summary>
@@ -408,7 +402,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          {
             TaskDialog.Show("Apply To Grids",
                 "Before applying a LinePattern to Grids, you must first select at least one grid.");
-            this.Close();
+            Close();
             return;
          }
 
@@ -425,7 +419,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             //set the parameter value of End Segment Pattern
             SetParameter("End Segment Pattern", eid, gridType);
          }
-         this.Close();
+         Close();
       }
 
       /// <summary>
@@ -459,7 +453,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          {
             TaskDialog.Show("Create Fill Pattern",
                 "Before applying a FillPattern to a wall's surfaces, you must first select a wall.");
-            this.Close();
+            Close();
             return;
          }
 
@@ -469,7 +463,7 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
          trans.Start("Apply complex fillpattern to surface");
          targetMaterial.SurfaceForegroundPatternId = mySurfacePattern.Id;
          trans.Commit();
-         this.Close();
+         Close();
       }
 
       private void PatternForm_Load(object sender, EventArgs e)

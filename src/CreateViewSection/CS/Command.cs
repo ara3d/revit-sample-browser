@@ -23,12 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.Linq;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -45,16 +40,16 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
     public class Command : IExternalCommand
     {
         // Private Members
-        Autodesk.Revit.UI.UIDocument m_project;  // Store the current document in revit   
-        String m_errorInformation;  // Store the error information
-        const Double PRECISION = 0.0000000001;  // Define a precision of double data
+        UIDocument m_project;  // Store the current document in revit   
+        string m_errorInformation;  // Store the error information
+        const double PRECISION = 0.0000000001;  // Define a precision of double data
 
         BoundingBoxXYZ m_box;       // Store the BoundingBoxXYZ reference used in creation
-        Autodesk.Revit.DB.Element m_currentComponent; // Store the selected element
+        Element m_currentComponent; // Store the selected element
         SelectType m_type;     // Indicate the type of the selected element.
         // 0 - wall, 1 - beam, 2 - floor, -1 - invalid
-        const Double LENGTH = 10;   // Define half length and width of BoudingBoxXYZ
-        const Double HEIGHT = 5;    // Define height of the BoudingBoxXYZ
+        const double LENGTH = 10;   // Define half length and width of BoudingBoxXYZ
+        const double HEIGHT = 5;    // Define height of the BoudingBoxXYZ
 
         // Define a enum to indicate the selected element type
         enum SelectType
@@ -74,24 +69,8 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             m_type = SelectType.INVALID;
         }
 
-        /// <summary>
-        /// Implement this method as an external command for Revit.
-        /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-                                                    ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+                                                    ref string message, ElementSet elements)
         {
             try
             {
@@ -101,14 +80,14 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 if (!GetSelectedElement())
                 {
                     message = m_errorInformation;
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Create a BoundingBoxXYZ instance which used in NewViewSection() method
                 if (!GenerateBoundingBoxXYZ())
                 {
                     message = m_errorInformation;
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Create a section view. 
@@ -131,7 +110,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 if (null == section)
                 {
                     message = "Can't create the ViewSection.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Modify some parameters to make it look better.
@@ -140,12 +119,12 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
 
                 // If everything goes right, give successful information and return succeeded.
                 TaskDialog.Show("Revit", "Create view section succeeded.");
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception e)
             {
                 message = e.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
 
@@ -154,7 +133,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         /// Get the selected element, and check whether it is a wall, a floor or a beam.
         /// </summary>
         /// <returns>true if the process succeed; otherwise, false.</returns>
-        Boolean GetSelectedElement()
+        bool GetSelectedElement()
         {
             // First get the selection, and make sure only one element in it.
            var collection = new ElementSet();
@@ -170,7 +149,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             }
 
             // Get the selected element.
-            foreach (Autodesk.Revit.DB.Element e in collection)
+            foreach (Element e in collection)
             {
                 m_currentComponent = e;
             }
@@ -220,15 +199,15 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
         /// Generate a BoundingBoxXYZ instance which used in NewViewSection() method
         /// </summary>
         /// <returns>true if the instance can be created; otherwise, false.</returns>
-        Boolean GenerateBoundingBoxXYZ()
+        bool GenerateBoundingBoxXYZ()
         {
             var transaction = new Transaction(m_project.Document, "GenerateBoundingBox");
             transaction.Start();
             // First new a BoundingBoxXYZ, and set the MAX and Min property.
             m_box = new BoundingBoxXYZ();
             m_box.Enabled = true;
-            var maxPoint = new Autodesk.Revit.DB.XYZ(LENGTH, LENGTH, 0);
-            var minPoint = new Autodesk.Revit.DB.XYZ(-LENGTH, -LENGTH, -HEIGHT);
+            var maxPoint = new XYZ(LENGTH, LENGTH, 0);
+            var minPoint = new XYZ(-LENGTH, -LENGTH, -HEIGHT);
             m_box.Max = maxPoint;
             m_box.Min = minPoint;
 
@@ -430,7 +409,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
          return transform;
       }
 
-      Double GetWallMidOffsetFromLocation(Wall wall)
+      double GetWallMidOffsetFromLocation(Wall wall)
         {
             // First get the "Base Offset" property.
             var baseOffset = wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).AsDouble();
@@ -452,7 +431,7 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class CreateDraftingView : IExternalCommand
     {
-        public Autodesk.Revit.UI.Result Execute(
+        public Result Execute(
           ExternalCommandData commandData,
           ref string message,
           ElementSet elements)
@@ -479,16 +458,16 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                 if (null == drafting)
                 {
                     message = "Can't create the ViewDrafting.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
                 transaction.Commit();
                 TaskDialog.Show("Revit", "Create view drafting succeeded.");
-                return Autodesk.Revit.UI.Result.Succeeded;
+                return Result.Succeeded;
             }
             catch (Exception e)
             {
                 message = e.Message;
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
         }
     }

@@ -21,8 +21,6 @@
 //  
 
 using System;
-using System.Windows.Forms;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -34,7 +32,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    public class Command : Autodesk.Revit.UI.IExternalCommand
+    public class Command : IExternalCommand
     {
         #region IExternalCommand Members Implementation
         /// <summary>
@@ -53,9 +51,9 @@ namespace Revit.SDK.Samples.MoveLinear.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
+        public Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
         {
-            var res = Autodesk.Revit.UI.Result.Succeeded;
+            var res = Result.Succeeded;
             var trans = new Transaction(cmdData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.MoveLinear");
             trans.Start();
             try
@@ -89,13 +87,13 @@ namespace Revit.SDK.Samples.MoveLinear.CS
                 iter = elemSet.ForwardIterator();
 
                 iter.MoveNext();
-                Autodesk.Revit.DB.Element element;
+                Element element;
 
-                element = (Autodesk.Revit.DB.Element)iter.Current;
+                element = (Element)iter.Current;
 
                 if (element != null)
                 {
-                    Autodesk.Revit.DB.LocationCurve lineLoc;
+                    LocationCurve lineLoc;
                     lineLoc = element.Location as LocationCurve;
 
                     if (null == lineLoc)
@@ -105,7 +103,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
                         return res;
                     }
 
-                    Autodesk.Revit.DB.Line line;
+                    Line line;
                     //get start point via "get_EndPoint(0)"
                     var newStart = new XYZ(
                         lineLoc.Curve.GetEndPoint(0).X + 100,
@@ -127,7 +125,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
             catch (Exception ex)
             {
                 TaskDialog.Show("MoveLinear", ex.Message);
-                res = Autodesk.Revit.UI.Result.Failed;
+                res = Result.Failed;
             }
             finally
             {

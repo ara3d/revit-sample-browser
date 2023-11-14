@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.DatumsModification.CS
 {
@@ -23,7 +15,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
          InitializeComponent();
          foreach (var name in DatumAlignment.datumDic.Keys)
          {
-            this.datumList.Items.Add(name);
+            datumList.Items.Add(name);
          }
       }
    }

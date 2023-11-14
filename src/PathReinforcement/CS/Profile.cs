@@ -21,11 +21,8 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Drawing.Drawing2D;
@@ -45,7 +42,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
       /// <summary>
       /// field used to store external command data.
       /// </summary>
-      private Autodesk.Revit.UI.ExternalCommandData m_commandData;
+      private ExternalCommandData m_commandData;
 
       /// <summary>
       /// field used to store the geometry curves of path reinforcement.
@@ -165,7 +162,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             foreach (var xyz in arr)
             {
                var tmpVector = transform.Transform(new Vector4(xyz));
-               var tmpUv = new Autodesk.Revit.DB.UV(
+               var tmpUv = new UV(
                    tmpVector.X,
                    tmpVector.Y);
                uvarr.Add(tmpUv);
@@ -192,7 +189,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             foreach (var xyz in arr)
             {
                var tmpVector = transform.Transform(new Vector4(xyz));
-               var tmpUv = new Autodesk.Revit.DB.UV(
+               var tmpUv = new UV(
                    tmpVector.X,
                    tmpVector.Y);
                uvarr.Add(tmpUv);

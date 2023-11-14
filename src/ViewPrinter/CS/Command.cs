@@ -21,11 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
@@ -56,7 +52,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
+        public Result Execute(ExternalCommandData commandData,
         ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             Autodesk.Revit.DB.Transaction newTran = null;
@@ -70,7 +66,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 if (null == pMgr.InstalledPrinterNames)
                 {
                     PrintMgr.MyMessageBox("No installed printer, the external command can't work.");
-                    return Autodesk.Revit.UI.Result.Cancelled;
+                    return Result.Cancelled;
                 }
 
                 using (var pmDlg = new PrintMgrForm(pMgr))
@@ -78,7 +74,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                     if (pmDlg.ShowDialog() != DialogResult.Cancel)
                     {
                         newTran.Commit();
-                        return Autodesk.Revit.UI.Result.Succeeded;
+                        return Result.Succeeded;
                     }
                     newTran.RollBack();
                 }
@@ -89,10 +85,10 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 if (null != newTran)
                     newTran.RollBack();
                 message = ex.ToString();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
-            return Autodesk.Revit.UI.Result.Cancelled;
+            return Result.Cancelled;
         }
 
     }

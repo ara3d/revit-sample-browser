@@ -21,15 +21,7 @@
 // (Rights in Technical Data and Computer Software), as applicable. 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.ExtensibleStorage;
-using System.Xml.Serialization;
-using System.Runtime.Serialization;
-using System.IO;
 
 namespace SchemaWrapperTools
 {
@@ -100,8 +92,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public string Name
       {
-         get { return m_Name; }
-         set { m_Name = value; }
+         get => m_Name;
+         set => m_Name = value;
       }
 
       /// <summary>
@@ -109,8 +101,8 @@ namespace SchemaWrapperTools
       /// </summary>
       public string Type
       {
-         get { return m_Type; }
-         set { m_Type = value; }
+         get => m_Type;
+         set => m_Type = value;
       }
 
        /// <summary>
@@ -118,8 +110,8 @@ namespace SchemaWrapperTools
        /// </summary>
       public string Spec
       {
-         get { return m_Spec; }
-         set { m_Spec = value; }
+         get => m_Spec;
+         set => m_Spec = value;
       }
 
        /// <summary>
@@ -127,8 +119,8 @@ namespace SchemaWrapperTools
        /// </summary>
       public SchemaWrapper SubSchema
       {
-          get { return m_SubSchema; }
-          set { m_SubSchema = value; }
+          get => m_SubSchema;
+          set => m_SubSchema = value;
       }
       #endregion
 

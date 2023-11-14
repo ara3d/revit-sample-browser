@@ -20,10 +20,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
@@ -40,7 +37,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
          Autodesk.Revit.UI.TaskDialog.Show("RoutingPreferenceTools", "Revit MEP is required to run this addin.");
       }
 
-      public static bool ValidatePipesDefined(Autodesk.Revit.DB.Document document)
+      public static bool ValidatePipesDefined(Document document)
       {
          var collector = new FilteredElementCollector(document);
          collector.OfClass(typeof(Autodesk.Revit.DB.Plumbing.PipeType));
@@ -58,14 +55,14 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
    internal class Convert
    {
-      public static double ConvertValueDocumentUnits(double decimalFeet, Autodesk.Revit.DB.Document document)
+      public static double ConvertValueDocumentUnits(double decimalFeet, Document document)
       {
          var formatOption = document.GetUnits().GetFormatOptions(SpecTypeId.PipeSize);
          return UnitUtils.ConvertFromInternalUnits(decimalFeet, formatOption.GetUnitTypeId());
       }
 
 
-      public static double ConvertValueToFeet(double unitValue, Autodesk.Revit.DB.Document document)
+      public static double ConvertValueToFeet(double unitValue, Document document)
       {
          var tempVal = ConvertValueDocumentUnits(unitValue, document);
          var ratio = unitValue / tempVal;

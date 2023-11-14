@@ -23,14 +23,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using Autodesk.Revit.DB;
 using Point = System.Drawing.Point;
 
 namespace Revit.SDK.Samples.NewOpenings.CS
@@ -38,14 +33,14 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// <summary>
     /// Main form used to display the profile of Wall or Floor and draw the opening profiles.
     /// </summary>
-    public partial class NewOpeningsForm : System.Windows.Forms.Form
+    public partial class NewOpeningsForm : Form
     {
         #region class members
         private Profile m_profile;  //save the profile date (ProfileFloor or ProfileWall)
         private Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
         private Matrix4 m_moveToCenterMatrix;  //save the matrix use to move point to origin
         private Matrix4 m_scaleMatrix; //save the matrix use to scale
-        private ITool m_tool = null; //current using tool
+        private ITool m_tool; //current using tool
         private Queue<ITool> m_tools = new Queue<ITool>(); //all tool can use in pictureBox       
         #endregion
         /// <summary>
@@ -99,8 +94,8 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// <param name="pts">contain the points to be transform</param>
         private void TransFormPoints(Point[] pts)
         {
-            var matrix = new System.Drawing.Drawing2D.Matrix(
-                1, 0, 0, 1, this.openingPictureBox.Width / 2, this.openingPictureBox.Height / 2);
+            var matrix = new Matrix(
+                1, 0, 0, 1, openingPictureBox.Width / 2, openingPictureBox.Height / 2);
             matrix.Invert();
             matrix.TransformPoints(pts);            
         }
@@ -199,12 +194,12 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                     m_profile.DrawOpening(ps3D, tool.ToolType);
                 }
             }
-            this.Close();
+            Close();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void openingPictureBox_Paint(object sender, PaintEventArgs e)
@@ -220,8 +215,8 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 SystemFonts.DefaultFont, SystemBrushes.Highlight, 2, 5);
             
             //move the origin to the picture center
-            var size = this.openingPictureBox.Size;
-            e.Graphics.Transform = new System.Drawing.Drawing2D.Matrix(
+            var size = openingPictureBox.Size;
+            e.Graphics.Transform = new Matrix(
                 1, 0, 0, 1, size.Width / 2, size.Height / 2);
 
             //draw profile
@@ -254,7 +249,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 var graphic = openingPictureBox.CreateGraphics();
                 graphic.DrawString(m_tool.ToolType.ToString(), 
                     SystemFonts.DefaultFont, SystemBrushes.Highlight, 2, 5);
-                this.Refresh();
+                Refresh();
             }
         }
 
@@ -278,7 +273,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         {
             var graphics = openingPictureBox.CreateGraphics();
             m_tool.OnMouseMove(graphics, e);
-            var paintArg = new PaintEventArgs(graphics, new System.Drawing.Rectangle());
+            var paintArg = new PaintEventArgs(graphics, new Rectangle());
             openingPictureBox_Paint(null, paintArg);
         }
     }

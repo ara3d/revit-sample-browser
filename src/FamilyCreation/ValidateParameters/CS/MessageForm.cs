@@ -20,22 +20,16 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace Revit.SDK.Samples.ValidateParameters.CS
 {
     /// <summary>
     /// The form is used to show the result
     /// </summary>
-    public partial class MessageForm : System.Windows.Forms.Form
+    public partial class MessageForm : Form
     {  
         /// <summary>
         /// store the log file name
@@ -58,7 +52,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
         {
             var msgText = "";
             //If the size of error messages is 0, means the validate parameters is successful
-            this.Text = "Validate Parameters Message Form";
+            Text = "Validate Parameters Message Form";
             //create regeneration log file
             string assemblyPath;            
             assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -85,7 +79,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
             }
             msgText += "\n\nIf you want to know the validating parameters result, please get the log file at \n"+m_logFileName;
             messageRichTextBox.Text = msgText;
-            this.StartPosition = FormStartPosition.CenterParent;           
+            StartPosition = FormStartPosition.CenterParent;           
             CheckForIllegalCrossThreadCalls = false;
         }
        

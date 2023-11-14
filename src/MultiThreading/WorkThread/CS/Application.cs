@@ -22,14 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.Analysis;
@@ -42,14 +36,14 @@ namespace Revit.SDK.Samples.WorkThread.CS
     public class Application : IExternalApplication
     {
         // instance of class Application
-        internal static Application thisApp = null;
+        internal static Application thisApp;
 
         // instance of class FaceAnalyzer
-        private FaceAnalyzer m_analyzer = null;
+        private FaceAnalyzer m_analyzer;
         // event handler of idling
-        private EventHandler<IdlingEventArgs> m_hIdling = null;
+        private EventHandler<IdlingEventArgs> m_hIdling;
         // event handler of document changed
-        private EventHandler<DocumentChangedEventArgs> m_hDocChanged = null;
+        private EventHandler<DocumentChangedEventArgs> m_hDocChanged;
 
         #region IExternalApplication Members
         /// <summary>
@@ -97,7 +91,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         ///   eventual changes to the element being analyzed.
         /// </remarks>
         /// 
-        public void RunAnalyzer(UIApplication uiapp, String sref)
+        public void RunAnalyzer(UIApplication uiapp, string sref)
         {
             if (uiapp.ActiveUIDocument != null)
             {
@@ -287,7 +281,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         ///   default analysis stile in that view.
         /// </remarks>
         /// 
-        private void SetupDisplayStyle(Autodesk.Revit.DB.View view)
+        private void SetupDisplayStyle(View view)
         {
             const string styleName = "SDK2014-AL Style";
             AnalysisDisplayStyle ourStyle = null;

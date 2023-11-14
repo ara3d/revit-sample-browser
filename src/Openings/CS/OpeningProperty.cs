@@ -22,8 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
@@ -75,64 +73,34 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         [Description("Name of current diaplayed Opening"),
         Category("Opening Name"),]
-        public string Name
-        {
-            get 
-            { 
-                return m_name; 
-            }
-        }
+        public string Name => m_name;
 
         /// <summary>
         ///element id 
         /// </summary>
         [Description("ElementId of current diaplayed Opening"),
         Category("Opening Property"),]
-        public string ElementID
-        {
-            get 
-            { 
-                return m_elementId; 
-            }
-        }
+        public string ElementID => m_elementId;
 
         /// <summary>
         /// host name
         /// </summary>
         [Description("Name of the Host which contains Current displayed Opening"),
         CategoryAttribute("Opening Property"),]
-        public string HostName
-        {
-            get 
-            { 
-                return m_hostName; 
-            }
-        }
+        public string HostName => m_hostName;
 
         /// <summary>
         /// host elements id
         /// </summary>
         [Description("ElementId of Host"),
         CategoryAttribute("Opening Property"),]
-        public string HostElementID
-        {
-            get 
-            { 
-                return m_hostElementId; 
-            }
-        }
+        public string HostElementID => m_hostElementId;
 
         /// <summary>
         /// shaft opening 
         /// </summary>
         [Description("whether displayed openging is Shaft Opening"),
         CategoryAttribute("Opening Property"),]
-        public bool ShaftOpening
-        {
-            get 
-            { 
-                return m_isShaft; 
-            }
-        }
+        public bool ShaftOpening => m_isShaft;
     }
 }

@@ -21,10 +21,6 @@
 //
 
 
-using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 
@@ -34,17 +30,17 @@ namespace Revit.SDK.Samples.SlabProperties.CS
     /// Show some properties of a slab in Revit Structure 5, including Level, Type name, Span direction,
     /// Material name, Thickness, and Young Modulus for each layer of the slab's material. 
     /// </summary>
-    public class SlabPropertiesForm : System.Windows.Forms.Form
+    public class SlabPropertiesForm : Form
     {
-        private System.Windows.Forms.GroupBox layerGroupBox;
-        private System.Windows.Forms.RichTextBox layerRichTextBox;
-        private System.Windows.Forms.Label levelLabel;
-        private System.Windows.Forms.Label typeNameLabel;
-        private System.Windows.Forms.Label spanDirectionLabel;
-        private System.Windows.Forms.TextBox levelTextBox;
-        private System.Windows.Forms.TextBox typeNameTextBox;
-        private System.Windows.Forms.TextBox spanDirectionTextBox;
-        private System.Windows.Forms.Button closeButton;
+        private GroupBox layerGroupBox;
+        private RichTextBox layerRichTextBox;
+        private Label levelLabel;
+        private Label typeNameLabel;
+        private Label spanDirectionLabel;
+        private TextBox levelTextBox;
+        private TextBox typeNameTextBox;
+        private TextBox spanDirectionTextBox;
+        private Button closeButton;
 
         /// <summary>
         /// Required designer variable.
@@ -247,26 +243,26 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         /// <param name="e"></param>
         private void SlabPropertiesForm_Load(object sender, System.EventArgs e)
         {
-            this.levelTextBox.Text = m_dataBuffer.Level;
-            this.typeNameTextBox.Text = m_dataBuffer.TypeName;
-            this.spanDirectionTextBox.Text = m_dataBuffer.SpanDirection;
+            levelTextBox.Text = m_dataBuffer.Level;
+            typeNameTextBox.Text = m_dataBuffer.TypeName;
+            spanDirectionTextBox.Text = m_dataBuffer.SpanDirection;
 
             var numberOfLayers = m_dataBuffer.NumberOfLayers;
 
-            this.layerRichTextBox.Text = "";
+            layerRichTextBox.Text = "";
 
             for (var i = 0; i < numberOfLayers; i++)
             {
                 // Get each layer's Material name and Young Modulus properties
                 m_dataBuffer.SetLayer(i);
 
-                this.layerRichTextBox.Text += "Layer " + (i + 1).ToString() + "\r\n";
-                this.layerRichTextBox.Text += "Material name:  " + m_dataBuffer.LayerMaterialName + "\r\n";
-                this.layerRichTextBox.Text += "Thickness: " + m_dataBuffer.LayerThickness + "\r\n";
-                this.layerRichTextBox.Text += "YoungModulus X:  " + m_dataBuffer.LayerYoungModulusX + "\r\n";
-                this.layerRichTextBox.Text += "YoungModulus Y:  " + m_dataBuffer.LayerYoungModulusY + "\r\n";
-                this.layerRichTextBox.Text += "YoungModulus Z:  " + m_dataBuffer.LayerYoungModulusZ + "\r\n";
-                this.layerRichTextBox.Text += "-----------------------------------------------------------" + "\r\n";
+                layerRichTextBox.Text += "Layer " + (i + 1).ToString() + "\r\n";
+                layerRichTextBox.Text += "Material name:  " + m_dataBuffer.LayerMaterialName + "\r\n";
+                layerRichTextBox.Text += "Thickness: " + m_dataBuffer.LayerThickness + "\r\n";
+                layerRichTextBox.Text += "YoungModulus X:  " + m_dataBuffer.LayerYoungModulusX + "\r\n";
+                layerRichTextBox.Text += "YoungModulus Y:  " + m_dataBuffer.LayerYoungModulusY + "\r\n";
+                layerRichTextBox.Text += "YoungModulus Z:  " + m_dataBuffer.LayerYoungModulusZ + "\r\n";
+                layerRichTextBox.Text += "-----------------------------------------------------------" + "\r\n";
             }
         }
     }

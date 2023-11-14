@@ -21,10 +21,7 @@
 //
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.Reinforcement.CS
@@ -37,7 +34,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
     public struct RebarGeometry
     {
         // Private members
-        Autodesk.Revit.DB.XYZ m_normal;        // the direction of rebar distribution
+        XYZ m_normal;        // the direction of rebar distribution
         IList<Curve> m_curves; //the profile of the rebar
         int m_number;        //the number of the rebar
         double m_spacing;    //the spacing of the rebar
@@ -45,16 +42,10 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <summary>
         /// get and set the value of the normal
         /// </summary>
-        public Autodesk.Revit.DB.XYZ Normal
+        public XYZ Normal
         {
-            get
-            {
-                return m_normal;
-            }
-            set
-            {
-                m_normal = value;
-            }
+            get => m_normal;
+            set => m_normal = value;
         }
 
         /// <summary>
@@ -62,14 +53,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// </summary>
         public IList<Curve> Curves
         {
-            get
-            {
-                return m_curves;
-            }
-            set
-            {
-                m_curves = value;
-            }
+            get => m_curves;
+            set => m_curves = value;
         }
 
         /// <summary>
@@ -77,14 +62,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// </summary>
         public int RebarNumber
         {
-            get
-            {
-                return m_number;
-            }
-            set
-            {
-                m_number = value;
-            }
+            get => m_number;
+            set => m_number = value;
         }
 
         /// <summary>
@@ -92,14 +71,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// </summary>
         public double RebarSpacing
         {
-            get
-            {
-                return m_spacing;
-            }
-            set
-            {
-                m_spacing = value;
-            }
+            get => m_spacing;
+            set => m_spacing = value;
         }
 
         /// <summary>
@@ -109,7 +82,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <param name="curves">the profile of the rebars</param>
         /// <param name="number">the number of the rebar</param>
         /// <param name="spacing">the number of the rebar</param>
-        public RebarGeometry(Autodesk.Revit.DB.XYZ normal, IList<Curve> curves, int number, double spacing)
+        public RebarGeometry(XYZ normal, IList<Curve> curves, int number, double spacing)
         {
             // initialize the data members
             m_normal = normal;
@@ -257,9 +230,9 @@ namespace Revit.SDK.Samples.Reinforcement.CS
     /// <summary>
     /// A comparer for XYZ, and give a method to sort all the Autodesk.Revit.DB.XYZ points in a array
     /// </summary>
-    public class XYZHeightComparer : IComparer<Autodesk.Revit.DB.XYZ>
+    public class XYZHeightComparer : IComparer<XYZ>
     {
-        int IComparer<Autodesk.Revit.DB.XYZ>.Compare(Autodesk.Revit.DB.XYZ first, Autodesk.Revit.DB.XYZ second)
+        int IComparer<XYZ>.Compare(XYZ first, XYZ second)
         {
             // first compare z coordinate, then y coordinate, at last x coordinate
             if (GeomUtil.IsEqual(first.Z, second.Z))

@@ -23,10 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.DB.Architecture;
 
 namespace Revit.SDK.Samples.Site.CS
@@ -48,7 +46,7 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="message"></param>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             AddNewRetainingPond(commandData.Application.ActiveUIDocument, 32);
 
@@ -62,13 +60,13 @@ namespace Revit.SDK.Samples.Site.CS
         /// <param name="pondRadius">The radius of the pond.</param>
         private void AddNewRetainingPond(UIDocument uiDoc, double pondRadius)
         {
-            Document doc = uiDoc.Document;
+            var doc = uiDoc.Document;
 
             // Find toposurfaces
-            FilteredElementCollector tsCollector = new FilteredElementCollector(doc);
+            var tsCollector = new FilteredElementCollector(doc);
             tsCollector.OfClass(typeof(TopographySurface));
-            IEnumerable<TopographySurface> tsEnumerable = tsCollector.Cast<TopographySurface>().Where<TopographySurface>(ts => !ts.IsSiteSubRegion);
-            int count = tsEnumerable.Count<TopographySurface>();
+            var tsEnumerable = tsCollector.Cast<TopographySurface>().Where<TopographySurface>(ts => !ts.IsSiteSubRegion);
+            var count = tsEnumerable.Count<TopographySurface>();
 
             // If there is only on surface, use it.  If there is more than one, let the user select the target.
             TopographySurface targetSurface = null;
@@ -82,36 +80,36 @@ namespace Revit.SDK.Samples.Site.CS
             }
 
             // Pick point and project to plane at toposurface average elevation
-            XYZ point = SiteUIUtils.PickPointNearToposurface(uiDoc, targetSurface, "Pick point for center of pond.");
-            double elevation = point.Z;
+            var point = SiteUIUtils.PickPointNearToposurface(uiDoc, targetSurface, "Pick point for center of pond.");
+            var elevation = point.Z;
 
             // Add subregion first, so that any previously existing points can be removed to avoid distorting the new region
 
             // Find material "Water"
-            FilteredElementCollector collector = new FilteredElementCollector(doc);
+            var collector = new FilteredElementCollector(doc);
             collector.OfClass(typeof(Material));
-            Material mat = collector.Cast<Material>().FirstOrDefault<Material>(m => m.Name == "Water");
+            var mat = collector.Cast<Material>().FirstOrDefault<Material>(m => m.Name == "Water");
 
             // Create subregion curves
-            List<Curve> curves = new List<Curve>();
+            var curves = new List<Curve>();
             curves.Add(Arc.Create(point, pondRadius, 0, Math.PI, XYZ.BasisX, XYZ.BasisY));
             curves.Add(Arc.Create(point, pondRadius, Math.PI, 2 * Math.PI, XYZ.BasisX, XYZ.BasisY));
 
-            CurveLoop curveLoop = CurveLoop.Create(curves);
-            List<CurveLoop> curveLoops = new List<CurveLoop>();
+            var curveLoop = CurveLoop.Create(curves);
+            var curveLoops = new List<CurveLoop>();
             curveLoops.Add(curveLoop);
 
             // All changes are added to one transaction group - will create one undo item
-            using (TransactionGroup addGroup = new TransactionGroup(doc, "Add pond group"))
+            using (var addGroup = new TransactionGroup(doc, "Add pond group"))
             {
                 addGroup.Start();
 
                 IList<XYZ> existingPoints = null;
                 // Transacton for adding subregion.
-                using (Transaction t2 = new Transaction(doc, "Add subregion"))
+                using (var t2 = new Transaction(doc, "Add subregion"))
                 {
                     t2.Start();
-                    SiteSubRegion region = SiteSubRegion.Create(doc, curveLoops, targetSurface.Id);
+                    var region = SiteSubRegion.Create(doc, curveLoops, targetSurface.Id);
                     if (mat != null)
                     {
                         region.TopographySurface.MaterialId = mat.Id;
@@ -128,12 +126,12 @@ namespace Revit.SDK.Samples.Site.CS
                 }
 
                 // Add the topography points to the target surface via edit scope.
-                using (TopographyEditScope editScope = new TopographyEditScope(doc, "Edit TS"))
+                using (var editScope = new TopographyEditScope(doc, "Edit TS"))
                 {
                     editScope.Start(targetSurface.Id);
 
                     // Transaction for points changes
-                    using (Transaction t = new Transaction(doc, "Add points"))
+                    using (var t = new Transaction(doc, "Add points"))
                     {
                         t.Start();
 
@@ -144,7 +142,7 @@ namespace Revit.SDK.Samples.Site.CS
                         }
 
                         // Generate list of points to add
-                        IList<XYZ> points = SiteEditingUtils.GeneratePondPointsSurrounding(new XYZ(point.X, point.Y, elevation - 3), pondRadius);
+                        var points = SiteEditingUtils.GeneratePondPointsSurrounding(new XYZ(point.X, point.Y, elevation - 3), pondRadius);
                         targetSurface.AddPoints(points);
                         t.Commit();
                     }

@@ -21,17 +21,9 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.Reflection;
 using System.IO;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ImportExport.CS
@@ -39,7 +31,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// <summary>
     /// It contains a dialog which provides the options of importing dwg format
     /// </summary>
-    public partial class ImportDWGForm : System.Windows.Forms.Form
+    public partial class ImportDWGForm : Form
     {
         /// <summary>
         /// Data class
@@ -102,7 +94,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 checkBoxCurrentViewOnly.Enabled = false;
             }
 
-            this.Text = m_importData.Title;
+            Text = m_importData.Title;
         }
 
         /// <summary>
@@ -112,7 +104,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="e"></param>
         private void buttonBrowser_Click(object sender, EventArgs e)
         {
-            var returnFileFullName = String.Empty;
+            var returnFileFullName = string.Empty;
             if (MainData.ShowOpenDialog(m_importData, ref returnFileFullName) != DialogResult.Cancel)
             {
                 textBoxFileSource.Text = returnFileFullName;
@@ -164,8 +156,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                     TaskDialog.Show("Import Failed", ex.ToString(), TaskDialogCommonButtons.Ok);
                 }
 
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
         }
 
@@ -173,11 +165,11 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Validate the file to import
         /// </summary>
         /// <returns></returns>
-        private Boolean ValidateFileName()
+        private bool ValidateFileName()
         {
             var fileNameFull = textBoxFileSource.Text;
             //If the textBoxFileSource is empty
-            if (String.IsNullOrEmpty(fileNameFull))
+            if (string.IsNullOrEmpty(fileNameFull))
             {
                 TaskDialog.Show("Information", "Please specify the folder and file name!", TaskDialogCommonButtons.Ok);
                 textBoxFileSource.Focus();
@@ -201,7 +193,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         private void SetImportColorMode()
         {
-            String colorMode;
+            string colorMode;
             if (radioButtonBlackWhite.Checked)
             {
                 colorMode = radioButtonBlackWhite.Text;
@@ -233,7 +225,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         private void SetImportPlacement()
         {
-            String placement;
+            string placement;
             if (radioButtonCenter2Center.Checked)
             {
                 placement = radioButtonCenter2Center.Text;
@@ -301,7 +293,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             if (custom)
             {
                 //Set the scaling
-                m_importData.ImportCustomScale = Double.Parse(textBoxScale.Text);
+                m_importData.ImportCustomScale = double.Parse(textBoxScale.Text);
             }
             else
             {

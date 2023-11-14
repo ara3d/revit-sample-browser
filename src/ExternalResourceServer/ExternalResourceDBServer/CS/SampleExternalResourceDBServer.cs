@@ -24,10 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 
@@ -76,7 +72,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       }
 
       /// Uniquely identifies this server to Revit's ExternalService registry
-      public System.Guid GetServerId()
+      public Guid GetServerId()
       {
          return new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
       }
@@ -85,7 +81,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// <summary>
       /// Implement this method to return the name of the server.
       /// </summary>
-      public System.String GetName()
+      public string GetName()
       {
          return "SDK Sample ExtRes Server";
       }
@@ -94,7 +90,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// <summary>
       /// # Implement this method to return the id of the vendor of the server.   
       /// </summary>
-      public System.String GetVendorId()
+      public string GetVendorId()
       {
          return "ADSK";
       }
@@ -102,7 +98,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// <summary>
       /// Provide a short description of the server for display to the end user.
       /// </summary>
-      public System.String GetDescription()
+      public string GetDescription()
       {
          return "A Revit SDK sample external resource server which provides keynote data and Revit links.";
       }
@@ -124,7 +120,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// <summary>
       /// Returns a URL address of the provider of this Revit add-in.
       /// </summary>
-      public virtual String GetInformationLink()
+      public virtual string GetInformationLink()
       {
          return "http://www.autodesk.com";
       }
@@ -249,7 +245,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// Servers can override the name for UI purposes, but here we just return the names that we
       /// used when we first created the Resources in SetupBrowserData().
       /// </summary>        
-      public String GetInSessionPath(ExternalResourceReference err, String savedPath)
+      public string GetInSessionPath(ExternalResourceReference err, string savedPath)
       {
          return savedPath;
       }
@@ -312,7 +308,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
          // Determine whether currently loaded version is out of date, and return appropriate status.
          var currentlyLoadedVersion = extRef.Version;
 
-         if (currentlyLoadedVersion == String.Empty)
+         if (currentlyLoadedVersion == string.Empty)
             return ResourceVersionStatus.Unknown;
 
          return currentlyLoadedVersion == GetCurrentlyAvailableResourceVersion(extRef) ? ResourceVersionStatus.Current
@@ -347,7 +343,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// <para>For this example server, the root folder is simply a directory immediately under the folder
       /// where the DLL for this assembly is located.</para>
       /// </summary>
-      private static String RootFolder
+      private static string RootFolder
       {
          get
          {
@@ -366,25 +362,13 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// stored in an ExternalResourceReference's reference information string-string Dictionary.
       /// See the SetupKeynoteDatabaseBrowserData method.
       /// </summary>
-      private static String RefMapDBKeyEntry
-      {
-         get
-         {
-            return "DBKey";
-         }
-      }
+      private static string RefMapDBKeyEntry => "DBKey";
 
       /// <summary>
       /// Returns the string used to access the server-based relative path to the Revit link file
       /// that is stored in an ExternalResourceReference's reference information string-string Dictionary.
       /// </summary>
-      private static String RefMapLinkPathEntry
-      {
-         get
-         {
-            return "Path";
-         }
-      }
+      private static string RefMapLinkPathEntry => "Path";
 
 
       /// <summary>
@@ -392,7 +376,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// </summary>
       /// <param name="extResRef">The ExternalResourceReference of the resource whose version is requested.</param>
       /// <returns>A string containing the version of the specified resource.</returns>
-      private String GetCurrentlyAvailableResourceVersion(ExternalResourceReference extResRef)
+      private string GetCurrentlyAvailableResourceVersion(ExternalResourceReference extResRef)
       {
          var refMap = extResRef.GetReferenceInformation();
          if (refMap.ContainsKey(RefMapDBKeyEntry))
@@ -415,7 +399,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// Provides Revit's file browser dialog with information for navigating the
       /// fictitious database containing French and German keynotes data.
       /// </summary>
-      private void SetupKeynoteDatabaseBrowserData(ExternalResourceBrowserData browserData, String currentCultureName)
+      private void SetupKeynoteDatabaseBrowserData(ExternalResourceBrowserData browserData, string currentCultureName)
       {
          var folderPath = browserData.FolderPath;
 
@@ -433,13 +417,13 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             }
             else if (folderPath.EndsWith("/Unterordner1"))
             {
-               var refMap = new Dictionary<String, String>();
+               var refMap = new Dictionary<string, string>();
                refMap[RefMapDBKeyEntry] = "1";
                browserData.AddResource("Keynotes1_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
             }
             else if (folderPath.EndsWith("/Unterordner2"))
             {
-               var refMap = new Dictionary<String, String>();
+               var refMap = new Dictionary<string, string>();
                refMap[RefMapDBKeyEntry] = "2";
                browserData.AddResource("Keynotes2_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
             }
@@ -453,13 +437,13 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             }
             else if (folderPath.EndsWith("/Sous-dossier1"))
             {
-               var refMap = new Dictionary<String, String>();
+               var refMap = new Dictionary<string, string>();
                refMap[RefMapDBKeyEntry] = "3";
                browserData.AddResource("Keynotes1_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
             }
             else if (folderPath.EndsWith("/Sous-dossier2"))
             {
-               var refMap = new Dictionary<String, String>();
+               var refMap = new Dictionary<string, string>();
                refMap[RefMapDBKeyEntry] = "4";
                browserData.AddResource("Keynotes2_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
             }
@@ -473,7 +457,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// </summary>
       /// <param name="filePath">The full path of a file on disk.</param>
       /// <returns>The version (last-modified data) of the specified file.</returns>
-      private String GetFileVersion(String filePath)
+      private string GetFileVersion(string filePath)
       {
          var fileInfo = new FileInfo(filePath);
          var lastModifiedTime = fileInfo.LastWriteTimeUtc;
@@ -487,7 +471,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// </summary>
       /// <param name="extRef">An ExternalResourceReference for a keynote data file stored on this server.</param>
       /// <returns>A string representing the full path to the Revit link resource on the server drive.</returns>
-      private String GetFullServerKeynoteFilePath(ExternalResourceReference extRef)
+      private string GetFullServerKeynoteFilePath(ExternalResourceReference extRef)
       {
          var inSessionPath = extRef.InSessionPath;
          var serverName = GetName();
@@ -536,7 +520,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                   browserData.AddResource(file.Name, GetFileVersion(file.FullName));
                else
                {
-                  var refMap = new Dictionary<String, String>();
+                  var refMap = new Dictionary<string, string>();
                   // Relative Path of Link File is Stored in the ExternalResourceReference that
                   // Will Be Addded to the BrowserData.
                   refMap[RefMapLinkPathEntry] = folderPath.TrimEnd('/') + '/' + file.Name;
@@ -612,19 +596,19 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
          {
             // Copy the file from the path under the server "root" folder to a secret "cache" folder on the users machine
             var fullCachedPath = GetFullLinkCachedFilePath(resourceReference);
-            var cacheFolder = System.IO.Path.GetDirectoryName(fullCachedPath);
-            if (!System.IO.Directory.Exists(cacheFolder))
+            var cacheFolder = Path.GetDirectoryName(fullCachedPath);
+            if (!Directory.Exists(cacheFolder))
             {
-               System.IO.Directory.CreateDirectory(cacheFolder);
+               Directory.CreateDirectory(cacheFolder);
             }
             var serverLinkPath = GetFullServerLinkFilePath(resourceReference);
-            System.IO.File.Copy(serverLinkPath, fullCachedPath, true);  // Overwrite
+            File.Copy(serverLinkPath, fullCachedPath, true);  // Overwrite
 
             var linksPath = ModelPathUtils.ConvertUserVisiblePathToModelPath(fullCachedPath);
             linkLoadContent.SetLinkDataPath(linksPath);
             loadContent.LoadStatus = ExternalResourceLoadStatus.Success;
          }
-         catch (System.Exception)
+         catch (Exception)
          {
          }
 
@@ -636,7 +620,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// </summary>
       /// <param name="resource">An ExternalResourceReference for a Revit link stored on this server.</param>
       /// <returns>A string representing the full path to the Revit link resource on the server drive.</returns>
-      public static String GetFullServerLinkFilePath(ExternalResourceReference resource)
+      public static string GetFullServerLinkFilePath(ExternalResourceReference resource)
       {
          if (resource == null)
             return "";
@@ -655,7 +639,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// simply a directory immediately under the folder where the DLL for this assembly is
       /// located.</para>
       /// </summary>
-      private static String LocalLinkCacheFolder
+      private static string LocalLinkCacheFolder
       {
          get
          {
@@ -680,7 +664,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// </summary>
       /// <param name="resource">An ExternalResourceReference for a Revit link stored on this server.</param>
       /// <returns>A string representing the full path to the link model on the end user's local drive.</returns>
-      public static String GetFullLinkCachedFilePath(ExternalResourceReference resource)
+      public static string GetFullLinkCachedFilePath(ExternalResourceReference resource)
       {
          if (resource == null)
             return "";

@@ -21,11 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.GenerateFloor.CS
@@ -33,7 +29,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
     /// <summary>
     /// User interface.
     /// </summary>
-    public partial class GenerateFloorForm : System.Windows.Forms.Form
+    public partial class GenerateFloorForm : Form
     {
         /// <summary>
         /// the data get/set with revit. 
@@ -60,7 +56,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             double maxLength = previewPictureBox.Width > previewPictureBox.Height ? previewPictureBox.Width : previewPictureBox.Height;
             var scale = (float)(maxLength / m_data.MaxLength * 0.8);
             e.Graphics.ScaleTransform(scale, scale);
-            e.Graphics.DrawLines(new Pen(System.Drawing.Color.Red, 1), m_data.Points);
+            e.Graphics.DrawLines(new Pen(Color.Red, 1), m_data.Points);
         }
 
         /// <summary>

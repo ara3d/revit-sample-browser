@@ -21,16 +21,7 @@
 //
 
 using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB.Events;
-using System.Windows.Forms;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI.Events;
 using System.Linq;
 
@@ -80,7 +71,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
       /// </summary>
       /// <param name="application">Controlled application to be loaded to Revit process.</param>
       /// <returns>The status of the external application</returns>
-      public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+      public Result OnStartup(UIControlledApplication application)
       {
          m_ctrlApp = application;
          
@@ -93,7 +84,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
          // subscribe to SelectionChanged event
          application.SelectionChanged += new EventHandler<SelectionChangedEventArgs>(SelectionChangedHandler);
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       /// <summary>
@@ -102,7 +93,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
       /// </summary>
       /// <param name="application">Controlled application to be shutdown.</param>
       /// <returns>The status of the external application.</returns>
-      public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+      public Result OnShutdown(UIControlledApplication application)
       {
          // unsubscribe to SelectionChanged event
          application.SelectionChanged -= new EventHandler<SelectionChangedEventArgs>(SelectionChangedHandler);
@@ -116,7 +107,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
             m_infoWindow = null;
          }
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       #endregion
@@ -130,7 +121,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
       /// </summary>
       /// <param name="sender">The source of the event.</param>
       /// <param name="args">Event arguments that contains the event data.</param>
-      private void SelectionChangedHandler(Object sender, SelectionChangedEventArgs args)
+      private void SelectionChangedHandler(object sender, SelectionChangedEventArgs args)
       {
          // The document associated with the event. 
          var doc = args.GetDocument();

@@ -20,10 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -59,8 +55,8 @@ namespace Revit.SDK.Samples.AutoJoin.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with
         /// the operation.</returns>
-        public virtual Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData
-            , ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public virtual Result Execute(ExternalCommandData commandData
+            , ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.AutoJoin");
             trans.Start();
@@ -99,21 +95,21 @@ namespace Revit.SDK.Samples.AutoJoin.CS
                 {
                     message = "At least 2 combinable elements should be selected.";
                     trans.RollBack();
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 doc.Document.CombineElements(solids);
 
                 //The selected generic forms are joined, whether or not they overlap.
                 trans.Commit();
-                return Autodesk.Revit.UI.Result.Succeeded;                
+                return Result.Succeeded;                
             }
 
             var autojoin = new AutoJoin();
             autojoin.Join(doc.Document);
             //All overlapping generic forms are joined.
             trans.Commit();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
     }    
 }

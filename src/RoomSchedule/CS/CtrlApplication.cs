@@ -21,10 +21,7 @@
 //
 
 using System;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.RoomSchedule
 {
@@ -56,7 +53,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 }
                 else
                 {
-                    return CrtlApplication.m_eventReactor;
+                    return m_eventReactor;
                 }
             }
         }
@@ -69,17 +66,17 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="application">Current loaded application.</param>
         /// <returns></returns>
-        public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+        public Result OnStartup(UIControlledApplication application)
         {
             // specify the log
-            var assemblyName = this.GetType().Assembly.Location;
+            var assemblyName = GetType().Assembly.Location;
             m_eventReactor = new EventsReactor(assemblyName.Replace(".dll", ".log"));
             //
             // subscribe events
             application.ControlledApplication.DocumentSaving += new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingEventArgs>(EventReactor.DocumentSaving);
             application.ControlledApplication.DocumentSavingAs += new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs>(EventReactor.DocumentSavingAs);
             application.ControlledApplication.DocumentClosed += new EventHandler<Autodesk.Revit.DB.Events.DocumentClosedEventArgs>(EventReactor.DocumentClosed);
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -87,13 +84,13 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         /// <param name="application">Current loaded application.</param>
         /// <returns></returns>
-        public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+        public Result OnShutdown(UIControlledApplication application)
         {
             m_eventReactor.Dispose();
             application.ControlledApplication.DocumentSaving -= new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingEventArgs>(EventReactor.DocumentSaving);
             application.ControlledApplication.DocumentSavingAs -= new EventHandler<Autodesk.Revit.DB.Events.DocumentSavingAsEventArgs>(EventReactor.DocumentSavingAs);
             application.ControlledApplication.DocumentClosed -= new EventHandler<Autodesk.Revit.DB.Events.DocumentClosedEventArgs>(EventReactor.DocumentClosed);
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
         #endregion
     }

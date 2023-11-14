@@ -24,9 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
 {
@@ -47,7 +45,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
       /// <summary>
       /// revit document
       /// </summary>
-      private Autodesk.Revit.DB.Document m_doc;
+      private Document m_doc;
 
       /// <summary>
       /// Constructor
@@ -56,7 +54,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
       /// <param name="doc">Revit document</param>
       private ProximityDetection(
          Autodesk.Revit.ApplicationServices.Application app, 
-         Autodesk.Revit.DB.Document doc)
+         Document doc)
       {
          m_app = app;
          m_doc = doc;
@@ -70,7 +68,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
       /// <returns>The singleton instance of ProximityDetection</returns>
       public static ProximityDetection getInstance(
          Autodesk.Revit.ApplicationServices.Application app, 
-         Autodesk.Revit.DB.Document doc)
+         Document doc)
       {
          if (Instance == null)
          {
@@ -149,7 +147,7 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                   new XAttribute("Name", egressElement.Name));
 
                var count = 1;
-               var Objects = egressElement.get_Geometry(new Autodesk.Revit.DB.Options()).GetEnumerator();
+               var Objects = egressElement.get_Geometry(new Options()).GetEnumerator();
                Objects.MoveNext();
                var gi = Objects.Current as GeometryInstance;
                var Objects1 = gi.GetInstanceGeometry().GetEnumerator();

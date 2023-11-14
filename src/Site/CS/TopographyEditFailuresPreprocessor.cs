@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -46,12 +45,12 @@ namespace Revit.SDK.Samples.Site.CS
             try
             {
                 TaskDialog.Show("Preprocess failures", "Hello");
-                IList<FailureMessageAccessor> failureMessages = failuresAccessor.GetFailureMessages();
-                int numberOfFailures = failureMessages.Count;
+                var failureMessages = failuresAccessor.GetFailureMessages();
+                var numberOfFailures = failureMessages.Count;
                 TaskDialog.Show("Preprocess failures", "Found " + numberOfFailures + " failure messages.");
                 if (numberOfFailures < 5)
                 {
-                    foreach (FailureMessageAccessor msgAccessor in failureMessages)
+                    foreach (var msgAccessor in failureMessages)
                     {
                         TaskDialog.Show("Failure!", msgAccessor.GetDescriptionText());
                     }

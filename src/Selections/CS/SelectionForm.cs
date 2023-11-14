@@ -21,12 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.Selections.CS
@@ -56,7 +50,7 @@ namespace Revit.SDK.Samples.Selections.CS
         private void PickElementButton_Click(object sender, EventArgs e)
         {
             m_manager.SelectionType = SelectionType.Element;
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -67,7 +61,7 @@ namespace Revit.SDK.Samples.Selections.CS
         private void MoveToButton_Click(object sender, EventArgs e)
         {
             m_manager.SelectionType = SelectionType.Point;
-            this.Close();
+            Close();
         }
     }
 }

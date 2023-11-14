@@ -24,9 +24,6 @@ using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
@@ -48,14 +45,14 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
         /// <returns>an instance of TrianglesData</returns>
         public static TrianglesData Load()
         {
-            string assemblyFileFolder = Path.GetDirectoryName(typeof(TrianglesData).Assembly.Location);
-            string emmfilePath        = Path.Combine(assemblyFileFolder, "TrianglesData.json");
-            string emmfileContent     = File.ReadAllText(emmfilePath);
+            var assemblyFileFolder = Path.GetDirectoryName(typeof(TrianglesData).Assembly.Location);
+            var emmfilePath        = Path.Combine(assemblyFileFolder, "TrianglesData.json");
+            var emmfileContent     = File.ReadAllText(emmfilePath);
             return JSONParse(emmfileContent);
         }
-        private static TrianglesData JSONParse(String jsonString)
+        private static TrianglesData JSONParse(string jsonString)
         {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            var serializer = new JavaScriptSerializer();
             serializer.RegisterConverters(new JavaScriptConverter[] { new XYZConverter() });
 
             return serializer.Deserialize(jsonString, typeof(TrianglesData)) as TrianglesData;
@@ -87,7 +84,7 @@ namespace Revit.SDK.Samples.CreateTrianglesTopography.CS
         /// <returns></returns>
         public override IDictionary<string, object> Serialize(object obj, JavaScriptSerializer serializer)
         {
-            Dictionary<string, object> dic = new Dictionary<string, object>();
+            var dic = new Dictionary<string, object>();
             var node = obj as XYZ;
             if (node == null)
                 return null;

@@ -23,8 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using System.Linq;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
@@ -41,7 +39,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         #region  Class Member Variables
         private double m_scale = 1.0;
         private List<PointCloudCellStorage> m_storedCells;
-        private Outline m_outline = null;
+        private Outline m_outline;
         #endregion
 
         #region Class Methods
@@ -278,7 +276,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             private PointCloudFilter m_filter;
             private int m_currentIndex;
             private PointCloudAccessBase m_access;
-            private bool m_done = false;
+            private bool m_done;
             #endregion
 
             #region Class Methods

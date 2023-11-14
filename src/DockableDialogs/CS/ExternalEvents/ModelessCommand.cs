@@ -20,13 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Windows.Data;
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace Revit.SDK.Samples.DockableDialogs.CS
 {
 

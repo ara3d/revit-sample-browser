@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 
 namespace Revit.SDK.Samples.PowerCircuit.CS
@@ -39,7 +34,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// <summary>
         /// Name of an electrical system
         /// </summary>
-        private String m_name;
+        private string m_name;
 
         /// <summary>
         /// Id of an electrical system
@@ -49,24 +44,12 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// <summary>
         /// Id of an electrical system
         /// </summary>
-        public Autodesk.Revit.DB.ElementId Id
-        {
-            get
-            {
-                return m_id;
-            }
-        }
+        public Autodesk.Revit.DB.ElementId Id => m_id;
 
         /// <summary>
         /// Name of an electrical system
         /// </summary>
-        public String Name
-        {
-            get
-            {
-                return m_name;
-            }
-        }
+        public string Name => m_name;
 
         /// <summary>
         /// Constructor

@@ -22,8 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Revit.SDK.Samples.Loads.CS
 {
@@ -33,37 +31,25 @@ namespace Revit.SDK.Samples.Loads.CS
     public class FormulaMap
     {
         // Private Members
-        Double m_factor;    // Indicate the factor column of Formula DataGridView control
-        String m_caseName;  // Indicate case column of Formula DataGridView control
+        double m_factor;    // Indicate the factor column of Formula DataGridView control
+        string m_caseName;  // Indicate case column of Formula DataGridView control
 
         /// <summary>
         /// Factor
         /// </summary>
-        public Double Factor
+        public double Factor
         {
-            get
-            {
-                return m_factor;
-            }
-            set
-            {
-                m_factor = value;
-            }
+            get => m_factor;
+            set => m_factor = value;
         }
 
         /// <summary>
         /// Load Case
         /// </summary>
-        public String Case
+        public string Case
         {
-            get
-            {
-                return m_caseName;
-            }
-            set
-            {
-                m_caseName = value;
-            }
+            get => m_caseName;
+            set => m_caseName = value;
         }
 
         // Methods
@@ -79,7 +65,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// constructor with the case name
         /// </summary>
         /// <param name="caseName">The value set to Case Property</param>
-        public FormulaMap(String caseName)
+        public FormulaMap(string caseName)
         {
             m_factor = 1;
             m_caseName = caseName;
@@ -90,7 +76,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         /// <param name="factor">The value set to Factor Property</param>
         /// <param name="caseName">The value set to Case Property</param>
-        public FormulaMap(double factor, String caseName)
+        public FormulaMap(double factor, string caseName)
         {
             m_factor = factor;
             m_caseName = caseName;

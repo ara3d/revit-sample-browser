@@ -23,11 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -57,7 +53,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <summary>
         /// the API create handle
         /// </summary>
-        protected Autodesk.Revit.DB.Document m_revitDoc;
+        protected Document m_revitDoc;
 
         /// <summary>
         /// the family instance to places rebar on
@@ -77,24 +73,12 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <summary>
         /// Show all the rebar types in revit
         /// </summary>
-        public IList<RebarBarType> RebarTypes
-        {
-            get
-            {
-                return m_rebarTypes;
-            }
-        }
+        public IList<RebarBarType> RebarTypes => m_rebarTypes;
 
         /// <summary>
         /// Show all the rebar hook types in revit
         /// </summary>
-        public IList<RebarHookType> HookTypes
-        {
-            get
-            {
-                return m_hookTypes;
-            }
-        }
+        public IList<RebarHookType> HookTypes => m_hookTypes;
 
         /// <summary>
         /// Implement the Run() method of IFrameReinMaker interface.
@@ -213,7 +197,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             var curves = geomInfo.Curves;    // the shape of the rebar curves
 
             // Invoke the NewRebar() method to create rebar 
-            var createdRebar = Rebar.CreateFromCurves(m_revitDoc, Autodesk.Revit.DB.Structure.RebarStyle.Standard, rebarType, startHook, endHook,
+            var createdRebar = Rebar.CreateFromCurves(m_revitDoc, RebarStyle.Standard, rebarType, startHook, endHook,
                                          m_hostObject, normal, curves,
                                                 startOrient, endOrient, false, true);
 

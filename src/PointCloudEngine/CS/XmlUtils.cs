@@ -22,7 +22,6 @@
 
 using System;
 using System.Xml.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.CS.PointCloudEngine
@@ -43,7 +42,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             var y = element.Attribute("Y");
             var z = element.Attribute("Z");
 
-            return new XYZ(Double.Parse(x.Value), Double.Parse(y.Value), Double.Parse(z.Value));
+            return new XYZ(double.Parse(x.Value), double.Parse(y.Value), double.Parse(z.Value));
         }
 
         /// <summary>
@@ -53,7 +52,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <returns>The value.</returns>
         public static bool GetBoolean(XElement element)
         {
-            return Boolean.Parse(element.Attribute("value").Value);
+            return bool.Parse(element.Attribute("value").Value);
         }
 
         /// <summary>
@@ -63,7 +62,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <returns>The value.</returns>
         public static double GetDouble(XElement element)
         {
-            return Double.Parse(element.Attribute("value").Value);
+            return double.Parse(element.Attribute("value").Value);
         }
 
         /// <summary>
@@ -73,7 +72,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <returns>The value.</returns>
         public static int GetInteger(XElement element)
         {
-            return Int32.Parse(element.Attribute("value").Value);
+            return int.Parse(element.Attribute("value").Value);
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <param name="point">The point.</param>
         /// <param name="name">The name of the XML element.</param>
         /// <returns>The element.</returns>
-        public static XElement GetXElement(XYZ point, String name)
+        public static XElement GetXElement(XYZ point, string name)
         {
             var ret = new XElement(name);
             ret.Add(new XAttribute("X", point.X));
@@ -108,7 +107,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <param name="color">The color.</param>
         /// <param name="name">The name.</param>
         /// <returns>The element.</returns>
-        public static XElement GetColorXElement(int color, String name)
+        public static XElement GetColorXElement(int color, string name)
         {
             var ret = new XElement(name);
             var htmlRep = System.Drawing.ColorTranslator.ToHtml(System.Drawing.ColorTranslator.FromWin32(color));
@@ -123,7 +122,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// <param name="obj">The object.</param>
         /// <param name="name">The name.</param>
         /// <returns>The element.</returns>
-        public static XElement GetXElement(object obj, String name)
+        public static XElement GetXElement(object obj, string name)
         {
             var ret = new XElement(name);
             ret.Add(new XAttribute("value", obj.ToString()));

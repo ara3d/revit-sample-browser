@@ -22,16 +22,11 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.Loads.CS
 {
-    public partial class LoadsForm : System.Windows.Forms.Form
+    public partial class LoadsForm : Form
     {
         // Private members
         Loads m_dataBuffer;   // A reference of Loads.
@@ -68,8 +63,8 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>
@@ -79,8 +74,8 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

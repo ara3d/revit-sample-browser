@@ -21,12 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 using Autodesk.Revit.DB.Events;
@@ -58,7 +52,7 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
       /// some point.
       /// If false is returned then Revit should inform the user that the external application 
       /// failed to load and the release the internal reference.</returns>
-      public Autodesk.Revit.UI.Result OnStartup(UIControlledApplication application)
+      public Result OnStartup(UIControlledApplication application)
       {
          try
          {
@@ -66,10 +60,10 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
          }
          catch (Exception)
          {
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
 
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
 
       /// <summary>
@@ -84,9 +78,9 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
       /// some point.
       /// If false is returned then the Revit user should be warned of the failure of the external 
       /// application to shut down correctly.</returns>
-      public Autodesk.Revit.UI.Result OnShutdown(UIControlledApplication application)
+      public Result OnShutdown(UIControlledApplication application)
       {
-         return Autodesk.Revit.UI.Result.Succeeded;
+         return Result.Succeeded;
       }
       #endregion
 
@@ -97,7 +91,7 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
       /// </summary>
       /// <param name="obj"></param>
       /// <param name="args"></param>
-      public void SortLoadedFamiliesParams(Object obj, DocumentOpenedEventArgs args)
+      public void SortLoadedFamiliesParams(object obj, DocumentOpenedEventArgs args)
       {
          if (!Command.m_SortDialogIsOpened)
             return;

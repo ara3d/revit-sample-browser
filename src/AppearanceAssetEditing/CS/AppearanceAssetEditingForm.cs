@@ -21,13 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
@@ -48,14 +41,8 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
       /// </summary>
       public Request Request
       {
-         get
-         {
-            return m_request;
-         }
-         private set
-         {
-            m_request = value;
-         }
+         get => m_request;
+         private set => m_request = value;
       }
 
       /// <summary>

@@ -21,16 +21,11 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.GridCreation.CS
 {
-    public partial class CreateRadialAndArcGridsForm : System.Windows.Forms.Form
+    public partial class CreateRadialAndArcGridsForm : Form
     {
         // data class object
         private CreateRadialAndArcGridsData m_data;
@@ -100,7 +95,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             }
             else
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
             }
         }
 

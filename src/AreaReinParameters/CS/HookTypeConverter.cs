@@ -28,9 +28,6 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
     using System.ComponentModel;
     using System.Globalization;
 
-    using Autodesk.Revit;
-    using Autodesk.Revit.DB;
-
     /// <summary>
     /// converter between Autodesk.Revit.DB.ElementId and Element's name
     /// </summary>
@@ -39,7 +36,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         /// <summary>
         /// hash table save
         /// </summary>
-        protected Hashtable m_hash = null;
+        protected Hashtable m_hash;
         
         /// <summary>
         /// initialize m_hash
@@ -73,7 +70,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
         public override StandardValuesCollection GetStandardValues(
             ITypeDescriptorContext context)
         {
-            ParameterConverter.StandardValuesCollection standardValues= null;
+            StandardValuesCollection standardValues= null;
 
             var Ids = new Autodesk.Revit.DB.ElementId[m_hash.Values.Count];
             var i = 0;

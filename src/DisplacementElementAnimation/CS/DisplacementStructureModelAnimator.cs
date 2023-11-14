@@ -24,7 +24,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
@@ -436,12 +435,12 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <summary>
         /// The current parent displacement element being animated.
         /// </summary>
-        private DisplacementElement m_displacementElement = null;
+        private DisplacementElement m_displacementElement;
 
         /// <summary>
         /// The index of the current parent element being animated.
         /// </summary>
-        private int m_currentDisplacementIndex = 0;
+        private int m_currentDisplacementIndex;
 
         /// <summary>
         /// The displacement parameter (proceeds from 1 -> 0 during the animation)
@@ -466,7 +465,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <summary>
         /// Signals that the timer has triggered.
         /// </summary>
-        private bool timerTripped = false;
+        private bool timerTripped;
 
         /// <summary>
         /// The number of milliseconds in between frames.
@@ -476,7 +475,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// <summary>
         /// The timer that governs the automation.
         /// </summary>
-        private System.Timers.Timer m_timer = null;
+        private System.Timers.Timer m_timer;
 
         /// <summary>
         /// The model center.  Currently hardcoded.

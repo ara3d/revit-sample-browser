@@ -21,18 +21,12 @@
 //
 namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
-   using System.Linq;
-
-    using Autodesk.Revit;
+    using System.Linq;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Structure;
 
     using GeoElement = Autodesk.Revit.DB.GeometryElement;
-    using Element = Autodesk.Revit.DB.Element;
 
 
     /// <summary>

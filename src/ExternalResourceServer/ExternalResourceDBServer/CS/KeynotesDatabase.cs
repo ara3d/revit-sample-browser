@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
@@ -40,11 +35,9 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// <summary>
       /// Indicates what version of keynote data is currently available from the database.
       /// </summary>
-      public static String CurrentVersion
-      {
-         // Assume that the server's keynote data is updated at the beginning of every month.
-         get { return System.DateTime.Now.ToString("MM-yyyy"); }
-      }
+      public static string CurrentVersion =>
+          // Assume that the server's keynote data is updated at the beginning of every month.
+          DateTime.Now.ToString("MM-yyyy");
 
 
       /// <summary>
@@ -54,7 +47,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// that is available from this 'database.'</param>
       /// <returns>True, if the specified 'key' corresponds to a valid set of keynote data in the
       /// 'database,' else False.</returns>
-      public static bool IsValidDBKey(String key)
+      public static bool IsValidDBKey(string key)
       {
          return key == "1" || key == "2" || key == "3" || key == "4";
       }
@@ -69,7 +62,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
       /// <param name="kdrlc">A KeyBasedTreeEntriesLoadContent object to which the keynote data will be
       /// added.</param>
       /// <returns></returns>
-      public static void LoadKeynoteEntries(String key, ref KeyBasedTreeEntriesLoadContent kdrlc)
+      public static void LoadKeynoteEntries(string key, ref KeyBasedTreeEntriesLoadContent kdrlc)
       {
          if (!IsValidDBKey(key))
             throw new ArgumentOutOfRangeException("key", key, "The specified key cannot be found in the database");

@@ -21,12 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.UI;
@@ -45,13 +39,7 @@ namespace Revit.SDK.Samples.Units.CS
         /// <summary>
         /// format options. 
         /// </summary>
-        public Autodesk.Revit.DB.FormatOptions FormatOptions
-        {
-            get
-            {
-                return this.m_formatoptions;
-            }
-        }
+        public Autodesk.Revit.DB.FormatOptions FormatOptions => m_formatoptions;
 
         /// <summary>
         /// Initialize GUI with FormatData 
@@ -84,35 +72,35 @@ namespace Revit.SDK.Samples.Units.CS
                 FormatForm_Clear();
 
                 // Initialize the combo box and check box. 
-                this.DisplayUnitTypecomboBox.BeginUpdate();
-                this.DisplayUnitcomboBox.BeginUpdate();
+                DisplayUnitTypecomboBox.BeginUpdate();
+                DisplayUnitcomboBox.BeginUpdate();
                 foreach (var unitTypeId in Autodesk.Revit.DB.UnitUtils.GetValidUnits(m_specTypeId))
                 {
-                   this.DisplayUnitTypecomboBox.Items.AddRange(new object[] { unitTypeId });
-                   this.DisplayUnitcomboBox.Items.Add(Autodesk.Revit.DB.LabelUtils.GetLabelForUnit(unitTypeId));
+                   DisplayUnitTypecomboBox.Items.AddRange(new object[] { unitTypeId });
+                   DisplayUnitcomboBox.Items.Add(Autodesk.Revit.DB.LabelUtils.GetLabelForUnit(unitTypeId));
                 }
-                this.DisplayUnitTypecomboBox.SelectedItem = m_formatoptions.GetUnitTypeId();
-                this.DisplayUnitcomboBox.SelectedIndex = this.DisplayUnitTypecomboBox.SelectedIndex;
-                this.DisplayUnitTypecomboBox.EndUpdate();
-                this.DisplayUnitcomboBox.EndUpdate();
+                DisplayUnitTypecomboBox.SelectedItem = m_formatoptions.GetUnitTypeId();
+                DisplayUnitcomboBox.SelectedIndex = DisplayUnitTypecomboBox.SelectedIndex;
+                DisplayUnitTypecomboBox.EndUpdate();
+                DisplayUnitcomboBox.EndUpdate();
 
-                this.AccuracytextBox.Text = m_formatoptions.Accuracy.ToString("###########0.############");
+                AccuracytextBox.Text = m_formatoptions.Accuracy.ToString("###########0.############");
 
-                this.SuppressTrailingZeroscheckBox.Checked = m_formatoptions.SuppressTrailingZeros;
-                this.SuppressLeadingZeroscheckBox.Checked = m_formatoptions.SuppressLeadingZeros;
-                this.UsePlusPrefixcheckBox.Checked = m_formatoptions.UsePlusPrefix;
-                this.UseDigitGroupingcheckBox.Checked = m_formatoptions.UseDigitGrouping;
-                this.SuppressSpacescheckBox.Checked = m_formatoptions.SuppressSpaces;
+                SuppressTrailingZeroscheckBox.Checked = m_formatoptions.SuppressTrailingZeros;
+                SuppressLeadingZeroscheckBox.Checked = m_formatoptions.SuppressLeadingZeros;
+                UsePlusPrefixcheckBox.Checked = m_formatoptions.UsePlusPrefix;
+                UseDigitGroupingcheckBox.Checked = m_formatoptions.UseDigitGrouping;
+                SuppressSpacescheckBox.Checked = m_formatoptions.SuppressSpaces;
 
                 m_formatoptions.UseDefault = isUseDefault;
-                this.UseDefaultcheckBox.Checked = m_formatoptions.UseDefault;
+                UseDefaultcheckBox.Checked = m_formatoptions.UseDefault;
 
                 if (!Autodesk.Revit.DB.Units.IsModifiableSpec(m_specTypeId))
                 {
-                   this.Text = "This unit type is unmodifiable";
-                   this.UseDefaultcheckBox.Checked = true;
-                   this.UseDefaultcheckBox.Enabled = false;
-                   this.buttonOK.Enabled = false;
+                   Text = "This unit type is unmodifiable";
+                   UseDefaultcheckBox.Checked = true;
+                   UseDefaultcheckBox.Enabled = false;
+                   buttonOK.Enabled = false;
                 }
             }
             catch
@@ -124,21 +112,21 @@ namespace Revit.SDK.Samples.Units.CS
         private void FormatForm_Clear()
         {
             // Clear the combo box and check box. 
-            this.UseDefaultcheckBox.Checked = false;
+            UseDefaultcheckBox.Checked = false;
             
-            this.DisplayUnitTypecomboBox.Items.Clear();
-            this.DisplayUnitcomboBox.Items.Clear();
+            DisplayUnitTypecomboBox.Items.Clear();
+            DisplayUnitcomboBox.Items.Clear();
            
-            this.AccuracytextBox.Text = "";
+            AccuracytextBox.Text = "";
             
-            this.UnitSymbolTypecomboBox.Items.Clear();
-            this.UnitSymbolcomboBox.Items.Clear();
+            UnitSymbolTypecomboBox.Items.Clear();
+            UnitSymbolcomboBox.Items.Clear();
         
-            this.SuppressTrailingZeroscheckBox.Checked = false;
-            this.SuppressLeadingZeroscheckBox.Checked = false;
-            this.UsePlusPrefixcheckBox.Checked = false;
-            this.UseDigitGroupingcheckBox.Checked = false;
-            this.SuppressSpacescheckBox.Checked = false;
+            SuppressTrailingZeroscheckBox.Checked = false;
+            SuppressLeadingZeroscheckBox.Checked = false;
+            UsePlusPrefixcheckBox.Checked = false;
+            UseDigitGroupingcheckBox.Checked = false;
+            SuppressSpacescheckBox.Checked = false;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -146,29 +134,29 @@ namespace Revit.SDK.Samples.Units.CS
             try
             {
                 // Save the properties of FormatOptions. 
-                m_formatoptions.UseDefault = this.UseDefaultcheckBox.Checked;
+                m_formatoptions.UseDefault = UseDefaultcheckBox.Checked;
 
                 if (!m_formatoptions.UseDefault)
                 {
-                   this.DisplayUnitTypecomboBox.SelectedIndex = this.DisplayUnitcomboBox.SelectedIndex;
-                   m_formatoptions.SetUnitTypeId((Autodesk.Revit.DB.ForgeTypeId)this.DisplayUnitTypecomboBox.SelectedItem);
+                   DisplayUnitTypecomboBox.SelectedIndex = DisplayUnitcomboBox.SelectedIndex;
+                   m_formatoptions.SetUnitTypeId((Autodesk.Revit.DB.ForgeTypeId)DisplayUnitTypecomboBox.SelectedItem);
 
-                   m_formatoptions.Accuracy = double.Parse(this.AccuracytextBox.Text);
+                   m_formatoptions.Accuracy = double.Parse(AccuracytextBox.Text);
 
-                   this.UnitSymbolTypecomboBox.SelectedIndex = this.UnitSymbolcomboBox.SelectedIndex;
-                   m_formatoptions.SetSymbolTypeId((Autodesk.Revit.DB.ForgeTypeId)this.UnitSymbolTypecomboBox.SelectedItem);
+                   UnitSymbolTypecomboBox.SelectedIndex = UnitSymbolcomboBox.SelectedIndex;
+                   m_formatoptions.SetSymbolTypeId((Autodesk.Revit.DB.ForgeTypeId)UnitSymbolTypecomboBox.SelectedItem);
 
-                   m_formatoptions.SuppressTrailingZeros = this.SuppressTrailingZeroscheckBox.Checked;
-                   m_formatoptions.SuppressLeadingZeros = this.SuppressLeadingZeroscheckBox.Checked;
-                   m_formatoptions.UsePlusPrefix = this.UsePlusPrefixcheckBox.Checked;
-                   m_formatoptions.UseDigitGrouping = this.UseDigitGroupingcheckBox.Checked;
-                   m_formatoptions.SuppressSpaces = this.SuppressSpacescheckBox.Checked;
+                   m_formatoptions.SuppressTrailingZeros = SuppressTrailingZeroscheckBox.Checked;
+                   m_formatoptions.SuppressLeadingZeros = SuppressLeadingZeroscheckBox.Checked;
+                   m_formatoptions.UsePlusPrefix = UsePlusPrefixcheckBox.Checked;
+                   m_formatoptions.UseDigitGrouping = UseDigitGroupingcheckBox.Checked;
+                   m_formatoptions.SuppressSpaces = SuppressSpacescheckBox.Checked;
                 }
 
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 TaskDialog.Show("Invalid Input", ex.Message, TaskDialogCommonButtons.Ok);
             }
@@ -176,60 +164,60 @@ namespace Revit.SDK.Samples.Units.CS
 
         private void DisplayUnitcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.DisplayUnitTypecomboBox.SelectedIndex = this.DisplayUnitcomboBox.SelectedIndex;
+            DisplayUnitTypecomboBox.SelectedIndex = DisplayUnitcomboBox.SelectedIndex;
 
-            this.UnitSymbolTypecomboBox.Items.Clear();
-            this.UnitSymbolcomboBox.Items.Clear();
+            UnitSymbolTypecomboBox.Items.Clear();
+            UnitSymbolcomboBox.Items.Clear();
             
-            this.UnitSymbolTypecomboBox.BeginUpdate();
-            this.UnitSymbolcomboBox.BeginUpdate();
-            foreach (var symbolTypeId in Autodesk.Revit.DB.FormatOptions.GetValidSymbols((Autodesk.Revit.DB.ForgeTypeId)this.DisplayUnitTypecomboBox.SelectedItem))
+            UnitSymbolTypecomboBox.BeginUpdate();
+            UnitSymbolcomboBox.BeginUpdate();
+            foreach (var symbolTypeId in Autodesk.Revit.DB.FormatOptions.GetValidSymbols((Autodesk.Revit.DB.ForgeTypeId)DisplayUnitTypecomboBox.SelectedItem))
             {
-                this.UnitSymbolTypecomboBox.Items.AddRange(new object[] { symbolTypeId });
+                UnitSymbolTypecomboBox.Items.AddRange(new object[] { symbolTypeId });
                 if (symbolTypeId.Empty())
                 {
-                   this.UnitSymbolcomboBox.Items.Add("");
+                   UnitSymbolcomboBox.Items.Add("");
                 }
                 else
                 {
-                   this.UnitSymbolcomboBox.Items.Add(Autodesk.Revit.DB.LabelUtils.GetLabelForSymbol(symbolTypeId));
+                   UnitSymbolcomboBox.Items.Add(Autodesk.Revit.DB.LabelUtils.GetLabelForSymbol(symbolTypeId));
                 }
             }
-            this.UnitSymbolTypecomboBox.SelectedItem = m_formatoptions.GetSymbolTypeId();
-            if (this.UnitSymbolTypecomboBox.SelectedIndex < 0)
+            UnitSymbolTypecomboBox.SelectedItem = m_formatoptions.GetSymbolTypeId();
+            if (UnitSymbolTypecomboBox.SelectedIndex < 0)
             {
-               this.UnitSymbolTypecomboBox.SelectedIndex = 0;
-               m_formatoptions.SetSymbolTypeId((Autodesk.Revit.DB.ForgeTypeId)this.UnitSymbolTypecomboBox.SelectedItem);
+               UnitSymbolTypecomboBox.SelectedIndex = 0;
+               m_formatoptions.SetSymbolTypeId((Autodesk.Revit.DB.ForgeTypeId)UnitSymbolTypecomboBox.SelectedItem);
             }
-            this.UnitSymbolcomboBox.SelectedIndex = this.UnitSymbolTypecomboBox.SelectedIndex;
-            this.UnitSymbolTypecomboBox.EndUpdate();
-            this.UnitSymbolcomboBox.EndUpdate();
+            UnitSymbolcomboBox.SelectedIndex = UnitSymbolTypecomboBox.SelectedIndex;
+            UnitSymbolTypecomboBox.EndUpdate();
+            UnitSymbolcomboBox.EndUpdate();
         }
 
         private void UseDefaultcheckBox_CheckedChanged(object sender, EventArgs e)
         {
-           m_formatoptions.UseDefault = this.UseDefaultcheckBox.Checked; 
-           if (this.UseDefaultcheckBox.Checked)
+           m_formatoptions.UseDefault = UseDefaultcheckBox.Checked; 
+           if (UseDefaultcheckBox.Checked)
            {
-              this.DisplayUnitcomboBox.Enabled = false;
-              this.AccuracytextBox.Enabled = false;
-              this.UnitSymbolcomboBox.Enabled = false;
-              this.SuppressTrailingZeroscheckBox.Enabled = false;
-              this.SuppressLeadingZeroscheckBox.Enabled = false;
-              this.UsePlusPrefixcheckBox.Enabled = false;
-              this.UseDigitGroupingcheckBox.Enabled = false;
-              this.SuppressSpacescheckBox.Enabled = false;
+              DisplayUnitcomboBox.Enabled = false;
+              AccuracytextBox.Enabled = false;
+              UnitSymbolcomboBox.Enabled = false;
+              SuppressTrailingZeroscheckBox.Enabled = false;
+              SuppressLeadingZeroscheckBox.Enabled = false;
+              UsePlusPrefixcheckBox.Enabled = false;
+              UseDigitGroupingcheckBox.Enabled = false;
+              SuppressSpacescheckBox.Enabled = false;
            }
            else
            {
-              this.DisplayUnitcomboBox.Enabled = true;
-              this.AccuracytextBox.Enabled = true;
-              this.UnitSymbolcomboBox.Enabled = true;
-              this.SuppressTrailingZeroscheckBox.Enabled = true;
-              this.SuppressLeadingZeroscheckBox.Enabled = true;
-              this.UsePlusPrefixcheckBox.Enabled = true;
-              this.UseDigitGroupingcheckBox.Enabled = true;
-              this.SuppressSpacescheckBox.Enabled = true;
+              DisplayUnitcomboBox.Enabled = true;
+              AccuracytextBox.Enabled = true;
+              UnitSymbolcomboBox.Enabled = true;
+              SuppressTrailingZeroscheckBox.Enabled = true;
+              SuppressLeadingZeroscheckBox.Enabled = true;
+              UsePlusPrefixcheckBox.Enabled = true;
+              UseDigitGroupingcheckBox.Enabled = true;
+              SuppressSpacescheckBox.Enabled = true;
            }
         }
     }

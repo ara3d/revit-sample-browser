@@ -20,12 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 
@@ -33,7 +27,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
 {
     public partial class OptionsAndAnalysisForm : Form
     {
-        EnergyAnalysisModel m_model = null;
+        EnergyAnalysisModel m_model;
         public OptionsAndAnalysisForm(EnergyAnalysisModel analysisModel)
         {
             m_model = analysisModel;
@@ -44,17 +38,17 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             // get UI input of options
-            m_model.SetTier(this.comboBoxTier.SelectedText);
-            m_model.Options.ExportMullions = this.checkBoxExportMullions.Checked;
-            m_model.Options.IncludeShadingSurfaces = this.checkBoxIncludeShadingSurfaces.Checked;
-            m_model.Options.SimplifyCurtainSystems = this.checkBoxSimplifyCurtainSystems.Checked;
+            m_model.SetTier(comboBoxTier.SelectedText);
+            m_model.Options.ExportMullions = checkBoxExportMullions.Checked;
+            m_model.Options.IncludeShadingSurfaces = checkBoxIncludeShadingSurfaces.Checked;
+            m_model.Options.SimplifyCurtainSystems = checkBoxSimplifyCurtainSystems.Checked;
 
             m_model.Initialize();
             m_model.RefreshAnalysisData(treeViewAnalyticalData);
 
             // expand all child
             treeViewAnalyticalData.ExpandAll();
-            this.Refresh();
+            Refresh();
         }
 
         /// <summary>
@@ -62,7 +56,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
         /// </summary>
         private void InitializeOptionsUI()
         {
-            this.comboBoxTier.SelectedIndex = 3;
+            comboBoxTier.SelectedIndex = 3;
         }
     }
 

@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Windows.Forms;

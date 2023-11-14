@@ -35,16 +35,16 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
       public static Result executeCreateBRepCommand(Document document)
       {
          // Create the ExternallyTaggedBRep named "Podium".
-         var taggedBRep = HelperMethods.createExternallyTaggedPodium(40.0, 12.0, 30.0);
+         var taggedBRep = createExternallyTaggedPodium(40.0, 12.0, 30.0);
          if (null == taggedBRep)
             return Result.Failed;
 
-         using (var transaction = new Autodesk.Revit.DB.Transaction(document, "CreateExternallyTaggedBRep"))
+         using (var transaction = new Transaction(document, "CreateExternallyTaggedBRep"))
          {
             transaction.Start();
 
             // Create the new DirectShape for this open Document and add the created ExternallyTaggedBRep to this DirectShape.
-            CreateBRep.CreatedDirectShape = HelperMethods.createDirectShapeWithExternallyTaggedBRep(document, taggedBRep);
+            CreateBRep.CreatedDirectShape = createDirectShapeWithExternallyTaggedBRep(document, taggedBRep);
             if (null == CreateBRep.CreatedDirectShape)
                return Result.Failed;
 

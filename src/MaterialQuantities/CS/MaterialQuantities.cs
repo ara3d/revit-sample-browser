@@ -24,10 +24,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
-using System.Diagnostics;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -170,7 +166,7 @@ namespace Revit.Samples.MaterialQuantities
         /// <summary>
         /// Override this to return the name of the element type calculated by this calculator.
         /// </summary>
-        protected abstract String GetElementTypeName();
+        protected abstract string GetElementTypeName();
 
         /// <summary>
         /// Sets the document for the calculator class.
@@ -262,7 +258,7 @@ namespace Revit.Samples.MaterialQuantities
                     if (deletedElements == null || deletedElements.Count < 1)
                     {
                         m_warningsForGrossQuantityCalculations.Add(
-                                 String.Format("   The tool was unable to delete the {0} named {2} (id {1})", e.GetType().Name, e.Id, e.Name));
+                                 string.Format("   The tool was unable to delete the {0} named {2} (id {1})", e.GetType().Name, e.Id, e.Name));
                     }
                 }
             }
@@ -356,7 +352,7 @@ namespace Revit.Samples.MaterialQuantities
             var legendLine = "Gross volume(cubic ft),Net volume(cubic ft),Gross area(sq ft),Net area(sq ft)";
 
             writer.WriteLine();
-            writer.WriteLine(String.Format("Totals for {0} elements,{1}", GetElementTypeName(), legendLine));
+            writer.WriteLine(string.Format("Totals for {0} elements,{1}", GetElementTypeName(), legendLine));
 
             // If unexpected deletion failures occurred, log the warnings to the output.
             if (m_warningsForGrossQuantityCalculations.Count > 0)
@@ -374,7 +370,7 @@ namespace Revit.Samples.MaterialQuantities
                 var e = m_doc.GetElement(id);
 
                 writer.WriteLine();
-                writer.WriteLine(String.Format("Totals for {0} element {1} (id {2}),{3}",
+                writer.WriteLine(string.Format("Totals for {0} element {1} (id {2}),{3}",
                     GetElementTypeName(),
                     e.Name.Replace(',', ':'), // Element names may have ',' in them
                     id.ToString(), legendLine));
@@ -400,7 +396,7 @@ namespace Revit.Samples.MaterialQuantities
                 var material = m_doc.GetElement(materialId) as Material;
 
                 //writer.WriteLine(String.Format("   {0} Net: [{1:F2} cubic ft {2:F2} sq. ft]  Gross: [{3:F2} cubic ft {4:F2} sq. ft]", material.Name, quantity.NetVolume, quantity.NetArea, quantity.GrossVolume, quantity.GrossArea));
-                writer.WriteLine(String.Format("{0},{3:F2},{1:F2},{4:F2},{2:F2}",
+                writer.WriteLine(string.Format("{0},{3:F2},{1:F2},{4:F2},{2:F2}",
                     material.Name.Replace(',', ':'),  // Element names may have ',' in them
                     quantity.NetVolume, quantity.NetArea, quantity.GrossVolume, quantity.GrossArea));
             }
@@ -420,12 +416,12 @@ namespace Revit.Samples.MaterialQuantities
         /// <summary>
         /// Flag indicating the mode of the calculation.
         /// </summary>
-        private bool m_calculatingGrossQuantities = false;
+        private bool m_calculatingGrossQuantities;
 
         /// <summary>
         /// A collection of warnings generated due to failure to delete elements in advance of gross quantity calculations.
         /// </summary>
-        private List<String> m_warningsForGrossQuantityCalculations = new List<string>();
+        private List<string> m_warningsForGrossQuantityCalculations = new List<string>();
         #endregion
 
         protected Document m_doc;

@@ -22,12 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit;
 
 namespace Revit.SDK.Samples.EventsMonitor.CS
 {
@@ -37,20 +32,20 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
     /// If you just want to learn how to use Revit events, 
     /// please pay more attention to EventManager class.
     /// </summary>
-    public partial class EventsSettingForm : System.Windows.Forms.Form
+    public partial class EventsSettingForm : Form
     {
         #region Class Member Variable
         /// <summary>
         /// A list to storage the selection user made
         /// </summary>
-        private List<String> m_appSelection;
+        private List<string> m_appSelection;
         #endregion
 
         #region Class property
         /// <summary>
         /// Property to get and set private member variables of SeletionMap
         /// </summary>
-        public List<String> AppSelectionList
+        public List<string> AppSelectionList
         {
             get
             {
@@ -60,10 +55,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                 }
                 return m_appSelection;
             }
-            set
-            {
-                m_appSelection = value;
-            }
+            set => m_appSelection = value;
         }
 
         #endregion
@@ -93,8 +85,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             {
                 m_appSelection.Add(item.ToString());
             }
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
+            DialogResult = DialogResult.OK;
+            Hide();
         }
 
         /// <summary>
@@ -104,7 +96,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// <param name="e"></param>
         private void ToggleForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.Hide();
+            Hide();
         }
 
         /// <summary>
@@ -141,8 +133,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Hide();
+            DialogResult = DialogResult.Cancel;
+            Hide();
         }
 
         #endregion

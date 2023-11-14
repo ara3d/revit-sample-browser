@@ -23,11 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-
-using Autodesk;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Structure;
@@ -42,7 +37,7 @@ namespace Revit.SDK.Samples.Loads.CS
         // Private Members
         Loads m_dataBuffer;                 // Store the reference of Loads
         Autodesk.Revit.ApplicationServices.Application m_revit; // Store the reference of revit
-        Autodesk.Revit.DB.Document m_document; // Store the reference of document
+        Document m_document; // Store the reference of document
 
         // Methods
         /// <summary>
@@ -100,7 +95,7 @@ namespace Revit.SDK.Samples.Loads.CS
             }
 
             // As specification require, some Load Combination Usages if they are not in document
-            String[] initUsageArray = { "Gravity", "Lateral", "Steel", "Composite", "Concrete" };
+            string[] initUsageArray = { "Gravity", "Lateral", "Steel", "Composite", "Concrete" };
             foreach (var s in initUsageArray)
             {
                 NewLoadUsage(s);
@@ -114,7 +109,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <param name="typeIndex">The index of new Load Combination Type</param>
         /// <param name="stateIndex">The index of new Load Combination State</param>
         /// <returns>true if the creation was successful; otherwise, false</returns>
-        public Boolean NewLoadCombination(String name, int typeIndex, int stateIndex)
+        public bool NewLoadCombination(string name, int typeIndex, int stateIndex)
         {
             // Define some data for creation.
             var usageIds = new List<ElementId>();
@@ -195,7 +190,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         /// <param name="index">The selected index in the DataGridView</param>
         /// <returns>true if the delete operation was successful; otherwise, false</returns>
-        public Boolean DeleteCombination(int index)
+        public bool DeleteCombination(int index)
         {
             // Get the name of the delete combination
             var combinationName = m_dataBuffer.LoadCombinationNames[index];
@@ -235,7 +230,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         /// <param name="usageName">The new Load Usage name</param>
         /// <returns>true if the process is successful; otherwise, false</returns> 
-        public Boolean NewLoadUsage(String usageName)
+        public bool NewLoadUsage(string usageName)
         {
             // First check whether the name has been used
             foreach (var s in m_dataBuffer.LoadUsageNames)
@@ -278,7 +273,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         /// <param name="index">The selected index in the DataGridView</param>
         /// <returns>true if the delete operation was successful; otherwise, false</returns>
-        public Boolean DeleteUsage(int index)
+        public bool DeleteUsage(int index)
         {
             // Get the delete usage
             var deleteUsage = m_dataBuffer.LoadUsages[index];
@@ -333,7 +328,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <param name="oldName">The name before modification</param>
         /// <param name="newName">The name after modification</param>
         /// <returns>true if the modification was successful; otherwise, false</returns>
-        public Boolean ModifyUsageName(String oldName, String newName)
+        public bool ModifyUsageName(string oldName, string newName)
         {
             // If the name is no change, just return true.
             if (oldName == newName)
@@ -367,7 +362,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         /// <param name="caseName">The name of the load case</param>
         /// <returns>true if the creation is successful; otherwise, false</returns>
-        public Boolean AddFormula(String caseName)
+        public bool AddFormula(string caseName)
         {
             // New a FormulaMap, and add it to m_dataBuffer.FormulaMap
             // Note: the factor of the formula is always set 1 
@@ -381,7 +376,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         /// <param name="name">The name of load usage</param>
         /// <returns>The reference of the LoadUsage</returns>
-        private LoadUsage FindUsageByName(String name)
+        private LoadUsage FindUsageByName(string name)
         {
             LoadUsage usage = null;
             foreach (var l in m_dataBuffer.LoadUsages)
@@ -400,7 +395,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         /// <param name="name">The name of load case</param>
         /// <returns>The reference of the LoadCase</returns>
-        private LoadCase FindLoadCaseByName(String name)
+        private LoadCase FindLoadCaseByName(string name)
         {
             LoadCase loadCase = null;
             foreach (var l in m_dataBuffer.LoadCases)

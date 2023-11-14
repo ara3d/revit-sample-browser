@@ -23,12 +23,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
 using System.IO;
-using System.Windows.Forms;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -50,14 +45,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public double TimeZone
         {
-            get
-            {
-                return m_timeZone;
-            }
-            set
-            {
-                m_timeZone = value;
-            }
+            get => m_timeZone;
+            set => m_timeZone = value;
         }
 
         /// <summary>
@@ -65,14 +54,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public double Latitude
         {
-            get
-            {
-                return m_latitude;
-            }
-            set
-            {
-                m_latitude = value;
-            }
+            get => m_latitude;
+            set => m_latitude = value;
         }
 
         /// <summary>
@@ -80,14 +63,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public double Longitude
         {
-            get
-            {
-                return m_longitude;
-            }
-            set
-            {
-                m_longitude = value;
-            }
+            get => m_longitude;
+            set => m_longitude = value;
         }
 
         /// <summary>
@@ -95,14 +72,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public string CityName
         {
-            get
-            {
-                return m_cityName;
-            }
-            set
-            {
-                m_cityName = value;
-            }
+            get => m_cityName;
+            set => m_cityName = value;
         }
 
         /// <summary>
@@ -149,14 +120,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public string TimeZone
         {
-            get
-            {
-                return m_timeZone;
-            }
-            set
-            {
-                m_timeZone = value;
-            }
+            get => m_timeZone;
+            set => m_timeZone = value;
         }
 
         /// <summary>
@@ -164,14 +129,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public string Latitude
         {
-            get
-            {
-                return m_latitude;
-            }
-            set
-            {
-                m_latitude = value;
-            }
+            get => m_latitude;
+            set => m_latitude = value;
         }
 
         /// <summary>
@@ -179,14 +138,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public string Longitude
         {
-            get
-            {
-                return m_longitude;
-            }
-            set
-            {
-                m_longitude = value;
-            }
+            get => m_longitude;
+            set => m_longitude = value;
         }
 
         /// <summary>
@@ -234,14 +187,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public List<string> CitiesName
         {
-            get
-            {
-                return m_citiesName;
-            }
-            set
-            {
-                m_citiesName = value;
-            }
+            get => m_citiesName;
+            set => m_citiesName = value;
         }
 
         /// <summary>
@@ -249,26 +196,14 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public List<string> TimeZones
         {
-            get
-            {
-                return m_timeZones;
-            }
-            set
-            {
-                m_timeZones = value;
-            }
+            get => m_timeZones;
+            set => m_timeZones = value;
         }
 
         /// <summary>
         /// property used to get Invalid timezone
         /// </summary>
-        public static double InvalidTimeZone
-        {
-            get
-            {
-                return m_invalidTimeZone;
-            }
-        }
+        public static double InvalidTimeZone => m_invalidTimeZone;
 
         /// <summary>
         /// class PlaceInfo's constructor
@@ -463,8 +398,8 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             double decimalNumber;
 
             //try to get double from string using method Double.TryParse
-            if (Double.TryParse(intString, out intNumber) &&
-               Double.TryParse(decimalString, out decimalNumber))
+            if (double.TryParse(intString, out intNumber) &&
+               double.TryParse(decimalString, out decimalNumber))
             {
                 //if decimal part is not zero, add 0.5 after int part
                 if (0 != decimalNumber)
@@ -525,7 +460,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             try
             {
                 //open file store timezone
-                var filepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                var filepath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 if (!filepath.EndsWith("\\"))
                 {
                     filepath += "\\";

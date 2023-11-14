@@ -22,13 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -68,24 +61,12 @@ namespace Revit.SDK.Samples.PlacementOptions.CS
         /// <summary>
         /// The family instance placement options for placement.
         /// </summary>
-        public PromptForFamilyInstancePlacementOptions FIPlacementOptions
-        {
-            get
-            {
-                return m_placementOptions;
-            }
-        }
+        public PromptForFamilyInstancePlacementOptions FIPlacementOptions => m_placementOptions;
 
         /// <summary>
         /// The family symbol for placement.
         /// </summary>
-        public FamilySymbol SelectedFamilySymbol
-        {
-            get
-            {
-                return m_selectedSymbol;
-            }
-        }
+        public FamilySymbol SelectedFamilySymbol => m_selectedSymbol;
 
         /// <summary>
         /// Use the FaceBasedPlacementType.Default option or not.

@@ -21,12 +21,6 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
@@ -52,12 +46,12 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// <param name="exportOptionsData">Data class object</param>
         /// <param name="contain3DView">If views to export contain 3D views</param>
         /// <param name="exportFormat">export format</param>
-        public ExportBaseOptionsForm(ExportBaseOptionsData exportOptionsData, bool contain3DView, String exportFormat)
+        public ExportBaseOptionsForm(ExportBaseOptionsData exportOptionsData, bool contain3DView, string exportFormat)
         {
             InitializeComponent();
             m_exportOptionsData = exportOptionsData;
             m_contain3DView = contain3DView;
-            this.Text = "Export " + exportFormat + " Options";
+            Text = "Export " + exportFormat + " Options";
             InitializeControl();
         }
 
@@ -110,7 +104,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_exportOptionsData.ExportAreas = checkBoxExportingAreas.Checked;
             m_exportOptionsData.ExportMergeFiles = checkBoxMergeViews.Checked;
 
-            this.Close();
+            Close();
         }
     }
 }

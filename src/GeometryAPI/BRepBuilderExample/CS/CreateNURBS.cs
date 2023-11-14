@@ -22,10 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -60,7 +56,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
 
          try
          {
-            using (var tr = new Autodesk.Revit.DB.Transaction(_dbdocument, "CreateNURBS"))
+            using (var tr = new Transaction(_dbdocument, "CreateNURBS"))
             {
                tr.Start();
 
@@ -146,7 +142,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
          return brepBuilder;
       }
 
-      private Document _dbdocument = null;
+      private Document _dbdocument;
 
    }
 }

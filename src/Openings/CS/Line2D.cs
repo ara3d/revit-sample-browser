@@ -24,8 +24,6 @@
 namespace Revit.SDK.Samples.Openings.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Drawing;
 
     /// <summary>
@@ -33,23 +31,17 @@ namespace Revit.SDK.Samples.Openings.CS
     /// </summary>
     public class Line2D
     {
-        private PointF m_startPnt = new PointF();            // start point
-        private PointF m_endPnt = new PointF();                // end point
+        private PointF m_startPnt;            // start point
+        private PointF m_endPnt;                // end point
         private float m_length;                                // length of the line
         // normal of the line; start point to end point
-        private PointF m_normal = new PointF();                
-        private RectangleF m_boundingBox = new RectangleF();// rectangle box contains the line
+        private PointF m_normal;                
+        private RectangleF m_boundingBox;// rectangle box contains the line
 
         /// <summary>
         /// rectangle box contains the line
         /// </summary>
-        public RectangleF BoundingBox
-        {
-            get 
-            {
-                return m_boundingBox; 
-            }
-        }
+        public RectangleF BoundingBox => m_boundingBox;
 
         /// <summary>
         /// start point of the line; if it is set to new value,
@@ -57,10 +49,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public PointF StartPnt
         {
-            get
-            {
-                return m_startPnt;
-            }
+            get => m_startPnt;
             set
             {
                 if (m_startPnt == value)
@@ -79,10 +68,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public PointF EndPnt
         {
-            get
-            {
-                return m_endPnt;
-            }
+            get => m_endPnt;
             set
             {
                 if (m_endPnt == value)
@@ -101,11 +87,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public float Length
         {
-            get
-            {
-                return m_length;
-
-            }
+            get => m_length;
             set
             {
                 if (m_length == value)
@@ -124,11 +106,7 @@ namespace Revit.SDK.Samples.Openings.CS
         /// </summary>
         public PointF Normal
         {
-            get
-            {
-                return m_normal;
-
-            }
+            get => m_normal;
             set
             {
                 if (m_normal == value)

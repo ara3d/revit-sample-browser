@@ -21,22 +21,14 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
-using System.Drawing.Drawing2D;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
     /// <summary>
     /// This form contains a property grid control to modify the property of hosted sweep.
     /// </summary>
-    public partial class HostedSweepModifyForm : System.Windows.Forms.Form
+    public partial class HostedSweepModifyForm : Form
     {        
         /// <summary>
         /// Data for modification.
@@ -59,7 +51,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             : this()
         {
             m_modificationData = modificationData;
-            this.Text = "Modify " + m_modificationData.CreatorName;
+            Text = "Modify " + m_modificationData.CreatorName;
         }
 
         /// <summary>
@@ -69,8 +61,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>

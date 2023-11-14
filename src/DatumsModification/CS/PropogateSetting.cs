@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.DatumsModification.CS
 {
@@ -23,7 +15,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
          InitializeComponent();
           foreach (var name in DatumPropagation.viewDic.Keys)
           {
-             this.propagationViewList.Items.Add(name);
+             propagationViewList.Items.Add(name);
           }
       }
 

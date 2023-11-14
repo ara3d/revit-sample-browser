@@ -21,11 +21,6 @@
 //
 
 using System;
-using System.Windows.Forms;
-using System.Collections;
-using System.Collections.Generic;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -73,7 +68,7 @@ namespace Revit.SDK.Samples.CapitalizeAllTextNotes.CS
             }
 
             // Record all TextNotes that are not yet formatted to be 'AllCaps'
-            var textNotesToUpdate = new Autodesk.Revit.DB.ElementSet();
+            var textNotesToUpdate = new ElementSet();
             foreach (var element in collector)
             {
                var textNote = (TextNote) element;

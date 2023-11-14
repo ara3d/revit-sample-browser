@@ -23,13 +23,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
-
-    using Autodesk.Revit;
     using Autodesk.Revit.DB;
-    using Autodesk.Revit.DB.Structure;
-
     using GeoElement = Autodesk.Revit.DB.GeometryElement;
     using GeoSolid = Autodesk.Revit.DB.Solid;
     using Element = Autodesk.Revit.DB.Element;
@@ -79,10 +73,10 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// </summary>
         /// <param name="face">face to be calculated</param>
         /// <returns></returns>
-        public static List<Autodesk.Revit.DB.XYZ> GetPoints(Face face)
+        public static List<XYZ> GetPoints(Face face)
         {
-            var points = new List<Autodesk.Revit.DB.XYZ>();
-            var XYZs = face.Triangulate().Vertices as List<Autodesk.Revit.DB.XYZ>;
+            var points = new List<XYZ>();
+            var XYZs = face.Triangulate().Vertices as List<XYZ>;
 
             foreach (var point in XYZs)
             {
@@ -208,13 +202,13 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static Autodesk.Revit.DB.XYZ SubXYZ(Autodesk.Revit.DB.XYZ p1, Autodesk.Revit.DB.XYZ p2)
+        private static XYZ SubXYZ(XYZ p1, XYZ p2)
         {
             var x = p1.X - p2.X;
             var y = p1.Y - p2.Y;
             var z = p1.Z - p2.Z;
 
-            var result = new Autodesk.Revit.DB.XYZ(x, y, z);
+            var result = new XYZ(x, y, z);
             return result;
         }
 
@@ -224,7 +218,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static Autodesk.Revit.DB.XYZ CrossMatrix(Autodesk.Revit.DB.XYZ p1, Autodesk.Revit.DB.XYZ p2)
+        private static XYZ CrossMatrix(XYZ p1, XYZ p2)
         {
             var v1 = p1.X;
             var v2 = p1.Y;
@@ -238,7 +232,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
             var y = -v3 * u1 + v1 * u3;
             var z = v2 * u1 - v1 * u2;
 
-            var point = new Autodesk.Revit.DB.XYZ(x, y, z);
+            var point = new XYZ(x, y, z);
             return point;
         }
 
@@ -248,7 +242,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        private static double DotMatrix(Autodesk.Revit.DB.XYZ p1, Autodesk.Revit.DB.XYZ p2)
+        private static double DotMatrix(XYZ p1, XYZ p2)
         {
             var v1 = p1.X;
             var v2 = p1.Y;

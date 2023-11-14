@@ -21,11 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Resources;
-using System.Reflection;
 
 namespace Revit.SDK.Samples.CurtainWallGrid.CS
 {
@@ -63,14 +59,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public Rectangle Boundary
       {
-         get
-         {
-            return m_boundary;
-         }
-         set
-         {
-            m_boundary = value;
-         }
+         get => m_boundary;
+         set => m_boundary = value;
       }
 
       /// <summary>
@@ -78,26 +68,15 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public Point Origin
       {
-         get
-         {
-            return m_origin;
-         }
-         set
-         {
-            m_origin = value;
-         }
+         get => m_origin;
+         set => m_origin = value;
       }
 
       /// <summary>
       /// the baseline of the curtain wall
       /// </summary>
-      public WallBaseline2D WallLine2D
-      {
-         get
-         {
-            return m_wallLine2D;
-         }
-      }
+      public WallBaseline2D WallLine2D => m_wallLine2D;
+
       #endregion
 
       #region Constructors

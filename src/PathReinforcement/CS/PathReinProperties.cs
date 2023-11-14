@@ -22,12 +22,8 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
 using System.ComponentModel;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.PathReinforcement.CS
@@ -94,17 +90,17 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// <summary>
         /// bar spacing
         /// </summary>
-        private String m_barSpacing;
+        private string m_barSpacing;
 
         /// <summary>
         /// primary bar type
         /// </summary>
-        private Autodesk.Revit.DB.ElementId m_primaryBarType;
+        private ElementId m_primaryBarType;
 
         /// <summary>
         /// primary bar length
         /// </summary>
-        private String m_primaryBarLength;
+        private string m_primaryBarLength;
 
         #region EnventHanlder for updating selected object of PropertyGrid
         /// <summary>
@@ -187,14 +183,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         [Category("Layers"), DisplayName("Number of Bars"), ReadOnlyAttribute(true)]
         public int NumberOfBars
         {
-            get
-            {
-                return m_numberOfBars;
-            }
-            set
-            {
-                m_numberOfBars = value;
-            }
+            get => m_numberOfBars;
+            set => m_numberOfBars = value;
         }
 
         /// <summary>
@@ -203,10 +193,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         [Category("Construction"), DisplayName("Layout Rule"), ReadOnlyAttribute(false)]
         public LayoutRule LayoutRule
         {
-            get
-            {
-                return m_layoutRule;
-            }
+            get => m_layoutRule;
             set
             {
                 if(m_layoutRule == value)
@@ -241,12 +228,9 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// Bar spacing of path reinforcement,get/set property.
         /// </summary>
         [Category("Layers"), DisplayName("Bar Spacing"), ReadOnlyAttribute(false)]
-        public String BarSpacing
+        public string BarSpacing
         {
-            get
-            {
-                return m_barSpacing;
-            }
+            get => m_barSpacing;
             set
             {
                 if (!ValidateInch(value))
@@ -261,29 +245,19 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// Primary bar type of path reinforcement,get/set property.
         /// </summary>
         [Category("Layers"), TypeConverter(typeof(BartypeConverter)), DisplayName("Primary Bar - Type")]
-        public Autodesk.Revit.DB.ElementId PrimaryBarType
+        public ElementId PrimaryBarType
         {
-            get
-            {
-                return m_primaryBarType;
-            }
-            set
-            {
-                m_primaryBarType = value;
-            }
+            get => m_primaryBarType;
+            set => m_primaryBarType = value;
         }
 
         /// <summary>
         /// Primary bar length of path reinforcement,get/set property.
         /// </summary>
         [Category("Layers"), DisplayName("Primary Bar - Length")]
-        public String PrimaryBarLength
+        public string PrimaryBarLength
         {
-            get
-            {
-                return m_primaryBarLength;
-
-            }
+            get => m_primaryBarLength;
             set
             {
                 if (!ValidateInch(value))
@@ -300,14 +274,8 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         [Category("Layers"), DisplayName("Face")]
         public Face Face
         {
-            get
-            {
-                return m_face;
-            }
-            set
-            {
-                m_face = value;
-            }
+            get => m_face;
+            set => m_face = value;
         }
 
         /// <summary>
@@ -315,7 +283,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         /// <param name="name">name of parameter</param>
         /// <returns>parameter whose definition name is the given name.</returns>
-        protected Parameter GetParameter(String name)
+        protected Parameter GetParameter(string name)
         {
             foreach (Parameter para in m_pathRein.Parameters)
             {
@@ -337,14 +305,14 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             var strEx = string.Empty;
             try
             {
-                var type = typeof(System.ComponentModel.ReadOnlyAttribute);
+                var type = typeof(ReadOnlyAttribute);
                 var props = TypeDescriptor.GetProperties(this);
                 var attrs = props[propertyName].Attributes;
                 var fld = type.GetField("isReadOnly",
                     BindingFlags.Instance | BindingFlags.NonPublic);
                 fld.SetValue(attrs[type], readOnly);
             }
-            catch (System.ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 strEx = ex.ToString();
             }
@@ -352,7 +320,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             {
                 strEx = ex.ToString();
             }
-            catch (System.Reflection.TargetException ex)
+            catch (TargetException ex)
             {
                 strEx = ex.ToString();
             }
@@ -373,13 +341,13 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         /// <param name="input">input string</param>
         /// <returns>true if input string is a valid inch.</returns>
-        private Boolean ValidateInch(String input)
+        private bool ValidateInch(string input)
         {
             // check whether the input string is a valid double value.
             // if it's true, return directly, otherwise parse the string.
             try
             {
-                Double.Parse(input);
+                double.Parse(input);
                 return true;
             }
             catch (Exception) 

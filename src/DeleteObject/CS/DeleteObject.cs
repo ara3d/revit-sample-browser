@@ -19,11 +19,7 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Windows.Forms;
-using System.Collections;
 
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -35,7 +31,7 @@ namespace Revit.SDK.Samples.DeleteObject.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    public class Command : Autodesk.Revit.UI.IExternalCommand
+    public class Command : IExternalCommand
     {
         ///<summary>
         /// Implement this method as an external command for Revit.
@@ -53,9 +49,9 @@ namespace Revit.SDK.Samples.DeleteObject.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(
-            Autodesk.Revit.UI.ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(
+            ExternalCommandData commandData,
+            ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
             var trans = new Transaction(revit.ActiveUIDocument.Document, "Revit.SDK.Samples.DeleteObject");
@@ -70,7 +66,7 @@ namespace Revit.SDK.Samples.DeleteObject.CS
             {
                 message = "Please select object(s) before delete.";
                 trans.RollBack();
-                return Autodesk.Revit.UI.Result.Cancelled;
+                return Result.Cancelled;
             }
 
             var error = true;
@@ -99,7 +95,7 @@ namespace Revit.SDK.Samples.DeleteObject.CS
                 }
                 message = "object(s) can't be deleted.";
                 trans.RollBack();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
             finally
             {
@@ -110,7 +106,7 @@ namespace Revit.SDK.Samples.DeleteObject.CS
                 }
             }
             trans.Commit();
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
     }
 }

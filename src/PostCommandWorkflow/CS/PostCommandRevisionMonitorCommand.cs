@@ -20,14 +20,8 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Events;
 
 namespace Revit.SDK.Samples.PostCommandWorkflow.CS
 {
@@ -79,7 +73,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// <summary>
         /// The monitor.
         /// </summary>
-        private static PostCommandRevisionMonitor monitor = null;
+        private static PostCommandRevisionMonitor monitor;
 
         /// <summary>
         /// The handle to the command's PushButton.

@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -49,11 +47,11 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       public int RiserNumber { get; set; }
 
       private double m_runWidth;
-      private bool m_runWidthOverride = false;
+      private bool m_runWidthOverride;
       private double m_runOffset;
-      private bool m_runOffsetOverride = false;
+      private bool m_runOffsetOverride;
       private double m_landingWidth;
-      private bool m_landingWidthOverride = false;
+      private bool m_landingWidthOverride;
       private int m_riserIncrement = 1;
 
       /// <summary>
@@ -223,13 +221,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// <summary>
       /// A helper to obtain the Autodesk.Revit.Creation.Application handle.
       /// </summary>
-      protected Autodesk.Revit.Creation.Application AppCreate
-      {
-         get
-         {
-            return m_stairs.Document.Application.Create;
-         }
-      }
+      protected Autodesk.Revit.Creation.Application AppCreate => m_stairs.Document.Application.Create;
 
       #region IStairsConfiguration Members
 

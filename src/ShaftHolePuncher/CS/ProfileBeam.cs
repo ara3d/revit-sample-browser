@@ -19,14 +19,11 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
+
 using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 {
@@ -36,16 +33,16 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
    /// </summary>
    public class ProfileBeam : Profile
    {
-      private FamilyInstance m_data = null; //beam
+      private FamilyInstance m_data; //beam
       //store the transform used to change points in beam coordinate system to Revit coordinate system
-      Transform m_beamTransform = null;
+      Transform m_beamTransform;
       bool m_isZaxis = true; //decide whether to create opening on Zaxis of beam or Yaixs of beam
       //if m_haveOpening is true means beam has already had opening on it
       //then the points get from get_Geometry(Option) do not need to be transformed 
       //by the Transform get from Instance object anymore.
-      bool m_haveOpening = false;
-      Matrix4 m_MatrixZaxis = null; //transform points to plane whose normal is Zaxis of beam
-      Matrix4 m_MatrixYaxis = null; //transform points to plane whose normal is Yaxis of beam
+      bool m_haveOpening;
+      Matrix4 m_MatrixZaxis; //transform points to plane whose normal is Zaxis of beam
+      Matrix4 m_MatrixYaxis; //transform points to plane whose normal is Yaxis of beam
 
       /// <summary>
       /// constructor
@@ -182,7 +179,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
       /// </summary>
       /// <param name="elem">selected element</param>
       /// <returns>all the faces in the selected Element</returns>
-      public override List<List<Edge>> GetFaces(Autodesk.Revit.DB.Element elem)
+      public override List<List<Edge>> GetFaces(Element elem)
       {
          var faceEdges = new List<List<Edge>>();
          var options = m_appCreator.NewGeometryOptions();
@@ -200,9 +197,9 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 
             //if beam doesn't contain opening on it, then we can get edges from instance
             //and the points we get should be transformed by instance.Tranceform
-            if (geo is Autodesk.Revit.DB.GeometryInstance)
+            if (geo is GeometryInstance)
             {
-               var instance = geo as Autodesk.Revit.DB.GeometryInstance;
+               var instance = geo as GeometryInstance;
                m_beamTransform = instance.Transform;
                var elemGeo = instance.SymbolGeometry;
                //GeometryObjectArray objectsGeo = elemGeo.Objects;
@@ -234,7 +231,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             }
             //if beam contains opening on it, then we can get edges from solid
             //and the points we get do not need transform anymore
-            else if (geo is Autodesk.Revit.DB.Solid)
+            else if (geo is Solid)
             {
                m_haveOpening = true;
                var solid = geo as Solid;
@@ -264,19 +261,19 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
       /// <returns>newly created Opening</returns>
       public override Opening CreateOpening(List<Vector4> points)
       {
-         Autodesk.Revit.DB.XYZ p1, p2; Line curve;
+         XYZ p1, p2; Line curve;
          var curves = m_appCreator.NewCurveArray();
          for (var i = 0; i < points.Count - 1; i++)
          {
-            p1 = new Autodesk.Revit.DB.XYZ(points[i].X, points[i].Y, points[i].Z);
-            p2 = new Autodesk.Revit.DB.XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
+            p1 = new XYZ(points[i].X, points[i].Y, points[i].Z);
+            p2 = new XYZ(points[i + 1].X, points[i + 1].Y, points[i + 1].Z);
             curve = Line.CreateBound(p1, p2);
             curves.Append(curve);
          }
 
          //close the curve
-         p1 = new Autodesk.Revit.DB.XYZ(points[0].X, points[0].Y, points[0].Z);
-         p2 = new Autodesk.Revit.DB.XYZ(points[points.Count - 1].X, points[points.Count - 1].Y, points[points.Count - 1].Z);
+         p1 = new XYZ(points[0].X, points[0].Y, points[0].Z);
+         p2 = new XYZ(points[points.Count - 1].X, points[points.Count - 1].Y, points[points.Count - 1].Z);
          curve = Line.CreateBound(p1, p2);
          curves.Append(curve);
 

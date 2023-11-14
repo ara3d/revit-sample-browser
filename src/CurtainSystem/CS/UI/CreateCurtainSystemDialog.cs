@@ -22,10 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using Revit.SDK.Samples.CurtainSystem.CS.Data;
 
@@ -34,7 +30,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
    /// <summary>
    /// the winForm for user to create a new curtain system
    /// </summary>
-   public partial class CreateCurtainSystemDialog : System.Windows.Forms.Form
+   public partial class CreateCurtainSystemDialog : Form
    {
       MyDocument m_mydocument;
       // the flag for curtain system creation, if it's true, the curtain system
@@ -153,7 +149,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
 
          // step 2: create the new curtain system
          m_mydocument.SystemData.CreateCurtainSystem(checkedIndices, m_byFaceArray);
-         this.Close();
+         Close();
       }
 
       private void CreateCurtainSystemDialog_FormClosing(object sender, FormClosingEventArgs e)

@@ -21,10 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FoundationSlab.CS
@@ -54,14 +50,14 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             try
             {
                 // Check commandData parameter.
                 if (null == commandData)
                 {
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 SlabData revitDatas = null;
@@ -73,22 +69,22 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                 catch (NullReferenceException e)
                 {
                     message = e.Message;
-                    return Autodesk.Revit.UI.Result.Cancelled;  // Data error.
+                    return Result.Cancelled;  // Data error.
                 }
                 // Display form.
                 using (var displayForm = new FoundationSlabForm(revitDatas))
                 {
                     if (displayForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        return Autodesk.Revit.UI.Result.Succeeded; // Create foundation slabs successfully.
+                        return Result.Succeeded; // Create foundation slabs successfully.
                     }
                 }
-                return Autodesk.Revit.UI.Result.Cancelled;  // Cancel creation.
+                return Result.Cancelled;  // Cancel creation.
             }
             catch (Exception e)
             {
                 message = e.Message;
-                return Autodesk.Revit.UI.Result.Failed; // Unknow error.
+                return Result.Failed; // Unknow error.
             }
         }
         #endregion IExternalCommand Members Implementation

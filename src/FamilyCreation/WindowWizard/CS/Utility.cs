@@ -20,12 +20,9 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.WindowWizard.CS
 {
@@ -91,7 +88,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// <param name="app">the application</param>
         /// <param name="doc">the document</param>
         /// <returns>the list of elements</returns>
-        public static List<T> GetElements<T>(UIApplication app,Document doc) where T : Autodesk.Revit.DB.Element
+        public static List<T> GetElements<T>(UIApplication app,Document doc) where T : Element
         {
             var elements = new List<T>();
 

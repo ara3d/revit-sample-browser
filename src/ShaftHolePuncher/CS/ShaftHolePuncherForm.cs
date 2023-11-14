@@ -20,15 +20,9 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Point = System.Drawing.Point;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 {
@@ -37,11 +31,11 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     /// profile of a wall or floor, and three command buttons.
     /// User can draw curves of opening in picture box.
     /// </summary>
-    public partial class ShaftHolePuncherForm : System.Windows.Forms.Form
+    public partial class ShaftHolePuncherForm : Form
     {
         #region class members
         private Profile m_profile;  //save the profile data
-        private ITool m_tool = null; //current using tool
+        private ITool m_tool; //current using tool
         Size m_sizePictureBox; //size of picture box
         #endregion
 
@@ -61,7 +55,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             : this()
         {
             m_profile = profile;
-            m_sizePictureBox = this.pictureBox.Size;
+            m_sizePictureBox = pictureBox.Size;
 
             if (profile is ProfileWall)
             {
@@ -74,14 +68,14 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 
             if (profile is ProfileNull)
             {
-                this.ScaleComboBox.Visible = true;
-                this.ScaleComboBox.SelectedIndex = 0;
-                this.scaleLabel.Visible = true;
+                ScaleComboBox.Visible = true;
+                ScaleComboBox.SelectedIndex = 0;
+                scaleLabel.Visible = true;
             }
             else if (profile is ProfileBeam)
             {
-                this.DirectionPanel.Visible = true;
-                this.DirectionComboBox.SelectedIndex = 0;
+                DirectionPanel.Visible = true;
+                DirectionComboBox.SelectedIndex = 0;
             }
         }
 
@@ -92,10 +86,10 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <param name="e">event args</param>
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            var graphics = this.pictureBox.CreateGraphics();
+            var graphics = pictureBox.CreateGraphics();
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             m_tool.OnMouseDown(e);
-            this.pictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         /// <summary>
@@ -105,8 +99,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <param name="e">event args</param>
         private void PictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            this.pictureBox.Refresh();
-            var graphics = this.pictureBox.CreateGraphics();
+            pictureBox.Refresh();
+            var graphics = pictureBox.CreateGraphics();
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             m_tool.OnMouseMove(graphics, e);
         }
@@ -140,7 +134,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         {
             m_tool.Clear();
             m_tool.Finished = false;
-            this.pictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         /// <summary>
@@ -163,7 +157,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             try
             {
                 m_profile.CreateOpening(ps3D);
-                this.Close();
+                Close();
             }
             catch (Exception ex)
             {
@@ -179,7 +173,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// <param name="e">event args</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -190,7 +184,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         private void ScaleComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var profile = m_profile as ProfileNull;
-            profile.Scale = (float)Convert.ToDouble(this.ScaleComboBox.Text);
+            profile.Scale = (float)Convert.ToDouble(ScaleComboBox.Text);
             m_profile.ComputeScaleMatrix(m_sizePictureBox);
         }
 
@@ -199,15 +193,15 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
             m_tool.Clear();
             m_tool.Finished = false;
             var profile = m_profile as ProfileBeam;
-            if (0 == this.DirectionComboBox.SelectedIndex)
+            if (0 == DirectionComboBox.SelectedIndex)
             {
                 profile.ChangeTransformMatrix(true);
             }
-            else if (1 == this.DirectionComboBox.SelectedIndex)
+            else if (1 == DirectionComboBox.SelectedIndex)
             {
                 profile.ChangeTransformMatrix(false);
             }
-            this.pictureBox.Refresh();
+            pictureBox.Refresh();
         }
     }
 }

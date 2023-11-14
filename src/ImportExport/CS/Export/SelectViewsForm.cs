@@ -20,12 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 // 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Revit.SDK.Samples.ImportExport.CS
 {
@@ -137,7 +131,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
         private void buttonOK_Click(object sender, EventArgs e)
         {
             GetSelectedViews();
-            this.Close();           
+            Close();           
         }
 
         /// <summary>
@@ -155,8 +149,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 if (text.StartsWith(sheetPrefix))
                 {
                     text = text.Substring(sheetPrefix.Length);
-                    String sheetNumber;
-                    String sheetViewName;
+                    string sheetNumber;
+                    string sheetViewName;
                     sheetNumber = text.Substring(0, text.IndexOf(" - "));
                     sheetViewName = text.Substring(text.IndexOf(" - ") + 3);
                     foreach(Autodesk.Revit.DB.ViewSheet viewSheet in m_selectViewsData.PrintableSheets)

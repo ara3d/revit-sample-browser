@@ -199,7 +199,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
                     debugTransaction.Commit();
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 // SWALLOW ALL DEBUG EXCEPTION
             }

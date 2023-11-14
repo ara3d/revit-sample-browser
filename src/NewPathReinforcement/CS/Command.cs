@@ -22,14 +22,8 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections;
-using System.Drawing;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.NewPathReinforcement.CS
 {
@@ -58,8 +52,8 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-            ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+            ref string message, ElementSet elements)
       {
          try
          {
@@ -78,15 +72,15 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             if (1 != elems.Size)
             {
                message = errorMessage;
-               return Autodesk.Revit.UI.Result.Cancelled;
+               return Result.Cancelled;
             }
 
-            Autodesk.Revit.DB.Element selectElem = null;
+            Element selectElem = null;
             var iter = elems.GetEnumerator();
             iter.Reset();
             if (iter.MoveNext())
             {
-               selectElem = (Autodesk.Revit.DB.Element)iter.Current;
+               selectElem = (Element)iter.Current;
             }
 
             if (selectElem is Wall)
@@ -100,7 +94,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             else
             {
                message = errorMessage;
-               return Autodesk.Revit.UI.Result.Cancelled;
+               return Result.Cancelled;
             }
             #endregion
             try
@@ -123,15 +117,15 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             catch (Exception ex)
             {
                message = ex.Message;
-               return Autodesk.Revit.UI.Result.Cancelled;
+               return Result.Cancelled;
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
          }
          catch (Exception e)
          {
             message = e.Message;
-            return Autodesk.Revit.UI.Result.Failed;
+            return Result.Failed;
          }
       }
       #endregion

@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
@@ -93,7 +91,7 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
       /// <param name="startAngle">The start angle for the revolution</param>
       /// <param name="endAngle">The end angle for the revolution</param>
       /// <returns>The created solid</returns>
-      private Solid CreateRevolved(Autodesk.Revit.DB.Frame coordinateFrame, List<CurveLoop> profileLoops, double startAngle, double endAngle)
+      private Solid CreateRevolved(Frame coordinateFrame, List<CurveLoop> profileLoops, double startAngle, double endAngle)
       {
          return GeometryCreationUtilities.CreateRevolvedGeometry(coordinateFrame, profileLoops, startAngle, endAngle);
       }
@@ -178,15 +176,15 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
       public Solid CreateCenterbasedSphere(XYZ center, double radius)
       {
          var frame = new Frame(center,
-            Autodesk.Revit.DB.XYZ.BasisX,
-            Autodesk.Revit.DB.XYZ.BasisY,
-            Autodesk.Revit.DB.XYZ.BasisZ);
+            XYZ.BasisX,
+            XYZ.BasisY,
+            XYZ.BasisZ);
 
          var profileloops = new List<CurveLoop>();
          var profileloop = new CurveLoop();
          var cemiEllipse = Ellipse.CreateCurve(center, radius, radius,
-            Autodesk.Revit.DB.XYZ.BasisX,
-            Autodesk.Revit.DB.XYZ.BasisZ,
+            XYZ.BasisX,
+            XYZ.BasisZ,
             -Math.PI / 2.0, Math.PI / 2.0);
          profileloop.Append(cemiEllipse);
          profileloop.Append(Line.CreateBound(
@@ -224,12 +222,12 @@ namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
          var profileloops = new List<CurveLoop>();
          var profileloop = new CurveLoop();
             var cemiEllipse1 = Ellipse.CreateCurve(bottomcenter, bottomradius, bottomradius,
-            cylinderdirection == CylinderDirection.BasisX ? Autodesk.Revit.DB.XYZ.BasisY : Autodesk.Revit.DB.XYZ.BasisX,
-            cylinderdirection == CylinderDirection.BasisZ ? Autodesk.Revit.DB.XYZ.BasisY : Autodesk.Revit.DB.XYZ.BasisZ,
+            cylinderdirection == CylinderDirection.BasisX ? XYZ.BasisY : XYZ.BasisX,
+            cylinderdirection == CylinderDirection.BasisZ ? XYZ.BasisY : XYZ.BasisZ,
             -Math.PI, 0);
          var cemiEllipse2 = Ellipse.CreateCurve(bottomcenter, bottomradius, bottomradius,
-            cylinderdirection == CylinderDirection.BasisX ? Autodesk.Revit.DB.XYZ.BasisY : Autodesk.Revit.DB.XYZ.BasisX,
-            cylinderdirection == CylinderDirection.BasisZ ? Autodesk.Revit.DB.XYZ.BasisY : Autodesk.Revit.DB.XYZ.BasisZ,
+            cylinderdirection == CylinderDirection.BasisX ? XYZ.BasisY : XYZ.BasisX,
+            cylinderdirection == CylinderDirection.BasisZ ? XYZ.BasisY : XYZ.BasisZ,
             0, Math.PI);
          profileloop.Append(cemiEllipse1);
          profileloop.Append(cemiEllipse2);

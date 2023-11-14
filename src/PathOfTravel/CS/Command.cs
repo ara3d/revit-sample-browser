@@ -22,13 +22,10 @@
 
 using System;
 using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -93,7 +90,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             if (null == viewPlan)
             {
                var td = new TaskDialog("Cannot create PathOfTravel.");
-               td.MainInstruction = String.Format("PathOfTravel can only be created for plan views.");
+               td.MainInstruction = string.Format("PathOfTravel can only be created for plan views.");
 
                td.Show();
 
@@ -180,7 +177,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
 
          // find all rooms
          var fec = new FilteredElementCollector(doc);
-         fec.WherePasses(new Autodesk.Revit.DB.Architecture.RoomFilter());
+         fec.WherePasses(new RoomFilter());
 
          var startPoints = new List<XYZ>();
 
@@ -340,7 +337,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
 
          // find rooms on level
          var fec = new FilteredElementCollector(doc, viewPlan.Id);
-         fec.WherePasses(new Autodesk.Revit.DB.Architecture.RoomFilter());
+         fec.WherePasses(new RoomFilter());
 
 
          // find doors on level
@@ -558,8 +555,8 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
          var successRatePercent = (double)(resultsSummary.numSuccesses) / (double)(numOfPathsToCreate);
 
          var td = new TaskDialog("Results of PathOfTravel creation");
-         td.MainInstruction = String.Format("Path of Travel succeeded on {0} of known points", successRatePercent.ToString("P01", ci));
-         var details = String.Format("There were {0} room source points found in room analysis (via offsetting boundaries). " +
+         td.MainInstruction = string.Format("Path of Travel succeeded on {0} of known points", successRatePercent.ToString("P01", ci));
+         var details = string.Format("There were {0} room source points found in room analysis (via offsetting boundaries). " +
                                      "They would be connected to {2} door target points. {1} failed to generate a Path of Travel out of {4}  " +
                                      "Processing took {3} milliseconds.",
                                          resultsSummary.numSourcePoints, resultsSummary.numFailures, resultsSummary.numDoors, resultsSummary.elapsedMilliseconds, numOfPathsToCreate);

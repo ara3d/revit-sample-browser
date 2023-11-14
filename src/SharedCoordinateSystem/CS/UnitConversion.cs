@@ -22,8 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 {    
@@ -82,7 +80,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             }
             else
             {
-                cityInfo.Latitude = Double.NaN;
+                cityInfo.Latitude = double.NaN;
             }
 
             //convert Longitude
@@ -92,7 +90,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             }
             else
             {
-                cityInfo.Longitude = Double.NaN;
+                cityInfo.Longitude = double.NaN;
             }
 
             return cityInfo;

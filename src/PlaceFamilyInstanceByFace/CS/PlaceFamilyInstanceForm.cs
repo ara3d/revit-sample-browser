@@ -21,11 +21,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
@@ -38,7 +34,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
     public partial class PlaceFamilyInstanceForm : System.Windows.Forms.Form
     {
         // the creator
-        private FamilyInstanceCreator m_creator = null;
+        private FamilyInstanceCreator m_creator;
         // the base type
         private BasedType m_baseType = BasedType.Point;
 
@@ -83,13 +79,13 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             switch (m_baseType)
             {
                 case BasedType.Point:
-                    this.Text = "Place Point-Based Family Instance";
+                    Text = "Place Point-Based Family Instance";
                     labelFirst.Text = "Location :";
                     labelSecond.Text = "Direction :";
                     break;
                 case BasedType.Line:
                     comboBoxFamily.SelectedItem = "Line-based";
-                    this.Text = "Place Line-Based Family Instance";
+                    Text = "Place Line-Based Family Instance";
 
                     labelFirst.Text = "Start Point :";
                     labelSecond.Text = "End Point :";
@@ -115,7 +111,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             {
                 case BasedType.Point:
                     PointControlFirst.SetPointData(totle / 2.0f);
-                    PointControlSecond.SetPointData(new Autodesk.Revit.DB.XYZ(1.0f, 0f, 0f));
+                    PointControlSecond.SetPointData(new XYZ(1.0f, 0f, 0f));
                     break;
                 case BasedType.Line:
                     PointControlFirst.SetPointData(boundingBox.Min);
@@ -172,8 +168,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
 
             if (retBool)
             {
-                this.Close();
-                this.DialogResult = DialogResult.OK;
+                Close();
+                DialogResult = DialogResult.OK;
             }
             else
             {

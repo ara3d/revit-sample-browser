@@ -22,11 +22,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Autodesk.Revit.DB;
@@ -178,7 +173,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// </summary>
         /// <param name="control">the object of the ComboBox</param>
         /// <param name="dataSource">the data source object</param>
-        void BindComboBox(ComboBox control, Object dataSource)
+        void BindComboBox(ComboBox control, object dataSource)
         {
             control.DataSource = null;              // clear the DataSource first
             control.DataSource = dataSource;        // rebind data source
@@ -225,10 +220,10 @@ namespace Revit.SDK.Samples.ModelLines.CS
         void createButton_Click(object sender, EventArgs e)
         {
             // Define some local data
-            Autodesk.Revit.DB.XYZ firstPoint;     // Store the data of first point for line or arc       
-            Autodesk.Revit.DB.XYZ secondPoint;    // Store the data of second point for line or arc
-            Autodesk.Revit.DB.XYZ thirdPoint;     // Store the data of third point only for arc
-            Autodesk.Revit.DB.XYZ offsetPoint;    // Store the data of offset point for other lines
+            XYZ firstPoint;     // Store the data of first point for line or arc       
+            XYZ secondPoint;    // Store the data of second point for line or arc
+            XYZ thirdPoint;     // Store the data of third point only for arc
+            XYZ offsetPoint;    // Store the data of offset point for other lines
             ElementId modelLineId;    // Store the selected element id using in creation
             ElementId sketchPlaneId;  // Store the selected sketch id using in creation
 
@@ -286,7 +281,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             }
 
             // Refresh the form display.
-            this.Refresh();
+            Refresh();
         }
 
         /// <summary>
@@ -294,7 +289,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// </summary>
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -424,7 +419,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             sketchPlaneComboBox.SelectedIndex = sketchPlaneComboBox.Items.Count - 1;
 
             // Refresh the form display.
-            this.Refresh();
+            Refresh();
         }
 
         #endregion

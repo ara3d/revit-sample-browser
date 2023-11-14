@@ -22,18 +22,13 @@
 namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Data;
-    using System.Drawing;
-    using System.Text;
     using System.Windows.Forms;
 
 
     /// <summary>
     /// simple business process of UI
     /// </summary>
-    public partial class CreateSimpleAreaReinForm : System.Windows.Forms.Form
+    public partial class CreateSimpleAreaReinForm : Form
     {
         private AreaReinData m_dataBuffer;
 
@@ -65,7 +60,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         /// <summary>
@@ -75,7 +70,7 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

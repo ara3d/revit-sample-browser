@@ -20,13 +20,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ViewPrinter.CS
@@ -65,7 +58,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             printerNameComboBox.DataSource = m_printMgr.InstalledPrinterNames;
             // the selectedValueChange event have to add event handler after
             // data source be set, or else the delegate method will be invoked meaningless.
-            this.printerNameComboBox.SelectedValueChanged += new System.EventHandler(this.printerNameComboBox_SelectedValueChanged);
+            printerNameComboBox.SelectedValueChanged += new EventHandler(printerNameComboBox_SelectedValueChanged);
             printerNameComboBox.SelectedItem = m_printMgr.PrinterName;
             if (m_printMgr.VerifyPrintToFile(printToFileCheckBox))
             {
@@ -98,7 +91,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             {
                 separateFileRadioButton.Checked = true;
             } 
-            this.singleFileRadioButton.CheckedChanged += new System.EventHandler(this.combineRadioButton_CheckedChanged);
+            singleFileRadioButton.CheckedChanged += new EventHandler(combineRadioButton_CheckedChanged);
                         
             switch (m_printMgr.PrintRange)
             {
@@ -114,28 +107,28 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 default:
                     break;
             }
-            this.currentWindowRadioButton.CheckedChanged += new System.EventHandler(this.currentWindowRadioButton_CheckedChanged);
-            this.visiblePortionRadioButton.CheckedChanged += new System.EventHandler(this.visiblePortionRadioButton_CheckedChanged);
-            this.selectedViewsRadioButton.CheckedChanged += new System.EventHandler(this.selectedViewsRadioButton_CheckedChanged);
+            currentWindowRadioButton.CheckedChanged += new EventHandler(currentWindowRadioButton_CheckedChanged);
+            visiblePortionRadioButton.CheckedChanged += new EventHandler(visiblePortionRadioButton_CheckedChanged);
+            selectedViewsRadioButton.CheckedChanged += new EventHandler(selectedViewsRadioButton_CheckedChanged);
 
-            this.printToFileNameTextBox.Text = Environment.GetFolderPath(
+            printToFileNameTextBox.Text = Environment.GetFolderPath(
                 Environment.SpecialFolder.MyDocuments) + "\\" + m_printMgr.DocumentTitle;
             controlsToEnableOrNot.Clear();
             controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
             controlsToEnableOrNot.Add(selectedViewSheetSetButton);
             if (m_printMgr.VerifySelectViewSheetSet(controlsToEnableOrNot))
             {
-                this.selectedViewSheetSetLabel.Text = m_printMgr.SelectedViewSheetSetName;
+                selectedViewSheetSetLabel.Text = m_printMgr.SelectedViewSheetSetName;
             }
 
             orderCheckBox.Checked = m_printMgr.PrintOrderReverse;
-            this.orderCheckBox.CheckedChanged += new System.EventHandler(this.orderCheckBox_CheckedChanged);
+            orderCheckBox.CheckedChanged += new EventHandler(orderCheckBox_CheckedChanged);
 
             if (m_printMgr.VerifyCollate(collateCheckBox))
             {
                 collateCheckBox.Checked = m_printMgr.Collate;
             }
-            this.collateCheckBox.CheckedChanged += new System.EventHandler(this.collateCheckBox_CheckedChanged);
+            collateCheckBox.CheckedChanged += new EventHandler(collateCheckBox_CheckedChanged);
 
             printSetupNameLabel.Text = m_printMgr.PrintSetupName;
         }
@@ -213,7 +206,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         {
             if (currentWindowRadioButton.Checked)
             {
-                m_printMgr.PrintRange = Autodesk.Revit.DB.PrintRange.Current;
+                m_printMgr.PrintRange = PrintRange.Current;
 
                 var controlsToEnableOrNot =
                 new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();
@@ -236,7 +229,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         {
             if (visiblePortionRadioButton.Checked)
             {
-                m_printMgr.PrintRange = Autodesk.Revit.DB.PrintRange.Visible;
+                m_printMgr.PrintRange = PrintRange.Visible;
 
                 var controlsToEnableOrNot =
                 new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();
@@ -259,7 +252,7 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
         {
             if (selectedViewsRadioButton.Checked)
             {
-                m_printMgr.PrintRange = Autodesk.Revit.DB.PrintRange.Select;
+                m_printMgr.PrintRange = PrintRange.Select;
 
                 var controlsToEnableOrNot =
                 new System.Collections.ObjectModel.Collection<System.Windows.Forms.Control>();

@@ -21,15 +21,11 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using Autodesk.Revit;
-using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.DB.Structure;
 using Point = System.Drawing.Point;
 
 namespace Revit.SDK.Samples.Truss.CS
@@ -56,27 +52,27 @@ namespace Revit.SDK.Samples.Truss.CS
 
         List<XYZ> m_points; // store all the points on the needed face
 
-        Autodesk.Revit.DB.XYZ[] m_boundPoints; // store array store bound point of truss
+        XYZ[] m_boundPoints; // store array store bound point of truss
 
-        Matrix4 m_to2DMatrix = null; // store the Matrix used to transform 3D points to 2D
+        Matrix4 m_to2DMatrix; // store the Matrix used to transform 3D points to 2D
 
-        Matrix4 m_moveToCenterMatrix = null; // store the Matrix used to move points to center
+        Matrix4 m_moveToCenterMatrix; // store the Matrix used to move points to center
 
-        Matrix4 m_scaleMatrix = null; // store the Matrix used to scale profile fit to pictureBox
+        Matrix4 m_scaleMatrix; // store the Matrix used to scale profile fit to pictureBox
 
-        Matrix4 m_transformMatrix = null; // store the Matrix used to transform Revit coordinate to window UI
+        Matrix4 m_transformMatrix; // store the Matrix used to transform Revit coordinate to window UI
 
-        Matrix4 m_restoreMatrix = null; // store the Matrix used to transform window UI coordinate to Revit
+        Matrix4 m_restoreMatrix; // store the Matrix used to transform window UI coordinate to Revit
 
-        Matrix4 m_2DToTrussProfileMatrix = null; //store matrix use to transform point on pictureBox to truss (profile) plane
+        Matrix4 m_2DToTrussProfileMatrix; //store matrix use to transform point on pictureBox to truss (profile) plane
 
-        Vector4 m_origin = null; //base point of truss
+        Vector4 m_origin; //base point of truss
 
         ExternalCommandData m_commandData; //object which contains reference of Revit Application
 
-        Autodesk.Revit.DB.XYZ startLocation = null; //store the start point of truss location
+        XYZ startLocation; //store the start point of truss location
 
-        Autodesk.Revit.DB.XYZ endLocation = null; //store the end point of truss location
+        XYZ endLocation; //store the end point of truss location
 
         #endregion
 
@@ -132,7 +128,7 @@ namespace Revit.SDK.Samples.Truss.CS
             iter.Reset();
             while (iter.MoveNext())
             {
-               var id = (Autodesk.Revit.DB.ElementId)(iter.Current);
+               var id = (ElementId)(iter.Current);
                var elem =
                    m_commandData.Application.ActiveUIDocument.Document.GetElement(id);
                var familyInstace = (FamilyInstance)(elem);
@@ -148,7 +144,7 @@ namespace Revit.SDK.Samples.Truss.CS
                xyzArray.Add(line.GetEndPoint(1));
             }
          }
-         catch (System.ArgumentException)
+         catch (ArgumentException)
          {
             TaskDialog.Show("Revit", "The start point and the end point of the line are too close, please re-draw it.");
          }
@@ -166,10 +162,10 @@ namespace Revit.SDK.Samples.Truss.CS
             endLocation = trussLocation.GetEndPoint(1);
             //use baseline of truss as the X axis
             var diff = endLocation - startLocation;
-            var xAxis = new Vector4(new Autodesk.Revit.DB.XYZ(diff.X, diff.Y, diff.Z));
+            var xAxis = new Vector4(new XYZ(diff.X, diff.Y, diff.Z));
             xAxis.Normalize();
             //get Z Axis
-            var zAxis = Vector4.CrossProduct(xAxis, new Vector4(new Autodesk.Revit.DB.XYZ(0, 0, 1)));
+            var zAxis = Vector4.CrossProduct(xAxis, new Vector4(new XYZ(0, 0, 1)));
             zAxis.Normalize();
             //get Y Axis, downward
             var yAxis = Vector4.CrossProduct(xAxis, zAxis);
@@ -202,7 +198,7 @@ namespace Revit.SDK.Samples.Truss.CS
             var bounds = GetBoundsPoints();
             var min = bounds[0];
             var max = bounds[1];
-            var center = new Autodesk.Revit.DB.XYZ((min.X + max.X) / 2, (min.Y + max.Y) / 2, 0);
+            var center = new XYZ((min.X + max.X) / 2, (min.Y + max.Y) / 2, 0);
             return new Matrix4(new Vector4(center.X, center.Y, 0));
         }
 
@@ -251,7 +247,7 @@ namespace Revit.SDK.Samples.Truss.CS
         /// Get max and min coordinates of all points
         /// </summary>
         /// <returns>points array stores the bound of all points</returns>
-        public Autodesk.Revit.DB.XYZ[] GetBoundsPoints()
+        public XYZ[] GetBoundsPoints()
         {
             var matrix = m_to2DMatrix;
             var inverseMatrix = matrix.Inverse();
@@ -280,8 +276,8 @@ namespace Revit.SDK.Samples.Truss.CS
                 }
             }
             //return an array with max and min value of all points
-            var resultPoints = new Autodesk.Revit.DB.XYZ[2] { 
-                new Autodesk.Revit.DB.XYZ (minX, minY, 0), new Autodesk.Revit.DB.XYZ (maxX, maxY, 0) };
+            var resultPoints = new XYZ[2] { 
+                new XYZ (minX, minY, 0), new XYZ (maxX, maxY, 0) };
             return resultPoints;
         }
 
@@ -355,8 +351,8 @@ namespace Revit.SDK.Samples.Truss.CS
                 var point = (Point)chord.Points[i];
                 var point2 = (Point)chord.Points[i + 1];
 
-                var xyz = new Autodesk.Revit.DB.XYZ(point.X, point.Y, 0);
-                var xyz2 = new Autodesk.Revit.DB.XYZ(point2.X, point2.Y, 0);
+                var xyz = new XYZ(point.X, point.Y, 0);
+                var xyz2 = new XYZ(point2.X, point2.Y, 0);
 
                 var v1 = new Vector4(xyz);
                 var v2 = new Vector4(xyz2);
@@ -367,10 +363,10 @@ namespace Revit.SDK.Samples.Truss.CS
                 try
                 {
                     var line = Line.CreateBound(
-                         new Autodesk.Revit.DB.XYZ(v1.X, v1.Y, v1.Z), new Autodesk.Revit.DB.XYZ(v2.X, v2.Y, v2.Z));
+                         new XYZ(v1.X, v1.Y, v1.Z), new XYZ(v2.X, v2.Y, v2.Z));
                     curves.Append(line);
                 }
-                catch (System.ArgumentException)
+                catch (ArgumentException)
                 {
                     TaskDialog.Show("Revit",
                         "The start point and the end point of the line are too close, please re-draw it.");
@@ -548,7 +544,7 @@ namespace Revit.SDK.Samples.Truss.CS
         public FamilyInstance GetSelectedBeam(ExternalCommandData commandData)
         {
             m_clickMemberIndex = m_selectMemberIndex;
-            Autodesk.Revit.DB.ElementId id = null;
+            ElementId id = null;
             var idSet = m_truss.Members as List<ElementId>;
             IEnumerator iter = idSet.GetEnumerator();
             iter.Reset();
@@ -557,7 +553,7 @@ namespace Revit.SDK.Samples.Truss.CS
             {
                 if (i == m_selectMemberIndex)
                 {
-                    id = iter.Current as Autodesk.Revit.DB.ElementId;
+                    id = iter.Current as ElementId;
                     break;
                 }
                 i++;

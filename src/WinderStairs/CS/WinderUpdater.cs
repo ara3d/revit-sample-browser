@@ -34,12 +34,12 @@ namespace Revit.SDK.Samples.WinderStairs.CS
     /// </summary>
     class WinderUpdater : IUpdater, IExternalEventHandler
     {
-        private UpdaterId m_updaterId = null;
-        private IList<ElementId> m_curveElements = null;
+        private UpdaterId m_updaterId;
+        private IList<ElementId> m_curveElements;
         private ElementId m_winderRunId = ElementId.InvalidElementId;
-        private Winder m_winder = null;
-        private bool m_removeTheUpdater = false;
-        private bool m_drawSketch = false;
+        private Winder m_winder;
+        private bool m_removeTheUpdater;
+        private bool m_drawSketch;
 
         /// <summary>
         /// Constructor to initialize the fields and create the winder stairs.
@@ -157,7 +157,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             {
                 GenerateWinderStairs(app.ActiveUIDocument.Document);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 TaskDialog.Show("WinderStairs", 
                     "Can't generate the winder layout because " + ex.Message);

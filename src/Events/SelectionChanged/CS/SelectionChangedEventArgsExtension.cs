@@ -22,10 +22,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Revit.SDK.Samples.SelectionChanged.CS
 {
@@ -192,10 +189,10 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
       /// </summary>
       /// <param name="orgTitle">Origin file name to be revised.</param>
       /// <returns>New file name without extension name.</returns>
-      private static string TitleNoExt(String orgTitle)
+      private static string TitleNoExt(string orgTitle)
       {
          // return null directly if it's null
-         if (String.IsNullOrEmpty(orgTitle))
+         if (string.IsNullOrEmpty(orgTitle))
          {
             return "";
          }

@@ -19,11 +19,8 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Drawing;
 
 namespace Revit.SDK.Samples.ShaftHolePuncher.CS
@@ -38,8 +35,8 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// </summary>
         /// <param name="graphic">graphic object,used to draw geometry</param>
         /// <param name="e">mouse event args</param>
-        public override void OnMouseMove(System.Drawing.Graphics graphic, 
-            System.Windows.Forms.MouseEventArgs e)
+        public override void OnMouseMove(Graphics graphic, 
+            MouseEventArgs e)
         {
             if(m_points.Count != 0 && !m_finished)
             {                
@@ -53,7 +50,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// record the location point where mouse clicked
         /// </summary>
         /// <param name="e">mouse event args</param>
-        public override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
+        public override void OnMouseDown(MouseEventArgs e)
         {
             //when user click right button of mouse,
             //finish the curve if the number of points is more than 2

@@ -23,11 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.FindColumns.CS
 {
@@ -62,12 +59,12 @@ namespace Revit.SDK.Samples.FindColumns.CS
         /// <summary>
         /// revit application
         /// </summary>
-        private Autodesk.Revit.UI.UIApplication m_app;
+        private UIApplication m_app;
 
         /// <summary>
         /// Revit active document
         /// </summary>
-        private Autodesk.Revit.DB.Document m_doc;
+        private Document m_doc;
 
         /// <summary>
         /// A 3d view 
@@ -92,9 +89,9 @@ namespace Revit.SDK.Samples.FindColumns.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData revit,
+        public Result Execute(ExternalCommandData revit,
                                                              ref string message,
-                                                             Autodesk.Revit.DB.ElementSet elements)
+                                                             ElementSet elements)
         {
             // Initialization 
             m_app = revit.Application;
@@ -395,7 +392,7 @@ namespace Revit.SDK.Samples.FindColumns.CS
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        private String XYZToString(XYZ point)
+        private string XYZToString(XYZ point)
         {
             return "( " + point.X + ", " + point.Y + ", " + point.Z + ")";
         }
@@ -406,12 +403,12 @@ namespace Revit.SDK.Samples.FindColumns.CS
         private void Get3DView(string viewName)
         {
             var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
-            foreach (Autodesk.Revit.DB.View3D v in collector.OfClass(typeof(View3D)).ToElements())
+            foreach (View3D v in collector.OfClass(typeof(View3D)).ToElements())
             {
                 // skip view template here because view templates are invisible in project browsers
                 if (v != null && !v.IsTemplate && v.Name == viewName)
                 {
-                    m_view3D = v as Autodesk.Revit.DB.View3D;
+                    m_view3D = v as View3D;
                     break;
                 }
             }

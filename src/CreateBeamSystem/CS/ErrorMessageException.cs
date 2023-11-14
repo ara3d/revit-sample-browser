@@ -24,8 +24,6 @@
 namespace Revit.SDK.Samples.CreateBeamSystem.CS
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// pass error message to UI or back to internal error messagebox by Execute method in IExternalCommand
@@ -44,7 +42,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
         /// constructor entirely using baseclass'
         /// </summary>
         /// <param name="message">error message</param>
-        public ErrorMessageException(String message)
+        public ErrorMessageException(string message)
             : base(message)
         {
         }

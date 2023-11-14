@@ -22,14 +22,8 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
-
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Element = Autodesk.Revit.DB.Element;
-using GeometryElement = Autodesk.Revit.DB.GeometryElement;
-using Instance = Autodesk.Revit.DB.Instance;
 
 namespace Revit.SDK.Samples.DWGFamilyCreation.CS
 {
@@ -46,7 +40,7 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
         /// <summary>
         /// Revit application
         /// </summary>
-        Autodesk.Revit.UI.UIApplication m_app;
+        UIApplication m_app;
         /// <summary>
         /// Revit document
         /// </summary>
@@ -68,8 +62,8 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData,
-        ref string message, Autodesk.Revit.DB.ElementSet elements)
+        public Result Execute(ExternalCommandData commandData,
+        ref string message, ElementSet elements)
         {
             try
             {
@@ -78,13 +72,13 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
                 if (null == m_doc)
                 {
                     message = "There is no active document.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 if (!m_doc.IsFamilyDocument)
                 {
                     message = "Current document is not a family document.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // Get the view where the dwg file will be imported
@@ -92,7 +86,7 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
                 if (null == view)
                 {
                     message = "Opened wrong template file, please use the provided family template file.";
-                    return Autodesk.Revit.UI.Result.Failed;
+                    return Result.Failed;
                 }
 
                 // The dwg file which will be imported
@@ -104,7 +98,7 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
                 transaction.Start();
                 // Import the dwg file into current family document
                 var options = new DWGImportOptions();
-                options.Placement = Autodesk.Revit.DB.ImportPlacement.Origin;
+                options.Placement = ImportPlacement.Origin;
                 options.OrientToView = true;
                 ElementId elementId = null;
                 m_doc.Import(DWGFullPath, options, view, out elementId);
@@ -116,10 +110,10 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
             catch (Exception ex)
             {
                 message = ex.ToString();
-                return Autodesk.Revit.UI.Result.Failed;
+                return Result.Failed;
             }
 
-            return Autodesk.Revit.UI.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -151,12 +145,12 @@ namespace Revit.SDK.Samples.DWGFamilyCreation.CS
         private View GetView()
         {
             View view = null;
-            var views = new List<Autodesk.Revit.DB.Element>();
+            var views = new List<Element>();
             var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
             views.AddRange(collector.OfClass(typeof(View)).ToElements());
             foreach (View v in views)
             {
-                if (!v.IsTemplate && v.ViewType == Autodesk.Revit.DB.ViewType.FloorPlan && v.Name == "Ref. Level")
+                if (!v.IsTemplate && v.ViewType == ViewType.FloorPlan && v.Name == "Ref. Level")
                 {
                     view = v;
                     break;

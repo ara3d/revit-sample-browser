@@ -76,26 +76,20 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// </summary>
       public InCanvasControlData InCanvasControlData
       {
-         get
-         {
-            return inCanvasData;
-         }
+         get => inCanvasData;
 
-         set
-         {
-            inCanvasData = value;
-         }
+         set => inCanvasData = value;
       }
 
       /// <summary>
       /// Index of the control, returned by TemporaryGraphicsManager
       /// </summary>
-      public int ControlIndex { get => controlIndex; }
+      public int ControlIndex => controlIndex;
 
       /// <summary>
       /// Id of the element that the marker tracks
       /// </summary>
-      public ElementId TrackedElementId { get => elementId; }
+      public ElementId TrackedElementId => elementId;
 
       #endregion
 

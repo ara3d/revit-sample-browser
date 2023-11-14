@@ -47,17 +47,17 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
          m_offset = offset;
       }
 
-      public System.Guid GetServerId() { return m_guid; }
-      public System.String GetVendorId() { return "ADSK"; }
+      public Guid GetServerId() { return m_guid; }
+      public string GetVendorId() { return "ADSK"; }
       public ExternalServiceId GetServiceId() { return ExternalServices.BuiltInExternalServices.DirectContext3DService; }
-      public System.String GetName() { return "Revit Element Drawing Server"; }
-      public System.String GetDescription() { return "Duplicates graphics from a Revit element."; }
+      public string GetName() { return "Revit Element Drawing Server"; }
+      public string GetDescription() { return "Duplicates graphics from a Revit element."; }
 
       // Corresponds to functionality that is not used in this sample.
-      public System.String GetApplicationId() { return ""; }
+      public string GetApplicationId() { return ""; }
 
       // Corresponds to functionality that is not used in this sample.
-      public System.String GetSourceId() { return ""; }
+      public string GetSourceId() { return ""; }
 
       // Corresponds to functionality that is not used in this sample.
       public bool UsesHandles() { return false; }
@@ -387,10 +387,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
          bufferStorage.EffectInstance = new EffectInstance(bufferStorage.FormatBits);
       }
 
-      public Document Document
-      {
-         get { return (m_uiDocument != null) ? m_uiDocument.Document : null; }
-      }
+      public Document Document => (m_uiDocument != null) ? m_uiDocument.Document : null;
 
       private Guid m_guid;
 

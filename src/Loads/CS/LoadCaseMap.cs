@@ -21,14 +21,6 @@
 //
 
 
-using System;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Text;
-
-using Autodesk;
-using Autodesk.Revit;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
 namespace Revit.SDK.Samples.Loads.CS
@@ -49,10 +41,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         public string LoadCasesName
         {
-            get
-            {
-                return m_loadCasesName;
-            }
+            get => m_loadCasesName;
             set
             {
                 m_loadCasesName = value;
@@ -63,23 +52,14 @@ namespace Revit.SDK.Samples.Loads.CS
         /// <summary>
         /// LoadCasesNumber property.
         /// </summary>
-        public string LoadCasesNumber
-        {
-            get
-            {
-                return m_loadCase.Number.ToString();
-            }
-        }
+        public string LoadCasesNumber => m_loadCase.Number.ToString();
 
         /// <summary>
         /// LoadCasesNatureId property.
         /// </summary>
         public Autodesk.Revit.DB.ElementId LoadCasesNatureId
         {
-            get
-            {
-                return m_loadCasesNatureId;
-            }
+            get => m_loadCasesNatureId;
             set
             {
                 m_loadCasesNatureId = value;
@@ -92,10 +72,7 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         public Autodesk.Revit.DB.ElementId LoadCasesSubCategoryId
         {
-            get
-            {
-                return m_loadCasesSubcategoryId;
-            }
+            get => m_loadCasesSubcategoryId;
             set
             {
                 m_loadCasesSubcategoryId = value;
@@ -122,18 +99,15 @@ namespace Revit.SDK.Samples.Loads.CS
     /// </summary>
     public class LoadNaturesMap
     {
-        LoadNature m_loadNature = null;
-        string m_loadNaturesName = null;
+        LoadNature m_loadNature;
+        string m_loadNaturesName;
 
         /// <summary>
         /// Get or set a load nature name.
         /// </summary>
         public string LoadNaturesName
         {
-            get
-            {
-                return m_loadNaturesName;
-            }
+            get => m_loadNaturesName;
             set
             {
                 m_loadNaturesName = value;

@@ -22,66 +22,36 @@ namespace Revit.SDK.Samples.NetworkPressureLossReport
       private XYZ m_endPt;
       const double Tolerance = 0.0000001;
 
-      public double Flow
-      {
-         get { return m_flow; }
-      }
-      public double PressureDrop
-      {
-         get { return m_pressureDrop; }
-      }
-      public MEPAnalyticalSegmentType SegmentType
-      {
-         get { return m_segmentType; }
-      }
-      public bool IsCriticalPath
-      {
-         get { return m_isCriticalPath; }
-      }
-      public string Id  
-      {
-         get { return m_id.ElementId.ToString() + @"_" + m_id.SegmentId.ToString(); }
-      }
-      public ElementId RevitElementId
-      {
-         get { return m_id.ElementId; }
-      }
-      public double Length
-      {
-         get { return m_length; }
-      }
-      public double Size
-      {
-         get { return m_size; }
-      }
-      public double Velocity
-      {
-         get { return m_velocity; }
-      }
-      public double VelocityPressure
-      {
-         get { return m_velocityPressure; }
-      }
-      public double Coefficients
-      {
-         get { return m_coefficients; }
-      }
-      public double Friction
-      {
-         get { return m_length < Tolerance ? 0.0 : m_pressureDrop / m_length; }
-      }
-      public double ReynoldsNumber
-      {
-         get { return m_reynolds; }
-      }
-      public XYZ Start
-      {
-         get { return m_startPt; }
-      }
-      public XYZ End
-      {
-         get { return m_endPt; }
-      }
+      public double Flow => m_flow;
+
+      public double PressureDrop => m_pressureDrop;
+
+      public MEPAnalyticalSegmentType SegmentType => m_segmentType;
+
+      public bool IsCriticalPath => m_isCriticalPath;
+
+      public string Id => m_id.ElementId.ToString() + @"_" + m_id.SegmentId.ToString();
+
+      public ElementId RevitElementId => m_id.ElementId;
+
+      public double Length => m_length;
+
+      public double Size => m_size;
+
+      public double Velocity => m_velocity;
+
+      public double VelocityPressure => m_velocityPressure;
+
+      public double Coefficients => m_coefficients;
+
+      public double Friction => m_length < Tolerance ? 0.0 : m_pressureDrop / m_length;
+
+      public double ReynoldsNumber => m_reynolds;
+
+      public XYZ Start => m_startPt;
+
+      public XYZ End => m_endPt;
+
       public SegmentInfo(Document doc, MEPAnalyticalSegment seg, MEPNetworkSegmentData data)
       {
          m_id = new MEPNetworkSegmentId(seg.RevitElementId, seg.Id);

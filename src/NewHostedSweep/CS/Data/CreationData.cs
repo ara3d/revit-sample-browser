@@ -20,12 +20,8 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Autodesk.Revit;
 using Autodesk.Revit.DB;
-using System.Drawing.Design;
 
 namespace Revit.SDK.Samples.NewHostedSweep.CS
 {
@@ -152,26 +148,20 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// <summary>
         /// Creator contains the necessary data to fetch the edges and get the symbol.
         /// </summary>
-        public HostedSweepCreator Creator
-        {
-            get { return m_creator; }
-        }
+        public HostedSweepCreator Creator => m_creator;
 
         /// <summary>
         /// Symbol for HostedSweep creation.
         /// </summary>
         public ElementType Symbol
         {
-            get { return m_symbol; }
-            set { m_symbol = value; }
+            get => m_symbol;
+            set => m_symbol = value;
         }        
 
         /// <summary>
         /// Edges which contains references for HostedSweep creation.
         /// </summary>
-        public List<Edge> EdgesForHostedSweep
-        {
-            get { return m_edgesForHostedSweep; }
-        }
+        public List<Edge> EdgesForHostedSweep => m_edgesForHostedSweep;
     }
 }

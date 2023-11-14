@@ -21,16 +21,10 @@
 //
 
 using System;
-using System.Data;
 using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-
-using Autodesk.Revit;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI.Events;
-using Autodesk.Revit.ApplicationServices;
 
 namespace Revit.SDK.Samples.EventsMonitor.CS
 {
@@ -52,7 +46,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// <summary>
         /// This list is used to store what user select last time.
         /// </summary> 
-        private List<String> historySelection;
+        private List<string> historySelection;
         #endregion
 
         #region Class Constructor
@@ -80,7 +74,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// A public method used to update the events subscription
         /// </summary>
         /// <param name="selection"></param>
-        public void Update(List<String> selection)
+        public void Update(List<string> selection)
         {
             // If event has been in history list and not in current selection,
             // it means user doesn't select this event again, and it should be move.
@@ -115,7 +109,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// The generic handler app_eventsHandlerMethod will be subscribed to this event.
         /// </summary>
         /// <param name="eventName"></param>
-        private void addEvents(String eventName)
+        private void addEvents(string eventName)
         {
             switch (eventName)
             {
@@ -199,7 +193,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// Remove registered event by its name.
         /// </summary>
         /// <param name="eventName">Event name to be subtracted.</param>
-        private void subtractEvents(String eventName)
+        private void subtractEvents(string eventName)
         {
             switch (eventName)
             {
@@ -284,7 +278,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="args"></param>
-        public void app_eventsHandlerMethod(Object obj, EventArgs args)
+        public void app_eventsHandlerMethod(object obj, EventArgs args)
         {
             // generate event information and set to information window 
             // to track what event be touch off.
