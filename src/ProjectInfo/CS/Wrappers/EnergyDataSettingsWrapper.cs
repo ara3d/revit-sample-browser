@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+using System.ComponentModel;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;

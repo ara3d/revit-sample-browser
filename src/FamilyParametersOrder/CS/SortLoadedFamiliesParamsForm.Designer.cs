@@ -1,4 +1,5 @@
-﻿namespace Revit.SDK.Samples.FamilyParametersOrder.CS
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+namespace Revit.SDK.Samples.FamilyParametersOrder.CS
 {
    partial class SortLoadedFamiliesParamsForm
    {

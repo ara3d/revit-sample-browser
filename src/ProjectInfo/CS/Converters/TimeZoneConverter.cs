@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+using System.ComponentModel;
 
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {

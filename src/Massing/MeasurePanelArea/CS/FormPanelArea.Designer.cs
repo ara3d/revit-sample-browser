@@ -1,4 +1,5 @@
-﻿namespace Revit.SDK.Samples.MeasurePanelArea.CS
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+namespace Revit.SDK.Samples.MeasurePanelArea.CS
 {
     partial class frmPanelArea
     {

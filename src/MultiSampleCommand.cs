@@ -1,4 +1,5 @@
-﻿using System.Linq;
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+using System.Linq;
 using System.Reflection;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;

@@ -1,4 +1,5 @@
-﻿using System;
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+using System.Windows.Forms;
 
 namespace RevitMultiSample
 {

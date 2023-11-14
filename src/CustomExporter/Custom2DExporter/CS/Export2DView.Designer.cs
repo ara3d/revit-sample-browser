@@ -1,4 +1,5 @@
-﻿namespace Revit.SDK.Samples.Custom2DExporter.CS
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+namespace Revit.SDK.Samples.Custom2DExporter.CS
 {
     partial class Export2DView
     {

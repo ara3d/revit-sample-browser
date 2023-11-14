@@ -1,4 +1,5 @@
-﻿
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+
 using System.Resources;
 
 namespace Revit.SDK.Samples.DatumsModification.CS

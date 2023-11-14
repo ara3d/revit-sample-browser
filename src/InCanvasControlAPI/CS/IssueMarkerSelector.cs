@@ -1,12 +1,4 @@
-﻿//
-// (C) Copyright 2003-2020 by Autodesk, Inc. All rights reserved.
-//
-// Permission to use, copy, modify, and distribute this software in
-// object code form for any purpose and without fee is hereby granted
-// provided that the above copyright notice appears in all copies and
-// that both that copyright notice and the limited warranty and
-// restricted rights notice below appear in all supporting
-// documentation.
+// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.

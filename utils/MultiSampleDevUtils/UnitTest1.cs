@@ -4,7 +4,7 @@ namespace MultiSampleDevUtils
 {
     public class Tests
     {
-        [Test]
+        [Test, Explicit]
         public static void TestUI()
         {
             var path = @"C:\Users\cdigg\git\revit-samples\src";
