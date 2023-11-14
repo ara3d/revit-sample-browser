@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.PerformanceAdviserControl.CS
+namespace RevitMultiSample.PerformanceAdviserControl.CS 
 {
     /// <summary>
     ///     A class that implements IPerformanceAdviserRule.  This class implements several methods that will be
