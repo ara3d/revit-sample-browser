@@ -25,9 +25,6 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.StairsAutomation.CS
 {
-    /// <summary>
-    /// Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Command : IExternalCommand

@@ -29,9 +29,6 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Revit.SDK.Samples.ProjectInfo.CS
 {
-    /// <summary>
-    /// Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]

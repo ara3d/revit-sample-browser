@@ -29,9 +29,6 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.GeometryCreation_BooleanOperation.CS
 {
-    /// <summary>
-    /// Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand

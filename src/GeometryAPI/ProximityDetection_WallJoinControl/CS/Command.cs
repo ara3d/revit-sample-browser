@@ -28,9 +28,6 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
 {
-    /// <summary>
-    /// Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     public class Command : IExternalCommand
     {
