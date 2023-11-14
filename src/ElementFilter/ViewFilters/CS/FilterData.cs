@@ -109,7 +109,6 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// </summary>
         public double Epsilon { get; private set; }
 
-
         /// <summary>
         ///     Get ElementId of current parameter
         /// </summary>

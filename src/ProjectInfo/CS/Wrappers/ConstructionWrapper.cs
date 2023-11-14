@@ -25,7 +25,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             m_construction = construction;
         }
 
-
         /// <summary>
         ///     Compares the names of Constructions.
         /// </summary>
@@ -41,7 +40,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             return obj is ConstructionWrapper wrapper ? Name.CompareTo(wrapper.Name) : 1;
         }
-
 
         /// <summary>
         ///     Gets the handle object.

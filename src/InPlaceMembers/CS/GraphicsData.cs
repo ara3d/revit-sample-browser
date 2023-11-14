@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -317,7 +316,6 @@ namespace Revit.SDK.Samples.InPlaceMembers.CS
                 pnt.Y < m_originMin.Y ? pnt.Y : m_originMin.Y,
                 pnt.Z < m_originMin.Z ? pnt.Z : m_originMin.Z);
         }
-
 
         /// <summary>
         ///     rotate points with origion matrix

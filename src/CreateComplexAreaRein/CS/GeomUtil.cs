@@ -8,7 +8,6 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
 {
     using GeoSolid = Solid;
 
-
     /// <summary>
     ///     provide some common geometry judgement and calculate method
     /// </summary>
@@ -54,7 +53,6 @@ namespace Revit.SDK.Samples.CreateComplexAreaRein.CS
         {
             var points = new List<XYZ>();
             var XYZs = face.Triangulate().Vertices as List<XYZ>;
-
 
             foreach (var point in XYZs) points.Add(point);
 

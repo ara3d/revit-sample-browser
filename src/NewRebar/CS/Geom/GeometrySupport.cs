@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
@@ -130,7 +129,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public double DrivingLength => m_drivingLength;
 
-
         /// <summary>
         ///     Transform the point to new coordinates
         /// </summary>
@@ -141,7 +139,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
             // only invoke the TransformPoint() method.
             return GeomUtil.TransformPoint(point, m_transform);
         }
-
 
         /// <summary>
         ///     Get the length of driving line
@@ -186,7 +183,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
             return vectors;
         }
 
-
         /// <summary>
         ///     Offset the points of the swept profile to make the points inside swept profile
         /// </summary>
@@ -215,7 +211,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
             return points;
         }
-
 
         /// <summary>
         ///     Find the information of the swept profile(face),

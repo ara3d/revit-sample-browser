@@ -148,7 +148,6 @@ namespace Revit.SDK.Samples.ScheduleCreation.CS
                         }
                     }
 
-
                     //Filter the view schedule by volume
                     if (field.ParameterId == new ElementId(BuiltInParameter.HOST_VOLUME_COMPUTED))
                     {

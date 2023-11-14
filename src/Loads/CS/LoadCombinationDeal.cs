@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.ApplicationServices;
@@ -120,7 +119,6 @@ namespace Revit.SDK.Samples.Loads.CS
                     components.Add(component);
                 }
             }
-
 
             // Begin to new a load combination
             try

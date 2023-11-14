@@ -64,7 +64,6 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                 separateFileRadioButton.Checked = !m_printMgr.IsCombinedFile;
             }
 
-
             if (!m_printMgr.VerifyPrintToSingleFile(singleFileRadioButton)
                 && m_printMgr.VerifyPrintToSeparateFile(separateFileRadioButton))
                 separateFileRadioButton.Checked = true;

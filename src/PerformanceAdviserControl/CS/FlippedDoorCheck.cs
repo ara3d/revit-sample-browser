@@ -61,7 +61,6 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// </summary>
         public static PerformanceAdviserRuleId Id => m_Id;
 
-
         /// <summary>
         ///     Does some preliminary work before executing tests on elements.  In this case,
         ///     we instantiate a list of FamilyInstances representing all doors that are flipped.
@@ -151,7 +150,6 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             return m_name;
         }
 
-
         /// <summary>
         ///     Returns true if this rule will iterate through elements and check them, false otherwise
         /// </summary>
@@ -160,7 +158,6 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         {
             return true;
         }
-
 
         /// <summary>
         ///     This method is used by PerformanceAdviser to get the

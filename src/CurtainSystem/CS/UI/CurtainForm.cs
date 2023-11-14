@@ -419,7 +419,6 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.UI
             }
         }
 
-
         private void facesCheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
         }

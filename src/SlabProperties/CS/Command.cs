@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -26,66 +25,55 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         private const double ToMetricYoungmodulus = 304800.0;
         private Document m_document;
 
-
         private ElementSet m_slabComponent; // the selected Slab component
         private Floor m_slabFloor; // Floor 
         private CompoundStructureLayer m_slabLayer; // Structure Layer 
         private IList<CompoundStructureLayer> m_slabLayerCollection; // Structure Layer collection
-
 
         /// <summary>
         ///     Level property, read only.
         /// </summary>
         public string Level { get; private set; }
 
-
         /// <summary>
         ///     TypeName property, read only.
         /// </summary>
         public string TypeName { get; private set; }
-
 
         /// <summary>
         ///     SpanDirection property, read only.
         /// </summary>
         public string SpanDirection { get; private set; }
 
-
         /// <summary>
         ///     NumberOfLayers property, read only.
         /// </summary>
         public int NumberOfLayers { get; private set; }
-
 
         /// <summary>
         ///     LayerThickness property, read only.
         /// </summary>
         public string LayerThickness { get; private set; }
 
-
         /// <summary>
         ///     LayerMaterialName property, read only.
         /// </summary>
         public string LayerMaterialName { get; private set; }
-
 
         /// <summary>
         ///     LayerYoungModulusX property, read only.
         /// </summary>
         public string LayerYoungModulusX { get; private set; }
 
-
         /// <summary>
         ///     LayerYoungModulusY property, read only.
         /// </summary>
         public string LayerYoungModulusY { get; private set; }
 
-
         /// <summary>
         ///     LayerYoungModulusZ property, read only.
         /// </summary>
         public string LayerYoungModulusZ { get; private set; }
-
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -109,7 +97,6 @@ namespace Revit.SDK.Samples.SlabProperties.CS
 
             return Result.Succeeded;
         }
-
 
         /// <summary>
         ///     SetLayer method
@@ -160,7 +147,6 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 LayerYoungModulusZ = "Null";
             }
         }
-
 
         /// <summary>
         ///     Initialization and find out a slab's Level, Type name, and set the Span Direction properties.
@@ -223,7 +209,6 @@ namespace Revit.SDK.Samples.SlabProperties.CS
 
             return true;
         }
-
 
         /// <summary>
         ///     Set SpanDirection property to the class private member

@@ -27,7 +27,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // the document of this sample
         private readonly MyDocument m_myDocument;
 
-
         /// <summary>
         ///     constructor
         /// </summary>
@@ -60,7 +59,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // store the grid line to be removed
 
         // store the offset to be moved for the specified grid line
-
 
         /// <summary>
         ///     stores the curtain grid information of the created curtain wall
@@ -194,7 +192,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                         break;
                     }
                 }
-
 
             GetULines();
             GetVLines();

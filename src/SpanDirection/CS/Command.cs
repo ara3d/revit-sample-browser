@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -50,7 +49,6 @@ namespace Revit.SDK.Samples.SpanDirection.CS
 
             return Result.Succeeded;
         }
-
 
         /// <summary>
         ///     Get SpanDirection and SpanDirectionSymobols of Floor

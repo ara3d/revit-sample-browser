@@ -84,7 +84,6 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
             zoomRadioButton.CheckedChanged += zoomRadioButton_CheckedChanged;
             fitToPageRadioButton.CheckedChanged += fitToPageRadioButton_CheckedChanged;
 
-
             rasterQualityComboBox.DataSource = m_printSetup.RasterQualities;
             rasterQualityComboBox.SelectedItem = m_printSetup.RasterQuality;
             rasterQualityComboBox.SelectedValueChanged += rasterQualityComboBox_SelectedValueChanged;

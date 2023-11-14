@@ -429,7 +429,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         {
             var mouseInGrid = VerifyMouseLocation(mousePosition);
 
-
             // mouse is outside the curtain grid boundary
             if (false == mouseInGrid) return;
 
@@ -1424,14 +1423,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </returns>
         private int GetOutlineIndex(List<GraphicsPath> pathList, Point point)
         {
-            for (var i = 0; i < pathList.Count; i++)
-            {
-                var redPen = Pens.Red;
-                var path = pathList[i];
-                if (path.IsOutlineVisible(point, redPen)) return i;
-            }
-
-            return -1;
+            return pathList.FindIndex(path => path.IsOutlineVisible(point, Pens.Red));
         }
 
         /// <summary>
@@ -1511,7 +1503,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // the location to draw the hint
         private Point m_textPosition;
 
-
         /// <summary>
         ///     default constructor
         /// </summary>
@@ -1539,7 +1530,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         // the pen to draw the hint
-
 
         /// <summary>
         ///     the lines to be drawn with the mapping pen

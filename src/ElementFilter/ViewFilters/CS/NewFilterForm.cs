@@ -22,7 +22,6 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// </summary>
         private readonly ICollection<string> m_inUseFilterNames;
 
-
         /// <summary>
         ///     Show form for new filter name
         /// </summary>

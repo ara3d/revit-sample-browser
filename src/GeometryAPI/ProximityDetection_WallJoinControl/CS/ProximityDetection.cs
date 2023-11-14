@@ -129,7 +129,6 @@ namespace Revit.SDK.Samples.ProximityDetection_WallJoinControl.CS
                     var gi = Objects.Current as GeometryInstance;
                     var Objects1 = gi.GetInstanceGeometry().GetEnumerator();
 
-
                     //foreach (GeometryObject egressGObj in 
                     //   (egressElement.get_Geometry(new Autodesk.Revit.DB.Options()).Objects.get_Item(0) as GeometryInstance).GetInstanceGeometry().Objects)
                     while (Objects1.MoveNext())

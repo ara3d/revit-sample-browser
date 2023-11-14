@@ -27,7 +27,6 @@ namespace Revit.SDK.Samples.ColorFill.CS
             BindData();
         }
 
-
         private void BindData()
         {
             tbSchemeName.Text = "";

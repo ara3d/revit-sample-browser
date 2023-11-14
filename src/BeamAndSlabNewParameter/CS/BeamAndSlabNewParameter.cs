@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections;
 using System.IO;
@@ -227,7 +226,6 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
 
             // all the elements of current document
             var i = seleElements.GetEnumerator();
-
 
             // if the selections include beams and slabs, 
             // find out the element using the select value for display

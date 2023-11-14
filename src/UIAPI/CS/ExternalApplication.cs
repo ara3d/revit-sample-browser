@@ -1,6 +1,5 @@
 ﻿// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Drawing;
 using System.IO;
@@ -53,7 +52,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
             binding.Executed += binding_Executed;
             binding.CanExecute += binding_CanExecute;
         }
-
 
         private BitmapSource convertFromBitmap(Bitmap bitmap)
         {
@@ -109,7 +107,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
             var pb2 = rp.AddItem(pbd2) as PushButton;
             pb2.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
 
-
             var pbd3 = new PushButtonData("PreviewControl", "Preview all views",
                 addinAssmeblyPath,
                 "Revit.SDK.Samples.UIAPI.CS.PreviewCommand")
@@ -119,7 +116,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
             };
             var pb3 = rp.AddItem(pbd3) as PushButton;
             pb3.AvailabilityClassName = "Revit.SDK.Samples.UIAPI.CS.ApplicationAvailabilityClass";
-
 
             var pbd5 = new PushButtonData("Drag_And_Drop", "Drag and Drop", addinAssmeblyPath,
                 "Revit.SDK.Samples.UIAPI.CS.DragAndDropCommand")

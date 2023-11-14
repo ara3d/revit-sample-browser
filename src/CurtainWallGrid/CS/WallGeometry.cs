@@ -26,7 +26,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // store the start point of baseline (in PointD format)
         private PointD m_startPointD;
 
-
         /// <summary>
         ///     default constructor
         /// </summary>
@@ -40,7 +39,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         //store the end point of baseline (in Autodesk.Revit.DB.XYZ format)
-
 
         /// <summary>
         ///     the document of this sample

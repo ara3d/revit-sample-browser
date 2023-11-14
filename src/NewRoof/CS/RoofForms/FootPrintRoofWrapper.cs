@@ -181,7 +181,6 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             Boundingbox = m_roof.get_BoundingBox(Command.ActiveView);
         }
 
-
         /// <summary>
         ///     Get the bounding box of the roof.
         /// </summary>

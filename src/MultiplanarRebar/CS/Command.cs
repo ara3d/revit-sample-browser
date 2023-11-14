@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -67,7 +66,6 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
                     // Cancelled by user.
                     return Result.Cancelled;
             }
-
 
             // Encapsulate operation "Reinforce Corbels" into one transaction. 
             var reinforceTransaction = new Transaction(revitDoc);

@@ -52,7 +52,6 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
             Trace.Listeners.Remove(TxtListener);
         }
 
-
         /// <summary>
         ///     Write specified message into log file.
         /// </summary>

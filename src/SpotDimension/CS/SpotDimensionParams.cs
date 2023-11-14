@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -88,7 +87,6 @@ namespace Revit.SDK.Samples.SpotDimension.CS
 
                 //begin to get Parameters and add them to a DataTable
                 var temporaryValue = "";
-
 
                 //string formatter
                 var formatter = "#0.000";

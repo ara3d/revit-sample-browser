@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 
 namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
@@ -20,7 +19,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         Angle
     }
-
 
     /// <summary>
     ///     a class used to deal with converting operation

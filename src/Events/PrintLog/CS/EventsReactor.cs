@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -67,7 +66,6 @@ namespace Revit.SDK.Samples.PrintLog.CS
         /// </summary>
         private TextWriterTraceListener m_printLog;
 
-
         /// <summary>
         ///     Constructor method
         ///     This method will only initialize the m_docEventsWatches and m_assemblyPath.
@@ -107,7 +105,6 @@ namespace Revit.SDK.Samples.PrintLog.CS
                 m_eventsLog.Close();
             }
         }
-
 
         /// <summary>
         ///     Handler method for DocumentPrinting event.
@@ -186,7 +183,6 @@ namespace Revit.SDK.Samples.PrintLog.CS
             // Dump the events arguments 
             DumpEventArguments(e);
         }
-
 
         /// <summary>
         ///     For singleton consideration, setup log file only when events are raised.

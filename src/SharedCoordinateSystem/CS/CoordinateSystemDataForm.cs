@@ -112,7 +112,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             timeZoneComboBox.Enabled = false;
         }
 
-
         /// <summary>
         ///     load the form
         /// </summary>
@@ -187,7 +186,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             elevationTextBox.Text = m_data.PositionElevation.ToString();
             m_elevation = m_data.PositionElevation.ToString();
         }
-
 
         /// <summary>
         ///     the function will be invoked when the selected item changed
@@ -270,7 +268,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
             return true;
         }
-
 
         /// <summary>
         ///     be invoked when SelectedValue of control cityNameComboBox changed
@@ -545,7 +542,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             m_siteLocation.Longitude = m_currentCityInfo.Longitude;
             m_siteLocation.TimeZone = m_currentCityInfo.TimeZone;
         }
-
 
         /// <summary>
         ///     check the format of the user's input and add a degree symbol behind the angle value

@@ -47,7 +47,6 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
             return Result.Succeeded;
         }
 
-
         private void CreateCopyPastePanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("CopyPaste");
@@ -62,7 +61,6 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
             var duplicateAllPB = rp.AddItem(pbd2) as PushButton;
             SetIconsForPushButton(duplicateAllPB, Resources.ViewCopyAcrossFiles);
         }
-
 
         /// <summary>
         ///     Utility for adding icons to the button.

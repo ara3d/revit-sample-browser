@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
@@ -96,7 +95,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         public const int TopRebarNumber = 2;
     }
 
-
     /// <summary>
     ///     A struct to store the const data which support column reinforcement creation
     /// </summary>
@@ -112,7 +110,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// </summary>
         public const double VerticalOffset = 0.234;
     }
-
 
     /// <summary>
     ///     Indicate location of top reinforcement

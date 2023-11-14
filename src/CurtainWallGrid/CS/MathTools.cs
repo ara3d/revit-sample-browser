@@ -32,7 +32,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             Z = (float)v.Z;
         }
 
-
         /// <summary>
         ///     X property to get/set x value of Vector4
         /// </summary>
@@ -406,7 +405,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         // Y coordinate
 
-
         /// <summary>
         ///     X coordinate
         /// </summary>
@@ -416,7 +414,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         ///     Y coordinate
         /// </summary>
         public double Y { get; set; }
-
 
         /// <summary>
         ///     constructor

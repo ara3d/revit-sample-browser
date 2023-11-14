@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
@@ -15,7 +14,6 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
     {
         // Private Members
         private const double PRECISION = 0.0000000001; // Define a precision of double data
-
 
         // Methods
         /// <summary>

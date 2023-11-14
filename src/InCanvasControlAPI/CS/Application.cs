@@ -30,7 +30,6 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
 
         private readonly EventHandler<DocumentClosedEventArgs> closedHandler;
 
-
         private readonly Dictionary<int, Guid> closingDocumentIdToIssueTrackingPairs = new Dictionary<int, Guid>();
 
         private readonly EventHandler<DocumentClosingEventArgs> closingHandler;
@@ -40,7 +39,6 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
         private readonly EventHandler<DocumentOpenedEventArgs> openHandler;
 
         private readonly EventHandler<DocumentChangedEventArgs> updateHandler;
-
 
         /// <summary>
         ///     Creates external application object and initializes event handlers.
@@ -74,7 +72,6 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
                 closingDocumentIdToIssueTrackingPairs.Remove(closedData.DocumentId);
             };
         }
-
 
         /// <summary>
         ///     Implements the OnShutdown event. It cleans up events and IssueMarkerTrackingManager

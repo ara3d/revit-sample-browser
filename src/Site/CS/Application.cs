@@ -46,7 +46,6 @@ namespace Revit.SDK.Samples.Site.CS
             return Result.Succeeded;
         }
 
-
         private void CreateSitePanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("Site");

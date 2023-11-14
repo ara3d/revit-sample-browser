@@ -88,7 +88,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             set => m_projectInfo.Number = value;
         }
 
-
         /// <summary>
         ///     Gets the handle object.
         /// </summary>

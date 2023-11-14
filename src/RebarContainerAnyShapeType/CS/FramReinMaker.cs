@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +21,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// <returns>indicate the result of run</returns>
         bool Run();
     }
-
 
     /// <summary>
     ///     The base class for family instance reinforcement creation.
@@ -122,7 +120,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             return FillWithBars();
         }
 
-
         /// <summary>
         ///     This is a virtual method which used to check the data whether is right and enough.
         /// </summary>
@@ -141,7 +138,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             return true; // only return true
         }
 
-
         /// <summary>
         ///     This is a virtual method which used to create reinforcement.
         /// </summary>
@@ -150,7 +146,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         {
             return true; // only return true
         }
-
 
         /// <summary>
         ///     A wrap function which used to create the reinforcement.
@@ -176,7 +171,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             return item;
         }
-
 
         /// <summary>
         ///     get all the hook types in current project, and store in m_hookTypes data

@@ -747,12 +747,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
     {
         // the current line operation type
 
-
         /// <summary>
         ///     the current line operation type
         /// </summary>
         public LineOperationType OpType { get; }
-
 
         /// <summary>
         ///     constructor

@@ -35,7 +35,6 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         {
             ProgressItem currentProgressItem = null;
 
-
             switch (progressEvent.Stage)
             {
                 case ProgressStage.Started:
@@ -92,11 +91,9 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                     break;
                 }
 
-
                 default:
                     throw new Exception("Unknown stage.");
             }
-
 
             if (m_itemStack.Count == 0)
                 Debug.WriteLine("Stack empty");
@@ -117,7 +114,6 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
             foreach (var pi in m_itemStack) sb.AppendLine(pi.ToString());
             return sb.ToString();
         }
-
 
         /// <summary>
         ///     ToStringList

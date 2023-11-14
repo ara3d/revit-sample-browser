@@ -27,7 +27,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // zoom the baseline to a suitable length
         public readonly double SCALEFACTOR = 5.0;
 
-
         /// <summary>
         ///     default constructor
         /// </summary>
@@ -43,7 +42,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         }
 
         // the baseline of the curtain wall
-
 
         /// <summary>
         ///     the boundary of the canvas for the baseline drawing

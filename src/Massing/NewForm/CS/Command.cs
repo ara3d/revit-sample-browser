@@ -241,7 +241,6 @@ namespace Revit.SDK.Samples.NewForm.CS
             ref_ar.Append(modelcurve.GeometryCurve.Reference);
             ref_ar_ar.Append(ref_ar);
 
-
             // Create second profile
             ref_ar = new ReferenceArray();
 

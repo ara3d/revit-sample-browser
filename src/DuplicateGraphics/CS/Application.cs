@@ -28,7 +28,6 @@
  *     d. update the buffers when necessary
  */
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
@@ -99,7 +98,6 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
         {
             unregisterServers(args.Document, false);
         }
-
 
         /// <summary>
         ///     Responds to the external command CommandDuplicateGraphics.

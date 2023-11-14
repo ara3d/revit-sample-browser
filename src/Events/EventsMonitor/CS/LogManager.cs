@@ -37,7 +37,6 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         private TraceListener m_txtListener;
 
-
         /// <summary>
         ///     Constructor without argument.
         /// </summary>
@@ -52,7 +51,6 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         ///     Property to get and set private member variables of Event log information.
         /// </summary>
         public DataTable EventsLog => m_eventsLog;
-
 
         /// <summary>
         ///     Create a log file to track the subscribed events' work process.

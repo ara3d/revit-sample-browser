@@ -20,7 +20,6 @@ namespace Revit.SDK.Samples.ExtensibleStorageUtility.CS
             var storageElements = StorageUtility.GetElementsWithAllSchemas(document);
             TaskDialog.Show("ExtensibleStorageUtility", storageElements);
 
-
             return Result.Succeeded;
         }
     }

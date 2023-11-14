@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -106,7 +105,6 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                 newLevelName = "Level" + " " + "1";
                 newLevelElevation = 0;
             }
-
 
             var newLevel = new LevelsDataSource
             {

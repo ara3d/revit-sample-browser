@@ -38,7 +38,6 @@ namespace SchemaWrapperTools
 
         [NonSerialized] private SchemaBuilder m_SchemaBuilder;
 
-
         private SchemaDataWrapper m_SchemaDataWrapper;
 
         [NonSerialized] private string m_xmlPath;
@@ -66,7 +65,6 @@ namespace SchemaWrapperTools
         {
             SetSchema(schema);
         }
-
 
         /// <summary>
         ///     Gets and set the SchemaDataWrapper of the SchemaWrapper.  "Set" is for serialization use only.
@@ -138,7 +136,6 @@ namespace SchemaWrapperTools
             return swReturn;
         }
 
-
         /// <summary>
         ///     Creates a new SchemaWrapper from a Guid
         /// </summary>
@@ -185,7 +182,6 @@ namespace SchemaWrapperTools
             return wrapperIn;
         }
 
-
         /// <summary>
         ///     Adds a new field to the SchemaWrapper
         /// </summary>
@@ -209,7 +205,6 @@ namespace SchemaWrapperTools
         {
             //Create the Autodesk.Revit.DB.ExtensibleStorage.SchemaBuilder that actually builds the schema
             m_SchemaBuilder = new SchemaBuilder(new Guid(m_SchemaDataWrapper.SchemaId));
-
 
             //We will add a new field to our schema from each FieldData object in our SchemaWrapper
             foreach (var currentFieldData in m_SchemaDataWrapper.DataList)
@@ -239,14 +234,12 @@ namespace SchemaWrapperTools
                     }
                 }
 
-
                 //Now that we have the data type of field we need to add, we need to call either
                 //SchemaBuilder.AddSimpleField, AddArrayField, or AddMapField.
 
                 FieldBuilder currentFieldBuilder = null;
                 var subSchemaId = Guid.Empty;
                 Type[] genericParams = null;
-
 
                 if (currentFieldData.SubSchema != null)
                     subSchemaId = new Guid(currentFieldData.SubSchema.Data.SchemaId);
@@ -303,7 +296,6 @@ namespace SchemaWrapperTools
             m_SchemaBuilder.SetDocumentation(Data.Documentation);
             m_SchemaBuilder.SetSchemaName(Data.Name);
 
-
             //Actually finish creating the Autodesk.Revit.DB.ExtensibleStorage.Schema.
             m_Schema = m_SchemaBuilder.Finish();
         }
@@ -331,7 +323,6 @@ namespace SchemaWrapperTools
             strBuilder.AppendLine("--End Schema--");
             return strBuilder.ToString();
         }
-
 
         /// <summary>
         ///     Returns a string representation of all data in an Entity
@@ -366,7 +357,6 @@ namespace SchemaWrapperTools
                 //Here, we call GetFieldDataAsString on this class, the SchemaWrapper class.  However, we must
                 //call it with specific generic parameters that are only known at runtime, so we must use reflection to 
                 //dynamically create a method with parameters from the current field we want to extract data from
-
 
                 var pmodifiers = Array.Empty<ParameterModifier>(); //a Dummy parameter needed for GetMethod() call, empty
 
@@ -540,7 +530,6 @@ namespace SchemaWrapperTools
         {
             m_Assembly = Assembly.GetAssembly(typeof(XYZ));
         }
-
 
         /// <summary>
         ///     Gets the Autodesk.Revit.DB.ExtensibleStorage schema that the wrapper owns.

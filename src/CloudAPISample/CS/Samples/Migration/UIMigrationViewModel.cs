@@ -33,7 +33,6 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
         /// <inheritdoc />
         public ObservableCollection<MigrationRule> Rules { get; set; } = new ObservableCollection<MigrationRule>();
 
-
         /// <inheritdoc />
         public string AccountGuid
         {

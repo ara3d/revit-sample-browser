@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -28,7 +27,6 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             yCoordinateTextBox.Text = "0";
             zCoordinateTextBox.Text = "0";
         }
-
 
         /// <summary>
         ///     Get the point data of this user control
@@ -67,7 +65,6 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                 string.IsNullOrEmpty(zCoordinateTextBox.Text); // z coordinate empty
             // If all coordinates are not empty, return true
         }
-
 
         /// <summary>
         ///     This method is called to Validate whether the TextBox data is a number.

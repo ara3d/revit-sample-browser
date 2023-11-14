@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -124,7 +123,6 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             }
         }
 #endif
-
 
         /// <summary>
         ///     Implement this method to implement the external application which should be called when

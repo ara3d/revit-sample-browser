@@ -48,7 +48,6 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             UpdateSpaceList();
         }
 
-
         /// <summary>
         ///     When the removeSpace Button is clicked, the selected spaces will be removed from the
         ///     current Zone element.

@@ -45,7 +45,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             return GetPaneSummary(paneId);
         }
 
-
         /// <summary>
         ///     Return dockable pane inforamtion, given a DockablePaneId
         /// </summary>

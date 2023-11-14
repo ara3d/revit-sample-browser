@@ -40,7 +40,6 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
         /// </summary>
         private int m_currentDisplacementIndex;
 
-
         /// <summary>
         ///     The current parent displacement element being animated.
         /// </summary>

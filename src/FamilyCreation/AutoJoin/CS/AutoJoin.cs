@@ -122,7 +122,6 @@ namespace Revit.SDK.Samples.AutoJoin.CS
                 }
             } while (isNew); // find all elements which overlapped with joined geometry combination.
 
-
             // removed the joined elements from the input list.
             foreach (CombinableElement aElement in joinedElements) elements.Remove(aElement);
 

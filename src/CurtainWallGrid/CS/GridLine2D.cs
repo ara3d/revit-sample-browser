@@ -49,7 +49,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         // the end point of the line
 
-
         /// <summary>
         ///     the start point of the line
         /// </summary>
@@ -101,7 +100,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             AssistantPoint = wallLine2D.AssistantPoint;
         }
         // an assistant point for temp usage
-
 
         /// <summary>
         ///     an assistant point for temp usage
@@ -175,7 +173,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // indicate how many segments have been removed from the grid line
 
         // indicate whether it's a U grid line
-
 
         /// <summary>
         ///     indicate whether the grid line is locked
@@ -256,12 +253,10 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         // indicates whether the segment is in a U grid line
 
-
         /// <summary>
         ///     indicates whether the segment is "isolated"
         /// </summary>
         public bool Isolated { get; set; }
-
 
         /// <summary>
         ///     indicate whether the segment has been removed from the grid line

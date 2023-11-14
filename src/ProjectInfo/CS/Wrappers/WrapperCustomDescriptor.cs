@@ -23,7 +23,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             m_handle = handle;
         }
 
-
         /// <summary>
         ///     Returns a collection of custom attributes for this instance of a component.
         /// </summary>
@@ -176,7 +175,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             return m_handle;
         }
 
-
         /// <summary>
         ///     Gets handle object
         /// </summary>
@@ -200,7 +198,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                 return Handle.ToString();
             }
         }
-
 
         /// <summary>
         ///     overrides ToString method

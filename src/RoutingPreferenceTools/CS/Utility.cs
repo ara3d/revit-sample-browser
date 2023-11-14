@@ -42,7 +42,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             return UnitUtils.ConvertFromInternalUnits(decimalFeet, formatOption.GetUnitTypeId());
         }
 
-
         public static double ConvertValueToFeet(double unitValue, Document document)
         {
             var tempVal = ConvertValueDocumentUnits(unitValue, document);

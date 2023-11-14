@@ -26,7 +26,6 @@ namespace ContextualAnalyticalModel
                 {
                     transaction.Start();
 
-
                     // Get release conditions of analytical member
                     var releaseConditions = analyticalMember.GetReleaseConditions();
                     foreach (var rc in releaseConditions)

@@ -39,7 +39,6 @@ namespace Revit.SDK.Samples.Site.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     Normalizes all points in the selected subregion to the average elevation of the host surface.
         /// </summary>

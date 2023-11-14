@@ -39,7 +39,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             Initialize();
         }
 
-
         /// <summary>
         ///     String collection of AutoCAD versions
         /// </summary>

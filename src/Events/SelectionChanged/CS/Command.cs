@@ -30,7 +30,6 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
                 SelectionChanged.InfoWindow.Focus();
             }
 
-
             return Result.Succeeded;
         }
     }

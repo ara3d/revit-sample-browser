@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -57,7 +56,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         /// </summary>
         public List<string> LocationNames { get; } = new List<string>();
 
-
         /// <summary>
         ///     get the shared coordinate system data of the project
         /// </summary>
@@ -88,7 +86,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
             }
         }
 
-
         /// <summary>
         ///     duplicate a new project location
         /// </summary>
@@ -107,7 +104,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                 }
         }
 
-
         /// <summary>
         ///     change the current project location
         /// </summary>
@@ -125,7 +121,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                     break;
                 }
         }
-
 
         /// <summary>
         ///     get the offset values of the project position
@@ -150,7 +145,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
             ChangePrecision();
         }
-
 
         /// <summary>
         ///     change the offset value for the project position
@@ -180,7 +174,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
                     location.SetProjectPosition(origin, projectPosition);
                 }
         }
-
 
         /// <summary>
         ///     change the Precision of the value

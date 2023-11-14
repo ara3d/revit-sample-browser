@@ -17,12 +17,10 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             //A list of rule information to be used below
             var ruleInfoList = new List<RuleInfo>();
 
-
             ///Here, we query the information about rules registered in PerformanceAdviser so that
             ///we can later decide in a dialog which rules we want to run.
 
             var performanceAdviser = PerformanceAdviser.GetPerformanceAdviser();
-
 
             ICollection<PerformanceAdviserRuleId> allIds = performanceAdviser.GetAllRuleIds();
             foreach (var ruleID in allIds)
@@ -38,7 +36,6 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
                 var oneRule = new RuleInfo(ruleID, isOurRule, ruleName, ruleDescription, isEnabled);
                 ruleInfoList.Add(oneRule);
             }
-
 
             //This dialog box will allow the user to select and run performance rules, so it needs
             //the PerformanceAdviser and active document passed to it.

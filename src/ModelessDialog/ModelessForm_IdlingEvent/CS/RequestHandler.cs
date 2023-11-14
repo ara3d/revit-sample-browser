@@ -65,7 +65,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             }
         }
 
-
         /// <summary>
         ///     The main door-modification subroutine - called from every request
         /// </summary>
@@ -109,7 +108,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
                 }
             }
         }
-
 
         //////////////////////////////////////////////////////////////////////////
         //

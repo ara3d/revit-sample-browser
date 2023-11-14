@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -129,7 +128,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         {
             Initialize(cities);
         }
-
 
         /// <summary>
         ///     property used to get and set all cities' name

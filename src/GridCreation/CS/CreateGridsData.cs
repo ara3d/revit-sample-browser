@@ -46,7 +46,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         protected readonly ForgeTypeId m_unit;
 
-
         /// <summary>
         ///     Constructor without display unit type
         /// </summary>

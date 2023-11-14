@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS;
 
 namespace Revit.SDK.Samples.Journaling.CS

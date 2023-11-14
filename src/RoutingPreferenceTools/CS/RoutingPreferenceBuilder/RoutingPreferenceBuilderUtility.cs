@@ -147,7 +147,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         }
     }
 
-
     /// <summary>
     ///     A simple exception class to help identify errors related to this application.
     /// </summary>
@@ -165,7 +164,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             return m_message;
         }
     }
-
 
     /// <summary>
     ///     A helper class to validate RoutingPreferenceBuilder xml documents against

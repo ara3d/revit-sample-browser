@@ -141,7 +141,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
                 value.Handle as Construction);
         }
 
-
         /// <summary>
         ///     Gets the handle object.
         /// </summary>

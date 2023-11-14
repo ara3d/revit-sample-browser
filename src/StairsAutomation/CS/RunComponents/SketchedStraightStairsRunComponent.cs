@@ -15,7 +15,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
     {
         private readonly double m_desiredTreadDepth;
 
-
         private readonly int m_riserNumber;
         private readonly XYZ m_runExtent;
         private StairsRun m_stairsRun;
@@ -61,7 +60,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             m_runExtent = new XYZ(0, (riserNumber - 1) * desiredTreadDepth, 0);
             m_widthOffset = new XYZ(m_width, 0, 0);
         }
-
 
         /// <summary>
         ///     Implements the interface property.

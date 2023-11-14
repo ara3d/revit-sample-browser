@@ -190,7 +190,6 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             return elemFilter;
         } // CreateElementFilterFromFilterRules
 
-
         /// <summary>
         ///     Given an ElementFilter representing a conjunction of FilterRules, return the list of FilterRules.
         /// </summary>

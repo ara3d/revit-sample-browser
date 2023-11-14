@@ -66,7 +66,6 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
             }
         }
 
-
         /// <summary>
         ///     Waking up the dialog from its waiting state.
         /// </summary>

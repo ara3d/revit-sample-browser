@@ -56,7 +56,6 @@ namespace Revit.SDK.Samples.Truss.CS
 
         private XYZ startLocation; //store the start point of truss location
 
-
         /// <summary>
         ///     constructor
         /// </summary>
@@ -222,7 +221,6 @@ namespace Revit.SDK.Samples.Truss.CS
             //    new Vector4(new Autodesk.Revit.DB.XYZ (0, -1, 0)), new Vector4(new Autodesk.Revit.DB.XYZ (0, 0, 1)));
             //return Matrix4.Multiply(matrix, upward);
         }
-
 
         /// <summary>
         ///     Get max and min coordinates of all points

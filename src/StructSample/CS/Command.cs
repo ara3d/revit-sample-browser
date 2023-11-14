@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
@@ -81,7 +80,6 @@ namespace Revit.SDK.Samples.StructSample.CS
             }
         }
 
-
         /// <summary>
         ///     find Column which will be used to placed to Wall
         /// </summary>
@@ -111,7 +109,6 @@ namespace Revit.SDK.Samples.StructSample.CS
 
             return null;
         }
-
 
         /// <summary>
         ///     Frame a Wall
@@ -169,7 +166,6 @@ namespace Revit.SDK.Samples.StructSample.CS
             // place column at end point of wall
             PlaceColumn(rvtApp, rvtDoc, endPt, angle, columnType, baseLevelId, topLevelId);
         }
-
 
         /// <summary>
         ///     create a column instance and place it on the wall line.

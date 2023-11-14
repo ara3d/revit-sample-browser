@@ -38,7 +38,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             m_results = results;
         }
 
-
         /// <summary>
         ///     A property to test whether the calculation thread is still alive.
         /// </summary>
@@ -59,7 +58,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             return true;
         }
 
-
         /// <summary>
         ///     Waits for the work thread to finish
         /// </summary>
@@ -67,7 +65,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
         {
             if (IsThreadAlive) m_thread.Join();
         }
-
 
         /// <summary>
         ///     The main method for calculating results for the face analysis.

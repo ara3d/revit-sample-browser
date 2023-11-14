@@ -43,7 +43,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
 
         private TextBox periodBox;
 
-
         /// <summary>
         ///     Implements the OnShutdown event
         /// </summary>
@@ -53,7 +52,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         {
             return Result.Succeeded;
         }
-
 
         /// <summary>
         ///     Implements the OnStartup event
@@ -82,7 +80,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     Gets the name of the currently selected family symbol.
         /// </summary>
@@ -91,7 +88,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         {
             return prismComboBox.Current.Name;
         }
-
 
         /// <summary>
         ///     Gets the value corresponding to the current text field input about the curve period.
@@ -104,7 +100,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         {
             return periodVal;
         }
-
 
         /// <summary>
         ///     Gets the value corresponding to the current text field input about the curve
@@ -119,7 +114,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             return cyclesVal;
         }
 
-
         /// <summary>
         ///     Gets the value corresponding to the current text field about the curve amplitude.
         /// </summary>
@@ -132,7 +126,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             return amplitudeVal;
         }
 
-
         /// <summary>
         ///     Gets the value corresponding to the current text field about the number of partitions.
         /// </summary>
@@ -144,7 +137,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         {
             return partitionsVal;
         }
-
 
         /// <summary>
         ///     Adds a drop down menu for selection of a type of prism. This four types
@@ -172,7 +164,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             prismComboBox.AddItem(comboBoxMemberData3);
             prismComboBox.AddItem(comboBoxMemberData4);
         }
-
 
         /// <summary>
         ///     Adds a group of text fields for accepting user input for the various parameters
@@ -216,7 +207,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
                 "Define the amplitude of the sine curve", "" + amplitudeVal, amplitudeVal, true, 50);
         }
 
-
         /// <summary>
         ///     Add a text field for accepting user input for how many family instances to array on
         ///     the curve.
@@ -235,7 +225,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
                 true, 50);
         }
 
-
         /// <summary>
         ///     Adds button that arrays family instances of curves given the various
         ///     user inputs.
@@ -251,7 +240,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             _ = panel.AddItem(pushButtonData) as PushButton;
         }
 
-
         private void CustomizeTextBox(RibbonPanel panel, TextBox txtBox, string tip, string displayedText,
             double defaultVal, bool isEnabled, int width)
         {
@@ -262,7 +250,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
 
             if (isEnabled) txtBox.EnterPressed += TextBoxEnterPressed;
         }
-
 
         /// <summary>
         ///     Handles the action of the text box user input. Checks if the input value is an
@@ -315,7 +302,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
                 TaskDialog.Show("TextBox Input", "The input value for " + textBox.Name + " has to be a double.");
             }
         }
-
 
         /// <summary>
         ///     Returns the path of the main project directory.

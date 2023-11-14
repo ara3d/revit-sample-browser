@@ -28,7 +28,6 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             Finished = false;
         }
 
-
         /// <summary>
         ///     Finished property to define whether curve was finished
         /// </summary>

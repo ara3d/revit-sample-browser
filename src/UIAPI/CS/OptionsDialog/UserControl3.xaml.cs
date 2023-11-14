@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 
-
 namespace Revit.SDK.Samples.UIAPI.CS
 {
     /// <summary>

@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
@@ -24,10 +23,8 @@ namespace Revit.SDK.Samples.ModelLines.CS
             ModelNurbSpline = 4 // ModelNurbSpline
         }
 
-
         // Private members
         private readonly ModelLines m_dataBuffer; // A reference of ModelLines.
-
 
         /// <summary>
         ///     Constructor of ModelLinesForm
@@ -51,7 +48,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             // Initialize the creation group information
             lineRadioButton.Checked = true;
         }
-
 
         /// <summary>
         ///     Bind the DataSource of the information DataGridView
@@ -143,7 +139,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             control.ValueMember = "Id"; // reset the ValueMember
         }
 
-
         /// <summary>
         ///     Rebind the data source of the elementIdComboBox control according to the line type
         /// </summary>
@@ -170,7 +165,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             // Reset the selected index property
             elementIdComboBox.SelectedIndex = selectedIndex;
         }
-
 
         /// <summary>
         ///     When the user click the create button, invoke method to create ReferencePlane

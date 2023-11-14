@@ -28,7 +28,6 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
         /// </summary>
         private readonly ViewSchedule theSchedule;
 
-
         /// <summary>
         ///     The writer for the HTML file.
         /// </summary>
@@ -220,7 +219,6 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
             WriteSectionRow(SectionType.Body, bodySection, iRow, numberOfColumns);
         }
 
-
         /// <summary>
         ///     Writes a row of a table section.
         /// </summary>
@@ -243,7 +241,6 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
                 // Get style
                 var style = data.GetTableCellStyle(iRow, iCol);
                 var numberOfStyleTags = 1;
-
 
                 // Merged cells
                 var mergedCell = data.GetMergedCell(iRow, iCol);

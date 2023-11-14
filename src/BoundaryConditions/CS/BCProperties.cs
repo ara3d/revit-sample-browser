@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -139,7 +138,6 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         // the boundary conditions of which the information will displayed in the UI grid
         private readonly Autodesk.Revit.DB.Structure.BoundaryConditions m_bC;
 
-
         /// <summary>
         ///     constructor
         /// </summary>
@@ -150,7 +148,6 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         {
             m_bC = bC;
         }
-
 
         /// <summary>
         ///     BoundaryConditions Type

@@ -83,7 +83,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public Document Document { get; }
 
-
         /// <summary>
         ///     stores all the Curtain WallTypes in the active Revit document
         /// </summary>

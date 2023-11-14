@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +28,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             if (!GetHostObject()) throw new Exception("Please select a beam or column.");
         }
-
 
         /// <summary>
         ///     check the condition of host object and see whether the reinforcement can be placed on
@@ -69,7 +67,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             return true;
         }
-
 
         /// <summary>
         ///     Get the selected element as the host object, also check if the selected element is expected host object

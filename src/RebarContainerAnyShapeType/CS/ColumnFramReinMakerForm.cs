@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB.Structure;
@@ -108,7 +107,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             DialogResult = DialogResult.OK; // set dialog result
             Close(); // close the form
         }
-
 
         /// <summary>
         ///     When the user click the cancel, just close the form

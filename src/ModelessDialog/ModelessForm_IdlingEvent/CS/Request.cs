@@ -55,7 +55,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         Rotate = 8
     }
 
-
     /// <summary>
     ///     A class around a variable holding the current request.
     /// </summary>

@@ -83,7 +83,6 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
         }
     }
 
-
     [Transaction(TransactionMode.Manual)]
     internal class SetReadonlyId1 : IExternalCommand
     {
@@ -134,7 +133,6 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             SetReadonlyIds(doc, GetReadonlyIdFromElementId);
         }
 
-
         private static void SetReadonlyIds(Document doc, Func<Element, string> idGetter)
         {
             var collector = new FilteredElementCollector(doc);
@@ -168,7 +166,6 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             return Result.Succeeded;
         }
 
-
         private List<SharedParameterBindingManager> BuildSharedParametersToCreate()
         {
             var sharedParametersToCreate =
@@ -189,7 +186,6 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             manager.ParameterGroup = GroupTypeId.IdentityData;
 
             sharedParametersToCreate.Add(manager); // Look up syntax for this automatic initialization.
-
 
             manager = new SharedParameterBindingManager
             {
@@ -232,7 +228,6 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
                 t.Commit();
             }
         }
-
 
         private string GetRandomSharedParameterFileName()
         {

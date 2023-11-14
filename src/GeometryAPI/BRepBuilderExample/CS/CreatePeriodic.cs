@@ -19,7 +19,6 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
         {
             _dbdocument = commandData.Application.ActiveUIDocument.Document;
 
-
             try
             {
                 CreateCylinder();
@@ -59,7 +58,6 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
                 tr.Commit();
             }
         }
-
 
         private void CreateCylinder()
         {
@@ -196,7 +194,6 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
             var topLeftEdgeId = brepBuilder.AddEdge(topLeftEdgeGeom);
             var sideFrontEdgeid = brepBuilder.AddEdge(sideFrontEdgeGeom);
             var sideBackEdgeId = brepBuilder.AddEdge(sideBackEdgeGeom);
-
 
             // Create bottom face
             var bottomLoopId = brepBuilder.AddLoop(bottomFaceId);

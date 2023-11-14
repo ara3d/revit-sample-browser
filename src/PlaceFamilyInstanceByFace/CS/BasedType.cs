@@ -19,7 +19,6 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         }
         // based-type
 
-
         /// <summary>
         ///     based-type
         /// </summary>

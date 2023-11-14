@@ -63,7 +63,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 bindingMap.Insert(basalOpening, typeBinding, GroupTypeId.Geometry);
             }
 
-
             // for "InstanceOpening"
             if (!AlreadyAddedSharedParameter(app.ActiveUIDocument.Document, "InstanceOpening",
                     BuiltInCategory.OST_Doors))

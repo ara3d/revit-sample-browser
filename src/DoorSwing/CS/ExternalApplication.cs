@@ -24,18 +24,15 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         // An object that is passed to the external application which contains the controlled Revit application.
         private UIControlledApplication m_controlApp;
 
-
         public Result OnStartup(UIControlledApplication application)
         {
             m_controlApp = application;
-
 
             // Doors are updated from the application level events. 
             // That will insure that the doc is correct when it is saved.
             // Subscribe to related events.
             application.ControlledApplication.DocumentSaving += DocumentSavingHandler;
             application.ControlledApplication.DocumentSavingAs += DocumentSavingAsHandler;
-
 
             // The location of this command assembly
             var currentCommandAssemblyPath = Assembly.GetExecutingAssembly().Location;
@@ -82,7 +79,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
                 new BitmapImage(new Uri(Path.Combine(buttonImageDir, "UpdateGeometry_Large.bmp")));
             updateGeoBut.Image = new BitmapImage(new Uri(Path.Combine(buttonImageDir, "UpdateGeometry_Small.bmp")));
 
-
             return Result.Succeeded;
         }
 
@@ -90,7 +86,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         {
             return Result.Succeeded;
         }
-
 
         /// <summary>
         ///     This event is fired whenever a document is saved.

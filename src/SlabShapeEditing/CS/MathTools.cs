@@ -256,7 +256,6 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             Matrix[2, 2] = scale;
         }
 
-
         /// <summary>
         ///     X property to get/set Type of matrix
         /// </summary>

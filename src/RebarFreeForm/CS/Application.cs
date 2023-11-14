@@ -16,7 +16,6 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
     {
         private readonly RebarUpdateServer m_server = new RebarUpdateServer();
 
-
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;

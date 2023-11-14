@@ -56,7 +56,6 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
             return "Simple UI server for the Revit SDK sample external resource server";
         }
 
-
         /// <summary>
         ///     Return the Id of the related DB server.
         /// </summary>
@@ -64,7 +63,6 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
         {
             return m_myDBServerId;
         }
-
 
         /// <summary>
         ///     Reports the results of loads from the DB server (SampleExternalResourceServer).
@@ -109,7 +107,6 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
                         myMessage = "There is no load type information!! ";
                         break;
                 }
-
 
                 var bUnrecognizedStatus = false;
                 switch (data.LoadStatus)
@@ -156,7 +153,6 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
                         break;
                 }
 
-
                 if (!bUnrecognizedStatus &&
                     resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.RevitLink)
                 {
@@ -171,7 +167,6 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
                 MessageBox.Show(myMessage, "UI Server for SDK Sample External Resource Server");
             }
         }
-
 
         /// <summary>
         ///     Use this method to report any problems that occurred while the user was browsing for External Resources.

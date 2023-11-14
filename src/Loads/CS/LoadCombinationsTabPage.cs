@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Text;
 using System.Windows.Forms;
@@ -135,7 +134,6 @@ namespace Revit.SDK.Samples.Loads.CS
             usageNameColumn.Name = "usageNameColumn";
             usageNameColumn.Width = usageDataGridView.Width / 2;
         }
-
 
         /// <summary>
         ///     Initialize the load combination formula DataGridView control

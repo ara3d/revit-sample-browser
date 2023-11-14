@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -190,7 +189,6 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
                 message = "There must be two connections selected !";
                 ret = Result.Failed;
             }
-
 
             return ret;
         }

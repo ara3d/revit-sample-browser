@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.ApplicationServices;
@@ -20,7 +19,6 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
         ///     Detector to detect the obstructions.
         /// </summary>
         private readonly Detector m_detector;
-
 
         private readonly PipingSystemType m_pipingSystemType;
 
@@ -361,7 +359,6 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
 
             return mins;
         }
-
 
         /// <summary>
         ///     Resolve one obstruction of Pipe.

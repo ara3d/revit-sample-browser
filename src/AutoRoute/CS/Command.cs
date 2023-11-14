@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -213,7 +212,6 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 //Get the duct type for the ducts to be created
                 dtRectangle = m_document.GetElement(ductTypeId) as DuctType;
 
-
                 //Create the ducts and elbows that connect the base mechanical equipment
                 var connectorDirection = conns[0].CoordinateSystem.BasisZ;
 
@@ -251,7 +249,6 @@ namespace Revit.SDK.Samples.AutoRoute.CS
                 }
 
                 ducts.Add(Duct.Create(m_document, ductTypeId, lvl.Id, conns[0], points[0]));
-
 
                 ducts.Add(Duct.Create(m_document, systemTypeId, ductTypeId, lvl.Id, points[1], points[2]));
                 connectors.Add(ConnectorInfo.GetConnector(ducts[0].Id, points[0]));

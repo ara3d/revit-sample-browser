@@ -26,7 +26,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         private readonly Document document;
         private readonly FamilySymbol familySymbol;
 
-
         /// <summary>
         ///     The constructor for the FamilyInstancePlotter Class.
         /// </summary>
@@ -37,7 +36,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             familySymbol = fs;
             document = doc;
         }
-
 
         /// <summary>
         ///     Places a family instance at the given location.
@@ -51,7 +49,6 @@ namespace Revit.SDK.Samples.SinePlotter.CS
                 StructuralType.NonStructural);
             t.Commit();
         }
-
 
         /// <summary>
         ///     Computes a sine curve taking into account input values for the sine curve period, amplitude and number

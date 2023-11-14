@@ -42,7 +42,6 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         private readonly XmlSerializer m_xs;
 
-
         /// <summary>
         ///     Constructor without argument.
         /// </summary>

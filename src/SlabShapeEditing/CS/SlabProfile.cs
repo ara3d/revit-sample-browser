@@ -45,7 +45,6 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
 
         private Matrix4 m_transformMatrix; // store the Matrix used to transform Revit coordinate to window UI
 
-
         /// <summary>
         ///     constructor
         /// </summary>

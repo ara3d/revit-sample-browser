@@ -1,11 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
 
 namespace Revit.SDK.Samples.UIAPI.CS
 {
@@ -17,7 +15,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             _dbdocument = commandData.Application.ActiveUIDocument.Document;
-
 
             var outerGroup = new TransactionGroup(_dbdocument, "preview control");
             outerGroup.Start();

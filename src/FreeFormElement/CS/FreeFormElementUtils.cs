@@ -121,7 +121,6 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             collector.WherePasses(new FamilySymbolFilter(family.Id));
             var fs = collector.FirstElement() as FamilySymbol;
 
-
             // Place instance at location of original curves
             using (var t2 = new Transaction(doc, "Place instance"))
             {
@@ -255,7 +254,6 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
         public static IList<Solid> GetTargetSolids(Element element)
         {
             var solids = new List<Solid>();
-
 
             var options = new Options();
             options.DetailLevel = ViewDetailLevel.Fine;

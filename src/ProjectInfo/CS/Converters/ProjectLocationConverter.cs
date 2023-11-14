@@ -31,7 +31,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             foreach (ProjectLocation city in RevitStartInfo.RevitDoc.ProjectLocations) ProjectLocations.Add(city);
         }
 
-
         /// <summary>
         ///     Returns whether this object supports a standard set of values that can be
         ///     picked from a list, using the specified context.

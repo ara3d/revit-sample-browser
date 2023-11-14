@@ -205,7 +205,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
             set => m_radiusParameter = value;
         }
 
-
         /// <summary>
         ///     Measure including bar thickness or not.
         /// </summary>
@@ -502,7 +501,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
             m_constraintDirCoordX = 0;
             m_constraintDirCoordY = 0;
         }
-
 
         /// <summary>
         ///     Dimension to constraint the length of two bends in the specified direction.

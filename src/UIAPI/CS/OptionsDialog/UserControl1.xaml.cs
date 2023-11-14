@@ -18,7 +18,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
         {
             InitializeComponent();
 
-
             var memberData = new ObservableCollection<Member>
             {
                 new Member

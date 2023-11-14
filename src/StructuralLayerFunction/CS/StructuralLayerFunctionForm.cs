@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -17,7 +16,6 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
         private ListBox functionListBox;
         private Button okButton;
 
-
         /// <summary>
         ///     Constructor of StructuralLayerFunctionForm
         /// </summary>
@@ -31,7 +29,6 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
             functionListBox.DataSource = dataBuffer.Functions;
         }
 
-
         /// <summary>
         ///     Clean up any resources being used.
         /// </summary>
@@ -44,7 +41,6 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
 
             base.Dispose(disposing);
         }
-
 
         /// <summary>
         ///     Required method for Designer support - do not modify

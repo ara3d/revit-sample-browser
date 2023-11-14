@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
@@ -17,7 +16,6 @@ namespace Revit.SDK.Samples.Rooms.CS
     {
         private readonly RoomsData m_data; // Room's data for current active document
 
-
         /// <summary>
         ///     constructor
         /// </summary>
@@ -25,7 +23,6 @@ namespace Revit.SDK.Samples.Rooms.CS
         {
             InitializeComponent();
         }
-
 
         /// <summary>
         ///     Overload the constructor
@@ -36,7 +33,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             m_data = data;
             InitializeComponent();
         }
-
 
         /// <summary>
         ///     add rooms of list roomsWithTag to the listview
@@ -82,7 +78,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             }
         }
 
-
         /// <summary>
         ///     when the form was loaded, display the information of rooms
         /// </summary>
@@ -105,7 +100,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             if (0 == m_data.RoomsWithoutTag.Count) addTagsButton.Enabled = false;
         }
 
-
         /// <summary>
         ///     create room tags for the rooms which are lack of tags
         /// </summary>
@@ -121,7 +115,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             if (0 == m_data.RoomsWithoutTag.Count) addTagsButton.Enabled = false;
         }
 
-
         /// <summary>
         ///     reorder rooms' number
         /// </summary>
@@ -134,7 +127,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             DisplayRooms(m_data.RoomsWithTag, true);
             DisplayRooms(m_data.RoomsWithoutTag, false);
         }
-
 
         /// <summary>
         ///     display total rooms' information for each department
@@ -151,7 +143,6 @@ namespace Revit.SDK.Samples.Rooms.CS
                 departmentsListView.Items.Add(tmpItem);
             }
         }
-
 
         /// <summary>
         ///     Save the information into an Excel file

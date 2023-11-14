@@ -50,7 +50,6 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             Setup();
         }
 
-
         /// <summary>
         ///     The implementation of IPointCloudAccess.GetName().
         /// </summary>

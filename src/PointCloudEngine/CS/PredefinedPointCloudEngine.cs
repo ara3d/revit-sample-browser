@@ -46,7 +46,6 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             m_type = type;
         }
 
-
         /// <summary>
         ///     Implementation of IPointCloudEngine.CreatePointCloudAccess().
         /// </summary>

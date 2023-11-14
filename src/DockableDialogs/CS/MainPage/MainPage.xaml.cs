@@ -41,7 +41,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             set => m_application = value;
         }
 
-
         /// <summary>
         ///     Called by Revit to initialize dockable pane settings set in DockingSetupDialog.
         /// </summary>
@@ -50,7 +49,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         {
             data.FrameworkElement = this;
             new DockablePaneProviderData();
-
 
             data.InitialState = new DockablePaneState();
             data.InitialState.DockPosition = m_position;
@@ -67,7 +65,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
                     data.InitialState.SetFloatingRectangle(new Rectangle(m_left, m_top, m_right, m_bottom));
                     break;
             }
-
 
             Log.Message("***Intial docking parameters***");
             Log.Message(APIUtility.GetDockStateSummary(data.InitialState));
@@ -108,7 +105,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             }
         }
 
-
         private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
@@ -135,7 +131,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             RaisePrintSummaryCommand();
         }
 
-
         private void RaisePrintSummaryCommand()
         {
             var data = new ModelessCommandData
@@ -156,7 +151,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             ThisApplication.thisApp.GetDockableAPIUtility().RunModelessCommand(data);
             m_exEvent.Raise();
         }
-
 
         public string GetPageWpfData()
         {
@@ -179,13 +173,11 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             m_targetGuid = targetGuid;
         }
 
-
         private void wpf_stats_Click(object sender, RoutedEventArgs e)
         {
             Log.Message("***Main Pane WPF info***");
             Log.Message(ThisApplication.thisApp.GetMainWindow().GetPageWpfData());
         }
-
 
         private void btn_getById_Click(object sender, RoutedEventArgs e)
         {

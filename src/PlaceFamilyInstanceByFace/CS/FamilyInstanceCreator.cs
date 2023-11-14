@@ -20,7 +20,6 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         // Creation application
         private Application m_appCreator;
 
-
         /// <summary>
         ///     Constructor, Store the Revit application
         /// </summary>
@@ -36,7 +35,6 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
         // all family symbols
         // all family symbol names
         // the index default family symbol in family list
-
 
         /// <summary>
         ///     Store the all face names, they will be displayed in a combo box
@@ -133,7 +131,6 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
                 {
                     TaskDialog.Show("Revit", "Can't load the prepared rfa.");
                 }
-
 
                 if (null == loadedfamilySymbol) return;
                 FamilySymbolList.Add(loadedfamilySymbol);

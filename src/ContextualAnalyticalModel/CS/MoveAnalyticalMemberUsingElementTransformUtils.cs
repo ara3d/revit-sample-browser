@@ -24,7 +24,6 @@ namespace ContextualAnalyticalModel
                 // Create the second Analytical Member that is convergent with the first one
                 CreateAnalyticalMember.CreateConvergentMember(document);
 
-
                 // Move the first Analytical Member using ElementTransformUtils
                 using (var transaction = new Transaction(document, "Move member with ElementTransformUtils"))
                 {

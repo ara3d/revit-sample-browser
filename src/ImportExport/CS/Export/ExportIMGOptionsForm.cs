@@ -52,7 +52,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             zoomSize.Value = 50;
             saveAs.Text = m_exportData.ExportFolder + "\\" + m_exportData.ActiveViewName;
 
-
             shadedCom.Items.Add("BMP");
             shadedCom.Items.Add("JPEG(lossless)");
             shadedCom.Items.Add("JPEG(medium)");
@@ -70,7 +69,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             noShadedCom.Items.Add("TARGA");
             noShadedCom.Items.Add("TIFF");
             noShadedCom.SelectedIndex = 2;
-
 
             RIQCom.Items.Add("72");
             RIQCom.Items.Add("150");
@@ -180,7 +178,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             m_exportOptions.ShadowViewsFileType = (ImageFileType)shadedCom.SelectedIndex;
             m_exportOptions.HLRandWFViewsFileType = (ImageFileType)noShadedCom.SelectedIndex;
-
 
             if (m_exportOptions.ExportRange == ExportRange.SetOfViews)
             {

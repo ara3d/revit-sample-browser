@@ -32,7 +32,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             m_energyDataSettings = EnergyDataSettings.GetFromDocument(document);
         }
 
-
         /// <summary>
         ///     Gets or sets Building Type
         /// </summary>
@@ -181,7 +180,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [TypeConverter(typeof(WrapperConverter))]
         [RevitVersion(ProductType.MEP, ProductType.Architecture)]
         public SiteLocationWrapper SiteLocation => new SiteLocationWrapper(m_document.SiteLocation);
-
 
         /// <summary>
         ///     Gets the handle object.

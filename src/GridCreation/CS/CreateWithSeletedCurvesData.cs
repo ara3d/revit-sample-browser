@@ -15,7 +15,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Selected curves in current document
         private readonly CurveArray m_selectedCurves;
 
-
         /// <summary>
         ///     Constructor
         /// </summary>
@@ -30,7 +29,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Whether to delete selected lines/arc after creation
         // Label of first grid
         // Bubble location of grids
-
 
         /// <summary>
         ///     Whether to delete selected lines/arc after creation

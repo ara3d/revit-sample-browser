@@ -25,7 +25,6 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
             var doc = args.GetDocument();
             sb.AppendLine("[Event] " + GetEventName(args.GetType()) + ": " + TitleNoExt(doc.Title));
 
-
             var refs = args.GetReferences();
             sb.AppendLine("Selection Count:" + refs.Count);
 
@@ -98,7 +97,6 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
                         break;
                     }
                 }
-
 
                 var elem = doc.GetElement(aRef.ElementId);
                 if (elem != null) sb.AppendFormat(" Name:{0}.", elem.Name);

@@ -22,7 +22,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         /// </summary>
         private Request m_request;
 
-
         /// <summary>
         ///     Dialog instantiation
         /// </summary>
@@ -41,7 +40,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             private set => m_request = value;
         }
 
-
         /// <summary>
         ///     Control enabler / disabler
         /// </summary>
@@ -50,7 +48,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             foreach (Control ctrl in Controls) ctrl.Enabled = status;
             if (!status) btnExit.Enabled = true;
         }
-
 
         /// <summary>
         ///     A private helper method to make a request
@@ -67,7 +64,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             DozeOff();
         }
 
-
         /// <summary>
         ///     DozeOff -> disable all controls (but the Exit button)
         /// </summary>
@@ -75,7 +71,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         {
             EnableCommands(false);
         }
-
 
         /// <summary>
         ///     WakeUp -> enable all controls
@@ -85,7 +80,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             EnableCommands(true);
         }
 
-
         /// <summary>
         ///     Exit - closing the dialog
         /// </summary>
@@ -93,7 +87,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         {
             Close();
         }
-
 
         /// <summary>
         ///     Making a door Left
@@ -103,7 +96,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             MakeRequest(RequestId.MakeLeft);
         }
 
-
         /// <summary>
         ///     Making a door Right
         /// </summary>
@@ -111,7 +103,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         {
             MakeRequest(RequestId.MakeRight);
         }
-
 
         /// <summary>
         ///     Flipping a door between Right and Left
@@ -121,7 +112,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             MakeRequest(RequestId.FlipLeftRight);
         }
 
-
         /// <summary>
         ///     Flipping a door between facing In and Out
         /// </summary>
@@ -129,7 +119,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         {
             MakeRequest(RequestId.FlipInOut);
         }
-
 
         /// <summary>
         ///     Turning a door to face Out
@@ -139,7 +128,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             MakeRequest(RequestId.TurnOut);
         }
 
-
         /// <summary>
         ///     Turning a door to face In
         /// </summary>
@@ -148,7 +136,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             MakeRequest(RequestId.TurnIn);
         }
 
-
         /// <summary>
         ///     Turning a door around - flipping both hand and face
         /// </summary>
@@ -156,7 +143,6 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         {
             MakeRequest(RequestId.Rotate);
         }
-
 
         /// <summary>
         ///     Deleting a door

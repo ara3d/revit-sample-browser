@@ -25,7 +25,6 @@ namespace Revit.SDK.Samples.RoomSchedule
         // All available tables(work sheets) in xls data source
         private readonly List<string> m_tables = new List<string>();
 
-
         /// <summary>
         ///     Class constructor, to retrieve data from .xls data source
         /// </summary>
@@ -71,7 +70,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             Dispose();
         }
 
-
         /// <summary>
         ///     Get all available table names from .xls data source
         /// </summary>
@@ -86,10 +84,8 @@ namespace Revit.SDK.Samples.RoomSchedule
             for (var i = 0; i < schemaTable.Rows.Count; i++)
                 m_tables.Add(schemaTable.Rows[i].ItemArray[2].ToString().TrimEnd('$'));
 
-
             return m_tables;
         }
-
 
         /// <summary>
         ///     Generate a DataTable data from xls data source, by a specified table name
@@ -151,7 +147,6 @@ namespace Revit.SDK.Samples.RoomSchedule
                     throw new Exception(message);
                 }
 
-
                 // check whether all required columns are there.
                 var missingColumns = string.Empty; // reserve all column names which are missing.
                 for (var col = 0; col < bHasColumn.Length; col++)
@@ -176,7 +171,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
         }
 
-
         /// <summary>
         ///     Execute SQL command, such as: update and insert
         /// </summary>
@@ -195,7 +189,6 @@ namespace Revit.SDK.Samples.RoomSchedule
                 throw new Exception(ex + strCmd);
             }
         }
-
 
         /// <summary>
         ///     This method will validate and update attributes the specified file.

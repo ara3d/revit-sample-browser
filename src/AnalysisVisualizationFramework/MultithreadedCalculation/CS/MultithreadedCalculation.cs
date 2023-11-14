@@ -282,7 +282,6 @@ namespace Revit.SDK.Samples.MultithreadedCalculation.CS
                 m_stop = true;
             }
 
-
             /// <summary>
             ///     The idling callback which adds data to the AVF results.
             /// </summary>

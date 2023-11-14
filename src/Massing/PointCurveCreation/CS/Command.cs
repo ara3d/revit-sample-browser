@@ -204,7 +204,6 @@ namespace Revit.SDK.Samples.PointCurveCreation.CS
         }
     }
 
-
     /// <summary>
     ///     A class inherits IExternalCommand interface.
     ///     This class used to create loft form based on curves and points created using the equation z = cos(x) + cos(y)

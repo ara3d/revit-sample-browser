@@ -36,7 +36,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Label of first arc grid
         // Label of first radial grid
 
-
         /// <summary>
         ///     X coordinate of origin
         /// </summary>
@@ -322,7 +321,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
                                 continue;
                             }
                         }
-
 
                         if (i == 0)
                         {

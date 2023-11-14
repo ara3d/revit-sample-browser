@@ -252,7 +252,6 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             set => m_isSelected = value;
         }
 
-
         /// <summary>
         ///     Dispose
         /// </summary>

@@ -29,9 +29,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         internal static ThisApplication thisApp;
         private APIUtility m_APIUtility;
 
-
         private MainPage m_mainPage;
-
 
         public DockablePaneId MainPageDockablePaneId => Globals.sm_UserDockablePaneId;
 
@@ -61,7 +59,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             var pushButtonRegisterPage = panel.AddItem(pushButtonRegisterPageData) as PushButton;
             pushButtonRegisterPage.AvailabilityClassName = typeof(ExternalCommandRegisterPage).FullName;
 
-
             var pushButtonShowPageData = new PushButtonData(Globals.ShowPage, Globals.ShowPage,
                 FileUtility.GetAssemblyFullName(), typeof(ExternalCommandShowPage).FullName)
             {
@@ -69,7 +66,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             };
             var pushButtonShowPage = panel.AddItem(pushButtonShowPageData) as PushButton;
             pushButtonShowPage.AvailabilityClassName = typeof(ExternalCommandShowPage).FullName;
-
 
             var pushButtonHidePageData = new PushButtonData(Globals.HidePage, Globals.HidePage,
                 FileUtility.GetAssemblyFullName(), typeof(ExternalCommandHidePage).FullName)
@@ -124,7 +120,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
                     pane.Hide();
             }
         }
-
 
         public bool IsMainWindowAvailable()
         {

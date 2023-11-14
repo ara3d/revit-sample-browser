@@ -138,7 +138,6 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
             UpdateRoomsList();
         }
 
-
         /// <summary>
         ///     Adjust combo box drop down list width to longest string width
         /// </summary>

@@ -40,7 +40,6 @@ namespace Revit.SDK.Samples.AutoStamp.CS
         /// </summary>
         private ElementId m_newTextNoteId;
 
-
         /// <summary>
         ///     Constructor method, it will only initialize m_assemblyPath.
         ///     Notice that this method won't open log files at this time.
@@ -69,7 +68,6 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                 m_eventsLog.Close();
             }
         }
-
 
         /// <summary>
         ///     Handler method for ViewPrinting event.
@@ -161,7 +159,6 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                 Trace.WriteLine("Succeeded to delete the created TextNote element.");
             }
         }
-
 
         /// <summary>
         ///     For singleton consideration, setup log file only when ViewPrinting is raised.

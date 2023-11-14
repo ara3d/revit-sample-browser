@@ -90,7 +90,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             foreach (Phase phs in allPhases) m_allPhases.Add(phs);
         }
 
-
         /// <summary>
         ///     Create shared parameter for Rooms category
         /// </summary>
@@ -152,7 +151,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
         }
 
-
         /// <summary>
         ///     Test if the Room binds a specified shared parameter
         /// </summary>
@@ -186,7 +184,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             return false;
         }
 
-
         /// <summary>
         ///     My custom message box
         /// </summary>
@@ -196,7 +193,6 @@ namespace Revit.SDK.Samples.RoomSchedule
         {
             TaskDialog.Show("Room Schedule", strMsg, TaskDialogCommonButtons.Ok);
         }
-
 
         /// <summary>
         ///     Update control display of form
@@ -220,7 +216,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             revitRoomDataGridView.Update();
         }
 
-
         /// <summary>
         ///     Display current Room sheet information: Excel path
         /// </summary>
@@ -231,7 +226,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             if (CrtlApplication.EventReactor.DocMappedSheetInfo(hashCode, ref xlsAndTable))
                 roomExcelTextBox.Text = "Mapped Sheet: " + xlsAndTable.FileName + ": " + xlsAndTable.SheetName;
         }
-
 
         /// <summary>
         ///     Some preparation and check before creating room.
@@ -332,7 +326,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             return nNewRoomsSize;
         }
 
-
         /// <summary>
         ///     Some preparation and check before creating room.
         /// </summary>
@@ -375,7 +368,6 @@ namespace Revit.SDK.Samples.RoomSchedule
 
             return true;
         }
-
 
         /// <summary>
         ///     Update new room with values in spreadsheet, currently there are three columns need to be set.

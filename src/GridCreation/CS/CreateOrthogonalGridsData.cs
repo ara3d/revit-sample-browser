@@ -33,7 +33,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Label of first horizontal grid
         // Label of first vertical grid
 
-
         /// <summary>
         ///     X coordinate of origin
         /// </summary>

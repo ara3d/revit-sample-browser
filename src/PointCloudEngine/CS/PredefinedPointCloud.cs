@@ -38,7 +38,6 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             Setup(randomizedPoints);
         }
 
-
         /// <summary>
         ///     The implementation of IPointCloudAccess.GetName().
         /// </summary>

@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 
 namespace Revit.SDK.Samples.UIAPI.CS
@@ -24,7 +23,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
         }
 
         public ApplicationAvailablity Availability { get; set; }
-
 
         public static void Initialize(ExternalApp application)
         {

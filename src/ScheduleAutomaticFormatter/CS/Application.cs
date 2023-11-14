@@ -46,7 +46,6 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             return Result.Succeeded;
         }
 
-
         private void CreateScheduleFormatterPanel(UIControlledApplication application)
         {
             var rp = application.CreateRibbonPanel("Schedule Formatter");

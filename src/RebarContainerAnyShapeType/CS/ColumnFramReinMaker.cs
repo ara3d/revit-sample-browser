@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
@@ -20,7 +19,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         private double m_transverseEndSpacing; //the space value of end transverse reinforcement
         private int m_verticalRebarNumber; //the number of the vertical reinforcement
 
-
         /// <summary>
         ///     Constructor of the ColumnFramReinMaker
         /// </summary>
@@ -36,7 +34,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             //create a ColumnGeometrySupport instance 
             m_geometry = new ColumnGeometrySupport(hostObject, geoOptions);
         }
-
 
         /// <summary>
         ///     get and set the type of the end transverse reinforcement
@@ -100,7 +97,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// </summary>
         public RebarHookType TransverseHookType { get; set; }
 
-
         /// <summary>
         ///     Override method to do some further checks
         /// </summary>
@@ -144,7 +140,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             return base.FillWithBars();
         }
-
 
         /// <summary>
         ///     create the transverse reinforcement for the column

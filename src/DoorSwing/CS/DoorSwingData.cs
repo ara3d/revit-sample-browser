@@ -21,7 +21,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         private readonly UIApplication m_app;
         private readonly List<DoorFamily> m_doorFamilies = new List<DoorFamily>();
 
-
         /// <summary>
         ///     fill OpeningTypes static member variable.
         /// </summary>
@@ -56,7 +55,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             // if the parameters already added will not add again.
             DoorSharedParameters.AddSharedParameters(app);
         }
-
 
         // retrieves door families.
         public List<DoorFamily> DoorFamilies => m_doorFamilies;

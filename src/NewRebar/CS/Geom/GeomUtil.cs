@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
@@ -245,7 +244,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
             var offsetVect = MultiplyVector(directUnit, offset);
             return AddXYZ(point, offsetVect);
         }
-
 
         /// <summary>
         ///     Dot product of two Autodesk.Revit.DB.XYZ as Matrix

@@ -36,7 +36,6 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
                 m_documentUI = commandData.Application.ActiveUIDocument;
                 m_thisAppId = commandData.Application.ActiveAddInId;
 
-
                 // creating and registering the updater for the document.
                 if (m_sectionUpdater == null)
                     using (var tran = new Transaction(m_document, "Register Section Updater"))

@@ -27,7 +27,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         // one door instance of this family.
         private readonly FamilyInstance m_oneInstance;
 
-
         /// <summary>
         ///     construct function.
         /// </summary>
@@ -40,7 +39,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             // one door instance which belongs to this family and neither flipped nor mirrored.
             m_oneInstance = CreateOneInstanceWithThisFamily();
         }
-
 
         /// <summary>
         ///     Retrieval the name of this family.

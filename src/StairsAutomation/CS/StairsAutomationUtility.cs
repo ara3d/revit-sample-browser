@@ -197,7 +197,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             return null;
         }
 
-
         /// <summary>
         ///     Execute the creation of the specified stairs assembly.
         /// </summary>
@@ -213,7 +212,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 
                 // Remember the stairs for use in creation of the run and landing configurations.
                 Stairs = Document.GetElement(stairsElementId) as Stairs;
-
 
                 // Setup a transaction for use during the run and landing creation
                 using (var t = new Transaction(Document, "Stairs Automation"))

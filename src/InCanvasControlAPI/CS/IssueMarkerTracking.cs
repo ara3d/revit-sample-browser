@@ -26,7 +26,6 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
     {
         private readonly HashSet<IssueMarker> issueMarkerSet = new HashSet<IssueMarker>();
 
-
         private int selectedIndex;
 
         /// <summary>

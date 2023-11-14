@@ -36,7 +36,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
         }
 
-
         /// <summary>
         ///     Implement OnStartup method to subscribe related events.
         /// </summary>

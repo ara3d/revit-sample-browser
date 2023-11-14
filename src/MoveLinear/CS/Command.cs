@@ -67,7 +67,6 @@ namespace Revit.SDK.Samples.MoveLinear.CS
                         lineLoc.Curve.GetEndPoint(1).Y + 100,
                         lineLoc.Curve.GetEndPoint(1).Z);
 
-
                     //get a new line and use it to move current element 
                     //with property "Autodesk.Revit.DB.LocationCurve.Curve"
                     var line = Line.CreateBound(newStart, newEnd);

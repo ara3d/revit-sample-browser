@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
@@ -17,7 +16,6 @@ namespace Revit.SDK.Samples.Journaling.CS
         // Private members
         private const double Precision = 0.00001; //precision when judge whether two doubles are equal
         private readonly Journaling m_dataBuffer; // A reference of Journaling.
-
 
         // Methods
         /// <summary>
@@ -38,7 +36,6 @@ namespace Revit.SDK.Samples.Journaling.CS
             levelComboBox.DataSource = m_dataBuffer.Levels;
             levelComboBox.DisplayMember = "Name";
         }
-
 
         /// <summary>
         ///     The okButton click event method,
@@ -81,7 +78,6 @@ namespace Revit.SDK.Samples.Journaling.CS
             DialogResult = DialogResult.OK;
             Close();
         }
-
 
         /// <summary>
         ///     The cancelButton click event method

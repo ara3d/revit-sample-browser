@@ -25,7 +25,6 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
             m_updaterId = new UpdaterId(addinID, new Guid("FBF3F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
         }
 
-
         // The Execute method for the updater
         public void Execute(UpdaterData data)
         {
@@ -87,7 +86,6 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
             m_sectionElement = sectionElement;
             UpdaterRegistry.AddTrigger(m_updaterId, doc, idsToWatch, Element.GetChangeTypeGeometry());
         }
-
 
         internal void RejustSectionView(Document doc, Element elem, ViewSection section)
         {

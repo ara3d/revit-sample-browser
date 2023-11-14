@@ -249,7 +249,6 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                     FabricationPart.CreateHanger(m_doc, bt_hangerBearer, pt_rectStraight3.Id, conn1_straight3, 2.5,
                         true);
 
-
                     // add a 45 degree radius bend 
                     var pt_radBend1 = FabricationPart.Create(m_doc, bt_radBend, 0, levelOne.Id);
                     var conn1_radBend1 = GetPrimaryConnector(pt_radBend1.ConnectorManager);
@@ -516,7 +515,6 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
 
                     //add one hangers for tube13, by default button condition 
                     FabricationPart.CreateHanger(m_doc, bt_hangerRound, pt_tube13.Id, conn1_tube13, 5.0, true);
-
 
                     // add a 90 bend, going 45 degrees down
                     var pt_90bend4 = FabricationPart.Create(m_doc, bt_90bend, 0, levelOne.Id);

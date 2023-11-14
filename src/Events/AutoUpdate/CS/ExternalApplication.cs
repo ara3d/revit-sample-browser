@@ -38,7 +38,6 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
         /// </summary>
         private TextWriterTraceListener m_txtListener;
 
-
         /// <summary>
         ///     Implement this method to subscribe event.
         /// </summary>

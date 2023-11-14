@@ -195,7 +195,6 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             var firstSegments = segments[0];
             var numSegments = firstSegments.Count;
 
-
             for (var i = 0; i < numSegments; i++)
             {
                 var seg1 = firstSegments.ElementAt(i);
@@ -251,11 +250,9 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             var fec = new FilteredElementCollector(doc, viewPlan.Id);
             fec.WherePasses(new RoomFilter());
 
-
             // find doors on level
             var fec2 = new FilteredElementCollector(doc, viewPlan.Id);
             fec2.OfCategory(BuiltInCategory.OST_Doors);
-
 
             // setup results
             var resultsSummary = new ResultsSummary();
@@ -274,7 +271,6 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             }
 
             resultsSummary.numDoors = endPoints.Count;
-
 
             using (var group = new TransactionGroup(doc, "Generate all paths of travel"))
             {

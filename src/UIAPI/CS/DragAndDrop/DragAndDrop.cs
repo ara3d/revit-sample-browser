@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -148,7 +147,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
             }
         }
     }
-
 
     /// <summary>
     ///     Custom handler for placement of loaded family types

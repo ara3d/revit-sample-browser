@@ -7,5 +7,4 @@
 		<TextBox Name="m_tb_Data" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" />
 	</DockPanel>
 
-
 </Window>

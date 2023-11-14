@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 namespace Revit.SDK.Samples.SpotDimension.CS
 {
     /// <summary>
@@ -28,7 +27,6 @@ namespace Revit.SDK.Samples.SpotDimension.CS
             }
             base.Dispose(disposing);
         }
-
 
         
         /// <summary>

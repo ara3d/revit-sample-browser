@@ -76,7 +76,6 @@ namespace Revit.SDK.Samples.DisableCommand.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     A command execution method which disables any command it is applied to (with a user-visible message).
         /// </summary>

@@ -19,7 +19,6 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         private List<string> m_appSelection;
 
-
         /// <summary>
         ///     Constructor without any argument
         /// </summary>

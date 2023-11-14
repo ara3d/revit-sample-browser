@@ -20,7 +20,6 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         private readonly Random m_random = new Random();
         private readonly bool m_randomize;
 
-
         /// <summary>
         ///     Creates a new instance of a rectangular cell.
         /// </summary>

@@ -82,7 +82,6 @@ namespace Revit.SDK.Samples.NewRebar.CS
         /// </summary>
         public RebarShape RebarShape => shapesComboBox.SelectedItem as RebarShape;
 
-
         /// <summary>
         ///     OK Button, return DialogResult.OK and close this form.
         /// </summary>

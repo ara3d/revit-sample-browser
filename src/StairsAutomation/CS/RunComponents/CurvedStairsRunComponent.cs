@@ -83,7 +83,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
         private double Radius => (m_innerRadius + m_outerRadius) / 2.0;
 
-
         /// <summary>
         ///     Implements the interface property.
         /// </summary>

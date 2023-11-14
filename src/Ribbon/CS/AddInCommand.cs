@@ -51,7 +51,6 @@ namespace Revit.SDK.Samples.Ribbon.CS
             return Result.Succeeded;
         }
 
-
         protected WallType GetNewWallType(UIApplication app)
         {
             var myPanel = app.GetRibbonPanels()[0];

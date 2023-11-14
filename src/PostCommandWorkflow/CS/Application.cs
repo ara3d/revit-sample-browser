@@ -46,7 +46,6 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     Creates the ribbon panel for this add-in.
         /// </summary>

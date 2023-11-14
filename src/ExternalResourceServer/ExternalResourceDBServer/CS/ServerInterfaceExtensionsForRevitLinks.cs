@@ -23,7 +23,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         }
     }
 
-
     /// <summary>
     ///     Extension operator to support handle updates when the user saves new shared coordinates in the
     ///     local copy of a link.

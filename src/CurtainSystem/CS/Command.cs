@@ -26,7 +26,6 @@ namespace Revit.SDK.Samples.CurtainSystem.CS
 
             var mydocument = new MyDocument(commandData);
 
-
             // check whether the mass is kind of parallelepiped
             var checker = new MassChecker(mydocument);
             var validMass = checker.CheckSelectedMass();

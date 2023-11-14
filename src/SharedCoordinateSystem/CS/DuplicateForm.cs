@@ -15,7 +15,6 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
         private readonly CoordinateSystemDataForm m_dataForm; //the reference of the CoordinateSystemDataForm class
         private readonly string m_locationName; //the name of  selected location
 
-
         /// <summary>
         ///     constructor
         /// </summary>

@@ -260,7 +260,6 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 m_currentIndex = 0;
             }
 
-
             /// <summary>
             ///     Implementation of IPointSetIterator.ReadPoints()
             /// </summary>

@@ -13,7 +13,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         private List<string> m_imageType;
 
-
         /// <summary>
         ///     Constructor
         /// </summary>
@@ -50,7 +49,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_filter = tmp.ToString().TrimEnd('|');
             m_title = "Export IMG";
         }
-
 
         /// <summary>
         ///     Collect the parameters and export

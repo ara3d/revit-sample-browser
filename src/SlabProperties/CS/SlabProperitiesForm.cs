@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -33,7 +32,6 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         private TextBox spanDirectionTextBox;
         private Label typeNameLabel;
         private TextBox typeNameTextBox;
-
 
         private SlabPropertiesForm()
         {

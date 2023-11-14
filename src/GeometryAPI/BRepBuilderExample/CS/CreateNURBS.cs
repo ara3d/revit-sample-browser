@@ -17,7 +17,6 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
         {
             _dbdocument = commandData.Application.ActiveUIDocument.Document;
 
-
             try
             {
                 using (var tr = new Transaction(_dbdocument, "CreateNURBS"))
@@ -42,7 +41,6 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
 
             return Result.Succeeded;
         }
-
 
         private BRepBuilder CreateNurbsSurface()
         {

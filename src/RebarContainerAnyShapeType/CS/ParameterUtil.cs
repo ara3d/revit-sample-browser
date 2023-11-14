@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using Autodesk.Revit.DB;
 
@@ -233,7 +232,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             return false;
         }
-
 
         /// <summary>
         ///     find a parameter according to the parameter's name

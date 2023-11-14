@@ -186,7 +186,6 @@ namespace Revit.SDK.Samples.CreateFillPattern.CS
             return fillGrid;
         }
 
-
         /// <summary>
         ///     Create a linepattern element
         /// </summary>

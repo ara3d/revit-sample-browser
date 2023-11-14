@@ -32,7 +32,6 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             AddInId = null;
         }
 
-
         /// <summary>
         ///     The ExtensibleStorage schema for marking schedules which have been formatted.
         /// </summary>
@@ -43,12 +42,10 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// </summary>
         public AddInId AddInId { get; set; }
 
-
         /// <summary>
         ///     GUID of the updater.
         /// </summary>
         private static Guid UpdaterGUID => new Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
-
 
         /// <summary>
         ///     Implements IUpdater.Execute()

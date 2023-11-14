@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
@@ -21,7 +20,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
         private double m_transverseEndSpacing; //the spacing value of end transverse rebar
 
-
         /// <summary>
         ///     Constructor of the BeamFramReinMaker
         /// </summary>
@@ -37,7 +35,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             //create a BeamGeometrySupport instance.
             m_geometry = new BeamGeometrySupport(hostObject, geoOptions);
         }
-
 
         /// <summary>
         ///     get and set the type of the end rebar in the top of beam
@@ -137,7 +134,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             return base.FillWithBars();
         }
 
-
         /// <summary>
         ///     Create the rebar at the bottom of beam
         /// </summary>
@@ -232,7 +228,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
                 return GeomUtil.GetHookOrient(curveVec, normal, hookVec);
             }
         }
-
 
         /// <summary>
         ///     Create the rebar at the top of beam

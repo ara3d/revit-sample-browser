@@ -70,7 +70,6 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             m_trackBall = new TrackBall();
         }
 
-
         /// <summary>
         ///     Initialize the combo box data source with Autodesk.Revit.DB.
         ///     e.g. FasciaTypes, GutterTypes, SlabEdgeTypes, and so on.
@@ -199,7 +198,6 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 break;
             }
         }
-
 
         /// <summary>
         ///     Extract the checked edges in the whole tree to CreationData.EdgesForHostedSweep.
@@ -336,7 +334,6 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
 
             return result;
         }
-
 
         /// <summary>
         ///     Extract checked edges and verify there are edges

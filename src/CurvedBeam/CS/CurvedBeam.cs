@@ -21,7 +21,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     {
         private UIApplication m_revit;
 
-
         /// <summary>
         ///     list of all type of beams
         /// </summary>
@@ -31,7 +30,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         ///     list of all levels
         /// </summary>
         public ArrayList LevelMaps { get; } = new ArrayList();
-
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -50,7 +48,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
             return Result.Succeeded;
         }
-
 
         /// <summary>
         ///     iterate all the symbols of levels and beams
@@ -118,7 +115,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             return Arc.Create(center, radius, startAngle, endAngle, xAxis, yAxis);
         }
 
-
         /// <summary>
         ///     create a horizontal partial ellipse instance with specified z coordinate value
         /// </summary>
@@ -135,7 +131,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             m_revit.ActiveUIDocument.Document.Regenerate();
             return ellpise;
         }
-
 
         /// <summary>
         ///     create a horizontal nurbspline instance with specified z coordinate value
@@ -179,7 +174,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             return detailNurbSpline;
         }
 
-
         /// <summary>
         ///     create a curved beam
         /// </summary>
@@ -211,7 +205,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         }
     }
 
-
     /// <summary>
     ///     assistant class contains symbol and it's name
     /// </summary>
@@ -225,7 +218,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             // no operation 
         }
 
-
         /// <summary>
         ///     constructor
         /// </summary>
@@ -238,19 +230,16 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             SymbolName = familyName + " : " + symbol.Name;
         }
 
-
         /// <summary>
         ///     SymbolName property
         /// </summary>
         public string SymbolName { get; } = "";
-
 
         /// <summary>
         ///     ElementType property
         /// </summary>
         public FamilySymbol ElementType { get; }
     }
-
 
     /// <summary>
     ///     assistant class contains level and it's name
@@ -265,7 +254,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             // no operation
         }
 
-
         /// <summary>
         ///     constructor
         /// </summary>
@@ -275,7 +263,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             Level = level;
             LevelName = level.Name;
         }
-
 
         /// <summary>
         ///     LevelName property

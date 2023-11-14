@@ -42,7 +42,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             m_routingPreferenceManager = routingPreferenceManager;
             m_document = document;
 
-
             m_mepSize = Convert.ConvertValueToFeet(mepSize, m_document);
         }
 
@@ -56,13 +55,11 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             var xroot = new XElement(XName.Get("RoutingPreferenceAnalysisSizeQuery"));
             xroot.Add(GetHeaderInformation());
 
-
             foreach (var partId in GetPreferredFittingsAndSegments()) xroot.Add(partId.GetXml(m_document));
 
             xReportDoc.Add(xroot);
             return xReportDoc;
         }
-
 
         /// <summary>
         ///     Get all segments from a the currently selected pipe type, get each size from each segment,
@@ -85,7 +82,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             sizesSorted.Sort();
             return sizesSorted;
         }
-
 
         /// <summary>
         ///     Returns XML data for a variety of potential routing-preference problems.
@@ -140,7 +136,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             xReportDoc.Add(xroot);
             return xReportDoc;
         }
-
 
         /// <summary>
         ///     Get basic information about the PipeType
@@ -202,14 +197,12 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                         m_document.GetUnits().GetFormatOptions(SpecTypeId.PipeSize).GetUnitTypeId().TypeId));
                     xSegmentNotCovered.Add(new XAttribute(XName.Get("groupType"), groupType.ToString()));
 
-
                     return xSegmentNotCovered;
                 }
             }
 
             return null;
         }
-
 
         private bool CheckSegmentForValidCoverage(RoutingPreferenceManager routingPreferenceManager, double lowerBound,
             double upperBound, ElementId segmentId, RoutingPreferenceRuleGroupType groupType,
@@ -338,7 +331,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             return segment.Name;
         }
 
-
         /// <summary>
         ///     Using routing preferences, display found segment and fitting info from the size and pipe type specified in the
         ///     dialog.
@@ -348,7 +340,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             var partIdInfoList = new List<PartIdInfo>();
 
             var conditions = new RoutingConditions(RoutingPreferenceErrorLevel.None);
-
 
             conditions.AppendCondition(new RoutingCondition(m_mepSize));
             foreach (RoutingPreferenceRuleGroupType groupType in Enum.GetValues(typeof(RoutingPreferenceRuleGroupType)))

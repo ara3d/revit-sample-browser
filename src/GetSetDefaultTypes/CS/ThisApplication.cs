@@ -55,7 +55,6 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
             }
         }
 
-
         /// <summary>
         ///     Show dockable panes when view active.
         /// </summary>

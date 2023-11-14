@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,7 +32,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
         // Private members
         private readonly UIApplication m_revit; // Store the reference of the application in revit
         private readonly List<SketchPlane> m_sketchArray; // Store the SketchPlane references
-
 
         /// <summary>
         ///     The default constructor
@@ -111,7 +109,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             }
         }
 
-
         /// <summary>
         ///     Get the id information of all ModelNurbSpline in revit,
         ///     which displayed this in elementIdComboBox when NurbSplineRadioButton checked
@@ -154,7 +151,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 return new ReadOnlyCollection<IdInfo>(idArray);
             }
         }
-
 
         /// <summary>
         ///     This is the main deal method in this example.
@@ -204,7 +200,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             }
         }
 
-
         /// <summary>
         ///     Create the line(ModelLine)
         /// </summary>
@@ -239,7 +234,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 throw new Exception("Can not create the ModelLine, message: " + ex.Message);
             }
         }
-
 
         /// <summary>
         ///     Create the arc(ModelArc)
@@ -278,7 +272,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 throw new Exception("Can not create the ModelArc, message: " + ex.Message);
             }
         }
-
 
         /// <summary>
         ///     Create other lines, including Ellipse, HermiteSpline and NurbSpline
@@ -331,7 +324,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             RefreshInformationMap();
         }
 
-
         /// <summary>
         ///     Get all model lines in current document of revit, and store them into the arrays
         /// </summary>
@@ -370,7 +362,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             }
         }
 
-
         /// <summary>
         ///     Get all sketch planes in revit
         /// </summary>
@@ -403,7 +394,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             RefreshInformationMap();
         }
 
-
         /// <summary>
         ///     Refresh the m_informationMap member, include the number of each model line type
         /// </summary>
@@ -431,7 +421,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
                 }
         }
 
-
         /// <summary>
         ///     Use Autodesk.Revit.DB.ElementId to get the corresponding element
         /// </summary>
@@ -442,7 +431,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
             // Get the corresponding element
             return m_revit.ActiveUIDocument.Document.GetElement(id);
         }
-
 
         /// <summary>
         ///     Use Autodesk.Revit.DB.ElementId to get the corresponding sketch plane

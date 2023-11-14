@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -19,7 +18,6 @@ namespace Revit.SDK.Samples.Loads.CS
     {
         // Mainly used data definition
         private LoadCombinationDeal m_combinationDeal; // the deal class on load combination page
-
 
         /// <summary>
         ///     Default constructor of Loads
@@ -44,7 +42,6 @@ namespace Revit.SDK.Samples.Loads.CS
         // Store all the Load Combination information include the user add.
 
         // Define the data mainly used in LoadCaseDeal class             
-
 
         /// <summary>
         ///     Used as the dataSource of load cases DataGridView control,
@@ -131,7 +128,6 @@ namespace Revit.SDK.Samples.Loads.CS
 
             // Prepare some data for the form displaying
             PrepareData();
-
 
             // Display the form and wait for the user's operate.
             // This class give some public methods to add or delete LoadUsage and delete LoadCombination

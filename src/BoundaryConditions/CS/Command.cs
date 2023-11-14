@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
@@ -34,7 +33,6 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                               "Columns/braces/Beams/Walls/Wall Foundations/Slabs/Foundation Slabs";
                     return Result.Cancelled;
                 }
-
 
                 var tran = new Transaction(doc.Document, "BoundaryConditions");
                 tran.Start();

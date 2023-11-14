@@ -105,7 +105,6 @@ namespace ExtensibleStorageManager
             }
         }
 
-
         /// <summary>
         ///     Retrieve AccessLevel enums for read and write permissions from the UI
         /// </summary>
@@ -113,7 +112,6 @@ namespace ExtensibleStorageManager
         {
             read = AccessLevel.Public;
             write = AccessLevel.Public;
-
 
             if (m_rb_ReadAccess_Application.IsChecked == true)
                 read = AccessLevel.Application;
@@ -150,7 +148,6 @@ namespace ExtensibleStorageManager
             return retval;
         }
 
-
         //Store the Guid of the last-used schema in the Application object for convenient access
         //later if the user re-creates and displays this dialog again.
         private void UICommand_Closing(object sender, CancelEventArgs e)
@@ -179,7 +176,6 @@ namespace ExtensibleStorageManager
         {
             CreateSetSave(SampleSchemaComplexity.ComplexExample);
         }
-
 
         /// <summary>
         ///     Creates a sample schema, populates it with sample data, and saves it to an XML file
@@ -225,7 +221,6 @@ namespace ExtensibleStorageManager
                     return;
                 }
 
-
                 UpdateUI();
 
                 //Display the schema fields and sample data we just created in a dialog.
@@ -240,7 +235,6 @@ namespace ExtensibleStorageManager
                 dataDialog.ShowDialog();
             }
         }
-
 
         /// <summary>
         ///     Handler for the "Create Wrapper from Schema" button

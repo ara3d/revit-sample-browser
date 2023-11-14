@@ -51,7 +51,6 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
                 if (selectedElements.IsEmpty)
                     return Result.Failed;
 
-
                 foreach (Element elem in selectedElements)
                 {
                     if (elem is Wall wall)
@@ -82,7 +81,6 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
         {
             // Get CompoundStructure
 
-
             var wallType = wall.WallType;
             //wallType.Name = wallType.Name + "_WithNewCompoundStructure";
             var wallCS = wallType.GetCompoundStructure();
@@ -108,7 +106,6 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
 
             // Set the created layers to CompoundStructureLayer
             wallCS.SetLayers(csLayers);
-
 
             //Set which layer is used for structural analysis
             wallCS.StructuralMaterialIndex = 2;
@@ -207,7 +204,6 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             return MaterialElement.First() as Material;
         }
 
-
         /// <summary>
         ///     Create a new brick material
         /// </summary>
@@ -243,7 +239,6 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
 
             var pseStructural = PropertySetElement.Create(m_document.Document, structuralAsssetBrick);
 
-
             //Create a new thermal asset and set properties on it.
             var thermalAssetBrick = new ThermalAsset("BrickThermalAsset", ThermalMaterialType.Solid);
             thermalAssetBrick.Porosity = 0.1;
@@ -265,7 +260,6 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             setPropertySets.Commit();
             return materialNew;
         }
-
 
         /// <summary>
         ///     Create a new concrete material.

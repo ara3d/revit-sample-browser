@@ -21,7 +21,6 @@ namespace Revit.SDK.Samples.CapitalizeAllTextNotes.CS
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-
                 // Iterate through the document and find all the TextNote elements
                 var collector = new FilteredElementCollector(document);
                 collector.OfClass(typeof(TextNote));
@@ -64,7 +63,6 @@ namespace Revit.SDK.Samples.CapitalizeAllTextNotes.CS
                     message = "No TextNote elements needed updating";
                     return Result.Failed;
                 }
-
 
                 // Apply the 'AllCaps' formatting to the TextNotes that still need it.
                 using (var transaction = new Transaction(document, "Capitalize All TextNotes"))

@@ -46,7 +46,6 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         public const string SharedParam = "External Room ID";
 
-
         /// <summary>
         ///     Active document to which this RoomsData instance belongs
         /// </summary>
@@ -67,7 +66,6 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         private List<Room> m_rooms = new List<Room>();
 
-
         /// <summary>
         ///     Constructor
         /// </summary>
@@ -83,12 +81,10 @@ namespace Revit.SDK.Samples.RoomSchedule
             GetAllRooms(activeDocument);
         }
 
-
         /// <summary>
         ///     A list of all the rooms in the project
         /// </summary>
         public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
-
 
         /// <summary>
         ///     Update rooms data after room creation happens in Revit
@@ -99,7 +95,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             m_rooms.Clear();
             GetAllRooms(m_activeDocument);
         }
-
 
         /// <summary>
         ///     Get all parameters to be displayed in DataGridView.
@@ -126,7 +121,6 @@ namespace Revit.SDK.Samples.RoomSchedule
                 m_columnNames.Add(toomPara.Definition.Name);
             }
         }
-
 
         /// <summary>
         ///     Generate all rooms which are located in specified level.
@@ -180,7 +174,6 @@ namespace Revit.SDK.Samples.RoomSchedule
 
             return newTable;
         }
-
 
         /// <summary>
         ///     Get the room property value according the parameter name
@@ -273,7 +266,6 @@ namespace Revit.SDK.Samples.RoomSchedule
 
             return null != sharedParam;
         }
-
 
         /// <summary>
         ///     Get all rooms in current Revit project

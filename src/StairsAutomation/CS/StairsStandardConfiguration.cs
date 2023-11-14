@@ -31,7 +31,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         private readonly StairsType m_stairsType;
         private readonly Transform m_transform;
 
-
         /// <summary>
         ///     Creates a new StairsStandardConfiguration of runs and landings at the default location and orientation.
         /// </summary>
@@ -133,7 +132,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         ///     A helper to obtain the Autodesk.Revit.Creation.Application handle.
         /// </summary>
         protected Application AppCreate => m_stairs.Document.Application.Create;
-
 
         /// <summary>
         ///     Implements the interface method.
@@ -283,7 +281,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
                 minTreadDepth, runWidth, transform);
             return run;
         }
-
 
         /// <summary>
         ///     Returns the transform assigned to the configuration.

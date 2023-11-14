@@ -49,11 +49,9 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             return xPartInfo;
         }
 
-
         private string GetFittingName(Document document, ElementId id)
         {
             var fittingName = " None ";
-
 
             if (id != ElementId.InvalidElementId)
             {
@@ -68,7 +66,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                     fittingName = familySymbol.Family.Name + " " + familySymbol.Name;
                 }
             }
-
 
             return fittingName;
         }

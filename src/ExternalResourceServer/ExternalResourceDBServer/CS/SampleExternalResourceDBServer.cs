@@ -44,7 +44,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         {
         }
 
-
         /// <summary>
         ///     <para>
         ///         Returns the path of the server's root folder.  The contents of this folder will be displayed
@@ -83,7 +82,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         /// </summary>
         private static string RefMapLinkPathEntry => "Path";
 
-
         /// <summary>
         ///     <para>
         ///         Returns the path of the root folder of the cache where the server will make
@@ -106,7 +104,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             }
         }
 
-
         // Methods that must be implemented by a server for any of Revit's external services
 
         /// Indicate which of Revit's external services this server supports.
@@ -123,7 +120,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             return new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
         }
 
-
         /// <summary>
         ///     Implement this method to return the name of the server.
         /// </summary>
@@ -131,7 +127,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         {
             return "SDK Sample ExtRes Server";
         }
-
 
         /// <summary>
         ///     # Implement this method to return the id of the vendor of the server.
@@ -149,13 +144,11 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             return "A Revit SDK sample external resource server which provides keynote data and Revit links.";
         }
 
-
         /// Methods implemented specifically by servers for the ExternalResource service
         public string GetShortName()
         {
             return GetName();
         }
-
 
         /// <summary>
         ///     Returns a URL address of the provider of this Revit add-in.
@@ -174,7 +167,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             return string.Empty;
         }
 
-
         /// <summary>
         ///     IExternalResourceServer classes can support more than one type of external resource.
         ///     This one supports keynotes and Revit links.
@@ -185,7 +177,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                    ||
                    resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.RevitLink;
         }
-
 
         /// <summary>
         ///     Return a list of resources and sub folders under a folder.
@@ -220,7 +211,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                 SetupFileBasedBrowserData(browserData);
         }
 
-
         /// <summary>
         ///     Checks whether the given ExternalResourceReference is formatted correctly for this server.
         ///     The format should match one of the formats created in the SetupBrowserData method.
@@ -242,7 +232,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             // ... OR it is a keynote file (non- French/German cases).
             return File.Exists(GetFullServerKeynoteFilePath(extRef));
         }
-
 
         /// <summary>
         ///     Implement this method to compare two ExternalResourceReferences.
@@ -274,7 +263,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             return same;
         }
 
-
         /// <summary>
         ///     Servers can override the name for UI purposes, but here we just return the names that we
         ///     used when we first created the Resources in SetupBrowserData().
@@ -283,7 +271,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         {
             return savedPath;
         }
-
 
         /// <summary>
         ///     Loads the resources.
@@ -326,10 +313,8 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                 throw new ArgumentOutOfRangeException(nameof(resourceType),
                     "The specified resource type is not supported by this server.");
 
-
             // The server indicates what version of the resource is being loaded.
             loadContent.Version = GetCurrentlyAvailableResourceVersion(resourceReference);
-
 
             // resourceReference is for Keynote Data
             if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable)
@@ -337,7 +322,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             else // resourceReference is a Revit Link
                 LoadRevitLink(resourceReference, loadContent);
         }
-
 
         /// <summary>
         ///     Indicates whether the given version of a resource is the most current
@@ -358,7 +342,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
                 : ResourceVersionStatus.OutOfDate;
         }
 
-
         /// <summary>
         ///     Implement this to extend the base IExternalResourceServer interface with additional methods
         ///     that are specific to particular types of external resource (for example, Revit Links).
@@ -374,7 +357,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             revitLinkOps.SetGetLocalPathForOpenCallback(new GetLinkPathForOpen());
             revitLinkOps.SetOnLocalLinkSharedCoordinatesSavedCallback(new LocalLinkSharedCoordinatesSaved());
         }
-
 
         /// <summary>
         ///     Returns a string specifying the version of an external resource available from the server.
@@ -399,7 +381,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             var serverKeynoteFilePath = GetFullServerKeynoteFilePath(extResRef);
             return GetFileVersion(serverKeynoteFilePath);
         }
-
 
         /// <summary>
         ///     Provides Revit's file browser dialog with information for navigating the
@@ -473,7 +454,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             }
         }
 
-
         /// <summary>
         ///     A convenience utility method.  For resources obtained from files on the server, we consider
         ///     the resource version to be the last-modified date of the file.
@@ -487,7 +467,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             var enUs = new CultureInfo("en-us");
             return lastModifiedTime.ToString(enUs);
         }
-
 
         /// <summary>
         ///     Computes the full path of a ExternalResourceReference's keynote data file location on the server.
@@ -506,7 +485,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             var serverKeynoteFilePath = inSessionPath.Replace(serverName + "://", RootFolder + "\\");
             return serverKeynoteFilePath;
         }
-
 
         /// <summary>
         ///     <para>
@@ -560,7 +538,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             }
         }
 
-
         /// <summary>
         ///     Loads the keynote data resources, either from the fictitious French/German database, or from a file.
         /// </summary>
@@ -610,7 +587,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             }
         }
 
-
         /// <summary>
         ///     Loads a specified Revit link external resource.
         /// </summary>
@@ -645,7 +621,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             }
         }
 
-
         /// <summary>
         ///     Computes the full path of a Revit link ExternalResourceReference's location on the server.
         /// </summary>
@@ -662,7 +637,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
 
             return RootFolder + resource.GetReferenceInformation()[RefMapLinkPathEntry].Replace("/", "\\");
         }
-
 
         /// <summary>
         ///     <para>

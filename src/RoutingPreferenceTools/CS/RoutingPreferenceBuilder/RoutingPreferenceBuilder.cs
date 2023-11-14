@@ -47,14 +47,12 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 throw new RoutingPreferenceDataException(
                     "No pipe pipes defined in this project.  At least one must be defined.");
 
-
             var formatOptionPipeSize = m_document.GetUnits().GetFormatOptions(SpecTypeId.PipeSize);
 
             var docPipeSizeUnit = formatOptionPipeSize.GetUnitTypeId().TypeId;
             var xmlPipeSizeUnit = xDoc.Root.Attribute("pipeSizeUnits").Value;
             if (docPipeSizeUnit != xmlPipeSizeUnit)
                 throw new RoutingPreferenceDataException("Units from XML do not match current pipe size units.");
-
 
             var formatOptionRoughness = m_document.GetUnits().GetFormatOptions(SpecTypeId.PipingRoughness);
 
@@ -136,7 +134,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
             UpdateSegmentsList(); //More segments may have been created, so update the segment list.
 
-
             //Now that all of the various types that routing preferences use have been created or loaded, add all the routing preferences.
             var addRoutingPreferences = new Transaction(m_document, "Add Routing Preferences");
             addRoutingPreferences.Start();
@@ -209,7 +206,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                 if (!File.Exists(familyPath))
                     throw new RoutingPreferenceDataException("Cannot find family file: " + xafilename.Value);
             }
-
 
             if (string.Compare(Path.GetExtension(familyPath), ".rfa", true) != 0)
                 throw new RoutingPreferenceDataException(familyPath + " is not a family file.");
@@ -554,7 +550,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                     routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.MechanicalJoints,
                         indexMechanicalJoints), RoutingPreferenceRuleGroupType.MechanicalJoints));
 
-
             return xRoutingPreferenceManager;
         }
 
@@ -592,7 +587,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
                                                          ".  Is this the correct family name, and is the correct family loaded?");
 
             var rule = new RoutingPreferenceRule(partId, description);
-
 
             PrimarySizeCriterion sizeCriterion;
             if (string.Compare(xaMinSize.Value, "All", true) ==
@@ -678,7 +672,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
             return xRoutingPreferenceRule;
         }
-
 
         /// <summary>
         ///     Get PipeScheduleTypeName by Id

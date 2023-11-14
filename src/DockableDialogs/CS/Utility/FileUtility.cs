@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System.IO;
 using System.Reflection;
 
@@ -11,7 +10,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
         private static string sm_assemblyPath;
         private static string sm_assemblyFullName;
         private static string sm_appResourcePath;
-
 
         public static string GetAssemblyPath()
         {

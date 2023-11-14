@@ -43,7 +43,6 @@ namespace Revit.SDK.Samples.PanelSchedule.CS
                 return null;
             }
 
-
             var panelScheduleFile =
                 asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(m_psView.Name) + ".html");
 

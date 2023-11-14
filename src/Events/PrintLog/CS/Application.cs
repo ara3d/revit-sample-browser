@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
@@ -20,7 +19,6 @@ namespace Revit.SDK.Samples.PrintLog.CS
         ///     Events reactor for ViewPrint and DocumentPrint related
         /// </summary>
         private EventsReactor m_eventsReactor;
-
 
         /// <summary>
         ///     Implement the OnStartup method to register events when Revit starts.

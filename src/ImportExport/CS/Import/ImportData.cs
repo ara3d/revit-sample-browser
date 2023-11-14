@@ -48,7 +48,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         protected string m_title;
 
-
         /// <summary>
         ///     Constructor
         /// </summary>

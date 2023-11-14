@@ -98,7 +98,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
             m_data.ArcNumber = Convert.ToUInt32(textBoxArcNumber.Text);
             m_data.LineNumber = Convert.ToUInt32(textBoxLineNumber.Text);
 
-
             if (Convert.ToUInt32(textBoxArcNumber.Text) != 0)
             {
                 m_data.ArcSpacing = Unit.CovertToAPI(Convert.ToDouble(textBoxArcSpacing.Text), m_data.Unit);

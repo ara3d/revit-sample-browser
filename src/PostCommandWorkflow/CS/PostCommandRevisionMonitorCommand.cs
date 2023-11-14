@@ -60,7 +60,6 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     Sets the handle to the command's pushbutton.
         /// </summary>

@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
@@ -20,7 +19,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         private double m_transverseEndSpacing; //the space value of end transverse rebar
         private int m_verticalRebarNumber; //the number of the vertical rebar
 
-
         /// <summary>
         ///     Constructor of the ColumnFramReinMaker
         /// </summary>
@@ -36,7 +34,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             //create a ColumnGeometrySupport instance 
             m_geometry = new ColumnGeometrySupport(hostObject, geoOptions);
         }
-
 
         /// <summary>
         ///     get and set the type of the end transverse rebar
@@ -100,7 +97,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// </summary>
         public RebarHookType TransverseHookType { get; set; }
 
-
         /// <summary>
         ///     Override method to do some further checks
         /// </summary>
@@ -139,7 +135,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
             return base.FillWithBars();
         }
-
 
         /// <summary>
         ///     create the transverse rebars for the column
@@ -187,7 +182,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
                 geomInfo, RebarHookOrientation.Right, RebarHookOrientation.Left);
         }
 
-
         /// <summary>
         ///     Create the vertical rebar according the location
         /// </summary>
@@ -219,7 +213,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             return PlaceRebars(VerticalRebarType, null, null, geomInfo,
                 RebarHookOrientation.Left, RebarHookOrientation.Left);
         }
-
 
         /// <summary>
         ///     create the all the vertial rebar

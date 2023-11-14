@@ -33,7 +33,6 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
         /// </summary>
         private ScheduleFormatter theFormatter;
 
-
         /// <summary>
         ///     The command implementation.
         /// </summary>
@@ -74,7 +73,6 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
 
             return Result.Succeeded;
         }
-
 
         /// <summary>
         ///     Adds an entity to the schedule, indicating that the schedule should be formatted by this tool.

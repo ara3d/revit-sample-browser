@@ -164,7 +164,6 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             return true;
         }
 
-
         /// <summary>
         ///     Check whether all the beams have horizontal analytical line
         /// </summary>

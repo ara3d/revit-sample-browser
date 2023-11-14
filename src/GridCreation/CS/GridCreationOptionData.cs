@@ -18,7 +18,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // The way to create grids
         // If lines/arcs have been selected
 
-
         /// <summary>
         ///     Creating mode
         /// </summary>

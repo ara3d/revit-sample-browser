@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
@@ -99,7 +98,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             // return the rebar geometry information
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
-
 
         /// <summary>
         ///     Get the geometry information of vertical rebar

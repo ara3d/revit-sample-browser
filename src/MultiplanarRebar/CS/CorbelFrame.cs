@@ -192,7 +192,6 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             var K = SharedParameterUtil.GetOrCreateDef("K", revitDoc);
             var MM = SharedParameterUtil.GetOrCreateDef("MM", revitDoc);
 
-
             // Set parameters default values according to the size Trapezoid shape. 
             shapedef.AddParameter(B, Top.Length);
             shapedef.AddParameter(H, Bottom.Length - Top.Length);

@@ -32,7 +32,6 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         /// </summary>
         private readonly IList<XYZ> m_points = new List<XYZ>();
 
-
         public TessellatedGeomAndText2DExportContext(out IList<XYZ> points)
         {
             points = m_points;
@@ -113,7 +112,6 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
         {
             m_currentElem = null;
         }
-
 
         public RenderNodeAction OnFaceBegin(FaceNode node)
         {

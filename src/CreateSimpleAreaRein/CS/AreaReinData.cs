@@ -83,7 +83,6 @@ namespace Revit.SDK.Samples.CreateSimpleAreaRein.CS
         {
             base.FillIn(areaRein);
 
-
             foreach (Parameter para in areaRein.Parameters)
             {
                 if (para.Definition.Name == "Exterior Major Direction")

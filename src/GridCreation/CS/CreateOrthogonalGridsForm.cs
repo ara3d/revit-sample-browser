@@ -39,7 +39,6 @@ namespace Revit.SDK.Samples.GridCreation.CS
             labelXCoordUnit.Text = unit;
             labelYCoordUnit.Text = unit;
 
-
             // Set spacing values
             textBoxXSpacing.Text = Unit.CovertFromAPI(m_data.Unit, 10).ToString();
             textBoxYSpacing.Text = textBoxXSpacing.Text;

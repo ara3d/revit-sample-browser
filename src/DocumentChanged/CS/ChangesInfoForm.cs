@@ -33,7 +33,6 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             changesdataGridView.AutoGenerateColumns = false;
         }
 
-
         /// <summary>
         ///     windows shown event handler
         /// </summary>

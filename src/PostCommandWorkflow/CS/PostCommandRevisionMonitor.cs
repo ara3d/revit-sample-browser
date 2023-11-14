@@ -40,7 +40,6 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// </summary>
         private ExternalEvent externalEvent;
 
-
         /// <summary>
         ///     Storage to remember the number of revisions when last checked.
         /// </summary>
@@ -75,7 +74,6 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             // Remove the event for saving.
             document.DocumentSaving -= OnSavingPromptForRevisions;
         }
-
 
         /// <summary>
         ///     The DocumentSaving callback.  This callback checks if at least one new revision has been added, and if not
@@ -164,7 +162,6 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         {
             externalEvent?.Raise();
         }
-
 
         /// <summary>
         ///     Prompts to edit the revision and resave.

@@ -143,7 +143,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
         }
     }
 
-
     /// <summary>
     ///     Add contour setting items to toposolid type
     /// </summary>
@@ -372,7 +371,6 @@ namespace Revit.SDK.Samples.Toposolid.CS
             return false;
         }
     }
-
 
     /// <summary>
     ///     TopographySurfaceFilter

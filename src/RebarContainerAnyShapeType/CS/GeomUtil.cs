@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
@@ -158,7 +157,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             return new XYZ(x, y, z);
         }
-
 
         /// <summary>
         ///     Set the vector into unit length

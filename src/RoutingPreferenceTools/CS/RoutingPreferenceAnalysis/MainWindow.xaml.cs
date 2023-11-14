@@ -62,7 +62,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             comboBox_Sizes.SelectedIndex = 0;
         }
 
-
         /// <summary>
         ///     Get all the PipeTypes in the document and display them in the window's combo box.
         /// </summary>
@@ -89,7 +88,6 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             var id = ElementId.Parse(selectedsplit[1]);
             return m_application.ActiveUIDocument.Document.GetElement(id) as PipeType;
         }
-
 
         /// <summary>
         ///     Get the selected PipeType from the combo box in the window, get its RoutingPreferenceManager, and analyze it for

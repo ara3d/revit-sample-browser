@@ -103,7 +103,6 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
                     td.Show();
                 }
 
-
                 return Result.Succeeded;
             }
             catch (Exception ex)

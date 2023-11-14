@@ -26,7 +26,6 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
             textBox_log.Text += e.GetInfo(true);
         }
 
-
         private void textBox_log_TextChanged(object sender, TextChangedEventArgs e)
         {
             textBox_log.ScrollToEnd();

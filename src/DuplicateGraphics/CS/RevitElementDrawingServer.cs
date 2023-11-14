@@ -343,7 +343,6 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
             }
             bufferStorage.IndexBuffer.Unmap();
 
-
             // VertexFormat is a specification of the data that is associated with a vertex (e.g., position).
             bufferStorage.VertexFormat = new VertexFormat(bufferStorage.FormatBits);
             // Effect instance is a specification of the appearance of geometry. For example, it may be used to specify color, if there is no color information provided with the vertices.
@@ -395,11 +394,9 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
             }
             bufferStorage.IndexBuffer.Unmap();
 
-
             bufferStorage.VertexFormat = new VertexFormat(bufferStorage.FormatBits);
             bufferStorage.EffectInstance = new EffectInstance(bufferStorage.FormatBits);
         }
-
 
         // A container to hold information associated with a triangulated face.
         private class MeshInfo

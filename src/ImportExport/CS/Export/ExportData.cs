@@ -53,7 +53,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         protected string m_filter;
 
-
         /// <summary>
         ///     Whether current view is a 3D view
         /// </summary>
@@ -63,7 +62,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         ///     The title of exporting dialog
         /// </summary>
         protected string m_title;
-
 
         /// <summary>
         ///     Constructor
@@ -107,7 +105,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             set => m_exportFolder = value;
         }
 
-
         /// <summary>
         ///     ActiveDocument Name
         /// </summary>
@@ -125,7 +122,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_activeViewName;
             set => m_activeViewName = value;
         }
-
 
         /// <summary>
         ///     Whether current view is a 3D view

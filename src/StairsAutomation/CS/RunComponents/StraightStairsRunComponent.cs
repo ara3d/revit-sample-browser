@@ -136,7 +136,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             }
         }
 
-
         /// <summary>
         ///     Implements the interface method.
         /// </summary>
@@ -156,7 +155,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 
             return curve1;
         }
-
 
         /// <summary>
         ///     Gets the first or last riser curve of the run.

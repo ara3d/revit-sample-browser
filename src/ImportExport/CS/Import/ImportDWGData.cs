@@ -102,7 +102,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         private List<string> m_visibleLayersOnly;
 
-
         /// <summary>
         ///     Constructor
         /// </summary>
@@ -114,7 +113,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             Initialize();
         }
 
-
         /// <summary>
         ///     Get or set whether import this view only
         /// </summary>
@@ -123,7 +121,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_importThisViewOnly;
             set => m_importThisViewOnly = value;
         }
-
 
         /// <summary>
         ///     all views for import
@@ -134,7 +131,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             set => m_views = value;
         }
 
-
         /// <summary>
         ///     Import view
         /// </summary>
@@ -144,19 +140,16 @@ namespace Revit.SDK.Samples.ImportExport.CS
             set => m_importView = value;
         }
 
-
         /// <summary>
         ///     All available color modes for import
         /// </summary>
         public ReadOnlyCollection<string> ColorMode => new ReadOnlyCollection<string>(m_colorMode);
-
 
         /// <summary>
         ///     All available import color modes
         /// </summary>
         public ReadOnlyCollection<ImportColorMode> EnumColorMode =>
             new ReadOnlyCollection<ImportColorMode>(m_enumColorMode);
-
 
         /// <summary>
         ///     Import color mode
@@ -167,7 +160,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             set => m_importColorMode = value;
         }
 
-
         /// <summary>
         ///     Custom scale for import
         /// </summary>
@@ -176,7 +168,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_importCustomScale;
             set => m_importCustomScale = value;
         }
-
 
         /// <summary>
         ///     Whether import orient to view
@@ -187,19 +178,16 @@ namespace Revit.SDK.Samples.ImportExport.CS
             set => m_importOrientToView = value;
         }
 
-
         /// <summary>
         ///     All placement for layers to be imported
         /// </summary>
         public ReadOnlyCollection<string> Placement => new ReadOnlyCollection<string>(m_placement);
-
 
         /// <summary>
         ///     All ImportPlacements for all layers to be imported
         /// </summary>
         public ReadOnlyCollection<ImportPlacement> EnumPlacement =>
             new ReadOnlyCollection<ImportPlacement>(m_enumPlacement);
-
 
         /// <summary>
         ///     Import placement for import
@@ -210,18 +198,15 @@ namespace Revit.SDK.Samples.ImportExport.CS
             set => m_importPlacement = value;
         }
 
-
         /// <summary>
         ///     All units for layer to be imported
         /// </summary>
         public ReadOnlyCollection<string> Unit => new ReadOnlyCollection<string>(m_unit);
 
-
         /// <summary>
         ///     All import unit for import layers
         /// </summary>
         public ReadOnlyCollection<ImportUnit> EnumUnit => new ReadOnlyCollection<ImportUnit>(m_enumUnit);
-
 
         /// <summary>
         ///     Get or set import unit
@@ -232,18 +217,15 @@ namespace Revit.SDK.Samples.ImportExport.CS
             set => m_importUnit = value;
         }
 
-
         /// <summary>
         ///     All available layers only
         /// </summary>
         public ReadOnlyCollection<string> VisibleLayersOnly => new ReadOnlyCollection<string>(m_visibleLayersOnly);
 
-
         /// <summary>
         ///     All boolean values for available visible layers
         /// </summary>
         public ReadOnlyCollection<bool> EnumVisibleLayersOnly => new ReadOnlyCollection<bool>(m_enumVisibleLayersOnly);
-
 
         /// <summary>
         ///     Whether import visible layer only
@@ -262,7 +244,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_is3DView;
             set => m_is3DView = value;
         }
-
 
         /// <summary>
         ///     Collect the parameters and export
@@ -296,7 +277,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             return imported;
         }
-
 
         /// <summary>
         ///     Initialize the variables
@@ -369,7 +349,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_filter = "DWG Files (*.dwg)|*.dwg";
             m_title = "Import DWG";
         }
-
 
         /// <summary>
         ///     Get all the views to be displayed

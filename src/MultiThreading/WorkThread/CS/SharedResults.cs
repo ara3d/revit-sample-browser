@@ -58,7 +58,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             }
         }
 
-
         /// <summary>
         ///     Returns a list of points and values acquired so far.
         /// </summary>
@@ -86,7 +85,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
             return hasMoreResults;
         }
-
 
         /// <summary>
         ///     Adding one pair of point/value to the collected

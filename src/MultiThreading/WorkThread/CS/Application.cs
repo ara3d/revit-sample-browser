@@ -92,7 +92,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             }
         }
 
-
         /// <summary>
         ///     Subscription to Idling
         /// </summary>
@@ -108,7 +107,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             }
         }
 
-
         /// <summary>
         ///     Unsubscribing from Idling event
         /// </summary>
@@ -120,7 +118,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 m_hIdling = null;
             }
         }
-
 
         /// <summary>
         ///     Subscription to DocumentChanged
@@ -137,7 +134,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             }
         }
 
-
         /// <summary>
         ///     Unsubscribing from DocumentChanged event
         /// </summary>
@@ -149,7 +145,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 m_hDocChanged = null;
             }
         }
-
 
         /// <summary>
         ///     Idling Handler
@@ -196,7 +191,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             }
         }
 
-
         /// <summary>
         ///     DocumentChanged Handler
         /// </summary>
@@ -233,7 +227,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 UnsubscribeFromChanges(sender as UIApplication);
             }
         }
-
 
         /// <summary>
         ///     We setup our preferred style for displaying the results

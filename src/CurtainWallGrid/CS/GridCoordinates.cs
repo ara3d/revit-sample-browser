@@ -45,7 +45,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // store the Matrix used to scale profile fit to pictureBox
         private Matrix4 m_scaleMatrix;
 
-
         /// <summary>
         ///     constructor
         /// </summary>
@@ -63,7 +62,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             Drawing = drawing;
             drawing.Coordinates = this;
         }
-
 
         /// <summary>
         ///     stores the GridDrawing data used in the current dialog

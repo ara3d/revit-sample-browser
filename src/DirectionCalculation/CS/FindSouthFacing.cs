@@ -20,7 +20,6 @@ namespace Revit.Samples.DirectionCalculation
             set => m_document = value;
         }
 
-
         /// <summary>
         ///     Identifies if a particular direction is "south-facing".  This means within a range of -45 degrees to 45 degrees
         ///     to the south vector (the negative Y axis).

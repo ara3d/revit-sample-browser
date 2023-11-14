@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.Creation;
@@ -71,7 +70,6 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
                 return Result.Failed;
             }
         }
-
 
         /// <summary>
         ///     Examples for form creation in generic model families.
@@ -325,7 +323,6 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
                 m_errorInfo += "Unexpected exceptions occur in CreateSweptBlend: " + e + "\r\n";
             }
         }
-
 
         /// <summary>
         ///     Get element by its id

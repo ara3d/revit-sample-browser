@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -21,7 +20,6 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
 
             // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
-
 
             long solidToBeCutElementId = 30481; //The cube
             long cuttingSolidElementId = 30809; //The sphere
@@ -55,7 +53,6 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
                 transaction.Commit();
             }
 
-
             return Result.Succeeded;
         }
     }
@@ -74,7 +71,6 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
 
             // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
-
 
             long solidToBeCutElementId = 30481; //The cube
             long cuttingSolidElementId = 30809; //The sphere
@@ -101,7 +97,6 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             SolidSolidCutUtils.RemoveCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid);
 
             transaction.Commit();
-
 
             return Result.Succeeded;
         }

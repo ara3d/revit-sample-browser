@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,7 +26,6 @@ namespace Revit.SDK.Samples.Journaling.CS
         private XYZ m_startPoint; // Store the start point of the created wall
         private List<WallType> m_wallTypeList; // Store all wall types in revit
 
-
         // Methods
         /// <summary>
         ///     The default constructor
@@ -45,19 +43,16 @@ namespace Revit.SDK.Samples.Journaling.CS
             InitializeListData();
         }
 
-
         // Properties
         /// <summary>
         ///     Give all levels in revit, and this information can be showed in UI
         /// </summary>
         public ReadOnlyCollection<Level> Levels => new ReadOnlyCollection<Level>(m_levelList);
 
-
         /// <summary>
         ///     Give all wall types in revit, and this information can be showed in UI
         /// </summary>
         public ReadOnlyCollection<WallType> WallTypes => new ReadOnlyCollection<WallType>(m_wallTypeList);
-
 
         /// <summary>
         ///     This is the main deal method in this sample.
@@ -81,7 +76,6 @@ namespace Revit.SDK.Samples.Journaling.CS
             }
         }
 
-
         /// <summary>
         ///     Set the necessary data which support the wall creation
         /// </summary>
@@ -96,7 +90,6 @@ namespace Revit.SDK.Samples.Journaling.CS
             m_createlevel = level; // the level information
             m_createType = type; // the wall type
         }
-
 
         /// <summary>
         ///     Get the levels and wall types from revit and insert into the lists
@@ -126,7 +119,6 @@ namespace Revit.SDK.Samples.Journaling.CS
                 m_levelList.Add(level);
             }
         }
-
 
         /// <summary>
         ///     Read the journal data from the journal.
@@ -171,7 +163,6 @@ namespace Revit.SDK.Samples.Journaling.CS
             if (m_startPoint.Equals(m_endPoint)) throw new InvalidDataException("Start point is equal to end point.");
         }
 
-
         /// <summary>
         ///     Display the UI form to collect some necessary information for create wall.
         ///     The information will be write into the journal
@@ -188,7 +179,6 @@ namespace Revit.SDK.Samples.Journaling.CS
 
             return true;
         }
-
 
         /// <summary>
         ///     Create a wall with the collected data or the data read from journal
@@ -210,7 +200,6 @@ namespace Revit.SDK.Samples.Journaling.CS
                 throw new Exception("Create the wall failed.");
         }
 
-
         /// <summary>
         ///     Write the support data into the journal
         /// </summary>
@@ -226,7 +215,6 @@ namespace Revit.SDK.Samples.Journaling.CS
             dataMap.Add("Start Point", XYZToString(m_startPoint)); // add start point
             dataMap.Add("End Point", XYZToString(m_endPoint)); // add end point
         }
-
 
         /// <summary>
         ///     The helper function which convert a format string to a Autodesk.Revit.DB.XYZ point
@@ -263,7 +251,6 @@ namespace Revit.SDK.Samples.Journaling.CS
             return new XYZ(x, y, z);
         }
 
-
         /// <summary>
         ///     The helper function which convert a Autodesk.Revit.DB.XYZ point to a format string
         /// </summary>
@@ -275,7 +262,6 @@ namespace Revit.SDK.Samples.Journaling.CS
                               + point.Z + ")";
             return pointString;
         }
-
 
         /// <summary>
         ///     Get the data which is related to a special key in journal

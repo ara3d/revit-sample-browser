@@ -185,7 +185,6 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
             SetTabTargetStates(true);
         }
 
-
         private void rb_left_Checked(object sender, RoutedEventArgs e)
         {
             SetFloatingCoordsStates(false);

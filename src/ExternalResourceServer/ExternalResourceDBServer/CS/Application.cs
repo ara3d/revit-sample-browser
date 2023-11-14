@@ -57,7 +57,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             return ExternalDBApplicationResult.Succeeded;
         }
 
-
         /// <summary>
         ///     <para>Implements the OnShutdown event.</para>
         ///     <para>

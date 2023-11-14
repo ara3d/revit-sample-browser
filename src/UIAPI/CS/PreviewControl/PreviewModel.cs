@@ -16,7 +16,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
     {
         private readonly RApplication _application;
 
-
         private ElementId _currentDBViewId;
         private Document _dbDocument;
         private readonly UIApplication _uiApplication;
@@ -196,7 +195,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
         }
     }
 
-
     public class DBViewItem
     {
         private string m_name;
@@ -234,7 +232,6 @@ namespace Revit.SDK.Samples.UIAPI.CS
             return Name;
         }
     }
-
 
     public class DBDocumentItem
     {

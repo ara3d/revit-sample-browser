@@ -286,7 +286,6 @@ namespace Revit.SDK.Samples.ViewPrinter.CS
                               || (m_printMgr.IsVirtual == VirtualPrinterType.None
                                   && m_printMgr.PrintToFile);
 
-
             foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
 
             return enableOrNot;

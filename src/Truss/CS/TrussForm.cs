@@ -266,7 +266,6 @@ namespace Revit.SDK.Samples.Truss.CS
 
             var centerPoint1 = (frame1Curve as Line).GetEndPoint(0);
 
-
             var centerPoint2 = (frame2Curve as Line).GetEndPoint(0);
             var startPoint = new XYZ(centerPoint1.X, centerPoint1.Y, 0);
             var endPoint = new XYZ(centerPoint2.X, centerPoint2.Y, 0);

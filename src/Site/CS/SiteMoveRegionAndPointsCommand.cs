@@ -38,7 +38,6 @@ namespace Revit.SDK.Samples.Site.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     Moves a subregion and the associated topography to a new user-selected location.
         /// </summary>

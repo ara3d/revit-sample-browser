@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +102,6 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             }
         }
 
-
         /// <summary>
         ///     Get the selected element, and check whether it is a wall, a floor or a beam.
         /// </summary>
@@ -158,7 +156,6 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             }
         }
 
-
         /// <summary>
         ///     Generate a BoundingBoxXYZ instance which used in NewViewSection() method
         /// </summary>
@@ -187,7 +184,6 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             return true;
         }
 
-
         /// <summary>
         ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ
         /// </summary>
@@ -209,7 +205,6 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
                     return null;
             }
         }
-
 
         /// <summary>
         ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,
@@ -246,7 +241,6 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             transform.set_Basis(2, basisZ);
             return transform;
         }
-
 
         /// <summary>
         ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,
@@ -300,7 +294,6 @@ namespace Revit.SDK.Samples.CreateViewSection.CS
             transform.set_Basis(2, basisZ);
             return transform;
         }
-
 
         /// <summary>
         ///     Generate a Transform instance which as Transform property of BoundingBoxXYZ,

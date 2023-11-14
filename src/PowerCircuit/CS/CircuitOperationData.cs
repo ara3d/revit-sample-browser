@@ -66,7 +66,6 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// </summary>
         private readonly Selection m_selection;
 
-
         /// <summary>
         ///     Constructor
         /// </summary>
@@ -82,7 +81,6 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
             CollectConnectorInfo();
             CollectCircuitInfo();
         }
-
 
         /// <summary>
         ///     Operation type

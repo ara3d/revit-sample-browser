@@ -519,6 +519,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
         private System.Windows.Forms.Label labelYCoordUnit;
         private System.Windows.Forms.Label labelXCoordUnit;
 
-
     }
 }

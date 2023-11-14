@@ -74,7 +74,6 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                 }
             }
 
-
             var itemReturn = m_progressStack.AddEventData(e);
 
             stackPanel_ProgressData.Children.Clear();
@@ -89,7 +88,6 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
                 stackPanel_ProgressData.Children.Add(tbProgressItem);
             }
 
-
             if (itemReturn.Stage == ProgressStage.RangeChanged || itemReturn.Stage == ProgressStage.Unchanged)
                 if (m_previousEvent != null)
                 {
@@ -100,7 +98,6 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
             m_previousEvent = itemReturn;
         }
-
 
         private void Button_Open_Click(object sender, RoutedEventArgs e)
         {

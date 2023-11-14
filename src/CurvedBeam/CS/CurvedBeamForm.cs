@@ -20,7 +20,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             InitializeComponent();
         }
 
-
         /// <summary>
         ///     get relevant data from Revit
         /// </summary>
@@ -45,7 +44,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             if (succeed) TaskDialog.Show("Revit", "Succeeded to create Arc beam.");
         }
 
-
         /// <summary>
         ///     create Nurbspline beam
         /// </summary>
@@ -59,7 +57,6 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
                 beamNs, locLev);
             if (succeed) TaskDialog.Show("Revit", "Succeeded to create NurbSpline beam.");
         }
-
 
         /// <summary>
         ///     create nurb spline beam

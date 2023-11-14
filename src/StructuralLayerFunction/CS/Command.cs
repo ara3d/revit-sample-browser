@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System.Collections;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -19,7 +18,6 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
     {
         private Floor m_slab; //Store the selected floor
 
-
         /// <summary>
         ///     Default constructor of StructuralLayerFunction
         /// </summary>
@@ -29,12 +27,10 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
             Functions = new ArrayList();
         }
 
-
         /// <summary>
         ///     With the selected floor, export the function of each of its structural layers
         /// </summary>
         public ArrayList Functions { get; }
-
 
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)

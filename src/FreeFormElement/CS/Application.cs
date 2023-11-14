@@ -47,7 +47,6 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     Creates the ribbon panel for the sample.
         /// </summary>

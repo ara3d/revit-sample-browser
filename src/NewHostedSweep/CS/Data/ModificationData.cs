@@ -38,7 +38,6 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         /// </summary>
         private readonly Transaction m_transaction;
 
-
         /// <summary>
         ///     Constructor with HostedSweep and CreationData as parameters.
         /// </summary>
@@ -335,7 +334,6 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
         {
             return m_elemToModify.LookupParameter(name);
         }
-
 
         public TransactionStatus StartTransaction()
         {

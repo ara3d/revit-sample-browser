@@ -26,7 +26,6 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
             return "R2014 External Event Sample";
         }
 
-
         /// <summary>
         ///     The top method of the event handler.
         /// </summary>
@@ -94,7 +93,6 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
             }
         }
 
-
         /// <summary>
         ///     The main door-modification subroutine - called from every request
         /// </summary>
@@ -138,7 +136,6 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
                 }
             }
         }
-
 
         //////////////////////////////////////////////////////////////////////////
         //

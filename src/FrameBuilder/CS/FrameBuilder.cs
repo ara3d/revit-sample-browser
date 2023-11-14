@@ -238,7 +238,6 @@ namespace Revit.SDK.Samples.FrameBuilder.CS
             return false;
         }
 
-
         /// <summary>
         ///     move and rotate the Frame
         /// </summary>

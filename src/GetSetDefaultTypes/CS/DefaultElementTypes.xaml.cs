@@ -18,7 +18,6 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
         public static readonly DockablePaneId PaneId = new DockablePaneId(new Guid("{B6579F42-2F4A-4552-92EF-24B3A897757D}"));
         private Document _document;
 
-
         private readonly ExternalEvent _event;
         private readonly IList<ElementTypeGroup> _finishedTypeGroup = new List<ElementTypeGroup>();
         private readonly DefaultElementTypeCommandHandler _handler;
@@ -98,7 +97,6 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
             _finishedTypeGroup.Add(ElementTypeGroup.ViewportType);
         }
 
-
         public void SetupDockablePane(DockablePaneProviderData data)
         {
             data.FrameworkElement = this;
@@ -154,7 +152,6 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
 
                 record.DefaultElementTypeCandidates = defaultElementTypeCandidates;
 
-
                 _dataGrid_DefaultElementTypes.Items.Add(record);
             }
         }
@@ -178,7 +175,6 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
             }
         }
     }
-
 
     /// <summary>
     ///     The default element type candidate.
@@ -239,7 +235,6 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
         {
             return "Reset Default family type";
         }
-
 
         public void Execute(UIApplication revitApp)
         {

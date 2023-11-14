@@ -29,7 +29,6 @@ namespace SchemaWrapperTools
         private SchemaWrapper m_SubSchema;
         private string m_Type;
 
-
         /// <summary>
         ///     For serialization only -- Do not use.
         /// </summary>
@@ -107,7 +106,6 @@ namespace SchemaWrapperTools
             strBuilder.Append(Type);
             strBuilder.Append(", ");
             strBuilder.Append(Spec);
-
 
             if (SubSchema != null) strBuilder.Append(Environment.NewLine + "   " + SubSchema);
             return strBuilder.ToString();

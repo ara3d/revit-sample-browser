@@ -48,7 +48,6 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             }
         }
 
-
         /// <summary>
         ///     create a floor by the data obtain from revit.
         /// </summary>

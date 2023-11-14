@@ -28,7 +28,6 @@ namespace Revit.SDK.Samples.CancelSave.CS
         private readonly Dictionary<int, string> documentOriginalStatusDic = new Dictionary<int, string>();
         private int hashcodeofCurrentClosingDoc;
 
-
         /// <summary>
         ///     Implement OnStartup method of IExternalApplication interface.
         ///     This method subscribes to DocumentOpened, DocumentCreated, DocumentSaving and DocumentSavingAs events.
@@ -69,7 +68,6 @@ namespace Revit.SDK.Samples.CancelSave.CS
 
             return Result.Succeeded;
         }
-
 
         /// <summary>
         ///     Event handler method for DocumentOpened and DocumentCreated events.

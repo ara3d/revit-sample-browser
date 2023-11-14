@@ -47,7 +47,6 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     Sets up the add-in panel for this sample.
         /// </summary>

@@ -51,7 +51,6 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
         /// </summary>
         public double W { get; set; } = 1.0d;
 
-
         /// <summary>
         ///     get normal vector of plane contains two vectors
         /// </summary>

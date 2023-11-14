@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.ModelLines.CS
@@ -32,7 +31,6 @@ namespace Revit.SDK.Samples.ModelLines.CS
         /// </summary>
         public int Number { get; set; }
     }
-
 
     /// <summary>
     ///     The map class which store the information used in elementIdComboBox comboBox in UI

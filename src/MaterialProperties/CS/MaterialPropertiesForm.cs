@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -238,7 +237,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             }
         }
 
-
         /// <summary>
         ///     change the content in datagrid according to selected material type
         /// </summary>
@@ -262,7 +260,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             Close();
         }
 
-
         /// <summary>
         ///     set selected element's material to current selection and close form
         /// </summary>
@@ -279,7 +276,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             Close();
         }
 
-
         /// <summary>
         ///     set selected element's material to current selection
         /// </summary>
@@ -293,7 +289,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 m_dataBuffer.SetMaterial();
             }
         }
-
 
         /// <summary>
         ///     change unit weight all instances of the elements that use this material

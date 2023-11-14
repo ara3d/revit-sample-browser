@@ -61,7 +61,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             m_view = view;
         }
 
-
         /// <summary>
         ///     Returns the Id of the element being analyzed
         /// </summary>
@@ -82,7 +81,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             return null;
         }
 
-
         /// <summary>
         ///     Getting the face object corresponding to the reference we have stored
         /// </summary>
@@ -97,7 +95,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 return m_view.Document.GetElement(faceref).GetGeometryObjectFromReference(faceref) as Face;
             return null;
         }
-
 
         /// <summary>
         ///     Getting ready to preform an analysis for the given in view
@@ -129,7 +126,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
             m_needInitialization = false;
         }
-
 
         /// <summary>
         ///     Updating results on the surface being analyzed
@@ -176,7 +172,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             return m_threadAgent != null && m_threadAgent.IsThreadAlive;
         }
 
-
         /// <summary>
         ///     Starting a work-thread to perform the calculation
         /// </summary>
@@ -203,7 +198,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
             return m_threadAgent.Start();
         }
 
-
         /// <summary>
         ///     Stopping the calculation if still in progress
         /// </summary>
@@ -227,7 +221,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
                 m_threadAgent = null;
             }
         }
-
 
         /// <summary>
         ///     Restarting the calculation.

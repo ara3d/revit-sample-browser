@@ -25,7 +25,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             Combine = true;
         }
 
-
         /// <summary>
         ///     Combine
         /// </summary>

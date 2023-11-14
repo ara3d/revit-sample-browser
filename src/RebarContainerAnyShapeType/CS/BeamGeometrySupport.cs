@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
@@ -196,7 +195,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             return new RebarGeometry(normal, curves, rebarNumber, spacing);
         }
 
-
         /// <summary>
         ///     Get the down direction, which stand for the top hook direction
         /// </summary>
@@ -213,7 +211,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             return directions[0];
         }
 
-
         /// <summary>
         ///     Get the width of the beam
         /// </summary>
@@ -229,7 +226,6 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
             return GeomUtil.GetLength(directions[0]);
         }
-
 
         /// <summary>
         ///     Get the height of the beam

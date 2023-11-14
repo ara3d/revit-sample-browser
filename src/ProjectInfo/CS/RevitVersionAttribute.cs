@@ -17,7 +17,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// </summary>
         private readonly List<ProductType> m_products = new List<ProductType>();
 
-
         /// <summary>
         ///     Initializes Revit version name array
         /// </summary>

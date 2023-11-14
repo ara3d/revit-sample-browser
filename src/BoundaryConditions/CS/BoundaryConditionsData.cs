@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +32,6 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         // and use the BC Id value as the key
 
         // the object for which the grid in UI displays.
-
 
         /// <summary>
         ///     gets or sets the object for which the grid in UI displays.
@@ -213,7 +211,6 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
                 createDoc.NewAreaBoundaryConditions(GetAnalyticalElement(hostElement), 0, 0, 0, 0, 0, 0);
             return createdBC;
         }
-
 
         //A delegate for create boundary condition with different type
         private delegate Autodesk.Revit.DB.Structure.BoundaryConditions

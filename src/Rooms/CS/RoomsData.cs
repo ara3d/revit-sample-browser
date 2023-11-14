@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +24,6 @@ namespace Revit.SDK.Samples.Rooms.CS
         private readonly List<Room> m_roomsWithTag = new List<Room>(); // a list to store all rooms with tag
         private readonly List<RoomTag> m_roomTags = new List<RoomTag>(); // a list to store all room tags
 
-
         /// <summary>
         ///     constructor
         /// </summary>
@@ -40,37 +38,31 @@ namespace Revit.SDK.Samples.Rooms.CS
             ClassifyRooms();
         }
 
-
         /// <summary>
         ///     a list of all department
         /// </summary>
         public ReadOnlyCollection<DepartmentInfo> DepartmentInfos =>
             new ReadOnlyCollection<DepartmentInfo>(m_departmentInfos);
 
-
         /// <summary>
         ///     a list of all the rooms in the project
         /// </summary>
         public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
-
 
         /// <summary>
         ///     a list of all the room tags in the project
         /// </summary>
         public ReadOnlyCollection<RoomTag> RoomTags => new ReadOnlyCollection<RoomTag>(m_roomTags);
 
-
         /// <summary>
         ///     a list of the rooms that had tag
         /// </summary>
         public ReadOnlyCollection<Room> RoomsWithTag => new ReadOnlyCollection<Room>(m_roomsWithTag);
 
-
         /// <summary>
         ///     a list of the rooms which lack room tag
         /// </summary>
         public ReadOnlyCollection<Room> RoomsWithoutTag => new ReadOnlyCollection<Room>(m_roomsWithoutTag);
-
 
         /// <summary>
         ///     create the room tags for the rooms which lack room tag
@@ -111,7 +103,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             }
         }
 
-
         /// <summary>
         ///     reorder all the rooms' number
         /// </summary>
@@ -138,7 +129,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             // display a message box
             TaskDialog.Show("Revit", "Reorder room's number complete!");
         }
-
 
         /// <summary>
         ///     get the room property and Department property according the property name
@@ -173,7 +163,6 @@ namespace Revit.SDK.Samples.Rooms.CS
 
             return propertyValue;
         }
-
 
         /// <summary>
         ///     calculate the area of rooms for each department
@@ -213,7 +202,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             }
         }
 
-
         /// <summary>
         ///     export data into an Excel file
         /// </summary>
@@ -240,7 +228,6 @@ namespace Revit.SDK.Samples.Rooms.CS
                 exportinfo.Close();
             }
         }
-
 
         /// <summary>
         ///     get all the rooms and room tags in the project
@@ -276,7 +263,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             }
         }
 
-
         /// <summary>
         ///     find out the rooms that without room tag
         /// </summary>
@@ -302,7 +288,6 @@ namespace Revit.SDK.Samples.Rooms.CS
                         m_roomsWithoutTag.Remove(tmpRoom);
             }
         }
-
 
         /// <summary>
         ///     sort all the rooms by ascending order according their coordinate
@@ -366,7 +351,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             return true;
         }
 
-
         /// <summary>
         ///     a struct to store the value of property Area and Department name
         /// </summary>
@@ -376,7 +360,6 @@ namespace Revit.SDK.Samples.Rooms.CS
             ///     the name of department
             /// </summary>
             public string DepartmentName { get; }
-
 
             /// <summary>
             ///     get the amount of rooms in the department

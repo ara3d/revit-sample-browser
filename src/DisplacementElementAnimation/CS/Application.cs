@@ -47,7 +47,6 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             return Result.Succeeded;
         }
 
-
         /// <summary>
         ///     Sets up the Ribbon panel for the sample.
         /// </summary>

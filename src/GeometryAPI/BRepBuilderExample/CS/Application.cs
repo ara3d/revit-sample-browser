@@ -66,7 +66,6 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
             };
             _ = rp.AddItem(pbd1) as PushButton;
 
-
             var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
                 addinAssmeblyPath,
                 "Revit.SDK.Samples.BRepBuilderExample.CS.CreateNURBS")

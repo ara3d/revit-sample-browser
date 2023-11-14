@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +21,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         /// <returns>indicate the result of run</returns>
         bool Run();
     }
-
 
     /// <summary>
     ///     The base class for family instance reinforcement creation.
@@ -95,7 +93,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             return FillWithBars();
         }
 
-
         /// <summary>
         ///     This is a virtual method which used to check the data whether is right and enough.
         /// </summary>
@@ -114,7 +111,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             return true; // only return true
         }
 
-
         /// <summary>
         ///     This is a virtual method which used to create reinforcement.
         /// </summary>
@@ -123,7 +119,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
         {
             return true; // only return true
         }
-
 
         /// <summary>
         ///     The helper function to changed rebar number and spacing properties

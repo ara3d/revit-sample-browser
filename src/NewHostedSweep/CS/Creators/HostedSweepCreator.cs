@@ -115,7 +115,6 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             return modificationData;
         }
 
-
         /// <summary>
         ///     Create a hosted-sweep according to the given Symbol and ReferenceArray.
         /// </summary>

@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections;
 using System.Data;
@@ -41,7 +40,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
 
         private UIApplication m_revit;
         private FamilyInstance m_selectedComponent; //selected beam, column or brace
-
 
         /// <summary>
         ///     get the material type of selected element
@@ -145,7 +143,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             var parameterTable = CreateTable();
             //if failed to convert object
             if (!(o is Material material)) return parameterTable;
-
 
             //- Behavior
             var temporaryAttribute =
@@ -510,7 +507,6 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             return StructuralAssetClass.Undefined;
         }
     }
-
 
     /// <summary>
     ///     assistant class contains material and its name

@@ -90,7 +90,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_fileVersion.Add("AutoCAD 2007 DWG Files (*.dwg)");
             m_enumFileVersion.Add(ACADVersion.R2007);
 
-
             var tmp = new StringBuilder();
             foreach (var version in m_fileVersion) tmp.Append(version + "|*.dwg|");
             m_filter = tmp.ToString().TrimEnd('|');

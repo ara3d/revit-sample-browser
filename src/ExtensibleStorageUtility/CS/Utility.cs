@@ -31,7 +31,6 @@ namespace Revit.SDK.Samples.ExtensibleStorageUtility.CS
             return false;
         }
 
-
         /// <summary>
         ///     Returns a formatted string containing schema guids and element info for all elements
         ///     containing extensible storage.

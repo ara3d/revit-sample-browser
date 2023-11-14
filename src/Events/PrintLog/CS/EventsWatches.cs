@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System.Diagnostics;
 
 namespace Revit.SDK.Samples.PrintLog.CS
@@ -24,7 +23,6 @@ namespace Revit.SDK.Samples.PrintLog.CS
         ///     for each view; the calculation will occurs in ViewPrinted event.
         /// </summary>
         private Stopwatch m_viewPrintWatch;
-
 
         /// <summary>
         ///     Get/set the watch of view print process.

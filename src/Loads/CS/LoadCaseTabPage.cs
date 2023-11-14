@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
@@ -20,7 +19,6 @@ namespace Revit.SDK.Samples.Loads.CS
         private int m_loadCaseDataGridViewSelectedIndex;
         private int m_loadNatureDataGridViewSelectedIndex;
 
-
         // Methods
         /// <summary>
         ///     Initialize the data on this page.
@@ -29,7 +27,6 @@ namespace Revit.SDK.Samples.Loads.CS
         {
             InitializeLoadCasesDataGridView();
             InitializeLoadNaturesDataGridView();
-
 
             if (0 == m_dataBuffer.LoadCases.Count) duplicateLoadCasesButton.Enabled = false;
             if (0 == m_dataBuffer.LoadNatures.Count) addLoadNaturesButton.Enabled = false;

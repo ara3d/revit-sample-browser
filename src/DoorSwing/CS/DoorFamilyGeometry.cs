@@ -22,7 +22,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         // User preferences for parsing of geometry.
         private readonly Options m_options;
 
-
         /// <summary>
         ///     construct function.
         /// </summary>
@@ -37,7 +36,6 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
             m_bbox = door.get_BoundingBox(m_options.View);
         }
-
 
         /// <summary>
         ///     BoundingBox of the 2D geometry.

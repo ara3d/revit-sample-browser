@@ -26,7 +26,6 @@ namespace ExtensibleStorageManager
         //A counter field used to assist in creating pseudorandom Guids
         private static int s_counter = DateTime.Now.Second;
 
-
         //Field names and schema guids used in sample schemas
         private static readonly string int0Name = "int0Name";
         private static readonly string double0Name = "double0Name";
@@ -41,7 +40,6 @@ namespace ExtensibleStorageManager
         private static readonly string map0Name = "map0Name";
         private static readonly string array0Name = "array0Name";
 
-
         private static readonly Guid subEntityGuid0 = NewGuid();
         private static readonly string entity0Name = "entity0Name";
 
@@ -53,7 +51,6 @@ namespace ExtensibleStorageManager
 
         private static readonly string array1Name = entity2Name_Array;
         private static readonly string map1Name = entity1Name_Map;
-
 
         /// <summary>
         ///     Creates a new sample Schema, creates an instance of that Schema (an Entity) in the given element,
@@ -89,7 +86,6 @@ namespace ExtensibleStorageManager
                     break;
             }
 
-
             storageElement.SetEntity(storageElementEntityWrite);
             var storageResult = storageWrite.Commit();
             if (storageResult != TransactionStatus.Committed)
@@ -117,7 +113,6 @@ namespace ExtensibleStorageManager
             //Generate the Autodesk.Revit.DB.ExtensibleStorage.Schema.
             mySchemaWrapper.FinishSchema();
 
-
             //Get the  fields
             var fieldInt0 = mySchemaWrapper.GetSchema().GetField(int0Name);
             var fieldShort0 = mySchemaWrapper.GetSchema().GetField(short0Name);
@@ -138,7 +133,6 @@ namespace ExtensibleStorageManager
             storageElementEntityWrite.Set(fieldBool0, false);
             storageElementEntityWrite.Set(fieldString0, "hello");
         }
-
 
         /// <summary>
         ///     Adds a simple fields, arrays, maps, subEntities, and arrays and maps of subEntities to a SchemaWrapper and Entity
@@ -187,7 +181,6 @@ namespace ExtensibleStorageManager
             //fields are created.
             mySchemaWrapper.AddField<IDictionary<int, Entity>>(map1Name, new ForgeTypeId(), mySubSchemaWrapper1_Map);
 
-
             //
             //Create a sample array of subentities (An IList<> of type "Entity")
             //
@@ -204,14 +197,11 @@ namespace ExtensibleStorageManager
             //are created.
             mySchemaWrapper.AddField<IList<Entity>>(array1Name, new ForgeTypeId(), mySubSchemaWrapper2_Array);
 
-
             mySchemaWrapper.FinishSchema();
-
 
             storageElementEntityWrite = null;
 
             storageElementEntityWrite = new Entity(mySchemaWrapper.GetSchema());
-
 
             var fieldInt0 = mySchemaWrapper.GetSchema().GetField(int0Name);
             var fieldShort0 = mySchemaWrapper.GetSchema().GetField(short0Name);
@@ -234,13 +224,11 @@ namespace ExtensibleStorageManager
             var fieldMap1 = mySchemaWrapper.GetSchema().GetField(map1Name);
             var fieldArray1 = mySchemaWrapper.GetSchema().GetField(array1Name);
 
-
             storageElementEntityWrite.Set(fieldInt0, 5);
             storageElementEntityWrite.Set<short>(fieldShort0, 2);
 
             storageElementEntityWrite.Set(fieldDouble0, 7.1, UnitTypeId.Meters);
             storageElementEntityWrite.Set(fieldFloat0, 3.1f, UnitTypeId.Meters);
-
 
             storageElementEntityWrite.Set(fieldBool0, false);
             storageElementEntityWrite.Set(fieldString0, "hello");
@@ -260,7 +248,6 @@ namespace ExtensibleStorageManager
             myBoolArrayList0.Add(false);
             storageElementEntityWrite.Set(fieldArray0, myBoolArrayList0);
             storageElementEntityWrite.Set(fieldEntity0, subEnt0);
-
 
             //Create a map of Entities
             IDictionary<int, Entity> myMap1 = new Dictionary<int, Entity>();
@@ -289,7 +276,6 @@ namespace ExtensibleStorageManager
             schemaWrapper = SchemaWrapper.FromSchema(toLookup);
         }
 
-
         /// <summary>
         ///     Create a SchemaWrapper from a Schema Guid and try to find an Entity of a matching Guid
         ///     in a given Element.  If successfull, try to change the data in that Entity.
@@ -305,7 +291,6 @@ namespace ExtensibleStorageManager
 
             //Create a SchemaWrapper.
             schemaWrapper = SchemaWrapper.FromSchema(schemaLookup);
-
 
             //Try to get an Entity of the given Schema
             var storageElementEntityWrite = storageElement.GetEntity(schemaLookup);
@@ -338,7 +323,6 @@ namespace ExtensibleStorageManager
             storageElement.SetEntity(storageElementEntityWrite);
             tStore.Commit();
         }
-
 
         /// <summary>
         ///     Given an element, try to find an entity containing instance data from a given Schema Guid.

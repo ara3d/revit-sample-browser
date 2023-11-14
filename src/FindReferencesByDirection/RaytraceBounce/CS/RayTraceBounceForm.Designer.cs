@@ -9,7 +9,6 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// </summary>
       private System.ComponentModel.IContainer components = null;
 
-
       
       /// <summary>
       /// Required method for Designer support - do not modify

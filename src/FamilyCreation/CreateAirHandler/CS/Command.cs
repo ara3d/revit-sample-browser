@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
@@ -225,7 +224,6 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
             Plane plane = null;
             SketchPlane sketchPlane = null;
 
-
             for (var i = 0; i <= 2; ++i)
             {
                 // create the profile
@@ -247,7 +245,6 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
                 extrusions[i].StartOffset = extrusionOffsets[i, 0];
                 m_combineElements.Append(extrusions[i]);
             }
-
 
             for (var i = 3; i <= 4; ++i)
             {
@@ -295,7 +292,6 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
             param = connSupplyAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_PARAM);
             param.Set(flow);
 
-
             // get the planar faces of extrusion2
             m_planarFaces = GetPlanarFaces(extrusions[2]);
 
@@ -316,7 +312,6 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
             param = connReturnAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_PARAM);
             param.Set(flow);
 
-
             // get the planar faces of extrusion3
             m_planarFaces = GetPlanarFaces(extrusions[3]);
 
@@ -330,7 +325,6 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
             param =
                 connSupplyHydronic.get_Parameter(BuiltInParameter.RBS_PIPE_FLOW_DIRECTION_PARAM);
             param.Set(2);
-
 
             // get the planar faces of extrusion4
             m_planarFaces = GetPlanarFaces(extrusions[4]);

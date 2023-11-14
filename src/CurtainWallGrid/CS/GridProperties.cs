@@ -45,7 +45,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         // stores how many unlocked mullions there are in the grid
 
-
         /// <summary>
         ///     stores the data of vertical justification
         /// </summary>

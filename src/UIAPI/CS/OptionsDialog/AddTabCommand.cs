@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Revit.SDK.Samples.UIAPI.CS.OptionsDialog;

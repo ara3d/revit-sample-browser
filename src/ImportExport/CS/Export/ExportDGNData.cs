@@ -54,7 +54,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         private List<string> m_layerMapping;
 
-
         /// <summary>
         ///     Constructor
         /// </summary>

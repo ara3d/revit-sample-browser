@@ -70,7 +70,6 @@ namespace Revit.SDK.Samples.AnalysisVisualizationFramework.CS
                 sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, sfm.RegisterResult(resultSchema));
             }
 
-
             trans.Commit();
             return Result.Succeeded;
         }

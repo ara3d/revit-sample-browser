@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
@@ -110,7 +109,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             if (4 != m_points.Count) throw new Exception("The sample only work for rectangular beams or columns.");
         }
 
-
         /// <summary>
         ///     transform the point to new coordinates
         /// </summary>
@@ -121,7 +119,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             // only invoke the TransformPoint() method.
             return GeomUtil.TransformPoint(point, m_transform);
         }
-
 
         /// <summary>
         ///     Get the length of driving line
@@ -166,7 +163,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             return vectors;
         }
 
-
         /// <summary>
         ///     Offset the points of the swept profile to make the points inside swept profile
         /// </summary>
@@ -195,7 +191,6 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
             return points;
         }
-
 
         /// <summary>
         ///     Find the inforamtion of the swept profile(face),

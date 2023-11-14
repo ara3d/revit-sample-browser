@@ -31,7 +31,6 @@ namespace SchemaWrapperTools
         private string m_Documentation;
         private string m_Name;
 
-
         private AccessLevel m_ReadAccess;
         private string m_schemaId;
         private string m_vendorId;
@@ -67,7 +66,6 @@ namespace SchemaWrapperTools
             Documentation = documentation;
         }
 
-
         /// <summary>
         ///     The list of FieldData objects in the wrapper
         /// </summary>
@@ -77,7 +75,6 @@ namespace SchemaWrapperTools
             set => m_DataList = value;
         }
 
-
         /// <summary>
         ///     The schemaId Guid of the Schema
         /// </summary>
@@ -86,7 +83,6 @@ namespace SchemaWrapperTools
             get => m_schemaId;
             set => m_schemaId = value;
         }
-
 
         /// <summary>
         ///     The read access of the Schema
@@ -114,7 +110,6 @@ namespace SchemaWrapperTools
             get => m_vendorId;
             set => m_vendorId = value;
         }
-
 
         /// <summary>
         ///     Application Id

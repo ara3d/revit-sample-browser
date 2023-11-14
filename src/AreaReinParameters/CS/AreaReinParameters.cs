@@ -1,6 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
-
 using System;
 using System.Collections;
 using System.Windows.Forms;
@@ -99,7 +98,6 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             BarTypes = new Hashtable();
 
             var activeDoc = CommandData.Application.ActiveUIDocument.Document;
-
 
             var itor = new FilteredElementCollector(activeDoc).OfClass(typeof(RebarHookType)).GetElementIterator();
             itor.Reset();

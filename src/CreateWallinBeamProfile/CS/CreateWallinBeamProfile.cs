@@ -38,7 +38,6 @@ namespace Revit.SDK.Samples.CreateWallinBeamProfile.CS
             IsSturctual = true;
         }
 
-
         // Properties
         /// <summary>
         ///     Inform all the wall types can be created in current document

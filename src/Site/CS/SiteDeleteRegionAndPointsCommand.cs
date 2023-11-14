@@ -71,7 +71,6 @@ namespace Revit.SDK.Samples.Site.CS
                             t.Commit();
                         }
 
-
                         editScope.Commit(new TopographyEditFailuresPreprocessor());
                     }
 

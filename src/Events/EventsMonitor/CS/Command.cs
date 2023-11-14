@@ -61,7 +61,6 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             // track the selected events by showing the information in the information windows.
             ExternalApplication.InfoWindows.Show();
 
-
             return Result.Succeeded;
         }
     }

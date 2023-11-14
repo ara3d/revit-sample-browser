@@ -18,7 +18,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
             // Assume that the server's keynote data is updated at the beginning of every month.
             DateTime.Now.ToString("MM-yyyy");
 
-
         /// <summary>
         ///     Validates the specified database 'key.'
         /// </summary>
@@ -34,7 +33,6 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
         {
             return key == "1" || key == "2" || key == "3" || key == "4";
         }
-
 
         /// <summary>
         ///     Loads keynote data corresponding to the specified 'key' string into a KeyBasedTreeEntriesLoadContent

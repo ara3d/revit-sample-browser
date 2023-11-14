@@ -98,7 +98,6 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             data[1] = name;
             data[2] = isOurRule ? "Yes" : "No";
 
-
             testData.Rows.Add(data);
         }
     }

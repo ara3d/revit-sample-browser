@@ -37,7 +37,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             m_elevation = elevation;
         }
 
-
         /// <summary>
         ///     Implements the interface method.
         /// </summary>

@@ -106,7 +106,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         private List<string> m_units;
 
-
         /// <summary>
         ///     Constructor
         /// </summary>
@@ -116,7 +115,6 @@ namespace Revit.SDK.Samples.ImportExport.CS
         }
 
         //Export rooms and areas as polylines
-
 
         /// <summary>
         ///     String collection of Layers and properties used in UI

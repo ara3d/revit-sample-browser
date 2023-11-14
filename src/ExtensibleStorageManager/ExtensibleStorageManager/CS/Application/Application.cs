@@ -13,7 +13,6 @@ namespace ExtensibleStorageManager
         /// </summary>
         public static string LastGuid { get; set; }
 
-
         /// <summary>
         ///     There is no cleanup needed in this application  -- default implementation
         /// </summary>

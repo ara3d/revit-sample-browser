@@ -26,7 +26,6 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// </summary>
         private string m_sheetName;
 
-
         /// <summary>
         ///     Ctor method
         /// </summary>
@@ -84,7 +83,6 @@ namespace Revit.SDK.Samples.RoomSchedule
         ///     Please call DumpLog to dump related logging
         /// </summary>
         private StreamWriter m_logWriter;
-
 
         /// <summary>
         ///     This class will dump information to log file to tell user what happened
@@ -195,7 +193,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
         }
 
-
         /// <summary>
         ///     Update mapped spread sheet when document is about to be saved or saved as
         ///     This method will update spread sheet room data([Area] column) with actual area value of mapped Revit Room.
@@ -304,7 +301,6 @@ namespace Revit.SDK.Samples.RoomSchedule
                         if (string.IsNullOrEmpty(externalId)) SetExternalRoomIdToRoomId(room);
                     }
 
-
                     // Add this new room to spread sheet if fail to update spreadsheet 
                     if (bUpdateFailed)
                     {
@@ -357,7 +353,6 @@ namespace Revit.SDK.Samples.RoomSchedule
             DumpLog(sumMsg);
             DumpLog("Finish updating spreadsheet room." + Environment.NewLine);
         }
-
 
         /// <summary>
         ///     Check to see if we need to update spreadsheet data according to this Revit room.

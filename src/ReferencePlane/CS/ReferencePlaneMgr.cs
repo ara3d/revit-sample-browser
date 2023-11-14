@@ -43,7 +43,6 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
             //m_options.DetailLevel = DetailLevels.Fine;
             m_options.View = m_document.Document.ActiveView;
 
-
             m_createHandler = new Dictionary<Type, CreateDelegate>
             {
                 { typeof(Wall), OperateWall },
@@ -122,7 +121,6 @@ namespace Revit.SDK.Samples.ReferencePlane.CS
             column.ColumnName = "Normal";
             // Add the column to the table.
             m_referencePlanes.Columns.Add(column);
-
 
             // Make the ID column the primary key column.
             var PrimaryKeyColumns = new DataColumn[1];

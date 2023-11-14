@@ -63,7 +63,6 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
         /// </summary>
         public static Guid SampleGuid = new Guid("64D176BA-EB3E-4E96-877D-46A3B0C17B93");
 
-
         /// <summary>
         ///     Returns the unique id of this server
         /// </summary>
@@ -454,7 +453,6 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
                 }
             }
 
-
             // get the FirstHandle constraint and extract the target face to use in determining the hook orientation for each bar
             var firstFace = new TargetFace();
             var constraints = data.GetRebarUpdateCurvesData().GetCustomConstraints();
@@ -490,7 +488,6 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
 
             return true;
         }
-
 
         /// <summary>
         ///     function used to extract current rebar

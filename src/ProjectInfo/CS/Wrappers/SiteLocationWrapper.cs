@@ -71,7 +71,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
         }
 
-
         /// <summary>
         ///     Gets the handle object.
         /// </summary>
@@ -100,7 +99,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             return Math.Abs(x - y) < 1E-9;
         }
-
 
         /// <summary>
         ///     Get time zone double value from time zone string

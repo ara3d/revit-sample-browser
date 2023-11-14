@@ -36,7 +36,6 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
         /// </summary>
         public static InfoWindow InfoWindow { get; set; }
 
-
         /// <summary>
         ///     Implement OnStartup method of IExternalApplication interface.
         ///     This method subscribes to SelectionChanged event.
@@ -54,7 +53,6 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
                 ToolTip = "Show Event Monitor window"
             };
             ribbonPanel.AddItem(showInfoWindowButton);
-
 
             // subscribe to SelectionChanged event
             application.SelectionChanged += SelectionChangedHandler;
@@ -84,7 +82,6 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
 
             return Result.Succeeded;
         }
-
 
         /// <summary>
         ///     Event handler method for SelectionChanged event.
