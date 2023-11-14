@@ -29,9 +29,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.RebarFreeForm.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand

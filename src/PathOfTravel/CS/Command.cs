@@ -56,9 +56,6 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
         AllRoomCornersToAllDoors
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

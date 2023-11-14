@@ -9,9 +9,6 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FabricationPartLayout.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class LoadAndPlaceNextItemFile : IExternalCommand
@@ -151,9 +148,6 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class UnloadUnusedItemFiles : IExternalCommand

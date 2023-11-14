@@ -29,9 +29,6 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.ManipulateForm.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

@@ -6,9 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace ContextualAnalyticalModel
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ReleaseConditionsAnalyticalMember : IExternalCommand

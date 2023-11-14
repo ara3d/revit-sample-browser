@@ -30,9 +30,6 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.FabricationPartLayout.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ChangeService : IExternalCommand
@@ -95,9 +92,6 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ChangeSize : IExternalCommand
@@ -178,9 +172,6 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
         }
     }
 
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ApplyChange : IExternalCommand

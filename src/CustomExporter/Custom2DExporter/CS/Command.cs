@@ -30,9 +30,6 @@ using View = Autodesk.Revit.DB.View;
 
 namespace Revit.SDK.Samples.Custom2DExporter.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]

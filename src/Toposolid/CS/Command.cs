@@ -31,9 +31,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.Toposolid.CS
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class ToposolidCreation : IExternalCommand

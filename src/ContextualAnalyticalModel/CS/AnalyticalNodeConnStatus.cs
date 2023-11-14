@@ -7,9 +7,6 @@ using Autodesk.Revit.UI.Selection;
 
 namespace ContextualAnalyticalModel
 {
-    /// <summary>
-    ///     Implements the Revit add-in interface IExternalCommand
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     internal class AnalyticalNodeConnStatus : IExternalCommand
