@@ -44,8 +44,7 @@ namespace Revit.SDK.Samples.PrintLog.CS
     /// </summary>
     public sealed class EventsReactor
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// This member will be used to reserve document and accordingly timers of current events.
         /// Because events are registered in controlled application, there are maybe more than one document.
         /// 
@@ -93,11 +92,9 @@ namespace Revit.SDK.Samples.PrintLog.CS
         /// Current assembly path
         /// </summary>
         string m_assemblyPath;
-        #endregion
+        
 
-
-        #region Class Constructor Method
-        /// <summary>
+                /// <summary>
         /// Constructor method
         /// This method will only initialize the m_docEventsWatches and m_assemblyPath.
         /// Notice that this method won't open log files.
@@ -135,11 +132,9 @@ namespace Revit.SDK.Samples.PrintLog.CS
                 m_eventsLog.Close();
             }
         }
-        #endregion
+        
 
-
-        #region Class Handler Methods
-        /// <summary>
+                /// <summary>
         /// Handler method for DocumentPrinting event.
         /// This method will dump printer name, views to be printed and user name, etc.
         /// Besides, this handler will reserve the start time of whole print process.
@@ -216,11 +211,9 @@ namespace Revit.SDK.Samples.PrintLog.CS
             // Dump the events arguments 
             DumpEventArguments(e);
         }
-        #endregion 
+        
 
-
-        #region Class Implementations
-        /// <summary>
+                /// <summary>
         /// For singleton consideration, setup log file only when events are raised.
         /// m_printLog and m_eventsLog will be initialized and added to Trace.Listeners
         /// PrintLog.txt and PrintEventsLog.txt will be removed if existed.
@@ -456,6 +449,5 @@ namespace Revit.SDK.Samples.PrintLog.CS
             Trace.WriteLine(string.Format("{0} ViewName: {1}, ViewType: {2}", 
                 prefix, view.Name, view.ViewType));
         }
-        #endregion
-    }
+            }
 }

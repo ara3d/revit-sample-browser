@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -383,8 +382,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.GroupBox filtersGroupBox;
       private System.Windows.Forms.GroupBox categoriesGroupBox;
       private System.Windows.Forms.Button deleteButton;

@@ -29,8 +29,7 @@ namespace APIAppStartup
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class AppSample : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       public Result OnShutdown(UIControlledApplication application)
       {
          TaskDialog.Show("Revit", "Quit External Application!");
@@ -50,6 +49,5 @@ namespace APIAppStartup
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 }

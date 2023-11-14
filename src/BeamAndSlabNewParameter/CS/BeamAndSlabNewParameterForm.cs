@@ -68,8 +68,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             base.Dispose( disposing );
         }
 
-        #region Windows Form Designer generated code
-        /// <summary>
+                /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
@@ -162,8 +161,7 @@ namespace Revit.SDK.Samples.BeamAndSlabNewParameter.CS
             this.ResumeLayout(false);
 
         }
-        #endregion
-    
+            
         // an instance of Command class
         Command m_dataBuffer;
 

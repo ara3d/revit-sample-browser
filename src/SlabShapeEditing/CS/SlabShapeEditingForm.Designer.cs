@@ -41,8 +41,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -199,8 +198,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.PictureBox SlabShapePictureBox;
         private System.Windows.Forms.Button PointButton;
         private System.Windows.Forms.Button LineButton;

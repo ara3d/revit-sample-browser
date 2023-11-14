@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
    /// </summary>
    public class ResourceProvider
    {
-      #region Class implementation
-
+      
       private ResourceProvider()
       {
          IssueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\issue.bmp";
@@ -61,12 +60,9 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// </summary>
       public string SelectedIssueImage { get; }
 
-      #endregion
-
-      #region Class member variables
-
+      
+      
       private static ResourceProvider provider;
 
-      #endregion
-   }
+         }
 }

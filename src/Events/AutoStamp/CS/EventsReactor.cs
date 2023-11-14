@@ -38,8 +38,7 @@ namespace Revit.SDK.Samples.AutoStamp.CS
     /// </summary>
     public sealed class EventsReactor
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// This listener is used to monitor the events raising sequences and arguments of events.
         /// it will be bound to log file PrintEventsLog.txt, it will be added to Trace.Listeners.
         /// 
@@ -60,11 +59,9 @@ namespace Revit.SDK.Samples.AutoStamp.CS
         /// Reserves the id of TextNote created by ViewPrinting and delete it in ViewPrinted event.
         /// </summary>
         ElementId m_newTextNoteId; 
-        #endregion
+        
 
-
-        #region Class Constructor Method
-        /// <summary>
+                /// <summary>
         /// Constructor method, it will only initialize m_assemblyPath.
         /// Notice that this method won't open log files at this time.
         /// </summary>
@@ -92,11 +89,9 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                 m_eventsLog.Close();
             }
         }
-        #endregion
+        
 
-
-        #region Class Handler Methods
-        /// <summary>
+                /// <summary>
         /// Handler method for ViewPrinting event.
         /// This method will dump EventArgument information of event firstly and then create TextNote element for this view.
         /// View print will be canceled if TextNote creation failed.
@@ -191,11 +186,9 @@ namespace Revit.SDK.Samples.AutoStamp.CS
                Trace.WriteLine("Succeeded to delete the created TextNote element.");
             }
         }               
-        #endregion 
+        
 
-
-        #region Class Implementations
-        /// <summary>
+                /// <summary>
         /// For singleton consideration, setup log file only when ViewPrinting is raised.
         /// m_eventsLog will be initialized and added to Trace.Listeners, 
         /// PrintEventsLog.txt will be removed if it already existed.
@@ -267,6 +260,5 @@ namespace Revit.SDK.Samples.AutoStamp.CS
             Trace.WriteLine(string.Format("{0} ViewName: {1}, ViewType: {2}", 
                 prefix, view.Name, view.ViewType));
         }
-        #endregion
-    }
+            }
 }

@@ -83,8 +83,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         {
             UnitDictionary = new Dictionary<string, ConversionValue>();
 
-            #region "fill my units dictionary"
-            var degree = (char)0xb0;
+                        var degree = (char)0xb0;
             var square = (char)0xB2;
             var cube = (char)0xB3;
 
@@ -103,8 +102,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             // about Area BC's translation spring modulus
             AddNewUnit(1, 14593.9029372064, "kip/ft" + cube, "ATSpringModulusConver");
 
-            #endregion
-        }
+                    }
 
         /// <summary>
         /// add a new unit conversion item

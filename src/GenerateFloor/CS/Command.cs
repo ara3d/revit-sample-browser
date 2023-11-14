@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
            var tran = new Transaction(commandData.Application.ActiveUIDocument.Document, "Generate Floor");
@@ -72,8 +71,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             }
         }
 
-        #endregion IExternalCommand Members Implementation
-
+        
         /// <summary>
         /// create a floor by the data obtain from revit.
         /// </summary>

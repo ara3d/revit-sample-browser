@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class Command : IExternalCommand
    {
-      #region Class Memeber Variables
-      /// <summary>
+            /// <summary>
       /// revit application
       /// </summary>
       UIApplication m_app;
@@ -47,10 +46,8 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// a 3D View
       /// </summary>
       View3D m_view;
-      #endregion
-
-      #region Class Interface Implementation
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+      
+            public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          try
          {
@@ -75,10 +72,8 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             return Result.Failed;
          }
       }
-      #endregion
-
-      #region Class Implementation
-      /// <summary>
+      
+            /// <summary>
       /// Get a 3D view from active document
       /// </summary>
       public void Get3DView()
@@ -96,7 +91,6 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
             }
          }
       }
-      #endregion
-
+      
    }
 }

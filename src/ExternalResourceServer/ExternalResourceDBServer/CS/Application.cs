@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
    /// </summary>
    public class DBApplication : IExternalDBApplication
    {
-      #region IExternalDBApplication Members
-      /// <summary>
+            /// <summary>
       /// Registers an instance of a SampleExternalResourceDBServer with the ExternalService
       /// of type ExternalResourceService. 
       /// </summary>
@@ -75,6 +74,5 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
          return ExternalDBApplicationResult.Succeeded;
       }
 
-      #endregion IExternalDBApplication Members
-   }
+         }
 }

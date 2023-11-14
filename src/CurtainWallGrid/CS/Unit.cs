@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    static class Unit
    {
-      #region Methods
-      /// <summary>
+            /// <summary>
       /// Convert the value get from RevitAPI to the value indicated by ForgeTypeId
       /// </summary>
       /// <param name="to">
@@ -103,6 +102,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             return unitLabels[unitTypeId];
          return string.Empty;
       }
-      #endregion
-   }
+         }
 }

@@ -32,14 +32,11 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class Application : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       RebarUpdateServer m_server = new RebarUpdateServer();
 
-      #endregion
-
-      #region IExternalApplication Interface Implementation
-      /// <summary>
+      
+            /// <summary>
       /// Implements the OnShutdown event
       /// </summary>
       /// <param name="application"></param>
@@ -72,6 +69,5 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
          }
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 }

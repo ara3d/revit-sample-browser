@@ -9,25 +9,20 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public abstract class RevitEnumConverter : EnumConverter
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// Dictionary contains enum and string map
         /// </summary>
         Dictionary<object, string> m_map;
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets the enum-string map
         /// </summary>
         protected abstract Dictionary<object, string> EnumMap
         {
             get;
         } 
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initialize private variables
         /// </summary>
         /// <param name="type">Enumeration type</param>
@@ -36,10 +31,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             m_map = EnumMap;
         }
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Returns a collection of standard values from the default context for the
         /// data type this type converter is designed for.
         /// </summary>
@@ -86,117 +79,96 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             var enumObject = Enum.Parse(EnumType, enumValue.ToString());
             return m_map[enumObject];
         } 
-        #endregion
-    };
+            };
 
     /// <summary>
     /// Converter for BuildingType
     /// </summary>
     public class BuildingTypeConverter : RevitEnumConverter
     {
-        #region Constructors
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="type">enumeration type</param>
         public BuildingTypeConverter(Type type) : base(type) { }
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets the enum-string map
         /// </summary>
         protected override Dictionary<object, string> EnumMap => RevitStartInfo.BuildingTypeMap;
 
-        #endregion
-    };
+            };
 
     /// <summary>
     /// Converter for ExportComplexityConverter
     /// </summary>
     public class ExportComplexityConverter : RevitEnumConverter
     {
-        #region Constructors
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="type">enumeration type</param>
         public ExportComplexityConverter(Type type) : base(type) { }
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets the enum-string map
         /// </summary>
         protected override Dictionary<object, string> EnumMap => RevitStartInfo.ExportComplexityMap;
 
-        #endregion
-    };
+            };
 
     /// <summary>
     /// Converter for ServiceType
     /// </summary>
     public class ServiceTypeConverter : RevitEnumConverter
     {
-        #region Constructors
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="type">enumeration type</param>
         public ServiceTypeConverter(Type type) : base(type) { }
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets the enum-string map
         /// </summary>
         protected override Dictionary<object, string> EnumMap => RevitStartInfo.ServiceTypeMap;
 
-        #endregion
-    };
+            };
 
     /// <summary>
     /// Converter for HVACLoadLoadsReportType
     /// </summary>
     public class HVACLoadLoadsReportTypeConverter : RevitEnumConverter
     {
-        #region Constructors
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="type">enumeration type</param>
         public HVACLoadLoadsReportTypeConverter(Type type) : base(type) { }
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets the enum-string map
         /// </summary>
         protected override Dictionary<object, string> EnumMap => RevitStartInfo.HVACLoadLoadsReportTypeMap;
 
-        #endregion
-    };
+            };
 
     /// <summary>
     /// Converter for HVACLoadConstructionClass
     /// </summary>
     public class HVACLoadConstructionClassConverter : RevitEnumConverter
     {
-        #region Constructors
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="type">enumeration type</param>
         public HVACLoadConstructionClassConverter(Type type) : base(type) { }
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets the enum-string map
         /// </summary>
         protected override Dictionary<object, string> EnumMap => RevitStartInfo.HVACLoadConstructionClassMap;
 
-        #endregion
-    };
+            };
     
 }

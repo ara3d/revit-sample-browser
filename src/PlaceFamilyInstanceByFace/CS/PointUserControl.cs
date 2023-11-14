@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
     public partial class PointUserControl : UserControl
     {
 
-        #region Constructors
-
+        
         /// <summary>
         /// Default constructor of ModelLinesForm
         /// </summary>
@@ -49,10 +48,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             zCoordinateTextBox.Text = "0";
         }
 
-        #endregion
-
-        #region Public Methods
-
+        
+        
         /// <summary>
         /// Get the point data of this user control
         /// </summary>
@@ -96,10 +93,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             return true;
         }
 
-        #endregion
-
-        #region Private Methods
-        /// <summary>
+        
+                /// <summary>
         /// This method is called to Validate whether the TextBox data is a number.
         /// </summary>
         /// <param name="sender">the event sender(can be all TextBox)</param>
@@ -152,6 +147,5 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             return true;
         }
 
-        #endregion
-    }
+            }
 }

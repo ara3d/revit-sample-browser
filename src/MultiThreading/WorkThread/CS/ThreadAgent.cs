@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
     /// 
     class ThreadAgent
     {
-        #region class member variables
-        // The main method for calculating results for the face analysis
+                // The main method for calculating results for the face analysis
         private Thread m_thread;
         // Results
         private SharedResults m_results;
@@ -45,10 +44,8 @@ namespace Revit.SDK.Samples.WorkThread.CS
         private BoundingBoxUV m_bbox;
         // Density
         private int m_density;
-        #endregion
-
-        #region class member methods
-        /// <summary>
+        
+                /// <summary>
         ///  A constructor initializes a bounding box and
         ///  the density of the grid for the values to be calculated at.
         /// </summary>
@@ -152,7 +149,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
             }  // for
         }
-        #endregion
-    }  // class
+            }  // class
 
 }

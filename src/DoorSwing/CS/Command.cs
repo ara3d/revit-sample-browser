@@ -38,8 +38,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class InitializeCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-
+      
       public Result Execute(ExternalCommandData commandData, 
                                              ref string message, 
                                              ElementSet elements)
@@ -90,8 +89,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          return returnCode;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// A ExternalCommand class inherited IExternalCommand interface.
@@ -102,8 +100,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class UpdateParamsCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-
+      
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var returnCode = Result.Succeeded;
@@ -146,8 +143,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          return returnCode;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// A ExternalCommand class inherited IExternalCommand interface.
@@ -158,8 +154,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class UpdateGeometryCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-
+      
       public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var returnCode = Result.Succeeded;
@@ -205,6 +200,5 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          return returnCode;
       }
 
-      #endregion
-   }
+         }
 }

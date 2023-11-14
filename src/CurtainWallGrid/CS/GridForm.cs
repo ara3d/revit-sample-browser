@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    public partial class GridForm : System.Windows.Forms.Form
    {
-      #region Fields
-      // store the document of this sample
+            // store the document of this sample
       MyDocument m_myDocument;
 
       // store whether the line to be moved has been selected
@@ -48,10 +47,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
       // stores the Ctrl key status: if Ctrl is down, the value of the variable true; otherwise false
       private bool m_ctrlKeyDown;
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// constructor
       /// </summary>
       /// <param name="myDoc">
@@ -68,10 +65,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          InitializeComponent();
          InitializeCustomComponent();
       }
-      #endregion
-
-      #region Private methods
-      /// <summary>
+      
+            /// <summary>
       /// initialize the special UI controls which needed to be initialized manually
       /// </summary>
       private void InitializeCustomComponent()
@@ -810,8 +805,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          Close();
       }
-      #endregion
-   }// end of class
+         }// end of class
 
    /// <summary>
    /// lists all the supported line operations in this sample
@@ -835,21 +829,16 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    public struct LineOperation
    {
-      #region Fields
-      // the current line operation type
+            // the current line operation type
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// the current line operation type
       /// </summary>
       public LineOperationType OpType { get; }
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// constructor
       /// </summary>
       /// <param name="type">
@@ -859,10 +848,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          OpType = type;
       }
-      #endregion
-
-      #region Public methods
-      /// <summary>
+      
+            /// <summary>
       /// convert to string
       /// </summary>
       /// <returns>
@@ -907,7 +894,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
          return resultString;
       }
-      #endregion
-   }
+         }
 
 }

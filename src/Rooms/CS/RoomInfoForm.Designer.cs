@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.Rooms.CS
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -249,8 +248,7 @@ namespace Revit.SDK.Samples.Rooms.CS
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.Button addTagsButton;
       private System.Windows.Forms.Button closeButton;
       private System.Windows.Forms.GroupBox roomsGroupBox;

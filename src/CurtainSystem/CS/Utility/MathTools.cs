@@ -28,8 +28,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
    /// </summary>
    public class Vector4
    {
-      #region Class member variables and properties
-
+      
       /// <summary>
       /// X property to get/set x value of Vector4
       /// </summary>
@@ -50,8 +49,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS.Utility
       /// </summary>
       public double W { get; set; } = 1.0d;
 
-      #endregion
-
+      
       /// <summary>
       /// constructor
       /// </summary>

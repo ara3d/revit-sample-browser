@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.RoomSchedule
     /// </summary>
     public class SheetInfo
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Excel file name, it's full path
         /// </summary>
         string m_fileName;
@@ -46,11 +45,9 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// Sheet table within excel file, it's opened by sample
         /// </summary>
         string m_sheetName;
-        #endregion
+        
 
-
-        #region Class Public Methods
-        /// <summary>
+                /// <summary>
         /// Ctor method
         /// </summary>
         /// <param name="fileName">Full path name file.</param>
@@ -78,8 +75,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             get => m_sheetName;
             set => m_sheetName = value;
         }
-        #endregion
-    }
+            }
 
     /// <summary>
     /// Class consists of delegate methods of DocumentSaving/SavingAs and DocumentClosing events.
@@ -90,8 +86,7 @@ namespace Revit.SDK.Samples.RoomSchedule
     /// </summary>
     public sealed class EventsReactor : IDisposable
     {
-        #region Class Global Static Variables
-        /// <summary>
+                /// <summary>
         /// Array of documents' hash code and mapped Excel file and opened table. 
         /// The mapped excel and its table will be updated when events DocumentSave/SaveAs are raised.
         /// The update occurs only when new room was created according to excel spreadsheet.
@@ -109,11 +104,9 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// Please call DumpLog to dump related logging
         /// </summary>
         private StreamWriter m_logWriter; 
-        #endregion
-        
+                
 
-        #region Class Public Implementations
-        /// <summary>
+                /// <summary>
         /// This class will dump information to log file to tell user what happened
         /// </summary>
         /// <param name="logFile"></param>
@@ -226,11 +219,9 @@ namespace Revit.SDK.Samples.RoomSchedule
                 m_docMapDict.Add(hashCode, newSheetInfo);
             }
         }
-        #endregion
+        
 
-
-        #region Class Implementations
-        /// <summary>
+                /// <summary>
         /// Update mapped spread sheet when document is about to be saved or saved as
         /// This method will update spread sheet room data([Area] column) with actual area value of mapped Revit Room.
         /// or add Revit room to spreadsheet if it is not mapped to room of spreadsheet.        /// </summary>
@@ -255,8 +246,7 @@ namespace Revit.SDK.Samples.RoomSchedule
             //    a: failed to update values of rooms (maybe there no matched ID value in spread sheet rows).
             // 
 
-            #region Check Whether Update Spreadsheet Data
-            //
+                        //
             // check which table to be updated.
             SheetInfo mappedXlsAndTable;
             var hasValue = m_docMapDict.TryGetValue(activeDocument.GetHashCode(), out mappedXlsAndTable);
@@ -274,8 +264,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 DumpLog("This document doesn't have any room yet.");
                 return;
             }
-            #endregion
-
+            
             // create a connection and update values of spread sheet
             var updatedRows = 0; // number of rows which were updated
             var newRows = 0; // number of rows which were added into spread sheet
@@ -301,8 +290,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                 try
                 {
 
-                    #region Update Spreadsheet Room
-                    // flag used to indicate whether update is successful 
+                                        // flag used to indicate whether update is successful 
                     var bUpdateFailed = false; // reserve whether this room updated successfully.
                     // if room comment is empty, use <null> for mapped room, use <Added from Revit> for not mapped room in spread sheet.
                     var bCommnetIsNull = false;
@@ -349,11 +337,9 @@ namespace Revit.SDK.Samples.RoomSchedule
                             SetExternalRoomIdToRoomId(room);
                         }
                     }
-                    #endregion
+                    
 
-
-                    #region Insert Revit Room
-
+                    
                     // Add this new room to spread sheet if fail to update spreadsheet 
                     if (bUpdateFailed)
                     {
@@ -394,8 +380,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                             DumpLog(string.Format("#{0}--> Failed: {1}", stepNo, insertStr));
                         }
                     }
-                    #endregion
-                }
+                                    }
                 catch (Exception ex)
                 {
                     // close the connection 
@@ -508,6 +493,5 @@ namespace Revit.SDK.Samples.RoomSchedule
             // dump log now
             m_logWriter.WriteLine(strLog);
         }
-        #endregion
-    }
+            }
 }

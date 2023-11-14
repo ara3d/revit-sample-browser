@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.Site.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class SiteDeleteRegionAndPointsCommand: IExternalCommand
     {
-        #region IExternalCommand Members
-        /// <summary>
+                /// <summary>
         /// Implementation of the command.
         /// </summary>
         /// <param name="commandData"></param>
@@ -98,6 +97,5 @@ namespace Revit.SDK.Samples.Site.CS
 
         }
 
-        #endregion
-    }
+            }
 }

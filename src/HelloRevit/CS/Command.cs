@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.HelloRevit.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData,
             ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
@@ -46,8 +45,7 @@ namespace Revit.SDK.Samples.HelloRevit.CS
             var app = commandData.Application.Application;
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            #region Task Dialog Sample
-            // Study how to create a revit style dialog using task dialog API by following
+                        // Study how to create a revit style dialog using task dialog API by following
             // code snippet.  
 
             // Creates a Revit task dialog to communicate information to the interactive user.
@@ -98,11 +96,9 @@ namespace Revit.SDK.Samples.HelloRevit.CS
                     "Active document: " + activeDoc.Title + "\n"
                     + "Active view name: " + activeDoc.ActiveView.Name);
             }
-            #endregion
-
+            
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }

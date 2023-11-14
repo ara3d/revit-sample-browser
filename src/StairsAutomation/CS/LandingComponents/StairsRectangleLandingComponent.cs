@@ -55,8 +55,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         private double m_width;
         private double m_elevation;
 
-        #region IStairsLandingConfiguration Members
-
+        
         /// <summary>
         /// Implements the interface method.
         /// </summary>
@@ -90,6 +89,5 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 			return StairsLanding.CreateSketchedLanding(document, stairsElementId, GetLandingBoundary(), GetLandingBaseElevation());
         }
 
-        #endregion
-    }
+            }
 }

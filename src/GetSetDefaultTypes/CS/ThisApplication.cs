@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
    /// </summary>
    public class ThisApplication : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       public Result OnShutdown(UIControlledApplication application)
       {
          return Result.Succeeded;
@@ -71,8 +70,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
          }
       }
 
-      #endregion
-
+      
       public static DefaultFamilyTypes DefaultFamilyTypesPane;
       public static DefaultElementTypes DefaultElementTypesPane;
 

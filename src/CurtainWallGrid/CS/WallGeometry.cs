@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    public class WallGeometry
    {
-      #region Fields
-      // the document of this sample
+            // the document of this sample
 
       // the refferred drawing class for the curtain wall
 
@@ -50,10 +49,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
       //store the end point of baseline (in Autodesk.Revit.DB.XYZ format)
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// the document of this sample
       /// </summary>
       public MyDocument MyDocument { get; }
@@ -101,10 +98,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public XYZ EndXYZ { get; set; }
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// default constructor
       /// </summary>
       /// <param name="myDoc">
@@ -115,10 +110,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          MyDocument = myDoc;
          Drawing = new WallDrawing(this);
       }
-      #endregion
-
-      #region Public methods
-      /// <summary>
+      
+            /// <summary>
       /// create the curtain wall to the active document of Revit
       /// </summary>
       /// <returns>
@@ -155,6 +148,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          act2.Commit();
          return wall;
       }
-      #endregion
-   }// end of class
+         }// end of class
 }

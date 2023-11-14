@@ -20,8 +20,7 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -147,8 +146,7 @@
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.TreeView treeViewAnalyticalData;
         private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.Button buttonClose;

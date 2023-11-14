@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
@@ -56,8 +55,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// Creates the ribbon panel for this add-in.
         /// </summary>

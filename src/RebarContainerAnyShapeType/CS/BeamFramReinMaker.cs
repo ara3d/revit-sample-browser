@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
    /// </summary>
    public class BeamFramReinMaker : FramReinMaker
    {
-      #region Private Members
-
+      
       BeamGeometrySupport m_geometry;   // The geometry support for beam reinforcement creation
 
       // The reinforcement type, hook type and spacing information
@@ -44,10 +43,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       double m_transverseEndSpacing;      //the spacing value of end transverse reinforcement
       double m_transverseCenterSpacing;   //the spacing value of center transverse reinforcement
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// get and set the type of the end reinforcement in the top of beam
       /// </summary>
       public RebarBarType TopEndRebarType { get; set; }
@@ -109,10 +106,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
       /// </summary>
       public RebarHookType TransverseHookType { get; set; }
 
-      #endregion
-
-      #region Constructor
-      /// <summary>
+      
+            /// <summary>
       /// Constructor of the BeamFramReinMaker
       /// </summary>
       /// <param name="commandData">the ExternalCommandData reference</param>
@@ -127,10 +122,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
          //create a BeamGeometrySupport instance.
          m_geometry = new BeamGeometrySupport(hostObject, geoOptions);
       }
-      #endregion
-
-      #region Override Methods
-      /// <summary>
+      
+            /// <summary>
       /// Override method to do some further checks
       /// </summary>
       /// <returns>true if the the data is right and enough, otherwise false.</returns>
@@ -178,8 +171,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
          return base.FillWithBars();
       }
 
-      #endregion
-
+      
 
 
       /// <summary>

@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.Truss.CS
     /// </summary>
     class TrussGeometry
     {
-        #region class member variables
-
+        
         Autodesk.Revit.DB.Structure.Truss m_truss; //object of truss in Revit
 
         LineTool m_topChord; //line tool used to draw top chord
@@ -74,8 +73,7 @@ namespace Revit.SDK.Samples.Truss.CS
 
         XYZ endLocation; //store the end point of truss location
 
-        #endregion
-
+        
         /// <summary>
         /// constructor
         /// </summary>

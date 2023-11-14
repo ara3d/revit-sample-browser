@@ -37,29 +37,24 @@ namespace Revit.SDK.Samples.SlabProperties.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region Class constant variables
-        const double PI = 3.1415926535879;
+                const double PI = 3.1415926535879;
         const int Degree = 180;
         const int ToMillimeter = 1000;
         const double ToMetricThickness = 0.3048;    // unit for changing inch to meter
         const double ToMetricYoungmodulus = 304800.0;
 
-        #endregion
+        
 
-
-        #region Class member variables
-
+        
         ElementSet m_slabComponent;  // the selected Slab component
         Floor m_slabFloor; // Floor 
         CompoundStructureLayer m_slabLayer; // Structure Layer 
         System.Collections.Generic.IList<CompoundStructureLayer> m_slabLayerCollection; // Structure Layer collection
         Document m_document;
 
-        #endregion
+        
 
-
-        #region Interface implementation
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+                public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
 
@@ -87,11 +82,9 @@ namespace Revit.SDK.Samples.SlabProperties.CS
 
             return Result.Succeeded;
         }
-        #endregion
+        
 
-
-        #region Class propertied
-        /// <summary>
+                /// <summary>
         /// Level property, read only.
         /// </summary>
         public string Level { get; private set; }
@@ -144,11 +137,9 @@ namespace Revit.SDK.Samples.SlabProperties.CS
         /// </summary>
         public string LayerYoungModulusZ { get; private set; }
 
-        #endregion
+        
 
-
-        #region Public class method
-        /// <summary>
+                /// <summary>
         /// SetLayer method
         /// </summary>
         /// <param name="layerNumber">The layerNumber for the number of the layers</param>
@@ -200,11 +191,9 @@ namespace Revit.SDK.Samples.SlabProperties.CS
                 LayerYoungModulusZ = "Null";
             }
         }
-        #endregion
+        
 
-
-        #region Private class memeber methods
-        /// <summary>
+                /// <summary>
         /// Initialization and find out a slab's Level, Type name, and set the Span Direction properties.
         /// </summary>
         /// <param name="revit">The revit object for the active instance of Autodesk Revit.</param>
@@ -289,6 +278,5 @@ namespace Revit.SDK.Samples.SlabProperties.CS
             // The precision is 0.01, and unit is "degree".
             SpanDirection = spanDirectionDegree.ToString("F2");
         }
-        #endregion
-    }
+            }
 }

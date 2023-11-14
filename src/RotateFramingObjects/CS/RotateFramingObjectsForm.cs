@@ -79,8 +79,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
             base.Dispose( disposing );
         }
 
-        #region Windows Form Designer generated code
-        /// <summary>
+                /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
@@ -172,8 +171,7 @@ namespace Revit.SDK.Samples.RotateFramingObjects.CS
             this.PerformLayout();
 
         }
-        #endregion
-
+        
         private void okButton_Click(object sender, EventArgs e)
         {
             if(IsReset)

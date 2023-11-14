@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -220,8 +219,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.GroupBox diagramGroupBox;

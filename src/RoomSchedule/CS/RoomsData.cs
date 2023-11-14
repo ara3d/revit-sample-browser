@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.RoomSchedule
     /// </summary>
     public class RoomsData
     {
-        #region Class Constant Variables
-        /// <summary>
+                /// <summary>
         /// Constant name for RoomID, this column must exist in first row.
         /// </summary>
         public const string RoomID = "ID";
@@ -66,11 +65,9 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// the mapped room id of spread sheet will saved in this parameter.
         /// </summary>
         public const string SharedParam = "External Room ID";
-        #endregion
+        
 
-
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Active document to which this RoomsData instance belongs
         /// </summary>
         Document m_activeDocument;
@@ -89,20 +86,16 @@ namespace Revit.SDK.Samples.RoomSchedule
         /// a list to store column names of Rooms
         /// </summary>
         List<string> m_columnNames = new List<string>();
-        #endregion
+        
 
-
-        #region Class Properties
-        /// <summary>
+                /// <summary>
         /// A list of all the rooms in the project
         /// </summary>
         public ReadOnlyCollection<Room> Rooms => new ReadOnlyCollection<Room>(m_rooms);
 
-        #endregion
+        
 
-
-        #region Class Constructor Method
-        /// <summary>
+                /// <summary>
         /// Constructor 
         /// </summary>
         /// <param name="activeDocument">Revit project.</param>
@@ -116,11 +109,9 @@ namespace Revit.SDK.Samples.RoomSchedule
             // get all the rooms in the project
             GetAllRooms(activeDocument);
         }
-        #endregion
+        
 
-
-        #region Class Public Methods
-        /// <summary>
+                /// <summary>
         /// Update rooms data after room creation happens in Revit
         /// </summary>
         public void UpdateRoomsData()
@@ -323,11 +314,9 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
             return (null != sharedParam);
         }
-        #endregion
+        
 
-
-        #region Class Implementation
-        /// <summary>
+                /// <summary>
         /// Get all rooms in current Revit project
         /// </summary>
         private void GetAllRooms(Document activeDoc)
@@ -385,6 +374,5 @@ namespace Revit.SDK.Samples.RoomSchedule
             m_parameters.Add(BuiltInParameter.ROOM_PHASE);
             m_columnNames.Add("Phase");
         }
-        #endregion
-    }
+            }
 }

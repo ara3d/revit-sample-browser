@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
     /// </summary>
     public class TreeNode
     {
-        #region Member variables
-        /// <summary>
+                /// <summary>
         /// Id of the element
         /// </summary>
         private ElementId m_Id;
@@ -61,10 +60,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         /// Active document of Revit
         /// </summary>
         private Document m_document;
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Id of the element
         /// </summary>
         public ElementId Id => m_Id;
@@ -104,10 +101,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             get => m_inputConnector;
             set => m_inputConnector = value;
         }
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="doc">Revit document</param>
@@ -193,16 +188,14 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
                 }
             }
         }
-        #endregion
-    }
+            }
 
     /// <summary>
     /// Data structure of the traversal
     /// </summary>
     public class TraversalTree
     {
-        #region Member variables
-        // Active document of Revit
+                // Active document of Revit
         private Document m_document;
         // The MEP system of the traversal
         private MEPSystem m_system;
@@ -210,10 +203,8 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
         private bool m_isMechanicalSystem;
         // The starting element node
         private TreeNode m_startingElementNode;
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="activeDocument">Revit document</param>
@@ -610,6 +601,5 @@ namespace Revit.SDK.Samples.TraverseSystem.CS
             m_startingElementNode.DumpIntoXML(writer);
             writer.WriteEndElement();
         }
-        #endregion
-    }
+            }
 }

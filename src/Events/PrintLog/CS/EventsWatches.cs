@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.PrintLog.CS
     /// </summary>
     public sealed class EventsWatches
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Time watch for view print process.
         /// It'll be renewed when ViewPrinting is raised and then used to calculate the print time 
         /// for each view; the calculation will occurs in ViewPrinted event.
@@ -45,11 +44,9 @@ namespace Revit.SDK.Samples.PrintLog.CS
         /// for all views; the calculation will occurs in DocumentPrinted event.
         /// </summary>
         private Stopwatch m_docPrintWatch;
-        #endregion
+        
 
-
-        #region Class Public Properties
-        /// <summary>
+                /// <summary>
         /// Get/set the watch of view print process.
         /// </summary>
         public Stopwatch ViewPrintWatch
@@ -66,6 +63,5 @@ namespace Revit.SDK.Samples.PrintLog.CS
             get => m_docPrintWatch;
             set => m_docPrintWatch = value;
         }
-        #endregion
-    }
+            }
 }

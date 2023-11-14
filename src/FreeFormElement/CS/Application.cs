@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
@@ -57,8 +56,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// Creates the ribbon panel for the sample.
         /// </summary>

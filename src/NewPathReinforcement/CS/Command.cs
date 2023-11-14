@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
       {
          try
@@ -49,8 +48,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             {
                elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
             }
-            #region selection handle -- select one Slab (or Structure Wall)
-            //if user had some wrong selection, give user an Error message
+                        //if user had some wrong selection, give user an Error message
             var errorMessage =
                 "Please select one Slab (or Structure Wall) to create PathReinforcement.";
             if (1 != elems.Size)
@@ -80,8 +78,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
                message = errorMessage;
                return Result.Cancelled;
             }
-            #endregion
-            try
+                        try
             {
                if (null != wall)
                {
@@ -112,6 +109,5 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             return Result.Failed;
          }
       }
-      #endregion
-   }
+         }
 }

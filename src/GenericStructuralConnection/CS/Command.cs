@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var ret = Result.Succeeded;
@@ -116,6 +115,5 @@ namespace Revit.SDK.Samples.GenericStructuralConnection.CS
             return ret;
         }
 
-        #endregion
-    }
+            }
 }

@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
    /// </summary>
    public abstract class Profile
    {
-      #region class member variables
-      /// <summary>
+            /// <summary>
       /// store all the points on the needed face
       /// </summary>
       protected List<List<XYZ>> m_points;
@@ -59,8 +58,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
       /// store the Matrix used to transform 3D points to 2D
       /// </summary>
       protected Matrix4 m_to2DMatrix = null;
-      #endregion
-
+      
       /// <summary>
       /// CommandData property get object which contains reference to Revit Application
       /// </summary>

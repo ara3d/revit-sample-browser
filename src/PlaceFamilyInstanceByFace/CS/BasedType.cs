@@ -30,31 +30,24 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
     /// </summary>
     public partial class BasedTypeForm : Form
     {
-        #region Fields
-        // based-type
+                // based-type
 
-        #endregion
-
-        #region Property
-        /// <summary>
+        
+                /// <summary>
         /// based-type
         /// </summary>
         public BasedType BaseType { get; private set; } = BasedType.Point;
 
-        #endregion
-
-        #region Constructor
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         public BasedTypeForm()
         {
             InitializeComponent();
         }
-        #endregion
-
-        #region Private methods
-        /// <summary>
+        
+                /// <summary>
         /// Process the click event of "Next" button
         /// </summary>
         /// <param name="sender"></param>
@@ -87,8 +80,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             Close();
             DialogResult = DialogResult.Cancel;
         }
-        #endregion
-    }
+            }
 
     /// <summary>
     /// Based-type

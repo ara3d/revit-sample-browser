@@ -11,15 +11,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class MEPBuildingConstructionWrapper : IWrapper
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// MEPBuildingConstruction
         /// </summary>
         private MEPBuildingConstruction m_mEPBuildingConstruction;
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initializes private variables.
         /// </summary>
         /// <param name="mEPBuildingConstruction">MEPBuildingConstruction</param>
@@ -27,10 +24,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             m_mEPBuildingConstruction = mEPBuildingConstruction;
         }
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets or sets Roofs
         /// </summary>
         [DisplayName("Roofs")]
@@ -130,8 +125,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             set => m_mEPBuildingConstruction.SetBuildingConstruction(ConstructionType.Skylight, value.Handle as Construction);
         }
 
-        #region IWrapper Members
-
+        
         /// <summary>
         /// Gets the handle object.
         /// </summary>
@@ -147,11 +141,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             get => m_mEPBuildingConstruction.Name;
             set => m_mEPBuildingConstruction.Name = value;
         }
-        #endregion
-        #endregion
-
-        #region Methods
-        /// <summary>
+                
+                /// <summary>
         /// Get constructions
         /// </summary>
         /// <param name="constructionType">ConstructionType</param>
@@ -160,6 +151,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             return m_mEPBuildingConstruction.GetConstructions(constructionType);
         }
-        #endregion
-    }
+            }
 }

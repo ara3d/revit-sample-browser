@@ -28,8 +28,7 @@ using Autodesk.Revit.UI;
 
 namespace Revit.SDK.Samples.CompoundStructureCreation.CS
 {
-    #region A Class For Create CompoundStructure
-    /// <summary>
+        /// <summary>
     /// This command allows to create vertical CompoundStructure and applying to walls.
     /// </summary>
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -355,5 +354,4 @@ namespace Revit.SDK.Samples.CompoundStructureCreation.CS
             return MaterialElement.First<Element>() as FamilySymbol;
         }
     }
-    #endregion Create CompoundStructure
-}
+    }

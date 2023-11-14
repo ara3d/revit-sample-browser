@@ -35,11 +35,9 @@ namespace Revit.SDK.Samples.Rooms.CS
     /// </summary>
     public partial class roomsInformationForm : System.Windows.Forms.Form
     {
-        #region Class member variables
-        RoomsData m_data; // Room's data for current active document
+                RoomsData m_data; // Room's data for current active document
 
-        #endregion
-
+        
         /// <summary>
         /// constructor
         /// </summary>

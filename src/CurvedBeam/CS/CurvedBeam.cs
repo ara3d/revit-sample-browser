@@ -37,14 +37,11 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.UsingCommandData)]
     public class Command : IExternalCommand
     {
-        #region Class memeber variables
-        UIApplication m_revit;
+                UIApplication m_revit;
 
-        #endregion
+        
 
-
-        #region Command class properties
-        /// <summary>
+                /// <summary>
         /// list of all type of beams
         /// </summary>
         public ArrayList BeamMaps { get; } = new ArrayList();
@@ -54,11 +51,9 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// </summary>
         public ArrayList LevelMaps { get; } = new ArrayList();
 
-        #endregion
+        
 
-
-        #region IExternalCommand interface implementation
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+                public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             m_revit = commandData.Application;
             var tran = new Transaction(m_revit.ActiveUIDocument.Document, "CurvedBeam");
@@ -78,8 +73,7 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
 
             return Result.Succeeded;
         }
-        #endregion
-
+        
 
         /// <summary>
         /// iterate all the symbols of levels and beams
@@ -257,10 +251,8 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     /// </summary>
     public class SymbolMap
     {
-        #region SymbolMap class member variables
-
-        #endregion
-
+        
+        
 
         /// <summary>
         /// constructor without parameter is forbidden
@@ -305,13 +297,10 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
     /// </summary>
     public class LevelMap
     {
-        #region LevelMap class member variable
+        
+        
 
-        #endregion
-
-
-        #region LevelMap Constructors
-        /// <summary>
+                /// <summary>
         /// constructor without parameter is forbidden
         /// </summary>
         private LevelMap()
@@ -329,11 +318,9 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
             Level = level;
             LevelName = level.Name;
         }
-        #endregion
+        
 
-
-        #region LevelMap properties
-        /// <summary>
+                /// <summary>
         /// LevelName property
         /// </summary>
         public string LevelName { get; } = "";
@@ -343,6 +330,5 @@ namespace Revit.SDK.Samples.CurvedBeam.CS
         /// </summary>
         public Level Level { get; }
 
-        #endregion
-    }
+            }
 }

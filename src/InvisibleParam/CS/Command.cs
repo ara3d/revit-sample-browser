@@ -40,8 +40,7 @@ namespace Revit.SDK.Samples.InvisibleParam.CS
     public class Command : IExternalCommand
     {
 
-        #region IExternalCommand Members
-        public Result Execute(
+                public Result Execute(
             ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
@@ -106,6 +105,5 @@ namespace Revit.SDK.Samples.InvisibleParam.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }

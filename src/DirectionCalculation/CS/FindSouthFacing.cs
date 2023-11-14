@@ -31,13 +31,11 @@ namespace Revit.Samples.DirectionCalculation
     /// </summary>
     public class FindSouthFacingBase
     {
-        #region Helper properties
-        protected Autodesk.Revit.ApplicationServices.Application Application { get; set; }
+                protected Autodesk.Revit.ApplicationServices.Application Application { get; set; }
 
         protected Document Document { get; set; }
 
-        #endregion
-
+        
         /// <summary>
         /// Identifies if a particular direction is "south-facing".  This means within a range of -45 degrees to 45 degrees 
         /// to the south vector (the negative Y axis).
@@ -81,8 +79,7 @@ namespace Revit.Samples.DirectionCalculation
             return rotatedDirection;
         }
 
-        #region Debugging Aids
-        /// <summary>
+                /// <summary>
         /// Debugging aid.
         /// </summary>
         /// <param name="label"></param>
@@ -115,8 +112,7 @@ namespace Revit.Samples.DirectionCalculation
             if (m_writer != null)
                 m_writer.Close();
         }
-        #endregion
-
+        
         private TextWriter m_writer;
     }
 }

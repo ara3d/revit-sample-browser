@@ -41,8 +41,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
-
+        
         /// <summary> 
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
@@ -61,6 +60,5 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
 
         }
 
-        #endregion
-    }
+            }
 }

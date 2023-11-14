@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.ShaftHolePuncher");
@@ -50,8 +49,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                    elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
                 }
 
-                #region selection handle -- select one floor, wall, beam or nothing
-                //if user had some wrong selection, give user an Error message
+                                //if user had some wrong selection, give user an Error message
                 var errorMessage =
                     "Please select one Floor (Beam or Wall) to create opening or select nothing to create Shaft Opening";
                 if (elems.Size > 1)
@@ -97,8 +95,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                         return Result.Cancelled;
                     }
                 }
-                #endregion
-
+                
                 try
                 {
                     if (null != wall)
@@ -146,6 +143,5 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
                 return Result.Failed;
             }
         }
-        #endregion
-    }
+            }
 }

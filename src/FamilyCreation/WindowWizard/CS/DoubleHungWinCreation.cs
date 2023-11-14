@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
     /// </summary>
     class DoubleHungWinCreation : WindowCreation
     {
-        #region Class Memeber Variables
-        /// <summary>
+                /// <summary>
         /// store the Application
         /// </summary>
         private UIApplication m_application;
@@ -142,8 +141,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// store the sash material ID
         /// </summary>
         ElementId m_sashMatID;
-        #endregion
-
+        
         /// <summary>
         /// constructor of DoubleHungWinCreation
         /// </summary>
@@ -180,8 +178,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             
         }
 
-        #region Class Implementation
-        /// <summary>
+                /// <summary>
         /// The implementation of CreateFrame()
         /// </summary>
         public override void CreateFrame()
@@ -669,6 +666,5 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             m_extrusionCreator = new CreateExtrusion(m_application.Application, m_document);
             m_rightView = Utility.GetViewByName("Right", m_application, m_document);
         }
-        #endregion
-    }
+            }
 }

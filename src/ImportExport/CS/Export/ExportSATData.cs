@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
    /// </summary>
    public class ExportSATData : ExportDataWithViews
    {
-      #region Class Member Variables
-      /// <summary>
+            /// <summary>
       /// String list of AutoCAD versions
       /// </summary>
       private List<string> m_fileVersion;
@@ -49,10 +48,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
       /// File version option to export
       /// </summary>
       private ACADVersion m_exportFileVersion;
-      #endregion
-
-      #region Class Properties
-
+      
+      
       /// <summary>
       /// String collection of AutoCAD versions
       /// </summary>
@@ -71,10 +68,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
          get => m_exportFileVersion;
          set => m_exportFileVersion = value;
       }
-      #endregion
-
-      #region Class Member Methods
-      /// <summary>
+      
+            /// <summary>
       /// Constructor
       /// </summary>
       /// <param name="commandData">Revit command data</param>
@@ -142,6 +137,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
          
          return exported;
       }
-      #endregion
-   }
+         }
 }

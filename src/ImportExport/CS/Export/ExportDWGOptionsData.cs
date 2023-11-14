@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class ExportDWGOptionsData
     {
-        #region Class Memeber Variables
-        /// <summary>
+                /// <summary>
         /// String list of Layers and properties used in UI
         /// </summary>
         List<string> m_layersAndProperties;
@@ -129,10 +128,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
         //Export rooms and areas as polylines
 
-        #endregion
-
-        #region Class Properties
-        /// <summary>
+        
+                /// <summary>
         /// String collection of Layers and properties used in UI
         /// </summary>
         public ReadOnlyCollection<string> LayersAndProperties => new ReadOnlyCollection<string>(m_layersAndProperties);
@@ -259,11 +256,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_exportMergeFiles;
             set => m_exportMergeFiles = value;
         } 
-        #endregion
+        
 
-
-        #region Class Member Methods
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         public ExportDWGOptionsData()
@@ -337,6 +332,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_solids.Add("Export as ACIS solids");
             m_enumSolids.Add(Autodesk.Revit.DB.SolidGeometry.ACIS);
         }
-        #endregion
-    }
+            }
 }

@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -119,8 +118,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.PropertyGrid propertyGrid;
         private System.Windows.Forms.Button okButton;

@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    /// </summary>
    public static class DoorSharedParameters
    {
-      #region "Methods"
-   
+         
       /// <summary>
       /// Add shared parameters needed in this sample.
       /// parameter 1: one string parameter named as "BasalOpening" which  is used for customization of door opening for each country.
@@ -198,6 +197,5 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          return false;
       }
 
-      #endregion
-   }
+         }
 }

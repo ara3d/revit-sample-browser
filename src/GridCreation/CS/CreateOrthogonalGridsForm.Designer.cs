@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -390,8 +389,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBoxYCoord;
         private System.Windows.Forms.TextBox textBoxXCoord;

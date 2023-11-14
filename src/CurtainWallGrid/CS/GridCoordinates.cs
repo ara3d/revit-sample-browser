@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
     /// </summary>
     public class GridCoordinates
     {
-        #region Fields
-        // scale the size of the image to let it shown in the canvas
+                // scale the size of the image to let it shown in the canvas
         private float m_scaleFactor = 0.85f;
 
         // the document of this sample
@@ -63,10 +62,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // stores the boundary of the curtain grid
         List<PointF> m_boundPoints;
 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// stores the GridDrawing data used in the current dialog
         /// </summary>
         public GridDrawing Drawing { get; set; }
@@ -86,10 +83,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public Matrix4 RestoreMatrix { get; private set; }
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// constructor
         /// </summary>
         /// <param name="myDoc">
@@ -109,10 +104,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             Drawing = drawing;
             drawing.Coordinates = this;
         }
-        #endregion
-
-        #region Public Methods
-        /// <summary>
+        
+                /// <summary>
         /// obtain the matrixes used in this dialog
         /// </summary>
         public void GetMatrix()
@@ -139,10 +132,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             // transform from 2D to 3D
             RestoreMatrix = Get2DTo3DMatrix();
         }
-        #endregion
-
-        #region Private Methods
-        /// <summary>
+        
+                /// <summary>
         /// calculate the matrix used to transform 2D to 3D
         /// </summary>
         /// <returns>
@@ -262,6 +253,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
             return new Matrix4(xAxis, yAxis, zAxis, origin);
         }
-        #endregion
-    } // end of class
+            } // end of class
 }

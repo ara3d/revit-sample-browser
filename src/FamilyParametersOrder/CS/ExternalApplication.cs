@@ -38,8 +38,7 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class ExternalApplication : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       /// <summary>
       /// Implement this method to implement the external application which should be called when 
       /// Revit starts before a file or default template is actually loaded.
@@ -82,10 +81,8 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
       {
          return Result.Succeeded;
       }
-      #endregion
-
-      #region Class Methods
-      /// <summary>
+      
+            /// <summary>
       /// Generic event handler can be subscribed to any events.
       /// It will dump events information(sender and EventArgs) to log window and log file
       /// </summary>
@@ -101,6 +98,5 @@ namespace Revit.SDK.Samples.FamilyParametersOrder.CS
             sortForm.ShowDialog();
          }
       }
-      #endregion
-   }
+         }
 }

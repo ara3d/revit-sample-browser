@@ -9,15 +9,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class SiteLocationWrapper : IWrapper
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// SiteLocation
         /// </summary>
         private SiteLocation m_siteLocation;
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initializes private variables.
         /// </summary>
         /// <param name="siteLocation"></param>
@@ -26,10 +23,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             m_siteLocation = siteLocation;
             //m_citys = RevitStartInfo.RevitApp.Cities;
         } 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets or sets TimeZone
         /// </summary>
         [DisplayName("Time Zone"), TypeConverter(typeof(TimeZoneConverter))]
@@ -86,8 +81,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             return Math.Abs(x - y) < 1E-9;
         }
 
-        #region IWrapper Members
-
+        
         /// <summary>
         /// Gets the handle object.
         /// </summary>
@@ -103,12 +97,9 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             get => m_siteLocation.Name;
             set => m_siteLocation.Name = value;
         }
-        #endregion 
-
-        #endregion
-
-        #region Methods
-
+        
+        
+        
         /// <summary>
         /// Get time zone double value from time zone string
         /// </summary>
@@ -143,6 +134,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
             return lastTimeZone;
         }
-        #endregion
-    }
+            }
 }

@@ -40,8 +40,7 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class ExternalApplication : IExternalApplication
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// This listener is used to monitor the events arguments and the result of the sample.
         /// It will be bound to log file AutoUpdate.log, it will be added to Trace.Listeners.
         /// </summary>
@@ -57,10 +56,8 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
         /// </summary>
         private string m_tempFile = Path.Combine(m_directory, "temp.log");
  
-        #endregion
-
-        #region IExternalApplication Members
-        /// <summary>
+        
+                /// <summary>
         /// Implement this method to subscribe event.
         /// </summary>
         /// <param name="application">the controlled application.</param>
@@ -110,10 +107,8 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
             CloseLogFile();
             return Result.Succeeded;
         }
-        #endregion
-
-        #region Event Handler
-        /// <summary>
+        
+                /// <summary>
         /// This is the event handler. We modify the model and dump log in this method.
         /// </summary>
         /// <param name="sender"></param>
@@ -151,10 +146,8 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
             Trace.WriteLine("The value after running the sample ------>");
             Trace.WriteLine("    [Address]         :" + doc.ProjectInformation.Address);
         }
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// Dump the events arguments to log file: AutoUpdat.log.
         /// </summary>
         /// <param name="args"></param>
@@ -194,6 +187,5 @@ namespace Revit.SDK.Samples.AutoUpdate.CS
             File.Copy(m_tempFile, logFile);
             File.Delete(m_tempFile);
         }
-        #endregion
-    }
+            }
 }

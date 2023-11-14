@@ -19,8 +19,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
    /// </summary>
    class TessellatedGeomAndText2DExportContext : IExportContext2D
    {
-      #region Data
-      /// <summary>
+            /// <summary>
       /// The list of (start, end) points for all tessellated lines
       /// </summary>
       private IList<XYZ> m_points = new List<XYZ>();
@@ -39,10 +38,8 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
       /// </summary>
       public string Texts { get; private set; }
 
-      #endregion
-
-      #region IExportContext2DOverrides
-      public TessellatedGeomAndText2DExportContext(out IList<XYZ> points)
+      
+            public TessellatedGeomAndText2DExportContext(out IList<XYZ> points)
       {
          points = m_points;
       }
@@ -220,6 +217,5 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
          var segPoints = segments.GetVertices();
          Utilities.addTo(m_points, segPoints);
       }
-	  #endregion
-   }
+	     }
 }

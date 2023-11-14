@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
     /// </summary>
     public partial class ViewFiltersForm : System.Windows.Forms.Form
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Revit active document
         /// </summary>
         Document m_doc;
@@ -64,8 +63,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// Sample custom rule name prefix, filter rules will be displayed with this name + #(1, 2, ...)
         /// </summary>
         const string m_ruleNamePrefix = "Filter Rule ";
-        #endregion
-
+        
         /// <summary>
         /// Overload the constructor
         /// </summary>
@@ -561,8 +559,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             senderComboBox.DropDownWidth = width;
         }
 
-        #region Class Implementations
-        /// <summary>
+                /// <summary>
         /// Initialize filter data with existing view filters
         /// </summary>
         void InitializeFilterData()
@@ -983,6 +980,5 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         {
             Autodesk.Revit.UI.TaskDialog.Show("View Filters", strMsg, Autodesk.Revit.UI.TaskDialogCommonButtons.Ok | Autodesk.Revit.UI.TaskDialogCommonButtons.Cancel);
         }
-        #endregion
-    }
+            }
 }

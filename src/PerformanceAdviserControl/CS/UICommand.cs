@@ -31,16 +31,14 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    class UICommand : IExternalCommand
    {
-      #region IExternalCommand implementation
-
+      
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
 
          //A list of rule information to be used below
          var ruleInfoList = new List<RuleInfo>();
 
-         #region Get Rule info through iteration from PerformanceAdviser
-
+         
             ///Here, we query the information about rules registered in PerformanceAdviser so that
             ///we can later decide in a dialog which rules we want to run.
 
@@ -62,10 +60,8 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
                ruleInfoList.Add(oneRule);
             }
 
-         #endregion
-
-         #region Prepare and show UI
          
+                  
            //This dialog box will allow the user to select and run performance rules, so it needs
            //the PerformanceAdviser and active document passed to it.
            var tdd = new TestDisplayDialog(PerformanceAdviser.GetPerformanceAdviser(), commandData.Application.ActiveUIDocument.Document);
@@ -78,12 +74,10 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
                }
 
           tdd.ShowDialog();
-            #endregion
-
+            
           return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 }
 
 

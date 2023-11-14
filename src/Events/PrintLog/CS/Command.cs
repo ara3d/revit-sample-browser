@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.PrintLog.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command: IExternalCommand
     {
-        #region IExternalCommand Members
-        public Result Execute(ExternalCommandData commandData, 
+                public Result Execute(ExternalCommandData commandData, 
             ref string message, ElementSet elements)
         {
             // Filter all printable views in current document and print them,
@@ -81,6 +80,5 @@ namespace Revit.SDK.Samples.PrintLog.CS
             // return succeed by default
             return Result.Succeeded;
         }
-        #endregion
-    }
+            }
 }

@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
     /// </summary>
     public class BoundaryConditionsData
     {
-        #region "Members"
-
+        
         // the selected Element
 
         // store all the corresponding BCs of the current selected host element 
@@ -46,10 +45,8 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
 
         // the object for which the grid in UI displays.
 
-        #endregion
-
-        #region "Properties"
-
+        
+        
         /// <summary>
         /// gets or sets the object for which the grid in UI displays. 
         /// </summary>
@@ -65,18 +62,14 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         /// </summary>
         public Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions> BCs { get; } = new Dictionary<ElementId, Autodesk.Revit.DB.Structure.BoundaryConditions>();
 
-        #endregion
-
-        #region "Delegate" 
-
+        
+        
         //A delegate for create boundary condition with different type
         private delegate Autodesk.Revit.DB.Structure.BoundaryConditions
                 CreateBCHandler(Element HostElement);
 
-        #endregion
-
-        #region "Methods"
-
+        
+        
         /// <summary>
         /// construct function
         /// </summary>
@@ -261,6 +254,5 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
          return createdBC;
         } 
 
-        #endregion
-    }
+            }
 }

@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
    /// </summary>
     public class FlippedDoorCheck : Autodesk.Revit.DB.IPerformanceAdviserRule
     {
-       #region Constructor
-       /// <summary>
+              /// <summary>
        /// Set up rule name, description, and error handling
        /// </summary>
         public FlippedDoorCheck()
@@ -42,13 +41,11 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             m_doorWarningId = new Autodesk.Revit.DB.FailureDefinitionId(new Guid("25570B8FD4AD42baBD78469ED60FB9A3"));
             m_doorWarning = Autodesk.Revit.DB.FailureDefinition.CreateFailureDefinition(m_doorWarningId, Autodesk.Revit.DB.FailureSeverity.Warning, "Some doors in this project are face-flipped.");
         }
-       #endregion
+       
 
 
 
-
-       #region IPerformanceAdviserRule implementation
-        /// <summary>
+               /// <summary>
         /// Does some preliminary work before executing tests on elements.  In this case,
         /// we instantiate a list of FamilyInstances representing all doors that are flipped.
         /// </summary>
@@ -152,10 +149,8 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
             return true;
         }
 
-        #endregion
-
-       #region Other instance methods
-        /// <summary>
+        
+               /// <summary>
         /// This method is used by PerformanceAdviser to get the
         ///  ID of the rule. It returns a global static field to make sharing the ID in different places
         ///  in the application easier.
@@ -165,15 +160,13 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         {
            return Id;
         }
-        #endregion
-
+        
         /// <summary>
         /// The rule ID for this rule;
         /// </summary>
         public static Autodesk.Revit.DB.PerformanceAdviserRuleId Id => m_Id;
 
-        #region Data
-        /// <summary>
+                /// <summary>
        /// A list of all family instances in the document that have the FaceFlipped property set to true;
        /// </summary>
         private List<Autodesk.Revit.DB.ElementId> m_FlippedDoors;
@@ -203,8 +196,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
        /// </summary>
        private Autodesk.Revit.DB.FailureDefinition m_doorWarning;
        
-       #endregion
-
+       
     }
 
 

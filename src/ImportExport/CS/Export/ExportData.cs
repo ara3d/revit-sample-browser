@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class ExportData
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Revit command data
         /// </summary>
         protected ExternalCommandData m_commandData;
@@ -84,10 +83,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// The title of exporting dialog
         /// </summary>
         protected string m_title;
-        #endregion
-
-        #region Class Properties
-        /// <summary>
+        
+                /// <summary>
         /// Revit command data
         /// </summary>
         public ExternalCommandData CommandData => m_commandData;
@@ -163,11 +160,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public string Title => m_title;
 
-        #endregion
+        
 
-
-        #region Class Member Methods
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
@@ -266,6 +261,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             return true;
         }
-        #endregion
-    }
+            }
 }

@@ -36,16 +36,13 @@ namespace Revit.SDK.Samples.PrintLog.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Application : IExternalApplication
     {
-        #region Class Member Variable
-        /// <summary>
+                /// <summary>
         /// Events reactor for ViewPrint and DocumentPrint related
         /// </summary>
         EventsReactor m_eventsReactor;
-        #endregion
+        
 
-
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implement the OnStartup method to register events when Revit starts.
         /// </summary>
         /// <param name="application">Controlled application of to be loaded to Revit process.</param>
@@ -78,6 +75,5 @@ namespace Revit.SDK.Samples.PrintLog.CS
             application.ControlledApplication.DocumentPrinted -= new EventHandler<Autodesk.Revit.DB.Events.DocumentPrintedEventArgs>(m_eventsReactor.AppDocumentPrinted);
             return Result.Succeeded;
         }
-        #endregion
-    }
+            }
 }

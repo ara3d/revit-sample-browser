@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
             m_roof = roof;
         }
 
-        #region The properties will be shown in the PropertyGrid
-        /// <summary>
+                /// <summary>
         /// The reference plane of the extrusion roof.
         /// </summary>
         [Category("Constrains")]
@@ -149,6 +148,5 @@ namespace Revit.SDK.Samples.NewRoof.RoofForms.CS
                 }
             }
         }
-        #endregion        
-    }
+            }
 }

@@ -161,8 +161,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
          }
       }
 
-      #region IDockablePaneProvider Members
-
+      
       public void SetupDockablePane(DockablePaneProviderData data)
       {
          data.FrameworkElement = this as FrameworkElement;
@@ -171,8 +170,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
          data.InitialState.DockPosition = DockPosition.Top;
       }
 
-      #endregion
-
+      
       private ExternalEvent _event;
       private DefaultElementTypeCommandHandler _handler;
       private Document _document;

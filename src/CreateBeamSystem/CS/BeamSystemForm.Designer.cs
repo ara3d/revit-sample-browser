@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -131,8 +130,7 @@ namespace Revit.SDK.Samples.CreateBeamSystem.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.PictureBox previewPictureBox;
         private System.Windows.Forms.PropertyGrid beamSystemPropertyGrid;
         private System.Windows.Forms.Button OKButton;

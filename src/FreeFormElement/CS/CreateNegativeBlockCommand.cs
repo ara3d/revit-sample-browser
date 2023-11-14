@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class CreateNegativeBlockCommand : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var uiDoc = commandData.Application.ActiveUIDocument;
@@ -85,8 +84,7 @@ namespace Revit.SDK.Samples.FreeFormElement.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 
     /// <summary>
     /// Selection filter for selection of a target object to use as a template for the negative block.

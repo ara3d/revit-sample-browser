@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -85,8 +84,7 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.DataGridView changesdataGridView;
     }
 }

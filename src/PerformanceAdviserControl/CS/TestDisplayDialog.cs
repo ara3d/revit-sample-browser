@@ -27,8 +27,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
 {
    public partial class TestDisplayDialog : System.Windows.Forms.Form
    {
-      #region Constructor
-      /// <summary>
+            /// <summary>
       /// Basic setup -- stores references to the active document and PerformanceAdviser for later use
       /// </summary>
       /// <param name="performanceAdviser">The revit PerformanceAdviser class</param>
@@ -41,10 +40,8 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
          FormBorderStyle = FormBorderStyle.Fixed3D;
 
       }
-      #endregion
-
-      #region UI Handlers
-      /// <summary>
+      
+            /// <summary>
       /// Called when the user clicks the "Run Selected Tests" button
       /// </summary>
       private void btn_RunTests_Click(object sender, EventArgs e)
@@ -108,10 +105,8 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
       {
          Close();
       }
-      #endregion
-
-      #region Other instance methods
-      /// <summary>
+      
+            /// <summary>
       /// This method is called by UICommand::Execute() and adds test information to the grid
       /// data object "testData."
       /// </summary>
@@ -128,12 +123,9 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
 
          testData.Rows.Add(data);
       }
-      #endregion
-
-      #region Data
-      private Document m_document;
+      
+            private Document m_document;
       private PerformanceAdviser m_PerformanceAdviser;
-#endregion      
 
      
    }

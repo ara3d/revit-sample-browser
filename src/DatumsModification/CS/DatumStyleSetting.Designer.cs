@@ -24,8 +24,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -137,8 +136,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.CheckedListBox datumLeftStyleListBox;
       private System.Windows.Forms.CheckedListBox datumRightStyleListBox;
       private System.Windows.Forms.Button okButton;

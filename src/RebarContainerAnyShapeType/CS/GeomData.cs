@@ -26,8 +26,7 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 {
-    #region Struct Definition
-
+    
     /// <summary>
     /// a struct to store the geometry information of the reinforcement
     /// </summary>
@@ -135,10 +134,8 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         public const double VerticalOffset = 0.234;
     }
 
-    #endregion
-
-    #region Enum Definition
-    /// <summary>
+    
+        /// <summary>
     /// Indicate location of top reinforcement
     /// </summary>
     public enum TopRebarLocation
@@ -205,8 +202,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
         /// </summary>
         West
     }
-    #endregion
-
+    
     /// <summary>
     /// A comparer for XYZ, and give a method to sort all the Autodesk.Revit.DB.XYZ points in a array
     /// </summary>

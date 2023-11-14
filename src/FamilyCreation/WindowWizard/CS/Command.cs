@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region Class Interface Implementation
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
         {
@@ -74,7 +73,6 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 return Result.Failed;
             }
         }
-        #endregion
-    }
+            }
 }
 

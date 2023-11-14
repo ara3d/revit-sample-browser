@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class DatumStyleModification : IExternalCommand
     {
-        #region globle variable
-       /// <summary>
+               /// <summary>
        /// 
        /// </summary>
        public static bool showLeftBubble = false;
@@ -58,8 +57,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
        /// 
        /// </summary>
        public static bool changeRightEnd2D = false;
-       #endregion
-
+       
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)
         {
@@ -148,13 +146,11 @@ namespace Revit.SDK.Samples.DatumsModification.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class DatumAlignment : IExternalCommand
     {
-       #region globle variable
-       /// <summary>
+              /// <summary>
        /// 
        /// </summary>
        public static Dictionary<string, DatumPlane> datumDic = new Dictionary<string, DatumPlane>();
-       #endregion
-
+       
        public virtual Result Execute(ExternalCommandData commandData
            , ref string message, ElementSet elements)
        {
@@ -238,13 +234,11 @@ namespace Revit.SDK.Samples.DatumsModification.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class DatumPropagation : IExternalCommand
     {
-       #region globle variable
-       /// <summary>
+              /// <summary>
        /// 
        /// </summary>
        public static Dictionary<string, ElementId> viewDic = new Dictionary<string, ElementId>();
-       #endregion
-
+       
        /// <summary>
        /// Implement this method as an external command for Revit.
        /// </summary>

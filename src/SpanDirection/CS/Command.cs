@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.SpanDirection.CS
     public class Command : IExternalCommand
     {
         public Document m_docment;
-        #region Interface implementation
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+                public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var application = commandData.Application;
             m_docment = application.ActiveUIDocument.Document;
@@ -74,8 +73,7 @@ namespace Revit.SDK.Samples.SpanDirection.CS
             }
             return Result.Succeeded;
         }
-        #endregion
-
+        
 
         /// <summary>
         /// Get SpanDirection and SpanDirectionSymobols of Floor

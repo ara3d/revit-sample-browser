@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Cut : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
@@ -43,8 +42,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            #region Demo how to use the SolidSolidCut API to make one solid cut another.
-
+            
             long solidToBeCutElementId = 30481; //The cube
             long cuttingSolidElementId = 30809; //The sphere
 
@@ -76,12 +74,10 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
                 transaction.Commit();
             }
 
-            #endregion
-
+            
             return Result.Succeeded;
         }
-        #endregion
-    }
+            }
 
     /// <summary>
     /// Demonstrate how to use the SolidSolidCut API to uncut two solids which have the cutting relationship.
@@ -90,8 +86,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Uncut : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
@@ -100,8 +95,7 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
             // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            #region Demo how to use the SolidSolidCut API to uncut two solids which have the cutting relationship.
-
+            
             long solidToBeCutElementId = 30481; //The cube
             long cuttingSolidElementId = 30809; //The sphere
 
@@ -127,10 +121,8 @@ namespace Revit.SDK.Samples.SolidSolidCut.CS
 
             transaction.Commit();
 
-            #endregion
-
+            
             return Result.Succeeded;
         }
-        #endregion
-    }
+            }
 }

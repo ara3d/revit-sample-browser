@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         /// <summary>
         /// The implementation of the automatic stairs creation command.
         /// </summary>
@@ -52,8 +51,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         private static int stairsIndex;
         private static int[] stairsConfigs = { 0, 3, 4, 1, 2 };
     }

@@ -30,15 +30,12 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    public class Line2D
    {
-      #region Fields
-      // the start point of the line
+            // the start point of the line
 
       // the end point of the line
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// the start point of the line
       /// </summary>
       public Point StartPoint { get; set; }
@@ -48,10 +45,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public Point EndPoint { get; set; }
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// default constructor
       /// </summary>
       public Line2D()
@@ -86,29 +81,23 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          StartPoint = line2D.StartPoint;
          EndPoint = line2D.EndPoint;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// the class stores the baseline data for curtain wall
    /// </summary>
    public class WallBaseline2D : Line2D
    {
-      #region Fields
-      // an assistant point for temp usage
+            // an assistant point for temp usage
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// an assistant point for temp usage
       /// </summary>
       public Point AssistantPoint { get; set; }
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// default constructor
       /// </summary>
       public WallBaseline2D()
@@ -143,10 +132,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          AssistantPoint = wallLine2D.AssistantPoint;
       }
-      #endregion
-
-      #region Public methods
-      /// <summary>
+      
+            /// <summary>
       /// clear the stored data
       /// </summary>
       public void Clear()
@@ -155,16 +142,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          EndPoint = Point.Empty;
          AssistantPoint = Point.Empty;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// the 2D format for the curtain grid line, it inherits from the Line2D class
    /// </summary>
    public class GridLine2D : Line2D
    {
-      #region Fields
-      // indicate whether the grid line is locked
+            // indicate whether the grid line is locked
 
       // all the segments for the grid line
 
@@ -172,10 +157,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
       // indicate whether it's a U grid line
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// indicate whether the grid line is locked
       /// </summary>
       public bool Locked { get; set; }
@@ -195,10 +178,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public bool IsUGridLine { get; set; }
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// default constructor, initialize all the members with default value
       /// </summary>
       public GridLine2D()
@@ -246,16 +227,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             Segments.Add(new SegmentLine2D(segLine));
          }
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// the line class for the segment of grid line, it inherits from Line2D class
    /// </summary>
    public class SegmentLine2D : Line2D
    {
-      #region Fields
-      // indicates whether the segment is "isolated" 
+            // indicates whether the segment is "isolated" 
 
       // indicate whether the segment has been removed from the grid line
 
@@ -265,18 +244,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
       // indicates whether the segment is in a U grid line
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// indicates whether the segment is "isolated" 
       /// </summary>
       public bool Isolated { get; set; }
 
-      #endregion
-
-      #region
-      /// <summary>
+      
+            /// <summary>
       /// indicate whether the segment has been removed from the grid line
       /// </summary>
       public bool Removed { get; set; }
@@ -296,10 +271,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public bool IsUSegment { get; set; }
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// default constructor
       /// </summary>
       public SegmentLine2D()
@@ -343,7 +316,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          SegmentIndex = segLine2D.SegmentIndex;
          GridLineIndex = segLine2D.GridLineIndex;
       }
-      #endregion
-   }
+         }
 
 }

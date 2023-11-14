@@ -54,8 +54,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Application : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       /// <summary>
       /// Implements the OnStartup event
       /// </summary>
@@ -105,8 +104,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
          unregisterServers(args.Document, false);
       }
 
-      #endregion
-
+      
       /// <summary>
       /// Responds to the external command CommandDuplicateGraphics.
       /// </summary>

@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
    /// </summary>
    class FamilyParameterAssigner
    {
-      #region Memeber Fields
-      private Autodesk.Revit.ApplicationServices.Application m_app;
+            private Autodesk.Revit.ApplicationServices.Application m_app;
       private FamilyManager m_manager;
       string m_assemblyPath;
       // indicate whether the parameter files have been loaded. If yes, no need to load again.
@@ -47,8 +46,7 @@ namespace Revit.SDK.Samples.AutoParameter.CS
       private DefinitionFile m_sharedFile;
       private string m_familyFilePath = string.Empty;
       private string m_sharedFilePath = string.Empty;
-      #endregion
-
+      
       /// <summary>
       /// constructor
       /// </summary>

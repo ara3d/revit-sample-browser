@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
    /// </summary>
    class CreateDimension
    {
-      #region Class Memeber Variables
-      /// <summary>
+            /// <summary>
       /// store the document
       /// </summary>
       Document m_document;
@@ -40,8 +39,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// store the application
       /// </summary>
       Application m_application;
-      #endregion
-
+      
       /// <summary>
       /// constructor of CreateDimension class
       /// </summary>
@@ -53,8 +51,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          m_document = doc;
       }
 
-      #region Class Implementation
-      /// <summary>
+            /// <summary>
       /// This method is used to create dimension among three reference planes
       /// </summary>
       /// <param name="view">the view</param>
@@ -146,6 +143,5 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          subTransaction.Commit();
          return dim;
       }
-      #endregion
-   }
+         }
 }

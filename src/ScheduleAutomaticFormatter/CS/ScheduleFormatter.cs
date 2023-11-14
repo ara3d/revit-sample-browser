@@ -74,8 +74,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             }
         }
 
-        #region UpdaterSupport
-
+        
         /// <summary>
         /// The ExtensibleStorage schema for marking schedules which have been formatted.
         /// </summary>
@@ -103,8 +102,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             AddInId = null;
         }
 
-        #region IUpdater Members
-
+        
         /// <summary>
         /// Implements IUpdater.Execute()
         /// </summary>
@@ -155,13 +153,11 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             return "AutomaticScheduleFormatter";
         }
 
-        #endregion
-
+        
         /// <summary>
         /// GUID of the updater.
         /// </summary>
         private static System.Guid UpdaterGUID => new System.Guid("{C8483107-EF6D-4FDB-BB88-AF79E0E62361}");
 
-        #endregion
-    }
+            }
 }

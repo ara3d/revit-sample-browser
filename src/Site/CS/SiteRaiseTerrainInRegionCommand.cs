@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.Site.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class SiteRaiseTerrainInRegionCommand : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         /// <summary>
         /// Implementation of the external command.
         /// </summary>
@@ -46,6 +45,5 @@ namespace Revit.SDK.Samples.Site.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }

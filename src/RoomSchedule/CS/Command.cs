@@ -26,8 +26,7 @@ using Autodesk.Revit.DB;
 
 namespace Revit.SDK.Samples.RoomSchedule
 {
-    #region Class Interface Implementation
-    /// <summary>
+        /// <summary>
     /// To add an external command to Autodesk Revit, 
     /// the developer must define a class which implements the IExternalCommand interface. 
     /// This class is used as the connection of Revit and external program
@@ -62,5 +61,4 @@ namespace Revit.SDK.Samples.RoomSchedule
             }
         }
     }
-    #endregion
-}
+    }

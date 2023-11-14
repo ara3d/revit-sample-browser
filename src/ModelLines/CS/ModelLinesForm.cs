@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
 {
     public partial class ModelLinesForm : System.Windows.Forms.Form
     {
-        #region Enum Define
-
+        
         /// <summary>
         /// Define the model line types in revit
         /// </summary>
@@ -44,13 +43,11 @@ namespace Revit.SDK.Samples.ModelLines.CS
             ModelNurbSpline = 4     // ModelNurbSpline
         };
 
-        #endregion
-
+        
         // Private members
         ModelLines m_dataBuffer;   // A reference of ModelLines.
 
-        #region Constructor
-
+        
         /// <summary>
         /// Constructor of ModelLinesForm
         /// </summary>
@@ -74,11 +71,9 @@ namespace Revit.SDK.Samples.ModelLines.CS
             lineRadioButton.Checked = true;
         }
 
-        #endregion
+        
 
-
-        #region helper Fuctions
-
+        
         /// <summary>
         /// Bind the DataSource of the information DataGridView
         /// </summary>
@@ -209,11 +204,9 @@ namespace Revit.SDK.Samples.ModelLines.CS
             elementIdComboBox.SelectedIndex = selectedIndex;
         }
 
-        #endregion
+        
 
-
-        #region UI Event
-
+        
         /// <summary>
         /// When the user click the create button, invoke method to create ReferencePlane
         /// </summary>
@@ -420,6 +413,5 @@ namespace Revit.SDK.Samples.ModelLines.CS
             Refresh();
         }
 
-        #endregion
-    }
+            }
 }

@@ -38,8 +38,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    {
       public static ElementSet CreatedWalls = new ElementSet(); //restore all the walls created by API.
 
-      #region IExternalCommand Members Implementation
-      public Result Execute(ExternalCommandData revit,
+            public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -65,10 +64,8 @@ namespace Revit.SDK.Samples.Ribbon.CS
          return Result.Succeeded;
       }
 
-      #endregion IExternalCommand Members Implementation
-
-      #region protected methods
-      protected WallType GetNewWallType(UIApplication app)
+      
+            protected WallType GetNewWallType(UIApplication app)
       {
          var myPanel = app.GetRibbonPanels()[0];
          var radioGroupTypeSelector =
@@ -224,8 +221,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
          curves.Add(line3);
          return curves;
       }
-      #endregion
-
+      
       /// <summary>
       /// return the RibbonItem by the input name in a specific panel
       /// </summary>
@@ -264,8 +260,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class DeleteWalls : IExternalCommand
    {
-      #region IExternalCommand Members Implementation
-      public Result Execute(ExternalCommandData revit,
+            public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -281,8 +276,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
          trans.Commit();
          return Result.Succeeded;
       }
-      #endregion IExternalCommand Members Implementation
-   }
+         }
 
    /// <summary>
    /// Implements the Revit add-in interface IExternalCommand,Move walls, X direction
@@ -291,8 +285,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class XMoveWalls : IExternalCommand
    {
-      #region IExternalCommand Members Implementation
-
+      
       public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
@@ -312,8 +305,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
          trans.Commit();
          return Result.Succeeded;
       }
-      #endregion IExternalCommand Members Implementation
-   }
+         }
 
    /// <summary>
    /// Implements the Revit add-in interface IExternalCommand,Move walls, Y direction
@@ -322,8 +314,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class YMoveWalls : IExternalCommand
    {
-      #region IExternalCommand Members Implementation
-
+      
       public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
@@ -343,8 +334,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         trans.Commit();
          return Result.Succeeded;
       }
-      #endregion IExternalCommand Members Implementation
-   }
+         }
 
    /// <summary>
    /// Implements the Revit add-in interface IExternalCommand,
@@ -354,8 +344,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ResetSetting : IExternalCommand
    {
-      #region IExternalCommand Members Implementation
-
+      
       public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
@@ -407,8 +396,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
          return null;
       }
 
-      #endregion IExternalCommand Members Implementation
-   }
+         }
 
    /// <summary>
    /// Do Nothing, 
@@ -418,8 +406,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class Dummy : IExternalCommand
    {
-      #region IExternalCommand Members Implementation
-
+      
       public Result Execute(ExternalCommandData revit,
                                              ref string message,
                                              ElementSet elements)
@@ -427,6 +414,5 @@ namespace Revit.SDK.Samples.Ribbon.CS
          return Result.Succeeded;
       }
 
-      #endregion IExternalCommand Members Implementation
-   }
+         }
 }

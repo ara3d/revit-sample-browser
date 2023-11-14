@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class SelectionChanged : IExternalApplication
    {
-      #region Class Member Variables
-      /// <summary>
+            /// <summary>
       /// A controlled application used to register the events. Because all trigger points
       /// in this sample come from UI, all events in application level must be registered 
       /// to ControlledApplication. If the trigger point is from API, user can register it 
@@ -50,10 +49,8 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
       private static InfoWindow m_infoWindow;
 
       static string AddInPath = typeof(SelectionChanged).Assembly.Location;
-      #endregion
-
-      #region Class Static Property
-      /// <summary>
+      
+            /// <summary>
       /// Property to get and set private member variable of InfoWindows
       /// </summary>
       public static InfoWindow InfoWindow
@@ -61,10 +58,8 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
          get;
          set;         
       }
-      #endregion
-
-      #region IExternalApplication Members
-
+      
+      
       /// <summary>
       /// Implement OnStartup method of IExternalApplication interface.
       /// This method subscribes to SelectionChanged event.        
@@ -110,10 +105,8 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
          return Result.Succeeded;
       }
 
-      #endregion
-
-      #region EventHandler
-
+      
+      
       /// <summary>
       /// Event handler method for SelectionChanged event.
       /// This method will check that the selection reported by event is the same with the actual Revit selection 
@@ -152,6 +145,5 @@ namespace Revit.SDK.Samples.SelectionChanged.CS
 
       }
 
-      #endregion
-   }
+         }
 }

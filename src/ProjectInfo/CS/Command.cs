@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             // initialize global information
@@ -77,16 +76,14 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
         }
 
-        #endregion
-    }
+            }
 
     /// <summary>
     /// Preserves global information
     /// </summary>
     public static class RevitStartInfo
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// Current Revit application
         /// </summary>
         public static Application RevitApp;
@@ -136,8 +133,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// </summary>
         static RevitStartInfo()
         {
-            #region TimeZones
-            TimeZones = new string[]{
+                        TimeZones = new string[]{
             "(GMT-12:00) International Date Line West",
             "(GMT-11:00) Midway Island, Samoa",
             "(GMT-10:00) Hawaii",
@@ -222,10 +218,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             "(GMT+12:00) Aukland, Wellington ",
             "(GMT+12:00) Fiji, Kamchatka, Marshall Is.",
             "(GMT+13:00) Nubu'alofa" };
-            #endregion
-
-            #region BuildingTypeMap
-            BuildingTypeMap = new Dictionary<object, string>();
+            
+                        BuildingTypeMap = new Dictionary<object, string>();
             BuildingTypeMap.Add(gbXMLBuildingType.AutomotiveFacility, "Automotive Facility");
             BuildingTypeMap.Add(gbXMLBuildingType.ConventionCenter, "Convention Center");
             BuildingTypeMap.Add(gbXMLBuildingType.Courthouse, "Courthouse");
@@ -260,10 +254,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             BuildingTypeMap.Add(gbXMLBuildingType.Transportation, "Transportation");
             BuildingTypeMap.Add(gbXMLBuildingType.Warehouse, "Warehouse");
             BuildingTypeMap.Add(gbXMLBuildingType.Workshop, "Workshop");
-            #endregion
-
-            #region ServiceTypeMap
-            ServiceTypeMap = new Dictionary<object, string>();
+            
+                        ServiceTypeMap = new Dictionary<object, string>();
             ServiceTypeMap.Add(gbXMLServiceType.ActiveChilledBeams, "Active Chilled Beams");
             ServiceTypeMap.Add(gbXMLServiceType.CentralHeatingConvectors, "Central Heating: Convectors");
             ServiceTypeMap.Add(gbXMLServiceType.CentralHeatingHotAir, "Central Heating: Hot Air");
@@ -293,37 +285,28 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             ServiceTypeMap.Add(gbXMLServiceType.VAVSingleDuct, "VAV - Single Duct");
             ServiceTypeMap.Add(gbXMLServiceType.VAVTerminalReheat, "VAV - Terminal Reheat");
             ServiceTypeMap.Add(gbXMLServiceType.WaterLoopHeatPump, "Water Loop Heat Pump");
-            #endregion
-
-            #region ExportComplexityMap
-            ExportComplexityMap = new Dictionary<object, string>();
+            
+                        ExportComplexityMap = new Dictionary<object, string>();
             ExportComplexityMap.Add(gbXMLExportComplexity.Complex, "Complex");
             ExportComplexityMap.Add(gbXMLExportComplexity.ComplexWithMullionsAndShadingSurfaces, "Complex With Mullions And Shading Surfaces");
             ExportComplexityMap.Add(gbXMLExportComplexity.ComplexWithShadingSurfaces, "Complex With Shading Surfaces");
             ExportComplexityMap.Add(gbXMLExportComplexity.Simple, "Simple");
             ExportComplexityMap.Add(gbXMLExportComplexity.SimpleWithShadingSurfaces, "Simple With Shading Surfaces");
-            #endregion
-
-            #region HVACLoadLoadsReportTypeMap
-            HVACLoadLoadsReportTypeMap = new Dictionary<object, string>();
+            
+                        HVACLoadLoadsReportTypeMap = new Dictionary<object, string>();
             HVACLoadLoadsReportTypeMap.Add(HVACLoadLoadsReportType.DetailedReport, "Detailed");
             HVACLoadLoadsReportTypeMap.Add(HVACLoadLoadsReportType.NoReport, "No");
             HVACLoadLoadsReportTypeMap.Add(HVACLoadLoadsReportType.SimpleReport, "Simple");
             HVACLoadLoadsReportTypeMap.Add(HVACLoadLoadsReportType.StandardReport, "Standard");
-            #endregion
-
-            #region HVACLoadConstructionClassMap
-            HVACLoadConstructionClassMap = new Dictionary<object, string>();
+            
+                        HVACLoadConstructionClassMap = new Dictionary<object, string>();
             HVACLoadConstructionClassMap.Add(HVACLoadConstructionClass.LooseConstruction, "Loose");
             HVACLoadConstructionClassMap.Add(HVACLoadConstructionClass.NoneConstruction, "None");
             HVACLoadConstructionClassMap.Add(HVACLoadConstructionClass.MediumConstruction, "Medium");
             HVACLoadConstructionClassMap.Add(HVACLoadConstructionClass.TightConstruction, "Tight");
-            #endregion
-        }
-        #endregion
-
-        #region Methods
-        public static Element GetElement(ElementId elementId)
+                    }
+        
+                public static Element GetElement(ElementId elementId)
         {
             return RevitDoc.GetElement(elementId);
         }
@@ -331,6 +314,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             return GetElement(new ElementId(elementId));
         }
-        #endregion
-    };
+            };
 }

@@ -57,8 +57,7 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
             UpdaterRegistry.AddTrigger(m_updaterId, doc, idsToWatch, Element.GetChangeTypeGeometry());
         }
 
-        #region IUpdater members
-
+        
         // The Execute method for the updater
         public void Execute(UpdaterData data)
         {
@@ -105,8 +104,7 @@ namespace Revit.SDK.Samples.DynamicModelUpdate.CS
             return ChangePriority.Views;
         }
 
-        #endregion
-
+        
         internal void RejustSectionView(Document doc, Element elem, ViewSection section)
         {
             var position = XYZ.Zero;

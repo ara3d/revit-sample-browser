@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region Class Members
-        /// <summary>
+                /// <summary>
         /// Revit application
         /// </summary>
         private Autodesk.Revit.ApplicationServices.Application m_app;
@@ -61,10 +60,8 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
         /// Floor element
         /// </summary>
         private Floor m_floor;
-        #endregion
-
-        #region Class Interface Implementation
-        /// <summary>
+        
+                /// <summary>
         /// The top level command.
         /// </summary>
         /// <param name="revit">An object that is passed to the external application 
@@ -139,10 +136,8 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
             trans.Commit();
             return Result.Succeeded;
         }
-        #endregion
-
-        #region Class Implementations
-        /// <summary>
+        
+                /// <summary>
         /// Determines the line segment that connects the skylight to the already obtained floor.
         /// </summary>
         /// <returns>The line segment.</returns>
@@ -177,6 +172,5 @@ namespace Revit.SDK.Samples.MeasureHeight.CS
             var result = Line.CreateBound(center, intersection);
             return result;
         }
-        #endregion
-    }
+            }
 }

@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class Application : IExternalApplication
    {
-      #region IExternalApplication Members
-      static string addinAssmeblyPath = typeof(Application).Assembly.Location;
+            static string addinAssmeblyPath = typeof(Application).Assembly.Location;
 
       /// <summary>
       /// Implements the OnShutdown event
@@ -96,6 +95,5 @@ namespace Revit.SDK.Samples.BRepBuilderExample.CS
       }
 
 
-      #endregion
-   }
+         }
 }

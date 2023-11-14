@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        public Result Execute(
+                public Result Execute(
             ExternalCommandData commandData,
             ref string message,
             ElementSet elements)
@@ -61,8 +60,7 @@ namespace Revit.SDK.Samples.TagBeam.CS
                 return Result.Failed;
             }
         }
-        #endregion IExternalCommand Members Implementation
-    }
+            }
 
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     public class TagRebar : IExternalCommand

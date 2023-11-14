@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
     /// </summary>
     public class CreateGridsData
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// The active document of Revit
         /// </summary>
         protected Document m_revitDoc;
@@ -57,10 +56,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// Resource manager
         /// </summary>
         protected static System.Resources.ResourceManager resManager = Properties.Resources.ResourceManager;
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Current display unit type
         /// </summary>
         public ForgeTypeId Unit => m_unit;
@@ -70,10 +67,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public ArrayList LabelsList => m_labelsList;
 
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor without display unit type
         /// </summary>
         /// <param name="application">Revit application</param>
@@ -328,6 +323,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             TaskDialog.Show(caption, message, TaskDialogCommonButtons.Ok);
         }
-        #endregion
-    }
+            }
 }

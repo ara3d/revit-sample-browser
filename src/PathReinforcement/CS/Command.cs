@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         public static Hashtable BarTypes { get; } = new Hashtable();
 
-        #region IExternalCommand Members Implementation
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
@@ -55,8 +54,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                 {
                    elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
                 }
-                #region selection error handle
-                //if user have some wrong selection, give user an Error message
+                                //if user have some wrong selection, give user an Error message
                 if (1 != elems.Size)
                 {
                     message = "please select one PathReinforcement.";
@@ -74,8 +72,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
                     message = "please select one PathReinforcement.";
                     return Result.Cancelled;
                 }
-                #endregion
-
+                
                 //clear all rebar bar type.
                 if (BarTypes.Count > 0)
                 {
@@ -118,6 +115,5 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }

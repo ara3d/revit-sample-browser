@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class ImportDWGData : ImportData
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// ThisViewOnly
         /// </summary>
         private bool m_importThisViewOnly;
@@ -123,11 +122,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Whether active view is 3D
         /// </summary>
         private bool m_is3DView;
-        #endregion
+        
 
-
-        #region Class Properties
-        /// <summary>
+                /// <summary>
         /// Get or set whether import this view only
         /// </summary>
         public bool ImportThisViewOnly
@@ -272,11 +269,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_is3DView;
             set => m_is3DView = value;
         }
-        #endregion
+        
 
-
-        #region Class Member Methods
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
@@ -324,11 +319,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             return imported;
         }
-        #endregion
+        
 
-
-        #region Class Implementation
-        /// <summary>
+                /// <summary>
         /// Initialize the variables
         /// </summary>
         private void Initialize()
@@ -511,6 +504,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
                 m_views.Insert(viewLowestElevation);
             }
         }
-        #endregion
-    }
+            }
 }

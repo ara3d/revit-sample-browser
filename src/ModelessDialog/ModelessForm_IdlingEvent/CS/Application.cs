@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
         // ModelessForm instance
         private ModelessForm m_MyForm;
         
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
@@ -136,6 +135,5 @@ namespace Revit.SDK.Samples.ModelessForm_IdlingEvent.CS
             return;
         }
 
-        #endregion
-    }
+            }
 }

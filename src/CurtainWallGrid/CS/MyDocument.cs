@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
     /// </summary>
     public class MyDocument
     {
-        #region Fields
-        // object which contains reference of Revit Application
+                // object which contains reference of Revit Application
         /// <summary>
         /// object which contains reference of Revit Application
         /// </summary>
@@ -125,16 +124,12 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 }
             }
         }
-        #endregion
-
-        #region Delegates and Events
-        // occurs only when the message was updated
+        
+                // occurs only when the message was updated
         public delegate void MessageChangedHandler();
         public event MessageChangedHandler MessageChanged;
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// constructor
         /// </summary>
         /// <param name="commandData">
@@ -163,10 +158,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 ActiveOperation = new LineOperation(LineOperationType.Waiting);
             }
         }
-        #endregion
-
-        #region Private methods
-        /// <summary>
+        
+                /// <summary>
         /// Get current length display unit type
         /// </summary>
         private void GetLengthUnitType()
@@ -256,6 +249,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             }
             return returns;
         }
-        #endregion
-    }
+            }
 }

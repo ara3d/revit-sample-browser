@@ -128,8 +128,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        #region top major layer
-        [CategoryAttribute("Top Major Layer"), TypeConverter(typeof(BarTypeItem))]
+                [CategoryAttribute("Top Major Layer"), TypeConverter(typeof(BarTypeItem))]
         public ElementId Top_Major_Bar_Type
         {
             get => m_topMajorBarType.AsElementId();
@@ -157,10 +156,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_topMajorHookOrientation.Set(index);
             }
         }
-        #endregion
-
-        #region top minor layer
-        [CategoryAttribute("Top Minor Layer"), TypeConverter(typeof(BarTypeItem))]
+        
+                [CategoryAttribute("Top Minor Layer"), TypeConverter(typeof(BarTypeItem))]
         public ElementId Top_Minor_Bar_Type
         {
             get => m_topMinorBarType.AsElementId();
@@ -188,10 +185,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_topMinorHookOrientation.Set(index);
             }
         }
-        #endregion
-
-        #region bottom major layer
-        [CategoryAttribute("Bottom Major Layer"), TypeConverter(typeof(BarTypeItem))]
+        
+                [CategoryAttribute("Bottom Major Layer"), TypeConverter(typeof(BarTypeItem))]
         public ElementId Bottom_Major_Bar_Type
         {
             get => m_bottomMajorBarType.AsElementId();
@@ -219,10 +214,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_bottomMajorHookOrientation.Set(index);
             }
         }
-        #endregion
-
-        #region bottom minor layer
-        [CategoryAttribute("Bottom Minor Layer"), TypeConverter(typeof(BarTypeItem))]
+        
+                [CategoryAttribute("Bottom Minor Layer"), TypeConverter(typeof(BarTypeItem))]
         public ElementId Bottom_Minor_Bar_Type
         {
             get => m_bottomMinorBarType.AsElementId();
@@ -250,7 +243,6 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_bottomMinorHookOrientation.Set(index);
             }
         }
-        #endregion
-
+        
     }
 }

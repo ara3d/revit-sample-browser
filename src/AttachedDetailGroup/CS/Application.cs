@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class Application : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       /// <summary>
       /// Implements the OnShutdown event
       /// </summary>
@@ -58,8 +57,7 @@ namespace Revit.SDK.Samples.AttachedDetailGroup.CS
          return Result.Succeeded;
       }
 
-      #endregion
-
+      
       /// <summary>
       /// Sets up the add-in panel for this sample.
       /// </summary>

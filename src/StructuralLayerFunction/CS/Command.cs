@@ -37,23 +37,18 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region Private data members
-        Floor m_slab;    //Store the selected floor
+                Floor m_slab;    //Store the selected floor
 
-        #endregion
+        
 
-
-        #region class public property
-        /// <summary>
+                /// <summary>
         /// With the selected floor, export the function of each of its structural layers
         /// </summary>
         public ArrayList Functions { get; }
 
-        #endregion
+        
 
-
-        #region class public method
-        /// <summary>
+                /// <summary>
         /// Default constructor of StructuralLayerFunction
         /// </summary>
         public Command()
@@ -61,11 +56,9 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
             //Construct the data members for the property
             Functions = new ArrayList();
         }
-        #endregion
+        
 
-
-        #region Interface implemetation
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
                                                 ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
@@ -117,6 +110,5 @@ namespace Revit.SDK.Samples.StructuralLayerFunction.CS
 
             return Result.Succeeded;
         }
-        #endregion
-    }
+            }
 }

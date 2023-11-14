@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class ExternalApplication : IExternalApplication
     {
-        #region  Class Member Variables
-        /// <summary>
+                /// <summary>
         /// A controlled application used to register the DocumentChanged event. Because all trigger points
         /// in this sample come from UI, the event must be registered to ControlledApplication. 
         /// If the trigger point is from API, user can register it to application 
@@ -55,10 +54,8 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
         /// The window is used to show changes' information.
         /// </summary>
         private static ChangesInformationForm m_InfoForm;
-        #endregion
-        
-        #region Class Static Property
-        /// <summary>
+                
+                /// <summary>
         /// Property to get and set private member variables of changes log information.
         /// </summary>
         public static DataTable ChangesInfoTable
@@ -75,10 +72,8 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             get => m_InfoForm;
             set => m_InfoForm = value;
         }
-        #endregion
-        
-        #region IExternalApplication Members
-        /// <summary>
+                
+                /// <summary>
         /// Implement this method to implement the external application which should be called when 
         /// Revit starts before a file or default template is actually loaded.
         /// </summary>
@@ -125,10 +120,8 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             m_ChangesInfoTable = null;
             return Result.Succeeded;
         }
-        #endregion
-
-        #region Event handler
-        /// <summary>
+        
+                /// <summary>
         /// This method is the event handler, which will dump the change information to tracking dialog
         /// </summary>
         /// <param name="sender"></param>
@@ -158,10 +151,8 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             }
 
         }
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// This method is used to retrieve the changed element and add row to data table.
         /// </summary>
         /// <param name="id"></param>
@@ -233,8 +224,7 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
             // return this data table 
             return changesInfoTable;
         }
-        #endregion
-    }
+            }
 
     /// <summary>
     /// This class inherits IExternalCommand interface and used to retrieve the dialog again.
@@ -243,8 +233,7 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+                public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             if (ExternalApplication.InfoForm == null)
             {
@@ -254,7 +243,6 @@ namespace Revit.SDK.Samples.ChangesMonitor.CS
 
             return Result.Succeeded;
         }
-        #endregion
-    }
+            }
 
 }

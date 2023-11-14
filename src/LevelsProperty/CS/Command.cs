@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region GetDatum
-
+        
         public Result Execute(ExternalCommandData revit, ref string message, ElementSet elements)
         {
             m_revit = revit;
@@ -88,10 +87,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         /// </summary>
         public List<LevelsDataSource> SystemLevelsDatum { get; set; }
 
-        #endregion
-
-        #region SetData
-
+        
+        
 
         /// <summary>
         /// Set Level
@@ -117,10 +114,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                 return false;
             }
         }
-        #endregion
-
-        #region CreateLevel
-        /// <summary>
+        
+                /// <summary>
         /// Create a level
         /// </summary>
         /// <param name="levelName">Pass a Level's Name</param>
@@ -133,10 +128,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
             newLevel.Name = levelName;
         }
-        #endregion
-
-        #region DeleteLevel
-        /// <summary>
+        
+                /// <summary>
         /// Delete a Level.
         /// </summary>
         /// <param name="IDOfLevel">A Level's ID value</param>
@@ -145,6 +138,5 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
             m_revit.Application.ActiveUIDocument.Document.Delete(IDOfLevel);
         }
-        #endregion
-    }
+            }
 }

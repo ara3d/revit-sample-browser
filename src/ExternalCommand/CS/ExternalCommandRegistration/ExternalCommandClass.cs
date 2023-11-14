@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class ExternalCommandCreateWall : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData,
            ref string message, ElementSet elements)
         {
@@ -63,8 +62,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    };
+            };
 
     /// <summary>
     /// Implements the Revit add-in interface IExternalCommand, show a message box
@@ -73,8 +71,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class ExternalCommand3DView : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData,
            ref string message, ElementSet elements)
         {
@@ -83,8 +80,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    };
+            };
 
     /// <summary>
     /// Implements the Revit add-in interface IExternalApplication, 
@@ -93,8 +89,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class ExternalApplicationClass : IExternalApplication
     {
-        #region IExternalApplication Members
-
+        
         public Result OnStartup(UIControlledApplication application)
         {
             TaskDialog.Show("External command Registration Sample", "Revit is starting up.");
@@ -107,6 +102,5 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    };
+            };
 }

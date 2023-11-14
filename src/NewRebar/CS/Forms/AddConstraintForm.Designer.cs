@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -118,8 +117,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Label label1;

@@ -37,15 +37,12 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command:IExternalCommand
     {
-        #region Class Memeber Variables
-        /// <summary>
+                /// <summary>
         /// store the family manager
         /// </summary>
         FamilyManager m_familyManager;         
-        #endregion
-        
-        #region Class Interface Implementation
-        public Result Execute(ExternalCommandData commandData,
+                
+                public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
         {
@@ -68,10 +65,8 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
                 return Result.Failed;
             }
         }
-        #endregion
-
-        #region Class Implementation
-        /// <summary>
+        
+                /// <summary>
         /// implementation of validate parameters, get all family types and parameters, 
         /// use the function FamilyType.HasValue() to make sure if the parameter needs to
         /// validate. Then along to the storage type to validate the parameters.
@@ -134,6 +129,5 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
             }           
             return errorInfo;
         }       
-        #endregion   
-    }   
+            }   
 }

@@ -39,8 +39,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         /// </summary>
 		protected List<IStairsLandingComponent> m_landingConfigurations = new List<IStairsLandingComponent>();
 
-        #region IStairsConfiguration members
-        /// <summary>
+                /// <summary>
         /// Implements the interface method.
         /// </summary>
         public int GetNumberOfRuns()
@@ -82,6 +81,5 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 				config.Width = width;
 			}
         }
-        #endregion
-    }
+            }
 }

@@ -41,8 +41,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -179,8 +178,7 @@ namespace Revit.SDK.Samples.ModelessForm_ExternalEvent.CS
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.Button btnExit;
       private System.Windows.Forms.Button btnDeleted;
       private System.Windows.Forms.Button btnFlipUpDown;

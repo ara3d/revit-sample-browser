@@ -377,8 +377,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             return m_isHighLighted;
         }
 
-        #region IDisposable Members
-
+        
         /// <summary>
         /// Dispose
         /// </summary>
@@ -389,6 +388,5 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             m_region.Dispose();
         }
 
-        #endregion
-    }
+            }
 }

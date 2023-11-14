@@ -63,8 +63,7 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class Command : IExternalCommand
    {
-      #region Class Interface Implementation
-      public virtual Result Execute(ExternalCommandData commandData
+            public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {
          try
@@ -108,10 +107,8 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
             return Result.Failed;
          }
       }
-      #endregion
-
-      #region MainMethods
-      /// <summary>
+      
+            /// <summary>
       /// Generates paths of travel for near-corner points in one room to a single selected door.
       /// </summary>
       private void CreatePathsOfTravelInOneRoomMultiplePointsToOneDoor(UIDocument uiDoc)
@@ -195,10 +192,8 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
          CreatePathsOfTravelInAllRoomsAllDoorsMultiplePointsManyToMany(doc, viewPlan, false);
 
       }
-      #endregion
-
-      #region RoomUtils
-      /// <summary>
+      
+            /// <summary>
       /// A selection filter that accepts selection of door elements only.
       /// </summary>
       class DoorSelectionFilter : ISelectionFilter
@@ -304,10 +299,8 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
 
          return nearCornerPoints;
       }
-      #endregion
-
-      #region PathOfTravelCreationUtils
-      /// <summary>
+      
+            /// <summary>
       /// Shared implementation for use of Path of Travel bulk creation routine from all near-corner room points to all doors.
       /// </summary>
       /// <param name="doc"></param>
@@ -500,10 +493,8 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
       {
          GeneratePathsOfTravelForOneRoomManyDoors(doc, viewPlan, room, new List<XYZ> { endPoint }, resultsSummary);
       }
-      #endregion
-
-      #region ResultsUtils
-      /// <summary>
+      
+            /// <summary>
       /// Class that aggregates the results of the path of travel creation for later display and/or logging.
       /// </summary>
       class ResultsSummary
@@ -549,7 +540,6 @@ namespace Revit.SDK.Samples.PathOfTravelCreation.CS
 
 
       }
-      #endregion
-   }
+         }
 }
 

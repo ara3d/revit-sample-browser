@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    public class WallDrawing
    {
-      #region Fields
-      // zoom the baseline to a suitable length
+            // zoom the baseline to a suitable length
       public double SCALEFACTOR = 5.0;
 
       // the boundary of the canvas for the baseline drawing
@@ -50,10 +49,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
       // the baseline of the curtain wall
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// the boundary of the canvas for the baseline drawing
       /// </summary>
       public Rectangle Boundary { get; set; }
@@ -72,10 +69,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public WallBaseline2D WallLine2D { get; }
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// default constructor
       /// </summary>
       /// <param name="wallGeo">
@@ -88,10 +83,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          m_myDocument = wallGeo.MyDocument;
          m_refGeometry = wallGeo;
       }
-      #endregion
-
-      #region Public methods
-      /// <summary>
+      
+            /// <summary>
       /// Add point to baseline of the curtain wall
       /// </summary>
       /// <param name="mousePosition">
@@ -172,10 +165,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          WallLine2D.Clear();
       }
-      #endregion
-
-      #region Private methods
-      /// <summary>
+      
+            /// <summary>
       /// scale the point and store them in PointD format
       /// </summary>
       /// <param name="srcPoint">
@@ -262,6 +253,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          graphics.DrawString(coordinate, m_coordinateFont, Brushes.Blue,
              new PointF(WallLine2D.AssistantPoint.X + 2, WallLine2D.AssistantPoint.Y + 2));
       }
-      #endregion
-   }
+         }
 }

@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -160,8 +159,7 @@ namespace Revit.SDK.Samples.GenerateFloor.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.GroupBox previewGroupBox;
         private System.Windows.Forms.PictureBox previewPictureBox;
         private System.Windows.Forms.ComboBox floorTypesComboBox;

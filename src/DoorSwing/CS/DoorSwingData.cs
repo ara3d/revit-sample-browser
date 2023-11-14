@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
     /// </summary>
     public class DoorSwingData
     {
-        #region "Memebers"
-
+        
         // store door-opening types: user to decide how he wants to identify 
         // the Left, Right or others information.
         public static List<string> OpeningTypes = new List<string>();
@@ -43,17 +42,13 @@ namespace Revit.SDK.Samples.DoorSwing.CS
 
         UIApplication m_app;
 
-        #endregion
-
-        #region "Properties"
-
+        
+        
         // retrieves door families.
         public List<DoorFamily> DoorFamilies { get; } = new List<DoorFamily>();
 
-        #endregion
-
-        #region "Methods"
-
+        
+        
         /// <summary>
         /// fill OpeningTypes static member variable.
         /// </summary>
@@ -515,6 +510,5 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             }
         }
 
-        #endregion
-    }
+            }
 }

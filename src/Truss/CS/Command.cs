@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.Truss.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
             ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             var trussForm = new TrussForm(commandData);
@@ -46,6 +45,5 @@ namespace Revit.SDK.Samples.Truss.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }

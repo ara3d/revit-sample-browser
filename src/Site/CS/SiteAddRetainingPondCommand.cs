@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.Site.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class SiteAddRetainingPondCommand : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         /// <summary>
         /// Implementation of the external command.
         /// </summary>
@@ -153,6 +152,5 @@ namespace Revit.SDK.Samples.Site.CS
             }
         }
 
-        #endregion
-    }
+            }
 }

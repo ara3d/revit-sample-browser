@@ -44,8 +44,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -140,8 +139,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.PictureBox openingPictureBox;
         private System.Windows.Forms.Button cancelButton;

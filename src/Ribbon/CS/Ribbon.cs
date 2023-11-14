@@ -54,8 +54,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
         // uiApplication
         static UIApplication uiApplication;
 
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implement this method to implement the external application which should be called when 
         /// Revit starts before a file or default template is actually loaded.
         /// </summary>
@@ -109,8 +108,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
 
             return Result.Succeeded;
         }
-        #endregion
-
+        
         /// <summary>
         /// This method is used to create RibbonSample panel, and add wall related command buttons to it:
         /// 1. contains a SplitButton for user to create Non-Structural or Structural Wall;
@@ -130,8 +128,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
             var firstPanelName = "Ribbon Sample";
             var ribbonSamplePanel = application.CreateRibbonPanel(firstPanelName);
 
-            #region Create a SplitButton for user to create Non-Structural or Structural Wall
-            var splitButtonData = new SplitButtonData("NewWallSplit", "Create Wall");
+                        var splitButtonData = new SplitButtonData("NewWallSplit", "Create Wall");
             var splitButton = ribbonSamplePanel.AddItem(splitButtonData) as SplitButton;
             var pushButton = splitButton.AddPushButton(new PushButtonData("WallPush", "Wall", AddInPath, "Revit.SDK.Samples.Ribbon.CS.CreateWall"));
             pushButton.LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "CreateWall.png"), UriKind.Absolute));
@@ -141,12 +138,10 @@ namespace Revit.SDK.Samples.Ribbon.CS
             pushButton = splitButton.AddPushButton(new PushButtonData("StrWallPush", "Structure Wall", AddInPath, "Revit.SDK.Samples.Ribbon.CS.CreateStructureWall"));
             pushButton.LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "StrcturalWall.png"), UriKind.Absolute));
             pushButton.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "StrcturalWall-S.png"), UriKind.Absolute));
-            #endregion
-
+            
             ribbonSamplePanel.AddSeparator();
 
-            #region Add a StackedButton which is consisted of one PushButton and two Comboboxes
-            var pushButtonData = new PushButtonData("Reset", "Reset", AddInPath, "Revit.SDK.Samples.Ribbon.CS.ResetSetting");
+                        var pushButtonData = new PushButtonData("Reset", "Reset", AddInPath, "Revit.SDK.Samples.Ribbon.CS.ResetSetting");
             var comboBoxDataLevel = new ComboBoxData("LevelsSelector");
             var comboBoxDataShape = new ComboBoxData("WallShapeComboBox");
             var ribbonItemsStacked = ribbonSamplePanel.AddStackedItems(pushButtonData, comboBoxDataLevel, comboBoxDataShape);
@@ -165,12 +160,10 @@ namespace Revit.SDK.Samples.Ribbon.CS
             comboBoxMemberData = new ComboBoxMemberData("SquareWall", "SquareWall");
             comboboxMember = comboboxWallShape.AddItem(comboBoxMemberData);
             comboboxMember.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "SquareWall.png"), UriKind.Absolute));
-            #endregion
-
+            
             ribbonSamplePanel.AddSeparator();
 
-            #region Add a RadioButtonGroup for user to select WallType
-            var radioButtonGroupData = new RadioButtonGroupData("WallTypeSelector");
+                        var radioButtonGroupData = new RadioButtonGroupData("WallTypeSelector");
             var radioButtonGroup = (RadioButtonGroup)(ribbonSamplePanel.AddItem(radioButtonGroupData));
             var toggleButton = radioButtonGroup.AddItem(new ToggleButtonData("Generic8", "Generic - 8\"", AddInPath, "Revit.SDK.Samples.Ribbon.CS.Dummy"));
             toggleButton.LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Generic8.png"), UriKind.Absolute));
@@ -178,25 +171,21 @@ namespace Revit.SDK.Samples.Ribbon.CS
             toggleButton = radioButtonGroup.AddItem(new ToggleButtonData("ExteriorBrick", "Exterior - Brick", AddInPath, "Revit.SDK.Samples.Ribbon.CS.Dummy"));
             toggleButton.LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "ExteriorBrick.png"), UriKind.Absolute));
             toggleButton.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "ExteriorBrick-S.png"), UriKind.Absolute));
-            #endregion
-
+            
             //slide-out panel:
             ribbonSamplePanel.AddSlideOut();
 
-            #region add a Text box to set the mark for new wall
-            var testBoxData = new TextBoxData("WallMark");
+                        var testBoxData = new TextBoxData("WallMark");
             var textBox = (TextBox)(ribbonSamplePanel.AddItem(testBoxData));
             textBox.Value = "new wall"; //default wall mark
             textBox.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "WallMark.png"), UriKind.Absolute));
             textBox.ToolTip = "Set the mark for new wall";
             textBox.ShowImageAsButton = true;
             textBox.EnterPressed += new EventHandler<TextBoxEnterPressedEventArgs>(SetTextBoxValue);
-            #endregion
-
+            
             ribbonSamplePanel.AddSeparator();
 
-            #region Create a StackedButton which consisted of a PushButton (delete all the walls) and a PulldownButton (move all the walls in X or Y direction)
-            var deleteWallsButtonData = new PushButtonData("deleteWalls", "Delete Walls", AddInPath, "Revit.SDK.Samples.Ribbon.CS.DeleteWalls");
+                        var deleteWallsButtonData = new PushButtonData("deleteWalls", "Delete Walls", AddInPath, "Revit.SDK.Samples.Ribbon.CS.DeleteWalls");
             deleteWallsButtonData.ToolTip = "Delete all the walls created by the Create Wall tool.";
             deleteWallsButtonData.Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "DeleteWalls.png"), UriKind.Absolute));
 
@@ -217,8 +206,7 @@ namespace Revit.SDK.Samples.Ribbon.CS
             var moveY = moveWallItem.AddPushButton(new PushButtonData("YDirection", "Y Direction", AddInPath, "Revit.SDK.Samples.Ribbon.CS.YMoveWalls"));
             moveY.ToolTip = "move all walls 10 feet in Y direction.";
             moveY.LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "MoveWallsYLarge.png"), UriKind.Absolute));
-            #endregion
-
+            
             ribbonSamplePanel.AddSeparator();
 
             application.ControlledApplication.DocumentCreated += new EventHandler<Autodesk.Revit.DB.Events.DocumentCreatedEventArgs>(DocumentCreated);

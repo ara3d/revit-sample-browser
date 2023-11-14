@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.MoveLinear.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        public Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
+                public Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
         {
             var res = Result.Succeeded;
             var trans = new Transaction(cmdData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.MoveLinear");
@@ -108,6 +107,5 @@ namespace Revit.SDK.Samples.MoveLinear.CS
             trans.Commit();
             return res;
         }
-        #endregion IExternalCommand Members Implementation
-    }
+            }
 }

@@ -27,8 +27,7 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    class ThisCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-
+      
       public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
       {
          if (!DockablePane.PaneExists(DefaultFamilyTypes.PaneId) ||
@@ -52,6 +51,5 @@ namespace Revit.SDK.Samples.GetSetDefaultTypes.CS
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 }

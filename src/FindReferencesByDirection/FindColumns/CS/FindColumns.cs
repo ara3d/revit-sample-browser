@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.FindColumns.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        #region Class Members
-        /// <summary>
+                /// <summary>
         /// This is the increment by which the code checks for embedded columns on a curved wall.
         /// </summary>
         private static double WallIncrement = 0.5;  // Check every 1/2'
@@ -70,10 +69,8 @@ namespace Revit.SDK.Samples.FindColumns.CS
         /// A 3d view 
         /// </summary>
         private View3D m_view3D;
-        #endregion
-
-        #region Class Interface Implementation
-        /// <summary>
+        
+                /// <summary>
         /// The top level command.
         /// </summary>
         /// <param name="revit">An object that is passed to the external application 
@@ -149,10 +146,8 @@ namespace Revit.SDK.Samples.FindColumns.CS
             }
             return Result.Succeeded;
         }
-        #endregion
-
-        #region Class Implementation
-        /// <summary>
+        
+                /// <summary>
         /// Check a list of walls for embedded columns.
         /// </summary>
         /// <param name="wallsToCheck">The list of walls to check.</param>
@@ -413,6 +408,5 @@ namespace Revit.SDK.Samples.FindColumns.CS
                 }
             }
         }
-        #endregion
-    }
+            }
 }

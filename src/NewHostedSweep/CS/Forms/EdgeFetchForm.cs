@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
     /// </summary>
     public partial class EdgeFetchForm : System.Windows.Forms.Form
     {
-        #region Fields and Constructors
-        
+                
         /// <summary>
         /// Contains all the data need to fetch edges.
         /// </summary>
@@ -90,10 +89,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             treeViewHost.StateImageList = imageListForCheckBox;
             m_trackBall = new TrackBall();
         }
-        #endregion
-
-        #region Initialize Methods
-
+        
+        
         /// <summary>
         /// Initialize the combo box data source with Autodesk.Revit.DB.
         /// e.g. FasciaTypes, GutterTypes, SlabEdgeTypes, and so on.
@@ -229,10 +226,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 break;
             }
         }        
-        #endregion
-
-        #region Auxiliary Methods
-
+        
+        
         /// <summary>
         /// Extract the checked edges in the whole tree to CreationData.EdgesForHostedSweep.
         /// </summary>
@@ -376,10 +371,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             return result;
         }
 
-        #endregion
-
-        #region Event handles
-
+        
+        
         /// <summary>
         /// Extract checked edges and verify there are edges 
         /// checked in the treeView, if there aren't edges to be checked, complain
@@ -635,6 +628,5 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
                 pictureBoxPreview.Refresh();
             }
         }
-        #endregion
-    }
+            }
 }

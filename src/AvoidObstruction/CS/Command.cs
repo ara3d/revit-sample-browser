@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
           public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
@@ -59,6 +58,5 @@ namespace Revit.SDK.Samples.AvoidObstruction.CS
             return Result.Succeeded;
         }
 
-        #endregion        
-    }
+            }
 }

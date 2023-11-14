@@ -32,23 +32,18 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public sealed class RevitVersionAttribute : Attribute
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// Revit version name array
         /// </summary>
         List<ProductType> m_products = new List<ProductType>(); 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets Revit version names
         /// </summary>
         public ReadOnlyCollection<ProductType> Names => m_products.AsReadOnly();
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initializes Revit version name array
         /// </summary>
         /// <param name="names"></param>
@@ -56,6 +51,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             m_products.AddRange(names);
         } 
-        #endregion
-    };
+            };
 }

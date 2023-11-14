@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
@@ -57,8 +56,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
             return Result.Succeeded;
         }
 
-        #endregion
-        
+                
         /// <summary>
         /// Sets up the add-in panel for this sample.
         /// </summary>

@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
    /// </summary>
    public abstract class Profile
    {
-      #region members
-      /// <summary>
+            /// <summary>
       ///Wall or Floor element 
       /// </summary>
       protected Element m_dataProfile;
@@ -60,8 +59,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
       /// Document creator
       /// </summary>
       protected Autodesk.Revit.Creation.Document m_docCreator;
-      #endregion
-
+      
       /// <summary>
       /// Abstract method to create Opening
       /// </summary>

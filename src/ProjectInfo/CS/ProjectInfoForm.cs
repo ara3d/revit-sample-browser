@@ -27,15 +27,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public partial class ProjectInfoForm : System.Windows.Forms.Form
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// Wrapper for ProjectInfo
         /// </summary>
         ProjectInfoWrapper m_projectInfoWrapper; 
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initialize component
         /// </summary>
         public ProjectInfoForm()
@@ -55,6 +52,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             // Initialize propertyGrid with CustomDescriptor
             propertyGrid1.SelectedObject = new WrapperCustomDescriptor(m_projectInfoWrapper);
         }
-        #endregion
-    }
+            }
 }

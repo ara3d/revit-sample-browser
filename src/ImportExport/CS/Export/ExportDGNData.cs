@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class ExportDGNData : ExportDataWithViews
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// String list of Layer Settings used in UI
         /// </summary>
         List<string> m_layerMapping;
@@ -69,10 +68,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Whether to hide reference plane
         /// </summary>
         private bool m_hideReferencePlane;
-        #endregion
-
-        #region Class Properties
-        /// <summary>
+        
+                /// <summary>
         /// Layer setting option to export
         /// </summary>
         public string ExportLayerMapping
@@ -132,10 +129,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// </summary>
         public ReadOnlyCollection<string> EnumLayerMapping => new ReadOnlyCollection<string>(m_enumLayerMapping);
 
-        #endregion
-
-        #region Class Member Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
@@ -220,6 +215,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
             var exported = m_activeDoc.Export(m_exportFolder, m_exportFileName, views, dgnExportOptions);
             return exported;
         }
-        #endregion
-    }
+            }
 }

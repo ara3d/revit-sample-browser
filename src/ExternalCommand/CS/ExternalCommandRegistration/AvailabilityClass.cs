@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
    /// </summary>
    class WallSelection : IExternalCommandAvailability
    {
-      #region IExternalCommandAvailability Members
-
+      
       public bool IsCommandAvailable(UIApplication applicationData, 
          Autodesk.Revit.DB.CategorySet selectedCategories)
       {
@@ -50,8 +49,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
          return true;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// Implements the Revit add-in interface IExternalCommandAvailability, 
@@ -61,8 +59,7 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
    /// </summary>
    class View3D : IExternalCommandAvailability
    {
-      #region IExternalCommandAvailability Members
-
+      
       public bool IsCommandAvailable(UIApplication applicationData, 
          Autodesk.Revit.DB.CategorySet selectedCategories)
       {
@@ -77,6 +74,5 @@ namespace Revit.SDK.Samples.ExternalCommandRegistration.CS
          }
       }
 
-      #endregion
-   }
+         }
 }

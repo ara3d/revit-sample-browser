@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -178,8 +177,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.GroupBox groupBoxShow;
         private System.Windows.Forms.CheckBox checkBoxViews;
         private System.Windows.Forms.CheckBox checkBoxSheets;

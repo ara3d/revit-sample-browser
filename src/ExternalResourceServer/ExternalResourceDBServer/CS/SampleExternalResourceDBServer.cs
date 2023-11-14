@@ -61,8 +61,7 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
 
 
       // Methods that must be implemented by a server for any of Revit's external services
-      #region IExternalServer Implementation
-
+      
       /// Indicate which of Revit's external services this server supports.
       /// Servers derived from IExternalResourceServer *must* return
       /// ExternalServices.BuiltInExternalServices.ExternalResourceService.
@@ -103,14 +102,12 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
          return "A Revit SDK sample external resource server which provides keynote data and Revit links.";
       }
 
-      #endregion IExternalServer Implementation
-
+      
 
 
 
       ///  Methods implemented specifically by servers for the ExternalResource service
-      #region IExternalResourceServer Implementation
-
+      
       public string GetShortName()
       {
          return GetName();
@@ -330,12 +327,10 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
          revitLinkOps.SetOnLocalLinkSharedCoordinatesSavedCallback(new LocalLinkSharedCoordinatesSaved());
       }
 
-      #endregion IExternalResourceServer Implementation
+      
 
 
-
-      #region SampleExternalResourceDBServer Implementation
-
+      
       /// <summary>
       /// <para>Returns the path of the server's root folder.  The contents of this folder will be displayed
       /// when the user first selects this server while browsing to load keynote data or a Revit link
@@ -676,12 +671,9 @@ namespace Revit.SDK.Samples.ExternalResourceDBServer.CS
          return LocalLinkCacheFolder + resource.GetReferenceInformation()[RefMapLinkPathEntry].Replace("/", "\\");
       }
 
-      #endregion SampleExternalResourceDBServer Implementation
-
+      
 
       
 
-      #region SampleExternalResourceDBServer Member Variables
-      #endregion SampleExternalResourceDBServer Member Variables
-   }
+               }
 }

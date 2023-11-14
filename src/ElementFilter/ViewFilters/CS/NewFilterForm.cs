@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
     /// </summary>
     public partial class NewFilterForm : Form
     {
-        #region Class Memeber
-        /// <summary>
+                /// <summary>
         /// In-use filter names
         /// </summary>
         ICollection<string> m_inUseFilterNames;
@@ -48,8 +47,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// </summary>
         public string FilterName => m_filterName;
 
-        #endregion
-
+        
         /// <summary>
         /// Show form for new filter name
         /// </summary>

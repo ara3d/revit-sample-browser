@@ -50,10 +50,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       }
 
 
-      #region Data
-      private static string sm_assemblyPath;
+            private static string sm_assemblyPath;
       private static string sm_assemblyFullName;
       private static string sm_appResourcePath;
-      #endregion
-   }
+         }
 }

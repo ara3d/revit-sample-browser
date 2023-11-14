@@ -36,14 +36,11 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
     /// </summary>
     internal class Analyzer
     {
-        #region Data
-        private Document m_document;
+                private Document m_document;
         private RoutingPreferenceManager m_routingPreferenceManager;
         private double m_mepSize;
-        #endregion
-
-        #region Public interface
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="routingPreferenceManager"></param>
@@ -174,10 +171,8 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
             xReportDoc.Add(xroot);
             return xReportDoc;
         }
-        #endregion
-
-        #region Analyis helper methods
-
+        
+        
         /// <summary>
         /// Get basic information about the PipeType
         /// </summary>
@@ -404,6 +399,5 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
             return partIdInfoList;
         }
-        #endregion
-    }
+            }
 }

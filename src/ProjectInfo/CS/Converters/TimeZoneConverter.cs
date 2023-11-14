@@ -7,8 +7,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class TimeZoneConverter : TypeConverter
     {
-        #region Methods
-        /// <summary>
+                /// <summary>
         /// Returns whether this object supports a standard set of values that can be
         /// picked from a list, using the specified context.
         /// </summary>
@@ -37,6 +36,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             return new StandardValuesCollection(RevitStartInfo.TimeZones);
         }
-        #endregion
-    };
+            };
 }

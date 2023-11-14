@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command:IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        public Result Execute(ExternalCommandData commandData, 
+                public Result Execute(ExternalCommandData commandData, 
             ref string message, ElementSet elements)
         {
             var transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "External Tool");
@@ -50,8 +49,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 {
                    elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
                 }
-                #region selection error handle
-                //if user have some wrong selection, give user an error message
+                                //if user have some wrong selection, give user an error message
                 if (1 != elems.Size)
                 {
                     message = "please selected one Object (Floor or Wall) to create Opening.";
@@ -69,8 +67,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                     message = "please selected one Object (Floor or Wall) to create Opening.";
                     return Result.Cancelled;
                 }
-                #endregion
-                try
+                                try
                 {
                     if (selectElem is Wall)
                     {
@@ -105,6 +102,5 @@ namespace Revit.SDK.Samples.NewOpenings.CS
                 transaction.Commit();
             }
         }
-        #endregion
-    }
+            }
 }

@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
    /// </summary>
    public class IssueMarker
    {
-      #region Class implementation
-
+      
       private IssueMarker(ElementId elementId, int controlIndex, InCanvasControlData inCanvasControlData)
       {
          this.TrackedElementId = elementId;
@@ -86,10 +85,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       /// </summary>
       public ElementId TrackedElementId { get; }
 
-      #endregion
-
-      #region Class member variables
-
-      #endregion
-   }
+      
+      
+         }
 }

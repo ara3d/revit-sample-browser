@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
     class ScheduleFormatterCommand : IExternalCommand
     {
         
-        #region IExternalCommand Members
-
+        
         /// <summary>
         /// The command implementation.
         /// </summary>
@@ -76,8 +75,7 @@ namespace Revit.SDK.Samples.ScheduleAutomaticFormatter.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// Adds an entity to the schedule, indicating that the schedule should be formatted by this tool.
         /// </summary>

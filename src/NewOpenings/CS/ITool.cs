@@ -63,7 +63,6 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// </summary>
     public abstract class ITool
     {
-        # region members
         /// <summary>
         /// ToolType is enum type indicate draw tools.
         /// </summary>
@@ -93,8 +92,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         /// Store the mouse position when mouse move in pictureBox
         /// </summary>        
         protected Point m_preMovePoint;
-        #endregion
-
+        
         /// <summary>
         /// Default constructor
         /// </summary>

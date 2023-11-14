@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.AllViews.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -713,8 +712,7 @@ namespace Revit.SDK.Samples.AllViews.CS
 
         }
 
-        #endregion
-        private System.Windows.Forms.GroupBox GenerateSheetGroupBox;
+                private System.Windows.Forms.GroupBox GenerateSheetGroupBox;
         private System.Windows.Forms.Button oKButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.TreeView allViewsTreeView;

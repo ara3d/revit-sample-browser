@@ -50,12 +50,9 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
     /// </summary>
     public class BasicPointCloudEngine : IPointCloudEngine
     {
-        #region  Class Member Variables
-        private PointCloudEngineType m_type;
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+                private PointCloudEngineType m_type;
+        
+                /// <summary>
         /// Constructs a new instance of the engine.
         /// </summary>
         /// <param name="type">The type of point cloud served by this engine instance.</param>
@@ -63,10 +60,8 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         {
             m_type = type;
         }
-        #endregion
-
-        #region IPointCloudEngine Members
-
+        
+        
         /// <summary>
         /// Implementation of IPointCloudEngine.CreatePointCloudAccess().
         /// </summary>
@@ -94,6 +89,5 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             //Nothing to do
         }
 
-        #endregion
-    }
+            }
 }

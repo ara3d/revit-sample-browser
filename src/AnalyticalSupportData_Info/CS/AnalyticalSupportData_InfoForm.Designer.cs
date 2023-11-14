@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -143,8 +142,7 @@ namespace Revit.SDK.Samples.AnalyticalSupportData_Info.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.Button closeButton;
        private System.Windows.Forms.DataGridView elementInfoDataGridView;
        private System.Windows.Forms.DataGridViewTextBoxColumn id;

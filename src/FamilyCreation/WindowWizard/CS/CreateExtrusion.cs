@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
    /// </summary>
    class CreateExtrusion
    {
-      #region Class Memeber Variables
-      /// <summary>
+            /// <summary>
       /// store the document
       /// </summary>
       Document m_document;
@@ -46,8 +45,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
       /// store the FamilyItemFactory of creation
       /// </summary>
       Autodesk.Revit.Creation.FamilyItemFactory m_familyCreator;
-      #endregion
-
+      
       /// <summary>
       /// The constructor of CreateExtrusion
       /// </summary>
@@ -60,8 +58,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
          m_familyCreator = doc.FamilyCreate;
       }
 
-      #region Class Implementation
-      /// <summary>
+            /// <summary>
       /// The method is used to create a CurveArray with four double parameters and one y coordinate value
       /// </summary>
       /// <param name="left">the left value</param>
@@ -173,6 +170,5 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             return null;
          }
       }
-      #endregion
-   }
+         }
 }

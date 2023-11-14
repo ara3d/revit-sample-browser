@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.RoomSchedule
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class CrtlApplication : IExternalApplication
     {
-        #region Class Members 
-        /// <summary>
+                /// <summary>
         /// The events reactor for this application. 
         /// </summary>
         static private EventsReactor m_eventReactor;
@@ -57,11 +56,9 @@ namespace Revit.SDK.Samples.RoomSchedule
                 }
             }
         }
-        #endregion
+        
 
-
-        #region IExternalApplication Implementations
-        /// <summary>
+                /// <summary>
         /// Implement OnStartup method to subscribe related events.
         /// </summary>
         /// <param name="application">Current loaded application.</param>
@@ -92,6 +89,5 @@ namespace Revit.SDK.Samples.RoomSchedule
             application.ControlledApplication.DocumentClosed -= new EventHandler<Autodesk.Revit.DB.Events.DocumentClosedEventArgs>(EventReactor.DocumentClosed);
             return Result.Succeeded;
         }
-        #endregion
-    }
+            }
 }

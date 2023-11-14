@@ -39,8 +39,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    public class GridProperties
    {
-      #region Fields
-      // stores the data of vertical justification
+            // stores the data of vertical justification
 
       // stores the data of vertical angle
 
@@ -66,10 +65,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
       // stores how many unlocked mullions there are in the grid
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// stores the data of vertical justification
       /// </summary>
       [CategoryAttribute("Vertical Grid Pattern"), DefaultValueAttribute(CurtainGridAlign.Beginning), ReadOnlyAttribute(true)]
@@ -147,6 +144,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       [CategoryAttribute("Other Data"), DefaultValueAttribute(0), ReadOnlyAttribute(true)]
       public int UnlockedmullionsNumber { get; set; }
 
-      #endregion
-   } // end of class
+         } // end of class
 }

@@ -92,8 +92,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             }
         }
 
-        #region PRIVATE
-        /// <summary>
+                /// <summary>
         /// The first Winder Corner, connecting the first and the second straight runs.
         /// </summary>
         private WinderSinglePoint m_corner1st;
@@ -164,8 +163,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             m_straightAtEnd = new WinderStraight(
                 m_corner2nd.EndPoint, endPnt, perpendicularDir3, NumStepsAtEnd);
         }
-        #endregion
-
+        
         /// <summary>
         /// This method generates the sketch for U-shape winder stairs.
         /// </summary>

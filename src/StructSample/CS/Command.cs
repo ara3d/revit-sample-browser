@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.StructSample.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class Command : IExternalCommand
    {
-      #region Interface implementation
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+            public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          try
          {
@@ -109,8 +108,7 @@ namespace Revit.SDK.Samples.StructSample.CS
             return Result.Failed;
          }
       }
-      #endregion
-
+      
 
       /// <summary>
       /// find Column which will be used to placed to Wall

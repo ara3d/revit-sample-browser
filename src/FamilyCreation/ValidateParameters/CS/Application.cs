@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     class Application: IExternalApplication
     {
-        #region IExternalApplication Members    
-        /// <summary>
+                /// <summary>
         /// Implement this method to implement the external application which should be called when 
         /// Revit starts before a file or default template is actually loaded.
         /// </summary>
@@ -132,6 +131,5 @@ namespace Revit.SDK.Samples.ValidateParameters.CS
                 msgForm.ShowDialog();
             }
         }
-        #endregion
-    }
+            }
 }

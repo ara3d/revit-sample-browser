@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class Command : IExternalCommand
    {
-      #region IExternalCommand Members Implementation
-      public Result Execute(ExternalCommandData commandData,
+            public Result Execute(ExternalCommandData commandData,
         ref string message, ElementSet elements)
       {
          if (null == commandData)
@@ -57,8 +56,7 @@ namespace Revit.SDK.Samples.SheetToView3D.CS
          return result;
       }
 
-      #endregion IExternalCommand Members Implementation
-   }
+         }
 
    /// <summary>
    /// Generates a View3D from a click on a viewport on a sheet.

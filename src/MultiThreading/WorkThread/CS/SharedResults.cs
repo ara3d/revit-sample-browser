@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
     /// 
     class SharedResults
     {
-        #region class member variables
-        // List of ValueAtPoints
+                // List of ValueAtPoints
         private IList<ValueAtPoint> m_values = new List<ValueAtPoint>();
         // List of UV points
         private IList<UV> m_points = new List<UV>();
@@ -48,10 +47,8 @@ namespace Revit.SDK.Samples.WorkThread.CS
         private bool m_completed;
         // Last read number
         private int m_NumberWhenLastRead;
-        #endregion
-
-        #region class member methods
-        /// <summary>
+        
+                /// <summary>
         ///   Signaling no more results are needed
         /// </summary>
         /// <remarks>
@@ -136,7 +133,6 @@ namespace Revit.SDK.Samples.WorkThread.CS
 
             return accepted;
         }
-        #endregion
-    }  // class
+            }  // class
 
 }

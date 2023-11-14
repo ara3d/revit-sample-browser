@@ -34,18 +34,15 @@ namespace Revit.SDK.Samples.Reinforcement.CS
    /// </summary>
    public class ColumnFramReinMaker : FramReinMaker
    {
-      #region Private Members
-
+      
       ColumnGeometrySupport m_geometry; // The geometry support for column rebar creation
 
       double m_transverseEndSpacing;    //the space value of end transverse rebar
       double m_transverseCenterSpacing; //the space value of center transverse rebar
       int m_verticalRebarNumber;        //the number of the vertical rebar
 
-      #endregion
-
-      #region Properties
-
+      
+      
       /// <summary>
       /// get and set the type of the end transverse rebar
       /// </summary>
@@ -114,10 +111,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
       /// </summary>
       public RebarHookType TransverseHookType { get; set; }
 
-      #endregion
-
-      #region Constructor
-      /// <summary>
+      
+            /// <summary>
       /// Constructor of the ColumnFramReinMaker
       /// </summary>
       /// <param name="commandData">the ExternalCommandData reference</param>
@@ -132,10 +127,8 @@ namespace Revit.SDK.Samples.Reinforcement.CS
          //create a ColumnGeometrySupport instance 
          m_geometry = new ColumnGeometrySupport(hostObject, geoOptions);
       }
-      #endregion
-
-      #region Override Methods
-
+      
+      
       /// <summary>
       /// Override method to do some further checks
       /// </summary>
@@ -177,8 +170,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
          return base.FillWithBars();
       }
 
-      #endregion
-
+      
       /// <summary>
       /// create the transverse rebars for the column
       /// </summary>

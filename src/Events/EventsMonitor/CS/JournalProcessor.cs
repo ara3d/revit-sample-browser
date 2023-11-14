@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
     /// </summary>
     public class JournalProcessor
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// xml file name.
         /// </summary>
         private string m_xmlFile;
@@ -61,10 +60,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// direcotory of xml file.
         /// </summary>
         private string m_directory;
-        #endregion
-
-        #region Class Property
-        /// <summary>
+        
+                /// <summary>
         /// Property to get private member variables to check the stauts is playing or recording.
         /// </summary>
         public bool IsReplay => m_isReplay;
@@ -74,10 +71,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         public List<string> EventsList => m_eventsInFile;
 
-        #endregion
-
-        #region Class Constructor and Destructor
-        /// <summary>
+        
+                /// <summary>
         /// Constructor without argument.
         /// </summary>
         public JournalProcessor()
@@ -92,10 +87,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             // get event list from xml file.
             GetEventsListFromFile();
         }
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// Check whether the xml file is exist or not.
         /// </summary>
         /// <returns></returns>
@@ -168,7 +161,6 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
                 data.Add(eventname, "1");
             }
         }
-        #endregion
-    }
+            }
 }
  

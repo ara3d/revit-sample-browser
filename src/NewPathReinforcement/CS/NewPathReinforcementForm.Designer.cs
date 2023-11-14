@@ -41,8 +41,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -164,8 +163,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Button createButton;
         private System.Windows.Forms.Button cancelButton;

@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -169,8 +168,7 @@ namespace Revit.SDK.Samples.AddSpaceAndZone.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.ListView availableSpacesListView;
         private System.Windows.Forms.ListView currentSpacesListView;
         private System.Windows.Forms.Button addSpaceButton;

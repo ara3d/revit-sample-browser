@@ -37,17 +37,14 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
       // class instance
       internal static Application thisApp;
 
-      #region Class member variables
-      // ModelessForm instance
+            // ModelessForm instance
       private AppearanceAssetEditingForm m_MyForm;
       UIApplication m_revit;
       Document m_document;
       Material m_currentMaterial;
       ElementId m_currentAppearanceAssetElementId;
-      #endregion
-
-      #region IExternalApplication Members
-      /// <summary>
+      
+            /// <summary>
       /// Implements the OnShutdown event
       /// </summary>
       /// <param name="application"></param>
@@ -408,6 +405,5 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
 
       }
 
-      #endregion
-   }
+         }
 }

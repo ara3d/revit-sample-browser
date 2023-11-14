@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
     /// </summary>
     public partial class NewPathReinforcementForm : System.Windows.Forms.Form
     {
-        #region class members
-        private Profile m_profile;  //save the profile date (ProfileFloor or ProfileWall)
+                private Profile m_profile;  //save the profile date (ProfileFloor or ProfileWall)
         private Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
         private Matrix4 m_moveToCenterMatrix;  //save the matrix use to move point to origin
         private Matrix4 m_scaleMatrix; //save the matrix use to scale
@@ -47,8 +46,7 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
         private bool m_previewMode; //indicate whether in the Preview Mode
         private List<List<XYZ>> m_pointsPreview; //store all the points of the preview
         Size m_sizePictureBox; //size of picture box
-        #endregion
-
+        
         /// <summary>
         /// constructor
         /// </summary>

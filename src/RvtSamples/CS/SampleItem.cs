@@ -27,8 +27,7 @@
     /// </summary>
     public class SampleItem
     {
-        #region Variables
-        /// <summary>
+                /// <summary>
         /// category
         /// </summary>
         private string m_category;
@@ -56,10 +55,8 @@
         /// class name
         /// </summary>
         private string m_className;
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// category
         /// </summary>
         public string Category => m_category;
@@ -94,9 +91,6 @@
         /// </summary>
         public string ClassName => m_className;
 
-        #endregion
-
-        # region Methods
         /// <summary>
         /// Constructor
         /// </summary>
@@ -124,6 +118,5 @@
             m_assembly = assembly;
             m_className = className;
         }
-        #endregion
-    }
+            }
 }

@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    /// </summary>
    public class DoorFamily
    {
-      #region "Members"
-
+      
       // door family
       Family m_family;
       // opening value of one of this family's door which neither flipped nor mirrored.
@@ -46,10 +45,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       // the geometry of one of this family's door which neither flipped nor mirrored.
       DoorGeometry m_geometry;
 
-      #endregion
-
-      #region "Properties"
-
+      
+      
       /// <summary>
       /// Retrieval the name of this family.
       /// </summary>
@@ -107,10 +104,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          }
       }
 
-      #endregion
-
-      #region "Methods"
-
+      
+      
       /// <summary>
       ///  construct function.
       /// </summary>
@@ -190,6 +185,5 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          return createdFamilyInstance;
       }
 
-      #endregion
-   }
+         }
 }

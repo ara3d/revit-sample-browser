@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class DisplacementStructureModelAnimatorCommand : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
            new DisplacementStructureModelAnimator(commandData.Application, true).StartAnimation();
@@ -39,8 +38,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
            return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 
     /// <summary>
     /// The command that initializes and starts the model animation step by step.
@@ -48,8 +46,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class DisplacementStructureModelAnimatorCommandStepByStep : IExternalCommand
     {
-       #region IExternalCommand Members
-
+       
        public static DisplacementStructureModelAnimator m_displacementstructuremodelAnimator;
 
        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
@@ -67,6 +64,5 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
           return Result.Succeeded;
        }
 
-       #endregion
-    }
+           }
  }

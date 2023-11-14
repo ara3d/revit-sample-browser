@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class DuplicateAcrossDocumentsCommand : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         /// <summary>
         /// The command implementation.
         /// </summary>
@@ -100,6 +99,5 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }

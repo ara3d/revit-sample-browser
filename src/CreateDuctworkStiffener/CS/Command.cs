@@ -55,8 +55,7 @@ namespace Revit.SDK.Samples.CreateDuctworkStiffener.CS
       /// </summary>
       private double m_distanceToHostEnd;
 
-      #region IExternalCommand Members
-      public Result Execute(ExternalCommandData commandData, ref string message,
+            public Result Execute(ExternalCommandData commandData, ref string message,
             ElementSet elements)
       {
          m_document = commandData.Application.ActiveUIDocument.Document;
@@ -127,7 +126,6 @@ namespace Revit.SDK.Samples.CreateDuctworkStiffener.CS
          }
       }
 
-      #endregion
-   }
+         }
 }
 

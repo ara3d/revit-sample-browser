@@ -87,12 +87,10 @@ namespace Revit.Samples.MaterialQuantities
             calculator.ReportResults(m_writer);
         }
 
-        #region Basic Command Data
-        private Document m_doc;
+                private Document m_doc;
 
         private TextWriter m_writer;
-        #endregion
-
+        
     }
 
     /// <summary>
@@ -400,8 +398,7 @@ namespace Revit.Samples.MaterialQuantities
             }
         }
 
-        #region Results Storage
-        /// <summary>
+                /// <summary>
         /// A storage of material quantities per individual element.
         /// </summary>
         private Dictionary<ElementId, Dictionary<ElementId, MaterialQuantities>> m_quantitiesPerElement = new Dictionary<ElementId, Dictionary<ElementId, MaterialQuantities>>();
@@ -420,8 +417,7 @@ namespace Revit.Samples.MaterialQuantities
         /// A collection of warnings generated due to failure to delete elements in advance of gross quantity calculations.
         /// </summary>
         private List<string> m_warningsForGrossQuantityCalculations = new List<string>();
-        #endregion
-
+        
         protected Document m_doc;
     }
 

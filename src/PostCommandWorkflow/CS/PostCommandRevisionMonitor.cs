@@ -63,8 +63,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             document.DocumentSaving -= OnSavingPromptForRevisions;
         }
 
-        #region RevitAPI event callbacks
-
+        
         /// <summary>
         /// The DocumentSaving callback.  This callback checks if at least one new revision has been added, and if not
         /// shows instructions to the user to deal with the situation.
@@ -159,8 +158,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
         /// </summary>
         class PostCommandRevisionMonitorEvent : IExternalEventHandler
         {
-            #region IExternalEventHandler Members
-
+            
             /// <summary>
             /// The external event callback to finalize the workflow.
             /// </summary>
@@ -193,11 +191,9 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             /// </summary>
             private PostCommandRevisionMonitor monitor;
 
-            #endregion
-        }
+                    }
 
-        #endregion
-
+        
         /// <summary>
         /// Prompts to edit the revision and resave.
         /// </summary>

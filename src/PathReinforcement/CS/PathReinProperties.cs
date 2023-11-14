@@ -102,8 +102,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// </summary>
         private string m_primaryBarLength;
 
-        #region EnventHanlder for updating selected object of PropertyGrid
-        /// <summary>
+                /// <summary>
         /// update selected object of Property grid after enable / disable some properties.
         /// </summary>
         public delegate void UpdateSelectObjEventHandler();
@@ -112,8 +111,7 @@ namespace Revit.SDK.Samples.PathReinforcement.CS
         /// my event object of updating event
         /// </summary>
         public event UpdateSelectObjEventHandler UpdateSelectObjEvent;
-        #endregion
-
+        
         /// <summary>
         /// constructor of class
         /// </summary>

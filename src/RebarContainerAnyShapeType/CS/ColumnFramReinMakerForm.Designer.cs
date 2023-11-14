@@ -44,8 +44,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -322,8 +321,7 @@ namespace Revit.SDK.Samples.RebarContainerAnyShapeType.CS
 
         }
 
-        #endregion
-
+        
        private System.Windows.Forms.GroupBox rebarTypesGroupBox;
        private System.Windows.Forms.GroupBox rebarSpacingGroupBox;
        private System.Windows.Forms.Label centerTransverseRebarLabel;

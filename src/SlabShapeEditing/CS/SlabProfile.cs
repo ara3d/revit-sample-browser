@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
    /// </summary>
    class SlabProfile
    {
-      #region class member variables
-
+      
       ExternalCommandData m_commandData; //contains reference of Revit Application
 
       Floor m_floor; //object of truss in Revit
@@ -67,8 +66,7 @@ namespace Revit.SDK.Samples.SlabShapeEditing.CS
 
       double m_rotateAngleY; //rotate angle in Y direction
 
-      #endregion
-
+      
       /// <summary>
       /// constructor
       /// </summary>

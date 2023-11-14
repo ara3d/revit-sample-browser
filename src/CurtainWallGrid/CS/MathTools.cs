@@ -30,12 +30,9 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    public class Vector4
    {
-      #region Fields
-
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+      
+            /// <summary>
       /// X property to get/set x value of Vector4
       /// </summary>
       public float X { get; set; }
@@ -55,10 +52,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public float W { get; set; } = 1.0f;
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// constructor
       /// </summary>
       public Vector4(float x, float y, float z)
@@ -74,10 +69,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          X = (float)v.X; Y = (float)v.Y; Z = (float)v.Z;
       }
-      #endregion
-
-      #region Public methods
-      /// <summary>
+      
+            /// <summary>
       /// adds two vectors
       /// </summary>
       /// <param name="va">first vector</param>
@@ -184,8 +177,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
       }
-      #endregion
-   };
+         };
 
    /// <summary>
    /// Matrix used to transform between ucs coordinate and world coordinate.
@@ -223,16 +215,13 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          Normal
       };
 
-      #region Fields
-      // an array stores the matrix
+            // an array stores the matrix
       private float[,] m_matrix = new float[4, 4];
 
       //type of matrix
       private MatrixType m_type;
-      #endregion
-
-      #region Properties and indexeres
-      /// <summary>
+      
+            /// <summary>
       /// indexer of matrix
       /// </summary>
       /// <param name="row">row number</param>
@@ -243,10 +232,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          get => m_matrix[row, column];
          set => m_matrix[row, column] = value;
       }
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// default constructor
       /// </summary>
       public Matrix4()
@@ -311,10 +298,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          m_matrix[1, 1] = scale;
          m_matrix[2, 2] = scale;
       }
-      #endregion
-
-      #region Public methods
-      /// <summary>
+      
+            /// <summary>
       /// Identity matrix
       /// </summary>
       public void Identity()
@@ -423,23 +408,19 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       {
          return new Matrix4(1 / m_matrix[0, 0]);
       }
-      #endregion
-   };
+         };
 
    /// <summary>
    /// the 2D point class which contains double value for its coordinates
    /// </summary>
    public struct PointD
    {
-      #region Fields
-      // X coordinate
+            // X coordinate
 
       // Y coordinate
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// X coordinate
       /// </summary>
       public double X { get; set; }
@@ -449,10 +430,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// </summary>
       public double Y { get; set; }
 
-      #endregion
-
-      #region Constructors
-      /// <summary>
+      
+            /// <summary>
       /// constructor
       /// </summary>
       /// <param name="x">
@@ -466,6 +445,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          X = x;
          Y = y;
       }
-      #endregion
-   }
+         }
 }

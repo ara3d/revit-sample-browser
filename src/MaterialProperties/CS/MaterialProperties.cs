@@ -168,8 +168,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 return parameterTable;
             }
 
-            #region Get all material element parameters
-
+            
             //- Behavior
             var temporaryAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_BEHAVIOR); // hold each parameter
             switch (temporaryAttribute.AsInteger())
@@ -294,8 +293,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
                 temporaryValue = temporaryAttribute.AsValueString();
                 AddDataRow(temporaryAttribute.Definition.Name, temporaryValue, parameterTable);
             }
-            #endregion
-            return parameterTable;
+                        return parameterTable;
         }
 
         /// <summary>

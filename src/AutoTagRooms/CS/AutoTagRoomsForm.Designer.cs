@@ -46,8 +46,7 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -167,8 +166,7 @@ namespace Revit.SDK.Samples.AutoTagRooms.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.ComboBox levelsComboBox;
         private System.Windows.Forms.Label levelLabel;
         private System.Windows.Forms.Label tagTypeLabel;

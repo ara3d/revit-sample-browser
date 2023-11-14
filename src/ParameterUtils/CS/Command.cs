@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members
-        public Result Execute(ExternalCommandData commandData, ref string message,
+                public Result Execute(ExternalCommandData commandData, ref string message,
             ElementSet elements)
         {
             // set out default result to failure.
@@ -140,6 +139,5 @@ namespace Revit.SDK.Samples.ParameterUtils.CS
             return retRes;
         }
 
-        #endregion
-    }
+            }
 }

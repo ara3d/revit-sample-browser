@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -384,8 +383,7 @@ namespace Revit.SDK.Samples.SharedCoordinateSystem.CS
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.TabControl coordinateSystemTabControl;
       private System.Windows.Forms.TabPage locationTabPage;
       private System.Windows.Forms.TabPage placeTabPage;

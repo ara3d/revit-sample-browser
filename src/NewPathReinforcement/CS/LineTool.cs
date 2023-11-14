@@ -31,14 +31,12 @@ namespace Revit.SDK.Samples.NewPathReinforcement.CS
     /// </summary>
     public class LineTool
     {
-        # region members
         private List<Point> m_points = new List<Point>();  // Field used to store points of a line
         private Pen m_backGroundPen;  // background pen used to Erase the preview line
         private Pen m_foreGroundPen;  // foreground pen used to draw lines
         private Point m_preMovePoint;  // store the mouse position when mouse move in pictureBox
 
-        #endregion
-
+        
         /// <summary>
         /// Finished property to define whether curve was finished
         /// </summary>

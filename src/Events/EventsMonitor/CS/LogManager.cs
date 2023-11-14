@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
     /// </summary>
     public class LogManager
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// data table for information windows.
         /// </summary>
         private DataTable m_eventsLog;
@@ -56,18 +55,14 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// This strategy can make the log file alway can be accessable.
         /// </summary>
         private string m_tempFile;
-        #endregion
-
-        #region Class Property
-        /// <summary>
+        
+                /// <summary>
         /// Property to get and set private member variables of Event log information.
         /// </summary>
         public DataTable EventsLog => m_eventsLog;
 
-        #endregion
-
-        #region Class Constructor and Destructor
-        /// <summary>
+        
+                /// <summary>
         /// Constructor without argument.
         /// </summary>
         public LogManager()
@@ -77,10 +72,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             m_eventsLog = CreateEventsLogTable();
         }
 
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// Create a log file to track the subscribed events' work process.
         /// </summary>
         private void CreateLogFile()
@@ -238,6 +231,5 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             var eventName = argName.Substring(firstIndex, length);
             return eventName;
         }
-        #endregion
-    }
+            }
 }

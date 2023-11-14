@@ -32,8 +32,7 @@ namespace SchemaWrapperTools
    public class FieldData
    {
 
-      #region Constructors
-
+      
       /// <summary>
       /// For serialization only -- Do not use.
       /// </summary>
@@ -64,10 +63,8 @@ namespace SchemaWrapperTools
          m_Spec = spec;
          m_SubSchema = subSchema;
       }
-      #endregion
-
-      #region Other helper functions
-      public override string ToString()
+      
+            public override string ToString()
       {
           var strBuilder = new StringBuilder();
           strBuilder.Append("   Field: ");
@@ -84,10 +81,8 @@ namespace SchemaWrapperTools
           }
           return strBuilder.ToString();
       }
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// The name of a schema field
       /// </summary>
       public string Name
@@ -122,14 +117,11 @@ namespace SchemaWrapperTools
           get => m_SubSchema;
           set => m_SubSchema = value;
       }
-      #endregion
-
-      #region Data
-      private SchemaWrapper m_SubSchema;
+      
+            private SchemaWrapper m_SubSchema;
       private string m_Name;
       private string m_Type;
       private string m_Spec;
-      #endregion
-
+      
    }
 }

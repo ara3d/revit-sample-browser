@@ -41,8 +41,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -163,8 +162,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.DataGridView testData;
       private System.Windows.Forms.Button btn_RunTests;
       private System.Windows.Forms.Button btn_SelectAll;

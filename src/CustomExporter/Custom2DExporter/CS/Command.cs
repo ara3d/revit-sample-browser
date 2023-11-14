@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class Command : IExternalCommand
    {
-      #region ExportViewUtils
-      /// <summary>
+            /// <summary>
       /// Generates the list of view types supported by the Exporter. 
       /// </summary>
       /// <returns>List of types that are valid view types for export. </returns>
@@ -90,10 +89,8 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
          resultsSummary.numTexts = context.NumTexts;
          resultsSummary.texts = context.Texts;
       }
-      #endregion
-
-      #region ResultsUtils
-      /// <summary>
+      
+            /// <summary>
       /// Class that aggregates the results of the export.
       /// </summary>
       class ResultsSummary
@@ -127,8 +124,7 @@ namespace Revit.SDK.Samples.Custom2DExporter.CS
 
 
       }
-      #endregion
-
+      
       public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {

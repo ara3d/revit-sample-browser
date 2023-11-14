@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
     /// </summary>
     public class PointCloudCellStorage
     {
-        #region  Class Member Variables
-        [Flags]
+                [Flags]
         private enum PointDirections
         {
             PlusX = 1,
@@ -51,10 +50,8 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         private const int s_maxNumberOfPoints = 1000000;
         private const float s_delta = 0.1f;
         private Random m_random = new Random();
-        #endregion
-
-        #region Class Property
-        /// <summary>
+        
+                /// <summary>
         /// The number of points in the cell.
         /// </summary>
         public int NumberOfPoints { get; private set; }
@@ -74,10 +71,8 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         /// </summary>
         public CloudPoint[] PointsBuffer { get; }
 
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// Creates a new instance of a rectangular cell.
         /// </summary>
         /// <param name="lowerLeft">The lower left point of the cell.</param>
@@ -220,6 +215,5 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             PointsBuffer = new CloudPoint[s_maxNumberOfPoints];
             NumberOfPoints = 0;
         }
-        #endregion
-    }
+            }
 }

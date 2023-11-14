@@ -27,8 +27,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public interface IWrapper
     {
-        #region Properties
-        /// <summary>
+                /// <summary>
         /// Gets the handle object.
         /// </summary>
         object Handle
@@ -43,6 +42,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             get;
         } 
-        #endregion
-    }
+            }
 }

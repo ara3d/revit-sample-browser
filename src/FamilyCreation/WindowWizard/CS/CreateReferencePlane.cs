@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
     /// </summary>
     class CreateRefPlane
     {
-        #region Class Implementation
-        /// <summary>
+                /// <summary>
         /// This method is used to create ReferencePlane along to a host referenceplane with a offset parameter
         /// </summary>
         /// <param name="doc">the document</param>
@@ -64,6 +63,5 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 return null;
             }
         }
-        #endregion
-    }  
+            }  
 }

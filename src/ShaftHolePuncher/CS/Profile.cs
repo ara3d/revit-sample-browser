@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
    /// </summary>
    public abstract class Profile
    {
-      #region class member variables
-      // store all the points on the needed face
+            // store all the points on the needed face
       protected List<List<XYZ>> m_points;
 
       // object which contains reference to Revit Application
@@ -64,8 +63,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
 
       // store the size of pictureBox in UI
       protected Size m_sizePictureBox;
-      #endregion
-
+      
       /// <summary>
       /// constructor
       /// </summary>

@@ -54,8 +54,7 @@ namespace Revit.SDK.Samples.SinePlotter.CS
         private TextBox partitionsBox;
 
 
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
@@ -328,6 +327,5 @@ namespace Revit.SDK.Samples.SinePlotter.CS
             return grandParentDir;
         }
 
-        #endregion
-    }
+            }
 }

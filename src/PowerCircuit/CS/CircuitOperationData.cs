@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
     /// </summary>
     public class CircuitOperationData
     {
-        #region Fields
-
+        
         /// <summary>
         /// Active document of Revit
         /// </summary>
@@ -87,10 +86,8 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// </summary>
         private ElectricalSystem m_selectedElectricalSystem;
 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Operation type
         /// </summary>
         public Operation Operation
@@ -146,10 +143,8 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         /// </summary>
         public int ElectricalSystemCount => m_electricalSystemSet.Count;
 
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commandData">Revit's external commandData</param>
@@ -700,6 +695,5 @@ namespace Revit.SDK.Samples.PowerCircuit.CS
         {
             TaskDialog.Show(Properties.Resources.ResourceManager.GetString("OperationFailed"), Properties.Resources.ResourceManager.GetString(message), TaskDialogCommonButtons.Ok);
         }
-        #endregion
-    }
+            }
 }

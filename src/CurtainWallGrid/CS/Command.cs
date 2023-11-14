@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
       /// <summary>
       /// The entrance of this example, implements the Execute method of IExternalCommand
       /// </summary>
-      #region IExternalCommand Members Implementation
-      public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+            public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
       {
          var myDoc = new MyDocument(commandData);
 
@@ -50,6 +49,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          }
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 }

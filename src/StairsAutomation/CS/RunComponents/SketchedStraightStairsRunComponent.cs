@@ -80,8 +80,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         private XYZ m_widthOffset;
         private StairsRun m_stairsRun;
 
-        #region IStairsRunConfiguration members
-
+        
         /// <summary>
         /// Implements the interface property.
         /// </summary>
@@ -185,8 +184,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 				m_width =  value;
 			}
 		}
-        #endregion
-
+        
         /// <summary>
         /// Generates the run boundary curves (not transformed by the stored transformation).
         /// </summary>

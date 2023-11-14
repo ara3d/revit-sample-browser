@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class Command : IExternalCommand
    {
-      #region Class Memeber Variables
-      // Application of Revit
+            // Application of Revit
       private Autodesk.Revit.ApplicationServices.Application m_revit;
       // the document to create generic model family
       private Document m_familyDocument;
@@ -47,10 +46,8 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
       private int m_errCount;
       // Error information
       private string m_errorInfo = "";
-      #endregion
-
-      #region Class Interface Implementation
-      public Result Execute(ExternalCommandData commandData,
+      
+            public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
       {
@@ -88,10 +85,8 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
          }
 
       }
-      #endregion
-
-      #region Class Implementation
-
+      
+      
       /// <summary>
       /// Examples for form creation in generic model families.
       /// Create extrusion, blend, revolution, sweep, swept blend
@@ -117,8 +112,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
       {
          try
          {
-            #region Create rectangle profile
-            var curveArrArray = new CurveArrArray();
+                        var curveArrArray = new CurveArrArray();
             var curveArray1 = new CurveArray();
 
             var normal = XYZ.BasisZ;
@@ -139,8 +133,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
             curveArray1.Append(line4);
 
             curveArrArray.Append(curveArray1);
-            #endregion
-            // here create rectangular extrusion
+                        // here create rectangular extrusion
             var rectExtrusion = m_creationFamily.NewExtrusion(true, curveArrArray, sketchPlane, 10);
             // move to proper place
             var transPoint1 = new XYZ(-16, 0, 0);
@@ -160,8 +153,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
       {
          try
          {
-            #region Create top and base profiles
-            var topProfile = new CurveArray();
+                        var topProfile = new CurveArray();
             var baseProfile = new CurveArray();
 
             var normal = XYZ.BasisZ;
@@ -195,8 +187,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
             topProfile.Append(line12);
             topProfile.Append(line13);
             topProfile.Append(line14);
-            #endregion
-            // here create one blend
+                        // here create one blend
             var blend = m_creationFamily.NewBlend(true, topProfile, baseProfile, sketchPlane);
             // move to proper place
             var transPoint1 = new XYZ(0, 11, 0);
@@ -216,8 +207,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
       {
          try
          {
-            #region Create rectangular profile
-            var curveArrArray = new CurveArrArray();
+                        var curveArrArray = new CurveArrArray();
             var curveArray = new CurveArray();
 
             var normal = XYZ.BasisZ;
@@ -241,8 +231,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
             curveArray.Append(line4);
 
             curveArrArray.Append(curveArray);
-            #endregion
-            // here create rectangular profile revolution
+                        // here create rectangular profile revolution
             var revolution1 = m_creationFamily.NewRevolution(true, curveArrArray, sketchPlane, axis1, -Math.PI, 0);
             // move to proper place
             var transPoint1 = new XYZ(0, 32, 0);
@@ -262,8 +251,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
       {
          try
          {
-            #region Create rectangular profile and path curve
-            var arrarr = new CurveArrArray();
+                        var arrarr = new CurveArrArray();
             var arr = new CurveArray();
 
             var normal = XYZ.BasisZ;
@@ -283,8 +271,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
 
             var curves = new CurveArray();
             curves.Append(curve);
-            #endregion
-            // here create one sweep with two arcs formed the profile
+                        // here create one sweep with two arcs formed the profile
             var sweep1 = m_creationFamily.NewSweep(true, curves, sketchPlane, profile, 0, ProfilePlaneLocation.Start);
             // move to proper place
             var transPoint1 = new XYZ(11, 0, 0);
@@ -304,8 +291,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
       {
          try
          {
-            #region Create top and bottom profiles and path curve
-            var pnt1 = new XYZ(0, 0, 0);
+                        var pnt1 = new XYZ(0, 0, 0);
             var pnt2 = new XYZ(1, 0, 0);
             var pnt3 = new XYZ(1, 1, 0);
             var pnt4 = new XYZ(0, 1, 0);
@@ -340,8 +326,7 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
 
             var normal = XYZ.BasisZ;
             var sketchPlane = CreateSketchPlane(normal, XYZ.Zero);
-            #endregion
-            // here create one swept blend
+                        // here create one swept blend
             var newSweptBlend1 = m_creationFamily.NewSweptBlend(true, curve, sketchPlane, bottomProfile, topProfile);
             // move to proper place
             var transPoint1 = new XYZ(11, 32, 0);
@@ -388,7 +373,6 @@ namespace Revit.SDK.Samples.GenericModelCreation.CS
          return plane;
       }
 
-      #endregion
-
+      
    }
 }

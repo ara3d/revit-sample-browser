@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
             InitializeComponent();
         }
 
-        #region Constructor
-        /// <summary>
+                /// <summary>
         /// The constructor is used to initialize some object.
         /// </summary>
         /// <param name="opt">Used to get the Command class's object.</param>
@@ -87,10 +86,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
         //Class Command's object reference
         Command m_objectReference;
-        #endregion
-
-        #region AddItem
-        /// <summary>
+        
+                /// <summary>
         /// Used to a new item in the dataGridView control.
         /// </summary>
         /// <param name="sender"></param>
@@ -130,10 +127,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
         //Record system levels' total
         int m_systemLevelsTotal;
-        #endregion
-
-        #region RemoveItem
-        /// <summary>
+        
+                /// <summary>
         /// Used to delete a item.
         /// </summary>
         /// <param name="sender"></param>
@@ -184,10 +179,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
         Autodesk.Revit.DB.ElementId[] m_deleteExistLevelIDValue;
         int m_deleteExistLevelTotal;
-        #endregion
-
-        #region CheckAndRecord
-        /// <summary>
+        
+                /// <summary>
         /// Judge if the inputted Name is unique.
         /// </summary>
         /// <param name="sender"></param>
@@ -259,10 +252,8 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
         //Record changed item
         int[] m_changedItemsFlag;
         int m_systemLevelChangedFlag;
-        #endregion
-
-        #region okButton
-        /// <summary>
+        
+                /// <summary>
         /// Used to make setting apply to the model.
         /// </summary>
         /// <param name="sender"></param>
@@ -312,8 +303,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
                 m_objectReference.CreateLevel(newItem.Name, newItem.Elevation);
             }
         }
-        #endregion
-
+        
 
     }
 }

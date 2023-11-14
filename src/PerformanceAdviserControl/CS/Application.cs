@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
    /// </summary>
     public class Application : IExternalApplication
     {
-         #region Constructor
-       /// <summary>
+                /// <summary>
        /// Basic construction
        /// </summary>
         public Application()
@@ -40,10 +39,8 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
 
             
         }
-#endregion
 
-         #region IExternalApplication implementation
-        /// <summary>
+                 /// <summary>
         /// Implement this method to implement the external application which should be called when 
         /// Revit starts before a file or default template is actually loaded.
         /// </summary>
@@ -65,20 +62,16 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// </returns>
         public Result OnStartup(UIControlledApplication application)
         {
-           #region Add command button
-           var rp = application.CreateRibbonPanel("PerformanceAdviserControl");
+                      var rp = application.CreateRibbonPanel("PerformanceAdviserControl");
            var currentAssembly = System.Reflection.Assembly.GetAssembly(GetType()).Location;
            var pb = rp.AddItem(new PushButtonData("Performance Adviser", "Performance Adviser", currentAssembly, "Revit.SDK.Samples.PerformanceAdviserControl.CS.UICommand")) as PushButton;
            var uriImage = new Uri(System.IO.Path.GetDirectoryName(currentAssembly) + "\\Button32.png");
            var largeImage = new BitmapImage(uriImage);
            pb.LargeImage = largeImage;
-           #endregion
-
-           #region Create and register new API rule (FlippedDoorCheck)
-           m_FlippedDoorApiRule = new FlippedDoorCheck();
+           
+                      m_FlippedDoorApiRule = new FlippedDoorCheck();
            Autodesk.Revit.DB.PerformanceAdviser.GetPerformanceAdviser().AddRule(m_FlippedDoorApiRule.getRuleId(), m_FlippedDoorApiRule);
-           #endregion
-
+           
            return Result.Succeeded;
 
         }
@@ -100,20 +93,15 @@ namespace Revit.SDK.Samples.PerformanceAdviserControl.CS
         /// </returns>
         public Result OnShutdown(UIControlledApplication application)
         {
-           #region Unregister API rule
-           Autodesk.Revit.DB.PerformanceAdviser.GetPerformanceAdviser().DeleteRule(m_FlippedDoorApiRule.getRuleId());
+                      Autodesk.Revit.DB.PerformanceAdviser.GetPerformanceAdviser().DeleteRule(m_FlippedDoorApiRule.getRuleId());
            m_FlippedDoorApiRule = null;
-           #endregion
-
+           
            return Result.Succeeded;
         }
-#endregion
 
-         #region Data
-       /// <summary>
+                /// <summary>
        /// The custom API rule we are registering with PerformanceAdviser
        /// </summary>
          private FlippedDoorCheck m_FlippedDoorApiRule;
-        #endregion
-    }
+            }
 }

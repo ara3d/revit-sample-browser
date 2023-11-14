@@ -43,8 +43,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -123,8 +122,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.DataGridView appEventsLogDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn timeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn eventColumn;

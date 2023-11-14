@@ -46,8 +46,7 @@ namespace Revit.SDK.Samples.Truss.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -347,8 +346,7 @@ namespace Revit.SDK.Samples.Truss.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.ComboBox TrussTypeComboBox;
         private System.Windows.Forms.TabControl TrussGraphicsTabControl;
         private System.Windows.Forms.TabPage ViewTabPage;

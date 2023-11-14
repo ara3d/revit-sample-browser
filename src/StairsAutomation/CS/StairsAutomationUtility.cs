@@ -77,8 +77,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             return utility;
         }
 
-        #region LevelManagement
-        /// <summary>
+                /// <summary>
         /// Sets up the levels for the bottom and top of the stairs assembly.
         /// </summary>
         private void SetupLevels()
@@ -146,8 +145,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             return collector.Cast<Level>().Where<Level>(level => IsBetweenExtents(level) && IsStoryLevel(level));
         }
 #endif
-        #endregion
-
+        
         /// <summary>
         /// Sets up and returns the hardcoded configuration corresponding to the stairs number.
         /// </summary>

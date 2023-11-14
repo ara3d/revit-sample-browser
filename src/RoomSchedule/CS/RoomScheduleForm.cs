@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.RoomSchedule
     /// </summary>
     public partial class RoomScheduleForm : System.Windows.Forms.Form
     {
-        #region Class Member Variables
-
+        
         // Reserve name of data source
         private string m_dataBaseName;
 
@@ -62,10 +61,8 @@ namespace Revit.SDK.Samples.RoomSchedule
 
         // All rooms data from spread sheet
         private DataTable m_spreadRoomsTable;
-        #endregion
-
-        #region Class Constructor Method
-        /// <summary>
+        
+                /// <summary>
         /// Class constructor
         /// </summary>
         /// <param name="commandData">Revit external command data</param>
@@ -101,10 +98,8 @@ namespace Revit.SDK.Samples.RoomSchedule
             // check to see whether current Revit document was mapped to spreadsheet.
             UpdateRoomMapSheetInfo();
         }
-        #endregion
-
-        #region Class Implementations
-        /// <summary>
+        
+                /// <summary>
         /// Get all available levels and phases from current document
         /// </summary>
         private void GetAllLevelsAndPhases()
@@ -315,8 +310,7 @@ namespace Revit.SDK.Samples.RoomSchedule
                     }
                 }
 
-                #region Rooms Creation and Set
-                myTransaction.Start();
+                                myTransaction.Start();
                 // create rooms with spread sheet based rooms data
                 for (var row = 0; row < m_spreadRoomsTable.Rows.Count; row++)
                 {
@@ -362,8 +356,7 @@ namespace Revit.SDK.Samples.RoomSchedule
 
                 // end this transaction if create all rooms successfully.
                 myTransaction.Commit();
-                #endregion
-            }
+                            }
             catch (Exception ex)
             {
                 // cancel this time transaction when exception occurs
@@ -487,10 +480,8 @@ namespace Revit.SDK.Samples.RoomSchedule
                 }
             }
         }
-        #endregion
-
-        #region Class Events Implmentation
-        /// <summary>
+        
+                /// <summary>
         /// Import room spread sheet and display them in form
         /// </summary>
         /// <param name="sender"></param>
@@ -705,6 +696,5 @@ namespace Revit.SDK.Samples.RoomSchedule
                 UpdateFormDisplay(false);
             }
         }
-        #endregion
-    }
+            }
 }

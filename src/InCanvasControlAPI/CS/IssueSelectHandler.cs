@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
    /// </summary>
    public class IssueSelectHandler : ITemporaryGraphicsHandler
    {
-      #region Class interface implementation
-
+      
       /// <summary>
       /// Gets the handler's description
       /// </summary>
@@ -86,6 +85,5 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
          IssueMarkerSelector.SelectMarker(data.Document, data.Index);
       }
 
-      #endregion
-   }
+         }
 }

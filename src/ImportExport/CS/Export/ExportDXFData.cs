@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class ExportDXFData : ExportDataWithViews
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Data class ExportOptionsData
         /// </summary>
         private ExportBaseOptionsData m_exportOptionsData;
@@ -54,10 +53,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// File version option to export
         /// </summary>
         private ACADVersion m_exportFileVersion;
-        #endregion
-
-        #region Class Properties
-        /// <summary>
+        
+                /// <summary>
         /// Data class ExportOptionsData
         /// </summary>
         public ExportBaseOptionsData ExportOptionsData
@@ -84,10 +81,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_exportFileVersion;
             set => m_exportFileVersion = value;
         }        
-        #endregion
-
-        #region Class Member Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
@@ -164,6 +159,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             return exported;
         }
-        #endregion
-    }
+            }
 }

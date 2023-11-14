@@ -40,8 +40,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS
    [Regeneration(RegenerationOption.Manual)]
    public class Application : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       /// <summary>
       ///    Implement this method to implement the external application which should be called when
       ///    Revit is about to exit,Any documents must have been closed before this method is called.
@@ -95,8 +94,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// </summary>

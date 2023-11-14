@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
     /// </summary>
     public class CreateRadialAndArcGridsData : CreateGridsData
     {
-        #region Fields
-        // X coordinate of origin
+                // X coordinate of origin
         // Y coordinate of origin
         // Start degree of arc grids and radial grids
         // End degree of arc grids and radial grids
@@ -47,10 +46,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Label of first arc grid
         // Label of first radial grid
 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// X coordinate of origin
         /// </summary>
         public double XOrigin { get; set; }
@@ -115,10 +112,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public string LineFirstLabel { get; set; }
 
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="application">Application object</param>
@@ -402,6 +397,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             return errorCount;
         }
-        #endregion
-    }
+            }
 }

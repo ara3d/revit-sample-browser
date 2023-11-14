@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
       /// <inheritdoc />
       public ObservableCollection<MigrationRule> Rules { get; set; } = new ObservableCollection<MigrationRule>();
 
-      #region INotifyPropertyChanged Members
-
+      
       /// <inheritdoc />
       public string AccountGuid
       {
@@ -82,6 +81,5 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Migration
       /// </summary>
       public event PropertyChangedEventHandler PropertyChanged;
 
-      #endregion
-   }
+         }
 }

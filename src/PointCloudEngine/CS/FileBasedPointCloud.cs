@@ -58,12 +58,9 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
     /// </example>
     class FileBasedPointCloud : PointCloudAccessBase, IPointCloudAccess
     {
-        #region  Class Member Variables
-        string m_fileName;
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+                string m_fileName;
+        
+                /// <summary>
         /// Constructs a new XML-based point cloud access.
         /// </summary>
         /// <param name="fileName">The full path to the file.</param>
@@ -88,10 +85,8 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 SetupFrom(xmlDoc.Element("PointCloud"));
             }
         }
-        #endregion
-
-        #region IPointCloudAccess Members
-
+        
+        
         /// <summary>
         /// The implementation of IPointCloudAccess.GetName().
         /// </summary>
@@ -183,6 +178,5 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         {
         }
 
-        #endregion
-    }
+            }
 }

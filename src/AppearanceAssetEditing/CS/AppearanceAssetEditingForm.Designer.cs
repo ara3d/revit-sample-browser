@@ -20,8 +20,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -106,8 +105,7 @@ namespace Revit.SDK.Samples.AppearanceAssetEditing.CS
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.Button buttonLighter;
       private System.Windows.Forms.Button buttonDarker;
       private System.Windows.Forms.ToolTip lighterToolTip;

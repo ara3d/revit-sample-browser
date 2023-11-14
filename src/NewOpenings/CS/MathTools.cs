@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// </summary>
     public class Vector4
     {
-        #region Member and propertys
-        /// <summary>
+                /// <summary>
         /// The coordinate x value
         /// </summary>
         private float    m_x; 
@@ -88,8 +87,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
             get => m_w;
             set => m_w = value;
         }
-        #endregion
-
+        
         /// <summary>
         /// Constructor
         /// </summary>
@@ -228,8 +226,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// </summary>
     public class Matrix4
     {
-        #region MatrixType
-        /// <summary>
+                /// <summary>
         /// matrix algorithm
         /// </summary>
         public enum MatrixType
@@ -261,8 +258,7 @@ namespace Revit.SDK.Samples.NewOpenings.CS
         };
         private float[,] m_matrix = new float[4,4];
         private MatrixType m_type;
-        #endregion
-
+        
         /// <summary>
         /// Construct a identity matrix
         /// </summary>

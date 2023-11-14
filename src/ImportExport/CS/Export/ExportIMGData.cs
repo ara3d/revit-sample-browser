@@ -29,17 +29,14 @@ namespace Revit.SDK.Samples.ImportExport.CS
 {
     class ExportIMGData : ExportDataWithViews
     {
-        #region Class Member Variables
-
+        
         /// <summary>
         /// String list of image type
         /// </summary>
         private List<string> m_imageType;
 
-        #endregion
-
-        #region Class Member Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
@@ -85,6 +82,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
             return true;
         }
 
-        #endregion
-    }
+            }
 }

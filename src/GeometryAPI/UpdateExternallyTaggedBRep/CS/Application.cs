@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-      #region IExternalApplication Members
-
+      
       static string m_addinAssemblyPath = typeof(Application).Assembly.Location;
 
       /// <summary>
@@ -98,6 +97,5 @@ namespace Revit.SDK.Samples.UpdateExternallyTaggedBRep.CS
              Int32Rect.Empty,
              BitmapSizeOptions.FromEmptyOptions());
       }
-      #endregion
-   }
+         }
 }

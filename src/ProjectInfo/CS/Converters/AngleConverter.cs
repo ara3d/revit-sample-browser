@@ -8,8 +8,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class AngleConverter : TypeConverter
     {
-        #region Methods
-        /// <summary>
+                /// <summary>
         /// Converts from string. 
         /// </summary>
         /// <returns>Converted string</returns>
@@ -93,6 +92,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             return ((object)Math.Round(value / 0.0174532925199433, 3)).ToString() + (char)0xb0;
         } 
         
-        #endregion
-    }
+            }
 }

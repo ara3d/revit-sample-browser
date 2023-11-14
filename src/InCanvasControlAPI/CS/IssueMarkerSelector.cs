@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
    /// </summary>
    public class IssueMarkerSelector
    {
-      #region Class implementation
-
+      
       /// <summary>
       /// Changes selected issue marker in given document's tracking
       /// </summary>
@@ -70,6 +69,5 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
          }
       }
       
-      #endregion
-   }
+         }
 }

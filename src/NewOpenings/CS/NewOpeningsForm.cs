@@ -35,15 +35,13 @@ namespace Revit.SDK.Samples.NewOpenings.CS
     /// </summary>
     public partial class NewOpeningsForm : Form
     {
-        #region class members
-        private Profile m_profile;  //save the profile date (ProfileFloor or ProfileWall)
+                private Profile m_profile;  //save the profile date (ProfileFloor or ProfileWall)
         private Matrix4 m_to2DMatrix; //save the matrix use to transform 3D to 2D
         private Matrix4 m_moveToCenterMatrix;  //save the matrix use to move point to origin
         private Matrix4 m_scaleMatrix; //save the matrix use to scale
         private ITool m_tool; //current using tool
         private Queue<ITool> m_tools = new Queue<ITool>(); //all tool can use in pictureBox       
-        #endregion
-        /// <summary>
+                /// <summary>
         /// default constructor
         /// </summary>
         public NewOpeningsForm()

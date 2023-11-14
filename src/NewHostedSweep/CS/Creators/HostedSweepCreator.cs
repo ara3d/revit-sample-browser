@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
    /// </summary>
    public abstract class HostedSweepCreator
    {
-      #region Public Interfaces
-
+      
       /// <summary>
       /// A string indicates which type this creator can create.
       /// </summary>
@@ -114,10 +113,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
       /// </summary>
       public UIDocument RvtUIDocument => m_rvtUIDoc;
 
-      #endregion
-
-      #region Fields and Constructor
-      /// <summary>
+      
+            /// <summary>
       /// List of Modification to store all the created hosted-sweep by this.
       /// </summary>
       private List<ModificationData> m_createdHostedSweeps;
@@ -148,10 +145,8 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
          m_elemGeom = new Dictionary<Element, ElementGeometry>();
          m_createdHostedSweeps = new List<ModificationData>();
       }
-      #endregion
-
-      #region Protected Methods
-
+      
+      
       /// <summary>
       /// Create a hosted-sweep according to the given Symbol and ReferenceArray.
       /// </summary>
@@ -184,6 +179,5 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
          var box = elem.get_BoundingBox(null);
          return new ElementGeometry(result, box);
       }
-      #endregion
-   }
+         }
 }

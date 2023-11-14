@@ -27,14 +27,11 @@ namespace Revit.SDK.Samples.GridCreation.CS
     /// </summary>
     public class GridCreationOptionData
     {
-        #region Fields
-        // The way to create grids
+                // The way to create grids
         // If lines/arcs have been selected
 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Creating mode
         /// </summary>
         public CreateMode CreateGridsMode { get; set; }
@@ -44,10 +41,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public bool HasSelectedLinesOrArcs { get; }
 
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="hasSelectedLinesOrArcs">Whether lines or arcs have been selected</param>
@@ -55,6 +50,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
         {
             HasSelectedLinesOrArcs = hasSelectedLinesOrArcs;
         }
-        #endregion
-    }
+            }
 }

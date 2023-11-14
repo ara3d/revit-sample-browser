@@ -96,8 +96,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       private Autodesk.Revit.Creation.Application m_appCreate;
       private StairsRun m_stairsRun;
 
-      #region IStairsRunConfiguration members
-
+      
       /// <summary>
       /// Implements the interface property.
       /// </summary>
@@ -188,8 +187,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
             }
          }
       }
-      #endregion
-
+      
       /// <summary>
       /// Gets the first or last riser curve of the run.
       /// </summary>

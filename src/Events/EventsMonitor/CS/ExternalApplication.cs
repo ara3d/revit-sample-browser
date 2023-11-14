@@ -39,8 +39,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class ExternalApplication : IExternalApplication
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// A controlled application used to register the events. Because all trigger points
         /// in this sample come from UI, all events in application level must be registered 
         /// to ControlledApplication. If the trigger point is from API, user can register it 
@@ -90,10 +89,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// </summary>
         private static JournalProcessor m_journalProcessor;
 #endif
-        #endregion
-
-        #region Class Static Property
-        /// <summary>
+        
+                /// <summary>
         /// Property to get and set private member variable of InfoWindows
         /// </summary>
         public static EventsInfoWindows InfoWindows
@@ -186,10 +183,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             }
         }
 #endif
-        #endregion
-
-        #region IExternalApplication Members
-
+        
+        
         /// <summary>
         /// Implement this method to implement the external application which should be called when 
         /// Revit starts before a file or default template is actually loaded.
@@ -279,10 +274,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             Dispose();
             return Result.Succeeded;
         }
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// Dispose some resource.
         /// </summary>
         public static void Dispose()
@@ -318,6 +311,5 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             pushButtonCreateWall.ToolTip = "Setting Events";
   
         }
-        #endregion
-    }
+            }
 }

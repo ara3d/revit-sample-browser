@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.Rooms.CS
     /// </summary>
     public class RoomsData
     {
-        #region class member variables
-        UIApplication m_revit;  // Store the reference of the application in revit
+                UIApplication m_revit;  // Store the reference of the application in revit
 
         List<Room> m_rooms = new List<Room>();    // a list to store all rooms in the project
         List<RoomTag> m_roomTags = new List<RoomTag>(); // a list to store all room tags
@@ -44,8 +43,7 @@ namespace Revit.SDK.Samples.Rooms.CS
         List<Room> m_roomsWithoutTag = new List<Room>(); // a list to store all rooms without tag
         // a list to store the information of departments
         List<DepartmentInfo> m_departmentInfos = new List<DepartmentInfo>();
-        #endregion
-
+        
 
         /// <summary>
         /// a struct to store the value of property Area and Department name

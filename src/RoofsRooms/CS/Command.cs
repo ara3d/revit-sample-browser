@@ -43,15 +43,12 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.UsingCommandData)]
     public class Command : IExternalCommand
     {
-        #region Class Variables
-        // Revit application
+                // Revit application
         Autodesk.Revit.ApplicationServices.Application m_application;
         // Current document in Revit
         Document m_document;
-        #endregion
-
-        #region Implement IExternalCommand
-        public Result Execute(ExternalCommandData commandData,
+        
+                public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
@@ -241,6 +238,5 @@ namespace Revit.SDK.Samples.RoofsRooms.CS
             return array;
         }
 
-        #endregion
-    }
+            }
 }

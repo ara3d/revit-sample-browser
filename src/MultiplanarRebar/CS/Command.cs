@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region Implement IExternalCommand
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             // A List to store the Corbels which are suitable to be reinforced.
@@ -137,14 +136,13 @@ namespace Revit.SDK.Samples.MultiplanarRebar.CS
             // Families of category "Structural Connection" support the Structural Material Type parameter. 
             // Structural Connection families of type Concrete or Precast Concrete are considered corbels. 
             // Corbels support the following features: 
-            // •Hosting Rebar.
-            // •Autojoining to columns and walls.
-            // •Manual joining to other concrete elements.
+            // ï¿½Hosting Rebar.
+            // ï¿½Autojoining to columns and walls.
+            // ï¿½Manual joining to other concrete elements.
             return (corbel.Category.BuiltInCategory == BuiltInCategory.OST_StructConnections &&
                     (corbel.StructuralMaterialType == StructuralMaterialType.Concrete ||
                     corbel.StructuralMaterialType == StructuralMaterialType.PrecastConcrete));
         }
 
-        #endregion
-    }
+            }
 }

@@ -65,16 +65,13 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
    /// </summary>
    class RebarUpdateServer : IRebarUpdateServer
    {
-      #region Class Members
-      /// <summary>
+            /// <summary>
       /// SampleGuid represents the Guid used by the Revit ExternalService framework to identify this custom IRebarUpdateServer
       /// For a Rebar to use this custom external server, pass this Guid to the Rebar.CreateFreeForm(..) function.
       /// </summary>
       public static Guid SampleGuid = new Guid("64D176BA-EB3E-4E96-877D-46A3B0C17B93");
-      #endregion
-
-      #region Class Interface Implementation
-
+      
+      
       /// <summary>
       /// Returns the unique id of this server
       /// </summary>
@@ -468,10 +465,8 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
          }
          return true;
       }
-      #endregion
-
-      #region Class Implementations
-
+      
+      
       /// <summary>
       /// function used to extract current rebar
       /// </summary>
@@ -761,6 +756,5 @@ namespace Revit.SDK.Samples.RebarFreeForm.CS
          }
          return result.Count > 0 ? result : null;
       }
-      #endregion
-   }
+         }
 }

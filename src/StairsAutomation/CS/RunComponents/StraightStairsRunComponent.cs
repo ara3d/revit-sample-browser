@@ -78,8 +78,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
         private XYZ m_widthOffset;
         private StairsRun m_stairsRun;
 
-        #region IStairsRunConfiguration Members
-
+        
         /// <summary>
         /// Implements the interface method.
         /// </summary>
@@ -185,8 +184,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 			}
         }
 
-        #endregion
-
+        
         /// <summary>
         /// Gets the first or last riser curve of the run.
         /// </summary>

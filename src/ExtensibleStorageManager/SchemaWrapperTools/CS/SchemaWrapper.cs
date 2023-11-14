@@ -40,8 +40,7 @@ namespace SchemaWrapperTools
    [Serializable]
    public class SchemaWrapper
    {
-      #region Constructors and class Factories
-      /// <summary>
+            /// <summary>
       /// For serialization only -- Do not use.
       /// </summary>
       internal SchemaWrapper() { }
@@ -149,10 +148,8 @@ namespace SchemaWrapperTools
          SetSchema(schema);
       }
 
-      #endregion
-
-      #region Active schema manipulation
-
+      
+      
       /// <summary>
       /// Adds a new field to the SchemaWrapper
       /// </summary>
@@ -294,10 +291,8 @@ namespace SchemaWrapperTools
           return strBuilder.ToString();
       }
 
-      #endregion
-
-      #region Helper Methods
-
+      
+      
       /// <summary>
       /// Returns a string representation of all data in an Entity
       /// </summary>
@@ -462,10 +457,8 @@ namespace SchemaWrapperTools
          m_Assembly = Assembly.GetAssembly(typeof(XYZ));
       }
 
-      #endregion
-
-      #region Properties
-
+      
+      
       /// <summary>
       /// Gets the Autodesk.Revit.DB.ExtensibleStorage schema that the wrapper owns.
       /// </summary>
@@ -504,10 +497,8 @@ namespace SchemaWrapperTools
          m_xmlPath = path;
       }
  
-      #endregion
-
-      #region Data
-      private SchemaDataWrapper m_SchemaDataWrapper;
+      
+            private SchemaDataWrapper m_SchemaDataWrapper;
   
       [NonSerialized]
       private Schema m_Schema;
@@ -520,7 +511,6 @@ namespace SchemaWrapperTools
 
       [NonSerialized]
       private string m_xmlPath;
-      #endregion
-
+      
    }
 }

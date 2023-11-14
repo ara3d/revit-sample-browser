@@ -39,15 +39,12 @@ namespace Revit.SDK.Samples.DoorSwing.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class ExternalApplication : IExternalApplication
     {
-        #region "Members"
-
+        
         // An object that is passed to the external application which contains the controlled Revit application.
         UIControlledApplication m_controlApp;
 
-        #endregion
-
-        #region IExternalApplication Members
-
+        
+        
         /// <summary>
         /// Implement this method to implement the external application which should be called when 
         /// Revit starts before a file or default template is actually loaded.
@@ -63,18 +60,15 @@ namespace Revit.SDK.Samples.DoorSwing.CS
         {
             m_controlApp = application;
 
-            #region Subscribe to related events
-
+            
             // Doors are updated from the application level events. 
             // That will insure that the doc is correct when it is saved.
             // Subscribe to related events.
             application.ControlledApplication.DocumentSaving += new EventHandler<DocumentSavingEventArgs>(DocumentSavingHandler);
             application.ControlledApplication.DocumentSavingAs += new EventHandler<DocumentSavingAsEventArgs>(DocumentSavingAsHandler);
 
-            #endregion
-
-            #region create a custom Ribbon panel which contains three buttons
-
+            
+            
             // The location of this command assembly
             var currentCommandAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
 
@@ -116,8 +110,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             updateGeoBut.LargeImage = new BitmapImage(new Uri(Path.Combine(buttonImageDir, "UpdateGeometry_Large.bmp")));
             updateGeoBut.Image = new BitmapImage(new Uri(Path.Combine(buttonImageDir, "UpdateGeometry_Small.bmp")));
 
-            #endregion
-
+            
             return Result.Succeeded;
         }
 
@@ -137,8 +130,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// This event is fired whenever a document is saved.
         /// Update door's information according to door's current geometry.

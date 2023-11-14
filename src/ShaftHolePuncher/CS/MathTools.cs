@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     /// </summary>
     public class Vector4
     {
-        #region Class member variables and properties
-
+        
         /// <summary>
         /// X property to get/set x value of Vector4
         /// </summary>
@@ -51,8 +50,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         /// </summary>
         public float W { get; set; } = 1.0f;
 
-        #endregion
-
+        
         /// <summary>
         /// constructor
         /// </summary>
@@ -184,8 +182,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     /// </summary>
     public class Matrix4
     {
-        #region MatrixType
-        /// <summary>
+                /// <summary>
         /// Matrix Type Enum use to define function of matrix
         /// </summary>
         public enum MatrixType
@@ -217,8 +214,7 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
         };
         private float[,] m_matrix = new float[4,4];
         private MatrixType m_type;
-        #endregion
-
+        
         /// <summary>
         /// default ctor
         /// </summary>

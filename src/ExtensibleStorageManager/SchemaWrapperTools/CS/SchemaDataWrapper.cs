@@ -34,8 +34,7 @@ namespace SchemaWrapperTools
    [Serializable]
    public class SchemaDataWrapper
    {
-      #region Constructors
-      /// <summary>
+            /// <summary>
       /// For serialization only -- Do not use.
       /// </summary>
       internal SchemaDataWrapper() { }
@@ -61,10 +60,8 @@ namespace SchemaWrapperTools
          Name = name;
          Documentation = documentation;
       }
-       #endregion
-
-      #region Data addition
-      /// <summary>
+       
+            /// <summary>
       /// Adds a new field to the wrapper's list of fields.
       /// </summary>
       /// <param name="name">the name of the field</param>
@@ -76,10 +73,8 @@ namespace SchemaWrapperTools
          m_DataList.Add(new FieldData(name, typeIn.FullName, spec.TypeId, subSchema));
       }
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// The list of FieldData objects in the wrapper
       /// </summary>
       public List<FieldData> DataList
@@ -154,10 +149,8 @@ namespace SchemaWrapperTools
          set => m_Name = value;
       }
 
-      #endregion
-
-      #region Data
-      private AccessLevel m_ReadAccess;
+      
+            private AccessLevel m_ReadAccess;
       private AccessLevel m_WriteAccess;
       private List<FieldData> m_DataList;
       private string m_applicationId;
@@ -165,7 +158,6 @@ namespace SchemaWrapperTools
       private string m_vendorId;
       private string m_Name;
       private string m_Documentation;
-      #endregion
-
+      
    }
 }

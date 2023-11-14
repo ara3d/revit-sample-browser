@@ -36,14 +36,11 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
     /// </summary>
     public class PointCloudAccessBase
     {
-        #region  Class Member Variables
-        private double m_scale = 1.0;
+                private double m_scale = 1.0;
         private List<PointCloudCellStorage> m_storedCells;
         private Outline m_outline;
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructs a new instance of the base class.
         /// </summary>
         protected PointCloudAccessBase()
@@ -265,22 +262,18 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 cell.GeneratePoints();
             }
         }
-        #endregion
-
+        
         /// <summary>
         /// The implementation for an IPointSetIterator for a file-based or predefined point cloud.
         /// </summary>
         protected class PointCloudAccessBaseIterator : IPointSetIterator
         {
-            #region  Class Member Variables
-            private PointCloudFilter m_filter;
+                        private PointCloudFilter m_filter;
             private int m_currentIndex;
             private PointCloudAccessBase m_access;
             private bool m_done;
-            #endregion
-
-            #region Class Methods
-            /// <summary>
+            
+                        /// <summary>
             /// Constructs a new instance of the point cloud iterator.
             /// </summary>
             /// <param name="access">The access.</param>
@@ -291,10 +284,8 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 m_filter = filter;
                 m_currentIndex = 0;
             }
-            #endregion
-
-            #region IPointSetIterator Members
-
+            
+            
             /// <summary>
             /// Implementation of IPointSetIterator.ReadPoints()
             /// </summary>
@@ -327,7 +318,6 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
                 m_done = true;
             }
 
-            #endregion
-        }
+                    }
     }
 }

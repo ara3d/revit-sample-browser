@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -313,8 +312,7 @@ namespace Revit.SDK.Samples.NewRebar.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.Button addParameterButton;
         private System.Windows.Forms.Button addConstraintButton;
         private System.Windows.Forms.ListBox parameterListBox;

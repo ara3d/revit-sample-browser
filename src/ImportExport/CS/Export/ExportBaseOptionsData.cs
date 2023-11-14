@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class ExportBaseOptionsData
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// String list of Layers and properties used in UI
         /// </summary>
         List<string> m_layersAndProperties;
@@ -129,10 +128,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
         //Export rooms and areas as polylines
 
-        #endregion
-
-        #region Class Properties
-        /// <summary>
+        
+                /// <summary>
         /// String collection of Layers and properties used in UI
         /// </summary>
         public ReadOnlyCollection<string> LayersAndProperties => new ReadOnlyCollection<string>(m_layersAndProperties);
@@ -259,11 +256,9 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_exportMergeFiles;
             set => m_exportMergeFiles = value;
         } 
-        #endregion
+        
 
-
-        #region Class Member Methods
-        /// <summary>
+                /// <summary>
         /// Constructor
         /// </summary>
         public ExportBaseOptionsData()
@@ -348,6 +343,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
             m_exportCoorSystem = EnumCoorSystem[0];
             m_exportUnit = Autodesk.Revit.DB.ExportUnit.Inch;
         }
-        #endregion
-    }
+            }
 }

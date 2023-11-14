@@ -72,8 +72,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             IsSturctual = true;
         }
 
-        #region IExternalCommand Members Implementation
-        
+                
         public Result Execute(ExternalCommandData commandData,
                                                     ref string message, ElementSet elements)
         {
@@ -135,8 +134,7 @@ namespace Revit.SDK.Samples.CreateWallsUnderBeams.CS
             // If everything goes right, return succeeded.
             return Result.Succeeded;
         }
-      #endregion IExternalCommand Members Implementation
-
+      
       /// <summary>
       /// Create the walls which along and under the path of the selected beams
       /// </summary>

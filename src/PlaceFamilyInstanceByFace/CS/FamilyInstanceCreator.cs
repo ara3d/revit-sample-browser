@@ -36,8 +36,7 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
    /// </summary>
    public class FamilyInstanceCreator
    {
-      #region Fields
-      // Revit document
+            // Revit document
       // Creation application
       private Autodesk.Revit.Creation.Application m_appCreator;
       // all face names
@@ -46,10 +45,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       // all family symbol names
       // the index default family symbol in family list
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// Store the all face names, they will be displayed in a combo box
       /// </summary>
       public List<string> FaceNameList { get; } = new List<string>();
@@ -82,10 +79,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
       /// </summary>
       public int DefaultFamilySymbolIndex { get; private set; } = -1;
 
-      #endregion
-
-      #region Constructor
-      /// <summary>
+      
+            /// <summary>
       /// Constructor, Store the Revit application
       /// </summary>
       /// <param name="app"></param>
@@ -98,10 +93,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
             throw new Exception("Please select an element with face geometry.");
          }
       }
-      #endregion
-
-      #region Public methods
-      /// <summary>
+      
+            /// <summary>
       /// 1. Find all family symbols in current Revit document and store them
       /// 2. Find the index of default family symbol
       /// Point("Point-based"); Line("Line-based")
@@ -284,10 +277,8 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
 
          return true;
       }
-      #endregion
-
-      #region Private Methods
-      /// <summary>
+      
+            /// <summary>
       /// Get the bounding box of a face, the BoundingBoxXYZ will be set in UI as default value
       /// </summary>
       /// <param name="indexFace">the index of face</param>
@@ -441,7 +432,6 @@ namespace Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS
          var retProjectedPoint = point - (normal.DotProduct(c)) * normal;
          return retProjectedPoint;
       }
-      #endregion
-
+      
    }
 }

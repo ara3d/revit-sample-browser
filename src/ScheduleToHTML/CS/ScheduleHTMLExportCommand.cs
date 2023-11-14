@@ -9,8 +9,7 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class ScheduleHTMLExportCommand : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         /// <summary>
         /// The implementation of the command.
         /// </summary>
@@ -34,7 +33,6 @@ namespace Revit.SDK.Samples.ScheduleToHTML.CS
             return Result.Cancelled;
         }
 
-        #endregion
-    }
+            }
 }
 

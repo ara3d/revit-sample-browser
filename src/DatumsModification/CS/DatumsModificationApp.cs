@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.DatumsModification.CS
         static string AddInPath = typeof(DatumsModificationApp).Assembly.Location;
         // Button icons directory
         static string ButtonIconsFolder = Path.GetDirectoryName(AddInPath);
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
@@ -69,7 +68,6 @@ namespace Revit.SDK.Samples.DatumsModification.CS
            return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }
 

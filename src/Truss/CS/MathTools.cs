@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.Truss.CS
     /// </summary>
     public class Vector4
     {
-        #region Class member variables and properties
-
+        
         /// <summary>
         /// X property to get/set x value of Vector4
         /// </summary>
@@ -51,8 +50,7 @@ namespace Revit.SDK.Samples.Truss.CS
         /// </summary>
         public double W { get; set; } = 1.0f;
 
-        #endregion
-
+        
         /// <summary>
         /// constructor
         /// </summary>
@@ -184,8 +182,7 @@ namespace Revit.SDK.Samples.Truss.CS
     /// </summary>
     public class Matrix4
     {
-        #region MatrixType
-        /// <summary>
+                /// <summary>
         /// Matrix Type Enum use to define function of matrix
         /// </summary>
         public enum MatrixType
@@ -217,8 +214,7 @@ namespace Revit.SDK.Samples.Truss.CS
         };
         private double[,] m_matrix = new double[4,4]; // an array stores the matrix
         private MatrixType m_type; //type of matrix
-        #endregion
-
+        
         /// <summary>
         /// default constructor
         /// </summary>

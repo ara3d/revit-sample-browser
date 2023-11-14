@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
     /// </summary>
     public sealed class FilterRuleBuilder
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Parameter of filter rule
         /// </summary>
         public BuiltInParameter Parameter { get; private set; }
@@ -60,19 +59,15 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// </summary>
         public double Epsilon { get; private set; }
 
-        #endregion
-
-        #region Class Public Properties
-
+        
+        
         /// <summary>
         /// Get ElementId of current parameter 
         /// </summary>
         public ElementId ParamId => new ElementId(Parameter);
 
-        #endregion
-
-        #region Class Public Methods
-        /// <summary>
+        
+                /// <summary>
         /// Create FilterRuleBuilder for String FilterRule
         /// </summary>
         /// <param name="param">Parameter of FilterRule.</param>
@@ -237,10 +232,8 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             // Throw exception for others
             throw new NotImplementedException("This filter rule or criteria is not implemented yet.");
         }
-        #endregion
-
-        #region Class Implementations
-        /// <summary>
+        
+                /// <summary>
         /// Make sure all members are initialized with expected values.
         /// </summary>
         private void InitializeMemebers()
@@ -251,8 +244,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             ParamType = StorageType.None;
             Epsilon = 0.0f;
         }
-        #endregion
-    }
+            }
 
     /// <summary>
     /// This class used to represents data for one API filter.
@@ -260,8 +252,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
     /// </summary>
     public sealed class FilterData
     {
-        #region Class Members
-        /// <summary>
+                /// <summary>
         /// Reserves current active document
         /// </summary>
         Document m_doc;
@@ -275,10 +266,8 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// Filer rules of filter
         /// </summary>
         List<FilterRuleBuilder> m_filterRules;
-        #endregion
-
-        #region Public Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// Get BuiltInCategories of filter
         /// </summary>
         public List<BuiltInCategory> FilterCategories => m_filterCategories;
@@ -369,16 +358,14 @@ namespace Revit.SDK.Samples.ViewFilters.CS
             m_filterRules = new List<FilterRuleBuilder>();
             m_filterRules.AddRange(filterRules);
         }
-        #endregion
-    }
+            }
 
     /// <summary>
     /// This class define constant strings to map rule criteria
     /// </summary>
     public sealed class RuleCriteraNames
     {
-        #region Public Class Members
-        /// <summary>
+                /// <summary>
         /// String represents BeginWith criteria
         /// </summary>
         public const string BeginWith = "begins with";
@@ -442,8 +429,7 @@ namespace Revit.SDK.Samples.ViewFilters.CS
         /// Invalid criteria 
         /// </summary>
         public const string Invalid = "n/a";
-        #endregion
-                      
+                              
         /// <summary>
         /// Hide ctor, this class defines only static members, no need to be created
         /// </summary>

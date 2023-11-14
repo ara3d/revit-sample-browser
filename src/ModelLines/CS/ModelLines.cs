@@ -49,8 +49,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
 
       List<ModelCurveCounter> m_informationMap;   // Store the number of each model line type
 
-      #region Properties
-      /// <summary>
+            /// <summary>
       /// The type-number map, store the number of each model line type
       /// </summary>
       public ReadOnlyCollection<ModelCurveCounter> InformationMap => new ReadOnlyCollection<ModelCurveCounter>(m_informationMap);
@@ -139,10 +138,8 @@ namespace Revit.SDK.Samples.ModelLines.CS
          }
       }
 
-      #endregion
-
-      #region Public Methods
-
+      
+      
       /// <summary>
       /// The default constructor
       /// </summary>
@@ -377,10 +374,8 @@ namespace Revit.SDK.Samples.ModelLines.CS
          RefreshInformationMap();
       }
 
-      #endregion
-
-      #region Private Methods
-
+      
+      
       /// <summary>
       /// Get all model lines in current document of revit, and store them into the arrays
       /// </summary>
@@ -516,6 +511,5 @@ namespace Revit.SDK.Samples.ModelLines.CS
          return workPlane;
       }
 
-      #endregion
-   }
+         }
 }

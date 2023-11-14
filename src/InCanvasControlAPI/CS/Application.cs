@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
    {
       const string TabLabel = "Issues";
 
-      #region Class implementation
-
+      
       /// <summary>
       /// Creates external application object and initializes event handlers.
       /// </summary>
@@ -76,10 +75,8 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
          };
       }
 
-      #endregion
-
-      #region IExternalApplication Members
-
+      
+      
       /// <summary>
       /// Implements the OnShutdown event. It cleans up events and IssueMarkerTrackingManager
       /// </summary>
@@ -136,10 +133,8 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
          return Result.Failed;
       }
 
-      #endregion
-
-      #region Class members
-
+      
+      
       private Dictionary<int, Guid> closingDocumentIdToIssueTrackingPairs = new Dictionary<int, Guid>();
 
       private EventHandler<Autodesk.Revit.DB.Events.DocumentChangedEventArgs> updateHandler;
@@ -152,7 +147,6 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
       
       private EventHandler<Autodesk.Revit.DB.Events.DocumentClosingEventArgs> closingHandler;
      
-      #endregion
-   }
+         }
 
 }

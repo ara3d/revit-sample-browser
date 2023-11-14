@@ -30,15 +30,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class WrapperCustomDescriptor : ICustomTypeDescriptor, IWrapper
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// Handle object
         /// </summary>
         object m_handle; 
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initializes handle object
         /// </summary>
         /// <param name="handle">Handle object</param>
@@ -46,10 +43,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             m_handle = handle;
         } 
-        #endregion
-
-        #region Properties
-
+        
+        
         /// <summary>
         /// Gets handle object
         /// </summary>
@@ -80,11 +75,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
         }
 
-        #endregion
-
-        #region Methods
-        #region ICustomTypeDescriptor Members
-
+        
+                
         /// <summary>
         /// Returns a collection of custom attributes for this instance of a component.
         /// </summary>
@@ -226,8 +218,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             return m_handle;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// overrides ToString method
         /// </summary>
@@ -236,6 +227,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             return Name;
         } 
-        #endregion
-    }
+            }
 }

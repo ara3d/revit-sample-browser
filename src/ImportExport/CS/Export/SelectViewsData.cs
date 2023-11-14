@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class SelectViewsData
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Revit command data
         /// </summary>
         private ExternalCommandData m_commandData;
@@ -55,10 +54,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Whether contain 3D view in selected views
         /// </summary>
         private bool m_contain3DView;
-        #endregion
-
-        #region Class Properties
-        /// <summary>
+        
+                /// <summary>
         /// All printable views(except sheets)
         /// </summary>
         public ViewSet PrintableViews
@@ -93,8 +90,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_contain3DView;
             set => m_contain3DView = value;
         }
-        #endregion
-
+        
         /// <summary>
         /// Constructor
         /// </summary>

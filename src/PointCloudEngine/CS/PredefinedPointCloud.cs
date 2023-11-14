@@ -33,12 +33,9 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
     /// </summary>
     public class PredefinedPointCloud : PointCloudAccessBase, IPointCloudAccess
     {
-        #region  Class Member Variables
-        string m_identifier;
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+                string m_identifier;
+        
+                /// <summary>
         /// Constructs a new predefined point cloud access instance.
         /// </summary>
         /// <param name="identifier">The identifier of the point cloud.</param>
@@ -81,10 +78,8 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
             AddCell(new XYZ(0, 70, 3), new XYZ(0.5, 73, 8), 0xA0A0A0, randomizedPoints);
             AddCell(new XYZ(0, 73, 3), new XYZ(0.5, 76, 8), 0xA0A0A0, randomizedPoints);
         }
-        #endregion
+                
         
-        #region IPointCloudAccess Members
-
         /// <summary>
         /// The implementation of IPointCloudAccess.GetName().
         /// </summary>
@@ -175,6 +170,5 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
         public void Free()
         {
         }
-        #endregion
-    }
+            }
 }

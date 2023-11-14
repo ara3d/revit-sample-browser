@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.Loads.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Loads : IExternalCommand
     {
-        #region Private Data Members
-        // Mainly used data definition
+                // Mainly used data definition
         LoadCombinationDeal m_combinationDeal;  // the deal class on load combination page
 
         // Define the data mainly used in LoadCombinationDeal class
@@ -44,10 +43,8 @@ namespace Revit.SDK.Samples.Loads.CS
 
         // Define the data mainly used in LoadCaseDeal class             
 
-        #endregion
-        
-        #region Properties
-        /// <summary>
+                
+                /// <summary>
         /// Used as the dataSource of load cases DataGridView control,
         /// and the information which support load case creation also.
         /// </summary>
@@ -120,10 +117,8 @@ namespace Revit.SDK.Samples.Loads.CS
         /// </summary>
         public List<UsageMap> UsageMap { get; private set; }
 
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Default constructor of Loads
         /// </summary>
         public Loads()
@@ -305,6 +300,5 @@ namespace Revit.SDK.Samples.Loads.CS
             }
             return true;
         }
-        #endregion
-    }
+            }
 }

@@ -44,8 +44,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -332,8 +331,7 @@ namespace Revit.SDK.Samples.Reinforcement.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.GroupBox barTypeGroupBox;
         private System.Windows.Forms.ComboBox topEndRebarTypeComboBox;
         private System.Windows.Forms.Label topCenterBarLabel;

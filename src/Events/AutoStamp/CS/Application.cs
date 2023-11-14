@@ -36,16 +36,13 @@ namespace Revit.SDK.Samples.AutoStamp.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Application : IExternalApplication
     {
-        #region Class Member Variable
-        /// <summary>
+                /// <summary>
         /// Events reactor for ViewPrint related events
         /// </summary>
         EventsReactor m_eventsReactor;
-        #endregion
+        
 
-
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnStartup method to register events when Revit starts.
         /// </summary>
         /// <param name="application">Controlled application of to be loaded to Revit process.</param>
@@ -74,6 +71,5 @@ namespace Revit.SDK.Samples.AutoStamp.CS
             application.ControlledApplication.ViewPrinted -= new EventHandler<Autodesk.Revit.DB.Events.ViewPrintedEventArgs>(m_eventsReactor.AppViewPrinted);
             return Result.Succeeded;
         }
-        #endregion
-    }
+            }
 }

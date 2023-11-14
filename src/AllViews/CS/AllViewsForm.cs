@@ -147,8 +147,7 @@ namespace Revit.SDK.Samples.AllViews.CS
             }
         }
 
-        #region CheckTreeNode
-        private void CheckNode(TreeNode node, bool check)
+                private void CheckNode(TreeNode node, bool check)
         {
             if (0 < node.Nodes.Count)
             {
@@ -173,8 +172,7 @@ namespace Revit.SDK.Samples.AllViews.CS
         {
             CheckNode(e.Node, e.Node.Checked);
         } 
-        #endregion
-
+        
         /// <summary>
         /// Select title block to generate sheet.
         /// </summary>

@@ -20,8 +20,7 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -129,8 +128,7 @@
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox _cbViews;
         private System.Windows.Forms.Integration.ElementHost _elementHostWPF;

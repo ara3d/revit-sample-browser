@@ -164,8 +164,7 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
         // the boundary conditions of which the information will displayed in the UI grid
         private Autodesk.Revit.DB.Structure.BoundaryConditions m_bC;
 
-        #region "Properties"
-
+        
         /// <summary>
         /// BoundaryConditions Type
         /// this item will be displayed no matter the point BC,line BC or area BC 
@@ -381,10 +380,8 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             set => SetParameterValue("Z Spring Modulus", GroupTypeId.RotationAbout, value);
         }
 
-        #endregion
-
-        #region "Methods"
-
+        
+        
         /// <summary>
         /// constructor  
         /// </summary>
@@ -613,6 +610,5 @@ namespace Revit.SDK.Samples.BoundaryConditions.CS
             }
         }
 
-        #endregion
-    }
+            }
 }

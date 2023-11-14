@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.CurtainSystem.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    class Command : IExternalCommand
    {
-      #region IExternalCommand Members Implementation
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+            public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
        
          // data verification
@@ -88,6 +87,5 @@ namespace Revit.SDK.Samples.CurtainSystem.CS
 
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 }

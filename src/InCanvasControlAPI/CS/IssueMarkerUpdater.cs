@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
    /// </summary>
    public class IssueMarkerUpdater
    {
-      #region Class implementation
-
+      
       /// <summary>
       /// Perform updates on in-canvas controls.
       /// In this example, the In-Canvas controls will be deleted, or have their positions changed, depending on the changes to related elements.
@@ -80,7 +79,6 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
          }
       }
 
-      #endregion
-
+      
    }
 }

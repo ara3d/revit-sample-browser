@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
    /// </summary>
    class WallTypeComparer : IComparer<WallType>
    {
-      #region IComparer<WallType> Members
-
+      
       /// <summary>
       /// compare 2 walltypes by their names
       /// </summary>
@@ -54,16 +53,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          return comp.Compare(xName, yName);
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// compare 2 views and sort them by their type names
    /// </summary>
    class ViewComparer : IComparer<View>
    {
-      #region IComparer<View> Members
-
+      
       /// <summary>
       /// compare 2 views by their names
       /// </summary>
@@ -85,6 +82,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
          return comp.Compare(xName, yName);
       }
 
-      #endregion
-   }
+         }
 }

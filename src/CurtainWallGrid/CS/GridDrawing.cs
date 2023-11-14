@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
     /// </summary>
     public class GridDrawing
     {
-        #region Fields
-        //the document of the sample
+                //the document of the sample
         private MyDocument m_myDocument;
 
         // stores the reference to the parent geometry
@@ -108,10 +107,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         // the width of the pen which is used to paint the sketch lines
         private float m_sketchPenWidth = 2.5f;
         //////////////////////////////////////////////////////////////////////////
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// stores the reference to the parent geometry
         /// </summary>
         public GridGeometry Geometry { get; }
@@ -204,20 +201,16 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public bool MouseLocationValid { get; private set; }
 
-        #endregion
-
-        #region Delegates & Events
-        // occurs only when the mouse is inside the curtain grid area
+        
+                // occurs only when the mouse is inside the curtain grid area
         public delegate void MouseInGridHandler();
         public event MouseInGridHandler MouseInGridEvent;
 
         // occurs only when the mouse is outside (out of or at the edge) the curtain grid area
         public delegate void MouseOutGridHandler();
         public event MouseOutGridHandler MouseOutGridEvent;
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// constructor
         /// </summary>
         /// <param name="geometry">
@@ -246,10 +239,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 DrawObject = new DrawObject();
             }
         }
-        #endregion
-
-        #region Public methods
-        /// <summary>
+        
+                /// <summary>
         /// get the 2D data of the curtain grid
         /// the original data is in CurtainGridLine/XYZ/Curve format of Revit, change it to Point/GridLine2D format
         /// </summary>
@@ -894,10 +885,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             }
 
         }
-        #endregion
-
-        #region Private methods
-        /// <summary>
+        
+                /// <summary>
         /// get the U ("Horizontal") grid lines and their segments in GridLine2D format
         /// </summary>
         private void GetULines2D()
@@ -1637,16 +1626,14 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 }
             }
         }
-        #endregion
-    }// end of class
+            }// end of class
 
     /// <summary>
     /// the class is designed to help draw the hints and the assistant lines of the curtain grid
     /// </summary>
     public class DrawObject
     {
-        #region Fields
-        // the lines to be drawn with the mapping pen
+                // the lines to be drawn with the mapping pen
 
         // the hint to be drawn
 
@@ -1655,10 +1642,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         // the pen to draw the hint
 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// the lines to be drawn with the mapping pen
         /// </summary>
         public List<KeyValuePair<Line2D, Pen>> Lines2D { get; set; }
@@ -1682,10 +1667,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public Pen TextPen { get; set; }
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// default constructor
         /// </summary>
         public DrawObject()
@@ -1711,10 +1694,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             Text = string.Empty;
             m_textPosition = System.Drawing.Point.Empty;
         }
-        #endregion
-
-        #region Public methods
-        /// <summary>
+        
+                /// <summary>
         /// clear all the to-be-drawn lines
         /// </summary>
         public void Clear()
@@ -1754,7 +1735,6 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 graphics.DrawString(Text, font, TextPen.Brush, new PointF(m_textPosition.X + 2, m_textPosition.Y + 2));
             }
         }
-        #endregion
-    }
+            }
 
 }

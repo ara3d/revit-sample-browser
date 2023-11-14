@@ -34,17 +34,14 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
     /// </summary>
     public class RoutingPreferenceBuilder
     {
-        #region Data
-        private IEnumerable<Segment> m_segments;
+                private IEnumerable<Segment> m_segments;
         private IEnumerable<FamilySymbol> m_fittings;
         private IEnumerable<Material> m_materials;
         private IEnumerable<PipeScheduleType> m_pipeSchedules;
         private IEnumerable<PipeType> m_pipeTypes;
         private Document m_document;
-        #endregion
-
-        #region Public interface
-        /// <summary>
+        
+                /// <summary>
         /// Create an instance of the class and initialize lists of all segments, fittings, materials, schedules, and pipe types in the document.
         /// </summary>
         public RoutingPreferenceBuilder(Document document)
@@ -218,10 +215,8 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
          routingPreferenceBuilderDoc.Add(xroot);
          return routingPreferenceBuilderDoc;
       }
-      #endregion
-
-      #region XML parsing and generation
-       /// <summary>
+      
+             /// <summary>
        /// Load a family from xml
        /// </summary>
        /// <param name="familyXElement"></param>
@@ -679,12 +674,10 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
 
          return xRoutingPreferenceRule;
       }
-      #endregion   
+      
 
 
-
-        #region Accessors and finders
-        /// <summary>
+                /// <summary>
         /// Get PipeScheduleTypeName by Id
         /// </summary>
         /// <param name="pipescheduleTypeId"></param>
@@ -930,8 +923,7 @@ namespace Revit.SDK.Samples.RoutingPreferenceTools.CS
         }
 
 
-        #endregion
-
+        
 
     }
 }

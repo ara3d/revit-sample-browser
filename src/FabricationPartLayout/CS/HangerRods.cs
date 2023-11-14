@@ -27,8 +27,7 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Revit.SDK.Samples.FabricationPartLayout.CS
 {
-   #region Detach Rods
-   /// <summary>
+      /// <summary>
    /// Implements the Revit add-in interface IExternalCommand
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -72,10 +71,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
          }
       }
    }
-   #endregion
-
-   #region Increase Rod Length (x2)
-   /// <summary>
+   
+      /// <summary>
    /// Implements the Revit add-in interface IExternalCommand
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -128,10 +125,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
          }
       }
    }
-   #endregion
-
-   #region Decrease Rod Length (x2)
-   /// <summary>
+   
+      /// <summary>
    /// Implements the Revit add-in interface IExternalCommand
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -200,10 +195,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
          }
       }
    }
-   #endregion
-
-   #region Increase Rod Strcuture Extension (by 1ft)
-   /// <summary>
+   
+      /// <summary>
    /// Implements the Revit add-in interface IExternalCommand
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -256,10 +249,8 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
          }
       }
    }
-   #endregion
-
-   #region Decrease Rod Strcuture Extension (by 1ft)
-   /// <summary>
+   
+      /// <summary>
    /// Implements the Revit add-in interface IExternalCommand
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -312,5 +303,4 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
          }
       }
    }
-   #endregion
-}
+   }

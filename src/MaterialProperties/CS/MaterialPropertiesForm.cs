@@ -83,8 +83,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
 
         private MaterialProperties m_dataBuffer;
 
-        #region Windows Form Designer generated code
-        /// <summary>
+                /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
@@ -207,8 +206,7 @@ namespace Revit.SDK.Samples.MaterialProperties.CS
             this.ResumeLayout(false);
 
         }
-        #endregion
-
+        
         /// <summary>
         /// 
         /// </summary>

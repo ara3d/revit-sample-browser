@@ -41,8 +41,7 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -120,8 +119,7 @@ namespace Revit.SDK.Samples.RevitAddInUtilitySample.CS
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.Button CreateAddInManifestButton;
       private System.Windows.Forms.Button AddInsInfoButton;
       private System.Windows.Forms.Button RevitProductsButton;

@@ -12,8 +12,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class EnergyDataSettingsWrapper : IWrapper
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// gbXMLParamElem
         /// </summary>
         private EnergyDataSettings m_energyDataSettings;
@@ -21,10 +20,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         /// Revit Document
         /// </summary>
         private Document m_document;
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initializes private variables.
         /// </summary>
         /// <param name="gbXMLParamElem">gbXMLParamElem</param>
@@ -33,10 +30,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             m_document = document;
             m_energyDataSettings = EnergyDataSettings.GetFromDocument(document);
         } 
-        #endregion
-
-        #region Properties
-
+        
+        
         /// <summary>
         /// Gets or sets Building Type
         /// </summary>
@@ -171,8 +166,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [DisplayName("Site Location"), TypeConverter(typeof(WrapperConverter)), RevitVersion(ProductType.MEP, ProductType.Architecture)]
         public SiteLocationWrapper SiteLocation => new SiteLocationWrapper(m_document.SiteLocation);
 
-        #region IWrapper Members
-
+        
         /// <summary>
         /// Gets the handle object.
         /// </summary>
@@ -190,7 +184,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             {
             }
         }
-        #endregion 
-        #endregion
-    }
+                    }
 }

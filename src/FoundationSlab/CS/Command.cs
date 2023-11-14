@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+                public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             try
             {
@@ -68,6 +67,5 @@ namespace Revit.SDK.Samples.FoundationSlab.CS
                 return Result.Failed; // Unknow error.
             }
         }
-        #endregion IExternalCommand Members Implementation
-    }
+            }
 }

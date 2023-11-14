@@ -101,8 +101,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 //begin to get Parameters and add them to a DataTable
                 var temporaryValue = "";
 
-                #region Get all SpotDimension element parameters
-
+                
                 //string formatter
                 var formatter = "#0.000";
 
@@ -243,8 +242,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
                 temporaryValue = s_textBackground[temporaryParam.AsInteger()];
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
-                #endregion
-                return parameterTable;
+                                return parameterTable;
             }
             catch (Exception ex)
             {

@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class ExportDWFData : ExportDataWithViews
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Whether export object data
         /// </summary>
         private bool m_exportObjectData;
@@ -56,10 +55,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Selected image format for DWF export
         /// </summary>
         DWFImageFormat m_dwfImageFormat;
-        #endregion
-
-        #region Class Properties
-        /// <summary>
+        
+                /// <summary>
         /// Whether export object data
         /// </summary>
         public bool ExportObjectData
@@ -112,10 +109,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_ImageQualities;
             set => m_ImageQualities = value;
         }
-        #endregion
-
-        #region Class Member Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
@@ -201,6 +196,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
 
             return exported;
         }
-        #endregion
-    }
+            }
 }

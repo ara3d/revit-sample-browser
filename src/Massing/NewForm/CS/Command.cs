@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.NewForm.CS
    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
    public class MakeExtrusionForm : IExternalCommand
    {
-      #region Class Interface Implementation
-     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+           public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
          var doc = commandData.Application.ActiveUIDocument.Document;
 
@@ -70,8 +69,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// A class inherits IExternalCommand interface.
@@ -81,8 +79,7 @@ namespace Revit.SDK.Samples.NewForm.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class MakeCapForm : IExternalCommand
    {
-      #region Class Interface Implementation
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+            public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
           var doc = commandData.Application.ActiveUIDocument.Document;
 
@@ -114,8 +111,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// A class inherits IExternalCommand interface.
@@ -125,8 +121,7 @@ namespace Revit.SDK.Samples.NewForm.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class MakeRevolveForm : IExternalCommand
    {
-      #region Class Interface Implementation
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+            public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
           var doc = commandData.Application.ActiveUIDocument.Document;
 
@@ -164,8 +159,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// A class inherits IExternalCommand interface.
@@ -175,8 +169,7 @@ namespace Revit.SDK.Samples.NewForm.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class MakeSweptBlendForm : IExternalCommand
    {
-      #region Class Interface Implementation
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+            public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
           var doc = commandData.Application.ActiveUIDocument.Document;
 
@@ -235,8 +228,7 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// A class inherits IExternalCommand interface.
@@ -246,8 +238,7 @@ namespace Revit.SDK.Samples.NewForm.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class MakeLoftForm : IExternalCommand
    {
-      #region Class Interface Implementation
-      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+            public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
       {
           var doc = commandData.Application.ActiveUIDocument.Document;
 
@@ -311,16 +302,14 @@ namespace Revit.SDK.Samples.NewForm.CS
 
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// This class is utility class for form creation.
    /// </summary>
    public class FormUtils
    {
-      #region Class Implementation
-      /// <summary>
+            /// <summary>
       /// Create arc element by three points
       /// </summary>
       /// <param name="app">revit application</param>
@@ -387,6 +376,5 @@ namespace Revit.SDK.Samples.NewForm.CS
          var modelcurve = doc.FamilyCreate.NewModelCurve(line, skplane);
          return modelcurve;
       }
-      #endregion
-   }
+         }
 }

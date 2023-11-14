@@ -35,8 +35,7 @@ using DialogResult = System.Windows.Forms.DialogResult;
 
 namespace Revit.SDK.Samples.Selections.CS
 {
-   #region A Class For Element Picks And Deletion
-   /// <summary>
+      /// <summary>
    /// This command allows to pick some elements and then delete from document.
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -92,10 +91,8 @@ namespace Revit.SDK.Samples.Selections.CS
          }
       }
    }
-   #endregion PickforDeletion
-
-   #region A Class For Place Window At Point On Wall Face
-   /// <summary>
+   
+      /// <summary>
    /// This command allows to pick a point on wall face, and then place a window with Fixed 36" x 48" type to the point.
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -188,10 +185,8 @@ namespace Revit.SDK.Samples.Selections.CS
          return elemType as FamilySymbol;
       }
    }
-   #endregion PlaceAtPointOnWallFace
-
-   #region A Class For Pick Face, Set WorkPlane, Pick Point
-   /// <summary>
+   
+      /// <summary>
    /// This command allows to pick a face and set the work plane on it, then pick a point on the work plane as center to create a model circle.
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -299,10 +294,8 @@ namespace Revit.SDK.Samples.Selections.CS
          return plane;
       }
    }
-   #endregion PlaceAtPickedFaceWorkplane
-
-   #region A Class For Select Objects From Dialog
-   /// <summary>
+   
+      /// <summary>
    /// This command allows to pick an element and a point from dialog. After picking the point, the element will be moved to the picked point.
    /// </summary>
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -356,5 +349,4 @@ namespace Revit.SDK.Samples.Selections.CS
          }
       }
    }
-   #endregion SelectionDialog
-}
+   }

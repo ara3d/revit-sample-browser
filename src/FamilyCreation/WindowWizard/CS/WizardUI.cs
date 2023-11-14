@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
     /// </summary>
     public partial class WizardForm : Form
     {
-        #region Class Memeber Variables
-        /// <summary>
+                /// <summary>
         /// store the wizard parameter
         /// </summary>
         WizardParameter m_para;
@@ -75,8 +74,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// store DoubleHungWinPara list
         /// </summary>
         BindingList<DoubleHungWinPara> paraList = new BindingList<DoubleHungWinPara>();
-        #endregion
-        
+                
         /// <summary>
         /// constructor of WizardForm
         /// </summary>

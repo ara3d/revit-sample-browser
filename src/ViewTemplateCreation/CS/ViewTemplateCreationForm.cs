@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
    /// </summary>
    public partial class ViewTemplateCreationForm : System.Windows.Forms.Form
    {
-      #region FormInitialization
-      /// <summary>
+            /// <summary>
       /// Creates a form for the sample, which allows user to create and configure a new view template.
       /// </summary>
       public ViewTemplateCreationForm(Document activeDocument)
@@ -80,10 +79,8 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
          detailLevelValueComboBox.Items.Add(ViewDetailLevel.Medium.ToString());
          detailLevelValueComboBox.Items.Add(ViewDetailLevel.Fine.ToString());
       }
-      #endregion FormInitialization
-
-      #region EventHandlers
-      private void CancelButton_Click(object sender, EventArgs e)
+      
+            private void CancelButton_Click(object sender, EventArgs e)
       {
          Close();
       }
@@ -119,10 +116,8 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
          }
          Close();
       }
-      #endregion EventHandlers
-
-      #region Methods
-      private View GetSelectedView()
+      
+            private View GetSelectedView()
       {
          var extendedViewName = viewNameComboBox.SelectedItem.ToString();
          // retrieve view name and type strings so we can find the right view by name and type
@@ -210,14 +205,11 @@ namespace Revit.SDK.Samples.ViewTemplateCreation.CS
          ogSettings.SetCutForegroundPatternId(foregroundFillPattern.Id);
          view.SetCategoryOverrides(categoryId, ogSettings);
       }
-      #endregion Methods
-
-      #region ClassMembers
-      private const string IncludeString = "include";
+      
+            private const string IncludeString = "include";
       private const string ExcludeString = "exclude";
 
       private List<View> m_views;
       private Document m_activeDocument;
-      #endregion ClassMembers
-   }
+         }
 }

@@ -30,11 +30,9 @@ namespace Revit.SDK.Samples.Truss.CS
     /// </summary>
     class LineTool
     {
-        #region class member variables
-
+        
         Point m_movePoint; //record the coordinate of location where mouse just moved to. 
-        #endregion 
-
+        
         /// <summary>
         /// Get all the points of this tool
         /// </summary>

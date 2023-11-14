@@ -9,15 +9,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class ProjectInfoWrapper : IWrapper
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// ProjectInfo
         /// </summary>
         private Autodesk.Revit.DB.ProjectInfo m_projectInfo; 
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initializes private variables.
         /// </summary>
         /// <param name="projectInfo">ProjectInfo</param>
@@ -25,10 +22,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             m_projectInfo = projectInfo;
         } 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// Gets gbXMLSettings
         /// </summary>
         [Category("Energy Analysis"), DisplayName("Energy Settings")]
@@ -86,8 +81,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             set => m_projectInfo.Number = value;
         }
 
-        #region IWrapper Members
-
+        
         /// <summary>
         /// Gets the handle object.
         /// </summary>
@@ -103,7 +97,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             get => m_projectInfo.Name;
             set => m_projectInfo.Name = value;
         }
-        #endregion 
-        #endregion
-    }
+                    }
 }

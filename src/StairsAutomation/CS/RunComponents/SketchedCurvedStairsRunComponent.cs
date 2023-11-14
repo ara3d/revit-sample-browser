@@ -100,8 +100,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       private Autodesk.Revit.Creation.Application m_appCreate;
       private StairsRun m_stairsRun;
 
-      #region IStairsConfiguration members
-      /// <summary>
+            /// <summary>
       /// Implements the interface property.
       /// </summary>
       public double RunElevation { get; }
@@ -235,7 +234,6 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
          }
       }
 
-      #endregion
-
+      
    }
 }

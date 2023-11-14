@@ -234,8 +234,7 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
     /// </summary>
     class HideAndAcceptDuplicateTypeNamesHandler : IDuplicateTypeNamesHandler
     {
-        #region IDuplicateTypeNamesHandler Members
-
+        
         /// <summary>
         /// Implementation of the IDuplicateTypeNameHandler
         /// </summary>
@@ -247,16 +246,14 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
             return DuplicateTypeAction.UseDestinationTypes;
         }
 
-        #endregion
-    }
+            }
 
     /// <summary>
     /// A failure preprocessor to hide the warning about duplicate types being pasted.
     /// </summary>
     class HidePasteDuplicateTypesPreprocessor : IFailuresPreprocessor
     {
-        #region IFailuresPreprocessor Members
-
+        
         /// <summary>
         /// Implementation of the IFailuresPreprocessor.
         /// </summary>
@@ -277,6 +274,5 @@ namespace Revit.SDK.Samples.DuplicateViews.CS
             return FailureProcessingResult.Continue;
         }
 
-        #endregion
-    }
+            }
 }

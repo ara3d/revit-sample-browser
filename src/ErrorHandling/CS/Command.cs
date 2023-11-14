@@ -61,8 +61,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
       /// </summary>
       private Document m_doc;
 
-      #region IExternalApplication Members
-      /// <summary>
+            /// <summary>
       /// Implements the OnShutdown event
       /// </summary>
       /// <param name="application"></param>
@@ -107,10 +106,8 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
 
          return Result.Succeeded;
       }
-      #endregion
-
-      #region IExternalApplication Members
-      public Result Execute(ExternalCommandData commandData,
+      
+            public Result Execute(ExternalCommandData commandData,
       ref string message, ElementSet elements)
       {
          m_revitApp = commandData.Application.Application;
@@ -285,8 +282,7 @@ namespace Revit.SDK.Samples.ErrorHandling.CS
 
          return level1;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// Implements the interface IFailuresPreprocessor

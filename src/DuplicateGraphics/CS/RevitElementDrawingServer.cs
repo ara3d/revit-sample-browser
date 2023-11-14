@@ -399,8 +399,7 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
       private RenderingPassBufferStorage m_transparentFaceBufferStorage;
       private RenderingPassBufferStorage m_edgeBufferStorage;
 
-      #region Helper classes
-
+      
       // A container to hold information associated with a triangulated face.
       class MeshInfo
       {
@@ -458,6 +457,5 @@ namespace Revit.SDK.Samples.DuplicateGraphics.CS
          public EffectInstance EffectInstance { get; set; }
       }
 
-      #endregion
-   }
+         }
 }

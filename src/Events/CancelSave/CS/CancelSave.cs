@@ -39,17 +39,14 @@ namespace Revit.SDK.Samples.CancelSave.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class CancelSave : IExternalApplication
     {
-        #region Memeber Variables
-        
+                
         const string thisAddinFileName = "CancelSave.addin";
         // The dictionary contains document hashcode and its original "Project Status" pair.
         Dictionary<int, string> documentOriginalStatusDic = new Dictionary<int, string>();
         int hashcodeofCurrentClosingDoc;
 
-        #endregion
-
-        #region IExternalApplication Members
-
+        
+        
         /// <summary>
         /// Implement OnStartup method of IExternalApplication interface.
         /// This method subscribes to DocumentOpened, DocumentCreated, DocumentSaving and DocumentSavingAs events.
@@ -90,10 +87,8 @@ namespace Revit.SDK.Samples.CancelSave.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
-        #region EventHandler
-
+        
+        
         /// <summary>
         /// Event handler method for DocumentOpened and DocumentCreated events.
         /// This method will reserve "Project Status" value after document has been opened or created.
@@ -180,8 +175,7 @@ namespace Revit.SDK.Samples.CancelSave.CS
               documentOriginalStatusDic.Remove(hashcodeofCurrentClosingDoc);
            }
         }
-        #endregion
-
+        
         /// <summary>
         /// Deal with the case that the project status wasn't updated.
         /// If the event is Cancellable, cancel it and inform user else just inform user the status.

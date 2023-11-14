@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.Site.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class SiteMoveRegionAndPointsCommand : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         /// <summary>
         /// Implementation of the external command.
         /// </summary>
@@ -48,8 +47,7 @@ namespace Revit.SDK.Samples.Site.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// Moves a subregion and the associated topography to a new user-selected location.
         /// </summary>

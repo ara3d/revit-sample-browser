@@ -150,15 +150,13 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
 
        public DockablePaneId MainPageDockablePaneId => Globals.sm_UserDockablePaneId;
 
-       #region Data
-
+       
         MainPage m_mainPage;
         internal static ThisApplication thisApp;
         private APIUtility m_APIUtility;
 
 
-       #endregion
-
+       
     }
 }
 

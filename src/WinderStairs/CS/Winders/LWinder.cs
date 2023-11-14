@@ -72,8 +72,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             }
         }
         
-        #region PRIVATE
-        /// <summary>
+                /// <summary>
         /// Winder Corner, connecting the first and the second straight runs.
         /// </summary>
         private WinderSinglePoint m_corner;
@@ -120,8 +119,7 @@ namespace Revit.SDK.Samples.WinderStairs.CS
             m_straightAtEnd = new WinderStraight(
                 m_corner.EndPoint, endPnt, perpendicularDir2, NumStepsAtEnd);
         }
-        #endregion
-
+        
         /// <summary>
         /// This method generates the sketch for L-shape winder stairs.
         /// </summary>

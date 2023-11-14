@@ -50,8 +50,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
         }
 
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -178,8 +177,7 @@ namespace Revit.SDK.Samples.SpotDimension.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.ListView spotDimensionsListView;
         private System.Windows.Forms.DataGridView typeParamsDataGridView;
         private System.Windows.Forms.ComboBox viewsComboBox;

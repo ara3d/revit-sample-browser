@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
     /// </summary>
     public class ValidateWindowParameter
     {
-        #region Class Memeber Variables
-        /// <summary>
+                /// <summary>
         /// store the wall's height
         /// </summary>
         private double m_wallHeight=10;
@@ -44,8 +43,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// indicate the template file is metric or not
         /// </summary>
         public bool IsMetric;
-        #endregion
-
+        
        /// <summary>
         /// constructor of ValidateWindowParameter
        /// </summary>
@@ -64,8 +62,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
 
         }
 
-        #region Class Implementation
-        /// <summary>
+                /// <summary>
         /// This method is used to check whether a value string is double type
         /// </summary>
         /// <param name="value">>the string value</param>
@@ -169,6 +166,5 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                     return "The sillheight should be < " + m_wallHeight;
             }
         }        
-        #endregion
-    }
+            }
 }

@@ -48,8 +48,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -154,8 +153,7 @@ namespace Revit.SDK.Samples.ModelLines.CS
 
         }
 
-        #endregion
-
+        
         private Revit.SDK.Samples.PlaceFamilyInstanceByFace.CS.PointUserControl normalUserControl;
         private System.Windows.Forms.Label normalLabel;
         private System.Windows.Forms.Label originLabel;

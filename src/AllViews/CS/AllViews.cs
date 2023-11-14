@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.AllViews.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region IExternalCommand Members Implementation
-        
+                
        public Result Execute(ExternalCommandData commandData,
          ref string message, ElementSet elements)
        {
@@ -68,8 +67,7 @@ namespace Revit.SDK.Samples.AllViews.CS
            return Result.Succeeded;
       }
 
-      #endregion IExternalCommand Members Implementation
-      }
+            }
 
     /// <summary>
     /// Generating a new sheet that has all the selected views placed in.

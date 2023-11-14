@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
         // event handler of document changed
         private EventHandler<DocumentChangedEventArgs> m_hDocChanged;
 
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
@@ -345,6 +344,5 @@ namespace Revit.SDK.Samples.WorkThread.CS
             }
         }
 
-        #endregion
-    }
+            }
 }

@@ -45,8 +45,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       {
          set => m_application = value;
       }
-      #region UI State
-
+      
       private void DozeOff()
       {
          EnableCommands(false);
@@ -64,9 +63,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
       {
          EnableCommands(true);
       }
-      #endregion
-      #region UI Support
-      public void UpdateUI(ModelessCommandData data)
+                  public void UpdateUI(ModelessCommandData data)
       {
          switch (data.CommandType)
          {
@@ -106,23 +103,18 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
   
            return null;
         }
-        #endregion
-      #region UI Support
-        private void MainWindow_Closing(object sender, CancelEventArgs e)
+                      private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
         }
 
 
-        #endregion
-      #region Data
-        private UIApplication m_application;
+                      private UIApplication m_application;
          private ExternalEvent m_exEvent;
          private APIExternalEventHandler m_handler=  new APIExternalEventHandler();
          private System.IO.TextWriter m_textWriter; //Used to re-route any standard IO to the WPF UI.
 
 
-        #endregion
-
+        
       /// <summary>
       /// Called by Revit to initialize dockable pane settings set in DockingSetupDialog.
       /// </summary>
@@ -195,8 +187,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
           m_bottom = bottom;
           m_targetGuid = targetGuid;
        }
-      #region Data
-
+      
        private Guid m_targetGuid;
        private DockPosition m_position = DockPosition.Bottom;  
        private int m_left = 1;
@@ -204,8 +195,7 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
        private int m_top = 1;
        private int m_bottom = 1;
 
-      #endregion
-
+      
        private void wpf_stats_Click(object sender, RoutedEventArgs e)
        {
           Log.Message("***Main Pane WPF info***");

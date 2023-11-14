@@ -46,8 +46,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         double m_width;       
 
-        #region Properties
-        /// <summary>
+                /// <summary>
         /// get/set the Type property
         /// </summary>
         public string Type
@@ -73,8 +72,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             set => m_width = value;
             get => m_width;
         }
-        #endregion 
-
+        
         /// <summary>
         /// constructor of WindowParameter
         /// </summary>
@@ -163,8 +161,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         private string m_pathName = System.IO.Path.GetTempPath();
       
-        #region
-        /// <summary>
+                /// <summary>
         /// get/set Validator property
         /// </summary>
         public ValidateWindowParameter Validator
@@ -235,8 +232,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             get => m_pathName;
             set => m_pathName = value;
         }       
-        #endregion    
-    }
+            }
 
     /// <summary>
     /// This class inherits from WindowParameter
@@ -253,8 +249,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// </summary>
         double m_sillHeight; 
 
-        #region
-        /// <summary>
+                /// <summary>
         /// set/get Inset property
         /// </summary>
         public double Inset
@@ -271,8 +266,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             set => m_sillHeight = value;
             get => m_sillHeight;
         }
-        #endregion
-
+        
         /// <summary>
         /// constructor of DoubleHungWinPara
         /// </summary>

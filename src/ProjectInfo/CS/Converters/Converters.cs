@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class WrapperConverter : ExpandableObjectConverter
     {
-        #region Methods
-        /// <summary>
+                /// <summary>
         /// Can be converted to string
         /// </summary>
         /// <returns>true if destinationType is string, otherwise false</returns>
@@ -68,7 +67,6 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
             return base.ConvertTo(context, culture, value, destinationType);
         } 
-        #endregion
-    };
+            };
 }
 

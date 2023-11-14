@@ -26,8 +26,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
 {
     public class ReadonlySharedParameterApplication : IExternalApplication
     {
-        #region IExternalApplication Members
-
+        
         Result IExternalApplication.OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
@@ -64,6 +63,5 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }

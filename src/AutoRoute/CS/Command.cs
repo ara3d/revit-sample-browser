@@ -108,8 +108,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
         /// </summary>
         private const double min1Duct2FittingsLength = min1FittingLength * 2 + minDuctLength;
 
-        #region IExternalCommand Members
-        public Result Execute(ExternalCommandData commandData, ref string message,
+                public Result Execute(ExternalCommandData commandData, ref string message,
             ElementSet elements)
         {
             // set out default result to Failed.
@@ -345,8 +344,7 @@ namespace Revit.SDK.Samples.AutoRoute.CS
             }
             return retRes;
         }
-        #endregion
-
+        
         /// <summary>
         /// Connect the system with a trunk line of ducts on X axis
         /// </summary>

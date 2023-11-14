@@ -46,8 +46,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -149,8 +148,7 @@ namespace Revit.SDK.Samples.LevelsProperty.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.DataGridView levelsDataGridView;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.Button okButton;

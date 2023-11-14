@@ -29,8 +29,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
     /// </summary>
     class CreateAlignment
     {
-        #region Class Memeber Variables
-        /// <summary>
+                /// <summary>
         /// store the document
         /// </summary>
         Document m_document;
@@ -39,8 +38,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
         /// store the family item factory of creation
         /// </summary>        
         Autodesk.Revit.Creation.FamilyItemFactory m_familyCreator;
-        #endregion
-
+        
         /// <summary>
         /// The constructor of CreateAlignment class
         /// </summary>        
@@ -51,8 +49,7 @@ namespace Revit.SDK.Samples.WindowWizard.CS
             m_familyCreator = m_document.FamilyCreate;
         }
 
-        #region Class Implementation
-        /// <summary>
+                /// <summary>
         /// The method is used to create alignment between two faces
         /// </summary>
         /// <param name="view">the view</param>
@@ -74,6 +71,5 @@ namespace Revit.SDK.Samples.WindowWizard.CS
                 subTransaction.Commit();
             }
         }
-        #endregion
-    }
+            }
 }

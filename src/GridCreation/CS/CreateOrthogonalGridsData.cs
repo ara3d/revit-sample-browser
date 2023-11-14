@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.GridCreation.CS
     /// </summary>
     public class CreateOrthogonalGridsData : CreateGridsData
     {
-        #region Fields
-        // X coordinate of origin
+                // X coordinate of origin
         // Y coordinate of origin
         // Spacing between horizontal grids
         // Spacing between vertical grids
@@ -44,10 +43,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         // Label of first horizontal grid
         // Label of first vertical grid
 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// X coordinate of origin
         /// </summary>
         public double XOrigin { get; set; }
@@ -97,10 +94,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
         /// </summary>
         public string YFirstLabel { get; set; }
 
-        #endregion
-
-        #region Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="application">Application object</param>
@@ -317,6 +312,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
 
             return errorCount;
         }
-        #endregion
-    }
+            }
 }

@@ -87,8 +87,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-        /// <summary>
+                /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
@@ -288,8 +287,7 @@ namespace Revit.SDK.Samples.CreateBeamsColumnsBraces.CS
             this.ResumeLayout(false);
 
         }
-        #endregion
-
+        
         /// <summary>
         /// Refresh the text box for the default data
         /// </summary>

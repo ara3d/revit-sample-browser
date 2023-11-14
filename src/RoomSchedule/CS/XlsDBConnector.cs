@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.RoomSchedule
     /// </summary>
     class XlsDBConnector : IDisposable
     {
-        #region Class Memeber Variables
-        // The connection created
+                // The connection created
         private OleDbConnection m_objConn;
 
         // One command for this connection
@@ -45,11 +44,9 @@ namespace Revit.SDK.Samples.RoomSchedule
 
         // All available tables(work sheets) in xls data source
         private List<string> m_tables = new List<string>();
-        #endregion
+        
 
-
-        #region Class Constructor & Destructor
-        /// <summary>
+                /// <summary>
         /// Class constructor, to retrieve data from .xls data source 
         /// </summary>
         /// <param name="strXlsFile">The .xls file to be connected. 
@@ -92,11 +89,9 @@ namespace Revit.SDK.Samples.RoomSchedule
         {
             Dispose();
         }
-        #endregion
+        
 
-
-        #region Class Member Methods
-        /// <summary>
+                /// <summary>
         /// Get all available table names from .xls data source
         /// </summary>
         public List<string> RetrieveAllTables()
@@ -229,11 +224,9 @@ namespace Revit.SDK.Samples.RoomSchedule
                 throw new Exception(ex.ToString() + strCmd);
             }
         }
-        #endregion
+        
 
-
-        #region Class Implementation
-        /// <summary>
+                /// <summary>
         /// This method will validate and update attributes the specified file.
         /// The file should exist and it should have writable attribute.
         /// If it's readonly, this method will try to set the attribute to writable.
@@ -268,6 +261,5 @@ namespace Revit.SDK.Samples.RoomSchedule
                 return false;
             }
         }
-        #endregion
-    };
+            };
 }

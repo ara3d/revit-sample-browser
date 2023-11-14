@@ -10,8 +10,7 @@ namespace ExtensibleStorageManager
    /// </summary>
    public partial class UICommand : Window
    {
-      #region Constructor
-      /// <summary>
+            /// <summary>
       /// Create a new dialog object and store a reference to the active document and applicationID of this addin.
       /// </summary>
       public UICommand(Autodesk.Revit.DB.Document doc, string applicationId)
@@ -26,10 +25,8 @@ namespace ExtensibleStorageManager
          m_label_applicationAppId.Content = applicationId;
          UpdateUI();
       }
-      #endregion
-
-      #region Helper methods
-      /// <summary>
+      
+            /// <summary>
       /// Return a convenient recommended path to save schema files in.
       /// </summary>
       private string GetStartingXmlPath()
@@ -139,10 +136,8 @@ namespace ExtensibleStorageManager
 
          return retval;
       }
-      #endregion
-
-      #region UI Handlers
-
+      
+      
 
       //Store the Guid of the last-used schema in the Application object for convenient access
       //later if the user re-creates and displays this dialog again.
@@ -345,24 +340,19 @@ namespace ExtensibleStorageManager
          dataDialog.SetData(allData);
          dataDialog.ShowDialog();
       }
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// The active document in Revit that the dialog queries for Schema and Entity data.
       /// </summary>
       public Autodesk.Revit.DB.Document Document { get; set; }
 
-      #endregion
-
-      #region Data
-      /// <summary>
+      
+            /// <summary>
       /// The object that provides high level serialization access to an Autodesk.Revit.DB.ExtensibleStorage.Schema
       /// </summary>
       private SchemaWrapperTools.SchemaWrapper m_SchemaWrapper;
 
-      #endregion
-
+      
 
 
 

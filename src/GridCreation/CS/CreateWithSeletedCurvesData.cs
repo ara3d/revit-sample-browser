@@ -32,17 +32,14 @@ namespace Revit.SDK.Samples.GridCreation.CS
    /// </summary>
    public class CreateWithSelectedCurvesData : CreateGridsData
    {
-      #region Fields
-      // Selected curves in current document
+            // Selected curves in current document
       private CurveArray m_selectedCurves;
       // Whether to delete selected lines/arc after creation
       // Label of first grid
       // Bubble location of grids
 
-      #endregion
-
-      #region Properties
-      /// <summary>
+      
+            /// <summary>
       /// Whether to delete selected lines/arc after creation
       /// </summary>
       public bool DeleteSelectedElements { get; set; }
@@ -57,10 +54,8 @@ namespace Revit.SDK.Samples.GridCreation.CS
       /// </summary>
       public string FirstLabel { get; set; }
 
-      #endregion
-
-      #region Methods
-      /// <summary>
+      
+            /// <summary>
       /// Constructor
       /// </summary>
       /// <param name="application">Revit application</param>
@@ -215,6 +210,5 @@ namespace Revit.SDK.Samples.GridCreation.CS
                         resManager.GetString("FailureCaptionCreateGrids"));
          }
       }
-      #endregion
-   }
+         }
 }

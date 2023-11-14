@@ -34,15 +34,12 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
     /// </summary>
     public partial class EventsSettingForm : Form
     {
-        #region Class Member Variable
-        /// <summary>
+                /// <summary>
         /// A list to storage the selection user made
         /// </summary>
         private List<string> m_appSelection;
-        #endregion
-
-        #region Class property
-        /// <summary>
+        
+                /// <summary>
         /// Property to get and set private member variables of SeletionMap
         /// </summary>
         public List<string> AppSelectionList
@@ -58,10 +55,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             set => m_appSelection = value;
         }
 
-        #endregion
-
-        #region Class Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Constructor without any argument
         /// </summary>
         public EventsSettingForm()
@@ -69,10 +64,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             InitializeComponent();
             m_appSelection = new List<string>();
         }
-        #endregion
-
-        #region Class Events Handler
-        /// <summary>
+        
+                /// <summary>
         /// Event handler for click OK button.
         /// </summary>
         /// <param name="sender"></param>
@@ -137,6 +130,5 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             Hide();
         }
 
-        #endregion
-    }
+            }
 }

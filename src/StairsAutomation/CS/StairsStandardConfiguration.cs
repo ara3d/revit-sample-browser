@@ -223,8 +223,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
       /// </summary>
       protected Autodesk.Revit.Creation.Application AppCreate => m_stairs.Document.Application.Create;
 
-      #region IStairsConfiguration Members
-
+      
       /// <summary>
       /// Implements the interface method.
       /// </summary>
@@ -319,8 +318,7 @@ namespace Revit.SDK.Samples.StairsAutomation.CS
 
       }
 
-      #endregion
-
+      
       /// <summary>
       /// Returns the transform assigned to the configuration.
       /// </summary>

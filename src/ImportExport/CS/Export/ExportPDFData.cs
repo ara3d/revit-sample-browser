@@ -31,18 +31,14 @@ namespace Revit.SDK.Samples.ImportExport.CS
    /// </summary>
    public class ExportPDFData : ExportDataWithViews
    {
-      #region Class Member Variables
-
-      #endregion
-
-      #region Class Properties
-    /// <summary>
+      
+      
+          /// <summary>
     /// Combine
     /// </summary>
       public bool Combine { get; set; }
 
-    #endregion
-
+    
       /// <summary>
       /// Constructor
       /// </summary>

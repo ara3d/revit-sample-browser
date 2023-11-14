@@ -42,8 +42,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -105,8 +104,7 @@ namespace Revit.SDK.Samples.NewHostedSweep.CS
 
         }
 
-        #endregion
-
+        
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.PropertyGrid propertyGrid;

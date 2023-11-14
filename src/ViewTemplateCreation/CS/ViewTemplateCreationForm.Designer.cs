@@ -23,8 +23,7 @@
          base.Dispose(disposing);
       }
 
-      #region Windows Form Designer generated code
-
+      
       /// <summary>
       /// Required method for Designer support - do not modify
       /// the contents of this method with the code editor.
@@ -174,8 +173,7 @@
 
       }
 
-      #endregion
-
+      
       private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
       private System.Windows.Forms.Button applyButton;
       private System.Windows.Forms.Button cancelButton;

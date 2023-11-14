@@ -35,8 +35,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
    {
 
       // Methods that must be implemented by a server for any of Revit's external services
-      #region IExternalServer Implementation
-      /// <summary>
+            /// <summary>
       /// Return the Id of the server. 
       /// </summary>
       public Guid GetServerId()
@@ -76,12 +75,10 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
          return "Simple UI server for the Revit SDK sample external resource server";
       }
 
-      #endregion IExternalServer Implementation
+      
 
 
-
-      #region IExternalResourceUIServer Interface Implementation
-
+      
       /// <summary>
       /// Return the Id of the related DB server. 
       /// </summary>
@@ -228,21 +225,16 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
          System.Windows.Forms.MessageBox.Show(message);
       }
 
-      #endregion IExternalResourceUIServer Interface Implementation
+      
 
 
-
-      #region SampleExternalResourceUIServer Implementations
-      #endregion SampleExternalResourceUIServer Implementations
+            
 
 
-
-      #region SampleExternalResourceUIServer Member Variables
-
+      
       private static Guid m_myServerId = new Guid("E9B6C194-62DE-4134-900D-BA8DF7AD33FA");
       private static Guid m_myDBServerId = new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");
 
-      #endregion SampleExternalResourceUIServer Member Variables
-
+      
    }
 }

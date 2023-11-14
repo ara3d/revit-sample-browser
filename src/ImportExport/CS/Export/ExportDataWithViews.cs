@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     public class ExportDataWithViews : ExportData
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Data class SelectViewsData
         /// </summary>
         protected SelectViewsData m_selectViewsData;
@@ -45,10 +44,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
         /// Whether to export current view only
         /// </summary>
         protected bool m_currentViewOnly;
-        #endregion
-
-        #region Class Properties
-        /// <summary>
+        
+                /// <summary>
         /// Data class SelectViewsData
         /// </summary>
         public SelectViewsData SelectViewsData
@@ -74,10 +71,8 @@ namespace Revit.SDK.Samples.ImportExport.CS
             get => m_currentViewOnly;
             set => m_currentViewOnly = value;
         }
-        #endregion
-
-        #region Class Member Methods
-        /// <summary>
+        
+                /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="commandData">Revit command data</param>
@@ -98,6 +93,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
             //Views to export
             m_exportViews = new ViewSet();
         }
-        #endregion
-    }
+            }
 }

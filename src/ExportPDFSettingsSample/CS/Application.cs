@@ -40,8 +40,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class ExportPDFSettingsSampleApplication : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       /// <summary>
       /// Implements the OnShutdown event
       /// </summary>
@@ -107,8 +106,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// ExternalCommand to create an ExportPDFSettings instance.
@@ -116,8 +114,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    public class CreateExportPDFSettingsCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -146,8 +143,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
          trans.Commit();
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// ExternalCommand to modify an ExportPDFSettings instance.
@@ -155,8 +151,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    public class ModifyExportPDFSettingsCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -195,8 +190,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
          trans.Commit();
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// ExternalCommand to add a naming rule to ExportPDFSettings instance.
@@ -204,8 +198,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    public class AddNamingRuleCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -268,8 +261,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
          trans.Commit();
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// ExternalCommand to modify a naming rule from ExportPDFSettings instance.
@@ -277,8 +269,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    public class MofidyNamingRuleCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -343,8 +334,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
          trans.Commit();
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 
    /// <summary>
    /// ExternalCommand to delete a naming rule from ExportPDFSettings instance.
@@ -352,8 +342,7 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    public class DeleteNamingRuleCommand : IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -411,6 +400,5 @@ namespace Revit.SDK.Samples.ExportPDFSettingsSample.CS
          trans.Commit();
          return Result.Succeeded;
       }
-      #endregion
-   }
+         }
 }

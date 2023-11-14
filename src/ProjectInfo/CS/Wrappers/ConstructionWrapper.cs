@@ -10,15 +10,12 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     [TypeConverter(typeof(ConstructionWrapperConverter))]
     public class ConstructionWrapper : IComparable, IWrapper
     {
-        #region Fields
-        /// <summary>
+                /// <summary>
         /// Construction
         /// </summary>
         private Construction m_construction;
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Initializes private variables.
         /// </summary>
         /// <param name="construction">Construction</param>
@@ -26,11 +23,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         {
             m_construction = construction;
         } 
-        #endregion
-
-        #region Properties
-        #region IComparable Members
-
+        
+                
         /// <summary>
         /// Compares the names of Constructions.
         /// </summary>
@@ -50,10 +44,8 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             return 1;
         }
 
-        #endregion
-
-        #region IWrapper Members
-
+        
+        
         /// <summary>
         /// Gets the handle object.
         /// </summary>
@@ -66,7 +58,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
         [Browsable(false)]
         public string Name => m_construction.Name;
 
-        #endregion 
-        #endregion
-    }
+                    }
 }

@@ -39,8 +39,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
    /// </summary>
    public partial class RayTraceBounceForm : System.Windows.Forms.Form
    {
-      #region Class Memeber Variables
-      /// <summary>
+            /// <summary>
       /// current assembly name
       /// </summary>
       private static string AssemblyName = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -119,8 +118,7 @@ namespace Revit.SDK.Samples.RayTraceBounce.CS
       /// trace listener
       /// </summary>
       private TraceListener m_txtListener;
-      #endregion
-
+      
       /// <summary>
       /// Constructor
       /// </summary>

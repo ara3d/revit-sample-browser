@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
    /// </summary>
    public class IssueMarkerTracking
    {
-      #region Class implementation
-
+      
       /// <summary>
       /// Creates IssueMarkerTracking for the opened document and initializes selected index
       /// </summary>
@@ -111,14 +110,11 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
          selectedIndex = index;
       }
 
-      #endregion
-
-      #region Class member variables
-
+      
+      
       private int selectedIndex;
 
       private HashSet<IssueMarker> issueMarkerSet = new HashSet<IssueMarker>();
 
-      #endregion
-   }
+         }
 }

@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
    /// </summary>
    class UIServerApplication : IExternalApplication
    {
-      #region IExternalApplication Members
-      /// <summary>
+            /// <summary>
       /// Registers an instance of a SampleExternalResourceUIServer with the ExternalService
       /// of type ExternalResourceUIService. 
       /// </summary>
@@ -70,6 +69,5 @@ namespace Revit.SDK.Samples.ExternalResourceUIServer.CS
          return Result.Succeeded;
       }
 
-      #endregion IExternalApplication Members
-   }
+         }
  }

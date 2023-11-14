@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
     /// </summary>
     public class EventManager
     {
-        #region Class Member Variables
-        /// <summary>
+                /// <summary>
         /// Revit application
         /// </summary> 
         private UIControlledApplication m_app;
@@ -47,10 +46,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         /// This list is used to store what user select last time.
         /// </summary> 
         private List<string> historySelection;
-        #endregion
-
-        #region Class Constructor
-        /// <summary>
+        
+                /// <summary>
         /// Prevent the compiler from generating a default constructor.
         /// </summary>
         private EventManager()
@@ -67,10 +64,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             m_app = app;
             historySelection = new List<string>();
         }
-        #endregion
-
-        #region Class Methods
-        /// <summary>
+        
+                /// <summary>
         /// A public method used to update the events subscription
         /// </summary>
         /// <param name="selection"></param>
@@ -287,6 +282,5 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             ExternalApplication.EventLogManager.WriteLogFile(obj, args);
         }
 
-        #endregion
-    }
+            }
 }

@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
     /// </summary>
     public class GridGeometry
     {
-        #region Fields
-        // the document of this sample
+                // the document of this sample
         private MyDocument m_myDocument;
 
         // stores the curtain grid information of the created curtain wall
@@ -61,10 +60,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
 
         // store the offset to be moved for the specified grid line
 
-        #endregion
-
-        #region Properties
-        /// <summary>
+        
+                /// <summary>
         /// stores the curtain grid information of the created curtain wall
         /// </summary>
         public CurtainGrid ActiveGrid { get; private set; }
@@ -106,10 +103,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
         /// </summary>
         public int MoveOffset { get; set; }
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
+        
+                /// <summary>
         /// constructor
         /// </summary>
         /// <param name="myDoc">
@@ -127,10 +122,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             VGridLines = new List<CurtainGridLine>();
             GridVertexesXYZ = new List<XYZ>();
         }
-        #endregion
-
-        #region Public methods
-        /// <summary>
+        
+                /// <summary>
         /// obtain all the properties of the curtain grid
         /// </summary>
         public void ReloadGridProperties()
@@ -827,10 +820,8 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
             }
             act.Commit();
         }
-        #endregion
-
-        #region Private methods
-        /// <summary>
+        
+                /// <summary>
         /// get all the U grid lines' data of the curtain grid
         /// </summary>
         private void GetULines()
@@ -1214,6 +1205,5 @@ namespace Revit.SDK.Samples.CurtainWallGrid.CS
                 removeList.Add(seg2D);
             }
         }
-        #endregion
-    }// end of class
+            }// end of class
 }

@@ -35,15 +35,13 @@ namespace Revit.SDK.Samples.FabricationPartLayout.CS
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class PartRenumber : IExternalCommand
    {
-      #region region Member Variables
-      private int m_ductNum = 1;
+            private int m_ductNum = 1;
       private int m_ductCouplingNum = 1;
       private int m_pipeNum = 1;
       private int m_pipeCouplingNum = 1;
       private int m_hangerNum = 1;
       private int m_otherNum = 1;
-      #endregion
-
+      
       public virtual Result Execute(ExternalCommandData commandData
           , ref string message, ElementSet elements)
       {

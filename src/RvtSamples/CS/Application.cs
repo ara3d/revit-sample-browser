@@ -106,8 +106,7 @@ namespace RvtSamples
             Selection
         }
 
-        #region Member Data
-        /// <summary>
+                /// <summary>
         /// Separator of category for samples have more than one category
         /// </summary>
         static char[] s_charSeparatorOfCategory = new char[] { ',' };
@@ -147,10 +146,8 @@ namespace RvtSamples
         /// Panel for RvtSamples
         /// </summary>
         RibbonPanel m_panelRvtSamples;
-        #endregion // Member Data
-
-        #region IExternalApplication Members
-        /// <summary>
+        
+                /// <summary>
         /// Implement this method to implement the external application which should be called when 
         /// Revit starts before a file or default template is actually loaded.
         /// </summary>
@@ -318,8 +315,7 @@ namespace RvtSamples
         {
             return Result.Succeeded;
         }
-        #endregion // IExternalApplication Members
-
+        
         /// <summary>
         /// Display error message
         /// </summary>
@@ -330,8 +326,7 @@ namespace RvtSamples
             TaskDialog.Show("RvtSamples", msg, TaskDialogCommonButtons.Ok);
         }
 
-        #region Parser
-        /// <summary>
+                /// <summary>
         /// Read file contents, including contents of files included in the current file
         /// </summary>
         /// <param name="filename">Current file to be read</param>
@@ -415,10 +410,8 @@ namespace RvtSamples
             }
             return b;
         }
-        #endregion // Parser
-
-        #region Menu Helpers
-        /// <summary>
+        
+                /// <summary>
         /// Add a new command to the corresponding pulldown button.
         /// </summary>
         /// <param name="lines">Array of lines defining sample's category, display name, description, large image, image, assembly and classname</param>
@@ -659,6 +652,5 @@ namespace RvtSamples
                 }
             }
         }
-        #endregion // Menu Helpers
-    }
+            }
 }

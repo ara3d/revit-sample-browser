@@ -122,8 +122,7 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
             }
         }
 
-        #region exterior major layer
-        [CategoryAttribute("Exterior Major Layers"), TypeConverter(typeof(BarTypeItem))]
+                [CategoryAttribute("Exterior Major Layers"), TypeConverter(typeof(BarTypeItem))]
         public ElementId Exterior_Major_Bar_Type
         {
             get => m_exteriorMajorBarType.AsElementId();
@@ -151,10 +150,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_exteriorMajorHookOrientation.Set(index);
             }
         }
-        #endregion
-
-        #region exterior minor layer
-        [CategoryAttribute("Exterior Minor Layers"), TypeConverter(typeof(BarTypeItem))]
+        
+                [CategoryAttribute("Exterior Minor Layers"), TypeConverter(typeof(BarTypeItem))]
         public ElementId Exterior_Minor_Bar_Type
         {
             get => m_exteriorMinorBarType.AsElementId();
@@ -182,10 +179,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_exteriorMinorHookOrientation.Set(index);
             }
         }
-        #endregion
-
-        #region interior major layer
-        [CategoryAttribute("Interior Major Layers"), TypeConverter(typeof(BarTypeItem))]
+        
+                [CategoryAttribute("Interior Major Layers"), TypeConverter(typeof(BarTypeItem))]
         public ElementId Interior_Major_Bar_Type
         {
             get => m_interiorMajorBarType.AsElementId();
@@ -213,10 +208,8 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_interiorMajorHookOrientation.Set(index);
             }
         }
-        #endregion
-
-        #region interior minor layer
-        [CategoryAttribute("Interior Minor Layers"), TypeConverter(typeof(BarTypeItem))]
+        
+                [CategoryAttribute("Interior Minor Layers"), TypeConverter(typeof(BarTypeItem))]
         public ElementId Interior_Minor_Bar_Type
         {
             get => m_interiorMinorBarType.AsElementId();
@@ -244,7 +237,6 @@ namespace Revit.SDK.Samples.AreaReinParameters.CS
                 m_interiorMinorHookOrientation.Set(index);
             }
         }
-        #endregion
-
+        
     }
 }

@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class SetReadonlyCost1 : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -42,14 +41,12 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class SetReadonlyCost2 : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -59,8 +56,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 
     class ReadonlyCostSetter
     {
@@ -118,8 +114,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class SetReadonlyId1 : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -129,14 +124,12 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class SetReadonlyId2 : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -146,8 +139,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 
     class ReadonlyIdSetter
     {
@@ -201,8 +193,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     class BindNewReadonlySharedParametersToDocument : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.View.Document;
@@ -212,8 +203,7 @@ namespace Revit.SDK.Samples.ReadonlySharedParameters.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         private List<SharedParameterBindingManager> BuildSharedParametersToCreate()
         {
             var sharedParametersToCreate =

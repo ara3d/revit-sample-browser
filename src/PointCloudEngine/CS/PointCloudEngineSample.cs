@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
    public class PointCloudTestApplication : IExternalApplication
    {
-      #region IExternalApplication Members
-
+      
       /// <summary>
       /// The implementation of IExternalApplication.OnStartup()
       /// </summary>
@@ -108,8 +107,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// ExternalCommand to add a predefined point cloud.
@@ -117,8 +115,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    public class AddPredefinedInstanceCommand : AddInstanceCommandBase, IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -134,8 +131,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// ExternalCommand to a predefined point cloud with randomized points.
@@ -143,8 +139,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    public class AddRandomizedInstanceCommand : AddInstanceCommandBase, IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -160,8 +155,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// ExternalCommand to add a predefined point cloud at a non-default transform.
@@ -169,8 +163,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
    public class AddTransformedInstanceCommand : AddInstanceCommandBase, IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -187,8 +180,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 
    /// <summary>
    /// Base class for ExternalCommands used to add point cloud instances programmatically.
@@ -218,8 +210,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.ReadOnly)]
    public class SerializePredefinedPointCloud : AddInstanceCommandBase, IExternalCommand
    {
-      #region IExternalCommand Members
-      /// <summary>
+            /// <summary>
       /// The implementation for IExternalCommand.Execute()
       /// </summary>
       /// <param name="commandData">The Revit command data.</param>
@@ -243,8 +234,7 @@ namespace Revit.SDK.Samples.CS.PointCloudEngine
          return Result.Succeeded;
       }
 
-      #endregion
-   }
+         }
 
 
 }

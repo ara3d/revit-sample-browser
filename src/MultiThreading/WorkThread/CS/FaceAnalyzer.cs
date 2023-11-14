@@ -51,8 +51,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
     /// 
     class FaceAnalyzer
     {
-        #region class member variables
-        // ActiveView
+                // ActiveView
         private View m_view;
         // string representation of reference object
         private string m_sreference;
@@ -68,10 +67,8 @@ namespace Revit.SDK.Samples.WorkThread.CS
         private SharedResults m_results;
         // If the result manager needs to be initialized
         private bool m_needInitialization = true;
-        #endregion
-
-        #region class member methods
-        /// <summary>
+        
+                /// <summary>
         ///   Constructor
         /// </summary>
         /// 
@@ -299,8 +296,7 @@ namespace Revit.SDK.Samples.WorkThread.CS
             // on a regular Idling event, during which the document is modifiable.
             m_needInitialization = true;
         }
-        #endregion
-
+        
 
     }  // class
 

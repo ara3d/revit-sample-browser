@@ -30,8 +30,7 @@ namespace Revit.SDK.Samples.ImportExport.CS
     /// </summary>
     static class Unit
     {
-        #region Methods
-        /// <summary>
+                /// <summary>
         /// Convert the value get from RevitAPI to the value indicated by ForgeTypeId
         /// </summary>
         /// <param name="to">ForgeTypeId indicates unit of target value</param>
@@ -70,6 +69,5 @@ namespace Revit.SDK.Samples.ImportExport.CS
             if (unit == UnitTypeId.MetersCentimeters) return 0.3048;
             return 1;
         }
-        #endregion
-    }
+            }
 }

@@ -45,8 +45,7 @@ namespace ExtensibleStorageManager
     public static class StorageCommand
     {
 
-       #region Create new sample schemas and write data to them
-
+       
        /// <summary>
        ///  Creates a new sample Schema, creates an instance of that Schema (an Entity) in the given element,
        ///  sets data on that element's entity, and exports the schema to a given XML file.
@@ -55,8 +54,7 @@ namespace ExtensibleStorageManager
        public static SchemaWrapperTools.SchemaWrapper CreateSetAndExport(Element storageElement, string xmlPathOut, Guid schemaId, AccessLevel readAccess, AccessLevel writeAccess, string vendorId, string applicationId, string name, string documentation, SampleSchemaComplexity schemaComplexity)
         {
 
-            #region Start a new transaction, and create a new Schema
-
+            
             if (Schema.Lookup(schemaId) != null)
             {
                throw new Exception("A Schema with this Guid already exists in this document -- another one cannot be created.");
@@ -67,8 +65,7 @@ namespace ExtensibleStorageManager
             //Create a new schema.
             var mySchemaWrapper = SchemaWrapperTools.SchemaWrapper.NewSchema(schemaId, readAccess, writeAccess, vendorId, applicationId, name, documentation);
             mySchemaWrapper.SetXmlPath(xmlPathOut);
-            #endregion
-           
+                       
             Entity storageElementEntityWrite = null;
          
             //Create some sample schema fields.  There are two sample schemas hard coded here, "simple" and "complex."
@@ -83,8 +80,7 @@ namespace ExtensibleStorageManager
             }
 
 
-            #region Store the main entity in an element, save the Serializeable SchemaWrapper to xml, and finish the transaction
-
+            
             storageElement.SetEntity(storageElementEntityWrite);
             var storageResult = storageWrite.Commit();
             if (storageResult != TransactionStatus.Committed)
@@ -96,11 +92,9 @@ namespace ExtensibleStorageManager
                mySchemaWrapper.ToXml(xmlPathOut);
                return mySchemaWrapper;
             }
-            #endregion
-        }
+                    }
 
-       #region Helper methods for CreateSetAndExport
-       /// <summary>
+              /// <summary>
        /// Adds several small, simple fields to a SchemaWrapper and Entity
        /// </summary>
        private static void SimpleSchemaAndData(SchemaWrapperTools.SchemaWrapper mySchemaWrapper, out Entity storageElementEntityWrite)
@@ -146,8 +140,7 @@ namespace ExtensibleStorageManager
        /// </summary>
        private static void ComplexSchemaAndData(SchemaWrapperTools.SchemaWrapper mySchemaWrapper, Element storageElement, string xmlPathOut, Guid schemaId, AccessLevel readAccess, AccessLevel writeAccess, string vendorId, string applicationId, string name, string documentation, out Entity storageElementEntityWrite)
        {
-          #region Add Fields to the SchemaWrapper
-          mySchemaWrapper.AddField<int>(int0Name, new ForgeTypeId(), null);
+                    mySchemaWrapper.AddField<int>(int0Name, new ForgeTypeId(), null);
           mySchemaWrapper.AddField<short>(short0Name, new ForgeTypeId(), null);
           mySchemaWrapper.AddField<double>(double0Name, SpecTypeId.Length, null);
           mySchemaWrapper.AddField<float>(float0Name, SpecTypeId.Length, null);
@@ -204,24 +197,18 @@ namespace ExtensibleStorageManager
             mySchemaWrapper.AddField<IList<Entity>>(array1Name, new ForgeTypeId(), mySubSchemaWrapper2_Array);
           
           
-          #endregion
-
-          #region Populate the Schema in the SchemaWrapper with data
-
+          
+          
           mySchemaWrapper.FinishSchema();
 
-          #endregion
-
-          #region Create a new entity to store an instance of schema data
-          storageElementEntityWrite = null;
+          
+                    storageElementEntityWrite = null;
 
           storageElementEntityWrite = new Entity(mySchemaWrapper.GetSchema());
 
 
-          #endregion
-
-          #region Get fields and set data in them
-          var fieldInt0 = mySchemaWrapper.GetSchema().GetField(int0Name);
+          
+                    var fieldInt0 = mySchemaWrapper.GetSchema().GetField(int0Name);
           var fieldShort0 = mySchemaWrapper.GetSchema().GetField(short0Name);
           var fieldDouble0 = mySchemaWrapper.GetSchema().GetField(double0Name);
           var fieldFloat0 = mySchemaWrapper.GetSchema().GetField(float0Name);
@@ -282,13 +269,9 @@ namespace ExtensibleStorageManager
           myEntArrayList1.Add(subEnt2);
           //Set the list of entities.
           storageElementEntityWrite.Set(fieldArray1, myEntArrayList1);
-          #endregion
-       }
-       #endregion
-       #endregion
-
-       #region Create and query SchemaWrappers from existing schemas or XML
-       /// <summary>
+                 }
+              
+              /// <summary>
         /// Given an Autodesk.Revit.DB.ExtensibleStorage.Schema that already exists,
         /// create a SchemaWrapper containing that Schema's data.
         /// </summary>
@@ -404,10 +387,8 @@ namespace ExtensibleStorageManager
            sWrapper = SchemaWrapperTools.SchemaWrapper.FromXml(path);
            sWrapper.SetXmlPath(path);
         }
-       #endregion
-
-       #region Helper methods
-       /// <summary>
+       
+              /// <summary>
        /// Create a new pseudorandom Guid
        /// </summary>
        /// <returns></returns>
@@ -420,10 +401,8 @@ namespace ExtensibleStorageManager
            s_counter++;
            return new Guid(guidBytes);
         }
-        #endregion
-
-       #region Data
-
+        
+       
         //A counter field used to assist in creating pseudorandom Guids
         private static int s_counter = DateTime.Now.Second;
  
@@ -455,6 +434,5 @@ namespace ExtensibleStorageManager
         private static string array1Name = entity2Name_Array;
         private static string map1Name = entity1Name_Map;
 
-        #endregion
-    }
+            }
 }

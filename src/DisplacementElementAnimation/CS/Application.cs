@@ -34,8 +34,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
-        #region IExternalApplication Members
-        /// <summary>
+                /// <summary>
         /// Implements the OnShutdown event
         /// </summary>
         /// <param name="application"></param>
@@ -57,8 +56,7 @@ namespace Revit.SDK.Samples.DisplacementElementAnimation.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// Sets up the Ribbon panel for the sample.
         /// </summary>

@@ -33,16 +33,13 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
     /// </summary>
     public partial class EventsInfoWindows : Form
     {
-        #region Class Member Variable
-        /// <summary>
+                /// <summary>
         /// An instance of RevitApplicationEvents class
         /// Which prepares the informations which is shown in this UI
         /// </summary>
         private LogManager m_dataBuffer;
-        #endregion
-
-        #region Class Constructors
-        /// <summary>
+        
+                /// <summary>
         /// Constructor without any argument
         /// </summary>
         public EventsInfoWindows()
@@ -60,10 +57,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             m_dataBuffer = dataBuffer;
             Initialize();
         }
-        #endregion 
-
-        #region Class Implementation
-        /// <summary>
+        
+                /// <summary>
         /// Initialize the DataGridView property
         /// </summary>
         private void Initialize()
@@ -75,10 +70,8 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
             eventColumn.DataPropertyName                 = "Event";
             typeColumn.DataPropertyName                  = "Type";
         }
-        #endregion 
-
-        #region Class Events Handler
-        /// <summary>
+        
+                /// <summary>
         /// form closed event handler
         /// </summary>
         /// <param name="sender"></param>
@@ -113,6 +106,5 @@ namespace Revit.SDK.Samples.EventsMonitor.CS
         {
             appEventsLogDataGridView.CurrentCell = appEventsLogDataGridView.Rows[appEventsLogDataGridView.Rows.Count - 1].Cells[0];
         }
-        #endregion
-    }
+            }
 }

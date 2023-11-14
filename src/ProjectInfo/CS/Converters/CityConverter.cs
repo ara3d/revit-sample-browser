@@ -23,8 +23,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
         }
 
-        #region Methods
-
+        
         /// <summary>
         /// Returns whether this object supports a standard set of values that can be
         /// picked from a list, using the specified context.
@@ -120,6 +119,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
             return base.ConvertTo(context, culture, value, destinationType);
         }
-        #endregion
-    }
+            }
 }

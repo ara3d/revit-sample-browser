@@ -37,8 +37,7 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region Implement IExternalCommand
-        public Result Execute(ExternalCommandData commandData,
+                public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document, "Revit.SDK.Samples.EnergyAnalysisModel");
@@ -62,6 +61,5 @@ namespace Revit.SDK.Samples.EnergyAnalysisModel.CS
             return Result.Succeeded;
         }
 
-        #endregion
-    }
+            }
 }

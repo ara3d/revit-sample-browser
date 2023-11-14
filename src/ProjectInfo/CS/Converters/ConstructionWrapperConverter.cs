@@ -10,8 +10,7 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
     /// </summary>
     public class ConstructionWrapperConverter : TypeConverter
     {
-        #region Methods
-        /// <summary>
+                /// <summary>
         /// Returns whether this object supports a standard set of values that can be
         /// picked from a list, using the specified context.
         /// </summary>
@@ -126,6 +125,5 @@ namespace Revit.SDK.Samples.ProjectInfo.CS
             }
             return base.ConvertTo(context, culture, value, destinationType);
         }
-        #endregion
-    };
+            };
 }

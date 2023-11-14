@@ -48,8 +48,7 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
             m_previousEvent = null;
         }
 
-        #region 'Event handlers for document opened and progress changed'
-        void RevitApp_DocumentOpened(object sender, Autodesk.Revit.DB.Events.DocumentOpenedEventArgs e)
+                void RevitApp_DocumentOpened(object sender, Autodesk.Revit.DB.Events.DocumentOpenedEventArgs e)
         {
             textBox_log.Text += "RevitApp_DocumentOpened: Cancellable:" + e.Cancellable.ToString() + " , IsCancelled: " + e.IsCancelled().ToString() + " , Status:" + e.Status.ToString() + Environment.NewLine;
             m_receivedCancelEvent = (e.Status == Autodesk.Revit.DB.Events.RevitAPIEventStatus.Cancelled);
@@ -114,11 +113,9 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
 
 
         }
-        #endregion
+        
 
-
-        #region Handlers for 'Open' and 'Cancel' buttons
-        private void Button_Open_Click(object sender, RoutedEventArgs e)
+                private void Button_Open_Click(object sender, RoutedEventArgs e)
         {
             var ofd = new Microsoft.Win32.OpenFileDialog();
 
@@ -165,17 +162,14 @@ namespace Revit.SDK.Samples.ProgressNotifier.CS
         {
             m_cancel = true;
         }
-        #endregion
-
-        #region Data
-        Autodesk.Revit.ApplicationServices.Application m_application;
+        
+                Autodesk.Revit.ApplicationServices.Application m_application;
         ProgressStack m_progressStack;
         bool m_cancel;
 
         private bool m_receivedCancelEvent;
         private ProgressItem m_previousEvent;
-        #endregion
-
+        
 
 
 

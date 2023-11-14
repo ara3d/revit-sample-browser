@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.DisableCommand.CS
     /// </summary>
     public class Application : IExternalApplication
     {
-        #region IExternalApplication Members
-       
+               
         /// <summary>
         /// Implements the OnStartup event
         /// </summary>
@@ -83,8 +82,7 @@ namespace Revit.SDK.Samples.DisableCommand.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// A command execution method which disables any command it is applied to (with a user-visible message).
         /// </summary>

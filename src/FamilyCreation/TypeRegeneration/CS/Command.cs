@@ -40,8 +40,7 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        #region Class Memeber Variables        
-        /// <summary>
+                /// <summary>
         /// store family manager
         /// </summary>
         FamilyManager m_familyManager;
@@ -50,10 +49,8 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
         /// store the log file name
         /// </summary>
         string m_logFileName;       
-        #endregion
-
-        #region Class Interface Implementation
-        public Result Execute(ExternalCommandData commandData,
+        
+                public Result Execute(ExternalCommandData commandData,
                                              ref string message,
                                              ElementSet elements)
         {
@@ -82,10 +79,8 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
                 return Result.Failed;
             }
         }
-        #endregion
-
-        #region Class Implementation
-       /// <summary>
+        
+               /// <summary>
         ///  After setting CurrentType property, the CurrentType has changed to the new one,the Revit model will change along with the current type
        /// </summary>
        /// <param name="msgForm">the form is used to show the regeneration result</param>        
@@ -152,6 +147,5 @@ namespace Revit.SDK.Samples.TypeRegeneration.CS
             writer.WriteLine(logStr);
             writer.Close();
         }       
-        #endregion
-    }
+            }
 }

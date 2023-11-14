@@ -31,8 +31,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     public class PostCommandRevisionMonitorCommand : IExternalCommand
     {
-        #region IExternalCommand Members
-
+        
         /// <summary>
         /// The external command callback.
         /// </summary>
@@ -59,8 +58,7 @@ namespace Revit.SDK.Samples.PostCommandWorkflow.CS
             return Result.Succeeded;
         }
 
-        #endregion
-
+        
         /// <summary>
         /// Sets the handle to the command's pushbutton.
         /// </summary>

@@ -104,10 +104,8 @@ namespace Revit.SDK.Samples.DockableDialogs.CS
          return sb.ToString();
       }
 
-      #region Data
-      private UIApplication m_uiApplication;
+            private UIApplication m_uiApplication;
 
-      #endregion
-
+      
    }
 }

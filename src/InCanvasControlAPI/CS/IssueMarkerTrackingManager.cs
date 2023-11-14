@@ -32,8 +32,7 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
    /// </summary>
    public class IssueMarkerTrackingManager
    {
-      #region Class implementation
-
+      
       private IssueMarkerTrackingManager()
       {
       }
@@ -90,14 +89,11 @@ namespace Revit.SDK.Samples.InCanvasControlAPI.CS
          trackings.Clear();
       }
 
-      #endregion
-
-      #region Class member variables
-
+      
+      
       private static IssueMarkerTrackingManager manager;
 
       private HashSet<IssueMarkerTracking> trackings = new HashSet<IssueMarkerTracking>();
 
-      #endregion
-   }
+         }
 }

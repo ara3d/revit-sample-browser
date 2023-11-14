@@ -33,8 +33,7 @@ namespace Revit.SDK.Samples.DoorSwing.CS
    /// </summary>
    public class DoorGeometry
    {
-      #region "Members"
-
+      
       // User preferences for parsing of geometry.
       Options m_options;
       // boundingBox of the geometry. 
@@ -42,10 +41,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
       // curves can represent the wireFrame of the door's geometry.
       List<List<XYZ>> m_curve3Ds = new List<List<XYZ>>();
 
-      #endregion
-
-      #region "Properties"
-
+      
+      
       /// <summary>
       /// BoundingBox of the 2D geometry.
       /// </summary>
@@ -53,10 +50,8 @@ namespace Revit.SDK.Samples.DoorSwing.CS
           new System.Drawing.RectangleF((float)m_bbox.Min.X, (float)m_bbox.Min.Y,
               (float)(m_bbox.Max.X - m_bbox.Min.X), (float)(m_bbox.Max.Y - m_bbox.Min.Y));
 
-      #endregion
-
-      #region "Methods"
-
+      
+      
       /// <summary>
       /// construct function.
       /// </summary>
@@ -300,6 +295,5 @@ namespace Revit.SDK.Samples.DoorSwing.CS
          }
       }
 
-      #endregion
-   }
+         }
 }

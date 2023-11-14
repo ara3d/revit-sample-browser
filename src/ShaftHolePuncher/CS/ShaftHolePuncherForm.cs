@@ -33,12 +33,10 @@ namespace Revit.SDK.Samples.ShaftHolePuncher.CS
     /// </summary>
     public partial class ShaftHolePuncherForm : Form
     {
-        #region class members
-        private Profile m_profile;  //save the profile data
+                private Profile m_profile;  //save the profile data
         private ITool m_tool; //current using tool
         Size m_sizePictureBox; //size of picture box
-        #endregion
-
+        
         /// <summary>
         /// constructor
         /// </summary>

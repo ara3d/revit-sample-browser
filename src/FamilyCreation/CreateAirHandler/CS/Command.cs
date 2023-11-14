@@ -64,8 +64,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
       /// </summary>
       private CombinableElementArray m_combineElements;
 
-      #region Data used to create extrusions and connectors
-      /// <summary>
+            /// <summary>
       /// Data to create extrusions and connectors
       /// </summary>
       private XYZ[,] profileData = new XYZ[5, 4]
@@ -156,10 +155,8 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
       /// Transaction of ExternalCommand
       /// </summary>
       private Transaction m_transaction;
-      #endregion
-
-      #region IExternalCommand Members
-      public Result Execute(ExternalCommandData commandData, ref string message,
+      
+            public Result Execute(ExternalCommandData commandData, ref string message,
           ElementSet elements)
       {
          // set out default result to failure.
@@ -201,8 +198,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
          retRes = Result.Succeeded;
          return retRes;
       }
-      #endregion
-
+      
       /// <summary>
       /// get all planar faces of an extrusion
       /// </summary>
@@ -251,8 +247,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
          Plane plane = null;
          SketchPlane sketchPlane = null;
 
-         #region Create the cuboid extrusions
-
+         
          for (var i = 0; i <= 2; ++i)
          {
             // create the profile
@@ -275,10 +270,8 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
             m_combineElements.Append(extrusions[i]);
          }
 
-         #endregion
-
-         #region Create the round extrusions
-
+         
+         
          for (var i = 3; i <= 4; ++i)
          {
             // create the profile
@@ -300,16 +293,14 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
             m_combineElements.Append(extrusions[i]);
          }
 
-         #endregion
-      }
+               }
 
       /// <summary>
       /// create the connectors on the extrusions
       /// </summary>
       private void CreateConnectors()
       {
-          #region Create the Supply Air duct connector
-
+          
          // get the planar faces of extrusion1
          var m_planarFaces = GetPlanarFaces(extrusions[1]);
 
@@ -328,10 +319,8 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
          param = connSupplyAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_PARAM);
          param.Set(flow);
 
-         #endregion
-
-         #region Create the Return Air duct connector
-
+         
+         
          // get the planar faces of extrusion2
          m_planarFaces = GetPlanarFaces(extrusions[2]);
 
@@ -351,10 +340,8 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
          param = connReturnAir.get_Parameter(BuiltInParameter.RBS_DUCT_FLOW_PARAM);
          param.Set(flow);
 
-         #endregion
-
-         #region Create the Supply Hydronic pipe connector
-
+         
+         
          // get the planar faces of extrusion3
          m_planarFaces = GetPlanarFaces(extrusions[3]);
 
@@ -368,10 +355,8 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
              connSupplyHydronic.get_Parameter(BuiltInParameter.RBS_PIPE_FLOW_DIRECTION_PARAM);
          param.Set(2);
 
-         #endregion
-
-         #region Create the Return Hydronic pipe connector
-
+         
+         
          // get the planar faces of extrusion4
          m_planarFaces = GetPlanarFaces(extrusions[4]);
 
@@ -385,8 +370,7 @@ namespace Revit.SDK.Samples.CreateAirHandler.CS
              connReturnHydronic.get_Parameter(BuiltInParameter.RBS_PIPE_FLOW_DIRECTION_PARAM);
          param.Set(1);
 
-         #endregion
-
+         
       }
    }
 }
