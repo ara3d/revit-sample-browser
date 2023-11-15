@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
@@ -11,7 +11,7 @@ using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 
-namespace RevitMultiSample.Truss.CS
+namespace Ara3D.RevitSampleBrowser.Truss.CS
 {
     /// <summary>
     ///     TrussGeometry class contains Geometry information of new created Truss,

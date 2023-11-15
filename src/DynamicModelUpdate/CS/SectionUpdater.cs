@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DynamicModelUpdate.CS
+namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
 {
     /// <summary>
     ///     Updater to automatically move a section in conjunction with the location of a window

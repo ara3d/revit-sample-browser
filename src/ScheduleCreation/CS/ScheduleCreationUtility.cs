@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ScheduleCreation.CS
+namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
 {
     /// <summary>
     ///     Utility class that contains methods of view schedule creation and schedule sheet instance creation.

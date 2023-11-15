@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.SpotDimension.CS
+namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
 {
     /// <summary>
     ///     this class is used to get some information

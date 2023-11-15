@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 
-namespace RevitMultiSample.RoomSchedule
+namespace Ara3D.RevitSampleBrowser.RoomSchedule
 {
     /// <summary>
     ///     An integrated class to connect .xls data source, retrieve / update data

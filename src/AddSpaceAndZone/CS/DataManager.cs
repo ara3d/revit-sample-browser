@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.AddSpaceAndZone.CS
+namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
     /// <summary>
     ///     The DataManager Class is used to obtain, create or edit the Space elements and Zone elements.

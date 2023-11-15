@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
 {
     /// <summary>
     ///     This class inherits IExternalCommand interface and is used to show the SelectionChanged event

@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.Openings.CS
+namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
     /// <summary>
     ///     This class which inherit from Autodesk.Revit.DB.BoundingBoxXYZ

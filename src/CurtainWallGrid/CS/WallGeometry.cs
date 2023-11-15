@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.CurtainWallGrid.CS
+namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     /// <summary>
     ///     the class manages the creation operation for the curtain wall

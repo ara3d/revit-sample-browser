@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

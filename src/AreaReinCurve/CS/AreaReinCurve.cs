@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.AreaReinCurve.CS
+namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -21,7 +21,7 @@ namespace RevitMultiSample.AreaReinCurve.CS
         public Result Execute(ExternalCommandData revit,
             ref string message, ElementSet elements)
         {
-            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "RevitMultiSample.AreaReinCurve");
+            var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "Ara3D.RevitSampleBrowser.AreaReinCurve");
             trans.Start();
             var selected = new ElementSet();
             foreach (var elementId in revit.Application.ActiveUIDocument.Selection.GetElementIds())

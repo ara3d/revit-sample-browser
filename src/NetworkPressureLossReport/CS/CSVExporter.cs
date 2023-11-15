@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using System.IO;
 using System.Text;
 using Autodesk.Revit.DB;
 using ArgumentException = Autodesk.Revit.Exceptions.ArgumentException;
 
-namespace RevitMultiSample.NetworkPressureLossReport
+namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport
 {
     public class CsvExporter : IDisposable
     {

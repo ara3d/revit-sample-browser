@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.PathOfTravelCreation.CS
+namespace Ara3D.RevitSampleBrowser.PathOfTravelCreation.CS
 {
     /// <summary>
     ///     Form presented to the user to fill in the options to control the path of travel creation.

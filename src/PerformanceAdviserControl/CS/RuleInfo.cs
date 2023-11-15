@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.PerformanceAdviserControl.CS
+namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
 {
     /// <summary>
     ///     A simple data class that holds Performance Adviser rule information for use with

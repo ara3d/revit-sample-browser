@@ -1,15 +1,15 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using RevitMultiSample.PowerCircuit.CS.Properties;
 
-namespace RevitMultiSample.PowerCircuit.CS
+namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 {
     /// <summary>
     ///     Data class which stores the information of electrical circuit operation

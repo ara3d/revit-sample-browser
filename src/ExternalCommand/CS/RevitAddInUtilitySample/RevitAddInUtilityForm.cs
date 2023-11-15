@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using Autodesk.RevitAddIns;
 
-namespace RevitMultiSample.RevitAddInUtilitySample.CS
+namespace Ara3D.RevitSampleBrowser.RevitAddInUtilitySample.CS
 {
     /// <summary>
     ///     Demonstrates how to use RevitAddInUtility.dll to create or edit addin manifest file.
@@ -33,18 +33,18 @@ namespace RevitMultiSample.RevitAddInUtilitySample.CS
             //create an external application
             var application1 = new RevitAddInApplication(
                 "ExternalApplication", fileInfo.FullName, Guid.NewGuid(),
-                "RevitMultiSample.ExternalCommandRegistration.CS.ExternalApplicationClass", "adsk");
+                "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.ExternalApplicationClass", "adsk");
 
             //create an external command to create a wall
             //This command will not be visible when there is no active document. 
             //And this command will be disabled if user selected a wall. 
             var command1 = new RevitAddInCommand(
                 fileInfo.FullName, Guid.NewGuid(),
-                "RevitMultiSample.ExternalCommandRegistration.CS.ExternalCommandCreateWall", "adsk")
+                "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.ExternalCommandCreateWall", "adsk")
  {
      Description = "A simple external command which is used to create a wall.",
      Text = "@createWallText",
-     AvailabilityClassName = "RevitMultiSample.ExternalCommandRegistration.CS.WallSelection",
+     AvailabilityClassName = "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.WallSelection",
      LanguageType = LanguageType.English_USA,
      LargeImage = "@CreateWall",
      TooltipImage = "@CreateWallTooltip",
@@ -58,11 +58,11 @@ namespace RevitMultiSample.RevitAddInUtilitySample.CS
             //And this command will be disabled if the active view is not a 3D view. ";
             var command2 = new RevitAddInCommand(
                 fileInfo.FullName, Guid.NewGuid(),
-                "RevitMultiSample.ExternalCommandRegistration.CS.ExternalCommand3DView", "adsk")
+                "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.ExternalCommand3DView", "adsk")
             {
                 Description = "A simple external command which show a message box.",
                 Text = "@view3DText",
-                AvailabilityClassName = "RevitMultiSample.ExternalCommandRegistration.CS.View3D",
+                AvailabilityClassName = "Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS.View3D",
                 LargeImage = "@View3D",
                 LanguageType = LanguageType.English_USA,
                 VisibilityMode = VisibilityMode.NotVisibleInFamily | VisibilityMode.NotVisibleWhenNoActiveDocument,

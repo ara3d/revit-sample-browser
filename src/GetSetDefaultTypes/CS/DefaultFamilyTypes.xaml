@@ -1,4 +1,4 @@
-﻿<Page x:Class="RevitMultiSample.GetSetDefaultTypes.CS.DefaultFamilyTypes"
+﻿<Page x:Class="Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS.DefaultFamilyTypes"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using ArgumentException = Autodesk.Revit.Exceptions.ArgumentException;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 using RevitFreeFormElement = Autodesk.Revit.DB.FreeFormElement;
 
-namespace RevitMultiSample.FreeFormElement.CS
+namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
 {
     /// <summary>
     ///     Utilities supporting the creation of a family containing a FreeFormElement which is cut out from existing geometry

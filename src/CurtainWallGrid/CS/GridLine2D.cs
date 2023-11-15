@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace RevitMultiSample.CurtainWallGrid.CS
+namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     /// <summary>
     ///     a linear line in 2D point format

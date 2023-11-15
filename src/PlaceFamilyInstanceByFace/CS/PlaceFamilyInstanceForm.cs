@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Drawing;
@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
+namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
     ///     The main UI for creating family instance by face

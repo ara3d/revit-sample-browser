@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.NewForm.CS
+namespace Ara3D.RevitSampleBrowser.NewForm.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

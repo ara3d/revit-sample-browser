@@ -1,7 +1,7 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System.Windows.Controls;
 
-namespace RevitMultiSample.UIAPI.CS.OptionsDialog
+namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 {
     /// <summary>
     ///     Interaction logic for Options.xaml

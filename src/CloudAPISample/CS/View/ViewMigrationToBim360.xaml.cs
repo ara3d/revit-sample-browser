@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -17,12 +17,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
-using RevitMultiSample.CloudAPISample.CS.Coroutine;
-using RevitMultiSample.CloudAPISample.CS.Migration;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration;
 using MessageBox = System.Windows.MessageBox;
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace RevitMultiSample.CloudAPISample.CS.View
+namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 {
     /// <summary>
     ///     Interaction logic for ViewMigrationToBim360.xaml

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
-namespace RevitMultiSample.AppearanceAssetEditing.CS
+namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

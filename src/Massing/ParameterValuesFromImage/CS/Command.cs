@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 
-namespace RevitMultiSample.ParameterValuesFromImage.CS
+namespace Ara3D.RevitSampleBrowser.ParameterValuesFromImage.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.
@@ -24,7 +24,7 @@ namespace RevitMultiSample.ParameterValuesFromImage.CS
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
 
-            var trans = new Transaction(doc, "RevitMultiSample.ParameterValuesFromImage");
+            var trans = new Transaction(doc, "Ara3D.RevitSampleBrowser.ParameterValuesFromImage");
             trans.Start();
             var image = new Bitmap(doc.PathName + "_grayscale.bmp");
             var collector = new FilteredElementCollector(doc);

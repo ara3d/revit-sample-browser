@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -17,7 +17,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.Site.CS
+namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
     ///     A command that normalizes all points in a region to the average elevation.

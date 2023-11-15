@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.SpanDirection.CS
+namespace Ara3D.RevitSampleBrowser.SpanDirection.CS
 {
     /// <summary>
     ///     Get Span direction of Floor and all the SpanDirection Symbols

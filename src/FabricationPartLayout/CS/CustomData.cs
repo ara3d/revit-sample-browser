@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Text;
@@ -9,7 +9,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
-namespace RevitMultiSample.FabricationPartLayout.CS
+namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
     /// <summary>
     ///     Helper class to report custom data from fabrication part selection.

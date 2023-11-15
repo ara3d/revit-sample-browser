@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Data;
 using Autodesk.Revit.Attributes;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.AnalyticalSupportData_Info.CS
+namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
 {
     /// <summary>
     ///     get element's id and type information and its supported information.

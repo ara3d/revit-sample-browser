@@ -1,5 +1,5 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
-namespace RevitMultiSample.Truss.CS
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+namespace Ara3D.RevitSampleBrowser.Truss.CS
 {
     /// <summary>
     /// window form contains one three picture box to show the 

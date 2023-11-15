@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ScheduleToHTML.CS
+namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 {
     /// <summary>
     ///     The external command exporting the active schedule to HTML.

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Events;
 
-namespace RevitMultiSample.RoomSchedule
+namespace Ara3D.RevitSampleBrowser.RoomSchedule
 {
     /// <summary>
     ///     One struct defines the content of mapped Excel spreadsheet: the full name of this file and the sheet.

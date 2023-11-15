@@ -1,15 +1,15 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using RevitMultiSample.CurtainSystem.CS.CurtainSystem;
-using RevitMultiSample.CurtainSystem.CS.Data;
-using RevitMultiSample.CurtainSystem.CS.Properties;
-using RevitMultiSample.CurtainSystem.CS.UI;
 
-namespace RevitMultiSample.CurtainSystem.CS
+namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS
 {
     /// <summary>
     ///     the entry point of the sample (to launch the sample dialog and allows further operations)

@@ -1,6 +1,6 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace RevitMultiSample.ImportExport.CS.Properties {
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
     using System;
     
     
@@ -31,7 +31,7 @@ namespace RevitMultiSample.ImportExport.CS.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RevitMultiSample.ImportExport.CS.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ara3D.RevitSampleBrowser.ImportExport.CS.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

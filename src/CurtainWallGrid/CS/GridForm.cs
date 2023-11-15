@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Drawing;
@@ -9,7 +9,7 @@ using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-namespace RevitMultiSample.CurtainWallGrid.CS
+namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     /// <summary>
     ///     the main windows form for users to operate on

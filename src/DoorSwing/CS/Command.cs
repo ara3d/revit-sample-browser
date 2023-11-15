@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DoorSwing.CS
+namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
     /// <summary>
     ///     This command will add needed shared parameters and initialize them.

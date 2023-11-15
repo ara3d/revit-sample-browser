@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace RevitMultiSample.CreateComplexAreaRein.CS
+namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -28,7 +28,7 @@ namespace RevitMultiSample.CreateComplexAreaRein.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.CreateComplexAreaRein");
+                "Ara3D.RevitSampleBrowser.CreateComplexAreaRein");
             trans.Start();
             //initialize members
             CommandData = revit;

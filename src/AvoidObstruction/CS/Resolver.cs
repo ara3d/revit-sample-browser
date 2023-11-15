@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.AvoidObstruction.CS
+namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
     /// <summary>
     ///     This class implement the algorithm to detect the obstruction and resolve it.

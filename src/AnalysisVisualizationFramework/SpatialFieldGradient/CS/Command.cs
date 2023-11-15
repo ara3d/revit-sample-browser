@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -20,7 +20,7 @@ using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace RevitMultiSample.AnalysisVisualizationFramework.CS
+namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -33,7 +33,7 @@ namespace RevitMultiSample.AnalysisVisualizationFramework.CS
             var doc = commandData.Application.ActiveUIDocument.Document;
             var uiDoc = commandData.Application.ActiveUIDocument;
 
-            var trans = new Transaction(doc, "RevitMultiSample.AnalysisVisualizationFramework");
+            var trans = new Transaction(doc, "Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework");
             trans.Start();
 
             var sfm = SpatialFieldManager.GetSpatialFieldManager(doc.ActiveView) ?? SpatialFieldManager.CreateSpatialFieldManager(doc.ActiveView, 1);

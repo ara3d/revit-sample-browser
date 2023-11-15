@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.AutoStamp.CS
+namespace Ara3D.RevitSampleBrowser.AutoStamp.CS
 {
     /// <summary>
     ///     This class implements the methods of interface IExternalApplication and register View Print related events.

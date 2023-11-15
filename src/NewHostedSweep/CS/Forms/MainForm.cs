@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
 {
     /// <summary>
     ///     This is the main form. It is the entry to create a new hosted sweep or to modify

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.ComponentModel;
@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using TextBox = System.Windows.Forms.TextBox;
 
-namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
+namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
     ///     Stand for the point data of this user control

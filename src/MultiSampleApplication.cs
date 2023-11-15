@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample
+namespace Ara3D.RevitSampleBrowser
 {
     public class MultiSampleApplication : IExternalApplication
     {

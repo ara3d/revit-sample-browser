@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.FrameBuilder.CS
+namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
     /// <summary>
     ///     for control PropertyGrid to show and modify parameters of column, beam or brace

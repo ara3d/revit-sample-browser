@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.AttachedDetailGroup.CS
+namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
 {
     /// <summary>
     ///     The external command that hides all of the selected group's attached detail groups.

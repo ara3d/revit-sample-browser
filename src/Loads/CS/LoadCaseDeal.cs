@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.Loads.CS
+namespace Ara3D.RevitSampleBrowser.Loads.CS
 {
     /// <summary>
     ///     Deal the LoadCase class which give methods to connect Revit and the user operation on the form

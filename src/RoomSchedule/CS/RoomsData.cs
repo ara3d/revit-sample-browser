@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
-namespace RevitMultiSample.RoomSchedule
+namespace Ara3D.RevitSampleBrowser.RoomSchedule
 {
     /// <summary>
     ///     Iterates through the rooms in the project and get the information of all the rooms

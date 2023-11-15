@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using Autodesk.Revit.Creation;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace RevitMultiSample.NewRoof.RoofsManager.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.RoofsManager.CS
 {
     /// <summary>
     ///     The ExtrusionRoofManager class is to manage the creation of the Extrusion roof.

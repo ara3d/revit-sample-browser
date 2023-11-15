@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.CreateBeamSystem.CS
+namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
     /// <summary>
     ///     is used to create new instances of beam system

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using TextBox = System.Windows.Forms.TextBox;
 
-namespace RevitMultiSample.CreateBeamsColumnsBraces.CS
+namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
 {
     /// <summary>
     ///     UI

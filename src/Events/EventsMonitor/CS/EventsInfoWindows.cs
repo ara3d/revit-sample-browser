@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.EventsMonitor.CS
+namespace Ara3D.RevitSampleBrowser.EventsMonitor.CS
 {
     /// <summary>
     ///     The UI to show the events history logs. This class is not the main one just a assistant

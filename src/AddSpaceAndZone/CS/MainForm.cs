@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.AddSpaceAndZone.CS
+namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
     /// <summary>
     ///     The MainForm Class is the main user interface to manage the Space elements and Zone elements

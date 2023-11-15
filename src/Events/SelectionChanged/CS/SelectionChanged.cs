@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace RevitMultiSample.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
 {
     /// <summary>
     ///     This class is an external application which monitors when the selection is changed.
@@ -48,7 +48,7 @@ namespace RevitMultiSample.SelectionChanged.CS
 
             var ribbonPanel = _ctrlApp.CreateRibbonPanel("SelectionChanged Event");
             var showInfoWindowButton = new PushButtonData("showInfoWindow", "Show Event Info", AddInPath,
-                "RevitMultiSample.SelectionChanged.CS.Command")
+                "Ara3D.RevitSampleBrowser.SelectionChanged.CS.Command")
             {
                 ToolTip = "Show Event Monitor window"
             };

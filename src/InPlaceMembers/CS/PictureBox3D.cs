@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.InPlaceMembers.CS
+namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 {
     /// <summary>
     ///     picturebox wich can display 3D geometry outline

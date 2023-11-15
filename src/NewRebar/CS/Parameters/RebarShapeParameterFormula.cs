@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace RevitMultiSample.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS
 {
     /// <summary>
     ///     This class wraps a formula parameter which will be the dimension of

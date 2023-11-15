@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace RevitMultiSample.GeometryCreation_BooleanOperation.CS
+namespace Ara3D.RevitSampleBrowser.GeometryCreation_BooleanOperation.CS
 {
     internal class AnalysisVisualizationFramework
     {

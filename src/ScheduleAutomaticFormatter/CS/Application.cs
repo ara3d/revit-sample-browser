@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -16,12 +16,12 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS.Properties;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-using RevitMultiSample.ScheduleAutomaticFormatter.CS.Properties;
 using Size = System.Drawing.Size;
 
-namespace RevitMultiSample.ScheduleAutomaticFormatter.CS
+namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

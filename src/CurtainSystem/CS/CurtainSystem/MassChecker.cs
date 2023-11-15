@@ -1,14 +1,14 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Utility;
 using Autodesk.Revit.DB;
-using RevitMultiSample.CurtainSystem.CS.Data;
-using RevitMultiSample.CurtainSystem.CS.Properties;
-using RevitMultiSample.CurtainSystem.CS.Utility;
 
-namespace RevitMultiSample.CurtainSystem.CS.CurtainSystem
+namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 {
     /// <summary>
     ///     check whether the selected element is a mass and whether the mass is kind of parallelepiped

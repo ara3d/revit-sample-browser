@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace RevitMultiSample.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS
 {
     /// <summary>
     ///     Type converter between RebarShapeParameter and string is provided for property grid.

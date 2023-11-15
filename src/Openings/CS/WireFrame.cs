@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace RevitMultiSample.Openings.CS
+namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
     /// <summary>
     ///     WireFrame class for generate the model lines and fit the picture box's size to display

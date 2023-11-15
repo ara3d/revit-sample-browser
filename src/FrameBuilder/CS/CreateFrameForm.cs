@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.FrameBuilder.CS
+namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
     /// <summary>
     ///     main form to create framing

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ReferencePlane.CS
+namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
 {
     /// <summary>
     ///     The entry of this sample, that supports the IExternalCommand interface.
@@ -21,7 +21,7 @@ namespace RevitMultiSample.ReferencePlane.CS
             ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.ReferencePlane");
+                "Ara3D.RevitSampleBrowser.ReferencePlane");
             trans.Start();
             try
             {

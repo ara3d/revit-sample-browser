@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.ColorFill.CS
+namespace Ara3D.RevitSampleBrowser.ColorFill.CS
 {
     /// <summary>
     ///     This is a dialog should appear that contains the following:

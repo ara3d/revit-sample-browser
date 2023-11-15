@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Diagnostics;
 
-namespace RevitMultiSample.PrintLog.CS
+namespace Ara3D.RevitSampleBrowser.PrintLog.CS
 {
     /// <summary>
     ///     This class consists of two watches for view print and document print processes.

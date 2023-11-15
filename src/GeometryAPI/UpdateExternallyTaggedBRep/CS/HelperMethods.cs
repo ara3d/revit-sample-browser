@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.UpdateExternallyTaggedBRep.CS
+namespace Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS
 {
     internal static class HelperMethods
     {

@@ -1,5 +1,5 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
-namespace RevitMultiSample.ShaftHolePuncher.CS
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
     /// <summary>
     /// window form contains one picture box to show the 

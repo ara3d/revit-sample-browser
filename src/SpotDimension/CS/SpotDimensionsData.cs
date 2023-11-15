@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.SpotDimension.CS
+namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
 {
     /// <summary>
     ///     Store all the views and spot dimensions in Revit.

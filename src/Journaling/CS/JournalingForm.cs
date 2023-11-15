@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.Journaling.CS
+namespace Ara3D.RevitSampleBrowser.Journaling.CS
 {
     /// <summary>
     ///     The form used to collect the support data for wall creation and store in journal

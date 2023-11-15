@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace RevitMultiSample.GenerateFloor.CS
+namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 {
     /// <summary>
     ///     obtain all data for this sample.

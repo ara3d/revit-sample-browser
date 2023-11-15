@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.VersionChecking.CS
+namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
 {
     /// <summary>
     ///     UI that display the version information

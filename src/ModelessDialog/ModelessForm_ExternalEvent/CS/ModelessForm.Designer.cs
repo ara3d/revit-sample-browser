@@ -1,5 +1,5 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
-namespace RevitMultiSample.ModelessForm_ExternalEvent.CS
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+namespace Ara3D.RevitSampleBrowser.ModelessForm_ExternalEvent.CS
 {
    partial class ModelessForm
    {

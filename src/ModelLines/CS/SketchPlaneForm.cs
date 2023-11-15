@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ModelLines.CS
+namespace Ara3D.RevitSampleBrowser.ModelLines.CS
 {
     /// <summary>
     ///     This UserControl is used to collect the information for sketch plane creation

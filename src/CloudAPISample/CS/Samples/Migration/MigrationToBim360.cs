@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -20,10 +20,10 @@ using System.IO;
 using System.Linq;
 using System.Web.Script.Serialization;
 using System.Windows;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.View;
 using Autodesk.Revit.DB;
-using RevitMultiSample.CloudAPISample.CS.View;
 
-namespace RevitMultiSample.CloudAPISample.CS.Migration
+namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration
 {
     /// <summary>
     ///     This is a sample shows how to migrate A360 Teams project to BIM360 Docs

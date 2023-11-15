@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample
+namespace Ara3D.RevitSampleBrowser
 {
     public class SampleData
     {
@@ -38,7 +38,7 @@ namespace RevitMultiSample
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
             Namespace = type.Namespace ?? "";
-            var prefix = "RevitMultiSample.";
+            var prefix = "Ara3D.RevitSampleBrowser.";
             if (Namespace.StartsWith(prefix))
                 Namespace = Namespace.Substring(prefix.Length);
             var suffix = ".CS";

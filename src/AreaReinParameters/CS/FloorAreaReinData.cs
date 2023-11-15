@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace RevitMultiSample.AreaReinParameters.CS
+namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
     /// <summary>
     ///     can be the datasource of propertygrid

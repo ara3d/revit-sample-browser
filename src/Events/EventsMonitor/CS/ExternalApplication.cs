@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.EventsMonitor.CS
+namespace Ara3D.RevitSampleBrowser.EventsMonitor.CS
 {
     /// <summary>
     ///     A class inherits IExternalApplication interface and provide an entry of the sample.
@@ -237,7 +237,7 @@ namespace RevitMultiSample.EventsMonitor.CS
             var ribbonPanelPushButtons = application.CreateRibbonPanel(panelName);
             var pushButtonData = new PushButtonData("EventsSetting",
                 "Set Events", Assembly.GetExecutingAssembly().Location,
-                "RevitMultiSample.EventsMonitor.CS.Command");
+                "Ara3D.RevitSampleBrowser.EventsMonitor.CS.Command");
             var pushButtonCreateWall = ribbonPanelPushButtons.AddItem(pushButtonData) as PushButton;
             pushButtonCreateWall.ToolTip = "Setting Events";
         }

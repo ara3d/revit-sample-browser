@@ -1,14 +1,14 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using RevitMultiSample.NewRoof.RoofForms.CS;
 using View = Autodesk.Revit.DB.View;
 
-namespace RevitMultiSample.NewRoof.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

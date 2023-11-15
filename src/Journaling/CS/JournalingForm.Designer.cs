@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using RevitMultiSample.PlaceFamilyInstanceByFace.CS;
+using Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS;
 
-namespace RevitMultiSample.Journaling.CS
+namespace Ara3D.RevitSampleBrowser.Journaling.CS
 {
     partial class JournalingForm
     {
@@ -185,7 +185,7 @@ namespace RevitMultiSample.Journaling.CS
         private System.Windows.Forms.Label startPointLabel;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
-        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl endPointUserControl;
-        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl startPointUserControl;
+        private PointUserControl endPointUserControl;
+        private PointUserControl startPointUserControl;
     }
 }

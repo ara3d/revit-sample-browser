@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.DB.Structure;
 
-namespace RevitMultiSample.RebarFreeForm.CS
+namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 {
     /// <summary>
     ///     Class used to represent a structural face that is part of a rebar constraint.

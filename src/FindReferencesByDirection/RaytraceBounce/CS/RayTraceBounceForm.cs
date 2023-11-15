@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.RayTraceBounce.CS
+namespace Ara3D.RevitSampleBrowser.RayTraceBounce.CS
 {
     /// <summary>
     ///     1. This form allowing entry of a coordinate location (X, Y, Z) within the model and a coordinate direction (i, j,

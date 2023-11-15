@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 /*
  * This sample demonstrates how to use DirectContext3D to draw graphics. 
@@ -15,7 +15,7 @@ using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-namespace RevitMultiSample.DuplicateGraphics.CS
+namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
 {
     internal class RevitElementDrawingServer : IDirectContext3DServer
     {

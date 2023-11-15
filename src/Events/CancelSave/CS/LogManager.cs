@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.CancelSave.CS
+namespace Ara3D.RevitSampleBrowser.CancelSave.CS
 {
     /// <summary>
     ///     One log file will be created by this class for tracking events raise.

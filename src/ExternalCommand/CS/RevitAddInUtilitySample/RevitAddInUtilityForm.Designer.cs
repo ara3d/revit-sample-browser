@@ -1,5 +1,5 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
-namespace RevitMultiSample.RevitAddInUtilitySample.CS
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+namespace Ara3D.RevitSampleBrowser.RevitAddInUtilitySample.CS
 {
    partial class RevitAddInUtilitySampleForm
    {

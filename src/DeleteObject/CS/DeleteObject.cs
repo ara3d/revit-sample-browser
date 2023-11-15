@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DeleteObject.CS
+namespace Ara3D.RevitSampleBrowser.DeleteObject.CS
 {
     /// <summary>
     ///     Delete the elements that were selected
@@ -19,7 +19,7 @@ namespace RevitMultiSample.DeleteObject.CS
             ref string message, ElementSet elements)
         {
             var revit = commandData.Application;
-            var trans = new Transaction(revit.ActiveUIDocument.Document, "RevitMultiSample.DeleteObject");
+            var trans = new Transaction(revit.ActiveUIDocument.Document, "Ara3D.RevitSampleBrowser.DeleteObject");
             trans.Start();
             var collection = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())

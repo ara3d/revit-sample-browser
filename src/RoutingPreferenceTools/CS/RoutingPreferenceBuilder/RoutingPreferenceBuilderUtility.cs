@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using Autodesk.Revit.ApplicationServices;
 
-namespace RevitMultiSample.RoutingPreferenceTools.CS
+namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
 {
     /// <summary>
     ///     A helper class to find paths of .rfa family files in a document.
@@ -199,7 +199,7 @@ namespace RevitMultiSample.RoutingPreferenceTools.CS
             try
             {
                 schemaStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                    "RevitMultiSample.RoutingPreferenceTools.CS.RoutingPreferenceBuilder.RoutingPreferenceBuilderData.xsd");
+                    "Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder.RoutingPreferenceBuilderData.xsd");
             }
             catch (Exception)
             {

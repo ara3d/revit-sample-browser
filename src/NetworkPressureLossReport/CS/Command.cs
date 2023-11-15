@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.NetworkPressureLossReport
+namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport
 {
     /// <summary>
     ///     Demonstrate how to find all networks available in the active document.

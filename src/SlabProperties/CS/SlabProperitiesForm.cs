@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.SlabProperties.CS
+namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
 {
     /// <summary>
     ///     Show some properties of a slab in Revit Structure 5, including Level, Type name, Span direction,

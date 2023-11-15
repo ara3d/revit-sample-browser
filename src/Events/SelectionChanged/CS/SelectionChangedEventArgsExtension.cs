@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Events;
 
-namespace RevitMultiSample.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
 {
     /// <summary>
     ///     This class is used to extend SelectionChangedEventArgs with GetInfo method

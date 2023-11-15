@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.Openings.CS
+namespace Ara3D.RevitSampleBrowser.Openings.CS
 {
     /// <summary>
     ///     This class use to create a object can use by PropertyGrid control

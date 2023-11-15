@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DatumsModification.CS
+namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication
@@ -41,17 +41,17 @@ namespace RevitMultiSample.DatumsModification.CS
         {
             var ribbonPanel = application.CreateRibbonPanel("DatumModification");
             var styleSettingButton = new PushButtonData("DatumStyle", "Datum Style", AddInPath,
-                "RevitMultiSample.DatumsModification.CS.DatumStyleModification")
+                "Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumStyleModification")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Style.png"), UriKind.Absolute))
             };
             var alignSettingButton = new PushButtonData("AlignDatum", "Align Datums", AddInPath,
-                "RevitMultiSample.DatumsModification.CS.DatumAlignment")
+                "Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumAlignment")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Align.png"), UriKind.Absolute))
             };
             var propagateButton = new PushButtonData("PropagateDatum", "Propagate Extents", AddInPath,
-                "RevitMultiSample.DatumsModification.CS.DatumPropagation")
+                "Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumPropagation")
             {
                 LargeImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Propagate.png"), UriKind.Absolute))
             };

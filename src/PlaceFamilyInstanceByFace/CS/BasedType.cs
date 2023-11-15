@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
+namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
     ///     This form class is for user choose a based-type of creating family instance

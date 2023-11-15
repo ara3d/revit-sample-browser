@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The RoofItem is used to display a roof info in the ListView as a ListViewItem.

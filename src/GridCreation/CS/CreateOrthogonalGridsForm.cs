@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
-using RevitMultiSample.GridCreation.CS.Properties;
+using Ara3D.RevitSampleBrowser.GridCreation.CS.Properties;
 
-namespace RevitMultiSample.GridCreation.CS
+namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
     /// <summary>
     ///     The dialog which provides the options of creating orthogonal grids

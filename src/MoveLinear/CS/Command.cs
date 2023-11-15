@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.MoveLinear.CS
+namespace Ara3D.RevitSampleBrowser.MoveLinear.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -16,7 +16,7 @@ namespace RevitMultiSample.MoveLinear.CS
         public Result Execute(ExternalCommandData cmdData, ref string msg, ElementSet eleSet)
         {
             var res = Result.Succeeded;
-            var trans = new Transaction(cmdData.Application.ActiveUIDocument.Document, "RevitMultiSample.MoveLinear");
+            var trans = new Transaction(cmdData.Application.ActiveUIDocument.Document, "Ara3D.RevitSampleBrowser.MoveLinear");
             trans.Start();
             try
             {

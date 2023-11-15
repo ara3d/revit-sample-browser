@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,7 @@ using ComboBox = System.Windows.Controls.ComboBox;
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable. 
 
-namespace RevitMultiSample.GetSetDefaultTypes.CS
+namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
     /// <summary>
     ///     Interaction logic for DefaultFamilyTypes.xaml

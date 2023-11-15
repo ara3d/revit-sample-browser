@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -17,11 +17,11 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.Properties;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-using RevitMultiSample.BRepBuilderExample.CS.Properties;
 
-namespace RevitMultiSample.BRepBuilderExample.CS
+namespace Ara3D.RevitSampleBrowser.BRepBuilderExample.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication
@@ -59,7 +59,7 @@ namespace RevitMultiSample.BRepBuilderExample.CS
 
             var pbd1 = new PushButtonData("CreateCube", "Create Cube",
                 AddinAssmeblyPath,
-                "RevitMultiSample.BRepBuilderExample.CS.CreateCube")
+                "Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.CreateCube")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)
@@ -68,7 +68,7 @@ namespace RevitMultiSample.BRepBuilderExample.CS
 
             var pbd2 = new PushButtonData("CreateNURBS", "Create NURBS Surface",
                 AddinAssmeblyPath,
-                "RevitMultiSample.BRepBuilderExample.CS.CreateNURBS")
+                "Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.CreateNURBS")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)
@@ -77,7 +77,7 @@ namespace RevitMultiSample.BRepBuilderExample.CS
 
             var pbd3 = new PushButtonData("CreatePeriodic", "Create Periodic Surface",
                 AddinAssmeblyPath,
-                "RevitMultiSample.BRepBuilderExample.CS.CreatePeriodic")
+                "Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.CreatePeriodic")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)

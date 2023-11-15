@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.RevitAddIns;
 
-namespace RevitMultiSample.CancelSave.CS
+namespace Ara3D.RevitSampleBrowser.CancelSave.CS
 {
     /// <summary>
     ///     This class is an external application which checks whether "Project Status" is updated

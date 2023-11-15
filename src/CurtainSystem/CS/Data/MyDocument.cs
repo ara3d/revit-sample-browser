@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using RevitMultiSample.CurtainSystem.CS.CurtainSystem;
 
-namespace RevitMultiSample.CurtainSystem.CS.Data
+namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data
 {
     /// <summary>
     ///     maintains all the data used in the sample

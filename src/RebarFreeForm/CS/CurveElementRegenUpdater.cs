@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace RevitMultiSample.RebarFreeForm.CS
+namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 {
     /// <summary>
     ///     This updater is used to regen rebar elements whenever a curveElement that was "Selected" is changed

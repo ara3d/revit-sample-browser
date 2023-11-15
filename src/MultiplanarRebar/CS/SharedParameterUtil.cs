@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.IO;
 using System.Reflection;
@@ -7,7 +7,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace RevitMultiSample.MultiplanarRebar.CS
+namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 {
     /// <summary>
     ///     This is an utility class used to create shared parameter in Revit Document.

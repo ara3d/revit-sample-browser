@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Diagnostics;
 using Autodesk.Revit.Attributes;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using AppCreation = Autodesk.Revit.Creation.Application;
 
-namespace RevitMultiSample.AutoJoin.CS
+namespace Ara3D.RevitSampleBrowser.AutoJoin.CS
 {
     /// <summary>
     ///     This sample demonstrates how to automatically join geometry
@@ -23,7 +23,7 @@ namespace RevitMultiSample.AutoJoin.CS
             , ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.AutoJoin");
+                "Ara3D.RevitSampleBrowser.AutoJoin");
             trans.Start();
             if (null == SAppCreation)
                 // share for class Intersection.

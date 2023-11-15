@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace RevitMultiSample.MultiplanarRebar.CS
+namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 {
     /// <summary>
     ///     This class represents the trapezoid wire frame profile of corbel.

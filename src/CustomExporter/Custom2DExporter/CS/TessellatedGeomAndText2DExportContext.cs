@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.Custom2DExporter.CS
+namespace Ara3D.RevitSampleBrowser.Custom2DExporter.CS
 {
     /// <summary>
     ///     This is an implementation of IExportContext2D, to be passed to an instance of CustomExporter object. It exports:

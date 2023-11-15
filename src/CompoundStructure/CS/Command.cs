@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.CompoundStructureCreation.CS
+namespace Ara3D.RevitSampleBrowser.CompoundStructureCreation.CS
 {
     /// <summary>
     ///     This command allows to create vertical CompoundStructure and applying to walls.

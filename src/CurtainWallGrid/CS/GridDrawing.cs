@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 
-namespace RevitMultiSample.CurtainWallGrid.CS
+namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     /// <summary>
     ///     Maintain the appearance of the 2D projection of the curtain grid and its behaviors

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -15,7 +15,7 @@
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ExternalResourceUIServer.CS
+namespace Ara3D.RevitSampleBrowser.ExternalResourceUIServer.CS
 {
     /// <summary>
     ///     <para>Implements the Revit add-in interface IExternalApplication.</para>

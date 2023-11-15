@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace RevitMultiSample.CreateAirHandler.CS
+namespace Ara3D.RevitSampleBrowser.CreateAirHandler.CS
 {
     /// <summary>
     ///     Create one air handler and add connectors.

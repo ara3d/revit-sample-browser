@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace RevitMultiSample.Ribbon.CS
+namespace Ara3D.RevitSampleBrowser.Ribbon.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication,
@@ -126,7 +126,7 @@ namespace RevitMultiSample.Ribbon.CS
             var splitButtonData = new SplitButtonData("NewWallSplit", "Create Wall");
             var splitButton = ribbonSamplePanel.AddItem(splitButtonData) as SplitButton;
             var pushButton = splitButton.AddPushButton(new PushButtonData("WallPush", "Wall", AddInPath,
-                "RevitMultiSample.Ribbon.CS.CreateWall"));
+                "Ara3D.RevitSampleBrowser.Ribbon.CS.CreateWall"));
             pushButton.LargeImage =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "CreateWall.png"), UriKind.Absolute));
             pushButton.Image =
@@ -135,7 +135,7 @@ namespace RevitMultiSample.Ribbon.CS
             pushButton.ToolTipImage = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "CreateWallTooltip.bmp"),
                 UriKind.Absolute));
             pushButton = splitButton.AddPushButton(new PushButtonData("StrWallPush", "Structure Wall", AddInPath,
-                "RevitMultiSample.Ribbon.CS.CreateStructureWall"));
+                "Ara3D.RevitSampleBrowser.Ribbon.CS.CreateStructureWall"));
             pushButton.LargeImage =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "StrcturalWall.png"), UriKind.Absolute));
             pushButton.Image =
@@ -144,7 +144,7 @@ namespace RevitMultiSample.Ribbon.CS
             ribbonSamplePanel.AddSeparator();
 
             var pushButtonData =
-                new PushButtonData("Reset", "Reset", AddInPath, "RevitMultiSample.Ribbon.CS.ResetSetting");
+                new PushButtonData("Reset", "Reset", AddInPath, "Ara3D.RevitSampleBrowser.Ribbon.CS.ResetSetting");
             var comboBoxDataLevel = new ComboBoxData("LevelsSelector");
             var comboBoxDataShape = new ComboBoxData("WallShapeComboBox");
             var ribbonItemsStacked =
@@ -175,13 +175,13 @@ namespace RevitMultiSample.Ribbon.CS
             var radioButtonGroupData = new RadioButtonGroupData("WallTypeSelector");
             var radioButtonGroup = (RadioButtonGroup)ribbonSamplePanel.AddItem(radioButtonGroupData);
             var toggleButton = radioButtonGroup.AddItem(new ToggleButtonData("Generic8", "Generic - 8\"", AddInPath,
-                "RevitMultiSample.Ribbon.CS.Dummy"));
+                "Ara3D.RevitSampleBrowser.Ribbon.CS.Dummy"));
             toggleButton.LargeImage =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Generic8.png"), UriKind.Absolute));
             toggleButton.Image =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "Generic8-S.png"), UriKind.Absolute));
             toggleButton = radioButtonGroup.AddItem(new ToggleButtonData("ExteriorBrick", "Exterior - Brick", AddInPath,
-                "RevitMultiSample.Ribbon.CS.Dummy"));
+                "Ara3D.RevitSampleBrowser.Ribbon.CS.Dummy"));
             toggleButton.LargeImage =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "ExteriorBrick.png"), UriKind.Absolute));
             toggleButton.Image =
@@ -201,7 +201,7 @@ namespace RevitMultiSample.Ribbon.CS
             ribbonSamplePanel.AddSeparator();
 
             var deleteWallsButtonData = new PushButtonData("deleteWalls", "Delete Walls", AddInPath,
-                "RevitMultiSample.Ribbon.CS.DeleteWalls")
+                "Ara3D.RevitSampleBrowser.Ribbon.CS.DeleteWalls")
             {
                 ToolTip = "Delete all the walls created by the Create Wall tool.",
                 Image = new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "DeleteWalls.png"), UriKind.Absolute))
@@ -220,13 +220,13 @@ namespace RevitMultiSample.Ribbon.CS
             var moveWallItem = ribbonItems[1] as PulldownButton;
 
             var moveX = moveWallItem.AddPushButton(new PushButtonData("XDirection", "X Direction", AddInPath,
-                "RevitMultiSample.Ribbon.CS.XMoveWalls"));
+                "Ara3D.RevitSampleBrowser.Ribbon.CS.XMoveWalls"));
             moveX.ToolTip = "move all walls 10 feet in X direction.";
             moveX.LargeImage =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "MoveWallsXLarge.png"), UriKind.Absolute));
 
             var moveY = moveWallItem.AddPushButton(new PushButtonData("YDirection", "Y Direction", AddInPath,
-                "RevitMultiSample.Ribbon.CS.YMoveWalls"));
+                "Ara3D.RevitSampleBrowser.Ribbon.CS.YMoveWalls"));
             moveY.ToolTip = "move all walls 10 feet in Y direction.";
             moveY.LargeImage =
                 new BitmapImage(new Uri(Path.Combine(ButtonIconsFolder, "MoveWallsYLarge.png"), UriKind.Absolute));

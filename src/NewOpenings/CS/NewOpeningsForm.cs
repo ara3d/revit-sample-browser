@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.NewOpenings.CS
+namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
     /// <summary>
     ///     Main form used to display the profile of Wall or Floor and draw the opening profiles.

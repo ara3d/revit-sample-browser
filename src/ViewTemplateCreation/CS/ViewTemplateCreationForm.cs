@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.ViewTemplateCreation.CS
+namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
 {
     /// <summary>
     ///     A form for the sample, which allows user to create and configure a new view template.

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.VisualBasic;
 
-namespace RevitMultiSample.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
 {
     public partial class MainPage : Page, IDockablePaneProvider
     {

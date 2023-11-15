@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 using GXYZ = Autodesk.Revit.DB.XYZ;
 
-namespace RevitMultiSample.AutoRoute.CS
+namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
 {
     /// <summary>
     ///     route a set of ducts and fittings between a base air supply equipment and 2 terminals.

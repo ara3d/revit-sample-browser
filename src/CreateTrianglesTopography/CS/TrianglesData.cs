@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Web.Script.Serialization;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.CreateTrianglesTopography.CS
+namespace Ara3D.RevitSampleBrowser.CreateTrianglesTopography.CS
 {
     /// <summary>
     ///     Triangles points and facets data which can be used to create topography surface.

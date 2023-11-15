@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using System.Drawing;
 using System.Windows;
@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.UIAPI.CS
+namespace Ara3D.RevitSampleBrowser.UIAPI.CS
 {
     /// <summary>
     ///     Interaction logic for UserControl3.xaml

@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Windows.Forms;
 
-namespace RevitMultiSample.ParameterUtils.CS
+namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
 {
     public partial class PropertiesForm : Form
     {

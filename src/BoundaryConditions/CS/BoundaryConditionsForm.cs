@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.BoundaryConditions.CS
+namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
     /// <summary>
     ///     UI which display the information and interact with users

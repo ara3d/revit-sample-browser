@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.LevelsProperty.CS
+namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 {
     /// <summary>
     ///     Provides static functions to convert unit

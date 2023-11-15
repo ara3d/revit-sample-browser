@@ -1,6 +1,6 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace RevitMultiSample.CurvedBeam.CS
+namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
 {
     /// <summary>
     /// new beam form
@@ -80,7 +80,7 @@ namespace RevitMultiSample.CurvedBeam.CS
             // newArcButton
             // 
             this.newArcButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.newArcButton.Image = global::RevitMultiSample.CurvedBeam.CS.Properties.Resources.arc3;
+            this.newArcButton.Image = global::Ara3D.RevitSampleBrowser.CurvedBeam.CS.Properties.Resources.arc3;
             this.newArcButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.newArcButton.Location = new System.Drawing.Point(33, 83);
             this.newArcButton.Name = "newArcButton";
@@ -93,7 +93,7 @@ namespace RevitMultiSample.CurvedBeam.CS
             // 
             // newEllipseButton
             // 
-            this.newEllipseButton.Image = global::RevitMultiSample.CurvedBeam.CS.Properties.Resources.partialellipse;
+            this.newEllipseButton.Image = global::Ara3D.RevitSampleBrowser.CurvedBeam.CS.Properties.Resources.partialellipse;
             this.newEllipseButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.newEllipseButton.Location = new System.Drawing.Point(162, 83);
             this.newEllipseButton.Name = "newEllipseButton";
@@ -106,7 +106,7 @@ namespace RevitMultiSample.CurvedBeam.CS
             // 
             // newNurbSplineButton
             // 
-            this.newNurbSplineButton.Image = global::RevitMultiSample.CurvedBeam.CS.Properties.Resources.spline;
+            this.newNurbSplineButton.Image = global::Ara3D.RevitSampleBrowser.CurvedBeam.CS.Properties.Resources.spline;
             this.newNurbSplineButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.newNurbSplineButton.Location = new System.Drawing.Point(291, 83);
             this.newNurbSplineButton.Name = "newNurbSplineButton";

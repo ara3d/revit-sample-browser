@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.FindColumns.CS
+namespace Ara3D.RevitSampleBrowser.FindColumns.CS
 {
     /// <summary>
     ///     Find all walls that have embedded columns in them, and the ids of those embedded columns.

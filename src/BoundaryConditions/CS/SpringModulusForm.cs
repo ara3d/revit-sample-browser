@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.BoundaryConditions.CS
+namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
     /// <summary>
     ///     user enter a positive number as the SpringModulus

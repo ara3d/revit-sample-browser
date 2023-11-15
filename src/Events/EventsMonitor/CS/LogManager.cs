@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Data;
@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace RevitMultiSample.EventsMonitor.CS
+namespace Ara3D.RevitSampleBrowser.EventsMonitor.CS
 {
     /// <summary>
     ///     This class implements all operators about writing log file and generating event

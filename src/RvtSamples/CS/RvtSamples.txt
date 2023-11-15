@@ -4,7 +4,7 @@ Demonstrates how to use EnergyAnalysisModel API.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\GeometryAPI\EnergyAnalysisModel\CS\bin\Debug\EnergyAnalysisModel.dll
-RevitMultiSample.EnergyAnalysisModel.CS.Command
+Ara3D.RevitSampleBrowser.EnergyAnalysisModel.CS.Command
 
 Annotation
 Tag Rooms
@@ -12,7 +12,7 @@ Auto tag all rooms in a specified level.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AutoTagRooms\CS\bin\Debug\AutoTagRooms.dll
-RevitMultiSample.AutoTagRooms.CS.Command
+Ara3D.RevitSampleBrowser.AutoTagRooms.CS.Command
 
 Annotation
 ColorFill Scheme and Legend creation and modification.
@@ -20,7 +20,7 @@ This sample demonstrates how to create ColorFill scheme, add entries and modify 
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ColorFill\CS\bin\Debug\ColorFill.dll
-RevitMultiSample.ColorFill.CS.Command
+Ara3D.RevitSampleBrowser.ColorFill.CS.Command
 
 Annotation
 Create Dimensions
@@ -28,7 +28,7 @@ Add a dimension to a selected structural wall from its start to its end. Name th
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateDimensions\CS\bin\Debug\CreateDimensions.dll
-RevitMultiSample.CreateDimensions.CS.Command
+Ara3D.RevitSampleBrowser.CreateDimensions.CS.Command
 
 Annotation
 LeaderLineAndDimensionLineSuperposition.
@@ -36,7 +36,7 @@ Using new dimension api to move leader end point. Make the dimension line and le
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DimensionLeaderEnd\CS\bin\Debug\DimensionLeaderEnd.dll
-RevitMultiSample.DimensionLeaderEnd.CS.MoveHorizontally
+Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS.MoveHorizontally
 
 Annotation
 MoveToPickedPoint.
@@ -44,7 +44,7 @@ Using new dimension api to move leader end point. Move to picked point.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DimensionLeaderEnd\CS\bin\Debug\DimensionLeaderEnd.dll
-RevitMultiSample.DimensionLeaderEnd.CS.MoveToPickedPoint
+Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS.MoveToPickedPoint
 
 Annotation
 Spot Dimension
@@ -52,7 +52,7 @@ Get all spot dimensions in all views and show their properties.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SpotDimension\CS\bin\Debug\SpotDimension.dll
-RevitMultiSample.SpotDimension.CS.Command
+Ara3D.RevitSampleBrowser.SpotDimension.CS.Command
 
 Annotation
 TagBeam - Tag Beam
@@ -60,7 +60,7 @@ Tag beam's start and end.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\TagBeam\CS\bin\Debug\TagBeam.dll
-RevitMultiSample.TagBeam.CS.Command
+Ara3D.RevitSampleBrowser.TagBeam.CS.Command
 
 Annotation
 TagBeam - Tag Rebar
@@ -68,7 +68,7 @@ Tag selected Rebar.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\TagBeam\CS\bin\Debug\TagBeam.dll
-RevitMultiSample.TagBeam.CS.TagRebar
+Ara3D.RevitSampleBrowser.TagBeam.CS.TagRebar
 
 Annotation
 TagBeam - Create Text
@@ -76,7 +76,7 @@ Create a new TextNote instance for selected Rebar.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\TagBeam\CS\bin\Debug\TagBeam.dll
-RevitMultiSample.TagBeam.CS.CreateText
+Ara3D.RevitSampleBrowser.TagBeam.CS.CreateText
 
 Annotation, Basics
 Capitalize all TextNote elements
@@ -84,7 +84,7 @@ This command iterates through the document and applies the 'AllCaps' formatting 
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CapitalizeAllTextNotes\CS\bin\Debug\CapitalizeAllTextNotes.dll
-RevitMultiSample.CapitalizeAllTextNotes.CS.Command
+Ara3D.RevitSampleBrowser.CapitalizeAllTextNotes.CS.Command
 
 Annotation, Basics
 Delete Dimensions
@@ -92,7 +92,7 @@ Delete all unpinned dimensions found in current selection.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DeleteDimensions\CS\bin\Debug\DeleteDimensions.dll
-RevitMultiSample.DeleteDimensions.CS.Command
+Ara3D.RevitSampleBrowser.DeleteDimensions.CS.Command
 
 Annotation, Basics
 In-Canvas controls
@@ -100,7 +100,7 @@ This sample will demonstrate how to create, keep track of and handle clicks on I
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\InCanvasControlAPI\CS\bin\Debug\InCanvasControlAPI.dll
-RevitMultiSample.InCanvasControlAPI.CS.Command
+Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS.Command
 
 Annotation, Elements
 Infrastructure Alignment Station Label
@@ -108,7 +108,7 @@ Demonstrates the use of API for finding and labeling an infrastructure alignment
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CivilAlignments\CS\bin\Debug\CivilAlignments.dll
-RevitMultiSample.CivilAlignments.CS.CreateAlignmentStationLabelsCmd
+Ara3D.RevitSampleBrowser.CivilAlignments.CS.CreateAlignmentStationLabelsCmd
 
 Annotation, Elements
 Infrastructure Alignment Properties
@@ -116,7 +116,7 @@ Demonstrates the use of API for listing properties of an infrastructure alignmen
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CivilAlignments\CS\bin\Debug\CivilAlignments.dll
-RevitMultiSample.CivilAlignments.CS.ShowPropertiesCmd
+Ara3D.RevitSampleBrowser.CivilAlignments.CS.ShowPropertiesCmd
 
 Annotation, Elements, Views
 Create PathOfTravel.
@@ -124,7 +124,7 @@ This sample demonstrated how to create PathOfTravel elements from room(s) to doo
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PathOfTravel\CS\bin\Debug\PathOfTravel.dll
-RevitMultiSample.PathOfTravelCreation.CS.Command
+Ara3D.RevitSampleBrowser.PathOfTravelCreation.CS.Command
 
 Basics
 Delete Objects (CS)
@@ -132,7 +132,7 @@ Delete selected elements.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DeleteObject\CS\bin\Debug\DeleteObject.dll
-RevitMultiSample.DeleteObject.CS.Command
+Ara3D.RevitSampleBrowser.DeleteObject.CS.Command
 
 Basics
 ErrorHandling
@@ -140,7 +140,7 @@ Demonstrates how to use the error handling framework..
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ErrorHandling\CS\bin\Debug\ErrorHandling.dll
-RevitMultiSample.ErrorHandling.CS.Command
+Ara3D.RevitSampleBrowser.ErrorHandling.CS.Command
 
 Basics
 ProgressNotifier
@@ -148,7 +148,7 @@ ProgressNotifier
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Events\ProgressNotifier\CS\bin\Debug\ProgressNotifier.dll
-RevitMultiSample.ProgressNotifier.CS.Command
+Ara3D.RevitSampleBrowser.ProgressNotifier.CS.Command
 
 Basics
 Hello Revit (CS)
@@ -156,7 +156,7 @@ Shows how a basic ExternalCommand can be added to the Revit user interface.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\HelloRevit\CS\bin\Debug\HelloRevit.dll
-RevitMultiSample.HelloRevit.CS.Command
+Ara3D.RevitSampleBrowser.HelloRevit.CS.Command
 
 Basics
 Journaling
@@ -164,7 +164,7 @@ Show how an external application can participate in the journaling mechanism.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Journaling\CS\bin\Debug\Journaling.dll
-RevitMultiSample.Journaling.CS.Command
+Ara3D.RevitSampleBrowser.Journaling.CS.Command
 
 Basics
 Show Modeless Form (External Event)
@@ -172,7 +172,7 @@ This sample shows how to utilize an External Event object  in order to communica
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ModelessDialog\ModelessForm_ExternalEvent\CS\bin\Debug\ModelessForm_ExternalEvent.dll
-RevitMultiSample.ModelessForm_ExternalEvent.CS.Command
+Ara3D.RevitSampleBrowser.ModelessForm_ExternalEvent.CS.Command
 
 Basics
 Show Modeless Form (Idling Event)
@@ -180,7 +180,7 @@ An applicaiton with a modeless dialog using the Idling event to comunicate with 
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ModelessDialog\ModelessForm_IdlingEvent\CS\bin\Debug\ModelessForm_IdlingEvent.dll
-RevitMultiSample.ModelessForm_IdlingEvent.CS.Command
+Ara3D.RevitSampleBrowser.ModelessForm_IdlingEvent.CS.Command
 
 Basics
 Analyze Wall Face
@@ -188,7 +188,7 @@ This sample shows how to utilize the Applicaiton.Idling event in order to commun
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\MultiThreading\WorkThread\CS\bin\Debug\WorkThread.dll
-RevitMultiSample.WorkThread.CS.Command
+Ara3D.RevitSampleBrowser.WorkThread.CS.Command
 
 Basics
 Highlight by Phase
@@ -196,7 +196,7 @@ Highlight by Phase.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PhaseSample\VB.NET\bin\PhaseSample.dll
-RevitMultiSample.PhaseSample.VB.NET.Command
+Ara3D.RevitSampleBrowser.PhaseSample.VB.NET.Command
 
 Basics
 Project Information
@@ -204,7 +204,7 @@ Project Information.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ProjectInfo\CS\bin\Debug\ProjectInfo.dll
-RevitMultiSample.ProjectInfo.CS.Command
+Ara3D.RevitSampleBrowser.ProjectInfo.CS.Command
 
 Basics
 TransactionControl
@@ -212,7 +212,7 @@ Demonstrate how to use transaction control.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\TransactionControl\CS\bin\Debug\TransactionControl.dll
-RevitMultiSample.TransactionControl.CS.Command
+Ara3D.RevitSampleBrowser.TransactionControl.CS.Command
 
 Basics, Data Exchange
 Units API
@@ -220,7 +220,7 @@ The sample of Revit Units API.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Units\CS\bin\Debug\Units.dll
-RevitMultiSample.Units.CS.Command
+Ara3D.RevitSampleBrowser.Units.CS.Command
 
 Basics, Elements
 Display Options
@@ -228,7 +228,7 @@ Display Options.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DesignOptionReader\VB.NET\bin\DesignOptionReader.dll
-RevitMultiSample.DesignOptionReader.VB.NET.Command
+Ara3D.RevitSampleBrowser.DesignOptionReader.VB.NET.Command
 
 Basics, Families
 Interactive placement of family instance via options
@@ -236,7 +236,7 @@ This sample demonstrates how to place the family instance via options
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PlacementOptions\CS\bin\Debug\PlacementOptions.dll
-RevitMultiSample.PlacementOptions.CS.Command
+Ara3D.RevitSampleBrowser.PlacementOptions.CS.Command
 
 Basics, Families
 RvtCmd_LibraryPaths
@@ -244,7 +244,7 @@ List the Revit library paths.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RevitCommands\VB.NET\bin\RevitCommands.dll
-RevitMultiSample.RevitCommands.VB.NET.RvtCmd_LibraryPaths
+Ara3D.RevitSampleBrowser.RevitCommands.VB.NET.RvtCmd_LibraryPaths
 
 Basics, Families
 RvtCmd_LoadFamilySymbol
@@ -252,7 +252,7 @@ Load a family symbol/type.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RevitCommands\VB.NET\bin\RevitCommands.dll
-RevitMultiSample.RevitCommands.VB.NET.RvtCmd_LoadFamilySymbol
+Ara3D.RevitSampleBrowser.RevitCommands.VB.NET.RvtCmd_LoadFamilySymbol
 
 Basics, Families
 RvtCmd_LoadFamily
@@ -260,7 +260,7 @@ Load a family.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RevitCommands\VB.NET\bin\RevitCommands.dll
-RevitMultiSample.RevitCommands.VB.NET.RvtCmd_LoadFamily
+Ara3D.RevitSampleBrowser.RevitCommands.VB.NET.RvtCmd_LoadFamily
 
 Basics, Families
 RvtCmd_Selection
@@ -268,7 +268,7 @@ show how to use selection set.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RevitCommands\VB.NET\bin\RevitCommands.dll
-RevitMultiSample.RevitCommands.VB.NET.RvtCmd_Selection
+Ara3D.RevitSampleBrowser.RevitCommands.VB.NET.RvtCmd_Selection
 
 Basics, Families
 RvtCmd_ShowElementData
@@ -276,7 +276,7 @@ show parameters in selected entities.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RevitCommands\VB.NET\bin\RevitCommands.dll
-RevitMultiSample.RevitCommands.VB.NET.RvtCmd_ShowElementData
+Ara3D.RevitSampleBrowser.RevitCommands.VB.NET.RvtCmd_ShowElementData
 
 Basics
 Display graphics using DirectContext3D
@@ -284,7 +284,7 @@ Select elements whose graphics should be redrawn using DirectContext3D.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DuplicateGraphics\CS\bin\Debug\DuplicateGraphics.dll
-RevitMultiSample.DuplicateGraphics.CS.CommandDuplicateGraphics
+Ara3D.RevitSampleBrowser.DuplicateGraphics.CS.CommandDuplicateGraphics
 
 Basics
 Clear DirectContext3D graphics
@@ -292,7 +292,7 @@ Remove external graphics.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DuplicateGraphics\CS\bin\Debug\DuplicateGraphics.dll
-RevitMultiSample.DuplicateGraphics.CS.CommandClearExternalGraphics
+Ara3D.RevitSampleBrowser.DuplicateGraphics.CS.CommandClearExternalGraphics
 
 Basics
 ReferencePlane
@@ -300,7 +300,7 @@ Allow user to create a reference plane at the left face of the wall or at the bo
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ReferencePlane\CS\bin\Debug\ReferencePlane.dll
-RevitMultiSample.ReferencePlane.CS.Command
+Ara3D.RevitSampleBrowser.ReferencePlane.CS.Command
 
 Basics, Views
 Export 2D views with CustomExporter
@@ -308,7 +308,7 @@ Export 2D views with CustomExporter, using varying options of the exporter.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CustomExporter\Custom2DExporter\CS\bin\Debug\Custom2DExporter.dll
-RevitMultiSample.Custom2DExporter.CS.Command
+Ara3D.RevitSampleBrowser.Custom2DExporter.CS.Command
 
 Basics, Parameters
 About Revit
@@ -316,7 +316,7 @@ Show the Revit product name, version and build number.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\VersionChecking\CS\bin\Debug\VersionChecking.dll
-RevitMultiSample.VersionChecking.CS.Command
+Ara3D.RevitSampleBrowser.VersionChecking.CS.Command
 
 Basics, Structure
 Rotate Framing Objects (CS)
@@ -324,7 +324,7 @@ Rotate selected objects, such as beams, braces and columns.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RotateFramingObjects\CS\bin\Debug\RotateFramingObjects.dll
-RevitMultiSample.RotateFramingObjects.CS.RotateFramingObjects
+Ara3D.RevitSampleBrowser.RotateFramingObjects.CS.RotateFramingObjects
 
 Data Exchange
 Arch Sample - Export to Excel
@@ -332,7 +332,7 @@ Export data to Excel, sorted by categories
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ArchSample\VB.NET\bin\ArchSample.dll
-RevitMultiSample.ArchSample.VB.NET.Command
+Ara3D.RevitSampleBrowser.ArchSample.VB.NET.Command
 
 Data Exchange
 Import and Export
@@ -340,7 +340,7 @@ Export current project to dwg, dwf(x), gbxml or fbx files and import a dwg or im
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ImportExport\CS\bin\Debug\ImportExport.dll
-RevitMultiSample.ImportExport.CS.Command
+Ara3D.RevitSampleBrowser.ImportExport.CS.Command
 
 Data Exchange
 Panel Schedule Sample - Export Data
@@ -348,7 +348,7 @@ Exoport Revit Panle Schedule(s) to CSV file(s) or HTML page(s).
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PanelSchedule\CS\bin\Debug\PanelSchedule.dll
-RevitMultiSample.PanelSchedule.CS.PanelScheduleExport
+Ara3D.RevitSampleBrowser.PanelSchedule.CS.PanelScheduleExport
 
 Data Exchange
 Panel Schedule Sample - View Instance Creation
@@ -356,7 +356,7 @@ Create Panel Schedule View instance for a panel.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PanelSchedule\CS\bin\Debug\PanelSchedule.dll
-RevitMultiSample.PanelSchedule.CS.InstanceViewCreation
+Ara3D.RevitSampleBrowser.PanelSchedule.CS.InstanceViewCreation
 
 Data Exchange
 Panel Schedule Sample - Sheet Instance Creation
@@ -364,7 +364,7 @@ Place Panel Schedule View instance on a sheet view.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PanelSchedule\CS\bin\Debug\PanelSchedule.dll
-RevitMultiSample.PanelSchedule.CS.SheetImport
+Ara3D.RevitSampleBrowser.PanelSchedule.CS.SheetImport
 
 Data Exchange
 View Printer
@@ -372,7 +372,7 @@ Print user selected printable views.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ViewPrinter\CS\bin\Debug\ViewPrinter.dll
-RevitMultiSample.ViewPrinter.CS.Command
+Ara3D.RevitSampleBrowser.ViewPrinter.CS.Command
 
 Data Exchange, Families
 DWGFamilyCreation
@@ -380,7 +380,7 @@ Import dwg file into family document.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\DWGFamilyCreation\CS\bin\Debug\DWGFamilyCreation.dll
-RevitMultiSample.DWGFamilyCreation.CS.Command
+Ara3D.RevitSampleBrowser.DWGFamilyCreation.CS.Command
 
 Elements
 Create CompoundStructure for wall
@@ -388,7 +388,7 @@ This command is to create CompoundStructure for wall.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CompoundStructure\CS\bin\Debug\CompoundStructure.dll
-RevitMultiSample.CompoundStructureCreation.CS.WallCompoundStructure
+Ara3D.RevitSampleBrowser.CompoundStructureCreation.CS.WallCompoundStructure
 
 Elements
 Create and set FillPattern
@@ -396,7 +396,7 @@ Create and set FillPattern or LinePattern to face and grid
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateFillPattern\CS\bin\Debug\CreateFillPattern.dll
-RevitMultiSample.CreateFillPattern.CS.Command
+Ara3D.RevitSampleBrowser.CreateFillPattern.CS.Command
 
 Elements
 Curtain System
@@ -404,7 +404,7 @@ Create curtain systems and edit their curtain grids
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CurtainSystem\CS\bin\Debug\CurtainSystem.dll
-RevitMultiSample.CurtainSystem.CS.Command
+Ara3D.RevitSampleBrowser.CurtainSystem.CS.Command
 
 Elements
 Curtain Wall and Grid
@@ -412,7 +412,7 @@ Create a curtain wall and edit its grid
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CurtainWallGrid\CS\bin\Debug\CurtainWallGrid.dll
-RevitMultiSample.CurtainWallGrid.CS.Command
+Ara3D.RevitSampleBrowser.CurtainWallGrid.CS.Command
 
 Elements
 Datum Alignment
@@ -420,7 +420,7 @@ Datumplane modification
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DatumsModification\CS\bin\Debug\DatumsModification.dll
-RevitMultiSample.DatumsModification.CS.DatumAlignment
+Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumAlignment
 
 Elements
 Datum Propagation
@@ -428,7 +428,7 @@ Datumplane modification
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DatumsModification\CS\bin\Debug\DatumsModification.dll
-RevitMultiSample.DatumsModification.CS.DatumPropagation
+Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumPropagation
 
 Elements
 Datum Style Modification
@@ -436,7 +436,7 @@ Datumplane modification
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DatumsModification\CS\bin\Debug\DatumsModification.dll
-RevitMultiSample.DatumsModification.CS.DatumStyleModification
+Ara3D.RevitSampleBrowser.DatumsModification.CS.DatumStyleModification
 
 Elements
 Create and modify view filters.
@@ -444,7 +444,7 @@ Create and modify view filters.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ElementFilter\ViewFilters\CS\bin\Debug\ViewFilters.dll
-RevitMultiSample.ViewFilters.CS.Command
+Ara3D.RevitSampleBrowser.ViewFilters.CS.Command
 
 Elements
 Extensible Storage Manager
@@ -460,7 +460,7 @@ ExtensibleStorageUtility-DeleteStorage
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ExtensibleStorageUtility\CS\bin\Debug\ExtensibleStorageUtility.dll
-RevitMultiSample.ExtensibleStorageUtility.CS.DeleteStorage
+Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS.DeleteStorage
 
 Elements
 ExtensibleStorageUtility-QueryStorage
@@ -468,7 +468,7 @@ ExtensibleStorageUtility-QueryStorage
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ExtensibleStorageUtility\CS\bin\Debug\ExtensibleStorageUtility.dll
-RevitMultiSample.ExtensibleStorageUtility.CS.QueryStorage
+Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS.QueryStorage
 
 Elements
 Foundation Slab
@@ -476,7 +476,7 @@ Convert regular floors at the base of the building to octagonal slabs.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FoundationSlab\CS\bin\Debug\FoundationSlab.dll
-RevitMultiSample.FoundationSlab.CS.Command
+Ara3D.RevitSampleBrowser.FoundationSlab.CS.Command
 
 Elements
 GenerateFloor
@@ -484,7 +484,7 @@ Generate a floor using a selection of walls that make a closed outline.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\GenerateFloor\CS\bin\Debug\GenerateFloor.dll
-RevitMultiSample.GenerateFloor.CS.Command
+Ara3D.RevitSampleBrowser.GenerateFloor.CS.Command
 
 Elements
 Grid Creation
@@ -492,7 +492,7 @@ Show how to create grids.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\GridCreation\CS\bin\Debug\GridCreation.dll
-RevitMultiSample.GridCreation.CS.Command
+Ara3D.RevitSampleBrowser.GridCreation.CS.Command
 
 Elements
 Create levels
@@ -500,7 +500,7 @@ Show how to get all the levels in a document and how to create and delete a leve
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\LevelsProperty\CS\bin\Debug\LevelsProperty.dll
-RevitMultiSample.LevelsProperty.CS.Command
+Ara3D.RevitSampleBrowser.LevelsProperty.CS.Command
 
 Elements
 Model Lines
@@ -508,7 +508,7 @@ Report the number of each model line type and allow the user to specify the shap
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ModelLines\CS\bin\Debug\ModelLines.dll
-RevitMultiSample.ModelLines.CS.Command
+Ara3D.RevitSampleBrowser.ModelLines.CS.Command
 
 Elements
 New hosted sweep
@@ -516,7 +516,7 @@ Create hosted sweep and modify created hosted sweep
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\NewHostedSweep\CS\bin\Debug\NewHostedSweep.dll
-RevitMultiSample.NewHostedSweep.CS.Command
+Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Command
 
 Elements
 New Openings
@@ -524,7 +524,7 @@ Create openings on the selected floor or wall.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\NewOpenings\CS\bin\Debug\NewOpenings.dll
-RevitMultiSample.NewOpenings.CS.Command
+Ara3D.RevitSampleBrowser.NewOpenings.CS.Command
 
 Elements
 NewRoof
@@ -532,7 +532,7 @@ Create or edit footprint roof and extrusion roof.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\NewRoof\CS\bin\Debug\NewRoof.dll
-RevitMultiSample.NewRoof.CS.Command
+Ara3D.RevitSampleBrowser.NewRoof.CS.Command
 
 Elements
 Openings
@@ -540,7 +540,7 @@ Display openings in project, and create model lines along its edges.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Openings\CS\bin\Debug\Openings.dll
-RevitMultiSample.Openings.CS.Command
+Ara3D.RevitSampleBrowser.Openings.CS.Command
 
 Elements
 PerformanceAdviserControl
@@ -548,7 +548,7 @@ PerformanceAdviserControl
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PerformanceAdviserControl\CS\bin\Debug\PerformanceAdviserControl.dll
-RevitMultiSample.PerformanceAdviserControl.CS.UICommand
+Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS.UICommand
 
 Elements
 Shared Coordinate System
@@ -556,7 +556,7 @@ Display the locations and site information of the project.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SharedCoordinateSystem\CS\bin\Debug\SharedCoordinateSystem.dll
-RevitMultiSample.SharedCoordinateSystem.CS.Command
+Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS.Command
 
 Elements
 Stairs automation
@@ -564,7 +564,7 @@ A utility sample that creates a series of stairs, stairs runs and stairs landing
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\StairsAutomation\CS\bin\Debug\StairsAutomation.dll
-RevitMultiSample.StairsAutomation.CS.Command
+Ara3D.RevitSampleBrowser.StairsAutomation.CS.Command
 
 Toposolid
 Toposolid ContourSettingCreation
@@ -572,7 +572,7 @@ API samples for toposolid related features.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Toposolid\CS\bin\Debug\Toposolid.dll
-RevitMultiSample.Toposolid.CS.ContourSettingCreation
+Ara3D.RevitSampleBrowser.Toposolid.CS.ContourSettingCreation
 
 Toposolid
 Toposolid ContourSettingModification
@@ -580,7 +580,7 @@ API samples for toposolid related features.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Toposolid\CS\bin\Debug\Toposolid.dll
-RevitMultiSample.Toposolid.CS.ContourSettingModification
+Ara3D.RevitSampleBrowser.Toposolid.CS.ContourSettingModification
 
 Toposolid
 Toposolid SSEPointVisibility
@@ -588,7 +588,7 @@ API samples for toposolid related features.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Toposolid\CS\bin\Debug\Toposolid.dll
-RevitMultiSample.Toposolid.CS.SSEPointVisibility
+Ara3D.RevitSampleBrowser.Toposolid.CS.SSEPointVisibility
 
 Toposolid
 Toposolid SimplifyToposolid
@@ -596,7 +596,7 @@ API samples for toposolid related features.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Toposolid\CS\bin\Debug\Toposolid.dll
-RevitMultiSample.Toposolid.CS.SimplifyToposolid
+Ara3D.RevitSampleBrowser.Toposolid.CS.SimplifyToposolid
 
 Toposolid
 Toposolid SplitToposolid
@@ -604,7 +604,7 @@ API samples for toposolid related features.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Toposolid\CS\bin\Debug\Toposolid.dll
-RevitMultiSample.Toposolid.CS.SplitToposolid
+Ara3D.RevitSampleBrowser.Toposolid.CS.SplitToposolid
 
 Toposolid
 Toposolid ToposolidCreation
@@ -612,7 +612,7 @@ API samples for toposolid related features.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Toposolid\CS\bin\Debug\Toposolid.dll
-RevitMultiSample.Toposolid.CS.ToposolidCreation
+Ara3D.RevitSampleBrowser.Toposolid.CS.ToposolidCreation
 
 Toposolid
 Toposolid ToposolidFromDWG
@@ -620,7 +620,7 @@ API samples for toposolid related features.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Toposolid\CS\bin\Debug\Toposolid.dll
-RevitMultiSample.Toposolid.CS.ToposolidFromDWG
+Ara3D.RevitSampleBrowser.Toposolid.CS.ToposolidFromDWG
 
 Toposolid
 Toposolid ToposolidFromSurface
@@ -628,7 +628,7 @@ API samples for toposolid related features.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Toposolid\CS\bin\Debug\Toposolid.dll
-RevitMultiSample.Toposolid.CS.ToposolidFromSurface
+Ara3D.RevitSampleBrowser.Toposolid.CS.ToposolidFromSurface
 
 
 Elements
@@ -637,7 +637,7 @@ API Sketched Winder Stairs
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\WinderStairs\CS\bin\Debug\WinderStairs.dll
-RevitMultiSample.WinderStairs.CS.Command
+Ara3D.RevitSampleBrowser.WinderStairs.CS.Command
 
 Elements
 Shaft Hole Puncher
@@ -645,7 +645,7 @@ Create shaft opening or create opening on wall, floor or beam.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ShaftHolePuncher\CS\bin\Debug\ShaftHolePuncher.dll
-RevitMultiSample.ShaftHolePuncher.CS.Command
+Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS.Command
 
 Elements
 SlabShapeEditing
@@ -653,7 +653,7 @@ Create vertex and crease on slab to edit it's shape.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SlabShapeEditing\CS\bin\Debug\SlabShapeEditing.dll
-RevitMultiSample.SlabShapeEditing.CS.Command
+Ara3D.RevitSampleBrowser.SlabShapeEditing.CS.Command
 
 Analytical Model
 Analytical Model: AddAssociation
@@ -833,7 +833,7 @@ Move a linear element, such as a structural beam.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\MoveLinear\CS\bin\Debug\MoveLinear.dll
-RevitMultiSample.MoveLinear.CS.Command
+Ara3D.RevitSampleBrowser.MoveLinear.CS.Command
 
 Elements, Parameters
 Slab Properties (CS)
@@ -841,7 +841,7 @@ Display slab properties.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SlabProperties\CS\bin\Debug\SlabProperties.dll
-RevitMultiSample.SlabProperties.CS.Command
+Ara3D.RevitSampleBrowser.SlabProperties.CS.Command
 
 Elements, Parameters
 Span Direction
@@ -849,7 +849,7 @@ Display slab properties (span direction and span direction symbols).
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SpanDirection\CS\bin\Debug\SpanDirection.dll
-RevitMultiSample.SpanDirection.CS.Command
+Ara3D.RevitSampleBrowser.SpanDirection.CS.Command
 
 Families
 Create Air Handler
@@ -857,7 +857,7 @@ Create one air handler and add connectors.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\CreateAirHandler\CS\bin\Debug\CreateAirHandler.dll
-RevitMultiSample.CreateAirHandler.CS.Command
+Ara3D.RevitSampleBrowser.CreateAirHandler.CS.Command
 
 Families
 Create Truss
@@ -865,7 +865,7 @@ Create truss in truss family document.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\CreateTruss\CS\bin\Debug\CreateTruss.dll
-RevitMultiSample.CreateTruss.CS.Command
+Ara3D.RevitSampleBrowser.CreateTruss.CS.Command
 
 Families
 GenericModelCreation
@@ -873,7 +873,7 @@ The sample show how to create Generic Model family at family document.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\GenericModelCreation\CS\bin\Debug\GenericModelCreation.dll
-RevitMultiSample.GenericModelCreation.CS.Command
+Ara3D.RevitSampleBrowser.GenericModelCreation.CS.Command
 
 Families
 TypeRegeneration
@@ -881,7 +881,7 @@ The command check every type regeneration without any error
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\TypeRegeneration\CS\bin\Debug\TypeRegeneration.dll
-RevitMultiSample.TypeRegeneration.CS.Command
+Ara3D.RevitSampleBrowser.TypeRegeneration.CS.Command
 
 Families
 ValidateParameters
@@ -889,7 +889,7 @@ This command will validate if every type has valid values for certain parameter
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\ValidateParameters\CS\bin\Debug\ValidateParameters.dll
-RevitMultiSample.ValidateParameters.CS.Command
+Ara3D.RevitSampleBrowser.ValidateParameters.CS.Command
 
 Families
 WindowWizard
@@ -897,7 +897,7 @@ This command is to create window family via wizard
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\WindowWizard\CS\bin\Debug\WindowWizard.dll
-RevitMultiSample.WindowWizard.CS.Command
+Ara3D.RevitSampleBrowser.WindowWizard.CS.Command
 
 Families
 In-Place Members
@@ -905,7 +905,7 @@ Display In-Place Member's Properties and AnalyticalModel.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\InPlaceMembers\CS\bin\Debug\InPlaceMembers.dll
-RevitMultiSample.InPlaceMembers.CS.Command
+Ara3D.RevitSampleBrowser.InPlaceMembers.CS.Command
 
 Families
 DividedSurface by intersects
@@ -913,7 +913,7 @@ Customize DividedSurface with intersection elements
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\DividedSurfaceByIntersects\CS\bin\Debug\DividedSurfaceByIntersects.dll
-RevitMultiSample.DividedSurfaceByIntersects.CS.Command
+Ara3D.RevitSampleBrowser.DividedSurfaceByIntersects.CS.Command
 
 Families
 New Extrusion Form
@@ -921,7 +921,7 @@ The sample show how to create extrusion form at family document.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\NewForm\CS\bin\Debug\NewForm.dll
-RevitMultiSample.NewForm.CS.MakeExtrusionForm
+Ara3D.RevitSampleBrowser.NewForm.CS.MakeExtrusionForm
 
 Families
 New Revolve Form
@@ -929,7 +929,7 @@ The sample show how to create revolve form at family document.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\NewForm\CS\bin\Debug\NewForm.dll
-RevitMultiSample.NewForm.CS.MakeRevolveForm
+Ara3D.RevitSampleBrowser.NewForm.CS.MakeRevolveForm
 
 Families
 New Loft Form
@@ -937,7 +937,7 @@ The sample show how to create loft form at family document.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\NewForm\CS\bin\Debug\NewForm.dll
-RevitMultiSample.NewForm.CS.MakeLoftForm
+Ara3D.RevitSampleBrowser.NewForm.CS.MakeLoftForm
 
 Families
 New Swept Blend Form
@@ -945,7 +945,7 @@ The sample show how to create swept blend form at family document.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\NewForm\CS\bin\Debug\NewForm.dll
-RevitMultiSample.NewForm.CS.MakeSweptBlendForm
+Ara3D.RevitSampleBrowser.NewForm.CS.MakeSweptBlendForm
 
 Families
 New Cap Form
@@ -953,7 +953,7 @@ The sample show how to create cap form at family document.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\NewForm\CS\bin\Debug\NewForm.dll
-RevitMultiSample.NewForm.CS.MakeCapForm
+Ara3D.RevitSampleBrowser.NewForm.CS.MakeCapForm
 
 Families
 Place FamilyInstance by face
@@ -961,7 +961,7 @@ Create family instance on face.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PlaceFamilyInstanceByFace\CS\bin\Debug\PlaceFamilyInstanceByFace.dll
-RevitMultiSample.PlaceFamilyInstanceByFace.CS.Command
+Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS.Command
 
 Families
 Type Selector
@@ -969,7 +969,7 @@ Retrieve all the types of the selected element, such as a wall and allow the sel
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\TypeSelector\VB.NET\bin\TypeSelector.dll
-RevitMultiSample.TypeSelector.VB.NET.Command
+Ara3D.RevitSampleBrowser.TypeSelector.VB.NET.Command
 
 Families, MEP
 Create Ductwork Stiffener
@@ -977,7 +977,7 @@ Create Ductwork Stiffener
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateDuctworkStiffener\CS\bin\Debug\CreateDuctworkStiffener.dll
-RevitMultiSample.CreateDuctworkStiffener.CS.Command
+Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS.Command
 
 Families, Parameters
 AddParameterToFamily
@@ -985,7 +985,7 @@ Sample to show how to automatically add a large set of parameters to a family.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\AutoParameter\CS\bin\Debug\AutoParameter.dll
-RevitMultiSample.AutoParameter.CS.AddParameterToFamily
+Ara3D.RevitSampleBrowser.AutoParameter.CS.AddParameterToFamily
 
 Families, Parameters
 AddParameterToFamilies
@@ -993,7 +993,7 @@ Sample to show how to automatically add a large set of parameters to multiple fa
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\AutoParameter\CS\bin\Debug\AutoParameter.dll
-RevitMultiSample.AutoParameter.CS.AddParameterToFamilies
+Ara3D.RevitSampleBrowser.AutoParameter.CS.AddParameterToFamilies
 
 Families, Parameters
 Command
@@ -1001,7 +1001,7 @@ Command
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyParametersOrder\CS\bin\Debug\FamilyParametersOrder.dll
-RevitMultiSample.FamilyParametersOrder.CS.Command
+Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS.Command
 
 Geometry
 Multithreaded Calculation
@@ -1009,7 +1009,7 @@ Multithreaded Calculation
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AnalysisVisualizationFramework\MultithreadedCalculation\CS\bin\Debug\MultithreadedCalculation.dll
-RevitMultiSample.MultithreadedCalculation.CS.MultithreadedCalculation
+Ara3D.RevitSampleBrowser.MultithreadedCalculation.CS.MultithreadedCalculation
 
 Geometry
 Gradient Results On Surface
@@ -1017,7 +1017,7 @@ Gradient Results On Surface
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AnalysisVisualizationFramework\SpatialFieldGradient\CS\bin\Debug\SpatialFieldGradient.dll
-RevitMultiSample.AnalysisVisualizationFramework.CS.SpatialFieldGradient
+Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.CS.SpatialFieldGradient
 
 Geometry
 South Facing Walls Without ProjectLocation
@@ -1057,7 +1057,7 @@ Automatically join geometry of combinable elements.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FamilyCreation\AutoJoin\CS\bin\Debug\AutoJoin.dll
-RevitMultiSample.AutoJoin.CS.Command
+Ara3D.RevitSampleBrowser.AutoJoin.CS.Command
 
 Geometry
 Find Columns Embedded In Walls
@@ -1065,7 +1065,7 @@ Find Columns Embedded In Walls
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FindReferencesByDirection\FindColumns\CS\bin\Debug\FindColumns.dll
-RevitMultiSample.FindColumns.CS.Command
+Ara3D.RevitSampleBrowser.FindColumns.CS.Command
 
 Geometry
 Measure Height of Skylight
@@ -1073,7 +1073,7 @@ Measure Height of Skylight
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FindReferencesByDirection\MeasureHeight\CS\bin\Debug\MeasureHeight.dll
-RevitMultiSample.MeasureHeight.CS.Command
+Ara3D.RevitSampleBrowser.MeasureHeight.CS.Command
 
 Geometry
 RayTraceBounce
@@ -1081,7 +1081,7 @@ Find intersection between ray and face and create connecting lines.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FindReferencesByDirection\RaytraceBounce\CS\bin\Debug\RayTraceBounce.dll
-RevitMultiSample.RayTraceBounce.CS.Command
+Ara3D.RevitSampleBrowser.RayTraceBounce.CS.Command
 
 Geometry
 ComputedSymbolGeometry
@@ -1089,7 +1089,7 @@ Demonstrates how to get the computed symbol geometry.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\GeometryAPI\ComputedSymbolGeometry\CS\bin\Debug\ComputedSymbolGeometry.dll
-RevitMultiSample.ComputedSymbolGeometry.CS.Command
+Ara3D.RevitSampleBrowser.ComputedSymbolGeometry.CS.Command
 
 Geometry
 GeometryCreation_BooleanOperation
@@ -1097,7 +1097,7 @@ GeometryCreation and BooleanOperation
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\GeometryAPI\GeometryCreation_BooleanOperation\CS\bin\Debug\GeometryCreation_BooleanOperation.dll
-RevitMultiSample.GeometryCreation_BooleanOperation.CS.Command
+Ara3D.RevitSampleBrowser.GeometryCreation_BooleanOperation.CS.Command
 
 Geometry
 Proximity Detection and Wall Join Control
@@ -1105,7 +1105,7 @@ The usage of  ElementIntersectsSolidFilter,ElementIntersectsElementFilter and Wa
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\GeometryAPI\ProximityDetection_WallJoinControl\CS\bin\Debug\ProximityDetection_WallJoinControl.dll
-RevitMultiSample.ProximityDetection_WallJoinControl.CS.Command
+Ara3D.RevitSampleBrowser.ProximityDetection_WallJoinControl.CS.Command
 
 Geometry
 Compute distance to panels
@@ -1113,7 +1113,7 @@ Compute the distance from a selected object to all panels and store in a panel i
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\DistanceToPanels\CS\bin\Debug\DistanceToPanels.dll
-RevitMultiSample.DistanceToPanels.CS.SetDistanceParam
+Ara3D.RevitSampleBrowser.DistanceToPanels.CS.SetDistanceParam
 
 Geometry
 Manipulate form
@@ -1121,7 +1121,7 @@ Show how to manipulate edges and profiles of form
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\ManipulateForm\CS\bin\Debug\ManipulateForm.dll
-RevitMultiSample.ManipulateForm.CS.Command
+Ara3D.RevitSampleBrowser.ManipulateForm.CS.Command
 
 Geometry
 Measure Panel Area
@@ -1129,7 +1129,7 @@ Measure curtain panels on divided surfaces and identify panels beyond a user-spe
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\MeasurePanelArea\CS\bin\Debug\MeasurePanelArea.dll
-RevitMultiSample.MeasurePanelArea.CS.MeasurePanelArea
+Ara3D.RevitSampleBrowser.MeasurePanelArea.CS.MeasurePanelArea
 
 Geometry
 Compute the length and angle of edges
@@ -1137,7 +1137,7 @@ Measure curtain panels on divided surfaces, store the length and angle data to p
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\PanelEdgeLengthAngle\CS\bin\Debug\PanelEdgeLengthAngle.dll
-RevitMultiSample.PanelEdgeLengthAngle.CS.SetLengthAngleParams
+Ara3D.RevitSampleBrowser.PanelEdgeLengthAngle.CS.SetLengthAngleParams
 
 Geometry
 Points Along Parabola
@@ -1145,7 +1145,7 @@ Points Along Parabola
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\PointCurveCreation\CS\bin\Debug\PointCurveCreation.dll
-RevitMultiSample.PointCurveCreation.CS.PointsParabola
+Ara3D.RevitSampleBrowser.PointCurveCreation.CS.PointsParabola
 
 Geometry
 Points On Curve
@@ -1153,7 +1153,7 @@ Points On Curve
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\PointCurveCreation\CS\bin\Debug\PointCurveCreation.dll
-RevitMultiSample.PointCurveCreation.CS.PointsOnCurve
+Ara3D.RevitSampleBrowser.PointCurveCreation.CS.PointsOnCurve
 
 Geometry
 Points From Text File
@@ -1161,7 +1161,7 @@ Points From Text File
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\PointCurveCreation\CS\bin\Debug\PointCurveCreation.dll
-RevitMultiSample.PointCurveCreation.CS.PointsFromTextFile
+Ara3D.RevitSampleBrowser.PointCurveCreation.CS.PointsFromTextFile
 
 Geometry
 Curve - Sine
@@ -1169,7 +1169,7 @@ Curve - Sine
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\PointCurveCreation\CS\bin\Debug\PointCurveCreation.dll
-RevitMultiSample.PointCurveCreation.CS.SineCurve
+Ara3D.RevitSampleBrowser.PointCurveCreation.CS.SineCurve
 
 Geometry
 Curve - Catenary
@@ -1177,7 +1177,7 @@ Curve - Catenary
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\PointCurveCreation\CS\bin\Debug\PointCurveCreation.dll
-RevitMultiSample.PointCurveCreation.CS.CatenaryCurve
+Ara3D.RevitSampleBrowser.PointCurveCreation.CS.CatenaryCurve
 
 Geometry
 Surface - Cyclic
@@ -1185,7 +1185,7 @@ Surface - Cyclic
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\PointCurveCreation\CS\bin\Debug\PointCurveCreation.dll
-RevitMultiSample.PointCurveCreation.CS.CyclicSurface
+Ara3D.RevitSampleBrowser.PointCurveCreation.CS.CyclicSurface
 
 Geometry
 Material Quantities
@@ -1201,7 +1201,7 @@ Add predefined instance
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PointCloudEngine\CS\bin\Debug\PointCloudEngine.dll
-RevitMultiSample.CS.PointCloudEngine.AddPredefinedInstanceCommand
+Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddPredefinedInstanceCommand
 
 Geometry
 Add randomized instance - Point Cloud Engine
@@ -1209,7 +1209,7 @@ Add randomized instance
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PointCloudEngine\CS\bin\Debug\PointCloudEngine.dll
-RevitMultiSample.CS.PointCloudEngine.AddRandomizedInstanceCommand
+Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddRandomizedInstanceCommand
 
 Geometry
 Add randomized instance at transform - Point Cloud Engine
@@ -1217,7 +1217,7 @@ Add randomized instance at transform
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PointCloudEngine\CS\bin\Debug\PointCloudEngine.dll
-RevitMultiSample.CS.PointCloudEngine.AddTransformedInstanceCommand
+Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddTransformedInstanceCommand
 
 Geometry
 Serialize point cloud (utility) - Point Cloud Engine
@@ -1225,7 +1225,7 @@ Serialize point cloud (utility)
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PointCloudEngine\CS\bin\Debug\PointCloudEngine.dll
-RevitMultiSample.CS.PointCloudEngine.SerializePredefinedPointCloud
+Ara3D.RevitSampleBrowser.CS.PointCloudEngine.SerializePredefinedPointCloud
 
 Geometry
 SolidSolidCut-Cut
@@ -1233,7 +1233,7 @@ SolidSolidCut-Cut
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SolidSolidCut\CS\bin\Debug\SolidSolidCut.dll
-RevitMultiSample.SolidSolidCut.CS.Cut
+Ara3D.RevitSampleBrowser.SolidSolidCut.CS.Cut
 
 Geometry
 SolidSolidCut-Uncut
@@ -1241,7 +1241,7 @@ SolidSolidCut-Uncut
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SolidSolidCut\CS\bin\Debug\SolidSolidCut.dll
-RevitMultiSample.SolidSolidCut.CS.Uncut
+Ara3D.RevitSampleBrowser.SolidSolidCut.CS.Uncut
 
 Geometry
 Analytical Viewer
@@ -1249,7 +1249,7 @@ Display analytical model of one or more selected elements.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Viewers\AnalyticalViewer\VB.NET\bin\AnalyticalViewer.dll
-RevitMultiSample.AnalyticalViewer.VB.NET.AnalyticalViewer
+Ara3D.RevitSampleBrowser.AnalyticalViewer.VB.NET.AnalyticalViewer
 
 Geometry
 Element Viewer
@@ -1257,7 +1257,7 @@ Display wireframe model of one or more selected elements.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Viewers\ElementViewer\VB.NET\bin\Debug\ElementViewer.dll
-RevitMultiSample.ElementViewer.VB.NET.ElementViewer
+Ara3D.RevitSampleBrowser.ElementViewer.VB.NET.ElementViewer
 
 Geometry
 Revit Viewer
@@ -1265,7 +1265,7 @@ View geometry information.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Viewers\RevitViewer\VB.NET\bin\RevitViewer.dll
-RevitMultiSample.RevitViewer.VB.NET.RevitViewer
+Ara3D.RevitSampleBrowser.RevitViewer.VB.NET.RevitViewer
 
 Geometry
 Room Viewer
@@ -1273,7 +1273,7 @@ Wireframe viewer for the selected room.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Viewers\RoomViewer\VB.NET\bin\RoomViewer.dll
-RevitMultiSample.RoomViewer.VB.NET.RoomViewer
+Ara3D.RevitSampleBrowser.RoomViewer.VB.NET.RoomViewer
 
 Geometry, Structure
 NewPathReinforcement
@@ -1281,7 +1281,7 @@ Create PathReinforcement on wall or slab.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\NewPathReinforcement\CS\bin\Debug\NewPathReinforcement.dll
-RevitMultiSample.NewPathReinforcement.CS.Command
+Ara3D.RevitSampleBrowser.NewPathReinforcement.CS.Command
 
 Geometry, Structure
 Truss
@@ -1289,7 +1289,7 @@ Create truss, edit profile and truss member of new created truss.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Truss\CS\bin\Debug\Truss.dll
-RevitMultiSample.Truss.CS.Command
+Ara3D.RevitSampleBrowser.Truss.CS.Command
 
 Massing
 Set Parameter Values From Image Data
@@ -1297,7 +1297,7 @@ Set Parameter Values From Image Data
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Massing\ParameterValuesFromImage\CS\bin\Debug\ParameterValuesFromImage.dll
-RevitMultiSample.ParameterValuesFromImage.CS.SetParameterValueWithImageData
+Ara3D.RevitSampleBrowser.ParameterValuesFromImage.CS.SetParameterValueWithImageData
 
 Materials
 Edit appearance asset properties via a small control dialog
@@ -1305,7 +1305,7 @@ This sample demonstrates basic usage of the AppearanceAssetEditScope and AssetPr
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AppearanceAssetEditing\CS\bin\Debug\AppearanceAssetEditing.dll
-RevitMultiSample.AppearanceAssetEditing.CS.Command
+Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS.Command
 
 Materials
 Material Properties (CS)
@@ -1313,7 +1313,7 @@ Get the material physical properties of the selected beam, column or brace.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\MaterialProperties\CS\bin\Debug\MaterialProperties.dll
-RevitMultiSample.MaterialProperties.CS.MaterialProperties
+Ara3D.RevitSampleBrowser.MaterialProperties.CS.MaterialProperties
 
 Materials, Parameters
 Physical Properties
@@ -1321,7 +1321,7 @@ Dump Material Physical Parameters.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PhysicalProp\CS\bin\Debug\PhysicalProp.dll
-RevitMultiSample.PhysicalProp.CS.DumpMaterialPhysicalParameters
+Ara3D.RevitSampleBrowser.PhysicalProp.CS.DumpMaterialPhysicalParameters
 
 MEP
 AutoRoute
@@ -1329,7 +1329,7 @@ Route ducts and fittings.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AutoRoute\CS\bin\Debug\AutoRoute.dll
-RevitMultiSample.AutoRoute.CS.Command
+Ara3D.RevitSampleBrowser.AutoRoute.CS.Command
 
 MEP
 AvoidObstruction
@@ -1337,7 +1337,7 @@ Resolve the obstructions of pipe with pipe, pipe with beam and pipe with duct.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AvoidObstruction\CS\bin\Debug\AvoidObstruction.dll
-RevitMultiSample.AvoidObstruction.CS.Command
+Ara3D.RevitSampleBrowser.AvoidObstruction.CS.Command
 
 MEP
 Fabrication Part Layout
@@ -1345,7 +1345,7 @@ Fabrication Part Layout Sample
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.FabricationPartLayout
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.FabricationPartLayout
 
 MEP
 Optimize Straights
@@ -1353,7 +1353,7 @@ Optimize Straights
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.OptimizeStraights
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.OptimizeStraights
 
 MEP
 Stretch and Fit
@@ -1361,7 +1361,7 @@ Stretch and fit
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.StretchAndFit
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.StretchAndFit
 
 MEP
 Convert To Fabrication
@@ -1369,7 +1369,7 @@ Convert Design Elements To Fabrication Parts
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.ConvertToFabrication
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.ConvertToFabrication
 
 MEP
 Buttons and Palette Exclusions
@@ -1377,7 +1377,7 @@ Exclude Fabrication Service Buttons and Palettes for Routing Operations
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.ButtonPaletteExclusions
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.ButtonPaletteExclusions
 
 MEP
 Ancillaries
@@ -1385,7 +1385,7 @@ Discover the Ancillaries Associated with a Fabrication Part
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.Ancillaries
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.Ancillaries
 
 MEP
 Get Custom Data
@@ -1393,7 +1393,7 @@ Discover the Custom data Associated with a Fabrication Config and Part
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.GetCustomData
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.GetCustomData
 
 MEP
 Set Custom Data
@@ -1401,7 +1401,7 @@ Set Custom data Associated with a Fabrication Config to a Selected Part
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.SetCustomData
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.SetCustomData
 
 MEP
 Export to PCF
@@ -1409,7 +1409,7 @@ Exports fabrication parts to a PCF file
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.ExportToPCF
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.ExportToPCF
 
 MEP
 Export Part Geometry
@@ -1417,7 +1417,7 @@ Exports fabrication part geometry to a CSV file
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.FabPartGeometry
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.FabPartGeometry
 
 MEP
 Display Part Info
@@ -1425,7 +1425,7 @@ Displays fabrication part information
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.PartInfo
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.PartInfo
 
 MEP
 Detach Hanger Rods
@@ -1433,7 +1433,7 @@ Detaches hanger rods from their structural host
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.DetachRods
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.DetachRods
 
 MEP
 Double Rod Lengths
@@ -1441,7 +1441,7 @@ Doubles the length of the picked hanger rods
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.DoubleRodLength
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.DoubleRodLength
 
 MEP
 Halve Rod Lengths
@@ -1449,7 +1449,7 @@ Halves the length of the picked hanger rods
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.HalveRodLength
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.HalveRodLength
 
 MEP
 Increase Rod Structure Extension
@@ -1457,7 +1457,7 @@ Increase the length of the rod as an extension from its hosted structure (by 1ft
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.IncreaseRodStructureExtension
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.IncreaseRodStructureExtension
 
 MEP
 Decrease Rod Structure Extension
@@ -1465,7 +1465,7 @@ Decrease the length of the rod as an extension from its hosted structure (by 1ft
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.DecreaseRodStructureExtension
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.DecreaseRodStructureExtension
 
 MEP
 Part Renumber
@@ -1473,7 +1473,7 @@ Renumbers a selection of fabrication parts
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.PartRenumber
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.PartRenumber
 
 MEP
 Split Straight
@@ -1481,7 +1481,7 @@ Splits a fabrication part straight into two equal pieces
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.SplitStraight
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.SplitStraight
 
 MEP
 Load and Place Next Item File
@@ -1489,7 +1489,7 @@ Reloads the fabrication configuration and then iterates the item folders and fin
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.LoadAndPlaceNextItemFile
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.LoadAndPlaceNextItemFile
 
 MEP
 Unload Unused Item Files
@@ -1497,7 +1497,7 @@ Unloads item files that are loaded but are not used in the model
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.UnloadUnusedItemFiles
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.UnloadUnusedItemFiles
 
 MEP
 Export to MAJ
@@ -1505,7 +1505,7 @@ Export Fabrication Parts to a fabrication job (MAJ) file
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.ExportToMAJ
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.ExportToMAJ
 
 MEP
 Change Service
@@ -1513,7 +1513,7 @@ Change the service of a selection of Fabrication Parts
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.ChangeService
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.ChangeService
 
 MEP
 Change Size
@@ -1521,7 +1521,7 @@ Change the size of a selection of Fabrication Parts
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.ChangeSize
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.ChangeSize
 
 MEP
 Apply Change
@@ -1529,7 +1529,7 @@ Apply change to the service and the size of a selection of Fabrication Parts
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.ApplyChange
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.ApplyChange
 
 MEP
 Flip Part
@@ -1537,7 +1537,7 @@ Flips a Fabrication Part to the opposite direction
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FabricationPartLayout\CS\bin\Debug\FabricationPartLayout.dll
-RevitMultiSample.FabricationPartLayout.CS.FlipPart
+Ara3D.RevitSampleBrowser.FabricationPartLayout.CS.FlipPart
 
 MEP
 Pressure Loss Report
@@ -1545,7 +1545,7 @@ Report the pressure loss for the network flow calculation.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\NetworkPressureLossReport\CS\bin\Debug\NetworkPressureLossReport.dll
-RevitMultiSample.NetworkPressureLossReport.Command
+Ara3D.RevitSampleBrowser.NetworkPressureLossReport.Command
 
 MEP
 Power Circuit
@@ -1553,7 +1553,7 @@ Operate power circuits.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PowerCircuit\CS\bin\Debug\PowerCircuit.dll
-RevitMultiSample.PowerCircuit.CS.Command
+Ara3D.RevitSampleBrowser.PowerCircuit.CS.Command
 
 MEP
 RoutingPreferenceTools.Analyzer
@@ -1561,7 +1561,7 @@ RoutingPreferenceTools.Analyzer
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RoutingPreferenceTools\CS\bin\Debug\RoutingPreferenceTools.dll
-RevitMultiSample.RoutingPreferenceTools.CS.Command
+Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.Command
 
 MEP
 RoutingPreferenceTools.Builder.CommandReadPreferences
@@ -1569,7 +1569,7 @@ RoutingPreferenceTools.Builder.CommandReadPreferences
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RoutingPreferenceTools\CS\bin\Debug\RoutingPreferenceTools.dll
-RevitMultiSample.RoutingPreferenceTools.CS.CommandReadPreferences
+Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.CommandReadPreferences
 
 MEP
 RoutingPreferenceTools.Builder.CommandWritePreferences
@@ -1577,7 +1577,7 @@ RoutingPreferenceTools.Builder.CommandWritePreferences
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RoutingPreferenceTools\CS\bin\Debug\RoutingPreferenceTools.dll
-RevitMultiSample.RoutingPreferenceTools.CS.CommandWritePreferences
+Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.CommandWritePreferences
 
 MEP
 TraverseSystem
@@ -1585,7 +1585,7 @@ Traverse a mechanical or piping system in the direction of flow
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\TraverseSystem\CS\bin\Debug\TraverseSystem.dll
-RevitMultiSample.TraverseSystem.CS.Command
+Ara3D.RevitSampleBrowser.TraverseSystem.CS.Command
 
 Parameters
 Beam and slab parameter
@@ -1593,7 +1593,7 @@ Add a new GUID parameter to beam and slab, and use the GUID value to find the ri
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\BeamAndSlabNewParameter\CS\bin\Debug\BeamAndSlabNewParameter.dll
-RevitMultiSample.BeamAndSlabNewParameter.CS.Command
+Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS.Command
 
 Parameters
 Browse Parameter Bindings
@@ -1601,7 +1601,7 @@ Browse all the shared parameters bindings used in this project.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\BrowseBindings\VB.NET\bin\BrowseBindings.dll
-RevitMultiSample.BrowseBindings.VB.NET.Command
+Ara3D.RevitSampleBrowser.BrowseBindings.VB.NET.Command
 
 Parameters
 CreateShared - Create Shared Parameter
@@ -1609,7 +1609,7 @@ Create a new shared parameter and assign it to wall categories.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateShared\VB.NET\bin\Debug\CreateShared.dll
-RevitMultiSample.CreateShared.VB.NET.Command1
+Ara3D.RevitSampleBrowser.CreateShared.VB.NET.Command1
 
 Parameters
 CreateShared - Set Shared Parameter
@@ -1617,7 +1617,7 @@ Set the shared parameter.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateShared\VB.NET\bin\Debug\CreateShared.dll
-RevitMultiSample.CreateShared.VB.NET.Command2
+Ara3D.RevitSampleBrowser.CreateShared.VB.NET.Command2
 
 Parameters
 Get Deck Properties
@@ -1625,7 +1625,7 @@ Get deck layer properties.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DeckProperties\CS\bin\Debug\DeckProperties.dll
-RevitMultiSample.DeckProperties.CS.Command
+Ara3D.RevitSampleBrowser.DeckProperties.CS.Command
 
 Parameters
 FireRating - Apply Parameter
@@ -1633,7 +1633,7 @@ Add a new shared parameter to Revit and apply it to all doors.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FireRating\VB.NET\bin\FireRating.dll
-RevitMultiSample.FireRating.VB.NET.ApplyParameter
+Ara3D.RevitSampleBrowser.FireRating.VB.NET.ApplyParameter
 
 Parameters
 FireRating - Export to Excel
@@ -1641,7 +1641,7 @@ Export fire rating values to an Excel file.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FireRating\VB.NET\bin\FireRating.dll
-RevitMultiSample.FireRating.VB.NET.ExportFireRating
+Ara3D.RevitSampleBrowser.FireRating.VB.NET.ExportFireRating
 
 Parameters
 FireRating - Import from Excel
@@ -1649,7 +1649,7 @@ Import fire rating values from the Excel file and apply them to doors.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FireRating\VB.NET\bin\FireRating.dll
-RevitMultiSample.FireRating.VB.NET.ImportFireRating
+Ara3D.RevitSampleBrowser.FireRating.VB.NET.ImportFireRating
 
 Parameters
 Create shared parameters
@@ -1657,7 +1657,7 @@ Create a visible and an invisible parameter.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\InvisibleParam\CS\bin\Debug\InvisibleParam.dll
-RevitMultiSample.InvisibleParam.CS.Command
+Ara3D.RevitSampleBrowser.InvisibleParam.CS.Command
 
 Parameters
 Element Parameters
@@ -1665,7 +1665,7 @@ Show the property information of selected element.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ParameterUtils\CS\bin\Debug\ParameterUtils.dll
-RevitMultiSample.ParameterUtils.CS.Command
+Ara3D.RevitSampleBrowser.ParameterUtils.CS.Command
 
 Parameters
 ReadonlySharedParameters1
@@ -1673,7 +1673,7 @@ ReadonlySharedParameters1
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ReadonlySharedParameters\CS\bin\Debug\ReadonlySharedParameters.dll
-RevitMultiSample.ReadonlySharedParameters.CS.SetReadonlyCost1
+Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS.SetReadonlyCost1
 
 Parameters
 ReadonlySharedParameters2
@@ -1681,7 +1681,7 @@ ReadonlySharedParameters2
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ReadonlySharedParameters\CS\bin\Debug\ReadonlySharedParameters.dll
-RevitMultiSample.ReadonlySharedParameters.CS.SetReadonlyCost2
+Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS.SetReadonlyCost2
 
 Parameters
 Test Floor Thickness
@@ -1689,7 +1689,7 @@ Show how to retrieve and modify floor thickness.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\TestFloorThickness\VB.NET\bin\Debug\TestFloorThickness.dll
-RevitMultiSample.TestFloorThickness.VB.NET.Command
+Ara3D.RevitSampleBrowser.TestFloorThickness.VB.NET.Command
 
 Parameters
 Test Wall Thickness
@@ -1697,7 +1697,7 @@ Show how to retrieve and modify wall thickness.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\TestWallThickness\VB.NET\bin\Debug\TestWallThickness.dll
-RevitMultiSample.TestWallThickness.VB.NET.Command
+Ara3D.RevitSampleBrowser.TestWallThickness.VB.NET.Command
 
 Parameters, Structure
 Create beams, columns and braces (CS)
@@ -1705,7 +1705,7 @@ Create beams, columns and braces.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateBeamsColumnsBraces\CS\bin\Debug\CreateBeamsColumnsBraces.dll
-RevitMultiSample.CreateBeamsColumnsBraces.CS.Command
+Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS.Command
 
 Parameters, Views
 Create and configure new view template
@@ -1713,7 +1713,7 @@ Demonstrates the process of creating a new view template from a regular view.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ViewTemplateCreation\CS\bin\Debug\ViewTemplateCreation.dll
-RevitMultiSample.ViewTemplateCreation.CS.Command
+Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS.Command
 
 Rooms/Spaces
 Create zone and space
@@ -1721,7 +1721,7 @@ Create space/zone elements and edit zone in Revit MEP.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AddSpaceAndZone\CS\bin\Debug\AddSpaceAndZone.dll
-RevitMultiSample.AddSpaceAndZone.CS.Command
+Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS.Command
 
 Rooms/Spaces
 Customize door opening expression
@@ -1729,7 +1729,7 @@ Customize door opening expression based on geometry and your country standard.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DoorSwing\CS\bin\Debug\DoorSwing.dll
-RevitMultiSample.DoorSwing.CS.InitializeCommand
+Ara3D.RevitSampleBrowser.DoorSwing.CS.InitializeCommand
 
 Rooms/Spaces
 Update Door Properties
@@ -1737,7 +1737,7 @@ Update Door Properties according to geometries.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DoorSwing\CS\bin\Debug\DoorSwing.dll
-RevitMultiSample.DoorSwing.CS.UpdateParamsCommand
+Ara3D.RevitSampleBrowser.DoorSwing.CS.UpdateParamsCommand
 
 Rooms/Spaces
 Update Door Geometries
@@ -1745,7 +1745,7 @@ Update door geometry according to From/To room property.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\DoorSwing\CS\bin\Debug\DoorSwing.dll
-RevitMultiSample.DoorSwing.CS.UpdateGeometryCommand
+Ara3D.RevitSampleBrowser.DoorSwing.CS.UpdateGeometryCommand
 
 Rooms/Spaces
 Roofs Rooms (CS)
@@ -1753,7 +1753,7 @@ Demonstrates how to check whether Room(Space) has bounding Roof.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RoofsRooms\CS\bin\Debug\RoofsRooms.dll
-RevitMultiSample.RoofsRooms.CS.Command
+Ara3D.RevitSampleBrowser.RoofsRooms.CS.Command
 
 Rooms/Spaces
 Rooms
@@ -1761,7 +1761,7 @@ Get and set room information (Number, Tag, Area).
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Rooms\CS\bin\Debug\Rooms.dll
-RevitMultiSample.Rooms.CS.Command
+Ara3D.RevitSampleBrowser.Rooms.CS.Command
 
 Rooms/Spaces
 Room Schedule
@@ -1769,7 +1769,7 @@ Room Schedule.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RoomSchedule\CS\bin\Debug\RoomSchedule.dll
-RevitMultiSample.RoomSchedule.Command
+Ara3D.RevitSampleBrowser.RoomSchedule.Command
 
 Selection
 Pick for Deletion
@@ -1777,7 +1777,7 @@ This command is to pick element and delete.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Selections\CS\bin\Debug\Selections.dll
-RevitMultiSample.Selections.CS.PickforDeletion
+Ara3D.RevitSampleBrowser.Selections.CS.PickforDeletion
 
 Selection
 Place At Point On Wall Face
@@ -1785,7 +1785,7 @@ This command is to pick a point on wall face and place a window.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Selections\CS\bin\Debug\Selections.dll
-RevitMultiSample.Selections.CS.PlaceAtPointOnWallFace
+Ara3D.RevitSampleBrowser.Selections.CS.PlaceAtPointOnWallFace
 
 Selection
 Place At Picked Face Work plane
@@ -1793,7 +1793,7 @@ This command is to pick a face, set work plane, then pick a point to create a ci
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Selections\CS\bin\Debug\Selections.dll
-RevitMultiSample.Selections.CS.PlaceAtPickedFaceWorkplane
+Ara3D.RevitSampleBrowser.Selections.CS.PlaceAtPickedFaceWorkplane
 
 Selection
 Selection Dialog
@@ -1801,7 +1801,7 @@ This command is to pick a element and a point from dialog.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Selections\CS\bin\Debug\Selections.dll
-RevitMultiSample.Selections.CS.SelectionDialog
+Ara3D.RevitSampleBrowser.Selections.CS.SelectionDialog
 
 Structure
 Analytical SupportData Information
@@ -1809,7 +1809,7 @@ Displays the element's support information
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AnalyticalSupportData_Info\CS\bin\Debug\AnalyticalSupportData_Info.dll
-RevitMultiSample.AnalyticalSupportData_Info.CS.Command
+Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS.Command
 
 Structure
 AreaReinCurve
@@ -1817,7 +1817,7 @@ Turn off all layers but one. You get some parallel bars. Remove the hooks from o
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AreaReinCurve\CS\bin\Debug\AreaReinCurve.dll
-RevitMultiSample.AreaReinCurve.CS.Command
+Ara3D.RevitSampleBrowser.AreaReinCurve.CS.Command
 
 Structure
 AreaReinParameters
@@ -1825,7 +1825,7 @@ Show parameters of selected AreaReinforcement and allow user to modify
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AreaReinParameters\CS\bin\Debug\AreaReinParameters.dll
-RevitMultiSample.AreaReinParameters.CS.Command
+Ara3D.RevitSampleBrowser.AreaReinParameters.CS.Command
 
 Rebar
 RebarParameters
@@ -1833,7 +1833,7 @@ Show all parameters of selected Rebar
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AreaReinParameters\CS\bin\Debug\AreaReinParameters.dll
-RevitMultiSample.AreaReinParameters.CS.RebarParas
+Ara3D.RevitSampleBrowser.AreaReinParameters.CS.RebarParas
 
 Structure
 Boundary Conditions
@@ -1841,7 +1841,7 @@ Display the BoundaryConditions' parameters or create a new BoundaryConditions in
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\BoundaryConditions\CS\bin\Debug\BoundaryConditions.dll
-RevitMultiSample.BoundaryConditions.CS.Command
+Ara3D.RevitSampleBrowser.BoundaryConditions.CS.Command
 
 Structure
 Create Beam System
@@ -1849,7 +1849,7 @@ Create beam system according to the profile made of selected beams.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateBeamSystem\CS\bin\Debug\CreateBeamSystem.dll
-RevitMultiSample.CreateBeamSystem.CS.Command
+Ara3D.RevitSampleBrowser.CreateBeamSystem.CS.Command
 
 Structure
 Create Complex Area Reinforcement
@@ -1857,7 +1857,7 @@ Create complex AreaReinforcement on selected slab.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateComplexAreaRein\CS\bin\Debug\CreateComplexAreaRein.dll
-RevitMultiSample.CreateComplexAreaRein.CS.Command
+Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS.Command
 
 Structure
 Create simple area reinforcement
@@ -1865,7 +1865,7 @@ Create simple AreaReinforcement on selected wall or floor.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateSimpleAreaRein\CS\bin\Debug\CreateSimpleAreaRein.dll
-RevitMultiSample.CreateSimpleAreaRein.CS.Command
+Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS.Command
 
 Structure
 Create wall in beam profile
@@ -1873,7 +1873,7 @@ Create a profiled wall using the outline generated by a selection of beams defin
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateWallinBeamProfile\CS\bin\Debug\CreateWallinBeamProfile.dll
-RevitMultiSample.CreateWallinBeamProfile.CS.CreateWallinBeamProfile
+Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS.CreateWallinBeamProfile
 
 Structure
 Create walls under beams
@@ -1881,7 +1881,7 @@ Create simple rectangular walls along and under the path of selected beams.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateWallsUnderBeams\CS\bin\Debug\CreateWallsUnderBeams.dll
-RevitMultiSample.CreateWallsUnderBeams.CS.CreateWallsUnderBeams
+Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS.CreateWallsUnderBeams
 
 Structure
 Create Curved Beam
@@ -1889,7 +1889,7 @@ Create Curved Beam.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CurvedBeam\CS\bin\Debug\CurvedBeam.dll
-RevitMultiSample.CurvedBeam.CS.Command
+Ara3D.RevitSampleBrowser.CurvedBeam.CS.Command
 
 Structure
 Frame Builder
@@ -1897,7 +1897,7 @@ Add a new concrete column and beam size.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\FrameBuilder\CS\bin\Debug\FrameBuilder.dll
-RevitMultiSample.FrameBuilder.CS.Command
+Ara3D.RevitSampleBrowser.FrameBuilder.CS.Command
 
 Structure
 Structural connection basic operations
@@ -1905,7 +1905,7 @@ Shows how to perform basic operations on a structural connection.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\GenericStructuralConnection\CS\bin\Debug\GenericStructuralConnection.dll
-RevitMultiSample.GenericStructuralConnection.CS.Command
+Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS.Command
 
 Structure
 Loads
@@ -1913,7 +1913,7 @@ Show how to use load case, nature, usage and combination.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Loads\CS\bin\Debug\Loads.dll
-RevitMultiSample.Loads.CS.Loads
+Ara3D.RevitSampleBrowser.Loads.CS.Loads
 
 Rebar
 Multiplanar Rebar
@@ -1921,7 +1921,7 @@ Demonstrates how to create multiplanar rebar.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\MultiplanarRebar\CS\bin\Debug\MultiplanarRebar.dll
-RevitMultiSample.MultiplanarRebar.CS.Command
+Ara3D.RevitSampleBrowser.MultiplanarRebar.CS.Command
 
 Rebar
 NewRebar
@@ -1929,7 +1929,7 @@ Create a rebar on the selected concrete rectangular column or beam.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\NewRebar\CS\bin\Debug\NewRebar.dll
-RevitMultiSample.NewRebar.CS.Command
+Ara3D.RevitSampleBrowser.NewRebar.CS.Command
 
 Rebar
 PathReinforcement
@@ -1937,7 +1937,7 @@ Display path reinforcement properties.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\PathReinforcement\CS\bin\Debug\PathReinforcement.dll
-RevitMultiSample.PathReinforcement.CS.Command
+Ara3D.RevitSampleBrowser.PathReinforcement.CS.Command
 
 Rebar
 RebarContainerAnyShapeType
@@ -1945,7 +1945,7 @@ Create Rebar Container in a selected concrete element (beam or column) that does
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RebarContainerAnyShapeType\CS\bin\Debug\RebarContainerAnyShapeType.dll
-RevitMultiSample.RebarContainerAnyShapeType.CS.Command
+Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS.Command
 
 Rebar
 Add Parameters
@@ -1953,7 +1953,7 @@ External command to add shared parameters to Rebar
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RebarFreeForm\CS\bin\Debug\RebarFreeForm.dll
-RevitMultiSample.RebarFreeForm.CS.AddSharedParams
+Ara3D.RevitSampleBrowser.RebarFreeForm.CS.AddSharedParams
 
 Rebar
 Create Rebar Free Form
@@ -1961,7 +1961,7 @@ External command to create a Rebar FreeForm element and external application to 
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\RebarFreeForm\CS\bin\Debug\RebarFreeForm.dll
-RevitMultiSample.RebarFreeForm.CS.Command
+Ara3D.RevitSampleBrowser.RebarFreeForm.CS.Command
 
 Structure
 Reinforcement
@@ -1969,7 +1969,7 @@ Create bar set in a selected concrete element (beam or column) that does not hav
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\Reinforcement\CS\bin\Debug\Reinforcement.dll
-RevitMultiSample.Reinforcement.CS.Command
+Ara3D.RevitSampleBrowser.Reinforcement.CS.Command
 
 Structure
 Add elements to connection
@@ -1977,7 +1977,7 @@ Add elements to existing structural connection
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.AddElementsToConnection.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.AddElementsToConnection.CS.Command
 
 Structure
 Add elements to custom connection
@@ -1985,7 +1985,7 @@ Add elements to existing custom connection
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.AddElementsToCustomConnection.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.AddElementsToCustomConnection.CS.Command
 
 Structure
 Add ranges of applicability to a connection type
@@ -1993,7 +1993,7 @@ Add ranges of applicability to a connection type
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.AddRangesToConnectionType.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.AddRangesToConnectionType.CS.Command
 
 Structure
 Create anchor pattern
@@ -2001,7 +2001,7 @@ Create anchor pattern
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreateAnchorPattern.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreateAnchorPattern.CS.Command
 
 Structure
 Create bolt pattern
@@ -2009,7 +2009,7 @@ Create bolt pattern
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreateBoltPattern.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreateBoltPattern.CS.Command
 
 Structure
 Create contour cut
@@ -2017,7 +2017,7 @@ Create contour cut
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreateContourCut.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreateContourCut.CS.Command
 
 Structure
 Create cope skewed
@@ -2025,7 +2025,7 @@ Create cope skewed
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreateCopeSkewed.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreateCopeSkewed.CS.Command
 
 Structure
 Create corner cut
@@ -2033,7 +2033,7 @@ Create corner cut
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreateCornerCut.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreateCornerCut.CS.Command
 
 Structure
 Create plate
@@ -2041,7 +2041,7 @@ Create plate
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreatePlate.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreatePlate.CS.Command
 
 Structure
 Create plate hole
@@ -2049,7 +2049,7 @@ Create plate hole
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreatePlateHole.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreatePlateHole.CS.Command
 
 Structure
 Create shear stud pattern
@@ -2057,7 +2057,7 @@ Create shear stud pattern
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreateShearStudPattern.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreateShearStudPattern.CS.Command
 
 Structure
 Create shortening
@@ -2065,7 +2065,7 @@ Create shortening
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreateShortening.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreateShortening.CS.Command
 
 Structure
 Create weld point
@@ -2073,7 +2073,7 @@ Create weld point
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.CreateWeldPoint.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.CreateWeldPoint.CS.Command
 
 Structure
 Delete connection
@@ -2081,7 +2081,7 @@ Delete connection
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.DeleteConnection.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.DeleteConnection.CS.Command
 
 Structure
 Remove elements from structural connection
@@ -2089,7 +2089,7 @@ Remove elements from structural connection
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.RemoveElementsFromConnection.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.RemoveElementsFromConnection.CS.Command
 
 Structure
 Remove subelements from custom connection
@@ -2097,7 +2097,7 @@ Remove subelements from custom connection
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.RemoveSubelementsFromCustomConnection.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.RemoveSubelementsFromCustomConnection.CS.Command
 
 Structure
 Print connection detailed parameters
@@ -2105,7 +2105,7 @@ Print connection detailed parameters
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.UpdateConnectionDetailedParameters.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.UpdateConnectionDetailedParameters.CS.Command
 
 Structure
 Fabrication transaction and background calculation
@@ -2113,7 +2113,7 @@ Shows how to handle "Background calculation in progress" exception when trying t
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SampleCommandsSteelElements\CS\bin\Debug\SampleCommandsSteelElements.dll
-RevitMultiSample.SampleCommandsSteelElements.BackgroundCalculation.CS.Command
+Ara3D.RevitSampleBrowser.SampleCommandsSteelElements.BackgroundCalculation.CS.Command
 
 Structure
 StructSample - Frame Wall
@@ -2121,7 +2121,7 @@ Add columns to the selected walls.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\StructSample\CS\bin\Debug\StructSample.dll
-RevitMultiSample.StructSample.CS.Command
+Ara3D.RevitSampleBrowser.StructSample.CS.Command
 
 Structure
 Structural Layer Function (CS)
@@ -2129,7 +2129,7 @@ For the selected floor, display the function of each structural layer from outsi
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\StructuralLayerFunction\CS\bin\Debug\StructuralLayerFunction.dll
-RevitMultiSample.StructuralLayerFunction.CS.Command
+Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS.Command
 
 View Transforms
 Sheet To 3D View
@@ -2137,7 +2137,7 @@ Generate a perspective View3D with its camera at a click on a viewport on a shee
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\SheetToView3D\CS\bin\Debug\SheetToView3D.dll
-RevitMultiSample.SheetToView3D.CS.Command
+Ara3D.RevitSampleBrowser.SheetToView3D.CS.Command
 
 Views
 All Views
@@ -2145,7 +2145,7 @@ Generate a new sheet for user selected views
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\AllViews\CS\bin\Debug\AllViews.dll
-RevitMultiSample.AllViews.CS.Command
+Ara3D.RevitSampleBrowser.AllViews.CS.Command
 
 Views
 Create view section
@@ -2153,7 +2153,7 @@ Create a section view across the mid point of the selected wall, floor or beam
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateViewSection\CS\bin\Debug\CreateViewSection.dll
-RevitMultiSample.CreateViewSection.CS.Command
+Ara3D.RevitSampleBrowser.CreateViewSection.CS.Command
 
 Views
 Create drafting view
@@ -2161,7 +2161,7 @@ Create a new empty drafting view
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\CreateViewSection\CS\bin\Debug\CreateViewSection.dll
-RevitMultiSample.CreateViewSection.CS.CreateDraftingView
+Ara3D.RevitSampleBrowser.CreateViewSection.CS.CreateDraftingView
 
 Views
 Object Viewer
@@ -2169,7 +2169,7 @@ Display the selected element in a preview window and generic properties in a gri
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ObjectViewer\CS\bin\Debug\ObjectViewer.dll
-RevitMultiSample.ObjectViewer.CS.Command
+Ara3D.RevitSampleBrowser.ObjectViewer.CS.Command
 
 Views
 ScheduleAPI
@@ -2177,7 +2177,7 @@ This sample introduces how to create a view schedule and how to show its data on
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\ScheduleCreation\CS\bin\Debug\ScheduleCreation.dll
-RevitMultiSample.ScheduleCreation.CS.Command
+Ara3D.RevitSampleBrowser.ScheduleCreation.CS.Command
 
 Views
 Visibility Controller
@@ -2185,5 +2185,5 @@ Control element visibility by category.
 LargeImage:
 Image:
 Y:\a\src\rvt\RevitSdkSamples\SDK\Samples\VisibilityControl\CS\bin\Debug\VisibilityControl.dll
-RevitMultiSample.VisibilityControl.CS.Command
+Ara3D.RevitSampleBrowser.VisibilityControl.CS.Command
 

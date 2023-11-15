@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -18,7 +18,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ScheduleAutomaticFormatter.CS
+namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
     ///     An external command that formats the columns of the schedule automatically.  After this has taken place,

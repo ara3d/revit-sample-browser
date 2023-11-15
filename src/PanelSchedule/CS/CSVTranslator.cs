@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 
-namespace RevitMultiSample.PanelSchedule.CS
+namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
     /// <summary>
     ///     Translate the panel schedule view data from Revit to CSV.

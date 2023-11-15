@@ -1,6 +1,6 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace RevitMultiSample.NewOpenings.CS
+namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 {
     partial class NewOpeningsForm
     {

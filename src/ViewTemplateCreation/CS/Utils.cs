@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Windows.Forms;
 
-namespace RevitMultiSample.ViewTemplateCreation.CS
+namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
 {
     /// <summary>
     ///     Utils class contains useful methods and members for using in whole project.

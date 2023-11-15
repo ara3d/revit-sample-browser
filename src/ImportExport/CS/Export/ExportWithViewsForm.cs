@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.IO;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 {
     /// <summary>
     ///     It contains a dialog which provides the options of common information for export

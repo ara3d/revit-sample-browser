@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ModelessForm_ExternalEvent.CS
+namespace Ara3D.RevitSampleBrowser.ModelessForm_ExternalEvent.CS
 {
     /// <summary>
     ///     The class of our modeless dialog.

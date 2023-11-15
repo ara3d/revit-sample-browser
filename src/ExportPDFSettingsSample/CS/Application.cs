@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -19,7 +19,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ExportPDFSettingsSample.CS
+namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 {
     /// <summary>
     ///     ExternalApplication for ExportPDFSettings manipulation through Revit API. ExportPDFSettings is the element to store
@@ -52,35 +52,35 @@ namespace RevitMultiSample.ExportPDFSettingsSample.CS
                 panel.AddItem(new PushButtonData("CreateExportPDFSettingsInstance",
                     "Create ExportPDFSettings Instance",
                     assembly.Location,
-                    "RevitMultiSample.ExportPDFSettingsSample.CS.CreateExportPDFSettingsCommand"));
+                    "Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS.CreateExportPDFSettingsCommand"));
 
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("ModifyExportPDFSettingsInstance",
                     "Modify ExportPDFSettings Instance",
                     assembly.Location,
-                    "RevitMultiSample.ExportPDFSettingsSample.CS.ModifyExportPDFSettingsCommand"));
+                    "Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS.ModifyExportPDFSettingsCommand"));
 
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("AddNamingRule",
                     "Add Naming Rule",
                     assembly.Location,
-                    "RevitMultiSample.ExportPDFSettingsSample.CS.AddNamingRuleCommand"));
+                    "Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS.AddNamingRuleCommand"));
 
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("ModifyNamingRule",
                     "Mofidy Naming Rule",
                     assembly.Location,
-                    "RevitMultiSample.ExportPDFSettingsSample.CS.MofidyNamingRuleCommand"));
+                    "Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS.MofidyNamingRuleCommand"));
 
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("DeleteNamingRule",
                     "Delete Naming Rule",
                     assembly.Location,
-                    "RevitMultiSample.ExportPDFSettingsSample.CS.DeleteNamingRuleCommand"));
+                    "Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS.DeleteNamingRuleCommand"));
             }
             catch (Exception e)
             {

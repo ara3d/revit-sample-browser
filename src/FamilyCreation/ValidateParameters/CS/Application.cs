@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ValidateParameters.CS
+namespace Ara3D.RevitSampleBrowser.ValidateParameters.CS
 {
     /// <summary>
     ///     A class inherits IExternalApplication interface to add an event to the document saving,

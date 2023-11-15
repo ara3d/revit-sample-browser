@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.ReferencePlane.CS
+namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
 {
     /// <summary>
     ///     A form display all reference planes, and allow user to create

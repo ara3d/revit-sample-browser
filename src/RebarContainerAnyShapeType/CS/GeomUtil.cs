@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace RevitMultiSample.RebarContainerAnyShapeType.CS
+namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 {
     /// <summary>
     ///     The class which give the base geometry operation, it is a static class.

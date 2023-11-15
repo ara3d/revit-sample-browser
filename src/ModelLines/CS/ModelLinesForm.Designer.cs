@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using RevitMultiSample.PlaceFamilyInstanceByFace.CS;
+using Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS;
 
-namespace RevitMultiSample.ModelLines.CS
+namespace Ara3D.RevitSampleBrowser.ModelLines.CS
 {
     /// <summary>
     /// The Mail Form
@@ -413,10 +413,10 @@ namespace RevitMultiSample.ModelLines.CS
         private System.Windows.Forms.RadioButton ellipseRadioButton;
         private System.Windows.Forms.RadioButton arcRadioButton;
         private System.Windows.Forms.RadioButton lineRadioButton;
-        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl offsetPointUserControl;
-        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl thirdPointUserControl;
-        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl secondPointUserControl;
-        private RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl firstPointUserControl;
+        private PointUserControl offsetPointUserControl;
+        private PointUserControl thirdPointUserControl;
+        private PointUserControl secondPointUserControl;
+        private PointUserControl firstPointUserControl;
         private System.Windows.Forms.Button createSketchPlaneButton;
         private System.Windows.Forms.ComboBox sketchPlaneComboBox;
         private System.Windows.Forms.Label sketchPlaneLabel;

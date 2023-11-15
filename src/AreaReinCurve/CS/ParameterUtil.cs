@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.AreaReinCurve.CS
+namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
 {
     /// <summary>
     ///     contain utility methods find or set certain parameter

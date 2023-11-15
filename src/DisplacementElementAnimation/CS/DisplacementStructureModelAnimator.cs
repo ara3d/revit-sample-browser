@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace RevitMultiSample.DisplacementElementAnimation.CS
+namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
 {
     /// <summary>
     ///     A class that executes an animation of structural model elements using DisplacementElements.

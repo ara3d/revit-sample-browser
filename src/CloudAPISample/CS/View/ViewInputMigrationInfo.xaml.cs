@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -17,10 +17,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web.Script.Serialization;
 using System.Windows;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration;
 using Microsoft.Win32;
-using RevitMultiSample.CloudAPISample.CS.Migration;
 
-namespace RevitMultiSample.CloudAPISample.CS.View
+namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
 {
     /// <summary>
     ///     Interaction logic for ViewInputMigrationInfo.xaml

@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
 {
     /// <summary>
     ///     A class to manage the safe execution of events in a modeless dialog.

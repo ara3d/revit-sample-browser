@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.CurtainSystem.CS.Utility
+namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Utility
 {
     /// <summary>
     ///     Vector4 is a homogeneous coordinate class used to store vector

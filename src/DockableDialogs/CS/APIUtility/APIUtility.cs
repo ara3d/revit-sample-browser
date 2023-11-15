@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Text;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
 {
     /// <summary>
     ///     A simple class to manage an interface into the Revit API.

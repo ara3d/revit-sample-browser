@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 
-namespace RevitMultiSample.CS.PointCloudEngine
+namespace Ara3D.RevitSampleBrowser.CS.PointCloudEngine
 {
     /// <summary>
     ///     An implementation for a file-based point cloud.

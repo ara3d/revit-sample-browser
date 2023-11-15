@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
@@ -9,7 +9,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.BeamAndSlabNewParameter.CS
+namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
 {
     /// <summary>
     ///     Display how to add a parameter to an element and set value to the parameter.

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.IO;
@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.PointCurveCreation.CS
+namespace Ara3D.RevitSampleBrowser.PointCurveCreation.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

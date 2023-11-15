@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.Custom2DExporter.CS
+namespace Ara3D.RevitSampleBrowser.Custom2DExporter.CS
 {
     /// <summary>
     ///     UI Form presented to the user used to collection options related to the export.

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.AutoParameter.CS
+namespace Ara3D.RevitSampleBrowser.AutoParameter.CS
 {
     /// <summary>
     ///     add parameters(family parameters/shared parameters) to the opened family file

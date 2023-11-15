@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.DoorSwing.CS
+namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
     /// <summary>
     ///     A class inherit from Form is used to list all the door family exist in current project and

@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.ValidateParameters.CS
+namespace Ara3D.RevitSampleBrowser.ValidateParameters.CS
 {
     /// <summary>
     ///     The form is used to show the result

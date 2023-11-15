@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using GeoInstance = Autodesk.Revit.DB.GeometryInstance;
 using GeoElement = Autodesk.Revit.DB.GeometryElement;
 using RevitElement = Autodesk.Revit.DB.Element;
 
-namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
+namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
     /// <summary>
     ///     This is main data class for creating family Instance by face

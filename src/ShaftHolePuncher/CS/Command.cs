@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using Autodesk.Revit.Attributes;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ShaftHolePuncher.CS
+namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
     /// <summary>
     ///     The entrance of this example, implements the Execute method of IExternalCommand
@@ -20,7 +20,7 @@ namespace RevitMultiSample.ShaftHolePuncher.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.ShaftHolePuncher");
+                "Ara3D.RevitSampleBrowser.ShaftHolePuncher");
             trans.Start();
             try
             {

@@ -3,17 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitMultiSample", "RevitMultiSample.csproj", "{EF12A6B4-ADE7-438D-A469-6A590548C266}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ara3D.RevitSampleBrowser", "Ara3D.RevitSampleBrowser.csproj", "{EF12A6B4-ADE7-438D-A469-6A590548C266}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiSampleDevUtils", "..\utils\MultiSampleDevUtils\MultiSampleDevUtils.csproj", "{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevUtils", "..\utils\MultiSampleDevUtils\DevUtils.csproj", "{612B32B1-2CC3-4506-AC0A-3CD7EA4E2F09}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{4FFA90CA-2621-44DD-AFF6-BB4BCADB88EA}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
 		help.txt = help.txt
-		..\README.md = ..\README.md
 		..\LICENSE.txt = ..\LICENSE.txt
-		rtf-files.txt = rtf-files.txt
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Global

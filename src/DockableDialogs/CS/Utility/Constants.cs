@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
 {
     internal class Globals
     {

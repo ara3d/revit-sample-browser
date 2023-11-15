@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.WinderStairs.CS
+namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
 {
     /// <summary>
     ///     This class implements IUpdater and IExternalEventHandler interfaces. It's mainly
@@ -82,7 +82,7 @@ namespace RevitMultiSample.WinderStairs.CS
         /// </summary>
         string IExternalEventHandler.GetName()
         {
-            return "RevitMultiSample.WinderStairs";
+            return "Ara3D.RevitSampleBrowser.WinderStairs";
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace RevitMultiSample.WinderStairs.CS
         /// </summary>
         string IUpdater.GetUpdaterName()
         {
-            return "RevitMultiSample.WinderStairs";
+            return "Ara3D.RevitSampleBrowser.WinderStairs";
         }
 
         /// <summary>

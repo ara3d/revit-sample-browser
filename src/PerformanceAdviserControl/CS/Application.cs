@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.PerformanceAdviserControl.CS
+namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication,
@@ -50,7 +50,7 @@ namespace RevitMultiSample.PerformanceAdviserControl.CS
             var rp = application.CreateRibbonPanel("PerformanceAdviserControl");
             var currentAssembly = Assembly.GetAssembly(GetType()).Location;
             var pb = rp.AddItem(new PushButtonData("Performance Adviser", "Performance Adviser", currentAssembly,
-                "RevitMultiSample.PerformanceAdviserControl.CS.UICommand")) as PushButton;
+                "Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS.UICommand")) as PushButton;
             var uriImage = new Uri(Path.GetDirectoryName(currentAssembly) + "\\Button32.png");
             var largeImage = new BitmapImage(uriImage);
             pb.LargeImage = largeImage;

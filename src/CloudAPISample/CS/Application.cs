@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -15,12 +15,12 @@
 using System;
 using System.IO;
 using System.Windows.Media.Imaging;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using RevitMultiSample.CloudAPISample.CS.Migration;
 
-namespace RevitMultiSample.CloudAPISample.CS
+namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
 {
     /// <summary>
     ///     Main external application class.
@@ -60,12 +60,12 @@ namespace RevitMultiSample.CloudAPISample.CS
             var assemblyPath = typeof(Application).Assembly.Location;
             var pushButton = ribbonPanel.AddItem(new PushButtonData("CloudAPI Tutorial", "CloudAPI Tutorial",
                 assemblyPath,
-                "RevitMultiSample.CloudAPISample.CS.RunSampleCommand")) as PushButton;
+                "Ara3D.RevitSampleBrowser.CloudAPISample.CS.RunSampleCommand")) as PushButton;
             pushButton.Enabled = true;
 
             pushButton.LargeImage =
                 new BitmapImage(new Uri(Path.Combine(Path.GetDirectoryName(assemblyPath) ?? string.Empty, "icon.ico")));
-            pushButton.AvailabilityClassName = " RevitMultiSample.CloudAPISample.CS.RunSampleCommand";
+            pushButton.AvailabilityClassName = " Ara3D.RevitSampleBrowser.CloudAPISample.CS.RunSampleCommand";
 
             return Result.Succeeded;
         }

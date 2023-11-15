@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.InPlaceMembers.CS
+namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 {
     /// <summary>
     ///     This class is used as PropertyGrid.SelectedObject.

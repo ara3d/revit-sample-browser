@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -17,11 +17,11 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS.Properties;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
-using RevitMultiSample.UpdateExternallyTaggedBRep.CS.Properties;
 
-namespace RevitMultiSample.UpdateExternallyTaggedBRep.CS
+namespace Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication.
@@ -76,7 +76,7 @@ namespace RevitMultiSample.UpdateExternallyTaggedBRep.CS
             // Create and add the new ribbon button "Create tagged BRep".
             var pbd1 = new PushButtonData("CreateTaggedBRep", "Create tagged BRep",
                 AddinAssemblyPath,
-                "RevitMultiSample.UpdateExternallyTaggedBRep.CS.CreateBRep")
+                "Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS.CreateBRep")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)
@@ -86,7 +86,7 @@ namespace RevitMultiSample.UpdateExternallyTaggedBRep.CS
             // Create and add the new ribbon button "Update tagged BRep".
             var pbd2 = new PushButtonData("UpdateTaggedBRep", "Update tagged BRep",
                 AddinAssemblyPath,
-                "RevitMultiSample.UpdateExternallyTaggedBRep.CS.UpdateBRep")
+                "Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS.UpdateBRep")
             {
                 LargeImage = ConvertFromBitmap(Resources.large_shape),
                 Image = ConvertFromBitmap(Resources.small_shape)

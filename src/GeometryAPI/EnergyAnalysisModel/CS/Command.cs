@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.EnergyAnalysisModel.CS
+namespace Ara3D.RevitSampleBrowser.EnergyAnalysisModel.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.
@@ -21,7 +21,7 @@ namespace RevitMultiSample.EnergyAnalysisModel.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.EnergyAnalysisModel");
+                "Ara3D.RevitSampleBrowser.EnergyAnalysisModel");
             trans.Start();
             // Create an object that is responsible for collecting users inputs and getting analysis data of current model.
             var analysisModel = new EnergyAnalysisModel(commandData.Application.ActiveUIDocument.Document);

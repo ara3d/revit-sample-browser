@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 
-namespace RevitMultiSample.AutoStamp.CS
+namespace Ara3D.RevitSampleBrowser.AutoStamp.CS
 {
     /// <summary>
     ///     This class consists of two handler methods which will be subscribed to ViewPrinting and ViewPrinted events

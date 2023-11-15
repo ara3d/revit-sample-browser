@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.ChangesMonitor.CS
+namespace Ara3D.RevitSampleBrowser.ChangesMonitor.CS
 {
     /// <summary>
     ///     The UI to show the change history logs. This class is not the main one just a assistant

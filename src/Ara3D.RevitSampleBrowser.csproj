@@ -5,7 +5,7 @@
     <ProjectGuid>{EF12A6B4-ADE7-438D-A469-6A590548C266}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>RevitMultiSample</AssemblyName>
+    <AssemblyName>Ara3D.RevitSampleBrowser</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -34,7 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>RevitMultiSample</RootNamespace>
+    <RootNamespace>Ara3D.RevitSampleBrowser</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />

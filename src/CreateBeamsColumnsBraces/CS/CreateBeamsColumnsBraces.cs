@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using STRUCTURALTYPE = Autodesk.Revit.DB.Structure.StructuralType;
 
-namespace RevitMultiSample.CreateBeamsColumnsBraces.CS
+namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
 {
     /// <summary>
     ///     Create Beams, Columns and Braces according to user's input information

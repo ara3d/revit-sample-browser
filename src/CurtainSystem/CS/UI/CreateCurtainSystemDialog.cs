@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using RevitMultiSample.CurtainSystem.CS.Data;
+using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
 
-namespace RevitMultiSample.CurtainSystem.CS.UI
+namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
 {
     /// <summary>
     ///     the winForm for user to create a new curtain system

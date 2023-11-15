@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.GridCreation.CS
+namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
     /// <summary>
     ///     Data class which stores information for creating orthogonal grids

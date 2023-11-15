@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace RevitMultiSample.CreateSimpleAreaRein.CS
+namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 {
     /// <summary>
     ///     main class to create simple AreaReinforcement on selected wall or floor
@@ -30,7 +30,7 @@ namespace RevitMultiSample.CreateSimpleAreaRein.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.CreateSimpleAreaRein");
+                "Ara3D.RevitSampleBrowser.CreateSimpleAreaRein");
             trans.Start();
             //initialize necessary data
             CommandData = revit;

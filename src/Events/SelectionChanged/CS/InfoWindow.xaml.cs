@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using SelectionChangedEventArgs = Autodesk.Revit.UI.Events.SelectionChangedEventArgs;
 
-namespace RevitMultiSample.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
 {
     /// <summary>
     ///     Interaction logic for InfoWindow.xaml

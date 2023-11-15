@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.FoundationSlab.CS
+namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
 {
     /// <summary>
     ///     A class to show properties and profiles of the foundation slabs.

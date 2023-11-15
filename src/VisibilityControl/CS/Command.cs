@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.VisibilityControl.CS
+namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -17,7 +17,7 @@ namespace RevitMultiSample.VisibilityControl.CS
             , ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.VisibilityControl");
+                "Ara3D.RevitSampleBrowser.VisibilityControl");
             trans.Start();
             try
             {

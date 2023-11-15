@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.IO;
@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Events;
 using Microsoft.Win32;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
-namespace RevitMultiSample.ProgressNotifier.CS
+namespace Ara3D.RevitSampleBrowser.ProgressNotifier.CS
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml

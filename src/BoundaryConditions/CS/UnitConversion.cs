@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 
-namespace RevitMultiSample.BoundaryConditions.CS
+namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
     /// <summary>
     ///     a structure about the conversion rule between display value and inside value

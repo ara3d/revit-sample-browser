@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace RevitMultiSample.StairsAutomation.CS
+namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
 {
     /// <summary>
     ///     A stairs component consisting of a single curved run.

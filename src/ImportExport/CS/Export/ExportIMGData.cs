@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Text;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS
 {
     internal class ExportImgData : ExportDataWithViews
     {

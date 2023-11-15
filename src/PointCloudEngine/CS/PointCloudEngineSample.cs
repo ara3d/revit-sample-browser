@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.IO;
@@ -10,7 +10,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.CS.PointCloudEngine
+namespace Ara3D.RevitSampleBrowser.CS.PointCloudEngine
 {
     /// <summary>
     ///     ExternalApplication used to register the point cloud engines managed by this sample.
@@ -49,25 +49,25 @@ namespace RevitMultiSample.CS.PointCloudEngine
                 panel.AddItem(new PushButtonData("AddPredefinedInstance",
                     "Add predefined instance",
                     assembly.Location,
-                    "RevitMultiSample.CS.PointCloudEngine.AddPredefinedInstanceCommand"));
+                    "Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddPredefinedInstanceCommand"));
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("AddRandomizedInstance",
                     "Add randomized instance",
                     assembly.Location,
-                    "RevitMultiSample.CS.PointCloudEngine.AddRandomizedInstanceCommand"));
+                    "Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddRandomizedInstanceCommand"));
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("AddTransformedInstance",
                     "Add randomized instance\nat transform",
                     assembly.Location,
-                    "RevitMultiSample.CS.PointCloudEngine.AddTransformedInstanceCommand"));
+                    "Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddTransformedInstanceCommand"));
                 panel.AddSeparator();
 
                 panel.AddItem(new PushButtonData("SerializePointCloud",
                     "Serialize point cloud (utility)",
                     assembly.Location,
-                    "RevitMultiSample.CS.PointCloudEngine.SerializePredefinedPointCloud"));
+                    "Ara3D.RevitSampleBrowser.CS.PointCloudEngine.SerializePredefinedPointCloud"));
             }
             catch (Exception e)
             {

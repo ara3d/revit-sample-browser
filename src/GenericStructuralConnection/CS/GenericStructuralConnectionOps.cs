@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.GenericStructuralConnection.CS
+namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
     /// <summary>
     ///     Performs basic operations on generic structural connections.

@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.SharedCoordinateSystem.CS
+namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 {
     /// <summary>
     ///     this class is used to get, set and manage information about Location

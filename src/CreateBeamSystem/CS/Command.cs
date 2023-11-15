@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.CreateBeamSystem.CS
+namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
     /// <summary>
     ///     external applications' only entry point class that supports the IExternalCommand interface

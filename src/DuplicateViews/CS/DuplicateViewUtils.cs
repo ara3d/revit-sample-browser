@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.DuplicateViews.CS
+namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
 {
     /// <summary>
     ///     Utilities that facilitate duplication of drafting views and schedules into another document.

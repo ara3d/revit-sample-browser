@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
@@ -22,7 +22,7 @@ namespace ContextualAnalyticalModel
             if (null == doc) return Result.Failed;
 
             using (var trans =
-                   new Transaction(doc, "RevitMultiSample.AddRelationBetweenPhysicalAndAnalyticalElements"))
+                   new Transaction(doc, "Ara3D.RevitSampleBrowser.AddRelationBetweenPhysicalAndAnalyticalElements"))
             {
                 trans.Start();
 

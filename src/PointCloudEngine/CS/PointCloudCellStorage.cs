@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Xml.Linq;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.CS.PointCloudEngine
+namespace Ara3D.RevitSampleBrowser.CS.PointCloudEngine
 {
     /// <summary>
     ///     This class is used to calculate and store points for a given cell.

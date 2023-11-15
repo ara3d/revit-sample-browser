@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Linq;
@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.MeasureHeight.CS
+namespace Ara3D.RevitSampleBrowser.MeasureHeight.CS
 {
     /// <summary>
     ///     Calculate the height above the ground floor of a selected skylight.
@@ -71,7 +71,7 @@ namespace RevitMultiSample.MeasureHeight.CS
             m_app = revit.Application.Application;
             m_doc = revit.Application.ActiveUIDocument.Document;
 
-            var trans = new Transaction(m_doc, "RevitMultiSample.MeasureHeight");
+            var trans = new Transaction(m_doc, "Ara3D.RevitSampleBrowser.MeasureHeight");
             trans.Start();
             // Find a 3D view to use for the ray tracing operation
             var collector = new FilteredElementCollector(m_doc);

@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.DisplacementElementAnimation.CS
+namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
 {
     /// <summary>
     ///     The command that initializes and starts the model animation.

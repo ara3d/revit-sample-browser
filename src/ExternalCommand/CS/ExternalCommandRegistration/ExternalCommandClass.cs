@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ExternalCommandRegistration.CS
+namespace Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommand, create a wall
@@ -19,7 +19,7 @@ namespace RevitMultiSample.ExternalCommandRegistration.CS
             ref string message, ElementSet elements)
         {
             var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.ExternalCommandRegistration");
+                "Ara3D.RevitSampleBrowser.ExternalCommandRegistration");
             trans.Start();
             var uiDoc = commandData.Application.ActiveUIDocument;
             var curves = new List<Curve>();

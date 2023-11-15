@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.IO;
@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.FamilyParametersOrder.CS
+namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
 {
     /// <summary>
     ///     Sort parameters' order in family files which are located in a folder:

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.AreaReinParameters.CS
+namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
     /// <summary>
     ///     Entry point and main command class
@@ -43,7 +43,7 @@ namespace RevitMultiSample.AreaReinParameters.CS
             ElementSet elements)
         {
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document,
-                "RevitMultiSample.AreaReinParameters");
+                "Ara3D.RevitSampleBrowser.AreaReinParameters");
             trans.Start();
             CommandData = revit;
             if (!PreData())

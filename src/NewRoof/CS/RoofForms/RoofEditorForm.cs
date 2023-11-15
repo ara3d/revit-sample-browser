@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Drawing;
@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-namespace RevitMultiSample.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The RoofEditorForm is the main edit form to edit a roof data.

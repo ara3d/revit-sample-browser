@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -20,7 +20,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace RevitMultiSample.SinePlotter.CS
+namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication
@@ -233,7 +233,7 @@ namespace RevitMultiSample.SinePlotter.CS
         private void AddRunButton(RibbonPanel panel)
         {
             var pushButtonData = new PushButtonData("arrayPrisms", "run",
-                m_assemblyPath + "\\" + m_assemblyName, "RevitMultiSample.SinePlotter.CS.Command")
+                m_assemblyPath + "\\" + m_assemblyName, "Ara3D.RevitSampleBrowser.SinePlotter.CS.Command")
             {
                 LargeImage = new BitmapImage(new Uri(m_imageFolder + "Start.png"))
             };

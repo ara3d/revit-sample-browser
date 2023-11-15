@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections;
 using System.Drawing;
 
-namespace RevitMultiSample.SlabShapeEditing.CS
+namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 {
     /// <summary>
     ///     tool used to draw line

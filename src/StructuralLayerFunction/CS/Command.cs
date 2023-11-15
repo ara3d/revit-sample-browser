@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.StructuralLayerFunction.CS
+namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
 {
     /// <summary>
     ///     With the selected floor, display the function of each of its structural layers

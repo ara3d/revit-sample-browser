@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Drawing;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.SlabShapeEditing.CS
+namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
 {
     /// <summary>
     ///     SlabProfile class contains Geometry information of Slab,

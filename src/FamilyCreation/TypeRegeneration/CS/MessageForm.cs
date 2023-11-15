@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Timers;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
 
-namespace RevitMultiSample.TypeRegeneration.CS
+namespace Ara3D.RevitSampleBrowser.TypeRegeneration.CS
 {
     /// <summary>
     ///     The form is used to show the result

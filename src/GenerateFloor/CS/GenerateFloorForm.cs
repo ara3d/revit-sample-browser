@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.GenerateFloor.CS
+namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 {
     /// <summary>
     ///     User interface.

@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using Autodesk.Revit.ApplicationServices;
@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ErrorHandling.CS
+namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommand and IExternalApplication

@@ -1,8 +1,8 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.WindowWizard.CS
+namespace Ara3D.RevitSampleBrowser.WindowWizard.CS
 {
     /// <summary>
     ///     The class is used to create ReferencePlane

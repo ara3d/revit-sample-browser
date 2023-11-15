@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.WinderStairs.CS
+namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
 {
     /// <summary>
     ///     This form is used to collect parameters for LWinder creation. It also validates the input

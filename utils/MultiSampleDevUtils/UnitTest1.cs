@@ -1,4 +1,4 @@
-using RevitMultiSample;
+using Ara3D.RevitSampleBrowser;
 
 namespace MultiSampleDevUtils
 {
@@ -14,7 +14,7 @@ namespace MultiSampleDevUtils
 
                 File.WriteAllLines(f, contents
                     .SkipWhile(s => s.StartsWith("//"))
-                    .Prepend("// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt"));
+                    .Prepend("// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt"));
             }
         }
 

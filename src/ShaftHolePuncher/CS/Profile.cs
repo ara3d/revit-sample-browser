@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +9,7 @@ using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 using Point = System.Drawing.Point;
 
-namespace RevitMultiSample.ShaftHolePuncher.CS
+namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 {
     /// <summary>
     ///     base class of ProfileFloor, ProfileWall and ProfileNull.

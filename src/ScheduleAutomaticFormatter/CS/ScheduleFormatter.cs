@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 //
 // AUTODESK PROVIDES THIS PROGRAM 'AS IS' AND WITH ALL ITS FAULTS.
@@ -16,7 +16,7 @@ using System;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-namespace RevitMultiSample.ScheduleAutomaticFormatter.CS
+namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
 {
     /// <summary>
     ///     A class capable of formatting schedules with alternating background colors on the columns

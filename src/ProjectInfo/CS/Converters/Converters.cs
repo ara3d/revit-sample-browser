@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace RevitMultiSample.ProjectInfo.CS
+namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
 {
     /// <summary>
     ///     Type converter for wrapper classes

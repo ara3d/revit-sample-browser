@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Web.UI;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.ScheduleToHTML.CS
+namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 {
     /// <summary>
     ///     A class that can export a schedule to HTML.

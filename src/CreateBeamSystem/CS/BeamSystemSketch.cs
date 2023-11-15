@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Color = System.Drawing.Color;
 using Control = System.Windows.Forms.Control;
 
-namespace RevitMultiSample.CreateBeamSystem.CS
+namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
     /// <summary>
     ///     Sketch the profile of beam system on canvas

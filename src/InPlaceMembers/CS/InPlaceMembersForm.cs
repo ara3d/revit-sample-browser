@@ -1,9 +1,9 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Windows.Forms;
 
-namespace RevitMultiSample.InPlaceMembers.CS
+namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 {
     /// <summary>
     ///     Main form class, use to diaplay the preview picture box and property grid.

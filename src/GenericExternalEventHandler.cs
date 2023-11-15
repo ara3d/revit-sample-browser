@@ -1,7 +1,7 @@
 using System;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample
+namespace Ara3D.RevitSampleBrowser
 {
     // https://stackoverflow.com/questions/31490990/starting-a-transaction-from-an-external-application-running-outside-of-api-conte
     // https://help.autodesk.com/cloudhelp/2018/ENU/Revit-API/Revit_API_Developers_Guide/Advanced_Topics/External_Events.html

@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.ComputedSymbolGeometry.CS
+namespace Ara3D.RevitSampleBrowser.ComputedSymbolGeometry.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.
@@ -23,7 +23,7 @@ namespace RevitMultiSample.ComputedSymbolGeometry.CS
             try
             {
                 var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
-                    "RevitMultiSample.ComputedSymbolGeometry");
+                    "Ara3D.RevitSampleBrowser.ComputedSymbolGeometry");
                 trans.Start();
                 // create a ComputedSymbolGeometry object 
                 var computedSymGeo = new ComputedSymbolGeometry(commandData.Application.ActiveUIDocument.Document);

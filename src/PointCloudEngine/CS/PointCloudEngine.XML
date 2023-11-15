@@ -5,7 +5,7 @@
     <name>PointCloudEngine</name>
   </assembly>
   <members>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud">
       <summary>
         An implementation for a file-based point cloud.
       </summary>
@@ -33,31 +33,31 @@
         the generated points.
       </example>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.#ctor(System.String)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.#ctor(System.String)">
       <summary>
         Constructs a new XML-based point cloud access.
       </summary>
       <param name="fileName">The full path to the file.</param>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.Setup">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.Setup">
       <summary>
         Sets up the file-based point cloud.
       </summary>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.GetName">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.GetName">
       <summary>
         The implementation of IPointCloudAccess.GetName().
       </summary>
       <returns>The name (the file name).</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.GetColorEncoding">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.GetColorEncoding">
       <summary>
         The implementation of IPointCloudAccess.GetColorEncoding()
       </summary>
       <returns>The color encoding.</returns>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.CreatePointSetIterator(Autodesk.Revit.DB.PointClouds.PointCloudFilter,Autodesk.Revit.DB.ElementId)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.CreatePointSetIterator(Autodesk.Revit.DB.PointClouds.PointCloudFilter,Autodesk.Revit.DB.ElementId)">
       <summary>
         The implementation of IPointCloudAccess.CreatePointSetIterator().
       </summary>
@@ -66,7 +66,7 @@
       <returns>The new iterator.</returns>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.CreatePointSetIterator(Autodesk.Revit.DB.PointClouds.PointCloudFilter,System.Double,Autodesk.Revit.DB.ElementId)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.CreatePointSetIterator(Autodesk.Revit.DB.PointClouds.PointCloudFilter,System.Double,Autodesk.Revit.DB.ElementId)">
       <summary>
         The implementation of IPointCloudAccess.CreatePointSetIterator().
       </summary>
@@ -75,27 +75,27 @@
       <param name="viewId">The view id (unused).</param>
       <returns>The new iterator.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.GetExtent">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.GetExtent">
       <summary>
         The implementation of IPointCloudAccess.GetExtent().
       </summary>
       <returns>The extents of the point cloud.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.GetOffset">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.GetOffset">
       <summary>
         The implementation of IPointCloudAccess.GetOffset().
       </summary>
       <remarks>This method is not used by Revit and will be removed in a later pre-release build.</remarks>
       <returns>Zero.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.GetUnitsToFeetConversionFactor">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.GetUnitsToFeetConversionFactor">
       <summary>
         The implementation of IPointCloudAccess.GetUnitsToFeetConversionFactor().
       </summary>
       <returns>The scale.</returns>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.ReadPoints(Autodesk.Revit.DB.PointClouds.PointCloudFilter,Autodesk.Revit.DB.ElementId,System.IntPtr,System.Int32)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.ReadPoints(Autodesk.Revit.DB.PointClouds.PointCloudFilter,Autodesk.Revit.DB.ElementId,System.IntPtr,System.Int32)">
       <summary>
         The implementation of IPointCloudAccess.ReadPoints().
       </summary>
@@ -105,23 +105,23 @@
       <param name="nBufferSize">The maximum number of points.</param>
       <returns>The number of points read.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.FileBasedPointCloud.Free">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.FileBasedPointCloud.Free">
       <summary>
         The implementation of IPointCloudAccess.Free().
       </summary>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase">
       <summary>
         The base class for all IPointCloudAccess implementations in this sample.
       </summary>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.#ctor">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.#ctor">
       <summary>
         Constructs a new instance of the base class.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.AddCell(Autodesk.Revit.DB.XYZ,Autodesk.Revit.DB.XYZ,System.Int32,System.Boolean)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.AddCell(Autodesk.Revit.DB.XYZ,Autodesk.Revit.DB.XYZ,System.Int32,System.Boolean)">
       <summary>
         Adds a new cell to the point cloud.
       </summary>
@@ -131,7 +131,7 @@
       <param name="randomize">True to randomize point number and location, false for a regular arrangement of points.</param>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.AddCell(Autodesk.Revit.DB.XYZ,Autodesk.Revit.DB.XYZ,System.Int32)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.AddCell(Autodesk.Revit.DB.XYZ,Autodesk.Revit.DB.XYZ,System.Int32)">
       <summary>
         Adds a new cell to the point cloud.
       </summary>
@@ -140,34 +140,34 @@
       <param name="color">The color.</param>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.AddCellToOutline(RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.AddCellToOutline(Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage)">
       <summary>
         Adds a cell to the stored outline of the point cloud.  If the cell boundaries extend beyond the current outline, the outline
         is adjusted.
       </summary>
       <param name="storage"></param>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.GetOutline">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.GetOutline">
       <summary>
         Gets the outline calculated from all cells in the point cloud.
       </summary>
       <returns></returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.GetScale">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.GetScale">
       <summary>
         Gets the scale stored for this point cloud.
       </summary>
       <returns></returns>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.SerializeObjectData(System.Xml.Linq.XElement)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.SerializeObjectData(System.Xml.Linq.XElement)">
       <summary>
         Saves the contents of the point cloud into an XML element.
       </summary>
       <param name="rootElement">The XML element in which to save the point cloud properties.</param>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.ReadSomePoints(Autodesk.Revit.DB.PointClouds.PointCloudFilter,System.IntPtr,System.Int32,System.Int32)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.ReadSomePoints(Autodesk.Revit.DB.PointClouds.PointCloudFilter,System.IntPtr,System.Int32,System.Int32)">
       <summary>
         The internal implementation for point cloud read requests from Revit.
       </summary>
@@ -182,19 +182,19 @@
       </param>
       <returns>The number of points read.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.SetupFrom(System.Xml.Linq.XElement)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.SetupFrom(System.Xml.Linq.XElement)">
       <summary>
         Sets up a point cloud from an XML root element.
       </summary>
       <param name="rootElement">The root element.</param>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.PointCloudAccessBaseIterator">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.PointCloudAccessBaseIterator">
       <summary>
         The implementation for an IPointSetIterator for a file-based or predefined point cloud.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.PointCloudAccessBaseIterator.#ctor(RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase,Autodesk.Revit.DB.PointClouds.PointCloudFilter)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.PointCloudAccessBaseIterator.#ctor(Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase,Autodesk.Revit.DB.PointClouds.PointCloudFilter)">
       <summary>
         Constructs a new instance of the point cloud iterator.
       </summary>
@@ -202,7 +202,7 @@
       <param name="filter">The filter used for this iteration.</param>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.PointCloudAccessBaseIterator.ReadPoints(System.IntPtr,System.Int32)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.PointCloudAccessBaseIterator.ReadPoints(System.IntPtr,System.Int32)">
       <summary>
         Implementation of IPointSetIterator.ReadPoints()
       </summary>
@@ -210,38 +210,38 @@
       <param name="nBufferSize">The buffer size.</param>
       <returns>The number of points read.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudAccessBase.PointCloudAccessBaseIterator.Free">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.PointCloudAccessBaseIterator.Free">
       <summary>
         Implementation of IPointSetIterator.Free()
       </summary>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage">
       <summary>
         This class is used to calculate and store points for a given cell.
       </summary>
     </member>
-    <member name="P:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage.NumberOfPoints">
+    <member name="P:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage.NumberOfPoints">
       <summary>
         The number of points in the cell.
       </summary>
     </member>
-    <member name="P:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage.LowerLeft">
+    <member name="P:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage.LowerLeft">
       <summary>
         The lower left point of the cell.
       </summary>
     </member>
-    <member name="P:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage.UpperRight">
+    <member name="P:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage.UpperRight">
       <summary>
         The upper right point of the cell.
       </summary>
     </member>
-    <member name="P:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage.PointsBuffer">
+    <member name="P:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage.PointsBuffer">
       <summary>
         The points in the cell.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage.#ctor(Autodesk.Revit.DB.XYZ,Autodesk.Revit.DB.XYZ,System.Int32,System.Boolean)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage.#ctor(Autodesk.Revit.DB.XYZ,Autodesk.Revit.DB.XYZ,System.Int32,System.Boolean)">
       <summary>
         Creates a new instance of a rectangular cell.
       </summary>
@@ -250,31 +250,31 @@
       <param name="color">The color used for points in the cell.</param>
       <param name="randomize">True to apply randomization to the number and location of points, false for a regular arrangement of points.</param>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage.GeneratePoints">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage.GeneratePoints">
       <summary>
         Invokes the calculation for all points in the cell.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage.SerializeObjectData(System.Xml.Linq.XElement)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage.SerializeObjectData(System.Xml.Linq.XElement)">
       <summary>
         Serializes the properties of the cell to an XML element.
       </summary>
       <param name="rootElement">The element to which the properties are added as subelements.</param>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudCellStorage.#ctor(System.Xml.Linq.XElement)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudCellStorage.#ctor(System.Xml.Linq.XElement)">
       <summary>
         Constructs a new instance of a rectangular cell from an XML element.
       </summary>
       <param name="rootElement">The XML element representing the cell.</param>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.PointCloudTestApplication">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudTestApplication">
       <summary>
         ExternalApplication used to register the point cloud engines managed by this sample.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudTestApplication.OnStartup(Autodesk.Revit.UI.UIControlledApplication)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudTestApplication.OnStartup(Autodesk.Revit.UI.UIControlledApplication)">
       <summary>
         The implementation of IExternalApplication.OnStartup()
       </summary>
@@ -282,20 +282,20 @@
       <returns>Result.Succeeded</returns>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PointCloudTestApplication.OnShutdown(Autodesk.Revit.UI.UIControlledApplication)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudTestApplication.OnShutdown(Autodesk.Revit.UI.UIControlledApplication)">
       <summary>
         The implementation of IExternalApplication.OnShutdown()
       </summary>
       <param name="application">The Revit application.</param>
       <returns>Result.Succeeded.</returns>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.AddPredefinedInstanceCommand">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddPredefinedInstanceCommand">
       <summary>
         ExternalCommand to add a predefined point cloud.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.AddPredefinedInstanceCommand.Execute(Autodesk.Revit.UI.ExternalCommandData,System.String@,Autodesk.Revit.DB.ElementSet)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddPredefinedInstanceCommand.Execute(Autodesk.Revit.UI.ExternalCommandData,System.String@,Autodesk.Revit.DB.ElementSet)">
       <summary>
         The implementation for IExternalCommand.Execute()
       </summary>
@@ -304,13 +304,13 @@
       <param name="elements">The elements to display in the failure dialog (ignored).</param>
       <returns>Result.Succeeded</returns>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.AddRandomizedInstanceCommand">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddRandomizedInstanceCommand">
       <summary>
         ExternalCommand to a predefined point cloud with randomized points.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.AddRandomizedInstanceCommand.Execute(Autodesk.Revit.UI.ExternalCommandData,System.String@,Autodesk.Revit.DB.ElementSet)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddRandomizedInstanceCommand.Execute(Autodesk.Revit.UI.ExternalCommandData,System.String@,Autodesk.Revit.DB.ElementSet)">
       <summary>
         The implementation for IExternalCommand.Execute()
       </summary>
@@ -319,13 +319,13 @@
       <param name="elements">The elements to display in the failure dialog (ignored).</param>
       <returns>Result.Succeeded</returns>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.AddTransformedInstanceCommand">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddTransformedInstanceCommand">
       <summary>
         ExternalCommand to add a predefined point cloud at a non-default transform.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.AddTransformedInstanceCommand.Execute(Autodesk.Revit.UI.ExternalCommandData,System.String@,Autodesk.Revit.DB.ElementSet)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddTransformedInstanceCommand.Execute(Autodesk.Revit.UI.ExternalCommandData,System.String@,Autodesk.Revit.DB.ElementSet)">
       <summary>
         The implementation for IExternalCommand.Execute()
       </summary>
@@ -334,13 +334,13 @@
       <param name="elements">The elements to display in the failure dialog (ignored).</param>
       <returns>Result.Succeeded</returns>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.AddInstanceCommandBase">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddInstanceCommandBase">
       <summary>
         Base class for ExternalCommands used to add point cloud instances programmatically.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.AddInstanceCommandBase.AddInstance(Autodesk.Revit.DB.Document,System.String,System.String,Autodesk.Revit.DB.Transform)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.AddInstanceCommandBase.AddInstance(Autodesk.Revit.DB.Document,System.String,System.String,Autodesk.Revit.DB.Transform)">
       <summary>
         Adds a point cloud instance programmatically.
       </summary>
@@ -349,13 +349,13 @@
       <param name="identifier">The identifier for the particular point cloud.</param>
       <param name="trf">The transform to apply to the new point cloud instance.</param>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.SerializePredefinedPointCloud">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.SerializePredefinedPointCloud">
       <summary>
         Utility ExternalCommand to take a predefined point cloud and write the corresponding XML for it to disk.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.SerializePredefinedPointCloud.Execute(Autodesk.Revit.UI.ExternalCommandData,System.String@,Autodesk.Revit.DB.ElementSet)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.SerializePredefinedPointCloud.Execute(Autodesk.Revit.UI.ExternalCommandData,System.String@,Autodesk.Revit.DB.ElementSet)">
       <summary>
         The implementation for IExternalCommand.Execute()
       </summary>
@@ -364,45 +364,45 @@
       <param name="elements">The elements to display in the failure dialog (ignored).</param>
       <returns>Result.Succeeded</returns>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud">
       <summary>
         An implementation for a non file-based point cloud.  In this implementaiton, the location of the cells, including their colors and options,
         are hardcoded.
       </summary>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.#ctor(System.String)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.#ctor(System.String)">
       <summary>
         Constructs a new predefined point cloud access instance.
       </summary>
       <param name="identifier">The identifier of the point cloud.</param>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.#ctor(System.String,System.Boolean)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.#ctor(System.String,System.Boolean)">
       <summary>
         Constructs a new predefined point cloud access instance.
       </summary>
       <param name="identifier">The identifier of the point cloud.</param>
       <param name="randomizedPoints">True to use randomization for the point location and number, false otherwise.</param>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.Setup(System.Boolean)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.Setup(System.Boolean)">
       <summary>
         Sets up the predefined point cloud.
       </summary>
       <param name="randomizedPoints">True to use randomization for the point location and number, false otherwise.</param>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.GetName">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.GetName">
       <summary>
         The implementation of IPointCloudAccess.GetName().
       </summary>
       <returns>The name (the file name).</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.GetColorEncoding">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.GetColorEncoding">
       <summary>
         The implementation of IPointCloudAccess.GetColorEncoding()
       </summary>
       <returns>The color encoding.</returns>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.CreatePointSetIterator(Autodesk.Revit.DB.PointClouds.PointCloudFilter,Autodesk.Revit.DB.ElementId)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.CreatePointSetIterator(Autodesk.Revit.DB.PointClouds.PointCloudFilter,Autodesk.Revit.DB.ElementId)">
       <summary>
         The implementation of IPointCloudAccess.CreatePointSetIterator().
       </summary>
@@ -411,7 +411,7 @@
       <returns>The new iterator.</returns>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.CreatePointSetIterator(Autodesk.Revit.DB.PointClouds.PointCloudFilter,System.Double,Autodesk.Revit.DB.ElementId)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.CreatePointSetIterator(Autodesk.Revit.DB.PointClouds.PointCloudFilter,System.Double,Autodesk.Revit.DB.ElementId)">
       <summary>
         The implementation of IPointCloudAccess.CreatePointSetIterator().
       </summary>
@@ -420,27 +420,27 @@
       <param name="viewId">The view id (unused).</param>
       <returns>The new iterator.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.GetExtent">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.GetExtent">
       <summary>
         The implementation of IPointCloudAccess.GetExtent().
       </summary>
       <returns>The extents of the point cloud.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.GetOffset">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.GetOffset">
       <summary>
         The implementation of IPointCloudAccess.GetOffset().
       </summary>
       <remarks>This method is not used by Revit and will be removed in a later pre-release build.</remarks>
       <returns>Zero.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.GetUnitsToFeetConversionFactor">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.GetUnitsToFeetConversionFactor">
       <summary>
         The implementation of IPointCloudAccess.GetUnitsToFeetConversionFactor().
       </summary>
       <returns>The scale.</returns>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.ReadPoints(Autodesk.Revit.DB.PointClouds.PointCloudFilter,Autodesk.Revit.DB.ElementId,System.IntPtr,System.Int32)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.ReadPoints(Autodesk.Revit.DB.PointClouds.PointCloudFilter,Autodesk.Revit.DB.ElementId,System.IntPtr,System.Int32)">
       <summary>
         The implementation of IPointCloudAccess.ReadPoints().
       </summary>
@@ -450,12 +450,12 @@
       <param name="nBufferSize">The maximum number of points.</param>
       <returns>The number of points read.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.PredefinedPointCloud.Free">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PredefinedPointCloud.Free">
       <summary>
         The implementation of IPointCloudAccess.Free().
       </summary>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.PointCloudEngineType">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudEngineType">
       <summary>
         The type of engine.
       </summary>
@@ -464,86 +464,86 @@
         is used to determine the logic necessary to create the IPointCloudAccess instance.
       </remarks>
     </member>
-    <member name="F:RevitMultiSample.CS.PointCloudEngine.PointCloudEngineType.Predefined">
+    <member name="F:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudEngineType.Predefined">
       <summary>
         A predefined point cloud engine (non-randomized).
       </summary>
     </member>
-    <member name="F:RevitMultiSample.CS.PointCloudEngine.PointCloudEngineType.RandomizedPoints">
+    <member name="F:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudEngineType.RandomizedPoints">
       <summary>
         A predefined point cloud engine (randomized).
       </summary>
     </member>
-    <member name="F:RevitMultiSample.CS.PointCloudEngine.PointCloudEngineType.FileBased">
+    <member name="F:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudEngineType.FileBased">
       <summary>
         A file based point cloud engine.
       </summary>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.BasicPointCloudEngine">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.BasicPointCloudEngine">
       <summary>
         An implementation of IPointCloudEngine used by all the custom engines in this sample.
       </summary>
     </member>
     <member
-      name="M:RevitMultiSample.CS.PointCloudEngine.BasicPointCloudEngine.#ctor(RevitMultiSample.CS.PointCloudEngine.PointCloudEngineType)">
+      name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.BasicPointCloudEngine.#ctor(Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudEngineType)">
       <summary>
         Constructs a new instance of the engine.
       </summary>
       <param name="type">The type of point cloud served by this engine instance.</param>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.BasicPointCloudEngine.CreatePointCloudAccess(System.String)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.BasicPointCloudEngine.CreatePointCloudAccess(System.String)">
       <summary>
         Implementation of IPointCloudEngine.CreatePointCloudAccess().
       </summary>
       <param name="identifier">The identifier (or file name) for the desired point cloud.</param>
       <returns>The IPointCloudAccess implementation serving this point cloud.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.BasicPointCloudEngine.Free">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.BasicPointCloudEngine.Free">
       <summary>
         Implementation of IPointCloudEngine.Free().
       </summary>
     </member>
-    <member name="T:RevitMultiSample.CS.PointCloudEngine.XmlUtils">
+    <member name="T:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils">
       <summary>
         Utilities used by the sample to process XML entries in file-based point clouds.
       </summary>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.XmlUtils.GetXYZ(System.Xml.Linq.XElement)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils.GetXYZ(System.Xml.Linq.XElement)">
       <summary>
         Gets an XYZ point from an XML element.
       </summary>
       <param name="element">The element.</param>
       <returns>The XYZ.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.XmlUtils.GetBoolean(System.Xml.Linq.XElement)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils.GetBoolean(System.Xml.Linq.XElement)">
       <summary>
         Gets a boolean value from an XML element.
       </summary>
       <param name="element">The element.</param>
       <returns>The value.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.XmlUtils.GetDouble(System.Xml.Linq.XElement)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils.GetDouble(System.Xml.Linq.XElement)">
       <summary>
         Gets a double value from an XML element.
       </summary>
       <param name="element">The element.</param>
       <returns>The value.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.XmlUtils.GetInteger(System.Xml.Linq.XElement)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils.GetInteger(System.Xml.Linq.XElement)">
       <summary>
         Gets an integer value from an XML element.
       </summary>
       <param name="element">The element.</param>
       <returns>The value.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.XmlUtils.GetColor(System.Xml.Linq.XElement)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils.GetColor(System.Xml.Linq.XElement)">
       <summary>
         Gets a color value (in the form needed for inclusion in a CloudPoint) from an XML element.
       </summary>
       <param name="element">The element.</param>
       <returns>The value.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.XmlUtils.GetXElement(Autodesk.Revit.DB.XYZ,System.String)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils.GetXElement(Autodesk.Revit.DB.XYZ,System.String)">
       <summary>
         Gets the XML element representing a point.
       </summary>
@@ -551,7 +551,7 @@
       <param name="name">The name of the XML element.</param>
       <returns>The element.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.XmlUtils.GetColorXElement(System.Int32,System.String)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils.GetColorXElement(System.Int32,System.String)">
       <summary>
         Gets the XML element representing a CloudPoint color.
       </summary>
@@ -559,7 +559,7 @@
       <param name="name">The name.</param>
       <returns>The element.</returns>
     </member>
-    <member name="M:RevitMultiSample.CS.PointCloudEngine.XmlUtils.GetXElement(System.Object,System.String)">
+    <member name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.XmlUtils.GetXElement(System.Object,System.String)">
       <summary>
         Gets the XML element representing an object.
       </summary>

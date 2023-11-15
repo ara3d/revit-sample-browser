@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 using System;
 using System.IO;
 using System.Linq;
@@ -10,7 +10,7 @@ using Form = System.Windows.Forms.Form;
 using RView = Autodesk.Revit.DB.View;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
-namespace RevitMultiSample.UIAPI.CS
+namespace Ara3D.RevitSampleBrowser.UIAPI.CS
 {
     public partial class PreviewModel : Form
     {

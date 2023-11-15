@@ -1,10 +1,10 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.RoutingPreferenceTools.CS
+namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
 {
     /// <summary>
     ///     This class contains a routing preference rule group and list of elementIds that correspond

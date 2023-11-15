@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Globalization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
 {
     /// <summary>
     ///     The LevelConverter class is inherited from the TypeConverter class which is used to

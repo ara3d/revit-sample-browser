@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace RevitMultiSample.PathReinforcement.CS
+namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 {
     /// <summary>
     ///     Main form,it contains a picture box to display the path of path reinforcement and

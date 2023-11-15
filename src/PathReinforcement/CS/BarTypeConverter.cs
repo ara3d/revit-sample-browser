@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Autodesk.Revit.DB;
 
-namespace RevitMultiSample.PathReinforcement.CS
+namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 {
     /// <summary>
     ///     Converter between Autodesk.Revit.DB.ElementId and Element's name

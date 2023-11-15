@@ -1,11 +1,11 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace RevitMultiSample.FreeFormElement.CS
+namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
 {
     /// <summary>
     ///     A command to create a new family block representing a negative of a selected element.

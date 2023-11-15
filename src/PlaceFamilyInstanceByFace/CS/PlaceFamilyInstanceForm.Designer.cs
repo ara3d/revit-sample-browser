@@ -1,6 +1,6 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
+namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 {
     partial class PlaceFamilyInstanceForm
     {
@@ -37,8 +37,8 @@ namespace RevitMultiSample.PlaceFamilyInstanceByFace.CS
             this.comboBoxFamily = new System.Windows.Forms.ComboBox();
             this.labelSecond = new System.Windows.Forms.Label();
             this.labelFirst = new System.Windows.Forms.Label();
-            this.PointControlSecond = new RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl();
-            this.PointControlFirst = new RevitMultiSample.PlaceFamilyInstanceByFace.CS.PointUserControl();
+            this.PointControlSecond = new PointUserControl();
+            this.PointControlFirst = new PointUserControl();
             this.SuspendLayout();
             // 
             // buttonCreate

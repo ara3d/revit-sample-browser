@@ -1,4 +1,4 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections.ObjectModel;
@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Control = System.Windows.Forms.Control;
 using Form = System.Windows.Forms.Form;
 
-namespace RevitMultiSample.ViewPrinter.CS
+namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     public partial class PrintSetupForm : Form
     {

@@ -1,13 +1,13 @@
-// Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Collections;
 using System.Resources;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.GridCreation.CS.Properties;
 using Autodesk.Revit.UI;
-using RevitMultiSample.GridCreation.CS.Properties;
 
-namespace RevitMultiSample.GridCreation.CS
+namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
     /// <summary>
     ///     Class to validate input data before creating grids
