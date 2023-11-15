@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Ara 3D - Sample Browser Command</Text>
+    <Assembly>Ara3D\RevitSampleBrowser\Ara3D.RevitSampleBrowser.dll</Assembly>
+    <ClientId>150FFD8A-91E4-4EB6-8348-222E9F00AA4C</ClientId>
+    <FullClassName>Ara3D.RevitSampleBrowser.SampleBrowserCommand</FullClassName>
+    <Description>Browse and execute Revit API samples.</Description>
+    <VisibilityMode>AlwaysVisible</VisibilityMode>
+    <VendorId>ARA3D</VendorId>
+    <VendorDescription>Ara 3D Inc., https://ara3d.com</VendorDescription>
+    <LongDescription>
+      This tool displays a list of Revit API C# Samples.
+      Select a sample to view a detailed description, and double-click to activate the command.
+    </LongDescription>
+    <TooltipImage></TooltipImage>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Ara 3D - Sample Browser Application</Name>
+    <Assembly>Ara3D\RevitSampleBrowser\Ara3D.RevitSampleBrowser.dll</Assembly>
+    <ClientId>2138C714-814F-4A80-B58C-0E8B1E73B187</ClientId>
+    <FullClassName>Ara3D.RevitSampleBrowser.SampleBrowserApplication</FullClassName>
+    <Description>Browse and execute Revit API samples.</Description>
+    <VendorId>ARA3D</VendorId>
+    <VendorDescription>Ara 3D Inc., https://ara3d.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>

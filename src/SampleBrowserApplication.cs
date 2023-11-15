@@ -4,7 +4,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser
 {
-    public class MultiSampleApplication : IExternalApplication
+    public class SampleBrowserApplication : IExternalApplication
     {
         public static UIControlledApplication Application { get; set; }
         

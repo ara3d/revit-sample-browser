@@ -15,9 +15,9 @@ namespace Ara3D.RevitSampleBrowser
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.UsingCommandData)]
-    public class MultiSampleCommand : IExternalCommand
+    public class SampleBrowserCommand : IExternalCommand
     {
-        public MultiSampleMainForm Form { get; private set; }
+        public SampleBrowserMainForm Form { get; private set; }
         public ExternalCommandData CommandData { get; private set; }
         public GenericExternalEventHandler EventHandler { get; } = new GenericExternalEventHandler();
 
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser
             {
                 CommandData = commandData;
 
-                Form = new MultiSampleMainForm();
+                Form = new SampleBrowserMainForm();
 
                 var samples = Assembly.GetExecutingAssembly()
                     .GetTypes()
@@ -91,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser
                 if (item?.Tag is SampleData sample)
                 {
                     EventHandler.Raise(() => 
-                        sample.Activate(CommandData, MultiSampleApplication.Application),
+                        sample.Activate(CommandData, SampleBrowserApplication.Application),
                         $"Activate sample {item.Name}");
                 }
                 else

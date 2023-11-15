@@ -238,6 +238,7 @@
     <None Include="AnalyticalSupportData_Info\CS\ReadMe_AnalyticalSupportData_Info.rtf" />
     <None Include="APIAppStartup\CS\ReadMe_APIAppStartup.rtf" />
     <None Include="AppearanceAssetEditing\CS\Readme_AppearanceAssetEditing.rtf" />
+    <None Include="Ara3D.RevitSampleBrowser.addin" />
     <None Include="AreaReinCurve\CS\ReadMe_AreaReinCurve.rtf" />
     <None Include="AreaReinParameters\CS\ReadMe_AreaReinParameters.rtf" />
     <None Include="AttachedDetailGroup\CS\Readme_AttachedDetailGroup.rtf" />
@@ -356,7 +357,6 @@
     <None Include="ModelLines\CS\ReadMe_ModelLines.rtf" />
     <None Include="MoveLinear\CS\ReadMe_MoveLinear.rtf" />
     <None Include="MultiplanarRebar\CS\ReadMe_MultiplanarRebar.rtf" />
-    <None Include="MultiSample.addin" />
     <None Include="MultiThreading\WorkThread\CS\Readme_WorkThread.rtf" />
     <None Include="NetworkPressureLossReport\CS\ReadMe_NetworkPressureLossReport.rtf" />
     <None Include="NewHostedSweep\CS\ReadMe_NewHostedSweep.rtf" />
@@ -1314,12 +1314,12 @@
     <Compile Include="MultiplanarRebar\CS\GeometryUtil.cs" />
     <Compile Include="MultiplanarRebar\CS\Properties\Resources.Designer.cs" />
     <Compile Include="MultiplanarRebar\CS\SharedParameterUtil.cs" />
-    <Compile Include="MultiSampleApplication.cs" />
-    <Compile Include="MultiSampleMainForm.cs">
+    <Compile Include="SampleBrowserApplication.cs" />
+    <Compile Include="SampleBrowserMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MultiSampleMainForm.Designer.cs">
-      <DependentUpon>MultiSampleMainForm.cs</DependentUpon>
+    <Compile Include="SampleBrowserMainForm.Designer.cs">
+      <DependentUpon>SampleBrowserMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MultiThreading\WorkThread\CS\Application.cs" />
     <Compile Include="MultiThreading\WorkThread\CS\Command.cs" />
@@ -1683,7 +1683,7 @@
     <Compile Include="Reinforcement\CS\GeometrySupport.cs" />
     <Compile Include="Reinforcement\CS\GeomUtil.cs" />
     <Compile Include="Reinforcement\CS\ParameterUtil.cs" />
-    <Compile Include="MultiSampleCommand.cs" />
+    <Compile Include="SampleBrowserCommand.cs" />
     <Compile Include="Ribbon\CS\AddInCommand.cs" />
     <Compile Include="Ribbon\CS\Ribbon.cs" />
     <Compile Include="RoofsRooms\CS\Command.cs" />
@@ -2246,8 +2246,8 @@
       <DependentUpon>CorbelReinforcementOptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MultiplanarRebar\CS\Properties\Resources.resx" />
-    <EmbeddedResource Include="MultiSampleMainForm.resx">
-      <DependentUpon>MultiSampleMainForm.cs</DependentUpon>
+    <EmbeddedResource Include="SampleBrowserMainForm.resx">
+      <DependentUpon>SampleBrowserMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewHostedSweep\CS\Forms\EdgeFetchForm.resx">
       <DependentUpon>EdgeFetchForm.cs</DependentUpon>

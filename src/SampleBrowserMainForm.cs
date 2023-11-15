@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace Ara3D.RevitSampleBrowser
 {
-    public partial class MultiSampleMainForm : Form
+    public partial class SampleBrowserMainForm : Form
     {
-        public MultiSampleMainForm()
+        public SampleBrowserMainForm()
         {
             InitializeComponent();
         }

@@ -56,20 +56,8 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             var myPanel = app.GetRibbonPanels()[0];
             if (!(GetRibbonItemByName(myPanel, "WallTypeSelector") is RadioButtonGroup radioGroupTypeSelector)) throw new InvalidCastException("Cannot get Wall Type selector!");
             var wallTypeName = radioGroupTypeSelector.Current.ItemText;
-            WallType newWallType = null;
             var collector = new FilteredElementCollector(app.ActiveUIDocument.Document);
-            ICollection<Element> founds = collector.OfClass(typeof(WallType)).ToElements();
-            foreach (var elem in founds)
-            {
-                var wallType = elem as WallType;
-                if (wallType.Name.StartsWith(wallTypeName))
-                {
-                    newWallType = wallType;
-                    break;
-                }
-            }
-
-            return newWallType;
+            return collector.OfClass(typeof(WallType)).ToElements().OfType<WallType>().FirstOrDefault(wallType => wallType.Name.StartsWith(wallTypeName));
         }
 
         protected Level GetNewWallLevel(UIApplication app)
