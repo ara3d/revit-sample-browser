@@ -211,9 +211,6 @@
     <Content Include="RvtSamples\CS\Icons\Structure.ico" />
     <Content Include="RvtSamples\CS\Icons\Views.ico" />
     <Content Include="RvtSamples\CS\RvtSamples.txt" />
-    <Content Include="SamplesContent.htm" />
-    <Content Include="SamplesIndex.htm" />
-    <Content Include="SamplesReadMe.htm" />
     <Content Include="ScheduleAutomaticFormatter\CS\Resources\ScheduleFormatter.ico" />
     <Content Include="ScheduleToHTML\CS\Resources\ScheduleExport.ico" />
     <Content Include="SharedCoordinateSystem\CS\timezone.txt" />
