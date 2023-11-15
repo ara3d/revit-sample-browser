@@ -8,9 +8,8 @@ namespace RevitMultiSample
 
     /// <summary>
     /// This class executes an action on the API's main thread using the Revit API external event mechanism.
-    /// It will dispose of the event once it has been activated.  
     /// </summary>
-    public class GenericExternalEventHandler : IExternalEventHandler
+    public class GenericExternalEventHandler : IExternalEventHandler, IDisposable
     {
         public Action Action { get; set; }
         public string Name { get; set; } = "External event";
@@ -24,6 +23,9 @@ namespace RevitMultiSample
 
         public string GetName()
             => Name;
+
+        public void Dispose()
+            => Event.Dispose();
 
         public ExternalEventRequest Raise(Action action, string name)
         {
