@@ -4,10 +4,18 @@
     <Assembly>MultiSample\RevitMultiSample.dll</Assembly>
     <ClientId>150FFD8A-91E4-4EB6-8348-222E9F00AA4C</ClientId>
     <FullClassName>RevitMultiSample.MultiSampleCommand</FullClassName>
-    <Text>Ara3D MultiSample</Text>
+    <Text>Ara 3D MultiSample</Text>
     <Description>Multiple sample plug-in for Revit in a single project.</Description>
     <VisibilityMode>AlwaysVisible</VisibilityMode>
     <VendorId>ARA3D</VendorId>
-    <VendorDescription>Ara 3D Inc.</VendorDescription>
+    <VendorDescription>Ara 3D Inc., www.ara3d.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Ara 3D MultiSample Application</Name>
+    <Assembly>MultiSample\RevitMultiSample.dll</Assembly>
+    <ClientId>2138C714-814F-4A80-B58C-0E8B1E73B187</ClientId>
+    <FullClassName>RevitMultiSample.MultiSampleApplication</FullClassName>
+    <VendorId>ARA3D</VendorId>
+    <VendorDescription>Ara 3D Inc., www.ara3d.com</VendorDescription>
   </AddIn>
 </RevitAddIns>

@@ -1,12 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-samples/LICENSE.txt
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -14,75 +12,22 @@ using Autodesk.Revit.UI;
 
 namespace RevitMultiSample
 {
-    public class SampleData
-    {
-        public Type Type { get; }
-        public string Namespace { get; } 
-        public string Name { get; }
-        public bool IsCommand => typeof(IExternalCommand).IsAssignableFrom(Type);
-        public bool IsApplication => typeof(IExternalApplication).IsAssignableFrom(Type);
-        public string FolderPath { get; }
-        public string ReadmePath { get; }
-        public bool FolderPathExists => Directory.Exists(FolderPath);
-
-        public void Activate()
-        {
-            if (IsCommand)
-            {
-                var command = Activator.CreateInstance(Type) as IExternalCommand;
-                var message = "";
-                command?.Execute(null, ref message, null);
-            }
-            else if (IsApplication)
-            {
-                // TODO: this requires that we have a UIExternalApplication and store the data somewhere to make it available.
-                //var app = Activator.CreateInstance(Type) as IExternalApplication;
-                //app?.OnStartup()
-            }
-        }
-
-        public SampleData(Type type)
-        {
-            Type = type ?? throw new ArgumentNullException(nameof(type));
-            Namespace = type.Namespace ?? "";
-            var prefix = "RevitMultiSample.";
-            if (Namespace.StartsWith(prefix))
-                Namespace = Namespace.Substring(prefix.Length);
-            var suffix = ".CS";
-            if (Namespace.EndsWith(suffix))
-                Namespace = Namespace.Substring(0, Namespace.Length - suffix.Length);
-            Name = Namespace + "." + Type.Name;
-
-            var folderRelPath = Namespace.Replace(".", "\\");
-            FolderPath = ThisFolderPath + "\\" + folderRelPath + @"\CS";
-            if (Directory.Exists(FolderPath))
-                ReadmePath = Directory.GetFiles(FolderPath, "*.rtf").FirstOrDefault();
-        }
-
-        private static readonly string ThisFolderPath = GetThisFolder();
-
-        /// <summary>
-        /// Fancy C# trick for getting the source file path. The "callerFilePath" parameter
-        /// is automatically supplied by the compiler. 
-        /// </summary>
-        private static string GetThisFolder([CallerFilePathAttribute] string callerFilePath = null)
-        {
-            return new FileInfo(callerFilePath ?? "").DirectoryName;
-        }
-    }
-
-    [Transaction(TransactionMode.ReadOnly)]
+    [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    [Journaling(JournalingMode.NoCommandData)]
+    [Journaling(JournalingMode.UsingCommandData)]
     public class MultiSampleCommand : IExternalCommand
     {
-        private MultiSampleMainForm m_form;
+        public MultiSampleMainForm Form { get; private set; }
+        public ExternalCommandData CommandData { get; private set; }
+        public GenericExternalEventHandler EventHandler { get; } = new GenericExternalEventHandler();
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
-                m_form = new MultiSampleMainForm();
+                CommandData = commandData;
+
+                Form = new MultiSampleMainForm();
 
                 var samples = Assembly.GetExecutingAssembly()
                     .GetTypes()
@@ -109,24 +54,24 @@ namespace RevitMultiSample
                     Width = 400
                 };
 
-                m_form.listView1.Columns.Add(header1);
-                m_form.listView1.Columns.Add(header2);
-                m_form.listView1.Columns.Add(header3);
+                Form.listView1.Columns.Add(header1);
+                Form.listView1.Columns.Add(header2);
+                Form.listView1.Columns.Add(header3);
 
-                m_form.listView1.Items.Clear();
+                Form.listView1.Items.Clear();
 
                 foreach (var sample in samples)
                 {
-                    var item = m_form.listView1.Items.Add(sample.Name);
+                    var item = Form.listView1.Items.Add(sample.Name);
                     item.SubItems.Add(sample.IsCommand ? "Command" : "Application");
                     item.SubItems.Add(sample.ReadmePath);
                     item.Tag = sample;
                 }
 
-                m_form.listView1.SelectedIndexChanged += ListView1_SelectedIndexChanged;
-                m_form.listView1.FullRowSelect = true;
-                m_form.listView1.MouseDoubleClick += ListView1_MouseDoubleClick;
-                m_form.Show();
+                Form.listView1.SelectedIndexChanged += ListView1_SelectedIndexChanged;
+                Form.listView1.FullRowSelect = true;
+                Form.listView1.MouseDoubleClick += ListView1_MouseDoubleClick;
+                Form.Show();
                 return Result.Succeeded;
             }
             catch (Exception ex)
@@ -140,12 +85,14 @@ namespace RevitMultiSample
         {
             try
             {
-                var info = m_form.listView1.HitTest(e.X, e.Y);
+                var info = Form.listView1.HitTest(e.X, e.Y);
                 var item = info.Item;
 
                 if (item?.Tag is SampleData sample)
                 {
-                    sample.Activate();
+                    EventHandler.Raise(() => 
+                        sample.Activate(CommandData, MultiSampleApplication.Application),
+                        $"Activate sample {item.Name}");
                 }
                 else
                 {
@@ -162,15 +109,14 @@ namespace RevitMultiSample
         {
             try
             {
-                m_form.richTextBox1.ResetText();
-                if (m_form.listView1.SelectedItems.Count > 0)
+                Form.richTextBox1.ResetText();
+                if (Form.listView1.SelectedItems.Count > 0)
                 {
-                    var item = m_form.listView1.SelectedItems[0];
-                    var data = item.Tag as SampleData;
-                    if (data == null)
+                    var item = Form.listView1.SelectedItems[0];
+                    if (!(item.Tag is SampleData data))
                         return;
                     if (File.Exists(data.ReadmePath))
-                        m_form.richTextBox1.LoadFile(data.ReadmePath);
+                        Form.richTextBox1.LoadFile(data.ReadmePath);
                 }
             }
             catch (Exception ex)

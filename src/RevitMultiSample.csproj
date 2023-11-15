@@ -108,7 +108,6 @@
     <Content Include="AttachedDetailGroup\CS\Resources\HideDetailGroupIcon.ico" />
     <Content Include="AttachedDetailGroup\CS\Resources\ShowDetailGroupIcon.ico" />
     <Content Include="CloudAPISample\CS\Resources\icon.ico" />
-    <Content Include="CreateShared\VB.NET\RevitParameters.txt" />
     <Content Include="CurtainSystem\CS\Resources\delete.ico" />
     <Content Include="CurtainSystem\CS\Resources\new.ico" />
     <Content Include="CurvedBeam\CS\arc3.bmp" />
@@ -250,20 +249,17 @@
     <None Include="AvoidObstruction\CS\ReadMe_AvoidObstruction.rtf" />
     <None Include="BeamAndSlabNewParameter\CS\ReadMe_BeamAndSlabNewParameter.rtf" />
     <None Include="BoundaryConditions\CS\ReadMe_BoundaryConditions.rtf" />
-    <None Include="BrowseBindings\VB.NET\ReadMe_BrowseBindings.rtf" />
     <None Include="CapitalizeAllTextNotes\CS\Readme_CapitalizeAllTextNotes.rtf" />
     <None Include="CloudAPISample\CS\ReadMe_CloudAPISample.rtf" />
     <None Include="ColorFill\CS\ReadMe_ColorFill.rtf" />
     <None Include="CompoundStructure\CS\ReadMe_CompoundStructure.rtf" />
     <None Include="ContextualAnalyticalModel\CS\ReadMe_ContextualAnalyticalModel.rtf" />
     <None Include="CreateBeamsColumnsBraces\CS\ReadMe_CreateBeamsColumnsBraces.rtf" />
-    <None Include="CreateBeamsColumnsBraces\VB.NET\ReadMe_CreateBeamsColumnsBraces.rtf" />
     <None Include="CreateBeamSystem\CS\ReadMe_CreateBeamSystem.rtf" />
     <None Include="CreateComplexAreaRein\CS\ReadMe_CreateComplexAreaRein.rtf" />
     <None Include="CreateDimensions\CS\ReadMe_CreateDimensions.rtf" />
     <None Include="CreateDuctworkStiffener\CS\ReadMe_CreateDuctworkStiffener.rtf" />
     <None Include="CreateFillPattern\CS\Readme_CreateFillPattern.rtf" />
-    <None Include="CreateShared\VB.NET\ReadMe_CreateShared.rtf" />
     <None Include="CreateSimpleAreaRein\CS\ReadMe_CreateSimpleAreaRein.rtf" />
     <None Include="CreateTrianglesTopography\CS\Readme_CreateTrianglesTopography.rtf" />
     <None Include="CreateTrianglesTopography\CS\TrianglesData.json" />
@@ -278,8 +274,6 @@
     <None Include="DeckProperties\CS\ReadMe_DeckProperties.rtf" />
     <None Include="DeleteDimensions\CS\ReadMe_DeleteDimensions.rtf" />
     <None Include="DeleteObject\CS\ReadMe_DeleteObject.rtf" />
-    <None Include="DeleteObject\VB.NET\ReadMe_DeleteObject.rtf" />
-    <None Include="DesignOptionReader\VB.NET\ReadMe_DesignOptionReader.rtf" />
     <None Include="DimensionLeaderEnd\CS\Readme_DimensionLeaderEnd.rtf" />
     <None Include="DirectionCalculation\CS\ReadMe_DirectionCalculation.rtf" />
     <None Include="DisableCommand\CS\Readme_DisableCommand.rtf" />
@@ -326,7 +320,6 @@
     <None Include="FindReferencesByDirection\FindColumns\CS\ReadMe_FindColumns.rtf" />
     <None Include="FindReferencesByDirection\MeasureHeight\CS\ReadMe_MeasureHeight.rtf" />
     <None Include="FindReferencesByDirection\RaytraceBounce\CS\ReadMe_RaytraceBounce.rtf" />
-    <None Include="FireRating\VB.NET\ReadMe_FireRating.rtf" />
     <None Include="FoundationSlab\CS\ReadMe_FoundationSlab.rtf" />
     <None Include="FrameBuilder\CS\ReadMe_FrameBuilder.rtf" />
     <None Include="FreeFormElement\CS\Readme_FreeFormElement.rtf" />
@@ -343,7 +336,6 @@
     <None Include="GridCreation\CS\Properties\Settings.settings" />
     <None Include="GridCreation\CS\ReadMe_GridCreation.rtf" />
     <None Include="HelloRevit\CS\ReadMe_HelloRevit.rtf" />
-    <None Include="HelloRevit\VB.NET\ReadMe_HelloRevit.rtf" />
     <None Include="ImportExport\CS\ReadMe_ImportExport.rtf" />
     <None Include="InCanvasControlAPI\CS\ReadMe_InCanvasControlAPI.rtf" />
     <None Include="InPlaceMembers\CS\ReadMe_InPlaceMembers.rtf" />
@@ -361,13 +353,13 @@
     <None Include="Massing\PointCurveCreation\CS\ReadMe_PointCurveCreation.rtf" />
     <None Include="Massing\PointCurveCreation\CS\sphere.csv" />
     <None Include="MaterialProperties\CS\ReadMe_MaterialProperties.rtf" />
-    <None Include="MaterialProperties\VB.NET\ReadMe_MaterialProperties.rtf" />
     <None Include="MaterialQuantities\CS\ReadMe_MaterialQuantities.rtf" />
     <None Include="ModelessDialog\ModelessForm_ExternalEvent\CS\Readme_ModelessForm_ExternalEvent.rtf" />
     <None Include="ModelessDialog\ModelessForm_IdlingEvent\CS\Readme_ModelessForm_IdlingEvent.rtf" />
     <None Include="ModelLines\CS\ReadMe_ModelLines.rtf" />
     <None Include="MoveLinear\CS\ReadMe_MoveLinear.rtf" />
     <None Include="MultiplanarRebar\CS\ReadMe_MultiplanarRebar.rtf" />
+    <None Include="MultiSample.addin" />
     <None Include="MultiThreading\WorkThread\CS\Readme_WorkThread.rtf" />
     <None Include="NetworkPressureLossReport\CS\ReadMe_NetworkPressureLossReport.rtf" />
     <None Include="NewHostedSweep\CS\ReadMe_NewHostedSweep.rtf" />
@@ -385,7 +377,6 @@
     <None Include="PathOfTravel\CS\Readme_PathOfTravel.rtf" />
     <None Include="PathReinforcement\CS\ReadMe_PathReinforcement.rtf" />
     <None Include="PerformanceAdviserControl\CS\ReadMe_PerformanceAdviserControl.rtf" />
-    <None Include="PhaseSample\VB.NET\ReadMe_PhaseSample.rtf" />
     <None Include="PhysicalProp\CS\ReadMe_PhysicalProp.rtf" />
     <None Include="PlaceFamilyInstanceByFace\CS\ReadMe_PlaceFamilyInstanceByFace.rtf" />
     <None Include="PlacementOptions\CS\Readme_PlacementOptions.rtf" />
@@ -399,14 +390,12 @@
     <None Include="RebarFreeForm\CS\Readme_RebarFreeForm.rtf" />
     <None Include="ReferencePlane\CS\ReadMe_ReferencePlane.rtf" />
     <None Include="Reinforcement\CS\ReadMe_Reinforcement.rtf" />
-    <None Include="RevitCommands\VB.NET\ReadMe_RevitCommands.rtf" />
     <None Include="Ribbon\CS\ReadMe_Ribbon.rtf" />
     <None Include="RoofsRooms\CS\ReadMe_RoofsRooms.rtf" />
     <None Include="RoomSchedule\CS\ReadMe_RoomSchedule.rtf" />
     <None Include="RoomSchedule\RoomSchedule.xls" />
     <None Include="Rooms\CS\ReadMe_Rooms.rtf" />
     <None Include="RotateFramingObjects\CS\ReadMe_RotateFramingObjects.rtf" />
-    <None Include="RotateFramingObjects\VB.NET\ReadMe_RotateFramingObjects.rtf" />
     <None Include="RoutingPreferenceTools\CS\ReadMe_RoutingPreferenceTools.rtf" />
     <None Include="RoutingPreferenceTools\CS\RoutingPreferenceBuilder\RoutingPreferenceBuilderData.xsd">
       <SubType>Designer</SubType>
@@ -422,7 +411,6 @@
     <None Include="SinePlotter\CS\Readme_SinePlotter.rtf" />
     <None Include="Site\CS\Readme_Site.rtf" />
     <None Include="SlabProperties\CS\ReadMe_SlabProperties.rtf" />
-    <None Include="SlabProperties\VB.NET\ReadMe_SlabProperties.rtf" />
     <None Include="SlabShapeEditing\CS\ReadMe_SlabShapeEditing.rtf" />
     <None Include="SolidSolidCut\CS\ReadMe_SolidSolidCut.rtf" />
     <None Include="SpanDirection\CS\ReadMe_SpanDirection.rtf" />
@@ -430,23 +418,15 @@
     <None Include="StairsAutomation\CS\Readme_StairsAutomationSample.rtf" />
     <None Include="StructSample\CS\ReadMe_StructSample.rtf" />
     <None Include="StructuralLayerFunction\CS\ReadMe_StructuralLayerFunction.rtf" />
-    <None Include="StructuralLayerFunction\VB.NET\ReadMe_StructuralLayerFunction.rtf" />
     <None Include="TagBeam\CS\ReadMe_TagBeam.rtf" />
-    <None Include="TestFloorThickness\VB.NET\ReadMe_TestFloorThickness.rtf" />
-    <None Include="TestWallThickness\VB.NET\ReadMe_TestWallThickness.rtf" />
     <None Include="Toposolid\CS\ReadMe_Toposolid.rtf" />
     <None Include="TransactionControl\CS\ReadMe_TransactionControl.rtf" />
     <None Include="TraverseSystem\CS\ReadMe_TraverseSystem.rtf" />
     <None Include="Truss\CS\ReadMe_Truss.rtf" />
-    <None Include="TypeSelector\VB.NET\ReadMe_TypeSelector.rtf" />
     <None Include="UIAPI\CS\ReadMe_UIAPI.rtf" />
     <None Include="Units\CS\Readme_Units.rtf" />
     <None Include="VersionChecking\CS\ReadMe_VersionChecking.rtf" />
     <None Include="VersionChecking\CS\~%24adMe_VersionChecking.rtf" />
-    <None Include="Viewers\AnalyticalViewer\VB.NET\ReadMe_AnalyticalViewer.rtf" />
-    <None Include="Viewers\ElementViewer\VB.NET\ReadMe_ElementViewer.rtf" />
-    <None Include="Viewers\RevitViewer\VB.NET\ReadMe_RevitViewer.rtf" />
-    <None Include="Viewers\RoomViewer\VB.NET\ReadMe_RoomViewer.rtf" />
     <None Include="ViewPrinter\CS\ReadMe_ViewPrinter.rtf" />
     <None Include="ViewTemplateCreation\CS\Readme_ViewTemplateCreation.rtf" />
     <None Include="VisibilityControl\CS\ReadMe_VisibilityControl.rtf" />
@@ -908,6 +888,7 @@
     <Compile Include="ExternalCommand\CS\RevitAddInUtilitySample\RevitAddInUtilityForm.Designer.cs">
       <DependentUpon>RevitAddInUtilityForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenericExternalEventHandler.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\CS\Application.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\CS\KeynotesDatabase.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\CS\SampleExternalResourceDBServer.cs" />
@@ -1336,6 +1317,7 @@
     <Compile Include="MultiplanarRebar\CS\GeometryUtil.cs" />
     <Compile Include="MultiplanarRebar\CS\Properties\Resources.Designer.cs" />
     <Compile Include="MultiplanarRebar\CS\SharedParameterUtil.cs" />
+    <Compile Include="MultiSampleApplication.cs" />
     <Compile Include="MultiSampleMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1745,6 +1727,7 @@
     <Compile Include="RvtSamples\CS\Application.cs" />
     <Compile Include="RvtSamples\CS\Properties\Resource.Designer.cs" />
     <Compile Include="RvtSamples\CS\SampleItem.cs" />
+    <Compile Include="SampleData.cs" />
     <Compile Include="ScheduleAutomaticFormatter\CS\Application.cs" />
     <Compile Include="ScheduleAutomaticFormatter\CS\Properties\Resources.Designer.cs" />
     <Compile Include="ScheduleAutomaticFormatter\CS\ScheduleFormatter.cs" />
@@ -2058,14 +2041,12 @@
     <EmbeddedResource Include="BoundaryConditions\CS\SpringModulusForm.resx">
       <DependentUpon>SpringModulusForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BrowseBindings\VB.NET\BindingsBrowserForm.resx" />
     <EmbeddedResource Include="ColorFill\CS\ColorFillForm.resx">
       <DependentUpon>ColorFillForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateBeamsColumnsBraces\CS\CreateBeamsColumnsBracesForm.resx">
       <DependentUpon>CreateBeamsColumnsBracesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateBeamsColumnsBraces\VB.NET\CreateBeamsColumnsBracesForm.resx" />
     <EmbeddedResource Include="CreateBeamSystem\CS\BeamSystemForm.resx">
       <DependentUpon>BeamSystemForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -2116,7 +2097,6 @@
     <EmbeddedResource Include="DeckProperties\CS\GenericForm.resx">
       <DependentUpon>GenericForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DesignOptionReader\VB.NET\DesignOptionsDialog.resx" />
     <EmbeddedResource Include="DisplacementElementAnimation\CS\Properties\Resources.resx" />
     <EmbeddedResource Include="DocumentChanged\CS\ChangesInfoForm.resx">
       <DependentUpon>ChangesInfoForm.cs</DependentUpon>
@@ -2253,7 +2233,6 @@
     <EmbeddedResource Include="MaterialProperties\CS\MaterialPropertiesForm.resx">
       <DependentUpon>MaterialPropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MaterialProperties\VB.NET\MaterialPropertiesForm.resx" />
     <EmbeddedResource Include="ModelessDialog\ModelessForm_ExternalEvent\CS\ModelessForm.resx">
       <DependentUpon>ModelessForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -2327,7 +2306,6 @@
     <EmbeddedResource Include="PerformanceAdviserControl\CS\TestDisplayDialog.resx">
       <DependentUpon>TestDisplayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PhaseSample\VB.NET\PickPhase.resx" />
     <EmbeddedResource Include="PlaceFamilyInstanceByFace\CS\BasedType.resx">
       <DependentUpon>BasedType.cs</DependentUpon>
     </EmbeddedResource>
@@ -2384,7 +2362,6 @@
     <EmbeddedResource Include="RotateFramingObjects\CS\RotateFramingObjectsForm.resx">
       <DependentUpon>RotateFramingObjectsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RotateFramingObjects\VB.NET\RotateFramingObjectsForm.resx" />
     <EmbeddedResource Include="RvtSamples\CS\Properties\Resource.resx" />
     <EmbeddedResource Include="ScheduleAutomaticFormatter\CS\Properties\Resources.resx" />
     <EmbeddedResource Include="ScheduleToHTML\CS\Properties\Resources.resx" />
@@ -2404,7 +2381,6 @@
     <EmbeddedResource Include="SlabProperties\CS\SlabProperitiesForm.resx">
       <DependentUpon>SlabProperitiesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SlabProperties\VB.NET\SlabPropertiesForm.resx" />
     <EmbeddedResource Include="SlabShapeEditing\CS\Properties\Resources.resx" />
     <EmbeddedResource Include="SlabShapeEditing\CS\SlabShapeEditingForm.resx">
       <DependentUpon>SlabShapeEditingForm.cs</DependentUpon>
@@ -2415,7 +2391,6 @@
     <EmbeddedResource Include="StructuralLayerFunction\CS\StructuralLayerFunctionForm.resx">
       <DependentUpon>StructuralLayerFunctionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StructuralLayerFunction\VB.NET\StructuralLayerFunctionForm.resx" />
     <EmbeddedResource Include="TagBeam\CS\TagBeamForm.resx">
       <DependentUpon>TagBeamForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -2429,7 +2404,6 @@
     <EmbeddedResource Include="Truss\CS\TrussForm.resx">
       <DependentUpon>TrussForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TypeSelector\VB.NET\TypeSelectorWindow.resx" />
     <EmbeddedResource Include="UIAPI\CS\DragAndDrop\DragAndDrop.resx">
       <DependentUpon>DragAndDrop.cs</DependentUpon>
     </EmbeddedResource>
@@ -2446,7 +2420,6 @@
     <EmbeddedResource Include="VersionChecking\CS\VersionCheckingForm.resx">
       <DependentUpon>VersionCheckingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Viewers\RevitViewer\VB.NET\Viewer\ViewerWindow.resx" />
     <EmbeddedResource Include="ViewPrinter\CS\PrintMgrForm.resx">
       <DependentUpon>PrintMgrForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -2580,7 +2553,6 @@
     <Folder Include="DoorSwing\CS\Properties\" />
     <Folder Include="DuplicateGraphics\CS\Properties\" />
     <Folder Include="DynamicModelUpdate\CS\Properties\" />
-    <Folder Include="ErrorHandling\CS\Properties\" />
     <Folder Include="Events\AutoStamp\CS\Properties\" />
     <Folder Include="Events\AutoUpdate\CS\Properties\" />
     <Folder Include="Events\CancelSave\CS\Properties\" />
@@ -2605,6 +2577,7 @@
     <Folder Include="FamilyCreation\ValidateParameters\CS\Properties\" />
     <Folder Include="FamilyCreation\WindowWizard\CS\Properties\" />
     <Folder Include="FamilyParametersOrder\CS\Properties\" />
+    <Folder Include="FireRating\" />
     <Folder Include="FoundationSlab\CS\Properties\" />
     <Folder Include="FrameBuilder\CS\Properties\" />
     <Folder Include="GenerateFloor\CS\Properties\" />
@@ -2644,6 +2617,7 @@
     <Folder Include="ParameterUtils\CS\Properties\" />
     <Folder Include="PathOfTravel\CS\Properties\" />
     <Folder Include="PathReinforcement\CS\Properties\" />
+    <Folder Include="PhaseSample\" />
     <Folder Include="PlaceFamilyInstanceByFace\CS\Properties\" />
     <Folder Include="PlacementOptions\CS\Properties\" />
     <Folder Include="ProjectInfo\CS\Properties\" />
@@ -2652,6 +2626,7 @@
     <Folder Include="RebarFreeForm\CS\Properties\" />
     <Folder Include="ReferencePlane\CS\Properties\" />
     <Folder Include="Reinforcement\CS\Properties\" />
+    <Folder Include="RevitCommands\" />
     <Folder Include="Ribbon\CS\Properties\" />
     <Folder Include="RoofsRooms\CS\Properties\" />
     <Folder Include="RoomSchedule\CS\Properties\" />
@@ -2669,11 +2644,18 @@
     <Folder Include="StairsAutomation\CS\Properties\" />
     <Folder Include="StructSample\CS\Properties\" />
     <Folder Include="TagBeam\CS\Properties\" />
+    <Folder Include="TestFloorThickness\" />
+    <Folder Include="TestWallThickness\" />
     <Folder Include="Toposolid\CS\Properties\" />
     <Folder Include="TransactionControl\CS\Properties\" />
     <Folder Include="TraverseSystem\CS\Properties\" />
+    <Folder Include="TypeSelector\" />
     <Folder Include="Units\CS\Properties\" />
     <Folder Include="VersionChecking\CS\Properties\" />
+    <Folder Include="Viewers\AnalyticalViewer\" />
+    <Folder Include="Viewers\ElementViewer\" />
+    <Folder Include="Viewers\RevitViewer\" />
+    <Folder Include="Viewers\RoomViewer\" />
     <Folder Include="ViewPrinter\CS\Properties\" />
     <Folder Include="ViewTemplateCreation\CS\Properties\" />
     <Folder Include="VisibilityControl\CS\Properties\" />
