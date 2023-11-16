@@ -1,18 +1,22 @@
 # Ara 3D Revit Sample Browser
 
-The Revit sample browser is a plug-in for Revit 2024 that provides a Windows Forms UI to browse the documentation and activate most of the Revit SDK C# samples for Revit 2024. 
+The Ara3D Revit Sample Browser is a plug-in for Revit 2024 that provides a Windows Forms UI to browse the documentation and activate most of the Revit SDK C# samples for Revit 2024. 
 The code for the samples was downloaded from [Jeremy Tammik's Revit SDK Samples](https://github.com/jeremytammik/RevitSdkSamples), then merged together in a single project
 with some code style changes applied via ReSharper, and some regular expression magic.   
 
+![image](https://github.com/ara3d/revit-sample-browser/assets/1759994/0b563e02-9cfe-445c-8f07-c38c0053aea2)
+
 ## Motivation 
 
-The Revit API is very complete and ships with roughly 200 samples. I wanted a tool which would make it easier to browse the documentation of the different samples. 
-I also wanted a single project that I could use for testing Bowerbird, a C# scripting solution for multiple host application.  
+The Revit API is very complete and ships with roughly 200 samples. I wanted a tool which would make it easier to browse the documentation of the different samples,
+try them out, and to debug them. I also wanted a single project that I could use for testing Bowerbird, a C# scripting 
+solution for multiple host applications that is being built by [Ara 3D](https://ara3d.com).  
 
 As I developed the Revit Sample browser I realized that it could help others who are learning the Revit API. It also helped me uncover some areas of improvement 
-for the samples. The samples were built over the last 15+ years, and use an outdated coding style.
+for the samples. The samples were built over the last 15+ years, and use an outdated coding style. 
 
-Using more modern C# idioms makes the code more succinct and easier to read, modify, and understand. 
+I took the liberty of refactoring many of the samples using more modern C# idioms to make the code 
+succinct and easier to read, modify, and understand. 
 
 ## Status
 
