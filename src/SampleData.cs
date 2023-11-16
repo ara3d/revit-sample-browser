@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -48,8 +49,22 @@ namespace Ara3D.RevitSampleBrowser
 
             var folderRelPath = Namespace.Replace(".", "\\");
             FolderPath = ThisFolderPath + "\\" + folderRelPath + @"\CS";
+            if (!Directory.Exists(FolderPath))
+            {
+                FolderPath = ThisFolderPath + "\\" + folderRelPath + "\\..";
+            }
             if (Directory.Exists(FolderPath))
+            {
                 ReadmePath = Directory.GetFiles(FolderPath, "*.rtf").FirstOrDefault();
+                if (ReadmePath == null)
+                {
+                    Debug.WriteLine($"Could not find any rtf files in {FolderPath}");
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"Could not find folder {FolderPath}");
+            }
         }
 
         private static readonly string ThisFolderPath = GetThisFolder();
