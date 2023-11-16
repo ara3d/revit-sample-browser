@@ -16,12 +16,12 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         /// <summary>
         ///     A short description of the rule
         /// </summary>
-        private readonly string m_description;
+        private readonly string m_description = "An API-based rule to search for and return any doors that are face-flipped";
 
         /// <summary>
         ///     The ID of the failure definition for our API-based door flip check rule
         /// </summary>
-        private readonly FailureDefinitionId m_doorWarningId;
+        private readonly FailureDefinitionId m_doorWarningId = new FailureDefinitionId(new Guid("25570B8FD4AD42baBD78469ED60FB9A3"));
 
         /// <summary>
         ///     A list of all family instances in the document that have the FaceFlipped property set to true;
@@ -31,16 +31,13 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         /// <summary>
         ///     A short name for the rule
         /// </summary>
-        private readonly string m_name;
+        private readonly string m_name = "Flipped Door Check";
 
         /// <summary>
         ///     Set up rule name, description, and error handling
         /// </summary>
         public FlippedDoorCheck()
         {
-            m_name = "Flipped Door Check";
-            m_description = "An API-based rule to search for and return any doors that are face-flipped";
-            m_doorWarningId = new FailureDefinitionId(new Guid("25570B8FD4AD42baBD78469ED60FB9A3"));
             FailureDefinition.CreateFailureDefinition(m_doorWarningId, FailureSeverity.Warning,
                 "Some doors in this project are face-flipped.");
         }
