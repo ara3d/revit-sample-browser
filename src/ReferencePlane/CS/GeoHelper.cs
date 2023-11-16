@@ -33,9 +33,9 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
                 double tempElevation = 0;
                 var mesh = f.Triangulate();
 
-                foreach (var xyz in mesh.Vertices) tempElevation = tempElevation + xyz.Z;
+                foreach (var xyz in mesh.Vertices) tempElevation += xyz.Z;
 
-                tempElevation = tempElevation / mesh.Vertices.Count;
+                tempElevation /= mesh.Vertices.Count;
 
                 if (elevation > tempElevation || null == face)
                 {
@@ -127,7 +127,7 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
             var verticalVct = new XYZ(0, 0, 1);
             var pointBuffer = polyline[0];
 
-            for (var i = 1; i < polyline.Count; i = i + 1)
+            for (var i = 1; i < polyline.Count; i++)
             {
                 var temp = polyline[i];
                 var vector = GetVector(pointBuffer, temp);

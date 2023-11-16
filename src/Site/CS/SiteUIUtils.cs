@@ -112,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var viewDirection = uiDoc.ActiveView.ViewDirection.Normalize();
 
             var elevationDelta = (elevation - point.Z) / viewDirection.Z;
-            point = point + viewDirection * elevationDelta;
+            point += viewDirection * elevationDelta;
 
             return point;
         }

@@ -194,10 +194,10 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             if (0 == m_attributeValueListBox.Items.Count)
             {
                 var message = "There was an error executing the command.\r\n";
-                message = message + "Possible reasons for this are:\r\n\r\n";
-                message = message + "1. No parameter was added.\r\n";
-                message = message + "2. No beam or slab was selected.\r\n";
-                message = message + "3. The value was blank.\r\n";
+                message += "Possible reasons for this are:\r\n\r\n";
+                message += "1. No parameter was added.\r\n";
+                message += "2. No beam or slab was selected.\r\n";
+                message += "3. The value was blank.\r\n";
                 TaskDialog.Show("Revit", message);
             }
         }

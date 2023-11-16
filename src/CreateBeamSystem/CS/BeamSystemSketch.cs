@@ -142,14 +142,14 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             {
                 // display area in canvas need move to center in height
                 var goalHeight = realWidth / originRate;
-                minY = minY + (realHeight - goalHeight) / 2;
+                minY += (realHeight - goalHeight) / 2;
                 realHeight = goalHeight;
             }
             else
             {
                 // display area in canvas need move to center in width
                 var goalWidth = realHeight * originRate;
-                minX = minX + (realWidth - goalWidth) / 2;
+                minX += (realWidth - goalWidth) / 2;
                 realWidth = goalWidth;
             }
 

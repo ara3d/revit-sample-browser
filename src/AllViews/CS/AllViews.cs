@@ -386,12 +386,12 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
                 if (0 != n++ % m_rows)
                 {
-                    tempU = tempU + xDistance * (1 - m_titlebar);
+                    tempU += xDistance * (1 - m_titlebar);
                 }
                 else
                 {
                     tempU = origin.U;
-                    tempV = tempV + yDistance;
+                    tempV += yDistance;
                 }
             }
         }
@@ -425,7 +425,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
             while (0 < result - (int)result)
             {
-                amount = amount + 1;
+                amount++;
                 result = Math.Sqrt(amount);
             }
 

@@ -109,7 +109,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 
             // The path of ourselves shared parameters file
             var sharedParameterFilePath = Path.GetDirectoryName(currentCommandAssemblyPath);
-            sharedParameterFilePath = sharedParameterFilePath + "\\MySharedParameterFile.txt";
+            sharedParameterFilePath += "\\MySharedParameterFile.txt";
 
             //Method's return
 

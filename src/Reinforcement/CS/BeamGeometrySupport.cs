@@ -163,7 +163,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
                     break;
                 case TransverseRebarLocation.Center: // center transverse rebar
                     curveOffset = endOffset + rebarLength + betweenOffset;
-                    curveOffset = curveOffset + rebarLength % spacing / 2;
+                    curveOffset += rebarLength % spacing / 2;
                     break;
                 case TransverseRebarLocation.End: // end transverse rebar
                     curveOffset = m_beamLength - endOffset - rebarLength + rebarLength % spacing;

@@ -99,7 +99,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
                 var xOuter = currentStep - OffsetDirection * runwidth2;
                 var xInner = currentStep + OffsetDirection * runwidth2;
                 riserLines.Add(Line.CreateBound(xOuter, xInner));
-                currentStep = currentStep + deltaStep;
+                currentStep += deltaStep;
             }
         }
     }

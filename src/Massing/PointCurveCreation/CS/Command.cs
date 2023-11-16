@@ -45,8 +45,8 @@ namespace Ara3D.RevitSampleBrowser.PointCurveCreation.CS
                     xctr++;
                 }
 
-                power = power + 0.1;
-                yctr = yctr + 50;
+                power += 0.1;
+                yctr += 50;
                 zctr = 0;
             }
 
@@ -80,7 +80,7 @@ namespace Ara3D.RevitSampleBrowser.PointCurveCreation.CS
             var skplane = SketchPlane.Create(doc, geometryPlane);
             var modelcurve = doc.FamilyCreate.NewModelCurve(line, skplane);
 
-            for (var i = 0.1; i <= 1; i = i + 0.1)
+            for (var i = 0.1; i <= 1; i += 0.1)
             {
                 var locationOnCurve = new PointLocationOnCurve(PointOnCurveMeasurementType.NormalizedCurveParameter, i,
                     PointOnCurveMeasureFrom.Beginning);
@@ -155,7 +155,7 @@ namespace Ara3D.RevitSampleBrowser.PointCurveCreation.CS
                 xyz = new XYZ(xctr, 0, Math.Cos(xctr) * 10);
                 var rp = doc.FamilyCreate.NewReferencePoint(xyz);
                 rparray.Append(rp);
-                xctr = xctr + 0.1;
+                xctr += 0.1;
                 pntCtr++;
             }
 
@@ -182,10 +182,10 @@ namespace Ara3D.RevitSampleBrowser.PointCurveCreation.CS
 
             var transaction = new Transaction(doc, "CatenaryCurve");
             transaction.Start();
-            for (double scalingFactor = 1; scalingFactor <= 2; scalingFactor = scalingFactor + 0.5)
+            for (double scalingFactor = 1; scalingFactor <= 2; scalingFactor += 0.5)
             {
                 var rpArray = new ReferencePointArray();
-                for (double x = -5; x <= 5; x = x + 0.5)
+                for (double x = -5; x <= 5; x += 0.5)
                 {
                     var y = scalingFactor * Math.Cosh(x / scalingFactor);
                     if (y < 50)
@@ -233,14 +233,14 @@ namespace Ara3D.RevitSampleBrowser.PointCurveCreation.CS
                     xyz = new XYZ(x, y, z);
                     var rp = doc.FamilyCreate.NewReferencePoint(xyz);
                     rpAr.Append(rp);
-                    y = y + 40;
+                    y += 40;
                 }
 
                 var curve = doc.FamilyCreate.NewCurveByPoints(rpAr);
                 var refAr = new ReferenceArray();
                 refAr.Append(curve.GeometryCurve.Reference);
                 refArAr.Append(refAr);
-                x = x + 40;
+                x += 40;
             }
 
             doc.FamilyCreate.NewLoftForm(true, refArAr);

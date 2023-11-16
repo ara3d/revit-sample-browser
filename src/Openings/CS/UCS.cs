@@ -98,7 +98,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         public Vector Gc2Lc(Vector arg)
         {
             var result = new Vector();
-            arg = arg - m_origin;
+            arg -= m_origin;
             result.X = m_xAxis * arg;
             result.Y = m_yAxis * arg;
             result.Z = m_zAxis * arg;

@@ -153,8 +153,8 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
         public void Shift(float distance)
         {
             var moveSize = new SizeF(-distance * m_normal.Y, distance * m_normal.X);
-            m_startPnt = m_startPnt + moveSize;
-            m_endPnt = m_endPnt + moveSize;
+            m_startPnt += moveSize;
+            m_endPnt += moveSize;
         }
 
         /// <summary>

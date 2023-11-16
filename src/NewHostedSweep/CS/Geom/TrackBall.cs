@@ -73,7 +73,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
             var x = point.X / (width / 2); // Scale so bounds map to [0,0] - [2,2]
             var y = point.Y / (height / 2);
 
-            x = x - 1; // Translate 0,0 to the center
+            x--; // Translate 0,0 to the center
             y = 1 - y; // Flip so +Y is up instead of down
 
             double z;

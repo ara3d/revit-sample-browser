@@ -84,10 +84,10 @@ namespace Ara3D.RevitSampleBrowser.DistanceToPanels.CS
                             }
                         }
 
-                        v = v + 1;
+                        v++;
                     }
 
-                    u = u + 1;
+                    u++;
                 }
             }
 

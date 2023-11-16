@@ -105,7 +105,7 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
                 {
                     view.SetColorFillSchemeId(m_schemeCategoryId, scheme.Id);
                     var legend = ColorFillLegend.Create(m_document, view.Id, m_schemeCategoryId, origin);
-                    legend.Height = legend.Height / 2;
+                    legend.Height /= 2;
                     transaction.Commit();
                 }
                 else

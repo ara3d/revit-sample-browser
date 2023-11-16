@@ -142,7 +142,7 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 
                 bindingSource1.RemoveCurrent();
 
-                m_systemLevelsTotal = m_systemLevelsTotal - 1;
+                m_systemLevelsTotal--;
 
                 var temChangedItemsFlag = new int[m_systemLevelsTotal];
                 for (int i = 0, j = 0; i < m_systemLevelsTotal; i++, j++)

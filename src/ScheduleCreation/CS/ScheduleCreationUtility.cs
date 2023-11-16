@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
                 //Get upperLeft point of the bounding box.
                 upperLeft = new XYZ(bbox.Min.X, bbox.Max.Y, bbox.Min.Z);
                 //Move the point to the postion that is 2 inches right and 2 inches down from the original upperLeft point.
-                upperLeft = upperLeft + new XYZ(2.0 / 12.0, -2.0 / 12.0, 0);
+                upperLeft += new XYZ(2.0 / 12.0, -2.0 / 12.0, 0);
             }
 
             //Create a new schedule sheet instance that makes the sheet to show the data of wall view schedule at upperLeft point.

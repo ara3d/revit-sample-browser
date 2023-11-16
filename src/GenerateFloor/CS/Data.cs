@@ -177,7 +177,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
             MaxLength = xMax - xMin > yMax - yMin ? xMax - xMin : yMax - yMin;
 
             Points = new PointF[tempArray.Count / 2 + 1];
-            for (var i = 0; i < tempArray.Count; i = i + 2)
+            for (var i = 0; i < tempArray.Count; i += 2)
             {
                 var point = (XYZ)tempArray[i];
                 Points.SetValue(new PointF((float)(point.X - xMin), (float)(point.Y - yMin)), i / 2);

@@ -79,7 +79,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             //create 12 lines
             for (var i = 0; i < 7; i++) NewModelLine(app, i, i + 1);
 
-            for (var i = 0; i < 5; i = i + 2) NewModelLine(app, i, i + 3);
+            for (var i = 0; i < 5; i += 2) NewModelLine(app, i, i + 3);
 
             NewModelLine(app, 1, 6);
             NewModelLine(app, 0, 7);

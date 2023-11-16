@@ -170,7 +170,7 @@ namespace Ara3D.RevitSampleBrowser.RayTraceBounce.CS
 
                 {
                     MakeLine(startpt, endpt, m_direction, "bounce");
-                    m_rayCount = m_rayCount + 1;
+                    m_rayCount++;
                     var info = "Intersected Element Type: [" + referenceElement.GetType() + "] ElementId: [" +
                                referenceElement.Id;
                     m_face = referenceObject as Face;
@@ -337,7 +337,7 @@ namespace Ara3D.RevitSampleBrowser.RayTraceBounce.CS
         {
             try
             {
-                m_lineCount = m_lineCount + 1;
+                m_lineCount++;
                 var line = Line.CreateBound(startpt, endpt);
                 // Line must lie in the sketch plane.  Use the direction of the line to construct a plane that hosts the target line.
                 var rotatedDirection = XYZ.BasisX;

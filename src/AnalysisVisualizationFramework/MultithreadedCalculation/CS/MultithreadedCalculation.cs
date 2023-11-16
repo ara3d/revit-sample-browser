@@ -384,10 +384,10 @@ namespace Ara3D.RevitSampleBrowser.MultithreadedCalculation.CS
                     while (vpnt <= m_max.V)
                     {
                         uvList.Add(new UV(upnt, vpnt));
-                        vpnt = vpnt + incrementV;
+                        vpnt += incrementV;
                     }
 
-                    upnt = upnt + incrementU;
+                    upnt += incrementU;
                 }
 
                 return uvList;

@@ -110,8 +110,8 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.CS
                 IList<UV> uvPts = new List<UV>();
                 IList<ValueAtPoint> valList = new List<ValueAtPoint>();
                 var bb = face.GetBoundingBox();
-                for (var u = bb.Min.U; u < bb.Max.U; u = u + (bb.Max.U - bb.Min.U) / 15)
-                for (var v = bb.Min.V; v < bb.Max.V; v = v + (bb.Max.V - bb.Min.V) / 15)
+                for (var u = bb.Min.U; u < bb.Max.U; u += (bb.Max.U - bb.Min.U) / 15)
+                for (var v = bb.Min.V; v < bb.Max.V; v += (bb.Max.V - bb.Min.V) / 15)
                 {
                     var uvPnt = new UV(u, v);
                     uvPts.Add(uvPnt);

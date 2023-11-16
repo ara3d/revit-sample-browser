@@ -8,25 +8,10 @@ namespace Ara3D.RevitSampleBrowser.ComputedSymbolGeometry.CS
 {
     internal class ComputedSymbolGeometry
     {
-        /// <summary>
-        ///     Options for geometry
-        /// </summary>
         private readonly Options m_options;
-
-        /// <summary>
-        ///     Schema Id
-        /// </summary>
         private int m_schemaId = -1;
-
-        /// <summary>
-        ///     Revit document
-        /// </summary>
         private readonly Document m_revitDoc;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="doc">Revit Document</param>
         public ComputedSymbolGeometry(Document doc)
         {
             m_revitDoc = doc;
@@ -171,10 +156,7 @@ namespace Ara3D.RevitSampleBrowser.ComputedSymbolGeometry.CS
             foreach (Face face in faces)
             {
                 var idx = sfm.AddSpatialFieldPrimitive(face, trf);
-                IList<UV> uvPts = null;
-                IList<ValueAtPoint> valList = null;
-                ComputeValueAtPointForFace(face, out uvPts, out valList, 1);
-
+                ComputeValueAtPointForFace(face, out var uvPts, out var valList, 1);
                 var pnts = new FieldDomainPointsByUV(uvPts);
                 var vals = new FieldValues(valList);
                 sfm.UpdateSpatialFieldPrimitive(idx, pnts, vals, m_schemaId);
@@ -195,8 +177,8 @@ namespace Ara3D.RevitSampleBrowser.ComputedSymbolGeometry.CS
             uvPts = new List<UV>();
             valList = new List<ValueAtPoint>();
             var bb = face.GetBoundingBox();
-            for (var u = bb.Min.U; u < bb.Max.U + 0.0000001; u = u + (bb.Max.U - bb.Min.U) / 1)
-            for (var v = bb.Min.V; v < bb.Max.V + 0.0000001; v = v + (bb.Max.V - bb.Min.V) / 1)
+            for (var u = bb.Min.U; u < bb.Max.U + 0.0000001; u += (bb.Max.U - bb.Min.U) / 1)
+            for (var v = bb.Min.V; v < bb.Max.V + 0.0000001; v += (bb.Max.V - bb.Min.V) / 1)
             {
                 var uvPnt = new UV(u, v);
                 uvPts.Add(uvPnt);

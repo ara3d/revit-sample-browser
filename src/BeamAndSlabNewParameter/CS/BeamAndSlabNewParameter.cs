@@ -296,7 +296,7 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
             // The path of ourselves shared parameters file
             var sharedParameterFile = Path.GetDirectoryName(currentExecutablePath);
 
-            sharedParameterFile = sharedParameterFile + "\\MySharedParameters.txt";
+            sharedParameterFile += "\\MySharedParameters.txt";
 
             //Method's return
 
