@@ -10,7 +10,7 @@ using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Ara3D.RevitSampleBrowser.CreateTruss.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.CreateTruss.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

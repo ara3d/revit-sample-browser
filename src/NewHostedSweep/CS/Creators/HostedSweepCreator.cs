@@ -2,10 +2,12 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
     /// <summary>
     ///     Provides functions to create hosted sweep and preserves available edges and type.

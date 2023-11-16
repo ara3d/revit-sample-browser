@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
+namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
     /// <summary>
     ///     Utility verifies the input parameters, like curves from Revit document.

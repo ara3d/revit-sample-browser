@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace Ara3D.RevitSampleBrowser.ViewFilters.CS
+namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     partial class ViewFiltersForm
    {

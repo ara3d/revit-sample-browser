@@ -5,13 +5,14 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 {
     /// <summary>
     ///     This form is provided for user to define a new RebarShape.
@@ -31,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
         /// <summary>
         ///     RebarShapeDef object.
         /// </summary>
-        private readonly RebarShapeDef m_rebarShapeDef;
+        private readonly RebarShapeDef.RebarShapeDef m_rebarShapeDef;
 
         /// <summary>
         ///     Autodesk Revit Application object.
@@ -56,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
         /// </summary>
         /// <param name="rvtApp">Revit Application object</param>
         /// <param name="shapeDef">RebarShapeDef object</param>
-        public NewRebarShapeForm(Document rvtDoc, RebarShapeDef shapeDef)
+        public NewRebarShapeForm(Document rvtDoc, RebarShapeDef.RebarShapeDef shapeDef)
             : this()
         {
             m_rebarShapeDef = shapeDef;

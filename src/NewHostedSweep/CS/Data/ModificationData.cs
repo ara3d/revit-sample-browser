@@ -2,11 +2,12 @@
 
 using System.ComponentModel;
 using System.Drawing.Design;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
 {
     /// <summary>
     ///     This class contains the data for hosted sweep modification.

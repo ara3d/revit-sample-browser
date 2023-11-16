@@ -1,8 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using System;
 using System.Windows.Forms;
 
-namespace Ara3D.RevitSampleBrowser.Custom2DExporter.CS
+namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
     /// <summary>
     ///     UI Form presented to the user used to collection options related to the export.

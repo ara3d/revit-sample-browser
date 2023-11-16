@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.NewForm.CS
+namespace Ara3D.RevitSampleBrowser.Massing.NewForm.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

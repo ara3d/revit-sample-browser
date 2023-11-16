@@ -10,7 +10,7 @@ using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.UIAPI.CS
+namespace Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDrop
 {
     public partial class FurnitureFamilyDragAndDropForm : Form
     {

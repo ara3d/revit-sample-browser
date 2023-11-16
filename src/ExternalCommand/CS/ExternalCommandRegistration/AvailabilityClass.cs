@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ExternalCommandRegistration.CS
+namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistration
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommandAvailability,

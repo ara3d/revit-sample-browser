@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
 {
     // using GeoInstance as Autodesk.Revit.DB.Instance
     using GeoInstance = GeometryInstance;

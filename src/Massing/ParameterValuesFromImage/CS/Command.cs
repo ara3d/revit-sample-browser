@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 
-namespace Ara3D.RevitSampleBrowser.ParameterValuesFromImage.CS
+namespace Ara3D.RevitSampleBrowser.Massing.ParameterValuesFromImage.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

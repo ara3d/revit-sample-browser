@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Ara3D.RevitSampleBrowser.WindowWizard.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     /// <summary>
     ///     This class will deal with all parameters related to window creation

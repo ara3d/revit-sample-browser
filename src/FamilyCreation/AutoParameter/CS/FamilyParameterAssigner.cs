@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.AutoParameter.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
 {
     /// <summary>
     ///     add parameters(family parameters/shared parameters) to the opened family file

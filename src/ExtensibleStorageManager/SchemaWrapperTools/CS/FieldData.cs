@@ -15,7 +15,7 @@
 using System;
 using System.Text;
 
-namespace SchemaWrapperTools
+namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS
 {
     /// <summary>
     ///     A class to store schema field information

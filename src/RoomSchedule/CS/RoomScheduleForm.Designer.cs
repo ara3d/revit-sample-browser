@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace Ara3D.RevitSampleBrowser.RoomSchedule
+namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
     /// Room Schedule form, used to retrieve data from .xls data source and create new rooms.

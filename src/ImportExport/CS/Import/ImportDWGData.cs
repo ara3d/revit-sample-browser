@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 {
     /// <summary>
     ///     Data class which stores the information for importing dwg format

@@ -3,7 +3,7 @@
 using System.IO;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.ExternalResourceDBServer.CS
+namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServer.CS
 {
     /// <summary>
     ///     Extension operator to support "Open (and Unload)" command.

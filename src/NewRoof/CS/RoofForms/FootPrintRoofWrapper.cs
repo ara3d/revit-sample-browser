@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
-using Ara3D.RevitSampleBrowser.NewRoof.CS;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
     ///     The Util class is used to translate Revit coordination to windows coordination.

@@ -2,7 +2,7 @@
 
 using System.ComponentModel;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter
 {
     /// <summary>
     ///     Type converter between int and string is provided for property grid.

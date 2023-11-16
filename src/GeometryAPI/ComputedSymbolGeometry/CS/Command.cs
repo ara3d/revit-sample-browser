@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ComputedSymbolGeometry.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

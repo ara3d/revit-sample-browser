@@ -1,6 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents;
+
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility
 {
     public partial class ApiUtility
     {

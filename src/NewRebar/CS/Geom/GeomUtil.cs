@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
 {
     /// <summary>
     ///     The class which gives the base geometry operation, it is a static class.

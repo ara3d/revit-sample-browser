@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using AppCreation = Autodesk.Revit.Creation.Application;
 
-namespace Ara3D.RevitSampleBrowser.AutoJoin.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 {
     /// <summary>
     ///     This sample demonstrates how to automatically join geometry

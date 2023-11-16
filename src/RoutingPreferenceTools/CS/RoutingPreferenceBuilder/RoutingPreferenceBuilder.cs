@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 
-namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
+namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
     /// <summary>
     ///     Class to read and write XML and routing preference data

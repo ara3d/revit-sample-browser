@@ -7,7 +7,7 @@ using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 
-namespace Ara3D.RevitSampleBrowser.AutoStamp.CS
+namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
 {
     /// <summary>
     ///     This class consists of two handler methods which will be subscribed to ViewPrinting and ViewPrinted events

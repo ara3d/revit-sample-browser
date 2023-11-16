@@ -9,7 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Ara3D.RevitSampleBrowser.WindowWizard.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     /// <summary>
     ///     The wizard form

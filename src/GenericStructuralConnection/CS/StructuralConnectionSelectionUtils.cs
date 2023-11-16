@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
         {
             StructuralConnectionHandler conn = null;
             // Create a filter for structural connections.
-            var types = new LogicalOrFilter(new List<ElementFilter>
+            var types = new LogicalOrFilter(new List<Autodesk.Revit.DB.ElementFilter>
                 { new ElementCategoryFilter(BuiltInCategory.OST_StructConnections) });
             var filter = new StructuralConnectionSelectionFilter(types);
             var target = document.Selection.PickObject(ObjectType.Element, filter, "Select connection element :");

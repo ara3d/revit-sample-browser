@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace ContextualAnalyticalModel
+namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     /// <summary>
     ///     Utility methods

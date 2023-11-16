@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Forms;
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Geom;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;

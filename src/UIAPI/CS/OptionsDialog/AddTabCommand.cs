@@ -1,10 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Ara3D.RevitSampleBrowser.UIAPI.CS
+namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 {
     public class AddTabCommand
     {

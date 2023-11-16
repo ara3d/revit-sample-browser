@@ -6,7 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
-namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
+namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
     /// <summary>
     ///     A stairs run consisting of a single sketched straight run.

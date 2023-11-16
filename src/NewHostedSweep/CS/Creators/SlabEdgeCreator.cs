@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
     /// <summary>
     ///     Provides functions to create SlabEdge.

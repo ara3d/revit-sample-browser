@@ -2,7 +2,7 @@
 
 using System;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS;
+using Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -31,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS
                 ActiveView = commandData.Application.ActiveUIDocument.Document.ActiveView;
 
                 //// Create a new instance of class DataManager
-                var roofsManager = new RoofsManager.CS.RoofsManager(commandData);
+                var roofsManager = new RoofsManager.RoofsManager(commandData);
                 LevelConverter.SetStandardValues(roofsManager.Levels);
 
                 // Create a form to create and edit a roof.

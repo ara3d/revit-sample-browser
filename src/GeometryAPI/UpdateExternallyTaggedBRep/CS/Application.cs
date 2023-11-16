@@ -21,7 +21,7 @@ using Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS.Properties;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication.

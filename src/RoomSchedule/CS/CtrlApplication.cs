@@ -4,7 +4,7 @@ using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.RoomSchedule
+namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
     ///     This class implements the IExternalApplication interface,

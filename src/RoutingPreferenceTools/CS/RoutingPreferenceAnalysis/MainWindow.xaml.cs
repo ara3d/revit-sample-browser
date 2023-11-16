@@ -10,7 +10,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
+namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAnalysis
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml

@@ -282,7 +282,7 @@
     <None Include="DuplicateGraphics\CS\Readme_DuplicateGraphics.rtf" />
     <None Include="DuplicateViews\CS\Readme_DuplicateViews.rtf" />
     <None Include="DynamicModelUpdate\CS\ReadMe_DynamicModelUpdate.rtf" />
-    <None Include="ElementFilter\ViewFilters\CS\ReadMe_ViewFilters.rtf" />
+    <None Include="ElementFilterSample\CS\ReadMe_ViewFilters.rtf" />
     <None Include="ErrorHandling\CS\ReadMe_ErrorHandling.rtf" />
     <None Include="Events\AutoStamp\CS\ReadMe_AutoStamp.rtf" />
     <None Include="Events\AutoUpdate\CS\ReadMe_AutoUpdate.rtf" />
@@ -800,21 +800,20 @@
     <Compile Include="DuplicateViews\CS\Properties\Resources.Designer.cs" />
     <Compile Include="DynamicModelUpdate\CS\Application.cs" />
     <Compile Include="DynamicModelUpdate\CS\SectionUpdater.cs" />
-    <Compile Include="ElementFilter\ViewFilters\CS\Command.cs" />
-    <Compile Include="ElementFilter\ViewFilters\CS\Extensions.cs" />
-    <Compile Include="ElementFilter\ViewFilters\CS\FilterData.cs" />
-    <Compile Include="ElementFilter\ViewFilters\CS\FilterUtil.cs" />
-    <Compile Include="ElementFilter\ViewFilters\CS\NewFilterForm.cs">
+    <Compile Include="ElementFilterSample\CS\Command.cs" />
+    <Compile Include="ElementFilterSample\CS\Extensions.cs" />
+    <Compile Include="ElementFilterSample\CS\FilterData.cs" />
+    <Compile Include="ElementFilterSample\CS\FilterUtil.cs" />
+    <Compile Include="ElementFilterSample\CS\NewFilterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ElementFilter\ViewFilters\CS\NewFilterForm.Designer.cs">
+    <Compile Include="ElementFilterSample\CS\NewFilterForm.Designer.cs">
       <DependentUpon>NewFilterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ElementFilter\ViewFilters\CS\Properties\Resources.Designer.cs" />
-    <Compile Include="ElementFilter\ViewFilters\CS\ViewFiltersForm.cs">
+    <Compile Include="ElementFilterSample\CS\ViewFiltersForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ElementFilter\ViewFilters\CS\ViewFiltersForm.Designer.cs">
+    <Compile Include="ElementFilterSample\CS\ViewFiltersForm.Designer.cs">
       <DependentUpon>ViewFiltersForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorHandling\CS\Command.cs" />
@@ -2103,11 +2102,10 @@
       <DependentUpon>InitializeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DuplicateViews\CS\Properties\Resources.resx" />
-    <EmbeddedResource Include="ElementFilter\ViewFilters\CS\NewFilterForm.resx">
+    <EmbeddedResource Include="ElementFilterSample\CS\NewFilterForm.resx">
       <DependentUpon>NewFilterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ElementFilter\ViewFilters\CS\Properties\Resources.resx" />
-    <EmbeddedResource Include="ElementFilter\ViewFilters\CS\ViewFiltersForm.resx">
+    <EmbeddedResource Include="ElementFilterSample\CS\ViewFiltersForm.resx">
       <DependentUpon>ViewFiltersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\EventsMonitor\CS\EventsInfoWindows.resx">

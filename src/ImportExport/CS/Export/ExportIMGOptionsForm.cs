@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 using View = Autodesk.Revit.DB.View;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     /// <summary>
     ///     Provide a dialog which provides the options of lower priority information for exporting image

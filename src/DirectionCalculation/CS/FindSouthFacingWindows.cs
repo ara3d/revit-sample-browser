@@ -5,7 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.Samples.DirectionCalculation
+namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
 {
     /// <summary>
     ///     Implementation class for utilities to find south facing windows in a project.

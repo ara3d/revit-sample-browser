@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.EventsMonitor.CS
+namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
     /// <summary>
     ///     This class is a manager for application events.

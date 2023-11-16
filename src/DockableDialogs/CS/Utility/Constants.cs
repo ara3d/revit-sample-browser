@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility
 {
     internal class Globals
     {

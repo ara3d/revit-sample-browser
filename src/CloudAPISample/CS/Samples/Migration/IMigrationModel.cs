@@ -14,7 +14,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration
+namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 {
     /// <summary>
     ///     Represents a folder on BIM360 site.

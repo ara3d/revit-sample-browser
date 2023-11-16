@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog;
 using Ara3D.RevitSampleBrowser.UIAPI.CS.Properties;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;

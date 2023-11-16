@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace Ara3D.RevitSampleBrowser.EventsMonitor.CS
+namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
     /// <summary>
     ///     This class implements all operators about writing log file and generating event

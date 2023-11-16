@@ -4,7 +4,7 @@ using System;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     /// <summary>
     ///     Data class which stores information of lower priority for exporting DWF(x) format.

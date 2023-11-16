@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.RayTraceBounce.CS
+namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
 {
     /// <summary>
     ///     1. This form allowing entry of a coordinate location (X, Y, Z) within the model and a coordinate direction (i, j,

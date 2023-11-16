@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-namespace Ara3D.RevitSampleBrowser.ProximityDetection_WallJoinControl.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
 {
    partial class ProximityDetectionAndWallJoinControlForm
    {

@@ -15,7 +15,7 @@
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Ara3D.RevitSampleBrowser.ModelessForm_IdlingEvent.CS
+namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

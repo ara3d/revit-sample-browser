@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Ara3D.RevitSampleBrowser.EnergyAnalysisModel.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 {
     public partial class OptionsAndAnalysisForm : Form
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Ara3D.RevitSampleBrowser.ComputedSymbolGeometry.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
 {
     internal class ComputedSymbolGeometry
     {

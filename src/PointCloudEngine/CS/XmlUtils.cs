@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Xml.Linq;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.CS.PointCloudEngine
+namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     /// <summary>
     ///     Utilities used by the sample to process XML entries in file-based point clouds.

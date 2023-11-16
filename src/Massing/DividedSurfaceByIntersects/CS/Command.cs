@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DividedSurfaceByIntersects.CS
+namespace Ara3D.RevitSampleBrowser.Massing.DividedSurfaceByIntersects.CS
 {
     /// <summary>
     ///     the entry point of the sample

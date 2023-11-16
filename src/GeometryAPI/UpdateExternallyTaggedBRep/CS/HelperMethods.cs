@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
     internal static class HelperMethods
     {

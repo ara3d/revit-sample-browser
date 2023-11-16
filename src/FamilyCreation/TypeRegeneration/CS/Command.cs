@@ -9,7 +9,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.TypeRegeneration.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

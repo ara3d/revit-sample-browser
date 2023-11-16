@@ -18,7 +18,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Coroutine;
-using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
 using MessageBox = System.Windows.MessageBox;
 using UserControl = System.Windows.Controls.UserControl;
 

@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-namespace SchemaWrapperTools
+namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS
 {
     /// <summary>
     ///     A class to store a list of FieldData objects as well as the top level data (name, access levels, SchemaId, etc..)

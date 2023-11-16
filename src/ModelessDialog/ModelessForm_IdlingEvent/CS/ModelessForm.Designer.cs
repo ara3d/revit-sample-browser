@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-namespace Ara3D.RevitSampleBrowser.ModelessForm_IdlingEvent.CS
+namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
 {
     partial class ModelessForm
     {

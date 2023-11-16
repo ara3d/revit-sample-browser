@@ -8,11 +8,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.VisualBasic;
+using Globals = Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility.Globals;
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
 {
     public partial class MainPage : Page, IDockablePaneProvider
     {

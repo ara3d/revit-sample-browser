@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ProximityDetection_WallJoinControl.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
 {
     [Transaction(TransactionMode.Manual)]
     public class Command : IExternalCommand

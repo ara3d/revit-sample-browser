@@ -1,6 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+using Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter;
+
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
 {
     /// <summary>
     ///     Dimension on RebarShape.
@@ -10,13 +12,13 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
         /// <summary>
         ///     A wrapper of RebarShapeDefinition.
         /// </summary>
-        protected readonly RebarShapeDef ShapeDef;
+        protected readonly RebarShapeDef.RebarShapeDef ShapeDef;
 
         /// <summary>
         ///     Constructor, initialize fields.
         /// </summary>
         /// <param name="def">RebarShapeDef object</param>
-        protected ConstraintOnRebarShape(RebarShapeDef def)
+        protected ConstraintOnRebarShape(RebarShapeDef.RebarShapeDef def)
         {
             ShapeDef = def;
         }

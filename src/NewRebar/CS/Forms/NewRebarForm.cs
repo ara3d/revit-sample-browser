@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 {
     /// <summary>
     ///     This is the main form for user to operate the Rebar creation.
@@ -131,7 +132,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
             }
 
             // Create a RebarShapeDefinition.
-            RebarShapeDef shapeDef = null;
+            RebarShapeDef.RebarShapeDef shapeDef = null;
 
             if (byArcradioButton.Checked)
             {

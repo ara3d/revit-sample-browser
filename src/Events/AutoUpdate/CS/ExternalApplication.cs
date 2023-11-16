@@ -9,7 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.AutoUpdate.CS
+namespace Ara3D.RevitSampleBrowser.Events.AutoUpdate.CS
 {
     /// <summary>
     ///     This class implements IExternalApplication and demonstrate how to subscribe event

@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.MeasurePanelArea.CS
+namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
 {
     /// <summary>
     ///     The window designed for interactive operations

@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
     ///     The RoofEditorForm is the main edit form to edit a roof data.
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
         private readonly RoofBase m_roof;
 
         // A reference to the roofs manager
-        private readonly RoofsManager.CS.RoofsManager m_roofsManager;
+        private readonly RoofsManager.RoofsManager m_roofsManager;
 
         /// <summary>
         ///     The private construct.
@@ -42,7 +42,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
         /// </summary>
         /// <param name="roofsManager">A reference to the roofs manager</param>
         /// <param name="roof">The roof which will be edited.</param>
-        public RoofEditorForm(RoofsManager.CS.RoofsManager roofsManager, RoofBase roof)
+        public RoofEditorForm(RoofsManager.RoofsManager roofsManager, RoofBase roof)
         {
             m_roofsManager = roofsManager;
             m_roof = roof;

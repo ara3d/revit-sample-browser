@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 
-namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
+namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
     /// <summary>
     ///     A command to read routing preference data from a document and write an XML file summarizing it that can later be

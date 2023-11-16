@@ -1,9 +1,10 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
+namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
     /// <summary>
     ///     Converts angle with string

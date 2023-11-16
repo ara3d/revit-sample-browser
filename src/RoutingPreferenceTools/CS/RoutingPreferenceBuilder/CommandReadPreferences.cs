@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 
-namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
+namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
     /// <summary>
     ///     A command to read a routing preference builder xml file and add pipe types, schedules, segments, and sizes, and

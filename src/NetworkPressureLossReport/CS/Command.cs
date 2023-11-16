@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport
+namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
     /// <summary>
     ///     Demonstrate how to find all networks available in the active document.

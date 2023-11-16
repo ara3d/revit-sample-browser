@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.CS.PointCloudEngine
+namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     /// <summary>
     ///     The base class for all IPointCloudAccess implementations in this sample.

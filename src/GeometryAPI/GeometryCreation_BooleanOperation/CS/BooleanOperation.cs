@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.GeometryCreation_BooleanOperation.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation.CS
 {
     internal static class BooleanOperation
     {

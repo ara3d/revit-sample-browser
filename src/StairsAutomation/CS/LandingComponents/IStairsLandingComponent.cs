@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
-namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
+namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
 {
     /// <summary>
     ///     An interface that represents a landing.

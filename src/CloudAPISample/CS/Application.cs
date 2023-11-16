@@ -15,7 +15,7 @@
 using System;
 using System.IO;
 using System.Windows.Media.Imaging;
-using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;

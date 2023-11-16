@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB.PointClouds;
 
-namespace Ara3D.RevitSampleBrowser.CS.PointCloudEngine
+namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     /// <summary>
     ///     The type of engine.

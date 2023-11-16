@@ -23,7 +23,7 @@ using System.Windows;
 using Ara3D.RevitSampleBrowser.CloudAPISample.CS.View;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration
+namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 {
     /// <summary>
     ///     This is a sample shows how to migrate A360 Teams project to BIM360 Docs

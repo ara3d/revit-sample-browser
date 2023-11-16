@@ -3,7 +3,7 @@
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.WindowWizard.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     /// <summary>
     ///     The class is used to create window wizard form

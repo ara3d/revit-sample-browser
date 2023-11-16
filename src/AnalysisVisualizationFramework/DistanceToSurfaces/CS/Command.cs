@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.CS
+namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurfaces.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -59,7 +59,7 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.CS
             var wallFilter = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
             var familyFilter = new ElementClassFilter(typeof(FamilyInstance));
             var massFilter = new ElementCategoryFilter(BuiltInCategory.OST_Mass);
-            IList<ElementFilter> filterList = new List<ElementFilter>();
+            IList<Autodesk.Revit.DB.ElementFilter> filterList = new List<Autodesk.Revit.DB.ElementFilter>();
             filterList.Add(wallFilter);
             filterList.Add(familyFilter);
             filterList.Add(massFilter);

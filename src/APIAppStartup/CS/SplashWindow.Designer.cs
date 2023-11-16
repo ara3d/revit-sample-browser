@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-namespace APIAppStartup
+namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
 {
    partial class SplashWindow
    {

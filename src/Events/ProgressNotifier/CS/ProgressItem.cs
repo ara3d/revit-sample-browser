@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB.Events;
 
-namespace Ara3D.RevitSampleBrowser.ProgressNotifier.CS
+namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 {
     /// <summary>
     ///     An object containing a progress event name, position, and status.

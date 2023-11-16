@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
     ///     The ExtrusionRoofWrapper class is use to edit a extrusion roof in a PropertyGrid.

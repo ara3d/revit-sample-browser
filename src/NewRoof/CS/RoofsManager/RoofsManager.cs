@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Ara3D.RevitSampleBrowser.NewRoof.RoofsManager.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
 {
     /// <summary>
     ///     The kinds of roof than can be created.

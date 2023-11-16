@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     /// <summary>
     /// It contains a dialog which provides the options of common information for export

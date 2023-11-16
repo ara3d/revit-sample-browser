@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Ara3D.RevitSampleBrowser.ModelessForm_IdlingEvent.CS
+namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
     ///     A list of requests the dialog has available

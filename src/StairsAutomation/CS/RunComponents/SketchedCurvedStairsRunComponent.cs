@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
+namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
     /// <summary>
     ///     A stairs run consisting of a single sketched curved run.

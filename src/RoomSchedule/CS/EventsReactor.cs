@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Events;
 
-namespace Ara3D.RevitSampleBrowser.RoomSchedule
+namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
     ///     One struct defines the content of mapped Excel spreadsheet: the full name of this file and the sheet.

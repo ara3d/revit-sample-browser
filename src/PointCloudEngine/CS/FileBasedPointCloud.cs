@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 
-namespace Ara3D.RevitSampleBrowser.CS.PointCloudEngine
+namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     /// <summary>
     ///     An implementation for a file-based point cloud.

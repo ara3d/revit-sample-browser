@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
+namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
     /// <summary>
     ///     An abstract base class for stairs components which can be moved via a translation and rotation.

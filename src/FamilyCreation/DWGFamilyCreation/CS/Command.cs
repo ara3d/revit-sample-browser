@@ -8,7 +8,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DWGFamilyCreation.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.DWGFamilyCreation.CS
 {
     /// <summary>
     ///     To add an external command to Autodesk Revit

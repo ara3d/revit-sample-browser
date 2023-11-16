@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility
 {
     public class Log
     {

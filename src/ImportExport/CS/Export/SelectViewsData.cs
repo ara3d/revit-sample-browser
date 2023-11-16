@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     /// <summary>
     ///     Data class which stores views information for export

@@ -3,7 +3,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility
 {
     public class FileUtility
     {

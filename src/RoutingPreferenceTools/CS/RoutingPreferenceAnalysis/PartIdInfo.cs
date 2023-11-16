@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
+namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAnalysis
 {
     /// <summary>
     ///     This class contains a routing preference rule group and list of elementIds that correspond

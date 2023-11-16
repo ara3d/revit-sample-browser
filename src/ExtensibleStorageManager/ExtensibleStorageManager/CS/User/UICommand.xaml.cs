@@ -1,16 +1,17 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
-using SchemaWrapperTools;
 
-namespace ExtensibleStorageManager
+namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.User
 {
     /// <summary>
     ///     The main user dialog class for issuing sample commands to the a SchemaWrapper
@@ -64,7 +65,7 @@ namespace ExtensibleStorageManager
             m_textBox_SchemaDocumentation.Text = m_schemaWrapper.Data.Documentation;
             m_textBox_SchemaId.Text = m_schemaWrapper.Data.SchemaId;
             if (m_textBox_SchemaId.Text == Guid.Empty.ToString())
-                m_textBox_SchemaId.Text = Application.LastGuid;
+                m_textBox_SchemaId.Text = Application.Application.LastGuid;
 
             switch (m_schemaWrapper.Data.ReadAccess)
             {
@@ -152,7 +153,7 @@ namespace ExtensibleStorageManager
         //later if the user re-creates and displays this dialog again.
         private void UICommand_Closing(object sender, CancelEventArgs e)
         {
-            Application.LastGuid = m_textBox_SchemaId.Text;
+            Application.Application.LastGuid = m_textBox_SchemaId.Text;
         }
 
         //Put a new, arbitrary Guid in the schema text box.

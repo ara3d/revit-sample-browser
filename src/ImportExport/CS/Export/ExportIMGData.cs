@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     internal class ExportImgData : ExportDataWithViews
     {

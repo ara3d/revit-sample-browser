@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.WindowWizard.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     /// <summary>
     ///     The class is used to create ReferencePlane

@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Ara3D.RevitSampleBrowser.ValidateParameters.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 {
     /// <summary>
     ///     The form is used to show the result

@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
  
-namespace Ara3D.RevitSampleBrowser.EventsMonitor.CS
+namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
     partial class EventsInfoWindows
     {

@@ -13,7 +13,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Ara3D.RevitSampleBrowser.PathOfTravelCreation.CS
+namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
 {
     /// <summary>
     ///     The options for creating the PathOfTravel.
@@ -154,7 +154,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelCreation.CS
             using (var t = new Transaction(doc, "Generate paths of travel"))
             {
                 t.Start();
-                PathOfTravel.CreateMapped(viewPlan, startPoints, new List<XYZ> { endPoint }, out _);
+                Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, startPoints, new List<XYZ> { endPoint }, out _);
                 t.Commit();
             }
         }
@@ -360,11 +360,11 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelCreation.CS
                 t.Start();
 
                 IList<PathOfTravelCalculationStatus> statuses;
-                IList<PathOfTravel> pathsOfTravel;
+                IList<Autodesk.Revit.DB.Analysis.PathOfTravel> pathsOfTravel;
                 if (mapAllStartsToAllEnds)
-                    pathsOfTravel = PathOfTravel.CreateMapped(viewPlan, startPoints, endPoints, out statuses);
+                    pathsOfTravel = Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, startPoints, endPoints, out statuses);
                 else
-                    pathsOfTravel = PathOfTravel.CreateMultiple(viewPlan, startPoints, endPoints, out statuses);
+                    pathsOfTravel = Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMultiple(viewPlan, startPoints, endPoints, out statuses);
 
                 var i = 0;
 
@@ -409,7 +409,7 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravelCreation.CS
             using (var t = new Transaction(doc, "Generate paths of travel"))
             {
                 t.Start();
-                var pathsOfTravel = PathOfTravel.CreateMapped(viewPlan, sourcePoints, endPoints, out _);
+                var pathsOfTravel = Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, sourcePoints, endPoints, out _);
 
                 foreach (var pOt in pathsOfTravel)
                     if (pOt == null) resultsSummary.NumFailures++;

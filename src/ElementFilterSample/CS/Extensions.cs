@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ara3D.RevitSampleBrowser.ViewFilters.CS
+namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     /// <summary>
     ///     Generic utility class used to extend enum parse related methods

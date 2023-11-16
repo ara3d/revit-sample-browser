@@ -2,8 +2,9 @@
 
 using System;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
     /// <summary>
     ///     This form contains a property grid control to modify the property of hosted sweep.

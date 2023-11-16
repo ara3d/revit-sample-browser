@@ -3,8 +3,9 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
     /// <summary>
     ///     This class is intent to convert CreationData to String.

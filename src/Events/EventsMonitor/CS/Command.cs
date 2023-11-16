@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.EventsMonitor.CS
+namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
     /// <summary>
     ///     This class inherits IExternalCommand interface and used to retrieve the events setting

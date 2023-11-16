@@ -17,7 +17,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web.Script.Serialization;
 using System.Windows;
-using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Migration;
+using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
 using Microsoft.Win32;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View

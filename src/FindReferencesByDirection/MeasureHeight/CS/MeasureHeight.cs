@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.MeasureHeight.CS
+namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.MeasureHeight.CS
 {
     /// <summary>
     ///     Calculate the height above the ground floor of a selected skylight.

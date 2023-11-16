@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.PointCurveCreation.CS
+namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

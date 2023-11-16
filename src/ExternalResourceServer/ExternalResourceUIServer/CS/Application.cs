@@ -15,7 +15,7 @@
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ExternalResourceUIServer.CS
+namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServer.CS
 {
     /// <summary>
     ///     <para>Implements the Revit add-in interface IExternalApplication.</para>

@@ -2,8 +2,10 @@
 
 using System;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
     /// <summary>
     ///     This is the main form. It is the entry to create a new hosted sweep or to modify

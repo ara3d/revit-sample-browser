@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.ViewFilters.CS
+namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     /// <summary>
     ///     UI form to display the view filters information

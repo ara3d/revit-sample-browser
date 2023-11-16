@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.BRepBuilderExample.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
     [Transaction(TransactionMode.Manual)]
     public class CreateNurbs : IExternalCommand

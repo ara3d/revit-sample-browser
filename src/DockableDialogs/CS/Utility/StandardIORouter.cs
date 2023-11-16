@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Controls;
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility
 {
     /// <summary>
     ///     A simple utility class to route calls from Console.WriteLine and other standard IO to

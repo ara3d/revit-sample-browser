@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
 {
     /// <summary>
     ///     It contains a dialog which provides the options of importing dwg format

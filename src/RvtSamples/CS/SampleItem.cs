@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace RvtSamples
+namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
 {
     /// <summary>
     ///     The class contains information of a sample item to be added into samples menu

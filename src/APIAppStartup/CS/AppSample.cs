@@ -16,7 +16,7 @@ using System.Threading;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace APIAppStartup
+namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

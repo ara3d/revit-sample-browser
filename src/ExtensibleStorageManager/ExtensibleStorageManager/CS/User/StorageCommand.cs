@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using SchemaWrapperTools;
 
-namespace ExtensibleStorageManager
+namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.User
 {
     /// <summary>
     ///     An enum to select which sample schema to create.

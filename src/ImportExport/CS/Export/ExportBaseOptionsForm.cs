@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     /// <summary>
     ///     Provide a dialog which provides the options of lower priority information for exporting dwg format

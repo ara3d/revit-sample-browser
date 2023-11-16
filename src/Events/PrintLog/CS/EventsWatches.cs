@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace Ara3D.RevitSampleBrowser.PrintLog.CS
+namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
 {
     /// <summary>
     ///     This class consists of two watches for view print and document print processes.

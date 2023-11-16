@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.EnergyAnalysisModel.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

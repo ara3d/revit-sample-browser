@@ -3,7 +3,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.PrintLog.CS
+namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
 {
     /// <summary>
     ///     This class implements the methods of interface IExternalApplication and register Print related events.

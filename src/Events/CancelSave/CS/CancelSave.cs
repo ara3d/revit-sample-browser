@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.RevitAddIns;
 
-namespace Ara3D.RevitSampleBrowser.CancelSave.CS
+namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
 {
     /// <summary>
     ///     This class is an external application which checks whether "Project Status" is updated

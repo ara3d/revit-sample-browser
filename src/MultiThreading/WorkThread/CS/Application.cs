@@ -20,7 +20,7 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Ara3D.RevitSampleBrowser.WorkThread.CS
+namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

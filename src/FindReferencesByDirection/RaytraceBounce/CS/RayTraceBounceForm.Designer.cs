@@ -1,6 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-namespace Ara3D.RevitSampleBrowser.RayTraceBounce.CS
+namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
 {
    partial class RayTraceBounceForm
    {

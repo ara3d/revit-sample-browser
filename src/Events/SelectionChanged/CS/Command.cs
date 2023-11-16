@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
     /// <summary>
     ///     This class inherits IExternalCommand interface and is used to show the SelectionChanged event

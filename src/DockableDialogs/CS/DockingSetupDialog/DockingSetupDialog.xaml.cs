@@ -14,9 +14,10 @@
 
 using System;
 using System.Windows;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
 {
     /// <summary>
     ///     Interaction logic for DockingSetupDialog.xaml

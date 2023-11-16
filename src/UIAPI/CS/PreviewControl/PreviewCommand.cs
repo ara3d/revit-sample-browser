@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.UIAPI.CS
+namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 {
     [Transaction(TransactionMode.Manual)]
     public class PreviewCommand : IExternalCommand

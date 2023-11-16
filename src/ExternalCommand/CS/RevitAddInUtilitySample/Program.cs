@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Ara3D.RevitSampleBrowser.RevitAddInUtilitySample.CS
+namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
 {
     internal static class RevitAddInUtilitySample
     {

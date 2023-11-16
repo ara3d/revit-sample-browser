@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.RayTraceBounce.CS
+namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using Autodesk.Revit.DB;
 
-namespace Revit.Samples.DirectionCalculation
+namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
 {
     /// <summary>
     ///     Base class for "Find South Facing..." utilities.

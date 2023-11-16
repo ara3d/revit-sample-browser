@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Ara3D.RevitSampleBrowser.ModelessForm_ExternalEvent.CS
+namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_ExternalEvent.CS
 {
     /// <summary>
     ///     A list of requests the dialog has available

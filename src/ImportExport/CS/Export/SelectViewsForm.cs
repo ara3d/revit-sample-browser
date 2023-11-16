@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 using View = Autodesk.Revit.DB.View;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     /// <summary>
     ///     Provide a dialog which lets users choose views to export.

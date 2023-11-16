@@ -5,7 +5,7 @@ using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Events;
 
-namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
     /// <summary>
     ///     This class is used to extend SelectionChangedEventArgs with GetInfo method

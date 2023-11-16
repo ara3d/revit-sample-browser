@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.ProximityDetection_WallJoinControl.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
 {
     /// <summary>
     ///     The form that show the operations and results

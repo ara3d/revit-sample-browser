@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
 
-namespace Ara3D.RevitSampleBrowser.EventsMonitor.CS
+namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
     /// <summary>
     ///     This class is implemented to make sample autotest.

@@ -7,7 +7,7 @@ using System.Drawing.Drawing2D;
 using Autodesk.Revit.DB;
 using Color = System.Drawing.Color;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 {
     /// <summary>
     ///     This class is intent to display element's wire-frame with C# GDI.

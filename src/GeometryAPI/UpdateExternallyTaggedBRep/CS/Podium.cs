@@ -2,7 +2,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.UpdateExternallyTaggedBRep.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
     internal class Podium
     {

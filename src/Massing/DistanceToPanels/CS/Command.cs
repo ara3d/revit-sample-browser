@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DistanceToPanels.CS
+namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommand.

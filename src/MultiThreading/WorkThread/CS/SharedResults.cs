@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Ara3D.RevitSampleBrowser.WorkThread.CS
+namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
     /// <summary>
     ///     This class is for exchange of results between the

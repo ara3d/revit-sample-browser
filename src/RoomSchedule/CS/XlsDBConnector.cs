@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 
-namespace Ara3D.RevitSampleBrowser.RoomSchedule
+namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
     ///     An integrated class to connect .xls data source, retrieve / update data

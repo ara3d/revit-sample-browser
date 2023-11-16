@@ -8,7 +8,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
-namespace Ara3D.RevitSampleBrowser.RoomSchedule
+namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
     ///     Iterates through the rooms in the project and get the information of all the rooms

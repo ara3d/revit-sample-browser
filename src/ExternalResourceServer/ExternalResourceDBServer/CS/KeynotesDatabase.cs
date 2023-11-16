@@ -3,7 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.ExternalResourceDBServer.CS
+namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServer.CS
 {
     /// <summary>
     ///     A "fake" keynote database used to demonstrate how Revit keynote data can

@@ -1,4 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using System;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ using Form = System.Windows.Forms.Form;
 using RView = Autodesk.Revit.DB.View;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
-namespace Ara3D.RevitSampleBrowser.UIAPI.CS
+namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 {
     public partial class PreviewModel : Form
     {
@@ -128,9 +129,9 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
             //if (dbItem.UniqueId.ToLower().CompareTo(currentView.UniqueId.ToLower()) != 0)
             //    return;
 
-            var vc = _elementHostWPF.Child as PreviewControl;
+            var vc = _elementHostWPF.Child as Autodesk.Revit.UI.PreviewControl;
             vc?.Dispose();
-            _elementHostWPF.Child = new PreviewControl(m_dbDocument, dbItem.Id);
+            _elementHostWPF.Child = new Autodesk.Revit.UI.PreviewControl(m_dbDocument, dbItem.Id);
             m_currentDbViewId = dbItem.Id;
         }
 

@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-namespace Ara3D.RevitSampleBrowser.Custom2DExporter.CS
+namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
     partial class Export2DView
     {

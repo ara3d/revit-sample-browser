@@ -1,7 +1,8 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using System.Windows;
 
-namespace ExtensibleStorageManager
+namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.User
 {
     /// <summary>
     ///     A class for a Window with a TextBox for displaying many lines of text data.

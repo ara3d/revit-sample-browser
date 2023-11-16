@@ -5,8 +5,9 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
     /// <summary>
     ///     This class is intent to provide a model dialog in property grid control.

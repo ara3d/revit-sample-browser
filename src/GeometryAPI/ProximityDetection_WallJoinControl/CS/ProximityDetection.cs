@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.ProximityDetection_WallJoinControl.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinControl.CS
 {
     /// <summary>
     ///     The class that is responsible for proximity detection

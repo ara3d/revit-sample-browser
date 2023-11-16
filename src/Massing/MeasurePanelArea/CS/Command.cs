@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.MeasurePanelArea.CS
+namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
-namespace Ara3D.RevitSampleBrowser.NewRoof.RoofsManager.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
 {
     /// <summary>
     ///     The FootPrintRoofManager class is to manage the creation of the footprint roof.

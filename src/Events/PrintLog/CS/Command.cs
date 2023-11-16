@@ -8,7 +8,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.PrintLog.CS
+namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
 {
     /// <summary>
     ///     Class used to call API to raise ViewPrint and DocumentPrint events

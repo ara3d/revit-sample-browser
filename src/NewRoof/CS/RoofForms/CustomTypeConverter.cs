@@ -8,7 +8,7 @@ using System.Globalization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
     ///     The LevelConverter class is inherited from the TypeConverter class which is used to

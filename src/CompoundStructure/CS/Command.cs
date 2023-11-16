@@ -8,7 +8,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.CompoundStructureCreation.CS
+namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
 {
     /// <summary>
     ///     This command allows to create vertical CompoundStructure and applying to walls.

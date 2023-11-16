@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DockableDiagnostics.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents
 {
     internal class MacroApiExternalEventHandler : IExternalEventHandler
     {

@@ -3,7 +3,7 @@
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
     ///     The RoofItem is used to display a roof info in the ListView as a ListViewItem.

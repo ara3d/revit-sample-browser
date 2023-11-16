@@ -4,7 +4,7 @@ using System.Timers;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
 
-namespace Ara3D.RevitSampleBrowser.TypeRegeneration.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
 {
     /// <summary>
     ///     The form is used to show the result

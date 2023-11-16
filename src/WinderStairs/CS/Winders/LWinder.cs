@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
+namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
     /// <summary>
     ///     It represents an L-shape winder and consists of two straight runs and one winder corner.

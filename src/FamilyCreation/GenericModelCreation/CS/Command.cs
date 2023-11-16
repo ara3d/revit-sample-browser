@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Ara3D.RevitSampleBrowser.GenericModelCreation.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

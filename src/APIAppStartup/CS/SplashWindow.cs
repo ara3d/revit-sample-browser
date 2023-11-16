@@ -1,8 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using System.Threading;
 using System.Windows.Forms;
 
-namespace APIAppStartup
+namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
 {
     public delegate void DelegateCloseSplash();
 

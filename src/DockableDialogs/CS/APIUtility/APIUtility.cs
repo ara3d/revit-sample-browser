@@ -2,9 +2,10 @@
 
 using System;
 using System.Text;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility
 {
     /// <summary>
     ///     A simple class to manage an interface into the Revit API.

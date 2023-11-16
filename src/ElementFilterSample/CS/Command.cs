@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ViewFilters.CS
+namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     /// <summary>
     ///     To add an external command to Autodesk Revit,

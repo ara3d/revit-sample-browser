@@ -14,10 +14,13 @@
 
 using System;
 using System.Windows.Media.Imaging;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.TopLevelCommands;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
+namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication
@@ -29,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
         internal static ThisApplication ThisApp;
         private ApiUtility m_apiUtility;
 
-        private MainPage m_mainPage;
+        private MainPage.MainPage m_mainPage;
 
         public DockablePaneId MainPageDockablePaneId => Globals.SmUserDockablePaneId;
 
@@ -103,7 +106,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
         /// </summary>
         public void CreateWindow()
         {
-            m_mainPage = new MainPage();
+            m_mainPage = new MainPage.MainPage();
         }
 
         /// <summary>
@@ -138,7 +141,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS
             return isAvailable;
         }
 
-        public MainPage GetMainWindow()
+        public MainPage.MainPage GetMainWindow()
         {
             if (!IsMainWindowAvailable())
                 throw new InvalidOperationException("Main window not constructed.");

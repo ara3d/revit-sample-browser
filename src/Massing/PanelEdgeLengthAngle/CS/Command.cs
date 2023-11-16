@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.PanelEdgeLengthAngle.CS
+namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

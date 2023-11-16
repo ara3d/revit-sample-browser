@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
-namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
     /// <summary>
     ///     This class is an external application which monitors when the selection is changed.

@@ -8,7 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-namespace Ara3D.RevitSampleBrowser.Custom2DExporter.CS
+namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.Custom2DExporter.CS
             out ResultsSummary resultsSummary)
         {
             var context = new TessellatedGeomAndText2DExportContext(out points);
-            var exporter = new CustomExporter(exportableView.Document, context);
+            var exporter = new Autodesk.Revit.DB.CustomExporter(exportableView.Document, context);
             exporter.IncludeGeometricObjects = includeGeometricObjects;
             exporter.Export2DIncludingAnnotationObjects = export2DIncludingAnnotationObjects;
             exporter.Export2DGeometricObjectsIncludingPatternLines = export2DGeometricObjectsIncludingPatternLines;

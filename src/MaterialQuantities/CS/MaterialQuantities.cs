@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Revit.Samples.MaterialQuantities
+namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
 {
     /// <summary>
     ///     Outputs an analysis of the materials that make up walls, floors, and roofs, and displays the output in Excel.
@@ -226,7 +226,7 @@ namespace Revit.Samples.MaterialQuantities
         /// </summary>
         private void DeleteAllCuttingElements()
         {
-            new List<ElementFilter>();
+            new List<Autodesk.Revit.DB.ElementFilter>();
             var collector = new FilteredElementCollector(Doc);
 
             // (Type == FamilyInstance && (Category == Door || Category == Window) || Type == Opening

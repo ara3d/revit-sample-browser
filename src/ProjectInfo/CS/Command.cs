@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;

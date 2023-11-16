@@ -5,7 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.BRepBuilderExample.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
     /// <summary>
     ///     Implement method Execute of this class as an external command for Revit.

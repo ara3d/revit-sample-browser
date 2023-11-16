@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Ara3D.RevitSampleBrowser.ChangesMonitor.CS
+namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
 {
     /// <summary>
     ///     The UI to show the change history logs. This class is not the main one just a assistant

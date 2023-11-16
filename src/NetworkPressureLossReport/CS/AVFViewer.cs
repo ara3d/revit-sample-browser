@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport
+namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
     public class AvfViewer
     {

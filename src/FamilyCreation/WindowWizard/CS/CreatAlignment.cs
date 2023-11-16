@@ -4,7 +4,7 @@ using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Document = Autodesk.Revit.DB.Document;
 
-namespace Ara3D.RevitSampleBrowser.WindowWizard.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     /// <summary>
     ///     The class allows users to create alignment

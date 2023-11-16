@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using Autodesk.Revit.ApplicationServices;
 
-namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
+namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
     /// <summary>
     ///     A helper class to find paths of .rfa family files in a document.

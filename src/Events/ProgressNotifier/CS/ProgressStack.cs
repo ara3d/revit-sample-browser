@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Text;
 using Autodesk.Revit.DB.Events;
 
-namespace Ara3D.RevitSampleBrowser.ProgressNotifier.CS
+namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 {
     /// <summary>
     ///     A collection of ProgressItem objects arranged in a stack

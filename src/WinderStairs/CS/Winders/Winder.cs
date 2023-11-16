@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
-namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
+namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
     /// <summary>
     ///     It represents a winder stairs, might include multiple straight runs and winder corners.

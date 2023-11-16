@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.AutoJoin.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 {
     /// <summary>
     ///     Join all the overlapping generic forms in this document.

@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data;
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 {
     /// <summary>
     ///     This form is intent to fetch edges for hosted sweep creation or modification.

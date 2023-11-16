@@ -20,7 +20,7 @@ using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.CS
+namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.SpatialFieldGradient.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

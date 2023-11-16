@@ -3,7 +3,7 @@
 using System.Reflection;
 using Autodesk.Revit.UI;
 
-namespace ExtensibleStorageManager
+namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.Application
 {
     public class Application : IExternalApplication
     {

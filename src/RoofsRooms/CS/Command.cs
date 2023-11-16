@@ -205,7 +205,7 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
         private List<Element> GetRoomsElements()
         {
             var array = new List<Element>();
-            ElementFilter roomSpaceFilter = new LogicalOrFilter(new RoomFilter(), new SpaceFilter());
+            var roomSpaceFilter = new LogicalOrFilter(new RoomFilter(), new SpaceFilter());
             var collector = new FilteredElementCollector(m_document);
             array.AddRange(collector.WherePasses(roomSpaceFilter).ToElements());
             return array;

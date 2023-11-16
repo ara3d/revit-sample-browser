@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
+namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
     /// <summary>
     ///     It represents a U-shape winder and consists of three straight runs and two winder corners.

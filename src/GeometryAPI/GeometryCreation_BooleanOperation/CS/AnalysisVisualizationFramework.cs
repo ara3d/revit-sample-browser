@@ -5,7 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Ara3D.RevitSampleBrowser.GeometryCreation_BooleanOperation.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation.CS
 {
     internal class AnalysisVisualizationFramework
     {

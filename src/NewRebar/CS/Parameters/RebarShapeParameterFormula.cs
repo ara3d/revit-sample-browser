@@ -3,7 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters
 {
     /// <summary>
     ///     This class wraps a formula parameter which will be the dimension of
@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
         /// <param name="shapeDef">RebarShapeDefinition proxy</param>
         /// <param name="name">Parameter name</param>
         /// <param name="formula">Parameter formula sting</param>
-        public RebarShapeParameterFormula(RebarShapeDef shapeDef, string name, string formula)
+        public RebarShapeParameterFormula(RebarShapeDef.RebarShapeDef shapeDef, string name, string formula)
             : base(shapeDef, name)
         {
             m_formula = formula;

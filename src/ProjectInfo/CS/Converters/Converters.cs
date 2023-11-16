@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
+namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
     /// <summary>
     ///     Type converter for wrapper classes

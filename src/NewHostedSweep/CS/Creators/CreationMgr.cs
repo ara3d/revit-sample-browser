@@ -1,8 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
+using Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 {
     /// <summary>
     ///     This is the manager of all hosted sweep creators, it contains all the creators

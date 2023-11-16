@@ -3,12 +3,12 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.NewRoof.RoofsManager.CS;
+using Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
-namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
+namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
     ///     The main form to create or delete roof in Revit.
@@ -16,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
     public partial class RoofForm : Form
     {
         // A reference to the roofs manager
-        private readonly RoofsManager.CS.RoofsManager m_roofsManager;
+        private readonly RoofsManager.RoofsManager m_roofsManager;
 
         // To store the extrusion start and extrusion end value for creating extrusion roof.
         private double m_start, m_end;
@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.RoofForms.CS
         ///     The construct of the RoofForm class.
         /// </summary>
         /// <param name="roofsManager">A reference to the roofs manager</param>
-        public RoofForm(RoofsManager.CS.RoofsManager roofsManager)
+        public RoofForm(RoofsManager.RoofsManager roofsManager)
         {
             m_roofsManager = roofsManager;
             m_start = -10.0;

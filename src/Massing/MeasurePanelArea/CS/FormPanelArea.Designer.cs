@@ -1,5 +1,5 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
-namespace Ara3D.RevitSampleBrowser.MeasurePanelArea.CS
+namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
 {
     partial class FrmPanelArea
     {

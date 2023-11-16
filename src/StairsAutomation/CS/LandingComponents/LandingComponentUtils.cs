@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
+namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
 {
     /// <summary>
     ///     Utilities used in processing of landings.

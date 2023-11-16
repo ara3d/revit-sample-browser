@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Point = System.Drawing.Point;
 
-namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS
+namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 {
     /// <summary>
     ///     This class is intent to convenience the geometry transformations.

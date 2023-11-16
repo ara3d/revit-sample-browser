@@ -11,7 +11,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
 
-namespace Ara3D.RevitSampleBrowser.MultithreadedCalculation.CS
+namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedCalculation.CS
 {
     /// <summary>
     ///     Command to set the target element and begin the multithreaded calculation.

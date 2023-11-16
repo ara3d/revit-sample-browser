@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ModelessForm_ExternalEvent.CS
+namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_ExternalEvent.CS
 {
     /// <summary>
     ///     The class of our modeless dialog.

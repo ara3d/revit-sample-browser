@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.CancelSave.CS
+namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
 {
     /// <summary>
     ///     One log file will be created by this class for tracking events raise.

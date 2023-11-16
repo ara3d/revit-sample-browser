@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
+namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
 {
     /// <summary>
     ///     This form is used to collect parameters for LWinder creation. It also validates the input

@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Ara3D.RevitSampleBrowser.ModelessForm_IdlingEvent.CS
+namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
 {
     /// <summary>
     ///     The class of our modeless dialog.

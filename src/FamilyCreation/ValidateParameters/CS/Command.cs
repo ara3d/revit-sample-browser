@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ValidateParameters.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
 {
     /// <summary>
     ///     A class inherits IExternalCommand interface.

@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS
+namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
     /// <summary>
     /// </summary>

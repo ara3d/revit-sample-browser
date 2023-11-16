@@ -2,9 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints;
 using Autodesk.Revit.DB.Structure;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
 {
     /// <summary>
     ///     This class wraps RebarShapeDefinitionByArc.

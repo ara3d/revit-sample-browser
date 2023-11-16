@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
+namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
 {
     /// <summary>
     ///     It represents a winder region used to connect straight runs. For L-shape stairs, there is

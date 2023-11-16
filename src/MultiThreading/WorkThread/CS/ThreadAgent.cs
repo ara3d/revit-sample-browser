@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.WorkThread.CS
+namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
     /// <summary>
     ///     A main class of the delegated thread.

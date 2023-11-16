@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
     /// <summary>
     ///     One log file will be created by this class for tracking events raised.

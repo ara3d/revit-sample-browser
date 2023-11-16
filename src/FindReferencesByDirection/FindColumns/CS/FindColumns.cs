@@ -6,7 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.FindColumns.CS
+namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
 {
     /// <summary>
     ///     Find all walls that have embedded columns in them, and the ids of those embedded columns.

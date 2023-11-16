@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
-namespace Ara3D.RevitSampleBrowser.EnergyAnalysisModel.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
 {
     public class EnergyAnalysisModel
     {

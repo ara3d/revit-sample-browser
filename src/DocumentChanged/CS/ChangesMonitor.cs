@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ChangesMonitor.CS
+namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
 {
     /// <summary>
     ///     A class inherits IExternalApplication interface and provide an entry of the sample.

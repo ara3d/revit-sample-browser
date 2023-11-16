@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.AutoJoin.CS
+namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 {
     /// <summary>
     ///     Tell if two geometry objects are overlapping or not.

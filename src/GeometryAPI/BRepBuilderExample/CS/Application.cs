@@ -21,7 +21,7 @@ using Ara3D.RevitSampleBrowser.BRepBuilderExample.CS.Properties;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.BRepBuilderExample.CS
+namespace Ara3D.RevitSampleBrowser.GeometryAPI.BRepBuilderExample.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalApplication

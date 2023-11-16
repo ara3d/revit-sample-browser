@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 using RvtSamples.Properties;
 
-namespace RvtSamples
+namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
 {
     /// <summary>
     ///     Main external application class.

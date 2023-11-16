@@ -22,7 +22,7 @@ using System.Xml.Serialization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-namespace SchemaWrapperTools
+namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS
 {
     /// <summary>
     ///     This class provides a simpler level of access to the

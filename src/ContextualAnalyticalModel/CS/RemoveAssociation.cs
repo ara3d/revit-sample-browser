@@ -1,11 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace ContextualAnalyticalModel
+namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     /// <summary>
     ///     Implements the Revit add-in interface IExternalCommand

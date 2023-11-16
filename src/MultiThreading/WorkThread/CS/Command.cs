@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
-namespace Ara3D.RevitSampleBrowser.WorkThread.CS
+namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

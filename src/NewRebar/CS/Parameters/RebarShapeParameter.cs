@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using Autodesk.Revit.DB;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters
 {
     /// <summary>
     ///     This class wraps an Parameter object which will be added
@@ -15,14 +15,14 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
         /// <summary>
         ///     RebarShape definition proxy object.
         /// </summary>
-        protected readonly RebarShapeDef RebarShapeDef;
+        protected readonly RebarShapeDef.RebarShapeDef RebarShapeDef;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="shapeDef">RebarShapeDefinition proxy</param>
         /// <param name="name">Parameter name</param>
-        protected RebarShapeParameter(RebarShapeDef shapeDef, string name)
+        protected RebarShapeParameter(RebarShapeDef.RebarShapeDef shapeDef, string name)
         {
             RebarShapeDef = shapeDef;
             Name = name;

@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter
 {
     /// <summary>
     ///     Type converter between RebarShapeParameter and string is provided for property grid.
     /// </summary>
-    internal class TypeConverterRebarShapeParameter : TypeConverter
+    internal class TypeConverterRebarShapeParameter : System.ComponentModel.TypeConverter
     {
         /// <summary>
         ///     RebarShape parameters list.

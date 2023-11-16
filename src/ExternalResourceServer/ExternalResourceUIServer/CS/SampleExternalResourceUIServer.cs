@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Ara3D.RevitSampleBrowser.ExternalResourceDBServer.CS;
+using Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServer.CS;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ExternalResourceUIServer.CS
+namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServer.CS
 {
     internal class SampleExternalResourceUiServer : IExternalResourceUIServer
     {

@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.Events;
 using Microsoft.Win32;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
-namespace Ara3D.RevitSampleBrowser.ProgressNotifier.CS
+namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml

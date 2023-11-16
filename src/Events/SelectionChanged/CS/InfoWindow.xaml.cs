@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using SelectionChangedEventArgs = Autodesk.Revit.UI.Events.SelectionChangedEventArgs;
 
-namespace Ara3D.RevitSampleBrowser.SelectionChanged.CS
+namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
     /// <summary>
     ///     Interaction logic for InfoWindow.xaml

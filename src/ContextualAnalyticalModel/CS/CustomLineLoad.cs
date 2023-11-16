@@ -7,7 +7,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-namespace ContextualAnalyticalModel
+namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

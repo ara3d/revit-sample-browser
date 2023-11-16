@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using Autodesk.RevitAddIns;
 
-namespace Ara3D.RevitSampleBrowser.RevitAddInUtilitySample.CS
+namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
 {
     /// <summary>
     ///     Demonstrates how to use RevitAddInUtility.dll to create or edit addin manifest file.

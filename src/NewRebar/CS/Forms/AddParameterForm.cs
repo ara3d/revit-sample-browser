@@ -4,9 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.NewRebar.CS
+namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 {
     /// <summary>
     ///     This form provides an entrance for user to add parameters to RebarShape.

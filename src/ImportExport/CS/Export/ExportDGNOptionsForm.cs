@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.ImportExport.CS
+namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
 {
     /// <summary>
     ///     Provide a dialog which provides the options for exporting dgn format

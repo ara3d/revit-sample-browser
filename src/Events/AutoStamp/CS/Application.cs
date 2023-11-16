@@ -3,7 +3,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.AutoStamp.CS
+namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
 {
     /// <summary>
     ///     This class implements the methods of interface IExternalApplication and register View Print related events.

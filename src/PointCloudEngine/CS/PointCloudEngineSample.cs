@@ -10,7 +10,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
-namespace Ara3D.RevitSampleBrowser.CS.PointCloudEngine
+namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     /// <summary>
     ///     ExternalApplication used to register the point cloud engines managed by this sample.
