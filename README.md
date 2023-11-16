@@ -49,6 +49,7 @@ If you have a suggested code fix or improvement please make a pull-request.
 If you have comments or questions please file an issue. 
 If you find the tool useful, please tell others about it.
 
-## References 
+# Guidelines
 
-The project was inspired by [Jeremy Tammik's Revit SDK Samples](https://github.com/jeremytammik/RevitSdkSamples). 
+Remember, open-source software is a generous gift from people who work extremely had for very little reward. 
+Be patient, kind, and supportive!
