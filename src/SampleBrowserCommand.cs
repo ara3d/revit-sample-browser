@@ -12,6 +12,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser
 {
+
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.UsingCommandData)]
@@ -20,6 +21,27 @@ namespace Ara3D.RevitSampleBrowser
         public SampleBrowserMainForm Form { get; private set; }
         public ExternalCommandData CommandData { get; private set; }
         public GenericExternalEventHandler EventHandler { get; } = new GenericExternalEventHandler();
+        public LoggingListener CurrentListener { get; set; }
+
+        public class LoggingListener : TraceListener
+        {
+            public RichTextBox TextBox { get; }
+
+            public LoggingListener(RichTextBox tetBox)
+                => TextBox = tetBox;
+
+            public override void Write(string message)
+            {
+                if (!TextBox.IsDisposed)
+                    TextBox.AppendText(message);
+            }
+
+            public override void WriteLine(string message)
+            {
+                if (!TextBox.IsDisposed)
+                    TextBox.AppendText(message + Environment.NewLine);
+            }
+        }
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -71,13 +93,26 @@ namespace Ara3D.RevitSampleBrowser
                 Form.listView1.SelectedIndexChanged += ListView1_SelectedIndexChanged;
                 Form.listView1.FullRowSelect = true;
                 Form.listView1.MouseDoubleClick += ListView1_MouseDoubleClick;
+                
                 Form.Show();
+                CurrentListener = new LoggingListener(Form.logTextBox);
+                Debug.Listeners.Add(CurrentListener);
+                Form.FormClosing += Form_FormClosing;
                 return Result.Succeeded;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
                 return Result.Failed;
+            }
+        }
+
+        private void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (CurrentListener != null)
+            {
+                Debug.Listeners.Remove(CurrentListener);
+                CurrentListener = null;
             }
         }
 
@@ -90,6 +125,7 @@ namespace Ara3D.RevitSampleBrowser
 
                 if (item?.Tag is SampleData sample)
                 {
+                    Debug.WriteLine($"Activating plug-in {sample.Name}");
                     EventHandler.Raise(() => 
                         sample.Activate(CommandData, SampleBrowserApplication.Application),
                         $"Activate sample {item.Name}");
