@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
     /// <summary>
     ///     A class capable of formatting schedules with alternating background colors on the columns
     /// </summary>
-    internal class ScheduleFormatter : IUpdater
+    public class ScheduleFormatter : IUpdater
     {
         /// <summary>
         ///     Constructs a new schedule formatter utility.

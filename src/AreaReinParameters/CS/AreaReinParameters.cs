@@ -16,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    internal class Command : IExternalCommand
+    public class Command : IExternalCommand
     {
         private AreaReinforcement m_areaRein;
 
@@ -127,7 +127,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    internal class RebarParas : IExternalCommand
+    public class RebarParas : IExternalCommand
     {
         public Result Execute(
             ExternalCommandData revit,

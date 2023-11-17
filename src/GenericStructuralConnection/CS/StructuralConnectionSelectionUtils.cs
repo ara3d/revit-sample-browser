@@ -12,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
     /// <summary>
     ///     Utility class to select connections or connection input elements.
     /// </summary>
-    internal class StructuralConnectionSelectionUtils
+    public class StructuralConnectionSelectionUtils
     {
         /// <summary>
         ///     Static method to select structural connections.

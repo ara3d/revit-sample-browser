@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
     /// <summary>
     ///     Data class which stores the information for exporting fbx format
     /// </summary>
-    internal class ExportFbxData : ExportData
+    public class ExportFbxData : ExportData
     {
         /// <summary>
         ///     Constructor

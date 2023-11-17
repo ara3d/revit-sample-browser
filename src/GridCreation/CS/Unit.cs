@@ -7,7 +7,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
     /// <summary>
     ///     Provides static functions to convert unit
     /// </summary>
-    internal static class Unit
+    public static class Unit
     {
         /// <summary>
         ///     Convert the value get from RevitAPI to the value indicated by ForgeTypeId

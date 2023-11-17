@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
     /// <summary>
     ///     The ZoneManager class is used to manage the Zone elements in the current document.
     /// </summary>
-    internal class ZoneManager
+    public class ZoneManager
     {
         private readonly ExternalCommandData m_commandData;
         private Level m_currentLevel;

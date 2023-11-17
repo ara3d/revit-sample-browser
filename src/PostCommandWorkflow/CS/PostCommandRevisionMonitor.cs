@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
     ///     This class has the capabilities to monitor when a document is saved, and prompt the user to
     ///     add a revision before save takes place.
     /// </summary>
-    internal class PostCommandRevisionMonitor
+    public class PostCommandRevisionMonitor
     {
         /// <summary>
         ///     The binding to the revision command.

@@ -14,21 +14,21 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        public Resources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties.Resources", typeof(Resources).Assembly);
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _new {
+        public static System.Drawing.Bitmap _new {
             get {
                 object obj = ResourceManager.GetObject("new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -65,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap delete {
+        public static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -75,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No curtain system available. Please create some first..
         /// </summary>
-        internal static string HINT_CreateCSFirst {
+        public static string HINT_CreateCSFirst {
             get {
                 return ResourceManager.GetString("HINT_CreateCSFirst", resourceCulture);
             }
@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Created by face array, forbidden to add/remove curtain grids..
         /// </summary>
-        internal static string HINT_CSIsByFaceArray {
+        public static string HINT_CSIsByFaceArray {
             get {
                 return ResourceManager.GetString("HINT_CSIsByFaceArray", resourceCulture);
             }
@@ -93,7 +93,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Curtain system must have at least one curtain grid..
         /// </summary>
-        internal static string HINT_KeepOneCG {
+        public static string HINT_KeepOneCG {
             get {
                 return ResourceManager.GetString("HINT_KeepOneCG", resourceCulture);
             }
@@ -102,7 +102,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please select some curtain grids and make them checked first..
         /// </summary>
-        internal static string HINT_SelectCGFirst {
+        public static string HINT_SelectCGFirst {
             get {
                 return ResourceManager.GetString("HINT_SelectCGFirst", resourceCulture);
             }
@@ -111,7 +111,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please select some curtain systems and make them checked first..
         /// </summary>
-        internal static string HINT_SelectCSFirst {
+        public static string HINT_SelectCSFirst {
             get {
                 return ResourceManager.GetString("HINT_SelectCSFirst", resourceCulture);
             }
@@ -120,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please select some uncovered faces and make them checked first..
         /// </summary>
-        internal static string HINT_SelectFaceFirst {
+        public static string HINT_SelectFaceFirst {
             get {
                 return ResourceManager.GetString("HINT_SelectFaceFirst", resourceCulture);
             }
@@ -129,7 +129,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error! Add curtain grid to the mass failed. The application will be terminated..
         /// </summary>
-        internal static string MSG_AddCGFailed {
+        public static string MSG_AddCGFailed {
             get {
                 return ResourceManager.GetString("MSG_AddCGFailed", resourceCulture);
             }
@@ -138,7 +138,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error! Create curtain system failed. The application will be terminated..
         /// </summary>
-        internal static string MSG_CreateCSFailed {
+        public static string MSG_CreateCSFailed {
             get {
                 return ResourceManager.GetString("MSG_CreateCSFailed", resourceCulture);
             }
@@ -147,7 +147,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error! Please select a parallelepiped mass first. The application will be terminated..
         /// </summary>
-        internal static string MSG_InvalidSelection {
+        public static string MSG_InvalidSelection {
             get {
                 return ResourceManager.GetString("MSG_InvalidSelection", resourceCulture);
             }
@@ -156,7 +156,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Fatal Error! More than 1 curtain system was created. The application will be terminated..
         /// </summary>
-        internal static string MSG_MoreThan1CSCreated {
+        public static string MSG_MoreThan1CSCreated {
             get {
                 return ResourceManager.GetString("MSG_MoreThan1CSCreated", resourceCulture);
             }
@@ -165,7 +165,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error! Remove curtain grid failed. The application will be terminated..
         /// </summary>
-        internal static string MSG_RemoveCGFailed {
+        public static string MSG_RemoveCGFailed {
             get {
                 return ResourceManager.GetString("MSG_RemoveCGFailed", resourceCulture);
             }
@@ -174,7 +174,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Curtain System.
         /// </summary>
-        internal static string TXT_DialogTitle {
+        public static string TXT_DialogTitle {
             get {
                 return ResourceManager.GetString("TXT_DialogTitle", resourceCulture);
             }

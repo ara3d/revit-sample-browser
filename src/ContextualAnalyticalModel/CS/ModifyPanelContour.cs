@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    internal class ModifyPanelContour : IExternalCommand
+    public class ModifyPanelContour : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

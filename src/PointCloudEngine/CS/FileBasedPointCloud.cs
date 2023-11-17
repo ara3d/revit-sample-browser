@@ -35,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
     ///     with the coordinates of the opposing corners, a color, and an option whether or not to randomize
     ///     the generated points.
     /// </example>
-    internal class FileBasedPointCloud : PointCloudAccessBase, IPointCloudAccess
+    public class FileBasedPointCloud : PointCloudAccessBase, IPointCloudAccess
     {
         private readonly string m_fileName;
 

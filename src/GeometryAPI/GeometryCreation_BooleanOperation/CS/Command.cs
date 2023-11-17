@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         /// </summary>
         /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
         /// <returns>The solids materials list</returns>
-        private List<Solid> PrepareSolids(GeometryCreation geometrycreation)
+        private static List<Solid> PrepareSolids(GeometryCreation geometrycreation)
         {
             var resultSolids = new List<Solid>
             {
@@ -78,20 +78,21 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         /// </summary>
         /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
         /// <param name="avf">The object that is responsible for displaying the solids</param>
-        private void CsgTree(GeometryCreation geometrycreation, AnalysisVisualizationFramework avf)
+        private static void CsgTree(GeometryCreation geometrycreation, AnalysisVisualizationFramework avf)
         {
             var materialSolids = PrepareSolids(geometrycreation);
 
             // Operation 1 : Intersect
-            var csgTreeSolid1 = BooleanOperation.BooleanOperation_Intersect(materialSolids[0], materialSolids[1]);
+            var csgTreeSolid1 = materialSolids[0].Intersect(materialSolids[1]);
 
             // Operation 2 : Union
-            var csgTreeSolid2 = BooleanOperation.BooleanOperation_Union(materialSolids[2], materialSolids[3]);
+            var csgTreeSolid2 = materialSolids[2].Union(materialSolids[3]);
+            
             // Operation 3 : Union
-            BooleanOperation.BooleanOperation_Union(ref csgTreeSolid2, materialSolids[4]);
+            csgTreeSolid2.Union(materialSolids[4]);
 
             // Operation 4 : Difference
-            BooleanOperation.BooleanOperation_Difference(ref csgTreeSolid1, csgTreeSolid2);
+            csgTreeSolid1.Difference(csgTreeSolid2);
 
             avf.PaintSolid(csgTreeSolid1, "CSGTree");
         }

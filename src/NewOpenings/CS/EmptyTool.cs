@@ -7,7 +7,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw nothing
     /// </summary>
-    internal class EmptyTool : Tool
+    public class EmptyTool : Tool
     {
         /// <summary>
         ///     Default constructor

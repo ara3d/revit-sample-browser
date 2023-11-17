@@ -12,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
     /// <summary>
     ///     The factory to create the corresponding FrameReinMaker, such as BeamFramReinMaker.
     /// </summary>
-    internal class FrameReinMakerFactory
+    public class FrameReinMakerFactory
     {
         // Private members
         private readonly ExternalCommandData m_commandData; // the ExternalCommandData reference

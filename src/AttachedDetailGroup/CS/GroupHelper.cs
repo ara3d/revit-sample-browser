@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
     /// <summary>
     ///     Utility class for accessing group API functionality.
     /// </summary>
-    internal class GroupHelper
+    public class GroupHelper
     {
         /// <summary>
         ///     Utility method for retrieving the currently selected model group.

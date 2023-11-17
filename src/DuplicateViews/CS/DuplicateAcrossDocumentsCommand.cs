@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
     ///     A command to copy schedules and drafting views across documents.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class DuplicateAcrossDocumentsCommand : IExternalCommand
+    public class DuplicateAcrossDocumentsCommand : IExternalCommand
     {
         /// <summary>
         ///     The command implementation.

@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Dimension on RebarShapeDefByArc.
     /// </summary>
-    internal abstract class ConstraintOnArcShape : ConstraintOnRebarShape
+    public abstract class ConstraintOnArcShape : ConstraintOnRebarShape
     {
         /// <summary>
         ///     Dimension to constrain the arc shape.
@@ -48,7 +48,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Arc length dimension.
     /// </summary>
-    internal class ConstraintArcLength : ConstraintOnArcShape
+    public class ConstraintArcLength : ConstraintOnArcShape
     {
         public ConstraintArcLength(RebarShapeDefByArc def)
             : base(def)
@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Arc chord length dimension.
     /// </summary>
-    internal class ConstraintChordLength : ConstraintOnArcShape
+    public class ConstraintChordLength : ConstraintOnArcShape
     {
         public ConstraintChordLength(RebarShapeDefByArc def)
             : base(def)
@@ -88,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Arc circumference dimension.
     /// </summary>
-    internal class ConstraintCircumference : ConstraintOnArcShape
+    public class ConstraintCircumference : ConstraintOnArcShape
     {
         public ConstraintCircumference(RebarShapeDefByArc def)
             : base(def)
@@ -114,7 +114,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Arc diameter dimension.
     /// </summary>
-    internal class ConstraintDiameter : ConstraintOnArcShape
+    public class ConstraintDiameter : ConstraintOnArcShape
     {
         public ConstraintDiameter(RebarShapeDefByArc def)
             : base(def)
@@ -140,7 +140,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Arc radius dimension.
     /// </summary>
-    internal class ConstraintRadius : ConstraintOnArcShape
+    public class ConstraintRadius : ConstraintOnArcShape
     {
         public ConstraintRadius(RebarShapeDefByArc def)
             : base(def)
@@ -166,7 +166,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Arc Sagittarius length dimension.
     /// </summary>
-    internal class ConstraintSagittaLength : ConstraintOnArcShape
+    public class ConstraintSagittaLength : ConstraintOnArcShape
     {
         public ConstraintSagittaLength(RebarShapeDefByArc def)
             : base(def)

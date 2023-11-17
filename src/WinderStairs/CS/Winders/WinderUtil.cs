@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
     ///     Utility verifies the input parameters, like curves from Revit document.
     ///     It also adapts the input data for winder stairs creation.
     /// </summary>
-    internal class WinderUtil
+    public class WinderUtil
     {
         /// <summary>
         ///     Return the control points from the connected curve elements.

@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw arc.
     /// </summary>
-    internal class ArcTool : Tool
+    public class ArcTool : Tool
     {
         private bool m_isFinished;
 

@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
     ///     This form is used to collect parameters for LWinder creation. It also validates the input
     ///     parameters and will warn if there is any invalid parameters when trying to submit the form.
     /// </summary>
-    internal partial class LWinderOptions : Form
+    public partial class LWinderOptions : Form
     {
         /// <summary>
         ///     Default constructor.
@@ -57,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
         }
 
         /// <summary>
-        ///     Center point offset distance from internal boundary.
+        ///     Center point offset distance from public boundary.
         /// </summary>
         public double CenterOffsetE
         {
@@ -66,7 +66,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
         }
 
         /// <summary>
-        ///     Center point offset distance from internal boundary.
+        ///     Center point offset distance from public boundary.
         /// </summary>
         public double CenterOffsetF
         {

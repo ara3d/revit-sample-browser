@@ -14,21 +14,21 @@ namespace RvtSamples.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        public Resource() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RvtSamples.Properties.Resource", typeof(Resource).Assembly);
@@ -43,7 +43,7 @@ namespace RvtSamples.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -55,7 +55,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to annotations such as notes, detail curves, dimensions and tags..
         /// </summary>
-        internal static string Annotation {
+        public static string Annotation {
             get {
                 return ResourceManager.GetString("Annotation", resourceCulture);
             }
@@ -64,7 +64,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to the ExternalCommand framework, transactions, and event registration..
         /// </summary>
-        internal static string Basics {
+        public static string Basics {
             get {
                 return ResourceManager.GetString("Basics", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to import, export, or print of Revit documents..
         /// </summary>
-        internal static string DataExchange {
+        public static string DataExchange {
             get {
                 return ResourceManager.GetString("DataExchange", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to Revit basic elements such as walls, roofs, floors, levels, grids..
         /// </summary>
-        internal static string Elements {
+        public static string Elements {
             get {
                 return ResourceManager.GetString("Elements", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to family creation and family instances..
         /// </summary>
-        internal static string Families {
+        public static string Families {
             get {
                 return ResourceManager.GetString("Families", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to read and analysis of element geometry including curves and reference planes..
         /// </summary>
-        internal static string Geometry {
+        public static string Geometry {
             get {
                 return ResourceManager.GetString("Geometry", resourceCulture);
             }
@@ -109,7 +109,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to materials and units..
         /// </summary>
-        internal static string Materials {
+        public static string Materials {
             get {
                 return ResourceManager.GetString("Materials", resourceCulture);
             }
@@ -118,7 +118,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains MEP-specific samples..
         /// </summary>
-        internal static string MEP {
+        public static string MEP {
             get {
                 return ResourceManager.GetString("MEP", resourceCulture);
             }
@@ -127,7 +127,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to creation, modification and read of element and shared parameters..
         /// </summary>
-        internal static string Parameters {
+        public static string Parameters {
             get {
                 return ResourceManager.GetString("Parameters", resourceCulture);
             }
@@ -136,7 +136,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to rooms, spaces and areas..
         /// </summary>
-        internal static string RoomsAndSpaces {
+        public static string RoomsAndSpaces {
             get {
                 return ResourceManager.GetString("RoomsAndSpaces", resourceCulture);
             }
@@ -145,7 +145,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains structure-specific samples..
         /// </summary>
-        internal static string Structure {
+        public static string Structure {
             get {
                 return ResourceManager.GetString("Structure", resourceCulture);
             }
@@ -154,7 +154,7 @@ namespace RvtSamples.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Contains samples related to view creation and view properties..
         /// </summary>
-        internal static string Views {
+        public static string Views {
             get {
                 return ResourceManager.GetString("Views", resourceCulture);
             }

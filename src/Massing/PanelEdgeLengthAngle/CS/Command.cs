@@ -266,7 +266,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
     /// <summary>
     ///     This class contains a dictionary which stores the parameter and parameter name pairs
     /// </summary>
-    internal class InstParameters
+    public class InstParameters
     {
         private readonly Dictionary<string, Parameter> m_parameters = new Dictionary<string, Parameter>(8);
 

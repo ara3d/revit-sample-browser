@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents
     /// <summary>
     ///     A class to manage the safe execution of events in a modeless dialog.
     /// </summary>
-    internal class ApiExternalEventHandler : IExternalEventHandler
+    public class ApiExternalEventHandler : IExternalEventHandler
     {
         /// <summary>
         ///     Called to execute an API command and update the UI after the command is finished.

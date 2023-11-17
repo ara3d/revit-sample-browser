@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
     /// <summary>
     ///     Data class which stores the information for importing image format
     /// </summary>
-    internal class ImportImageData : ImportData
+    public class ImportImageData : ImportData
     {
         /// <summary>
         ///     Constructor

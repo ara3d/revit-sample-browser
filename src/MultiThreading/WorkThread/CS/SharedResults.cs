@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
     ///     analyzer which displays the results and the work-thread
     ///     that calculates them. All operations are thread-safe;
     /// </summary>
-    internal class SharedResults
+    public class SharedResults
     {
         // If completed
         private bool m_completed;

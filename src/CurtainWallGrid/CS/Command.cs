@@ -12,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    internal class Command : IExternalCommand
+    public class Command : IExternalCommand
     {
         /// <summary>
         ///     The entrance of this example, implements the Execute method of IExternalCommand

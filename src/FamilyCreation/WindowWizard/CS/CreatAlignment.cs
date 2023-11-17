@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
     /// <summary>
     ///     The class allows users to create alignment
     /// </summary>
-    internal class CreateAlignment
+    public class CreateAlignment
     {
         /// <summary>
         ///     store the document

@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
     ///     to display the Spaces is a TreeView, each SpaceNode contains
     ///     a Space element.
     /// </summary>
-    internal class SpaceNode : TreeNode
+    public class SpaceNode : TreeNode
     {
         /// <summary>
         ///     The constructor of SpaceNode class

@@ -16,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
     ///     the main dialog for user and after that a Rebar will be created
     ///     if user click OK button on the main dialog.
     /// </summary>
-    internal class RebarCreator
+    public class RebarCreator
     {
         /// <summary>
         ///     Newly created Rebar.

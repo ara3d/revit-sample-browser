@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
 {
     /// <summary>
     ///     This command places a set of columns in the selected wall.
-    ///     Note that Revit uses Feet as an internal length unit.
+    ///     Note that Revit uses Feet as an public length unit.
     ///     To run this sample,
     ///     (1) load the column family type of "M_Wood Timber Column", "191 x 292mm"
     ///     (It is hard-coded in the program.)
@@ -66,7 +66,7 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
                 }
 
                 //  place columns.
-                double spacing = 5; //  Spacing in feet hard coded. Note: Revit's internal length unit is feet. 
+                double spacing = 5; //  Spacing in feet hard coded. Note: Revit's public length unit is feet. 
                 foreach (Wall wall in walls) FrameWall(rvtApp.Application, wall, spacing, colType);
                 tran.Commit();
 

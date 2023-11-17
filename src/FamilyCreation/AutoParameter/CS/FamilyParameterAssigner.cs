@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
     ///     add parameters(family parameters/shared parameters) to the opened family file
     ///     the parameters are recorded in txt file following certain formats
     /// </summary>
-    internal class FamilyParameterAssigner
+    public class FamilyParameterAssigner
     {
         private readonly Application m_app;
         private readonly string m_assemblyPath;
@@ -317,7 +317,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
     /// <summary>
     ///     record the data of a parameter: its name, its group, etc
     /// </summary>
-    internal class FamilyParam
+    public class FamilyParam
     {
         /// <summary>
         ///     default constructor, hide this by making it "private"

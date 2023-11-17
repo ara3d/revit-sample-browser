@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
     /// <summary>
     ///     This class stores the geometry information of path reinforcement.
     /// </summary>
-    internal class Profile
+    public class Profile
     {
         /// <summary>
         ///     field used to store the bound of the curves of path reinforcement.

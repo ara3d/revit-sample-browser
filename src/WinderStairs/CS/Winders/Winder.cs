@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
     /// <summary>
     ///     It represents a winder stairs, might include multiple straight runs and winder corners.
     /// </summary>
-    internal abstract class Winder
+    public abstract class Winder
     {
         /// <summary>
         ///     Control Points to determine the winder shape(e.g. L or U shape).
@@ -110,7 +110,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
                     // Start the winder creation transaction 
                     winderTransaction.Start(GetType().Name);
 
-                    // The boundaries is consist of internal and external boundaries.
+                    // The boundaries is consist of public and external boundaries.
                     var boundarys = new List<Curve>();
                     boundarys.AddRange(InnerBoundary);
                     boundarys.AddRange(OuterBoundary);
@@ -171,7 +171,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
         }
     }
 
-    internal class StairsEditScopeFailuresPreprocessor : IFailuresPreprocessor
+    public class StairsEditScopeFailuresPreprocessor : IFailuresPreprocessor
     {
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {

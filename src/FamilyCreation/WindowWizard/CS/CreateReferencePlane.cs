@@ -7,7 +7,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
     /// <summary>
     ///     The class is used to create ReferencePlane
     /// </summary>
-    internal class CreateRefPlane
+    public class CreateRefPlane
     {
         /// <summary>
         ///     This method is used to create ReferencePlane along to a host referenceplane with a offset parameter

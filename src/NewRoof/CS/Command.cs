@@ -15,7 +15,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS
     [Journaling(JournalingMode.NoCommandData)]
     public class Command : IExternalCommand
     {
-        // internal buffer
+        // public buffer
 
         /// <summary>
         ///     singleton in the external application

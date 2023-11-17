@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistratio
     ///     return value from IsCommandAvailable function.
     ///     Corresponding command will be disabled when a wall selected by user in this case.
     /// </summary>
-    internal class WallSelection : IExternalCommandAvailability
+    public class WallSelection : IExternalCommandAvailability
     {
         public bool IsCommandAvailable(UIApplication applicationData,
             CategorySet selectedCategories)
@@ -34,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistratio
     ///     return value from IsCommandAvailable function.
     ///     Corresponding command will be disabled if active document is not a 3D view.
     /// </summary>
-    internal class View3D : IExternalCommandAvailability
+    public class View3D : IExternalCommandAvailability
     {
         public bool IsCommandAvailable(UIApplication applicationData,
             CategorySet selectedCategories)

@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
     /// <summary>
     ///     This class implement the algorithm to detect the obstruction and resolve it.
     /// </summary>
-    internal class Resolver
+    public class Resolver
     {
         /// <summary>
         ///     Detector to detect the obstructions.

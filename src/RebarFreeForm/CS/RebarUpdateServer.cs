@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
     /// <summary>
     ///     Class used to represent a structural face that is part of a rebar constraint.
     /// </summary>
-    internal class TargetFace
+    public class TargetFace
     {
         public TargetFace()
         {
@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
     /// <summary>
     ///     Enum defining the custom handles used by this server to identify the different custom constraints
     /// </summary>
-    internal enum BarHandle
+    public enum BarHandle
     {
         FirstHandle,
         SecondHandle,
@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
     ///     - Last bar is the intersection of First Handle target with Third Handle target;
     ///     - All other bars are created between the first and last bar so that they have equal distance between them.
     /// </summary>
-    internal class RebarUpdateServer : IRebarUpdateServer
+    public class RebarUpdateServer : IRebarUpdateServer
     {
         /// <summary>
         ///     SampleGuid represents the Guid used by the Revit ExternalService framework to identify this custom
@@ -112,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
         ///     accordingly.
         /// </summary>
         /// <param name="data">
-        ///     Class used to pass information from the external application to the internal Rebar Element.
+        ///     Class used to pass information from the external application to the public Rebar Element.
         ///     data receives the custom, start and end Rebar handle definitions used by this server
         /// </param>
         /// <returns> true if handle definition was completed successfully, false otherwise</returns>
@@ -131,7 +131,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
         ///     for display of graphical controls during GraphicalConstraintsManager edit mode
         /// </summary>
         /// <param name="data">
-        ///     Class used to pass information between the external application and the internal Rebar Element.
+        ///     Class used to pass information between the external application and the public Rebar Element.
         ///     data exposes geometry to the external application and receives the calculated absolute positions of the handles in
         ///     the model space
         /// </param>
@@ -154,7 +154,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
         ///     Function resolves the User-facing name for the custom-defined Rebar handles
         /// </summary>
         /// <param name="handleNameData">
-        ///     Class used to pass information from the external application to the internal Rebar Element.
+        ///     Class used to pass information from the external application to the public Rebar Element.
         ///     data receives the name for the Rebar Handle it specifies
         /// </param>
         /// <returns> true if operation was completed successfully, false otherwise</returns>
@@ -186,7 +186,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
         ///     3. Distribution Path for MRA;
         /// </summary>
         /// <param name="data">
-        ///     Class used to pass information from the external application to the internal Rebar Element.
+        ///     Class used to pass information from the external application to the public Rebar Element.
         ///     Interfaces with the Rebar Element and exposes information needed for geometric calculation during regeneration,
         ///     such as constrained geometry, state of changed input information, etc.
         ///     Receives the result of the custom constraint calculation and
@@ -341,7 +341,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
         ///     This function is called after the successful execution of GenerateCurves
         /// </summary>
         /// <param name="data">
-        ///     Class used to pass information from the external application to the internal Rebar Element.
+        ///     Class used to pass information from the external application to the public Rebar Element.
         ///     Interfaces with the Rebar Element and exposes information needed for Constraint creation, face searching, and
         ///     receives the result of the Start/End constraint calculation.
         ///     updates are done on the element after the entire function finished successfully.

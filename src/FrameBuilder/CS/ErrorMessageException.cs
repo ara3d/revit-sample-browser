@@ -5,9 +5,9 @@ using System;
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
     /// <summary>
-    ///     pass error message to UI or back to internal error messagebox by Execute method in IExternalCommand
+    ///     pass error message to UI or back to public error messagebox by Execute method in IExternalCommand
     /// </summary>
-    internal class ErrorMessageException : ApplicationException
+    public class ErrorMessageException : ApplicationException
     {
         /// <summary>
         ///     constructor entirely using baseclass'

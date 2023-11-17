@@ -206,7 +206,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
     /// <summary>
     ///     store the warning/error messeges when executing the sample
     /// </summary>
-    internal static class MessageManager
+    public static class MessageManager
     {
         /// <summary>
         ///     store the warning/error messages

@@ -5,7 +5,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS
 {
-    internal class ApplicationAvailabilityClass : IExternalCommandAvailability
+    public class ApplicationAvailabilityClass : IExternalCommandAvailability
     {
         public bool IsCommandAvailable(UIApplication applicationData,
             CategorySet selectedCategories)

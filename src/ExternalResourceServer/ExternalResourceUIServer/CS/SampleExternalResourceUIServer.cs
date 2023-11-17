@@ -10,7 +10,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServer.CS
 {
-    internal class SampleExternalResourceUiServer : IExternalResourceUIServer
+    public class SampleExternalResourceUiServer : IExternalResourceUIServer
     {
         private static readonly Guid MyServerId = new Guid("E9B6C194-62DE-4134-900D-BA8DF7AD33FA");
         private static readonly Guid MyDbServerId = new Guid("5F3CAA13-F073-4F93-BDC2-B7F4B806CDAF");

@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
     /// <summary>
     ///     A class that can export a schedule to HTML.
     /// </summary>
-    internal class ScheduleHtmlExporter
+    public class ScheduleHtmlExporter
     {
         /// <summary>
         ///     The body section of the table.

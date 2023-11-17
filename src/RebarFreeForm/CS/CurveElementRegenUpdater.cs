@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
     /// <summary>
     ///     This updater is used to regen rebar elements whenever a curveElement that was "Selected" is changed
     /// </summary>
-    internal class CurveElementRegenUpdater : IUpdater
+    public class CurveElementRegenUpdater : IUpdater
     {
         private static AddInId _appId;
         private static UpdaterId _updaterId;

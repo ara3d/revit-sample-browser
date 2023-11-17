@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
     ///     TrussGeometry class contains Geometry information of new created Truss,
     ///     and contains methods used to Edit profile of truss.
     /// </summary>
-    internal class TrussGeometry
+    public class TrussGeometry
     {
         private XYZ m_endLocation; //store the end point of truss location
 

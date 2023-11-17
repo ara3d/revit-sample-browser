@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
     /// <summary>
     ///     A common class for users to get some specified element
     /// </summary>
-    internal class Utility
+    public class Utility
     {
         /// <summary>
         ///     This method is used to allow user to get reference plane by name,if there is no proper reference plane,will return

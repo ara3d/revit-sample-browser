@@ -20,7 +20,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS
 {
-    internal class SampleEngine : IDisposable
+    public class SampleEngine : IDisposable
     {
         private readonly List<SampleContext> m_allContext = new List<SampleContext>();
         private readonly UIApplication m_application;

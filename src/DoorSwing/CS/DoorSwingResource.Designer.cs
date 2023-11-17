@@ -14,21 +14,21 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DoorSwingResource {
+    public class DoorSwingResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DoorSwingResource() {
+        public DoorSwingResource() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ara3D.RevitSampleBrowser.DoorSwing.CS.DoorSwingResource", typeof(DoorSwingResource).Assembly);
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS {
         /// <summary>
         ///   Looks up a localized string similar to L.
         /// </summary>
-        internal static string LeftDoor {
+        public static string LeftDoor {
             get {
                 return ResourceManager.GetString("LeftDoor", resourceCulture);
             }
@@ -64,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS {
         /// <summary>
         ///   Looks up a localized string similar to R.
         /// </summary>
-        internal static string RightDoor {
+        public static string RightDoor {
             get {
                 return ResourceManager.GetString("RightDoor", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS {
         /// <summary>
         ///   Looks up a localized string similar to Double.
         /// </summary>
-        internal static string TwoLeaf {
+        public static string TwoLeaf {
             get {
                 return ResourceManager.GetString("TwoLeaf", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS {
         /// <summary>
         ///   Looks up a localized string similar to Double-R.
         /// </summary>
-        internal static string TwoLeafActiveLeafLeft {
+        public static string TwoLeafActiveLeafLeft {
             get {
                 return ResourceManager.GetString("TwoLeafActiveLeafLeft", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS {
         /// <summary>
         ///   Looks up a localized string similar to Double-L.
         /// </summary>
-        internal static string TwoLeafActiveLeafRight {
+        public static string TwoLeafActiveLeafRight {
             get {
                 return ResourceManager.GetString("TwoLeafActiveLeafRight", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS {
         /// <summary>
         ///   Looks up a localized string similar to N/A.
         /// </summary>
-        internal static string Undefined {
+        public static string Undefined {
             get {
                 return ResourceManager.GetString("Undefined", resourceCulture);
             }

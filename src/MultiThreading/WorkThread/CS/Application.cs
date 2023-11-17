@@ -28,7 +28,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
     public class Application : IExternalApplication
     {
         // instance of class Application
-        internal static Application ThisApp;
+        public static Application ThisApp;
 
         // instance of class FaceAnalyzer
         private FaceAnalyzer m_analyzer;

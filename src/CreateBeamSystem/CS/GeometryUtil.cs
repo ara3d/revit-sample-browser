@@ -150,7 +150,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
         }
 
         /// <summary>
-        ///     compare whether 2 double is equal using internal precision
+        ///     compare whether 2 double is equal using public precision
         /// </summary>
         /// <param name="d1">first value</param>
         /// <param name="d2">second value</param>

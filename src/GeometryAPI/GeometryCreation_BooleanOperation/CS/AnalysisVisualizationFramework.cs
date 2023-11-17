@@ -7,7 +7,7 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation.CS
 {
-    internal class AnalysisVisualizationFramework
+    public class AnalysisVisualizationFramework
     {
         /// <summary>
         ///     The singleton instance of AnalysisVisualizationFramework

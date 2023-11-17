@@ -129,7 +129,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 
                     if (!(door.Symbol.ParametersMap.Contains("BasalOpening") &&
                           door.ParametersMap.Contains("InstanceOpening") &&
-                          door.ParametersMap.Contains("Internal Door")))
+                          door.ParametersMap.Contains("public Door")))
                     {
                         message = "Cannot update door parameters. Please customize door opening expression first.";
                         return Result.Failed;
@@ -277,17 +277,17 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         }
 
         /// <summary>
-        ///     Update one door's internalDoor flag which indicates the door is internal door or external door.
+        ///     Update one door's internalDoor flag which indicates the door is public door or external door.
         /// </summary>
         /// <param name="door">one door instance.</param>
         private static void UpdateInternalDoorFlagFeatureofOneDoor(FamilyInstance door)
         {
-            // get the "Internal Door" shared parameter. 
-            var internalDoorFlagParam = door.ParametersMap.get_Item("Internal Door");
+            // get the "public Door" shared parameter. 
+            var internalDoorFlagParam = door.ParametersMap.get_Item("public Door");
 
-            // "Internal Door" is decided based on whether door's ToRoom and FromRoom properties both have values.
-            // 1 means internal door, 0 means external door.
-            if (null != door.ToRoom && null != door.FromRoom) // considered as internal door.
+            // "public Door" is decided based on whether door's ToRoom and FromRoom properties both have values.
+            // 1 means public door, 0 means external door.
+            if (null != door.ToRoom && null != door.FromRoom) // considered as public door.
                 internalDoorFlagParam.Set(1);
             else
                 internalDoorFlagParam.Set(0); // considered as external door.

@@ -24,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
     ///     OnCurve, OnPolyline, OnFaceBegin, OnFaceEdge2D and OnFaceSilhouette2D and return RenderNodeAction.Skip.
     ///     Note3: Special instance transforms may not always be taken into account.
     /// </summary>
-    internal class TessellatedGeomAndText2DExportContext : IExportContext2D
+    public class TessellatedGeomAndText2DExportContext : IExportContext2D
     {
         private Element m_currentElem;
 

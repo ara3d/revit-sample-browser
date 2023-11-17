@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
     /// <summary>
     ///     Tell if two geometry objects are overlapping or not.
     /// </summary>
-    internal class Intersection
+    public class Intersection
     {
         /// <summary>
         ///     Tell if the geometry object A and B are overlapped.

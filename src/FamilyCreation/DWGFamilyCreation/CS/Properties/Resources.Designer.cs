@@ -14,21 +14,21 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        public Resources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ara3D.RevitSampleBrowser.ImportExport.CS.Properties.Resources", typeof(Resources).Assembly);
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to cm.
         /// </summary>
-        internal static string DUT_CENTIMETERS {
+        public static string DUT_CENTIMETERS {
             get {
                 return ResourceManager.GetString("DUT_CENTIMETERS", resourceCulture);
             }
@@ -64,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &apos;.
         /// </summary>
-        internal static string DUT_DECIMAL_FEET {
+        public static string DUT_DECIMAL_FEET {
             get {
                 return ResourceManager.GetString("DUT_DECIMAL_FEET", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &quot;.
         /// </summary>
-        internal static string DUT_DECIMAL_INCHES {
+        public static string DUT_DECIMAL_INCHES {
             get {
                 return ResourceManager.GetString("DUT_DECIMAL_INCHES", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &apos;.
         /// </summary>
-        internal static string DUT_FEET_FRACTIONAL_INCHES {
+        public static string DUT_FEET_FRACTIONAL_INCHES {
             get {
                 return ResourceManager.GetString("DUT_FEET_FRACTIONAL_INCHES", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &quot;.
         /// </summary>
-        internal static string DUT_FRACTIONAL_INCHES {
+        public static string DUT_FRACTIONAL_INCHES {
             get {
                 return ResourceManager.GetString("DUT_FRACTIONAL_INCHES", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to m.
         /// </summary>
-        internal static string DUT_METERS {
+        public static string DUT_METERS {
             get {
                 return ResourceManager.GetString("DUT_METERS", resourceCulture);
             }
@@ -109,7 +109,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to m.
         /// </summary>
-        internal static string DUT_METERS_CENTIMETERS {
+        public static string DUT_METERS_CENTIMETERS {
             get {
                 return ResourceManager.GetString("DUT_METERS_CENTIMETERS", resourceCulture);
             }
@@ -118,7 +118,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mm.
         /// </summary>
-        internal static string DUT_MILLIMETERS {
+        public static string DUT_MILLIMETERS {
             get {
                 return ResourceManager.GetString("DUT_MILLIMETERS", resourceCulture);
             }

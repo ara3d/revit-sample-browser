@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
     /// <summary>
     ///     User interface utilities for site editing commands.
     /// </summary>
-    internal class SiteUiUtils
+    public class SiteUiUtils
     {
         /// <summary>
         ///     Changes the elevation of all points in the subregion by a designated delta.

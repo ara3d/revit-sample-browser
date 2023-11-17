@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
     /// <summary>
     ///     This class is intent to convert CreationData to String.
     /// </summary>
-    internal class CreationDataTypeConverter : TypeConverter
+    public class CreationDataTypeConverter : TypeConverter
     {
         /// <summary>
         ///     CreationData can convert to string.

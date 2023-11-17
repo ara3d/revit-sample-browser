@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
     /// <summary>
     ///     The ExtrusionRoofManager class is to manage the creation of the Extrusion roof.
     /// </summary>
-    internal class ExtrusionRoofManager
+    public class ExtrusionRoofManager
     {
         // To store a reference to the commandData
         private readonly ExternalCommandData m_commandData;

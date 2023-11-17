@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
     ///     Its two main functionalities are to create a multi-planar rebar shape and
     ///     to calculate the location for rebar creation when reinforcing corbel.
     /// </summary>
-    internal class Trapezoid
+    public class Trapezoid
     {
         /// <summary>
         ///     Constructor to initialize the fields.
@@ -273,7 +273,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
     ///     It represents the frame of Corbel, which is consist of a trapezoid profile and a extrusion line.
     ///     Corbel can be constructed by sweeping a trapezoid profile along the extrusion line.
     /// </summary>
-    internal class CorbelFrame
+    public class CorbelFrame
     {
         /// <summary>
         ///     Corbel family instance.

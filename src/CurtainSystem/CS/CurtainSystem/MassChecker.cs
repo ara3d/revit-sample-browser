@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
     ///     check whether the selected element is a mass and whether the mass is kind of parallelepiped
     ///     (only mass of parallelepiped supported in this sample)
     /// </summary>
-    internal class MassChecker
+    public class MassChecker
     {
         // the document containing all the data used in the sample
         private readonly MyDocument m_mydocument;

@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw circle
     /// </summary>
-    internal class CircleTool : Tool
+    public class CircleTool : Tool
     {
         /// <summary>
         ///     Default constructor

@@ -7,7 +7,7 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
-    internal class SegmentInfo
+    public class SegmentInfo
     {
         private const double Tolerance = 0.0000001;
         private readonly MEPNetworkSegmentId m_id;
@@ -76,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
         public XYZ End { get; }
     }
 
-    internal class CompareNetworkSegmentId : IEqualityComparer<MEPNetworkSegmentId>
+    public class CompareNetworkSegmentId : IEqualityComparer<MEPNetworkSegmentId>
     {
         public bool Equals(MEPNetworkSegmentId left, MEPNetworkSegmentId right)
         {

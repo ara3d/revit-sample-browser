@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
     ///     It represents a winder region used to connect straight runs. For L-shape stairs, there is
     ///     one WinderCorner, For U-shape stairs, there are two such components.
     /// </summary>
-    internal abstract class WinderCorner
+    public abstract class WinderCorner
     {
         /// <summary>
         ///     Constructor to initialize the basic fields of a winder region.

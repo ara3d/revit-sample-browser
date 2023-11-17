@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
     /// <summary>
     ///     It represents an L-shape winder and consists of two straight runs and one winder corner.
     /// </summary>
-    internal class LWinder : Winder
+    public class LWinder : Winder
     {
         /// <summary>
         ///     Winder Corner, connecting the first and the second straight runs.

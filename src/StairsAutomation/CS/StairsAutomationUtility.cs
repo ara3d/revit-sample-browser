@@ -240,7 +240,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         }
     }
 
-    internal class StairsEditScopeFailuresPreprocessor : IFailuresPreprocessor
+    public class StairsEditScopeFailuresPreprocessor : IFailuresPreprocessor
     {
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {

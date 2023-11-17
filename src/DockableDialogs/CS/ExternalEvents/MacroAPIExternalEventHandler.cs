@@ -5,7 +5,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents
 {
-    internal class MacroApiExternalEventHandler : IExternalEventHandler
+    public class MacroApiExternalEventHandler : IExternalEventHandler
     {
         public void Execute(UIApplication app)
         {

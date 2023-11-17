@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
     ///     A command to create a new family block representing a negative of a selected element.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class CreateNegativeBlockCommand : IExternalCommand
+    public class CreateNegativeBlockCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -69,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
     /// <summary>
     ///     Selection filter for selection of a target object to use as a template for the negative block.
     /// </summary>
-    internal class TargetElementSelectionFilter : ISelectionFilter
+    public class TargetElementSelectionFilter : ISelectionFilter
     {
         public bool AllowElement(Element element)
         {
@@ -88,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
     /// <summary>
     ///     Selection filter for selection of the boundary curves for the block extents.
     /// </summary>
-    internal class BoundarySelectionFilter : ISelectionFilter
+    public class BoundarySelectionFilter : ISelectionFilter
     {
         public bool AllowElement(Element element)
         {

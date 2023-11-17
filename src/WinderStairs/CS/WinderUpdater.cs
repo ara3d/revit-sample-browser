@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
     ///     This class implements IUpdater and IExternalEventHandler interfaces. It's mainly
     ///     for winder stairs creation and regeneration when its dependencies are being changed.
     /// </summary>
-    internal class WinderUpdater : IUpdater, IExternalEventHandler
+    public class WinderUpdater : IUpdater, IExternalEventHandler
     {
         private readonly IList<ElementId> m_curveElements;
         private readonly bool m_drawSketch;

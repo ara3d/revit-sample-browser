@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
     ///     The command that initializes and starts the model animation.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class DisplacementStructureModelAnimatorCommand : IExternalCommand
+    public class DisplacementStructureModelAnimatorCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -24,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
     ///     The command that initializes and starts the model animation step by step.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class DisplacementStructureModelAnimatorCommandStepByStep : IExternalCommand
+    public class DisplacementStructureModelAnimatorCommandStepByStep : IExternalCommand
     {
         public static DisplacementStructureModelAnimator DisplacementstructuremodelAnimator;
 

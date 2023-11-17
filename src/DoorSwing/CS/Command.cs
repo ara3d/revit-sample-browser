@@ -12,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
     ///     This command will add needed shared parameters and initialize them.
     ///     It will initialize door opening parameter based on family's actual geometry and
     ///     country's standard. It will initialize each door instance's opening, ToRoom, FromRoom and
-    ///     internal door flag values according to door's current geometry.
+    ///     public door flag values according to door's current geometry.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -46,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                         // country's standard.
                         databuffer.UpdateDoorFamiliesOpeningFeature();
 
-                        // update each door instance's Opening feature and internal door flag
+                        // update each door instance's Opening feature and public door flag
                         returnCode = DoorSwingData.UpdateDoorsInfo(commandData.Application.ActiveUIDocument.Document,
                             false, true, ref message);
                     }
@@ -70,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
     /// <summary>
     ///     A ExternalCommand class inherited IExternalCommand interface.
     ///     This command will update each door instance's opening, ToRoom, FromRoom and
-    ///     internal door flag values according to door's current geometry.
+    ///     public door flag values according to door's current geometry.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]

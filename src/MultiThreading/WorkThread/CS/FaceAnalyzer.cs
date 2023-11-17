@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
     ///         are delivered to the work-thread.
     ///     </para>
     /// </remarks>
-    internal class FaceAnalyzer
+    public class FaceAnalyzer
     {
         // field Id
         private int m_fieldId = -1;

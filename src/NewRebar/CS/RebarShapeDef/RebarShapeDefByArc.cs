@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
     /// <summary>
     ///     This class wraps RebarShapeDefinitionByArc.
     /// </summary>
-    internal class RebarShapeDefByArc : RebarShapeDef
+    public class RebarShapeDefByArc : RebarShapeDef
     {
         public RebarShapeDefByArc(RebarShapeDefinitionByArc arcShapeDef)
             : base(arcShapeDef)

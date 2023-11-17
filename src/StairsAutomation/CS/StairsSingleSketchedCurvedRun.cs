@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
     ///     A stairs configuration that represents a single curved run (which will be made in Revit as a sketched run).
     /// </summary>
     /// <remarks>Because this is a sketched run, a included angle of greater than 360 degrees will not succeed.</remarks>
-    internal class StairsSingleSketchedCurvedRun : StairsConfiguration
+    public class StairsSingleSketchedCurvedRun : StairsConfiguration
     {
         /// <summary>
         ///     Creates a new instance of StairsSingleSketchedCurvedRun at the default location and orientation.

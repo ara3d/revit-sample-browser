@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
     ///     A command that deletes a subregion and all topography surface points it contains.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class SiteDeleteRegionAndPointsCommand : IExternalCommand
+    public class SiteDeleteRegionAndPointsCommand : IExternalCommand
     {
         /// <summary>
         ///     Implementation of the command.

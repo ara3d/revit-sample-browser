@@ -14,21 +14,21 @@ namespace ExternalCommandRegistration {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ExternalCommandResource {
+    public class ExternalCommandResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ExternalCommandResource() {
+        public ExternalCommandResource() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ExternalCommandRegistration.ExternalCommandResource", typeof(ExternalCommandResource).Assembly);
@@ -43,7 +43,7 @@ namespace ExternalCommandRegistration {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -55,7 +55,7 @@ namespace ExternalCommandRegistration {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CreateWall {
+        public static System.Drawing.Bitmap CreateWall {
             get {
                 object obj = ResourceManager.GetObject("CreateWall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -65,7 +65,7 @@ namespace ExternalCommandRegistration {
         /// <summary>
         ///   Looks up a localized string similar to Create Wall.
         /// </summary>
-        internal static string createWallText {
+        public static string createWallText {
             get {
                 return ResourceManager.GetString("createWallText", resourceCulture);
             }
@@ -74,7 +74,7 @@ namespace ExternalCommandRegistration {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CreateWallTooltip {
+        public static System.Drawing.Bitmap CreateWallTooltip {
             get {
                 object obj = ResourceManager.GetObject("CreateWallTooltip", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -84,7 +84,7 @@ namespace ExternalCommandRegistration {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap View3D {
+        public static System.Drawing.Bitmap View3D {
             get {
                 object obj = ResourceManager.GetObject("View3D", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -94,7 +94,7 @@ namespace ExternalCommandRegistration {
         /// <summary>
         ///   Looks up a localized string similar to 3D View.
         /// </summary>
-        internal static string view3DText {
+        public static string view3DText {
             get {
                 return ResourceManager.GetString("view3DText", resourceCulture);
             }

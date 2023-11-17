@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    internal class SheetImport : IExternalCommand
+    public class SheetImport : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData
             , ref string message, ElementSet elements)

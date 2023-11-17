@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
     ///     Represent the reinforcement options of corbel.
     ///     The options include bar type and bar counts which are collected from user via UI input.
     /// </summary>
-    internal class CorbelReinforcementOptions
+    public class CorbelReinforcementOptions
     {
         /// <summary>
         ///     Constructor to initialize the fields.

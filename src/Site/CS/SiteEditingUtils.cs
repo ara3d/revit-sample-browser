@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
     /// <summary>
     ///     Database level utilities for the site editing commands.
     /// </summary>
-    internal class SiteEditingUtils
+    public class SiteEditingUtils
     {
         /// <summary>
         ///     Moves an XYZ point to the elevation specified.

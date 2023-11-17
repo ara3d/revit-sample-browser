@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
     /// <summary>
     ///     This class wraps RebarShapeDefinitionBySegments.
     /// </summary>
-    internal class RebarShapeDefBySegment : RebarShapeDef
+    public class RebarShapeDefBySegment : RebarShapeDef
     {
         public RebarShapeDefBySegment(RebarShapeDefinitionBySegments segmentShapeDef)
             : base(segmentShapeDef)

@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    internal class UiCommand : IExternalCommand
+    public class UiCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

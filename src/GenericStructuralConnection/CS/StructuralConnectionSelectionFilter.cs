@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
     /// <summary>
     ///     Define filter for generic structural connection input elements.
     /// </summary>
-    internal class StructuralConnectionSelectionFilter : ISelectionFilter
+    public class StructuralConnectionSelectionFilter : ISelectionFilter
     {
         private readonly LogicalOrFilter m_filter;
 

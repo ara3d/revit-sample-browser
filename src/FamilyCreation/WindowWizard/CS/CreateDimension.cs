@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
     /// <summary>
     ///     The class allows users to create dimension using Document.FamilyCreate.NewDimension() function
     /// </summary>
-    internal class CreateDimension
+    public class CreateDimension
     {
         /// <summary>
         ///     store the application

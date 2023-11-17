@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
     ///     to display the Spaces is a ListView, each SpaceItem contains
     ///     a Space element.
     /// </summary>
-    internal class SpaceItem : ListViewItem
+    public class SpaceItem : ListViewItem
     {
         public SpaceItem(Space space) : base(space.Name)
         {

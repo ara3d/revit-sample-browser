@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    internal class RemoveAssociation : IExternalCommand
+    public class RemoveAssociation : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 {
     [Transaction(TransactionMode.Manual)]
-    internal class Command : IExternalCommand
+    public class Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

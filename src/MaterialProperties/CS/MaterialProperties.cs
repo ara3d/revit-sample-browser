@@ -22,13 +22,13 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
     public class MaterialProperties : IExternalCommand
     {
         private const double
-            ToMetricUnitWeight = 0.010764; //coefficient of converting unit weight from internal unit to metric unit 
+            ToMetricUnitWeight = 0.010764; //coefficient of converting unit weight from public unit to metric unit 
 
         private const double
-            ToMetricStress = 0.334554; //coefficient of converting stress from internal unit to metric unit
+            ToMetricStress = 0.334554; //coefficient of converting stress from public unit to metric unit
 
         private const double
-            ToImperialUnitWeight = 6.365827; //coefficient of converting unit weight from internal unit to imperial unit
+            ToImperialUnitWeight = 6.365827; //coefficient of converting unit weight from public unit to imperial unit
 
         private const double ChangedUnitWeight = 14.5; //the value of unit weight of selected component to be set
 

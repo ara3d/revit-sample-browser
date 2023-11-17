@@ -5,7 +5,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
     /// <summary>
     ///     This class is used for window creation
     /// </summary>
-    internal abstract class WindowCreation
+    public abstract class WindowCreation
     {
         /// <summary>
         ///     The parameter of Window wizard

@@ -95,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
         }
 
         /// <summary>
-        ///     property get or set internal variable m_bcTypes
+        ///     property get or set public variable m_bcTypes
         /// </summary>
         public BcType[] BcType
         {

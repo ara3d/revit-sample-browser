@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
     /// <summary>
     ///     It represents a straight run connected to winder-corner.
     /// </summary>
-    internal class WinderStraight
+    public class WinderStraight
     {
         /// <summary>
         ///     Constructor to initialize the basic fields of the straight run.

@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    internal class CreateAnalyticalCurvedPanel : IExternalCommand
+    public class CreateAnalyticalCurvedPanel : IExternalCommand
     {
         public virtual Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

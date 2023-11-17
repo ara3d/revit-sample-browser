@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_ExternalEvent.CS
     public class Application : IExternalApplication
     {
         // class instance
-        internal static Application ThisApp;
+        public static Application ThisApp;
 
         // ModelessForm instance
         private ModelessForm m_myForm;

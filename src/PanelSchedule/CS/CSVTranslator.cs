@@ -12,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
     /// <summary>
     ///     Translate the panel schedule view data from Revit to CSV.
     /// </summary>
-    internal class CsvTranslator : Translator
+    public class CsvTranslator : Translator
     {
         /// <summary>
         ///     create a CSVTranslator instance for a PanelScheduleView instance.

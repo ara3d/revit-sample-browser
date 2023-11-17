@@ -14,7 +14,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
     ///     A stairs run consisting of a single sketched curved run.
     /// </summary>
     /// <remarks>Because this is sketched, the maximum covered angle for the stair is 360 degrees.</remarks>
-    internal class SketchedCurvedStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
+    public class SketchedCurvedStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
         private Application m_appCreate;
         private readonly XYZ m_center;

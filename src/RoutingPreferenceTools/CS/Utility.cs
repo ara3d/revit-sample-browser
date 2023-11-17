@@ -8,7 +8,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
 {
-    internal class Validation
+    public class Validation
     {
         public static bool ValidateMep(Application application)
         {
@@ -34,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS
         }
     }
 
-    internal class Convert
+    public class Convert
     {
         public static double ConvertValueDocumentUnits(double decimalFeet, Document document)
         {

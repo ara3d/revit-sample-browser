@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
             InitializeComponent();
         }
 
-        internal void RevitUIApp_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void RevitUIApp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             textBox_log.Text += e.GetInfo(true);
         }

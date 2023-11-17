@@ -132,7 +132,7 @@ namespace Ara3D.RevitSampleBrowser
                 }
                 else
                 {
-                    MessageBox.Show($"Internal error: couldn't find sample data");
+                    MessageBox.Show($"public error: couldn't find sample data");
                 }
             }
             catch (Exception ex)

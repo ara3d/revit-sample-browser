@@ -20,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
         private readonly UpdaterId m_updaterId;
         private ElementId m_windowId;
 
-        internal SectionUpdater(AddInId addinId)
+        public SectionUpdater(AddInId addinId)
         {
             m_updaterId = new UpdaterId(addinId, new Guid("FBF3F6B2-4C06-42d4-97C1-D1B4EB593EFF"));
         }
@@ -68,14 +68,14 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
         }
 
         // Registers itself with Revit
-        internal void Register(Document doc)
+        public void Register(Document doc)
         {
             // Register the section updater if the updater is not registered.
             if (!UpdaterRegistry.IsUpdaterRegistered(m_updaterId))
                 UpdaterRegistry.RegisterUpdater(this, doc);
         }
 
-        internal void AddTriggerForUpdater(Document doc, List<ElementId> idsToWatch, ElementId sectionId,
+        public void AddTriggerForUpdater(Document doc, List<ElementId> idsToWatch, ElementId sectionId,
             Element sectionElement)
         {
             if (idsToWatch.Count == 0)
@@ -87,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
             UpdaterRegistry.AddTrigger(m_updaterId, doc, idsToWatch, Element.GetChangeTypeGeometry());
         }
 
-        internal void RejustSectionView(Document doc, Element elem, ViewSection section)
+        public void RejustSectionView(Document doc, Element elem, ViewSection section)
         {
             var position = XYZ.Zero;
             var fOrientation = XYZ.Zero;

@@ -126,7 +126,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 
                 t.Commit();
 
-                // internal fatal error, quit the sample
+                // public fatal error, quit the sample
                 if (null == curtainSystems ||
                     1 != curtainSystems.Count)
                 {

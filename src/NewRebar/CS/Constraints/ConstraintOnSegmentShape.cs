@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Segment's ends reference enum.
     /// </summary>
-    internal enum EndReference
+    public enum EndReference
     {
         /// <summary>
         ///     Segment's start reference.
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Constraint to be added to RebarShapeDefBySegment.
     /// </summary>
-    internal abstract class ConstraintOnSegmentShape : ConstraintOnRebarShape
+    public abstract class ConstraintOnSegmentShape : ConstraintOnRebarShape
     {
         public ConstraintOnSegmentShape(RebarShapeDefBySegment def)
             : base(def)
@@ -52,7 +52,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Default radius dimension of bend.
     /// </summary>
-    internal class ConstraintBendDefaultRadius : ConstraintOnSegmentShape
+    public class ConstraintBendDefaultRadius : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     Bend angle field.
@@ -126,7 +126,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Variable radius dimension of bend.
     /// </summary>
-    internal class ConstraintBendVariableRadius : ConstraintOnSegmentShape
+    public class ConstraintBendVariableRadius : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     Bend angle field.
@@ -231,7 +231,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Parallel dimension to segment.
     /// </summary>
-    internal class ConstraintParallelToSegment : ConstraintOnSegmentShape
+    public class ConstraintParallelToSegment : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     Measure segment's length to outside of bend 0 or not.
@@ -325,7 +325,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Length dimension of segment in specified direction.
     /// </summary>
-    internal class ConstraintToSegment : ConstraintOnSegmentShape
+    public class ConstraintToSegment : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     X coordinate of constraint direction.
@@ -459,7 +459,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Listening length dimension between two bends.
     /// </summary>
-    internal class ListeningDimensionBendToBend : ConstraintOnSegmentShape
+    public class ListeningDimensionBendToBend : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     X coordinate of constraint direction.
@@ -600,7 +600,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Listening length dimension between a segment and a bend.
     /// </summary>
-    internal class ListeningDimensionSegmentToBend : ConstraintOnSegmentShape
+    public class ListeningDimensionSegmentToBend : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     X coordinate of constraint direction.
@@ -728,7 +728,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Listening length dimension between two segments.
     /// </summary>
-    internal class ListeningDimensionSegmentToSegment : ConstraintOnSegmentShape
+    public class ListeningDimensionSegmentToSegment : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     X coordinate of constraint direction.
@@ -837,7 +837,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Remove a dimension from a segment.
     /// </summary>
-    internal class RemoveParameterFromSegment : ConstraintOnSegmentShape
+    public class RemoveParameterFromSegment : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     Dimension to be removed.
@@ -896,7 +896,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     A 180 degree bend dimension.
     /// </summary>
-    internal class SetSegmentAs180DegreeBend : ConstraintOnSegmentShape
+    public class SetSegmentAs180DegreeBend : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     If measure to outside of bend.
@@ -970,7 +970,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Length dimension of segment in its parallel direction.
     /// </summary>
-    internal class SetSegmentFixedDirection : ConstraintOnSegmentShape
+    public class SetSegmentFixedDirection : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     Reference of segment.
@@ -1040,7 +1040,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
     /// <summary>
     ///     Remove a dimension from a segment.
     /// </summary>
-    internal class SetSegmentVariableDirection : ConstraintOnSegmentShape
+    public class SetSegmentVariableDirection : ConstraintOnSegmentShape
     {
         /// <summary>
         ///     Reference of segment.

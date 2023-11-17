@@ -7,7 +7,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter
     /// <summary>
     ///     Type converter between int and string is provided for property grid.
     /// </summary>
-    internal class TypeConverterSegmentId : Int32Converter
+    public class TypeConverterSegmentId : Int32Converter
     {
         /// <summary>
         ///     Segment count.

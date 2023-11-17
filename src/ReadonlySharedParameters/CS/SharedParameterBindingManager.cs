@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 {
-    internal class SharedParameterBindingManager
+    public class SharedParameterBindingManager
     {
         private readonly List<BuiltInCategory> m_categories = new List<BuiltInCategory>();
 
@@ -70,7 +70,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
         }
     }
 
-    internal class Utils
+    public class Utils
     {
     }
 }

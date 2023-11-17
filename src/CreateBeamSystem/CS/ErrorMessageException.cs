@@ -5,7 +5,7 @@ using System;
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
     /// <summary>
-    ///     pass error message to UI or back to internal error messagebox by Execute method in IExternalCommand
+    ///     pass error message to UI or back to public error messagebox by Execute method in IExternalCommand
     /// </summary>
     public class ErrorMessageException : ApplicationException
     {

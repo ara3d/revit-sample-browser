@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
     ///     It has few data the calculations needs and
     ///     one method that will run on a separate thread.
     /// </remarks>
-    internal class ThreadAgent
+    public class ThreadAgent
     {
         // BoundingBoxUV
         private readonly BoundingBoxUV m_bbox;

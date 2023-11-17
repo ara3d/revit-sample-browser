@@ -8,7 +8,7 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
-    internal class SectionInfo
+    public class SectionInfo
     {
         private const double
             Epsilon = 0.0001; // The small tolerance within which two flow values may be considered equal.

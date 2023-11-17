@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms
     ///     This form is used to collect parameters for UWinder creation. It also validates the input
     ///     parameters and will warn if there is any invalid parameters when trying to submit the form.
     /// </summary>
-    internal partial class UWinderOptions : Form
+    public partial class UWinderOptions : Form
     {
         /// <summary>
         ///     Default constructor.

@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
     /// <summary>
     ///     This class is used to detect the obstructions of a Line or a ray.
     /// </summary>
-    internal class Detector
+    public class Detector
     {
         /// <summary>
         ///     Revit Document.

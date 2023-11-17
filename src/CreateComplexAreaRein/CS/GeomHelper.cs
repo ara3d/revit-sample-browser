@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
     ///     provide utility method to get geometry data for
     ///     creating AreaReinforcement on wall or floor
     /// </summary>
-    internal class GeomHelper
+    public class GeomHelper
     {
         private Document m_currentDoc; //active document
 

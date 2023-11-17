@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation.CS
 {
-    internal class GeometryCreation
+    public class GeometryCreation
     {
         /// <summary>
         ///     The direction of cylinder, only on X, Y, Z three axes forward direction

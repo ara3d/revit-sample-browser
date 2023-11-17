@@ -25,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleAutomaticFormatter.CS
     ///     the schedule formatting will be automatically updated when the schedule changes.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class ScheduleFormatterCommand : IExternalCommand
+    public class ScheduleFormatterCommand : IExternalCommand
     {
         /// <summary>
         ///     The formatter used by the command when updating the schedule.

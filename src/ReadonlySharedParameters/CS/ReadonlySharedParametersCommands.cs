@@ -10,7 +10,7 @@ using Autodesk.Revit.UI;
 namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 {
     [Transaction(TransactionMode.Manual)]
-    internal class SetReadonlyCost1 : IExternalCommand
+    public class SetReadonlyCost1 : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
     }
 
     [Transaction(TransactionMode.Manual)]
-    internal class SetReadonlyCost2 : IExternalCommand
+    public class SetReadonlyCost2 : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -35,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
         }
     }
 
-    internal class ReadonlyCostSetter
+    public class ReadonlyCostSetter
     {
         public static void SetReadonlyCosts1(Document doc)
         {
@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
     }
 
     [Transaction(TransactionMode.Manual)]
-    internal class SetReadonlyId1 : IExternalCommand
+    public class SetReadonlyId1 : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
     }
 
     [Transaction(TransactionMode.Manual)]
-    internal class SetReadonlyId2 : IExternalCommand
+    public class SetReadonlyId2 : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -109,7 +109,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
         }
     }
 
-    internal class ReadonlyIdSetter
+    public class ReadonlyIdSetter
     {
         private static string GetReadonlyIdUniqueId(Element elem)
         {
@@ -155,7 +155,7 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
     }
 
     [Transaction(TransactionMode.Manual)]
-    internal class BindNewReadonlySharedParametersToDocument : IExternalCommand
+    public class BindNewReadonlySharedParametersToDocument : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

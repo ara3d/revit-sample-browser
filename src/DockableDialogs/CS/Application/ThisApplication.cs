@@ -29,7 +29,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
     [Regeneration(RegenerationOption.Manual)]
     public class ThisApplication : IExternalApplication
     {
-        internal static ThisApplication ThisApp;
+        public static ThisApplication ThisApp;
         private ApiUtility m_apiUtility;
 
         private MainPage.MainPage m_mainPage;

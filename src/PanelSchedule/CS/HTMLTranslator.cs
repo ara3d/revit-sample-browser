@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
     /// <summary>
     ///     Translate the panel schedule view data from Revit to HTML table.
     /// </summary>
-    internal class HtmlTranslator : Translator
+    public class HtmlTranslator : Translator
     {
         /// <summary>
         ///     create a Translator instance for a PanelScheduleView instance.

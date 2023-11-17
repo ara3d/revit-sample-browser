@@ -5,7 +5,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility
 {
-    internal class Globals
+    public class Globals
     {
         public const string ApplicationName = "DockableDialogs";
         public const string DiagnosticsTabName = "DockableDialogs";

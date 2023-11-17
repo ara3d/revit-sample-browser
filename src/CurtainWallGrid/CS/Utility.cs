@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
     /// <summary>
     ///     compare 2 wall types and sort them by their type names
     /// </summary>
-    internal class WallTypeComparer : IComparer<WallType>
+    public class WallTypeComparer : IComparer<WallType>
     {
         /// <summary>
         ///     compare 2 walltypes by their names
@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
     /// <summary>
     ///     compare 2 views and sort them by their type names
     /// </summary>
-    internal class ViewComparer : IComparer<View>
+    public class ViewComparer : IComparer<View>
     {
         /// <summary>
         ///     compare 2 views by their names

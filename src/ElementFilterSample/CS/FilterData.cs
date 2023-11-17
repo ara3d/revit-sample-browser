@@ -8,7 +8,7 @@ using PFRF = Autodesk.Revit.DB.ParameterFilterRuleFactory;
 namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     /// <summary>
-    ///     Sample custom immutable class used to represents Revit internal FilterRule.
+    ///     Sample custom immutable class used to represents Revit public FilterRule.
     ///     This class and its variables will help display the contents of UI controls.
     ///     This class can build its data caches to Revit FilterRule object.
     /// </summary>

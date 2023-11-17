@@ -17,7 +17,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
     public class Application : IExternalApplication
     {
         // class instance
-        internal static Application ThisApp;
+        public static Application ThisApp;
         private ElementId m_currentAppearanceAssetElementId;
         private Material m_currentMaterial;
         private Document m_document;
@@ -90,7 +90,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
         /// <summary>
         ///     Get the painted material from selection.
         /// </summary>
-        internal void GetPaintedMaterial()
+        public void GetPaintedMaterial()
         {
             Reference refer;
 
@@ -180,7 +180,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
         ///     Check if the button Lighter is enabled.
         /// </summary>
         /// <returns>True if the material can be made lighter or not.</returns>
-        internal bool IsLighterEnabled()
+        public bool IsLighterEnabled()
         {
             if (!SupportTintColor())
                 return false;
@@ -199,7 +199,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
         ///     Check if the button Darker is enabled.
         /// </summary>
         /// <returns>True if the material can be made darker or not.</returns>
-        internal bool IsDarkerEnabled()
+        public bool IsDarkerEnabled()
         {
             if (!SupportTintColor())
                 return false;
@@ -270,7 +270,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
         /// </remarks>
         /// <param name="text">Caption of the transaction for the operation.</param>
         /// <param name="lighter">Increase the tint color property or not.</param>
-        internal void ModifySelectedMaterial(string text, bool lighter)
+        public void ModifySelectedMaterial(string text, bool lighter)
         {
             // Since we'll modify the document, we need a transaction
             // It's best if a transaction is scoped by a 'using' block
@@ -291,7 +291,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
         ///     Edit tint color property.
         /// </summary>
         /// <param name="lighter">Increase the tint color property or not.</param>
-        internal void EditMaterialTintColorProperty(bool lighter)
+        public void EditMaterialTintColorProperty(bool lighter)
         {
             using (var editScope = new AppearanceAssetEditScope(m_document))
             {

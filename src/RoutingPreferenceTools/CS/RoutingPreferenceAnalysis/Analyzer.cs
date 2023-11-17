@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
     /// <summary>
     ///     Queries all routing preferences and reports potential problems in the form of an XDocument.
     /// </summary>
-    internal class Analyzer
+    public class Analyzer
     {
         private readonly Document m_document;
         private readonly double m_mepSize;

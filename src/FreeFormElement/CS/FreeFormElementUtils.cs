@@ -15,7 +15,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
     /// <summary>
     ///     Utilities supporting the creation of a family containing a FreeFormElement which is cut out from existing geometry
     /// </summary>
-    internal class FreeFormElementUtils
+    public class FreeFormElementUtils
     {
         public enum FailureCondition
         {

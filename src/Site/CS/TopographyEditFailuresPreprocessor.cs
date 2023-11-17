@@ -19,7 +19,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
-    internal class TopographyEditFailuresPreprocessor : IFailuresPreprocessor
+    public class TopographyEditFailuresPreprocessor : IFailuresPreprocessor
     {
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {
@@ -27,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
         }
     }
 
-    internal class TopographyEditFailuresPreprocessorVerbose : IFailuresPreprocessor
+    public class TopographyEditFailuresPreprocessorVerbose : IFailuresPreprocessor
     {
         // For debugging
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)

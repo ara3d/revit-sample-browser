@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
     /// <summary>
     ///     A stairs component consisting of a single curved run.
     /// </summary>
-    internal class CurvedStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
+    public class CurvedStairsRunComponent : TransformedStairsComponent, IStairsRunComponent
     {
         private Application m_appCreate;
         private readonly XYZ m_center;

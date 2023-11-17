@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
     /// <summary>
     ///     provide some common geometry judgement and calculate method
     /// </summary>
-    internal class GeomUtil
+    public class GeomUtil
     {
         private const double Precision = 0.00001; //precision when judge whether two doubles are equal
 
@@ -214,7 +214,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 
         /// <summary>
         ///     judge whether the subtraction of two doubles is less than
-        ///     the internal decided precision
+        ///     the public decided precision
         /// </summary>
         /// <param name="d1"></param>
         /// <param name="d2"></param>

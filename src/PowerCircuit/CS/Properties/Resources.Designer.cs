@@ -14,21 +14,21 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        public Resources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties.Resources", typeof(Resources).Assembly);
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap AddToCircuit {
+        public static System.Drawing.Bitmap AddToCircuit {
             get {
                 object obj = ResourceManager.GetObject("AddToCircuit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -65,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Cancel {
+        public static System.Drawing.Bitmap Cancel {
             get {
                 object obj = ResourceManager.GetObject("Cancel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -75,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Information.
         /// </summary>
-        internal static string CaptionInformation {
+        public static string CaptionInformation {
             get {
                 return ResourceManager.GetString("CaptionInformation", resourceCulture);
             }
@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CreateCircuit {
+        public static System.Drawing.Bitmap CreateCircuit {
             get {
                 object obj = ResourceManager.GetObject("CreateCircuit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -94,7 +94,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap DisconnectPanel {
+        public static System.Drawing.Bitmap DisconnectPanel {
             get {
                 object obj = ResourceManager.GetObject("DisconnectPanel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -104,7 +104,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap EditCircuit {
+        public static System.Drawing.Bitmap EditCircuit {
             get {
                 object obj = ResourceManager.GetObject("EditCircuit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -114,7 +114,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Selected element has already been included in the circuit!.
         /// </summary>
-        internal static string ElementInCircuit {
+        public static string ElementInCircuit {
             get {
                 return ResourceManager.GetString("ElementInCircuit", resourceCulture);
             }
@@ -123,7 +123,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to  The circuit does not include the selected element!.
         /// </summary>
-        internal static string ElementNotInCircuit {
+        public static string ElementNotInCircuit {
             get {
                 return ResourceManager.GetString("ElementNotInCircuit", resourceCulture);
             }
@@ -132,7 +132,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Failed to add the selected element to Circuit. Please verify that The Number of Poles and Voltage for the selected element match the Number of Poles and Voltage for the Circuit..
         /// </summary>
-        internal static string FailedToAddElement {
+        public static string FailedToAddElement {
             get {
                 return ResourceManager.GetString("FailedToAddElement", resourceCulture);
             }
@@ -141,7 +141,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Failed to create circuit with selected elements. Please verify that The Number of Poles and Voltage for selected elements match with each other..
         /// </summary>
-        internal static string FailedToCreateCircuit {
+        public static string FailedToCreateCircuit {
             get {
                 return ResourceManager.GetString("FailedToCreateCircuit", resourceCulture);
             }
@@ -150,7 +150,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Failed to disconnect panel from the power circuit!.
         /// </summary>
-        internal static string FailedToDisconnectPanel {
+        public static string FailedToDisconnectPanel {
             get {
                 return ResourceManager.GetString("FailedToDisconnectPanel", resourceCulture);
             }
@@ -159,7 +159,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Failed to remove selected element from the power circuit!.
         /// </summary>
-        internal static string FailedToRemoveElement {
+        public static string FailedToRemoveElement {
             get {
                 return ResourceManager.GetString("FailedToRemoveElement", resourceCulture);
             }
@@ -168,7 +168,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Failed to assign the selected element to the circuit. Please verify that The Number of Poles and Voltage for the selected element match the Number of Poles and Voltage for the Circuit..
         /// </summary>
-        internal static string FailedToSelectPanel {
+        public static string FailedToSelectPanel {
             get {
                 return ResourceManager.GetString("FailedToSelectPanel", resourceCulture);
             }
@@ -177,7 +177,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Selected element has no unused electrical connector!.
         /// </summary>
-        internal static string NoUsableConnector {
+        public static string NoUsableConnector {
             get {
                 return ResourceManager.GetString("NoUsableConnector", resourceCulture);
             }
@@ -186,7 +186,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document is null..
         /// </summary>
-        internal static string NullActiveDocument {
+        public static string NullActiveDocument {
             get {
                 return ResourceManager.GetString("NullActiveDocument", resourceCulture);
             }
@@ -195,7 +195,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Operation Failed.
         /// </summary>
-        internal static string OperationFailed {
+        public static string OperationFailed {
             get {
                 return ResourceManager.GetString("OperationFailed", resourceCulture);
             }
@@ -204,7 +204,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap RemoveFromCircuit {
+        public static System.Drawing.Bitmap RemoveFromCircuit {
             get {
                 object obj = ResourceManager.GetObject("RemoveFromCircuit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -214,7 +214,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Selected element is not electrical!.
         /// </summary>
-        internal static string SelectElectricalComponent {
+        public static string SelectElectricalComponent {
             get {
                 return ResourceManager.GetString("SelectElectricalComponent", resourceCulture);
             }
@@ -223,7 +223,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SelectPanel {
+        public static System.Drawing.Bitmap SelectPanel {
             get {
                 object obj = ResourceManager.GetObject("SelectPanel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -233,7 +233,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please select elements first!.
         /// </summary>
-        internal static string SelectPowerElements {
+        public static string SelectPowerElements {
             get {
                 return ResourceManager.GetString("SelectPowerElements", resourceCulture);
             }
@@ -242,7 +242,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Add to Circuit.
         /// </summary>
-        internal static string tipAddToCircuit {
+        public static string tipAddToCircuit {
             get {
                 return ResourceManager.GetString("tipAddToCircuit", resourceCulture);
             }
@@ -251,7 +251,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        internal static string tipCancel {
+        public static string tipCancel {
             get {
                 return ResourceManager.GetString("tipCancel", resourceCulture);
             }
@@ -260,7 +260,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Create Power Circuit.
         /// </summary>
-        internal static string tipCreateCircuit {
+        public static string tipCreateCircuit {
             get {
                 return ResourceManager.GetString("tipCreateCircuit", resourceCulture);
             }
@@ -269,7 +269,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Disconnect Panel from Circuit.
         /// </summary>
-        internal static string tipDisconnectPanel {
+        public static string tipDisconnectPanel {
             get {
                 return ResourceManager.GetString("tipDisconnectPanel", resourceCulture);
             }
@@ -278,7 +278,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Edit Circuit.
         /// </summary>
-        internal static string tipEditCircuit {
+        public static string tipEditCircuit {
             get {
                 return ResourceManager.GetString("tipEditCircuit", resourceCulture);
             }
@@ -287,7 +287,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Remove from circuit.
         /// </summary>
-        internal static string tipRemoveFromCircuit {
+        public static string tipRemoveFromCircuit {
             get {
                 return ResourceManager.GetString("tipRemoveFromCircuit", resourceCulture);
             }
@@ -296,7 +296,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Select a Panel for the Circuit.
         /// </summary>
-        internal static string tipSelectPanel {
+        public static string tipSelectPanel {
             get {
                 return ResourceManager.GetString("tipSelectPanel", resourceCulture);
             }

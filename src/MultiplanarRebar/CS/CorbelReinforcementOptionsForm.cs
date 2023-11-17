@@ -7,7 +7,7 @@ using Autodesk.Revit.DB.Structure;
 
 namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 {
-    internal partial class CorbelReinforcementOptionsForm : Form
+    public partial class CorbelReinforcementOptionsForm : Form
     {
         private readonly CorbelReinforcementOptions m_corbelReinforcementOptions;
 

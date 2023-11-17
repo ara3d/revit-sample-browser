@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
     ///     The external command that hides all of the selected group's attached detail groups.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class AttachedDetailGroupShowAllCommand : IExternalCommand
+    public class AttachedDetailGroupShowAllCommand : IExternalCommand
     {
         /// <summary>
         ///     The implementation of the command.

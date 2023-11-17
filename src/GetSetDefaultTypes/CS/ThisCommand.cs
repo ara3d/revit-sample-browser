@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
     [Transaction(TransactionMode.Manual)]
-    internal class ThisCommand : IExternalCommand
+    public class ThisCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

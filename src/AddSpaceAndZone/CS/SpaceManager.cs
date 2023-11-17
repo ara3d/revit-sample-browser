@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
     /// <summary>
     ///     The SpaceManager class is used to manage the Spaces elements in the current document.
     /// </summary>
-    internal class SpaceManager
+    public class SpaceManager
     {
         private readonly ExternalCommandData m_commandData;
         private readonly Dictionary<ElementId, List<Space>> m_spaceDictionary;

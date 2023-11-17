@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
     /// <summary>
     ///     Tool used to draw rectangle
     /// </summary>
-    internal class RectTool : Tool
+    public class RectTool : Tool
     {
         /// <summary>
         ///     Default constructor

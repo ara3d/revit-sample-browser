@@ -19,7 +19,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         ///     parameter 1: one string parameter named as "BasalOpening" which  is used for customization of door opening for each
         ///     country.
         ///     parameter 2: one string parameter named as "InstanceOpening" to indicate the door's opening value.
-        ///     parameter 3: one YESNO parameter named as "Internal Door" to flag the door is internal door or not.
+        ///     parameter 3: one YESNO parameter named as "public Door" to flag the door is public door or not.
         /// </summary>
         /// <param name="app">Revit application.</param>
         public static void AddSharedParameters(UIApplication app)
@@ -31,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             var doorCategory = app.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Doors);
             categories.Insert(doorCategory);
 
-            // create one instance binding for "Internal Door" and "InstanceOpening" parameters;
+            // create one instance binding for "public Door" and "InstanceOpening" parameters;
             // and one type binding for "BasalOpening" parameters
             var instanceBinding = app.Application.Create.NewInstanceBinding(categories);
             var typeBinding = app.Application.Create.NewTypeBinding(categories);
@@ -80,15 +80,15 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                 bindingMap.Insert(instanceOpening, instanceBinding, GroupTypeId.Geometry);
             }
 
-            // for "Internal Door"
-            if (!AlreadyAddedSharedParameter(app.ActiveUIDocument.Document, "Internal Door", BuiltInCategory.OST_Doors))
+            // for "public Door"
+            if (!AlreadyAddedSharedParameter(app.ActiveUIDocument.Document, "public Door", BuiltInCategory.OST_Doors))
             {
-                var internalDoorFlag = defGroup.Definitions.get_Item("Internal Door");
+                var internalDoorFlag = defGroup.Definitions.get_Item("public Door");
 
                 if (null == internalDoorFlag)
                 {
                     var externalDefinitionCreationOptions3 =
-                        new ExternalDefinitionCreationOptions("Internal Door", SpecTypeId.Boolean.YesNo);
+                        new ExternalDefinitionCreationOptions("public Door", SpecTypeId.Boolean.YesNo);
                     internalDoorFlag = defGroup.Definitions.Create(externalDefinitionCreationOptions3);
                 }
 

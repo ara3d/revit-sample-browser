@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
     /// <summary>
     ///     can be the datasource of propertygrid
     /// </summary>
-    internal class FloorAreaReinData : IAreaReinData
+    public class FloorAreaReinData : IAreaReinData
     {
         //bottom major layer
         private Parameter m_bottomMajorBarType;

@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
     ///     A "fake" keynote database used to demonstrate how Revit keynote data can
     ///     be generated without reading from a *.txt file.
     /// </summary>
-    internal static class KeynotesDatabase
+    public static class KeynotesDatabase
     {
         /// <summary>
         ///     Indicates what version of keynote data is currently available from the database.

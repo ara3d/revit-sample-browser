@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
     ///     Raised all points contained in a subregion by 3 feet.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class SiteRaiseTerrainInRegionCommand : IExternalCommand
+    public class SiteRaiseTerrainInRegionCommand : IExternalCommand
     {
         /// <summary>
         ///     Implementation of the external command.

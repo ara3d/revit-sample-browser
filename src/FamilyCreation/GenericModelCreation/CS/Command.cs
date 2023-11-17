@@ -339,7 +339,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
         /// <param name="normal">plane normal</param>
         /// <param name="origin">origin point</param>
         /// <returns></returns>
-        internal SketchPlane CreateSketchPlane(XYZ normal, XYZ origin)
+        public SketchPlane CreateSketchPlane(XYZ normal, XYZ origin)
         {
             // First create a Geometry.Plane which need in NewSketchPlane() method
             var geometryPlane = Plane.CreateByNormalAndOrigin(normal, origin);

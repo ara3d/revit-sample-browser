@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
     ///     The geometry support for reinforcement creation on column.
     ///     It can prepare the geometry information for transverse and vertical reinforcement creation
     /// </summary>
-    internal class ColumnGeometrySupport : GeometrySupport
+    public class ColumnGeometrySupport : GeometrySupport
     {
         private readonly double m_columnHeight; //the height of the column
 

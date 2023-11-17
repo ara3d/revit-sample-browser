@@ -5,7 +5,7 @@ using Autodesk.Revit.UI;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
-    internal static class HelperMethods
+    public static class HelperMethods
     {
         /// <summary>
         ///     Makes the main part of the CreateBRep external command actions.

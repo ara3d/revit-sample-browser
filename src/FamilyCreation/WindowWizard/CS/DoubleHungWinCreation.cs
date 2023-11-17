@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
     /// <summary>
     ///     Inherited from WindowCreation class
     /// </summary>
-    internal class DoubleHungWinCreation : WindowCreation
+    public class DoubleHungWinCreation : WindowCreation
     {
         /// <summary>
         ///     store the Application

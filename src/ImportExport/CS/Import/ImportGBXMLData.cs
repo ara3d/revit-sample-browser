@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
     /// <summary>
     ///     Data class which stores the information for importing GBXML format
     /// </summary>
-    internal class ImportGbxmlData : ImportData
+    public class ImportGbxmlData : ImportData
     {
         /// <summary>
         ///     Constructor

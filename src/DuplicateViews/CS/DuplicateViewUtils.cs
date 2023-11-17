@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
     /// <summary>
     ///     Utilities that facilitate duplication of drafting views and schedules into another document.
     /// </summary>
-    internal class DuplicateViewUtils
+    public class DuplicateViewUtils
     {
         /// <summary>
         ///     Utility to duplicate schedules from one document to another.
@@ -221,7 +221,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
     /// <summary>
     ///     A handler to accept duplicate types names created by the copy/paste operation.
     /// </summary>
-    internal class HideAndAcceptDuplicateTypeNamesHandler : IDuplicateTypeNamesHandler
+    public class HideAndAcceptDuplicateTypeNamesHandler : IDuplicateTypeNamesHandler
     {
         /// <summary>
         ///     Implementation of the IDuplicateTypeNameHandler
@@ -238,7 +238,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
     /// <summary>
     ///     A failure preprocessor to hide the warning about duplicate types being pasted.
     /// </summary>
-    internal class HidePasteDuplicateTypesPreprocessor : IFailuresPreprocessor
+    public class HidePasteDuplicateTypesPreprocessor : IFailuresPreprocessor
     {
         /// <summary>
         ///     Implementation of the IFailuresPreprocessor.

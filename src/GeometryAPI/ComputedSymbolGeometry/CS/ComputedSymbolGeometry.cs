@@ -6,7 +6,7 @@ using Autodesk.Revit.DB.Analysis;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
 {
-    internal class ComputedSymbolGeometry
+    public class ComputedSymbolGeometry
     {
         private readonly Options m_options;
         private int m_schemaId = -1;

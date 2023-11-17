@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
     /// <summary>
     ///     It represents a U-shape winder and consists of three straight runs and two winder corners.
     /// </summary>
-    internal class UWinder : Winder
+    public class UWinder : Winder
     {
         /// <summary>
         ///     The first Winder Corner, connecting the first and the second straight runs.

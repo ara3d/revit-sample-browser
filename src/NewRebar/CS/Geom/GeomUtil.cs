@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Geom
     /// <summary>
     ///     The class which gives the base geometry operation, it is a static class.
     /// </summary>
-    internal static class GeomUtil
+    public static class GeomUtil
     {
         // Private members
         private const double Precision = 0.00001; //precision when judge whether two doubles are equal

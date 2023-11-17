@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
     /// <summary>
     ///     This represents a single point winder corner.
     /// </summary>
-    internal class WinderSinglePoint : WinderCorner
+    public class WinderSinglePoint : WinderCorner
     {
         /// <summary>
         ///     Constructor to initialize the basic fields of the winder region.

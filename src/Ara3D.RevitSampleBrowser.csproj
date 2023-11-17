@@ -486,7 +486,6 @@
     <Compile Include="AppearanceAssetEditing\CS\Request.cs" />
     <Compile Include="AppearanceAssetEditing\CS\RequestHandler.cs" />
     <Compile Include="AreaReinCurve\CS\AreaReinCurve.cs" />
-    <Compile Include="AreaReinCurve\CS\GeomUtil.cs" />
     <Compile Include="AreaReinCurve\CS\ParameterUtil.cs" />
     <Compile Include="AreaReinParameters\CS\AreaReinData.cs" />
     <Compile Include="AreaReinParameters\CS\AreaReinEnum.cs" />

@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
     ///     commonly used landscape structures.
     /// </remarks>
     [Transaction(TransactionMode.Manual)]
-    internal class SiteAddRetainingPondCommand : IExternalCommand
+    public class SiteAddRetainingPondCommand : IExternalCommand
     {
         /// <summary>
         ///     Implementation of the external command.

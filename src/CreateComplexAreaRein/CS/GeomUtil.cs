@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
@@ -11,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
     /// <summary>
     ///     provide some common geometry judgement and calculate method
     /// </summary>
-    internal class GeomUtil
+    public class GeomUtil
     {
         private const double Precision = 0.00001; //precision when judge whether two doubles are equal
 
@@ -97,6 +98,9 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 
             return result < Precision;
         }
+
+        public static bool IsRectangular(CurveArray curves)
+            => IsRectangular(curves.Cast<Curve>().ToList());
 
         /// <summary>
         ///     judge whether given 4 lines can form a rectangular
@@ -196,7 +200,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
         /// <param name="line1"></param>
         /// <param name="line2"></param>
         /// <returns></returns>
-        private static bool IsVertical(Line line1, Line line2)
+        public static bool IsVertical(Line line1, Line line2)
         {
             var vector1 = SubXyz(line1.GetEndPoint(0), line1.GetEndPoint(1));
             var vector2 = SubXyz(line2.GetEndPoint(0), line2.GetEndPoint(1));
@@ -300,7 +304,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
         }
 
         /// <summary>
-        ///     judge whether the subtraction of two doubles is less than the internal decided precision
+        ///     judge whether the subtraction of two doubles is less than the public decided precision
         /// </summary>
         /// <param name="d1"></param>
         /// <param name="d2"></param>

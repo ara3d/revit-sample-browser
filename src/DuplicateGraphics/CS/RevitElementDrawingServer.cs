@@ -17,7 +17,7 @@ using View = Autodesk.Revit.DB.View;
 
 namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
 {
-    internal class RevitElementDrawingServer : IDirectContext3DServer
+    public class RevitElementDrawingServer : IDirectContext3DServer
     {
         private RenderingPassBufferStorage m_edgeBufferStorage;
 

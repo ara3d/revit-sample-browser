@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
     /// <summary>
     ///     can be the datasource of propertygrid
     /// </summary>
-    internal class WallAreaReinData : IAreaReinData
+    public class WallAreaReinData : IAreaReinData
     {
         //exterior major layer
         private Parameter m_exteriorMajorBarType;

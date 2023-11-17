@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
     ///     A command that lowers all points contained in a subregion by 3 feet.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class SiteLowerTerrainInRegionCommand : IExternalCommand
+    public class SiteLowerTerrainInRegionCommand : IExternalCommand
     {
         /// <summary>
         ///     Implementation of the external command.

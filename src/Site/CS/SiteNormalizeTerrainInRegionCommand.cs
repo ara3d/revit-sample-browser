@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
     ///     A command that normalizes all points in a region to the average elevation.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class SiteNormalizeTerrainInRegionCommand : IExternalCommand
+    public class SiteNormalizeTerrainInRegionCommand : IExternalCommand
     {
         /// <summary>
         ///     Implementation of the external command.

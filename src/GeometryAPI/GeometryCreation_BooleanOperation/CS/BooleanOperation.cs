@@ -4,15 +4,12 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation.CS
 {
-    internal static class BooleanOperation
+    public static class BooleanOperation
     {
         /// <summary>
         ///     Boolean intersect geometric operation, return a new solid as the result
         /// </summary>
-        /// <param name="solid1">Operation solid 1</param>
-        /// <param name="solid2">Operation solid 2</param>
-        /// <returns>The operation result</returns>
-        public static Solid BooleanOperation_Intersect(Solid solid1, Solid solid2)
+        public static Solid Intersect(this Solid solid1, Solid solid2)
         {
             return BooleanOperationsUtils.ExecuteBooleanOperation(solid1, solid2, BooleanOperationsType.Intersect);
         }
@@ -20,10 +17,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         /// <summary>
         ///     Boolean union geometric operation, return a new solid as the result
         /// </summary>
-        /// <param name="solid1">Operation solid 1</param>
-        /// <param name="solid2">Operation solid 2</param>
-        /// <returns>The operation result</returns>
-        public static Solid BooleanOperation_Union(Solid solid1, Solid solid2)
+        public static Solid Union(this Solid solid1, Solid solid2)
         {
             return BooleanOperationsUtils.ExecuteBooleanOperation(solid1, solid2, BooleanOperationsType.Union);
         }
@@ -31,10 +25,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         /// <summary>
         ///     Boolean difference geometric operation, return a new solid as the result
         /// </summary>
-        /// <param name="solid1">Operation solid 1</param>
-        /// <param name="solid2">Operation solid 2</param>
-        /// <returns>The operation result</returns>
-        public static Solid BooleanOperation_Difference(Solid solid1, Solid solid2)
+        public static Solid Difference(this Solid solid1, Solid solid2)
         {
             return BooleanOperationsUtils.ExecuteBooleanOperation(solid1, solid2, BooleanOperationsType.Difference);
         }
@@ -42,34 +33,31 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         /// <summary>
         ///     Boolean intersect geometric operation, modify the original solid as the result
         /// </summary>
-        /// <param name="solid1">Operation solid 1 and operation result</param>
-        /// <param name="solid2">Operation solid 2</param>
-        public static void BooleanOperation_Intersect(ref Solid solid1, Solid solid2)
+        public static Solid IntersectSelf(this Solid solid1, Solid solid2)
         {
             BooleanOperationsUtils.ExecuteBooleanOperationModifyingOriginalSolid(solid1, solid2,
                 BooleanOperationsType.Intersect);
+            return solid1;
         }
 
         /// <summary>
         ///     Boolean union geometric operation, modify the original solid as the result
         /// </summary>
-        /// <param name="solid1">Operation solid 1 and operation result</param>
-        /// <param name="solid2">Operation solid 2</param>
-        public static void BooleanOperation_Union(ref Solid solid1, Solid solid2)
+        public static Solid UnionSelf(this Solid solid1, Solid solid2)
         {
             BooleanOperationsUtils.ExecuteBooleanOperationModifyingOriginalSolid(solid1, solid2,
                 BooleanOperationsType.Union);
+            return solid1;
         }
 
         /// <summary>
         ///     Boolean difference geometric operation, modify the original solid as the result
         /// </summary>
-        /// <param name="solid1">Operation solid 1 and operation result</param>
-        /// <param name="solid2">Operation solid 2</param>
-        public static void BooleanOperation_Difference(ref Solid solid1, Solid solid2)
+        public static Solid DifferenceSelf(this Solid solid1, Solid solid2)
         {
             BooleanOperationsUtils.ExecuteBooleanOperationModifyingOriginalSolid(solid1, solid2,
                 BooleanOperationsType.Difference);
+            return solid1;
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
         ///     Cancelled can be used to signify that the user cancelled the external operation at
         ///     some point.
         ///     If false is returned then Revit should inform the user that the external application
-        ///     failed to load and the release the internal reference.
+        ///     failed to load and the release the public reference.
         /// </returns>
         public Result OnStartup(UIControlledApplication application)
         {

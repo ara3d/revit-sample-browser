@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters
     ///     This class wraps a formula parameter which will be the dimension of
     ///     RebarShape definition.
     /// </summary>
-    internal class RebarShapeParameterFormula : RebarShapeParameter
+    public class RebarShapeParameterFormula : RebarShapeParameter
     {
         /// <summary>
         ///     Parameter formula sting.

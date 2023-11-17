@@ -40,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         ///     Cancelled can be used to signify that the user cancelled the external operation at
         ///     some point.
         ///     If Failed is returned then Revit should inform the user that the external application
-        ///     failed to load and the release the internal reference.
+        ///     failed to load and the release the public reference.
         ///     This method also adds a ribbon panel and button to launch an IExternalCommand
         ///     defined in UICommand.cs.  It also registers a new IPerformanceAdviserRule-implementing class
         ///     (m_FlippedDoorApiRule) with PerformanceAdviser.

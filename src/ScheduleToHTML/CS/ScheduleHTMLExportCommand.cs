@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
     ///     The external command exporting the active schedule to HTML.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class ScheduleHtmlExportCommand : IExternalCommand
+    public class ScheduleHtmlExportCommand : IExternalCommand
     {
         /// <summary>
         ///     The implementation of the command.

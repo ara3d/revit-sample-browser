@@ -22,7 +22,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
     /// <summary>
     ///     Utility class that contains methods of view schedule creation and schedule sheet instance creation.
     /// </summary>
-    internal class ScheduleCreationUtility
+    public class ScheduleCreationUtility
     {
         private static readonly BuiltInParameter[] SSkipParameters = { BuiltInParameter.ALL_MODEL_MARK };
 

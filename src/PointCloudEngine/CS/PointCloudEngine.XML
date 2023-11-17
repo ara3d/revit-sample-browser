@@ -169,7 +169,7 @@
     <member
       name="M:Ara3D.RevitSampleBrowser.CS.PointCloudEngine.PointCloudAccessBase.ReadSomePoints(Autodesk.Revit.DB.PointClouds.PointCloudFilter,System.IntPtr,System.Int32,System.Int32)">
       <summary>
-        The internal implementation for point cloud read requests from Revit.
+        The public implementation for point cloud read requests from Revit.
       </summary>
       <remarks>Both IPointCloudAccess.ReadPoints() and IPointSetIterator.ReadPoints() are served by this method.</remarks>
       <param name="rFilter">The point cloud filter.</param>

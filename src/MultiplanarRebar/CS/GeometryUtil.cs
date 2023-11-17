@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
     ///     This class is to parse the geometry information of given Corbel FamilyInstance,
     ///     and finally construct a CorbelFrame according to the parsed geometry information.
     /// </summary>
-    internal class GeometryUtil
+    public class GeometryUtil
     {
         /// <summary>
         ///     This method parses geometry information of given Corbel to construct the CorbelFrame.

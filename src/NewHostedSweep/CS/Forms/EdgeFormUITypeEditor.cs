@@ -12,7 +12,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
     /// <summary>
     ///     This class is intent to provide a model dialog in property grid control.
     /// </summary>
-    internal class EdgeFormUiTypeEditor : UITypeEditor
+    public class EdgeFormUiTypeEditor : UITypeEditor
     {
         /// <summary>
         ///     Return the Modal style.

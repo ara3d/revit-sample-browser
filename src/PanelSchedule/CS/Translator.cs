@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
     /// <summary>
     ///     Translate the panel schedule view data from Revit to some formats, HTML, CSV etc.
     /// </summary>
-    internal abstract class Translator
+    public abstract class Translator
     {
         /// <summary>
         ///     the panel schedule view instance to be exported.

@@ -59,7 +59,7 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
                     // the name of the parameter can be found from its definition.
                     sb.AppendFormat("{0}\t", param.Definition.Name);
 
-                    // Revit parameters can be one of 5 different internal storage types:
+                    // Revit parameters can be one of 5 different public storage types:
                     // double, int, string, Autodesk.Revit.DB.ElementId and None. 
                     // if it is double then use AsDouble to get the double value
                     // then int AsInteger, string AsString, None AsStringValue.

@@ -129,7 +129,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         /// <summary>
         ///     Pick the element from UI.
         /// </summary>
-        internal void PickElement()
+        public void PickElement()
         {
             try
             {
@@ -151,7 +151,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         /// <summary>
         ///     Pick the point from UI.
         /// </summary>
-        internal void PickPoint()
+        public void PickPoint()
         {
             try
             {
@@ -171,7 +171,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         /// </summary>
         /// <param name="elem">The element to be moved.</param>
         /// <param name="targetPoint">The location element to be moved.</param>
-        internal void MoveElement(Element elem, XYZ targetPoint)
+        public void MoveElement(Element elem, XYZ targetPoint)
         {
             var vecToMove = targetPoint - m_elemPickedPoint;
             m_elemPickedPoint = targetPoint;

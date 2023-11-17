@@ -119,7 +119,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         }
 
         /// <summary>
-        ///     The internal implementation for point cloud read requests from Revit.
+        ///     The public implementation for point cloud read requests from Revit.
         /// </summary>
         /// <remarks>Both IPointCloudAccess.ReadPoints() and IPointSetIterator.ReadPoints() are served by this method.</remarks>
         /// <param name="rFilter">The point cloud filter.</param>

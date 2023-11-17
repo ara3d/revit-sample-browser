@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
     ///     A stairs configuration representing a single curved run.
     /// </summary>
     /// <remarks>Because this run is based on Spiral runs, runs exceeding 360 degrees are possible.</remarks>
-    internal class StairsSingleCurvedRun : StairsConfiguration
+    public class StairsSingleCurvedRun : StairsConfiguration
     {
         /// <summary>
         ///     Creates a new instance of StairsSingleCurvedRun at the default location and orientation.

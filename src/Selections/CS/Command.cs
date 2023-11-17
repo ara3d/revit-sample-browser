@@ -154,7 +154,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         /// </summary>
         /// <param name="symbolName">The name of FamilySymbol to be found.</param>
         /// <returns>The specific FamilySymbol.</returns>
-        internal FamilySymbol FindFamilySymbol(string symbolName)
+        public FamilySymbol FindFamilySymbol(string symbolName)
         {
             var elemCollector = new FilteredElementCollector(m_document.Document);
             elemCollector.WhereElementIsElementType();
@@ -248,7 +248,7 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
         /// <param name="normal">The vector for normal of sketch plane.</param>
         /// <param name="origin">The vector for origin of sketch plane.</param>
         /// <returns>The new sketch plane created by specific normal and origin.</returns>
-        internal SketchPlane CreateSketchPlane(XYZ normal, XYZ origin)
+        public SketchPlane CreateSketchPlane(XYZ normal, XYZ origin)
         {
             // First create a Geometry.Plane which need in NewSketchPlane() method
             var geometryPlane = Plane.CreateByNormalAndOrigin(normal, origin);

@@ -9,7 +9,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Parameters
     ///     This class wraps a double parameter which will be the dimension of
     ///     RebarShape definition.
     /// </summary>
-    internal class RebarShapeParameterDouble : RebarShapeParameter
+    public class RebarShapeParameterDouble : RebarShapeParameter
     {
         /// <summary>
         ///     Parameter double value.

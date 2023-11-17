@@ -10,7 +10,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
     /// <summary>
     ///     This class presents an obstruction of a Pipe.
     /// </summary>
-    internal class Section
+    public class Section
     {
         /// <summary>
         ///     Pipe centerline's direction.

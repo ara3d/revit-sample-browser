@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
     ///     SlabProfile class contains Geometry information of Slab,
     ///     and contains methods used to edit slab's Shape.
     /// </summary>
-    internal class SlabProfile
+    public class SlabProfile
     {
         private const int SizeXPictureBox = 354; //save picture box's size.X
 

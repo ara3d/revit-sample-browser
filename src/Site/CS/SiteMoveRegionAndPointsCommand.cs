@@ -23,7 +23,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
     ///     A command that moves a subregion and the points it contains to a new location on the host surface.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    internal class SiteMoveRegionAndPointsCommand : IExternalCommand
+    public class SiteMoveRegionAndPointsCommand : IExternalCommand
     {
         /// <summary>
         ///     Implementation of the external command.

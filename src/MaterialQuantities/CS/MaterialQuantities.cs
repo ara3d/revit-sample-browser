@@ -83,7 +83,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     /// <summary>
     ///     The wall material quantity calculator specialized class.
     /// </summary>
-    internal class WallMaterialQuantityCalculator : MaterialQuantityCalculator
+    public class WallMaterialQuantityCalculator : MaterialQuantityCalculator
     {
         protected override void CollectElements()
         {
@@ -102,7 +102,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     /// <summary>
     ///     The floor material quantity calculator specialized class.
     /// </summary>
-    internal class FloorMaterialQuantityCalculator : MaterialQuantityCalculator
+    public class FloorMaterialQuantityCalculator : MaterialQuantityCalculator
     {
         protected override void CollectElements()
         {
@@ -120,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     /// <summary>
     ///     The roof material quantity calculator specialized class.
     /// </summary>
-    internal class RoofMaterialQuantityCalculator : MaterialQuantityCalculator
+    public class RoofMaterialQuantityCalculator : MaterialQuantityCalculator
     {
         protected override void CollectElements()
         {
@@ -138,7 +138,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     /// <summary>
     ///     The base material quantity calculator for all element types.
     /// </summary>
-    internal abstract class MaterialQuantityCalculator
+    public abstract class MaterialQuantityCalculator
     {
         /// <summary>
         ///     Flag indicating the mode of the calculation.
@@ -408,7 +408,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
     /// <summary>
     ///     A storage class for the extracted material quantities.
     /// </summary>
-    internal class MaterialQuantities
+    public class MaterialQuantities
     {
         /// <summary>
         ///     Gross volume (cubic ft)

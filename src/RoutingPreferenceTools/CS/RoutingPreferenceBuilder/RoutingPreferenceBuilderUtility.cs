@@ -16,7 +16,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
     /// <summary>
     ///     A helper class to find paths of .rfa family files in a document.
     /// </summary>
-    internal class FindFolderUtility
+    public class FindFolderUtility
     {
         private readonly Application m_application;
         private readonly string m_basePath;
@@ -150,7 +150,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
     /// <summary>
     ///     A simple exception class to help identify errors related to this application.
     /// </summary>
-    internal class RoutingPreferenceDataException : Exception
+    public class RoutingPreferenceDataException : Exception
     {
         private readonly string m_message;
 
@@ -169,7 +169,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
     ///     A helper class to validate RoutingPreferenceBuilder xml documents against
     ///     the embedded resource "RoutingPreferenceBuilderData.xsd"
     /// </summary>
-    internal class SchemaValidationHelper
+    public class SchemaValidationHelper
     {
         /// <summary>
         ///     Returns true if a document is a valid RoutingPreferenceBuilder xml document, false otherwise.

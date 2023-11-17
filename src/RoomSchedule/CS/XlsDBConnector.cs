@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
     /// <summary>
     ///     An integrated class to connect .xls data source, retrieve / update data
     /// </summary>
-    internal class XlsDbConnector : IDisposable
+    public class XlsDbConnector : IDisposable
     {
         // One command for this connection
         private OleDbCommand m_command;

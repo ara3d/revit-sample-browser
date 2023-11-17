@@ -13,7 +13,7 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
     /// <summary>
     ///     A class that executes an animation of structural model elements using DisplacementElements.
     /// </summary>
-    internal class DisplacementStructureModelAnimator
+    public class DisplacementStructureModelAnimator
     {
         /// <summary>
         ///     The increment by which the displacement parameter is reduced during animation.

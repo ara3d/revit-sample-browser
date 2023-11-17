@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
     /// <summary>
     ///     The RoofItem is used to display a roof info in the ListView as a ListViewItem.
     /// </summary>
-    internal class RoofItem : ListViewItem
+    public class RoofItem : ListViewItem
     {
         // To store the roof which the RoofItem stands for.
 

@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
     /// <summary>
     ///     This class plots a number of instances of a given family object along a sine curve.
     /// </summary>
-    internal class FamilyInstancePlotter
+    public class FamilyInstancePlotter
     {
         private readonly Document m_document;
         private readonly FamilySymbol m_familySymbol;

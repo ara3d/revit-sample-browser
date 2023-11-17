@@ -4,7 +4,7 @@ using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
-    internal class Podium
+    public class Podium
     {
         /// <summary>
         ///     ExternalGeometryId of the created ExternallyTaggedBRep by Podium class.

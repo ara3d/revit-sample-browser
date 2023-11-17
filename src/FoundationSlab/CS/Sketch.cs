@@ -11,10 +11,10 @@ using Color = System.Drawing.Color;
 namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
 {
     /// <summary>
-    ///     An internal class for drawing slabs' profiles.
+    ///     An public class for drawing slabs' profiles.
     ///     This class is intended to contain only static methods.
     /// </summary>
-    internal class Sketch
+    public class Sketch
     {
         // A private constructor to prevent the compiler from generating a default constructor.
         private Sketch()

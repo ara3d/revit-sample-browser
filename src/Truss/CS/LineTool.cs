@@ -8,7 +8,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
     /// <summary>
     ///     tool used to draw line
     /// </summary>
-    internal class LineTool
+    public class LineTool
     {
         private Point m_movePoint; //record the coordinate of location where mouse just moved to. 
 

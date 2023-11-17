@@ -45,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
         /// <summary>
         ///     For serialization only -- Do not use.
         /// </summary>
-        internal SchemaWrapper()
+        public SchemaWrapper()
         {
         }
 

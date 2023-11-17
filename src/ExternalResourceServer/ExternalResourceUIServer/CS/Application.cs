@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
     ///         IExternalApplication, and NOT an IExternalDBApplication.
     ///     </para>
     /// </summary>
-    internal class UiServerApplication : IExternalApplication
+    public class UiServerApplication : IExternalApplication
     {
         /// <summary>
         ///     Registers an instance of a SampleExternalResourceUIServer with the ExternalService

@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter
     /// <summary>
     ///     Type converter between RebarShapeParameter and string is provided for property grid.
     /// </summary>
-    internal class TypeConverterRebarShapeParameter : System.ComponentModel.TypeConverter
+    public class TypeConverterRebarShapeParameter : System.ComponentModel.TypeConverter
     {
         /// <summary>
         ///     RebarShape parameters list.

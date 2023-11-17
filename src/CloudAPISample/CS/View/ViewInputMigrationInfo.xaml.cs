@@ -85,7 +85,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
         }
 
         [DataContract]
-        internal class SerializableProjectInfo
+        public class SerializableProjectInfo
         {
             [DataMember]
             public string AccountGuid { get; set; }

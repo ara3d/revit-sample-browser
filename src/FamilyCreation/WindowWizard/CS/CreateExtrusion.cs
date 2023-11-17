@@ -11,7 +11,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
     /// <summary>
     ///     The class is used to create solid extrusion
     /// </summary>
-    internal class CreateExtrusion
+    public class CreateExtrusion
     {
         /// <summary>
         ///     store the application of creation
