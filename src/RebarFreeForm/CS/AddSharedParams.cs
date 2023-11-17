@@ -89,10 +89,12 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 var apiGroup = parafile.Groups.Create("RebarTestParamGroup");
 
                 // create a visible param 
-                var extDefinitionCreationOptions = new ExternalDefinitionCreationOptions(paramName, paramType);
-                extDefinitionCreationOptions.HideWhenNoValue =
-                    true; //used this to show the parameter only in some rebar instances that will use it
-                extDefinitionCreationOptions.UserModifiable = userModifiable; //  set if users need to modify this
+                var extDefinitionCreationOptions = new ExternalDefinitionCreationOptions(paramName, paramType)
+                {
+                    HideWhenNoValue =
+                    true, //used this to show the parameter only in some rebar instances that will use it
+                    UserModifiable = userModifiable //  set if users need to modify this
+                };
                 var rebarSharedParamDef = apiGroup.Definitions.Create(extDefinitionCreationOptions);
 
                 // get rebar category

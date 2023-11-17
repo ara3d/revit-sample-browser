@@ -117,9 +117,11 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
             // Get the octagonal profile's bounding box.
             var newMin = new XYZ(min.X - xOffset, min.Y - yOffset, z);
             var newMax = new XYZ(max.X + xOffset, max.Y + yOffset, z);
-            BBox = new BoundingBoxXYZ();
-            BBox.Min = newMin;
-            BBox.Max = newMax;
+            BBox = new BoundingBoxXYZ
+            {
+                Min = newMin,
+                Max = newMax
+            };
 
             return true;
         }

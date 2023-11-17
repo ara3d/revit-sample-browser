@@ -319,9 +319,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var dashULine = new GridLine2D(startPoint, endPoint);
 
             // initialize the pan
-            var redPen = new Pen(Color.Red, m_sketchPenWidth);
-            redPen.DashCap = DashCap.Flat;
-            redPen.DashStyle = DashStyle.Dash;
+            var redPen = new Pen(Color.Red, m_sketchPenWidth)
+            {
+                DashCap = DashCap.Flat,
+                DashStyle = DashStyle.Dash
+            };
 
             // add the dash line to the assistant line list for drawing
             DrawObject = new DrawObject(dashULine, redPen);
@@ -410,9 +412,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var dashVLine = new GridLine2D(startPoint, endPoint);
 
             // initialize the pan
-            var redPen = new Pen(Color.Red, m_sketchPenWidth);
-            redPen.DashCap = DashCap.Flat;
-            redPen.DashStyle = DashStyle.Dash;
+            var redPen = new Pen(Color.Red, m_sketchPenWidth)
+            {
+                DashCap = DashCap.Flat,
+                DashStyle = DashStyle.Dash
+            };
 
             // add the dash line to the assistant line list for drawing
             DrawObject = new DrawObject(dashVLine, redPen);

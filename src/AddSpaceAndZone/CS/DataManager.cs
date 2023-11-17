@@ -52,19 +52,19 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 
             var activeDoc = m_commandData.Application.ActiveUIDocument.Document;
 
-            foreach (var level in activeDoc.GetFilteredElements<Level>())
+            foreach (var level in activeDoc.GetElements<Level>())
             {
                 m_levels.Add(level);
                 spaceDictionary.Add(level.Id, new List<Space>());
                 zoneDictionary.Add(level.Id, new List<Zone>());
             }
 
-            foreach (var space in activeDoc.GetFilteredElements<Space>())
+            foreach (var space in activeDoc.GetElements<Space>())
             {
                 spaceDictionary[space.LevelId].Add(space);
             }
 
-            foreach (var zone in activeDoc.GetFilteredElements<Zone>())
+            foreach (var zone in activeDoc.GetElements<Zone>())
             {
                 if (activeDoc.GetElement(zone.LevelId) != null) 
                     zoneDictionary[zone.LevelId].Add(zone);

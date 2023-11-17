@@ -39,10 +39,12 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
                 noPanelScheduleInstance = false;
 
                 // choose what format export to, it can be CSV or HTML.
-                var alternativeDlg = new TaskDialog("Choose Format to export");
-                alternativeDlg.MainContent = "Click OK to export in .CSV format, Cancel to export in HTML format.";
-                alternativeDlg.CommonButtons = TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel;
-                alternativeDlg.AllowCancellation = true;
+                var alternativeDlg = new TaskDialog("Choose Format to export")
+                {
+                    MainContent = "Click OK to export in .CSV format, Cancel to export in HTML format.",
+                    CommonButtons = TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel,
+                    AllowCancellation = true
+                };
                 var exportToCsv = alternativeDlg.Show();
 
                 var translator = TaskDialogResult.Cancel == exportToCsv
@@ -56,9 +58,11 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 
             if (noPanelScheduleInstance)
             {
-                var messageDlg = new TaskDialog("Warnning Message");
-                messageDlg.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-                messageDlg.MainContent = "No panel schedule view is in the current document.";
+                var messageDlg = new TaskDialog("Warnning Message")
+                {
+                    MainIcon = TaskDialogIcon.TaskDialogIconWarning,
+                    MainContent = "No panel schedule view is in the current document."
+                };
                 messageDlg.Show();
                 return Result.Cancelled;
             }

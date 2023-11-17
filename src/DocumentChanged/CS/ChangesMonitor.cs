@@ -169,28 +169,38 @@ namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
             var changesInfoTable = new DataTable("ChangesInfoTable");
 
             // Create a "ChangeType" column. It will be "Added", "Deleted" and "Modified".
-            var styleColumn = new DataColumn("ChangeType", typeof(string));
-            styleColumn.Caption = "ChangeType";
+            var styleColumn = new DataColumn("ChangeType", typeof(string))
+            {
+                Caption = "ChangeType"
+            };
             changesInfoTable.Columns.Add(styleColumn);
 
             // Create a "Id" column. It will be the Element ID
-            var idColum = new DataColumn("Id", typeof(string));
-            idColum.Caption = "Id";
+            var idColum = new DataColumn("Id", typeof(string))
+            {
+                Caption = "Id"
+            };
             changesInfoTable.Columns.Add(idColum);
 
             // Create a "Name" column. It will be the Element Name
-            var nameColum = new DataColumn("Name", typeof(string));
-            nameColum.Caption = "Name";
+            var nameColum = new DataColumn("Name", typeof(string))
+            {
+                Caption = "Name"
+            };
             changesInfoTable.Columns.Add(nameColum);
 
             // Create a "Category" column. It will be the Category Name of the element.
-            var categoryColum = new DataColumn("Category", typeof(string));
-            categoryColum.Caption = "Category";
+            var categoryColum = new DataColumn("Category", typeof(string))
+            {
+                Caption = "Category"
+            };
             changesInfoTable.Columns.Add(categoryColum);
 
             // Create a "Document" column. It will be the document which own the changed element.
-            var docColum = new DataColumn("Document", typeof(string));
-            docColum.Caption = "Document";
+            var docColum = new DataColumn("Document", typeof(string))
+            {
+                Caption = "Document"
+            };
             changesInfoTable.Columns.Add(docColum);
 
             // return this data table 

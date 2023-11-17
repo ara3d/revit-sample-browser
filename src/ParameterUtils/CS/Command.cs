@@ -105,8 +105,10 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
                 }
 
                 // Create our dialog, passing it the parameters array for display.
-                var propertiesForm = new PropertiesForm(parameterItems.ToArray());
-                propertiesForm.StartPosition = FormStartPosition.CenterParent;
+                var propertiesForm = new PropertiesForm(parameterItems.ToArray())
+                {
+                    StartPosition = FormStartPosition.CenterParent
+                };
                 propertiesForm.ShowDialog();
                 retRes = Result.Succeeded;
             }

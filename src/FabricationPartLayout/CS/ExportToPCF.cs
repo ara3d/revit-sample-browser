@@ -50,10 +50,11 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 var callingFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-                var saveAsDlg = new FileSaveDialog("PCF Files (*.pcf)|*.pcf");
-
-                saveAsDlg.InitialFileName = callingFolder + "\\pcfExport";
-                saveAsDlg.Title = "Export To PCF";
+                var saveAsDlg = new FileSaveDialog("PCF Files (*.pcf)|*.pcf")
+                {
+                    InitialFileName = callingFolder + "\\pcfExport",
+                    Title = "Export To PCF"
+                };
                 var result = saveAsDlg.Show();
 
                 if (result == ItemSelectionDialogResult.Canceled)

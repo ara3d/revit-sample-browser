@@ -58,13 +58,8 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         /// </summary>
         public void Resolve()
         {
-            var pipes = new List<Element>();
-            var collector = new FilteredElementCollector(m_rvtDoc);
-            pipes.AddRange(collector.OfClass(typeof(Pipe)).ToElements());
-            foreach (var pipe in pipes)
-            {
-                Resolve(pipe as Pipe);
-            }
+            foreach (var pipe in m_rvtDoc.GetFilteredElements<Pipe>())
+                 Resolve(pipe);
         }
 
         /// <summary>

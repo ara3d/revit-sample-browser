@@ -137,18 +137,22 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             var newTable = new DataTable();
             foreach (var col in m_columnNames)
             {
-                var column = new DataColumn();
-                column.ColumnName = col;
-                column.ReadOnly = true;
-                column.DataType = Type.GetType("System.String");
+                var column = new DataColumn
+                {
+                    ColumnName = col,
+                    ReadOnly = true,
+                    DataType = Type.GetType("System.String")
+                };
                 newTable.Columns.Add(column);
             }
 
             // add constant column: External Room ID
-            var constantCol = new DataColumn();
-            constantCol.ColumnName = SharedParam;
-            constantCol.ReadOnly = true;
-            constantCol.DataType = Type.GetType("System.String");
+            var constantCol = new DataColumn
+            {
+                ColumnName = SharedParam,
+                ReadOnly = true,
+                DataType = Type.GetType("System.String")
+            };
             newTable.Columns.Add(constantCol);
 
             // filter rooms by level

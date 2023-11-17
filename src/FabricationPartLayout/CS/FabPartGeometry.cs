@@ -44,10 +44,11 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 var callingFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-                var saveAsDlg = new FileSaveDialog("CSV Files (*.csv)|*.csv");
-
-                saveAsDlg.InitialFileName = callingFolder + "\\geomExport";
-                saveAsDlg.Title = "Save Part Geometry As";
+                var saveAsDlg = new FileSaveDialog("CSV Files (*.csv)|*.csv")
+                {
+                    InitialFileName = callingFolder + "\\geomExport",
+                    Title = "Save Part Geometry As"
+                };
                 var result = saveAsDlg.Show();
 
                 if (result == ItemSelectionDialogResult.Canceled)
@@ -64,8 +65,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     // get all rods and kist with rods 
                     if (doc.GetElement(eid) is FabricationPart part)
                     {
-                        var options = new Options();
-                        options.DetailLevel = ViewDetailLevel.Coarse;
+                        var options = new Options
+                        {
+                            DetailLevel = ViewDetailLevel.Coarse
+                        };
 
                         var main = GetMeshes(part.get_Geometry(options));
                         var ins = GetMeshes(part.GetInsulationLiningGeometry());

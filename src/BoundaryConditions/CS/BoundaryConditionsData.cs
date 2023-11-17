@@ -120,36 +120,20 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             // retrieve the Document in which the Element resides.
             var doc = element.Document;
 
-            var boundaryConditions = from elem in
-                    new FilteredElementCollector(doc).OfClass(typeof(Autodesk.Revit.DB.Structure.BoundaryConditions))
-                        .ToElements()
-                let bC = elem as Autodesk.Revit.DB.Structure.BoundaryConditions
-                where bC != null && HostElement.Id == bC.HostElementId
-                select bC;
+            var boundaryConditions = doc.GetFilteredElements<Autodesk.Revit.DB.Structure.BoundaryConditions>();
             foreach (var bC in boundaryConditions)
             {
-                BCs.Add(bC.Id, bC);
+                if (HostElement.Id == bC.HostElementId)
+                    BCs.Add(bC.Id, bC);
             }
         }
 
         private AnalyticalElement GetAnalyticalElement(Element element)
         {
-            AnalyticalElement analyticalModel = null;
             var document = element.Document;
-            var assocManager =
-                AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(document);
-            if (assocManager != null)
-            {
-                var associatedElementId = assocManager.GetAssociatedElementId(element.Id);
-                if (associatedElementId != ElementId.InvalidElementId)
-                {
-                    var associatedElement = document.GetElement(associatedElementId);
-                    if (associatedElement != null && associatedElement is AnalyticalElement analyticalElement)
-                        analyticalModel = analyticalElement;
-                }
-            }
-
-            return analyticalModel;
+            var assocManager = AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager(document);
+            return assocManager == null 
+                ? null : document.GetElement<AnalyticalElement>(element.Id);
         }
 
         /// <summary>
@@ -165,15 +149,14 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             if (!(hostElement is FamilyInstance)) return null;
 
             var analyticalModel = GetAnalyticalElement(hostElement);
-            Reference endReference = null;
-
+            
             var refCurve = analyticalModel.GetCurve();
-            if (null != refCurve)
-                endReference =
-                    analyticalModel.GetReference(
-                        new AnalyticalModelSelector(refCurve, AnalyticalCurveSelector.EndPoint));
-            else
+            if (null == refCurve)
                 return null;
+            
+            var endReference =
+                analyticalModel.GetReference(
+                    new AnalyticalModelSelector(refCurve, AnalyticalCurveSelector.EndPoint));
 
             var createDoc = hostElement.Document.Create;
 
@@ -207,12 +190,8 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
         /// <returns>the created Point BoundaryConditions Element</returns>
         private Autodesk.Revit.DB.Structure.BoundaryConditions CreateAreaBc(Element hostElement)
         {
-            var createDoc = hostElement.Document.Create;
-
-            // invoke Document.NewAreaBoundaryConditions Method
-            var createdBc =
-                createDoc.NewAreaBoundaryConditions(GetAnalyticalElement(hostElement), 0, 0, 0, 0, 0, 0);
-            return createdBc;
+            var createDoc = ;
+            return hostElement.Document.Create.NewAreaBoundaryConditions(GetAnalyticalElement(hostElement), 0, 0, 0, 0, 0, 0);
         }
 
         //A delegate for create boundary condition with different type

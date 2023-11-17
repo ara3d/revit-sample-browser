@@ -375,8 +375,10 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                     if (hostFaces.Count <= 0) // fetch the faces of the structural used for searching constraints.
                     {
                         // used compute references to true to make sure we can create constraints with the faces we find
-                        var geomOptions = new Options();
-                        geomOptions.ComputeReferences = true;
+                        var geomOptions = new Options
+                        {
+                            ComputeReferences = true
+                        };
                         // the host structural is considered the first structural in the first constraint
                         var elemGeometry = data.GetRebarUpdateCurvesData().GetCustomConstraints()[0].GetTargetElement(0)
                             .get_Geometry(geomOptions);

@@ -120,8 +120,10 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             var faceAreas = new SortedDictionary<double, List<Face>>();
 
             // Get the element geometry
-            var options = new Options();
-            options.ComputeReferences = true;
+            var options = new Options
+            {
+                ComputeReferences = true
+            };
             var geomElem = element.get_Geometry(options);
 
             // Look at the faces in each solid

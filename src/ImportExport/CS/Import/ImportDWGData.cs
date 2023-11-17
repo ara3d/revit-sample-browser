@@ -252,12 +252,14 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
         public override bool Import()
         {
             //parameter: DWGImportOptions
-            var dwgImportOption = new DWGImportOptions();
-            dwgImportOption.ColorMode = m_importColorMode;
-            dwgImportOption.CustomScale = m_importCustomScale;
-            dwgImportOption.OrientToView = m_importOrientToView;
-            dwgImportOption.Placement = m_importPlacement;
-            dwgImportOption.ThisViewOnly = m_importThisViewOnly;
+            var dwgImportOption = new DWGImportOptions
+            {
+                ColorMode = m_importColorMode,
+                CustomScale = m_importCustomScale,
+                OrientToView = m_importOrientToView,
+                Placement = m_importPlacement,
+                ThisViewOnly = m_importThisViewOnly
+            };
             View view = null;
             if (!m_importThisViewOnly)
                 view = m_importView;

@@ -27,9 +27,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         {
             FaceArray faces = null;
             Face face = null;
-            var options = new Options();
-            options.ComputeReferences = true;
-            options.View = view;
+            var options = new Options
+            {
+                ComputeReferences = true,
+                View = view
+            };
             if (wall != null)
             {
                 //GeometryObjectArray geoArr = wall.get_Geometry(options).Objects;
@@ -66,9 +68,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             FaceArray faces = null;
             if (extrusion.IsSolid)
             {
-                var options = new Options();
-                options.ComputeReferences = true;
-                options.View = view;
+                var options = new Options
+                {
+                    ComputeReferences = true,
+                    View = view
+                };
                 //GeometryObjectArray geoArr = extrusion.get_Geometry(options).Objects;
                 var objects = extrusion.get_Geometry(options).GetEnumerator();
                 //foreach (GeometryObject geoObj in geoArr)

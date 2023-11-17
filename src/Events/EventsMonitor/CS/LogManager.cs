@@ -89,18 +89,24 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             var eventsInfoLogTable = new DataTable("EventsLogInfoTable");
 
             // Create a "Time" column
-            var timeColumn = new DataColumn("Time", typeof(string));
-            timeColumn.Caption = "Time";
+            var timeColumn = new DataColumn("Time", typeof(string))
+            {
+                Caption = "Time"
+            };
             eventsInfoLogTable.Columns.Add(timeColumn);
 
             // Create a "Event" column
-            var eventColum = new DataColumn("Event", typeof(string));
-            eventColum.Caption = "Event";
+            var eventColum = new DataColumn("Event", typeof(string))
+            {
+                Caption = "Event"
+            };
             eventsInfoLogTable.Columns.Add(eventColum);
 
             // Create a "Type" column
-            var typeColum = new DataColumn("Type", typeof(string));
-            typeColum.Caption = "Type";
+            var typeColum = new DataColumn("Type", typeof(string))
+            {
+                Caption = "Type"
+            };
             eventsInfoLogTable.Columns.Add(typeColum);
 
             // return this data table 

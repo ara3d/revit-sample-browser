@@ -255,8 +255,10 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
         {
             var solids = new List<Solid>();
 
-            var options = new Options();
-            options.DetailLevel = ViewDetailLevel.Fine;
+            var options = new Options
+            {
+                DetailLevel = ViewDetailLevel.Fine
+            };
             var geomElem = element.get_Geometry(options);
             foreach (var geomObj in geomElem)
             {

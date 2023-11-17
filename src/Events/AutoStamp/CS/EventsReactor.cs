@@ -101,9 +101,11 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
                 using (var eventTransaction = new Transaction(e.Document, "External Tool"))
                 {
                     eventTransaction.Start();
-                    var options = new TextNoteOptions();
-                    options.HorizontalAlignment = HorizontalTextAlignment.Center;
-                    options.TypeId = e.Document.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
+                    var options = new TextNoteOptions
+                    {
+                        HorizontalAlignment = HorizontalTextAlignment.Center,
+                        TypeId = e.Document.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType)
+                    };
                     var newTextNote = TextNote.Create(e.Document, e.View.Id, XYZ.Zero, strText, options);
                     eventTransaction.Commit();
 

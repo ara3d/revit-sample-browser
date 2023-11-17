@@ -49,8 +49,10 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
                 var uiDoc = commandData.Application.ActiveUIDocument;
                 if (!(uiDoc.ActiveView is ViewPlan viewPlan))
                 {
-                    var td = new TaskDialog("Cannot create PathOfTravel.");
-                    td.MainInstruction = "PathOfTravel can only be created for plan views.";
+                    var td = new TaskDialog("Cannot create PathOfTravel.")
+                    {
+                        MainInstruction = "PathOfTravel can only be created for plan views."
+                    };
 
                     td.Show();
 
@@ -453,9 +455,11 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
 
             var successRatePercent = resultsSummary.NumSuccesses / (double)numOfPathsToCreate;
 
-            var td = new TaskDialog("Results of PathOfTravel creation");
-            td.MainInstruction =
-                $"Path of Travel succeeded on {successRatePercent.ToString("P01", ci)} of known points";
+            var td = new TaskDialog("Results of PathOfTravel creation")
+            {
+                MainInstruction =
+                $"Path of Travel succeeded on {successRatePercent.ToString("P01", ci)} of known points"
+            };
             var details = string.Format(
                 "There were {0} room source points found in room analysis (via offsetting boundaries). " +
                 "They would be connected to {2} door target points. {1} failed to generate a Path of Travel out of {4}  " +

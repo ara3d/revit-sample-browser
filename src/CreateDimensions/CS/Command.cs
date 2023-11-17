@@ -140,8 +140,10 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
                         newLine = aCurve as Line;
                     if (aCurve.GetEndPoint(0).Z != aCurve.GetEndPoint(1).Z)
                     {
-                        var amSelector = new AnalyticalModelSelector(aCurve);
-                        amSelector.CurveSelector = AnalyticalCurveSelector.StartPoint;
+                        var amSelector = new AnalyticalModelSelector(aCurve)
+                        {
+                            CurveSelector = AnalyticalCurveSelector.StartPoint
+                        };
 
                         referenceArray.Append(analyticalModel.GetReference(amSelector));
                     }

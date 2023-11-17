@@ -36,9 +36,11 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 
         public ExternalDefinitionCreationOptions GetCreationOptions()
         {
-            var options = new ExternalDefinitionCreationOptions(Name, Type);
-            options.UserModifiable = UserModifiable;
-            options.Description = Description;
+            var options = new ExternalDefinitionCreationOptions(Name, Type)
+            {
+                UserModifiable = UserModifiable,
+                Description = Description
+            };
             return options;
         }
 

@@ -153,8 +153,10 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
                 m_uiApplication.Idling += IdlingResponse;
 
                 // Register timer for animation framews
-                m_timer = new Timer();
-                m_timer.Interval = m_timerInterval;
+                m_timer = new Timer
+                {
+                    Interval = m_timerInterval
+                };
                 m_timer.Elapsed += TimerElapsed;
                 m_timer.Start();
             }

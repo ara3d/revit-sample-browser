@@ -143,10 +143,12 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 
             if (documentItem.IsNull)
             {
-                var ofd = new OpenFileDialog();
-                ofd.DefaultExt = "rvt";
-                ofd.Filter =
-                    "Revit project files (*.rvt)|*.rvt|Revit family files (*.rfa)|*.rfa|Revit family template files (*.rft)|*.rft";
+                var ofd = new OpenFileDialog
+                {
+                    DefaultExt = "rvt",
+                    Filter =
+                    "Revit project files (*.rvt)|*.rvt|Revit family files (*.rfa)|*.rfa|Revit family template files (*.rft)|*.rft"
+                };
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     try

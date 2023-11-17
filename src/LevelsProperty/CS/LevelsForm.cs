@@ -46,13 +46,17 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
             m_objectReference = opt;
 
             //Set control on UI
-            LevelName = new DataGridViewTextBoxColumn();
-            LevelName.HeaderText = "Name";
-            LevelName.Width = 142;
+            LevelName = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Name",
+                Width = 142
+            };
 
-            LevelElevation = new DataGridViewTextBoxColumn();
-            LevelElevation.HeaderText = "Elevation";
-            LevelElevation.Width = 142;
+            LevelElevation = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Elevation",
+                Width = 142
+            };
 
             levelsDataGridView.Columns.AddRange(LevelName, LevelElevation);
 

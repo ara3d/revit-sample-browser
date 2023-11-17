@@ -89,14 +89,18 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                 colorSettings.MaxColor = new Color(255, 0, 0);
                 colorSettings.MinColor = new Color(0, 255, 0);
 
-                var vectorSettings = new AnalysisDisplayVectorSettings();
-                vectorSettings.VectorOrientation = AnalysisDisplayStyleVectorOrientation.Linear;
-                vectorSettings.ArrowheadScale = AnalysisDisplayStyleVectorArrowheadScale.NoScaling;
-                vectorSettings.ArrowLineWeight = 4;
-                vectorSettings.VectorTextType = AnalysisDisplayStyleVectorTextType.ShowNone;
+                var vectorSettings = new AnalysisDisplayVectorSettings
+                {
+                    VectorOrientation = AnalysisDisplayStyleVectorOrientation.Linear,
+                    ArrowheadScale = AnalysisDisplayStyleVectorArrowheadScale.NoScaling,
+                    ArrowLineWeight = 4,
+                    VectorTextType = AnalysisDisplayStyleVectorTextType.ShowNone
+                };
 
-                var legendSettings = new AnalysisDisplayLegendSettings();
-                legendSettings.ShowLegend = false;
+                var legendSettings = new AnalysisDisplayLegendSettings
+                {
+                    ShowLegend = false
+                };
 
                 analysisDisplayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(Document, DisplayStyleName,
                     vectorSettings, colorSettings, legendSettings);

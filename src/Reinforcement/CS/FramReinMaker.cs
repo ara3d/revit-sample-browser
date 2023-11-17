@@ -152,7 +152,6 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             var normal = geomInfo.Normal; // the direction of rebar distribution
             var curves = geomInfo.Curves; // the shape of the rebar curves
 
-            // Invoke the NewRebar() method to create rebar 
             var createdRebar = Rebar.CreateFromCurves(m_revitDoc, RebarStyle.Standard, rebarType, startHook, endHook,
                 m_hostObject, normal, curves,
                 startOrient, endOrient, false, true);
@@ -179,7 +178,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             m_hookTypes = filteredElementCollector.Cast<RebarHookType>().ToList();
 
             // If no hook types in revit return false, otherwise true
-            return 0 == m_hookTypes.Count ? false : true;
+            return 0 != m_hookTypes.Count;
         }
 
         /// <summary>
@@ -197,7 +196,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             m_rebarTypes = filteredElementCollector.Cast<RebarBarType>().ToList();
 
             // If no rebar types in revit return false, otherwise true
-            return 0 == m_rebarTypes.Count ? false : true;
+            return 0 != m_rebarTypes.Count;
         }
     }
 }

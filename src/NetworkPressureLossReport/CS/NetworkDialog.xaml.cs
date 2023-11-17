@@ -68,13 +68,14 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             if (idx < 0 || m_networks.Count <= 0)
                 return;
 
-            var saveFileDialog1 = new SaveFileDialog();
-
-            saveFileDialog1.FileName = "PressureReport.csv";
-            saveFileDialog1.Filter = "CSV Files | *.csv";
-            saveFileDialog1.DefaultExt = "csv";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
+            var saveFileDialog1 = new SaveFileDialog
+            {
+                FileName = "PressureReport.csv",
+                Filter = "CSV Files | *.csv",
+                DefaultExt = "csv",
+                FilterIndex = 2,
+                RestoreDirectory = true
+            };
 
             if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 using (var ex = new CsvExporter(saveFileDialog1.FileName, ChxItemized.IsChecked))

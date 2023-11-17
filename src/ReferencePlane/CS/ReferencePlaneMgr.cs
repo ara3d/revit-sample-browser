@@ -95,30 +95,38 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
             var column =
                 // Create new DataColumn, set DataType, 
                 // ColumnName and add to DataTable.    
-                new DataColumn();
-            column.DataType = Type.GetType("System.Int32");
-            column.ColumnName = "ID";
+                new DataColumn
+                {
+                    DataType = Type.GetType("System.Int32"),
+                    ColumnName = "ID"
+                };
             // Add the Column to the DataColumnCollection.
             m_referencePlanes.Columns.Add(column);
 
             // Create second column.
-            column = new DataColumn();
-            column.DataType = Type.GetType("System.String");
-            column.ColumnName = "BubbleEnd";
+            column = new DataColumn
+            {
+                DataType = Type.GetType("System.String"),
+                ColumnName = "BubbleEnd"
+            };
             // Add the column to the table.
             m_referencePlanes.Columns.Add(column);
 
             // Create third column.
-            column = new DataColumn();
-            column.DataType = Type.GetType("System.String");
-            column.ColumnName = "FreeEnd";
+            column = new DataColumn
+            {
+                DataType = Type.GetType("System.String"),
+                ColumnName = "FreeEnd"
+            };
             // Add the column to the table.
             m_referencePlanes.Columns.Add(column);
 
             // Create fourth column.
-            column = new DataColumn();
-            column.DataType = Type.GetType("System.String");
-            column.ColumnName = "Normal";
+            column = new DataColumn
+            {
+                DataType = Type.GetType("System.String"),
+                ColumnName = "Normal"
+            };
             // Add the column to the table.
             m_referencePlanes.Columns.Add(column);
 

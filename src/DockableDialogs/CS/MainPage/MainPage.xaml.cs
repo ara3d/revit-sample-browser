@@ -55,8 +55,10 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
             data.FrameworkElement = this;
             new DockablePaneProviderData();
 
-            data.InitialState = new DockablePaneState();
-            data.InitialState.DockPosition = m_position;
+            data.InitialState = new DockablePaneState
+            {
+                DockPosition = m_position
+            };
             DockablePaneId targetPane;
             if (m_targetGuid == Guid.Empty)
                 targetPane = null;

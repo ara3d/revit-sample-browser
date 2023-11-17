@@ -60,8 +60,10 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         /// <param name="e"></param>
         private void GraphicsControl_Load(object sender, EventArgs e)
         {
-            var picturebox = new PictureBox();
-            picturebox.Dock = DockStyle.Fill;
+            var picturebox = new PictureBox
+            {
+                Dock = DockStyle.Fill
+            };
             Controls.Add(picturebox);
             picturebox.Paint += picturebox_Paint;
 

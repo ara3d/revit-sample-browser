@@ -28,9 +28,11 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         /// <param name="door">of which geometry data is wanted.</param>
         public DoorGeometry(Element door)
         {
-            m_options = new Options();
-            m_options.View = GetPlanform2DView(door);
-            m_options.ComputeReferences = false;
+            m_options = new Options
+            {
+                View = GetPlanform2DView(door),
+                ComputeReferences = false
+            };
             var geoEle = door.get_Geometry(m_options);
             AddGeometryElement(geoEle);
 

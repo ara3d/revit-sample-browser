@@ -177,8 +177,10 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             if (entries.Count > 0)
                 lastEntry = entries.Last();
 
-            var entry = new ColorFillSchemeEntry(type);
-            entry.FillPatternId = fillPatternId;
+            var entry = new ColorFillSchemeEntry(type)
+            {
+                FillPatternId = fillPatternId
+            };
 
             switch (type)
             {
@@ -199,12 +201,12 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
                     entry.SetIntegerValue(intValue);
                     break;
                 case StorageType.ElementId:
-                    var level = new FilteredElementCollector(m_document)
-                        .OfClass(typeof(Level))
-                        .Where(lv => !m_levelIds.Contains(lv.Id) && lv.Name != "Level 1")
-                        .FirstOrDefault();
-                    m_levelIds.Add(level.Id);
-                    entry.SetElementIdValue(level.Id);
+                    var level = m_document.GetElements<Level>().FirstOrDefault(lv => !m_levelIds.Contains(lv.Id) && lv.Name != "Level 1");
+                    if (level != null)
+                    {
+                        m_levelIds.Add(level.Id);
+                        entry.SetElementIdValue(level.Id);
+                    }
                     break;
                 default:
                     throw new Exception("The type is not correct!");

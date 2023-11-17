@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
@@ -91,11 +92,8 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
                 if (!(rvtDoc.GetElement(winderRunId) is StairsRun winderOldRun))
                 {
                     // Find two levels to create a stairs between them
-                    var filterLevels = new FilteredElementCollector(rvtDoc);
-                    var levels = filterLevels.OfClass(typeof(Level)).ToElements();
-                    var levelList = new List<Element>();
-                    levelList.AddRange(levels);
-                    levelList.Sort((a, b) => ((Level)a).Elevation.CompareTo(((Level)b).Elevation));
+                    var levelList = rvtDoc.GetFilteredElements<Level>().ToList();
+                    levelList.Sort((a, b) => a.Elevation.CompareTo(b.Elevation));
                     // Start the stairs edit mode
                     stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);
                 }
@@ -152,6 +150,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
                     var skp = SketchPlane.Create(
                         rvtDoc, Plane.CreateByNormalAndOrigin(XYZ.BasisZ, ControlPoints[0]));
                     var curves = new CurveArray();
+                    
                     foreach (var curve in OuterBoundary)
                     {
                         curves.Append(curve);

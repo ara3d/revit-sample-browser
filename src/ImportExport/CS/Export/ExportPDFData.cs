@@ -54,10 +54,12 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             }
 
             // Parameter: The exporting options, including paper size, orientation, file name or naming rule and etc.
-            var options = new PDFExportOptions();
-            options.FileName = ExportFileName;
-            options.Combine =
-                Combine; // If not combined, PDFs will be exported with default naming rule "Type-ViewName"
+            var options = new PDFExportOptions
+            {
+                FileName = ExportFileName,
+                Combine =
+                Combine // If not combined, PDFs will be exported with default naming rule "Type-ViewName"
+            };
             var exported = ActiveDocument.Export(ExportFolder, views, options);
 
             return exported;

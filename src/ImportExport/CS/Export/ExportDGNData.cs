@@ -171,9 +171,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 }
 
             //parameter : DWGExportOptions dwgExportOptions
-            var dgnExportOptions = new DGNExportOptions();
-            // default values
-            dgnExportOptions.FileVersion = DGNFileFormat.DGNVersion8;
+            var dgnExportOptions = new DGNExportOptions
+            {
+                // default values
+                FileVersion = DGNFileFormat.DGNVersion8
+            };
             m_exportLayerMapping = m_enumLayerMapping[0];
 
             // set values from selected options

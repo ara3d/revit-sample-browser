@@ -53,8 +53,10 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
         {
             data.FrameworkElement = this;
 
-            data.InitialState = new DockablePaneState();
-            data.InitialState.DockPosition = DockPosition.Top;
+            data.InitialState = new DockablePaneState
+            {
+                DockPosition = DockPosition.Top
+            };
         }
 
         /// <summary>

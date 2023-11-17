@@ -65,9 +65,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.DWGFamilyCreation.CS
                 var transaction = new Transaction(m_doc, "DWGFamilyCreation");
                 transaction.Start();
                 // Import the dwg file into current family document
-                var options = new DWGImportOptions();
-                options.Placement = ImportPlacement.Origin;
-                options.OrientToView = true;
+                var options = new DWGImportOptions
+                {
+                    Placement = ImportPlacement.Origin,
+                    OrientToView = true
+                };
                 m_doc.Import(dwgFullPath, options, view, out _);
 
                 // Add type parameters to the family

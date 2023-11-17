@@ -236,8 +236,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             if (!shapedef.CheckDefaultParameterValues(0, 0)) throw new Exception("Can't resolve rebar shape.");
 
             // Define multi-planar definition
-            var multiPlanarDef = new RebarShapeMultiplanarDefinition(bendDiameter);
-            multiPlanarDef.DepthParamId = mm;
+            var multiPlanarDef = new RebarShapeMultiplanarDefinition(bendDiameter)
+            {
+                DepthParamId = mm
+            };
 
             // Realize the Rebar shape with creation static method.
             // The RebarStype is stirrupTie, and it will attach to the top cover.

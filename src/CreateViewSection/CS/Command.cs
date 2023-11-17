@@ -171,8 +171,10 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             var transaction = new Transaction(m_project.Document, "GenerateBoundingBox");
             transaction.Start();
             // First new a BoundingBoxXYZ, and set the MAX and Min property.
-            m_box = new BoundingBoxXYZ();
-            m_box.Enabled = true;
+            m_box = new BoundingBoxXYZ
+            {
+                Enabled = true
+            };
             var maxPoint = new XYZ(Length, Length, 0);
             var minPoint = new XYZ(-Length, -Length, -Height);
             m_box.Max = maxPoint;

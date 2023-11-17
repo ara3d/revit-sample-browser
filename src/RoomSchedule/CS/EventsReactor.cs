@@ -425,8 +425,10 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             if (null == m_logWriter)
             {
                 if (File.Exists(m_logFile)) File.Delete(m_logFile);
-                m_logWriter = new StreamWriter(m_logFile);
-                m_logWriter.AutoFlush = true;
+                m_logWriter = new StreamWriter(m_logFile)
+                {
+                    AutoFlush = true
+                };
             }
 
             //

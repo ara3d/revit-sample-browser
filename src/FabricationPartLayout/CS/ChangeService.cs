@@ -111,14 +111,18 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         // Create a map of sizes to swap the current sizes to a new size
                         var sizeMappings = new HashSet<FabricationPartSizeMap>();
                         var mapping = new FabricationPartSizeMap("12x12", 1.0, 1.0, false,
-                            ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0);
-                        mapping.MappedWidthDiameter = 1.5;
-                        mapping.MappedDepth = 1.5;
+                            ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0)
+                        {
+                            MappedWidthDiameter = 1.5,
+                            MappedDepth = 1.5
+                        };
                         sizeMappings.Add(mapping);
                         var mapping1 = new FabricationPartSizeMap("18x18", 1.5, 1.5, false,
-                            ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0);
-                        mapping1.MappedWidthDiameter = 2.0;
-                        mapping1.MappedDepth = 2.0;
+                            ConnectorProfileType.Rectangular, allLoadedServices[0].ServiceId, 0)
+                        {
+                            MappedWidthDiameter = 2.0,
+                            MappedDepth = 2.0
+                        };
                         sizeMappings.Add(mapping1);
 
                         var changesize = new FabricationNetworkChangeService(doc);

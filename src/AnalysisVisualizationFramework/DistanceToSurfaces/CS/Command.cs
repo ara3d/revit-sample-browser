@@ -33,14 +33,14 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
             var uiApp = new UIApplication(app);
             var doc = uiApp.ActiveUIDocument.Document;
 
-            var sphere = doc.GetFilteredElements<FamilyInstance>().FirstOrDefault(s => s.Name == "Sphere");
+            var sphere = doc.GetElements<FamilyInstance>().FirstOrDefault(s => s.Name == "Sphere");
             if (sphere == null)
             {
                 TaskDialog.Show("Error", "No sphere family instance found, it must be loaded");
                 return;
             }
 
-            var view = doc.GetFilteredElements<View3D>().FirstOrDefault();
+            var view = doc.GetElements<View3D>().FirstOrDefault();
             if (view == null)
             {
                 TaskDialog.Show("Error", "A 3D view named 'AVF' must exist to run this application.");
@@ -157,8 +157,10 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
         private FaceArray GetFaces(ICollection<Element> elements)
         {
             var faceArray = new FaceArray();
-            var options = new Options();
-            options.ComputeReferences = true;
+            var options = new Options
+            {
+                ComputeReferences = true
+            };
             foreach (var element in elements)
             {
                 var geomElem = element.get_Geometry(options);

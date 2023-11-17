@@ -41,6 +41,9 @@ namespace Ara3D.RevitSampleBrowser
 
         public static IEnumerable<T> GetElements<T>(this Document doc, IEnumerable<ElementId> ids) where T : class
             => ids.Select(doc.GetElement<T>).Where(e => e != null);
-        
+
+        public static View GetNamedView(this Document doc, string name)
+            => doc.GetFilteredElements<View>().FirstOrDefault(v => v.Name == name);
+
     }
 }

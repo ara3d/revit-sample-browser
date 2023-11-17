@@ -239,20 +239,24 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
             var propDataTable = new DataTable("ParameterTable");
 
             // Create parameter column and add to the DataTable.
-            var paraDataColumn = new DataColumn();
-            paraDataColumn.DataType = Type.GetType("System.String");
-            paraDataColumn.ColumnName = "Parameter";
-            paraDataColumn.Caption = "Parameter";
-            paraDataColumn.ReadOnly = true;
+            var paraDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.String"),
+                ColumnName = "Parameter",
+                Caption = "Parameter",
+                ReadOnly = true
+            };
             // Add the column to the DataColumnCollection.
             propDataTable.Columns.Add(paraDataColumn);
 
             // Create value column and add to the DataTable.
-            var valueDataColumn = new DataColumn();
-            valueDataColumn.DataType = Type.GetType("System.String");
-            valueDataColumn.ColumnName = "Value";
-            valueDataColumn.Caption = "Value";
-            valueDataColumn.ReadOnly = true;
+            var valueDataColumn = new DataColumn
+            {
+                DataType = Type.GetType("System.String"),
+                ColumnName = "Value",
+                Caption = "Value",
+                ReadOnly = true
+            };
             propDataTable.Columns.Add(valueDataColumn);
 
             return propDataTable;

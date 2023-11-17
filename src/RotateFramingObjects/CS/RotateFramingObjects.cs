@@ -38,8 +38,10 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
             var revit = commandData.Application;
 
             m_revit = revit;
-            var displayForm = new RotateFramingObjectsForm(this);
-            displayForm.StartPosition = FormStartPosition.CenterParent;
+            var displayForm = new RotateFramingObjectsForm(this)
+            {
+                StartPosition = FormStartPosition.CenterParent
+            };
             var selection = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
             {

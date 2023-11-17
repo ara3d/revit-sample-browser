@@ -23,8 +23,10 @@ namespace Ara3D.RevitSampleBrowser.APIAppStartup.CS
         //start a new thread to display splash window
         public static void StartSplash()
         {
-            _instance = new SplashWindow();
-            _instance.TopMost = true;
+            _instance = new SplashWindow
+            {
+                TopMost = true
+            };
             _instanceCaller = new Thread(MySplashThreadFunc);
             _instanceCaller.Start();
         }

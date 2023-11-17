@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -178,7 +179,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_document.Regenerate();
 
             //get the wall in the document and retrieve the exterior face
-            var walls = Utility.GetElements<Wall>(m_application, m_document);
+            var walls = m_document.GetElements<Wall>().ToList();
             var exteriorWallFace = GeoHelper.GetWallFace(walls[0], m_rightView, true);
             if (exteriorWallFace == null)
                 return;
@@ -283,7 +284,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var sashDepth = (frameDepth - m_windowInset) / 2;
 
             //get the exterior view and sash referenceplane which are used in this process
-            var exteriorView = Utility.GetViewByName("Exterior", m_application, m_document);
+            var exteriorView = m_document.GetNamedView("Exterior");
             var subTransaction = new SubTransaction(m_document);
             subTransaction.Start();
 
@@ -510,7 +511,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         /// </summary>
         private void CollectTemplateInfo()
         {
-            var walls = Utility.GetElements<Wall>(m_application, m_document);
+            var walls = m_document.GetElements<Wall>().ToList();
             m_wallThickness = walls[0].Width;
             var wallheightPara =
                 walls[0].get_Parameter(BuiltInParameter
@@ -586,7 +587,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_glassCat = categories.get_Item(BuiltInCategory.OST_WindowsGlassProjection);
 
             //get referenceplanes
-            var planes = Utility.GetElements<Autodesk.Revit.DB.ReferencePlane>(m_application, m_document);
+            var planes = m_document.GetElements<Autodesk.Revit.DB.ReferencePlane>();
             foreach (var p in planes)
             {
                 switch (p.Name)
@@ -659,13 +660,15 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         /// <returns>FamilyElementVisibility instance</returns>
         private FamilyElementVisibility CreateVisibility()
         {
-            var familyElemVisibility = new FamilyElementVisibility(FamilyElementVisibilityType.Model);
-            familyElemVisibility.IsShownInCoarse = true;
-            familyElemVisibility.IsShownInFine = true;
-            familyElemVisibility.IsShownInMedium = true;
-            familyElemVisibility.IsShownInFrontBack = true;
-            familyElemVisibility.IsShownInLeftRight = true;
-            familyElemVisibility.IsShownInPlanRCPCut = false;
+            var familyElemVisibility = new FamilyElementVisibility(FamilyElementVisibilityType.Model)
+            {
+                IsShownInCoarse = true,
+                IsShownInFine = true,
+                IsShownInMedium = true,
+                IsShownInFrontBack = true,
+                IsShownInLeftRight = true,
+                IsShownInPlanRCPCut = false
+            };
             return familyElemVisibility;
         }
 
@@ -677,7 +680,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             //create common 
             m_dimensionCreator = new CreateDimension(m_application.Application, m_document);
             m_extrusionCreator = new CreateExtrusion(m_application.Application, m_document);
-            m_rightView = Utility.GetViewByName("Right", m_application, m_document);
+            m_rightView = m_document.GetNamedView("Right");
         }
     }
 }

@@ -93,13 +93,15 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
                 if (revisionCount <= m_storedRevisionCount)
                 {
                     // Show dialog with explanation and options
-                    var td = new TaskDialog("Revisions not created.");
-                    td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-                    td.MainInstruction =
-                        "Changes have been made to this document, but no new revision has been created.";
-                    td.ExpandedContent =
+                    var td = new TaskDialog("Revisions not created.")
+                    {
+                        MainIcon = TaskDialogIcon.TaskDialogIconWarning,
+                        MainInstruction =
+                        "Changes have been made to this document, but no new revision has been created.",
+                        ExpandedContent =
                         "Because the document has been released, it is typically required to issue a new " +
-                        "revision number with any change.";
+                        "revision number with any change."
+                    };
                     td.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Add revision now");
                     td.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Cancel save");
                     td.AddCommandLink(TaskDialogCommandLinkId.CommandLink3, "Proceed with save (not recommended).");

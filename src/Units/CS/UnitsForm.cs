@@ -134,11 +134,15 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
 
         private string GetDecimalSymbolAndGroupingstring()
         {
-            var formatvalueoptions = new FormatValueOptions();
-            formatvalueoptions.AppendUnitSymbol = false;
+            var formatvalueoptions = new FormatValueOptions
+            {
+                AppendUnitSymbol = false
+            };
 
-            var formatoptions = new FormatOptions(UnitTypeId.Currency, new ForgeTypeId());
-            formatoptions.UseDefault = false;
+            var formatoptions = new FormatOptions(UnitTypeId.Currency, new ForgeTypeId())
+            {
+                UseDefault = false
+            };
             formatoptions.SetUnitTypeId(UnitTypeId.Currency);
             formatoptions.SetSymbolTypeId(new ForgeTypeId());
             formatoptions.Accuracy = 0.01;

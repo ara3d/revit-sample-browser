@@ -422,13 +422,15 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         /// <param name="e">EventArgs</param>
         private void m_buttonBrowser_Click(object sender, EventArgs e)
         {
-            var saveDialog = new SaveFileDialog();
-            saveDialog.CheckPathExists = true;
-            saveDialog.SupportMultiDottedExtensions = true;
-            saveDialog.OverwritePrompt = true;
-            saveDialog.ValidateNames = true;
-            saveDialog.Filter = "Family file(*.rfa)|*.rfa|All files(*.*)|*.*";
-            saveDialog.FilterIndex = 2;
+            var saveDialog = new SaveFileDialog
+            {
+                CheckPathExists = true,
+                SupportMultiDottedExtensions = true,
+                OverwritePrompt = true,
+                ValidateNames = true,
+                Filter = "Family file(*.rfa)|*.rfa|All files(*.*)|*.*",
+                FilterIndex = 2
+            };
             if (DialogResult.OK == saveDialog.ShowDialog())
                 if (!string.IsNullOrEmpty(saveDialog.FileName))
                     m_pathName.Text = saveDialog.FileName;

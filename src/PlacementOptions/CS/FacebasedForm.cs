@@ -23,8 +23,10 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
             InitializeComponent();
 
             radioButtonFace.Checked = true;
-            FiPlacementOptions = new PromptForFamilyInstancePlacementOptions();
-            FiPlacementOptions.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace;
+            FiPlacementOptions = new PromptForFamilyInstancePlacementOptions
+            {
+                FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnFace
+            };
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();

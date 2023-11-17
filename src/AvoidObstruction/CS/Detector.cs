@@ -48,8 +48,10 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         public List<ReferenceWithContext> Obstructions(XYZ origin, XYZ dir)
         {
             var result = new List<ReferenceWithContext>();
-            var referenceIntersector = new ReferenceIntersector(m_view3d);
-            referenceIntersector.TargetType = FindReferenceTarget.Face;
+            var referenceIntersector = new ReferenceIntersector(m_view3d)
+            {
+                TargetType = FindReferenceTarget.Face
+            };
             var obstructionsOnUnboundLine = referenceIntersector.Find(origin, dir);
             foreach (var gRef in obstructionsOnUnboundLine)
             {
@@ -72,8 +74,10 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             var startPt = boundLine.GetEndPoint(0);
             var endPt = boundLine.GetEndPoint(1);
             var dir = (endPt - startPt).Normalize();
-            var referenceIntersector = new ReferenceIntersector(m_view3d);
-            referenceIntersector.TargetType = FindReferenceTarget.Face;
+            var referenceIntersector = new ReferenceIntersector(m_view3d)
+            {
+                TargetType = FindReferenceTarget.Face
+            };
             var obstructionsOnUnboundLine = referenceIntersector.Find(startPt, dir);
             foreach (var gRefWithContext in obstructionsOnUnboundLine)
             {

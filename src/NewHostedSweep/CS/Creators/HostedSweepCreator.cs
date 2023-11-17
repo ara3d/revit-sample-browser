@@ -136,8 +136,10 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         protected ElementGeometry ExtractGeom(Element elem)
         {
             Solid result = null;
-            var options = new Options();
-            options.ComputeReferences = true;
+            var options = new Options
+            {
+                ComputeReferences = true
+            };
             var gElement = elem.get_Geometry(options);
             //foreach (GeometryObject gObj in gElement.Objects)
             var objects = gElement.GetEnumerator();

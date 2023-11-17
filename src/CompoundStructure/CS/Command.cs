@@ -243,11 +243,13 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
             var pseStructural = PropertySetElement.Create(m_document.Document, structuralAsssetBrick);
 
             //Create a new thermal asset and set properties on it.
-            var thermalAssetBrick = new ThermalAsset("BrickThermalAsset", ThermalMaterialType.Solid);
-            thermalAssetBrick.Porosity = 0.1;
-            thermalAssetBrick.Permeability = 0.2;
-            thermalAssetBrick.Compressibility = .5;
-            thermalAssetBrick.ThermalConductivity = .5;
+            var thermalAssetBrick = new ThermalAsset("BrickThermalAsset", ThermalMaterialType.Solid)
+            {
+                Porosity = 0.1,
+                Permeability = 0.2,
+                Compressibility = .5,
+                ThermalConductivity = .5
+            };
 
             //Create PropertySets from assets and assign them to the material.
             var pseThermal = PropertySetElement.Create(m_document.Document, thermalAssetBrick);
@@ -287,15 +289,19 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
 
             //Create a new structural asset and set properties on it.
             var structuralAsssetConcrete =
-                new StructuralAsset("ConcreteStructuralAsset", StructuralAssetClass.Concrete);
-            structuralAsssetConcrete.ConcreteBendingReinforcement = .5;
+                new StructuralAsset("ConcreteStructuralAsset", StructuralAssetClass.Concrete)
+                {
+                    ConcreteBendingReinforcement = .5
+                };
 
             //Create a new thermal asset and set properties on it.
-            var thermalAssetConcrete = new ThermalAsset("ConcreteThermalAsset", ThermalMaterialType.Solid);
-            thermalAssetConcrete.Porosity = 0.2;
-            thermalAssetConcrete.Permeability = 0.3;
-            thermalAssetConcrete.Compressibility = .5;
-            thermalAssetConcrete.ThermalConductivity = .5;
+            var thermalAssetConcrete = new ThermalAsset("ConcreteThermalAsset", ThermalMaterialType.Solid)
+            {
+                Porosity = 0.2,
+                Permeability = 0.3,
+                Compressibility = .5,
+                ThermalConductivity = .5
+            };
 
             //Create PropertySets from assets and assign them to the material.
             var pseThermal = PropertySetElement.Create(m_document.Document, thermalAssetConcrete);

@@ -246,8 +246,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
         /// <returns>Solid of given element</returns>
         private static Solid GetElementSolid(Element element)
         {
-            var goption = new Options();
-            goption.ComputeReferences = true;
+            var goption = new Options
+            {
+                ComputeReferences = true
+            };
             var gelem = element.get_Geometry(goption);
             Solid resultSolid = null;
             //foreach (GeometryObject gobj in gelem.Objects)

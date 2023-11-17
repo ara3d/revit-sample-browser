@@ -35,10 +35,12 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 
             if (!File.Exists(tempFile))
             {
-                var messageDlg = new TaskDialog("Warnning Message");
-                messageDlg.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-                messageDlg.MainContent =
-                    "Can not find 'template.html', please make sure the 'template.html' file is in the same folder as the external command assembly.";
+                var messageDlg = new TaskDialog("Warnning Message")
+                {
+                    MainIcon = TaskDialogIcon.TaskDialogIconWarning,
+                    MainContent =
+                    "Can not find 'template.html', please make sure the 'template.html' file is in the same folder as the external command assembly."
+                };
                 messageDlg.Show();
                 return null;
             }

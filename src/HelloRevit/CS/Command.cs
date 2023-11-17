@@ -30,12 +30,14 @@ namespace Ara3D.RevitSampleBrowser.HelloRevit.CS
             // code snippet.  
 
             // Creates a Revit task dialog to communicate information to the interactive user.
-            var mainDialog = new TaskDialog("Hello, Revit!");
-            mainDialog.MainInstruction = "Hello, Revit!";
-            mainDialog.MainContent =
+            var mainDialog = new TaskDialog("Hello, Revit!")
+            {
+                MainInstruction = "Hello, Revit!",
+                MainContent =
                 "This sample shows how a basic ExternalCommand can be added to the Revit user interface."
                 + " It uses a Revit task dialog to communicate information to the interactive user.\n"
-                + "The command links below open additional task dialogs with more information.";
+                + "The command links below open additional task dialogs with more information."
+            };
 
             // Add commmandLink to task dialog
             mainDialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink1,
@@ -61,13 +63,15 @@ namespace Ara3D.RevitSampleBrowser.HelloRevit.CS
                 // with only a Close button shows information about the Revit installation. 
                 case TaskDialogResult.CommandLink1:
                 {
-                    var dialogCommandLink1 = new TaskDialog("Revit Build Information");
-                    dialogCommandLink1.MainInstruction =
-                        "Revit Version Name is: " + app.VersionName + "\n"
-                        + "Revit Version Number is: " + app.VersionNumber + "\n"
-                        + "Revit Version Build is: " + app.VersionBuild;
+                        var dialogCommandLink1 = new TaskDialog("Revit Build Information")
+                        {
+                            MainInstruction =
+                            "Revit Version Name is: " + app.VersionName + "\n"
+                            + "Revit Version Number is: " + app.VersionNumber + "\n"
+                            + "Revit Version Build is: " + app.VersionBuild
+                        };
 
-                    dialogCommandLink1.Show();
+                        dialogCommandLink1.Show();
                     break;
                 }
                 // If the user clicks the second command link, a simple Task Dialog 

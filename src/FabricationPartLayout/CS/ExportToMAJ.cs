@@ -44,9 +44,11 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 }
 
                 var callingFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var saveAsDlg = new FileSaveDialog("MAJ Files (*.maj)|*.maj");
-                saveAsDlg.InitialFileName = callingFolder + "\\majExport";
-                saveAsDlg.Title = "Export To MAJ";
+                var saveAsDlg = new FileSaveDialog("MAJ Files (*.maj)|*.maj")
+                {
+                    InitialFileName = callingFolder + "\\majExport",
+                    Title = "Export To MAJ"
+                };
                 var result = saveAsDlg.Show();
 
                 if (result == ItemSelectionDialogResult.Canceled)

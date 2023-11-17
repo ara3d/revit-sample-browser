@@ -54,9 +54,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
                 if (ImageInstance.IsValidView(view))
                 {
                     // ImagePlacementOptions
-                    var placementOptions = new ImagePlacementOptions();
-                    placementOptions.PlacementPoint = BoxPlacement.TopLeft;
-                    placementOptions.Location = new XYZ(1, 1, 1);
+                    var placementOptions = new ImagePlacementOptions
+                    {
+                        PlacementPoint = BoxPlacement.TopLeft,
+                        Location = new XYZ(1, 1, 1)
+                    };
 
                     ImageInstance.Create(ActiveDoc, view, imageType.Id, placementOptions);
                 }

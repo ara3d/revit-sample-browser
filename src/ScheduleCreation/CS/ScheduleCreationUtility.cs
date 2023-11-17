@@ -164,8 +164,10 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
                     //Group and sort the view schedule by type
                     if (field.ParameterId == new ElementId(BuiltInParameter.ELEM_TYPE_PARAM))
                     {
-                        var sortGroupField = new ScheduleSortGroupField(field.FieldId);
-                        sortGroupField.ShowHeader = true;
+                        var sortGroupField = new ScheduleSortGroupField(field.FieldId)
+                        {
+                            ShowHeader = true
+                        };
                         schedule.Definition.AddSortGroupField(sortGroupField);
                     }
                 }

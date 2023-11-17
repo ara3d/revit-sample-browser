@@ -269,8 +269,10 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
             // we do not have out style yet - let's create it
 
             // a) grid lines
-            var surface = new AnalysisDisplayColoredSurfaceSettings();
-            surface.ShowGridLines = true;
+            var surface = new AnalysisDisplayColoredSurfaceSettings
+            {
+                ShowGridLines = true
+            };
 
             // b) colors
             var colors = new AnalysisDisplayColorSettings();
@@ -280,11 +282,13 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
             colors.MaxColor = green;
 
             // c) the legend
-            var legend = new AnalysisDisplayLegendSettings();
-            legend.NumberOfSteps = 10;
-            legend.Rounding = 0.1;
-            legend.ShowDataDescription = false;
-            legend.ShowLegend = false;
+            var legend = new AnalysisDisplayLegendSettings
+            {
+                NumberOfSteps = 10,
+                Rounding = 0.1,
+                ShowDataDescription = false,
+                ShowLegend = false
+            };
 
             // creation of a style needs to be in a transaction
             using (var trans = new Transaction(view.Document))

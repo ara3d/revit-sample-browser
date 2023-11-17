@@ -201,8 +201,10 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         /// </summary>
         private void Tessellate()
         {
-            var option = new Options();
-            option.DetailLevel = ViewDetailLevel.Fine;
+            var option = new Options
+            {
+                DetailLevel = ViewDetailLevel.Fine
+            };
             var geoElem = m_pathRein.get_Geometry(option);
             //GeometryObjectArray geoArray = geoElem.Objects;
             var objects = geoElem.GetEnumerator();

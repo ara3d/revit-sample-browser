@@ -170,15 +170,17 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
         private FillGrid CreateGrid(UV origin, double offset, double angle,
             double shift, params double[] segments)
         {
-            var fillGrid = new FillGrid();
-            // The arguments: origin, offset (vertical distance between lines), 
-            // angle, shift (delta between location of start point per line)
-            // The last two arguments are the segments: e.g. 1.0 units on, 
-            // 0.1 units off (units are Revit units (ft))
-            fillGrid.Origin = origin;
-            fillGrid.Offset = offset;
-            fillGrid.Angle = angle;
-            fillGrid.Shift = shift;
+            var fillGrid = new FillGrid
+            {
+                // The arguments: origin, offset (vertical distance between lines), 
+                // angle, shift (delta between location of start point per line)
+                // The last two arguments are the segments: e.g. 1.0 units on, 
+                // 0.1 units off (units are Revit units (ft))
+                Origin = origin,
+                Offset = offset,
+                Angle = angle,
+                Shift = shift
+            };
             var segmentsList = new List<double>();
             foreach (var d in segments)
             {

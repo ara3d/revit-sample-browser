@@ -76,15 +76,19 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
                 roofEditorPropertyGrid.SelectedObject = m_footPrintRoofWrapper;
                 Size = new Size(814, 515);
 
-                var label = new Label();
-                label.Text = "Footprint roof lines:";
-                label.AutoSize = true;
-                label.Location = new Point(398, 12);
+                var label = new Label
+                {
+                    Text = "Footprint roof lines:",
+                    AutoSize = true,
+                    Location = new Point(398, 12)
+                };
                 Controls.Add(label);
 
-                m_graphicsControl = new GraphicsControl(m_footPrintRoofWrapper);
-                m_graphicsControl.Location = new Point(398, 36);
-                m_graphicsControl.Size = new Size(400, 440);
+                m_graphicsControl = new GraphicsControl(m_footPrintRoofWrapper)
+                {
+                    Location = new Point(398, 36),
+                    Size = new Size(400, 440)
+                };
                 Controls.Add(m_graphicsControl);
             }
             else

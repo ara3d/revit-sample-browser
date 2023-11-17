@@ -22,8 +22,10 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
         {
             InitializeComponent();
 
-            FiPlacementOptions = new PromptForFamilyInstancePlacementOptions();
-            FiPlacementOptions.SketchGalleryOptions = SketchGalleryOptions.SGO_Line;
+            FiPlacementOptions = new PromptForFamilyInstancePlacementOptions
+            {
+                SketchGalleryOptions = SketchGalleryOptions.SGO_Line
+            };
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();

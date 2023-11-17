@@ -121,16 +121,18 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             // Default values
             m_exportFileVersion = ACADVersion.R2010;
             //parameter : DXFExportOptions dxfExportOptions
-            var dxfExportOptions = new DXFExportOptions();
-            dxfExportOptions.ExportingAreas = m_exportOptionsData.ExportAreas;
-            dxfExportOptions.ExportOfSolids = m_exportOptionsData.ExportSolid;
-            dxfExportOptions.FileVersion = m_exportFileVersion;
-            dxfExportOptions.LayerMapping = m_exportOptionsData.ExportLayerMapping;
-            dxfExportOptions.LineScaling = m_exportOptionsData.ExportLineScaling;
-            //dxfExportOptions.MergedViews = m_exportOptionsData.ExportMergeFiles;
-            dxfExportOptions.PropOverrides = m_exportOptionsData.ExportLayersAndProperties;
-            dxfExportOptions.SharedCoords = m_exportOptionsData.ExportCoorSystem;
-            dxfExportOptions.TargetUnit = m_exportOptionsData.ExportUnit;
+            var dxfExportOptions = new DXFExportOptions
+            {
+                ExportingAreas = m_exportOptionsData.ExportAreas,
+                ExportOfSolids = m_exportOptionsData.ExportSolid,
+                FileVersion = m_exportFileVersion,
+                LayerMapping = m_exportOptionsData.ExportLayerMapping,
+                LineScaling = m_exportOptionsData.ExportLineScaling,
+                //dxfExportOptions.MergedViews = m_exportOptionsData.ExportMergeFiles;
+                PropOverrides = m_exportOptionsData.ExportLayersAndProperties,
+                SharedCoords = m_exportOptionsData.ExportCoorSystem,
+                TargetUnit = m_exportOptionsData.ExportUnit
+            };
 
             //Export
             var exported = ActiveDocument.Export(ExportFolder, ExportFileName, views, dxfExportOptions);

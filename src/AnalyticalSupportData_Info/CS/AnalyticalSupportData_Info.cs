@@ -142,35 +142,43 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
             var elementInformationTable = new DataTable("ElementInformationTable");
 
             // Create element id column and add to the DataTable.
-            var idColumn = new DataColumn();
-            idColumn.DataType = typeof(string);
-            idColumn.ColumnName = "Id";
-            idColumn.Caption = "Id";
-            idColumn.ReadOnly = true;
+            var idColumn = new DataColumn
+            {
+                DataType = typeof(string),
+                ColumnName = "Id",
+                Caption = "Id",
+                ReadOnly = true
+            };
             elementInformationTable.Columns.Add(idColumn);
 
             // Create element type column and add to the DataTable.
-            var typeColumn = new DataColumn();
-            typeColumn.DataType = typeof(string);
-            typeColumn.ColumnName = "Element Type";
-            typeColumn.Caption = "Element Type";
-            typeColumn.ReadOnly = true;
+            var typeColumn = new DataColumn
+            {
+                DataType = typeof(string),
+                ColumnName = "Element Type",
+                Caption = "Element Type",
+                ReadOnly = true
+            };
             elementInformationTable.Columns.Add(typeColumn);
 
             // Create support column and add to the DataTable.
-            var supportColumn = new DataColumn();
-            supportColumn.DataType = typeof(string);
-            supportColumn.ColumnName = "Support Type";
-            supportColumn.Caption = "Support Type";
-            supportColumn.ReadOnly = true;
+            var supportColumn = new DataColumn
+            {
+                DataType = typeof(string),
+                ColumnName = "Support Type",
+                Caption = "Support Type",
+                ReadOnly = true
+            };
             elementInformationTable.Columns.Add(supportColumn);
 
             // Create a column which can note others information
-            var remarkColumn = new DataColumn();
-            remarkColumn.DataType = typeof(string);
-            remarkColumn.ColumnName = "Remark";
-            remarkColumn.Caption = "Remark";
-            remarkColumn.ReadOnly = true;
+            var remarkColumn = new DataColumn
+            {
+                DataType = typeof(string),
+                ColumnName = "Remark",
+                Caption = "Remark",
+                ReadOnly = true
+            };
             elementInformationTable.Columns.Add(remarkColumn);
 
             return elementInformationTable;

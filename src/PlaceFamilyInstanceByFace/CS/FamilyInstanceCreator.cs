@@ -249,9 +249,11 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
                     Math.Max(maxP.Z, tempXyz.Z));
             }
 
-            var retBounding = new BoundingBoxXYZ();
-            retBounding.Max = maxP;
-            retBounding.Min = minP;
+            var retBounding = new BoundingBoxXYZ
+            {
+                Max = maxP,
+                Min = minP
+            };
             return retBounding;
         }
 
@@ -263,9 +265,11 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
         private bool CheckSelectedElement(RevitElement elem)
         {
             if (null == elem) return false;
-            var opts = new Options();
-            opts.View = RevitDoc.Document.ActiveView;
-            opts.ComputeReferences = true;
+            var opts = new Options
+            {
+                View = RevitDoc.Document.ActiveView,
+                ComputeReferences = true
+            };
             // Get geometry of the element
             var geoElement = elem.get_Geometry(opts);
             InquireGeometry(geoElement, elem);

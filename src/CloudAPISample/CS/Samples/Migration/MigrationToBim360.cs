@@ -61,17 +61,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
             View = null;
         }
 
-        private IEnumerable<RevitLinkType> GetLinkInstances(Document document)
-        {
-            var links = new FilteredElementCollector(document);
-            var classFilter = new ElementClassFilter(typeof(RevitLinkType));
-            links.WherePasses(classFilter);
-            foreach (var link in links)
-            {
-                if (link is RevitLinkType revitLinkType)
-                    yield return revitLinkType;
-            }
-        }
 
         private FolderLocation GetTargetFolderUrn(IList<MigrationRule> rules, string directory, string model)
         {
@@ -125,7 +114,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
                 {
                     var doc = Application.Application.OpenDocumentFile(modelpath, ops);
                     var links = new List<string>();
-                    foreach (var linkInstance in GetLinkInstances(doc))
+                    foreach (var linkInstance in doc.GetFilteredElements<RevitLinkType>())
                     {
                         links.Add(linkInstance.Name);
                     }
@@ -237,7 +226,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
                 {
                     var doc = Application.Application.OpenDocumentFile(hostModelPath, ops,
                         new DefaultOpenFromCloudCallback());
-                    foreach (var linkInstance in GetLinkInstances(doc))
+                    foreach (var linkInstance in doc.GetFilteredElements<RevitLinkType>)
                     {
                         if (mapModelsNameToGuid.TryGetValue(linkInstance.Name, out _))
                         {

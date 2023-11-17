@@ -37,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
 
                 // Set the view which display the solid active
                 commandData.Application.ActiveUIDocument.ActiveView =
-                    document.GetFilteredElements<View>().First(e => e.Name == "CSGTree");
+                    document.GetElements<View>().First(e => e.Name == "CSGTree");
 
                 return Result.Succeeded;
             }

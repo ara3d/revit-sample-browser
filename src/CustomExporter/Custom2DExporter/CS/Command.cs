@@ -24,8 +24,10 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
                 var activeView = uiDoc.ActiveView;
                 if (!IsExportableView(activeView))
                 {
-                    var td = new TaskDialog("Cannot export view.");
-                    td.MainInstruction = "Only plans, elevations and sections can be exported.";
+                    var td = new TaskDialog("Cannot export view.")
+                    {
+                        MainInstruction = "Only plans, elevations and sections can be exported."
+                    };
 
                     td.Show();
 
@@ -97,11 +99,13 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             out ResultsSummary resultsSummary)
         {
             var context = new TessellatedGeomAndText2DExportContext(out points);
-            var exporter = new Autodesk.Revit.DB.CustomExporter(exportableView.Document, context);
-            exporter.IncludeGeometricObjects = includeGeometricObjects;
-            exporter.Export2DIncludingAnnotationObjects = export2DIncludingAnnotationObjects;
-            exporter.Export2DGeometricObjectsIncludingPatternLines = export2DGeometricObjectsIncludingPatternLines;
-            exporter.ShouldStopOnError = true;
+            var exporter = new Autodesk.Revit.DB.CustomExporter(exportableView.Document, context)
+            {
+                IncludeGeometricObjects = includeGeometricObjects,
+                Export2DIncludingAnnotationObjects = export2DIncludingAnnotationObjects,
+                Export2DGeometricObjectsIncludingPatternLines = export2DGeometricObjectsIncludingPatternLines,
+                ShouldStopOnError = true
+            };
             exporter.Export(exportableView);
             exporter.Dispose();
 
@@ -119,8 +123,10 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
         /// <param name="resultsSummary"></param>
         private static void ShowResults(ResultsSummary resultsSummary)
         {
-            var td = new TaskDialog("Results of 2D export");
-            td.MainInstruction = $"2D exporter exported {resultsSummary.NumElements} elements";
+            var td = new TaskDialog("Results of 2D export")
+            {
+                MainInstruction = $"2D exporter exported {resultsSummary.NumElements} elements"
+            };
             var details = $"There were {resultsSummary.NumTexts} text nodes exported.\n\n";
 
             if (resultsSummary.NumTexts > 0 && resultsSummary.Texts.Length > 0)

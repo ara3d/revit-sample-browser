@@ -23,14 +23,16 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
         {
             InitializeComponent();
             m_specTypeId = specTypeId;
-            FormatOptions = new FormatOptions(formatoptions.GetUnitTypeId(), formatoptions.GetSymbolTypeId());
-            FormatOptions.UseDefault = formatoptions.UseDefault;
-            FormatOptions.Accuracy = formatoptions.Accuracy;
-            FormatOptions.SuppressTrailingZeros = formatoptions.SuppressTrailingZeros;
-            FormatOptions.SuppressLeadingZeros = formatoptions.SuppressLeadingZeros;
-            FormatOptions.UsePlusPrefix = formatoptions.UsePlusPrefix;
-            FormatOptions.UseDigitGrouping = formatoptions.UseDigitGrouping;
-            FormatOptions.SuppressSpaces = formatoptions.SuppressSpaces;
+            FormatOptions = new FormatOptions(formatoptions.GetUnitTypeId(), formatoptions.GetSymbolTypeId())
+            {
+                UseDefault = formatoptions.UseDefault,
+                Accuracy = formatoptions.Accuracy,
+                SuppressTrailingZeros = formatoptions.SuppressTrailingZeros,
+                SuppressLeadingZeros = formatoptions.SuppressLeadingZeros,
+                UsePlusPrefix = formatoptions.UsePlusPrefix,
+                UseDigitGrouping = formatoptions.UseDigitGrouping,
+                SuppressSpaces = formatoptions.SuppressSpaces
+            };
         }
 
         /// <summary>
