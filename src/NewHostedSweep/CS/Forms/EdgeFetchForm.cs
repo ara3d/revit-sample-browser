@@ -157,21 +157,27 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 
             // Initialize edge binding selection state
             foreach (var edge in m_creationData.EdgesForHostedSweep)
-            foreach (var elemGeom in m_creationData.Creator.ElemGeomDic.Values)
-                if (elemGeom.EdgeBindingDic.ContainsKey(edge))
-                    elemGeom.EdgeBindingDic[edge].IsSelected = true;
+            {
+                foreach (var elemGeom in m_creationData.Creator.ElemGeomDic.Values)
+                {
+                    if (elemGeom.EdgeBindingDic.ContainsKey(edge))
+                        elemGeom.EdgeBindingDic[edge].IsSelected = true;
+                }
+            }
 
             // Initialize tree node selection state
             // check on all the edges on which we created hostd sweeps
             var root = treeViewHost.Nodes[0];
             foreach (TreeNode elemNode in root.Nodes)
-            foreach (TreeNode edgeNode in elemNode.Nodes)
             {
-                var edge = edgeNode.Tag as Edge;
-                if (m_creationData.EdgesForHostedSweep.IndexOf(edge) != -1)
+                foreach (TreeNode edgeNode in elemNode.Nodes)
                 {
-                    edgeNode.StateImageIndex = (int)CheckState.Checked;
-                    UpdateParent(edgeNode);
+                    var edge = edgeNode.Tag as Edge;
+                    if (m_creationData.EdgesForHostedSweep.IndexOf(edge) != -1)
+                    {
+                        edgeNode.StateImageIndex = (int)CheckState.Checked;
+                        UpdateParent(edgeNode);
+                    }
                 }
             }
         }
@@ -210,9 +216,14 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             m_creationData.EdgesForHostedSweep.Clear();
             var rootNode = treeViewHost.Nodes[0];
             foreach (TreeNode hostNode in rootNode.Nodes)
-            foreach (TreeNode edgeNode in hostNode.Nodes)
-                if (edgeNode.StateImageIndex == (int)CheckState.Checked)
-                    m_creationData.EdgesForHostedSweep.Add(edgeNode.Tag as Edge);
+            {
+                foreach (TreeNode edgeNode in hostNode.Nodes)
+                {
+                    if (edgeNode.StateImageIndex == (int)CheckState.Checked)
+                        m_creationData.EdgesForHostedSweep.Add(edgeNode.Tag as Edge);
+                }
+            }
+
             m_creationData.Symbol = comboBoxTypes.SelectedItem as ElementType;
         }
 
@@ -270,12 +281,14 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             var parent = node.Parent;
             if (parent == null) return;
             foreach (TreeNode brother in parent.Nodes)
+            {
                 if (brother.StateImageIndex != node.StateImageIndex)
                 {
                     parent.StateImageIndex = (int)CheckState.Indeterminate;
                     UpdateParent(parent);
                     return;
                 }
+            }
 
             parent.StateImageIndex = node.StateImageIndex;
             UpdateParent(parent);
@@ -309,7 +322,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
 
             foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
+            {
                 elemGeom.EdgeBindingDic[edge].IsHighLighted = false;
+            }
         }
 
         /// <summary>
@@ -332,7 +347,10 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
                     break;
                 }
 
-                foreach (TreeNode tmpNode in node.Nodes) todo.Push(tmpNode);
+                foreach (TreeNode tmpNode in node.Nodes)
+                {
+                    todo.Push(tmpNode);
+                }
             }
 
             return result;
@@ -468,9 +486,12 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
                     mat.TransformPoints(pts);
                     var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
                     foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
+                    {
                         if (elemGeom.EdgeBindingDic.ContainsKey(edge))
                             if (elemGeom.EdgeBindingDic[edge].HighLight(pts[0].X, pts[0].Y))
                                 pictureBoxPreview.Refresh();
+                    }
+
                     break;
                 }
             }
@@ -487,6 +508,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
 
             var elemGeom = m_creationData.Creator.ElemGeomDic[m_activeElem];
             foreach (var edge in m_creationData.Creator.SupportEdges[m_activeElem])
+            {
                 if (elemGeom.EdgeBindingDic.ContainsKey(edge))
                     if (elemGeom.EdgeBindingDic[edge].IsHighLighted)
                     {
@@ -502,6 +524,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
                         treeViewHost.Refresh();
                         return;
                     }
+            }
         }
 
         /// <summary>

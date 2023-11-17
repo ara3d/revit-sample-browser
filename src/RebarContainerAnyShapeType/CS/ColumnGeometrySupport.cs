@@ -83,7 +83,9 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 
             var translatedPoints = new List<XYZ>();
             foreach (var point in movedPoints)
+            {
                 translatedPoints.Add(GeomUtil.OffsetPoint(point, DrivingVector, curveOffset));
+            }
 
             IList<Curve> curves = new List<Curve>(); //the profile of the transverse reinforcement
             var first = translatedPoints[0];
@@ -151,8 +153,10 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var spacing = rebarOffset / rebarNumber; //spacing value of the reinforcement
             var endPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, rebarLength);
 
-            IList<Curve> curves = new List<Curve>(); //profile of the reinforcement
-            curves.Add(Line.CreateBound(startPoint, endPoint));
+            IList<Curve> curves = new List<Curve>
+            {
+                Line.CreateBound(startPoint, endPoint)
+            }; //profile of the reinforcement
 
             // return the reinforcement geometry information
             return new RebarGeometry(normal, curves, rebarNumber, spacing);

@@ -98,7 +98,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                 var newUIdoc = new UIDocument(doc);
                 var es = new ElementSet();
                 foreach (var elementId in newUIdoc.Selection.GetElementIds())
+                {
                     es.Insert(newUIdoc.Document.GetElement(elementId));
+                }
+
                 iter = es.GetEnumerator();
             }
             else // update all doors in current Revit project.
@@ -185,7 +188,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                 var newUIdoc = new UIDocument(doc);
                 var es = new ElementSet();
                 foreach (var elementId in newUIdoc.Selection.GetElementIds())
+                {
                     es.Insert(newUIdoc.Document.GetElement(elementId));
+                }
+
                 iter = es.GetEnumerator();
             }
             else // update all doors in current Revit document
@@ -372,7 +378,9 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         public void UpdateDoorFamiliesOpeningFeature()
         {
             foreach (var doorFamily in DoorFamilies)
+            {
                 doorFamily.UpdateOpeningFeature();
+            }
         }
 
         /// <summary>
@@ -382,7 +390,9 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
         public void DeleteTempDoorInstances()
         {
             foreach (var doorFamily in DoorFamilies)
+            {
                 doorFamily.DeleteTempDoorInstance();
+            }
         }
 
         /// <summary>

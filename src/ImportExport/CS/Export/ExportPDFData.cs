@@ -47,7 +47,10 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             else
             {
                 var viewSet = SelectViewsData.SelectedViews;
-                foreach (View v in viewSet) views.Add(v.Id);
+                foreach (View v in viewSet)
+                {
+                    views.Add(v.Id);
+                }
             }
 
             // Parameter: The exporting options, including paper size, orientation, file name or naming rule and etc.

@@ -170,7 +170,10 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             if (DeleteSelectedElements)
                 try
                 {
-                    foreach (Element e in Command.GetSelectedModelLinesAndArcs(RevitDoc)) RevitDoc.Delete(e.Id);
+                    foreach (Element e in Command.GetSelectedModelLinesAndArcs(RevitDoc))
+                    {
+                        RevitDoc.Delete(e.Id);
+                    }
                 }
                 catch (Exception)
                 {

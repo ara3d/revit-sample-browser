@@ -44,7 +44,10 @@ namespace Ara3D.RevitSampleBrowser.DeleteDimensions.CS
         {
             var selections = new ElementSet();
             foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+            {
                 selections.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             var dimsToDelete = new ElementSet();
 
             //warning if nothing selected
@@ -71,7 +74,10 @@ namespace Ara3D.RevitSampleBrowser.DeleteDimensions.CS
 
             transaction.Start();
             //delete all the unpinned dimensions
-            foreach (Element e in dimsToDelete) commandData.Application.ActiveUIDocument.Document.Delete(e.Id);
+            foreach (Element e in dimsToDelete)
+            {
+                commandData.Application.ActiveUIDocument.Document.Delete(e.Id);
+            }
 
             transaction.Commit();
             return Result.Succeeded;

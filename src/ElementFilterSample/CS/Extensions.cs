@@ -60,11 +60,17 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         {
             if (coll1.Count != coll2.Count) return false;
             foreach (var val1 in coll1)
+            {
                 if (!coll2.Contains(val1))
                     return false;
+            }
+
             foreach (var val2 in coll2)
+            {
                 if (!coll1.Contains(val2))
                     return false;
+            }
+
             return true;
         }
     }

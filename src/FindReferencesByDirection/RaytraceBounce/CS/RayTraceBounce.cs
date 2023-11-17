@@ -62,11 +62,13 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             list.AddRange(collector.OfClass(typeof(View3D)).ToElements());
             foreach (View3D v in list)
                 // skip view template here because view templates are invisible in project browsers
+            {
                 if (v != null && !v.IsTemplate && v.Name == "{3D}")
                 {
                     m_view = v;
                     break;
                 }
+            }
         }
     }
 }

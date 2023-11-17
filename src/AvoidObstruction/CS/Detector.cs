@@ -52,8 +52,10 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             referenceIntersector.TargetType = FindReferenceTarget.Face;
             var obstructionsOnUnboundLine = referenceIntersector.Find(origin, dir);
             foreach (var gRef in obstructionsOnUnboundLine)
+            {
                 if (!InArray(result, gRef))
                     result.Add(gRef);
+            }
 
             result.Sort(CompareReferencesWithContext);
             return result;
@@ -98,9 +100,12 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         private bool InArray(List<ReferenceWithContext> arr, ReferenceWithContext entry)
         {
             foreach (var tmp in arr)
+            {
                 if (Math.Abs(tmp.Proximity - entry.Proximity) < 1e-9 &&
                     tmp.GetReference().ElementId == entry.GetReference().ElementId)
                     return true;
+            }
+
             return false;
         }
 

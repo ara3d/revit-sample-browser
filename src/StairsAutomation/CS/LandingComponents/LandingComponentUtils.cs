@@ -20,7 +20,11 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
         public static IList<Curve> ProjectCurvesToElevation(IList<Curve> curves, double elevation)
         {
             var ret = new List<Curve>();
-            foreach (var curve in curves) ret.Add(ProjectCurveToElevation(curve, elevation));
+            foreach (var curve in curves)
+            {
+                ret.Add(ProjectCurveToElevation(curve, elevation));
+            }
+
             return ret;
         }
 

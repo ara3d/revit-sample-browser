@@ -48,15 +48,27 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
         private void InitializeControls()
         {
             //Layers
-            foreach (var layer in m_importData.VisibleLayersOnly) comboBoxLayers.Items.Add(layer);
+            foreach (var layer in m_importData.VisibleLayersOnly)
+            {
+                comboBoxLayers.Items.Add(layer);
+            }
+
             comboBoxLayers.SelectedIndex = 0;
 
             //unit
-            foreach (var unit in m_importData.Unit) comboBoxUnits.Items.Add(unit);
+            foreach (var unit in m_importData.Unit)
+            {
+                comboBoxUnits.Items.Add(unit);
+            }
+
             comboBoxUnits.SelectedIndex = 0;
 
             //Level
-            foreach (View view in m_importData.Views) comboBoxLevel.Items.Add(view.Name);
+            foreach (View view in m_importData.Views)
+            {
+                comboBoxLevel.Items.Add(view.Name);
+            }
+
             comboBoxLevel.SelectedIndex = 0;
 
             //If active view is 3D
@@ -217,11 +229,13 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
                 m_importData.ImportOrientToView = checkBoxOrient2View.Checked;
                 var viewName = comboBoxLevel.SelectedItem.ToString();
                 foreach (View view in m_importData.Views)
+                {
                     if (viewName == view.Name)
                     {
                         m_importData.ImportView = view;
                         break;
                     }
+                }
             }
         }
 

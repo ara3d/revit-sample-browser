@@ -124,13 +124,17 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
 
             if (EdgeRemoved != null)
                 foreach (var edge in m_backUpEdges)
+                {
                     if (m_edgesForHostedSweep.IndexOf(edge) == -1)
                         EdgeRemoved(edge);
+                }
 
             if (EdgeAdded != null)
                 foreach (var edge in m_edgesForHostedSweep)
+                {
                     if (m_backUpEdges.IndexOf(edge) == -1)
                         EdgeAdded(edge);
+                }
         }
     }
 }

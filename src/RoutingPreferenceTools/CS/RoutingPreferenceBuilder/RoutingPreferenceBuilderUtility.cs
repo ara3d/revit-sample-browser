@@ -33,7 +33,10 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             m_familyfiles = new Dictionary<string, string>();
             GetAllFiles(m_basePath, m_familyfiles);
             //Get additional .rfa files in user-defined paths specified in familypaths.xml
-            foreach (var extraPath in extraFamilyPaths) GetAllFiles(extraPath, m_familyfiles);
+            foreach (var extraPath in extraFamilyPaths)
+            {
+                GetAllFiles(extraPath, m_familyfiles);
+            }
         }
 
         /// <summary>
@@ -58,6 +61,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             var paths = pathsDoc.Root.Elements("FamilyPath");
 
             foreach (var xpath in paths)
+            {
                 try
                 {
                     var xaPath = xpath.Attribute(XName.Get("pathname"));
@@ -67,6 +71,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 catch (Exception)
                 {
                 }
+            }
 
             reader.Close();
             return pathsList;
@@ -103,7 +108,10 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             }
 
             var dirs = Directory.GetDirectories(basePath);
-            foreach (var dir in dirs) GetAllFiles(dir, allPaths);
+            foreach (var dir in dirs)
+            {
+                GetAllFiles(dir, allPaths);
+            }
         }
 
         private string GetFamilyBasePath()

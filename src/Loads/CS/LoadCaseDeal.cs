@@ -103,7 +103,9 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             {
                 var uiapplication = new UIApplication(m_revit);
                 foreach (var name in m_newLoadNaturesName)
+                {
                     LoadNature.Create(uiapplication.ActiveUIDocument.Document, name);
+                }
             }
             catch (Exception e)
             {

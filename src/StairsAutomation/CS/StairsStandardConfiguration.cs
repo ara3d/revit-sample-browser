@@ -220,7 +220,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             RunWidth = value;
 
             //assign to existing run configurations
-            foreach (var config in m_runConfigurations) config.Width = value;
+            foreach (var config in m_runConfigurations)
+            {
+                config.Width = value;
+            }
         }
 
         /// <summary>

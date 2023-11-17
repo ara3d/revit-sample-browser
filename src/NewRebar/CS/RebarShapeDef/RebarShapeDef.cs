@@ -83,10 +83,16 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
         public void Commit(Document rvtDoc, DefinitionGroup defGroup)
         {
             // Submit all the parameters.
-            foreach (var param in Parameters) param.Commit(rvtDoc, defGroup);
+            foreach (var param in Parameters)
+            {
+                param.Commit(rvtDoc, defGroup);
+            }
 
             // Submit all the constraints.
-            foreach (var constraint in Constraints) constraint.Commit();
+            foreach (var constraint in Constraints)
+            {
+                constraint.Commit();
+            }
 
             // Submit the RebarShape.
             if (RebarshapeDefinition.Complete)

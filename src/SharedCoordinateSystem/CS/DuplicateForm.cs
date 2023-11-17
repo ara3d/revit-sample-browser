@@ -39,12 +39,14 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             //check whether the name has been used
             foreach (var name in m_data.LocationNames)
+            {
                 if (name == newNameTextBox.Text)
                 {
                     TaskDialog.Show("Revit", "The name entered is already in use. Enter a unique name.",
                         TaskDialogCommonButtons.Ok);
                     return;
                 }
+            }
 
             try
             {

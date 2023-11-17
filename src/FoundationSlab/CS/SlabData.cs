@@ -86,8 +86,11 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
         public bool CheckHaveSelected()
         {
             foreach (var slab in m_allBaseSlabList)
+            {
                 if (slab.Selected)
                     return true;
+            }
+
             return false;
         }
 
@@ -97,7 +100,10 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
         /// <param name="value">The value for Selected property</param>
         public void ChangeAllSelected(bool value)
         {
-            foreach (var slab in m_allBaseSlabList) slab.Selected = value;
+            foreach (var slab in m_allBaseSlabList)
+            {
+                slab.Selected = value;
+            }
         }
 
         /// <summary>
@@ -116,7 +122,10 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
                 t.Start();
 
                 var loop = new CurveLoop();
-                foreach (Curve curve in slab.OctagonalProfile) loop.Append(curve);
+                foreach (Curve curve in slab.OctagonalProfile)
+                {
+                    loop.Append(curve);
+                }
 
                 var floorLoops = new List<CurveLoop> { loop };
                 var foundationSlab = Floor.Create(Revit.ActiveUIDocument.Document, floorLoops,
@@ -141,11 +150,13 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
         /// </summary>
         private void FindElements()
         {
-            IList<ElementFilter> filters = new List<ElementFilter>(4);
-            filters.Add(new ElementClassFilter(typeof(Level)));
-            filters.Add(new ElementClassFilter(typeof(View)));
-            filters.Add(new ElementClassFilter(typeof(Floor)));
-            filters.Add(new ElementClassFilter(typeof(FloorType)));
+            IList<ElementFilter> filters = new List<ElementFilter>(4)
+            {
+                new ElementClassFilter(typeof(Level)),
+                new ElementClassFilter(typeof(View)),
+                new ElementClassFilter(typeof(Floor)),
+                new ElementClassFilter(typeof(FloorType))
+            };
 
             var orFilter = new LogicalOrFilter(filters);
             var collector = new FilteredElementCollector(Revit.ActiveUIDocument.Document);
@@ -187,13 +198,17 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
             // Find out the lowest level's view for finding the bounding box of slab.
             View baseView = null;
             foreach (var view in m_viewList)
+            {
                 if (view.Name == m_levelList.Values[0].Name)
                     baseView = view;
+            }
+
             if (null == baseView)
                 return false;
 
             // Get all slabs at the base of the building.
             foreach (var floor in m_floorList)
+            {
                 if (floor.LevelId == m_levelList.Values[0].Id)
                 {
                     var bbXyz = floor.get_BoundingBox(baseView); // Get the slab's bounding box.
@@ -206,6 +221,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
                     var regularSlab = new RegularSlab(floor, floorProfile, bbXyz); // Get a regular slab.
                     m_allBaseSlabList.Add(regularSlab); // Add regular slab to the set.
                 }
+            }
 
             // Getting regular slabs.
             return 0 != m_allBaseSlabList.Count;
@@ -260,7 +276,9 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
                 IList<Curve> curveList = analyticalModel.GetOuterContour().ToList();
 
                 foreach (var curve in curveList)
+                {
                     floorProfile.Append(curve);
+                }
 
                 return floorProfile;
             }

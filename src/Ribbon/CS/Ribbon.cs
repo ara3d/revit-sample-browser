@@ -276,8 +276,11 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
                 var level = elem as Level;
                 var alreadyContained = false;
                 foreach (var comboboxMember in comboboxLevel.GetItems())
+                {
                     if (comboboxMember.Name == level.Name)
                         alreadyContained = true;
+                }
+
                 if (!alreadyContained)
                 {
                     var comboBoxMemberData = new ComboBoxMemberData(level.Name, level.Name);

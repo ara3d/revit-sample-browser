@@ -51,7 +51,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             get
             {
                 var names = new List<string>();
-                foreach (PaperSize ps in m_printMgr.PaperSizes) names.Add(ps.Name);
+                foreach (PaperSize ps in m_printMgr.PaperSizes)
+                {
+                    names.Add(ps.Name);
+                }
+
                 return names;
             }
         }
@@ -72,11 +76,13 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             set
             {
                 foreach (PaperSize ps in m_printMgr.PaperSizes)
+                {
                     if (ps.Name.Equals(value))
                     {
                         m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.PaperSize = ps;
                         break;
                     }
+                }
             }
         }
 
@@ -85,7 +91,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             get
             {
                 var names = new List<string>();
-                foreach (PaperSource ps in m_printMgr.PaperSources) names.Add(ps.Name);
+                foreach (PaperSource ps in m_printMgr.PaperSources)
+                {
+                    names.Add(ps.Name);
+                }
+
                 return names;
             }
         }
@@ -96,11 +106,13 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             set
             {
                 foreach (PaperSource ps in m_printMgr.PaperSources)
+                {
                     if (ps.Name.Equals(value))
                     {
                         m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.PaperSource = ps;
                         break;
                     }
+                }
             }
         }
 
@@ -308,7 +320,10 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             var enableOrNot =
                 m_printMgr.PrintSetup.CurrentPrintSetting.PrintParameters.MarginType == MarginType.UserDefined;
 
-            foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
+            foreach (var control in controlsToEnableOrNot)
+            {
+                control.Enabled = enableOrNot;
+            }
 
             return enableOrNot;
         }

@@ -128,7 +128,10 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_ExternalEvent.CS
                             if (trans.Start(text) == TransactionStatus.Started)
                             {
                                 // apply the requested operation to every door
-                                foreach (FamilyInstance door in doorset) operation(door);
+                                foreach (FamilyInstance door in doorset)
+                                {
+                                    operation(door);
+                                }
 
                                 trans.Commit();
                             }

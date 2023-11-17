@@ -318,7 +318,10 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             var illegalChars = Path.GetInvalidFileNameChars();
 
             var updated = stringWithIllegalChar;
-            foreach (var ch in illegalChars) updated = updated.Replace(ch, '_');
+            foreach (var ch in illegalChars)
+            {
+                updated = updated.Replace(ch, '_');
+            }
 
             return updated;
         }

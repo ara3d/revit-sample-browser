@@ -28,11 +28,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 Level levelOne = null;
                 foreach (Level level in levels)
+                {
                     if (level != null && level.Name.Equals("Level 1"))
                     {
                         levelOne = level;
                         break;
                     }
+                }
 
                 if (levelOne == null)
                     return Result.Failed;
@@ -132,8 +134,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             var files = folder.GetItemFiles();
             if (files != null && files.Count > 0)
                 foreach (var file in files)
+                {
                     if (file != null && file.IsLoaded() == false && file.IsValid())
                         return file;
+                }
 
             var subFolders = folder.GetSubFolders();
             if (subFolders != null && subFolders.Count > 0)

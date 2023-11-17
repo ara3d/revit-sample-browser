@@ -139,8 +139,11 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         private static ReferenceWithContext Find(List<ReferenceWithContext> arr, ReferenceWithContext entry)
         {
             foreach (var tmp in arr)
+            {
                 if (tmp.GetReference().ElementId == entry.GetReference().ElementId)
                     return tmp;
+            }
+
             return null;
         }
     }

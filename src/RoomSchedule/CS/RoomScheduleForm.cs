@@ -82,12 +82,18 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         private void GetAllLevelsAndPhases()
         {
             // get all levels which can place rooms
-            foreach (PlanTopology planTopology in m_document.PlanTopologies) m_allLevels.Add(planTopology.Level);
+            foreach (PlanTopology planTopology in m_document.PlanTopologies)
+            {
+                m_allLevels.Add(planTopology.Level);
+            }
 
             // get all phases by filter type
             var collector = new FilteredElementCollector(m_document);
             ICollection<Element> allPhases = collector.OfClass(typeof(Phase)).ToElements();
-            foreach (Phase phs in allPhases) m_allPhases.Add(phs);
+            foreach (Phase phs in allPhases)
+            {
+                m_allPhases.Add(phs);
+            }
         }
 
         /// <summary>
@@ -173,10 +179,12 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 var binding = bindingMap.get_Item(tempDefinition) as ElementBinding;
                 var bindCategories = binding.Categories;
                 foreach (Category category in bindCategories)
+                {
                     if (category.Name
                         == m_document.Settings.Categories.get_Item(BuiltInCategory.OST_Rooms).Name)
                         // the definition with appointed name was bound to Rooms, return true
                         return true;
+                }
             }
 
             // 
@@ -354,11 +362,13 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
             // get phase used to create room
             foreach (var phase in m_allPhases)
+            {
                 if (string.Compare(phase.Name, phaseComboBox.Text) == 0)
                 {
                     curPhase = phase;
                     break;
                 }
+            }
 
             if (null == curPhase)
             {
@@ -378,6 +388,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         {
             string[] constantColumns = { RoomsData.RoomName, RoomsData.RoomNumber, RoomsData.RoomComments };
             foreach (var constantColumn in constantColumns)
+            {
                 if (m_spreadRoomsTable.Columns.IndexOf(constantColumn) != -1)
                 {
                     // if value is not null or empty, set new rooms related parameter.
@@ -398,6 +409,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                             break;
                     }
                 }
+            }
         }
 
         /// <summary>
@@ -502,11 +514,13 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             // get the selected level, by comparing its name and ComboBox selected item's name
             Level selLevel = null;
             foreach (var level in m_allLevels)
+            {
                 if (0 == string.Compare(level.Name, levelComboBox.Text))
                 {
                     selLevel = level;
                     break;
                 }
+            }
 
             if (selLevel == null)
             {

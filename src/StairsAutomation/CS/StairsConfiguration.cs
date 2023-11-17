@@ -59,7 +59,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         /// </summary>
         public void SetRunWidth(double width)
         {
-            foreach (var config in RunConfigurations) config.Width = width;
+            foreach (var config in RunConfigurations)
+            {
+                config.Width = width;
+            }
         }
     }
 }

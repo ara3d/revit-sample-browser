@@ -55,7 +55,11 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
             var ids = new ElementId[Hash.Values.Count];
             var i = 0;
 
-            foreach (DictionaryEntry de in Hash) ids[i++] = (ElementId)de.Value;
+            foreach (DictionaryEntry de in Hash)
+            {
+                ids[i++] = (ElementId)de.Value;
+            }
+
             var standardValues = new StandardValuesCollection(ids);
 
             return standardValues;
@@ -83,8 +87,11 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         {
             if (v is string)
                 foreach (DictionaryEntry de in Hash)
+                {
                     if (de.Key.Equals(v.ToString()))
                         return de.Value;
+                }
+
             return base.ConvertFrom(context, culture, v);
         }
 

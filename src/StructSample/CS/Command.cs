@@ -32,7 +32,9 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
                 var rvtDoc = rvtApp.ActiveUIDocument;
                 var ss = new ElementSet();
                 foreach (var elementId in rvtDoc.Selection.GetElementIds())
+                {
                     ss.Insert(rvtDoc.Document.GetElement(elementId));
+                }
 
                 var tran = new Transaction(rvtDoc.Document, "StructSample");
                 tran.Start();
@@ -41,10 +43,12 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
 
                 //  iterate through a selection set, and collect walls which are constrained at the top and the bottom.
                 foreach (Element elem in ss)
+                {
                     if (elem.GetType() == typeof(Wall))
                         if (elem.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE) != null
                             && elem.get_Parameter(BuiltInParameter.WALL_BASE_CONSTRAINT) != null)
                             walls.Insert(elem);
+                }
 
                 //  how many did we get? 
                 TaskDialog.Show("Revit", "# of constrained walls in the selection set is " + walls.Size);
@@ -67,7 +71,11 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
 
                 //  place columns.
                 double spacing = 5; //  Spacing in feet hard coded. Note: Revit's public length unit is feet. 
-                foreach (Wall wall in walls) FrameWall(rvtApp.Application, wall, spacing, colType);
+                foreach (Wall wall in walls)
+                {
+                    FrameWall(rvtApp.Application, wall, spacing, colType);
+                }
+
                 tran.Commit();
 
                 //  return succeeded info. 

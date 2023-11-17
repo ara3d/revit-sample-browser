@@ -49,16 +49,18 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
 
             //else we return the face whose normal is Z axis
             foreach (var face in faces)
-            foreach (var edge in face)
             {
-                var edgexyzs = edge.Tessellate() as List<XYZ>;
-                if (xyzs.Count == edgexyzs.Count)
+                foreach (var edge in face)
                 {
-                    //get the normal of face
-                    var normal = GetFaceNormal(face);
-                    var cross = Vector4.CrossProduct(zAxis, normal);
-                    cross.Normalize();
-                    if (cross.Length() == 1) needFace = face;
+                    var edgexyzs = edge.Tessellate() as List<XYZ>;
+                    if (xyzs.Count == edgexyzs.Count)
+                    {
+                        //get the normal of face
+                        var normal = GetFaceNormal(face);
+                        var cross = Vector4.CrossProduct(zAxis, normal);
+                        cross.Normalize();
+                        if (cross.Length() == 1) needFace = face;
+                    }
                 }
             }
 

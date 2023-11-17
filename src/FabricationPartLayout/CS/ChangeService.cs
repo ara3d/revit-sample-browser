@@ -29,7 +29,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 {
                     // FabricationNetworkChangeService needs an ISet<ElementId>
                     ISet<ElementId> selIds = new HashSet<ElementId>();
-                    foreach (var id in collection) selIds.Add(id);
+                    foreach (var id in collection)
+                    {
+                        selIds.Add(id);
+                    }
 
                     using (var tr = new Transaction(doc, "Change Service of Fabrication Parts"))
                     {
@@ -91,7 +94,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 {
                     // FabricationNetworkChangeService needs an ISet<ElementId>
                     var selIds = new HashSet<ElementId>();
-                    foreach (var id in collection) selIds.Add(id);
+                    foreach (var id in collection)
+                    {
+                        selIds.Add(id);
+                    }
 
                     using (var tr = new Transaction(doc, "Change Size of Fabrication Parts"))
                     {
@@ -171,7 +177,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 {
                     // FabricationNetworkChangeService needs an ISet<ElementId>
                     ISet<ElementId> selIds = new HashSet<ElementId>();
-                    foreach (var id in collection) selIds.Add(id);
+                    foreach (var id in collection)
+                    {
+                        selIds.Add(id);
+                    }
 
                     using (var tr = new Transaction(doc, "Appply Change Service and Size of Fabrication Parts"))
                     {
@@ -194,12 +203,14 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         // Get the sizes of all the straights that was in the selection of elements that was added to FabricationNetworkChangeService
                         var sizeMappings = applychange.GetMapOfAllSizesForStraights();
                         foreach (var sizemapping in sizeMappings)
+                        {
                             if (sizemapping != null)
                             {
                                 // Testing round so ignoring the depth and adding 6" to the current size so all straights will be updated to a new size
                                 var widthDia = sizemapping.WidthDiameter + 0.5;
                                 sizemapping.MappedWidthDiameter = widthDia;
                             }
+                        }
 
                         applychange.SetMapOfSizesForStraights(sizeMappings);
 

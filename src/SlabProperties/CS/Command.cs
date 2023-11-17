@@ -157,7 +157,10 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
         {
             m_slabComponent = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
+            {
                 m_slabComponent.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             m_document = revit.ActiveUIDocument.Document;
 
             // There must be exactly one slab selected

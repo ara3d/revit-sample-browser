@@ -73,12 +73,14 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var currentAncillary = string.Empty;
 
                 foreach (var ancillaryName in ancillaryDescriptions)
+                {
                     if (ancillaryName != currentAncillary)
                     {
                         resultsBuilder.AppendLine(
                             $"{ancillaryName} x {ancillaryDescriptions.Count(x => x == ancillaryName)}");
                         currentAncillary = ancillaryName;
                     }
+                }
 
                 results = resultsBuilder.ToString();
             }

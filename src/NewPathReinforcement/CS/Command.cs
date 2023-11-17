@@ -25,7 +25,10 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 
                 var elems = new ElementSet();
                 foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+                {
                     elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                }
+
                 //if user had some wrong selection, give user an Error message
                 var errorMessage =
                     "Please select one Slab (or Structure Wall) to create PathReinforcement.";

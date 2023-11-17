@@ -28,7 +28,11 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
 
             m_familySymbolList = symbolList;
             var nameList = new List<string>();
-            foreach (var symbol in m_familySymbolList) nameList.Add(symbol.Name);
+            foreach (var symbol in m_familySymbolList)
+            {
+                nameList.Add(symbol.Name);
+            }
+
             comboBoxFamilySymbol.DataSource = nameList;
             comboBoxFamilySymbol.SelectedIndex = 0;
             SelectedFamilySymbol = m_familySymbolList[comboBoxFamilySymbol.SelectedIndex];

@@ -50,11 +50,13 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
             }
 
             foreach (var loadedDoc in documents)
+            {
                 if (loadedDoc.Title != doc.Title)
                 {
                     toDocument = loadedDoc;
                     break;
                 }
+            }
 
             // Collect schedules and drafting views
             var collector = new FilteredElementCollector(doc);

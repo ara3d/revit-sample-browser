@@ -90,7 +90,10 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
         public ModificationData Create(CreationData creationData)
         {
             var refArr = new ReferenceArray();
-            foreach (var edge in creationData.EdgesForHostedSweep) refArr.Append(edge.Reference);
+            foreach (var edge in creationData.EdgesForHostedSweep)
+            {
+                refArr.Append(edge.Reference);
+            }
 
             ModificationData modificationData = null;
             var transaction = new Transaction(RvtDoc, "CreateHostedSweep");

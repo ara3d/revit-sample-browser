@@ -52,10 +52,12 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
             var wallFilter = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
             var familyFilter = new ElementClassFilter(typeof(FamilyInstance));
             var massFilter = new ElementCategoryFilter(BuiltInCategory.OST_Mass);
-            IList<ElementFilter> filterList = new List<ElementFilter>();
-            filterList.Add(wallFilter);
-            filterList.Add(familyFilter);
-            filterList.Add(massFilter);
+            var filterList = new List<ElementFilter>
+            {
+                wallFilter,
+                familyFilter,
+                massFilter
+            };
             var filter = new LogicalOrFilter(filterList);
 
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), filter, Element.GetChangeTypeGeometry());
@@ -166,7 +168,10 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
                         var solid = geomObj as Solid;
                         if (solid != null)
                             foreach (Face f in solid.Faces)
+                            {
                                 faceArray.Append(f);
+                            }
+
                         var inst = geomObj as GeometryInstance;
                         if (inst != null) // in-place family walls
                             foreach (object o in inst.SymbolGeometry)
@@ -174,7 +179,9 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
                                 var s = o as Solid;
                                 if (s != null)
                                     foreach (Face f in s.Faces)
+                                    {
                                         faceArray.Append(f);
+                                    }
                             }
                     }
             }

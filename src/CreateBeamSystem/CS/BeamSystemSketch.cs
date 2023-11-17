@@ -59,7 +59,10 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
         /// <param name="translate">translation matrix to canvas coordinates</param>
         public override void Draw(Graphics g, Matrix translate)
         {
-            foreach (LineSketch sketch in Objects) sketch.Draw(g, Transform);
+            foreach (LineSketch sketch in Objects)
+            {
+                sketch.Draw(g, Transform);
+            }
         }
 
         /// <summary>

@@ -137,9 +137,11 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 var binding = bindingMap.get_Item(tempDefinition) as ElementBinding;
                 var bindCategories = binding.Categories;
                 foreach (Category category in bindCategories)
+                {
                     if (category.Name
                         == doc.Settings.Categories.get_Item(BuiltInCategory.OST_Rebar).Name)
                         return true;
+                }
             }
 
             return false;

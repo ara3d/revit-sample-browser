@@ -366,7 +366,9 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
         {
             var componentCollection = new ElementSet();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
+            {
                 componentCollection.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
+            }
 
             if (componentCollection.Size != 1) return;
 

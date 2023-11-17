@@ -264,6 +264,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
             if (!allParamValid) return false;
 
             foreach (var param in m_familyParams.Values)
+            {
                 try
                 {
                     m_manager.AddParameter(param.Name, param.Group, param.Type, param.IsInstance);
@@ -273,6 +274,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
                     MessageManager.MessageBuff.AppendLine(e.Message);
                     return false;
                 }
+            }
 
             return true;
         }
@@ -293,20 +295,22 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
             }
 
             foreach (var group in m_sharedFile.Groups)
-            foreach (ExternalDefinition def in group.Definitions)
             {
-                // check whether the parameter already exists in the document
-                var param = m_manager.get_Parameter(def.Name);
-                if (null != param) continue;
+                foreach (ExternalDefinition def in group.Definitions)
+                {
+                    // check whether the parameter already exists in the document
+                    var param = m_manager.get_Parameter(def.Name);
+                    if (null != param) continue;
 
-                try
-                {
-                    m_manager.AddParameter(def, def.GetGroupTypeId(), true);
-                }
-                catch (Exception e)
-                {
-                    MessageManager.MessageBuff.AppendLine(e.Message);
-                    return false;
+                    try
+                    {
+                        m_manager.AddParameter(def, def.GetGroupTypeId(), true);
+                    }
+                    catch (Exception e)
+                    {
+                        MessageManager.MessageBuff.AppendLine(e.Message);
+                        return false;
+                    }
                 }
             }
 

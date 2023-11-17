@@ -84,7 +84,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 return null;
 
             var nodename = element.Name.LocalName;
-            foreach (var att in element.Attributes()) nodename += " (" + att.Name.LocalName + ":" + att.Value + ")";
+            foreach (var att in element.Attributes())
+            {
+                nodename += " (" + att.Name.LocalName + ":" + att.Value + ")";
+            }
+
             //TreeNode node = new TreeNode(element.FirstAttribute.Value);
             var node = new TreeNode(nodename);
 
@@ -92,7 +96,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                 // return if it is leaf node
                 return node;
             // convert its child elements
-            foreach (var ele in element.Elements()) node.Nodes.Add(XElementToTreeNode(ele));
+            foreach (var ele in element.Elements())
+            {
+                node.Nodes.Add(XElementToTreeNode(ele));
+            }
 
             // return whole node
             return node;

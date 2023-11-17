@@ -25,7 +25,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             // from the selected elements.
             var elems = new ElementSet();
             foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+            {
                 elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             foreach (Element elem in elems)
             {
                 // Make sure it's a Corbel firstly.
@@ -77,7 +80,9 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
                 // Reinforce all the corbels in list.
                 foreach (var corbel in corbelsToReinforce)
                     // Reinforce the sloped Corbel.
+                {
                     corbel.Reinforce(reinforcementOptions);
+                }
 
                 // Submit the transaction
                 reinforceTransaction.Commit();

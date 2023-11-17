@@ -92,12 +92,14 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             Level level3 = null;
             foreach (var level in collector.Cast<Level>().Where(level =>
                          level.Name.Equals(name1) || level.Name.Equals(name2) || level.Name.Equals(name3)))
+            {
                 if (level.Name.Equals(name1))
                     level1 = level;
                 else if (level.Name.Equals(name2))
                     level2 = level;
                 else
                     level3 = level;
+            }
 
             return new Tuple<Level, Level, Level>(level1, level2, level3);
         }

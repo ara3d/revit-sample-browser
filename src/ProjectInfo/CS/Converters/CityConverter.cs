@@ -20,7 +20,10 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
         static CityConverter()
         {
             Cities = new List<City>();
-            foreach (City city in RevitStartInfo.RevitApp.Cities) Cities.Add(city);
+            foreach (City city in RevitStartInfo.RevitApp.Cities)
+            {
+                Cities.Add(city);
+            }
         }
 
         /// <summary>
@@ -90,8 +93,11 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             var text = value as string;
             if (!string.IsNullOrEmpty(text))
                 foreach (var city in Cities)
+                {
                     if (city.Name == text)
                         return city;
+                }
+
             return base.ConvertFrom(context, culture, value);
         }
 

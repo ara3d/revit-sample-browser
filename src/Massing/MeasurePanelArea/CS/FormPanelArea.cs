@@ -118,7 +118,11 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
 
             GetDividedSurfaces();
 
-            foreach (var ds in m_dividedSurfaceList) ExamineDividedSurface(ds);
+            foreach (var ds in m_dividedSurfaceList)
+            {
+                ExamineDividedSurface(ds);
+            }
+
             m_writeFile.WriteLine(m_maxCounter + " panels larger than " + m_maxValue);
             m_writeFile.WriteLine(m_minCounter + " panels smaller than " + m_minValue);
             m_writeFile.WriteLine(m_okCounter + " panels within desired range");
@@ -317,7 +321,11 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
             var returns = new List<T>();
             var collector = new FilteredElementCollector(m_uiDoc.Document);
             ICollection<Element> founds = collector.OfClass(typeof(T)).ToElements();
-            foreach (var elem in founds) returns.Add(elem as T);
+            foreach (var elem in founds)
+            {
+                returns.Add(elem as T);
+            }
+
             return returns;
         }
     }

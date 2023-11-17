@@ -43,11 +43,15 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
                 m_selectedOpeningInfo.BoundingBox.CreateLines(m_selectedOpeningInfo.Revit);
             else if (CreateAllRadioButton.Checked)
                 foreach (var openingInfo in m_openingInfos)
+                {
                     openingInfo.BoundingBox.CreateLines(m_selectedOpeningInfo.Revit);
+                }
             else if (CreateShaftRadioButton.Checked)
                 foreach (var openingInfo in m_openingInfos)
+                {
                     if (openingInfo.IsShaft)
                         openingInfo.BoundingBox.CreateLines(m_selectedOpeningInfo.Revit);
+                }
 
             Close();
         }

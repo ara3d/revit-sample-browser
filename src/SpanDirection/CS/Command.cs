@@ -33,7 +33,10 @@ namespace Ara3D.RevitSampleBrowser.SpanDirection.CS
                 // get the selected slab and show its span direction
                 var elementSet = new ElementSet();
                 foreach (var elementId in application.ActiveUIDocument.Selection.GetElementIds())
+                {
                     elementSet.Insert(application.ActiveUIDocument.Document.GetElement(elementId));
+                }
+
                 var elemIter = elementSet.ForwardIterator();
                 elemIter.Reset();
                 while (elemIter.MoveNext())

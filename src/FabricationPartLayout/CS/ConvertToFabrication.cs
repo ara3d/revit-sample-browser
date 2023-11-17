@@ -29,7 +29,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 {
                     // DesignToFabrication needs an ISet<ElementId>
                     ISet<ElementId> selIds = new HashSet<ElementId>();
-                    foreach (var id in collection) selIds.Add(id);
+                    foreach (var id in collection)
+                    {
+                        selIds.Add(id);
+                    }
 
                     // Set the in-line element type identiers to be swapped during the conversion replacing the family with a similar fabrication part
                     IDictionary<ElementId, ElementId> convertInLineIds = new Dictionary<ElementId, ElementId>();
@@ -44,11 +47,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     // The found family symbol
                     FamilySymbol fsDamper = null;
                     foreach (FamilySymbol family in families)
+                    {
                         if (family.FamilyName == fsName)
                         {
                             fsDamper = family;
                             break;
                         }
+                    }
 
                     // If the damper was found try to find the matching fabrication part type
                     if (fsDamper != null)
@@ -66,11 +71,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         // The found fabrication part type
                         FabricationPartType fptDamper = null;
                         foreach (FabricationPartType partType in fabPartTypes)
+                        {
                             if (partType.FamilyName == fptName)
                             {
                                 fptDamper = partType;
                                 break;
                             }
+                        }
 
                         // The damper was found create the mapping in between the family symbol and the matching fabrication part type
                         if (fptDamper != null)

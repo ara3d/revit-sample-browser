@@ -214,6 +214,7 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
             IList<RevitProduct> installedRevitList = RevitProductUtility.GetAllInstalledRevitProducts();
 
             foreach (var revit in installedRevitList)
+            {
                 if (revit.Version.ToString().Contains(applictaion.VersionNumber))
                 {
                     var allUsersAddInFolder = revit.AllUsersAddInFolder;
@@ -226,6 +227,7 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
 
                     break;
                 }
+            }
 
             return addinFileFolderLocation;
         }

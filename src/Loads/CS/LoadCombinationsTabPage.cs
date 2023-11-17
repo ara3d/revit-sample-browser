@@ -174,7 +174,11 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         /// </summary>
         private void usageCheckAllButton_Click(object sender, EventArgs e)
         {
-            foreach (var map in m_dataBuffer.UsageMap) map.Set = true;
+            foreach (var map in m_dataBuffer.UsageMap)
+            {
+                map.Set = true;
+            }
+
             // Disable the CheckAll button, enable CheckNone button and refresh.
             usageCheckAllButton.Enabled = false;
             usageCheckNoneButton.Enabled = true;
@@ -186,7 +190,10 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         /// </summary>
         private void usageCheckNoneButton_Click(object sender, EventArgs e)
         {
-            foreach (var map in m_dataBuffer.UsageMap) map.Set = false;
+            foreach (var map in m_dataBuffer.UsageMap)
+            {
+                map.Set = false;
+            }
 
             // Disable the CheckNone button, enable CheckAll button and refresh.
             usageCheckAllButton.Enabled = true;
@@ -209,11 +216,13 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                 var isEqual = false;
                 usageString.Append(i);
                 foreach (var s in m_dataBuffer.LoadUsageNames)
+                {
                     if (s == usageString.ToString())
                     {
                         isEqual = true;
                         break;
                     }
+                }
 
                 if (isEqual)
                 {
@@ -287,8 +296,10 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
                 var oldName = usageDataGridView.CurrentCell.FormattedValue as string;
                 if (newName != oldName)
                     foreach (var usageMap in m_dataBuffer.UsageMap)
+                    {
                         if (usageMap.Name == newName)
                             e.Cancel = true;
+                    }
             }
         }
 
@@ -307,11 +318,13 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             //  Check if it has been used
             var name = combinationNameTextBox.Text;
             foreach (var s in m_dataBuffer.LoadCombinationNames)
+            {
                 if (s == name)
                 {
                     TaskDialog.Show("Revit", "Combination name has been used by another combination.");
                     return;
                 }
+            }
 
             // get the data and begin to create.
             var typeIndex = combinationTypeComboBox.SelectedIndex;
@@ -487,8 +500,10 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             {
                 var checkedCount = 0;
                 foreach (var map in m_dataBuffer.UsageMap)
+                {
                     if (map.Set)
                         checkedCount++;
+                }
 
                 if (checkedCount <= 0)
                 {

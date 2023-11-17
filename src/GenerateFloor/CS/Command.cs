@@ -56,7 +56,10 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
         public static void CreateFloor(Data data, Document doc)
         {
             var loop = new CurveLoop();
-            foreach (Curve curve in data.Profile) loop.Append(curve);
+            foreach (Curve curve in data.Profile)
+            {
+                loop.Append(curve);
+            }
 
             var floorLoops = new List<CurveLoop> { loop };
 

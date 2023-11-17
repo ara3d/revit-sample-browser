@@ -26,7 +26,10 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         /// <param name="graphic"></param>
         public override void Draw(Graphics graphic)
         {
-            foreach (var line in Lines) DrawCircle(graphic, ForeGroundPen, line[0], line[1]);
+            foreach (var line in Lines)
+            {
+                DrawCircle(graphic, ForeGroundPen, line[0], line[1]);
+            }
         }
 
         /// <summary>

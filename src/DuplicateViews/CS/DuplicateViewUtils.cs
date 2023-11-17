@@ -249,8 +249,10 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
         {
             foreach (var failure in failuresAccessor.GetFailureMessages())
                 // Delete any "Can't paste duplicate types.  Only non duplicate types will be pasted." warnings
+            {
                 if (failure.GetFailureDefinitionId() == BuiltInFailures.CopyPasteFailures.CannotCopyDuplicates)
                     failuresAccessor.DeleteWarning(failure);
+            }
 
             // Handle any other errors interactively
             return FailureProcessingResult.Continue;

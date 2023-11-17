@@ -55,7 +55,10 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             var xroot = new XElement(XName.Get("RoutingPreferenceAnalysisSizeQuery"));
             xroot.Add(GetHeaderInformation());
 
-            foreach (var partId in GetPreferredFittingsAndSegments()) xroot.Add(partId.GetXml(m_document));
+            foreach (var partId in GetPreferredFittingsAndSegments())
+            {
+                xroot.Add(partId.GetXml(m_document));
+            }
 
             xReportDoc.Add(xroot);
             return xReportDoc;
@@ -75,7 +78,10 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                 var segmentRule = routingPreferenceManager.GetRule(RoutingPreferenceRuleGroupType.Segments, index);
 
                 var segment = document.GetElement(segmentRule.MEPPartId) as Segment;
-                foreach (var size in segment.GetSizes()) sizes.Add(size.NominalDiameter);
+                foreach (var size in segment.GetSizes())
+                {
+                    sizes.Add(size.NominalDiameter);
+                }
             }
 
             var sizesSorted = sizes.ToList();
@@ -97,6 +103,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             //None-range-warnings         
             foreach (var groupType in Enum.GetValues(typeof(RoutingPreferenceRuleGroupType))
                          .Cast<RoutingPreferenceRuleGroupType>())
+            {
                 if (IsRuleSetToRangeNone(m_routingPreferenceManager, groupType, 0))
                 {
                     var xNoRangeSet = new XElement(XName.Get("NoRangeSet"));
@@ -108,6 +115,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                         xNoRangeSet.Add(new XAttribute(XName.Get("rule"), "firstRule"));
                     xWarnings.Add(xNoRangeSet);
                 }
+            }
 
             //tee/tap warnings
 

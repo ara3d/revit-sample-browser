@@ -61,7 +61,10 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 
             // list the boundary conditions Id values to the combobox
             ICollection bCIdValues = m_dataBuffer.BCs.Keys;
-            foreach (ElementId bCIdValue in bCIdValues) bCComboBox.Items.Add(bCIdValue);
+            foreach (ElementId bCIdValue in bCIdValues)
+            {
+                bCComboBox.Items.Add(bCIdValue);
+            }
 
             bCComboBox.SelectedIndex = 0;
         }

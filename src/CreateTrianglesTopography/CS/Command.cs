@@ -27,7 +27,10 @@ namespace Ara3D.RevitSampleBrowser.CreateTrianglesTopography.CS
                     // Creates a new topography surface element from facets and adds it to the document.
                     var triangleFacets = new List<PolymeshFacet>();
                     foreach (var facet in trianglesData.Facets)
+                    {
                         triangleFacets.Add(new PolymeshFacet(facet[0], facet[1], facet[2]));
+                    }
+
                     var topoSurface = TopographySurface.Create(document, trianglesData.Points, triangleFacets);
                     var name = topoSurface.get_Parameter(BuiltInParameter.ROOM_NAME);
                     name?.Set("CreateTrianglesTopography");

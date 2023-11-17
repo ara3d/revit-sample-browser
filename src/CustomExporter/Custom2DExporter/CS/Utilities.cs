@@ -77,8 +77,10 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             var elementIds = viewElems.ToElementIds();
             ICollection<ElementId> hideElemIds = new List<ElementId>();
             foreach (var id in elementIds)
+            {
                 if (view.Document.GetElement(id).CanBeHidden(view))
                     hideElemIds.Add(id);
+            }
 
             view.HideElements(hideElemIds);
         }

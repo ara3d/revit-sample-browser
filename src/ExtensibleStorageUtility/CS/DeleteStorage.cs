@@ -31,7 +31,10 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
                 var schemas = Schema.ListSchemas();
                 foreach (var schema in schemas)
                     //Note-this will delete storage of this schema in *all* open documents.
+                {
                     document.EraseSchemaAndAllEntities(schema);
+                }
+
                 tErase.Commit();
                 message = "All storage was deleted.";
             }

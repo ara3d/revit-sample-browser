@@ -191,7 +191,10 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         private void openingPictureBox_Paint(object sender, PaintEventArgs e)
         {
             //Draw the pictures in the m_tools list
-            foreach (var tool in m_tools) tool.Draw(e.Graphics);
+            foreach (var tool in m_tools)
+            {
+                tool.Draw(e.Graphics);
+            }
 
             //draw the tips string
             e.Graphics.DrawString(m_tool.ToolType.ToString(),

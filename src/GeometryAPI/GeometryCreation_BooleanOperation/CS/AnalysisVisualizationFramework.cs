@@ -61,8 +61,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
                 var viewFamilyTypes = new FilteredElementCollector(m_doc).OfClass(typeof(ViewFamilyType)).ToElements();
                 var view3DId = ElementId.InvalidElementId;
                 foreach (var e in viewFamilyTypes)
+                {
                     if (e.Name == "3D View")
                         view3DId = e.Id;
+                }
 
                 //view = m_doc.Create.NewView3D(new XYZ(1, 1, 1));
                 view = View3D.CreateIsometric(m_doc, view3DId);

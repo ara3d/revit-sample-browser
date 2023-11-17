@@ -65,6 +65,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             //initialize the listbox
             locationListBox.Items.Clear();
             foreach (var itemName in m_data.LocationNames)
+            {
                 if (itemName == m_data.LocationName)
                 {
                     m_currentName = itemName + " (current)"; //indicate the current project location
@@ -74,6 +75,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                 {
                     locationListBox.Items.Add(itemName);
                 }
+            }
 
             //set the selected item to current location
             for (var i = 0; i < locationListBox.Items.Count; i++)

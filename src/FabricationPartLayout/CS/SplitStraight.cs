@@ -34,8 +34,10 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 // get the 2 end connectors
                 var connectors = new List<Connector>();
                 foreach (Connector c in part.ConnectorManager.Connectors)
+                {
                     if (c.ConnectorType == ConnectorType.End)
                         connectors.Add(c);
+                }
 
                 if (connectors.Count != 2)
                 {

@@ -42,15 +42,15 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             m_rvtApp = data.Application.Application;
             m_detector = new Detector(m_rvtDoc);
 
-            var collector = new FilteredElementCollector(m_rvtDoc);
-            var pipingSystemTypes = collector.OfClass(typeof(PipingSystemType)).ToElements();
-            foreach (PipingSystemType pipingSystemType in pipingSystemTypes)
+            foreach (var pipingSystemType in m_rvtDoc.GetFilteredElements<PipingSystemType>())
+            {
                 if (pipingSystemType.SystemClassification == MEPSystemClassification.SupplyHydronic ||
                     pipingSystemType.SystemClassification == MEPSystemClassification.ReturnHydronic)
                 {
                     m_pipingSystemType = pipingSystemType;
                     break;
                 }
+            }
         }
 
         /// <summary>
@@ -61,7 +61,10 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             var pipes = new List<Element>();
             var collector = new FilteredElementCollector(m_rvtDoc);
             pipes.AddRange(collector.OfClass(typeof(Pipe)).ToElements());
-            foreach (var pipe in pipes) Resolve(pipe as Pipe);
+            foreach (var pipe in pipes)
+            {
+                Resolve(pipe as Pipe);
+            }
         }
 
         /// <summary>
@@ -126,7 +129,10 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             }
 
             // Resolve the obstructions one by one.
-            foreach (var sec in sections) Resolve(pipe, sec);
+            foreach (var sec in sections)
+            {
+                Resolve(pipe, sec);
+            }
 
             // Connect the neighbor sections with pipe and elbow fittings.
             //
@@ -436,8 +442,11 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         {
             var conns = pipe.ConnectorManager.Connectors;
             foreach (Connector conn in conns)
+            {
                 if (conn.Origin.IsAlmostEqualTo(conXyz))
                     return conn;
+            }
+
             return null;
         }
 
@@ -453,9 +462,12 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             var connItself = FindConnector(pipe, conXyz);
             var connSet = connItself.AllRefs;
             foreach (Connector conn in connSet)
+            {
                 if (conn.Owner.Id != pipe.Id &&
                     conn.ConnectorType == ConnectorType.End)
                     return conn;
+            }
+
             return null;
         }
     }

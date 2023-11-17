@@ -116,11 +116,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.DWGFamilyCreation.CS
             var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
             views.AddRange(collector.OfClass(typeof(View)).ToElements());
             foreach (View v in views)
+            {
                 if (!v.IsTemplate && v.ViewType == ViewType.FloorPlan && v.Name == "Ref. Level")
                 {
                     view = v;
                     break;
                 }
+            }
 
             return view;
         }

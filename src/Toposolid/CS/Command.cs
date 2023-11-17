@@ -114,6 +114,7 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
                     var ge = gInstance.GetSymbolGeometry();
                     var glist = ge.ToList();
                     foreach (var obj in glist)
+                    {
                         switch (obj)
                         {
                             case PolyLine polyLine:
@@ -124,6 +125,7 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
                                 ptList.Add(line.GetEndPoint(1));
                                 break;
                         }
+                    }
                 }
             }
 

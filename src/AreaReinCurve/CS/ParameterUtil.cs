@@ -42,8 +42,10 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             Parameter findPara = null;
 
             foreach (Parameter para in paras)
+            {
                 if (para.Definition.Name == name)
                     findPara = para;
+            }
 
             return findPara;
         }

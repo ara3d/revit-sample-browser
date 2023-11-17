@@ -138,7 +138,10 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         /// <param name="wallsToCheck">The list of walls to check.</param>
         private void CheckWallsForEmbeddedColumns(List<Wall> wallsToCheck)
         {
-            foreach (var wall in wallsToCheck) CheckWallForEmbeddedColumns(wall);
+            foreach (var wall in wallsToCheck)
+            {
+                CheckWallForEmbeddedColumns(wall);
+            }
         }
 
         /// <summary>
@@ -280,6 +283,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         {
             foreach (var reference in references)
                 // Exclude items too far from the start point.
+            {
                 if (reference.Proximity < proximity)
                 {
                     var referenceElement = wall.Document.GetElement(reference.GetReference());
@@ -310,6 +314,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
                         }
                     }
                 }
+            }
         }
 
         /// <summary>
@@ -379,11 +384,13 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
             var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
             foreach (View3D v in collector.OfClass(typeof(View3D)).ToElements())
                 // skip view template here because view templates are invisible in project browsers
+            {
                 if (v != null && !v.IsTemplate && v.Name == viewName)
                 {
                     m_view3D = v;
                     break;
                 }
+            }
         }
     }
 }

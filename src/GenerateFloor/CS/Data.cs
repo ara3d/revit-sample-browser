@@ -73,7 +73,11 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
             var doc = commandData.Application.ActiveUIDocument;
             m_document = doc.Document;
             var es = new ElementSet();
-            foreach (var elementId in doc.Selection.GetElementIds()) es.Insert(doc.Document.GetElement(elementId));
+            foreach (var elementId in doc.Selection.GetElementIds())
+            {
+                es.Insert(doc.Document.GetElement(elementId));
+            }
+
             var walls = WallFilter(es);
             m_creApp = commandData.Application.Application.Create;
             Profile = m_creApp.NewCurveArray();

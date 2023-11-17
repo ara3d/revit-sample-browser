@@ -39,7 +39,10 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
                 // Select at least a wall.
                 var selectedElements = new ElementSet();
                 foreach (var elementId in m_document.Selection.GetElementIds())
+                {
                     selectedElements.Insert(m_document.Document.GetElement(elementId));
+                }
+
                 if (selectedElements.IsEmpty)
                 {
                     TaskDialog.Show("Error", "Please select one wall at least.");

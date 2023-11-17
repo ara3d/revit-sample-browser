@@ -113,9 +113,13 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             if (!(obj is BcTypeAttribute temp)) return false;
 
             foreach (var t1 in temp.BcType)
-            foreach (var t2 in BcType)
-                if (t1 == t2)
-                    return true;
+            {
+                foreach (var t2 in BcType)
+                {
+                    if (t1 == t2)
+                        return true;
+                }
+            }
 
             return false;
         }

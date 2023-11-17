@@ -29,7 +29,9 @@ namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
             var selElements = new ElementSet();
 
             foreach (var elementId in uiDoc.Selection.GetElementIds())
+            {
                 selElements.Insert(uiDoc.Document.GetElement(elementId));
+            }
 
             var walls = CollectExteriorWalls();
             foreach (var wall in walls)
@@ -46,7 +48,11 @@ namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
 
             // Select all walls which had the proper direction.
             var elemIdList = new List<ElementId>();
-            foreach (Element element in selElements) elemIdList.Add(element.Id);
+            foreach (Element element in selElements)
+            {
+                elemIdList.Add(element.Id);
+            }
+
             uiDoc.Selection.SetElementIds(elemIdList);
         }
 

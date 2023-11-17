@@ -63,8 +63,10 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
             var updater = new SpatialFieldUpdater(container, uiApp.ActiveAddInId);
             if (!UpdaterRegistry.IsUpdaterRegistered(updater.GetUpdaterId()))
                 UpdaterRegistry.RegisterUpdater(updater, doc);
-            IList<ElementId> idCollection = new List<ElementId>();
-            idCollection.Add(element.Id);
+            IList<ElementId> idCollection = new List<ElementId>
+            {
+                element.Id
+            };
             UpdaterRegistry.RemoveAllTriggers(_sUpdaterId);
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), doc, idCollection, Element.GetChangeTypeGeometry());
 
@@ -321,8 +323,10 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.MultithreadedC
                         foreach (var rData in m_results)
                         {
                             m_uvPts.Add(new UV(rData.Uv.U, rData.Uv.V));
-                            IList<double> doubleList = new List<double>();
-                            doubleList.Add(rData.Value);
+                            IList<double> doubleList = new List<double>
+                            {
+                                rData.Value
+                            };
                             m_valList.Add(new ValueAtPoint(doubleList));
                         }
 

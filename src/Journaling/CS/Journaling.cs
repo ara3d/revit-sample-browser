@@ -134,11 +134,13 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
                 // Get the wall type from the journal
                 GetSpecialData(dataMap, "Wall Type Name"); // get wall type name
             foreach (var type in m_wallTypeList) // get the wall type by the name
+            {
                 if (dataValue == type.Name)
                 {
                     m_createType = type;
                     break;
                 }
+            }
 
             if (null == m_createType) // assert the wall type is exist
                 throw new InvalidDataException("Can't find the wall type from the journal.");

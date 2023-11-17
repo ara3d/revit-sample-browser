@@ -325,7 +325,10 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             //
             // Find all child nodes and analyze them recursively
             AppendChildren(elementNode);
-            foreach (var node in elementNode.ChildNodes) Traverse(node);
+            foreach (var node in elementNode.ChildNodes)
+            {
+                Traverse(node);
+            }
         }
 
         /// <summary>

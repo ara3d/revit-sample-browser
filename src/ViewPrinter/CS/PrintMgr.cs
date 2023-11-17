@@ -38,7 +38,10 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
                     printers.CopyTo(printerNames, 0);
 
                     var names = new List<string>();
-                    foreach (var name in printerNames) names.Add(name);
+                    foreach (var name in printerNames)
+                    {
+                        names.Add(name);
+                    }
 
                     return 0 == names.Count ? null : names;
                 }
@@ -271,7 +274,10 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
                 // Note: SnagIt is an exception
             }
 
-            foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
+            foreach (var control in controlsToEnableOrNot)
+            {
+                control.Enabled = enableOrNot;
+            }
 
             return enableOrNot;
         }
@@ -286,7 +292,10 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
                               || (m_printMgr.IsVirtual == VirtualPrinterType.None
                                   && m_printMgr.PrintToFile);
 
-            foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
+            foreach (var control in controlsToEnableOrNot)
+            {
+                control.Enabled = enableOrNot;
+            }
 
             return enableOrNot;
         }
@@ -337,7 +346,10 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             // Enable terms (or):
             // 1. Print range is select.
             var enableOrNot = m_printMgr.PrintRange == PrintRange.Select;
-            foreach (var control in controlsToEnableOrNot) control.Enabled = enableOrNot;
+            foreach (var control in controlsToEnableOrNot)
+            {
+                control.Enabled = enableOrNot;
+            }
 
             return enableOrNot;
         }

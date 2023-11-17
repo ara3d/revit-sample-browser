@@ -179,6 +179,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             // get one of the mullion types
             var mullTypes = Document.MullionTypes;
             foreach (MullionType type in mullTypes)
+            {
                 if (null != type)
                 {
                     var bip = BuiltInParameter.ALL_MODEL_FAMILY_NAME;
@@ -189,6 +190,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                         if (name.StartsWith("circular mullion")) GridGeometry.MullionType = type;
                     }
                 }
+            }
         }
 
         protected List<T> GetElements<T>() where T : Element
@@ -196,7 +198,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var returns = new List<T>();
             var collector = new FilteredElementCollector(Document);
             ICollection<Element> founds = collector.OfClass(typeof(T)).ToElements();
-            foreach (var elem in founds) returns.Add(elem as T);
+            foreach (var elem in founds)
+            {
+                returns.Add(elem as T);
+            }
+
             return returns;
         }
 
@@ -211,8 +217,11 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         {
             var returns = new List<T>();
             foreach (View curView in views)
+            {
                 if (null != curView && !curView.IsTemplate)
                     returns.Add(curView as T);
+            }
+
             return returns;
         }
     }

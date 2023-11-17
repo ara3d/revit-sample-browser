@@ -88,7 +88,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             {
                 var elementSet = new ElementSet();
                 foreach (var elementId in doc.Selection.GetElementIds())
+                {
                     elementSet.Insert(doc.Document.GetElement(elementId));
+                }
+
                 if (elementSet.IsEmpty)
                     returnCode = DoorSwingData.UpdateDoorsInfo(doc.Document, false, true, ref message);
                 else
@@ -130,7 +133,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             {
                 var elementSet = new ElementSet();
                 foreach (var elementId in doc.Selection.GetElementIds())
+                {
                     elementSet.Insert(doc.Document.GetElement(elementId));
+                }
+
                 if (elementSet.IsEmpty)
                     DoorSwingData.UpdateDoorsGeometry(doc.Document, false);
                 else

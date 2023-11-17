@@ -39,26 +39,28 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                         foreach (CurveArray curveArray in sketch.Profile)
                             // Iterate through the Curves forming the Analytical Panel and 
                             // create new ones with a slight offset from the original ones before deleting them
-                        foreach (Curve curve in curveArray)
                         {
-                            var line = curve as Line;
-                            if (line != null)
+                            foreach (Curve curve in curveArray)
                             {
-                                // Create new offseted Start and End points from the original line coordinates
-                                var offset = 5.0;
-                                var newLineStart = new XYZ(line.GetEndPoint(0).X + offset,
-                                    line.GetEndPoint(0).Y + offset, 0);
-                                var newLineEnd = new XYZ(line.GetEndPoint(1).X + offset, line.GetEndPoint(1).Y + offset,
-                                    0);
+                                var line = curve as Line;
+                                if (line != null)
+                                {
+                                    // Create new offseted Start and End points from the original line coordinates
+                                    var offset = 5.0;
+                                    var newLineStart = new XYZ(line.GetEndPoint(0).X + offset,
+                                        line.GetEndPoint(0).Y + offset, 0);
+                                    var newLineEnd = new XYZ(line.GetEndPoint(1).X + offset, line.GetEndPoint(1).Y + offset,
+                                        0);
 
-                                // Define the new line with offseted coordinates
-                                Curve offsetedLine = Line.CreateBound(newLineStart, newLineEnd);
+                                    // Define the new line with offseted coordinates
+                                    Curve offsetedLine = Line.CreateBound(newLineStart, newLineEnd);
 
-                                // Remove the old line
-                                document.Delete(line.Reference.ElementId);
+                                    // Remove the old line
+                                    document.Delete(line.Reference.ElementId);
 
-                                // Create the new line
-                                document.Create.NewModelCurve(offsetedLine, sketch.SketchPlane);
+                                    // Create the new line
+                                    document.Create.NewModelCurve(offsetedLine, sketch.SketchPlane);
+                                }
                             }
                         }
 

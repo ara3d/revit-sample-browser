@@ -129,7 +129,11 @@ namespace Ara3D.RevitSampleBrowser.DisplacementElementAnimation.CS
             using (var t = new Transaction(doc, "Start animation"))
             {
                 t.Start();
-                foreach (var idGroups in idGroupsInOrder) BuildDisplacementElementGroup(doc, idGroups, view);
+                foreach (var idGroups in idGroupsInOrder)
+                {
+                    BuildDisplacementElementGroup(doc, idGroups, view);
+                }
+
                 if (m_displacementElements.Count == 0)
                 {
                     t.RollBack();

@@ -166,7 +166,9 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 views.Add(ActiveDocument.ActiveView.Id);
             else
                 foreach (View view in SelectViewsData.SelectedViews)
+                {
                     views.Add(view.Id);
+                }
 
             //parameter : DWGExportOptions dwgExportOptions
             var dgnExportOptions = new DGNExportOptions();

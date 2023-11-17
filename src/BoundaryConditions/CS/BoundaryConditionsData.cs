@@ -126,7 +126,10 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                 let bC = elem as Autodesk.Revit.DB.Structure.BoundaryConditions
                 where bC != null && HostElement.Id == bC.HostElementId
                 select bC;
-            foreach (var bC in boundaryConditions) BCs.Add(bC.Id, bC);
+            foreach (var bC in boundaryConditions)
+            {
+                BCs.Add(bC.Id, bC);
+            }
         }
 
         private AnalyticalElement GetAnalyticalElement(Element element)

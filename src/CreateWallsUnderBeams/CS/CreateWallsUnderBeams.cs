@@ -64,7 +64,10 @@ namespace Ara3D.RevitSampleBrowser.CreateWallsUnderBeams.CS
             // Find the selection of beams in Revit
             var selection = new ElementSet();
             foreach (var elementId in project.Selection.GetElementIds())
+            {
                 selection.Insert(project.Document.GetElement(elementId));
+            }
+
             foreach (Element e in selection)
             {
                 if (e is FamilyInstance m)

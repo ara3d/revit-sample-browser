@@ -109,8 +109,12 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
                     {
                         var edgeArrarr = face.EdgeLoops;
                         foreach (EdgeArray edgeArr in edgeArrarr)
-                        foreach (Edge edge in edgeArr)
-                            edges.Append(edge);
+                        {
+                            foreach (Edge edge in edgeArr)
+                            {
+                                edges.Append(edge);
+                            }
+                        }
                     }
                 }
             }
@@ -209,7 +213,10 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
             foreach (Edge edge in m_edges)
             {
                 var edgexyzs = edge.Tessellate() as List<XYZ>;
-                foreach (var xyz in edgexyzs) points.Add(xyz);
+                foreach (var xyz in edgexyzs)
+                {
+                    points.Add(xyz);
+                }
             }
 
             //get the max and min point on the face

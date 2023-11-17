@@ -255,6 +255,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
             var collector = new FilteredElementCollector(view.Document);
             ICollection<Element> allStyles = collector.OfClass(typeof(AnalysisDisplayStyle)).ToElements();
             foreach (var elem in allStyles)
+            {
                 if (elem.Name == styleName)
                     using (var trans = new Transaction(view.Document))
                     {
@@ -263,6 +264,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
                         trans.Commit();
                         return;
                     }
+            }
 
             // we do not have out style yet - let's create it
 

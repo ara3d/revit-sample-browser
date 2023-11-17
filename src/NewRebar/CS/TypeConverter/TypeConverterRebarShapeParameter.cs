@@ -105,8 +105,11 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.TypeConverter
             if (value is string)
                 foreach (var param in
                          RebarShapeParameters)
+                {
                     if (param.Name.Equals(value))
                         return param;
+                }
+
             throw new Exception("Can't be converted from other types except from string.");
         }
 

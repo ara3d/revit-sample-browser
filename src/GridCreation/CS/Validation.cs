@@ -213,6 +213,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
             var labelToBeValidated = labelCtrl.Text;
             foreach (string label in allLabels)
+            {
                 if (label == labelToBeValidated)
                 {
                     ShowWarningMessage(ResManager.GetString("LabelExisted"),
@@ -220,6 +221,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                     labelCtrl.Focus();
                     return false;
                 }
+            }
 
             return true;
         }

@@ -238,27 +238,35 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             storageElementEntityWrite.Set(fieldGuid0, new Guid("D8301329-F207-43B8-8AA1-634FD344F350"));
 
             //Note that we must pass an IDictionary<>, not a Dictionary<> to Set().
-            IDictionary<string, string> myMap0 = new Dictionary<string, string>();
-            myMap0.Add("mykeystr", "myvalstr");
+            IDictionary<string, string> myMap0 = new Dictionary<string, string>
+            {
+                { "mykeystr", "myvalstr" }
+            };
             storageElementEntityWrite.Set(fieldMap0, myMap0);
 
             //Note that we must pass an IList<>, not a List<> to Set().
-            IList<bool> myBoolArrayList0 = new List<bool>();
-            myBoolArrayList0.Add(true);
-            myBoolArrayList0.Add(false);
+            IList<bool> myBoolArrayList0 = new List<bool>
+            {
+                true,
+                false
+            };
             storageElementEntityWrite.Set(fieldArray0, myBoolArrayList0);
             storageElementEntityWrite.Set(fieldEntity0, subEnt0);
 
             //Create a map of Entities
-            IDictionary<int, Entity> myMap1 = new Dictionary<int, Entity>();
-            myMap1.Add(5, subEnt1);
+            IDictionary<int, Entity> myMap1 = new Dictionary<int, Entity>
+            {
+                { 5, subEnt1 }
+            };
             //Set the map of Entities.
             storageElementEntityWrite.Set(fieldMap1, myMap1);
 
             //Create a list of entities
-            IList<Entity> myEntArrayList1 = new List<Entity>();
-            myEntArrayList1.Add(subEnt2);
-            myEntArrayList1.Add(subEnt2);
+            IList<Entity> myEntArrayList1 = new List<Entity>
+            {
+                subEnt2,
+                subEnt2
+            };
             //Set the list of entities.
             storageElementEntityWrite.Set(fieldArray1, myEntArrayList1);
         }

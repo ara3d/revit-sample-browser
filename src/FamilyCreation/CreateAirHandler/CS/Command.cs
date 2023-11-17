@@ -206,8 +206,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.CreateAirHandler.CS
                 var geoSolid = geoObject as Solid;
                 if (null == geoSolid) continue;
                 foreach (Face geoFace in geoSolid.Faces)
+                {
                     if (geoFace is PlanarFace face)
                         planarFaces.Add(face);
+                }
             }
 
             return planarFaces;

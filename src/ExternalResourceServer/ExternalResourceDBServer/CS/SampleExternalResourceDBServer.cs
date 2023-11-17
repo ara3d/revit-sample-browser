@@ -253,12 +253,14 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                 same = false;
             else
                 foreach (var key in referenceInformation1.Keys)
+                {
                     if (!referenceInformation2.ContainsKey(key) ||
                         referenceInformation1[key] != referenceInformation2[key])
                     {
                         same = false;
                         break;
                     }
+                }
 
             return same;
         }
@@ -514,9 +516,14 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             {
                 var dir = new DirectoryInfo(path);
                 var subDirs = dir.GetDirectories();
-                foreach (var subDir in subDirs) browserData.AddSubFolder(subDir.Name);
+                foreach (var subDir in subDirs)
+                {
+                    browserData.AddSubFolder(subDir.Name);
+                }
+
                 var subFiles = dir.GetFiles(filterPattern, SearchOption.TopDirectoryOnly);
                 foreach (var file in subFiles)
+                {
                     if (resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable)
                     {
                         browserData.AddResource(file.Name, GetFileVersion(file.FullName));
@@ -531,6 +538,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                         };
                         browserData.AddResource(file.Name, GetFileVersion(file.FullName), refMap);
                     }
+                }
             }
             else
             {

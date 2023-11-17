@@ -34,11 +34,19 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             InitializeComponent();
 
             // set the face name list and the default value
-            foreach (var name in creator.FaceNameList) comboBoxFace.Items.Add(name);
+            foreach (var name in creator.FaceNameList)
+            {
+                comboBoxFace.Items.Add(name);
+            }
+
             if (comboBoxFace.Items.Count > 0) SetFaceIndex(0);
 
             // set the family name list and the default value
-            foreach (var symbolName in m_creator.FamilySymbolNameList) comboBoxFamily.Items.Add(symbolName);
+            foreach (var symbolName in m_creator.FamilySymbolNameList)
+            {
+                comboBoxFamily.Items.Add(symbolName);
+            }
+
             if (m_creator.DefaultFamilySymbolIndex < 0)
                 comboBoxFamily.SelectedItem = m_creator.FamilySymbolNameList[0];
             else
@@ -174,6 +182,7 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
                         : 0;
 
                 foreach (var s in senderComboBox.Items) //Loop through list items and check size of each items.
+                {
                     if (s != null)
                     {
                         var newWidth = (int)g.MeasureString(s.ToString().Trim(), font).Width
@@ -181,6 +190,7 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
                         if (width < newWidth)
                             width = newWidth; //set the width of the drop down list to the width of the largest item.
                     }
+                }
 
                 senderComboBox.DropDownWidth = width;
             }

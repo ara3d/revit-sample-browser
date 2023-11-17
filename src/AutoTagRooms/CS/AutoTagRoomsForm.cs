@@ -81,7 +81,10 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
 
             // Create the columns of the roomsListView
             roomsListView.Columns.Add("Room Name");
-            foreach (var type in m_roomsData.RoomTagTypes) roomsListView.Columns.Add(type.Name);
+            foreach (var type in m_roomsData.RoomTagTypes)
+            {
+                roomsListView.Columns.Add(type.Name);
+            }
 
             roomsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             roomsListView.FullRowSelect = true;

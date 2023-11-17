@@ -61,7 +61,10 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
 
             var elementSet = new ElementSet();
             foreach (var elementId in m_revitDoc.Selection.GetElementIds())
+            {
                 elementSet.Insert(m_revitDoc.Document.GetElement(elementId));
+            }
+
             var itor = elementSet.ForwardIterator();
             while (itor.MoveNext())
             {
@@ -76,12 +79,17 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             var elements = collector.OfClass(typeof(Family)).ToElements();
 
             foreach (Family family in elements)
+            {
                 if (family != null && family.GetFamilySymbolIds() != null)
                 {
                     var ffs = new List<FamilySymbol>();
                     foreach (var elementId in family.GetFamilySymbolIds())
+                    {
                         ffs.Add((FamilySymbol)commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                    }
+
                     foreach (var tagSymbol in ffs)
+                    {
                         try
                         {
                             if (tagSymbol != null)
@@ -103,7 +111,9 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
                         catch (Exception)
                         {
                         }
+                    }
                 }
+            }
         }
 
         /// <summary>

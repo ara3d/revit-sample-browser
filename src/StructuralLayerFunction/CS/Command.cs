@@ -42,7 +42,9 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
             var choices = project.Selection;
             var collection = new ElementSet();
             foreach (var elementId in choices.GetElementIds())
+            {
                 collection.Insert(project.Document.GetElement(elementId));
+            }
 
             // Only allow to select one floor, or else report the failure
             if (1 != collection.Size)
@@ -65,10 +67,12 @@ namespace Ara3D.RevitSampleBrowser.StructuralLayerFunction.CS
             foreach (var e in m_slab.FloorType.GetCompoundStructure().GetLayers())
                 // With the selected floor, judge if the function of each of its structural layers
                 // is exist, if it's not exist, there should be zero.
+            {
                 if (0 == e.Function)
                     Functions.Add("No function");
                 else
                     Functions.Add(e.Function.ToString());
+            }
 
             // Display them in a form
             var displayForm = new StructuralLayerFunctionForm(this);

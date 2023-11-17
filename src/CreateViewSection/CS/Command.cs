@@ -111,7 +111,10 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             // First get the selection, and make sure only one element in it.
             var collection = new ElementSet();
             foreach (var elementId in m_project.Selection.GetElementIds())
+            {
                 collection.Insert(m_project.Document.GetElement(elementId));
+            }
+
             if (1 != collection.Size)
             {
                 m_errorInformation =
@@ -120,7 +123,10 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             }
 
             // Get the selected element.
-            foreach (Element e in collection) m_currentComponent = e;
+            foreach (Element e in collection)
+            {
+                m_currentComponent = e;
+            }
 
             switch (m_currentComponent)
             {
@@ -329,7 +335,10 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 
             var curves = m_project.Document.Application.Create.NewCurveArray();
             IList<Curve> curveList = model.GetOuterContour().ToList();
-            foreach (var curve in curveList) curves.Append(curve);
+            foreach (var curve in curveList)
+            {
+                curves.Append(curve);
+            }
 
             if (null == curves || curves.IsEmpty)
             {

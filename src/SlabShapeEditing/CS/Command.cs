@@ -37,7 +37,10 @@ namespace Ara3D.RevitSampleBrowser.SlabShapeEditing.CS
         {
             var eleSet = new ElementSet();
             foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+            {
                 eleSet.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             if (eleSet.Size != 1) return null;
 
             var iter = eleSet.GetEnumerator();

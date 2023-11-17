@@ -37,7 +37,10 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
 
             var schedules = CreateSchedules(uiDocument);
 
-            foreach (var schedule in schedules) AddScheduleToNewSheet(uiDocument.Document, schedule);
+            foreach (var schedule in schedules)
+            {
+                AddScheduleToNewSheet(uiDocument.Document, schedule);
+            }
 
             tGroup.Assimilate();
         }
@@ -116,6 +119,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
             //Iterate all the schedulable field gotten from the walls view schedule.
             foreach (var schedulableField in schedule.Definition.GetSchedulableFields())
                 //Judge if the FieldType is ScheduleFieldType.Instance.
+            {
                 if (schedulableField.FieldType == ScheduleFieldType.Instance)
                 {
                     //Get ParameterId of SchedulableField.
@@ -165,6 +169,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
                         schedule.Definition.AddSortGroupField(sortGroupField);
                     }
                 }
+            }
 
             t.Commit();
 
@@ -181,8 +186,11 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
         private bool ShouldSkip(ElementId parameterId)
         {
             foreach (var bip in SSkipParameters)
+            {
                 if (new ElementId(bip) == parameterId)
                     return true;
+            }
+
             return false;
         }
     }

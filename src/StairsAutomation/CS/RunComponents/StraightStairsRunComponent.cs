@@ -175,8 +175,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 
             // Walk the footprint boundary, and look for a curve whose projection of the target point is equal to the point.
             foreach (var boundaryCurve in boundary)
+            {
                 if (boundaryCurve.Project(pathPoint).XYZPoint.IsAlmostEqualTo(pathPoint))
                     return boundaryCurve;
+            }
 
             throw new Exception("Unable to find an intersecting boundary curve in the run.");
         }

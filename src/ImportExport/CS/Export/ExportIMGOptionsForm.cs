@@ -183,7 +183,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             {
                 var views = m_exportData.SelectViewsData.SelectedViews;
                 var viewIds = new List<ElementId>();
-                foreach (View view in views) viewIds.Add(view.Id);
+                foreach (View view in views)
+                {
+                    viewIds.Add(view.Id);
+                }
+
                 m_exportOptions.SetViewsAndSheets(viewIds);
             }
 

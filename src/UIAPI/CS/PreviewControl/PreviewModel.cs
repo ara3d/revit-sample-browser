@@ -181,11 +181,13 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
                     }
 
                     foreach (DbDocumentItem dbItem in _cbDocuments.Items)
+                    {
                         if (dbItem.Name.ToLower().CompareTo(documentName.ToLower()) == 0)
                         {
                             _cbDocuments.SelectedItem = dbItem;
                             break;
                         }
+                    }
                 }
             }
             else

@@ -53,7 +53,10 @@ namespace Ara3D.RevitSampleBrowser.ReadonlySharedParameters.CS
 
             var categorySet = new CategorySet();
 
-            foreach (var bic in m_categories) categorySet.Insert(categories.get_Item(bic));
+            foreach (var bic in m_categories)
+            {
+                categorySet.Insert(categories.get_Item(bic));
+            }
 
             return categorySet;
         }

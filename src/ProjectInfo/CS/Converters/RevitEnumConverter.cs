@@ -60,8 +60,11 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             var enumValue = value;
             var valueText = value.ToString();
             foreach (var pair in m_map)
+            {
                 if (pair.Value == valueText)
                     enumValue = pair.Key.ToString();
+            }
+
             return base.ConvertFrom(context, culture, enumValue);
         }
 

@@ -201,9 +201,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
             // output array
             foreach (Element ele in array)
+            {
                 if (ele is Wall)
                     joinedwallsNode.Add(new XElement("JoinedWall",
                         new XAttribute("Name", ele.Name)));
+            }
 
             return joinedwallsNode;
         }

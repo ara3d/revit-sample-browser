@@ -330,7 +330,10 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             var collector1 = new FilteredElementCollector(doc);
             var a1 = collector1.OfClass(typeof(Level)).ToElements();
 
-            foreach (Level lev in a1) Levels.Add(lev.Elevation, lev);
+            foreach (Level lev in a1)
+            {
+                Levels.Add(lev.Elevation, lev);
+            }
 
             a1.Clear();
 

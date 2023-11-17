@@ -34,7 +34,10 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
                 // Verify the number of selected elements
                 var selElements = new ElementSet();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
+                {
                     selElements.Insert(activeDoc.Document.GetElement(elementId));
+                }
+
                 if (selElements.Size != 1)
                 {
                     message = "Please select ONLY one element from current project.";
@@ -166,11 +169,13 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
             {
                 var countOfElements = 0;
                 foreach (var sys in systems)
+                {
                     if (sys.Elements.Size > countOfElements)
                     {
                         system = sys;
                         countOfElements = sys.Elements.Size;
                     }
+                }
             }
 
             return system;

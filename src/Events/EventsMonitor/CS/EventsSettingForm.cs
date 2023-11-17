@@ -46,7 +46,11 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
         {
             // clear lists.
             m_appSelection.Clear();
-            foreach (var item in AppEventsCheckedList.CheckedItems) m_appSelection.Add(item.ToString());
+            foreach (var item in AppEventsCheckedList.CheckedItems)
+            {
+                m_appSelection.Add(item.ToString());
+            }
+
             DialogResult = DialogResult.OK;
             Hide();
         }

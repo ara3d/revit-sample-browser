@@ -202,7 +202,10 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
         /// </summary>
         private void CalculateNetMaterialQuantities()
         {
-            foreach (var e in ElementsToProcess) CalculateMaterialQuantitiesOfElement(e);
+            foreach (var e in ElementsToProcess)
+            {
+                CalculateMaterialQuantitiesOfElement(e);
+            }
         }
 
         /// <summary>
@@ -217,7 +220,11 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
             t.Start();
             DeleteAllCuttingElements();
             Doc.Regenerate();
-            foreach (var e in ElementsToProcess) CalculateMaterialQuantitiesOfElement(e);
+            foreach (var e in ElementsToProcess)
+            {
+                CalculateMaterialQuantitiesOfElement(e);
+            }
+
             t.RollBack();
         }
 
@@ -244,6 +251,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
             foreach (var e in cuttingElementsList)
                 // Doors in curtain grid systems cannot be deleted.  This doesn't actually affect the calculations because
                 // material quantities are not extracted for curtain systems.
+            {
                 if (e.Category != null)
                 {
                     if (e.Category.BuiltInCategory == BuiltInCategory.OST_Doors)
@@ -264,6 +272,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
                             string.Format("   The tool was unable to delete the {0} named {2} (id {1})",
                                 e.GetType().Name, e.Id, e.Name));
                 }
+            }
         }
 
         /// <summary>
@@ -363,7 +372,10 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
                 writer.WriteLine(
                     "WARNING: Calculations for gross volume and area may not be completely accurate due to the following warnings: ");
                 foreach (var s in m_warningsForGrossQuantityCalculations)
+                {
                     writer.WriteLine(s);
+                }
+
                 writer.WriteLine();
             }
 

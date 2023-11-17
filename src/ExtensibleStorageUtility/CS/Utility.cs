@@ -44,7 +44,11 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
                 return "No schemas or storage.";
             }
 
-            foreach (var schema in schemas) sBuilder.Append(GetElementsWithSchema(doc, schema));
+            foreach (var schema in schemas)
+            {
+                sBuilder.Append(GetElementsWithSchema(doc, schema));
+            }
+
             return sBuilder.ToString();
         }
 
@@ -61,7 +65,10 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
                 sBuilder.AppendLine("No elements.");
             else
                 foreach (var id in elementsofSchema)
+                {
                     sBuilder.AppendLine(PrintElementInfo(id, doc));
+                }
+
             return sBuilder.ToString();
         }
 

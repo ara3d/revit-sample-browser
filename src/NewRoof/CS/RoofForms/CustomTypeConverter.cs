@@ -28,7 +28,10 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         public static void SetStandardValues(ReadOnlyCollection<Level> levels)
         {
             Levels.Clear();
-            foreach (var level in levels) Levels.Add(level.Id.ToString(), level);
+            foreach (var level in levels)
+            {
+                Levels.Add(level.Id.ToString(), level);
+            }
         }
 
         /// <summary>

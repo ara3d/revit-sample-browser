@@ -1141,12 +1141,14 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 // at the skipped segments in the grid line won't be painted to the canvas
                 foreach (var segLine2D in line2D.Segments)
                     // skip the removed segments, won't draw them
+                {
                     if (segLine2D.Removed)
                         continue;
                     else if (segLine2D.Isolated)
                         graphics.DrawLine(isolatedPen, segLine2D.StartPoint, segLine2D.EndPoint);
                     else
                         graphics.DrawLine(pen, segLine2D.StartPoint, segLine2D.EndPoint);
+                }
             }
         }
 
@@ -1172,12 +1174,14 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 // at the skipped segments in the grid line won't be painted to the canvas
                 foreach (var segLine2D in line2D.Segments)
                     // skip the removed segments, won't draw them
+                {
                     if (segLine2D.Removed)
                         continue;
                     else if (segLine2D.Isolated)
                         graphics.DrawLine(isolatedPen, segLine2D.StartPoint, segLine2D.EndPoint);
                     else
                         graphics.DrawLine(pen, segLine2D.StartPoint, segLine2D.EndPoint);
+                }
             }
         }
 
@@ -1192,7 +1196,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         /// </param>
         private void DrawBoundLines(Graphics graphics, Pen pen)
         {
-            foreach (var line2D in BoundLines2D) graphics.DrawLine(pen, line2D.StartPoint, line2D.EndPoint);
+            foreach (var line2D in BoundLines2D)
+            {
+                graphics.DrawLine(pen, line2D.StartPoint, line2D.EndPoint);
+            }
         }
 
         /// <summary>
@@ -1259,8 +1266,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
             foreach (var path in paths)
                 // the point is in the outline of the path, so the isOverlapped is true
+            {
                 if (path.IsOutlineVisible(point, pen))
                     return true;
+            }
 
             // no overlap found, so return false
             return false;
@@ -1269,11 +1278,13 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         private void UpdateIsolate()
         {
             foreach (var line2D in UGridLines2D)
-            foreach (var seg in line2D.Segments)
             {
-                var startPoint = seg.StartPoint;
-                // if we get all the U line's start points, we can cover all the conjoints
-                IsPointIsolate(startPoint);
+                foreach (var seg in line2D.Segments)
+                {
+                    var startPoint = seg.StartPoint;
+                    // if we get all the U line's start points, we can cover all the conjoints
+                    IsPointIsolate(startPoint);
+                }
             }
         }
 

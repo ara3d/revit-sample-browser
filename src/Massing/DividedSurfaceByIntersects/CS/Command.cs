@@ -42,18 +42,25 @@ namespace Ara3D.RevitSampleBrowser.Massing.DividedSurfaceByIntersects.CS
             {
                 // step 1: divide the surface with reference planes and levels
                 foreach (var id in planes)
+                {
                     if (ds.CanBeIntersectionElement(id))
                         ds.AddIntersectionElement(id);
+                }
 
                 // step 2: remove all the reference planes and level intersection elements
                 IEnumerable<ElementId> intersects = ds.GetAllIntersectionElements();
 
-                foreach (var id in intersects) ds.RemoveIntersectionElement(id);
+                foreach (var id in intersects)
+                {
+                    ds.RemoveIntersectionElement(id);
+                }
 
                 // step 3: divide the surface with model lines instead
                 foreach (var id in lines)
+                {
                     if (ds.CanBeIntersectionElement(id))
                         ds.AddIntersectionElement(id);
+                }
             }
             catch (Exception)
             {

@@ -33,7 +33,10 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
                 double tempElevation = 0;
                 var mesh = f.Triangulate();
 
-                foreach (var xyz in mesh.Vertices) tempElevation += xyz.Z;
+                foreach (var xyz in mesh.Vertices)
+                {
+                    tempElevation += xyz.Z;
+                }
 
                 tempElevation /= mesh.Vertices.Count;
 
@@ -109,9 +112,13 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
         private static bool IsVerticalFace(Face face)
         {
             foreach (EdgeArray ea in face.EdgeLoops)
-            foreach (Edge e in ea)
-                if (IsVerticalEdge(e))
-                    return true;
+            {
+                foreach (Edge e in ea)
+                {
+                    if (IsVerticalEdge(e))
+                        return true;
+                }
+            }
 
             return false;
         }

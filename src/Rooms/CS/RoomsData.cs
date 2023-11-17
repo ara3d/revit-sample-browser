@@ -121,7 +121,10 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
 
             // to avoid revit display the warning message,
             // change the rooms' name to a temp name 
-            foreach (var tmpRoom in m_rooms) tmpRoom.Number += "XXX";
+            foreach (var tmpRoom in m_rooms)
+            {
+                tmpRoom.Number += "XXX";
+            }
 
             // set the tag number of rooms in order
             for (var i = 1; i <= m_rooms.Count; i++) m_rooms[i - 1].Number = i.ToString();
@@ -217,8 +220,10 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
             allData += "Department" + "," + "Rooms Amount" + "," + "Total Area" + "\r\n";
 
             foreach (var tmp in m_departmentInfos)
+            {
                 allData += tmp.DepartmentName + "," + tmp.RoomsAmount +
                            "," + tmp.DepartmentAreaValue + " SF\r\n";
+            }
 
             // save the information into a Excel file
             if (0 < allData.Length)
@@ -284,8 +289,10 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
 
                 // search the id for list RoomWithoutTag
                 foreach (var tmpRoom in m_rooms)
+                {
                     if (idValue == tmpRoom.Id)
                         m_roomsWithoutTag.Remove(tmpRoom);
+                }
             }
         }
 

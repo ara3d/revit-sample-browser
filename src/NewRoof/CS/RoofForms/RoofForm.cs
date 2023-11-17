@@ -50,10 +50,14 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         private void RoofForm_Load(object sender, EventArgs e)
         {
             foreach (FootPrintRoof roof in m_roofsManager.FootPrintRoofs)
+            {
                 footPrintRoofsListView.Items.Add(new RoofItem(roof));
+            }
 
             foreach (ExtrusionRoof roof in m_roofsManager.ExtrusionRoofs)
+            {
                 extrusionRoofsListView.Items.Add(new RoofItem(roof));
+            }
 
             levelsComboBox.DataSource = m_roofsManager.Levels;
             levelsComboBox.DisplayMember = "Name";

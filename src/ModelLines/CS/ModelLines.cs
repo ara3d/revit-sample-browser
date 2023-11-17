@@ -304,9 +304,14 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
 
             // Offset the create model lines in order to differentiate the existing model lines
             foreach (ModelCurve m in
-                     modelCurves) ElementTransformUtils.MoveElement(m.Document, m.Id, offsetPoint); // move the lines
+                     modelCurves)
+            {
+                ElementTransformUtils.MoveElement(m.Document, m.Id, offsetPoint); // move the lines
+            }
+
             // Add the created model lines into corresponding array
             foreach (ModelCurve m in modelCurves)
+            {
                 switch (m.GetType().Name)
                 {
                     case "ModelEllipse": // If the line is Ellipse
@@ -319,6 +324,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
                         m_nurbArray.Append(m); // Add to NurbSpline
                         break;
                 }
+            }
 
             // Finally refresh information map.
             RefreshInformationMap();
@@ -401,6 +407,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
         {
             // Search the model line types in the map, and refresh the number of each type
             foreach (var info in m_informationMap)
+            {
                 switch (info.TypeName)
                 {
                     case "ModelArc": // if the type is ModelAre
@@ -419,6 +426,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
                         info.Number = m_nurbArray.Size; // refresh the number of NurbSpline
                         break;
                 }
+            }
         }
 
         /// <summary>

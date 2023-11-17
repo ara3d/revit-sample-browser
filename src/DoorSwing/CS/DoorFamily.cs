@@ -59,7 +59,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                     // get current opening value.  
                     var fss = new List<FamilySymbol>();
                     foreach (var elementId in m_family.GetFamilySymbolIds())
+                    {
                         fss.Add((FamilySymbol)m_app.ActiveUIDocument.Document.GetElement(elementId));
+                    }
+
                     var doorSymbol = fss[0];
                     paramValue = doorSymbol.ParametersMap.get_Item("BasalOpening").AsString();
 
@@ -91,14 +94,19 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             // get current Left/Right feature's value of this door family.
             var ffs = new List<FamilySymbol>();
             foreach (var elementId in m_family.GetFamilySymbolIds())
+            {
                 ffs.Add((FamilySymbol)m_app.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             foreach (var doorSymbol in ffs)
                 // update the the related family shared parameter's value if user already added it.
+            {
                 if (doorSymbol.ParametersMap.Contains("BasalOpening"))
                 {
                     var basalOpeningParam = doorSymbol.ParametersMap.get_Item("BasalOpening");
                     basalOpeningParam.Set(m_basalOpeningValue);
                 }
+            }
         }
 
         /// <summary>
@@ -132,7 +140,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             // door symbol.
             var ffs = new List<FamilySymbol>();
             foreach (var elementId in m_family.GetFamilySymbolIds())
+            {
                 ffs.Add((FamilySymbol)m_app.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             var doorSymbol = ffs[0];
 
             // create the door

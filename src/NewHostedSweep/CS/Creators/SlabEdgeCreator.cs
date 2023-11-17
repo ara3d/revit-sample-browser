@@ -59,6 +59,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
                     var collector = new FilteredElementCollector(RvtDoc);
                     collector.OfClass(typeof(Floor));
                     foreach (var elem in collector.ToElements())
+                    {
                         if (elem is Floor)
                         {
                             var solid = ExtractGeom(elem);
@@ -69,6 +70,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
                                 FilterEdgesForSlabEdge(elem);
                             }
                         }
+                    }
                 }
 
                 return m_floorSlabEdges;

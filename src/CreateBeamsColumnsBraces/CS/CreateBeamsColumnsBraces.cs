@@ -129,7 +129,10 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
                     }
 
                     //place column of this level
-                    foreach (var point2D in m_matrixUv) PlaceColumn(point2D, columnSymbol, baseLevel, topLevel);
+                    foreach (var point2D in m_matrixUv)
+                    {
+                        PlaceColumn(point2D, columnSymbol, baseLevel, topLevel);
+                    }
                 }
             }
             catch

@@ -52,7 +52,9 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 
             // get all Constructions from MEPBuildingConstructionWrapper and add them to a list
             foreach (var con in mEpBuildingConstruction.GetConstructions(constructionType))
+            {
                 list.Add(new ConstructionWrapper(con));
+            }
 
             // sort the list
             list.Sort();
@@ -97,8 +99,11 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             var text = value as string;
             if (!string.IsNullOrEmpty(text))
                 foreach (ConstructionWrapper con in GetStandardValues(context))
+                {
                     if (con.Name == text)
                         return con;
+                }
+
             return base.ConvertFrom(context, culture, value);
         }
 

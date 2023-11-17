@@ -259,6 +259,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
             options.DetailLevel = ViewDetailLevel.Fine;
             var geomElem = element.get_Geometry(options);
             foreach (var geomObj in geomElem)
+            {
                 switch (geomObj)
                 {
                     case Solid obj:
@@ -272,14 +273,17 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
                     {
                         var instGeomElem = geomInst.GetInstanceGeometry();
                         foreach (var instGeomObj in instGeomElem)
+                        {
                             if (instGeomObj is Solid solid)
                             {
                                 if (solid.Faces.Size > 0 && solid.Volume > 0.0) solids.Add(solid);
                             }
+                        }
 
                         break;
                     }
                 }
+            }
 
             return solids;
         }

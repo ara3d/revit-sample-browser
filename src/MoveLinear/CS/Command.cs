@@ -24,7 +24,9 @@ namespace Ara3D.RevitSampleBrowser.MoveLinear.CS
 
                 var elemSet = new ElementSet();
                 foreach (var elementId in sel.GetElementIds())
+                {
                     elemSet.Insert(cmdData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                }
 
                 //Check whether user has selected only one element
                 if (0 == elemSet.Size)

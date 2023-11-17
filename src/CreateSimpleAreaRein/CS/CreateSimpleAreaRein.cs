@@ -70,7 +70,9 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
         {
             var elems = new ElementSet();
             foreach (var elementId in m_currentDoc.Selection.GetElementIds())
+            {
                 elems.Insert(m_currentDoc.Document.GetElement(elementId));
+            }
 
             //selected 0 or more than 1 element
             if (elems.Size != 1)
@@ -201,7 +203,11 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 
                 //create AreaReinforcement
                 IList<Curve> curveList = new List<Curve>();
-                foreach (var curve in curves) curveList.Add(curve);
+                foreach (var curve in curves)
+                {
+                    curveList.Add(curve);
+                }
+
                 var areaReinforcementTypeId =
                     AreaReinforcementType.CreateDefaultAreaReinforcementType(CommandData.Application.ActiveUIDocument
                         .Document);

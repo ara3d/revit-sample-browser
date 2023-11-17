@@ -63,6 +63,7 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
 
             //add SpotDimensions to the listview
             foreach (var tmpSpotDimension in m_data.SpotDimensions)
+            {
                 if (tmpSpotDimension.View.Name == viewName)
                 {
                     //create a list view Item
@@ -74,6 +75,7 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
                     //add the item to the listview
                     spotDimensionsListView.Items.Add(tmpItem);
                 }
+            }
         }
 
         /// <summary>

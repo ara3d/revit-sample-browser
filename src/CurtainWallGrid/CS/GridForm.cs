@@ -54,7 +54,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             // moniter the sample message change status
             m_myDocument.MessageChanged += m_myDocument_MessageChanged;
 
-            foreach (var type in m_myDocument.WallTypes) wallTypeComboBox.Items.Add(type.Name);
+            foreach (var type in m_myDocument.WallTypes)
+            {
+                wallTypeComboBox.Items.Add(type.Name);
+            }
 
             // add items to the views combo box
             foreach (var view in m_myDocument.Views)

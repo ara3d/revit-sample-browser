@@ -75,7 +75,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             m_enumFileVersion.Add(ACADVersion.R2007);
 
             var tmp = new StringBuilder();
-            foreach (var version in m_fileVersion) tmp.Append(version + "|*.sat|");
+            foreach (var version in m_fileVersion)
+            {
+                tmp.Append(version + "|*.sat|");
+            }
+
             Filter = tmp.ToString().TrimEnd('|');
             Title = "Export SAT";
         }
@@ -96,7 +100,10 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 views = SelectViewsData.SelectedViews;
 
             ICollection<ElementId> viewIds = new List<ElementId>();
-            foreach (View view in views) viewIds.Add(view.Id);
+            foreach (View view in views)
+            {
+                viewIds.Add(view.Id);
+            }
 
             //parameter : DXFExportOptions dxfExportOptions
             var satExportOptions = new SATExportOptions();

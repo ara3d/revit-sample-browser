@@ -81,7 +81,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             if (byFaceArray)
             {
                 var faceArray = new FaceArray();
-                foreach (var index in faceIndices) faceArray.Append(m_mydocument.MassFaceArray.get_Item(index));
+                foreach (var index in faceIndices)
+                {
+                    faceArray.Append(m_mydocument.MassFaceArray.get_Item(index));
+                }
 
                 Autodesk.Revit.DB.CurtainSystem curtainSystem = null;
                 var t = new Transaction(m_mydocument.Document, Guid.NewGuid().GetHashCode().ToString());
@@ -107,7 +110,9 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             {
                 var refArray = new ReferenceArray();
                 foreach (var index in faceIndices)
+                {
                     refArray.Append(m_mydocument.MassFaceArray.get_Item(index).Reference);
+                }
 
                 ICollection<ElementId> curtainSystems = null;
                 var t = new Transaction(m_mydocument.Document, Guid.NewGuid().GetHashCode().ToString());
@@ -177,8 +182,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             CurtainSystemInfos = new List<SystemInfo>();
 
             foreach (var info in infos)
+            {
                 if (null != info.CurtainForm)
                     CurtainSystemInfos.Add(info);
+            }
 
             CurtainSystemChanged?.Invoke();
         }
@@ -277,13 +284,20 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         {
             // step 1: find out the faces to be covered
             var refFaces = new List<Reference>();
-            foreach (var index in faceIndices) refFaces.Add(m_mydocument.MassFaceArray.get_Item(index).Reference);
+            foreach (var index in faceIndices)
+            {
+                refFaces.Add(m_mydocument.MassFaceArray.get_Item(index).Reference);
+            }
+
             // step 2: cover the selected faces with curtain grids
             var t = new Transaction(m_mydocument.Document, Guid.NewGuid().GetHashCode().ToString());
             t.Start();
             try
             {
-                foreach (var refFace in refFaces) CurtainForm.AddCurtainGrid(refFace);
+                foreach (var refFace in refFaces)
+                {
+                    CurtainForm.AddCurtainGrid(refFace);
+                }
             }
             catch (Exception)
             {
@@ -312,13 +326,20 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         {
             // step 1: find out the faces to be covered
             var refFaces = new List<Reference>();
-            foreach (var index in faceIndices) refFaces.Add(m_mydocument.MassFaceArray.get_Item(index).Reference);
+            foreach (var index in faceIndices)
+            {
+                refFaces.Add(m_mydocument.MassFaceArray.get_Item(index).Reference);
+            }
+
             // step 2: remove the selected curtain grids
             var t = new Transaction(m_mydocument.Document, Guid.NewGuid().GetHashCode().ToString());
             t.Start();
             try
             {
-                foreach (var refFace in refFaces) CurtainForm.RemoveCurtainGrid(refFace);
+                foreach (var refFace in refFaces)
+                {
+                    CurtainForm.RemoveCurtainGrid(refFace);
+                }
             }
             catch (Exception)
             {

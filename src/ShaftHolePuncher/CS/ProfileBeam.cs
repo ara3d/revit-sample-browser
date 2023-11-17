@@ -51,23 +51,25 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
         {
             var needPoints = new List<List<XYZ>>();
             foreach (var face in faces)
-            foreach (var edge in face)
             {
-                var edgexyzs = edge.Tessellate() as List<XYZ>;
-                if (false == m_haveOpening)
+                foreach (var edge in face)
                 {
-                    var transformedPoints = new List<XYZ>();
-                    for (var j = 0; j < edgexyzs.Count; j++)
+                    var edgexyzs = edge.Tessellate() as List<XYZ>;
+                    if (false == m_haveOpening)
                     {
-                        var xyz = edgexyzs[j];
-                        var transformedXyz = m_beamTransform.OfPoint(xyz);
-                        transformedPoints.Add(transformedXyz);
+                        var transformedPoints = new List<XYZ>();
+                        for (var j = 0; j < edgexyzs.Count; j++)
+                        {
+                            var xyz = edgexyzs[j];
+                            var transformedXyz = m_beamTransform.OfPoint(xyz);
+                            transformedPoints.Add(transformedXyz);
+                        }
+
+                        edgexyzs = transformedPoints;
                     }
 
-                    edgexyzs = transformedPoints;
+                    needPoints.Add(edgexyzs);
                 }
-
-                needPoints.Add(edgexyzs);
             }
 
             return needPoints;
@@ -196,7 +198,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                                     foreach (EdgeArray edgeArr in edgeArrarr)
                                     {
                                         var edgesList = new List<Edge>();
-                                        foreach (Edge edge in edgeArr) edgesList.Add(edge);
+                                        foreach (Edge edge in edgeArr)
+                                        {
+                                            edgesList.Add(edge);
+                                        }
+
                                         faceEdges.Add(edgesList);
                                     }
                                 }
@@ -217,7 +223,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                             foreach (EdgeArray edgeArr in edgeArrarr)
                             {
                                 var edgesList = new List<Edge>();
-                                foreach (Edge edge in edgeArr) edgesList.Add(edge);
+                                foreach (Edge edge in edgeArr)
+                                {
+                                    edgesList.Add(edge);
+                                }
+
                                 faceEdges.Add(edgesList);
                             }
                         }

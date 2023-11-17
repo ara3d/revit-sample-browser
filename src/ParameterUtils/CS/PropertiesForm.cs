@@ -49,7 +49,10 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
 
             // increase the width of columns by 40, make them a litter wider
             var span = 40;
-            foreach (ColumnHeader ch in propertyListView.Columns) ch.Width += span;
+            foreach (ColumnHeader ch in propertyListView.Columns)
+            {
+                ch.Width += span;
+            }
 
             // the last column fit the rest of the list view
             propertyListView.Columns[propertyListView.Columns.Count - 1].Width = -2;

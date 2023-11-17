@@ -48,6 +48,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
             else
             {
                 foreach (var row in messages)
+                {
                     if (row == null)
                     {
                     }
@@ -56,6 +57,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
                         WriteLog(row);
                         msgText += row + "\n";
                     }
+                }
             }
 
             msgText += "\n\nIf you want to know the validating parameters result, please get the log file at \n" +

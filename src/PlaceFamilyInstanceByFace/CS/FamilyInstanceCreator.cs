@@ -205,7 +205,10 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
             // judge whether an or more element is selected
             var es = new ElementSet();
             foreach (var elementId in RevitDoc.Selection.GetElementIds())
+            {
                 es.Insert(RevitDoc.Document.GetElement(elementId));
+            }
+
             if (1 != es.Size) return false;
 
             FaceList.Clear();
@@ -320,6 +323,7 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 
                 var ii = 0;
                 foreach (Face tempFace in faces)
+                {
                     if (tempFace is PlanarFace)
                     {
                         FaceNameList.Add(
@@ -327,6 +331,7 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
                         FaceList.Add(tempFace);
                         ii++;
                     }
+                }
             }
 
             return true;

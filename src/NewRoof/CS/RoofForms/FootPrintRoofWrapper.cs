@@ -140,7 +140,11 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         private void DrawCurve(Graphics graphics, Pen pen, Curve curve)
         {
             var poinsts = new List<PointF>();
-            foreach (var point in curve.Tessellate()) poinsts.Add(Util.Translate(point, m_boundingbox));
+            foreach (var point in curve.Tessellate())
+            {
+                poinsts.Add(Util.Translate(point, m_boundingbox));
+            }
+
             graphics.DrawCurve(pen, poinsts.ToArray());
         }
     }
@@ -171,8 +175,12 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             var curveloops = m_roof.GetProfiles();
 
             foreach (ModelCurveArray curveloop in curveloops)
-            foreach (ModelCurve curve in curveloop)
-                m_roofLines.Add(new FootPrintRoofLine(m_roof, curve));
+            {
+                foreach (ModelCurve curve in curveloop)
+                {
+                    m_roofLines.Add(new FootPrintRoofLine(m_roof, curve));
+                }
+            }
 
             FootPrintRoofLineConverter.SetStandardValues(m_roofLines);
             m_footPrintLine = m_roofLines[0];
@@ -254,10 +262,12 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         public void DrawFootPrint(Graphics graphics, Pen displayPen, Pen highlightPen)
         {
             foreach (var line in m_roofLines)
+            {
                 if (line.Id == m_footPrintLine.Id)
                     line.Draw(graphics, highlightPen);
                 else
                     line.Draw(graphics, displayPen);
+            }
         }
     }
 }

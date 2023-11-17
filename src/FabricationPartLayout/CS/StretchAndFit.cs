@@ -28,7 +28,9 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 {
                     var selIds = new List<ElementId>();
                     foreach (var id in collection)
+                    {
                         selIds.Add(id);
+                    }
 
                     if (selIds.Count != 2)
                     {
@@ -97,7 +99,9 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
             foreach (Connector conn in part.ConnectorManager.UnusedConnectors)
                 // return the first unoccupied connector
+            {
                 return conn;
+            }
 
             return null;
         }
@@ -114,7 +118,9 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
             foreach (Connector conn in part.ConnectorManager.UnusedConnectors)
                 // return the first unoccupied connector
+            {
                 return conn;
+            }
 
             return null;
         }

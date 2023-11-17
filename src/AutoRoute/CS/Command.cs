@@ -100,15 +100,14 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             Trace.AutoFlush = true;
 
             //get the system type id of the duct
-            var systemTypeFilter = new ElementClassFilter(typeof(MEPSystemType));
-            var c = new FilteredElementCollector(_document);
-            c.WherePasses(systemTypeFilter);
-            foreach (MEPSystemType type in c)
+            foreach (var type in _document.GetFilteredElements<MEPSystemType>())
+            {
                 if (type.SystemClassification == MEPSystemClassification.SupplyAir)
                 {
                     m_systemTypeId = type.Id;
                     break;
                 }
+            }
 
             var outputFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                 "AutoRoute.log");
@@ -274,19 +273,23 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 //Connect the system by creating the trunk line of ducts and connect them to the base connectors
                 SortConnectorsByX(baseConnectors);
                 foreach (var baseY in baseYValues)
+                {
                     if (ConnectSystemOnXAxis(baseConnectors, baseY))
                     {
                         LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
                         return Result.Succeeded;
                     }
+                }
 
                 SortConnectorsByY(baseConnectors);
                 foreach (var baseX in baseXValues)
+                {
                     if (ConnectSystemOnYAxis(baseConnectors, baseX))
                     {
                         LogUtility.WriteMechanicalSystem(m_mechanicalSystem);
                         return Result.Succeeded;
                     }
+                }
 
                 //If all the cases fail to route the system, try the trunks out of the bounding box
                 SortConnectorsByX(baseConnectors);
@@ -798,7 +801,10 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             if (connectors != null)
             {
                 cset = new ConnectorSet();
-                foreach (var ci in connectors) cset.Insert(ci.Connector);
+                foreach (var ci in connectors)
+                {
+                    cset.Insert(ci.Connector);
+                }
             }
 
             var mechanicalSystem =
@@ -944,9 +950,12 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 var result = new Connector[2];
                 var conns = connMgr.Connectors;
                 foreach (Connector conn in conns)
+                {
                     if (conn.Origin.IsAlmostEqualTo(pnt1))
                         result[0] = conn;
                     else if (conn.Origin.IsAlmostEqualTo(pnt2)) result[1] = conn;
+                }
+
                 return result;
             }
         }
@@ -1268,21 +1277,26 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 var connId = GetConnectorId(conn);
                 if (conn.ConnectorType == ConnectorType.Logical)
                     foreach (Connector logLinkConn in conn.AllRefs)
+                    {
                         connId += GetConnectorId(logLinkConn);
+                    }
+
                 if (!connectors.ContainsKey(connId)) connectors.Add(connId, new List<Connector>());
 
                 connectors[connId].Add(conn);
             }
 
             foreach (var key in connectors.Keys)
-            foreach (var conn in connectors[key])
             {
-                WriteConnector(conn);
-                Trace.WriteLine("+AllRefs");
-                Trace.Indent();
-                WriteConnectorSet(conn.AllRefs);
-                Trace.Unindent();
-                Trace.WriteLine("");
+                foreach (var conn in connectors[key])
+                {
+                    WriteConnector(conn);
+                    Trace.WriteLine("+AllRefs");
+                    Trace.Indent();
+                    WriteConnectorSet(conn.AllRefs);
+                    Trace.Unindent();
+                    Trace.WriteLine("");
+                }
             }
         }
 
@@ -1298,17 +1312,22 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                 var connId = GetConnectorId(conn);
                 if (conn.ConnectorType == ConnectorType.Logical)
                     foreach (Connector logLinkConn in conn.AllRefs)
+                    {
                         connId += GetConnectorId(logLinkConn);
+                    }
+
                 if (!connectors.ContainsKey(connId)) connectors.Add(connId, new List<Connector>());
 
                 connectors[connId].Add(conn);
             }
 
             foreach (var key in connectors.Keys)
-            foreach (var conn in connectors[key])
             {
-                WriteConnector(conn);
-                Trace.WriteLine("");
+                foreach (var conn in connectors[key])
+                {
+                    WriteConnector(conn);
+                    Trace.WriteLine("");
+                }
             }
         }
     }

@@ -33,6 +33,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
                 var doc = data.GetDocument();
                 // iterate through modified elements to find the one we want the section to follow
                 foreach (var id in data.GetModifiedElementIds())
+                {
                     if (id == m_windowId)
                     {
                         var window = doc.GetElement(m_windowId) as FamilyInstance;
@@ -40,6 +41,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
 
                         RejustSectionView(doc, window, section);
                     }
+                }
             }
             catch (Exception ex)
             {

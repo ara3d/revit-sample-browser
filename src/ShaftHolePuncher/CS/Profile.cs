@@ -148,7 +148,11 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                         foreach (EdgeArray edgeArr in edgeArrarr)
                         {
                             var edgesList = new List<Edge>();
-                            foreach (Edge edge in edgeArr) edgesList.Add(edge);
+                            foreach (Edge edge in edgeArr)
+                            {
+                                edgesList.Add(edge);
+                            }
+
                             faceEdges.Add(edgesList);
                         }
                     }

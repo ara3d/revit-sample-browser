@@ -67,7 +67,10 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
                 var matrixYSize = matrixUv.GetLength(1); //length of matrix's y range
 
                 // insert columns in an array format according to the calculated matrix
-                foreach (var point2D in matrixUv) frameElems.Add(NewColumn(point2D, baseLevel, topLevel));
+                foreach (var point2D in matrixUv)
+                {
+                    frameElems.Add(NewColumn(point2D, baseLevel, topLevel));
+                }
 
                 // insert beams between the tops of each adjacent column in the X and Y direction
                 for (var j = 0; j < matrixYSize; j++)

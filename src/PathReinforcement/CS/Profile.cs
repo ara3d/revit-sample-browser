@@ -96,6 +96,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                 while (!isDrawFinished)
                 {
                     foreach (var arr in point2d)
+                    {
                         for (var i = 0; i < arr.Count - 1; i++)
                         {
                             //get the two connection points to draw a line between them.
@@ -117,6 +118,7 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                             //draw a line between pf1 and pf2.
                             graphics.DrawLine(tmpPen, pf1, pf2);
                         }
+                    }
 
                     if (point2d == m_path2d) isDrawFinished = true;
                     point2d = m_path2d;

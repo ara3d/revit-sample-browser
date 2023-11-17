@@ -231,7 +231,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             // get the curves that make up the boundary of the profile.
             var curves = profile.Curves;
 
-            foreach (Curve curve in curves) AddCurve(curve);
+            foreach (Curve curve in curves)
+            {
+                AddCurve(curve);
+            }
         }
 
         /// <summary>
@@ -245,7 +248,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             // get the faces that belong to the solid.
             var faces = solid.Faces;
 
-            foreach (Face face in faces) AddFace(face);
+            foreach (Face face in faces)
+            {
+                AddFace(face);
+            }
         }
     }
 }

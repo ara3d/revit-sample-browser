@@ -315,7 +315,11 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
             }
 
             var pointsPreview = new List<List<XYZ>>();
-            foreach (var curve in curvesList) pointsPreview.Add(curve.Tessellate() as List<XYZ>);
+            foreach (var curve in curvesList)
+            {
+                pointsPreview.Add(curve.Tessellate() as List<XYZ>);
+            }
+
             return pointsPreview;
         }
 
@@ -332,6 +336,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
         private void DrawPoints(Graphics graphics, Pen pen, Matrix4 matrix4, List<List<XYZ>> points)
         {
             foreach (var xyzArray in points)
+            {
                 for (var i = 0; i < xyzArray.Count - 1; i++)
                 {
                     var point1 = xyzArray[i];
@@ -345,6 +350,7 @@ namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
                     graphics.DrawLine(pen, new Point((int)v1.X, (int)v1.Y),
                         new Point((int)v2.X, (int)v2.Y));
                 }
+            }
         }
 
         /// <summary>

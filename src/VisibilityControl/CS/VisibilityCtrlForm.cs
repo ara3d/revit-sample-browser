@@ -88,12 +88,18 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 
         private void checkAllButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in allCategoriesListView.Items) item.Checked = true;
+            foreach (ListViewItem item in allCategoriesListView.Items)
+            {
+                item.Checked = true;
+            }
         }
 
         private void checkNoneButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in allCategoriesListView.Items) item.Checked = false;
+            foreach (ListViewItem item in allCategoriesListView.Items)
+            {
+                item.Checked = false;
+            }
         }
     }
 }

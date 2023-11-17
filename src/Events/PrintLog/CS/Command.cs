@@ -35,8 +35,11 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
                 var printableViews = new ViewSet();
                 foreach (View view in viewElems)
                     // skip view templates because they're invalid for print
+                {
                     if (!view.IsTemplate && view.CanBePrinted)
                         printableViews.Insert(view);
+                }
+
                 // 
                 // Print to file to folder of assembly
                 var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

@@ -58,11 +58,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var levels = cl.ToElements();
                 Level levelOne = null;
                 foreach (Level level in levels)
+                {
                     if (level != null && level.Name.Equals("Level 1"))
                     {
                         levelOne = level;
                         break;
                     }
+                }
 
                 if (levelOne == null)
                     return Result.Failed;
@@ -83,9 +85,11 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var lengthInFeet = 40.0 / 12.0;
                 foreach (Connector conn in connsAhu)
                     // Revit units measured in feet, so dividing the width and height by 12
+                {
                     if (conn.Shape == ConnectorProfileType.Rectangular && conn.Width == lengthInFeet &&
                         conn.Height == lengthInFeet)
                         connAhu = conn;
+                }
 
                 if (connAhu == null)
                     return Result.Failed;
@@ -612,11 +616,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var dims = part.GetDimensions();
                 foreach (var def in dims)
+                {
                     if (def.Name.Equals(dimName))
                     {
                         value = part.GetDimensionValue(def);
                         break;
                     }
+                }
             }
 
             return value;
@@ -642,11 +648,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             var dims = part.GetDimensions();
             FabricationDimensionDefinition dim = null;
             foreach (var def in dims)
+            {
                 if (def.Name.Equals(dimName))
                 {
                     dim = def;
                     break;
                 }
+            }
 
             if (dim == null)
                 return false;

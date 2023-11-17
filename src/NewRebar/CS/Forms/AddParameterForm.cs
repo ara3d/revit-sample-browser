@@ -98,12 +98,14 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
 
             // Make sure the name is unique.
             foreach (var param in m_parameterList)
+            {
                 if (param.Name.Equals(ParamName))
                 {
                     TaskDialog.Show("Revit", "The name is already exist, please input again.");
                     paramNameTextBox.Focus();
                     return;
                 }
+            }
 
             DialogResult = DialogResult.OK;
             Close();

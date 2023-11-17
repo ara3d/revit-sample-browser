@@ -288,7 +288,11 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             // New parameter was selected, reset controls with new criteria
             var possibleCritias = RuleCriteraNames.Criterions(paramType);
             criteriaComboBox.Items.Clear();
-            foreach (var criteria in possibleCritias) criteriaComboBox.Items.Add(criteria);
+            foreach (var criteria in possibleCritias)
+            {
+                criteriaComboBox.Items.Add(criteria);
+            }
+
             // 
             // Display parameter values for current filter rule, 
             // If current selected parameter equal to current filter rule's, reset controls with rule data
@@ -452,7 +456,10 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 
                     // Update filter rules for this filter
                     IList<FilterRule> newRules = new List<FilterRule>();
-                    foreach (var ruleData in filterData.RuleData) newRules.Add(ruleData.AsFilterRule());
+                    foreach (var ruleData in filterData.RuleData)
+                    {
+                        newRules.Add(ruleData.AsFilterRule());
+                    }
 
                     var elemFilter = FiltersUtil.CreateElementFilterFromFilterRules(newRules);
                     // Set this filter's list of rules.
@@ -479,7 +486,11 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                     // conjunction ("ANDing together") of the FilterRules, and use the ElementFilter
                     // to create a ParameterFilterElement
                     IList<FilterRule> rules = new List<FilterRule>();
-                    foreach (var ruleData in myFilter.Value.RuleData) rules.Add(ruleData.AsFilterRule());
+                    foreach (var ruleData in myFilter.Value.RuleData)
+                    {
+                        rules.Add(ruleData.AsFilterRule());
+                    }
+
                     var elemFilter = FiltersUtil.CreateElementFilterFromFilterRules(rules);
 
                     // Check that the ElementFilter is valid for use by a ParameterFilterElement.
@@ -589,7 +600,9 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             categoryCheckedListBox.Items.Clear();
             var filterCatIds = ParameterFilterUtilities.GetAllFilterableCategories();
             foreach (var id in filterCatIds)
+            {
                 categoryCheckedListBox.Items.Add(EnumParseUtility<BuiltInCategory>.Parse((BuiltInCategory)id.Value));
+            }
         }
 
         /// <summary>
@@ -682,7 +695,11 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             // Initialize all supported parameters for selected categories
             ICollection<BuiltInCategory> filterCat = m_currentFilterData.FilterCategories;
             ICollection<ElementId> filterCatIds = new List<ElementId>();
-            foreach (var curCat in filterCat) filterCatIds.Add(new ElementId(curCat));
+            foreach (var curCat in filterCat)
+            {
+                filterCatIds.Add(new ElementId(curCat));
+            }
+
             var supportedParams =
                 ParameterFilterUtilities.GetFilterableParametersInCommon(m_doc, filterCatIds);
             ResetParameterCombox(supportedParams);
@@ -728,8 +745,10 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             if (m_currentFilterData == null || m_currentFilterData.RuleData.Count == 0)
                 return false;
             foreach (var rule in m_currentFilterData.RuleData)
+            {
                 if (rule.Parameter == param)
                     return true;
+            }
 
             return false;
         }
@@ -773,7 +792,10 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         {
             paramerComboBox.Items.Clear();
             foreach (var paramId in paramSet)
+            {
                 paramerComboBox.Items.Add(EnumParseUtility<BuiltInParameter>.Parse((BuiltInParameter)paramId.Value));
+            }
+
             //
             // always added one (none) 
             paramerComboBox.Items.Add(NoneParam);

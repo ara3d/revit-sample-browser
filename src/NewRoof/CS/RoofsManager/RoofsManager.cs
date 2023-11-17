@@ -179,7 +179,10 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
             {
                 var es = new ElementSet();
                 foreach (var elementId in m_selection.GetElementIds())
+                {
                     es.Insert(m_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                }
+
                 es.Clear();
                 IList<Element> selectResult;
                 try

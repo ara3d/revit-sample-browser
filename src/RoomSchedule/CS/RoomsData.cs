@@ -154,6 +154,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             // filter rooms by level
             foreach (var room in m_rooms)
                 // check whether room is located at specified level 
+            {
                 if (null == level || (m_activeDocument.GetElement(room.LevelId) != null && room.LevelId == level.Id))
                 {
                     var dataRow = newTable.NewRow();
@@ -171,6 +172,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                     // add this row
                     newTable.Rows.Add(dataRow);
                 }
+            }
 
             return newTable;
         }

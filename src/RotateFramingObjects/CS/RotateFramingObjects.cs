@@ -42,7 +42,10 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
             displayForm.StartPosition = FormStartPosition.CenterParent;
             var selection = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
+            {
                 selection.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             var isSingle = true; //selection is single object
             var isAllFamilyInstance = true; //all is not familyInstance
 
@@ -142,7 +145,10 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
             {
                 var selection = new ElementSet();
                 foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
+                {
                     selection.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
+                }
+
                 foreach (Element e in selection)
                 {
                     if (!(e is FamilyInstance familyComponent))

@@ -41,7 +41,10 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         private void addSpaceButton_Click(object sender, EventArgs e)
         {
             var set = new SpaceSet();
-            foreach (SpaceItem item in availableSpacesListView.SelectedItems) set.Insert(item.Space);
+            foreach (SpaceItem item in availableSpacesListView.SelectedItems)
+            {
+                set.Insert(item.Space);
+            }
 
             m_zone.AddSpaces(set);
 
@@ -57,7 +60,10 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         private void removeSpaceButton_Click(object sender, EventArgs e)
         {
             var set = new SpaceSet();
-            foreach (SpaceItem item in currentSpacesListView.SelectedItems) set.Insert(item.Space);
+            foreach (SpaceItem item in currentSpacesListView.SelectedItems)
+            {
+                set.Insert(item.Space);
+            }
 
             m_zone.RemoveSpaces(set);
             UpdateSpaceList();
@@ -84,11 +90,16 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 
             // AvailableSpacesListView
             foreach (var space in m_dataManager.GetSpaces())
+            {
                 if (m_zone.Spaces.Contains(space) == false)
                     availableSpacesListView.Items.Add(new SpaceItem(space));
+            }
 
             // CurrentSpacesListView
-            foreach (Space space in m_zone.Spaces) currentSpacesListView.Items.Add(new SpaceItem(space));
+            foreach (Space space in m_zone.Spaces)
+            {
+                currentSpacesListView.Items.Add(new SpaceItem(space));
+            }
 
             availableSpacesListView.Update();
             currentSpacesListView.Update();

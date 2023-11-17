@@ -55,7 +55,10 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             var points = new List<XYZ>();
             var xyZs = face.Triangulate().Vertices as List<XYZ>;
 
-            foreach (var point in xyZs) points.Add(point);
+            foreach (var point in xyZs)
+            {
+                points.Add(point);
+            }
 
             return points;
         }

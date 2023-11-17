@@ -30,28 +30,40 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
             // Initialize the combo box and list view. 
             disciplineCombox.BeginUpdate();
             foreach (var disciplineTypeId in UnitUtils.GetAllDisciplines())
+            {
                 disciplineCombox.Items.AddRange(new object[] { LabelUtils.GetLabelForDiscipline(disciplineTypeId) });
+            }
+
             disciplineCombox.SelectedItem = disciplineCombox.Items[0];
             disciplineCombox.EndUpdate();
 
             DecimalSymbolComboBox.BeginUpdate();
             foreach (DecimalSymbol ds in Enum.GetValues(typeof(
                          DecimalSymbol)))
+            {
                 DecimalSymbolComboBox.Items.AddRange(new object[] { ds });
+            }
+
             DecimalSymbolComboBox.EndUpdate();
             DecimalSymbolComboBox.SelectedItem = m_units.DecimalSymbol;
 
             DigitGroupingAmountComboBox.BeginUpdate();
             foreach (DigitGroupingAmount dga in Enum.GetValues(typeof(
                          DigitGroupingAmount)))
+            {
                 DigitGroupingAmountComboBox.Items.AddRange(new object[] { dga });
+            }
+
             DigitGroupingAmountComboBox.EndUpdate();
             DigitGroupingAmountComboBox.SelectedItem = m_units.DigitGroupingAmount;
 
             DigitGroupingSymbolComboBox.BeginUpdate();
             foreach (var enumName in Enum.GetNames(typeof(
                          DigitGroupingSymbol)))
+            {
                 DigitGroupingSymbolComboBox.Items.AddRange(new object[] { enumName });
+            }
+
             DigitGroupingSymbolComboBox.EndUpdate();
             DigitGroupingSymbolComboBox.SelectedItem =
                 Enum.GetName(typeof(DigitGroupingSymbol), m_units.DigitGroupingSymbol);
@@ -77,6 +89,7 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
             // using the static example value 1234.56789
             var count = 0;
             foreach (var specTypeId in UnitUtils.GetAllMeasurableSpecs())
+            {
                 if (LabelUtils.GetLabelForDiscipline(UnitUtils.GetDiscipline(specTypeId)) ==
                     disciplineCombox.SelectedItem.ToString())
                 {
@@ -87,6 +100,7 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
                         UnitFormatUtils.Format(m_units, specTypeId, 1234.56789, false);
                     count++;
                 }
+            }
         }
 
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

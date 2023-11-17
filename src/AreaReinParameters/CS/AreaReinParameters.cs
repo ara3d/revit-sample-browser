@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -86,40 +87,26 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
         {
             var selected = new ElementSet();
             foreach (var elementId in CommandData.Application.ActiveUIDocument.Selection.GetElementIds())
+            {
                 selected.Insert(CommandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+            }
 
             //selected is not only one AreaReinforcement
             if (selected.Size != 1) return false;
-            foreach (var o in selected) m_areaRein = o as AreaReinforcement;
-            if (null == m_areaRein) return false;
+            foreach (var o in selected)
+            {
+                m_areaRein = o as AreaReinforcement;
+            }
 
-            //make sure hook type and bar type exist in current project and get them
-            HookTypes = new Hashtable();
-            BarTypes = new Hashtable();
+            if (null == m_areaRein) return false;
 
             var activeDoc = CommandData.Application.ActiveUIDocument.Document;
 
-            var itor = new FilteredElementCollector(activeDoc).OfClass(typeof(RebarHookType)).GetElementIterator();
-            itor.Reset();
-            while (itor.MoveNext())
-            {
-                if (itor.Current is RebarHookType hookType)
-                {
-                    var hookTypeName = hookType.Name;
-                    HookTypes.Add(hookTypeName, hookType.Id);
-                }
-            }
-
-            itor = new FilteredElementCollector(activeDoc).OfClass(typeof(RebarBarType)).GetElementIterator();
-            itor.Reset();
-            while (itor.MoveNext())
-            {
-                if (itor.Current is RebarBarType barType)
-                {
-                    var barTypeName = barType.Name;
-                    BarTypes.Add(barTypeName, barType.Id);
-                }
-            }
+            HookTypes = new Hashtable(
+                activeDoc.GetFilteredElements<RebarHookType>().ToDictionary(ht => ht.Name, ht => ht.Id));
+            
+            BarTypes = new Hashtable(
+                activeDoc.GetFilteredElements<RebarBarType>().ToDictionary(bt => bt.Name, bt => bt.Id));
 
             return HookTypes.Count != 0 && BarTypes.Count != 0;
         }

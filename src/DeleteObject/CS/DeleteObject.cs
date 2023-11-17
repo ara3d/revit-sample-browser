@@ -23,7 +23,10 @@ namespace Ara3D.RevitSampleBrowser.DeleteObject.CS
             trans.Start();
             var collection = new ElementSet();
             foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
+            {
                 collection.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             // check user selection
             if (collection.Size < 1)
             {
@@ -52,7 +55,11 @@ namespace Ara3D.RevitSampleBrowser.DeleteObject.CS
             catch
             {
                 // if revit threw an exception, try to catch it
-                foreach (Element c in collection) elements.Insert(c);
+                foreach (Element c in collection)
+                {
+                    elements.Insert(c);
+                }
+
                 message = "object(s) can't be deleted.";
                 trans.RollBack();
                 return Result.Failed;

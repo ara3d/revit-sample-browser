@@ -30,7 +30,9 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                     // Get member forces of analytical member
                     var memberForces = analyticalMember.GetMemberForces();
                     foreach (var mf in memberForces)
+                    {
                         Console.WriteLine("Position: " + mf.Start + "Force: " + mf.Force + "Moment: " + mf.Moment);
+                    }
 
                     // Change some values
                     analyticalMember.SetMemberForces(true, new XYZ(10000, 5000, 0), new XYZ(0, 0, 0));

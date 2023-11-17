@@ -106,13 +106,22 @@ namespace Ara3D.RevitSampleBrowser.DocumentChanged.CS
 
             // dump the element information
             var addedElem = e.GetAddedElementIds();
-            foreach (var id in addedElem) AddChangeInfoRow(id, doc, "Added");
+            foreach (var id in addedElem)
+            {
+                AddChangeInfoRow(id, doc, "Added");
+            }
 
             var deletedElem = e.GetDeletedElementIds();
-            foreach (var id in deletedElem) AddChangeInfoRow(id, doc, "Deleted");
+            foreach (var id in deletedElem)
+            {
+                AddChangeInfoRow(id, doc, "Deleted");
+            }
 
             var modifiedElem = e.GetModifiedElementIds();
-            foreach (var id in modifiedElem) AddChangeInfoRow(id, doc, "Modified");
+            foreach (var id in modifiedElem)
+            {
+                AddChangeInfoRow(id, doc, "Modified");
+            }
         }
 
         /// <summary>

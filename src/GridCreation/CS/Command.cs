@@ -110,8 +110,12 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             var newUIdocument = new UIDocument(document);
             var elements = new ElementSet();
             foreach (var elementId in newUIdocument.Selection.GetElementIds())
+            {
                 elements.Insert(newUIdocument.Document.GetElement(elementId));
+            }
+
             foreach (Element element in elements)
+            {
                 switch (element)
                 {
                     case ModelLine _:
@@ -131,6 +135,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                         break;
                     }
                 }
+            }
 
             return selectedCurves;
         }
@@ -145,11 +150,16 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             var newUIdocument = new UIDocument(document);
             var elements = new ElementSet();
             foreach (var elementId in newUIdocument.Selection.GetElementIds())
+            {
                 elements.Insert(newUIdocument.Document.GetElement(elementId));
+            }
+
             var tmpSet = new ElementSet();
             foreach (Element element in elements)
+            {
                 if (element is ModelLine || element is ModelArc || element is DetailLine || element is DetailArc)
                     tmpSet.Insert(element);
+            }
 
             return tmpSet;
         }

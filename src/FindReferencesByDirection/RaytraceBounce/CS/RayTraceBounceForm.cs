@@ -403,7 +403,11 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
         /// </summary>
         protected void OutputInformation()
         {
-            foreach (var item in m_outputInfo) Trace.WriteLine(item);
+            foreach (var item in m_outputInfo)
+            {
+                Trace.WriteLine(item);
+            }
+
             Trace.Flush();
         }
     }

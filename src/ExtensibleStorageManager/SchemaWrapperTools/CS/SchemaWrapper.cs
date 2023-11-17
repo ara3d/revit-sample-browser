@@ -319,7 +319,11 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
             strBuilder.AppendLine("--Start Schema--  " + " Name: " + Data.Name + ", Description: " +
                                   Data.Documentation + ", Id: " + Data.SchemaId + ", ReadAccess: " + Data.ReadAccess +
                                   ", WriteAccess: " + Data.WriteAccess);
-            foreach (var fd in Data.DataList) strBuilder.AppendLine(fd.ToString());
+            foreach (var fd in Data.DataList)
+            {
+                strBuilder.AppendLine(fd.ToString());
+            }
+
             strBuilder.AppendLine("--End Schema--");
             return strBuilder.ToString();
         }
@@ -485,7 +489,10 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                         strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
                                               " {Array} " + ", Unit: " + field.GetSpecTypeId().TypeId +
                                               ", ContainerType: " + field.ContainerType);
-                        foreach (var fa in listRetval) strBuilder.AppendLine("  Array value: " + fa);
+                        foreach (var fa in listRetval)
+                        {
+                            strBuilder.AppendLine("  Array value: " + fa);
+                        }
                     }
 
                     break;
@@ -514,7 +521,10 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                         strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
                                               " {Map} " + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
                                               field.ContainerType);
-                        foreach (var fa in mapRetval.Values) strBuilder.AppendLine("  Map value: " + fa);
+                        foreach (var fa in mapRetval.Values)
+                        {
+                            strBuilder.AppendLine("  Map value: " + fa);
+                        }
                     }
 
                     break;

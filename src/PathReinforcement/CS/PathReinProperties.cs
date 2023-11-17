@@ -264,8 +264,11 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
         protected Parameter GetParameter(string name)
         {
             foreach (Parameter para in PathRein.Parameters)
+            {
                 if (para.Definition.Name.Equals(name))
                     return para;
+            }
+
             return null;
         }
 

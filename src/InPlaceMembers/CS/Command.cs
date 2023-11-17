@@ -66,7 +66,9 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
         {
             var selected = new ElementSet();
             foreach (var elementId in _commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+            {
                 selected.Insert(_commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+            }
 
             if (selected.Size != 1) return false;
 

@@ -299,7 +299,10 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
             bool mapAllStartsToAllEnds)
         {
             var allSourcePoints = new List<XYZ>();
-            foreach (var room in rooms) AppendRoomNearCornerPoints(room, allSourcePoints);
+            foreach (var room in rooms)
+            {
+                AppendRoomNearCornerPoints(room, allSourcePoints);
+            }
             //            foreach (Room room in rooms)
             //            {
             //                LocationPoint location = room.Location as LocationPoint;
@@ -321,10 +324,12 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
                 var allSourcePointsMappedToEnds = new List<XYZ>();
                 var allEndPointsMappedToEnds = new List<XYZ>();
                 foreach (var source in allSourcePoints)
-                foreach (var end in endPoints)
                 {
-                    allSourcePointsMappedToEnds.Add(source);
-                    allEndPointsMappedToEnds.Add(end);
+                    foreach (var end in endPoints)
+                    {
+                        allSourcePointsMappedToEnds.Add(source);
+                        allEndPointsMappedToEnds.Add(end);
+                    }
                 }
 
                 inputStartPoints = allSourcePointsMappedToEnds;
@@ -412,8 +417,11 @@ namespace Ara3D.RevitSampleBrowser.PathOfTravel.CS
                 var pathsOfTravel = Autodesk.Revit.DB.Analysis.PathOfTravel.CreateMapped(viewPlan, sourcePoints, endPoints, out _);
 
                 foreach (var pOt in pathsOfTravel)
+                {
                     if (pOt == null) resultsSummary.NumFailures++;
                     else resultsSummary.NumSuccesses++;
+                }
+
                 t.Commit();
             }
         }

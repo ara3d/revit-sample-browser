@@ -161,7 +161,10 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         /// </summary>
         public void ResetEdgeStates()
         {
-            foreach (var pair in m_edgeBindinDic) pair.Value.Reset();
+            foreach (var pair in m_edgeBindinDic)
+            {
+                pair.Value.Reset();
+            }
         }
 
         /// <summary>
@@ -172,7 +175,11 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         {
             if (!m_isDirty) return;
 
-            foreach (var pair in m_edgeBindinDic) pair.Value.Update(m_rotation, m_translation, m_scale);
+            foreach (var pair in m_edgeBindinDic)
+            {
+                pair.Value.Update(m_rotation, m_translation, m_scale);
+            }
+
             m_isDirty = false;
         }
 
@@ -183,7 +190,10 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
         public void Draw(Graphics g)
         {
             Update();
-            foreach (var pair in m_edgeBindinDic) pair.Value.Draw(g);
+            foreach (var pair in m_edgeBindinDic)
+            {
+                pair.Value.Draw(g);
+            }
         }
     }
 

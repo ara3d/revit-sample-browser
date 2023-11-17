@@ -244,8 +244,10 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             Parameter findParameter = null;
 
             foreach (Parameter parameter in parameters)
+            {
                 if (parameter.Definition.Name == name)
                     findParameter = parameter;
+            }
 
             return findParameter;
         }

@@ -107,9 +107,11 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             // all the Z coordinate of lines' start point and end point should be equal
             var firstPnt = lines[0].GetEndPoint(0);
             foreach (var line in lines)
+            {
                 if (!MathUtil.CompareDouble(line.GetEndPoint(0).Z, firstPnt.Z) ||
                     !MathUtil.CompareDouble(line.GetEndPoint(1).Z, firstPnt.Z))
                     return false;
+            }
 
             return true;
         }

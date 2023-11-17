@@ -45,8 +45,10 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
                 var eRefList = m_document.Selection.PickObjects(ObjectType.Element,
                     "Please pick some element to delete. ESC for Cancel.");
                 foreach (var eRef in eRefList)
+                {
                     if (eRef != null && eRef.ElementId != ElementId.InvalidElementId)
                         elemDeleteList.Add(eRef.ElementId);
+                }
 
                 // Delete elements
                 m_document.Document.Delete(elemDeleteList);

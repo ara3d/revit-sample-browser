@@ -300,7 +300,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             var selection = m_mydocument.UiDocument.Selection;
             var elementSet = new ElementSet();
             foreach (var elementId in selection.GetElementIds())
+            {
                 elementSet.Insert(m_mydocument.UiDocument.Document.GetElement(elementId));
+            }
+
             if (null == selection ||
                 null == elementSet ||
                 elementSet.IsEmpty ||

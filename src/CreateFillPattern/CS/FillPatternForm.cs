@@ -180,7 +180,11 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
             fillGrid.Angle = angle;
             fillGrid.Shift = shift;
             var segmentsList = new List<double>();
-            foreach (var d in segments) segmentsList.Add(d);
+            foreach (var d in segments)
+            {
+                segmentsList.Add(d);
+            }
+
             fillGrid.SetSegments(segmentsList);
 
             return fillGrid;
@@ -274,6 +278,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
         private void SetParameter(string paramName, ElementId eid, Element elem)
         {
             foreach (Parameter param in elem.Parameters)
+            {
                 if (param.Definition.Name == paramName)
                 {
                     var trans = new Transaction(m_doc);
@@ -282,6 +287,7 @@ namespace Ara3D.RevitSampleBrowser.CreateFillPattern.CS
                     trans.Commit();
                     break;
                 }
+            }
         }
 
         /// <summary>

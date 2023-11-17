@@ -165,6 +165,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
                     // You could also access and modify the connection parameters.
                     var fields = primarySchema.ListFields();
                     foreach (var field in fields)
+                    {
                         if (field.ValueType == typeof(string))
                         {
                             var parameters = primaryEnt.Get<IList<string>>(field);
@@ -173,6 +174,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
                                 // Do something.
                             }
                         }
+                    }
 
                     destConn.SetEntity(primaryEnt);
 

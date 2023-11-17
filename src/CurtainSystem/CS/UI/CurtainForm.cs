@@ -96,7 +96,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.UI
                 return;
             }
 
-            foreach (var info in csInfos) csListBox.Items.Add(info);
+            foreach (var info in csInfos)
+            {
+                csListBox.Items.Add(info);
+            }
 
             // activate the last one
             var csInfo = csInfos[csInfos.Count - 1];

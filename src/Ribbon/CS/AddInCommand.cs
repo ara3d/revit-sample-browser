@@ -206,8 +206,10 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         public RibbonItem GetRibbonItemByName(RibbonPanel panelRibbon, string itemName)
         {
             foreach (var item in panelRibbon.GetItems())
+            {
                 if (itemName == item.Name)
                     return item;
+            }
 
             return null;
         }
@@ -239,7 +241,11 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
             var wallSet = CreateWall.CreatedWalls;
             var trans = new Transaction(revit.Application.ActiveUIDocument.Document, "DeleteWalls");
             trans.Start();
-            foreach (Element e in wallSet) revit.Application.ActiveUIDocument.Document.Delete(e.Id);
+            foreach (Element e in wallSet)
+            {
+                revit.Application.ActiveUIDocument.Document.Delete(e.Id);
+            }
+
             CreateWall.CreatedWalls.Clear();
             trans.Commit();
             return Result.Succeeded;
@@ -341,8 +347,10 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
         public RibbonItem GetRibbonItemByName(RibbonPanel panelRibbon, string itemName)
         {
             foreach (var item in panelRibbon.GetItems())
+            {
                 if (itemName == item.Name)
                     return item;
+            }
 
             return null;
         }

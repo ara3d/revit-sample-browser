@@ -111,7 +111,11 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
         {
             var sb = new StringBuilder();
             sb.AppendLine("-ProgressBar Stack-");
-            foreach (var pi in ItemStack) sb.AppendLine(pi.ToString());
+            foreach (var pi in ItemStack)
+            {
+                sb.AppendLine(pi.ToString());
+            }
+
             return sb.ToString();
         }
 
@@ -131,7 +135,11 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
                 for (var index = 0; index != padding; ++index) itemList.Add("");
             }
 
-            foreach (var pi in ItemStack) itemList.Add(pi.ToString());
+            foreach (var pi in ItemStack)
+            {
+                itemList.Add(pi.ToString());
+            }
+
             return itemList;
         }
     }

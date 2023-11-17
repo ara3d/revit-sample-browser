@@ -35,6 +35,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
             var tracking = IssueMarkerTrackingManager.GetInstance().GetTracking(doc);
 
             foreach (var deleted in data.GetDeletedElementIds())
+            {
                 if (tracking.GetMarkerByElementId(deleted) is IssueMarker marker)
                 {
                     // This is how to delete control
@@ -43,8 +44,10 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
                     // Don't forget to clean up your own data
                     tracking.RemoveMarkerByElement(deleted);
                 }
+            }
 
             foreach (var updated in data.GetModifiedElementIds())
+            {
                 if (tracking.GetMarkerByElementId(updated) is IssueMarker marker)
                 {
                     var element = doc.GetElement(updated);
@@ -66,6 +69,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
                     // This is how to set updated data to a control
                     temporaryGraphicsManager.UpdateControl(marker.ControlIndex, marker.InCanvasControlData);
                 }
+            }
         }
     }
 }

@@ -104,7 +104,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             {
                 double tempElevation = 0;
                 var mesh = f.Triangulate();
-                foreach (var xyz in mesh.Vertices) tempElevation += xyz.Y;
+                foreach (var xyz in mesh.Vertices)
+                {
+                    tempElevation += xyz.Y;
+                }
+
                 tempElevation /= mesh.Vertices.Count;
                 if (elevation < tempElevation || null == face)
                 {
@@ -129,7 +133,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             {
                 double tempElevation = 0;
                 var mesh = f.Triangulate();
-                foreach (var xyz in mesh.Vertices) tempElevation += xyz.Y;
+                foreach (var xyz in mesh.Vertices)
+                {
+                    tempElevation += xyz.Y;
+                }
+
                 tempElevation /= mesh.Vertices.Count;
                 if (elevation > tempElevation || null == face)
                 {

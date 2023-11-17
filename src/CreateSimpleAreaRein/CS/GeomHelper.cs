@@ -41,11 +41,13 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 
             //get the face reference
             foreach (Face face in faces)
+            {
                 if (GeomUtil.IsParallel(face, locLine))
                 {
                     refer = face.Reference;
                     break;
                 }
+            }
 
             //can't find proper reference
             if (null == refer) return false;
@@ -84,11 +86,13 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             //get horizontal face reference
             var faces = GeomUtil.GetFaces(floor);
             foreach (Face face in faces)
+            {
                 if (GeomUtil.IsHorizontalFace(face))
                 {
                     refer = face.Reference;
                     break;
                 }
+            }
 
             //no proper reference
             if (null == refer) return false;

@@ -557,7 +557,10 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
                 var sampleItems = m_defaultMenus.Values[i];
                 var menuButton =
                     m_pulldownButtons.Values[m_pulldownButtons.IndexOfKey(GetDisplayNameByEnumName(category))];
-                foreach (var item in sampleItems) AddSampleToPulldownMenu(menuButton, item);
+                foreach (var item in sampleItems)
+                {
+                    AddSampleToPulldownMenu(menuButton, item);
+                }
             }
         }
 
@@ -605,7 +608,11 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
                     var pulldownButtonData = new PulldownButtonData(name, name);
                     var button = m_panelRvtSamples.AddItem(pulldownButtonData) as PulldownButton;
                     var sampleItems = m_customizedMenus.Values[m_customizedMenus.IndexOfKey(button.Name)];
-                    foreach (var item in sampleItems) AddSampleToPulldownMenu(button, item);
+                    foreach (var item in sampleItems)
+                    {
+                        AddSampleToPulldownMenu(button, item);
+                    }
+
                     break;
                 }
             }
@@ -621,7 +628,10 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
             {
                 var button = rItem as PulldownButton;
                 var sampleItems = m_customizedMenus.Values[m_customizedMenus.IndexOfKey(button.Name)];
-                foreach (var item in sampleItems) AddSampleToPulldownMenu(button, item);
+                foreach (var item in sampleItems)
+                {
+                    AddSampleToPulldownMenu(button, item);
+                }
             }
         }
     }

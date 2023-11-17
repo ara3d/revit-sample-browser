@@ -119,7 +119,11 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
                         foreach (EdgeArray edgeArr in edgeArrarr)
                         {
                             var edgesList = new List<Edge>();
-                            foreach (Edge edge in edgeArr) edgesList.Add(edge);
+                            foreach (Edge edge in edgeArr)
+                            {
+                                edgesList.Add(edge);
+                            }
+
                             faceEdges.Add(edgesList);
                         }
                     }
@@ -252,15 +256,17 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             if (xyzs.Count == 2) return faces[0];
 
             foreach (var face in faces)
-            foreach (var edge in face)
             {
-                var edgexyzs = edge.Tessellate() as List<XYZ>;
-                if (xyzs.Count == edgexyzs.Count)
+                foreach (var edge in face)
                 {
-                    var normal = GetFaceNormal(face);
-                    var cross = Vector4.CrossProduct(zAxis, normal);
-                    cross.Normalize();
-                    if (cross.Length() == 1) return face;
+                    var edgexyzs = edge.Tessellate() as List<XYZ>;
+                    if (xyzs.Count == edgexyzs.Count)
+                    {
+                        var normal = GetFaceNormal(face);
+                        var cross = Vector4.CrossProduct(zAxis, normal);
+                        cross.Normalize();
+                        if (cross.Length() == 1) return face;
+                    }
                 }
             }
 

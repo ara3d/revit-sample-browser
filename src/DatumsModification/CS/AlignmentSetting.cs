@@ -12,7 +12,10 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
         public AlignmentSetting()
         {
             InitializeComponent();
-            foreach (var name in DatumAlignment.DatumDic.Keys) datumList.Items.Add(name);
+            foreach (var name in DatumAlignment.DatumDic.Keys)
+            {
+                datumList.Items.Add(name);
+            }
         }
     }
 }

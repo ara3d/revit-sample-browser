@@ -58,11 +58,13 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             // These character are different from Path.GetInvalidFileNameChars()
             char[] invalidFileChars = { '\\', ':', '{', '}', '[', ']', '|', ';', '<', '>', '?', '\'', '~' };
             foreach (var invalidChr in invalidFileChars)
+            {
                 if (newName.Contains(invalidChr))
                 {
                     ViewFiltersForm.MyMessageBox("Filter name contains invalid character: " + invalidChr);
                     return;
                 }
+            }
 
             // 
             // Check if name is used

@@ -109,6 +109,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             // Transparent everything so we can see the flow vector.
             var rasterId = new ElementId(BuiltInCategory.OST_RasterImages);
             foreach (Category c in m_view.Document.Settings.Categories)
+            {
                 if (!m_view.GetCategoryHidden(c.Id))
                     if (c.Id != rasterId && m_view.IsCategoryOverridable(c.Id))
                     {
@@ -119,6 +120,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                             m_view.SetCategoryOverrides(c.Id, ogs.SetSurfaceTransparency(50));
                         }
                     }
+            }
         }
     }
 }

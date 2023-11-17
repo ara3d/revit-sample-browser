@@ -63,9 +63,13 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
 
                     collector = new FilteredElementCollector(RvtDoc);
                     collector.OfClass(typeof(ExtrusionRoof));
-                    foreach (var elem in collector) elements.Add(elem);
+                    foreach (var elem in collector)
+                    {
+                        elements.Add(elem);
+                    }
 
                     foreach (var elem in elements)
+                    {
                         if (elem is RoofBase)
                         {
                             var solid = ExtractGeom(elem);
@@ -76,6 +80,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Creators
                                 FilterEdgesForGutter(elem);
                             }
                         }
+                    }
                 }
 
                 return m_roofGutterEdges;

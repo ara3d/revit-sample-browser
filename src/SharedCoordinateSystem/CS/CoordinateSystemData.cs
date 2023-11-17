@@ -95,6 +95,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             var locationSet = m_application.ActiveUIDocument.Document.ProjectLocations;
             foreach (ProjectLocation projectLocation in locationSet)
+            {
                 if (projectLocation.Name == locationName ||
                     projectLocation.Name + " (current)" == locationName)
                 {
@@ -102,6 +103,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                     projectLocation.Duplicate(newLocationName);
                     break;
                 }
+            }
         }
 
         /// <summary>
@@ -114,12 +116,14 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             foreach (ProjectLocation projectLocation in locations)
                 //find the project location which is selected by user and
                 //set it to the current projecte location 
+            {
                 if (projectLocation.Name == locationName)
                 {
                     m_application.ActiveUIDocument.Document.ActiveProjectLocation = projectLocation;
                     LocationName = locationName;
                     break;
                 }
+            }
         }
 
         /// <summary>
@@ -130,6 +134,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             var locationSet = m_application.ActiveUIDocument.Document.ProjectLocations;
             foreach (ProjectLocation projectLocation in locationSet)
+            {
                 if (projectLocation.Name == locationName ||
                     projectLocation.Name + " (current)" == locationName)
                 {
@@ -142,6 +147,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                     PositionElevation = pp.Elevation; //Elevation above ground level
                     break;
                 }
+            }
 
             ChangePrecision();
         }
@@ -159,6 +165,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         {
             var locationSet = m_application.ActiveUIDocument.Document.ProjectLocations;
             foreach (ProjectLocation location in locationSet)
+            {
                 if (location.Name == locationName ||
                     location.Name + " (current)" == locationName)
                 {
@@ -173,6 +180,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                     //set the value of the project position
                     location.SetProjectPosition(origin, projectPosition);
                 }
+            }
         }
 
         /// <summary>

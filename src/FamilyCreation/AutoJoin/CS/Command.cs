@@ -34,7 +34,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
                 = new CombinableElementArray();
 
             var es = new ElementSet();
-            foreach (ElementId elemId in es) es.Insert(doc.Document.GetElement(elemId));
+            foreach (ElementId elemId in es)
+            {
+                es.Insert(doc.Document.GetElement(elemId));
+            }
+
             if (0 < es.Size)
             {
                 foreach (var elementId in doc.Selection.GetElementIds())

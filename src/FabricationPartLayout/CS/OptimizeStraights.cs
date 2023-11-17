@@ -26,7 +26,9 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 {
                     ISet<ElementId> selIds = new HashSet<ElementId>();
                     foreach (var id in collection)
+                    {
                         selIds.Add(id);
+                    }
 
                     using (var tr = new Transaction(doc, "Optimize Straights"))
                     {

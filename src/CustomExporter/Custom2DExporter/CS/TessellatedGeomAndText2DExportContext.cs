@@ -210,9 +210,11 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             var segmentStart = segment.StartPoint;
             var segmentEnd = segment.EndPoint;
 
-            IList<XYZ> list = new List<XYZ>();
-            list.Add(segmentStart);
-            list.Add(segmentEnd);
+            IList<XYZ> list = new List<XYZ>
+            {
+                segmentStart,
+                segmentEnd
+            };
             Utilities.AddTo(m_points, list);
         }
 

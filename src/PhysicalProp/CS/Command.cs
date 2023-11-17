@@ -29,7 +29,10 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
 
                 var selection = new ElementSet();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
+                {
                     selection.Insert(activeDoc.Document.GetElement(elementId));
+                }
+
                 if (selection.Size != 1)
                 {
                     message = "Please select only one element.";
@@ -39,7 +42,10 @@ namespace Ara3D.RevitSampleBrowser.PhysicalProp.CS
 
                 var es = new ElementSet();
                 foreach (var elementId in activeDoc.Selection.GetElementIds())
+                {
                     es.Insert(activeDoc.Document.GetElement(elementId));
+                }
+
                 IEnumerator iter = es.ForwardIterator();
                 iter.MoveNext();
 

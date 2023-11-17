@@ -60,7 +60,10 @@ namespace Ara3D.RevitSampleBrowser.CreateDimensions.CS
         {
             var selections = new ElementSet();
             foreach (var elementId in m_revit.Application.ActiveUIDocument.Selection.GetElementIds())
+            {
                 selections.Insert(m_revit.Application.ActiveUIDocument.Document.GetElement(elementId));
+            }
+
             //nothing was selected
             if (0 == selections.Size)
             {

@@ -114,11 +114,13 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
                 {
                     var isInclude = false;
                     foreach (var j in curveArray)
+                    {
                         if (o.Equals(j))
                         {
                             isInclude = true;
                             break;
                         }
+                    }
 
                     if (isInclude) continue;
 
@@ -193,7 +195,9 @@ namespace Ara3D.RevitSampleBrowser.CreateWallinBeamProfile.CS
             // Find the selection of beams in Revit
             var selection = new ElementSet();
             foreach (var elementId in project.Selection.GetElementIds())
+            {
                 selection.Insert(project.Document.GetElement(elementId));
+            }
 
             foreach (Element e in selection)
             {

@@ -24,7 +24,9 @@ namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
             var uiDoc = new UIDocument(Document);
             var selElements = new ElementSet();
             foreach (var elementId in uiDoc.Selection.GetElementIds())
+            {
                 selElements.Insert(uiDoc.Document.GetElement(elementId));
+            }
 
             var windows = CollectWindows();
             foreach (var window in windows)
@@ -41,7 +43,11 @@ namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
 
             // Select all windows which had the proper direction.
             var elemIdList = new List<ElementId>();
-            foreach (Element element in selElements) elemIdList.Add(element.Id);
+            foreach (Element element in selElements)
+            {
+                elemIdList.Add(element.Id);
+            }
+
             uiDoc.Selection.SetElementIds(elemIdList);
         }
 

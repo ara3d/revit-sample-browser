@@ -387,8 +387,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var vetical = profileCopy.Vertical;
             var delta = extruDir * offset;
             Curve barLine = Line.CreateBound(vetical.GetEndPoint(1) + delta, vetical.GetEndPoint(0) + delta);
-            IList<Curve> barCurves = new List<Curve>();
-            barCurves.Add(barLine);
+            IList<Curve> barCurves = new List<Curve>
+            {
+                barLine
+            };
 
             var bars = Rebar.CreateFromCurves(options.RevitDoc, RebarStyle.Standard,
                 options.TopBarType, null, null, m_corbel, extruDir, barCurves,
@@ -450,11 +452,13 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 
             RebarShape stirrupShape = null;
             foreach (var shape in filter)
+            {
                 if (shape.Name.Equals("T1"))
                 {
                     stirrupShape = shape;
                     break;
                 }
+            }
 
             var profileCopy = m_profile.Clone();
             profileCopy.OffsetTop(-m_corbelCoverDistance - 0.5 * options.StirrupBarType.BarModelDiameter);
@@ -521,8 +525,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var pt2 = profileCopy.Bottom.GetEndPoint(1) + delta;
 
             Curve barLine = Line.CreateBound(pt1, pt2);
-            IList<Curve> barCurves = new List<Curve>();
-            barCurves.Add(barLine);
+            IList<Curve> barCurves = new List<Curve>
+            {
+                barLine
+            };
 
             var bars = Rebar.CreateFromCurves(
                 options.RevitDoc, RebarStyle.Standard,

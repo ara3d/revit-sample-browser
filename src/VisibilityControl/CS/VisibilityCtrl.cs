@@ -46,11 +46,13 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
 
             // fill out the two table
             foreach (Category category in m_document.Document.Settings.Categories)
+            {
                 if (category.get_AllowsVisibilityControl(m_document.Document.ActiveView))
                 {
                     AllCategories.Add(category.Name, category.get_Visible(m_document.Document.ActiveView));
                     m_categoriesWithName.Add(category.Name, category);
                 }
+            }
         }
 
         /// <summary>
@@ -109,7 +111,10 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
             // ElementSet elements = m_document.Selection.Elements;
 
             // hide all categories elements
-            foreach (Category cat in m_document.Document.Settings.Categories) SetVisibility(false, cat.Name);
+            foreach (Category cat in m_document.Document.Settings.Categories)
+            {
+                SetVisibility(false, cat.Name);
+            }
 
             // set the visibility for the selection elements
             foreach (var reference in elements)

@@ -28,7 +28,10 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
             {
                 var elementSet = new ElementSet();
                 foreach (var elementId in revit.ActiveUIDocument.Selection.GetElementIds())
+                {
                     elementSet.Insert(revit.ActiveUIDocument.Document.GetElement(elementId));
+                }
+
                 if (elementSet.IsEmpty)
                 {
                     TaskDialog.Show("Select", "Please select one floor or slab at least.");
@@ -50,7 +53,11 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
                         return Result.Cancelled;
                     }
 
-                    foreach (var floor in floorList) DumpSlab(floor);
+                    foreach (var floor in floorList)
+                    {
+                        DumpSlab(floor);
+                    }
+
                     m_displayForm.ShowDialog();
                 }
             }
@@ -77,10 +84,12 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
 
             if (slabType != null)
                 foreach (var layer in slabType.GetCompoundStructure().GetLayers())
+                {
                     if (layer.Function == MaterialFunctionAssignment.StructuralDeck)
                         DumbDeck(layer);
                     else
                         DumpLayer(layer);
+                }
 
             m_displayForm.WriteLine(" ");
         }

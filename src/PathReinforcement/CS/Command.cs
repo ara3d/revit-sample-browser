@@ -31,7 +31,10 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                 transaction.Start();
                 var elems = new ElementSet();
                 foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+                {
                     elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                }
+
                 //if user have some wrong selection, give user an Error message
                 if (1 != elems.Size)
                 {
@@ -40,7 +43,10 @@ namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
                 }
 
                 Element selectElem = null;
-                foreach (Element e in elems) selectElem = e;
+                foreach (Element e in elems)
+                {
+                    selectElem = e;
+                }
 
                 if (!(selectElem is Autodesk.Revit.DB.Structure.PathReinforcement pathRein))
                 {

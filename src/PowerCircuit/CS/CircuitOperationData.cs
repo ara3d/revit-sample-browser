@@ -190,11 +190,13 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                 if (null == unusedConnectors || unusedConnectors.IsEmpty) return hasUnusedElectricalConnector;
 
                 foreach (Connector connector in unusedConnectors)
+                {
                     if (connector.Domain == Domain.DomainElectrical)
                     {
                         hasUnusedElectricalConnector = true;
                         break;
                     }
+                }
             }
             catch (Exception)
             {
@@ -241,8 +243,10 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 
                     // Remove systems which are not power circuits
                     foreach (var es in ess)
+                    {
                         if (es.SystemType != ElectricalSystemType.PowerCircuit)
                             ess.Remove(es);
+                    }
 
                     if (ess.Count == 0)
                     {
@@ -262,8 +266,10 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                     }
 
                     foreach (var es in m_electricalSystemSet)
+                    {
                         if (!ess.Contains(es))
                             m_electricalSystemSet.Remove(es);
+                    }
 
                     if (m_electricalSystemSet.Count == 0)
                     {
@@ -327,11 +333,13 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                     }
 
                 foreach (var es in m_electricalSystemSet)
+                {
                     if (!string.IsNullOrEmpty(es.PanelName))
                     {
                         m_hasPanel = true;
                         break;
                     }
+                }
             }
         }
 
@@ -372,9 +380,14 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             var selectionElementId = new List<ElementId>();
             var elements = new ElementSet();
             foreach (var elementId in m_selection.GetElementIds())
+            {
                 elements.Insert(m_revitDoc.Document.GetElement(elementId));
+            }
 
-            foreach (Element e in elements) selectionElementId.Add(e.Id);
+            foreach (Element e in elements)
+            {
+                selectionElementId.Add(e.Id);
+            }
 
             try
             {
@@ -458,7 +471,10 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             {
                 var es = new ElementSet();
                 foreach (var elementId in m_selection.GetElementIds())
+                {
                     es.Insert(m_revitDoc.Document.GetElement(elementId));
+                }
+
                 if (!m_selectedElectricalSystem.AddToCircuit(es)) ShowErrorMessage("FailedToAddElement");
             }
             catch (Exception)
@@ -505,7 +521,10 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                 // Remove the selected element from circuit
                 var es = new ElementSet();
                 foreach (var elementId in m_revitDoc.Selection.GetElementIds())
+                {
                     es.Insert(m_revitDoc.Document.GetElement(elementId));
+                }
+
                 m_selectedElectricalSystem.RemoveFromCircuit(es);
             }
             catch (Exception)

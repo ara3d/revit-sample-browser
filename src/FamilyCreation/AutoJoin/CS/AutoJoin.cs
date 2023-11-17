@@ -73,11 +73,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
             foreach (var aElement in elements)
             {
                 foreach (var xElement in elements)
+                {
                     if (IsOverlapped(aElement, xElement))
                     {
                         joinedElements.Append(aElement);
                         break;
                     }
+                }
 
                 if (1 == joinedElements.Size)
                     break;
@@ -87,8 +89,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
             // try to find all elements overlapped the first element.
             foreach (var aElement in elements)
+            {
                 if (IsOverlapped(aElement, joinedElements.get_Item(0)))
                     joinedElements.Append(aElement);
+            }
 
             var allCanJoin = new List<CombinableElement>();
             var isNew = false;
@@ -99,9 +103,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
                 // try to find all elements overlapped joinedElements
                 foreach (CombinableElement aElement in joinedElements)
-                foreach (var xElement in elements)
-                    if (IsOverlapped(aElement, xElement))
-                        allCanJoin.Add(xElement);
+                {
+                    foreach (var xElement in elements)
+                    {
+                        if (IsOverlapped(aElement, xElement))
+                            allCanJoin.Add(xElement);
+                    }
+                }
 
                 foreach (var aElement in allCanJoin)
                 {
@@ -123,7 +131,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
             } while (isNew); // find all elements which overlapped with joined geometry combination.
 
             // removed the joined elements from the input list.
-            foreach (CombinableElement aElement in joinedElements) elements.Remove(aElement);
+            foreach (CombinableElement aElement in joinedElements)
+            {
+                elements.Remove(aElement);
+            }
 
             return document.CombineElements(joinedElements);
         }

@@ -164,7 +164,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             Locked = gridLine2D.Locked;
             RemovedNumber = gridLine2D.RemovedNumber;
             IsUGridLine = gridLine2D.IsUGridLine;
-            foreach (var segLine in gridLine2D.Segments) Segments.Add(new SegmentLine2D(segLine));
+            foreach (var segLine in gridLine2D.Segments)
+            {
+                Segments.Add(new SegmentLine2D(segLine));
+            }
         }
         // indicate whether the grid line is locked
 

@@ -43,6 +43,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
 
             m_views = new List<View>();
             foreach (View curView in viewCollector)
+            {
                 if (!curView.IsTemplate && curView.IsViewValidForTemplateCreation())
                 {
                     m_views.Add(curView);
@@ -50,6 +51,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
                     var extendedViewName = $"{curView.ViewType}:{curView.Name}";
                     viewNameComboBox.Items.Add(extendedViewName);
                 }
+            }
         }
 
         private void InitPartVisibilityComboBox()

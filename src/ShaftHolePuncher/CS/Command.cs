@@ -29,7 +29,9 @@ namespace Ara3D.RevitSampleBrowser.ShaftHolePuncher.CS
                 FamilyInstance familyInstance = null;
                 var elems = new ElementSet();
                 foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+                {
                     elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                }
 
                 //if user had some wrong selection, give user an Error message
                 var errorMessage =

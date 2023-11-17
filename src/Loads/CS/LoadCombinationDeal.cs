@@ -74,7 +74,10 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
             // As specification require, some Load Combination Usages if they are not in document
             string[] initUsageArray = { "Gravity", "Lateral", "Steel", "Composite", "Concrete" };
-            foreach (var s in initUsageArray) NewLoadUsage(s);
+            foreach (var s in initUsageArray)
+            {
+                NewLoadUsage(s);
+            }
         }
 
         /// <summary>
@@ -93,19 +96,23 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
             // First check whether the name has been used
             foreach (var s in m_dataBuffer.LoadCombinationNames)
+            {
                 if (s == name || null == name)
                 {
                     m_dataBuffer.ErrorInformation = "the combination name has been used.";
                     return false;
                 }
+            }
 
             // Get the usage information.
             foreach (var usageMap in m_dataBuffer.UsageMap)
+            {
                 if (usageMap.Set)
                 {
                     var usage = FindUsageByName(usageMap.Name);
                     if (null != usage) usageIds.Add(usage.Id);
                 }
+            }
 
             // Get the formula information
             for (var i = 0; i < m_dataBuffer.FormulaMap.Count; i++)
@@ -146,7 +153,11 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             }
 
             // If create combination successful, reset the usage check state and clear the formula
-            foreach (var usageMap in m_dataBuffer.UsageMap) usageMap.Set = false;
+            foreach (var usageMap in m_dataBuffer.UsageMap)
+            {
+                usageMap.Set = false;
+            }
+
             m_dataBuffer.FormulaMap.Clear();
             return true;
         }
@@ -200,11 +211,13 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         {
             // First check whether the name has been used
             foreach (var s in m_dataBuffer.LoadUsageNames)
+            {
                 if (usageName == s)
                 {
                     m_dataBuffer.ErrorInformation = "the usage name has been used.";
                     return false;
                 }
+            }
 
             // Begin to new a load combination usage
             try
@@ -294,16 +307,21 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
 
             // Check whether the name has been used
             foreach (var s in m_dataBuffer.LoadUsageNames)
+            {
                 if (s == newName)
                 {
                     TaskDialog.Show("Revit", "There is a same named usage already.");
                     return false;
                 }
+            }
 
             // Begin to modify the name of the usage
             foreach (var usage in m_dataBuffer.LoadUsages)
+            {
                 if (oldName == usage.Name)
                     usage.get_Parameter(BuiltInParameter.LOAD_USAGE_NAME).Set(newName);
+            }
+
             return true;
         }
 
@@ -330,11 +348,13 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         {
             LoadUsage usage = null;
             foreach (var l in m_dataBuffer.LoadUsages)
+            {
                 if (name == l.Name)
                 {
                     usage = l;
                     break;
                 }
+            }
 
             return usage;
         }
@@ -348,11 +368,13 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
         {
             LoadCase loadCase = null;
             foreach (var l in m_dataBuffer.LoadCases)
+            {
                 if (name == l.Name)
                 {
                     loadCase = l;
                     break;
                 }
+            }
 
             return loadCase;
         }

@@ -122,7 +122,10 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                 if (failureReasons.Count != 0)
                 {
                     failureReason += "\r";
-                    foreach (string reason in failureReasons) failureReason += reason + "\r";
+                    foreach (string reason in failureReasons)
+                    {
+                        failureReason += reason + "\r";
+                    }
                 }
 
                 failureReason += "\r" + ResManager.GetString("AjustValues");

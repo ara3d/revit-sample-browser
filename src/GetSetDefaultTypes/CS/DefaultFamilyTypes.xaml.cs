@@ -125,8 +125,10 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
             };
 
             foreach (Family t in query)
+            {
                 if (!categoryids.Contains(t.FamilyCategory.BuiltInCategory))
                     categoryids.Add(t.FamilyCategory.BuiltInCategory);
+            }
 
             return categoryids;
         }

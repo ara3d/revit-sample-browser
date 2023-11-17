@@ -258,7 +258,11 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
             var returns = new List<T>();
             var collector = new FilteredElementCollector(m_doc);
             ICollection<Element> founds = collector.OfClass(typeof(T)).ToElements();
-            foreach (var elem in founds) returns.Add(elem as T);
+            foreach (var elem in founds)
+            {
+                returns.Add(elem as T);
+            }
+
             return returns;
         }
     }

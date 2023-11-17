@@ -382,13 +382,19 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
             }
 
             foreach (View floorPlan in floorPlans)
-            foreach (View ceilingPlan in ceilingPlans)
-                if (floorPlan.Name == ceilingPlan.Name)
-                    views.Insert(floorPlan);
+            {
+                foreach (View ceilingPlan in ceilingPlans)
+                {
+                    if (floorPlan.Name == ceilingPlan.Name)
+                        views.Insert(floorPlan);
+                }
+            }
 
             foreach (View engineeringPlan in engineeringPlans)
+            {
                 if (engineeringPlan.Name == engineeringPlan.GenLevel.Name)
                     views.Insert(engineeringPlan);
+            }
 
             var activeView = ActiveDoc.ActiveView;
             var viewType = activeView.ViewType;
@@ -399,16 +405,22 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
                 {
                     m_views.Insert(activeView);
                     foreach (View view in views)
+                    {
                         if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
                             m_views.Insert(view);
+                    }
+
                     break;
                 }
                 case ViewType.EngineeringPlan:
                 {
                     if (views.Contains(activeView)) m_views.Insert(activeView);
                     foreach (View view in views)
+                    {
                         if (view.GenLevel.Elevation < activeView.GenLevel.Elevation)
                             m_views.Insert(view);
+                    }
+
                     break;
                 }
                 //Get view of the lowest elevation

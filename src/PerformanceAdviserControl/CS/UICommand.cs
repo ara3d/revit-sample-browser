@@ -45,7 +45,9 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
             foreach (var r in ruleInfoList)
                 /// Add the rule data we just collected in the previous loop the the dialog box
                 /// we are about to show.
+            {
                 tdd.AddData(r.RuleName, r.IsOurRule, r.IsEnabled);
+            }
 
             tdd.ShowDialog();
 

@@ -184,6 +184,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             foreach (var temp in m_citiesInfo)
                 //compare Latitude and longitude,and if difference < Diff 
                 // the two CityInfo are equal
+            {
                 if (Math.Abs(temp.Latitude - cityInfo.Latitude) < Diff &&
                     Math.Abs(temp.Longitude - cityInfo.Longitude) < Diff)
                 {
@@ -191,6 +192,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                     timeZone = temp.TimeZone;
                     return true;
                 }
+            }
 
             return false;
         }
@@ -206,11 +208,13 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             //compare cityName with element's CityName of m_citiesInfo
             //if they are equal, that element is matched
             foreach (var temp in m_citiesInfo)
+            {
                 if (cityName == temp.CityName)
                 {
                     cityInfo = temp;
                     return true;
                 }
+            }
 
             cityInfo = new CityInfo();
             return false;
@@ -264,9 +268,11 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 
             //try to find string in list m_timeZones contains string get above
             foreach (var timeZone in TimeZones)
+            {
                 if (timeZone.Contains(temp))
                     //here, use last member of list contains that string as result.
                     timeZoneString = timeZone;
+            }
 
             return timeZoneString;
         }

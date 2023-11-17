@@ -154,6 +154,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 
             // output some typical property's name and value. (for example, Cancelable, Cancel,etc)
             foreach (var propertyInfo in propertyInfos)
+            {
                 try
                 {
                     if (!propertyInfo.CanRead) continue;
@@ -179,6 +180,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
                     // Unexpected exception
                     Trace.WriteLine("    [Property Exception]: " + propertyInfo.Name + ", " + ex.Message);
                 }
+            }
         }
 
         /// <summary>

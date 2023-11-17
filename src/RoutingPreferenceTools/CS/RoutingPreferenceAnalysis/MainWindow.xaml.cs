@@ -70,7 +70,10 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             var collector = new FilteredElementCollector(m_application.ActiveUIDocument.Document);
             collector.OfClass(typeof(PipeType));
             foreach (var pipeType in collector.ToElements().Cast<PipeType>())
+            {
                 comboBox_PipeTypes.Items.Add(pipeType.Name + ", Id: " + pipeType.Id);
+            }
+
             comboBox_PipeTypes.SelectedIndex = 0;
         }
 

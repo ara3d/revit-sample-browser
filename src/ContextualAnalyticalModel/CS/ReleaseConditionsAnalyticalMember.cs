@@ -30,6 +30,7 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                     // Get release conditions of analytical member
                     var releaseConditions = analyticalMember.GetReleaseConditions();
                     foreach (var rc in releaseConditions)
+                    {
                         Console.WriteLine("Position: " + rc.Start +
                                           "Fx: " + rc.Fx +
                                           "Fy: " + rc.Fy +
@@ -37,6 +38,7 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                                           "Mx: " + rc.Mx +
                                           "My: " + rc.My +
                                           "Mz: " + rc.Mz);
+                    }
 
                     // Get release type at start
                     analyticalMember.GetReleaseType(true);

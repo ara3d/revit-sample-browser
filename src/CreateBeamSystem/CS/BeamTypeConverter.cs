@@ -95,8 +95,11 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
                 if (!(v is FamilySymbol symbol)) return "";
 
                 foreach (var kvp in Hash)
+                {
                     if (kvp.Value.Id == symbol.Id)
                         return kvp.Key;
+                }
+
                 return "";
             }
 

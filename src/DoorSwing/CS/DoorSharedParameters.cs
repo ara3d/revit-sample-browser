@@ -152,8 +152,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
                         var categories = binding.Categories;
 
                         foreach (Category category in categories)
+                        {
                             if (category.BuiltInCategory == boundCategory)
                                 return true;
+                        }
                     }
             }
             catch (Exception)

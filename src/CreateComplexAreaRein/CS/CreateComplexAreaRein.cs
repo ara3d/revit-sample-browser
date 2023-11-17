@@ -97,7 +97,10 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
         {
             var elems = new ElementSet();
             foreach (var elementId in m_currentDoc.Selection.GetElementIds())
+            {
                 elems.Insert(m_currentDoc.Document.GetElement(elementId));
+            }
+
             //selected 0 or more than 1 element
             if (elems.Size != 1)
             {

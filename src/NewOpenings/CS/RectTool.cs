@@ -73,7 +73,10 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
         /// <param name="graphic">Graphics object,used to draw geometry </param>
         public override void Draw(Graphics graphic)
         {
-            foreach (var line in Lines) DrawRect(graphic, ForeGroundPen, line[0], line[1]);
+            foreach (var line in Lines)
+            {
+                DrawRect(graphic, ForeGroundPen, line[0], line[1]);
+            }
         }
 
         /// <summary>

@@ -38,7 +38,10 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         {
             graphics.Clear(Color.Black);
             CalculateTransform(previewWidth, previewHeigh);
-            foreach (var sketch in Objects) sketch.Draw(graphics, Transform);
+            foreach (var sketch in Objects)
+            {
+                sketch.Draw(graphics, Transform);
+            }
         }
 
         /// <summary>

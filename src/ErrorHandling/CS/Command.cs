@@ -244,11 +244,13 @@ namespace Ara3D.RevitSampleBrowser.ErrorHandling.CS
             var levels = collector.WherePasses(filter).ToElements();
 
             foreach (Level level in levels)
+            {
                 if (level.Name.Equals("Level 1"))
                 {
                     level1 = level;
                     break;
                 }
+            }
 
             return level1;
         }

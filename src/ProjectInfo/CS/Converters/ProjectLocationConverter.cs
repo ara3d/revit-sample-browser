@@ -29,7 +29,10 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
         static ProjectLocationConverter()
         {
             ProjectLocations = new List<ProjectLocation>();
-            foreach (ProjectLocation city in RevitStartInfo.RevitDoc.ProjectLocations) ProjectLocations.Add(city);
+            foreach (ProjectLocation city in RevitStartInfo.RevitDoc.ProjectLocations)
+            {
+                ProjectLocations.Add(city);
+            }
         }
 
         /// <summary>
@@ -99,8 +102,11 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             var text = value as string;
             if (!string.IsNullOrEmpty(text))
                 foreach (var projectLocation in ProjectLocations)
+                {
                     if (projectLocation.Name == text)
                         return projectLocation;
+                }
+
             return base.ConvertFrom(context, culture, value);
         }
 

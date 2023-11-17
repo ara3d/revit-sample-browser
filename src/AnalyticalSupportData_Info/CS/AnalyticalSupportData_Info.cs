@@ -32,7 +32,9 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
 
             var selectedElements = new ElementSet();
             foreach (var elementId in m_revit.Application.ActiveUIDocument.Selection.GetElementIds())
+            {
                 selectedElements.Insert(m_revit.Application.ActiveUIDocument.Document.GetElement(elementId));
+            }
 
             // get all the required information of selected elements and store them in a data table.
             ElementInformation = StoreInformationInDataTable(selectedElements);

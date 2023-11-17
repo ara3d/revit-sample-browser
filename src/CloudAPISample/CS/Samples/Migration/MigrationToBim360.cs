@@ -67,8 +67,10 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
             var classFilter = new ElementClassFilter(typeof(RevitLinkType));
             links.WherePasses(classFilter);
             foreach (var link in links)
+            {
                 if (link is RevitLinkType revitLinkType)
                     yield return revitLinkType;
+            }
         }
 
         private FolderLocation GetTargetFolderUrn(IList<MigrationRule> rules, string directory, string model)
@@ -123,7 +125,10 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
                 {
                     var doc = Application.Application.OpenDocumentFile(modelpath, ops);
                     var links = new List<string>();
-                    foreach (var linkInstance in GetLinkInstances(doc)) links.Add(linkInstance.Name);
+                    foreach (var linkInstance in GetLinkInstances(doc))
+                    {
+                        links.Add(linkInstance.Name);
+                    }
 
                     if (links.Count > 0) mapLocalModelPathToLinksName[model] = links;
                     doc.Close(false);
@@ -233,6 +238,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
                     var doc = Application.Application.OpenDocumentFile(hostModelPath, ops,
                         new DefaultOpenFromCloudCallback());
                     foreach (var linkInstance in GetLinkInstances(doc))
+                    {
                         if (mapModelsNameToGuid.TryGetValue(linkInstance.Name, out _))
                         {
                             guids = mapModelsNameToGuid[linkInstance.Name].Split(',');
@@ -241,6 +247,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
                                     Guid.Parse(guids[1]));
                             linkInstance.LoadFrom(linkModelPath, new WorksetConfiguration());
                         }
+                    }
 
                     doc.SynchronizeWithCentral(transOp, swcOptions);
                     doc.Close(false);

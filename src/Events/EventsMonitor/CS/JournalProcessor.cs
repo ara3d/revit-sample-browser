@@ -122,7 +122,11 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
         public List<string> GetEventsListFromJournalData(IDictionary<string, string> data)
         {
             var eventList = new List<string>();
-            foreach (var kvp in data) eventList.Add(kvp.Key);
+            foreach (var kvp in data)
+            {
+                eventList.Add(kvp.Key);
+            }
+
             return eventList;
         }
 
@@ -134,7 +138,10 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
         /// <param name="data"></param>
         public void DumpEventListToJournalData(List<string> eventList, ref IDictionary<string, string> data)
         {
-            foreach (var eventname in eventList) data.Add(eventname, "1");
+            foreach (var eventname in eventList)
+            {
+                data.Add(eventname, "1");
+            }
         }
     }
 }

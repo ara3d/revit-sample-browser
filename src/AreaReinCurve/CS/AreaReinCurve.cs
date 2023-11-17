@@ -26,7 +26,9 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             trans.Start();
             var selected = new ElementSet();
             foreach (var elementId in revit.Application.ActiveUIDocument.Selection.GetElementIds())
+            {
                 selected.Insert(revit.Application.ActiveUIDocument.Document.GetElement(elementId));
+            }
 
             try
             {

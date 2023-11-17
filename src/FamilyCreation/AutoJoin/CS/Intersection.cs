@@ -25,9 +25,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
             GetAllCurves(geometryB, curvesOfB);
 
             foreach (var face in facesOfA)
-            foreach (var curve in curvesOfB)
-                if (face.Intersect(curve) == SetComparisonResult.Overlap)
-                    return true;
+            {
+                foreach (var curve in curvesOfB)
+                {
+                    if (face.Intersect(curve) == SetComparisonResult.Overlap)
+                        return true;
+                }
+            }
 
             return false;
         }
@@ -64,7 +68,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
         private static void GetAllFaces(Solid solid, List<Face> faces)
         {
-            foreach (Face face in solid.Faces) faces.Add(face);
+            foreach (Face face in solid.Faces)
+            {
+                faces.Add(face);
+            }
         }
 
         private static void GetAllCurves(GeometryObject geometry, List<Curve> curves)
@@ -94,19 +101,24 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoJoin.CS
 
         private static void GetAllCurves(Solid solid, List<Curve> curves)
         {
-            foreach (Face face in solid.Faces) GetAllCurves(face, curves);
+            foreach (Face face in solid.Faces)
+            {
+                GetAllCurves(face, curves);
+            }
         }
 
         private static void GetAllCurves(Face face, List<Curve> curves)
         {
             foreach (EdgeArray loop in face.EdgeLoops)
-            foreach (Edge edge in loop)
             {
-                var points = edge.Tessellate() as List<XYZ>;
-                for (var ii = 0; ii + 1 < points.Count; ii++)
+                foreach (Edge edge in loop)
                 {
-                    var line = Line.CreateBound(points[ii], points[ii + 1]);
-                    curves.Add(line);
+                    var points = edge.Tessellate() as List<XYZ>;
+                    for (var ii = 0; ii + 1 < points.Count; ii++)
+                    {
+                        var line = Line.CreateBound(points[ii], points[ii + 1]);
+                        curves.Add(line);
+                    }
                 }
             }
         }

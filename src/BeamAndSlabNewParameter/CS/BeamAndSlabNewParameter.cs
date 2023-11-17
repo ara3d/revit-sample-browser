@@ -157,7 +157,9 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
         {
             var elements = new ElementSet();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
+            {
                 elements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
+            }
 
             // all the elements of current document
             var i = elements.GetEnumerator();
@@ -222,7 +224,9 @@ namespace Ara3D.RevitSampleBrowser.BeamAndSlabNewParameter.CS
         {
             var seleElements = new ElementSet();
             foreach (var elementId in m_revit.ActiveUIDocument.Selection.GetElementIds())
+            {
                 seleElements.Insert(m_revit.ActiveUIDocument.Document.GetElement(elementId));
+            }
 
             // all the elements of current document
             var i = seleElements.GetEnumerator();

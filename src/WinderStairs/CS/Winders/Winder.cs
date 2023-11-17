@@ -152,13 +152,25 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
                     var skp = SketchPlane.Create(
                         rvtDoc, Plane.CreateByNormalAndOrigin(XYZ.BasisZ, ControlPoints[0]));
                     var curves = new CurveArray();
-                    foreach (var curve in OuterBoundary) curves.Append(curve);
+                    foreach (var curve in OuterBoundary)
+                    {
+                        curves.Append(curve);
+                    }
 
-                    foreach (var curve in InnerBoundary) curves.Append(curve);
+                    foreach (var curve in InnerBoundary)
+                    {
+                        curves.Append(curve);
+                    }
 
-                    foreach (var curve in CenterWalkpath) curves.Append(curve);
+                    foreach (var curve in CenterWalkpath)
+                    {
+                        curves.Append(curve);
+                    }
 
-                    foreach (var curve in RiserLines) curves.Append(curve);
+                    foreach (var curve in RiserLines)
+                    {
+                        curves.Append(curve);
+                    }
 
                     rvtDoc.Create.NewModelCurveArray(curves, skp);
                     debugTransaction.Commit();

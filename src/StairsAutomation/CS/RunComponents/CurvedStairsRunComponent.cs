@@ -182,8 +182,10 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
             var pathPoint = pathCurve.GetEndPoint(last ? 1 : 0);
 
             foreach (var boundaryCurve in boundary)
+            {
                 if (boundaryCurve.Project(pathPoint).XYZPoint.IsAlmostEqualTo(pathPoint))
                     return boundaryCurve;
+            }
 
             throw new Exception("Unable to find an intersecting boundary curve in the run.");
         }

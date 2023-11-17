@@ -177,7 +177,11 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.EnergyAnalysisModel.CS
                 // return if it is leaf node
                 return node;
             // convert its child elements
-            foreach (var ele in element.Elements()) node.Nodes.Add(XElementToTreeNode(ele));
+            foreach (var ele in element.Elements())
+            {
+                node.Nodes.Add(XElementToTreeNode(ele));
+            }
+
             // return whole node
             return node;
         }

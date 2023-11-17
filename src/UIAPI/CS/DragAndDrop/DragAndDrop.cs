@@ -44,14 +44,18 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDrop
             // Visit each Revit library looking for Furniture families
             var libraryPaths = m_document.Application.GetLibraryPaths();
             foreach (var libraryPath in libraryPaths.Values)
-            foreach (var directory in Directory.EnumerateDirectories(libraryPath, "*Furniture",
-                         SearchOption.AllDirectories))
-            foreach (var familyFile in Directory.EnumerateFiles(directory, "*.rfa", SearchOption.AllDirectories))
             {
-                // Add each Furniture family to the listbox
-                var fileName = Path.GetFileName(familyFile);
-                var member = new FamilyListBoxMember(familyFile, fileName);
-                listBox1.Items.Add(member);
+                foreach (var directory in Directory.EnumerateDirectories(libraryPath, "*Furniture",
+                             SearchOption.AllDirectories))
+                {
+                    foreach (var familyFile in Directory.EnumerateFiles(directory, "*.rfa", SearchOption.AllDirectories))
+                    {
+                        // Add each Furniture family to the listbox
+                        var fileName = Path.GetFileName(familyFile);
+                        var member = new FamilyListBoxMember(familyFile, fileName);
+                        listBox1.Items.Add(member);
+                    }
+                }
             }
         }
 

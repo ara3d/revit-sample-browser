@@ -228,11 +228,13 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
         private void AssortViews(string view, string type)
         {
             foreach (TreeNode t in AllViewsNames.Nodes)
+            {
                 if (t.Tag.Equals(type))
                 {
                     t.Nodes.Add(new TreeNode(view));
                     return;
                 }
+            }
 
             var categoryNode = new TreeNode(type)
             {
@@ -253,17 +255,25 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
         {
             var names = new ArrayList();
             foreach (TreeNode t in AllViewsNames.Nodes)
-            foreach (TreeNode n in t.Nodes)
-                if (n.Checked && 0 == n.Nodes.Count)
-                    names.Add(n.Text);
+            {
+                foreach (TreeNode n in t.Nodes)
+                {
+                    if (n.Checked && 0 == n.Nodes.Count)
+                        names.Add(n.Text);
+                }
+            }
 
             foreach (View v in m_allViews)
-            foreach (string s in names)
-                if (s.Equals(v.Name))
+            {
+                foreach (string s in names)
                 {
-                    m_selectedViews.Insert(v);
-                    break;
+                    if (s.Equals(v.Name))
+                    {
+                        m_selectedViews.Insert(v);
+                        break;
+                    }
                 }
+            }
         }
 
         /// <summary>
@@ -317,11 +327,13 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
             foreach (FamilySymbol f in m_allTitleBlocks)
+            {
                 if (name.Equals(f.Family.Name + ":" + f.Name))
                 {
                     m_titleBlock = f;
                     return;
                 }
+            }
         }
 
         /// <summary>

@@ -84,12 +84,17 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             checkedListBoxViews.Items.Clear();
             if (checkBoxViews.Checked)
                 foreach (View view in m_selectViewsData.PrintableViews)
+                {
                     checkedListBoxViews.Items.Add(view.ViewType + ": " + view.Name);
+                }
 
             if (checkBoxSheets.Checked)
                 foreach (ViewSheet viewSheet in m_selectViewsData.PrintableSheets)
+                {
                     checkedListBoxViews.Items.Add("Drawing Sheet: " + viewSheet.SheetNumber + " - " +
                                                   viewSheet.Name);
+                }
+
             checkedListBoxViews.Sorted = true;
         }
 
@@ -122,11 +127,13 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                     var sheetNumber = text.Substring(0, text.IndexOf(" - "));
                     var sheetViewName = text.Substring(text.IndexOf(" - ") + 3);
                     foreach (ViewSheet viewSheet in m_selectViewsData.PrintableSheets)
+                    {
                         if (viewSheet.SheetNumber == sheetNumber && viewSheet.Name == sheetViewName)
                         {
                             m_selectViewsData.SelectedViews.Insert(viewSheet);
                             break;
                         }
+                    }
                 }
                 else
                 {

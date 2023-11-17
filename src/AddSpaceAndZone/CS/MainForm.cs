@@ -97,7 +97,10 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 
             // spacesListView
             var spaces = m_dataManager.GetSpaces();
-            foreach (var space in spaces) spacesListView.Items.Add(new SpaceItem(space));
+            foreach (var space in spaces)
+            {
+                spacesListView.Items.Add(new SpaceItem(space));
+            }
 
             // zonesTreeView
             var zones = m_dataManager.GetZones();
@@ -105,7 +108,9 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             {
                 var nodeIndex = zonesTreeView.Nodes.Add(new ZoneNode(zone));
                 foreach (Space spaceInZone in zone.Spaces)
+                {
                     zonesTreeView.Nodes[nodeIndex].Nodes.Add(new SpaceNode(spaceInZone));
+                }
             }
 
             zonesTreeView.ExpandAll();

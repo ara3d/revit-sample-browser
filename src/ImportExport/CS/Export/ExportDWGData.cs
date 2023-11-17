@@ -91,7 +91,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             m_enumFileVersion.Add(ACADVersion.R2007);
 
             var tmp = new StringBuilder();
-            foreach (var version in m_fileVersion) tmp.Append(version + "|*.dwg|");
+            foreach (var version in m_fileVersion)
+            {
+                tmp.Append(version + "|*.dwg|");
+            }
+
             Filter = tmp.ToString().TrimEnd('|');
             Title = "Export DWG";
         }
@@ -110,7 +114,9 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 views.Add(ActiveDocument.ActiveView.Id);
             else
                 foreach (View view in SelectViewsData.SelectedViews)
+                {
                     views.Add(view.Id);
+                }
 
             // Default values
             m_exportFileVersion = ACADVersion.R2010;

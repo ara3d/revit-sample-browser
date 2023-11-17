@@ -201,11 +201,16 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                 ex.GetFlowUnitSymbol(), ex.GetSizeUnitSymbol(), ex.GetVelocityUnitSymbol(), ex.GetPressureUnitSymbol(),
                 ex.GetLengthUnitSymbol(), ex.GetFrictionUnitSymbol());
             ex.Writer.WriteLine(str);
-            foreach (var item in m_sections) item.Value.ExportCsv(ex, item.Key);
+            foreach (var item in m_sections)
+            {
+                item.Value.ExportCsv(ex, item.Key);
+            }
+
             // Critical path if available
             var dCriticalLoss = 0.0;
             string path = null;
             foreach (var item in m_sections)
+            {
                 if (item.Value.IsCriticalPath)
                 {
                     dCriticalLoss += item.Value.TotalPressureLoss;
@@ -214,6 +219,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                     else
                         path += @" - " + item.Key;
                 }
+            }
 
             ex.Writer.WriteLine("Critical Pressure Loss: {0}, {1}", path, dCriticalLoss);
         }
@@ -227,7 +233,10 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             if (m_maxFlow < 0.0000001)
                 return;
 
-            foreach (var item in m_sections) item.Value.UpdateView(viewer, points, valList, m_maxFlow);
+            foreach (var item in m_sections)
+            {
+                item.Value.UpdateView(viewer, points, valList, m_maxFlow);
+            }
 
             if (points.Count > 0) viewer.AddData(points, valList);
         }

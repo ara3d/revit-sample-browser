@@ -52,18 +52,25 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             // If event has been in history list and not in current selection,
             // it means user doesn't select this event again, and it should be move.
             foreach (var eventname in m_historySelection)
+            {
                 if (!selection.Contains(eventname))
                     SubtractEvents(eventname);
+            }
 
             // Contrarily,if event has been in current selection and not in history list,
             // it means this event should be subscribed.
             foreach (var eventname in selection)
+            {
                 if (!m_historySelection.Contains(eventname))
                     AddEvents(eventname);
+            }
 
             // generate the history list.
             m_historySelection.Clear();
-            foreach (var eventname in selection) m_historySelection.Add(eventname);
+            foreach (var eventname in selection)
+            {
+                m_historySelection.Add(eventname);
+            }
         }
 
         /// <summary>

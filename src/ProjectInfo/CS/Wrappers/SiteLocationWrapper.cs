@@ -92,8 +92,11 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
         private City GetCityFromPosition(double latitude, double longitude)
         {
             foreach (City city in RevitStartInfo.RevitApp.Cities)
+            {
                 if (DoubleEquals(city.Latitude, latitude) && DoubleEquals(city.Longitude, longitude))
                     return city;
+            }
+
             return null;
         }
 

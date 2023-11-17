@@ -64,6 +64,7 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
         {
             var document = m_revit.ActiveUIDocument.Document;
             foreach (PlanTopology planTopology in document.PlanTopologies)
+            {
                 if (planTopology.GetRoomIds().Count != 0 && planTopology.Level != null)
                 {
                     m_levels.Add(planTopology.Level);
@@ -79,6 +80,7 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
                         }
                     }
                 }
+            }
         }
 
         /// <summary>
@@ -86,10 +88,7 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
         /// </summary>
         private void GetRoomTagTypes()
         {
-            var filteredElementCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
-            filteredElementCollector.OfClass(typeof(FamilySymbol));
-            filteredElementCollector.OfCategory(BuiltInCategory.OST_RoomTags);
-            m_roomTagTypes = filteredElementCollector.Cast<RoomTagType>().ToList();
+            m_roomTagTypes = m_revit.ActiveUIDocument.Document.GetFilteredElements<RoomTagType>().ToList();
         }
 
         /// <summary>
@@ -97,19 +96,14 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
         /// </summary>
         private void GetRoomWithTags()
         {
-            var document = m_revit.ActiveUIDocument.Document;
-            var roomTags =
-                from elem in new FilteredElementCollector(document).WherePasses(new RoomTagFilter()).ToElements()
-                let roomTag = elem as RoomTag
-                where roomTag != null && roomTag.Room != null
-                select roomTag;
-
+            var roomTags = m_revit.ActiveUIDocument.Document.GetFilteredElements<RoomTag>();
             foreach (var roomTag in roomTags)
+            {
                 if (m_roomWithTags.ContainsKey(roomTag.Room.Id))
                 {
-                    var tmpList = m_roomWithTags[roomTag.Room.Id];
-                    tmpList.Add(roomTag);
+                    m_roomWithTags[roomTag.Room.Id].Add(roomTag);
                 }
+            }
         }
 
         /// <summary>
@@ -155,8 +149,11 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
             var count = 0;
             var tagListInTheRoom = m_roomWithTags[room.Id];
             foreach (var roomTag in tagListInTheRoom)
+            {
                 if (roomTag.RoomTagType.Id == tagType.Id)
                     count++;
+            }
+
             return count;
         }
     }

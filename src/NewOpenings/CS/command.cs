@@ -26,7 +26,10 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
 
                 var elems = new ElementSet();
                 foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
+                {
                     elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
+                }
+
                 //if user have some wrong selection, give user an error message
                 if (1 != elems.Size)
                 {
@@ -35,7 +38,10 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
                 }
 
                 Element selectElem = null;
-                foreach (Element e in elems) selectElem = e;
+                foreach (Element e in elems)
+                {
+                    selectElem = e;
+                }
 
                 if (!(selectElem is Wall) && !(selectElem is Floor))
                 {

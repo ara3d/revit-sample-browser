@@ -110,7 +110,10 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             allViewsTreeView.Nodes.Add(m_data.AllViewsNames);
             allViewsTreeView.TopNode.Expand();
 
-            foreach (string s in m_data.AllTitleBlocksNames) titleBlocksListBox.Items.Add(s);
+            foreach (string s in m_data.AllTitleBlocksNames)
+            {
+                titleBlocksListBox.Items.Add(s);
+            }
         }
 
         private void oKButton_Click(object sender, EventArgs e)

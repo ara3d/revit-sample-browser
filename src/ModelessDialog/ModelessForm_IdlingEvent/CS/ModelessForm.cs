@@ -45,7 +45,11 @@ namespace Ara3D.RevitSampleBrowser.ModelessDialog.ModelessForm_IdlingEvent.CS
         /// </summary>
         private void EnableCommands(bool status)
         {
-            foreach (Control ctrl in Controls) ctrl.Enabled = status;
+            foreach (Control ctrl in Controls)
+            {
+                ctrl.Enabled = status;
+            }
+
             if (!status) btnExit.Enabled = true;
         }
 

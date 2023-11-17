@@ -367,7 +367,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
                 var gridLine2D = Drawing.UGridLines2D[Drawing.SelectedUIndex];
                 gridLine2D.RemovedNumber = 0;
-                foreach (var segLine2D in gridLine2D.Segments) segLine2D.Removed = false;
+                foreach (var segLine2D in gridLine2D.Segments)
+                {
+                    segLine2D.Removed = false;
+                }
             }
             else if (-1 != Drawing.SelectedVIndex)
             {
@@ -388,7 +391,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 
                 var gridLine2D = Drawing.VGridLines2D[Drawing.SelectedVIndex];
                 gridLine2D.RemovedNumber = 0;
-                foreach (var segLine2D in gridLine2D.Segments) segLine2D.Removed = false;
+                foreach (var segLine2D in gridLine2D.Segments)
+                {
+                    segLine2D.Removed = false;
+                }
             }
 
             ReloadGeometryData();
@@ -690,10 +696,15 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             {
                 // add mullions to all U grid lines
                 foreach (var line in UGridLines)
+                {
                     line.AddMullions(line.AllSegmentCurves.get_Item(0), MullionType, false);
+                }
+
                 // add mullions to all V grid lines
                 foreach (var line in VGridLines)
+                {
                     line.AddMullions(line.AllSegmentCurves.get_Item(0), MullionType, false);
+                }
             }
             catch (Exception e)
             {

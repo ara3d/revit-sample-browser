@@ -275,7 +275,10 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
             m_transferedCurves.Clear();
             m_curves2D.Clear();
 
-            foreach (var points in m_originCurves) SynChroData(points);
+            foreach (var points in m_originCurves)
+            {
+                SynChroData(points);
+            }
 
             UpdateViewEvent?.Invoke();
         }

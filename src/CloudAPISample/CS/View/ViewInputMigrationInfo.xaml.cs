@@ -62,7 +62,10 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
                 model.AccountGuid = info.AccountGuid;
                 model.ProjectGuid = info.ProjectGuid;
                 model.AvailableFolders.Clear();
-                foreach (var folder in info.AvailableFolders) model.AvailableFolders.Add(folder);
+                foreach (var folder in info.AvailableFolders)
+                {
+                    model.AvailableFolders.Add(folder);
+                }
             }
         }
 

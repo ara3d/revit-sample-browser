@@ -90,7 +90,9 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                         new XAttribute("Count", collector.Count().ToString()));
 
                     foreach (var column in collector)
+                    {
                         columnsNode.Add(new XElement("column", new XAttribute("Name", column.Name)));
+                    }
 
                     wallNode.Add(columnsNode);
                     wallsNode.Add(wallNode);
@@ -157,8 +159,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                                 new XAttribute("Count", blockingElement.Count().ToString()));
 
                             foreach (var blockingelement in blockingElement)
+                            {
                                 blockingegressNode.Add(new XElement("blocking_egress_element",
                                     new XAttribute("Name", blockingelement.Name)));
+                            }
 
                             solidNode.Add(blockingegressNode);
                             egressNode.Add(solidNode);
@@ -213,8 +217,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                         new XAttribute("Count", nearbyWalls.Count().ToString()));
 
                     foreach (var nearbywall in nearbyWalls)
+                    {
                         nearbyWallsNode.Add(new XElement("near_by_wall",
                             new XAttribute("Name", nearbywall.Name)));
+                    }
 
                     endNode.Add(nearbyWallsNode);
                     wallNode.Add(endNode);
@@ -236,8 +242,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
                         new XAttribute("Count", nearbyWalls.Count().ToString()));
 
                     foreach (var nearbywall in nearbyWalls)
+                    {
                         nearbyWallsNode.Add(new XElement("near_by_wall",
                             new XAttribute("Name", nearbywall.Name)));
+                    }
 
                     endNode.Add(nearbyWallsNode);
                     wallNode.Add(endNode);

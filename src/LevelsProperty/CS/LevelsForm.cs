@@ -190,11 +190,13 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
                 var oldName = levelsDataGridView.CurrentCell.FormattedValue as string;
                 if (newName != oldName)
                     foreach (var systemLevelDatum in m_objectReference.SystemLevelsDatum)
+                    {
                         if (systemLevelDatum.Name == newName)
                         {
                             TaskDialog.Show("Revit", "The name entered is already in use. Enter a unique name.");
                             e.Cancel = true;
                         }
+                    }
             }
         }
 

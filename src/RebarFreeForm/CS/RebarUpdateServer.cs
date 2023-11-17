@@ -387,13 +387,17 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 
                     // for each bar try to find the closest face that intersects with it, or its extension, at the specified end
                     foreach (var bar in allbars)
+                    {
                         faces.Add(SearchForFace(bar, hostFaces, iBarEnd));
+                    }
 
                     // gather valid references for constraint creation
                     var refs = new List<Reference>();
                     foreach (var face in faces)
+                    {
                         if (face.Face.Reference != null && !refs.Contains(face.Face.Reference))
                             refs.Add(face.Face.Reference);
+                    }
 
                     // if we have any valid references, we create the constraint for the specified bar end.
                     if (refs.Count > 0)
@@ -457,6 +461,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             var firstFace = new TargetFace();
             var constraints = data.GetRebarUpdateCurvesData().GetCustomConstraints();
             foreach (var constraint in constraints)
+            {
                 if ((BarHandle)constraint.GetCustomHandleTag() == BarHandle.FirstHandle)
                 {
                     var tempTrf = Transform.Identity;
@@ -470,6 +475,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                     };
                     break;
                 }
+            }
 
             // add each curve as separate bar in the set.
             for (var ii = 0; ii < allbars.Count; ii++)
@@ -798,14 +804,18 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                             if (nestedFaces == null)
                                 return null;
                             foreach (var nestedFace in nestedFaces)
+                            {
                                 result.Add(nestedFace);
+                            }
                         }
                     }
                     else
                     {
                         foreach (Face face in solid.Faces)
+                        {
                             result.Add(new TargetFace
                                 { Face = face, Transform = trf == null ? Transform.Identity : trf });
+                        }
                     }
                 }
 

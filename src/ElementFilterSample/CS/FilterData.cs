@@ -276,7 +276,10 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             m_doc = doc;
             m_filterCategories = new List<BuiltInCategory>();
             foreach (var catId in categories)
+            {
                 m_filterCategories.Add((BuiltInCategory)catId.Value);
+            }
+
             m_filterRules = new List<FilterRuleBuilder>();
             m_filterRules.AddRange(filterRules);
         }
@@ -298,7 +301,10 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         {
             var catIds = new List<ElementId>();
             foreach (var cat in m_filterCategories)
+            {
                 catIds.Add(new ElementId(cat));
+            }
+
             return catIds;
         }
 
@@ -319,7 +325,11 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             m_filterCategories = newCats; // update categories
 
             var newCatIds = new List<ElementId>();
-            foreach (var cat in newCats) newCatIds.Add(new ElementId(cat));
+            foreach (var cat in newCats)
+            {
+                newCatIds.Add(new ElementId(cat));
+            }
+
             //
             // Check if need to update file rules:
             // . if filer rule is empty, do nothing
@@ -327,11 +337,13 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             var supportParams =
                 ParameterFilterUtilities.GetFilterableParametersInCommon(m_doc, newCatIds);
             foreach (var rule in m_filterRules)
+            {
                 if (!supportParams.Contains(new ElementId(rule.Parameter)))
                 {
                     m_filterRules.Clear();
                     break;
                 }
+            }
 
             return true;
         }
@@ -421,15 +433,17 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         /// <returns>String list of criteria supported for specified parameter type.</returns>
         public static ICollection<string> Criterions(StorageType paramType)
         {
-            ICollection<string> returns = new List<string>();
-            //
-            // all parameter supports following criteria
-            returns.Add(Equals);
-            returns.Add(Greater);
-            returns.Add(GreaterOrEqual);
-            returns.Add(LessOrEqual);
-            returns.Add(Less);
-            returns.Add(NotEquals);
+            ICollection<string> returns = new List<string>
+            {
+                //
+                // all parameter supports following criteria
+                Equals,
+                Greater,
+                GreaterOrEqual,
+                LessOrEqual,
+                Less,
+                NotEquals
+            };
             // 
             // Only string parameter support criteria below
             if (paramType == StorageType.String)

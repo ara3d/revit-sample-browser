@@ -30,7 +30,9 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
             // document via the selection object
             var seletion = new ElementSet();
             foreach (var elementId in app.ActiveUIDocument.Selection.GetElementIds())
+            {
                 seletion.Insert(app.ActiveUIDocument.Document.GetElement(elementId));
+            }
 
             // we need to make sure that only one element is selected.
             if (seletion.Size == 1)

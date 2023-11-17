@@ -26,7 +26,10 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
                 // must select a element first
                 var elementSet = new ElementSet();
                 foreach (var elementId in doc.Selection.GetElementIds())
+                {
                     elementSet.Insert(doc.Document.GetElement(elementId));
+                }
+
                 if (1 != elementSet.Size)
                 {
                     message = "Please select one structural element which is listed as follows: \r\n" +

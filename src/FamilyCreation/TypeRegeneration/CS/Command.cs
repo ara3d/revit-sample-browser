@@ -71,6 +71,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
             try
             {
                 foreach (FamilyType type in m_familyManager.Types)
+                {
                     if (!(type.Name.Trim() == ""))
                     {
                         try
@@ -88,13 +89,17 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
 
                         msgForm.ShowDialog();
                     }
+                }
 
                 //add a conclusion regeneration result
                 string resMsg;
                 if (errorInfo.Count > 0)
                 {
                     resMsg = "\nResult: " + errorInfo.Count + " family types regeneration failed!";
-                    foreach (var error in errorInfo) resMsg += "\n " + error;
+                    foreach (var error in errorInfo)
+                    {
+                        resMsg += "\n " + error;
+                    }
                 }
                 else
                 {

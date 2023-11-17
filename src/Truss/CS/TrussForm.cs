@@ -73,7 +73,10 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
 
             var es = new ElementSet();
             foreach (var elementId in m_activeDocument.Selection.GetElementIds())
+            {
                 es.Insert(m_activeDocument.Document.GetElement(elementId));
+            }
+
             var iter = es.GetEnumerator();
             iter.Reset();
             while (iter.MoveNext())
@@ -140,7 +143,10 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
                 let viewPlan = elem as ViewPlan
                 where viewPlan != null && !viewPlan.IsTemplate
                 select viewPlan;
-            foreach (View view in m_views) ViewComboBox.Items.Add(view.Name);
+            foreach (View view in m_views)
+            {
+                ViewComboBox.Items.Add(view.Name);
+            }
         }
 
         /// <summary>

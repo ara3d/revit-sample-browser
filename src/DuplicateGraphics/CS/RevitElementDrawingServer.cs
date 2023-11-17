@@ -183,11 +183,13 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             var allSolids = new List<Solid>();
 
             foreach (var geomObj in geomElem)
+            {
                 if (geomObj is Solid solid)
                 {
                     if (solid.Volume > 1e-06)
                         allSolids.Add(solid);
                 }
+            }
 
             m_nonTransparentFaceBufferStorage = new RenderingPassBufferStorage(displayStyle);
             m_transparentFaceBufferStorage = new RenderingPassBufferStorage(displayStyle);
@@ -197,6 +199,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
             foreach (var solid in allSolids)
             {
                 foreach (Face face in solid.Faces)
+                {
                     if (face.Area > 1e-06)
                     {
                         var mesh = face.Triangulate();
@@ -235,6 +238,7 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                             m_nonTransparentFaceBufferStorage.PrimitiveCount += mesh.NumTriangles;
                         }
                     }
+                }
 
                 foreach (Edge edge in solid.Edges)
                     // if (edge.Length > 1e-06)
@@ -288,8 +292,10 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                 {
                     var mesh = meshInfo.Mesh;
                     foreach (var vertex in mesh.Vertices)
+                    {
                         vertexStream.AddVertex(new VertexPositionNormalColored(vertex + m_offset, meshInfo.Normal,
                             meshInfo.ColorWithTransparency));
+                    }
 
                     numVerticesInMeshesBefore.Add(numVerticesInMeshesBefore.Last() + mesh.Vertices.Count);
                 }
@@ -306,7 +312,9 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                         ? new ColorWithTransparency(255, 255, 255, meshInfo.ColorWithTransparency.GetTransparency())
                         : meshInfo.ColorWithTransparency;
                     foreach (var vertex in mesh.Vertices)
+                    {
                         vertexStream.AddVertex(new VertexPositionColored(vertex + m_offset, color));
+                    }
 
                     numVerticesInMeshesBefore.Add(numVerticesInMeshesBefore.Last() + mesh.Vertices.Count);
                 }
@@ -368,7 +376,10 @@ namespace Ara3D.RevitSampleBrowser.DuplicateGraphics.CS
                 var vertexStream = bufferStorage.VertexBuffer.GetVertexStreamPosition();
                 foreach (var xyzs in edges)
                 {
-                    foreach (var vertex in xyzs) vertexStream.AddVertex(new VertexPosition(vertex + m_offset));
+                    foreach (var vertex in xyzs)
+                    {
+                        vertexStream.AddVertex(new VertexPosition(vertex + m_offset));
+                    }
 
                     numVerticesInEdgesBefore.Add(numVerticesInEdgesBefore.Last() + xyzs.Count);
                 }

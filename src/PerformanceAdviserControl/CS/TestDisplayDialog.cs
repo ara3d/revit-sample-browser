@@ -64,7 +64,10 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         private void btn_SelectAll_Click(object sender, EventArgs e)
         {
             //Set the first column value (the enabled status) to true;
-            foreach (DataGridViewRow row in testData.Rows) row.Cells[0].Value = true;
+            foreach (DataGridViewRow row in testData.Rows)
+            {
+                row.Cells[0].Value = true;
+            }
         }
 
         /// <summary>
@@ -73,7 +76,10 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         private void btn_DeselectAll_Click(object sender, EventArgs e)
         {
             //Set the first column value (the enabled status) to false;
-            foreach (DataGridViewRow row in testData.Rows) row.Cells[0].Value = false;
+            foreach (DataGridViewRow row in testData.Rows)
+            {
+                row.Cells[0].Value = false;
+            }
         }
 
         /// <summary>

@@ -88,8 +88,10 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
         {
             var names = new List<string>();
             foreach (ListViewItem item in viewSheetSetListView.Items)
+            {
                 if (item.Checked)
                     names.Add(item.Text);
+            }
 
             m_viewSheets.ChangeCurrentViewSheetSet(names);
 
@@ -146,13 +148,18 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
         private void checkAllButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in viewSheetSetListView.Items) item.Checked = true;
+            foreach (ListViewItem item in viewSheetSetListView.Items)
+            {
+                item.Checked = true;
+            }
         }
 
         private void checkNoneButton_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in viewSheetSetListView.Items) 
+            foreach (ListViewItem item in viewSheetSetListView.Items)
+            {
                 item.Checked = false;
+            }
         }
 
         private void viewSheetSetListView_ItemChecked(object sender, ItemCheckedEventArgs e)

@@ -80,7 +80,11 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             var fittingNames = "";
 
             if (Id.Count == 0) fittingNames += "None -1";
-            foreach (var id in Id) fittingNames += GetFittingName(document, id) + " " + id + ", ";
+            foreach (var id in Id)
+            {
+                fittingNames += GetFittingName(document, id) + " " + id + ", ";
+            }
+
             return fittingNames.Remove(fittingNames.Length - 2, 2);
         }
     }

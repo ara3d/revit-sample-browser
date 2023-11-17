@@ -35,11 +35,13 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             //get horizontal face's reference
             var faces = GeomUtil.GetFaces(floor);
             foreach (Face face in faces)
+            {
                 if (GeomUtil.IsHorizontalFace(face))
                 {
                     refer = face.Reference;
                     break;
                 }
+            }
 
             if (null == refer) return false;
             //get analytical model profile

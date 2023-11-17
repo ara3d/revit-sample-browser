@@ -35,11 +35,16 @@ namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
             // get the target element to be used for the Distance computation
             var collection = new ElementSet();
             foreach (var elementId in m_uiDoc.Selection.GetElementIds())
+            {
                 collection.Insert(m_uiDoc.Document.GetElement(elementId));
+            }
 
             var es = new ElementSet();
             foreach (var elementId in m_uiDoc.Selection.GetElementIds())
+            {
                 es.Insert(m_uiDoc.Document.GetElement(elementId));
+            }
+
             var targetPoint = GetTargetPoint(es);
 
             // get all the divided surfaces in the Revit document
@@ -104,7 +109,10 @@ namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
             FamilyInstance targetElement = null;
             if (collection.Size != 1)
                 throw new Exception("You must select one component from which the distance to panels will be measured");
-            foreach (Element e in collection) targetElement = e as FamilyInstance;
+            foreach (Element e in collection)
+            {
+                targetElement = e as FamilyInstance;
+            }
 
             if (null == targetElement)
                 throw new Exception(
@@ -118,7 +126,11 @@ namespace Ara3D.RevitSampleBrowser.Massing.DistanceToPanels.CS
             var returns = new List<T>();
             var collector = new FilteredElementCollector(m_uiDoc.Document);
             ICollection<Element> founds = collector.OfClass(typeof(T)).ToElements();
-            foreach (var elem in founds) returns.Add(elem as T);
+            foreach (var elem in founds)
+            {
+                returns.Add(elem as T);
+            }
+
             return returns;
         }
     }

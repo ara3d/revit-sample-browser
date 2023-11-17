@@ -206,7 +206,10 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             if (null == sweptFace || 1 != sweptFace.EdgeLoops.Size) return false;
 
             // get the points of the swept face
-            foreach (var point in sweptFace.Triangulate().Vertices) Points.Add(Transform(point));
+            foreach (var point in sweptFace.Triangulate().Vertices)
+            {
+                Points.Add(Transform(point));
+            }
 
             // get the edges of the swept face
             Edges = ChangeEdgeToLine(sweptFace.EdgeLoops.get_Item(0));

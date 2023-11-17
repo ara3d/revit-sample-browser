@@ -67,6 +67,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             var findFolderUtility = new FindFolderUtility(m_document.Application);
 
             foreach (var xfamily in families)
+            {
                 try
                 {
                     ParseFamilyFromXml(xfamily, findFolderUtility); //Load families.
@@ -76,6 +77,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                     loadFamilies.RollBack();
                     throw ex;
                 }
+            }
 
             loadFamilies.Commit();
 
@@ -83,6 +85,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             addPipeTypes.Start();
             var pipeTypes = xDoc.Root.Elements("PipeType");
             foreach (var xpipeType in pipeTypes)
+            {
                 try
                 {
                     ParsePipeTypeFromXml(xpipeType); //Define new pipe types.
@@ -92,6 +95,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                     addPipeTypes.RollBack();
                     throw ex;
                 }
+            }
 
             addPipeTypes.Commit();
 
@@ -99,6 +103,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             addPipeSchedules.Start();
             var pipeScheduleTypes = xDoc.Root.Elements("PipeScheduleType");
             foreach (var xpipeScheduleType in pipeScheduleTypes)
+            {
                 try
                 {
                     ParsePipeScheduleTypeFromXml(xpipeScheduleType); //Define new pipe schedule types.
@@ -108,6 +113,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                     addPipeSchedules.RollBack();
                     throw ex;
                 }
+            }
 
             addPipeSchedules.Commit();
 
@@ -120,6 +126,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             addPipeSchedules.Start();
             var pipeSegments = xDoc.Root.Elements("PipeSegment"); //Define new segments.
             foreach (var xpipeSegment in pipeSegments)
+            {
                 try
                 {
                     ParsePipeSegmentFromXml(xpipeSegment);
@@ -129,6 +136,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                     addPipeSchedules.RollBack();
                     throw ex;
                 }
+            }
 
             addPipeSchedules.Commit();
 
@@ -139,6 +147,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             addRoutingPreferences.Start();
             var routingPreferenceManagers = xDoc.Root.Elements("RoutingPreferenceManager");
             foreach (var xroutingPreferenceManager in routingPreferenceManagers)
+            {
                 try
                 {
                     ParseRoutingPreferenceManagerFromXml(xroutingPreferenceManager);
@@ -148,6 +157,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                     addRoutingPreferences.RollBack();
                     throw ex;
                 }
+            }
 
             addRoutingPreferences.Commit();
         }
@@ -174,17 +184,29 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             xroot.Add(new XAttribute(XName.Get("pipeRoughnessUnits"), unitStringRoughness));
 
             foreach (var familySymbol in m_fittings)
+            {
                 xroot.Add(CreateXmlFromFamily(familySymbol, findFolderUtility, ref pathsNotFound));
-
-            foreach (var pipeType in m_pipeTypes) xroot.Add(CreateXmlFromPipeType(pipeType));
-
-            foreach (var pipeScheduleType in m_pipeSchedules)
-                xroot.Add(CreateXmlFromPipeScheduleType(pipeScheduleType));
-
-            foreach (PipeSegment pipeSegment in m_segments) xroot.Add(CreateXmlFromPipeSegment(pipeSegment));
+            }
 
             foreach (var pipeType in m_pipeTypes)
+            {
+                xroot.Add(CreateXmlFromPipeType(pipeType));
+            }
+
+            foreach (var pipeScheduleType in m_pipeSchedules)
+            {
+                xroot.Add(CreateXmlFromPipeScheduleType(pipeScheduleType));
+            }
+
+            foreach (PipeSegment pipeSegment in m_segments)
+            {
+                xroot.Add(CreateXmlFromPipeSegment(pipeSegment));
+            }
+
+            foreach (var pipeType in m_pipeTypes)
+            {
                 xroot.Add(CreateXmlFromRoutingPreferenceManager(pipeType.RoutingPreferenceManager));
+            }
 
             routingPreferenceBuilderDoc.Add(xroot);
             return routingPreferenceBuilderDoc;
@@ -350,11 +372,13 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
 
             ICollection<MEPSize> sizes = new List<MEPSize>();
             foreach (var sizeNode in segmentXElement.Nodes())
+            {
                 if (sizeNode is XElement node)
                 {
                     var newSize = ParseMepSizeFromXml(node, m_document);
                     sizes.Add(newSize);
                 }
+            }
 
             var pipeSegment = PipeSegment.Create(m_document, materialId, scheduleId, sizes);
             pipeSegment.Roughness = Convert.ConvertValueToFeet(roughness, m_document);
@@ -377,7 +401,9 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             xPipeSegment.Add(new XAttribute(XName.Get("roughness"), roughnessInDocumentUnits.ToString("r")));
 
             foreach (var size in pipeSegment.GetSizes())
+            {
                 xPipeSegment.Add(CreateXmlFromMepSize(size, m_document));
+            }
 
             return xPipeSegment;
         }
@@ -476,12 +502,14 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             routingPreferenceManager.PreferredJunctionType = preferredJunctionType;
 
             foreach (var xRule in routingPreferenceManagerXElement.Nodes())
+            {
                 if (xRule is XElement element)
                 {
                     RoutingPreferenceRuleGroupType groupType;
                     var rule = ParseRoutingPreferenceRuleFromXml(element, out groupType);
                     routingPreferenceManager.AddRule(groupType, rule);
                 }
+            }
         }
 
         /// <summary>
@@ -749,8 +777,11 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
         private ElementId GetSegmentByName(string name)
         {
             foreach (var segment in m_segments)
+            {
                 if (segment.Name == name)
                     return segment.Id;
+            }
+
             return ElementId.InvalidElementId;
         }
 
@@ -762,9 +793,12 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
         private ElementId GetFittingByName(string name)
         {
             foreach (var fitting in m_fittings)
+            {
                 if (fitting.Family.Name + " " + fitting.Name == name)
 
                     return fitting.Id;
+            }
+
             return ElementId.InvalidElementId;
         }
 
@@ -776,8 +810,11 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
         private ElementId GetMaterialByName(string name)
         {
             foreach (var material in m_materials)
+            {
                 if (material.Name == name)
                     return material.Id;
+            }
+
             return ElementId.InvalidElementId;
         }
 
@@ -789,8 +826,11 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
         private ElementId GetPipeScheduleTypeByName(string name)
         {
             foreach (var pipeScheduleType in m_pipeSchedules)
+            {
                 if (pipeScheduleType.Name == name)
                     return pipeScheduleType.Id;
+            }
+
             return ElementId.InvalidElementId;
         }
 
@@ -802,8 +842,11 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
         private ElementId GetPipeTypeByName(string name)
         {
             foreach (var pipeType in m_pipeTypes)
+            {
                 if (pipeType.Name == name)
                     return pipeType.Id;
+            }
+
             return ElementId.InvalidElementId;
         }
 
