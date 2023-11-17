@@ -871,6 +871,7 @@
     <Compile Include="ExtensibleStorageUtility\CS\DeleteStorage.cs" />
     <Compile Include="ExtensibleStorageUtility\CS\QueryStorage.cs" />
     <Compile Include="ExtensibleStorageUtility\CS\Utility.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="ExternalCommand\CS\ExternalCommandRegistration\AvailabilityClass.cs" />
     <Compile Include="ExternalCommand\CS\ExternalCommandRegistration\ExternalCommandClass.cs" />
     <Compile Include="ExternalCommand\CS\ExternalCommandRegistration\ExternalCommandResource.Designer.cs" />

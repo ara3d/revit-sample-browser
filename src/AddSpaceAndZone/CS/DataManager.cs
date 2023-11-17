@@ -52,32 +52,22 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 
             var activeDoc = m_commandData.Application.ActiveUIDocument.Document;
 
-            var levelsIterator = new FilteredElementCollector(activeDoc).OfClass(typeof(Level)).GetElementIterator();
-            var spacesIterator = new FilteredElementCollector(activeDoc).WherePasses(new SpaceFilter())
-                .GetElementIterator();
-            var zonesIterator = new FilteredElementCollector(activeDoc).OfClass(typeof(Zone)).GetElementIterator();
-
-            levelsIterator.Reset();
-            while (levelsIterator.MoveNext())
+            foreach (var level in activeDoc.GetFilteredElements<Level>())
             {
-                if (levelsIterator.Current is Level level)
-                {
-                    m_levels.Add(level);
-                    spaceDictionary.Add(level.Id, new List<Space>());
-                    zoneDictionary.Add(level.Id, new List<Zone>());
-                }
+                m_levels.Add(level);
+                spaceDictionary.Add(level.Id, new List<Space>());
+                zoneDictionary.Add(level.Id, new List<Zone>());
             }
 
-            spacesIterator.Reset();
-            while (spacesIterator.MoveNext())
+            foreach (var space in activeDoc.GetFilteredElements<Space>())
             {
-                if (spacesIterator.Current is Space space) spaceDictionary[space.LevelId].Add(space);
+                spaceDictionary[space.LevelId].Add(space);
             }
 
-            zonesIterator.Reset();
-            while (zonesIterator.MoveNext())
+            foreach (var zone in activeDoc.GetFilteredElements<Zone>())
             {
-                if (zonesIterator.Current is Zone zone && activeDoc.GetElement(zone.LevelId) != null) zoneDictionary[zone.LevelId].Add(zone);
+                if (activeDoc.GetElement(zone.LevelId) != null) 
+                    zoneDictionary[zone.LevelId].Add(zone);
             }
 
             m_spaceManager = new SpaceManager(m_commandData, spaceDictionary);

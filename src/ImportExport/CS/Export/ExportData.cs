@@ -102,34 +102,34 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             string extension = null;
             switch (ExportFormat)
             {
-                case CS.ExportFormat.Dwg:
+                case ExportFormat.Dwg:
                     extension = "dwg";
                     break;
-                case CS.ExportFormat.Dxf:
+                case ExportFormat.Dxf:
                     extension = "dxf";
                     break;
-                case CS.ExportFormat.Sat:
+                case ExportFormat.Sat:
                     extension = "sat";
                     break;
-                case CS.ExportFormat.Dwf:
+                case ExportFormat.Dwf:
                     extension = "dwf";
                     break;
-                case CS.ExportFormat.DwFx:
+                case ExportFormat.DwFx:
                     extension = "dwfx";
                     break;
-                case CS.ExportFormat.Gbxml:
+                case ExportFormat.Gbxml:
                     extension = "xml";
                     break;
-                case CS.ExportFormat.Fbx:
+                case ExportFormat.Fbx:
                     extension = "fbx";
                     break;
-                case CS.ExportFormat.Dgn:
+                case ExportFormat.Dgn:
                     extension = "dgn";
                     break;
-                case CS.ExportFormat.Image:
+                case ExportFormat.Image:
                     extension = "";
                     break;
-                case CS.ExportFormat.Pdf:
+                case ExportFormat.Pdf:
                     extension = "pdf";
                     break;
             }

@@ -33,33 +33,26 @@ namespace Ara3D.RevitSampleBrowser.AnalysisVisualizationFramework.DistanceToSurf
             var uiApp = new UIApplication(app);
             var doc = uiApp.ActiveUIDocument.Document;
 
-            var collector = new FilteredElementCollector(doc);
-            collector.WherePasses(new ElementClassFilter(typeof(FamilyInstance)));
-            var sphereElements = from element in collector where element.Name == "sphere" select element;
-            if (!sphereElements.Any())
+            var sphere = doc.GetFilteredElements<FamilyInstance>().FirstOrDefault(s => s.Name == "Sphere");
+            if (sphere == null)
             {
-                TaskDialog.Show("Error", "Sphere family must be loaded");
+                TaskDialog.Show("Error", "No sphere family instance found, it must be loaded");
                 return;
             }
 
-            var sphere = sphereElements.Cast<FamilyInstance>().First();
-            var viewCollector = new FilteredElementCollector(doc);
-            viewCollector.OfClass(typeof(View3D)).ToElements();
-            var viewElements = from element in viewCollector where element.Name == "AVF" select element;
-            if (!viewElements.Any())
+            var view = doc.GetFilteredElements<View3D>().FirstOrDefault();
+            if (view == null)
             {
                 TaskDialog.Show("Error", "A 3D view named 'AVF' must exist to run this application.");
                 return;
             }
-
-            var view = viewElements.Cast<View>().First();
 
             var updater = new SpatialFieldUpdater(uiApp.ActiveAddInId, sphere.Id, view.Id);
             if (!UpdaterRegistry.IsUpdaterRegistered(updater.GetUpdaterId())) UpdaterRegistry.RegisterUpdater(updater);
             var wallFilter = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
             var familyFilter = new ElementClassFilter(typeof(FamilyInstance));
             var massFilter = new ElementCategoryFilter(BuiltInCategory.OST_Mass);
-            IList<Autodesk.Revit.DB.ElementFilter> filterList = new List<Autodesk.Revit.DB.ElementFilter>();
+            IList<ElementFilter> filterList = new List<ElementFilter>();
             filterList.Add(wallFilter);
             filterList.Add(familyFilter);
             filterList.Add(massFilter);

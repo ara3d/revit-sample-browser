@@ -141,7 +141,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
         /// </summary>
         private void FindElements()
         {
-            IList<Autodesk.Revit.DB.ElementFilter> filters = new List<Autodesk.Revit.DB.ElementFilter>(4);
+            IList<ElementFilter> filters = new List<ElementFilter>(4);
             filters.Add(new ElementClassFilter(typeof(Level)));
             filters.Add(new ElementClassFilter(typeof(View)));
             filters.Add(new ElementClassFilter(typeof(Floor)));

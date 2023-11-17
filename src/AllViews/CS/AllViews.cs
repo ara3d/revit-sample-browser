@@ -116,29 +116,22 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             m_vp = null;
             form.InvalidViewport = true;
 
-            var fec = new FilteredElementCollector(m_doc);
-            fec.OfClass(typeof(View));
-            var viewSheets = fec.Cast<View>().Where(vp => !vp.IsTemplate && vp.ViewType == ViewType.DrawingSheet);
+            var viewSheet = m_doc.GetFilteredElements<ViewSheet>()
+                .FirstOrDefault(vp => !vp.IsTemplate 
+                                      && vp.ViewType == ViewType.DrawingSheet 
+                                      && vp.Name == selectSheetName);
 
-            foreach (var view in viewSheets)
-                if (view.Name.Equals(selectSheetName))
-                {
-                    var viewSheet = (ViewSheet)view;
-                    foreach (var vpId in viewSheet.GetAllViewports())
-                    {
-                        var vp = (Viewport)m_doc.GetElement(vpId);
+            if (viewSheet != null)
+            {
+                m_vp = m_doc
+                    .GetElements<Viewport>(viewSheet.GetAllViewports())
+                    .First(vp => m_doc.GetElement<View>(vp.ViewId).Name == selectAssociatedViewName);
+            }
 
-                        var associatedView = m_doc.GetElement(vp.ViewId) as View;
-
-                        if (associatedView.Name.Equals(selectAssociatedViewName))
-                        {
-                            m_vp = vp;
-                            break;
-                        }
-                    }
-                }
-
-            if (m_vp == null) throw new InvalidOperationException("Viewport not found.");
+            if (m_vp == null)
+            {
+                throw new InvalidOperationException("Viewport not found.");
+            }
 
             form.InvalidViewport = false;
             UpdateViewportProperties(form);

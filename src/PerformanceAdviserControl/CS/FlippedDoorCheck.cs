@@ -123,7 +123,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         /// </summary>
         /// <param name="document">The document being checked</param>
         /// <returns>A door element filter</returns>
-        public Autodesk.Revit.DB.ElementFilter GetElementFilter(Document document)
+        public ElementFilter GetElementFilter(Document document)
         {
             return new ElementCategoryFilter(BuiltInCategory.OST_Doors);
         }

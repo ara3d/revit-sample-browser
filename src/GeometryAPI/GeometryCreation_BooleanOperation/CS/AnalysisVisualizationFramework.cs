@@ -74,8 +74,8 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             }
             else
             {
-                view = new FilteredElementCollector(m_doc).OfClass(typeof(View)).Cast<View>()
-                    .Where(e => e.Name == viewName).First();
+                view = new FilteredElementCollector(m_doc).OfClass(typeof(View))
+                    .Cast<View>().First(e => e.Name == viewName);
             }
 
             var sfm = SpatialFieldManager.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 1);
@@ -110,9 +110,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
             {
                 var idx = sfm.AddSpatialFieldPrimitive(face, trf);
 
-                IList<UV> uvPts = null;
-                IList<ValueAtPoint> valList = null;
-                ComputeValueAtPointForFace(face, out uvPts, out valList, 1);
+                ComputeValueAtPointForFace(face, out var uvPts, out var valList, 1);
 
                 var pnts = new FieldDomainPointsByUV(uvPts);
 

@@ -171,14 +171,14 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         /// </summary>
         /// <param name="filterRules">A list of FilterRules</param>
         /// <returns>The ElementFilter.</returns>
-        public static Autodesk.Revit.DB.ElementFilter CreateElementFilterFromFilterRules(IList<FilterRule> filterRules)
+        public static ElementFilter CreateElementFilterFromFilterRules(IList<FilterRule> filterRules)
         {
             // KEEP THIS FUNCTION SYNCHRONIZED WITH GetConjunctionOfFilterRulesFromElementFilter!!!
 
             // We use a LogicalAndFilter containing one ElementParameterFilter
             // for each FilterRule. We could alternatively create a single
             // ElementParameterFilter containing the entire list of FilterRules.
-            IList<Autodesk.Revit.DB.ElementFilter> elemFilters = new List<Autodesk.Revit.DB.ElementFilter>();
+            IList<ElementFilter> elemFilters = new List<ElementFilter>();
             foreach (var filterRule in filterRules)
             {
                 var elemParamFilter = new ElementParameterFilter(filterRule);
@@ -195,7 +195,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         /// </summary>
         /// <param name="elemFilter">An ElementFilter representing a conjunction of FilterRules.</param>
         /// <returns>A list of FilterRules whose conjunction the ElementFilter represents.</returns>
-        public static IList<FilterRule> GetConjunctionOfFilterRulesFromElementFilter(Autodesk.Revit.DB.ElementFilter elemFilter)
+        public static IList<FilterRule> GetConjunctionOfFilterRulesFromElementFilter(ElementFilter elemFilter)
         {
             // KEEP THIS FUNCTION SYNCHRONIZED WITH CreateElementFilterFromFilterRules!!!
 

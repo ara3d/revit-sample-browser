@@ -226,7 +226,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialQuantities.CS
         /// </summary>
         private void DeleteAllCuttingElements()
         {
-            new List<Autodesk.Revit.DB.ElementFilter>();
+            new List<ElementFilter>();
             var collector = new FilteredElementCollector(Doc);
 
             // (Type == FamilyInstance && (Category == Door || Category == Window) || Type == Opening

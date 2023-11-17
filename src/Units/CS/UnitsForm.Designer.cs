@@ -40,8 +40,8 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
          this.FormatOptions = new System.Windows.Forms.DataGridViewButtonColumn();
          this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
          this.String = new System.Windows.Forms.DataGridViewTextBoxColumn();
-         this.Frompublic = new System.Windows.Forms.DataGridViewTextBoxColumn();
-         this.Topublic = new System.Windows.Forms.DataGridViewTextBoxColumn();
+         this.FromInternal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+         this.ToInternal = new System.Windows.Forms.DataGridViewTextBoxColumn();
          this.groupBox = new System.Windows.Forms.GroupBox();
          this.DecimalSymbolAndGroupingtextBox = new System.Windows.Forms.TextBox();
          this.DecimalSymbolAndGroupinglabel = new System.Windows.Forms.Label();

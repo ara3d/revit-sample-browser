@@ -229,7 +229,7 @@ namespace Ara3D.RevitSampleBrowser.PostCommandWorkflow.CS
             /// <param name="monitor">The instance of the command.</param>
             public PostCommandRevisionMonitorEvent(PostCommandRevisionMonitor monitor)
             {
-                this.m_monitor = monitor;
+                m_monitor = monitor;
             }
 
             /// <summary>

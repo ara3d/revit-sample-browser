@@ -122,7 +122,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             };
 
             // Export DWF
-            if (ExportFormat == CS.ExportFormat.Dwf)
+            if (ExportFormat == ExportFormat.Dwf)
             {
                 Filter = "DWF Files |*.dwf";
                 Title = "Export DWF";
@@ -154,7 +154,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 views = SelectViewsData.SelectedViews;
 
             // Export DWFx
-            if (ExportFormat == CS.ExportFormat.DwFx)
+            if (ExportFormat == ExportFormat.DwFx)
             {
                 var options = new DWFXExportOptions
                 {
