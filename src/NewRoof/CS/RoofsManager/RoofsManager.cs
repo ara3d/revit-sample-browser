@@ -153,7 +153,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofsManager
                 // just use the vertical plane
                 if (Math.Abs(plane.Normal.DotProduct(XYZ.BasisZ)) < 1.0e-09)
                 {
-                    if (plane.Name == "Reference Plane") plane.Name = "Reference Plane" + "(" + plane.Id + ")";
+                    if (plane.Name == "Reference Plane") plane.Name = $"Reference Plane({plane.Id})";
                     m_referencePlanes.Add(plane);
                 }
             }

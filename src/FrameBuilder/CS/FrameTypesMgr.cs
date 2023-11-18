@@ -129,7 +129,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             var result = symbolName;
             while (ContainsSymbolName(result))
             {
-                result = symbolName + " " + suffix;
+                result = $"{symbolName} {suffix}";
                 suffix++;
             }
 

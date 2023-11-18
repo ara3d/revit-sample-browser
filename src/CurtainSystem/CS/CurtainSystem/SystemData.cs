@@ -270,7 +270,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
             set
             {
                 m_index = value;
-                Name = "Curtain System " + m_index;
+                Name = $"Curtain System {m_index}";
             }
         }
 
@@ -400,7 +400,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         /// </returns>
         public override string ToString()
         {
-            return "Grid on Face " + FaceIndex;
+            return $"Grid on Face {FaceIndex}";
         }
     }
 
@@ -434,7 +434,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         /// </returns>
         public override string ToString()
         {
-            return "Face " + Index;
+            return $"Face {Index}";
         }
     }
 }

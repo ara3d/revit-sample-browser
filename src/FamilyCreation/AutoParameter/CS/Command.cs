@@ -142,7 +142,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
 
             var myDocumentsFolder = Environment.SpecialFolder.MyDocuments;
             var myDocs = Environment.GetFolderPath(myDocumentsFolder);
-            var families = myDocs + "\\AutoParameter_Families";
+            var families = $"{myDocs}\\AutoParameter_Families";
             if (!Directory.Exists(families))
                 MessageManager.MessageBuff.Append(
                     "The folder [AutoParameter_Families] doesn't exist in [MyDocuments] folder.\n");
@@ -154,8 +154,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
             {
                 if (info.IsReadOnly)
                 {
-                    MessageManager.MessageBuff.Append("Family file: \"" + info.FullName +
-                                                      "\" is read only. Can not add parameters to it.\n");
+                    MessageManager.MessageBuff.Append(
+                        $"Family file: \"{info.FullName}\" is read only. Can not add parameters to it.\n");
                     continue;
                 }
 
@@ -165,7 +165,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
                 if (!doc.IsFamilyDocument)
                 {
                     succeeded = false;
-                    MessageManager.MessageBuff.Append("Document: \"" + famFilePath + "\" is not a family document.\n");
+                    MessageManager.MessageBuff.Append($"Document: \"{famFilePath}\" is not a family document.\n");
                     continue;
                 }
 
@@ -194,7 +194,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
                 {
                     t.RollBack();
                     doc.Close();
-                    MessageManager.MessageBuff.Append("Failed to add parameters to " + famFilePath + ".\n");
+                    MessageManager.MessageBuff.Append($"Failed to add parameters to {famFilePath}.\n");
                     return false;
                 }
             }

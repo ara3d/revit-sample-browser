@@ -128,21 +128,21 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
                 //Text Size
                 temporaryParam = dimensionType.get_Parameter(BuiltInParameter.TEXT_SIZE);
                 temporaryValue =
-                    (temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter) + "''";
+                    $"{(temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter)}''";
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //Text Offset from Leader
                 temporaryParam =
                     dimensionType.get_Parameter(BuiltInParameter.SPOT_TEXT_FROM_LEADER);
                 temporaryValue =
-                    (temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter) + "''";
+                    $"{(temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter)}''";
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //Text Offset from Symbol
                 temporaryParam =
                     dimensionType.get_Parameter(BuiltInParameter.SPOT_ELEV_TEXT_HORIZ_OFFSET);
                 temporaryValue =
-                    (temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter) + "''";
+                    $"{(temporaryParam.AsDouble() / ToFractionalInches).ToString(formatter)}''";
                 AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                 //for Spot Coordinates, add some other Parameters 
@@ -184,7 +184,7 @@ namespace Ara3D.RevitSampleBrowser.SpotDimension.CS
                     //Instance Parameter----Value
                     temporaryParam =
                         spotDimension.get_Parameter(BuiltInParameter.DIM_VALUE_LENGTH);
-                    temporaryValue = temporaryParam.AsDouble().ToString(formatter) + "'";
+                    temporaryValue = $"{temporaryParam.AsDouble().ToString(formatter)}'";
                     AddDataRow(temporaryParam.Definition.Name, temporaryValue, parameterTable);
 
                     //Elevation Origin

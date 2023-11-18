@@ -188,7 +188,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
         private static Curve CreateReversedCurve(Curve orig)
         {
             if (!SupportsLoopUtilities(orig))
-                throw new NotImplementedException("CreateReversedCurve for type " + orig.GetType().Name);
+                throw new NotImplementedException($"CreateReversedCurve for type {orig.GetType().Name}");
 
             switch (orig)
             {

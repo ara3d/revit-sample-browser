@@ -46,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var callingFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var saveAsDlg = new FileSaveDialog("MAJ Files (*.maj)|*.maj")
                 {
-                    InitialFileName = callingFolder + "\\majExport",
+                    InitialFileName = $"{callingFolder}\\majExport",
                     Title = "Export To MAJ"
                 };
                 var result = saveAsDlg.Show();
@@ -65,8 +65,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     {
                         MainIcon = TaskDialogIcon.TaskDialogIconInformation,
                         TitleAutoPrefix = false,
-                        MainInstruction = string.Concat("Export to MAJ was successful - ", exported.Count.ToString(),
-                            " Parts written"),
+                        MainInstruction = $"Export to MAJ was successful - {exported.Count} Parts written",
                         MainContent = filename,
                         AllowCancellation = false,
                         CommonButtons = TaskDialogCommonButtons.Ok

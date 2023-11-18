@@ -53,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 
         public bool IsCriticalPath { get; }
 
-        public string Id => m_id.ElementId + @"_" + m_id.SegmentId;
+        public string Id => $@"{m_id.ElementId}_{m_id.SegmentId}";
 
         public ElementId RevitElementId => m_id.ElementId;
 

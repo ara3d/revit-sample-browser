@@ -23,10 +23,10 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
             sb.AppendLine();
 
             var doc = args.GetDocument();
-            sb.AppendLine("[Event] " + GetEventName(args.GetType()) + ": " + TitleNoExt(doc.Title));
+            sb.AppendLine($"[Event] {GetEventName(args.GetType())}: {TitleNoExt(doc.Title)}");
 
             var refs = args.GetReferences();
-            sb.AppendLine("Selection Count:" + refs.Count);
+            sb.AppendLine($"Selection Count:{refs.Count}");
 
             foreach (var aRef in refs)
             {

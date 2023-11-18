@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             {
                 if (itemName == m_data.LocationName)
                 {
-                    m_currentName = itemName + " (current)"; //indicate the current project location
+                    m_currentName = $"{itemName} (current)"; //indicate the current project location
                     locationListBox.Items.Add(m_currentName);
                 }
                 else

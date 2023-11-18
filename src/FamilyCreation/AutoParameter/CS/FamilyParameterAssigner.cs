@@ -88,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
         {
             exist = true;
             // step 1: find the file "FamilyParameter.txt" and open it
-            var fileName = m_assemblyPath + "\\FamilyParameter.txt";
+            var fileName = $"{m_assemblyPath}\\FamilyParameter.txt";
             if (!File.Exists(fileName))
             {
                 exist = false;
@@ -137,8 +137,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
                     if (4 != values.Count)
                     {
                         MessageManager.MessageBuff.Append("Loading family parameter data from \"FamilyParam.txt\".");
-                        MessageManager.MessageBuff.Append("Line [\"" + line + "]\"" +
-                                                          "doesn't follow the valid format.\n");
+                        MessageManager.MessageBuff.Append($"Line [\"{line}]\"doesn't follow the valid format.\n");
                         return false;
                     }
 
@@ -159,8 +158,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
                     if (m_familyParams.ContainsKey(paramName))
                     {
                         var duplicatedParam = m_familyParams[paramName];
-                        var warning = "Line " + param.Line + "has a duplicate parameter name with Line " +
-                                      duplicatedParam.Line + "\n";
+                        var warning =
+                            $"Line {param.Line}has a duplicate parameter name with Line {duplicatedParam.Line}\n";
                         MessageManager.MessageBuff.Append(warning);
                         continue;
                     }
@@ -194,7 +193,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
         private bool LoadSharedParameterFromFile(out bool exist)
         {
             exist = true;
-            var filePath = m_assemblyPath + "\\SharedParameter.txt";
+            var filePath = $"{m_assemblyPath}\\SharedParameter.txt";
             if (!File.Exists(filePath))
             {
                 exist = false;
@@ -255,8 +254,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.AutoParameter.CS
                 {
                     allParamValid = false;
                     var famParam = m_familyParams[name];
-                    MessageManager.MessageBuff.Append("Line " + famParam.Line + ": paramName \"" + famParam.Name +
-                                                      "\"already exists in the family document.\n");
+                    MessageManager.MessageBuff.Append(
+                        $"Line {famParam.Line}: paramName \"{famParam.Name}\"already exists in the family document.\n");
                 }
             }
 

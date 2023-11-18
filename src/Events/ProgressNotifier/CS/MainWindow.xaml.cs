@@ -42,8 +42,8 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
 
         private void RevitApp_DocumentOpened(object sender, DocumentOpenedEventArgs e)
         {
-            textBox_log.Text += "RevitApp_DocumentOpened: Cancellable:" + e.Cancellable + " , IsCancelled: " +
-                                e.IsCancelled() + " , Status:" + e.Status + Environment.NewLine;
+            textBox_log.Text +=
+                $"RevitApp_DocumentOpened: Cancellable:{e.Cancellable} , IsCancelled: {e.IsCancelled()} , Status:{e.Status}{Environment.NewLine}";
             m_receivedCancelEvent = e.Status == RevitAPIEventStatus.Cancelled;
         }
 
@@ -60,7 +60,7 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
             {
                 var shouldCancel = e.Cancellable;
                 if (e.IsCancelled())
-                    textBox_log.Text += "!! We are already canceled!" + Environment.NewLine;
+                    textBox_log.Text += $"!! We are already canceled!{Environment.NewLine}";
 
                 try
                 {
@@ -69,8 +69,8 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
                 }
                 catch (Exception ex)
                 {
-                    textBox_log.Text += "Exception: " + ex + Environment.NewLine + "'  Cancelable' value: " +
-                                        shouldCancel + Environment.NewLine;
+                    textBox_log.Text +=
+                        $"Exception: {ex}{Environment.NewLine}'  Cancelable' value: {shouldCancel}{Environment.NewLine}";
                 }
             }
 
@@ -119,7 +119,7 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
             try
             {
                 document = m_application.OpenDocumentFile(ofd.FileName);
-                textBox_log.Text += "Opened filename = " + document.Title + Environment.NewLine;
+                textBox_log.Text += $"Opened filename = {document.Title}{Environment.NewLine}";
             }
             catch (Exception ex)
             {
@@ -131,10 +131,9 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
                     else
                         isNull = " is not null.";
 
-                    textBox_log.Text += "Open Document has thrown an exception." + Environment.NewLine;
+                    textBox_log.Text += $"Open Document has thrown an exception.{Environment.NewLine}";
                     textBox_log.Text +=
-                        "We just got a cancel event, so this exception is likely from 'Open' being canceled. Returned document" +
-                        isNull + Environment.NewLine;
+                        $"We just got a cancel event, so this exception is likely from 'Open' being canceled. Returned document{isNull}{Environment.NewLine}";
                     m_receivedCancelEvent = false;
                 }
                 else

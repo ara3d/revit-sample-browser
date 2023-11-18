@@ -125,7 +125,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             catch (Exception e)
             {
                 m_errCount++;
-                m_errorInfo += "Unexpected exceptions occur in CreateExtrusion: " + e + "\r\n";
+                m_errorInfo += $"Unexpected exceptions occur in CreateExtrusion: {e}\r\n";
             }
         }
 
@@ -179,7 +179,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             catch (Exception e)
             {
                 m_errCount++;
-                m_errorInfo += "Unexpected exceptions occur in CreateBlend: " + e + "\r\n";
+                m_errorInfo += $"Unexpected exceptions occur in CreateBlend: {e}\r\n";
             }
         }
 
@@ -223,7 +223,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             catch (Exception e)
             {
                 m_errCount++;
-                m_errorInfo += "Unexpected exceptions occur in CreateRevolution: " + e + "\r\n";
+                m_errorInfo += $"Unexpected exceptions occur in CreateRevolution: {e}\r\n";
             }
         }
 
@@ -264,7 +264,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             catch (Exception e)
             {
                 m_errCount++;
-                m_errorInfo += "Unexpected exceptions occur in CreateSweep: " + e + "\r\n";
+                m_errorInfo += $"Unexpected exceptions occur in CreateSweep: {e}\r\n";
             }
         }
 
@@ -320,7 +320,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.GenericModelCreation.CS
             catch (Exception e)
             {
                 m_errCount++;
-                m_errorInfo += "Unexpected exceptions occur in CreateSweptBlend: " + e + "\r\n";
+                m_errorInfo += $"Unexpected exceptions occur in CreateSweptBlend: {e}\r\n";
             }
         }
 

@@ -62,7 +62,7 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
 
                 // get the area value
                 var areaValue = double.Parse(propertyValue); //room area
-                tmpItem.SubItems.Add(propertyValue + " SF");
+                tmpItem.SubItems.Add($"{propertyValue} SF");
 
                 // display whether the room with tag or not
                 if (isHaveTag)
@@ -138,8 +138,7 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
                 // create a listview item
                 var tmpItem = new ListViewItem(departmentInfo.DepartmentName);
                 tmpItem.SubItems.Add(departmentInfo.RoomsAmount.ToString());
-                tmpItem.SubItems.Add(departmentInfo.DepartmentAreaValue +
-                                     " SF");
+                tmpItem.SubItems.Add($"{departmentInfo.DepartmentAreaValue} SF");
                 departmentsListView.Items.Add(tmpItem);
             }
         }

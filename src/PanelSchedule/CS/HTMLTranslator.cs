@@ -46,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
             }
 
             var panelScheduleFile =
-                asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(PsView.Name) + ".html");
+                asemblyName.Replace("PanelSchedule.dll", $"{ReplaceIllegalCharacters(PsView.Name)}.html");
 
             var doc = new XmlDocument();
             var tw = new XmlTextWriter(panelScheduleFile, null);

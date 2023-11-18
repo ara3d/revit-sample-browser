@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
             Text = "Validate Parameters Message Form";
             //create regeneration log file
             var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            m_logFileName = assemblyPath + "\\ValidateParametersLog.txt";
+            m_logFileName = $"{assemblyPath}\\ValidateParametersLog.txt";
             var writer = File.CreateText(m_logFileName);
             writer.Close();
             if (messages.Length == 0)
@@ -55,13 +55,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
                     else
                     {
                         WriteLog(row);
-                        msgText += row + "\n";
+                        msgText += $"{row}\n";
                     }
                 }
             }
 
-            msgText += "\n\nIf you want to know the validating parameters result, please get the log file at \n" +
-                       m_logFileName;
+            msgText +=
+                $"\n\nIf you want to know the validating parameters result, please get the log file at \n{m_logFileName}";
             messageRichTextBox.Text = msgText;
             StartPosition = FormStartPosition.CenterParent;
             CheckForIllegalCrossThreadCalls = false;

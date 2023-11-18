@@ -179,7 +179,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             }
             else
             {
-                if (!Name.Contains(name)) Name += " + " + name;
+                if (!Name.Contains(name)) Name += $" + {name}";
             }
         }
 
@@ -217,7 +217,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
                     if (string.IsNullOrEmpty(path))
                         path = item.Key.ToString();
                     else
-                        path += @" - " + item.Key;
+                        path += $@" - {item.Key}";
                 }
             }
 

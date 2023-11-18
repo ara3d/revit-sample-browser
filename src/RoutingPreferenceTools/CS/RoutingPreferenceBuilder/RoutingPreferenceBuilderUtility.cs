@@ -49,8 +49,8 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             StreamReader reader = null;
             try
             {
-                reader = new StreamReader(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName +
-                                          "\\familypaths.xml");
+                reader = new StreamReader(
+                    $"{Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName}\\familypaths.xml");
             }
             catch (Exception)
             {
@@ -195,7 +195,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             }
             catch (XmlSchemaValidationException ex)
             {
-                message = ex.Message + ", " + ex.LineNumber + ", " + ex.LinePosition;
+                message = $"{ex.Message}, {ex.LineNumber}, {ex.LinePosition}";
                 return false;
             }
         }

@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
         private void Log(string msg)
         {
             var dt = DateTime.Now.ToString("u");
-            Trace.WriteLine(dt + " " + msg);
+            Trace.WriteLine($"{dt} {msg}");
         }
 
         /// <summary>

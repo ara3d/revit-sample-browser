@@ -122,7 +122,7 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
             DumpPrintEnv(Environment.UserName, e.Document.PrintManager.PrinterName, e.Document.Title);
             //
             // Start new watch for DocumentPrint
-            Trace.WriteLine(Environment.NewLine + "Document Print Start: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            Trace.WriteLine($"{Environment.NewLine}Document Print Start: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             StartNewWatch(e.Document, false);
             //
             // Dump the events arguments 
@@ -138,7 +138,7 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
         public void AppViewPrinting(object sender, ViewPrintingEventArgs e)
         {
             // header information
-            Trace.WriteLine(Environment.NewLine + "View Print Start: -----------------------------------------------");
+            Trace.WriteLine($"{Environment.NewLine}View Print Start: -----------------------------------------------");
             //
             // Start new watch for ViewPrint
             StartNewWatch(e.Document, true);
@@ -157,7 +157,7 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
         public void AppViewPrinted(object sender, ViewPrintedEventArgs e)
         {
             // header information
-            Trace.WriteLine(Environment.NewLine + "View Print End: -------");
+            Trace.WriteLine($"{Environment.NewLine}View Print End: -------");
             //
             // Stop watch and calculate the cost time
             StopWatch(e.Document, true);
@@ -175,7 +175,7 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
         public void AppDocumentPrinted(object sender, DocumentPrintedEventArgs e)
         {
             // header information
-            Trace.WriteLine(Environment.NewLine + "Document Print End: <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            Trace.WriteLine($"{Environment.NewLine}Document Print End: <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             //
             // Stop watch and calculate the cost time
             StopWatch(e.Document, false);
@@ -284,9 +284,9 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
         private void DumpPrintEnv(string user, string printer, string projectName)
         {
             m_printLog.WriteLine("Start to Print..................................................");
-            m_printLog.WriteLine(">> Print user: " + user);
-            m_printLog.WriteLine(">> Printer name: " + printer);
-            m_printLog.WriteLine(">> Project name: " + projectName);
+            m_printLog.WriteLine($">> Print user: {user}");
+            m_printLog.WriteLine($">> Printer name: {printer}");
+            m_printLog.WriteLine($">> Project name: {projectName}");
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
             {
                 Trace.WriteLine("DocumentPrintingEventArgs Parameters ------>");
                 var args = eventArgs as DocumentPrintingEventArgs;
-                Trace.WriteLine("    Event Cancellable   : " + args.Cancellable); // cancellable
+                Trace.WriteLine($"    Event Cancellable   : {args.Cancellable}"); // cancellable
                 Trace.WriteLine("    Views to be printed : "); // Views
                 DumpViewsInfo(args.Document, args.GetViewElementIds(), "    ");
             }
@@ -327,8 +327,8 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
             {
                 Trace.WriteLine("DocumentPrintedEventArgs Parameters ------>");
                 var args = eventArgs as DocumentPrintedEventArgs;
-                Trace.WriteLine("    Event Status      : " + args.Status); // Status
-                Trace.WriteLine("    Event Cancellable : " + args.Cancellable); // Cancellable 
+                Trace.WriteLine($"    Event Status      : {args.Status}"); // Status
+                Trace.WriteLine($"    Event Cancellable : {args.Cancellable}"); // Cancellable 
                 //
                 // PrintedViews
                 var ids = args.GetPrintedViewElementIds();
@@ -359,9 +359,9 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
             {
                 Trace.WriteLine("ViewPrintingEventArgs Parameters ------>");
                 var args = eventArgs as ViewPrintingEventArgs;
-                Trace.WriteLine("    Event Cancellable   : " + args.Cancellable); // Cancellable
-                Trace.WriteLine("    TotalViews          : " + args.TotalViews); // TotalViews
-                Trace.WriteLine("    View Index          : " + args.Index); // Index
+                Trace.WriteLine($"    Event Cancellable   : {args.Cancellable}"); // Cancellable
+                Trace.WriteLine($"    TotalViews          : {args.TotalViews}"); // TotalViews
+                Trace.WriteLine($"    View Index          : {args.Index}"); // Index
                 Trace.WriteLine("    View Information    :"); // View
                 DumpViewInfo(args.View, "      ");
             }
@@ -369,9 +369,9 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
             {
                 Trace.WriteLine("ViewPrintedEventArgs Parameters ------>");
                 var args = eventArgs as ViewPrintedEventArgs;
-                Trace.WriteLine("    Event Status        : " + args.Status); // Cancellable
-                Trace.WriteLine("    TotalViews          : " + args.TotalViews); // TotalViews
-                Trace.WriteLine("    View Index          : " + args.Index); // Index
+                Trace.WriteLine($"    Event Status        : {args.Status}"); // Cancellable
+                Trace.WriteLine($"    TotalViews          : {args.TotalViews}"); // TotalViews
+                Trace.WriteLine($"    View Index          : {args.Index}"); // Index
                 Trace.WriteLine("    View Information    :"); // View
                 DumpViewInfo(args.View, "      ");
             }

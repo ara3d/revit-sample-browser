@@ -81,9 +81,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             {
                 if (value < YNumberMinValue || value > YNumberMaxValue)
                 {
-                    var message = "Number of Columns in the Y Direction should no less than "
-                                  + YNumberMinValue + " and no more than "
-                                  + YNumberMaxValue;
+                    var message =
+                        $"Number of Columns in the Y Direction should no less than {YNumberMinValue} and no more than {YNumberMaxValue}";
                     throw new ErrorMessageException(message);
                 }
 
@@ -102,9 +101,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             {
                 if (value < XNumberMinValue || value > XNumberMaxValue)
                 {
-                    var message = "Number of Columns in the X Direction should no less than "
-                                  + XNumberMinValue + " and no more than "
-                                  + XNumberMaxValue;
+                    var message =
+                        $"Number of Columns in the X Direction should no less than {XNumberMinValue} and no more than {XNumberMaxValue}";
                     throw new ErrorMessageException(message);
                 }
 
@@ -123,9 +121,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             {
                 if (value < DistanceMinValue || value > DistanceMaxValue)
                 {
-                    var message = "The distance between columns shoule no less than "
-                                  + DistanceMinValue + "and no more than "
-                                  + DistanceMaxValue;
+                    var message =
+                        $"The distance between columns shoule no less than {DistanceMinValue}and no more than {DistanceMaxValue}";
                     throw new ErrorMessageException(message);
                 }
 
@@ -143,9 +140,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             {
                 if (value < FloorNumberMinValue || value > FloorNumberMaxValue)
                 {
-                    var message = "Number of floors should no less than "
-                                  + FloorNumberMinValue + " and no more than "
-                                  + FloorNumberMaxValue;
+                    var message =
+                        $"Number of floors should no less than {FloorNumberMinValue} and no more than {FloorNumberMaxValue}";
                     throw new ErrorMessageException(message);
                 }
 
@@ -164,9 +160,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             {
                 if (value < LevelHeightMinValue || value > LevelHeightMaxValue)
                 {
-                    var message = "The distance between columns shoule no less than "
-                                  + LevelHeightMinValue + "and no more than "
-                                  + LevelHeightMaxValue;
+                    var message =
+                        $"The distance between columns shoule no less than {LevelHeightMinValue}and no more than {LevelHeightMaxValue}";
                     throw new ErrorMessageException(message);
                 }
 
@@ -313,8 +308,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
         {
             if (number > TotalMaxValue)
             {
-                var message = "The total number of columns should less than "
-                              + TotalMaxValue;
+                var message = $"The total number of columns should less than {TotalMaxValue}";
                 throw new ErrorMessageException(message);
             }
         }

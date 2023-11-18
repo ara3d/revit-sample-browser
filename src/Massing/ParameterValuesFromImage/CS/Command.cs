@@ -26,7 +26,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.ParameterValuesFromImage.CS
 
             var trans = new Transaction(doc, "Ara3D.RevitSampleBrowser.ParameterValuesFromImage");
             trans.Start();
-            var image = new Bitmap(doc.PathName + "_grayscale.bmp");
+            var image = new Bitmap($"{doc.PathName}_grayscale.bmp");
             var collector = new FilteredElementCollector(doc);
             ICollection<Element> collection = collector.OfClass(typeof(DividedSurface)).ToElements();
             foreach (var element in collection)

@@ -127,7 +127,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         private void startTransButton_Click(object sender, EventArgs e)
         {
             var transNo = m_transCount + 1;
-            m_transaction = new Transaction(m_document, "Transaction " + transNo);
+            m_transaction = new Transaction(m_document, $"Transaction {transNo}");
             if (m_transaction.Start() == TransactionStatus.Started)
             {
                 m_transCount++;
@@ -220,7 +220,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
                                 if (subTransaction.Commit() == TransactionStatus.Committed)
                                 {
                                     m_lastCreatedWall = createWallForm.CreatedWall;
-                                    AddNode(OperationType.ObjectModification, "Created wall " + m_lastCreatedWall.Id);
+                                    AddNode(OperationType.ObjectModification, $"Created wall {m_lastCreatedWall.Id}");
                                     UpdateButtonsStatus();
                                     return;
                                 }
@@ -234,7 +234,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
                 }
                 catch (Exception ex)
                 {
-                    TaskDialog.Show("Revit", "Exception when creating a wall: " + ex.Message);
+                    TaskDialog.Show("Revit", $"Exception when creating a wall: {ex.Message}");
                 }
             }
 
@@ -266,14 +266,14 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
 
                         if (subTransaction.Commit() == TransactionStatus.Committed)
                         {
-                            AddNode(OperationType.ObjectModification, "Moved wall " + m_lastCreatedWall.Id);
+                            AddNode(OperationType.ObjectModification, $"Moved wall {m_lastCreatedWall.Id}");
                             return;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    TaskDialog.Show("Revit", "Exception when moving a wall: " + ex.Message);
+                    TaskDialog.Show("Revit", $"Exception when moving a wall: {ex.Message}");
                 }
             }
 
@@ -300,7 +300,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
                     var wallId = m_lastCreatedWall.Id.ToString();
 
                     if (TaskDialogResult.No ==
-                        TaskDialog.Show("Warning", "Do you really want to delete wall with id " + wallId + "?",
+                        TaskDialog.Show("Warning", $"Do you really want to delete wall with id {wallId}?",
                             TaskDialogCommonButtons.Yes | TaskDialogCommonButtons.No))
                         return;
 
@@ -311,7 +311,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
 
                         if (subTransaction.Commit() == TransactionStatus.Committed)
                         {
-                            AddNode(OperationType.ObjectDeletion, "Deleted wall " + wallId);
+                            AddNode(OperationType.ObjectDeletion, $"Deleted wall {wallId}");
                             m_lastCreatedWall = null;
                             UpdateButtonsStatus();
                             return;
@@ -320,7 +320,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
                 }
                 catch (Exception ex)
                 {
-                    TaskDialog.Show("Revit", "Exception when deleting a wall: " + ex.Message);
+                    TaskDialog.Show("Revit", $"Exception when deleting a wall: {ex.Message}");
                 }
             }
 
@@ -335,7 +335,7 @@ namespace Ara3D.RevitSampleBrowser.TransactionControl.CS
         private void btnStartTransGroup_Click(object sender, EventArgs e)
         {
             m_transGroupCount++;
-            m_transactionGroup = new TransactionGroup(m_document, "Transaction Group " + m_transGroupCount);
+            m_transactionGroup = new TransactionGroup(m_document, $"Transaction Group {m_transGroupCount}");
             m_transactionGroup.Start();
 
             AddNode(OperationType.StartTransactionGroup);

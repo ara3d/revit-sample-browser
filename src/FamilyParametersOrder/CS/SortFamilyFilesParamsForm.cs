@@ -93,7 +93,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
                 doc.Close(false);
             }
 
-            TaskDialog.Show("Message", "Sort completed! " + fileInfo.Count() + " family file(s) sorted.");
+            TaskDialog.Show("Message", $"Sort completed! {fileInfo.Count()} family file(s) sorted.");
         }
 
         private void A_ZBtn_Click(object sender, EventArgs e)

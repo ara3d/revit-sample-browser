@@ -31,9 +31,9 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
                 var panel = application.CreateRibbonPanel(str);
                 var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var data = new PushButtonData("Default Type Selector", "Default Type Selector",
-                    directoryName + @"\GetSetDefaultTypes.dll", "Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS.ThisCommand");
+                    $@"{directoryName}\GetSetDefaultTypes.dll", "Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS.ThisCommand");
                 var button = panel.AddItem(data) as PushButton;
-                button.LargeImage = new BitmapImage(new Uri(directoryName + "\\Resources\\type.png"));
+                button.LargeImage = new BitmapImage(new Uri($"{directoryName}\\Resources\\type.png"));
 
                 // register dockable Windows on startup.
                 DefaultFamilyTypesPane = new DefaultFamilyTypes();

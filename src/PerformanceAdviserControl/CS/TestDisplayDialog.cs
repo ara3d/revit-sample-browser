@@ -42,8 +42,8 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
             {
                 var isEnabled = (bool)row.Cells[0].Value;
                 m_performanceAdviser.SetRuleEnabled(testIndex, isEnabled);
-                Debug.WriteLine("Test Name: " + m_performanceAdviser.GetRuleName(testIndex) + " Enabled? " +
-                                !m_performanceAdviser.IsRuleEnabled(testIndex));
+                Debug.WriteLine(
+                    $"Test Name: {m_performanceAdviser.GetRuleName(testIndex)} Enabled? {!m_performanceAdviser.IsRuleEnabled(testIndex)}");
                 testIndex++;
             }
 

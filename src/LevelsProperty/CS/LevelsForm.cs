@@ -101,7 +101,7 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 
                 var lastLevelName = lastItem.Name;
                 var lastLevelElevation = lastItem.Elevation;
-                newLevelName = lastLevelName + "'";
+                newLevelName = $"{lastLevelName}'";
                 newLevelElevation = lastLevelElevation + Unit.CovertFromApi(m_objectReference.UnitTypeId, 10);
             }
             else
@@ -252,7 +252,7 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
                         if (false == m_objectReference.SetLevel(changeItem.LevelIdValue, changeItem.Name,
                                 changeItem.Elevation))
                         {
-                            changeItem.Name = "TempName" + changeItem.Name;
+                            changeItem.Name = $"TempName{changeItem.Name}";
                             tempLevels.Add(changeItem);
                             m_objectReference.SetLevel(changeItem.LevelIdValue, changeItem.Name, changeItem.Elevation);
                         }

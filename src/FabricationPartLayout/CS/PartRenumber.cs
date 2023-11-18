@@ -67,24 +67,24 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                             if (IsADuct(part1))
                             {
                                 if (IsACoupling(part1))
-                                    part1.ItemNumber = "DUCT COUPLING: " + m_ductCouplingNum++;
+                                    part1.ItemNumber = $"DUCT COUPLING: {m_ductCouplingNum++}";
                                 else
-                                    part1.ItemNumber = "DUCT: " + m_ductNum++;
+                                    part1.ItemNumber = $"DUCT: {m_ductNum++}";
                             }
                             else if (IsAPipe(part1))
                             {
                                 if (IsACoupling(part1))
-                                    part1.ItemNumber = "PIPE COUPLING: " + m_pipeCouplingNum++;
+                                    part1.ItemNumber = $"PIPE COUPLING: {m_pipeCouplingNum++}";
                                 else
-                                    part1.ItemNumber = "PIPE: " + m_pipeNum++;
+                                    part1.ItemNumber = $"PIPE: {m_pipeNum++}";
                             }
                             else if (part1.IsAHanger())
                             {
-                                part1.ItemNumber = "HANGER: " + m_hangerNum++;
+                                part1.ItemNumber = $"HANGER: {m_hangerNum++}";
                             }
                             else
                             {
-                                part1.ItemNumber = "MISC: " + m_otherNum++;
+                                part1.ItemNumber = $"MISC: {m_otherNum++}";
                             }
                         }
 

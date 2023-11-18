@@ -44,7 +44,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         /// <returns>The name (the file name).</returns>
         public string GetName()
         {
-            return "apipc: " + m_identifier;
+            return $"apipc: {m_identifier}";
         }
 
         /// <summary>

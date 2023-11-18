@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             viewSheetSetListView.Items.Clear();
             foreach (var view in views)
             {
-                var item = new ListViewItem(view.ViewType + ": " + view.Name);
+                var item = new ListViewItem($"{view.ViewType}: {view.Name}");
                 item.Checked = m_viewSheets.IsSelected(item.Text);
                 viewSheetSetListView.Items.Add(item);
             }

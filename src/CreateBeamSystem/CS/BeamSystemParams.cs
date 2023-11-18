@@ -91,7 +91,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             set
             {
                 if (LayoutType != value)
-                    // invokes the delegate
                     LayoutRuleChanged(ref value);
             }
         }

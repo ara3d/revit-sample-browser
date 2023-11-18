@@ -99,10 +99,10 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
                 foreach (var app in revitAddInManifest.AddInApplications)
                 {
                     var appNode = apps.Nodes.Add(app.Name);
-                    appNode.Nodes.Add("Name: " + app.Name);
-                    appNode.Nodes.Add("Assembly: " + app.Assembly);
-                    appNode.Nodes.Add("AddInId: " + app.AddInId);
-                    appNode.Nodes.Add("Full Class Name: " + app.FullClassName);
+                    appNode.Nodes.Add($"Name: {app.Name}");
+                    appNode.Nodes.Add($"Assembly: {app.Assembly}");
+                    appNode.Nodes.Add($"AddInId: {app.AddInId}");
+                    appNode.Nodes.Add($"Full Class Name: {app.FullClassName}");
                 }
             }
 
@@ -112,17 +112,17 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
                 foreach (var cmd in revitAddInManifest.AddInCommands)
                 {
                     var cmdNode = cmds.Nodes.Add(cmd.Text);
-                    cmdNode.Nodes.Add("Assembly: " + cmd.Assembly);
-                    cmdNode.Nodes.Add("AddInId: " + cmd.AddInId);
-                    cmdNode.Nodes.Add("Full Class Name: " + cmd.FullClassName);
-                    cmdNode.Nodes.Add("Text: " + cmd.Text);
-                    cmdNode.Nodes.Add("Description: " + cmd.Description);
-                    cmdNode.Nodes.Add("LanguageType: " + cmd.LanguageType);
-                    cmdNode.Nodes.Add("LargeImage: " + cmd.LargeImage);
-                    cmdNode.Nodes.Add("LongDescription: " + cmd.LongDescription);
-                    cmdNode.Nodes.Add("TooltipImage: " + cmd.TooltipImage);
-                    cmdNode.Nodes.Add("VisibilityMode: " + cmd.VisibilityMode);
-                    cmdNode.Nodes.Add("AvailabilityClassName: " + cmd.AvailabilityClassName);
+                    cmdNode.Nodes.Add($"Assembly: {cmd.Assembly}");
+                    cmdNode.Nodes.Add($"AddInId: {cmd.AddInId}");
+                    cmdNode.Nodes.Add($"Full Class Name: {cmd.FullClassName}");
+                    cmdNode.Nodes.Add($"Text: {cmd.Text}");
+                    cmdNode.Nodes.Add($"Description: {cmd.Description}");
+                    cmdNode.Nodes.Add($"LanguageType: {cmd.LanguageType}");
+                    cmdNode.Nodes.Add($"LargeImage: {cmd.LargeImage}");
+                    cmdNode.Nodes.Add($"LongDescription: {cmd.LongDescription}");
+                    cmdNode.Nodes.Add($"TooltipImage: {cmd.TooltipImage}");
+                    cmdNode.Nodes.Add($"VisibilityMode: {cmd.VisibilityMode}");
+                    cmdNode.Nodes.Add($"AvailabilityClassName: {cmd.AvailabilityClassName}");
                 }
             }
         }
@@ -137,14 +137,14 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.RevitAddInUtilitySample
             foreach (var revitProduct in RevitProductUtility.GetAllInstalledRevitProducts())
             {
                 var productNode = allProductsNode.Nodes.Add(revitProduct.Name);
-                productNode.Nodes.Add("Product Name: " + revitProduct.Name);
-                productNode.Nodes.Add("AllUsersAddInFolder: " + revitProduct.AllUsersAddInFolder);
-                productNode.Nodes.Add("Architecture: " + revitProduct.Architecture);
+                productNode.Nodes.Add($"Product Name: {revitProduct.Name}");
+                productNode.Nodes.Add($"AllUsersAddInFolder: {revitProduct.AllUsersAddInFolder}");
+                productNode.Nodes.Add($"Architecture: {revitProduct.Architecture}");
                 //productNode.Nodes.Add("Build: " + revitProduct.Build); // deprecated
-                productNode.Nodes.Add("Current User AddIn Folder: " + revitProduct.CurrentUserAddInFolder);
-                productNode.Nodes.Add("Install Location: " + revitProduct.InstallLocation);
-                productNode.Nodes.Add("ProductCode: " + revitProduct.ProductCode);
-                productNode.Nodes.Add("Version: " + revitProduct.Version);
+                productNode.Nodes.Add($"Current User AddIn Folder: {revitProduct.CurrentUserAddInFolder}");
+                productNode.Nodes.Add($"Install Location: {revitProduct.InstallLocation}");
+                productNode.Nodes.Add($"ProductCode: {revitProduct.ProductCode}");
+                productNode.Nodes.Add($"Version: {revitProduct.Version}");
             }
         }
 

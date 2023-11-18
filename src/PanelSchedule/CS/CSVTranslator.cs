@@ -32,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
             var asemblyName = Assembly.GetExecutingAssembly().Location;
 
             var panelScheduleCsvFile =
-                asemblyName.Replace("PanelSchedule.dll", ReplaceIllegalCharacters(PsView.Name) + ".csv");
+                asemblyName.Replace("PanelSchedule.dll", $"{ReplaceIllegalCharacters(PsView.Name)}.csv");
 
             if (File.Exists(panelScheduleCsvFile)) File.Delete(panelScheduleCsvFile);
 

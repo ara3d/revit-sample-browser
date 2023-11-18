@@ -31,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
         /// </summary>
         private void InitializeControls()
         {
-            textBoxSaveAs.Text = m_exportData.ExportFolder + "\\" + m_exportData.ExportFileName;
+            textBoxSaveAs.Text = $"{m_exportData.ExportFolder}\\{m_exportData.ExportFileName}";
 
             radioButtonCurrentView.Checked = true;
 
@@ -222,8 +222,8 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
                 {
                     var exported = m_exportData.Export();
                     if (!exported)
-                        TaskDialog.Show("Export", "This project cannot be exported to " + m_exportData.ExportFileName +
-                                                  " in current settings.", TaskDialogCommonButtons.Ok);
+                        TaskDialog.Show("Export",
+                            $"This project cannot be exported to {m_exportData.ExportFileName} in current settings.", TaskDialogCommonButtons.Ok);
                 }
                 catch (Exception ex)
                 {

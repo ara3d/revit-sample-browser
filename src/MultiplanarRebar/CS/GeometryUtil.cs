@@ -74,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             // Check to see if the Trapezoid faces was found.
             if (!foundTrapezoid)
                 // Throw if no any trapezoid face in corbel.
-                throw new Exception("Didn't find the trapezoid face in corbel [Id:" + corbel.Id + "].");
+                throw new Exception($"Didn't find the trapezoid face in corbel [Id:{corbel.Id}].");
 
             var depthEdge = bottomEdges.get_Item((foundEdgeIndex + 1) % bottomEdges.Size);
 

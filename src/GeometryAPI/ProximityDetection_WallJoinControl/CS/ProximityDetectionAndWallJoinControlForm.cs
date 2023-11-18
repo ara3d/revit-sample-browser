@@ -86,7 +86,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
             var nodename = element.Name.LocalName;
             foreach (var att in element.Attributes())
             {
-                nodename += " (" + att.Name.LocalName + ":" + att.Value + ")";
+                nodename += $" ({att.Name.LocalName}:{att.Value})";
             }
 
             //TreeNode node = new TreeNode(element.FirstAttribute.Value);

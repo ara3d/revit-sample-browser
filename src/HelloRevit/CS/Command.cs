@@ -66,9 +66,7 @@ namespace Ara3D.RevitSampleBrowser.HelloRevit.CS
                         var dialogCommandLink1 = new TaskDialog("Revit Build Information")
                         {
                             MainInstruction =
-                            "Revit Version Name is: " + app.VersionName + "\n"
-                            + "Revit Version Number is: " + app.VersionNumber + "\n"
-                            + "Revit Version Build is: " + app.VersionBuild
+                                $"Revit Version Name is: {app.VersionName}\nRevit Version Number is: {app.VersionNumber}\nRevit Version Build is: {app.VersionBuild}"
                         };
 
                         dialogCommandLink1.Show();
@@ -78,8 +76,7 @@ namespace Ara3D.RevitSampleBrowser.HelloRevit.CS
                 // created by static method shows information about the active document.
                 case TaskDialogResult.CommandLink2:
                     TaskDialog.Show("Active Document Information",
-                        "Active document: " + activeDoc.Title + "\n"
-                        + "Active view name: " + activeDoc.ActiveView.Name);
+                        $"Active document: {activeDoc.Title}\nActive view name: {activeDoc.ActiveView.Name}");
                     break;
             }
 

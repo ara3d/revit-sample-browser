@@ -28,7 +28,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility
         public static string GetApplicationResourcesPath()
         {
             if (string.IsNullOrEmpty(_smAppResourcePath))
-                _smAppResourcePath = GetAssemblyPath() + "\\Resources\\";
+                _smAppResourcePath = $"{GetAssemblyPath()}\\Resources\\";
             return _smAppResourcePath;
         }
     }

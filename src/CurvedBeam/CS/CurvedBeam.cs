@@ -227,7 +227,7 @@ namespace Ara3D.RevitSampleBrowser.CurvedBeam.CS
             ElementType = symbol;
             var familyName = "";
             if (null != symbol.Family) familyName = symbol.Family.Name;
-            SymbolName = familyName + " : " + symbol.Name;
+            SymbolName = $"{familyName} : {symbol.Name}";
         }
 
         /// <summary>

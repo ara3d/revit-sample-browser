@@ -15,7 +15,6 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
     {
         private readonly Document m_document;
         private readonly ExternalCommandData m_externalCommandData;
-        private readonly FilteredElementCollector m_fec;
         private List<ElementId> m_fillPatternIds = new List<ElementId>();
         private readonly List<ElementId> m_levelIds = new List<ElementId>();
         private List<ElementId> m_parameterDefinitions = new List<ElementId>();
@@ -29,7 +28,6 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
         public ColorFillMgr(Document doc, ExternalCommandData commandData)
         {
             m_document = doc;
-            m_fec = new FilteredElementCollector(m_document);
             m_schemeCategoryId = new ElementId(BuiltInCategory.OST_Rooms);
             m_externalCommandData = commandData;
         }
@@ -49,20 +47,16 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
         /// </summary>
         public void RetrieveData()
         {
-            RoomSchemes = m_fec.OfClass(typeof(ColorFillScheme))
-                .OfType<ColorFillScheme>()
+            RoomSchemes = m_document.GetElements<ColorFillScheme>()
                 .Where(s => s.CategoryId == m_schemeCategoryId).ToList();
-            m_fillPatternIds = new FilteredElementCollector(m_document)
-                .OfClass(typeof(FillPatternElement))
-                .OfType<FillPatternElement>()
+            m_fillPatternIds = m_document.GetElements<FillPatternElement>()
                 .Where(fp => fp.GetFillPattern().Target == FillPatternTarget.Drafting)
                 .Select(f => f.Id)
                 .ToList();
             //Select all floor views and elevation views.
-            Views = new FilteredElementCollector(m_document)
-                .OfClass(typeof(View))
-                .OfType<View>().Where(v => !v.IsTemplate &&
-                                           (v.ViewType == ViewType.FloorPlan || v.ViewType == ViewType.Elevation))
+            Views = m_document
+                .GetElements<View>()
+                .Where(v => !v.IsTemplate && (v.ViewType == ViewType.FloorPlan || v.ViewType == ViewType.Elevation))
                 .ToList();
         }
 

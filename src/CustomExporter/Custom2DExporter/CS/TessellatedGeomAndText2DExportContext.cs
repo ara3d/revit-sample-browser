@@ -185,7 +185,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 
         public void OnText(TextNode node)
         {
-            Texts += "\n" + node.Text;
+            Texts += $"\n{node.Text}";
             ++NumTexts;
         }
 

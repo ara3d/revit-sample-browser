@@ -50,7 +50,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             pixelValue.Text = "512";
             zoomSize.Enabled = false;
             zoomSize.Value = 50;
-            saveAs.Text = m_exportData.ExportFolder + "\\" + m_exportData.ActiveViewName;
+            saveAs.Text = $"{m_exportData.ExportFolder}\\{m_exportData.ActiveViewName}";
 
             shadedCom.Items.Add("BMP");
             shadedCom.Items.Add("JPEG(lossless)");
@@ -197,7 +197,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             }
             catch (Exception ex)
             {
-                var errorMessage = "Failed to export img" + ex;
+                var errorMessage = $"Failed to export img{ex}";
                 TaskDialog.Show("Error", errorMessage, TaskDialogCommonButtons.Ok);
             }
 

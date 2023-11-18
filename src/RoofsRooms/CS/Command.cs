@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
             ref string message, ElementSet elements)
         {
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-            var log = assemblyLocation + "." + DateTime.Now.ToString("yyyyMMdd") + ".log";
+            var log = $"{assemblyLocation}.{DateTime.Now:yyyyMMdd}.log";
             if (File.Exists(log)) File.Delete(log);
             TraceListener txtListener = new TextWriterTraceListener(log);
             Trace.Listeners.Add(txtListener);
@@ -149,7 +149,7 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
             if (roomsAndRoofs.Count > 0)
             {
                 var logs = "Rooms that have a bounding roof:";
-                message += logs + "\t\r\n";
+                message += $"{logs}\t\r\n";
                 Trace.WriteLine(logs);
                 foreach (var kvp in roomsAndRoofs)
                 {
@@ -168,13 +168,13 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
                     // Multiple roofs
                     else
                     {
-                        roofsString = "Roofs ids = " +
-                                      string.Join(", ", Array.ConvertAll(roofs.ToArray(), i => i.ToString()));
+                        roofsString =
+                            $"Roofs ids = {string.Join(", ", Array.ConvertAll(roofs.ToArray(), i => i.ToString()))}";
                     }
 
                     // Save results
                     logs = $"  Room: Id = {kvp.Key.Id}, Name = {kvp.Key.Name} --> {roofsString}";
-                    message += logs + "\t\r\n";
+                    message += $"{logs}\t\r\n";
                     Trace.WriteLine(logs);
                 }
             }
@@ -184,13 +184,13 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
             if (rooms.Count != 0)
             {
                 var logs = "Below rooms don't have bounding roofs:";
-                message += logs + "\t\r\n";
+                message += $"{logs}\t\r\n";
                 Trace.WriteLine(logs);
                 foreach (var room in rooms)
                 {
                     elements.Insert(room);
                     logs = $"  Room Id: {room.Id}, Room Name: {room.Name}";
-                    message += logs + "\t\r\n";
+                    message += $"{logs}\t\r\n";
                     Trace.WriteLine(logs);
                 }
             }

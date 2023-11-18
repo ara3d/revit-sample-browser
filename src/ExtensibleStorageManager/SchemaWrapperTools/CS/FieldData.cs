@@ -107,7 +107,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
             strBuilder.Append(", ");
             strBuilder.Append(Spec);
 
-            if (SubSchema != null) strBuilder.Append(Environment.NewLine + "   " + SubSchema);
+            if (SubSchema != null) strBuilder.Append($"{Environment.NewLine}   {SubSchema}");
             return strBuilder.ToString();
         }
     }

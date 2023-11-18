@@ -261,9 +261,9 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                 //if timeZoneNumber is not int, append ":30" to string
                 var intNumber = (int)timeZoneNumber;
                 if (0.5 == Math.Abs(timeZoneNumber - intNumber))
-                    temp += Math.Abs(intNumber) + ":30)";
+                    temp += $"{Math.Abs(intNumber)}:30)";
                 else
-                    temp += Math.Abs(intNumber) + ":00)";
+                    temp += $"{Math.Abs(intNumber)}:00)";
             }
 
             //try to find string in list m_timeZones contains string get above

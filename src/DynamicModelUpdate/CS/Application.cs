@@ -95,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
                 if (sectionViews.Count == 0)
                 {
                     TaskDialog.Show("Message",
-                        "Cannot find the view name " + name + "\n The operation will be canceled.");
+                        $"Cannot find the view name {name}\n The operation will be canceled.");
                     return Result.Failed;
                 }
 
@@ -110,8 +110,7 @@ namespace Ara3D.RevitSampleBrowser.DynamicModelUpdate.CS
                     UpdaterRegistry.RemoveAllTriggers(_sectionUpdater.GetUpdaterId());
                     _sectionUpdater.AddTriggerForUpdater(m_document, IdsToWatch, sectionId, sectionElement);
                     TaskDialog.Show("Message",
-                        "The ViewSection id: " + sectionId + " has been associated to the window id: " + modelId +
-                        "\n You can try to move or modify the window to see how the updater works.");
+                        $"The ViewSection id: {sectionId} has been associated to the window id: {modelId}\n You can try to move or modify the window to see how the updater works.");
                 }
                 else
                 {

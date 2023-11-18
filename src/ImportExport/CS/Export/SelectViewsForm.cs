@@ -85,14 +85,13 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             if (checkBoxViews.Checked)
                 foreach (View view in m_selectViewsData.PrintableViews)
                 {
-                    checkedListBoxViews.Items.Add(view.ViewType + ": " + view.Name);
+                    checkedListBoxViews.Items.Add($"{view.ViewType}: {view.Name}");
                 }
 
             if (checkBoxSheets.Checked)
                 foreach (ViewSheet viewSheet in m_selectViewsData.PrintableSheets)
                 {
-                    checkedListBoxViews.Items.Add("Drawing Sheet: " + viewSheet.SheetNumber + " - " +
-                                                  viewSheet.Name);
+                    checkedListBoxViews.Items.Add($"Drawing Sheet: {viewSheet.SheetNumber} - {viewSheet.Name}");
                 }
 
             checkedListBoxViews.Sorted = true;

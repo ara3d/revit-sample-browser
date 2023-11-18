@@ -61,7 +61,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
             {
                 if (newName.Contains(invalidChr))
                 {
-                    ViewFiltersForm.MyMessageBox("Filter name contains invalid character: " + invalidChr);
+                    ViewFiltersForm.MyMessageBox($"Filter name contains invalid character: {invalidChr}");
                     return;
                 }
             }

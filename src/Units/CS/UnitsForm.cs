@@ -125,7 +125,7 @@ namespace Ara3D.RevitSampleBrowser.Units.CS
                             }
                             catch (Exception ex)
                             {
-                                TaskDialog.Show(ex.GetType().ToString(), "Set FormatOptions error : \n" + ex.Message,
+                                TaskDialog.Show(ex.GetType().ToString(), $"Set FormatOptions error : \n{ex.Message}",
                                     TaskDialogCommonButtons.Ok);
                             }
                 }

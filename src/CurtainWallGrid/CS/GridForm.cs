@@ -62,7 +62,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             // add items to the views combo box
             foreach (var view in m_myDocument.Views)
             {
-                var name = view.ViewType + " : " + view.Name;
+                var name = $"{view.ViewType} : {view.Name}";
                 viewComboBox.Items.Add(name);
             }
 

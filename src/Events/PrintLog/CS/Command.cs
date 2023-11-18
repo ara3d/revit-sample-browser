@@ -45,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.Events.PrintLog.CS
                 var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var pm = document.PrintManager;
                 pm.PrintToFile = true;
-                pm.PrintToFileName = assemblyPath + "\\PrintOut.prn";
+                pm.PrintToFileName = $"{assemblyPath}\\PrintOut.prn";
                 pm.Apply();
                 // 
                 // Print views now to raise events:

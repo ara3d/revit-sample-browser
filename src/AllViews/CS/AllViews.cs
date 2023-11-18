@@ -116,7 +116,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             m_vp = null;
             form.InvalidViewport = true;
 
-            var viewSheet = m_doc.GetFilteredElements<ViewSheet>()
+            var viewSheet = m_doc.GetElements<ViewSheet>()
                 .FirstOrDefault(vp => !vp.IsTemplate 
                                       && vp.ViewType == ViewType.DrawingSheet 
                                       && vp.Name == selectSheetName);
@@ -203,16 +203,12 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
         /// <param name="doc">the active document</param>
         private void GetAllViews(Document doc)
         {
-            var collector = new FilteredElementCollector(doc);
-            var itor = collector.OfClass(typeof(View)).GetElementIterator();
-            itor.Reset();
-            while (itor.MoveNext())
+            foreach (var view in doc.GetElements<View>())
             {
                 // skip view templates because they're invisible in project browser
-                if (!(itor.Current is View view) || view.IsTemplate) continue;
-
-                if (!(doc.GetElement(view.GetTypeId()) is ElementType objType) || objType.Name.Equals("Schedule")
-                                                                               || objType.Name.Equals("Drawing Sheet"))
+                if (!(doc.GetElement(view.GetTypeId()) is ElementType objType) 
+                    || objType.Name.Equals("Schedule")
+                    || objType.Name.Equals("Drawing Sheet"))
                     continue;
 
                 m_allViews.Insert(view);
@@ -241,9 +237,9 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
                 Tag = type
             };
             if (type.Equals("Building Elevation"))
-                categoryNode.Text = "Elevations [" + type + "]";
+                categoryNode.Text = $"Elevations [{type}]";
             else
-                categoryNode.Text = type + "s";
+                categoryNode.Text = $"{type}s";
             categoryNode.Nodes.Add(new TreeNode(view));
             AllViewsNames.Nodes.Add(categoryNode);
         }
@@ -328,7 +324,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
 
             foreach (FamilySymbol f in m_allTitleBlocks)
             {
-                if (name.Equals(f.Family.Name + ":" + f.Name))
+                if (name.Equals($"{f.Family.Name}:{f.Name}"))
                 {
                     m_titleBlock = f;
                     return;
@@ -352,7 +348,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             foreach (var element in m_allTitleBlocks)
             {
                 var f = element as FamilySymbol;
-                AllTitleBlocksNames.Add(f.Family.Name + ":" + f.Name);
+                AllTitleBlocksNames.Add($"{f.Family.Name}:{f.Name}");
                 if (null == m_titleBlock) m_titleBlock = f;
             }
         }
@@ -362,14 +358,13 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
         /// </summary>
         /// <param name="views">all selected views</param>
         /// <param name="sheet">all views located sheet</param>
-        private void PlaceViews(ViewSet views, ViewSheet sheet)
+        private void PlaceViews(ViewSet views, View sheet)
         {
             double xDistance = 0;
             double yDistance = 0;
             CalculateDistance(sheet.Outline, views.Size, ref xDistance, ref yDistance);
 
             var origin = GetOffSet(sheet.Outline, xDistance, yDistance);
-            //Autodesk.Revit.DB.UV temp = new Autodesk.Revit.DB.UV (origin.U, origin.V);
             var tempU = origin.U;
             var tempV = origin.V;
             var n = 1;
@@ -385,8 +380,8 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
                 }
                 catch (ArgumentException /*ae*/)
                 {
-                    throw new InvalidOperationException("The view '" + view.Name +
-                                                        "' can't be added, it may have already been placed in another sheet.");
+                    throw new InvalidOperationException(
+                        $"The view '{view.Name}' can't be added, it may have already been placed in another sheet.");
                 }
 
                 if (0 != n++ % m_rows)

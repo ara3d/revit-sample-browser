@@ -26,6 +26,6 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
         /// <summary>
         ///     Display name
         /// </summary>
-        public string Name => FamilySymbol.Family.Name + " : " + FamilySymbol.Name;
+        public string Name => $"{FamilySymbol.Family.Name} : {FamilySymbol.Name}";
     }
 }

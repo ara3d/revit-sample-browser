@@ -59,8 +59,8 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
             {
                 var ancilType = ancillaryUsage.Type;
                 var usageType = ancillaryUsage.UsageType;
-                ancillaryDescriptions.Add($"{ancilType}: {usageType} - "
-                                          + $"{config.GetAncillaryName(ancillaryUsage.AncillaryId)}");
+                ancillaryDescriptions.Add(
+                    $"{ancilType}: {usageType} - {config.GetAncillaryName(ancillaryUsage.AncillaryId)}");
             }
 
             var results = string.Empty;

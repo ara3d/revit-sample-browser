@@ -139,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ProximityDetection_WallJoinContro
 
                         if (egressGObj is Solid egressVolume)
                         {
-                            var solidNode = new XElement("ElementSolid" + count);
+                            var solidNode = new XElement($"ElementSolid{count}");
                             // Iterate to find all instance types
                             var blockingcollector = new FilteredElementCollector(m_doc);
                             blockingcollector.WhereElementIsNotElementType();

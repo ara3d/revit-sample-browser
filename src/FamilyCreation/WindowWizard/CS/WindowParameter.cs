@@ -53,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         public WindowParameter(WindowParameter para)
         {
             if (string.IsNullOrEmpty(para.m_type)) m_type = "NewType";
-            m_type = para.Type + "1";
+            m_type = $"{para.Type}1";
             m_height = para.Height;
             m_width = para.Width;
         }

@@ -116,7 +116,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
                 // create shared parameter file
                 var modulePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var paramFile = modulePath + "\\RoomScheduleSharedParameters.txt";
+                var paramFile = $"{modulePath}\\RoomScheduleSharedParameters.txt";
                 if (File.Exists(paramFile)) File.Delete(paramFile);
                 var fs = File.Create(paramFile);
                 fs.Close();
@@ -153,7 +153,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to create shared parameter: " + ex.Message);
+                throw new Exception($"Failed to create shared parameter: {ex.Message}");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             var hashCode = m_document.GetHashCode();
             var xlsAndTable = new SheetInfo("", "");
             if (CrtlApplication.EventReactor.DocMappedSheetInfo(hashCode, ref xlsAndTable))
-                roomExcelTextBox.Text = "Mapped Sheet: " + xlsAndTable.FileName + ": " + xlsAndTable.SheetName;
+                roomExcelTextBox.Text = $"Mapped Sheet: {xlsAndTable.FileName}: {xlsAndTable.SheetName}";
         }
 
         /// <summary>

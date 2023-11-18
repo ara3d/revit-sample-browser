@@ -104,7 +104,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
         {
             if (!m_isReplay)
             {
-                var fileName = DateTime.Now.ToString("yyyyMMdd") + ".xml";
+                var fileName = $"{DateTime.Now:yyyyMMdd}.xml";
                 var tempFile = Path.Combine(m_directory, fileName);
                 Stream stream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite,
                     FileShare.ReadWrite);

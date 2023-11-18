@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             foreach (ProjectLocation projectLocation in locationSet)
             {
                 if (projectLocation.Name == locationName ||
-                    projectLocation.Name + " (current)" == locationName)
+                    $"{projectLocation.Name} (current)" == locationName)
                 {
                     //duplicate a new project location
                     projectLocation.Duplicate(newLocationName);
@@ -136,7 +136,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             foreach (ProjectLocation projectLocation in locationSet)
             {
                 if (projectLocation.Name == locationName ||
-                    projectLocation.Name + " (current)" == locationName)
+                    $"{projectLocation.Name} (current)" == locationName)
                 {
                     var origin = new XYZ(0, 0, 0);
                     //get the project position
@@ -167,7 +167,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             foreach (ProjectLocation location in locationSet)
             {
                 if (location.Name == locationName ||
-                    location.Name + " (current)" == locationName)
+                    $"{location.Name} (current)" == locationName)
                 {
                     //get the project position
                     var origin = new XYZ(0, 0, 0);

@@ -35,8 +35,8 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             {
                 DefaultExt = ".xml",
                 Filter = "RoutingPreference Builder Xml files (*.xml)|*.xml",
-                FileName = Path.GetFileNameWithoutExtension(commandData.Application.ActiveUIDocument.Document.PathName) +
-                           ".routingPreferences.xml"
+                FileName =
+                    $"{Path.GetFileNameWithoutExtension(commandData.Application.ActiveUIDocument.Document.PathName)}.routingPreferences.xml"
             };
             if (sfd.ShowDialog() == true)
             {
@@ -57,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                     pathmessage =
                         "One or more paths to .rfa files were not found.  You may need to add these paths in manually to the generated xml file.";
                 TaskDialog.Show("RoutingPreferenceBuilder",
-                    "Routing Preferences exported successfully.   " + pathmessage);
+                    $"Routing Preferences exported successfully.   {pathmessage}");
             }
 
             return Result.Succeeded;

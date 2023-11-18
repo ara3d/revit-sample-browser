@@ -226,11 +226,11 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 var filename = Path.GetFileName(familyPath);
                 familyPath = findFolderUtility.FindFileFolder(filename);
                 if (!File.Exists(familyPath))
-                    throw new RoutingPreferenceDataException("Cannot find family file: " + xafilename.Value);
+                    throw new RoutingPreferenceDataException($"Cannot find family file: {xafilename.Value}");
             }
 
             if (string.Compare(Path.GetExtension(familyPath), ".rfa", true) != 0)
-                throw new RoutingPreferenceDataException(familyPath + " is not a family file.");
+                throw new RoutingPreferenceDataException($"{familyPath} is not a family file.");
 
             try
             {
@@ -239,7 +239,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             }
             catch (Exception ex)
             {
-                throw new RoutingPreferenceDataException("Cannot load family: " + xafilename.Value + ": " + ex);
+                throw new RoutingPreferenceDataException($"Cannot load family: {xafilename.Value}: {ex}");
             }
         }
 
@@ -254,12 +254,12 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             ref bool pathNotFound)
         {
             //Try to find the path of the .rfa file.
-            var path = findFolderUtility.FindFileFolder(pipeFitting.Family.Name + ".rfa");
+            var path = findFolderUtility.FindFileFolder($"{pipeFitting.Family.Name}.rfa");
             string pathToWrite;
             if (path == "")
             {
                 pathNotFound = true;
-                pathToWrite = pipeFitting.Family.Name + ".rfa";
+                pathToWrite = $"{pipeFitting.Family.Name}.rfa";
             }
             else
             {
@@ -347,24 +347,24 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 GetMaterialByName(xaMaterial
                     .Value); //There is nothing in the xml schema for creating new materials -- any material specified must already exist in the document.
             if (materialId == ElementId.InvalidElementId)
-                throw new RoutingPreferenceDataException("Cannot find Material: " + xaMaterial.Value + " in: " +
-                                                         segmentXElement);
+                throw new RoutingPreferenceDataException(
+                    $"Cannot find Material: {xaMaterial.Value} in: {segmentXElement}");
             var scheduleId = GetPipeScheduleTypeByName(xaSchedule.Value);
 
             double roughness;
             var r1 = double.TryParse(xaRoughness.Value, out roughness);
 
             if (!r1)
-                throw new RoutingPreferenceDataException("Invalid roughness value: " + xaRoughness.Value + " in: " +
-                                                         segmentXElement);
+                throw new RoutingPreferenceDataException(
+                    $"Invalid roughness value: {xaRoughness.Value} in: {segmentXElement}");
 
             if (roughness <= 0)
-                throw new RoutingPreferenceDataException("Invalid roughness value: " + xaRoughness.Value + " in: " +
-                                                         segmentXElement);
+                throw new RoutingPreferenceDataException(
+                    $"Invalid roughness value: {xaRoughness.Value} in: {segmentXElement}");
 
             if (scheduleId == ElementId.InvalidElementId)
-                throw new RoutingPreferenceDataException("Cannot find Schedule: " + xaSchedule.Value + " in: " +
-                                                         segmentXElement); //we will not create new schedules.
+                throw new RoutingPreferenceDataException(
+                    $"Cannot find Schedule: {xaSchedule.Value} in: {segmentXElement}"); //we will not create new schedules.
 
             var existingPipeSegmentId = GetSegmentByIds(materialId, scheduleId);
             if (existingPipeSegmentId != ElementId.InvalidElementId)
@@ -431,9 +431,8 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             var r5 = bool.TryParse(xaUsedInSizing.Value, out usedInSizing);
 
             if (!r1 || !r2 || !r3 || !r4 || !r5)
-                throw new RoutingPreferenceDataException("Cannot parse MEPSize attributes:" + xaNominal.Value + ", " +
-                                                         xaInner.Value + ", " + xaOuter.Value + ", " +
-                                                         xaUsedInSizeLists.Value + ", " + xaUsedInSizing.Value);
+                throw new RoutingPreferenceDataException(
+                    $"Cannot parse MEPSize attributes:{xaNominal.Value}, {xaInner.Value}, {xaOuter.Value}, {xaUsedInSizeLists.Value}, {xaUsedInSizing.Value}");
 
             MEPSize newSize = null;
 
@@ -446,8 +445,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
 
             catch (Exception)
             {
-                throw new RoutingPreferenceDataException("Invalid MEPSize values: " + nominal + ", " + inner + ", " +
-                                                         outer);
+                throw new RoutingPreferenceDataException($"Invalid MEPSize values: {nominal}, {inner}, {outer}");
             }
 
             return newSize;
@@ -488,13 +486,13 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             var r1 = Enum.TryParse(xaPreferredJunctionType.Value, out preferredJunctionType);
 
             if (!r1)
-                throw new RoutingPreferenceDataException("Invalid Preferred Junction Type in: " +
-                                                         routingPreferenceManagerXElement);
+                throw new RoutingPreferenceDataException(
+                    $"Invalid Preferred Junction Type in: {routingPreferenceManagerXElement}");
 
             var pipeTypeId = GetPipeTypeByName(xaPipeTypeName.Value);
             if (pipeTypeId == ElementId.InvalidElementId)
-                throw new RoutingPreferenceDataException("Could not find pipe type element in: " +
-                                                         routingPreferenceManagerXElement);
+                throw new RoutingPreferenceDataException(
+                    $"Could not find pipe type element in: {routingPreferenceManagerXElement}");
 
             var pipeType = m_document.GetElement(pipeTypeId) as PipeType;
 
@@ -601,7 +599,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
 
             var r3 = Enum.TryParse(xaGroup.Value, out groupType);
             if (!r3)
-                throw new RoutingPreferenceDataException("Could not parse rule group type: " + xaGroup.Value);
+                throw new RoutingPreferenceDataException($"Could not parse rule group type: {xaGroup.Value}");
 
             var description = xaDescription.Value;
 
@@ -611,8 +609,8 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 partId = GetFittingByName(xaPartName.Value);
 
             if (partId == ElementId.InvalidElementId)
-                throw new RoutingPreferenceDataException("Could not find MEP Part: " + xaPartName.Value +
-                                                         ".  Is this the correct family name, and is the correct family loaded?");
+                throw new RoutingPreferenceDataException(
+                    $"Could not find MEP Part: {xaPartName.Value}.  Is this the correct family name, and is the correct family loaded?");
 
             var rule = new RoutingPreferenceRule(partId, description);
 
@@ -634,15 +632,15 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 }
                 catch (Exception)
                 {
-                    throw new RoutingPreferenceDataException("Cannot get maximumSize attribute in: " + ruleXElement);
+                    throw new RoutingPreferenceDataException($"Cannot get maximumSize attribute in: {ruleXElement}");
                 }
 
                 double min, max;
                 var r1 = double.TryParse(xaMinSize.Value, out min);
                 var r2 = double.TryParse(xaMaxSize.Value, out max);
                 if (!r1 || !r2)
-                    throw new RoutingPreferenceDataException("Could not parse size values: " + xaMinSize.Value + ", " +
-                                                             xaMaxSize.Value);
+                    throw new RoutingPreferenceDataException(
+                        $"Could not parse size values: {xaMinSize.Value}, {xaMaxSize.Value}");
                 if (min > max)
                     throw new RoutingPreferenceDataException("Invalid size range.");
 
@@ -739,7 +737,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
         private string GetFittingNameById(ElementId fittingId)
         {
             var fs = m_document.GetElement(fittingId) as FamilySymbol;
-            return fs.Family.Name + " " + fs.Name;
+            return $"{fs.Family.Name} {fs.Name}";
         }
 
         /// <summary>
@@ -755,7 +753,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
 
             var material = m_document.GetElement(materialId);
             var pipeScheduleType = m_document.GetElement(pipeScheduleTypeId);
-            var segmentName = material.Name + " - " + pipeScheduleType.Name;
+            var segmentName = $"{material.Name} - {pipeScheduleType.Name}";
             return GetSegmentByName(segmentName);
         }
 
@@ -794,7 +792,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
         {
             foreach (var fitting in m_fittings)
             {
-                if (fitting.Family.Name + " " + fitting.Name == name)
+                if ($"{fitting.Family.Name} {fitting.Name}" == name)
 
                     return fitting.Id;
             }

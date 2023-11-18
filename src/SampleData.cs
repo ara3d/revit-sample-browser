@@ -45,13 +45,13 @@ namespace Ara3D.RevitSampleBrowser
             var suffix = ".CS";
             if (Namespace.EndsWith(suffix))
                 Namespace = Namespace.Substring(0, Namespace.Length - suffix.Length);
-            Name = Namespace + "." + Type.Name;
+            Name = $"{Namespace}.{Type.Name}";
 
             var folderRelPath = Namespace.Replace(".", "\\");
-            FolderPath = ThisFolderPath + "\\" + folderRelPath + @"\CS";
+            FolderPath = $"{ThisFolderPath}\\{folderRelPath}\\CS";
             if (!Directory.Exists(FolderPath))
             {
-                FolderPath = ThisFolderPath + "\\" + folderRelPath + "\\..";
+                FolderPath = $"{ThisFolderPath}\\{folderRelPath}\\..";
             }
             if (Directory.Exists(FolderPath))
             {

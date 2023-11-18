@@ -108,7 +108,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         {
             if (CreateRadialGrids() != 0)
             {
-                var failureReason = ResManager.GetString("FailedToCreateRadialGrids") + "\r";
+                var failureReason = $"{ResManager.GetString("FailedToCreateRadialGrids")}\r";
                 failureReason += ResManager.GetString("AjustValues");
 
                 ShowMessage(failureReason, ResManager.GetString("FailureCaptionCreateGrids"));
@@ -117,18 +117,18 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             var failureReasons = new ArrayList();
             if (CreateArcGrids(ref failureReasons) != 0)
             {
-                var failureReason = ResManager.GetString("FailedToCreateArcGrids") +
-                                    ResManager.GetString("Reasons") + "\r";
+                var failureReason =
+                    $"{ResManager.GetString("FailedToCreateArcGrids")}{ResManager.GetString("Reasons")}\r";
                 if (failureReasons.Count != 0)
                 {
                     failureReason += "\r";
                     foreach (string reason in failureReasons)
                     {
-                        failureReason += reason + "\r";
+                        failureReason += $"{reason}\r";
                     }
                 }
 
-                failureReason += "\r" + ResManager.GetString("AjustValues");
+                failureReason += $"\r{ResManager.GetString("AjustValues")}";
 
                 ShowMessage(failureReason, ResManager.GetString("FailureCaptionCreateGrids"));
             }
@@ -202,7 +202,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                         }
                         catch (ArgumentException)
                         {
-                            ShowMessage(ResManager.GetString("FailedToSetLabel") + LineFirstLabel + "!",
+                            ShowMessage($"{ResManager.GetString("FailedToSetLabel")}{LineFirstLabel}!",
                                 ResManager.GetString("FailureCaptionSetLabel"));
                         }
                     }
@@ -261,7 +261,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                                 }
                                 catch (ArgumentException)
                                 {
-                                    ShowMessage(ResManager.GetString("FailedToSetLabel") + ArcFirstLabel + "!",
+                                    ShowMessage($"{ResManager.GetString("FailedToSetLabel")}{ArcFirstLabel}!",
                                         ResManager.GetString("FailureCaptionSetLabel"));
                                 }
                         }
@@ -335,7 +335,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                                 }
                                 catch (ArgumentException)
                                 {
-                                    ShowMessage(ResManager.GetString("FailedToSetLabel") + ArcFirstLabel + "!",
+                                    ShowMessage($"{ResManager.GetString("FailedToSetLabel")}{ArcFirstLabel}!",
                                         ResManager.GetString("FailureCaptionSetLabel"));
                                 }
                         }

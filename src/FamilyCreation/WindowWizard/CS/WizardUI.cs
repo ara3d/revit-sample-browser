@@ -515,7 +515,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var sp = Path.DirectorySeparatorChar; //{'\\'};
             path = path.Substring(0, path.LastIndexOf(sp));
-            path = path.Substring(0, path.LastIndexOf(sp)) + sp + "ReadMe_WindowWizard.rtf";
+            path = $"{path.Substring(0, path.LastIndexOf(sp))}{sp}ReadMe_WindowWizard.rtf";
             Process.Start(path);
         }
     }

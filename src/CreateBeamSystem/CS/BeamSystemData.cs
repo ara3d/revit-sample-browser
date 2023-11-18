@@ -139,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
                     // add symbols to lists according to category name
                     var categoryName = symbol.Category.Name;
                     if ("Structural Framing" == categoryName)
-                        BeamTypes.Add(symbol.Family.Name + ":" + symbol.Name, symbol);
+                        BeamTypes.Add($"{symbol.Family.Name}:{symbol.Name}", symbol);
                 }
             }
 

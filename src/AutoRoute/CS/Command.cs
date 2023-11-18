@@ -100,7 +100,7 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             Trace.AutoFlush = true;
 
             //get the system type id of the duct
-            foreach (var type in _document.GetFilteredElements<MEPSystemType>())
+            foreach (var type in _document.GetElements<MEPSystemType>())
             {
                 if (type.SystemClassification == MEPSystemClassification.SupplyAir)
                 {
@@ -146,7 +146,7 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                     var element = _document.GetElement(ids[i]);
                     if (null == element)
                     {
-                        message = "Element " + ids[i] + " can't be found.";
+                        message = $"Element {ids[i]} can't be found.";
                         return Result.Failed;
                     }
 
@@ -1009,11 +1009,11 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
 
             var category = element.Category.BuiltInCategory;
 
-            Trace.WriteLine("Type: " + element.GetType().FullName);
-            Trace.WriteLine("Name: " + familyName + ":" + elementName);
-            if (writeId) Trace.WriteLine("Id: " + elementId);
-            Trace.WriteLine("Category: " + category);
-            Trace.WriteLine("FamilyId: " + familyId);
+            Trace.WriteLine($"Type: {element.GetType().FullName}");
+            Trace.WriteLine($"Name: {familyName}:{elementName}");
+            if (writeId) Trace.WriteLine($"Id: {elementId}");
+            Trace.WriteLine($"Category: {category}");
+            Trace.WriteLine($"FamilyId: {familyId}");
         }
 
         /// <summary>
@@ -1031,9 +1031,9 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
             {
             }
 
-            Trace.WriteLine("Flow: " + flow);
-            Trace.WriteLine("IsWellConnected: " + system.IsWellConnected);
-            Trace.WriteLine("SystemType: " + system.SystemType);
+            Trace.WriteLine($"Flow: {flow}");
+            Trace.WriteLine($"IsWellConnected: {system.IsWellConnected}");
+            Trace.WriteLine($"SystemType: {system.SystemType}");
             Trace.WriteLine("+DuctNetwork");
             Trace.Indent();
             foreach (Element element in system.DuctNetwork)
@@ -1140,13 +1140,13 @@ namespace Ara3D.RevitSampleBrowser.AutoRoute.CS
                     break;
             }
 
-            Trace.WriteLine("Type: " + connAType);
-            Trace.WriteLine("SystemType: " + connType);
-            Trace.WriteLine("Direction: " + connDirection);
-            Trace.WriteLine("Shape: " + connShape);
-            Trace.WriteLine("Size: " + connSize);
-            Trace.WriteLine("Location: " + connLocation);
-            Trace.WriteLine("IsConnected: " + connIsConnected);
+            Trace.WriteLine($"Type: {connAType}");
+            Trace.WriteLine($"SystemType: {connType}");
+            Trace.WriteLine($"Direction: {connDirection}");
+            Trace.WriteLine($"Shape: {connShape}");
+            Trace.WriteLine($"Size: {connSize}");
+            Trace.WriteLine($"Location: {connLocation}");
+            Trace.WriteLine($"IsConnected: {connIsConnected}");
         }
 
         /// <summary>

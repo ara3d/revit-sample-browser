@@ -37,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
         {
             var document = commandData.Application.ActiveUIDocument.Document;
             var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            m_logFileName = assemblyPath + "\\RegenerationLog.txt";
+            m_logFileName = $"{assemblyPath}\\RegenerationLog.txt";
             //only a family document  can retrieve family manager
             if (document.IsFamilyDocument)
             {
@@ -77,14 +77,14 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
                         try
                         {
                             m_familyManager.CurrentType = type;
-                            msgForm.AddMessage(type.Name + " Successful\n", true);
-                            WriteLog(type.Name + "      Successful");
+                            msgForm.AddMessage($"{type.Name} Successful\n", true);
+                            WriteLog($"{type.Name}      Successful");
                         }
                         catch
                         {
                             errorInfo.Add(type.Name);
-                            msgForm.AddMessage(type.Name + " Failed \n", true);
-                            WriteLog(type.Name + "      Failed");
+                            msgForm.AddMessage($"{type.Name} Failed \n", true);
+                            WriteLog($"{type.Name}      Failed");
                         }
 
                         msgForm.ShowDialog();
@@ -95,10 +95,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
                 string resMsg;
                 if (errorInfo.Count > 0)
                 {
-                    resMsg = "\nResult: " + errorInfo.Count + " family types regeneration failed!";
+                    resMsg = $"\nResult: {errorInfo.Count} family types regeneration failed!";
                     foreach (var error in errorInfo)
                     {
-                        resMsg += "\n " + error;
+                        resMsg += $"\n {error}";
                     }
                 }
                 else
@@ -107,15 +107,15 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.TypeRegeneration.CS
                 }
 
                 WriteLog(resMsg);
-                resMsg += "\nIf you want to know the detail regeneration result please get log file at " +
-                          m_logFileName;
+                resMsg +=
+                    $"\nIf you want to know the detail regeneration result please get log file at {m_logFileName}";
                 msgForm.AddMessage(resMsg, false);
                 msgForm.ShowDialog();
             }
             catch (Exception ex)
             {
-                WriteLog("There is some problem when regeneration:" + ex);
-                msgForm.AddMessage("There is some problem when regeneration:" + ex, true);
+                WriteLog($"There is some problem when regeneration:{ex}");
+                msgForm.AddMessage($"There is some problem when regeneration:{ex}", true);
                 msgForm.ShowDialog();
             }
         }

@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         {
             Zone = zone;
             Text = Zone.Name;
-            ToolTipText = "Phase: " + Zone.Phase.Name;
+            ToolTipText = $"Phase: {Zone.Phase.Name}";
         }
 
         /// <summary>

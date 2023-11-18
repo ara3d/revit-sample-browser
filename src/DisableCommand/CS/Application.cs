@@ -44,8 +44,8 @@ namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
             // Confirm that the command can be overridden
             if (!_sCommandId.CanHaveBinding)
             {
-                ShowDialog("Error", "The target command " + SCommandToDisable +
-                                    " selected for disabling cannot be overridden");
+                ShowDialog("Error",
+                    $"The target command {SCommandToDisable} selected for disabling cannot be overridden");
                 return Result.Failed;
             }
 
@@ -61,8 +61,8 @@ namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
             // Most likely, this is because someone else has bound this command already.
             catch (Exception)
             {
-                ShowDialog("Error", "This add-in is unable to disable the target command " + SCommandToDisable +
-                                    "; most likely another add-in has overridden this command.");
+                ShowDialog("Error",
+                    $"This add-in is unable to disable the target command {SCommandToDisable}; most likely another add-in has overridden this command.");
             }
 
             return Result.Succeeded;

@@ -103,10 +103,10 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             var activeDoc = CommandData.Application.ActiveUIDocument.Document;
 
             HookTypes = new Hashtable(
-                activeDoc.GetFilteredElements<RebarHookType>().ToDictionary(ht => ht.Name, ht => ht.Id));
+                activeDoc.GetElements<RebarHookType>().ToDictionary(ht => ht.Name, ht => ht.Id));
             
             BarTypes = new Hashtable(
-                activeDoc.GetFilteredElements<RebarBarType>().ToDictionary(bt => bt.Name, bt => bt.Id));
+                activeDoc.GetElements<RebarBarType>().ToDictionary(bt => bt.Name, bt => bt.Id));
 
             return HookTypes.Count != 0 && BarTypes.Count != 0;
         }
@@ -157,7 +157,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
                                     break;
                             }
 
-                            str = str + name + ": " + val + "\r\n";
+                            str = $"{str}{name}: {val}\r\n";
                         }
 
                         TaskDialog.Show("Rebar parameters", str);

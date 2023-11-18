@@ -196,7 +196,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
             catch (Exception ex)
             {
-                throw new Exception("Can not create the sketch plane, message: " + ex.Message);
+                throw new Exception($"Can not create the sketch plane, message: {ex.Message}");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
             catch (Exception ex)
             {
-                throw new Exception("Can not create the ModelLine, message: " + ex.Message);
+                throw new Exception($"Can not create the ModelLine, message: {ex.Message}");
             }
         }
 
@@ -269,7 +269,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             }
             catch (Exception ex)
             {
-                throw new Exception("Can not create the ModelArc, message: " + ex.Message);
+                throw new Exception($"Can not create the ModelArc, message: {ex.Message}");
             }
         }
 

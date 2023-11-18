@@ -81,7 +81,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                                 var failedItems = config.LoadItemFiles(itemFilesToLoad);
                                 if (failedItems != null && failedItems.Count > 0)
                                 {
-                                    message = "Could not load the item file: " + nextFile.Identifier;
+                                    message = $"Could not load the item file: {nextFile.Identifier}";
                                     return Result.Failed;
                                 }
 

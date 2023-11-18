@@ -76,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                             }
                             catch (ArgumentException)
                             {
-                                ShowMessage(ResManager.GetString("FailedToSetLabel") + FirstLabel + "!",
+                                ShowMessage($"{ResManager.GetString("FailedToSetLabel")}{FirstLabel}!",
                                     ResManager.GetString("FailureCaptionSetLabel"));
                             }
                         }
@@ -107,7 +107,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                                     }
                                     catch (ArgumentException)
                                     {
-                                        ShowMessage(ResManager.GetString("FailedToSetLabel") + FirstLabel + "!",
+                                        ShowMessage($"{ResManager.GetString("FailedToSetLabel")}{FirstLabel}!",
                                             ResManager.GetString("FailureCaptionSetLabel"));
                                     }
                                 }
@@ -140,7 +140,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                                     }
                                     catch (ArgumentException)
                                     {
-                                        ShowMessage(ResManager.GetString("FailedToSetLabel") + FirstLabel + "!",
+                                        ShowMessage($"{ResManager.GetString("FailedToSetLabel")}{FirstLabel}!",
                                             ResManager.GetString("FailureCaptionSetLabel"));
                                     }
 

@@ -86,21 +86,21 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
                 setLabelLineLengthTextBox.Enabled = true;
 
                 //BoxOutline
-                getMinBoxOutlineTextBox.Text = "(" + GetMinBoxOutline.X + ", " + GetMinBoxOutline.Y + ")";
-                getMaxBoxOutlineTextBox.Text = "(" + GetMaxBoxOutline.X + ", " + GetMaxBoxOutline.Y + ")";
+                getMinBoxOutlineTextBox.Text = $"({GetMinBoxOutline.X}, {GetMinBoxOutline.Y})";
+                getMaxBoxOutlineTextBox.Text = $"({GetMaxBoxOutline.X}, {GetMaxBoxOutline.Y})";
 
                 //LabelOutline
-                getMinLabelOutlineTextBox.Text = "(" + GetMinLabelOutline.X + ", " + GetMinLabelOutline.Y + ")";
-                getMaxLabelOutlineTextBox.Text = "(" + GetMaxLabelOutline.X + ", " + GetMaxLabelOutline.Y + ")";
+                getMinLabelOutlineTextBox.Text = $"({GetMinLabelOutline.X}, {GetMinLabelOutline.Y})";
+                getMaxLabelOutlineTextBox.Text = $"({GetMaxLabelOutline.X}, {GetMaxLabelOutline.Y})";
 
                 //LabelLineOffset
-                getLabelLineOffsetTextBox.Text = "(" + GetLabelLineOffset.X + ", " + GetLabelLineOffset.Y + ")";
+                getLabelLineOffsetTextBox.Text = $"({GetLabelLineOffset.X}, {GetLabelLineOffset.Y})";
 
                 //LabelLineLength
                 getLabelLineLengthTextBox.Text = GetLabelLineLength.ToString();
 
                 //Others
-                getBoxCenterTextBox.Text = "(" + GetBoxCenter.X + ", " + GetBoxCenter.Y + ")";
+                getBoxCenterTextBox.Text = $"({GetBoxCenter.X}, {GetBoxCenter.Y})";
                 getOrientationTtextBox.Text = GetOrientation.ToString();
             }
         }
@@ -171,7 +171,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             catch (Exception exception)
             {
                 UpdateControls();
-                MessageBox.Show("ERROR: " + exception.Message);
+                MessageBox.Show($"ERROR: {exception.Message}");
             }
         }
 

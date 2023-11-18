@@ -93,7 +93,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
                         var wallFootSymbol =
                             m_revit.Application.ActiveUIDocument.Document.GetElement(wallFound.GetTypeId()) as
                                 ElementType; // get element Type
-                        typeName = wallFootSymbol.Category.Name + ": " + wallFootSymbol.Name;
+                        typeName = $"{wallFootSymbol.Category.Name}: {wallFootSymbol.Name}";
                         break;
 
                     case "FamilyInstance":
@@ -101,7 +101,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
                         var symbol =
                             m_revit.Application.ActiveUIDocument.Document.GetElement(familyInstance.GetTypeId()) as
                                 FamilySymbol;
-                        typeName = symbol.Family.Name + ": " + symbol.Name;
+                        typeName = $"{symbol.Family.Name}: {symbol.Name}";
                         break;
 
                     case "Floor":
@@ -109,7 +109,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
                         var slabType =
                             m_revit.Application.ActiveUIDocument.Document
                                 .GetElement(slab.GetTypeId()) as FloorType; // get element type
-                        typeName = slabType.Category.Name + ": " + slabType.Name;
+                        typeName = $"{slabType.Category.Name}: {slabType.Name}";
                         break;
 
                     case "Wall":
@@ -117,7 +117,7 @@ namespace Ara3D.RevitSampleBrowser.AnalyticalSupportData_Info.CS
                         var wallType =
                             m_revit.Application.ActiveUIDocument.Document
                                 .GetElement(wall.GetTypeId()) as WallType; // get element type
-                        typeName = wallType.Kind + ": " + wallType.Name;
+                        typeName = $"{wallType.Kind}: {wallType.Name}";
                         break;
                 }
 

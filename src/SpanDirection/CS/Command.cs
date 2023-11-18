@@ -64,7 +64,7 @@ namespace Ara3D.RevitSampleBrowser.SpanDirection.CS
                 // get SpanDirection angle of Floor(Slab)
                 // The angle returned is in radians. An exception will be thrown if the floor
                 // is non structural.
-                var spanDirAngle = "Span direction angle: " + floor.SpanDirectionAngle + "\r\n";
+                var spanDirAngle = $"Span direction angle: {floor.SpanDirectionAngle}\r\n";
 
                 // get span direction symbols of Floor(Slab)
                 var symbols = "Span direction symbols: \r\n\t";
@@ -75,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.SpanDirection.CS
                 foreach (var eid in symbolArray)
                 {
                     var elem = Docment.GetElement(eid);
-                    if (elem != null) symbols += (Docment.GetElement(elem.GetTypeId()) as ElementType).Name + "\r\n";
+                    if (elem != null) symbols += $"{(Docment.GetElement(elem.GetTypeId()) as ElementType).Name}\r\n";
                 }
 
                 TaskDialog.Show("Revit Direction", spanDirAngle + symbols, TaskDialogCommonButtons.Ok);

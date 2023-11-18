@@ -50,8 +50,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                         out xmlValidationMessage))
                 {
                     TaskDialog.Show("RoutingPreferenceBuilder",
-                        "Xml file is not a valid RoutingPreferenceBuilder xml document.  Please check RoutingPreferenceBuilderData.xsd.  " +
-                        xmlValidationMessage);
+                        $"Xml file is not a valid RoutingPreferenceBuilder xml document.  Please check RoutingPreferenceBuilderData.xsd.  {xmlValidationMessage}");
                     return Result.Succeeded;
                 }
 

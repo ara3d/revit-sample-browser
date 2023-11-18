@@ -111,7 +111,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             foreach (var pair in creator.SupportEdges)
             {
                 var elem = pair.Key;
-                var elemNode = new TreeNode("[Id:" + elem.Id + "] " + elem.Name)
+                var elemNode = new TreeNode($"[Id:{elem.Id}] {elem.Name}")
                 {
                     StateImageIndex = (int)CheckState.Unchecked
                 };
@@ -120,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
                 var i = 1;
                 foreach (var edge in pair.Value)
                 {
-                    var edgeNode = new TreeNode("Edge " + i)
+                    var edgeNode = new TreeNode($"Edge {i}")
                     {
                         StateImageIndex = (int)CheckState.Unchecked,
                         Tag = edge
@@ -187,9 +187,9 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
         /// </summary>
         private void InitializeText()
         {
-            Text = "Pick edges for " + m_creationData.Creator.Name;
-            label.Text = "Select a type for " + m_creationData.Creator.Name;
-            groupBoxEdges.Text = "All edges for " + m_creationData.Creator.Name;
+            Text = $"Pick edges for {m_creationData.Creator.Name}";
+            label.Text = $"Select a type for {m_creationData.Creator.Name}";
+            groupBoxEdges.Text = $"All edges for {m_creationData.Creator.Name}";
         }
 
         /// <summary>

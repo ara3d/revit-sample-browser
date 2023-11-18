@@ -82,7 +82,7 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
             if (null == m_eventsLog) SetupLogFiles();
             //
             // header information
-            Trace.WriteLine(Environment.NewLine + "View Print Start: ------------------------");
+            Trace.WriteLine($"{Environment.NewLine}View Print Start: ------------------------");
             //
             // Dump the events arguments
             DumpEventArguments(e);
@@ -124,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
             catch (Exception ex)
             {
                 failureOccured = true;
-                Trace.WriteLine("Exception occurred when creating TextNote, print will be canceled, ex: " + ex.Message);
+                Trace.WriteLine($"Exception occurred when creating TextNote, print will be canceled, ex: {ex.Message}");
             }
             finally
             {
@@ -143,7 +143,7 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
         public void AppViewPrinted(object sender, ViewPrintedEventArgs e)
         {
             // header information
-            Trace.WriteLine(Environment.NewLine + "View Print End: -------");
+            Trace.WriteLine($"{Environment.NewLine}View Print End: -------");
             //
             // Dump the events arguments 
             DumpEventArguments(e);
@@ -197,8 +197,8 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
             {
                 Trace.WriteLine("ViewPrintingEventArgs Parameters ------>");
                 var args = eventArgs as ViewPrintingEventArgs;
-                Trace.WriteLine("    TotalViews          : " + args.TotalViews);
-                Trace.WriteLine("    View Index          : " + args.Index);
+                Trace.WriteLine($"    TotalViews          : {args.TotalViews}");
+                Trace.WriteLine($"    View Index          : {args.Index}");
                 Trace.WriteLine("    View Information    :");
                 DumpViewInfo(args.View, "      ");
             }
@@ -206,9 +206,9 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoStamp.CS
             {
                 Trace.WriteLine("ViewPrintedEventArgs Parameters ------>");
                 var args = eventArgs as ViewPrintedEventArgs;
-                Trace.WriteLine("    Event Status        : " + args.Status);
-                Trace.WriteLine("    TotalViews          : " + args.TotalViews);
-                Trace.WriteLine("    View Index          : " + args.Index);
+                Trace.WriteLine($"    Event Status        : {args.Status}");
+                Trace.WriteLine($"    TotalViews          : {args.TotalViews}");
+                Trace.WriteLine($"    View Index          : {args.Index}");
                 Trace.WriteLine("    View Information    :");
                 DumpViewInfo(args.View, "      ");
             }

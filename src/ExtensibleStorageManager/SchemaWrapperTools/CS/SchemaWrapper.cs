@@ -163,7 +163,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Could not deserialize schema file." + ex);
+                Debug.WriteLine($"Could not deserialize schema file.{ex}");
                 return null;
             }
 
@@ -175,7 +175,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Could not create schema." + ex);
+                Debug.WriteLine($"Could not create schema.{ex}");
                 return null;
             }
 
@@ -229,7 +229,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
 
                     catch (Exception exx)
                     {
-                        Debug.WriteLine("Error getting type: " + exx);
+                        Debug.WriteLine($"Error getting type: {exx}");
                         throw;
                     }
                 }
@@ -316,9 +316,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
         public override string ToString()
         {
             var strBuilder = new StringBuilder();
-            strBuilder.AppendLine("--Start Schema--  " + " Name: " + Data.Name + ", Description: " +
-                                  Data.Documentation + ", Id: " + Data.SchemaId + ", ReadAccess: " + Data.ReadAccess +
-                                  ", WriteAccess: " + Data.WriteAccess);
+            strBuilder.AppendLine(
+                $"--Start Schema--   Name: {Data.Name}, Description: {Data.Documentation}, Id: {Data.SchemaId}, ReadAccess: {Data.ReadAccess}, WriteAccess: {Data.WriteAccess}");
             foreach (var fd in Data.DataList)
             {
                 strBuilder.AppendLine(fd.ToString());
@@ -353,9 +352,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
         private void DumpAllSchemaEntityData<TEntityType>(TEntityType storageEntity, Schema schema,
             StringBuilder strBuilder)
         {
-            strBuilder.AppendLine("Schema/Entity Name: " + "" + ", Description: " + schema.Documentation + ", Id: " +
-                                  schema.GUID + ", Read Access: " + schema.ReadAccessLevel + ", Write Access: " +
-                                  schema.WriteAccessLevel);
+            strBuilder.AppendLine(
+                $"Schema/Entity Name: , Description: {schema.Documentation}, Id: {schema.GUID}, Read Access: {schema.ReadAccessLevel}, Write Access: {schema.WriteAccessLevel}");
             foreach (var currentField in schema.ListFields())
             {
                 //Here, we call GetFieldDataAsString on this class, the SchemaWrapper class.  However, we must
@@ -455,16 +453,14 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                     if (fieldType == typeof(Entity))
                     {
                         var subSchema = Schema.Lookup(field.SubSchemaGUID);
-                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                              " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
-                                              ", ContainerType: " + field.ContainerType);
+                        strBuilder.AppendLine(
+                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
                         DumpAllSchemaEntityData(retval, subSchema, strBuilder);
                     }
                     else
                     {
-                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                              retval + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
-                                              field.ContainerType);
+                        strBuilder.AppendLine(
+                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value: {retval}, Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
                     }
 
                     break;
@@ -474,9 +470,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                     var listRetval = (IList<TFieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
                     if (fieldType == typeof(Entity))
                     {
-                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                              " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
-                                              ", ContainerType: " + field.ContainerType);
+                        strBuilder.AppendLine(
+                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
 
                         foreach (var fa in listRetval)
                         {
@@ -486,12 +481,11 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                     }
                     else
                     {
-                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                              " {Array} " + ", Unit: " + field.GetSpecTypeId().TypeId +
-                                              ", ContainerType: " + field.ContainerType);
+                        strBuilder.AppendLine(
+                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{Array}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
                         foreach (var fa in listRetval)
                         {
-                            strBuilder.AppendLine("  Array value: " + fa);
+                            strBuilder.AppendLine($"  Array value: {fa}");
                         }
                     }
 
@@ -500,16 +494,14 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                 //Map
                 default:
                 {
-                    strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                          " {Map} " + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
-                                          field.ContainerType);
+                    strBuilder.AppendLine(
+                        $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{Map}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
                     var mapRetval =
                         (IDictionary<TKeyType, TFieldType>)instantiatedGenericGetMethod.Invoke(entity, invokeParams);
                     if (fieldType == typeof(Entity))
                     {
-                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                              " {SubEntity} " + ", Unit: " + field.GetSpecTypeId().TypeId +
-                                              ", ContainerType: " + field.ContainerType);
+                        strBuilder.AppendLine(
+                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{SubEntity}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
                         foreach (var fa in mapRetval.Values)
                         {
                             strBuilder.Append("  Map Value: ");
@@ -518,12 +510,11 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.C
                     }
                     else
                     {
-                        strBuilder.AppendLine("Field: " + field.FieldName + ", Type: " + field.ValueType + ", Value: " +
-                                              " {Map} " + ", Unit: " + field.GetSpecTypeId().TypeId + ", ContainerType: " +
-                                              field.ContainerType);
+                        strBuilder.AppendLine(
+                            $"Field: {field.FieldName}, Type: {field.ValueType}, Value:  {{Map}} , Unit: {field.GetSpecTypeId().TypeId}, ContainerType: {field.ContainerType}");
                         foreach (var fa in mapRetval.Values)
                         {
-                            strBuilder.AppendLine("  Map value: " + fa);
+                            strBuilder.AppendLine($"  Map value: {fa}");
                         }
                     }
 

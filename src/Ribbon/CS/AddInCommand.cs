@@ -129,7 +129,7 @@ namespace Ara3D.RevitSampleBrowser.Ribbon.CS
                 }
             }
 
-            var newWallMark = textBox.Value.ToString() + '_' + (newWallIndex + 1);
+            var newWallMark = $"{textBox.Value}_{(newWallIndex + 1)}";
             return newWallMark;
         }
 

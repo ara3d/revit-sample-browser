@@ -113,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
                 // family symbol name
                 var familyCategoryname = string.Empty;
                 if (null != symbol.Family.FamilyCategory)
-                    familyCategoryname = symbol.Family.FamilyCategory.Name + " : ";
+                    familyCategoryname = $"{symbol.Family.FamilyCategory.Name} : ";
                 FamilySymbolNameList.Add($"{familyCategoryname}{symbol.Family.Name} : {symbol.Name}");
                 ii++;
             }
@@ -137,7 +137,7 @@ namespace Ara3D.RevitSampleBrowser.PlaceFamilyInstanceByFace.CS
 
                 var familyCategoryname = string.Empty;
                 if (null != loadedfamilySymbol.Family.FamilyCategory)
-                    familyCategoryname = loadedfamilySymbol.Family.FamilyCategory.Name + ": ";
+                    familyCategoryname = $"{loadedfamilySymbol.Family.FamilyCategory.Name}: ";
                 FamilySymbolNameList.Add(
                     $"{familyCategoryname}{loadedfamilySymbol.Family.Name}: {loadedfamilySymbol.Name}");
                 DefaultFamilySymbolIndex = FamilySymbolList.Count - 1;

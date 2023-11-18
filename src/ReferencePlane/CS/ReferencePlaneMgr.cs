@@ -143,9 +143,7 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
         /// <returns>The display string for a point.</returns>
         private string Format(XYZ point)
         {
-            return "(" + Math.Round(point.X, 2) +
-                   ", " + Math.Round(point.Y, 2) +
-                   ", " + Math.Round(point.Z, 2) + ")";
+            return $"({Math.Round(point.X, 2)}, {Math.Round(point.Y, 2)}, {Math.Round(point.Z, 2)})";
         }
 
         /// <summary>

@@ -62,7 +62,7 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
         public static void WriteLog(EventArgs args, Document doc)
         {
             Trace.WriteLine("");
-            Trace.WriteLine("[Event] " + GetEventName(args.GetType()) + ": " + TitleNoExt(doc.Title));
+            Trace.WriteLine($"[Event] {GetEventName(args.GetType())}: {TitleNoExt(doc.Title)}");
         }
 
         /// <summary>

@@ -200,8 +200,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 DefaultExt = ".xml",
                 Filter = "SchemaWrapper Xml files (*.xml)|*.xml",
                 InitialDirectory = GetStartingXmlPath(),
-                FileName = m_textBox_SchemaName.Text + "_" + m_textBox_SchemaVendorId.Text + "___" +
-                           m_textBox_SchemaId.Text.Substring(31) + ".xml"
+                FileName =
+                    $"{m_textBox_SchemaName.Text}_{m_textBox_SchemaVendorId.Text}___{m_textBox_SchemaId.Text.Substring(31)}.xml"
             };
 
             var result = sfd.ShowDialog();
@@ -218,7 +218,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 }
                 catch (Exception ex)
                 {
-                    TaskDialog.Show("ExtensibleStorage Manager", "Could not Create Schema.  " + ex);
+                    TaskDialog.Show("ExtensibleStorage Manager", $"Could not Create Schema.  {ex}");
                     return;
                 }
 
@@ -230,8 +230,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
                 var entityData =
                     m_schemaWrapper.GetSchemaEntityData(
                         Document.ProjectInformation.GetEntity(m_schemaWrapper.GetSchema()));
-                var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine +
-                              Environment.NewLine + "Entity" + Environment.NewLine + entityData;
+                var allData =
+                    $"Schema: {Environment.NewLine}{schemaData}{Environment.NewLine}{Environment.NewLine}Entity{Environment.NewLine}{entityData}";
                 dataDialog.SetData(allData);
                 dataDialog.ShowDialog();
             }
@@ -252,7 +252,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 
             catch (Exception ex)
             {
-                TaskDialog.Show("ExtensibleStorage Manager", "Could not Create SchemaWrapper from Schema.  " + ex);
+                TaskDialog.Show("ExtensibleStorage Manager", $"Could not Create SchemaWrapper from Schema.  {ex}");
                 return;
             }
 
@@ -276,7 +276,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("ExtensibleStorage Manager", "Could not extract data from Schema.  " + ex);
+                TaskDialog.Show("ExtensibleStorage Manager", $"Could not extract data from Schema.  {ex}");
                 return;
             }
 
@@ -287,8 +287,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             var schemaData = m_schemaWrapper.ToString();
             var entityData =
                 m_schemaWrapper.GetSchemaEntityData(Document.ProjectInformation.GetEntity(m_schemaWrapper.GetSchema()));
-            var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine + Environment.NewLine +
-                          "Entity" + Environment.NewLine + entityData;
+            var allData =
+                $"Schema: {Environment.NewLine}{schemaData}{Environment.NewLine}{Environment.NewLine}Entity{Environment.NewLine}{entityData}";
 
             dataDialog.SetData(allData);
             dataDialog.ShowDialog();
@@ -318,7 +318,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
 
                 catch (Exception ex)
                 {
-                    TaskDialog.Show("ExtensibleStorage Manager", "Could not import Schema from Xml.  " + ex);
+                    TaskDialog.Show("ExtensibleStorage Manager", $"Could not import Schema from Xml.  {ex}");
                     return;
                 }
 
@@ -346,7 +346,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("ExtensibleStorage Manager", "Could not extract data from Schema.  " + ex);
+                TaskDialog.Show("ExtensibleStorage Manager", $"Could not extract data from Schema.  {ex}");
                 return;
             }
 
@@ -357,8 +357,8 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             var schemaData = m_schemaWrapper.ToString();
             var entityData =
                 m_schemaWrapper.GetSchemaEntityData(Document.ProjectInformation.GetEntity(m_schemaWrapper.GetSchema()));
-            var allData = "Schema: " + Environment.NewLine + schemaData + Environment.NewLine + Environment.NewLine +
-                          "Entity" + Environment.NewLine + entityData;
+            var allData =
+                $"Schema: {Environment.NewLine}{schemaData}{Environment.NewLine}{Environment.NewLine}Entity{Environment.NewLine}{entityData}";
 
             dataDialog.SetData(allData);
             dataDialog.ShowDialog();

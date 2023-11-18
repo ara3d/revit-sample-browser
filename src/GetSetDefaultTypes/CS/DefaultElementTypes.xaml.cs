@@ -143,7 +143,7 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
                 {
                     var item = new DefaultElementTypeCandidate
                     {
-                        Name = t.FamilyName + " - " + t.Name,
+                        Name = $"{t.FamilyName} - {t.Name}",
                         Id = t.Id,
                         ElementTypeGroup = etg
                     };
@@ -241,7 +241,7 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
         public void Execute(UIApplication revitApp)
         {
             using (var tran = new Transaction(revitApp.ActiveUIDocument.Document,
-                       "Set Default element type to " + m_defaultTypeId))
+                       $"Set Default element type to {m_defaultTypeId}"))
             {
                 tran.Start();
                 revitApp.ActiveUIDocument.Document.SetDefaultElementTypeId(m_elementTypeGroup, m_defaultTypeId);

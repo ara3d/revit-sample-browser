@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.CreateDuctworkStiffener.CS
             foreach (var element in allStiffenerTypes)
             {
                 var f = element as FamilySymbol;
-                var name = f.Family.Name + ": " + f.Name;
+                var name = $"{f.Family.Name}: {f.Name}";
                 if (name == stiffenerTypeName)
                 {
                     m_stiffenerType = f;

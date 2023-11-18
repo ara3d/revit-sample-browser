@@ -139,10 +139,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
             // set up the display style
             if (m_schemaId == -1)
             {
-                var resultSchema1 = new AnalysisResultSchema("PaintedSolid " + viewName, "Description");
+                var resultSchema1 = new AnalysisResultSchema($"PaintedSolid {viewName}", "Description");
 
                 var displayStyle = AnalysisDisplayStyle.CreateAnalysisDisplayStyle(m_revitDoc,
-                    "Real_Color_Surface" + viewName, new AnalysisDisplayColoredSurfaceSettings(),
+                    $"Real_Color_Surface{viewName}", new AnalysisDisplayColoredSurfaceSettings(),
                     new AnalysisDisplayColorSettings(), new AnalysisDisplayLegendSettings());
 
                 resultSchema1.AnalysisDisplayStyleId = displayStyle.Id;

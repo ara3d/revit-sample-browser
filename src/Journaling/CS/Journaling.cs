@@ -260,8 +260,7 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
         /// <returns>The format string which store the information of the point</returns>
         private static string XyzToString(XYZ point)
         {
-            var pointString = "(" + point.X + "," + point.Y + ","
-                              + point.Z + ")";
+            var pointString = $"({point.X},{point.Y},{point.Z})";
             return pointString;
         }
 
@@ -275,7 +274,7 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
         {
             var dataValue = dataMap[key];
 
-            if (string.IsNullOrEmpty(dataValue)) throw new Exception(key + "information is not exist in journal.");
+            if (string.IsNullOrEmpty(dataValue)) throw new Exception($"{key}information is not exist in journal.");
             return dataValue;
         }
 

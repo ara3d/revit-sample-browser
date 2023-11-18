@@ -88,7 +88,7 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
         /// </summary>
         private void GetRoomTagTypes()
         {
-            m_roomTagTypes = m_revit.ActiveUIDocument.Document.GetFilteredElements<RoomTagType>().ToList();
+            m_roomTagTypes = m_revit.ActiveUIDocument.Document.GetElements<RoomTagType>().ToList();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Ara3D.RevitSampleBrowser.AutoTagRooms.CS
         /// </summary>
         private void GetRoomWithTags()
         {
-            var roomTags = m_revit.ActiveUIDocument.Document.GetFilteredElements<RoomTag>();
+            var roomTags = m_revit.ActiveUIDocument.Document.GetElements<RoomTag>();
             foreach (var roomTag in roomTags)
             {
                 if (m_roomWithTags.ContainsKey(roomTag.Room.Id))

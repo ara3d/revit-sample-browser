@@ -26,9 +26,9 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 
         private ResourceProvider()
         {
-            IssueImage = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\issue.bmp";
+            IssueImage = $"{new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName}\\issue.bmp";
             SelectedIssueImage =
-                new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + "\\selected.bmp";
+                $"{new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName}\\selected.bmp";
         }
 
         /// <summary>

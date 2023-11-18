@@ -94,15 +94,15 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                 var failureReason = ResManager.GetString("FailedToCreateGrids");
                 if (failureReasons.Count != 0)
                 {
-                    failureReason += ResManager.GetString("Reasons") + "\r";
+                    failureReason += $"{ResManager.GetString("Reasons")}\r";
                     failureReason += "\r";
                     foreach (string reason in failureReasons)
                     {
-                        failureReason += reason + "\r";
+                        failureReason += $"{reason}\r";
                     }
                 }
 
-                failureReason += "\r" + ResManager.GetString("AjustValues");
+                failureReason += $"\r{ResManager.GetString("AjustValues")}";
 
                 ShowMessage(failureReason, ResManager.GetString("FailureCaptionCreateGrids"));
             }
@@ -170,7 +170,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                         }
                         catch (ArgumentException)
                         {
-                            ShowMessage(ResManager.GetString("FailedToSetLabel") + XFirstLabel + "!",
+                            ShowMessage($"{ResManager.GetString("FailedToSetLabel")}{XFirstLabel}!",
                                 ResManager.GetString("FailureCaptionSetLabel"));
                         }
                     }
@@ -253,7 +253,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                         }
                         catch (ArgumentException)
                         {
-                            ShowMessage(ResManager.GetString("FailedToSetLabel") + YFirstLabel + "!",
+                            ShowMessage($"{ResManager.GetString("FailedToSetLabel")}{YFirstLabel}!",
                                 ResManager.GetString("FailureCaptionSetLabel"));
                         }
                     }

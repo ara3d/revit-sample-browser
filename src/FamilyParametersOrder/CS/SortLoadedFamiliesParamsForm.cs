@@ -69,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
                     }
 
                     var tmpFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                        fam.Name + ".rfa");
+                        $"{fam.Name}.rfa");
 
                     if (File.Exists(tmpFile))
                         File.Delete(tmpFile);
@@ -88,11 +88,11 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
                     count++;
                 }
 
-                TaskDialog.Show("Message", "Sort completed! " + count + " families sorted.");
+                TaskDialog.Show("Message", $"Sort completed! {count} families sorted.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error:" + ex.Message);
+                MessageBox.Show($"Error:{ex.Message}");
             }
         }
 

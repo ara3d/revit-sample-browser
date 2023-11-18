@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         /// <returns>the validation result message</returns>
         public string IsDouble(string value, ref double result)
         {
-            return double.TryParse("0" + value, out result) ? string.Empty : "Please input a double value.";
+            return double.TryParse($"0{value}", out result) ? string.Empty : "Please input a double value.";
         }
 
         /// <summary>
@@ -58,12 +58,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 value = Utility.MetricToImperial(value);
                 if (value >= 0.23 && value < m_wallWidth)
                     return string.Empty;
-                return "The width should be between 69 and " + Convert.ToInt32(Utility.ImperialToMetric(m_wallWidth));
+                return $"The width should be between 69 and {Convert.ToInt32(Utility.ImperialToMetric(m_wallWidth))}";
             }
 
             if (value >= 0.4 && value < m_wallWidth)
                 return string.Empty;
-            return "The width should be between 0.4 and " + m_wallWidth;
+            return $"The width should be between 0.4 and {m_wallWidth}";
         }
 
         /// <summary>
@@ -106,12 +106,12 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                 value = Utility.MetricToImperial(value);
                 if (value < m_wallHeight)
                     return string.Empty;
-                return "The sillheight should be < " + Convert.ToInt32(Utility.ImperialToMetric(m_wallHeight));
+                return $"The sillheight should be < {Convert.ToInt32(Utility.ImperialToMetric(m_wallHeight))}";
             }
 
             if (value < m_wallHeight)
                 return string.Empty;
-            return "The sillheight should be < " + m_wallHeight;
+            return $"The sillheight should be < {m_wallHeight}";
         }
     }
 }

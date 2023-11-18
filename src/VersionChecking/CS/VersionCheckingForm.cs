@@ -33,9 +33,9 @@ namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
         {
             versionInformationTextBox.ReadOnly = true;
 
-            var productName = "Product Name:    " + m_dataBuffer.ProductName + "\r\n";
-            var productVersion = "Product Version: " + m_dataBuffer.ProductVersion + "\r\n";
-            var buildNumber = "Build Number:    " + m_dataBuffer.BuildNumner + "\r\n";
+            var productName = $"Product Name:    {m_dataBuffer.ProductName}\r\n";
+            var productVersion = $"Product Version: {m_dataBuffer.ProductVersion}\r\n";
+            var buildNumber = $"Build Number:    {m_dataBuffer.BuildNumner}\r\n";
 
             versionInformationTextBox.AppendText(productName);
             versionInformationTextBox.AppendText(productVersion);

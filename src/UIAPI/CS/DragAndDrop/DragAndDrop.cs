@@ -78,9 +78,9 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDrop
                 var item = new ListViewItem
                 {
                     Tag = familySymbol.Id,
-                    Text = familySymbol.Family.Name + "::" + familySymbol.Name
+                    Text = $"{familySymbol.Family.Name}::{familySymbol.Name}"
                 };
-                item.ToolTipText = "Drag to place instances of " + item.Text + " in the active document.";
+                item.ToolTipText = $"Drag to place instances of {item.Text} in the active document.";
 
                 var bitmap = familySymbol.GetPreviewImage(size);
 

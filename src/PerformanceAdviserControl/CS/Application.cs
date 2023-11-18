@@ -51,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
             var currentAssembly = Assembly.GetAssembly(GetType()).Location;
             var pb = rp.AddItem(new PushButtonData("Performance Adviser", "Performance Adviser", currentAssembly,
                 "Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS.UICommand")) as PushButton;
-            var uriImage = new Uri(Path.GetDirectoryName(currentAssembly) + "\\Button32.png");
+            var uriImage = new Uri($"{Path.GetDirectoryName(currentAssembly)}\\Button32.png");
             var largeImage = new BitmapImage(uriImage);
             pb.LargeImage = largeImage;
 

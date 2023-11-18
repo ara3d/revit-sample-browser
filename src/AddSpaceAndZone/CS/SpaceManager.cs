@@ -54,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
                 }
 
                 if (elements == null || elements.Count == 0)
-                    TaskDialog.Show("Revit", "There is no enclosed loop in " + level.Name);
+                    TaskDialog.Show("Revit", $"There is no enclosed loop in {level.Name}");
             }
             catch (Exception ex)
             {

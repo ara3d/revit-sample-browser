@@ -107,12 +107,12 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoUpdate.CS
             }
             catch (Exception ee)
             {
-                Trace.WriteLine("Failed to modify project information!-" + ee.Message);
+                Trace.WriteLine($"Failed to modify project information!-{ee.Message}");
             }
 
             // write the value to log file to check whether the operation is successful.
             Trace.WriteLine("The value after running the sample ------>");
-            Trace.WriteLine("    [Address]         :" + doc.ProjectInformation.Address);
+            Trace.WriteLine($"    [Address]         :{doc.ProjectInformation.Address}");
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace Ara3D.RevitSampleBrowser.Events.AutoUpdate.CS
         private void DumpEventArgs(DocumentOpenedEventArgs args)
         {
             Trace.WriteLine("DocumentOpenedEventArgs Parameters ------>");
-            Trace.WriteLine("    Event Cancel      : " + args.IsCancelled()); // is it be cancelled?
-            Trace.WriteLine("    Event Cancellable : " + args.Cancellable); // Cancellable
-            Trace.WriteLine("    Status            : " + args.Status); // Status
+            Trace.WriteLine($"    Event Cancel      : {args.IsCancelled()}"); // is it be cancelled?
+            Trace.WriteLine($"    Event Cancellable : {args.Cancellable}"); // Cancellable
+            Trace.WriteLine($"    Status            : {args.Status}"); // Status
         }
 
         /// <summary>

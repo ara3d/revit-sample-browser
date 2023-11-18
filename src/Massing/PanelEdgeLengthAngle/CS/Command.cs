@@ -235,8 +235,8 @@ namespace Ara3D.RevitSampleBrowser.Massing.PanelEdgeLengthAngle.CS
             if (l1 == null || l2 == null || l3 == null || l4 == null || a1 == null || a2 == null || a3 == null ||
                 a4 == null)
             {
-                var errorstring = "Panel family: " + familyInstance.Id + " '" + familyInstance.Symbol.Family.Name +
-                                  "' must have instance parameters Length1, Length2, Length3, Length4, Angle1, Angle2, Angle3, and Angle4";
+                var errorstring =
+                    $"Panel family: {familyInstance.Id} '{familyInstance.Symbol.Family.Name}' must have instance parameters Length1, Length2, Length3, Length4, Angle1, Angle2, Angle3, and Angle4";
                 TaskDialog.Show("Revit", errorstring);
                 //   throw new ArgumentException(errorstring);
             }

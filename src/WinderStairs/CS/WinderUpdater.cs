@@ -74,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
             catch (Exception ex)
             {
                 TaskDialog.Show("WinderStairs",
-                    "Can't generate the winder layout because " + ex.Message);
+                    $"Can't generate the winder layout because {ex.Message}");
             }
         }
 

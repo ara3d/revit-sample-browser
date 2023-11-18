@@ -119,12 +119,12 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                                 break;
                         }
 
-                        resultsBuilder.AppendLine("Current custom data entry value = "
-                                                  + $"{fabPartCurrentValue} {Environment.NewLine}");
+                        resultsBuilder.AppendLine(
+                            $"Current custom data entry value = {fabPartCurrentValue} {Environment.NewLine}");
 
                         if (setNewValues)
-                            resultsBuilder.AppendLine("New custom data entry value = "
-                                                      + $"{fabPartNewValue} {Environment.NewLine}");
+                            resultsBuilder.AppendLine(
+                                $"New custom data entry value = {fabPartNewValue} {Environment.NewLine}");
                     }
                     else
                     {

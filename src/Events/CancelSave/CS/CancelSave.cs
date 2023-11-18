@@ -95,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
             m_documentOriginalStatusDic.Add(docHashCode, currentProjectStatus);
 
             // write log file. 
-            LogManager.WriteLog("   Current Project Status: " + currentProjectStatus);
+            LogManager.WriteLog($"   Current Project Status: {currentProjectStatus}");
         }
 
         /// <summary>
@@ -122,8 +122,8 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
             var originalProjectStatus = m_documentOriginalStatusDic[doc.GetHashCode()];
 
             // write log file.
-            LogManager.WriteLog("   Current Project Status: " + currentProjectStatus + "; Original Project Status: " +
-                                originalProjectStatus);
+            LogManager.WriteLog(
+                $"   Current Project Status: {currentProjectStatus}; Original Project Status: {originalProjectStatus}");
 
             // project status has not been updated.
             if ((string.IsNullOrEmpty(currentProjectStatus) && string.IsNullOrEmpty(originalProjectStatus)) ||
@@ -192,7 +192,7 @@ namespace Ara3D.RevitSampleBrowser.Events.CancelSave.CS
             }
 
             // write log file.
-            LogManager.WriteLog("   Project Status is not updated, taskDialog informs user: " + mainMessage);
+            LogManager.WriteLog($"   Project Status is not updated, taskDialog informs user: {mainMessage}");
         }
 
         /// <summary>

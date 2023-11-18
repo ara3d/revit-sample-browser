@@ -232,12 +232,12 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
                 // Get each layer's Material name and Young Modulus properties
                 m_dataBuffer.SetLayer(i);
 
-                m_layerRichTextBox.Text += "Layer " + (i + 1) + "\r\n";
-                m_layerRichTextBox.Text += "Material name:  " + m_dataBuffer.LayerMaterialName + "\r\n";
-                m_layerRichTextBox.Text += "Thickness: " + m_dataBuffer.LayerThickness + "\r\n";
-                m_layerRichTextBox.Text += "YoungModulus X:  " + m_dataBuffer.LayerYoungModulusX + "\r\n";
-                m_layerRichTextBox.Text += "YoungModulus Y:  " + m_dataBuffer.LayerYoungModulusY + "\r\n";
-                m_layerRichTextBox.Text += "YoungModulus Z:  " + m_dataBuffer.LayerYoungModulusZ + "\r\n";
+                m_layerRichTextBox.Text += $"Layer {(i + 1)}\r\n";
+                m_layerRichTextBox.Text += $"Material name:  {m_dataBuffer.LayerMaterialName}\r\n";
+                m_layerRichTextBox.Text += $"Thickness: {m_dataBuffer.LayerThickness}\r\n";
+                m_layerRichTextBox.Text += $"YoungModulus X:  {m_dataBuffer.LayerYoungModulusX}\r\n";
+                m_layerRichTextBox.Text += $"YoungModulus Y:  {m_dataBuffer.LayerYoungModulusY}\r\n";
+                m_layerRichTextBox.Text += $"YoungModulus Z:  {m_dataBuffer.LayerYoungModulusZ}\r\n";
                 m_layerRichTextBox.Text += "-----------------------------------------------------------" + "\r\n";
             }
         }

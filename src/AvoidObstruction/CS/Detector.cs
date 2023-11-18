@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
@@ -28,15 +29,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         public Detector(Document rvtDoc)
         {
             m_rvtDoc = rvtDoc;
-            var collector = new FilteredElementCollector(m_rvtDoc);
-            var iter = collector.OfClass(typeof(View3D)).GetElementIterator();
-            iter.Reset();
-            while (iter.MoveNext())
-            {
-                m_view3d = iter.Current as View3D;
-                if (null != m_view3d && !m_view3d.IsTemplate)
-                    break;
-            }
+            m_view3d = m_rvtDoc.GetElements<View3D>().FirstOrDefault(v => !v.IsTemplate);
         }
 
         /// <summary>

@@ -63,7 +63,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                 else
                 {
                     var familySymbol = element as FamilySymbol;
-                    fittingName = familySymbol.Family.Name + " " + familySymbol.Name;
+                    fittingName = $"{familySymbol.Family.Name} {familySymbol.Name}";
                 }
             }
 
@@ -82,7 +82,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             if (Id.Count == 0) fittingNames += "None -1";
             foreach (var id in Id)
             {
-                fittingNames += GetFittingName(document, id) + " " + id + ", ";
+                fittingNames += $"{GetFittingName(document, id)} {id}, ";
             }
 
             return fittingNames.Remove(fittingNames.Length - 2, 2);

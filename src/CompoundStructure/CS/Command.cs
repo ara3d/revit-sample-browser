@@ -196,15 +196,7 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
         /// <returns>The specific material</returns>
         private Material GetMaterial(string name)
         {
-            var collector = new FilteredElementCollector(m_document.Document);
-            collector.WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_Materials));
-            var materialElement = from element in collector
-                where element.Name == name
-                select element;
-
-            if (!materialElement.Any())
-                return null;
-            return materialElement.First() as Material;
+            return m_document.Document.GetElements<Material>().FirstOrDefault(m => m.Name == name);
         }
 
         /// <summary>
@@ -215,13 +207,13 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
         {
             var createMaterial = new SubTransaction(m_document.Document);
             createMaterial.Start();
-            Material materialNew = null;
+            Material materialNew;
 
             //Try to copy an existing material.  If it is not available, create a new one.
             var masonryBrick = GetMaterial("Brick, Common");
             if (masonryBrick != null)
             {
-                materialNew = masonryBrick.Duplicate(masonryBrick.Name + "_new");
+                materialNew = masonryBrick.Duplicate($"{masonryBrick.Name}_new");
                 Debug.WriteLine(masonryBrick.MaterialClass);
                 materialNew.MaterialClass = "Brick";
             }
@@ -277,7 +269,7 @@ namespace Ara3D.RevitSampleBrowser.CompoundStructure.CS
             var masonryConcrete = GetMaterial("Concrete, Lightweight");
             if (masonryConcrete != null)
             {
-                materialNew = masonryConcrete.Duplicate(masonryConcrete.Name + "_new");
+                materialNew = masonryConcrete.Duplicate($"{masonryConcrete.Name}_new");
                 materialNew.MaterialClass = "Concrete";
             }
             else

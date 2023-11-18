@@ -125,8 +125,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
             if (!regex.IsMatch(nameTextBox.Text.Trim()))
             {
                 TaskDialog.Show("Revit",
-                    "Please input the name starting with letter and just containing letters, numbers and underlines. String is " +
-                    nameTextBox.Text);
+                    $"Please input the name starting with letter and just containing letters, numbers and underlines. String is {nameTextBox.Text}");
                 nameTextBox.Focus();
                 return;
             }

@@ -112,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
         {
             InitializeComponent();
 
-            var logFile = AssemblyName.Replace(".dll", DateTime.Now.ToString("yyyyMMddhhmmss") + ".log");
+            var logFile = AssemblyName.Replace(".dll", $"{DateTime.Now:yyyyMMddhhmmss}.log");
             if (File.Exists(logFile)) File.Delete(logFile);
             m_txtListener = new TextWriterTraceListener(logFile);
             Trace.Listeners.Add(m_txtListener);
@@ -151,7 +151,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
                 FindClosestReference(references);
                 if (m_rClosest == null)
                 {
-                    var info = "Ray " + ctr + " aborted. No closest face reference found. ";
+                    var info = $"Ray {ctr} aborted. No closest face reference found. ";
                     m_outputInfo.Add(info);
                     if (ctr == 1) TaskDialog.Show("Revit", info);
                     break;
@@ -163,26 +163,26 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
                 var endpt = reference.GlobalPoint;
                 if (startpt.IsAlmostEqualTo(endpt))
                 {
-                    m_outputInfo.Add("Start and end points are equal. Ray " + ctr + " aborted\n" + startpt.X + ", " +
-                                     startpt.Y + ", " + startpt.Z);
+                    m_outputInfo.Add(
+                        $"Start and end points are equal. Ray {ctr} aborted\n{startpt.X}, {startpt.Y}, {startpt.Z}");
                     break;
                 }
 
                 {
                     MakeLine(startpt, endpt, m_direction, "bounce");
                     m_rayCount++;
-                    var info = "Intersected Element Type: [" + referenceElement.GetType() + "] ElementId: [" +
-                               referenceElement.Id;
+                    var info =
+                        $"Intersected Element Type: [{referenceElement.GetType()}] ElementId: [{referenceElement.Id}";
                     m_face = referenceObject as Face;
                     if (m_face.MaterialElementId != ElementId.InvalidElementId)
                     {
                         var materialElement = m_doc.GetElement(m_face.MaterialElementId) as Material;
-                        info += "] Face MaterialElement Name: [" + materialElement.Name + "] Shininess: [" +
-                                materialElement.Shininess;
+                        info +=
+                            $"] Face MaterialElement Name: [{materialElement.Name}] Shininess: [{materialElement.Shininess}";
                     }
                     else
                     {
-                        info += "] Face.MaterialElement is null [" + referenceElement.Category.Name;
+                        info += $"] Face.MaterialElement is null [{referenceElement.Category.Name}";
                     }
 
                     info += "]";
@@ -207,7 +207,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             var ts = m_stopWatch.Elapsed;
             var elapsedTime = string.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds,
                 ts.Milliseconds / 10);
-            m_outputInfo.Add(elapsedTime + "\n" + "Lines = " + m_lineCount + "\n" + "Rays = " + m_rayCount);
+            m_outputInfo.Add($"{elapsedTime}\nLines = {m_lineCount}\nRays = {m_rayCount}");
             m_stopWatch.Reset();
             OutputInformation();
         }
@@ -367,7 +367,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             }
             catch (Exception ex)
             {
-                m_outputInfo.Add("Failed to create lines: " + ex);
+                m_outputInfo.Add($"Failed to create lines: {ex}");
             }
         }
 

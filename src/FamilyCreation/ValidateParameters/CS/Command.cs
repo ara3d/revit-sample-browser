@@ -93,13 +93,13 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.ValidateParameters.CS
                     // output the parameters which failed during validating.
                     catch
                     {
-                        errorInfo.Add("Family Type:" + type.Name + "   Family Parameter:"
-                                      + para.Definition.Name + "   validating failed!");
+                        errorInfo.Add(
+                            $"Family Type:{type.Name}   Family Parameter:{para.Definition.Name}   validating failed!");
                     }
 
                     if (!right)
-                        errorInfo.Add("Family Type:" + type.Name + "   Family Parameter:"
-                                      + para.Definition.Name + "   validating failed!");
+                        errorInfo.Add(
+                            $"Family Type:{type.Name}   Family Parameter:{para.Definition.Name}   validating failed!");
                 }
             }
 

@@ -1,6 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
+using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -21,10 +22,8 @@ namespace Ara3D.RevitSampleBrowser.CapitalizeAllTextNotes.CS
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                // Iterate through the document and find all the TextNote elements
-                var collector = new FilteredElementCollector(document);
-                collector.OfClass(typeof(TextNote));
-                if (collector.GetElementCount() == 0)
+                var textNotes = document.GetElements<TextNote>().ToList();
+                if (textNotes.Count == 0)
                 {
                     message = "The document does not contain TextNote elements";
                     return Result.Failed;
@@ -32,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.CapitalizeAllTextNotes.CS
 
                 // Record all TextNotes that are not yet formatted to be 'AllCaps'
                 var textNotesToUpdate = new ElementSet();
-                foreach (var element in collector)
+                foreach (var element in textNotes)
                 {
                     var textNote = (TextNote)element;
 
@@ -54,7 +53,8 @@ namespace Ara3D.RevitSampleBrowser.CapitalizeAllTextNotes.CS
                     // This is done by calling these methods with a 'TextRange' that specifies 
                     // the range of characters to be tested.
 
-                    if (formattedText.GetAllCapsStatus() != FormatStatus.All) textNotesToUpdate.Insert(textNote);
+                    if (formattedText.GetAllCapsStatus() != FormatStatus.All) 
+                        textNotesToUpdate.Insert(textNote);
                 }
 
                 // Check whether we found any TextNotes that need to be formatted

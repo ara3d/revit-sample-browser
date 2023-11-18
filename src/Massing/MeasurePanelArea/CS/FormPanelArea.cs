@@ -113,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
 
             var assemblyName = Assembly.GetExecutingAssembly().Location;
             var assemblyDirectory = Path.GetDirectoryName(assemblyName);
-            m_writeFile = new StreamWriter(assemblyDirectory + @"\" + "_PanelArea.txt");
+            m_writeFile = new StreamWriter($@"{assemblyDirectory}\_PanelArea.txt");
             m_writeFile.WriteLine("Panel Element ID : Area");
 
             GetDividedSurfaces();
@@ -123,9 +123,9 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
                 ExamineDividedSurface(ds);
             }
 
-            m_writeFile.WriteLine(m_maxCounter + " panels larger than " + m_maxValue);
-            m_writeFile.WriteLine(m_minCounter + " panels smaller than " + m_minValue);
-            m_writeFile.WriteLine(m_okCounter + " panels within desired range");
+            m_writeFile.WriteLine($"{m_maxCounter} panels larger than {m_maxValue}");
+            m_writeFile.WriteLine($"{m_minCounter} panels smaller than {m_minValue}");
+            m_writeFile.WriteLine($"{m_okCounter} panels within desired range");
             m_writeFile.Close();
             Close();
         }
@@ -254,7 +254,7 @@ namespace Ara3D.RevitSampleBrowser.Massing.MeasurePanelArea.CS
                 foreach (Face face in solid.Faces)
                 {
                     panelArea = face.Area;
-                    m_writeFile.WriteLine(familyinstance.Id + " : " + panelArea);
+                    m_writeFile.WriteLine($"{familyinstance.Id} : {panelArea}");
                 }
             }
 

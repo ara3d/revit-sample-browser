@@ -78,7 +78,7 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
         /// <param name="slab"></param>
         private void DumpSlab(Floor slab)
         {
-            m_displayForm.WriteLine("Dumping Slab" + slab.Id);
+            m_displayForm.WriteLine($"Dumping Slab{slab.Id}");
 
             var slabType = slab.FloorType;
 
@@ -107,7 +107,7 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
                 // get the deck material object. In this sample all we need to display is the
                 // name, but other properties are readily available from the material object.
                 var deckMaterial = m_document.GetElement(deck.MaterialId) as Material;
-                m_displayForm.WriteLine("Deck Material = " + deckMaterial.Name);
+                m_displayForm.WriteLine($"Deck Material = {deckMaterial.Name}");
             }
 
             if (deck.DeckProfileId != ElementId.InvalidElementId)
@@ -117,8 +117,7 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
 
                 // firstly display the full name as the user would see it in the user interface
                 // this is done in the format Family.Name and then Symbol.Name
-                m_displayForm.WriteLine("Deck Profile = "
-                                        + deckProfile.Family.Name + " : " + deckProfile.Name);
+                m_displayForm.WriteLine($"Deck Profile = {deckProfile.Family.Name} : {deckProfile.Name}");
 
                 // the symbol object also contains parameters that describe how the deck is
                 // specified. From these parameters an external application can generate
@@ -152,7 +151,7 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
                         break;
                 }
 
-                m_displayForm.WriteLine(parameter.Definition.Name + " = " + value);
+                m_displayForm.WriteLine($"{parameter.Definition.Name} = {value}");
             }
         }
 
@@ -166,10 +165,11 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
             // Display the name of the material. More detailed material properties can
             // be found form the material object
             m_displayForm.WriteLine("Dumping Layer");
-            if (m_document.GetElement(layer.MaterialId) is Material material) m_displayForm.WriteLine("Layer material = " + material.Name);
+            if (m_document.GetElement(layer.MaterialId) is Material material) m_displayForm.WriteLine(
+                $"Layer material = {material.Name}");
 
             // display the thickness of the layer in inches.
-            m_displayForm.WriteLine("Layer Thickness = " + layer.Width);
+            m_displayForm.WriteLine($"Layer Thickness = {layer.Width}");
         }
     }
 }

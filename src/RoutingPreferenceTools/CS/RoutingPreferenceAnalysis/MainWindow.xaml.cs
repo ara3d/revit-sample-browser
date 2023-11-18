@@ -71,7 +71,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             collector.OfClass(typeof(PipeType));
             foreach (var pipeType in collector.ToElements().Cast<PipeType>())
             {
-                comboBox_PipeTypes.Items.Add(pipeType.Name + ", Id: " + pipeType.Id);
+                comboBox_PipeTypes.Items.Add($"{pipeType.Name}, Id: {pipeType.Id}");
             }
 
             comboBox_PipeTypes.SelectedIndex = 0;

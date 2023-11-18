@@ -65,7 +65,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
 
             //Create sheet by gotten title block type.
             var newSheet = ViewSheet.Create(document, titleBlockId);
-            newSheet.Name = "Sheet for " + schedule.Name;
+            newSheet.Name = $"Sheet for {schedule.Name}";
 
             document.Regenerate();
 

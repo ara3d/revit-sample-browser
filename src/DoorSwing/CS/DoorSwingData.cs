@@ -159,12 +159,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             if (showUpdateResultMessage)
             {
                 if (onlyUpdateSelect)
-                    TaskDialog.Show("Door Swing", "Updated all selected doors of " + doc.Title +
-                                                  " (" + doorCount + " doors).\r\n (Selection may " +
-                                                  "include miscellaneous elements.)");
+                    TaskDialog.Show("Door Swing",
+                        $"Updated all selected doors of {doc.Title} ({doorCount} doors).\r\n (Selection may include miscellaneous elements.)");
                 else
-                    TaskDialog.Show("Door Swing", "Updated all doors of " + doc.Title + " (" +
-                                                  doorCount + " doors).");
+                    TaskDialog.Show("Door Swing", $"Updated all doors of {doc.Title} ({doorCount} doors).");
             }
 
             return Result.Succeeded;
@@ -224,11 +222,10 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
             }
 
             if (onlyUpdateSelect)
-                TaskDialog.Show("Door Swing", "Updated all selected doors (" + doorCount +
-                                              " doors).\r\n (Selection may include miscellaneous elements.)");
+                TaskDialog.Show("Door Swing",
+                    $"Updated all selected doors ({doorCount} doors).\r\n (Selection may include miscellaneous elements.)");
             else
-                TaskDialog.Show("Door Swing", "Updated all doors of this project (" +
-                                              doorCount + " doors).");
+                TaskDialog.Show("Door Swing", $"Updated all doors of this project ({doorCount} doors).");
         }
 
         /// <summary>

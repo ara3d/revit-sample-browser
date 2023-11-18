@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
                 {
                     var item = new DefaultFamilyTypeCandidate
                     {
-                        Name = t.FamilyName + " - " + t.Name,
+                        Name = $"{t.FamilyName} - {t.Name}",
                         Id = t.Id,
                         CateogryId = new ElementId(cid)
                     };
@@ -218,7 +218,7 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
         public void Execute(UIApplication revitApp)
         {
             using (var tran = new Transaction(revitApp.ActiveUIDocument.Document,
-                       "Set Default family type to " + m_defaultTypeId))
+                       $"Set Default family type to {m_defaultTypeId}"))
             {
                 tran.Start();
                 revitApp.ActiveUIDocument.Document.SetDefaultFamilyTypeId(m_builtInCategory, m_defaultTypeId);

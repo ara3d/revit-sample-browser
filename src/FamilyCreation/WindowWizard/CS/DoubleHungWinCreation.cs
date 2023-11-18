@@ -152,7 +152,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
                         break;
                 }
 
-                para.PathName = Path.GetDirectoryName(para.PathName) + "Double Hung.rfa";
+                para.PathName = $"{Path.GetDirectoryName(para.PathName)}Double Hung.rfa";
 
                 CreateCommon();
 
@@ -499,7 +499,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Write to " + Para.PathName + " Failed");
+                Debug.WriteLine($"Write to {Para.PathName} Failed");
                 Debug.WriteLine(e.Message);
             }
 
@@ -618,8 +618,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         /// </summary>
         /// <param name="para">WindowParameter</param>
         /// <returns>indicate whether the NewType is successful</returns>
-        private bool
-            NewFamilyType(WindowParameter para) //string typeName, double height, double width, double sillHeight)
+        private bool NewFamilyType(WindowParameter para) 
         {
             var dbhungPara = para as DoubleHungWinPara;
             var typeName = dbhungPara.Type;

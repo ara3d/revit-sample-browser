@@ -62,16 +62,16 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             AddNewUnit(1, 175126.835246476, "kip/in", "PTSpringModulusConver");
 
             // about point BC's rotation spring modulus
-            AddNewUnit(1, 47880.2589803358, "kip-f/" + degree + "F", "PRSpringModulusConver");
+            AddNewUnit(1, 47880.2589803358, $"kip-f/{degree}F", "PRSpringModulusConver");
 
             // about Line BC's translation spring modulus
-            AddNewUnit(4, 14593.9029372064, "kip/ft" + square, "LTSpringModulusConver");
+            AddNewUnit(4, 14593.9029372064, $"kip/ft{square}", "LTSpringModulusConver");
 
             // about Line BC's rotation spring modulus
-            AddNewUnit(1, 47880.2589803358, "kip-f/" + degree + "F/ft", "LRSpringModulusConver");
+            AddNewUnit(1, 47880.2589803358, $"kip-f/{degree}F/ft", "LRSpringModulusConver");
 
             // about Area BC's translation spring modulus
-            AddNewUnit(1, 14593.9029372064, "kip/ft" + cube, "ATSpringModulusConver");
+            AddNewUnit(1, 14593.9029372064, $"kip/ft{cube}", "ATSpringModulusConver");
         }
         // member: dictionary
 

@@ -68,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility
         public static string GetPaneSummary(DockablePane pane)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("-RevitDockablePane- Title: " + pane.GetTitle() + ", Id-Guid: " + pane.Id.Guid);
+            sb.AppendLine($"-RevitDockablePane- Title: {pane.GetTitle()}, Id-Guid: {pane.Id.Guid}");
             return sb.ToString();
         }
 
@@ -79,12 +79,12 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility
         {
             var sb = new StringBuilder();
             sb.AppendLine(" -DockablePaneState-");
-            sb.AppendLine(" Left: " + paneState.FloatingRectangle.Left);
-            sb.AppendLine(" Right: " + paneState.FloatingRectangle.Right);
-            sb.AppendLine(" Top: " + paneState.FloatingRectangle.Top);
-            sb.AppendLine(" Bottom: " + paneState.FloatingRectangle.Bottom);
-            sb.AppendLine(" Position: " + paneState.DockPosition);
-            sb.AppendLine(" Tab target guid:" + paneState.TabBehind.Guid);
+            sb.AppendLine($" Left: {paneState.FloatingRectangle.Left}");
+            sb.AppendLine($" Right: {paneState.FloatingRectangle.Right}");
+            sb.AppendLine($" Top: {paneState.FloatingRectangle.Top}");
+            sb.AppendLine($" Bottom: {paneState.FloatingRectangle.Bottom}");
+            sb.AppendLine($" Position: {paneState.DockPosition}");
+            sb.AppendLine($" Tab target guid:{paneState.TabBehind.Guid}");
             return sb.ToString();
         }
     }

@@ -111,8 +111,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
                 {
                     // If Shared parameter file does not exist, then create a new one.
                     var shapeFile =
-                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-                        + "\\ParameterFile.txt";
+                        $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\ParameterFile.txt";
 
                     // Fill Schema data of Revit shared parameter file.
                     // If no this schema data, OpenSharedParameterFile may alway return null.
@@ -204,7 +203,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Revit", "Rebar shape creation failed:" + ex);
+                TaskDialog.Show("Revit", $"Rebar shape creation failed:{ex}");
                 return;
             }
 

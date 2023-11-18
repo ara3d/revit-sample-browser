@@ -86,8 +86,8 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             visiblePortionRadioButton.CheckedChanged += visiblePortionRadioButton_CheckedChanged;
             selectedViewsRadioButton.CheckedChanged += selectedViewsRadioButton_CheckedChanged;
 
-            printToFileNameTextBox.Text = Environment.GetFolderPath(
-                Environment.SpecialFolder.MyDocuments) + "\\" + m_printMgr.DocumentTitle;
+            printToFileNameTextBox.Text =
+                $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{m_printMgr.DocumentTitle}";
             controlsToEnableOrNot.Clear();
             controlsToEnableOrNot.Add(selectedViewSheetSetLabel);
             controlsToEnableOrNot.Add(selectedViewSheetSetButton);

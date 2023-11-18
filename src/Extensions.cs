@@ -15,7 +15,7 @@ namespace Ara3D.RevitSampleBrowser
         // This looks slow, but it is only called once when starting the collector so it is O(1) compared to O(N) where N = number of elements. 
         public static FilteredElementCollector GetCollector(this FilteredElementCollector collector, Type t)
         {
-            if (typeof(Material).IsAssignableFrom(t)) return collector;
+            if (typeof(Material).IsAssignableFrom(t)) return collector.WherePasses(new ElementCategoryFilter(BuiltInCategory.OST_Materials));
             if (typeof(ConnectorElement).IsAssignableFrom(t)) return collector;
             if (typeof(HostedSweep).IsAssignableFrom(t)) return collector.OfClass(typeof(HostObject));
             if (typeof(SpatialElement).IsAssignableFrom(t)) return collector.OfClass(typeof(SpatialElement));
@@ -33,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser
             return collector.OfClass(t);
         }
 
-        public static IEnumerable<T> GetFilteredElements<T>(this Document doc) where T : Element
+        public static IEnumerable<T> GetElements<T>(this Document doc) where T : Element
             => new FilteredElementCollector(doc).GetCollector(typeof(T)).OfType<T>();
 
         public static T GetElement<T>(this Document doc, ElementId id) where T : class
@@ -43,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser
             => ids.Select(doc.GetElement<T>).Where(e => e != null);
 
         public static View GetNamedView(this Document doc, string name)
-            => doc.GetFilteredElements<View>().FirstOrDefault(v => v.Name == name);
+            => doc.GetElements<View>().FirstOrDefault(v => v.Name == name);
 
     }
 }

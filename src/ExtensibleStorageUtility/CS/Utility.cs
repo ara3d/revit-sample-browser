@@ -59,7 +59,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
         private static string GetElementsWithSchema(Document doc, Schema schema)
         {
             var sBuilder = new StringBuilder();
-            sBuilder.AppendLine("Schema: " + schema.GUID + ", " + schema.SchemaName);
+            sBuilder.AppendLine($"Schema: {schema.GUID}, {schema.SchemaName}");
             var elementsofSchema = ElementsWithStorage(doc, schema);
             if (elementsofSchema.Count == 0)
                 sBuilder.AppendLine("No elements.");
@@ -91,7 +91,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
         private static string PrintElementInfo(ElementId id, Document document)
         {
             var element = document.GetElement(id);
-            var retval = element.Id + ", " + element.Name + ", " + element.GetType().FullName;
+            var retval = $"{element.Id}, {element.Name}, {element.GetType().FullName}";
             Debug.WriteLine(retval);
             return retval;
         }

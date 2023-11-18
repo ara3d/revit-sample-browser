@@ -117,7 +117,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.MeasureHeight.CS
             m_doc.Create.NewModelCurve(line, sketchPlane);
 
             // Show a message with the length value
-            TaskDialog.Show("Distance", "Distance to floor: " + $"{line.Length:f2}");
+            TaskDialog.Show("Distance", $"Distance to floor: {line.Length:f2}");
 
             trans.Commit();
             return Result.Succeeded;

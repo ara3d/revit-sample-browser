@@ -124,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         /// <param name="e">EventArgs of this event.</param>
         public void DocumentSavingAs(object sender, DocumentSavingAsEventArgs e)
         {
-            DumpLog("Raised DocumentSavingAs -> Document: " + Path.GetFileNameWithoutExtension(e.Document.Title));
+            DumpLog($"Raised DocumentSavingAs -> Document: {Path.GetFileNameWithoutExtension(e.Document.Title)}");
             UpdateMappedSpreadsheet(e.Document);
         }
 
@@ -135,7 +135,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         /// <param name="e">EventArgs of this event.</param>
         public void DocumentSaving(object sender, DocumentSavingEventArgs e)
         {
-            DumpLog("Raised DocumentSaving -> Document: " + Path.GetFileNameWithoutExtension(e.Document.Title));
+            DumpLog($"Raised DocumentSaving -> Document: {Path.GetFileNameWithoutExtension(e.Document.Title)}");
             UpdateMappedSpreadsheet(e.Document);
         }
 
@@ -246,7 +246,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             // check whether there is room table. 
             // get all available rooms in current document once more
             var stepNo = -1;
-            DumpLog(Environment.NewLine + "Start to update spreadsheet room......");
+            DumpLog($"{Environment.NewLine}Start to update spreadsheet room......");
             foreach (var room in roomData.Rooms)
             {
                 // check Whether We Update This Room
@@ -351,7 +351,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             var sumMsg =
                 $"{Path.GetFileName(mappedXlsAndTable.FileName)}:[{mappedXlsAndTable.SheetName}]: {updatedRows} rows were updated and {newRows} rows were added into successfully.";
             DumpLog(sumMsg);
-            DumpLog("Finish updating spreadsheet room." + Environment.NewLine);
+            DumpLog($"Finish updating spreadsheet room.{Environment.NewLine}");
         }
 
         /// <summary>

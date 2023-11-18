@@ -69,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         {
             if (destinationType == typeof(string) && value is Level level)
             {
-                return level.Name + "[" + level.Id + "]";
+                return $"{level.Name}[{level.Id}]";
             }
 
             return base.ConvertTo(context, culture, value, destinationType);
@@ -184,7 +184,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
         {
             if (destinationType == typeof(string) && value is FootPrintRoofLine footPrintLine)
             {
-                return footPrintLine.Name + "[" + footPrintLine.Id + "]";
+                return $"{footPrintLine.Name}[{footPrintLine.Id}]";
             }
 
             return base.ConvertTo(context, culture, value, destinationType);

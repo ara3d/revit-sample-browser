@@ -128,8 +128,8 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Import
                 try
                 {
                     if (!m_importData.Import())
-                        TaskDialog.Show("Import", "Cannot import " + Path.GetFileName(m_importData.ImportFileFullName) +
-                                                  " in current settings.", TaskDialogCommonButtons.Ok);
+                        TaskDialog.Show("Import",
+                            $"Cannot import {Path.GetFileName(m_importData.ImportFileFullName)} in current settings.", TaskDialogCommonButtons.Ok);
                 }
                 catch (Exception ex)
                 {

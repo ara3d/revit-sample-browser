@@ -61,8 +61,8 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
         public Result OnStartup(UIControlledApplication application)
         {
             m_assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            m_assemblyName = Assembly.GetExecutingAssembly().GetName().Name + ".dll";
-            m_imageFolder = GetProjectDirectory() + "/Resources/";
+            m_assemblyName = $"{Assembly.GetExecutingAssembly().GetName().Name}.dll";
+            m_imageFolder = $"{GetProjectDirectory()}/Resources/";
 
             //add a panel to go on the Add-In tab
             var panel = application.CreateRibbonPanel("ArrayPrismsOnASineCurve");
@@ -200,11 +200,11 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
 
             //Call method to customize the text boxes and make them active
             CustomizeTextBox(panel, m_periodBox,
-                "Define the period of the sine curve", "" + _periodVal, _periodVal, true, 50);
+                "Define the period of the sine curve", $"{_periodVal}", _periodVal, true, 50);
             CustomizeTextBox(panel, m_cyclesBox,
-                "Define the number of cycles of the sine curve", "" + _cyclesVal, _cyclesVal, true, 50);
+                "Define the number of cycles of the sine curve", $"{_cyclesVal}", _cyclesVal, true, 50);
             CustomizeTextBox(panel, m_amplitudeBox,
-                "Define the amplitude of the sine curve", "" + _amplitudeVal, _amplitudeVal, true, 50);
+                "Define the amplitude of the sine curve", $"{_amplitudeVal}", _amplitudeVal, true, 50);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
             //Call method to customize the text box and set it as active
             var partitionsBoxData = new TextBoxData("curve partitions box");
             m_partitionsBox = panel.AddItem(partitionsBoxData) as TextBox;
-            CustomizeTextBox(panel, m_partitionsBox, "Define the number of partitions", "" + _partitionsVal, _partitionsVal,
+            CustomizeTextBox(panel, m_partitionsBox, "Define the number of partitions", $"{_partitionsVal}", _partitionsVal,
                 true, 50);
         }
 
@@ -233,9 +233,9 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
         private void AddRunButton(RibbonPanel panel)
         {
             var pushButtonData = new PushButtonData("arrayPrisms", "run",
-                m_assemblyPath + "\\" + m_assemblyName, "Ara3D.RevitSampleBrowser.SinePlotter.CS.Command")
+                $"{m_assemblyPath}\\{m_assemblyName}", "Ara3D.RevitSampleBrowser.SinePlotter.CS.Command")
             {
-                LargeImage = new BitmapImage(new Uri(m_imageFolder + "Start.png"))
+                LargeImage = new BitmapImage(new Uri($"{m_imageFolder}Start.png"))
             };
             _ = panel.AddItem(pushButtonData) as PushButton;
         }
@@ -272,34 +272,34 @@ namespace Ara3D.RevitSampleBrowser.SinePlotter.CS
                 {
                     if (value < 0.1 || value > 3)
                         TaskDialog.Show("TextBox Input",
-                            "The input value for " + textBox.Name + " has to be between 0.1 and 3.0");
+                            $"The input value for {textBox.Name} has to be between 0.1 and 3.0");
                     else _periodVal = value;
                 }
                 else if (textBox.Name.Equals(m_cyclesBox.Name))
                 {
                     if (value <= 0)
                         TaskDialog.Show("TextBox Input",
-                            "The input value for " + textBox.Name + " has to be greater than zero.");
+                            $"The input value for {textBox.Name} has to be greater than zero.");
                     else _cyclesVal = value;
                 }
                 else if (textBox.Name.Equals(m_amplitudeBox.Name))
                 {
                     if (value < -4 || value > 4)
                         TaskDialog.Show("TextBox Input",
-                            "The input value for " + textBox.Name + " has to be between -4.0 and 4.0");
+                            $"The input value for {textBox.Name} has to be between -4.0 and 4.0");
                     else _amplitudeVal = value;
                 }
                 else
                 {
                     if (value <= 0)
                         TaskDialog.Show("TextBox Input",
-                            "The input value for " + textBox.Name + " has to be greater than zero.");
+                            $"The input value for {textBox.Name} has to be greater than zero.");
                     else _partitionsVal = value;
                 }
             }
             else
             {
-                TaskDialog.Show("TextBox Input", "The input value for " + textBox.Name + " has to be a double.");
+                TaskDialog.Show("TextBox Input", $"The input value for {textBox.Name} has to be a double.");
             }
         }
 

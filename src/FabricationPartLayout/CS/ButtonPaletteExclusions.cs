@@ -96,8 +96,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         TitleAutoPrefix = false,
                         MainInstruction = "Operation Successful",
                         MainContent =
-                            $"Excluded {excludeButtonName} button from {serviceName} {rectangularPaletteName} Palette {Environment.NewLine}"
-                            + $"Excluded {roundPaletteName} Palette from {serviceName}"
+                            $"Excluded {excludeButtonName} button from {serviceName} {rectangularPaletteName} Palette {Environment.NewLine}Excluded {roundPaletteName} Palette from {serviceName}"
                     };
 
                     td.Show();

@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         try
                         {
                             var reference = sel.PickObject(ObjectType.Face,
-                                "Select face for " + handle.GetHandleName());
+                                $"Select face for {handle.GetHandleName()}");
                             if (reference == null)
                                 continue;
                             // create constraint using the picked faces and set it to the associated handle

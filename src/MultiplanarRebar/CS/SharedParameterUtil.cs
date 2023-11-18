@@ -79,8 +79,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
                 {
                     // If Shared parameter file does not exist, then create a new one.
                     var shapeFile =
-                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-                        + "\\MultiplanarParameterFiles.txt";
+                        $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\MultiplanarParameterFiles.txt";
 
                     // Fill Schema data of Revit shared parameter file.
                     // If no this schema data, OpenSharedParameterFile may alway return null.

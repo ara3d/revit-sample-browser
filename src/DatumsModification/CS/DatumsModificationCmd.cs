@@ -259,8 +259,8 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                 foreach (var id in viewList)
                 {
                     var pView = document.GetElement(id) as View;
-                    if (!ViewDic.Keys.Contains(pView.ViewType + " : " + pView.Name))
-                        ViewDic.Add(pView.ViewType + " : " + pView.Name, id);
+                    if (!ViewDic.Keys.Contains($"{pView.ViewType} : {pView.Name}"))
+                        ViewDic.Add($"{pView.ViewType} : {pView.Name}", id);
                 }
 
                 //// Show UI                

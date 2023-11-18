@@ -46,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 var saveAsDlg = new FileSaveDialog("CSV Files (*.csv)|*.csv")
                 {
-                    InitialFileName = callingFolder + "\\geomExport",
+                    InitialFileName = $"{callingFolder}\\geomExport",
                     Title = "Save Part Geometry As"
                 };
                 var result = saveAsDlg.Show();
@@ -76,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         var mlp = 0;
                         foreach (var mesh in main)
                         {
-                            var file = string.Concat(filename, partcount.ToString(), "-main-", (++mlp).ToString(), ext);
+                            var file = $"{filename}{partcount}-main-{(++mlp)}{ext}";
                             if (ExportMesh(file, mesh))
                                 exported++;
                         }
@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         var ilp = 0;
                         foreach (var mesh in ins)
                         {
-                            var file = string.Concat(filename, partcount.ToString(), "-ins-", (++ilp).ToString(), ext);
+                            var file = $"{filename}{partcount}-ins-{(++ilp)}{ext}";
                             if (ExportMesh(file, mesh))
                                 exported++;
                         }

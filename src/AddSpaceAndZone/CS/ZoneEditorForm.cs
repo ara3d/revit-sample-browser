@@ -76,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         /// <param name="e"></param>
         private void ZoneEditorForm_Load(object sender, EventArgs e)
         {
-            Text = "Edit Zone : " + m_zone.Name;
+            Text = $"Edit Zone : {m_zone.Name}";
             UpdateSpaceList();
         }
 

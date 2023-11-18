@@ -112,9 +112,9 @@ namespace Ara3D.RevitSampleBrowser.Massing.PointCurveCreation.CS
             transaction.Start();
             var filename = "sphere.csv";
             var filepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            if (File.Exists(filepath + "\\" + filename))
+            if (File.Exists($"{filepath}\\{filename}"))
             {
-                var readFile = new StreamReader(filepath + "\\" + filename);
+                var readFile = new StreamReader($"{filepath}\\{filename}");
                 string line;
                 while ((line = readFile.ReadLine()) != null)
                 {

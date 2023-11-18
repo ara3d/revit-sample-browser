@@ -193,7 +193,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Revit", ex.Message + " : Footprint must be in closed loops.");
+                TaskDialog.Show("Revit", $"{ex.Message} : Footprint must be in closed loops.");
             }
         }
 

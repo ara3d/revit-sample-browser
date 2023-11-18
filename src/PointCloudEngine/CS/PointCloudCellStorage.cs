@@ -135,8 +135,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             if (NumberOfPoints == SMaxNumberOfPoints)
             {
                 TaskDialog.Show("Point  cloud engine",
-                    "A single cell is requiring more than the maximum hardcoded number of points for one cell: " +
-                    SMaxNumberOfPoints);
+                    $"A single cell is requiring more than the maximum hardcoded number of points for one cell: {SMaxNumberOfPoints}");
                 throw new Exception("Reached maximum number of points.");
             }
         }

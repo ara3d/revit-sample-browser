@@ -114,7 +114,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
                     case ExternalResourceLoadStatus.ResourceAlreadyCurrent when data.GetLoadContext().LoadOperationType == LoadOperationType.Explicit:
                     {
                         var resourcePath = currentlyLoadedRef.InSessionPath;
-                        myMessage += "\n No new changes to load for link: " + resourcePath;
+                        myMessage += $"\n No new changes to load for link: {resourcePath}";
                         break;
                     }
                     case ExternalResourceLoadStatus.ResourceAlreadyCurrent:
@@ -128,8 +128,8 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
                     case ExternalResourceLoadStatus.Success when resourceType == ExternalResourceTypes.BuiltInExternalResourceTypes.KeynoteTable:
                     {
                         var resourcePath = data.GetExternalResourceReference().InSessionPath;
-                        myMessage += "\n Version " + data.GetLoadContent().Version + " of keynote data \'" +
-                                     resourcePath + "\' has been loaded successfully";
+                        myMessage +=
+                            $"\n Version {data.GetLoadContent().Version} of keynote data '{resourcePath}' has been loaded successfully";
                         break;
                     }
                     case ExternalResourceLoadStatus.Success:
@@ -139,10 +139,8 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
                             var resourcePath = data.GetExternalResourceReference().InSessionPath;
                             var ldrlc = (LinkLoadContent)data.GetLoadContent();
                             var destinationPath = ModelPathUtils.ConvertModelPathToUserVisiblePath(ldrlc.GetLinkDataPath());
-                            myMessage += "\n Version " + data.GetLoadContent().Version +
-                                         " of the file: " + resourcePath +
-                                         " has been downloaded into the cached folder: " + destinationPath +
-                                         " for this Revit Link.";
+                            myMessage +=
+                                $"\n Version {data.GetLoadContent().Version} of the file: {resourcePath} has been downloaded into the cached folder: {destinationPath} for this Revit Link.";
                         }
 
                         break;
@@ -161,7 +159,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceUIServ
                     var ldrlc = (LinkLoadContent)data.GetLoadContent();
                     var loadResult = ldrlc.GetLinkLoadResult();
                     if (loadResult != null)
-                        myMessage += "\n LinkLoadResultType: " + loadResult.LoadResult.ToString("g");
+                        myMessage += $"\n LinkLoadResultType: {loadResult.LoadResult:g}";
                 }
 
                 MessageBox.Show(myMessage, "UI Server for SDK Sample External Resource Server");

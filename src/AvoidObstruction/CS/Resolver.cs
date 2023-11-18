@@ -42,7 +42,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             m_rvtApp = data.Application.Application;
             m_detector = new Detector(m_rvtDoc);
 
-            foreach (var pipingSystemType in m_rvtDoc.GetFilteredElements<PipingSystemType>())
+            foreach (var pipingSystemType in m_rvtDoc.GetElements<PipingSystemType>())
             {
                 if (pipingSystemType.SystemClassification == MEPSystemClassification.SupplyHydronic ||
                     pipingSystemType.SystemClassification == MEPSystemClassification.ReturnHydronic)
@@ -58,7 +58,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         /// </summary>
         public void Resolve()
         {
-            foreach (var pipe in m_rvtDoc.GetFilteredElements<Pipe>())
+            foreach (var pipe in m_rvtDoc.GetElements<Pipe>())
                  Resolve(pipe);
         }
 

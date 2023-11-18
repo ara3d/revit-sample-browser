@@ -60,7 +60,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             get
             {
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var rootFolderName = assemblyFolder + "\\SampleResourceServerRoot";
+                var rootFolderName = $"{assemblyFolder}\\SampleResourceServerRoot";
                 var rootFolder = new DirectoryInfo(rootFolderName);
                 if (!rootFolder.Exists)
                     rootFolder.Create();
@@ -95,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             get
             {
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var cacheRootFolderName = assemblyFolder + "\\SampleResourceServerLinkCache";
+                var cacheRootFolderName = $"{assemblyFolder}\\SampleResourceServerLinkCache";
                 var cacheRootFolder = new DirectoryInfo(cacheRootFolderName);
                 if (!cacheRootFolder.Exists)
                     cacheRootFolder.Create();
@@ -484,7 +484,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             // ExternalResourceReference's referenceInformation (as is done for links).
             // This would be particularly true if you were overriding the default in-session path in
             // the GetInSessionPath() method.
-            var serverKeynoteFilePath = inSessionPath.Replace(serverName + "://", RootFolder + "\\");
+            var serverKeynoteFilePath = inSessionPath.Replace($"{serverName}://", $"{RootFolder}\\");
             return serverKeynoteFilePath;
         }
 
@@ -534,7 +534,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                         {
                             // Relative Path of Link File is Stored in the ExternalResourceReference that
                             // Will Be Addded to the BrowserData.
-                            [RefMapLinkPathEntry] = folderPath.TrimEnd('/') + '/' + file.Name
+                            [RefMapLinkPathEntry] = $"{folderPath.TrimEnd('/')}/{file.Name}"
                         };
                         browserData.AddResource(file.Name, GetFileVersion(file.FullName), refMap);
                     }

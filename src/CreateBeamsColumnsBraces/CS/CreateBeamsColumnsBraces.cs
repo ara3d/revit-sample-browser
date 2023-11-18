@@ -327,32 +327,19 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamsColumnsBraces.CS
     public class SymbolMap
     {
         /// <summary>
-        ///     constructor without parameter is forbidden
-        /// </summary>
-        private SymbolMap()
-        {
-        }
-
-        /// <summary>
         ///     constructor
         /// </summary>
         /// <param name="symbol">family symbol</param>
         public SymbolMap(FamilySymbol symbol)
         {
-            ElementType = symbol;
             var familyName = "";
             if (null != symbol.Family) familyName = symbol.Family.Name;
-            SymbolName = familyName + " : " + symbol.Name;
+            SymbolName = $"{familyName} : {symbol.Name}";
         }
 
         /// <summary>
         ///     SymbolName property
         /// </summary>
-        public string SymbolName { get; } = "";
-
-        /// <summary>
-        ///     ElementType property
-        /// </summary>
-        public FamilySymbol ElementType { get; }
+        public string SymbolName { get; }
     }
 }

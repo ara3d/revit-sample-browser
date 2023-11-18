@@ -362,8 +362,8 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         {
             Debug.WriteLine("Wall curve is line: ");
 
-            Debug.WriteLine("Start point: " + XyzToString(wallCurve.GetEndPoint(0)));
-            Debug.WriteLine("End point: " + XyzToString(wallCurve.GetEndPoint(1)));
+            Debug.WriteLine($"Start point: {XyzToString(wallCurve.GetEndPoint(0))}");
+            Debug.WriteLine($"End point: {XyzToString(wallCurve.GetEndPoint(1))}");
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         /// <returns></returns>
         private string XyzToString(XYZ point)
         {
-            return "( " + point.X + ", " + point.Y + ", " + point.Z + ")";
+            return $"( {point.X}, {point.Y}, {point.Z})";
         }
 
         /// <summary>

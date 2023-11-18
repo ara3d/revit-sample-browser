@@ -109,7 +109,7 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
             m_slabLayer = m_slabLayerCollection[layerNumber];
 
             // Get the Thickness property and change to the metric millimeter
-            LayerThickness = m_slabLayer.Width * ToMetricThickness * ToMillimeter + " mm";
+            LayerThickness = $"{m_slabLayer.Width * ToMetricThickness * ToMillimeter} mm";
 
             // Get the Material name property
             if (ElementId.InvalidElementId != m_slabLayer.MaterialId)
@@ -130,15 +130,15 @@ namespace Ara3D.RevitSampleBrowser.SlabProperties.CS
                 var youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD1);
                 if (null != youngModuleAttribute)
                     LayerYoungModulusX =
-                        (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
+                        $"{(youngModuleAttribute.AsDouble() / ToMetricYoungmodulus):F2} MPa";
                 youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD2);
                 if (null != youngModuleAttribute)
                     LayerYoungModulusY =
-                        (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
+                        $"{(youngModuleAttribute.AsDouble() / ToMetricYoungmodulus):F2} MPa";
                 youngModuleAttribute = material.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_YOUNG_MOD3);
                 if (null != youngModuleAttribute)
                     LayerYoungModulusZ =
-                        (youngModuleAttribute.AsDouble() / ToMetricYoungmodulus).ToString("F2") + " MPa";
+                        $"{(youngModuleAttribute.AsDouble() / ToMetricYoungmodulus):F2} MPa";
             }
             else
             {

@@ -460,7 +460,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 offset = Unit.CovertFromApi(m_myDocument.LengthUnit, offset);
 
                 // showing the move offset
-                DrawObject.Text = "Offset: " + Math.Round(offset, 1) + Unit.GetUnitLabel(m_myDocument.LengthUnit);
+                DrawObject.Text = $"Offset: {Math.Round(offset, 1)}{Unit.GetUnitLabel(m_myDocument.LengthUnit)}";
                 DrawObject.TextPosition = mousePosition;
                 DrawObject.TextPen = redPen;
                 return;
@@ -487,7 +487,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 offset = Unit.CovertFromApi(m_myDocument.LengthUnit, offset);
 
                 // showing the move offset
-                DrawObject.Text = "Offset: " + Math.Round(offset, 1) + Unit.GetUnitLabel(m_myDocument.LengthUnit);
+                DrawObject.Text = $"Offset: {Math.Round(offset, 1)}{Unit.GetUnitLabel(m_myDocument.LengthUnit)}";
                 DrawObject.TextPosition = mousePosition;
                 DrawObject.TextPen = redPen;
             }

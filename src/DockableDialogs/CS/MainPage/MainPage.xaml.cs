@@ -163,8 +163,8 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
         {
             var sb = new StringBuilder();
             sb.AppendLine("-WFP Page Info-");
-            sb.AppendLine("FrameWorkElement.Width=" + Width);
-            sb.AppendLine("FrameWorkElement.Height=" + Height);
+            sb.AppendLine($"FrameWorkElement.Width={Width}");
+            sb.AppendLine($"FrameWorkElement.Height={Height}");
 
             return sb.ToString();
         }
@@ -197,13 +197,13 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
         private void btn_listTabs_Click(object sender, RoutedEventArgs e)
         {
             Log.Message("***Dockable dialogs***");
-            Log.Message(" Main dialog: " + Globals.SmUserDockablePaneId.Guid);
-            Log.Message(" Element View: " + DockablePanes.BuiltInDockablePanes.ElementView.Guid);
-            Log.Message(" System Navigator: " + DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid);
-            Log.Message(" Link Navigator: " + DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid);
-            Log.Message(" Project Browser: " + DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid);
-            Log.Message(" Properties Palette: " + DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid);
-            Log.Message(" Rebar Browser: " + DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid);
+            Log.Message($" Main dialog: {Globals.SmUserDockablePaneId.Guid}");
+            Log.Message($" Element View: {DockablePanes.BuiltInDockablePanes.ElementView.Guid}");
+            Log.Message($" System Navigator: {DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid}");
+            Log.Message($" Link Navigator: {DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid}");
+            Log.Message($" Project Browser: {DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid}");
+            Log.Message($" Properties Palette: {DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid}");
+            Log.Message($" Rebar Browser: {DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid}");
         }
     }
 }

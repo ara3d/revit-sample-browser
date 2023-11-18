@@ -248,7 +248,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
                 0, RebarHookOrientation.Left, 0, RebarHookOrientation.Left, 0);
 
             // Give a readable name
-            newshape.Name = "API Corbel Multi-Shape " + newshape.Id;
+            newshape.Name = $"API Corbel Multi-Shape {newshape.Id}";
 
             // Make sure we can see the created shape from the browser.
             var curvesForBrowser = newshape.GetCurvesForBrowser();

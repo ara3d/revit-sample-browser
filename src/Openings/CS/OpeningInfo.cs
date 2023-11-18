@@ -66,7 +66,7 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
         ///     Property to get Name and Id
         ///     eg: "Opening Cut (114389)"
         /// </summary>
-        public string NameAndId => string.Concat(Opening.Name, " (", Opening.Id.ToString(), ")");
+        public string NameAndId => $"{Opening.Name} ({Opening.Id})";
 
         /// <summary>
         ///     Property to get bool the define whether opening is Shaft Opening

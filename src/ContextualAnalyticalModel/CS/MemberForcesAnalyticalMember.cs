@@ -31,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                     var memberForces = analyticalMember.GetMemberForces();
                     foreach (var mf in memberForces)
                     {
-                        Console.WriteLine("Position: " + mf.Start + "Force: " + mf.Force + "Moment: " + mf.Moment);
+                        Console.WriteLine($"Position: {mf.Start}Force: {mf.Force}Moment: {mf.Moment}");
                     }
 
                     // Change some values

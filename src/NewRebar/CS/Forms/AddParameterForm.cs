@@ -81,7 +81,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Forms
                 }
                 catch
                 {
-                    TaskDialog.Show("Revit", "Input value - " + ParamValue + " - should be double.");
+                    TaskDialog.Show("Revit", $"Input value - {ParamValue} - should be double.");
                     return;
                 }
 

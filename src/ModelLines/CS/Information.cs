@@ -48,7 +48,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             Id = id; // Store the element id
 
             // Generate the display text
-            DisplayText = typeName + " : " + id;
+            DisplayText = $"{typeName} : {id}";
         }
         // Private members
 

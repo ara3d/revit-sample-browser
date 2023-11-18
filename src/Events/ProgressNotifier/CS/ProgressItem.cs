@@ -131,8 +131,8 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
         /// <returns></returns>
         public override string ToString()
         {
-            return "Name: " + Name + ", Stage: " + m_stage + ", Percent Done: " + PercentDone().ToString("F") +
-                   ", Upper: " + m_upper + ", Position: " + m_position;
+            return
+                $"Name: {Name}, Stage: {m_stage}, Percent Done: {PercentDone():F}, Upper: {m_upper}, Position: {m_position}";
         }
     }
 }

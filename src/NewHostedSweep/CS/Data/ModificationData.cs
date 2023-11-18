@@ -74,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Data
         {
             get
             {
-                var result = "[Id:" + m_elemToModify.Id + "] ";
+                var result = $"[Id:{m_elemToModify.Id}] ";
                 return result + m_elemToModify.Name;
             }
         }

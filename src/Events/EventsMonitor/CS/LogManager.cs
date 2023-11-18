@@ -143,14 +143,14 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             // get this eventArgs's runtime type.
             var type = args.GetType();
             var eventName = GetEventsName(type);
-            Trace.WriteLine("Raised " + sender.GetType() + "." + eventName);
+            Trace.WriteLine($"Raised {sender.GetType()}.{eventName}");
             Trace.WriteLine("---------------------------------------------------------");
 
             // 1: output sender's information
             Trace.WriteLine("  Start to dump Sender and EventAgrs of Event...\n");
             if (null != sender)
                 // output the type of sender
-                Trace.WriteLine("    [Event Sender]: " + sender.GetType().FullName);
+                Trace.WriteLine($"    [Event Sender]: {sender.GetType().FullName}");
             else
                 Trace.WriteLine("      Sender is null, it's unexpected!!!");
 
@@ -176,15 +176,15 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
                         case "Format":
                             var propertyValue = propertyInfo.GetValue(args, null);
                             // Dump current property value
-                            Trace.WriteLine("    [Property]: " + propertyInfo.Name);
-                            Trace.WriteLine("    [Value]: " + propertyValue);
+                            Trace.WriteLine($"    [Property]: {propertyInfo.Name}");
+                            Trace.WriteLine($"    [Value]: {propertyValue}");
                             break;
                     }
                 }
                 catch (Exception ex)
                 {
                     // Unexpected exception
-                    Trace.WriteLine("    [Property Exception]: " + propertyInfo.Name + ", " + ex.Message);
+                    Trace.WriteLine($"    [Property Exception]: {propertyInfo.Name}, {ex.Message}");
                 }
             }
         }

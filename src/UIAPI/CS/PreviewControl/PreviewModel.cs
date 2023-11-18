@@ -209,7 +209,7 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
         public DbViewItem(RView dbView, Document dbDoc)
         {
             var viewType = dbDoc.GetElement(dbView.GetTypeId()) as ElementType;
-            Name = viewType.Name + " " + dbView.Name;
+            Name = $"{viewType.Name} {dbView.Name}";
             Id = dbView.Id;
             UniqueId = dbView.UniqueId;
         }

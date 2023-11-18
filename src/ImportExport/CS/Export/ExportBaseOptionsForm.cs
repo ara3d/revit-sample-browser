@@ -31,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             InitializeComponent();
             m_exportOptionsData = exportOptionsData;
             m_contain3DView = contain3DView;
-            Text = "Export " + exportFormat + " Options";
+            Text = $"Export {exportFormat} Options";
             InitializeControl();
         }
 

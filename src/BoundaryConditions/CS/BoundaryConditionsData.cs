@@ -120,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
             // retrieve the Document in which the Element resides.
             var doc = element.Document;
 
-            var boundaryConditions = doc.GetFilteredElements<Autodesk.Revit.DB.Structure.BoundaryConditions>();
+            var boundaryConditions = doc.GetElements<Autodesk.Revit.DB.Structure.BoundaryConditions>();
             foreach (var bC in boundaryConditions)
             {
                 if (HostElement.Id == bC.HostElementId)
@@ -160,10 +160,7 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 
             var createDoc = hostElement.Document.Create;
 
-            // invoke Document.NewPointBoundaryConditions Method 
-            var createdBc =
-                createDoc.NewPointBoundaryConditions(endReference, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-            return createdBc;
+            return createDoc.NewPointBoundaryConditions(endReference, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
         /// <summary>
@@ -175,11 +172,8 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
         private Autodesk.Revit.DB.Structure.BoundaryConditions CreateLineBc(Element hostElement)
         {
             var createDoc = hostElement.Document.Create;
-            // invoke Document.NewLineBoundaryConditions Method
             var analyticalModel = GetAnalyticalElement(hostElement);
-            var createdBc =
-                createDoc.NewLineBoundaryConditions(analyticalModel, 0, 0, 0, 0, 0, 0, 0, 0);
-            return createdBc;
+            return createDoc.NewLineBoundaryConditions(analyticalModel, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
         /// <summary>
@@ -190,7 +184,6 @@ namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
         /// <returns>the created Point BoundaryConditions Element</returns>
         private Autodesk.Revit.DB.Structure.BoundaryConditions CreateAreaBc(Element hostElement)
         {
-            var createDoc = ;
             return hostElement.Document.Create.NewAreaBoundaryConditions(GetAnalyticalElement(hostElement), 0, 0, 0, 0, 0, 0);
         }
 

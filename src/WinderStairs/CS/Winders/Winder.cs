@@ -92,7 +92,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders
                 if (!(rvtDoc.GetElement(winderRunId) is StairsRun winderOldRun))
                 {
                     // Find two levels to create a stairs between them
-                    var levelList = rvtDoc.GetFilteredElements<Level>().ToList();
+                    var levelList = rvtDoc.GetElements<Level>().ToList();
                     levelList.Sort((a, b) => a.Elevation.CompareTo(b.Elevation));
                     // Start the stairs edit mode
                     stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);

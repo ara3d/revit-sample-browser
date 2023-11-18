@@ -51,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
                 }
 
                 //  how many did we get? 
-                TaskDialog.Show("Revit", "# of constrained walls in the selection set is " + walls.Size);
+                TaskDialog.Show("Revit", $"# of constrained walls in the selection set is {walls.Size}");
                 if (walls.Size == 0)
                 {
                     message = "You must select some walls that are constrained top or bottom";
@@ -153,7 +153,7 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
             // get # of column
             var nmax = (int)(wallLength / spacing);
 
-            TaskDialog.Show("Revit", "wallLength = " + wallLength + "\r\nspacing = " + spacing + "\r\nnmax = " + nmax);
+            TaskDialog.Show("Revit", $"wallLength = {wallLength}\r\nspacing = {spacing}\r\nnmax = {nmax}");
 
             // get angle of wall and axis
             var angle = wallVec.AngleTo(axis);

@@ -92,7 +92,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
                 var length = Convert.ToDouble(lengthCtrl.Text);
                 if (length <= 0 && !canBeZero)
                 {
-                    ShowWarningMessage(ResManager.GetString(typeName + "CannotBeNegativeOrZero"),
+                    ShowWarningMessage(ResManager.GetString($"{typeName}CannotBeNegativeOrZero"),
                         Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     lengthCtrl.Focus();
                     return false;
@@ -100,7 +100,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
                 if (length < 0 && canBeZero)
                 {
-                    ShowWarningMessage(ResManager.GetString(typeName + "CannotBeNegative"),
+                    ShowWarningMessage(ResManager.GetString($"{typeName}CannotBeNegative"),
                         Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                     lengthCtrl.Focus();
                     return false;
@@ -108,7 +108,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             }
             catch (Exception)
             {
-                ShowWarningMessage(ResManager.GetString(typeName + "FormatWrong"),
+                ShowWarningMessage(ResManager.GetString($"{typeName}FormatWrong"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 lengthCtrl.Focus();
                 return false;
@@ -236,7 +236,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         {
             if (string.IsNullOrEmpty(control.Text.TrimStart(' ').TrimEnd(' ')))
             {
-                ShowWarningMessage(ResManager.GetString(typeName + "CannotBeNull"),
+                ShowWarningMessage(ResManager.GetString($"{typeName}CannotBeNull"),
                     Resources.ResourceManager.GetString("FailureCaptionInvalidValue"));
                 control.Focus();
                 return false;

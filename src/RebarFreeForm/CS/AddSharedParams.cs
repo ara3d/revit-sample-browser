@@ -71,7 +71,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 
                 // create shared parameter file
                 var modulePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var paramFile = modulePath + "\\RebarTestParameters.txt";
+                var paramFile = $"{modulePath}\\RebarTestParameters.txt";
                 if (File.Exists(paramFile)) File.Delete(paramFile);
                 var fs = File.Create(paramFile);
                 fs.Close();
@@ -112,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to create shared parameter: " + ex.Message);
+                throw new Exception($"Failed to create shared parameter: {ex.Message}");
             }
         }
 

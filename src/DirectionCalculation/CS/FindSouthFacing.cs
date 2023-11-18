@@ -85,7 +85,7 @@ namespace Ara3D.RevitSampleBrowser.DirectionCalculation.CS
         /// <returns></returns>
         private string XyzToString(XYZ point)
         {
-            return "( " + point.X + ", " + point.Y + ", " + point.Z + ")";
+            return $"( {point.X}, {point.Y}, {point.Z})";
         }
 
         /// <summary>

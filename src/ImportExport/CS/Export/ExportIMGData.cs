@@ -40,11 +40,11 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             };
 
             var tmp = new StringBuilder();
-            tmp.Append(m_imageType[0] + "|*.bmp|");
-            tmp.Append(m_imageType[1] + "|*.jpeg|");
-            tmp.Append(m_imageType[2] + "|*.png|");
-            tmp.Append(m_imageType[3] + "|*.tga|");
-            tmp.Append(m_imageType[4] + "|*.tif|");
+            tmp.Append($"{m_imageType[0]}|*.bmp|");
+            tmp.Append($"{m_imageType[1]}|*.jpeg|");
+            tmp.Append($"{m_imageType[2]}|*.png|");
+            tmp.Append($"{m_imageType[3]}|*.tga|");
+            tmp.Append($"{m_imageType[4]}|*.tif|");
 
             Filter = tmp.ToString().TrimEnd('|');
             Title = "Export IMG";

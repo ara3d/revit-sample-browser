@@ -77,7 +77,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             var tmp = new StringBuilder();
             foreach (var version in m_fileVersion)
             {
-                tmp.Append(version + "|*.sat|");
+                tmp.Append($"{version}|*.sat|");
             }
 
             Filter = tmp.ToString().TrimEnd('|');

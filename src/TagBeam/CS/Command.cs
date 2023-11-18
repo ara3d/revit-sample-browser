@@ -120,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
                             curve.GetEndPoint(0).X + curve.Length,
                             curve.GetEndPoint(0).Y,
                             curve.GetEndPoint(0).Z);
-                        var strText = "This is " + rebar.Category.Name + " : " + rebar.Name;
+                        var strText = $"This is {rebar.Category.Name} : {rebar.Name}";
 
                         // create the text
                         using (var t = new Transaction(dbDoc))

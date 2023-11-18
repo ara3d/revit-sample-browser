@@ -40,13 +40,13 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 var builder = new StringBuilder();
 
                 // alias
-                builder.AppendLine("Alias: " + part.Alias);
+                builder.AppendLine($"Alias: {part.Alias}");
 
                 // cid
-                builder.AppendLine("CID: " + part.ItemCustomId);
+                builder.AppendLine($"CID: {part.ItemCustomId}");
 
                 // domain type
-                builder.AppendLine("Domain Type: " + part.DomainType);
+                builder.AppendLine($"Domain Type: {part.DomainType}");
 
                 // hanger rod kit
                 if (part.IsAHanger())
@@ -54,52 +54,52 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                     var rodKitName = "None";
                     var rodKit = part.HangerRodKit;
                     if (rodKit > 0)
-                        rodKitName = config.GetAncillaryGroupName(part.HangerRodKit) + ": " +
-                                     config.GetAncillaryName(part.HangerRodKit);
+                        rodKitName =
+                            $"{config.GetAncillaryGroupName(part.HangerRodKit)}: {config.GetAncillaryName(part.HangerRodKit)}";
 
-                    builder.AppendLine("Hanger Rod Kit: " + rodKitName);
+                    builder.AppendLine($"Hanger Rod Kit: {rodKitName}");
                 }
 
                 // insulation specification
-                var insSpec = config.GetInsulationSpecificationGroup(part.InsulationSpecification)
-                              + ": " + config.GetInsulationSpecificationName(part.InsulationSpecification);
-                builder.AppendLine("Insulation Specification: " + insSpec);
+                var insSpec =
+                    $"{config.GetInsulationSpecificationGroup(part.InsulationSpecification)}: {config.GetInsulationSpecificationName(part.InsulationSpecification)}";
+                builder.AppendLine($"Insulation Specification: {insSpec}");
 
                 // has no connections
-                builder.AppendLine("Has No Connections: " + part.HasNoConnections());
+                builder.AppendLine($"Has No Connections: {part.HasNoConnections()}");
 
                 // item number
-                builder.AppendLine("Item Number: " + part.ItemNumber);
+                builder.AppendLine($"Item Number: {part.ItemNumber}");
 
                 // material
-                var material = config.GetMaterialGroup(part.Material) + ": " + config.GetMaterialName(part.Material);
-                builder.AppendLine("Material: " + material);
+                var material = $"{config.GetMaterialGroup(part.Material)}: {config.GetMaterialName(part.Material)}";
+                builder.AppendLine($"Material: {material}");
 
                 // part guid
-                builder.AppendLine("Part Guid: " + part.PartGuid);
+                builder.AppendLine($"Part Guid: {part.PartGuid}");
 
                 // part status
-                builder.AppendLine("Part Status: " + config.GetPartStatusDescription(part.PartStatus));
+                builder.AppendLine($"Part Status: {config.GetPartStatusDescription(part.PartStatus)}");
 
                 // product code
-                builder.AppendLine("Product Code: " + part.ProductCode);
+                builder.AppendLine($"Product Code: {part.ProductCode}");
 
                 // service
-                builder.AppendLine("Service Name: " + part.ServiceName);
+                builder.AppendLine($"Service Name: {part.ServiceName}");
 
                 // get the service type name
-                builder.AppendLine("Service Type: " + config.GetServiceTypeName(part.ServiceType));
+                builder.AppendLine($"Service Type: {config.GetServiceTypeName(part.ServiceType)}");
 
                 // specification
-                var spec = config.GetSpecificationGroup(part.Specification) + ": " +
-                           config.GetSpecificationName(part.Specification);
-                builder.AppendLine("Specification: " + spec);
+                var spec =
+                    $"{config.GetSpecificationGroup(part.Specification)}: {config.GetSpecificationName(part.Specification)}";
+                builder.AppendLine($"Specification: {spec}");
 
                 // centerline length
-                builder.AppendLine("Centerline Length: " +
-                                   GetStringFromNumber(doc, part.CenterlineLength, SpecTypeId.Length));
+                builder.AppendLine(
+                    $"Centerline Length: {GetStringFromNumber(doc, part.CenterlineLength, SpecTypeId.Length)}");
 
-                TaskDialog.Show("Fabrication Part [" + part.Id + "]", builder.ToString());
+                TaskDialog.Show($"Fabrication Part [{part.Id}]", builder.ToString());
 
                 return Result.Succeeded;
             }

@@ -252,7 +252,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             }
             catch (Exception ex)
             {
-                var errorMessage = "Failed to export " + format + " format" + ex;
+                var errorMessage = $"Failed to export {format} format{ex}";
                 ;
                 TaskDialog.Show("Error", errorMessage, TaskDialogCommonButtons.Ok);
             }
@@ -275,8 +275,8 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
                 data.ExportFileName = Path.GetFileName(returnFilename);
                 data.ExportFolder = Path.GetDirectoryName(returnFilename);
                 if (!data.Export())
-                    TaskDialog.Show("Export", "This project cannot be exported to " + data.ExportFileName +
-                                              " in current settings.", TaskDialogCommonButtons.Ok);
+                    TaskDialog.Show("Export",
+                        $"This project cannot be exported to {data.ExportFileName} in current settings.", TaskDialogCommonButtons.Ok);
             }
 
             return result;
@@ -373,7 +373,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             }
             catch (Exception)
             {
-                var errorMessage = "Failed to import " + format + " format";
+                var errorMessage = $"Failed to import {format} format";
                 TaskDialog.Show("Error", errorMessage, TaskDialogCommonButtons.Ok);
             }
 
@@ -392,8 +392,8 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
             {
                 data.ImportFileFullName = returnFilename;
                 if (!data.Import())
-                    TaskDialog.Show("Import", "Cannot import " + Path.GetFileName(data.ImportFileFullName) +
-                                              " in current settings.", TaskDialogCommonButtons.Ok);
+                    TaskDialog.Show("Import",
+                        $"Cannot import {Path.GetFileName(data.ImportFileFullName)} in current settings.", TaskDialogCommonButtons.Ok);
             }
 
             return result;

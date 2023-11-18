@@ -97,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
                 "Ara3D.RevitSampleBrowser.UIAPI.CS.CalcCommand");
 
             var ch2 = new ContextualHelp(ContextualHelpType.ChmFile,
-                Path.GetDirectoryName(AddinAssmeblyPath) + @"\RevitAddInUtility.chm")
+                $@"{Path.GetDirectoryName(AddinAssmeblyPath)}\RevitAddInUtility.chm")
             {
                 HelpTopicUrl = @"html/3374f8f0-dccc-e1df-d269-229ed8c60e93.htm"
             };
@@ -139,14 +139,14 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
                 return;
 
             var famTemplatePath = uiApp.Application.FamilyTemplatePath;
-            var conceptualmassTemplatePath = famTemplatePath + @"\Conceptual Mass\Mass.rft";
+            var conceptualmassTemplatePath = $@"{famTemplatePath}\Conceptual Mass\Mass.rft";
             if (File.Exists(conceptualmassTemplatePath))
             {
                 //uiApp.OpenAndActivateDocument(conceptualmassTemplatePath);
                 var familyDocument = uiApp.Application.NewFamilyDocument(conceptualmassTemplatePath);
                 if (null == familyDocument) throw new Exception("Cannot open family document");
 
-                var fileName = Guid.NewGuid() + ".rfa";
+                var fileName = $"{Guid.NewGuid()}.rfa";
                 familyDocument.SaveAs(fileName);
                 familyDocument.Close();
 

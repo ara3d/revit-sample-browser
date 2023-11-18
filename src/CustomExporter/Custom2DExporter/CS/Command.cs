@@ -130,7 +130,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             var details = $"There were {resultsSummary.NumTexts} text nodes exported.\n\n";
 
             if (resultsSummary.NumTexts > 0 && resultsSummary.Texts.Length > 0)
-                details += "Exported text nodes:\n" + resultsSummary.Texts;
+                details += $"Exported text nodes:\n{resultsSummary.Texts}";
 
             td.MainContent = details;
 

@@ -61,12 +61,7 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
                 if (system == null)
                 {
                     message =
-                        "The selected element does not belong to any well-connected mechanical or piping system. " +
-                        "The sample will not support well-connected systems for the following reasons: " +
-                        Environment.NewLine +
-                        "- Some elements in a non-well-connected system may get lost when traversing the system in the " +
-                        "direction of flow" + Environment.NewLine +
-                        "- Flow direction of elements in a non-well-connected system may not be right";
+                        $"The selected element does not belong to any well-connected mechanical or piping system. The sample will not support well-connected systems for the following reasons: {Environment.NewLine}- Some elements in a non-well-connected system may get lost when traversing the system in the direction of flow{Environment.NewLine}- Flow direction of elements in a non-well-connected system may not be right";
                     return Result.Failed;
                 }
 

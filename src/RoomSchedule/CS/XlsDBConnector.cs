@@ -39,8 +39,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 throw new ArgumentException("The specified file doesn't exists or has readonly attribute.", strXlsFile);
 
             // establish a connection to the data source.
-            m_connectStr = "Provider = Microsoft.Jet.OLEDB.4.0; Data Source = \"" + strXlsFile +
-                           "\"; Extended Properties = \"Excel 8.0;HDR=YES;\"";
+            m_connectStr =
+                $"Provider = Microsoft.Jet.OLEDB.4.0; Data Source = \"{strXlsFile}\"; Extended Properties = \"Excel 8.0;HDR=YES;\"";
 
             // create the .xls connection
             m_objConn = new OleDbConnection(m_connectStr);
@@ -95,10 +95,10 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         public DataTable GenDataTable(string tableName)
         {
             // Get all data via command and then fill data to table
-            var strCom = "Select * From [" + tableName + "$]";
+            var strCom = $"Select * From [{tableName}$]";
             var myCommand = new OleDbDataAdapter(strCom, m_objConn);
             var myDataSet = new DataSet();
-            myCommand.Fill(myDataSet, "[" + tableName + "$]");
+            myCommand.Fill(myDataSet, $"[{tableName}$]");
 
             try
             {

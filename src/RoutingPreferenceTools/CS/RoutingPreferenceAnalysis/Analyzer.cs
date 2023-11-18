@@ -196,7 +196,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                     {
                         var roundedSize = Convert.ConvertValueDocumentUnits(size, m_document);
 
-                        sBuilder.Append(roundedSize + " ");
+                        sBuilder.Append($"{roundedSize} ");
                     }
 
                     sBuilder.Remove(sBuilder.Length - 1, 1);
@@ -328,7 +328,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             if (id == ElementId.InvalidElementId)
                 throw new Exception("Invalid ElementId");
             var symbol = m_document.GetElement(id) as FamilySymbol;
-            return symbol.Family.Name + " " + symbol.Name;
+            return $"{symbol.Family.Name} {symbol.Name}";
         }
 
         private string GetSegmentName(ElementId id)

@@ -69,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
         {
             // Setup file location in temp directory
             var folder = Environment.GetEnvironmentVariable("TEMP");
-            var htmlFile = Path.Combine(folder, ReplaceIllegalCharacters(m_theSchedule.Name) + ".html");
+            var htmlFile = Path.Combine(folder, $"{ReplaceIllegalCharacters(m_theSchedule.Name)}.html");
 
             // Initialize StringWriter instance, but handle any io exceptions and close as appropriate. 
             StreamWriter stringWriter = null;
@@ -95,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
             catch (IOException e)
             {
                 // set error message and return failure,  finally will close stringWriter if necessary. 
-                errMessage = "Exception occured generating HTML: " + e.Message + " Command canceled.";
+                errMessage = $"Exception occured generating HTML: {e.Message} Command canceled.";
                 return false;
             }
             finally

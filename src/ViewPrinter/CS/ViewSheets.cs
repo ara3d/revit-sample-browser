@@ -189,7 +189,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
         {
             foreach (View view in m_viewSheetSetting.CurrentViewSheetSet.Views)
             {
-                if (viewName.Equals(view.ViewType + ": " + view.Name))
+                if (viewName.Equals($"{view.ViewType}: {view.Name}"))
                     return true;
             }
 
@@ -203,7 +203,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             if (null != names && 0 < names.Count)
                 foreach (View view in m_viewSheetSetting.AvailableViews)
                 {
-                    if (names.Contains(view.ViewType + ": " + view.Name))
+                    if (names.Contains($"{view.ViewType}: {view.Name}"))
                         selectedViews.Insert(view);
                 }
 

@@ -90,7 +90,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             var storageResult = storageWrite.Commit();
             if (storageResult != TransactionStatus.Committed)
             {
-                throw new Exception("Error storing Schema.  Transaction status: " + storageResult);
+                throw new Exception($"Error storing Schema.  Transaction status: {storageResult}");
             }
 
             mySchemaWrapper.ToXml(xmlPathOut);

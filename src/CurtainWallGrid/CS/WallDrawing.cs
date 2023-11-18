@@ -219,7 +219,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
             var yCoorString = Convert.ToString(Math.Round(y, 1));
 
             var unitType = Unit.GetUnitLabel(m_myDocument.LengthUnit);
-            var coordinate = "(" + xCoorString + unitType + "," + yCoorString + unitType + ")";
+            var coordinate = $"({xCoorString}{unitType},{yCoorString}{unitType})";
             graphics.DrawString(coordinate, m_coordinateFont, Brushes.Blue,
                 new PointF(WallLine2D.AssistantPoint.X + 2, WallLine2D.AssistantPoint.Y + 2));
         }

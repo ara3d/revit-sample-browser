@@ -32,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Forms
             : this()
         {
             m_modificationData = modificationData;
-            Text = "Modify " + m_modificationData.CreatorName;
+            Text = $"Modify {m_modificationData.CreatorName}";
         }
 
         /// <summary>

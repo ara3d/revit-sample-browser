@@ -212,7 +212,7 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Revit", "Rotate failed! " + ex.Message);
+                TaskDialog.Show("Revit", $"Rotate failed! {ex.Message}");
                 transaction.RollBack();
             }
         }

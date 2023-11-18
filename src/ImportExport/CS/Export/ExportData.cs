@@ -84,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS.Export
             ActiveDocName = ActiveDocument.Title;
             ActiveViewName = ActiveDocument.ActiveView.Name;
             var viewType = ActiveDocument.ActiveView.ViewType.ToString();
-            ExportFileName = ActiveDocName + "-" + viewType + "-" + ActiveViewName + "." + GetExtension();
+            ExportFileName = $"{ActiveDocName}-{viewType}-{ActiveViewName}.{GetExtension()}";
 
             //Whether current active view is 3D view
             if (ActiveDocument.ActiveView.ViewType == ViewType.ThreeD)

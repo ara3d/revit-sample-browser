@@ -186,7 +186,7 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
                 var filename = FileNameStem;
                 if (!GetFilepath(ref filename))
                 {
-                    ErrorMsg(FileNameStem + " not found.");
+                    ErrorMsg($"{FileNameStem} not found.");
                     return rc;
                 }
 
@@ -226,7 +226,7 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
                             var enumName = GetEnumNameByDisplayName(name);
                             var button = item as PulldownButton;
                             button.Image = new BitmapImage(
-                                new Uri(Path.Combine(SAssemblyDirectory, "Icons\\" + enumName + ".ico"),
+                                new Uri(Path.Combine(SAssemblyDirectory, $"Icons\\{enumName}.ico"),
                                     UriKind.Absolute));
                             button.ToolTip = Resource.ResourceManager.GetString(enumName);
                             m_pulldownButtons.Add(name, button);
@@ -311,7 +311,7 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
         /// <param name="msg">Message to display</param>
         public void ErrorMsg(string msg)
         {
-            Debug.WriteLine("RvtSamples: " + msg);
+            Debug.WriteLine($"RvtSamples: {msg}");
             TaskDialog.Show("RvtSamples", msg, TaskDialogCommonButtons.Ok);
         }
 
@@ -324,7 +324,7 @@ namespace Ara3D.RevitSampleBrowser.RvtSamples.CS
         {
             if (!File.Exists(filename))
             {
-                ErrorMsg(filename + " not found.");
+                ErrorMsg($"{filename} not found.");
                 return new string[] { };
             }
 

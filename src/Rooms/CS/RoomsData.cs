@@ -76,9 +76,8 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
                     // get the location point of the room
                     if (!(tmpRoom.Location is LocationPoint locPoint))
                     {
-                        var roomId = "Room Id:  " + tmpRoom.Id;
-                        var errMsg = roomId + "\r\nFault to create room tag," +
-                                     "can't get the location point!";
+                        var roomId = $"Room Id:  {tmpRoom.Id}";
+                        var errMsg = $"{roomId}\r\nFault to create room tag,can't get the location point!";
                         throw new Exception(errMsg);
                     }
 
@@ -216,13 +215,12 @@ namespace Ara3D.RevitSampleBrowser.Rooms.CS
 
             // get the project title
             var projectTitle = m_revit.ActiveUIDocument.Document.Title; //the name of the project
-            allData += "Total Rooms area of " + projectTitle + "\r\n";
+            allData += $"Total Rooms area of {projectTitle}\r\n";
             allData += "Department" + "," + "Rooms Amount" + "," + "Total Area" + "\r\n";
 
             foreach (var tmp in m_departmentInfos)
             {
-                allData += tmp.DepartmentName + "," + tmp.RoomsAmount +
-                           "," + tmp.DepartmentAreaValue + " SF\r\n";
+                allData += $"{tmp.DepartmentName},{tmp.RoomsAmount},{tmp.DepartmentAreaValue} SF\r\n";
             }
 
             // save the information into a Excel file

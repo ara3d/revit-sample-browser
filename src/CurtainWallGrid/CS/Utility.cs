@@ -52,8 +52,8 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         /// </returns>
         public int Compare(View x, View y)
         {
-            var xName = x.ViewType + " : " + x.Name;
-            var yName = y.ViewType + " : " + y.Name;
+            var xName = $"{x.ViewType} : {x.Name}";
+            var yName = $"{y.ViewType} : {y.Name}";
 
             IComparer comp = new CaseInsensitiveComparer();
             return comp.Compare(xName, yName);
