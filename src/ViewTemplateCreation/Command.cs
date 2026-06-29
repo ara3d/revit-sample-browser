@@ -5,6 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -24,7 +25,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
             }
             catch (Exception ex)
             {
-                Utils.ShowWarningMessageBox(ex.ToString());
+                ViewTemplateHelper.ShowWarningMessageBox(ex.ToString());
                 return Result.Failed;
             }
         }

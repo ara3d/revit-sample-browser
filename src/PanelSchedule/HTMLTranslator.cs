@@ -8,6 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
     /// <summary>
@@ -46,7 +47,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
             }
 
             var panelScheduleFile =
-                asemblyName.Replace("PanelSchedule.dll", $"{ReplaceIllegalCharacters(PsView.Name)}.html");
+                asemblyName.Replace("PanelSchedule.dll", $"{ScheduleHelper.ReplaceIllegalCharacters(PsView.Name)}.html");
 
             var doc = new XmlDocument();
             var tw = new XmlTextWriter(panelScheduleFile, null);
@@ -85,7 +86,7 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
         {
             var nRowsSection = 0;
             var nColsSection = 0;
-            GetNumberOfRowsAndColumns(PsView.Document, PsView, sectionType, ref nRowsSection, ref nColsSection);
+            ScheduleHelper.GetNumberOfRowsAndColumns(PsView.Document, PsView, sectionType, ref nRowsSection, ref nColsSection);
 
             for (var ii = 0; ii < nRowsSection; ++ii)
             {

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Point = System.Drawing.Point;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
 {
     /// <summary>
@@ -61,75 +62,20 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
             set => m_scale = value;
         }
 
-        /// <summary>
-        ///     Project canvas 2D point to the track ball.
-        /// </summary>
-        /// <param name="width">Canvas width</param>
-        /// <param name="height">Canvas height</param>
-        /// <param name="point">2D point</param>
-        /// <returns>Projected point in track ball</returns>
-        private XYZ ProjectToTrackball(double width, double height, Point point)
-        {
-            var x = point.X / (width / 2); // Scale so bounds map to [0,0] - [2,2]
-            var y = point.Y / (height / 2);
-
-            x--; // Translate 0,0 to the center
-            y = 1 - y; // Flip so +Y is up instead of down
-
-            double z;
-
-            var d = Math.Sqrt(x * x + y * y);
-            if (d < 0.70710678118654752440)
-            {
-                /* Inside sphere */
-                z = Math.Sqrt(1 - d * d);
-            }
-            else
-            {
-                /* On hyperbola */
-                var t = 1 / 1.41421356237309504880;
-                z = t * t / d;
-            }
-
-            return new XYZ(x, y, z);
-        }
-
-        /// <summary>
-        ///     Yield the rotation transform according to current 2D point in canvas.
-        /// </summary>
-        /// <param name="currentPosition">2D point in canvas</param>
         private void Track(Point currentPosition)
         {
-            var currentPosition3D = ProjectToTrackball(
-                m_canvasWidth, m_canvasHeight, currentPosition);
-
+            var currentPosition3D = SampleBrowserUtils.ProjectToTrackball(m_canvasWidth, m_canvasHeight, currentPosition);
             var axis = m_previousPosition3D.CrossProduct(currentPosition3D);
-            if (axis.GetLength() == 0) return;
+            if (axis.GetLength() == 0)
+                return;
 
-            var angle = m_previousPosition3D.AngleTo(currentPosition3D);
-            m_rotation = Transform.CreateRotation(axis, -angle);
+            m_rotation = Transform.CreateRotation(axis, -m_previousPosition3D.AngleTo(currentPosition3D));
             m_previousPosition3D = currentPosition3D;
         }
 
-        /// <summary>
-        ///     Yield the scale transform according to current 2D point in canvas.
-        /// </summary>
-        /// <param name="currentPosition">2D point in canvas</param>
-        private void Zoom(Point currentPosition)
-        {
-            double yDelta = currentPosition.Y - m_previousPosition2D.Y;
+        private void Zoom(Point currentPosition) =>
+            m_scale = Math.Exp((currentPosition.Y - m_previousPosition2D.Y) / 100);
 
-            var scale = Math.Exp(yDelta / 100); // e^(yDelta/100) is fairly arbitrary.
-
-            m_scale = scale;
-        }
-
-        /// <summary>
-        ///     Mouse down, initialize the transformation to identity.
-        /// </summary>
-        /// <param name="width">Canvas width</param>
-        /// <param name="height">Canvas height</param>
-        /// <param name="e"></param>
         public void OnMouseDown(float width, float height, MouseEventArgs e)
         {
             m_rotation = Transform.Identity;
@@ -137,26 +83,17 @@ namespace Ara3D.RevitSampleBrowser.NewHostedSweep.CS.Geom
             m_canvasWidth = width;
             m_canvasHeight = height;
             m_previousPosition2D = e.Location;
-            m_previousPosition3D = ProjectToTrackball(m_canvasWidth,
-                m_canvasHeight,
-                m_previousPosition2D);
+            m_previousPosition3D = SampleBrowserUtils.ProjectToTrackball(m_canvasWidth, m_canvasHeight, m_previousPosition2D);
         }
 
-        /// <summary>
-        ///     Mouse move with left button press will yield the rotation transform,
-        ///     with right button press will yield scale transform.
-        /// </summary>
-        /// <param name="e"></param>
         public void OnMouseMove(MouseEventArgs e)
         {
             var currentPosition = e.Location;
-
-            // avoid any zero axis conditions
-            if (currentPosition == m_previousPosition2D) return;
+            if (currentPosition == m_previousPosition2D)
+                return;
 
             switch (e.Button)
             {
-                // Prefer tracking to zooming if both buttons are pressed.
                 case MouseButtons.Left:
                     Track(currentPosition);
                     break;

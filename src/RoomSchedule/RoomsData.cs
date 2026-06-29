@@ -8,6 +8,8 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
@@ -163,11 +165,11 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 {
                     var dataRow = newTable.NewRow();
                     for (var i = 0; i < m_parameters.Count; i++)
-                        dataRow[i] = GetProperty(m_activeDocument, room, m_parameters[i], true);
+                        dataRow[i] = SampleBrowserUtils.GetProperty(m_activeDocument, room, m_parameters[i], true);
 
                     // add constant column value: External Room ID
                     Parameter param = null;
-                    var bExist = ShareParameterExists(room, SharedParam, ref param);
+                    var bExist = ParameterAccess.ShareParameterExists(room, SharedParam, ref param);
                     if (bExist && null != param && false == string.IsNullOrEmpty(param.AsString()))
                         dataRow[m_parameters.Count] = param.AsString();
                     else
@@ -179,98 +181,6 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             }
 
             return newTable;
-        }
-
-        /// <summary>
-        ///     Get the room property value according the parameter name
-        /// </summary>
-        /// <param name="activeDoc">Current active document.</param>
-        /// <param name="room">an instance of room class</param>
-        /// <param name="paraEnum">the parameter used to get parameter value</param>
-        /// <param name="useValue">
-        ///     convert parameter to value type or not.
-        ///     if true, the value of parameter will be with unit.
-        ///     if false, the value of parameter will be without unit.
-        /// </param>
-        /// <returns>the string value of property specified by shared parameter</returns>
-        public static string GetProperty(Document activeDoc, Room room, BuiltInParameter paraEnum, bool useValue)
-        {
-            string propertyValue = null; //the value of parameter 
-
-            // Assuming the build in parameter is legal for room.
-            // if the room is not placed, some properties are not available, i.g. Level name, Area ...
-            // trying to retrieve them will throw exception; 
-            // however some parameters are available, e.g.: name, number
-            Parameter param;
-            try
-            {
-                param = room.get_Parameter(paraEnum);
-            }
-            catch (Exception)
-            {
-                // throwing exception for this parameter is acceptable if it's a unplaced room
-                if (null == room.Location)
-                {
-                    propertyValue = "Not Placed";
-                    return propertyValue;
-                }
-
-                throw new Exception("Illegal built in parameter.");
-            }
-
-            // get the parameter via the built in parameter
-            if (null == param) return "";
-
-            // get the parameter's storage type and convert parameter to string 
-            var storageType = param.StorageType;
-            switch (storageType)
-            {
-                case StorageType.Integer:
-                    var iVal = param.AsInteger();
-                    propertyValue = iVal.ToString();
-                    break;
-                case StorageType.String:
-                    propertyValue = param.AsString();
-                    break;
-                case StorageType.Double:
-                    // AsValueString will make the return string with unit, it's appreciated.
-                    if (useValue)
-                        propertyValue = param.AsValueString();
-                    else
-                        propertyValue = param.AsDouble().ToString();
-                    break;
-                case StorageType.ElementId:
-                    var elemId = param.AsElementId();
-                    var elem = activeDoc.GetElement(elemId);
-                    propertyValue = elem.Name;
-                    break;
-                default:
-                    propertyValue = param.AsString();
-                    break;
-            }
-
-            return propertyValue;
-        }
-
-        /// <summary>
-        ///     Check to see whether specified parameter exists in room object.
-        /// </summary>
-        /// <param name="roomObj">Room object used to get parameter</param>
-        /// <param name="paramName">parameter name to be checked</param>
-        /// <param name="sharedParam">shared parameter returned</param>
-        /// <returns>true, the parameter exists; false, the parameter doesn't exist</returns>
-        public static bool ShareParameterExists(Room roomObj, string paramName, ref Parameter sharedParam)
-        {
-            // get the parameter
-            try
-            {
-                sharedParam = roomObj.LookupParameter(paramName);
-            }
-            catch
-            {
-            }
-
-            return null != sharedParam;
         }
 
         /// <summary>

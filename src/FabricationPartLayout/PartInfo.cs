@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -97,7 +98,7 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 
                 // centerline length
                 builder.AppendLine(
-                    $"Centerline Length: {GetStringFromNumber(doc, part.CenterlineLength, SpecTypeId.Length)}");
+                    $"Centerline Length: {ValueFormatting.FormatNumber(doc, part.CenterlineLength, SpecTypeId.Length)}");
 
                 TaskDialog.Show($"Fabrication Part [{part.Id}]", builder.ToString());
 
@@ -108,11 +109,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 message = ex.Message;
                 return Result.Failed;
             }
-        }
-
-        private string GetStringFromNumber(Document doc, double number, ForgeTypeId specTypeId)
-        {
-            return UnitFormatUtils.Format(doc.GetUnits(), specTypeId, number, false);
         }
     }
 }

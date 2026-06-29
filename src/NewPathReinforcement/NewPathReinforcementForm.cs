@@ -10,6 +10,7 @@ using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
     /// <summary>

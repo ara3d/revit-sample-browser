@@ -13,30 +13,10 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
         ///     Flag of progress
         /// </summary>
         private bool m_done;
-
-        /// <summary>
-        ///     Lower
-        /// </summary>
         private int m_lower;
-
-        /// <summary>
-        ///     Name
-        /// </summary>
         private string m_name;
-
-        /// <summary>
-        ///     Position
-        /// </summary>
         private int m_position;
-
-        /// <summary>
-        ///     Progress stage
-        /// </summary>
         private ProgressStage m_stage;
-
-        /// <summary>
-        ///     Upper
-        /// </summary>
         private int m_upper;
 
         /// <summary>
@@ -120,19 +100,9 @@ namespace Ara3D.RevitSampleBrowser.Events.ProgressNotifier.CS
         ///     percent of progress
         /// </summary>
         /// <returns></returns>
-        public double PercentDone()
-        {
-            return m_position / (double)(m_upper - m_lower) * 100;
-        }
+        public double PercentDone() => m_position / (double)(m_upper - m_lower) * 100;
 
-        /// <summary>
-        ///     ToString
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return
-                $"Name: {Name}, Stage: {m_stage}, Percent Done: {PercentDone():F}, Upper: {m_upper}, Position: {m_position}";
-        }
+        public override string ToString() =>
+            $"Name: {Name}, Stage: {m_stage}, Percent Done: {PercentDone():F}, Upper: {m_upper}, Position: {m_position}";
     }
 }

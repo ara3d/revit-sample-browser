@@ -9,6 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
 {
     /// <summary>
@@ -58,9 +59,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyParametersOrder.CS
         private void SortParameters(ParametersOrder order)
         {
             // Convert relative path to absolute path.
-            var absPath = directoryTxt.Text;
-            if (!Path.IsPathRooted(absPath))
-                absPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), absPath);
+            var absPath = AssemblyPathHelper.ResolveDirectoryPath(directoryTxt.Text);
 
             var dirInfo = new DirectoryInfo(absPath);
             if (!dirInfo.Exists)

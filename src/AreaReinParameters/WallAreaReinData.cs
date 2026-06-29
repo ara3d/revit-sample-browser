@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
 {
     /// <summary>
@@ -184,41 +185,41 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
             var paras = areaRein.Parameters;
 
             //exterior major layer
-            m_exteriorMajorBarType = ParameterUtil.FindParaByName(paras,
+            m_exteriorMajorBarType = ParameterAccess.FindParaByName(paras,
                 "Exterior Major Bar Type");
-            m_exteriorMajorHookType = ParameterUtil.FindParaByName(paras,
+            m_exteriorMajorHookType = ParameterAccess.FindParaByName(paras,
                 "Exterior Major Hook Type");
-            m_exteriorMajorHookOrientation = ParameterUtil.FindParaByName(paras,
+            m_exteriorMajorHookOrientation = ParameterAccess.FindParaByName(paras,
                 "Exterior Major Hook Orientation");
             flag &= m_exteriorMajorBarType != null && m_exteriorMajorHookOrientation != null
                                                    && m_exteriorMajorHookType != null;
 
             //exterior minor layer
-            m_exteriorMinorBarType = ParameterUtil.FindParaByName(paras,
+            m_exteriorMinorBarType = ParameterAccess.FindParaByName(paras,
                 "Exterior Minor Bar Type");
-            m_exteriorMinorHookType = ParameterUtil.FindParaByName(paras,
+            m_exteriorMinorHookType = ParameterAccess.FindParaByName(paras,
                 "Exterior Minor Hook Type");
-            m_exteriorMinorHookOrientation = ParameterUtil.FindParaByName(paras,
+            m_exteriorMinorHookOrientation = ParameterAccess.FindParaByName(paras,
                 "Exterior Minor Hook Orientation");
             flag &= m_exteriorMinorBarType != null && m_exteriorMinorHookOrientation != null
                                                    && m_exteriorMinorHookType != null;
 
             //interior major layer
-            m_interiorMajorBarType = ParameterUtil.FindParaByName(paras,
+            m_interiorMajorBarType = ParameterAccess.FindParaByName(paras,
                 "Interior Major Bar Type");
-            m_interiorMajorHookType = ParameterUtil.FindParaByName(paras,
+            m_interiorMajorHookType = ParameterAccess.FindParaByName(paras,
                 "Interior Major Hook Type");
-            m_interiorMajorHookOrientation = ParameterUtil.FindParaByName(paras,
+            m_interiorMajorHookOrientation = ParameterAccess.FindParaByName(paras,
                 "Interior Major Hook Orientation");
             flag &= m_interiorMajorBarType != null && m_interiorMajorHookOrientation != null
                                                    && m_interiorMajorHookType != null;
 
             //interior minor layer
-            m_interiorMinorBarType = ParameterUtil.FindParaByName(paras,
+            m_interiorMinorBarType = ParameterAccess.FindParaByName(paras,
                 "Interior Minor Bar Type");
-            m_interiorMinorHookType = ParameterUtil.FindParaByName(paras,
+            m_interiorMinorHookType = ParameterAccess.FindParaByName(paras,
                 "Interior Minor Hook Type");
-            m_interiorMinorHookOrientation = ParameterUtil.FindParaByName(paras,
+            m_interiorMinorHookOrientation = ParameterAccess.FindParaByName(paras,
                 "Interior Minor Hook Orientation");
             flag &= m_interiorMinorBarType != null && m_interiorMinorHookOrientation != null
                                                    && m_interiorMinorHookType != null;

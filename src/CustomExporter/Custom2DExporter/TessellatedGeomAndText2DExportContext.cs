@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
     /// <summary>
@@ -141,7 +142,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
                     list = curve.Tessellate();
                 }
 
-                Utilities.AddTo(m_points, list);
+                CustomExportHelper.AddTo(m_points, list);
                 return RenderNodeAction.Skip;
             }
 
@@ -155,7 +156,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             {
                 var pLine = node.GetPolyline();
                 var list = pLine.GetCoordinates();
-                Utilities.AddTo(m_points, list);
+                CustomExportHelper.AddTo(m_points, list);
                 return RenderNodeAction.Skip;
             }
 
@@ -172,7 +173,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
             //   {
             //      curve = curve.CreateTransformed(node.GetInstanceTransform());
             //      IList<XYZ> list = curve.Tessellate();
-            //      Utilities.addTo(m_points, list);
+            //      CustomExportHelper.addTo(m_points, list);
             //   }
             //}
             return RenderNodeAction.Proceed;
@@ -215,13 +216,13 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
                 segmentStart,
                 segmentEnd
             };
-            Utilities.AddTo(m_points, list);
+            CustomExportHelper.AddTo(m_points, list);
         }
 
         public void OnPolylineSegments(PolylineSegments segments)
         {
             var segPoints = segments.GetVertices();
-            Utilities.AddTo(m_points, segPoints);
+            CustomExportHelper.AddTo(m_points, segPoints);
         }
     }
 }

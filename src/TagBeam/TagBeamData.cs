@@ -2,11 +2,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.TagBeam.CS
 {
     /// <summary>
@@ -17,8 +20,7 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
         /// <summary>
         ///     Selected beams
         /// </summary>
-        private readonly List<FamilyInstance> m_beamList =
-            new List<FamilyInstance>();
+        private readonly List<FamilyInstance> m_beamList;
 
         /// <summary>
         ///     Tag types whose category is "Structural Framing Tags"
@@ -59,19 +61,7 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
             m_docCreator = m_revitDoc.Document.Create;
             m_view = m_revitDoc.Document.ActiveView;
 
-            var elementSet = new ElementSet();
-            foreach (var elementId in m_revitDoc.Selection.GetElementIds())
-            {
-                elementSet.Insert(m_revitDoc.Document.GetElement(elementId));
-            }
-
-            var itor = elementSet.ForwardIterator();
-            while (itor.MoveNext())
-            {
-                if (itor.Current is FamilyInstance familyInstance && familyInstance.StructuralType == StructuralType.Beam)
-                    m_beamList.Add(familyInstance);
-            }
-
+            m_beamList = SelectionHelper.GetSelectedBeams(m_revitDoc);
             if (m_beamList.Count < 1) throw new ApplicationException("there is no beam selected");
 
             //Get the family symbols of tag in this document.
@@ -89,29 +79,8 @@ namespace Ara3D.RevitSampleBrowser.TagBeam.CS
                     }
 
                     foreach (var tagSymbol in ffs)
-                    {
-                        try
-                        {
-                            if (tagSymbol != null)
-                                switch (tagSymbol.Category.Name)
-                                {
-                                    case "Structural Framing Tags":
-                                        m_categoryTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
-                                        continue;
-                                    case "Material Tags":
-                                        m_materialTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
-                                        continue;
-                                    case "Multi-Category Tags":
-                                        m_multiCategoryTagTypes.Add(new FamilySymbolWrapper(tagSymbol));
-                                        continue;
-                                    default:
-                                        continue;
-                                }
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }
+                        ViewHelper.AddTagSymbolByCategory(tagSymbol, m_categoryTagTypes, m_materialTagTypes,
+                            m_multiCategoryTagTypes);
                 }
             }
         }

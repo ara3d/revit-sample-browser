@@ -3,6 +3,7 @@
 using System;
 using System.Windows.Forms;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
 {
     /// <summary>
@@ -133,7 +134,7 @@ namespace Ara3D.RevitSampleBrowser.FoundationSlab.CS
         /// <param name="e">A object contains the event data.</param>
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            Sketch.DrawProfile(e.Graphics, pictureBox.DisplayRectangle, m_datas.BaseSlabList); // Draw profiles.
+            SampleBrowserUtils.DrawProfile(e.Graphics, pictureBox.DisplayRectangle, m_datas.BaseSlabList); // Draw profiles.
         }
 
         /// <summary>

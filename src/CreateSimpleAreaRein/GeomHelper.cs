@@ -5,6 +5,9 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Ara3D.RevitSampleBrowser.Common.Structural;
 namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 {
     /// <summary>
@@ -32,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
         /// <returns>is successful</returns>
         public bool GetWallGeom(Wall wall, ref Reference refer, ref IList<Curve> curves)
         {
-            var faces = GeomUtil.GetFaces(wall);
+            var faces = SampleBrowserUtils.GetFaces(wall);
             //unless API has bug, locCurve can't be null
             if (!(wall.Location is LocationCurve locCurve)) return false;
             //check the location is line
@@ -42,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             //get the face reference
             foreach (Face face in faces)
             {
-                if (GeomUtil.IsParallel(face, locLine))
+                if (ParameterAccess.IsParallel(face, locLine))
                 {
                     refer = face.Reference;
                     break;
@@ -71,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 
             curves = model.GetOuterContour().ToList();
 
-            return GeomUtil.IsRectangular(curves);
+            return AreaReinforcementHelper.IsRectangular(curves);
         }
 
         /// <summary>
@@ -84,10 +87,10 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
         public bool GetFloorGeom(Floor floor, ref Reference refer, ref IList<Curve> curves)
         {
             //get horizontal face reference
-            var faces = GeomUtil.GetFaces(floor);
+            var faces = SampleBrowserUtils.GetFaces(floor);
             foreach (Face face in faces)
             {
-                if (GeomUtil.IsHorizontalFace(face))
+                if (SampleBrowserUtils.IsHorizontalFace(face))
                 {
                     refer = face.Reference;
                     break;
@@ -117,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
             if (null == model) return false;
             curves = model.GetOuterContour().ToList();
 
-            return GeomUtil.IsRectangular(curves);
+            return AreaReinforcementHelper.IsRectangular(curves);
         }
     }
 }

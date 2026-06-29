@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {
     /// <summary>
@@ -187,11 +188,11 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
         int IComparer<XYZ>.Compare(XYZ first, XYZ second)
         {
             // first compare z coordinate, then y coordinate, at last x coordinate
-            if (GeomUtil.IsEqual(first.Z, second.Z))
+            if (XyzMath.IsEqual(first.Z, second.Z))
             {
-                if (GeomUtil.IsEqual(first.Y, second.Y))
+                if (XyzMath.IsEqual(first.Y, second.Y))
                 {
-                    if (GeomUtil.IsEqual(first.X, second.X)) return 0;
+                    if (XyzMath.IsEqual(first.X, second.X)) return 0;
                     return first.X > second.X ? 1 : -1;
                 }
 

@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -31,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    CreateFloor(data, commandData.Application.ActiveUIDocument.Document);
+                    SampleBrowserUtils.CreateFloor(data, commandData.Application.ActiveUIDocument.Document);
 
                     tran.Commit();
                     return Result.Succeeded;
@@ -46,24 +46,6 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
                 tran.RollBack();
                 return Result.Failed;
             }
-        }
-
-        /// <summary>
-        ///     create a floor by the data obtain from revit.
-        /// </summary>
-        /// <param name="data">Data including the profile, level etc, which is need for create a floor.</param>
-        /// <param name="doc">Retrieves an object that represents the currently active project.</param>
-        public static void CreateFloor(Data data, Document doc)
-        {
-            var loop = new CurveLoop();
-            foreach (Curve curve in data.Profile)
-            {
-                loop.Append(curve);
-            }
-
-            var floorLoops = new List<CurveLoop> { loop };
-
-            Floor.Create(doc, floorLoops, data.FloorType.Id, data.Level.Id, data.Structural, null, 0.0);
         }
     }
 }

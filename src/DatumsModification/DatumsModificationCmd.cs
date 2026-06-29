@@ -9,6 +9,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -82,7 +84,7 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                                 else if (datum.GetLeader(DatumEnds.End0, view) != null)
                                 {
                                     var leader = datum.GetLeader(DatumEnds.End0, view);
-                                    leader = CalculateLeader(leader, AddLeftElbow);
+                                    leader = SampleBrowserUtils.CalculateLeader(leader, AddLeftElbow);
                                     datum.SetLeader(DatumEnds.End0, view, leader);
                                 }
 
@@ -93,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                                 else if (datum.GetLeader(DatumEnds.End1, view) != null)
                                 {
                                     var leader = datum.GetLeader(DatumEnds.End1, view);
-                                    leader = CalculateLeader(leader, AddRightElbow);
+                                    leader = SampleBrowserUtils.CalculateLeader(leader, AddRightElbow);
                                     datum.SetLeader(DatumEnds.End1, view, leader);
                                 }
                             }
@@ -109,20 +111,6 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                 message = ex.Message;
                 return Result.Failed;
             }
-        }
-
-        private Leader CalculateLeader(Leader leader, bool addLeader)
-        {
-            XYZ elbow = null;
-            if (AddLeftElbow)
-                elbow = new XYZ(leader.Anchor.X + (leader.End.X - leader.Anchor.X) / 2,
-                    leader.Anchor.Y + (leader.End.Y - leader.Anchor.Y) / 2,
-                    leader.Anchor.Z + (leader.End.Z - leader.Anchor.Z) / 2);
-            else
-                elbow = new XYZ(leader.Anchor.X, leader.Anchor.Y, leader.Anchor.Z);
-
-            leader.Elbow = elbow;
-            return leader;
         }
     }
 
@@ -171,7 +159,7 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                                 var curve = datum
                                     .GetCurvesInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view), view)
                                     .ElementAt(0);
-                                var newCurve = CalculateCurve(curve, baseLine, baseDirect);
+                                var newCurve = XyzMath.CalculateAlignedCurve(curve, baseLine, baseDirect);
                                 datum.SetCurveInView(datum.GetDatumExtentTypeInView(DatumEnds.End0, view), view,
                                     newCurve);
                             }
@@ -188,25 +176,6 @@ namespace Ara3D.RevitSampleBrowser.DatumsModification.CS
                 message = ex.Message;
                 return Result.Failed;
             }
-        }
-
-        private Curve CalculateCurve(Curve curve, Curve baseCurve, XYZ baseDirect)
-        {
-            var direct = (curve as Line).Direction;
-            Line newCurve = null;
-            if (Math.Round(direct.X) == Math.Round(baseDirect.X) && Math.Round(direct.X) == 1)
-                newCurve = Line.CreateBound(
-                    new XYZ(baseCurve.GetEndPoint(0).X, curve.GetEndPoint(0).Y, curve.GetEndPoint(0).Z)
-                    , new XYZ(baseCurve.GetEndPoint(1).X, curve.GetEndPoint(1).Y, curve.GetEndPoint(1).Z));
-            else if (Math.Round(direct.Y) == Math.Round(baseDirect.Y) && Math.Round(direct.Y) == 1)
-                newCurve = Line.CreateBound(
-                    new XYZ(curve.GetEndPoint(0).X, baseCurve.GetEndPoint(0).Y, curve.GetEndPoint(0).Z)
-                    , new XYZ(curve.GetEndPoint(1).X, baseCurve.GetEndPoint(1).Y, curve.GetEndPoint(1).Z));
-            else
-                newCurve = Line.CreateBound(
-                    new XYZ(curve.GetEndPoint(0).X, curve.GetEndPoint(0).Y, baseCurve.GetEndPoint(0).Z)
-                    , new XYZ(curve.GetEndPoint(1).X, curve.GetEndPoint(1).Y, baseCurve.GetEndPoint(1).Z));
-            return newCurve;
         }
     }
 

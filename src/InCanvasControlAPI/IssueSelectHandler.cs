@@ -16,6 +16,7 @@ using System;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
 {
     /// <summary>
@@ -77,7 +78,7 @@ namespace Ara3D.RevitSampleBrowser.InCanvasControlAPI.CS
         /// </param>
         public void OnClick(TemporaryGraphicsCommandData data)
         {
-            IssueMarkerSelector.SelectMarker(data.Document, data.Index);
+            ElementQuery.SelectMarker(data.Document, data.Index);
         }
     }
 }

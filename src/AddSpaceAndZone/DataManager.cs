@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
     /// <summary>
@@ -81,7 +82,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         {
             if (m_defaultPhase == null)
             {
-                TaskDialog.Show("Revit", "The phase of the active view is null, you can't create zone in a null phase");
+                DialogHelper.ShowMessage( "The phase of the active view is null, you can't create zone in a null phase");
                 return;
             }
 
@@ -91,7 +92,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Revit", ex.Message);
+                DialogHelper.ShowMessage( ex.Message);
             }
         }
 
@@ -102,7 +103,7 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
         {
             if (m_defaultPhase == null)
             {
-                TaskDialog.Show("Revit",
+                DialogHelper.ShowMessage(
                     "The phase of the active view is null, you can't create spaces in a null phase");
                 return;
             }
@@ -112,11 +113,11 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
                 if (m_commandData.Application.ActiveUIDocument.Document.ActiveView.ViewType == ViewType.FloorPlan)
                     m_spaceManager.CreateSpaces(m_currentLevel, m_defaultPhase);
                 else
-                    TaskDialog.Show("Revit", "You can not create spaces in this plan view");
+                    DialogHelper.ShowMessage( "You can not create spaces in this plan view");
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Revit", ex.Message);
+                DialogHelper.ShowMessage( ex.Message);
             }
         }
 

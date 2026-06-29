@@ -5,7 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 {
     /// <summary>
@@ -125,7 +125,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
 
             // set the relative information of this event into the table.
             newRow["Time"] = DateTime.Now.ToString();
-            newRow["Event"] = GetEventsName(args.GetType());
+            newRow["Event"] = EventLoggingHelper.GetRevitDbEventName(args.GetType());
             newRow["Type"] = sender.GetType().ToString();
 
             m_eventsLog.Rows.Add(newRow);
@@ -142,7 +142,7 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
             if (null == args) return;
             // get this eventArgs's runtime type.
             var type = args.GetType();
-            var eventName = GetEventsName(type);
+            var eventName = EventLoggingHelper.GetRevitDbEventName(type);
             Trace.WriteLine($"Raised {sender.GetType()}.{eventName}");
             Trace.WriteLine("---------------------------------------------------------");
 
@@ -187,22 +187,6 @@ namespace Ara3D.RevitSampleBrowser.Events.EventsMonitor.CS
                     Trace.WriteLine($"    [Property Exception]: {propertyInfo.Name}, {ex.Message}");
                 }
             }
-        }
-
-        /// <summary>
-        ///     Get event name from its EventArgs, without namespace prefix
-        /// </summary>
-        /// <param name="type">Generic event type.</param>
-        /// <returns></returns>
-        private string GetEventsName(Type type)
-        {
-            var argName = type.ToString();
-            var tail = "EventArgs";
-            var head = "Autodesk.Revit.DB.Events.";
-            var firstIndex = head.Length;
-            var length = argName.Length - head.Length - tail.Length;
-            var eventName = argName.Substring(firstIndex, length);
-            return eventName;
         }
     }
 }

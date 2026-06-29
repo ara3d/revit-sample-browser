@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     /// <summary>
@@ -47,10 +48,10 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         /// <param name="rootElement">The XML element representing the cell.</param>
         public PointCloudCellStorage(XElement rootElement)
         {
-            LowerLeft = XmlUtils.GetXyz(rootElement.Element("LowerLeft"));
-            UpperRight = XmlUtils.GetXyz(rootElement.Element("UpperRight"));
-            m_color = XmlUtils.GetColor(rootElement.Element("Color"));
-            m_randomize = XmlUtils.GetBoolean(rootElement.Element("Randomize"));
+            LowerLeft = SerializationHelper.GetXyz(rootElement.Element("LowerLeft"));
+            UpperRight = SerializationHelper.GetXyz(rootElement.Element("UpperRight"));
+            m_color = SerializationHelper.GetColor(rootElement.Element("Color"));
+            m_randomize = SerializationHelper.GetBoolean(rootElement.Element("Randomize"));
 
             PointsBuffer = new CloudPoint[SMaxNumberOfPoints];
             NumberOfPoints = 0;
@@ -179,10 +180,10 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         /// <param name="rootElement">The element to which the properties are added as subelements.</param>
         public void SerializeObjectData(XElement rootElement)
         {
-            rootElement.Add(XmlUtils.GetXElement(LowerLeft, "LowerLeft"));
-            rootElement.Add(XmlUtils.GetXElement(UpperRight, "UpperRight"));
-            rootElement.Add(XmlUtils.GetColorXElement(m_color, "Color"));
-            rootElement.Add(XmlUtils.GetXElement(m_randomize, "Randomize"));
+            rootElement.Add(SerializationHelper.GetXElement(LowerLeft, "LowerLeft"));
+            rootElement.Add(SerializationHelper.GetXElement(UpperRight, "UpperRight"));
+            rootElement.Add(SerializationHelper.GetColorXElement(m_color, "Color"));
+            rootElement.Add(SerializationHelper.GetXElement(m_randomize, "Randomize"));
         }
 
         [Flags]

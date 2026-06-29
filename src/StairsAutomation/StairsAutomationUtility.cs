@@ -5,6 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
 {
     /// <summary>
@@ -51,57 +52,26 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         /// <param name="document">The document in which the stairs will be created.</param>
         /// <param name="stairsNumber">The predefined stairs configuration number.</param>
         /// <returns></returns>
-        public static StairsAutomationUtility Create(Document document, int stairsNumber)
-        {
-            var utility = new StairsAutomationUtility(document, stairsNumber);
-            return utility;
-        }
+        public static StairsAutomationUtility Create(Document document, int stairsNumber) =>
+            new StairsAutomationUtility(document, stairsNumber);
 
         /// <summary>
         ///     Sets up the levels for the bottom and top of the stairs assembly.
         /// </summary>
         private void SetupLevels()
         {
-            var targetLevels = FindTargetLevels(Document, "Level 1", "Level 2", "Level 3");
-            var level1 = targetLevels.Item1;
-            var level2 = targetLevels.Item2;
-            var level3 = targetLevels.Item3;
+            var targetLevels = StairsHelper.FindTargetLevels(Document, "Level 1", "Level 2", "Level 3");
             switch (m_stairsNumber)
             {
-                // Standard stair 1 level
                 case 3:
-                    BottomLevel = level1;
-                    TopLevel = level2;
+                    BottomLevel = targetLevels.Item1;
+                    TopLevel = targetLevels.Item2;
                     break;
-                //Level 1 -> Level 3
                 default:
-                    BottomLevel = level1;
-                    TopLevel = level3;
+                    BottomLevel = targetLevels.Item1;
+                    TopLevel = targetLevels.Item3;
                     break;
             }
-        }
-
-        private static Tuple<Level, Level, Level> FindTargetLevels(Document doc, string name1, string name2,
-            string name3)
-        {
-            var collector = new FilteredElementCollector(doc);
-            collector.OfClass(typeof(Level));
-
-            Level level1 = null;
-            Level level2 = null;
-            Level level3 = null;
-            foreach (var level in collector.Cast<Level>().Where(level =>
-                         level.Name.Equals(name1) || level.Name.Equals(name2) || level.Name.Equals(name3)))
-            {
-                if (level.Name.Equals(name1))
-                    level1 = level;
-                else if (level.Name.Equals(name2))
-                    level2 = level;
-                else
-                    level3 = level;
-            }
-
-            return new Tuple<Level, Level, Level>(level1, level2, level3);
         }
 
         // Not currently used.

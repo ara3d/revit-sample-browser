@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 {
     /// <summary>
@@ -102,7 +103,7 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
                 var lastLevelName = lastItem.Name;
                 var lastLevelElevation = lastItem.Elevation;
                 newLevelName = $"{lastLevelName}'";
-                newLevelElevation = lastLevelElevation + Unit.CovertFromApi(m_objectReference.UnitTypeId, 10);
+                newLevelElevation = lastLevelElevation + UnitConversion.CovertFromApi(m_objectReference.UnitTypeId, 10);
             }
             else
             {

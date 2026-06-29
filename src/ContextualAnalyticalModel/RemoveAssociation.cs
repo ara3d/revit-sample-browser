@@ -4,8 +4,8 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     /// <summary>
@@ -24,12 +24,8 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             {
                 trans.Start();
 
-                //select object for which we want to break the relation
-                var eRef = activeDoc.Selection.PickObject(ObjectType.Element,
+                var selectedElementId = ElementQuery.GetSelectedObject(activeDoc,
                     "Please select the element for which you want to break relation");
-                ElementId selectedElementId = null;
-                if (eRef != null && eRef.ElementId != ElementId.InvalidElementId)
-                    selectedElementId = eRef.ElementId;
 
                 // Gets the AnalyticalToPhysicalAssociationManager for this Revit document
                 var analyticalToPhysicalmanager =

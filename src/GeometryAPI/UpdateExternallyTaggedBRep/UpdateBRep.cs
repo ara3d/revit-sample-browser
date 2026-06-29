@@ -5,6 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
     /// <summary>
@@ -51,7 +52,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
                 if (null == CreateBRep.CreatedDirectShape ||
                     !CreateBRep.CreatedDirectShape.IsValidObject ||
                     !CreateBRep.CreatedDirectShape.Document.Equals(dbDocument))
-                    if (Result.Succeeded != HelperMethods.ExecuteCreateBRepCommand(dbDocument))
+                    if (Result.Succeeded != SampleBrowserUtils.ExecuteCreateBRepCommand(dbDocument))
                         return Result.Failed;
 
                 using (var transaction = new Transaction(dbDocument, "UpdateExternallyTaggedBRep"))
@@ -59,7 +60,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
                     transaction.Start();
 
                     // Create BRep with other dimensions than CreateBRep command creates and update the geometry in the DirectShape.
-                    var resizedTaggedBRep = HelperMethods.CreateExternallyTaggedPodium(120.0, 20.0, 60.0);
+                    var resizedTaggedBRep = SampleBrowserUtils.CreateExternallyTaggedPodium(120.0, 20.0, 60.0);
                     if (null == resizedTaggedBRep)
                         return Result.Failed;
 

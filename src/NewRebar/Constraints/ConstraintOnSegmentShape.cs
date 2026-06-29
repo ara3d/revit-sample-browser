@@ -43,10 +43,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     Update list value for property grid.
         /// </summary>
-        protected void UpdateSegmentIdTypeConverter()
-        {
+        protected void UpdateSegmentIdTypeConverter() =>
             TypeConverterSegmentId.SegmentCount = GetRebarShapeDefinitionBySegments.NumberOfSegments;
-        }
     }
 
     /// <summary>

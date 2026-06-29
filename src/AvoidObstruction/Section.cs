@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
     /// <summary>
@@ -120,7 +121,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 
                 current.Refs.Add(geoRef);
 
-                var tmp = Find(buildStack, geoRef);
+                var tmp = ElementQuery.FindReferenceInList(buildStack, geoRef);
                 if (tmp != null)
                     buildStack.Remove(tmp);
                 else
@@ -128,23 +129,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             }
 
             return sections;
-        }
-
-        /// <summary>
-        ///     Judge whether a Reference is already in the list of Reference, return the founded value.
-        /// </summary>
-        /// <param name="arr">List of Reference</param>
-        /// <param name="entry">Reference to test</param>
-        /// <returns>One Reference has the same element's Id with entry</returns>
-        private static ReferenceWithContext Find(List<ReferenceWithContext> arr, ReferenceWithContext entry)
-        {
-            foreach (var tmp in arr)
-            {
-                if (tmp.GetReference().ElementId == entry.GetReference().ElementId)
-                    return tmp;
-            }
-
-            return null;
         }
     }
 }

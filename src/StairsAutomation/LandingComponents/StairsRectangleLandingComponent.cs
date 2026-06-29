@@ -3,6 +3,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
 {
     /// <summary>
@@ -29,8 +30,8 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
             double elevation, double width)
         {
             // offset to base elevation
-            m_stairsRunBoundary1 = LandingComponentUtils.ProjectCurveToElevation(stairsRunBoundary1, elevation) as Line;
-            m_stairsRunBoundary2 = LandingComponentUtils.ProjectCurveToElevation(stairsRunBoundary2, elevation) as Line;
+            m_stairsRunBoundary1 = CurveGeometry.ProjectCurveToElevation(stairsRunBoundary1, elevation) as Line;
+            m_stairsRunBoundary2 = CurveGeometry.ProjectCurveToElevation(stairsRunBoundary2, elevation) as Line;
 
             m_runDirection = runDirection;
             m_width = width;
@@ -43,8 +44,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
         public CurveLoop GetLandingBoundary()
         {
             // TODO : What if not collinear 
-            var boundaryLine =
-                LandingComponentUtils.FindLongestEndpointConnection(m_stairsRunBoundary1, m_stairsRunBoundary2);
+            var boundaryLine = CurveGeometry.FindLongestEndpointConnection(m_stairsRunBoundary1, m_stairsRunBoundary2);
 
             // offset by 1/2 of width
             var centerCurve =
@@ -59,18 +59,9 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.LandingComponents
         /// <summary>
         ///     Implements the interface method.
         /// </summary>
-        public double GetLandingBaseElevation()
-        {
-            return m_elevation;
-        }
+        public double GetLandingBaseElevation() => m_elevation;
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
-        public StairsLanding CreateLanding(Document document, ElementId stairsElementId)
-        {
-            return StairsLanding.CreateSketchedLanding(document, stairsElementId, GetLandingBoundary(),
-                GetLandingBaseElevation());
-        }
+        public StairsLanding CreateLanding(Document document, ElementId stairsElementId) =>
+            StairsLanding.CreateSketchedLanding(document, stairsElementId, GetLandingBoundary(), GetLandingBaseElevation());
     }
 }

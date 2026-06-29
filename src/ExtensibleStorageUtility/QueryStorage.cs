@@ -4,6 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
 {
     /// <summary>
@@ -17,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var document = commandData.Application.ActiveUIDocument.Document;
-            var storageElements = StorageUtility.GetElementsWithAllSchemas(document);
+            var storageElements = ExtensibleStorageHelper.GetElementsWithAllSchemas(document);
             TaskDialog.Show("ExtensibleStorageUtility", storageElements);
 
             return Result.Succeeded;

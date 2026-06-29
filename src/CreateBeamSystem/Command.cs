@@ -24,8 +24,6 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 
             try
             {
-                GeometryUtil.CreApp = commandData.Application.Application.Create;
-
                 // initialize precondition data of the program
                 var data = new BeamSystemData(commandData);
                 // display form to collect user's setting for beam system

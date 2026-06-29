@@ -11,6 +11,7 @@ using Form = System.Windows.Forms.Form;
 using RView = Autodesk.Revit.DB.View;
 using RApplication = Autodesk.Revit.ApplicationServices.Application;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
 {
     public partial class PreviewModel : Form
@@ -82,19 +83,7 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewControl
                     }
                     else
                     {
-                        var projName = dbDoc.ProjectInformation.Name;
-                        if (string.IsNullOrEmpty(projName) || projName.ToLower().CompareTo("project name") == 0)
-                        {
-                            if (string.IsNullOrEmpty(dbDoc.PathName))
-                                documentName = projName;
-                            else
-                                documentName = new FileInfo(dbDoc.PathName).Name;
-                        }
-                        else
-                        {
-                            documentName = projName;
-                        }
-
+                        documentName = ViewHelper.GetDocumentDisplayName(dbDoc);
                         item = new DbDocumentItem(documentName, dbDoc);
                     }
 

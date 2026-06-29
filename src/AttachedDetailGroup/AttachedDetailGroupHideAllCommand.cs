@@ -4,6 +4,8 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
 {
     /// <summary>
@@ -24,12 +26,9 @@ namespace Ara3D.RevitSampleBrowser.AttachedDetailGroup.CS
             var uiDoc = commandData.Application.ActiveUIDocument;
             var doc = uiDoc.Document;
             var activeView = commandData.View;
-            var groupHelper = new GroupHelper();
-            Group selectedModelGroup;
+            if (!SelectionHelper.GetSelectedModelGroup(uiDoc, out var selectedModelGroup, out message)) return Result.Cancelled;
 
-            if (!groupHelper.GetSelectedModelGroup(uiDoc, out selectedModelGroup, out message)) return Result.Cancelled;
-
-            groupHelper.HideAllAttachedDetailGroups(selectedModelGroup, doc, activeView);
+            GroupVisibilityHelper.HideAllAttachedDetailGroups(selectedModelGroup, doc, activeView);
             return Result.Succeeded;
         }
     }

@@ -1,7 +1,6 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
-using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
 using Autodesk.Revit.UI;
@@ -9,6 +8,8 @@ using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 {
     /// <summary>
@@ -70,21 +71,16 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             }
         }
 
-        /// <summary>
-        ///     Compares two colors.
-        /// </summary>
-        /// <param name="color1">The first color.</param>
-        /// <param name="color2">The second color.</param>
-        /// <returns>True if the colors are equal, false otherwise.</returns>
-        private bool ColorsEqual(Color color1, Color color2)
+        public void ModifySelectedMaterial(string text, bool lighter)
         {
-            return color1.Red == color2.Red && color1.Green == color2.Green && color1.Blue == color2.Blue;
-        }
-
-        private void Log(string msg)
-        {
-            var dt = DateTime.Now.ToString("u");
-            Trace.WriteLine($"{dt} {msg}");
+            using (var trans = new Transaction(m_document))
+            {
+                if (trans.Start(text) == TransactionStatus.Started)
+                {
+                    EditMaterialTintColorProperty(lighter);
+                    trans.Commit();
+                }
+            }
         }
 
         /// <summary>
@@ -101,13 +97,11 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             }
             catch (OperationCanceledException)
             {
-                // Selection Cancelled.
                 return;
             }
             catch (Exception ex)
             {
-                // If any error, give error information and return failed
-                Log(ex.Message);
+                EventLoggingHelper.Log(ex.Message);
                 return;
             }
 
@@ -121,8 +115,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             if (m_currentMaterial != null)
             {
                 m_currentAppearanceAssetElementId = m_currentMaterial.AppearanceAssetId;
-
-                // Clear selection
                 m_revit.ActiveUIDocument.Selection.GetElementIds().Clear();
             }
         }
@@ -192,7 +184,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             var tintColorProp = asset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
             var tintColor = tintColorProp.GetValueAsColor();
             var white = new Color(255, 255, 255);
-            return !ColorsEqual(tintColor, white);
+            return !BitmapHelper.ColorsEqual(tintColor, white);
         }
 
         /// <summary>
@@ -211,7 +203,7 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
             var tintColorProp = asset.FindByName("common_Tint_color") as AssetPropertyDoubleArray4d;
             var tintColor = tintColorProp.GetValueAsColor();
             var black = new Color(0, 0, 0);
-            return !ColorsEqual(tintColor, black);
+            return !BitmapHelper.ColorsEqual(tintColor, black);
         }
 
         /// <summary>
@@ -253,41 +245,6 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
         }
 
         /// <summary>
-        ///     Limit value to 0-255
-        /// </summary>
-        /// <returns>True if the material can be made darker or not.</returns>
-        private int LimitValue(int value)
-        {
-            return value < 0 ? 0 : value > 255 ? 255 : value;
-        }
-
-        /// <summary>
-        ///     The main material-modification subroutine - called from every request
-        /// </summary>
-        /// <remarks>
-        ///     It searches the current selection for all doors
-        ///     and if it finds any it applies the requested operation to them
-        /// </remarks>
-        /// <param name="text">Caption of the transaction for the operation.</param>
-        /// <param name="lighter">Increase the tint color property or not.</param>
-        public void ModifySelectedMaterial(string text, bool lighter)
-        {
-            // Since we'll modify the document, we need a transaction
-            // It's best if a transaction is scoped by a 'using' block
-            using (var trans = new Transaction(m_document))
-            {
-                // The name of the transaction was given as an argument  
-                if (trans.Start(text) == TransactionStatus.Started)
-                {
-                    // apply the requested operation to every door    
-                    EditMaterialTintColorProperty(lighter);
-
-                    trans.Commit();
-                }
-            }
-        }
-
-        /// <summary>
         ///     Edit tint color property.
         /// </summary>
         /// <param name="lighter">Increase the tint color property or not.</param>
@@ -309,46 +266,21 @@ namespace Ara3D.RevitSampleBrowser.AppearanceAssetEditing.CS
 
                 if (lighter)
                 {
-                    red = (byte)LimitValue(red + factor);
-                    green = (byte)LimitValue(green + factor);
-                    blue = (byte)LimitValue(blue + factor);
+                    red = (byte)BitmapHelper.LimitValue(red + factor);
+                    green = (byte)BitmapHelper.LimitValue(green + factor);
+                    blue = (byte)BitmapHelper.LimitValue(blue + factor);
                 }
                 else
                 {
-                    red = (byte)LimitValue(red - factor);
-                    green = (byte)LimitValue(green - factor);
-                    blue = (byte)LimitValue(blue - factor);
+                    red = (byte)BitmapHelper.LimitValue(red - factor);
+                    green = (byte)BitmapHelper.LimitValue(green - factor);
+                    blue = (byte)BitmapHelper.LimitValue(blue - factor);
                 }
 
                 if (metalColorProp.IsValidValue(color))
                     metalColorProp.SetValueAsColor(new Color(red, green, blue));
 
                 editScope.Commit(true);
-            }
-        }
-
-        /// <summary>
-        ///     Custom filter for selection.
-        /// </summary>
-        private class IsPaintedFaceSelectionFilter : ISelectionFilter
-        {
-            private Document m_selectedDocument;
-
-            public bool AllowElement(Element element)
-            {
-                m_selectedDocument = element.Document;
-                return true;
-            }
-
-            public bool AllowReference(Reference refer, XYZ point)
-            {
-                if (m_selectedDocument == null)
-                    throw new Exception("AllowElement was never called for this reference...");
-
-                var element = m_selectedDocument.GetElement(refer);
-                var face = element.GetGeometryObjectFromReference(refer) as Face;
-
-                return m_selectedDocument.IsPainted(element.Id, face);
             }
         }
     }

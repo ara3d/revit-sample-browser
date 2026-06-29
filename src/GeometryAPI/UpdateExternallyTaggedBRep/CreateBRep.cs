@@ -5,6 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 {
     /// <summary>
@@ -17,7 +18,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
         /// <summary>
         ///     Created DirectShape by the CreateBRep external command.
         /// </summary>
-        public static DirectShape CreatedDirectShape { set; get; } = null;
+        public static DirectShape CreatedDirectShape { get; set; }
 
         /// <summary>
         ///     Creates the ExternallyTaggedBRep (named Podium), creates the new DirectShape for the open Document
@@ -52,7 +53,7 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.UpdateExternallyTaggedBRep.CS
 
             try
             {
-                if (Result.Succeeded != HelperMethods.ExecuteCreateBRepCommand(dbDocument))
+                if (Result.Succeeded != SampleBrowserUtils.ExecuteCreateBRepCommand(dbDocument))
                     return Result.Failed;
             }
             catch (Exception ex)

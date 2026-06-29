@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.PointClouds;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
 {
     /// <summary>
@@ -106,7 +107,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
         /// <param name="rootElement">The XML element in which to save the point cloud properties.</param>
         public void SerializeObjectData(XElement rootElement)
         {
-            var scaleElement = XmlUtils.GetXElement(m_scale, "Scale");
+            var scaleElement = SerializationHelper.GetXElement(m_scale, "Scale");
             rootElement.Add(scaleElement);
 
             var count = m_storedCells.Count;
@@ -220,7 +221,7 @@ namespace Ara3D.RevitSampleBrowser.PointCloudEngine.CS
             // Read scale, if it exists.
             foreach (var scaleElement in rootElement.Elements("Scale"))
             {
-                var scale = XmlUtils.GetDouble(scaleElement);
+                var scale = SerializationHelper.GetDouble(scaleElement);
                 if (scale < 0.0)
                     TaskDialog.Show("Scale error", "The value of scale is not a valid number greater than zero.");
                 else

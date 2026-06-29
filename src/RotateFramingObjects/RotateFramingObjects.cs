@@ -7,6 +7,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
 {
     /// <summary>
@@ -85,7 +87,7 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
                         case StructuralType.Brace:
                         {
                             // selection is a beam or brace
-                            var returnValue = FindParameter(AngleDefinitionName, familyComponent);
+                            var returnValue = ParameterAccess.FindParameter(AngleDefinitionName, familyComponent);
                             displayForm.RotationTextBox.Text = returnValue;
                             break;
                         }
@@ -174,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
                                 if (objectAttribute.Definition.Name.Equals(AngleDefinitionName))
                                 {
                                     var originDegree = objectAttribute.AsDouble();
-                                    var rotateDegree = ReceiveRotationTextBox * Math.PI / 180;
+                                    var rotateDegree = ReceiveRotationTextBox * SampleBrowserUtils.DegreesToRadians;
                                     if (!IsAbsoluteChecked)
                                         // absolute rotation
                                         rotateDegree += originDegree;
@@ -198,7 +200,7 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
                             var directionPoint = new XYZ(0, 0, 1);
                             // define the vector of axis
                             var rotateAxis = Line.CreateUnbound(insertPoint, directionPoint);
-                            var rotateDegree = ReceiveRotationTextBox * Math.PI / 180;
+                            var rotateDegree = ReceiveRotationTextBox * SampleBrowserUtils.DegreesToRadians;
                             // rotate column by rotate method
                             if (IsAbsoluteChecked) rotateDegree -= temp;
                             var rotateResult = pointLocation.Rotate(rotateAxis, rotateDegree);
@@ -215,68 +217,6 @@ namespace Ara3D.RevitSampleBrowser.RotateFramingObjects.CS
                 TaskDialog.Show("Revit", $"Rotate failed! {ex.Message}");
                 transaction.RollBack();
             }
-        }
-
-        /// <summary>
-        ///     get the parameter value according given parameter name
-        /// </summary>
-        public string FindParameter(string parameterName, FamilyInstance familyInstanceName)
-        {
-            var i = familyInstanceName.Parameters.ForwardIterator();
-            i.Reset();
-            string valueOfParameter = null;
-            var iMoreAttribute = i.MoveNext();
-            while (iMoreAttribute)
-            {
-                var isFound = false;
-                var o = i.Current;
-                var familyAttribute = o as Parameter;
-                if (familyAttribute.Definition.Name == parameterName)
-                {
-                    //find the parameter whose name is same to the given parameter name 
-                    var st = familyAttribute.StorageType;
-                    switch (st)
-                    {
-                        //get the storage type
-                        case StorageType.Double:
-                            if (parameterName.Equals(AngleDefinitionName))
-                            {
-                                //make conversion between degrees and radians
-                                var temp = familyAttribute.AsDouble();
-                                valueOfParameter = Math.Round(temp * 180 / Math.PI, 3).ToString();
-                            }
-                            else
-                            {
-                                valueOfParameter = familyAttribute.AsDouble().ToString();
-                            }
-
-                            break;
-                        case StorageType.ElementId:
-                            //get Autodesk.Revit.DB.ElementId as string 
-                            valueOfParameter = familyAttribute.AsElementId().ToString();
-                            break;
-                        case StorageType.Integer:
-                            //get Integer as string
-                            valueOfParameter = familyAttribute.AsInteger().ToString();
-                            break;
-                        case StorageType.String:
-                            //get string 
-                            valueOfParameter = familyAttribute.AsString();
-                            break;
-                        case StorageType.None:
-                            valueOfParameter = familyAttribute.AsValueString();
-                            break;
-                    }
-
-                    isFound = true;
-                }
-
-                if (isFound) break;
-                iMoreAttribute = i.MoveNext();
-            }
-
-            //return the value.
-            return valueOfParameter;
         }
     }
 }

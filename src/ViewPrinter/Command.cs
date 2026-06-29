@@ -6,6 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     /// <summary>
@@ -31,7 +32,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
                 if (null == pMgr.InstalledPrinterNames)
                 {
-                    PrintMgr.MyMessageBox("No installed printer, the external command can't work.");
+                    PrintHelper.MyMessageBox("No installed printer, the external command can't work.");
                     return Result.Cancelled;
                 }
 

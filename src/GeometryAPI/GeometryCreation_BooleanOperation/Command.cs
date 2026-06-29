@@ -53,22 +53,14 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.GeometryCreation_BooleanOperation
         /// </summary>
         /// <param name="geometrycreation">The object that is responsible for creating the solids</param>
         /// <returns>The solids materials list</returns>
-        private static List<Solid> PrepareSolids(GeometryCreation geometrycreation)
+        private static List<Solid> PrepareSolids(GeometryCreation geometrycreation) => new()
         {
-            var resultSolids = new List<Solid>
-            {
-                geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25),
-                geometrycreation.CreateCenterbasedSphere(XYZ.Zero, 20),
-                geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
-                    GeometryCreation.CylinderDirection.BasisX),
-                geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
-                    GeometryCreation.CylinderDirection.BasisY),
-                geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40,
-                    GeometryCreation.CylinderDirection.BasisZ)
-            };
-
-            return resultSolids;
-        }
+            geometrycreation.CreateCenterbasedBox(XYZ.Zero, 25),
+            geometrycreation.CreateCenterbasedSphere(XYZ.Zero, 20),
+            geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, GeometryCreation.CylinderDirection.BasisX),
+            geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, GeometryCreation.CylinderDirection.BasisY),
+            geometrycreation.CreateCenterbasedCylinder(XYZ.Zero, 5, 40, GeometryCreation.CylinderDirection.BasisZ)
+        };
 
         /// <summary>
         ///     Create a constructive solid geometry - CSG tree

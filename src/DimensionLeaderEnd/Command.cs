@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -43,14 +44,14 @@ namespace Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS
                                     var dir = dimLine.Direction;
                                     if (dim.Segments.IsEmpty)
                                     {
-                                        var leaderPos = ComputeLeaderPosition(dir, dim.Origin);
+                                        var leaderPos = SampleBrowserUtils.ComputeLeaderPosition(dir, dim.Origin, m_delta);
                                         dim.LeaderEndPosition = leaderPos;
                                     }
                                     else
                                     {
                                         foreach (DimensionSegment ds in dim.Segments)
                                         {
-                                            var leaderPos = ComputeLeaderPosition(dir, ds.Origin);
+                                            var leaderPos = SampleBrowserUtils.ComputeLeaderPosition(dir, ds.Origin, m_delta);
                                             ds.LeaderEndPosition = leaderPos;
                                         }
                                     }
@@ -68,14 +69,6 @@ namespace Ara3D.RevitSampleBrowser.DimensionLeaderEnd.CS
 
                 return Result.Succeeded;
             }
-        }
-
-        private XYZ ComputeLeaderPosition(XYZ dir, XYZ origin)
-        {
-            var leaderPos = new XYZ();
-            leaderPos = dir * m_delta;
-            leaderPos = leaderPos.Add(origin);
-            return leaderPos;
         }
     }
 

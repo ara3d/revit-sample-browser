@@ -16,6 +16,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
@@ -33,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
         /// <returns></returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            SiteUiUtils.ChangeSubregionAndPointsElevation(commandData.Application.ActiveUIDocument, 3);
+            SiteTopographyHelper.ChangeSubregionAndPointsElevation(commandData.Application.ActiveUIDocument, 3);
 
             return Result.Succeeded;
         }

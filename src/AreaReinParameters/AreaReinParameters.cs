@@ -85,28 +85,17 @@ namespace Ara3D.RevitSampleBrowser.AreaReinParameters.CS
         /// <returns>whether the selected AreaReinforcement is expected</returns>
         private bool PreData()
         {
-            var selected = new ElementSet();
-            foreach (var elementId in CommandData.Application.ActiveUIDocument.Selection.GetElementIds())
-            {
-                selected.Insert(CommandData.Application.ActiveUIDocument.Document.GetElement(elementId));
-            }
+            var selectedIds = CommandData.Application.ActiveUIDocument.Selection.GetElementIds();
+            if (selectedIds.Count != 1) return false;
 
-            //selected is not only one AreaReinforcement
-            if (selected.Size != 1) return false;
-            foreach (var o in selected)
-            {
-                m_areaRein = o as AreaReinforcement;
-            }
-
-            if (null == m_areaRein) return false;
-
-            var activeDoc = CommandData.Application.ActiveUIDocument.Document;
+            var doc = CommandData.Application.ActiveUIDocument.Document;
+            m_areaRein = doc.GetElement(selectedIds.First()) as AreaReinforcement;
+            if (m_areaRein == null) return false;
 
             HookTypes = new Hashtable(
-                activeDoc.GetElements<RebarHookType>().ToDictionary(ht => ht.Name, ht => ht.Id));
-            
+                doc.GetElements<RebarHookType>().ToDictionary(ht => ht.Name, ht => ht.Id));
             BarTypes = new Hashtable(
-                activeDoc.GetElements<RebarBarType>().ToDictionary(bt => bt.Name, bt => bt.Id));
+                doc.GetElements<RebarBarType>().ToDictionary(bt => bt.Name, bt => bt.Id));
 
             return HookTypes.Count != 0 && BarTypes.Count != 0;
         }

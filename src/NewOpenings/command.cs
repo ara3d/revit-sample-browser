@@ -1,6 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
+using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -24,24 +25,14 @@ namespace Ara3D.RevitSampleBrowser.NewOpenings.CS
             {
                 transaction.Start();
 
-                var elems = new ElementSet();
-                foreach (var elementId in commandData.Application.ActiveUIDocument.Selection.GetElementIds())
-                {
-                    elems.Insert(commandData.Application.ActiveUIDocument.Document.GetElement(elementId));
-                }
-
-                //if user have some wrong selection, give user an error message
-                if (1 != elems.Size)
+                var selectedId = commandData.Application.ActiveUIDocument.Selection.GetElementIds().FirstOrDefault();
+                if (selectedId == null)
                 {
                     message = "please selected one Object (Floor or Wall) to create Opening.";
                     return Result.Cancelled;
                 }
 
-                Element selectElem = null;
-                foreach (Element e in elems)
-                {
-                    selectElem = e;
-                }
+                var selectElem = commandData.Application.ActiveUIDocument.Document.GetElement(selectedId);
 
                 if (!(selectElem is Wall) && !(selectElem is Floor))
                 {

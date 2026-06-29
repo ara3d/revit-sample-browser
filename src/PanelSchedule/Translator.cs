@@ -1,9 +1,9 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System.IO;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
 {
     /// <summary>
@@ -23,38 +23,11 @@ namespace Ara3D.RevitSampleBrowser.PanelSchedule.CS
         /// </summary>
         /// <param name="stringWithIllegalChar">the Panel Schedule view name.</param>
         /// <returns>the updated string without illegal characters.</returns>
-        protected string ReplaceIllegalCharacters(string stringWithIllegalChar)
-        {
-            var illegalChars = Path.GetInvalidFileNameChars();
+        protected string ReplaceIllegalCharacters(string stringWithIllegalChar) =>
+            ScheduleHelper.ReplaceIllegalCharacters(stringWithIllegalChar);
 
-            var updated = stringWithIllegalChar;
-            foreach (var ch in illegalChars)
-            {
-                updated = updated.Replace(ch, '_');
-            }
-
-            return updated;
-        }
-
-        /// <summary>
-        ///     An utility method to get the number of rows and columns of the section which is exporting.
-        /// </summary>
-        /// <param name="doc">Revit document.</param>
-        /// <param name="psView">the exporting panel schedule view</param>
-        /// <param name="sectionType">the exporting section of the panel schedule.</param>
-        /// <param name="nRows">the number of rows.</param>
-        /// <param name="nCols">the number of columns.</param>
         protected void GetNumberOfRowsAndColumns(Document doc, PanelScheduleView psView, SectionType sectionType,
-            ref int nRows, ref int nCols)
-        {
-            var openSectionData = new Transaction(doc, "openSectionData");
-            openSectionData.Start();
-
-            var sectionData = psView.GetSectionData(sectionType);
-            nRows = sectionData.NumberOfRows;
-            nCols = sectionData.NumberOfColumns;
-
-            openSectionData.RollBack();
-        }
+            ref int nRows, ref int nCols) =>
+            ScheduleHelper.GetNumberOfRowsAndColumns(doc, psView, sectionType, ref nRows, ref nCols);
     }
 }

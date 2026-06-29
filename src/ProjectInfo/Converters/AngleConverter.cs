@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
 {
     /// <summary>
@@ -45,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var text = value as string;
-            return !string.IsNullOrEmpty(text) ? AngleString2Double(text) : base.ConvertFrom(context, culture, value);
+            return !string.IsNullOrEmpty(text) ? ValueFormatting.AngleStringToDouble(text) : base.ConvertFrom(context, culture, value);
         }
 
         /// <summary>
@@ -63,34 +63,10 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters
             if (destinationType == typeof(string))
             {
                 if (value == null) return string.Empty;
-                var angle = (double)value;
-                return Double2AngleString(angle);
+                return ValueFormatting.DoubleToAngleString((double)value);
             }
 
             return base.ConvertTo(context, culture, value, destinationType);
-        }
-
-        /// <summary>
-        ///     Convert angle string to double value
-        /// </summary>
-        /// <param name="value">Angle string</param>
-        /// <returns>Double value</returns>
-        private static double AngleString2Double(string value)
-        {
-            var n = value.Length - 1;
-            if (!char.IsDigit(value[n])) value = value.Substring(0, n);
-            return double.Parse(value) * 0.0174532925199433;
-        }
-
-        /// <summary>
-        ///     Convert double value to angle string
-        /// </summary>
-        /// <param name="value">Angle value</param>
-        /// <returns>Angle string, the unit is degree.</returns>
-        private static string Double2AngleString(double value)
-        {
-            // 0xb0 is ASCII for unit flag of "degree"
-            return Math.Round(value / 0.0174532925199433, 3).ToString() + (char)0xb0;
         }
     }
 }

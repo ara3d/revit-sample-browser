@@ -56,9 +56,6 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
         ///     Write specified message into log file.
         /// </summary>
         /// <param name="message">the message which will be written into the log file. </param>
-        public static void WriteLog(string message)
-        {
-            Trace.WriteLine(message);
-        }
+        public static void WriteLog(string message) => Trace.WriteLine(message);
     }
 }

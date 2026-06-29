@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
 {
     /// <summary>
@@ -41,7 +42,7 @@ namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
             versionInformationTextBox.AppendText(productVersion);
             versionInformationTextBox.AppendText(buildNumber);
 
-            SetDialogLocation();
+            DialogHelper.CenterOnScreen(this);
         }
 
         /// <summary>
@@ -52,18 +53,6 @@ namespace Ara3D.RevitSampleBrowser.VersionChecking.CS
         private void closeButton_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        /// <summary>
-        ///     set dialog's display location.
-        /// </summary>
-        private void SetDialogLocation()
-        {
-            // set dialog's display location
-            var left = (Screen.PrimaryScreen.WorkingArea.Right - Width) / 2;
-            var top = (Screen.PrimaryScreen.WorkingArea.Bottom - Height) / 2;
-            var windowLocation = new Point(left, top);
-            Location = windowLocation;
         }
     }
 }

@@ -5,6 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
 {
     /// <summary>
@@ -20,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageUtility.CS
         {
             var document = commandData.Application.ActiveUIDocument.Document;
 
-            if (!StorageUtility.DoesAnyStorageExist(document))
+            if (!ExtensibleStorageHelper.DoesAnyStorageExist(document))
             {
                 message = "No storage in this document to delete.";
             }

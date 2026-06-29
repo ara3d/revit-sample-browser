@@ -9,6 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.DB.Document;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 {
     /// <summary>
@@ -78,7 +79,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
                 es.Insert(doc.Document.GetElement(elementId));
             }
 
-            var walls = WallFilter(es);
+            var walls = ElementQuery.WallFilter(es);
             m_creApp = commandData.Application.Application.Create;
             Profile = m_creApp.NewCurveArray();
 
@@ -173,7 +174,7 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
                 foreach (var xyz in xyzArray)
                 {
                     var temp = new XYZ(xyz.X, -xyz.Y, xyz.Z);
-                    FindMinMax(temp, ref xMin, ref xMax, ref yMin, ref yMax);
+                    ElementQuery.FindMinMax(temp, ref xMin, ref xMax, ref yMin, ref yMax);
                     tempArray.Add(temp);
                 }
             }
@@ -189,40 +190,6 @@ namespace Ara3D.RevitSampleBrowser.GenerateFloor.CS
 
             var end = (PointF)Points.GetValue(0);
             Points.SetValue(end, tempArray.Count / 2);
-        }
-
-        /// <summary>
-        ///     Estimate the current point is left_bottom or right_up.
-        /// </summary>
-        /// <param name="point">current point</param>
-        /// <param name="xMin">left</param>
-        /// <param name="xMax">right</param>
-        /// <param name="yMin">bottom</param>
-        /// <param name="yMax">up</param>
-        private static void FindMinMax(XYZ point, ref double xMin, ref double xMax, ref double yMin, ref double yMax)
-        {
-            if (point.X < xMin) xMin = point.X;
-            if (point.X > xMax) xMax = point.X;
-            if (point.Y < yMin) yMin = point.Y;
-            if (point.Y > yMax) yMax = point.Y;
-        }
-
-        /// <summary>
-        ///     Filter none-wall elements.
-        /// </summary>
-        /// <param name="miscellanea">The currently selected Elements in Autodesk Revit</param>
-        /// <returns></returns>
-        private static ElementSet WallFilter(ElementSet miscellanea)
-        {
-            var walls = new ElementSet();
-            foreach (Element e in miscellanea)
-            {
-                if (e is Wall w) walls.Insert(w);
-            }
-
-            if (0 == walls.Size) throw new InvalidOperationException("Please select wall first.");
-
-            return walls;
         }
 
         /// <summary>

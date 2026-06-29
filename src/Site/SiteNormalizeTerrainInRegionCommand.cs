@@ -17,6 +17,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
@@ -48,13 +49,13 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var doc = uiDoc.Document;
 
             // Pick subregion
-            var subregion = SiteUiUtils.PickSubregion(uiDoc);
-            var toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
-            var points = SiteEditingUtils.GetPointsFromSubregionExact(subregion);
+            var subregion = SiteTopographyHelper.PickSubregion(uiDoc);
+            var toposurface = SiteTopographyHelper.GetTopographySurfaceHost(subregion);
+            var points = SiteTopographyHelper.GetPointsFromSubregionExact(subregion);
 
             // Get elevation of all points on the toposurface
             var allPoints = toposurface.GetPoints();
-            var elevation = SiteEditingUtils.GetAverageElevation(allPoints);
+            var elevation = SiteTopographyHelper.GetAverageElevation(allPoints);
 
             // Edit scope for all changes
             using (var editScope = new TopographyEditScope(doc, "Edit TS"))

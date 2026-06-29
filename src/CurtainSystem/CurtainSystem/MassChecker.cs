@@ -7,7 +7,10 @@ using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Data;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Properties;
 using Ara3D.RevitSampleBrowser.CurtainSystem.CS.Utility;
 using Autodesk.Revit.DB;
+using GeoVector4 = Ara3D.RevitSampleBrowser.Common.Geometry.Vector4;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
 {
     /// <summary>
@@ -94,7 +97,7 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
         private bool IsFacesParallel(FaceArray faces)
         {
             // step1: get the normals of the 6 faces
-            var normals = new List<Vector4>();
+            var normals = new List<GeoVector4>();
             foreach (Face face in faces)
             {
                 var edgeArrayArray = face.EdgeLoops;
@@ -111,134 +114,18 @@ namespace Ara3D.RevitSampleBrowser.CurtainSystem.CS.CurtainSystem
                     var edgeB = edges.get_Item(i + 1);
 
                     // if edgeA & edgeB are parallel, can't compute  the cross product
-                    var isLinesParallel = IsLinesParallel(edgeA, edgeB);
+                    if (FaceAndSolidGeometry.IsLinesParallel(edgeA, edgeB)) continue;
 
-                    if (isLinesParallel) continue;
-
-                    var vec4 = ComputeCrossProduct(edgeA, edgeB);
+                    var vec4 = ConnectorHelper.ComputeCrossProduct(edgeA, edgeB);
                     normals.Add(vec4);
                     break;
                 }
             }
 
-            // step 2: the 6 normals should be one-one parallel pairs
-            if (null == normals ||
-                6 != normals.Count)
+            if (normals == null || normals.Count != 6)
                 return false;
 
-            var matchedList = new bool[6];
-            for (var i = 0; i < matchedList.Length; i++) matchedList[i] = false;
-
-            // check whether the normal has another matched parallel normal
-            for (var i = 0; i < matchedList.Length; i++)
-            {
-                if (matchedList[i]) continue;
-
-                var vec4A = normals[i];
-
-                for (var j = 0; j < matchedList.Length; j++)
-                {
-                    if (j == i ||
-                        matchedList[j])
-                        continue;
-
-                    var vec4B = normals[j];
-
-                    if (IsLinesParallel(vec4A, vec4B))
-                    {
-                        matchedList[i] = true;
-                        matchedList[j] = true;
-                        break;
-                    }
-                }
-            }
-
-            // step 3: check each of the 6 normals has matched parallel normal
-            return matchedList.All(matchedItem => matchedItem);
-        }
-
-        /// <summary>
-        ///     check whether 2 edges are parallel
-        /// </summary>
-        /// <param name="edgeA">
-        ///     the edge to be checked
-        /// </param>
-        /// <param name="edgeB">
-        ///     the edge to be checked
-        /// </param>
-        /// <returns>
-        ///     if they're parallel, return true; otherwise false
-        /// </returns>
-        private bool IsLinesParallel(Edge edgeA, Edge edgeB)
-        {
-            var pointsA = edgeA.Tessellate() as List<XYZ>;
-            var pointsB = edgeB.Tessellate() as List<XYZ>;
-            var vectorA = pointsA[1] - pointsA[0];
-            var vectorB = pointsB[1] - pointsB[0];
-            var vec4A = new Vector4(vectorA);
-            var vec4B = new Vector4(vectorB);
-            return IsLinesParallel(vec4A, vec4B);
-        }
-
-        /// <summary>
-        ///     check whether 2 vectors are parallel
-        /// </summary>
-        /// <param name="vec4A">
-        ///     the vector to be checked
-        /// </param>
-        /// <param name="vec4B">
-        ///     the vector to be checked
-        /// </param>
-        /// <returns>
-        ///     if they're parallel, return true; otherwise false
-        /// </returns>
-        private bool IsLinesParallel(Vector4 vec4A, Vector4 vec4B)
-        {
-            // if 2 vectors are parallel, they should be like the following formula:
-            // vec4A.X    vec4A.Y    vec4A.Z
-            // ------- == ------- == -------
-            // vec4B.X    vec4B.Y    vec4B.Z
-            // change to multiply, it's 
-            // vec4A.X * vec4B.Y == vec4A.Y * vec4B.X &&
-            // vec4A.Y * vec4B.Z == vec4A.Z * vec4B.Y
-            var aa = vec4A.X * vec4B.Y;
-            var bb = vec4A.Y * vec4B.X;
-            var cc = vec4A.Y * vec4B.Z;
-            var dd = vec4A.Z * vec4B.Y;
-            var ee = vec4A.X * vec4B.Z;
-            var ff = vec4A.Z * vec4B.X;
-
-            const double tolerance = 0.0001d;
-
-            if (Math.Abs(aa - bb) < tolerance &&
-                Math.Abs(cc - dd) < tolerance &&
-                Math.Abs(ee - ff) < tolerance)
-                return true;
-
-            return false;
-        }
-
-        /// <summary>
-        ///     compute the cross product of 2 edges
-        /// </summary>
-        /// <param name="edgeA">
-        ///     the edge for the cross product
-        /// </param>
-        /// <param name="edgeB">
-        ///     the edge for the cross product
-        /// </param>
-        /// <returns>
-        ///     the cross product of 2 edges
-        /// </returns>
-        private Vector4 ComputeCrossProduct(Edge edgeA, Edge edgeB)
-        {
-            var pointsA = edgeA.Tessellate() as List<XYZ>;
-            var pointsB = edgeB.Tessellate() as List<XYZ>;
-            var vectorA = pointsA[1] - pointsA[0];
-            var vectorB = pointsB[1] - pointsB[0];
-            var vec4A = new Vector4(vectorA);
-            var vec4B = new Vector4(vectorB);
-            return Vector4.CrossProduct(vec4A, vec4B);
+            return FaceAndSolidGeometry.AreFaceNormalsPaired(normals);
         }
 
         /// <summary>

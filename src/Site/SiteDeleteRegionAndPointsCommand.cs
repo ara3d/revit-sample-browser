@@ -17,6 +17,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
@@ -48,9 +49,9 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var doc = uiDoc.Document;
 
             // Select subregion
-            var subregion = SiteUiUtils.PickSubregion(uiDoc);
-            var toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
-            var points = SiteEditingUtils.GetNonBoundaryPoints(subregion);
+            var subregion = SiteTopographyHelper.PickSubregion(uiDoc);
+            var toposurface = SiteTopographyHelper.GetTopographySurfaceHost(subregion);
+            var points = SiteTopographyHelper.GetNonBoundaryPoints(subregion);
 
             // All changes are added to one transaction group - will create one undo item
             using (var deleteGroup = new TransactionGroup(doc, "Delete region"))

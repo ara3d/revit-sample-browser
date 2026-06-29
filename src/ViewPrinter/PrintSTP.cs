@@ -7,6 +7,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Control = System.Windows.Forms.Control;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     /// <summary>
@@ -41,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
                     names.Add(printSetting.Name);
                 }
 
-                names.Add(ConstData.InSessionName);
+                names.Add(SampleBrowserUtils.InSessionName);
                 return names;
             }
         }
@@ -224,7 +226,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
                 return false;
             }
         }
@@ -237,7 +239,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
                 return false;
             }
         }
@@ -247,11 +249,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             get
             {
                 var setting = m_printMgr.PrintSetup.CurrentPrintSetting;
-                return setting is PrintSetting printSetting ? printSetting.Name : ConstData.InSessionName;
+                return setting is PrintSetting printSetting ? printSetting.Name : SampleBrowserUtils.InSessionName;
             }
             set
             {
-                if (value == ConstData.InSessionName)
+                if (value == SampleBrowserUtils.InSessionName)
                 {
                     m_printMgr.PrintSetup.CurrentPrintSetting = m_printMgr.PrintSetup.InSession;
                     return;
@@ -276,7 +278,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
                 return false;
             }
         }
@@ -289,7 +291,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
             }
         }
 
@@ -301,7 +303,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
                 return false;
             }
         }

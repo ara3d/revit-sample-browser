@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 {
     /// <summary>
@@ -84,7 +85,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var translatedPoints = new List<XYZ>();
             foreach (var point in movedPoints)
             {
-                translatedPoints.Add(GeomUtil.OffsetPoint(point, DrivingVector, curveOffset));
+                translatedPoints.Add(XyzMath.OffsetPoint(point, DrivingVector, curveOffset));
             }
 
             IList<Curve> curves = new List<Curve>(); //the profile of the transverse reinforcement
@@ -151,7 +152,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             }
 
             var spacing = rebarOffset / rebarNumber; //spacing value of the reinforcement
-            var endPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, rebarLength);
+            var endPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, rebarLength);
 
             IList<Curve> curves = new List<Curve>
             {
@@ -175,7 +176,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 
-            return GeomUtil.GetLength(directions[0]);
+            return XyzMath.GetLength(directions[0]);
         }
 
         /// <summary>
@@ -191,7 +192,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 
-            return GeomUtil.GetLength(directions[1]);
+            return XyzMath.GetLength(directions[1]);
         }
     }
 }

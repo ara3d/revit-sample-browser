@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
     /// <summary>
@@ -18,7 +19,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
         private const int YNumberMaxValue = 50; // maximum number of Columns in the Y Direction
         private const int YNumberMinValue = 2; // minimum number of Columns in the Y Direction
         private const int YNumberDefault = 3; // default number of Columns in the Y Direction
-        private const int TotalMaxValue = 200; // maximum total number of Columns to create
         private const int FloorNumberMinValue = 1; // minimum number of floors
         private const int FloorNumberMaxValue = 200; // maximum number of floors
         private const double DistanceMaxValue = 3000; // maxinum distance between 2 adjoining columns
@@ -86,7 +86,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
                     throw new ErrorMessageException(message);
                 }
 
-                CheckTotalNumber(value * XNumber * (m_floorNumber - 1));
+                SampleBrowserUtils.CheckTotalNumber(value * XNumber * (m_floorNumber - 1));
                 m_yNumber = value;
             }
         }
@@ -106,7 +106,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
                     throw new ErrorMessageException(message);
                 }
 
-                CheckTotalNumber(value * YNumber * (m_floorNumber - 1));
+                SampleBrowserUtils.CheckTotalNumber(value * YNumber * (m_floorNumber - 1));
                 m_xNumber = value;
             }
         }
@@ -145,7 +145,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
                     throw new ErrorMessageException(message);
                 }
 
-                CheckTotalNumber(XNumber * YNumber * (value - 1));
+                SampleBrowserUtils.CheckTotalNumber(XNumber * YNumber * (value - 1));
                 m_floorNumber = value;
             }
         }
@@ -297,20 +297,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             }
 
             OriginalLevelSize = Levels.Count;
-        }
-
-        /// <summary>
-        ///     check the total number of columns to create less than certain value
-        /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        private static void CheckTotalNumber(int number)
-        {
-            if (number > TotalMaxValue)
-            {
-                var message = $"The total number of columns should less than {TotalMaxValue}";
-                throw new ErrorMessageException(message);
-            }
         }
 
         /// <summary>

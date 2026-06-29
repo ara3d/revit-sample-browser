@@ -11,6 +11,7 @@ using Autodesk.Revit.UI;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.Truss.CS
 {
     /// <summary>
@@ -165,7 +166,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             var xScale = 384 / (m_boundPoints[1].X - m_boundPoints[0].X);
             var yScale = 275 / (m_boundPoints[1].Y - m_boundPoints[0].Y);
             var factor = xScale <= yScale ? xScale : yScale;
-            return new Matrix4(factor * 0.85);
+            return new Matrix4((float)(factor * 0.85));
         }
 
         /// <summary>
@@ -179,7 +180,7 @@ namespace Ara3D.RevitSampleBrowser.Truss.CS
             var min = bounds[0];
             var max = bounds[1];
             var center = new XYZ((min.X + max.X) / 2, (min.Y + max.Y) / 2, 0);
-            return new Matrix4(new Vector4(center.X, center.Y, 0));
+            return new Matrix4(new Vector4((float)center.X, (float)center.Y, 0));
         }
 
         /// <summary>

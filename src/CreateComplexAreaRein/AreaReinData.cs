@@ -3,6 +3,9 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Ara3D.RevitSampleBrowser.AreaReinParameters.CS;
+using Ara3D.RevitSampleBrowser.Common.Structural;
 namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 {
     /// <summary>
@@ -32,12 +35,12 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
         public virtual void FillIn(AreaReinforcement areaRein)
         {
             var temp = (int)LayoutRule;
-            var flag = ParameterUtil.SetParaInt(areaRein,
+            var flag = ParameterAccess.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE, temp);
             //if BuiltInParameter doesn't work
             if (!flag)
             {
-                var paraLayout = ParameterUtil.FindParaByName(
+                var paraLayout = ParameterAccess.FindParaByName(
                     areaRein.Parameters, "Layout Rule");
                 paraLayout?.Set(temp);
             }
@@ -60,14 +63,14 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
                 var areaReinCurve =
                     m_doc.GetElement(curveIds[i]) as AreaReinforcementCurve;
                 //remove hooks, set the hook the top 2 layers to 'up'
-                ParameterUtil.SetParaInt(areaReinCurve,
+                ParameterAccess.SetParaInt(areaReinCurve,
                     BuiltInParameter.REBAR_SYSTEM_OVERRIDE, -1);
-                ParameterUtil.SetParaInt(areaReinCurve,
+                ParameterAccess.SetParaInt(areaReinCurve,
                     BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_TOP_DIR_1,
-                    (int)HookOrientation.Up);
-                ParameterUtil.SetParaInt(areaReinCurve,
+                    (int)AreaReinforcementHelper.HookOrientation.Up);
+                ParameterAccess.SetParaInt(areaReinCurve,
                     BuiltInParameter.REBAR_SYSTEM_HOOK_ORIENT_TOP_DIR_2,
-                    (int)HookOrientation.Up);
+                    (int)AreaReinforcementHelper.HookOrientation.Up);
             }
         }
     }

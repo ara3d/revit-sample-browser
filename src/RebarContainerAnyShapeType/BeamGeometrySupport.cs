@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 {
     /// <summary>
@@ -82,9 +83,9 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var startPoint = movedPoints[movedPoints.Count - 1];
 
             // offset the start point according startPointOffset
-            startPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, startPointOffset);
+            startPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, startPointOffset);
             // get the coordinate of endpoint 
-            var endPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, rebarLength);
+            var endPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, rebarLength);
             IList<Curve> curves = new List<Curve>
             {
                 Line.CreateBound(startPoint, endPoint)
@@ -121,7 +122,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var movedPoints = OffsetPoints(offset);
             var startPoint = movedPoints[0]; //get the coordinate of startpoint 
             //get the coordinate of endpoint  
-            var endPoint = GeomUtil.OffsetPoint(startPoint, DrivingVector, m_beamLength);
+            var endPoint = XyzMath.OffsetPoint(startPoint, DrivingVector, m_beamLength);
 
             IList<Curve> curves = new List<Curve>
             {
@@ -183,7 +184,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var translatedPoints = new List<XYZ>();
             foreach (var point in movedPoints)
             {
-                translatedPoints.Add(GeomUtil.OffsetPoint(point, DrivingVector, curveOffset));
+                translatedPoints.Add(XyzMath.OffsetPoint(point, DrivingVector, curveOffset));
             }
 
             IList<Curve> curves = new List<Curve>();
@@ -230,7 +231,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 
-            return GeomUtil.GetLength(directions[0]);
+            return XyzMath.GetLength(directions[0]);
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             var directions = GetRelatedVectors(refPoint);
             directions.Sort(comparer);
 
-            return GeomUtil.GetLength(directions[1]);
+            return XyzMath.GetLength(directions[1]);
         }
     }
 }

@@ -3,6 +3,9 @@
 using System;
 using System.Drawing;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.CreateBeamSystem.CS;
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
     /// <summary>
@@ -190,18 +193,18 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
         {
             // segments p0 + s * d0 for s in [0, 0], p1 + t * d1 for t in [0, 1]
             var p0 = line0.StartPnt;
-            var d0 = MathUtil.Multiply(line0.Length, line0.Normal);
+            var d0 = Point2DMath.Multiply(line0.Length, line0.Normal);
             var p1 = line1.StartPnt;
-            var d1 = MathUtil.Multiply(line1.Length, line1.Normal);
+            var d1 = Point2DMath.Multiply(line1.Length, line1.Normal);
 
-            var e = MathUtil.Subtract(p1, p0);
+            var e = Point2DMath.Subtract(p1, p0);
             var kross = d0.X * d1.Y - d0.Y * d1.X;
             var sqrKross = kross * kross;
             var sqrLen0 = d0.X * d0.X + d0.Y * d0.Y;
             var sqrLen1 = d1.X * d1.X + d1.Y * d1.Y;
 
             // lines of the segments are not parallel
-            if (sqrKross > MathUtil.FloatEpsilon * sqrLen0 * sqrLen1)
+            if (sqrKross > Point2DMath.FloatEpsilon * sqrLen0 * sqrLen1)
             {
                 var s = (e.X * d1.Y - e.Y * d1.X) / kross;
                 if (s < 0 || s > 1)
@@ -213,7 +216,7 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
                     // intersection of lines is not a point on segment p1 + t * d1
                     return 0;
                 // intersection of lines is a point on each segment
-                intersectPnt[0] = MathUtil.Add(p0, MathUtil.Multiply(s, d0));
+                intersectPnt[0] = Point2DMath.Add(p0, Point2DMath.Multiply(s, d0));
                 return 1;
             }
 
@@ -221,19 +224,19 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             var sqrLenE = e.X * e.X + e.Y * e.Y;
             var kross2 = e.X * d0.Y - e.Y * d0.X;
             var sqrKross2 = kross2 * kross2;
-            if (sqrKross2 > MathUtil.FloatEpsilon * sqrLen0 * sqrLenE)
+            if (sqrKross2 > Point2DMath.FloatEpsilon * sqrLen0 * sqrLenE)
                 // lines of the segments are different
                 return 0;
 
             // lines of the segments are the same. need to test for overlap of segments
-            var s0 = MathUtil.Dot(d0, e) / sqrLen0;
-            var s1 = s0 + MathUtil.Dot(d0, d1) / sqrLen0;
-            var smin = MathUtil.GetMin(s0, s1);
-            var smax = MathUtil.GetMax(s0, s1);
+            var s0 = Point2DMath.Dot(d0, e) / sqrLen0;
+            var s1 = s0 + Point2DMath.Dot(d0, d1) / sqrLen0;
+            var smin = Point2DMath.GetMin(s0, s1);
+            var smax = Point2DMath.GetMax(s0, s1);
             var w = new float[2];
 
-            var imax = MathUtil.FindIntersection(0.0f, 1.0f, smin, smax, ref w);
-            for (var i = 0; i < imax; i++) intersectPnt[i] = MathUtil.Add(p0, MathUtil.Multiply(w[i], d0));
+            var imax = ElementQuery.FindIntersection(0.0f, 1.0f, smin, smax, ref w);
+            for (var i = 0; i < imax; i++) intersectPnt[i] = Point2DMath.Add(p0, Point2DMath.Multiply(w[i], d0));
 
             return imax;
         }

@@ -19,6 +19,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
 {
     /// <summary>
@@ -74,13 +75,13 @@ namespace Ara3D.RevitSampleBrowser.DuplicateViews.CS
 
             // Copy all schedules together so that any dependency elements are copied only once
             var schedules = collector.OfType<ViewSchedule>();
-            DuplicateViewUtils.DuplicateSchedules(doc, schedules, toDocument);
+            ViewHelper.DuplicateSchedules(doc, schedules, toDocument);
             var numSchedules = schedules.Count();
 
             // Copy drafting views together
             var draftingViews = collector.OfType<ViewDrafting>();
             var numDraftingElements =
-                DuplicateViewUtils.DuplicateDraftingViews(doc, draftingViews, toDocument);
+                ViewHelper.DuplicateDraftingViews(doc, draftingViews, toDocument);
             var numDrafting = draftingViews.Count();
 
             // Show results

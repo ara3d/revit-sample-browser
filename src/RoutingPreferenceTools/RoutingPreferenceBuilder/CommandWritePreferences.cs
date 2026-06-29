@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 
+using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
     /// <summary>
@@ -19,15 +20,15 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            if (!Validation.ValidateMep(commandData.Application.Application))
+            if (!RoutingPreferenceHelper.ValidateMep(commandData.Application.Application))
             {
-                Validation.MepWarning();
+                RoutingPreferenceHelper.MepWarning();
                 return Result.Succeeded;
             }
 
-            if (!Validation.ValidatePipesDefined(commandData.Application.ActiveUIDocument.Document))
+            if (!RoutingPreferenceHelper.ValidatePipesDefined(commandData.Application.ActiveUIDocument.Document))
             {
-                Validation.PipesDefinedWarning();
+                RoutingPreferenceHelper.PipesDefinedWarning();
                 return Result.Succeeded;
             }
 

@@ -3,6 +3,7 @@
 using System;
 using System.Windows.Forms;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
     /// <summary>
@@ -50,7 +51,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         /// <returns>Whether input is validated</returns>
         private bool ValidateValues()
         {
-            return Validation.ValidateLabel(textBoxFirstLabel, m_data.LabelsList);
+            return SampleBrowserUtils.ValidateLabel(textBoxFirstLabel, m_data.LabelsList);
         }
 
         /// <summary>

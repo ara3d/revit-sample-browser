@@ -6,6 +6,9 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Structural;
+using RebarGeomHelper = Ara3D.RevitSampleBrowser.Common.Structural.RebarGeometry;
 namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 {
     /// <summary>
@@ -189,7 +192,7 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
 
             var startHook = RebarHookOrientation.Right;
             var endHook = RebarHookOrientation.Left;
-            if (!GeomUtil.IsInRightDir(geomInfo.Normal))
+            if (!RebarGeomHelper.IsInRightDir(geomInfo.Normal))
             {
                 startHook = RebarHookOrientation.Left;
                 endHook = RebarHookOrientation.Right;
@@ -219,13 +222,13 @@ namespace Ara3D.RevitSampleBrowser.Reinforcement.CS
             // get the top start hook orient
             if (TopRebarLocation.Start == location)
             {
-                var curveVec = GeomUtil.SubXyz(rebarLine.GetEndPoint(1), rebarLine.GetEndPoint(0));
-                return GeomUtil.GetHookOrient(curveVec, normal, hookVec);
+                var curveVec = XyzMath.SubXyz(rebarLine.GetEndPoint(1), rebarLine.GetEndPoint(0));
+                return RebarGeomHelper.GetHookOrient(curveVec, normal, hookVec);
             }
             else // get the top end hook orient
             {
-                var curveVec = GeomUtil.SubXyz(rebarLine.GetEndPoint(0), rebarLine.GetEndPoint(1));
-                return GeomUtil.GetHookOrient(curveVec, normal, hookVec);
+                var curveVec = XyzMath.SubXyz(rebarLine.GetEndPoint(0), rebarLine.GetEndPoint(1));
+                return RebarGeomHelper.GetHookOrient(curveVec, normal, hookVec);
             }
         }
 

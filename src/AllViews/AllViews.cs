@@ -10,6 +10,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.AllViews.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -372,7 +373,7 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
             {
                 var location = new UV(tempU, tempV);
                 var view = v;
-                Rescale(view, xDistance, yDistance);
+                SampleBrowserUtils.Rescale(view, xDistance, yDistance);
                 try
                 {
                     //sheet.AddView(view, location);
@@ -443,26 +444,6 @@ namespace Ara3D.RevitSampleBrowser.AllViews.CS
                 y = Math.Sqrt(area / m_goldensection);
                 x = m_goldensection * y;
             }
-        }
-
-        /// <summary>
-        ///     Rescale the view's Scale value for suitable.
-        /// </summary>
-        /// <param name="view">The view to be located on sheet.</param>
-        /// <param name="x">Distance in x axis between each view</param>
-        /// <param name="y">Distance in y axis between each view</param>
-        private static void Rescale(View view, double x, double y)
-        {
-            double rescale = 2;
-            var outline = new UV(view.Outline.Max.U - view.Outline.Min.U,
-                view.Outline.Max.V - view.Outline.Min.V);
-
-            if (outline.U > outline.V)
-                rescale = outline.U / x * rescale;
-            else
-                rescale = outline.V / y * rescale;
-
-            if (1 != view.Scale && 0 != rescale) view.Scale = (int)(view.Scale * rescale);
         }
     }
 }

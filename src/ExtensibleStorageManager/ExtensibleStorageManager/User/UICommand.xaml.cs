@@ -11,6 +11,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.User
 {
     /// <summary>
@@ -159,7 +160,7 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
         //Put a new, arbitrary Guid in the schema text box.
         private void m_button_NewSchemaId_Click(object sender, RoutedEventArgs e)
         {
-            m_textBox_SchemaId.Text = StorageCommand.NewGuid().ToString();
+            m_textBox_SchemaId.Text = ExtensibleStorageHelper.NewGuid().ToString();
         }
 
         /// <summary>

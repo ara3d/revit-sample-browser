@@ -1,7 +1,7 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
-
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     /// <summary>
@@ -55,10 +55,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         {
             if (IsMetric)
             {
-                value = Utility.MetricToImperial(value);
+                value = SampleBrowserUtils.MetricToImperial(value);
                 if (value >= 0.23 && value < m_wallWidth)
                     return string.Empty;
-                return $"The width should be between 69 and {Convert.ToInt32(Utility.ImperialToMetric(m_wallWidth))}";
+                return $"The width should be between 69 and {Convert.ToInt32(SampleBrowserUtils.ImperialToMetric(m_wallWidth))}";
             }
 
             if (value >= 0.4 && value < m_wallWidth)
@@ -75,7 +75,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         {
             if (IsMetric)
             {
-                value = Utility.MetricToImperial(value);
+                value = SampleBrowserUtils.MetricToImperial(value);
                 return value >= 0.23 ? string.Empty : "The height should > 69";
             }
 
@@ -90,7 +90,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         public string IsInsetInRange(double value)
         {
             if (IsMetric)
-                value = Utility.MetricToImperial(value);
+                value = SampleBrowserUtils.MetricToImperial(value);
             return value >= 0 ? string.Empty : "The Inset should > 0";
         }
 
@@ -103,10 +103,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
         {
             if (IsMetric)
             {
-                value = Utility.MetricToImperial(value);
+                value = SampleBrowserUtils.MetricToImperial(value);
                 if (value < m_wallHeight)
                     return string.Empty;
-                return $"The sillheight should be < {Convert.ToInt32(Utility.ImperialToMetric(m_wallHeight))}";
+                return $"The sillheight should be < {Convert.ToInt32(SampleBrowserUtils.ImperialToMetric(m_wallHeight))}";
             }
 
             if (value < m_wallHeight)

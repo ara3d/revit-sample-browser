@@ -8,6 +8,7 @@ using System.Globalization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
     /// <summary>
@@ -98,12 +99,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             if (value is string levelString)
                 try
                 {
-                    var leftBracket = levelString.IndexOf('[');
-                    var rightBracket = levelString.IndexOf(']');
-
-                    var idString = levelString.Substring(leftBracket + 1, rightBracket - leftBracket - 1);
-
-                    return Levels[idString];
+                    return Levels[ViewHelper.ParseBracketedId(levelString)];
                 }
                 catch (Exception ex)
                 {
@@ -213,12 +209,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             if (value is string footPrintLineString)
                 try
                 {
-                    var leftBracket = footPrintLineString.IndexOf('[');
-                    var rightBracket = footPrintLineString.IndexOf(']');
-
-                    var idString = footPrintLineString.Substring(leftBracket + 1, rightBracket - leftBracket - 1);
-
-                    return FootPrintLines[idString];
+                    return FootPrintLines[ViewHelper.ParseBracketedId(footPrintLineString)];
                 }
                 catch (Exception ex)
                 {

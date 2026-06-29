@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
 {
     /// <summary>
@@ -54,11 +55,11 @@ namespace Ara3D.RevitSampleBrowser.AddSpaceAndZone.CS
                 }
 
                 if (elements == null || elements.Count == 0)
-                    TaskDialog.Show("Revit", $"There is no enclosed loop in {level.Name}");
+                    DialogHelper.ShowMessage( $"There is no enclosed loop in {level.Name}");
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Revit", ex.Message);
+                DialogHelper.ShowMessage( ex.Message);
             }
         }
     }

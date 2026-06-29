@@ -9,6 +9,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using OperationCanceledException = Autodesk.Revit.Exceptions.OperationCanceledException;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -30,7 +31,7 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
                         var famSymbolList = new List<FamilySymbol>();
                         if (optionsForm.OptionType == PlacementOptionsEnum.FaceBased)
                         {
-                            famSymbolList = FindProperFamilySymbol(document, BuiltInCategory.OST_GenericModel);
+                            famSymbolList = ElementQuery.FindProperFamilySymbol(document, BuiltInCategory.OST_GenericModel);
                             if (famSymbolList == null || famSymbolList.Count == 0)
                             {
                                 TaskDialog.Show("Error",
@@ -48,7 +49,7 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
                         }
                         else
                         {
-                            famSymbolList = FindProperFamilySymbol(document, BuiltInCategory.OST_StructuralFraming);
+                            famSymbolList = ElementQuery.FindProperFamilySymbol(document, BuiltInCategory.OST_StructuralFraming);
                             if (famSymbolList == null || famSymbolList.Count == 0)
                             {
                                 TaskDialog.Show("Error",
@@ -79,33 +80,6 @@ namespace Ara3D.RevitSampleBrowser.PlacementOptions.CS
                 message = ex.Message;
                 return Result.Failed;
             }
-        }
-
-        /// <summary>
-        ///     Find proper family symbol for family instance placement.
-        /// </summary>
-        /// <param name="document">The Revit document.</param>
-        /// <param name="category">The category of the family symbol.</param>
-        /// <returns>The list of family symbol.</returns>
-        private List<FamilySymbol> FindProperFamilySymbol(Document document, BuiltInCategory category)
-        {
-            var collector = new FilteredElementCollector(document);
-            // OST_GenericModel for looking up the face based family symbol.
-            // OST_StructuralFraming for looking up the beam framing symbol, which is sketch based.
-            var filter = new ElementCategoryFilter(category);
-            collector.WherePasses(filter);
-            var symbollList = collector.ToElements().ToList();
-            if (!symbollList.Any())
-                return null;
-
-            var famSymbolList = new List<FamilySymbol>();
-            foreach (var elem in symbollList)
-            {
-                if (elem is FamilySymbol famSymbol)
-                    famSymbolList.Add(famSymbol);
-            }
-
-            return famSymbolList;
         }
     }
 

@@ -8,6 +8,7 @@ using Autodesk.Revit.UI;
 using ComboBox = System.Windows.Forms.ComboBox;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
 {
     /// <summary>
@@ -461,7 +462,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                         newRules.Add(ruleData.AsFilterRule());
                     }
 
-                    var elemFilter = FiltersUtil.CreateElementFilterFromFilterRules(newRules);
+                    var elemFilter = FilterBuilder.CreateElementFilterFromFilterRules(newRules);
                     // Set this filter's list of rules.
                     filter.SetElementFilter(elemFilter);
 
@@ -491,7 +492,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                         rules.Add(ruleData.AsFilterRule());
                     }
 
-                    var elemFilter = FiltersUtil.CreateElementFilterFromFilterRules(rules);
+                    var elemFilter = FilterBuilder.CreateElementFilterFromFilterRules(rules);
 
                     // Check that the ElementFilter is valid for use by a ParameterFilterElement.
                     var categoryIdList = myFilter.Value.GetCategoryIds();
@@ -548,7 +549,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
         private void InitializeFilterData()
         {
             // Get all existing filters
-            var filters = FiltersUtil.GetViewFilters(m_doc);
+            var filters = FilterBuilder.GetViewFilters(m_doc);
             foreach (var filter in filters)
             {
                 // Get all data of the current filter and create my FilterData
@@ -558,7 +559,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                 var elemFilter = filter.GetElementFilter();
                 // Check that the ElementFilter represents a conjunction of ElementFilters.
                 // We will then check that each child ElementFilter contains just one FilterRule.
-                var filterRules = FiltersUtil.GetConjunctionOfFilterRulesFromElementFilter(elemFilter);
+                var filterRules = FilterBuilder.GetConjunctionOfFilterRulesFromElementFilter(elemFilter);
                 var numFilterRules = filterRules.Count;
                 if (0 == numFilterRules)
                     return; // Error
@@ -569,7 +570,7 @@ namespace Ara3D.RevitSampleBrowser.ElementFilterSample.CS
                 {
                     var paramId = filterRule.GetRuleParameter();
                     var bip = (BuiltInParameter)paramId.Value;
-                    var ruleData = FiltersUtil.CreateFilterRuleBuilder(bip, filterRule);
+                    var ruleData = FilterBuilder.CreateFilterRuleBuilder(bip, filterRule);
                     ruleDataSet.Add(ruleData);
                 }
 

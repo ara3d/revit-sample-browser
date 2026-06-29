@@ -8,6 +8,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
 {
     /// <summary>
@@ -231,7 +233,7 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             var transform = Transform.Identity;
 
             // Second find the middle point of the wall and set it as Origin property.
-            var mPoint = XyzMath.FindMidPoint(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
+            var mPoint = ElementQuery.FindMidPoint(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
             // midPoint is mid point of the wall location, but not the wall's.
             // The different is the elevation of the point. Then change it.
 
@@ -240,9 +242,9 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             transform.Origin = midPoint;
 
             // At last find out the directions of the created view, and set it as Basis property.
-            var basisZ = XyzMath.FindDirection(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
-            var basisX = XyzMath.FindRightDirection(basisZ);
-            var basisY = XyzMath.FindUpDirection(basisZ);
+            var basisZ = ElementQuery.FindDirection(locationLine.GetEndPoint(0), locationLine.GetEndPoint(1));
+            var basisX = ElementQuery.FindRightDirection(basisZ);
+            var basisY = ElementQuery.FindUpDirection(basisZ);
 
             transform.set_Basis(0, basisX);
             transform.set_Basis(1, basisY);
@@ -289,13 +291,13 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             // Third find the middle point of the line and set it as Origin property.
             var startPoint = curve.GetEndPoint(0);
             var endPoint = curve.GetEndPoint(1);
-            var midPoint = XyzMath.FindMidPoint(startPoint, endPoint);
+            var midPoint = ElementQuery.FindMidPoint(startPoint, endPoint);
             transform.Origin = midPoint;
 
             // At last find out the directions of the created view, and set it as Basis property.   
-            var basisZ = XyzMath.FindDirection(startPoint, endPoint);
-            var basisX = XyzMath.FindRightDirection(basisZ);
-            var basisY = XyzMath.FindUpDirection(basisZ);
+            var basisZ = ElementQuery.FindDirection(startPoint, endPoint);
+            var basisX = ElementQuery.FindRightDirection(basisZ);
+            var basisY = ElementQuery.FindUpDirection(basisZ);
 
             transform.set_Basis(0, basisX);
             transform.set_Basis(1, basisY);
@@ -352,13 +354,13 @@ namespace Ara3D.RevitSampleBrowser.CreateViewSection.CS
             transform = Transform.Identity;
 
             // Third find the middle point of the floor and set it as Origin property.
-            var midPoint = XyzMath.FindMiddlePoint(curves);
+            var midPoint = ElementQuery.FindMiddlePoint(curves);
             transform.Origin = midPoint;
 
             // At last find out the directions of the created view, and set it as Basis property.
-            var basisZ = XyzMath.FindFloorViewDirection(curves);
-            var basisX = XyzMath.FindRightDirection(basisZ);
-            var basisY = XyzMath.FindUpDirection(basisZ);
+            var basisZ = ViewHelper.FindFloorViewDirection(curves);
+            var basisX = ElementQuery.FindRightDirection(basisZ);
+            var basisY = ElementQuery.FindUpDirection(basisZ);
 
             transform.set_Basis(0, basisX);
             transform.set_Basis(1, basisY);

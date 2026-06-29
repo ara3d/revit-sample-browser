@@ -5,6 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     /// <summary>
@@ -28,8 +29,8 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             {
                 trans.Start();
 
-                var analyticalElementIds = Utilities.GetSelectedObjects(activeDoc, "Please select analytical elements");
-                var physicalElementIds = Utilities.GetSelectedObjects(activeDoc, "Please select physical elements");
+                var analyticalElementIds = ElementQuery.GetSelectedObjects(activeDoc, "Please select analytical elements");
+                var physicalElementIds = ElementQuery.GetSelectedObjects(activeDoc, "Please select physical elements");
 
                 //gets the AnalyticalToPhysicalAssociationManager for the current document
                 var analyticalToPhysicalmanager =

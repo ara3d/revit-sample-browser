@@ -16,6 +16,7 @@ using System;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
 {
     /// <summary>
@@ -44,7 +45,7 @@ namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
             // Confirm that the command can be overridden
             if (!_sCommandId.CanHaveBinding)
             {
-                ShowDialog("Error",
+                EventLoggingHelper.ShowDialog("Error",
                     $"The target command {SCommandToDisable} selected for disabling cannot be overridden");
                 return Result.Failed;
             }
@@ -61,7 +62,7 @@ namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
             // Most likely, this is because someone else has bound this command already.
             catch (Exception)
             {
-                ShowDialog("Error",
+                EventLoggingHelper.ShowDialog("Error",
                     $"This add-in is unable to disable the target command {SCommandToDisable}; most likely another add-in has overridden this command.");
             }
 
@@ -83,23 +84,7 @@ namespace Ara3D.RevitSampleBrowser.DisableCommand.CS
         /// <param name="args">Arguments.</param>
         private void DisableEvent(object sender, ExecutedEventArgs args)
         {
-            ShowDialog("Disabled", "Use of this command has been disabled.");
-        }
-
-        /// <summary>
-        ///     Show a task dialog with a message and title.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <param name="message">The message.</param>
-        private static void ShowDialog(string title, string message)
-        {
-            // Show the user a message.
-            var td = new TaskDialog(title)
-            {
-                MainInstruction = message,
-                TitleAutoPrefix = false
-            };
-            td.Show();
+            EventLoggingHelper.ShowDialog("Disabled", "Use of this command has been disabled.");
         }
     }
 }

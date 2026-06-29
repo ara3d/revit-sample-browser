@@ -6,6 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
 {
     public class AvfViewer
@@ -23,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.NetworkPressureLossReport.CS
             m_view = view;
             m_isItemzied = isItemized;
 
-            m_sfm = SpatialFieldManager.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 1);
+            m_sfm = SampleBrowserUtils.GetSpatialFieldManager(view) ?? SpatialFieldManager.CreateSpatialFieldManager(view, 1);
             m_sfm.Clear();
             m_maxCorner = new XYZ(-double.MaxValue, -double.MaxValue, -double.MaxValue);
         }

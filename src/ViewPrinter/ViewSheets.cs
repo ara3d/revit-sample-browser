@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     public enum VisibleType
@@ -25,18 +27,6 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 
         bool Rename(string name);
         bool SaveAs(string newName);
-    }
-
-    /// <summary>
-    ///     Define some config data which is useful in this sample.
-    /// </summary>
-    public static class ConstData
-    {
-        /// <summary>
-        ///     The const string data which is used as the name
-        ///     for InSessionPrintSetting and InSessionViewSheetSet data
-        /// </summary>
-        public const string InSessionName = "<In-Session>";
     }
 
     /// <summary>
@@ -67,7 +57,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
                     names.Add(viewSheetSet.Name);
                 }
 
-                names.Add(ConstData.InSessionName);
+                names.Add(SampleBrowserUtils.InSessionName);
 
                 return names;
             }
@@ -78,11 +68,11 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             get
             {
                 var theSet = m_viewSheetSetting.CurrentViewSheetSet;
-                return theSet is ViewSheetSet set ? set.Name : ConstData.InSessionName;
+                return theSet is ViewSheetSet set ? set.Name : SampleBrowserUtils.InSessionName;
             }
             set
             {
-                if (value == ConstData.InSessionName)
+                if (value == SampleBrowserUtils.InSessionName)
                 {
                     m_viewSheetSetting.CurrentViewSheetSet = m_viewSheetSetting.InSession;
                     return;
@@ -109,7 +99,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
                 return false;
             }
         }
@@ -122,7 +112,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
                 return false;
             }
         }
@@ -147,7 +137,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
             }
         }
 
@@ -159,7 +149,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception ex)
             {
-                PrintMgr.MyMessageBox(ex.Message);
+                PrintHelper.MyMessageBox(ex.Message);
                 return false;
             }
         }

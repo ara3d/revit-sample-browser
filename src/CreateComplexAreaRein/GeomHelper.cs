@@ -5,6 +5,10 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Ara3D.RevitSampleBrowser.Common.Structural;
 namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
 {
     /// <summary>
@@ -33,10 +37,10 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
         public bool GetFloorGeom(Floor floor, ref Reference refer, ref IList<Curve> curves)
         {
             //get horizontal face's reference
-            var faces = GeomUtil.GetFaces(floor);
+            var faces = FaceAndSolidGeometry.GetFaces(floor);
             foreach (Face face in faces)
             {
-                if (GeomUtil.IsHorizontalFace(face))
+                if (FaceAndSolidGeometry.IsHorizontalFace(face))
                 {
                     refer = face.Reference;
                     break;
@@ -63,7 +67,7 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             if (null == model) return false;
 
             curves = model.GetOuterContour().ToList();
-            if (!GeomUtil.IsRectangular(curves)) return false;
+            if (!AreaReinforcementHelper.IsRectangular(curves)) return false;
             curves = AddInlaidCurves(curves, 0.5);
 
             return true;
@@ -86,22 +90,22 @@ namespace Ara3D.RevitSampleBrowser.CreateComplexAreaRein.CS
             }
 
             //length and width of the rectangle
-            var length = GeomUtil.GetLength(lines[0]);
-            var width = GeomUtil.GetLength(lines[1]);
+            var length = XyzMath.GetLength(lines[0]);
+            var width = XyzMath.GetLength(lines[1]);
             for (var i = 0; i < 2; i++)
             {
                 //height line
                 var tempLine1 = lines[i * 2];
-                var scaledLine1 = GeomUtil.GetScaledLine(tempLine1, scale);
+                var scaledLine1 = XyzMath.GetScaledLine(tempLine1, scale);
                 var distance1 = scale / 2 * width;
-                var movedLine1 = GeomUtil.GetXyParallelLine(scaledLine1, distance1);
+                var movedLine1 = ParameterAccess.GetXyParallelLine(scaledLine1, distance1);
                 lines.Add(movedLine1);
 
                 //width line
                 var tempLine2 = lines[i * 2 + 1];
-                var scaledLine2 = GeomUtil.GetScaledLine(tempLine2, scale);
+                var scaledLine2 = XyzMath.GetScaledLine(tempLine2, scale);
                 var distance2 = scale / 2 * length;
-                var movedLine2 = GeomUtil.GetXyParallelLine(scaledLine2, distance2);
+                var movedLine2 = ParameterAccess.GetXyParallelLine(scaledLine2, distance2);
                 lines.Add(movedLine2);
             }
 

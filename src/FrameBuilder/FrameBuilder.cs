@@ -8,6 +8,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
     using ModelElement = Element;
@@ -55,7 +56,7 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             t.Start();
             m_data.UpdateLevels();
             var frameElems = new List<FamilyInstance>();
-            var matrixUv = CreateMatrix(m_data.XNumber, m_data.YNumber, m_data.Distance);
+            var matrixUv = XyzMath.CreateMatrix(m_data.XNumber, m_data.YNumber, m_data.Distance);
 
             // iterate levels from lower one to higher one by one according to FloorNumber
             for (var ii = 0; ii < m_data.FloorNumber; ii++)
@@ -100,22 +101,6 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 
             MoveRotateFrame(frameElems);
             t.Commit();
-        }
-
-        /// <summary>
-        ///     create a 2D matrix of coordinates to form an array format
-        /// </summary>
-        /// <param name="xNumber">number of Columns in the X direction</param>
-        /// <param name="yNumber">number of Columns in the Y direction</param>
-        /// <param name="distance">distance between columns</param>
-        private static UV[,] CreateMatrix(int xNumber, int yNumber, double distance)
-        {
-            var result = new UV[xNumber, yNumber];
-
-            for (var i = 0; i < xNumber; i++)
-            for (var j = 0; j < yNumber; j++)
-                result[i, j] = new UV(i * distance, j * distance);
-            return result;
         }
 
         /// <summary>

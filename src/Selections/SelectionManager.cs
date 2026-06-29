@@ -6,6 +6,7 @@ using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.Selections.CS
 {
     /// <summary>
@@ -102,7 +103,8 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
             set
             {
                 m_selectedPoint = value;
-                if (SelectedElement != null && m_selectedPoint != null) MoveElement(SelectedElement, m_selectedPoint);
+                if (SelectedElement != null && m_selectedPoint != null)
+                    SelectionHelper.MoveElement(m_document.Document, SelectedElement, ref m_elemPickedPoint, m_selectedPoint);
             }
         }
 
@@ -164,18 +166,6 @@ namespace Ara3D.RevitSampleBrowser.Selections.CS
                 // Point selection cancelled.
                 SelectedPoint = null;
             }
-        }
-
-        /// <summary>
-        ///     Move an element to the point.
-        /// </summary>
-        /// <param name="elem">The element to be moved.</param>
-        /// <param name="targetPoint">The location element to be moved.</param>
-        public void MoveElement(Element elem, XYZ targetPoint)
-        {
-            var vecToMove = targetPoint - m_elemPickedPoint;
-            m_elemPickedPoint = targetPoint;
-            ElementTransformUtils.MoveElement(m_document.Document, elem.Id, vecToMove);
         }
     }
 }

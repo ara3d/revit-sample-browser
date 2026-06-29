@@ -7,6 +7,9 @@ using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
 {
     /// <summary>
@@ -223,9 +226,9 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
 
             //Calculate offset by law of cosines.
             var halfThickness = wall.Width / 2;
-            var length = GeoHelper.GetLength(locaCurve.GetEndPoint(0), locaCurve.GetEndPoint(1));
-            var xAxis = GeoHelper.GetDistance(locaCurve.GetEndPoint(0).X, locaCurve.GetEndPoint(1).X);
-            var yAxis = GeoHelper.GetDistance(locaCurve.GetEndPoint(0).Y, locaCurve.GetEndPoint(1).Y);
+            var length = XyzMath.GetLength(locaCurve.GetEndPoint(0), locaCurve.GetEndPoint(1));
+            var xAxis = FaceAndSolidGeometry.GetDistance(locaCurve.GetEndPoint(0).X, locaCurve.GetEndPoint(1).X);
+            var yAxis = FaceAndSolidGeometry.GetDistance(locaCurve.GetEndPoint(0).Y, locaCurve.GetEndPoint(1).Y);
 
             var xOffset = yAxis * halfThickness / length;
             var yOffset = xAxis * halfThickness / length;
@@ -274,11 +277,11 @@ namespace Ara3D.RevitSampleBrowser.ReferencePlane.CS
                 if (null == solid)
                     continue;
                 //Get the bottom face of this floor.
-                buttomFace = GeoHelper.GetBottomFace(solid.Faces);
+                buttomFace = SampleBrowserUtils.GetBottomFace(solid.Faces);
             }
 
             var mesh = buttomFace.Triangulate();
-            GeoHelper.Distribute(mesh, ref bubbleEnd, ref freeEnd, ref thirdPnt);
+            SampleBrowserUtils.Distribute(mesh, ref bubbleEnd, ref freeEnd, ref thirdPnt);
         }
 
         //A delegate for create reference plane with different host element.

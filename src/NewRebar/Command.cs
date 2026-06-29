@@ -21,8 +21,7 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
             try
             {
                 transaction.Start();
-                var creator = new RebarCreator(commandData);
-                creator.Execute();
+                new RebarCreator(commandData).Execute();
             }
             catch (Exception e)
             {

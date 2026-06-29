@@ -4,11 +4,9 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.SolidSolidCut.CS
 {
-    /// <summary>
-    ///     Demonstrate how to use the SolidSolidCut API to make one solid cut another.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class Cut : IExternalCommand
@@ -16,40 +14,22 @@ namespace Ara3D.RevitSampleBrowser.SolidSolidCut.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            // NOTES: Anything can be done in this method, such as the solid-solid cut operation.
-
-            // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            long solidToBeCutElementId = 30481; //The cube
-            long cuttingSolidElementId = 30809; //The sphere
-
-            //Get element by ElementId
-            var solidToBeCut = activeDoc.GetElement(new ElementId(solidToBeCutElementId));
-            var cuttingSolid = activeDoc.GetElement(new ElementId(cuttingSolidElementId));
-
-            //If the two elements do not exist, notify user to open the family file then try this command.
-            if (solidToBeCut == null || cuttingSolid == null)
+            if (!FaceAndSolidGeometry.TryGetDemoSolids(activeDoc, out var solidToBeCut, out var cuttingSolid))
             {
                 TaskDialog.Show("Notice",
                     "Please open the family file SolidSolidCut.rfa, then try to run this command.");
-
                 return Result.Succeeded;
             }
 
-            //Check whether the cuttingSolid can cut the solidToBeCut
-            if (SolidSolidCutUtils.CanElementCutElement(cuttingSolid, solidToBeCut, out _))
+            if (!SolidSolidCutUtils.CanElementCutElement(cuttingSolid, solidToBeCut, out _))
+                return Result.Succeeded;
+
+            using (var transaction = new Transaction(activeDoc, "AddCutBetweenSolids"))
             {
-                //cuttingSolid can cut solidToBeCut
-
-                //Do the solid-solid cut operation
-                //Start a transaction
-                var transaction = new Transaction(activeDoc);
-                transaction.Start("AddCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid)");
-
-                //Let the cuttingSolid cut the solidToBeCut
+                transaction.Start();
                 SolidSolidCutUtils.AddCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid);
-
                 transaction.Commit();
             }
 
@@ -57,9 +37,6 @@ namespace Ara3D.RevitSampleBrowser.SolidSolidCut.CS
         }
     }
 
-    /// <summary>
-    ///     Demonstrate how to use the SolidSolidCut API to uncut two solids which have the cutting relationship.
-    /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class Uncut : IExternalCommand
@@ -67,36 +44,21 @@ namespace Ara3D.RevitSampleBrowser.SolidSolidCut.CS
         public Result Execute(ExternalCommandData commandData,
             ref string message, ElementSet elements)
         {
-            // NOTES: Anything can be done in this method, such as the solid-solid uncut operation.
-
-            // Get the application and document from external command data.
             var activeDoc = commandData.Application.ActiveUIDocument.Document;
 
-            long solidToBeCutElementId = 30481; //The cube
-            long cuttingSolidElementId = 30809; //The sphere
-
-            //Get element by ElementId
-            var solidToBeCut = activeDoc.GetElement(new ElementId(solidToBeCutElementId));
-            var cuttingSolid = activeDoc.GetElement(new ElementId(cuttingSolidElementId));
-
-            //If the two elements do not exist, notify user to open the family file then try this command.
-            if (solidToBeCut == null || cuttingSolid == null)
+            if (!FaceAndSolidGeometry.TryGetDemoSolids(activeDoc, out var solidToBeCut, out var cuttingSolid))
             {
                 TaskDialog.Show("Notice",
                     "Please open the family file SolidSolidCut.rfa, then try to run this command.");
-
                 return Result.Succeeded;
             }
 
-            //Remove the solid-solid cut (Uncut)
-            //Start a transaction
-            var transaction = new Transaction(activeDoc);
-            transaction.Start("RemoveCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid)");
-
-            //Remove the cutting relationship between solidToBeCut and cuttingSolid (Uncut)
-            SolidSolidCutUtils.RemoveCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid);
-
-            transaction.Commit();
+            using (var transaction = new Transaction(activeDoc, "RemoveCutBetweenSolids"))
+            {
+                transaction.Start();
+                SolidSolidCutUtils.RemoveCutBetweenSolids(activeDoc, solidToBeCut, cuttingSolid);
+                transaction.Commit();
+            }
 
             return Result.Succeeded;
         }

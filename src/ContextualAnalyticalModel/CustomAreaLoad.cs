@@ -6,8 +6,9 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -21,27 +22,11 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
                 var document = commandData.Application.ActiveUIDocument.Document;
                 var activeDoc = commandData.Application.ActiveUIDocument;
 
-                //select object for adding a line load
-                var eRef = activeDoc.Selection.PickObject(ObjectType.Element, "Please select the analytical element");
-                ElementId selectedElementId = null;
-                if (eRef != null && eRef.ElementId != ElementId.InvalidElementId)
-                    selectedElementId = eRef.ElementId;
+                var selectedElementId = ElementQuery.GetSelectedObject(activeDoc, "Please select the analytical element");
 
                 var start = activeDoc.Selection.PickPoint("start");
                 var end = activeDoc.Selection.PickPoint("end");
-
-                //create curveloop which will be assigned to the analytical panel
-                var profileloop = new CurveLoop();
-                profileloop.Append(Line.CreateBound(
-                    start, new XYZ(end.X, start.Y, 0)));
-                profileloop.Append(Line.CreateBound(
-                    new XYZ(end.X, start.Y, 0), end));
-                profileloop.Append(Line.CreateBound(
-                    end, new XYZ(start.X, end.Y, 0)));
-                profileloop.Append(Line.CreateBound(
-                    new XYZ(start.X, end.Y, 0), start));
-
-                var loops = new List<CurveLoop> { profileloop };
+                var loops = new List<CurveLoop> { SampleBrowserUtils.CreateRectangleLoop(start, end) };
 
                 using (var transaction = new Transaction(document, "Create custom AreaLoad"))
                 {

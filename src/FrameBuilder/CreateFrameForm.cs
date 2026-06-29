@@ -8,6 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
 {
     /// <summary>
@@ -50,9 +51,9 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
             originYtextBox.Text = m_frameData.FrameOrigin.V.ToString();
             originAngletextBox.Text = m_frameData.FrameOriginAngle.ToString();
 
-            RefreshListControl(columnTypeComboBox, m_frameData.ColumnSymbolsMgr);
-            RefreshListControl(beamTypeComboBox, m_frameData.BeamSymbolsMgr);
-            RefreshListControl(braceTypeComboBox, m_frameData.BraceSymbolsMgr);
+            SampleBrowserUtils.RefreshListControl(columnTypeComboBox, m_frameData.ColumnSymbolsMgr);
+            SampleBrowserUtils.RefreshListControl(beamTypeComboBox, m_frameData.BeamSymbolsMgr);
+            SampleBrowserUtils.RefreshListControl(braceTypeComboBox, m_frameData.BraceSymbolsMgr);
         }
 
         /// <summary>
@@ -62,8 +63,8 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
         /// <param name="e"></param>
         private void columnDuplicateButton_Click(object sender, EventArgs e)
         {
-            if (DuplicateSymbol(m_frameData.ColumnSymbolsMgr, columnTypeComboBox.SelectedValue))
-                RefreshListControl(columnTypeComboBox, m_frameData.ColumnSymbolsMgr);
+            if (SampleBrowserUtils.DuplicateSymbol(m_frameData.ColumnSymbolsMgr, columnTypeComboBox.SelectedValue))
+                SampleBrowserUtils.RefreshListControl(columnTypeComboBox, m_frameData.ColumnSymbolsMgr);
         }
 
         /// <summary>
@@ -73,10 +74,10 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
         /// <param name="e"></param>
         private void beamDuplicateButton_Click(object sender, EventArgs e)
         {
-            if (DuplicateSymbol(m_frameData.BeamSymbolsMgr, beamTypeComboBox.SelectedValue))
+            if (SampleBrowserUtils.DuplicateSymbol(m_frameData.BeamSymbolsMgr, beamTypeComboBox.SelectedValue))
             {
-                RefreshListControl(beamTypeComboBox, m_frameData.BeamSymbolsMgr);
-                RefreshListControl(braceTypeComboBox, m_frameData.BraceSymbolsMgr);
+                SampleBrowserUtils.RefreshListControl(beamTypeComboBox, m_frameData.BeamSymbolsMgr);
+                SampleBrowserUtils.RefreshListControl(braceTypeComboBox, m_frameData.BraceSymbolsMgr);
             }
         }
 
@@ -87,41 +88,11 @@ namespace Ara3D.RevitSampleBrowser.FrameBuilder.CS
         /// <param name="e"></param>
         private void braceDuplicateButton_Click(object sender, EventArgs e)
         {
-            if (DuplicateSymbol(m_frameData.BraceSymbolsMgr, braceTypeComboBox.SelectedValue))
+            if (SampleBrowserUtils.DuplicateSymbol(m_frameData.BraceSymbolsMgr, braceTypeComboBox.SelectedValue))
             {
-                RefreshListControl(beamTypeComboBox, m_frameData.BeamSymbolsMgr);
-                RefreshListControl(braceTypeComboBox, m_frameData.BraceSymbolsMgr);
+                SampleBrowserUtils.RefreshListControl(beamTypeComboBox, m_frameData.BeamSymbolsMgr);
+                SampleBrowserUtils.RefreshListControl(braceTypeComboBox, m_frameData.BraceSymbolsMgr);
             }
-        }
-
-        /// <summary>
-        ///     provide user UI to duplicate FamilySymbols
-        /// </summary>
-        /// <param name="typesMgr">data manager of FamilySymbols</param>
-        /// <param name="symbol">FamilySymbol to be copied</param>
-        /// <returns>does duplicate</returns>
-        private static bool DuplicateSymbol(FrameTypesMgr typesMgr, object symbol)
-        {
-            var result = false;
-            using (var typeFrm = new DuplicateTypeForm(symbol, typesMgr))
-            {
-                if (typeFrm.ShowDialog() == DialogResult.OK) result = true;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        ///     refresh the ListControl's datasource
-        /// </summary>
-        /// <param name="list">ListControl to be refreshed</param>
-        private static void RefreshListControl(ListControl list, FrameTypesMgr typesMgr)
-        {
-            // refresh control's data
-            list.DataSource = null;
-            list.DataSource = typesMgr.FramingSymbols;
-            list.DisplayMember = "Name";
-            list.SelectedIndex = 0;
         }
 
         /// <summary>

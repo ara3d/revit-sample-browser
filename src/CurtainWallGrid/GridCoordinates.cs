@@ -7,6 +7,7 @@ using Autodesk.Revit.UI;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     /// <summary>

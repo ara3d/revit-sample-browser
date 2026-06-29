@@ -10,6 +10,7 @@ using Autodesk.Revit.UI;
 using Control = System.Windows.Forms.Control;
 using PrintRange = Autodesk.Revit.DB.PrintRange;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     /// <summary>
@@ -73,7 +74,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             get
             {
                 var setting = m_printMgr.PrintSetup.CurrentPrintSetting;
-                return setting is PrintSetting printSetting ? printSetting.Name : ConstData.InSessionName;
+                return setting is PrintSetting printSetting ? printSetting.Name : SampleBrowserUtils.InSessionName;
             }
         }
 
@@ -145,7 +146,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             get
             {
                 var theSet = m_printMgr.ViewSheetSetting.CurrentViewSheetSet;
-                return theSet is ViewSheetSet set ? set.Name : ConstData.InSessionName;
+                return theSet is ViewSheetSet set ? set.Name : SampleBrowserUtils.InSessionName;
             }
         }
 
@@ -354,13 +355,5 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             return enableOrNot;
         }
 
-        /// <summary>
-        ///     global and consistent for message box with same caption
-        /// </summary>
-        /// <param name="text">MessageBox's text.</param>
-        public static void MyMessageBox(string text)
-        {
-            TaskDialog.Show("View Printer", text);
-        }
     }
 }

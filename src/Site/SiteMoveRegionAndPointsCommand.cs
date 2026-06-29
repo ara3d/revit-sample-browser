@@ -17,6 +17,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.Site.CS
 {
     /// <summary>
@@ -47,13 +49,13 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
             var doc = uiDoc.Document;
 
             // Pick subregion
-            var subregion = SiteUiUtils.PickSubregion(uiDoc);
-            var toposurface = SiteEditingUtils.GetTopographySurfaceHost(subregion);
-            var points = SiteEditingUtils.GetPointsFromSubregionExact(subregion);
-            var sourceLocation = SiteEditingUtils.GetCenterOf(subregion);
+            var subregion = SiteTopographyHelper.PickSubregion(uiDoc);
+            var toposurface = SiteTopographyHelper.GetTopographySurfaceHost(subregion);
+            var points = SiteTopographyHelper.GetPointsFromSubregionExact(subregion);
+            var sourceLocation = SiteTopographyHelper.GetCenterOf(subregion);
 
             // Pick target location
-            var targetPoint = SiteUiUtils.PickPointNearToposurface(uiDoc, toposurface, "Pick point to move to");
+            var targetPoint = SiteTopographyHelper.PickPointNearToposurface(uiDoc, toposurface, "Pick point to move to");
 
             // Delta for the move
             var delta = targetPoint - sourceLocation;
@@ -66,7 +68,7 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
                 // Get elevation of region in current location
                 var existingPointsInCurrentLocation = subregion.GetPoints();
 
-                var existingElevation = SiteEditingUtils.GetAverageElevation(existingPointsInCurrentLocation);
+                var existingElevation = SiteTopographyHelper.GetAverageElevation(existingPointsInCurrentLocation);
 
                 // Move subregion first - allows the command delete existing points and adjust elevation to surroundings
                 using (var t2 = new Transaction(doc, "Move subregion"))
@@ -79,13 +81,13 @@ namespace Ara3D.RevitSampleBrowser.Site.CS
                 // The boundary points for the subregion cannot be deleted, since they are generated
                 // to represent the subregion boundary rather than representing real points in the host.
                 // Get non-boundary points only to be deleted.
-                var existingPointsInNewLocation = SiteEditingUtils.GetNonBoundaryPoints(subregion);
+                var existingPointsInNewLocation = SiteTopographyHelper.GetNonBoundaryPoints(subregion);
 
                 // Average elevation of all points in the subregion.
-                var newElevation = SiteEditingUtils.GetAverageElevation(subregion.GetPoints());
+                var newElevation = SiteTopographyHelper.GetAverageElevation(subregion.GetPoints());
 
                 // Adjust delta for elevation based on calculated values
-                delta = SiteEditingUtils.MoveXyzToElevation(delta, newElevation - existingElevation);
+                delta = XyzMath.MoveXyzToElevation(delta, newElevation - existingElevation);
 
                 // Edit scope for points changes
                 using (var editScope = new TopographyEditScope(doc, "Edit TS"))

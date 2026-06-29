@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 {
     /// <summary>
@@ -53,7 +54,7 @@ namespace Ara3D.RevitSampleBrowser.DoorSwing.CS
 
             // add needed shared parameters
             // if the parameters already added will not add again.
-            DoorSharedParameters.AddSharedParameters(app);
+            ParameterAccess.AddSharedParameters(app);
         }
 
         // retrieves door families.

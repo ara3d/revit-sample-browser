@@ -6,6 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ColorFill.CS
 {
     /// <summary>
@@ -123,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             foreach (var entry in entries)
             {
                 seed++;
-                var newEntry = CreateEntry(scheme, storageType, entry.FillPatternId, GenerateRandomColor(seed));
+                var newEntry = CreateEntry(scheme, storageType, entry.FillPatternId, BitmapHelper.GenerateRandomColor(seed));
                 switch (storageType)
                 {
                     case StorageType.Double:
@@ -151,16 +152,6 @@ namespace Ara3D.RevitSampleBrowser.ColorFill.CS
             }
 
             m_externalCommandData.Application.ActiveUIDocument.RefreshActiveView();
-        }
-
-        private Color GenerateRandomColor(int seed)
-        {
-            var r = new Random(seed);
-            var red = byte.Parse(r.Next(0, 256).ToString());
-            var green = byte.Parse(r.Next(0, 256).ToString());
-            var blue = byte.Parse(r.Next(0, 256).ToString());
-            var randomColor = new Color(red, green, blue);
-            return randomColor;
         }
 
         private ColorFillSchemeEntry CreateEntry(ColorFillScheme scheme, StorageType type, ElementId fillPatternId,

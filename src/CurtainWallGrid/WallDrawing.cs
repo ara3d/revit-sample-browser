@@ -3,6 +3,8 @@
 using System;
 using System.Drawing;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     /// <summary>
@@ -212,13 +214,13 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
         private void WriteCoordinate(Graphics graphics, Pen pen)
         {
             var assistPointD = ConvertToPointD(WallLine2D.AssistantPoint);
-            var x = Unit.CovertFromApi(m_myDocument.LengthUnit, assistPointD.X);
-            var y = Unit.CovertFromApi(m_myDocument.LengthUnit, assistPointD.Y);
+            var x = UnitConversion.CovertFromApi(m_myDocument.LengthUnit, assistPointD.X);
+            var y = UnitConversion.CovertFromApi(m_myDocument.LengthUnit, assistPointD.Y);
 
             var xCoorString = Convert.ToString(Math.Round(x, 1));
             var yCoorString = Convert.ToString(Math.Round(y, 1));
 
-            var unitType = Unit.GetUnitLabel(m_myDocument.LengthUnit);
+            var unitType = UnitConversion.GetUnitLabel(m_myDocument.LengthUnit);
             var coordinate = $"({xCoorString}{unitType},{yCoorString}{unitType})";
             graphics.DrawString(coordinate, m_coordinateFont, Brushes.Blue,
                 new PointF(WallLine2D.AssistantPoint.X + 2, WallLine2D.AssistantPoint.Y + 2));

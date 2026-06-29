@@ -7,6 +7,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 {
     /// <summary>
@@ -180,7 +181,7 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
             //get the wall in the document and retrieve the exterior face
             var walls = m_document.GetElements<Wall>().ToList();
-            var exteriorWallFace = GeoHelper.GetWallFace(walls[0], m_rightView, true);
+            var exteriorWallFace = SampleBrowserUtils.GetWallFace(walls[0], m_rightView, true);
             if (exteriorWallFace == null)
                 return;
 
@@ -206,10 +207,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
             //add alignment between wall face and exterior frame face
             exteriorWallFace =
-                GeoHelper.GetWallFace(walls[0], m_rightView,
+                SampleBrowserUtils.GetWallFace(walls[0], m_rightView,
                     true); // Get the face again as the document is regenerated.
-            var exteriorExtrusionFace1 = GeoHelper.GetExtrusionFace(extFrame, m_rightView, true);
-            var interiorExtrusionFace1 = GeoHelper.GetExtrusionFace(extFrame, m_rightView, false);
+            var exteriorExtrusionFace1 = SampleBrowserUtils.GetExtrusionFace(extFrame, m_rightView, true);
+            var interiorExtrusionFace1 = SampleBrowserUtils.GetExtrusionFace(extFrame, m_rightView, false);
             var alignmentCreator = new CreateAlignment(m_document);
             alignmentCreator.AddAlignment(m_rightView, exteriorWallFace, exteriorExtrusionFace1);
 
@@ -235,9 +236,9 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_document.Regenerate();
 
             //add alignment between interior face of wall and interior frame face
-            var interiorWallFace = GeoHelper.GetWallFace(walls[0], m_rightView, false);
-            var interiorExtrusionFace2 = GeoHelper.GetExtrusionFace(intFrame, m_rightView, false);
-            var exteriorExtrusionFace2 = GeoHelper.GetExtrusionFace(intFrame, m_rightView, true);
+            var interiorWallFace = SampleBrowserUtils.GetWallFace(walls[0], m_rightView, false);
+            var interiorExtrusionFace2 = SampleBrowserUtils.GetExtrusionFace(intFrame, m_rightView, false);
+            var exteriorExtrusionFace2 = SampleBrowserUtils.GetExtrusionFace(intFrame, m_rightView, true);
             alignmentCreator.AddAlignment(m_rightView, interiorWallFace, interiorExtrusionFace2);
 
             //add dimension between sash referenceplane and interior frame face and lock the dimension
@@ -256,9 +257,9 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
 
             //add alignment between wall face and sill frame face
             exteriorWallFace =
-                GeoHelper.GetWallFace(walls[0], m_rightView,
+                SampleBrowserUtils.GetWallFace(walls[0], m_rightView,
                     true); // Get the face again as the document is regenerated.
-            var sillExtFace = GeoHelper.GetExtrusionFace(sillFrame, m_rightView, false);
+            var sillExtFace = SampleBrowserUtils.GetExtrusionFace(sillFrame, m_rightView, false);
             alignmentCreator.AddAlignment(m_rightView, sillExtFace, exteriorWallFace);
             m_document.Regenerate();
 
@@ -311,8 +312,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             var sash1 = m_extrusionCreator.NewExtrusion(curveArrArray3, m_sashPlane, 2 * sashDepth, sashDepth);
             m_document.Regenerate();
 
-            var esashFace1 = GeoHelper.GetExtrusionFace(sash1, m_rightView, true);
-            var isashFace1 = GeoHelper.GetExtrusionFace(sash1, m_rightView, false);
+            var esashFace1 = SampleBrowserUtils.GetExtrusionFace(sash1, m_rightView, true);
+            var isashFace1 = SampleBrowserUtils.GetExtrusionFace(sash1, m_rightView, false);
             var sashDim1 = m_dimensionCreator.AddDimension(m_rightView, esashFace1, isashFace1);
             sashDim1.IsLocked = true;
             var sashWithPlane1 = m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, isashFace1);
@@ -333,8 +334,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             sash2.SetVisibility(CreateVisibility());
             m_document.Regenerate();
 
-            var esashFace2 = GeoHelper.GetExtrusionFace(sash2, m_rightView, true);
-            var isashFace2 = GeoHelper.GetExtrusionFace(sash2, m_rightView, false);
+            var esashFace2 = SampleBrowserUtils.GetExtrusionFace(sash2, m_rightView, true);
+            var isashFace2 = SampleBrowserUtils.GetExtrusionFace(sash2, m_rightView, false);
             var sashDim2 = m_dimensionCreator.AddDimension(m_rightView, esashFace2, isashFace2);
             sashDim2.IsLocked = true;
             var sashWithPlane2 = m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, isashFace2);
@@ -381,8 +382,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_document.Regenerate();
             glass1.SetVisibility(CreateVisibility());
             m_document.Regenerate();
-            var eglassFace1 = GeoHelper.GetExtrusionFace(glass1, m_rightView, true);
-            var iglassFace1 = GeoHelper.GetExtrusionFace(glass1, m_rightView, false);
+            var eglassFace1 = SampleBrowserUtils.GetExtrusionFace(glass1, m_rightView, true);
+            var iglassFace1 = SampleBrowserUtils.GetExtrusionFace(glass1, m_rightView, false);
             var glassDim1 = m_dimensionCreator.AddDimension(m_rightView, eglassFace1, iglassFace1);
             glassDim1.IsLocked = true;
             var glass1WithSashPlane = m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, eglassFace1);
@@ -400,8 +401,8 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             m_document.Regenerate();
             glass2.SetVisibility(CreateVisibility());
             m_document.Regenerate();
-            var eglassFace2 = GeoHelper.GetExtrusionFace(glass2, m_rightView, true);
-            var iglassFace2 = GeoHelper.GetExtrusionFace(glass2, m_rightView, false);
+            var eglassFace2 = SampleBrowserUtils.GetExtrusionFace(glass2, m_rightView, true);
+            var iglassFace2 = SampleBrowserUtils.GetExtrusionFace(glass2, m_rightView, false);
             var glassDim2 = m_dimensionCreator.AddDimension(m_rightView, eglassFace2, iglassFace2);
             glassDim2.IsLocked = true;
             var glass2WithSashPlane = m_dimensionCreator.AddDimension(m_rightView, m_sashPlane, eglassFace2);
@@ -629,10 +630,10 @@ namespace Ara3D.RevitSampleBrowser.FamilyCreation.WindowWizard.CS
             switch (m_document.DisplayUnitSystem)
             {
                 case DisplayUnit.METRIC:
-                    height = Utility.MetricToImperial(height);
-                    width = Utility.MetricToImperial(width);
-                    sillHeight = Utility.MetricToImperial(sillHeight);
-                    windowInset = Utility.MetricToImperial(windowInset);
+                    height = SampleBrowserUtils.MetricToImperial(height);
+                    width = SampleBrowserUtils.MetricToImperial(width);
+                    sillHeight = SampleBrowserUtils.MetricToImperial(sillHeight);
+                    windowInset = SampleBrowserUtils.MetricToImperial(windowInset);
                     break;
             }
 

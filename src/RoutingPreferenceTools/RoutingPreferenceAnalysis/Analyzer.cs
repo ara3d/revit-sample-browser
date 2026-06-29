@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAnalysis
 {
     /// <summary>
@@ -42,7 +43,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
             m_routingPreferenceManager = routingPreferenceManager;
             m_document = document;
 
-            m_mepSize = Convert.ConvertValueToFeet(mepSize, m_document);
+            m_mepSize = DocumentUnits.ConvertValueToFeet(mepSize, m_document);
         }
 
         /// <summary>
@@ -194,7 +195,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
 
                     foreach (var size in sizesNotCovered)
                     {
-                        var roundedSize = Convert.ConvertValueDocumentUnits(size, m_document);
+                        var roundedSize = DocumentUnits.ConvertValueDocumentUnits(size, m_document);
 
                         sBuilder.Append($"{roundedSize} ");
                     }

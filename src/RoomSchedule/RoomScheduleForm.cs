@@ -11,6 +11,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
@@ -604,7 +605,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             foreach (var room in m_roomData.Rooms)
             {
                 Parameter param = null;
-                var bExist = RoomsData.ShareParameterExists(room, RoomsData.SharedParam, ref param);
+                var bExist = ParameterAccess.ShareParameterExists(room, RoomsData.SharedParam, ref param);
                 if (bExist && null != param && false == string.IsNullOrEmpty(param.AsString()))
                 {
                     param.Set(string.Empty);

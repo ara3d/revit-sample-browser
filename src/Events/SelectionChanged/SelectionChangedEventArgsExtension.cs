@@ -5,6 +5,7 @@ using System.Text;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Events;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
 {
     /// <summary>
@@ -23,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
             sb.AppendLine();
 
             var doc = args.GetDocument();
-            sb.AppendLine($"[Event] {GetEventName(args.GetType())}: {TitleNoExt(doc.Title)}");
+            sb.AppendLine($"[Event] {EventLoggingHelper.GetRevitUiEventName(args.GetType())}: {EventLoggingHelper.TitleNoExt(doc.Title)}");
 
             var refs = args.GetReferences();
             sb.AppendLine($"Selection Count:{refs.Count}");
@@ -111,41 +112,6 @@ namespace Ara3D.RevitSampleBrowser.Events.SelectionChanged.CS
             }
 
             return sb.ToString();
-        }
-
-        /// <summary>
-        ///     Get event name from its EventArgs, without namespace prefix
-        /// </summary>
-        /// <param name="type">Generic event arguments type.</param>
-        /// <returns>the event name</returns>
-        private static string GetEventName(Type type)
-        {
-            var argName = type.ToString();
-            var tail = "EventArgs";
-            var head = "Autodesk.Revit.UI.Events.";
-            var firstIndex = head.Length;
-            var length = argName.Length - head.Length - tail.Length;
-            var eventName = argName.Substring(firstIndex, length);
-            return eventName;
-        }
-
-        /// <summary>
-        ///     This method will remove the extension of the file name (if it has an extension).
-        ///     Document.Title will return title of project depends on OS setting:
-        ///     If we choose show extension name by IE:Tools\Folder Options, then the title will end with accordingly extension
-        ///     name.
-        ///     If we don't show extension, the Document.Title will only return file name without extension.
-        /// </summary>
-        /// <param name="orgTitle">Origin file name to be revised.</param>
-        /// <returns>New file name without extension name.</returns>
-        private static string TitleNoExt(string orgTitle)
-        {
-            // return null directly if it's null
-            if (string.IsNullOrEmpty(orgTitle)) return "";
-
-            // Remove the extension 
-            var pos = orgTitle.LastIndexOf('.');
-            return -1 != pos ? orgTitle.Remove(pos) : orgTitle;
         }
     }
 }

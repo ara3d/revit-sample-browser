@@ -10,6 +10,7 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -110,66 +111,14 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
                         system = null;
                     }
 
-                    system = ExtractSystemFromConnectors(connectors);
+                    system = ConnectorHelper.ExtractSystemFromConnectors(connectors);
                     break;
                 }
-                //
-                // If selected element is a MEPCurve (e.g. pipe or duct), 
-                // iterate its connectors and get the expected system
                 case MEPCurve mepCurve:
                 {
                     var connectors = mepCurve.ConnectorManager.Connectors;
-                    system = ExtractSystemFromConnectors(connectors);
+                    system = ConnectorHelper.ExtractSystemFromConnectors(connectors);
                     break;
-                }
-            }
-
-            return system;
-        }
-
-        /// <summary>
-        ///     Get the mechanical or piping system from the connectors of selected element
-        /// </summary>
-        /// <param name="connectors">Connectors of selected element</param>
-        /// <returns>The found mechanical or piping system</returns>
-        private static MEPSystem ExtractSystemFromConnectors(ConnectorSet connectors)
-        {
-            MEPSystem system = null;
-
-            if (connectors == null || connectors.Size == 0) return null;
-
-            // Get well-connected mechanical or piping systems from each connector
-            var systems = new List<MEPSystem>();
-            foreach (Connector connector in connectors)
-            {
-                var tmpSystem = connector.MEPSystem;
-                switch (tmpSystem)
-                {
-                    case null:
-                        continue;
-                    case MechanicalSystem ms:
-                    {
-                        if (ms.IsWellConnected) systems.Add(tmpSystem);
-                        break;
-                    }
-                    case PipingSystem ps when ps.IsWellConnected:
-                        systems.Add(tmpSystem);
-                        break;
-                }
-            }
-
-            // If more than one system is found, get the system contains the most elements
-            var countOfSystem = systems.Count;
-            if (countOfSystem != 0)
-            {
-                var countOfElements = 0;
-                foreach (var sys in systems)
-                {
-                    if (sys.Elements.Size > countOfElements)
-                    {
-                        system = sys;
-                        countOfElements = sys.Elements.Size;
-                    }
                 }
             }
 

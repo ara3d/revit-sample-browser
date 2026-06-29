@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
 {
     /// <summary>
@@ -39,7 +40,7 @@ namespace Ara3D.RevitSampleBrowser.InPlaceMembers.CS
                     return Result.Failed;
                 }
 
-                var graphicsData = GraphicsDataFactory.CreateGraphicsData(model);
+                var graphicsData = SampleBrowserUtils.CreateGraphicsData(model);
                 var instanceProperties = new Properties(inPlace);
                 var form = new InPlaceMembersForm(instanceProperties, graphicsData);
                 return form.ShowDialog() == DialogResult.Abort ? Result.Failed : Result.Succeeded;

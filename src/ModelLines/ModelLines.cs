@@ -9,6 +9,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.Creation.Document;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.ModelLines.CS
 {
     /// <summary>
@@ -211,7 +213,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             try
             {
                 // First get the sketch plane by the giving element id.
-                var workPlane = GetSketchPlaneById(sketchId);
+                var workPlane = XyzMath.GetSketchPlaneById(m_revit.ActiveUIDocument.Document, sketchId);
 
                 // Additional check: start point should not equal end point
                 if (startPoint.Equals(endPoint)) throw new ArgumentException("Two points should not be the same.");
@@ -247,7 +249,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             try
             {
                 // First get the sketch plane by the giving element id.
-                var workPlane = GetSketchPlaneById(sketchId);
+                var workPlane = XyzMath.GetSketchPlaneById(m_revit.ActiveUIDocument.Document, sketchId);
 
                 // Additional check: the start, end and third point should not be the same
                 if (startPoint.Equals(endPoint) || startPoint.Equals(thirdPoint)
@@ -282,7 +284,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
         public void CreateOthers(ElementId sketchId, ElementId elementId, XYZ offsetPoint)
         {
             // First get the sketch plane by the giving element id.
-            var workPlane = GetSketchPlaneById(sketchId);
+            var workPlane = XyzMath.GetSketchPlaneById(m_revit.ActiveUIDocument.Document, sketchId);
 
             // Because the geometry of these lines can't be created by API,
             // use an existing geometry to create ModelEllipse, ModelHermiteSpline, ModelNurbSpline
@@ -292,7 +294,7 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
             var curves = m_createApp.NewCurveArray(); // create a geometry curve array
 
             // Get the Autodesk.Revit.DB.ElementId which used to get the corresponding element
-            if (!(GetElementById(elementId) is ModelCurve selected)) throw new Exception("Don't have the element you select");
+            if (!(ElementQuery.GetElementById(m_revit.ActiveUIDocument.Document, elementId) is ModelCurve selected)) throw new Exception("Don't have the element you select");
 
             // add the geometry curve of the element
             curves.Append(selected.GeometryCurve); // add the geometry ellipse
@@ -427,29 +429,6 @@ namespace Ara3D.RevitSampleBrowser.ModelLines.CS
                         break;
                 }
             }
-        }
-
-        /// <summary>
-        ///     Use Autodesk.Revit.DB.ElementId to get the corresponding element
-        /// </summary>
-        /// <param name="id">the element id value</param>
-        /// <returns>the corresponding element</returns>
-        private Element GetElementById(ElementId id)
-        {
-            // Get the corresponding element
-            return m_revit.ActiveUIDocument.Document.GetElement(id);
-        }
-
-        /// <summary>
-        ///     Use Autodesk.Revit.DB.ElementId to get the corresponding sketch plane
-        /// </summary>
-        /// <param name="id">the element id value</param>
-        /// <returns>the corresponding sketch plane</returns>
-        private SketchPlane GetSketchPlaneById(ElementId id)
-        {
-            // First get the sketch plane by the giving element id.
-            if (!(GetElementById(id) is SketchPlane workPlane)) throw new Exception("Don't have the work plane you select.");
-            return workPlane;
         }
     }
 }

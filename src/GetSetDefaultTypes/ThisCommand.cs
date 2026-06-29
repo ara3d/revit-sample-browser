@@ -4,6 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -11,8 +12,7 @@ namespace Ara3D.RevitSampleBrowser.GetSetDefaultTypes.CS
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            if (!DockablePane.PaneExists(DefaultFamilyTypes.PaneId) ||
-                !DockablePane.PaneExists(DefaultElementTypes.PaneId))
+            if (!SampleBrowserUtils.DockablePanesExist())
                 return Result.Failed;
 
             var uiApp = commandData.Application;

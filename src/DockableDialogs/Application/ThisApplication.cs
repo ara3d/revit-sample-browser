@@ -14,12 +14,13 @@
 
 using System;
 using System.Windows.Media.Imaging;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.TopLevelCommands;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
 {
     /// <summary>
@@ -34,7 +35,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
 
         private MainPage.MainPage m_mainPage;
 
-        public DockablePaneId MainPageDockablePaneId => Globals.SmUserDockablePaneId;
+        public DockablePaneId MainPageDockablePaneId => SampleBrowserUtils.SmUserDockablePaneId;
 
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -49,31 +50,31 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
             ThisApp = this;
             m_apiUtility = new ApiUtility();
 
-            application.CreateRibbonTab(Globals.DiagnosticsTabName);
-            var panel = application.CreateRibbonPanel(Globals.DiagnosticsTabName, Globals.DiagnosticsPanelName);
+            application.CreateRibbonTab(SampleBrowserUtils.DiagnosticsTabName);
+            var panel = application.CreateRibbonPanel(SampleBrowserUtils.DiagnosticsTabName, SampleBrowserUtils.DiagnosticsPanelName);
 
             panel.AddSeparator();
 
-            var pushButtonRegisterPageData = new PushButtonData(Globals.RegisterPage, Globals.RegisterPage,
-                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandRegisterPage).FullName)
+            var pushButtonRegisterPageData = new PushButtonData(SampleBrowserUtils.RegisterPage, SampleBrowserUtils.RegisterPage,
+                AssemblyPathHelper.GetAssemblyFullName(), typeof(ExternalCommandRegisterPage).FullName)
             {
-                LargeImage = new BitmapImage(new Uri($"{FileUtility.GetApplicationResourcesPath()}Register.png"))
+                LargeImage = new BitmapImage(new Uri($"{AssemblyPathHelper.GetApplicationResourcesPath()}Register.png"))
             };
             var pushButtonRegisterPage = panel.AddItem(pushButtonRegisterPageData) as PushButton;
             pushButtonRegisterPage.AvailabilityClassName = typeof(ExternalCommandRegisterPage).FullName;
 
-            var pushButtonShowPageData = new PushButtonData(Globals.ShowPage, Globals.ShowPage,
-                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandShowPage).FullName)
+            var pushButtonShowPageData = new PushButtonData(DialogHelper.ShowPage, DialogHelper.ShowPage,
+                AssemblyPathHelper.GetAssemblyFullName(), typeof(ExternalCommandShowPage).FullName)
             {
-                LargeImage = new BitmapImage(new Uri($"{FileUtility.GetApplicationResourcesPath()}Show.png"))
+                LargeImage = new BitmapImage(new Uri($"{AssemblyPathHelper.GetApplicationResourcesPath()}Show.png"))
             };
             var pushButtonShowPage = panel.AddItem(pushButtonShowPageData) as PushButton;
             pushButtonShowPage.AvailabilityClassName = typeof(ExternalCommandShowPage).FullName;
 
-            var pushButtonHidePageData = new PushButtonData(Globals.HidePage, Globals.HidePage,
-                FileUtility.GetAssemblyFullName(), typeof(ExternalCommandHidePage).FullName)
+            var pushButtonHidePageData = new PushButtonData(SampleBrowserUtils.HidePage, SampleBrowserUtils.HidePage,
+                AssemblyPathHelper.GetAssemblyFullName(), typeof(ExternalCommandHidePage).FullName)
             {
-                LargeImage = new BitmapImage(new Uri($"{FileUtility.GetApplicationResourcesPath()}Hide.png"))
+                LargeImage = new BitmapImage(new Uri($"{AssemblyPathHelper.GetApplicationResourcesPath()}Hide.png"))
             };
             var pushButtonHidePage = panel.AddItem(pushButtonHidePageData) as PushButton;
             pushButtonHidePage.AvailabilityClassName = typeof(ExternalCommandHidePage).FullName;
@@ -86,8 +87,8 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
         /// </summary>
         public void RegisterDockableWindow(UIApplication application, Guid mainPageGuid)
         {
-            Globals.SmUserDockablePaneId = new DockablePaneId(mainPageGuid);
-            application.RegisterDockablePane(Globals.SmUserDockablePaneId, Globals.ApplicationName,
+            SampleBrowserUtils.SmUserDockablePaneId = new DockablePaneId(mainPageGuid);
+            application.RegisterDockablePane(SampleBrowserUtils.SmUserDockablePaneId, SampleBrowserUtils.ApplicationName,
                 ThisApp.GetMainWindow());
         }
 
@@ -96,8 +97,8 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
         /// </summary>
         public void RegisterDockableWindow(UIControlledApplication application, Guid mainPageGuid)
         {
-            Globals.SmUserDockablePaneId = new DockablePaneId(mainPageGuid);
-            application.RegisterDockablePane(Globals.SmUserDockablePaneId, Globals.ApplicationName,
+            SampleBrowserUtils.SmUserDockablePaneId = new DockablePaneId(mainPageGuid);
+            application.RegisterDockablePane(SampleBrowserUtils.SmUserDockablePaneId, SampleBrowserUtils.ApplicationName,
                 ThisApp.GetMainWindow());
         }
 
@@ -114,7 +115,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application
         /// </summary>
         public void SetWindowVisibility(UIApplication application, bool state)
         {
-            var pane = application.GetDockablePane(Globals.SmUserDockablePaneId);
+            var pane = application.GetDockablePane(SampleBrowserUtils.SmUserDockablePaneId);
             if (pane != null)
             {
                 if (state)

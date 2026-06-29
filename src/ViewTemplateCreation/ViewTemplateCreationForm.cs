@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
 {
     /// <summary>
@@ -25,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
         {
             InitializeComponent();
 
-            Text = Utils.SampleName;
+            Text = ViewTemplateHelper.SampleName;
             m_activeDocument = activeDocument;
             InitViewNameComboBox();
             InitPartVisibilityComboBox();
@@ -86,14 +88,14 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
 
                     var selectedView = GetSelectedView();
                     var viewTemplate = selectedView.CreateViewTemplate();
-                    Utils.ShowInformationMessageBox($"View template '{viewTemplate.Name}' has been created.");
+                    ViewTemplateHelper.ShowInformationMessageBox($"View template '{viewTemplate.Name}' has been created.");
 
                     SetPartsVisibilityIncludeState(viewTemplate);
                     SetDetailLevelValue(viewTemplate);
                     ChangeVgOverridesModelSettings(viewTemplate);
 
                     selectedView.ViewTemplateId = viewTemplate.Id;
-                    Utils.ShowInformationMessageBox(
+                    ViewTemplateHelper.ShowInformationMessageBox(
                         $"View template '{viewTemplate.Name}' has been assigned to '{selectedView.Name}' view.");
 
                     transaction.Commit();
@@ -101,7 +103,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
             }
             catch (Exception ex)
             {
-                Utils.ShowWarningMessageBox(ex.ToString());
+                ViewTemplateHelper.ShowWarningMessageBox(ex.ToString());
             }
 
             Close();
@@ -132,13 +134,13 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
         {
             if (!view.HasDetailLevel())
             {
-                Utils.ShowWarningMessageBox($"'{view.Name}' view does not have '{"Detail level"}' parameter.");
+                ViewTemplateHelper.ShowWarningMessageBox($"'{view.Name}' view does not have '{"Detail level"}' parameter.");
                 return;
             }
 
             if (!view.CanModifyDetailLevel())
             {
-                Utils.ShowWarningMessageBox($"'{"Detail level"}' can not be modified in view '{view.Name}'.");
+                ViewTemplateHelper.ShowWarningMessageBox($"'{"Detail level"}' can not be modified in view '{view.Name}'.");
                 return;
             }
 
@@ -161,7 +163,7 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
         {
             if (!view.AreGraphicsOverridesAllowed())
             {
-                Utils.ShowWarningMessageBox($"Graphic overrides are not alowed for the '{view.Name}' view");
+                ViewTemplateHelper.ShowWarningMessageBox($"Graphic overrides are not alowed for the '{view.Name}' view");
                 return;
             }
 
@@ -184,14 +186,14 @@ namespace Ara3D.RevitSampleBrowser.ViewTemplateCreation.CS
             var ogSettings = view.GetCategoryOverrides(categoryId);
             if (ogSettings == null || !ogSettings.IsValidObject)
             {
-                Utils.ShowWarningMessageBox(
+                ViewTemplateHelper.ShowWarningMessageBox(
                     $"Graphic overrides category '{buildInCategory}' is not found or is not valid");
                 return;
             }
 
             if (!view.IsCategoryOverridable(categoryId))
             {
-                Utils.ShowWarningMessageBox(
+                ViewTemplateHelper.ShowWarningMessageBox(
                     $"Graphic overrides category '{buildInCategory}' is not overridable");
                 return;
             }

@@ -1,12 +1,13 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.TopLevelCommands
 {
     [Transaction(TransactionMode.Manual)]
@@ -32,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.TopLevelCommands
             }
             catch (Exception ex)
             {
-                TaskDialog.Show(Globals.ApplicationName, ex.Message);
+                TaskDialog.Show(SampleBrowserUtils.ApplicationName, ex.Message);
             }
 
             return Result.Succeeded;

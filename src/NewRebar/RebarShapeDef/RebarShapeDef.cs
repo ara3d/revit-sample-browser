@@ -105,23 +105,12 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.RebarShapeDef
         ///     Return all the parameter types supported by RebarShape definition.
         /// </summary>
         /// <returns>All the parameter types supported by RebarShape definition</returns>
-        public List<Type> AllParameterTypes()
+        public List<Type> AllParameterTypes() => new List<Type>
         {
-            var types = new List<Type>
-            {
-                typeof(RebarShapeParameterDouble),
-                typeof(RebarShapeParameterFormula)
-            };
-            return types;
-        }
+            typeof(RebarShapeParameterDouble),
+            typeof(RebarShapeParameterFormula)
+        };
 
-        /// <summary>
-        ///     Return all the constraint types supported by RebarShapeDefinition.
-        /// </summary>
-        /// <returns>all the constraint types supported by RebarShapeDefinition</returns>
-        public virtual List<Type> AllowedConstraintTypes()
-        {
-            return new List<Type>();
-        }
+        public virtual List<Type> AllowedConstraintTypes() => new List<Type>();
     }
 }

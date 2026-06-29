@@ -23,6 +23,7 @@ using System.Windows;
 using Ara3D.RevitSampleBrowser.CloudAPISample.CS.View;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
 {
     /// <summary>
@@ -62,22 +63,6 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
         }
 
 
-        private FolderLocation GetTargetFolderUrn(IList<MigrationRule> rules, string directory, string model)
-        {
-            foreach (var rule in rules)
-            {
-                var models = Directory.GetFiles(directory, rule.Pattern, SearchOption.TopDirectoryOnly);
-                if (models.Contains(model))
-                    return rule.Target;
-            }
-
-            // If the given model can not match any pattern in rules, use root folder by default.
-            return Model.AvailableFolders.Last();
-        }
-
-        /// <summary>
-        ///     User coroutine to update UI during processing.
-        /// </summary>
         public IEnumerator Upload(string directory, Guid accountId, Guid projectId,
             ObservableCollection<MigrationRule> modelRules)
         {
@@ -154,7 +139,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
                 try
                 {
                     var doc = Application.Application.OpenDocumentFile(modelpath, ops);
-                    var folderUrn = GetTargetFolderUrn(modelRules, directory, model)?.Urn;
+                    var folderUrn = CloudApiHelper.GetTargetFolderUrn(modelRules, directory, model, Model.AvailableFolders)?.Urn;
                     doc.SaveAsCloudModel(accountId, projectId, folderUrn, $"Migrated_{Path.GetFileName(model)}");
                     var modelPath = doc.GetCloudModelPath();
                     mapModelsNameToGuid.Add(name, $"{modelPath.GetProjectGUID()},{modelPath.GetModelGUID()}");

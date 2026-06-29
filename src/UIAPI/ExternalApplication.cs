@@ -1,12 +1,10 @@
-﻿// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
 using Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog;
 using Ara3D.RevitSampleBrowser.UIAPI.CS.Properties;
 using Autodesk.Revit.Attributes;
@@ -14,6 +12,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS
 {
     public class ExternalApp : IExternalApplication
@@ -54,15 +53,6 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
             binding.CanExecute += binding_CanExecute;
         }
 
-        private BitmapSource ConvertFromBitmap(Bitmap bitmap)
-        {
-            return Imaging.CreateBitmapSourceFromHBitmap(
-                bitmap.GetHbitmap(),
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions());
-        }
-
         private void CreateRibbonButton(UIControlledApplication application)
         {
             application.CreateRibbonTab("AddIn Integration");
@@ -74,8 +64,8 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
             var ch = new ContextualHelp(ContextualHelpType.ContextId, "HID_OBJECTS_WALL");
             pbd.SetContextualHelp(ch);
             pbd.LongDescription = "We redirect the wiki help for this button to Wall creation.";
-            pbd.LargeImage = ConvertFromBitmap(Resources.StrcturalWall);
-            pbd.Image = ConvertFromBitmap(Resources.StrcturalWall_S);
+            pbd.LargeImage = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall);
+            pbd.Image = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall_S);
 
             var pb = rp.AddItem(pbd) as PushButton;
             pb.Enabled = true;
@@ -87,8 +77,8 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
             var ch1 = new ContextualHelp(ContextualHelpType.Url, "http://www.google.com/");
             pbd1.SetContextualHelp(ch1);
             pbd1.LongDescription = "Go to google.";
-            pbd1.LargeImage = ConvertFromBitmap(Resources.StrcturalWall);
-            pbd1.Image = ConvertFromBitmap(Resources.StrcturalWall_S);
+            pbd1.LargeImage = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall);
+            pbd1.Image = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall_S);
             var pb1 = rp.AddItem(pbd1) as PushButton;
             pb1.AvailabilityClassName = "Ara3D.RevitSampleBrowser.UIAPI.CS.ApplicationAvailabilityClass";
 
@@ -103,8 +93,8 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
             };
             pbd2.SetContextualHelp(ch2);
             pbd2.LongDescription = "Go to Revit Add-In Utility.";
-            pbd2.LargeImage = ConvertFromBitmap(Resources.StrcturalWall);
-            pbd2.Image = ConvertFromBitmap(Resources.StrcturalWall_S);
+            pbd2.LargeImage = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall);
+            pbd2.Image = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall_S);
             var pb2 = rp.AddItem(pbd2) as PushButton;
             pb2.AvailabilityClassName = "Ara3D.RevitSampleBrowser.UIAPI.CS.ApplicationAvailabilityClass";
 
@@ -112,8 +102,8 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
                 AddinAssmeblyPath,
                 "Ara3D.RevitSampleBrowser.UIAPI.CS.PreviewCommand")
             {
-                LargeImage = ConvertFromBitmap(Resources.StrcturalWall),
-                Image = ConvertFromBitmap(Resources.StrcturalWall_S)
+                LargeImage = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall),
+                Image = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall_S)
             };
             var pb3 = rp.AddItem(pbd3) as PushButton;
             pb3.AvailabilityClassName = "Ara3D.RevitSampleBrowser.UIAPI.CS.ApplicationAvailabilityClass";
@@ -121,8 +111,8 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS
             var pbd5 = new PushButtonData("Drag_And_Drop", "Drag and Drop", AddinAssmeblyPath,
                 "Ara3D.RevitSampleBrowser.UIAPI.CS.DragAndDropCommand")
             {
-                LargeImage = ConvertFromBitmap(Resources.StrcturalWall),
-                Image = ConvertFromBitmap(Resources.StrcturalWall_S)
+                LargeImage = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall),
+                Image = BitmapHelper.ConvertFromBitmap(Resources.StrcturalWall_S)
             };
             var pb5 = rp.AddItem(pbd5) as PushButton;
             pb5.AvailabilityClassName = "Ara3D.RevitSampleBrowser.UIAPI.CS.ApplicationAvailabilityClass";

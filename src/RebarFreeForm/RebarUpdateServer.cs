@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
 {
     /// <summary>
@@ -207,7 +208,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                     return false;
                 var tempTrf = Transform.Identity;
                 double dfOffset = 0;
-                if (!GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0, out dfOffset))
+                if (!SampleBrowserUtils.GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0, out dfOffset))
                     return false;
 
                 switch ((BarHandle)constraint.GetCustomHandleTag())
@@ -419,7 +420,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                         if (constrainedFace == null)
                             continue;
                         double dfOffset;
-                        if (GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0,
+                        if (!SampleBrowserUtils.GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0,
                                 out dfOffset))
                             faces.Add(new TargetFace { Face = constrainedFace, Transform = trf, Offset = dfOffset });
                     }
@@ -468,7 +469,7 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 {
                     var tempTrf = Transform.Identity;
                     double dfOffset;
-                    if (!GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0, out dfOffset))
+                    if (!SampleBrowserUtils.GetOffsetFromConstraintAtTarget(data.GetRebarUpdateCurvesData(), constraint, 0, out dfOffset))
                         return false;
                     firstFace = new TargetFace
                     {
@@ -516,44 +517,6 @@ namespace Ara3D.RevitSampleBrowser.RebarFreeForm.CS
                 return null;
             var id = ElementId.Parse(paramCurveId.AsString());
             return data.GetDocument().GetElement(id) as CurveElement;
-        }
-
-        /// <summary>
-        ///     function used to extract offset value from constraint
-        /// </summary>
-        /// <param name="updateData"> data used to pass or get information regarding constraints cover</param>
-        /// <param name="constraint">constraint from which we extract the offset information</param>
-        /// <param name="targetIdx">index of target in constraint</param>
-        /// <param name="offset"> output value </param>
-        /// <returns></returns>
-        public static bool GetOffsetFromConstraintAtTarget(RebarUpdateCurvesData updateData, RebarConstraint constraint,
-            int targetIdx, out double offset)
-        {
-            offset = 0.0;
-            if (updateData == null || constraint == null)
-                return false;
-
-            var barDiam = updateData.GetBarModelDiameter();
-            var rebarStyle = updateData.GetRebarStyle();
-            var attachment = updateData.GetAttachmentType();
-            var bIsInside = rebarStyle == RebarStyle.Standard || (rebarStyle != RebarStyle.Standard &&
-                                                                  attachment == StirrupTieAttachmentType.InteriorFace);
-
-            if (constraint.IsToCover())
-            {
-                if (targetIdx < 0 || targetIdx >= constraint.NumberOfTargets)
-                    return false; // incorrect index
-                var coverType = constraint.GetTargetCoverType(targetIdx);
-                var coverDist = coverType == null ? 0.0 : coverType.CoverDistance;
-                var diameterOffset = barDiam / 2;
-                if (bIsInside)
-                    diameterOffset *= -1;
-                offset = constraint.GetDistanceToTargetCover() - coverDist + diameterOffset;
-                return true;
-            }
-
-            offset = constraint.GetDistanceToTargetHostFace();
-            return true;
         }
 
         /// <summary>

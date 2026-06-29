@@ -10,6 +10,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAnalysis
 {
     /// <summary>
@@ -55,7 +56,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceAn
                 m_application.ActiveUIDocument.Document);
             foreach (var size in sizes)
             {
-                var unitAdjustedSize = Convert.ConvertValueDocumentUnits(size, m_application.ActiveUIDocument.Document);
+                var unitAdjustedSize = DocumentUnits.ConvertValueDocumentUnits(size, m_application.ActiveUIDocument.Document);
                 comboBox_Sizes.Items.Add(unitAdjustedSize.ToString());
             }
 

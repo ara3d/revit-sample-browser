@@ -5,6 +5,8 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistration
 {
     /// <summary>
@@ -22,20 +24,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalCommand.CS.ExternalCommandRegistratio
                 "Ara3D.RevitSampleBrowser.ExternalCommandRegistration");
             trans.Start();
             var uiDoc = commandData.Application.ActiveUIDocument;
-            var curves = new List<Curve>();
-            //create rectangular curve: wall length: 60 , wall width: 40
-            var line1 = Line.CreateBound(new XYZ(0, 0, 0),
-                new XYZ(0, 60, 0));
-            var line2 = Line.CreateBound(new XYZ(0, 60, 0),
-                new XYZ(0, 60, 40));
-            var line3 = Line.CreateBound(new XYZ(0, 60, 40),
-                new XYZ(0, 0, 40));
-            var line4 = Line.CreateBound(new XYZ(0, 0, 40),
-                new XYZ(0, 0, 0));
-            curves.Add(line1);
-            curves.Add(line2);
-            curves.Add(line3);
-            curves.Add(line4);
+            var curves = XyzMath.CreateRectangularWallCurves();
             //create wall
             Wall.Create(uiDoc.Document, curves, false);
 

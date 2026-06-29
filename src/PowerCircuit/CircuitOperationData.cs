@@ -9,6 +9,8 @@ using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
 {
     /// <summary>
@@ -159,7 +161,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                 if (!string.Equals(fi.Category.Name, "Lighting Devices")) allLightingDevices = false;
 
                 // Verify if the family instance has usable connectors
-                if (!VerifyUnusedConnectors(fi))
+                if (!ConnectorHelper.VerifyUnusedConnectors(fi))
                 {
                     m_canCreateCircuit = false;
                     return;
@@ -167,43 +169,6 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             }
 
             if (allLightingDevices) m_canCreateCircuit = false;
-        }
-
-        /// <summary>
-        ///     Verify if the family instance has usable connectors
-        /// </summary>
-        /// <param name="fi">The family instance to be verified</param>
-        /// <returns>
-        ///     True if the family instance has usable connecotors,
-        ///     otherwise false
-        /// </returns>
-        private static bool VerifyUnusedConnectors(FamilyInstance fi)
-        {
-            var hasUnusedElectricalConnector = false;
-            try
-            {
-                var mepModel = fi.MEPModel;
-                if (null == mepModel) return hasUnusedElectricalConnector;
-
-                var cm = mepModel.ConnectorManager;
-                var unusedConnectors = cm.UnusedConnectors;
-                if (null == unusedConnectors || unusedConnectors.IsEmpty) return hasUnusedElectricalConnector;
-
-                foreach (Connector connector in unusedConnectors)
-                {
-                    if (connector.Domain == Domain.DomainElectrical)
-                    {
-                        hasUnusedElectricalConnector = true;
-                        break;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return hasUnusedElectricalConnector;
-            }
-
-            return hasUnusedElectricalConnector;
         }
 
         /// <summary>
@@ -401,7 +366,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             }
             catch (Exception)
             {
-                ShowErrorMessage("FailedToCreateCircuit");
+                DialogHelper.ShowErrorMessage("FailedToCreateCircuit");
             }
         }
 
@@ -450,20 +415,20 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             MEPModel mepModel = null;
             if (!(selectedElement is FamilyInstance fi) || null == (mepModel = fi.MEPModel))
             {
-                ShowErrorMessage("SelectElectricalComponent");
+                DialogHelper.ShowErrorMessage("SelectElectricalComponent");
                 return;
             }
 
             // Verify if the element has usable connector 
-            if (!VerifyUnusedConnectors(fi))
+            if (!ConnectorHelper.VerifyUnusedConnectors(fi))
             {
-                ShowErrorMessage("NoUsableConnector");
+                DialogHelper.ShowErrorMessage("NoUsableConnector");
                 return;
             }
 
-            if (IsElementBelongsToCircuit(mepModel, m_selectedElectricalSystem))
+            if (ConnectorHelper.IsElementBelongsToCircuit(mepModel, m_selectedElectricalSystem))
             {
-                ShowErrorMessage("ElementInCircuit");
+                DialogHelper.ShowErrorMessage("ElementInCircuit");
                 return;
             }
 
@@ -475,11 +440,11 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
                     es.Insert(m_revitDoc.Document.GetElement(elementId));
                 }
 
-                if (!m_selectedElectricalSystem.AddToCircuit(es)) ShowErrorMessage("FailedToAddElement");
+                if (!m_selectedElectricalSystem.AddToCircuit(es)) DialogHelper.ShowErrorMessage("FailedToAddElement");
             }
             catch (Exception)
             {
-                ShowErrorMessage("FailedToAddElement");
+                DialogHelper.ShowErrorMessage("FailedToAddElement");
             }
         }
 
@@ -505,14 +470,14 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             MEPModel mepModel = null;
             if (!(selectedElement is FamilyInstance fi) || null == (mepModel = fi.MEPModel))
             {
-                ShowErrorMessage("SelectElectricalComponent");
+                DialogHelper.ShowErrorMessage("SelectElectricalComponent");
                 return;
             }
 
             // Check whether the selected element belongs to the circuit
-            if (!IsElementBelongsToCircuit(mepModel, m_selectedElectricalSystem))
+            if (!ConnectorHelper.IsElementBelongsToCircuit(mepModel, m_selectedElectricalSystem))
             {
-                ShowErrorMessage("ElementNotInCircuit");
+                DialogHelper.ShowErrorMessage("ElementNotInCircuit");
                 return;
             }
 
@@ -529,15 +494,8 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             }
             catch (Exception)
             {
-                ShowErrorMessage("FailedToRemoveElement");
+                DialogHelper.ShowErrorMessage("FailedToRemoveElement");
             }
-        }
-
-        private static bool IsElementBelongsToCircuit(MEPModel mepModel,
-            ElectricalSystem selectedElectricalSystem)
-        {
-            var ess = mepModel.GetElectricalSystems();
-            return null != ess && ess.Contains(selectedElectricalSystem);
         }
 
         /// <summary>
@@ -561,7 +519,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             }
             catch (Exception)
             {
-                ShowErrorMessage("FailedToSelectPanel");
+                DialogHelper.ShowErrorMessage("FailedToSelectPanel");
             }
         }
 
@@ -576,7 +534,7 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             }
             catch (Exception)
             {
-                ShowErrorMessage("FailedToDisconnectPanel");
+                DialogHelper.ShowErrorMessage("FailedToDisconnectPanel");
             }
         }
 
@@ -617,14 +575,5 @@ namespace Ara3D.RevitSampleBrowser.PowerCircuit.CS
             m_revitDoc.ShowElements(ei);
         }
 
-        /// <summary>
-        ///     Show message box with specified string
-        /// </summary>
-        /// <param name="message">specified string to show</param>
-        private static void ShowErrorMessage(string message)
-        {
-            TaskDialog.Show(Resources.ResourceManager.GetString("OperationFailed"),
-                Resources.ResourceManager.GetString(message), TaskDialogCommonButtons.Ok);
-        }
     }
 }

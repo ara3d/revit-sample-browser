@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Forms;
 using Ara3D.RevitSampleBrowser.NewRebar.CS.Geom;
@@ -55,31 +56,23 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
         /// </summary>
         private void Assert()
         {
-            // Reserve all element ids for following iteration
-            var selectedIds = new List<ElementId>();
-            foreach (var elemId in m_rvtUiDoc.Selection.GetElementIds())
-            {
-                var elem = m_rvtUiDoc.Document.GetElement(elemId);
-                selectedIds.Add(elem.Id);
-            }
+            var selectedIds = m_rvtUiDoc.Selection.GetElementIds()
+                .Select(elemId => m_rvtUiDoc.Document.GetElement(elemId).Id)
+                .ToList();
 
             if (selectedIds.Count == 0)
                 throw new Exception("Please select a concrete beam or column to create rebar.");
 
-            //
-            // Construct filter to find expected rebar host
-            // Structural type filters firstly
             var stFilter = new LogicalOrFilter(
                 new ElementStructuralTypeFilter(StructuralType.Beam),
                 new ElementStructuralTypeFilter(StructuralType.Column));
-            // + StructuralMaterial 
             var hostFilter = new LogicalAndFilter(stFilter,
                 new StructuralMaterialTypeFilter(StructuralMaterialType.Concrete));
-            // Expected rebar host: it should be family instance
-            var collector = new FilteredElementCollector(m_rvtUiDoc.Document, selectedIds);
-            var rebarHost =
-                collector.OfClass(typeof(FamilyInstance)).WherePasses(hostFilter).FirstElement() as FamilyInstance;
-            // Make sure the selected beam or column is rectangular.
+            var rebarHost = new FilteredElementCollector(m_rvtUiDoc.Document, selectedIds)
+                .OfClass(typeof(FamilyInstance))
+                .WherePasses(hostFilter)
+                .FirstElement() as FamilyInstance;
+
             try
             {
                 m_geometryData = new GeometrySupport(rebarHost);
@@ -91,12 +84,10 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS
 
             m_rebarHost = rebarHost;
 
-            // Judge the rebar host is a valid host.
             var rebarHostData = RebarHostData.GetRebarHostData(rebarHost);
             if (rebarHostData == null || !rebarHostData.IsValidHost())
                 throw new Exception("The selected element is not a valid rebar host.");
 
-            // Make sure the selected beam or column doesn't contain any rebar.
             if (rebarHostData.GetRebarsInHost().Count > 0)
                 throw new Exception("Please select a beam or a column which doesn't contain any rebar.");
         }

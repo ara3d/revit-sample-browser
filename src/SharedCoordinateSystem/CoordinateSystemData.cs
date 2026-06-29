@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 {
     /// <summary>
@@ -188,10 +189,10 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         /// </summary>
         private void ChangePrecision()
         {
-            AngleOffset = UnitConversion.DealPrecision(AngleOffset, Precision);
-            EastWestOffset = UnitConversion.DealPrecision(EastWestOffset, Precision);
-            NorthSouthOffset = UnitConversion.DealPrecision(NorthSouthOffset, Precision);
-            PositionElevation = UnitConversion.DealPrecision(PositionElevation, Precision);
+            AngleOffset = SampleBrowserUtils.DealPrecision(AngleOffset, Precision);
+            EastWestOffset = SampleBrowserUtils.DealPrecision(EastWestOffset, Precision);
+            NorthSouthOffset = SampleBrowserUtils.DealPrecision(NorthSouthOffset, Precision);
+            PositionElevation = SampleBrowserUtils.DealPrecision(PositionElevation, Precision);
         }
     }
 }

@@ -22,13 +22,10 @@ namespace Ara3D.RevitSampleBrowser.GeometryAPI.ComputedSymbolGeometry.CS
         {
             try
             {
-                var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
+                using var trans = new Transaction(commandData.Application.ActiveUIDocument.Document,
                     "Ara3D.RevitSampleBrowser.ComputedSymbolGeometry");
                 trans.Start();
-                // create a ComputedSymbolGeometry object 
-                var computedSymGeo = new ComputedSymbolGeometry(commandData.Application.ActiveUIDocument.Document);
-                // execute method to get and show geometry of all instances
-                computedSymGeo.GetInstanceGeometry();
+                new ComputedSymbolGeometry(commandData.Application.ActiveUIDocument.Document).GetInstanceGeometry();
                 trans.Commit();
                 return Result.Succeeded;
             }

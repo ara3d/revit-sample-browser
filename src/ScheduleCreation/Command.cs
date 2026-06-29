@@ -5,6 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -16,11 +17,7 @@ namespace Ara3D.RevitSampleBrowser.ScheduleCreation.CS
         {
             try
             {
-                var uiDocument = commandData.Application.ActiveUIDocument;
-
-                var utility = new ScheduleCreationUtility();
-                utility.CreateAndAddSchedules(uiDocument);
-
+                ScheduleHelper.CreateAndAddSchedules(commandData.Application.ActiveUIDocument);
                 return Result.Succeeded;
             }
             catch (Exception ex)

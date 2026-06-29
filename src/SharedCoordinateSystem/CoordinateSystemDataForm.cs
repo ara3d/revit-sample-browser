@@ -6,6 +6,9 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Units;
+using FormatValueType = Ara3D.RevitSampleBrowser.Common.Infrastructure.ValueType;
 namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
 {
     /// <summary>
@@ -92,7 +95,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             //set control in placeTabPage
             //convert values get from API and set them to controls
             var cityInfo = new CityInfo(m_siteLocation.Latitude, m_siteLocation.Longitude);
-            var cityInfoString = UnitConversion.ConvertFrom(cityInfo);
+            var cityInfoString = ValueFormatting.ConvertFrom(cityInfo);
 
             //set Text of Latitude and Longitude TextBox
             latitudeTextBox.Text = cityInfoString.Latitude;
@@ -358,7 +361,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             string result;
             double doubleValue;
             //try to get double value from string
-            if (!UnitConversion.StringToDouble(value, ValueType.Angle, out doubleValue))
+            if (!SampleBrowserUtils.StringToDouble(value, FormatValueType.Angle, out doubleValue))
             {
                 var degree = ((char)0xb0).ToString();
                 if (!value.Contains(degree))
@@ -369,7 +372,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             }
 
             //try to convert double into string
-            result = UnitConversion.DoubleToString(doubleValue, ValueType.Angle);
+            result = SampleBrowserUtils.DoubleToString(doubleValue, FormatValueType.Angle);
             return result;
         }
 
@@ -441,7 +444,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
                         m_placeInfo.CitiesName.Add(userDefinedCity);
                         m_placeInfo.CitiesName.Sort();
                         cityNameComboBox.DataSource = m_placeInfo.CitiesName;
-                        var cityInfo = UnitConversion.ConvertTo(cityInfoString);
+                        var cityInfo = ValueFormatting.ConvertTo(cityInfoString);
                         cityInfo.CityName = userDefinedCity;
                         cityInfo.TimeZone = m_siteLocation.TimeZone;
                         m_placeInfo.AddCityInfo(cityInfo);
@@ -472,7 +475,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
         private void GetCityNameTimeZone(CityInfoString cityInfoString,
             out string cityName, out string timeZone)
         {
-            var cityInfo = UnitConversion.ConvertTo(cityInfoString);
+            var cityInfo = ValueFormatting.ConvertTo(cityInfoString);
             string tempName;
             double tempTime;
 
@@ -515,7 +518,7 @@ namespace Ara3D.RevitSampleBrowser.SharedCoordinateSystem.CS
             if (m_placeInfo.TryGetCityInfo(cityName, out cityInfo))
             {
                 //do conversion from CityInfo to CityInfoString
-                cityInfoString = UnitConversion.ConvertFrom(cityInfo);
+                cityInfoString = ValueFormatting.ConvertFrom(cityInfo);
 
                 //do TimeZone conversion from double to string
                 cityInfoString.TimeZone = m_placeInfo.TryGetTimeZoneString(cityInfo.TimeZone);

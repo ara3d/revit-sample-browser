@@ -8,15 +8,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.APIUtility;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Application;
 using Ara3D.RevitSampleBrowser.DockableDialogs.CS.ExternalEvents;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.VisualBasic;
-using Globals = Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility.Globals;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
 {
     public partial class MainPage : Page, IDockablePaneProvider
@@ -73,8 +73,8 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
                     break;
             }
 
-            Log.Message("***Intial docking parameters***");
-            Log.Message(ApiUtility.GetDockStateSummary(data.InitialState));
+            DialogHelper.Message("***Intial docking parameters***");
+            DialogHelper.Message(ApiUtility.GetDockStateSummary(data.InitialState));
         }
 
         private void DozeOff()
@@ -98,15 +98,15 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
             {
                 case ModelessCommandType.PrintMainPageStatistics:
                 {
-                    Log.Message("***Main Pane***");
-                    Log.Message(data.WindowSummaryData);
+                    DialogHelper.Message("***Main Pane***");
+                    DialogHelper.Message(data.WindowSummaryData);
                     break;
                 }
 
                 case ModelessCommandType.PrintSelectedPageStatistics:
                 {
-                    Log.Message("***Selected Pane***");
-                    Log.Message(data.WindowSummaryData);
+                    DialogHelper.Message("***Selected Pane***");
+                    DialogHelper.Message(data.WindowSummaryData);
                     break;
                 }
             }
@@ -182,13 +182,13 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
 
         private void wpf_stats_Click(object sender, RoutedEventArgs e)
         {
-            Log.Message("***Main Pane WPF info***");
-            Log.Message(ThisApplication.ThisApp.GetMainWindow().GetPageWpfData());
+            DialogHelper.Message("***Main Pane WPF info***");
+            DialogHelper.Message(ThisApplication.ThisApp.GetMainWindow().GetPageWpfData());
         }
 
         private void btn_getById_Click(object sender, RoutedEventArgs e)
         {
-            var guid = Interaction.InputBox("Enter Pane Guid", Globals.ApplicationName);
+            var guid = Interaction.InputBox("Enter Pane Guid", SampleBrowserUtils.ApplicationName);
             if (string.IsNullOrEmpty(guid))
                 return;
             RaisePrintSpecificSummaryCommand(guid);
@@ -196,14 +196,14 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.MainPage
 
         private void btn_listTabs_Click(object sender, RoutedEventArgs e)
         {
-            Log.Message("***Dockable dialogs***");
-            Log.Message($" Main dialog: {Globals.SmUserDockablePaneId.Guid}");
-            Log.Message($" Element View: {DockablePanes.BuiltInDockablePanes.ElementView.Guid}");
-            Log.Message($" System Navigator: {DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid}");
-            Log.Message($" Link Navigator: {DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid}");
-            Log.Message($" Project Browser: {DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid}");
-            Log.Message($" Properties Palette: {DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid}");
-            Log.Message($" Rebar Browser: {DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid}");
+            DialogHelper.Message("***Dockable dialogs***");
+            DialogHelper.Message($" Main dialog: {SampleBrowserUtils.SmUserDockablePaneId.Guid}");
+            DialogHelper.Message($" Element View: {DockablePanes.BuiltInDockablePanes.ElementView.Guid}");
+            DialogHelper.Message($" System Navigator: {DockablePanes.BuiltInDockablePanes.SystemNavigator.Guid}");
+            DialogHelper.Message($" Link Navigator: {DockablePanes.BuiltInDockablePanes.HostByLinkNavigator.Guid}");
+            DialogHelper.Message($" Project Browser: {DockablePanes.BuiltInDockablePanes.ProjectBrowser.Guid}");
+            DialogHelper.Message($" Properties Palette: {DockablePanes.BuiltInDockablePanes.PropertiesPalette.Guid}");
+            DialogHelper.Message($" Rebar Browser: {DockablePanes.BuiltInDockablePanes.RebarBrowser.Guid}");
         }
     }
 }

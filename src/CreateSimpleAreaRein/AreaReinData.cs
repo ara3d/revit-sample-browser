@@ -5,6 +5,8 @@ using System.ComponentModel;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Ara3D.RevitSampleBrowser.AreaReinParameters.CS;
 namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
 {
     /// <summary>
@@ -34,12 +36,12 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
         public virtual void FillIn(AreaReinforcement areaRein)
         {
             var temp = (int)LayoutRule;
-            var flag = ParameterUtil.SetParaInt(areaRein,
+            var flag = ParameterAccess.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_LAYOUT_RULE, temp);
 
             if (!flag)
             {
-                var paraLayout = ParameterUtil.FindParaByName(
+                var paraLayout = ParameterAccess.FindParaByName(
                     areaRein.Parameters, "Layout Rule");
                 paraLayout?.Set(temp);
             }
@@ -137,16 +139,16 @@ namespace Ara3D.RevitSampleBrowser.CreateSimpleAreaRein.CS
         {
             base.FillIn(areaRein);
 
-            ParameterUtil.SetParaInt(areaRein,
+            ParameterAccess.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_1,
                 Convert.ToInt32(BottomMajorDirection));
-            ParameterUtil.SetParaInt(areaRein,
+            ParameterAccess.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_2,
                 Convert.ToInt32(BottomMinorDirection));
-            ParameterUtil.SetParaInt(areaRein,
+            ParameterAccess.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_1,
                 Convert.ToInt32(TopMajorDirection));
-            ParameterUtil.SetParaInt(areaRein,
+            ParameterAccess.SetParaInt(areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_2,
                 Convert.ToInt32(TopMinorDirection));
         }

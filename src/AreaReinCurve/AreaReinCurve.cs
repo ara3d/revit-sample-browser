@@ -8,6 +8,10 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
+using Ara3D.RevitSampleBrowser.Common.Structural;
+using RebarGeomHelper = Ara3D.RevitSampleBrowser.Common.Structural.RebarGeometry;
+
 namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -113,7 +117,7 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
                 curves.Append(areaCurve.Curve);
             }
 
-            var flag = GeomUtil.IsRectangular(curves);
+            var flag = AreaReinforcementHelper.IsRectangular(curves);
 
             return flag;
         }
@@ -125,20 +129,20 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
         private bool TurnOffLayers()
         {
             //AreaReinforcement is on the floor or slab
-            var flag = ParameterUtil.SetParaInt(m_areaRein,
+            var flag = ParameterAccess.SetParaInt(m_areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_1, 0);
-            flag &= ParameterUtil.SetParaInt(m_areaRein,
+            flag &= ParameterAccess.SetParaInt(m_areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_BOTTOM_DIR_2, 0);
-            flag &= ParameterUtil.SetParaInt(m_areaRein,
+            flag &= ParameterAccess.SetParaInt(m_areaRein,
                 BuiltInParameter.REBAR_SYSTEM_ACTIVE_TOP_DIR_2, 0);
 
             //AreaReinforcement is on the wall
             if (!flag)
             {
                 flag = true;
-                flag &= ParameterUtil.SetParaInt(m_areaRein, "Interior Major Direction", 0);
-                flag &= ParameterUtil.SetParaInt(m_areaRein, "Exterior Minor Direction", 0);
-                flag &= ParameterUtil.SetParaInt(m_areaRein, "Interior Minor Direction", 0);
+                flag &= ParameterAccess.SetParaInt(m_areaRein, "Interior Major Direction", 0);
+                flag &= ParameterAccess.SetParaInt(m_areaRein, "Exterior Minor Direction", 0);
+                flag &= ParameterAccess.SetParaInt(m_areaRein, "Interior Minor Direction", 0);
             }
 
             return flag;
@@ -155,22 +159,22 @@ namespace Ara3D.RevitSampleBrowser.AreaReinCurve.CS
             var line0 = m_areaReinCurves[0].Curve as Line;
             var line1 = m_areaReinCurves[1].Curve as Line;
             AreaReinforcementCurve temp = null;
-            if (GeomUtil.IsVertical(line0, line1))
+            if (RebarGeomHelper.IsVertical(line0, line1))
                 temp = m_areaReinCurves[1];
             else
                 temp = m_areaReinCurves[2];
 
             //remove hooks
-            ParameterUtil.SetParaInt(m_areaReinCurves[0],
+            ParameterAccess.SetParaInt(m_areaReinCurves[0],
                 BuiltInParameter.REBAR_SYSTEM_OVERRIDE, -1);
             var para = m_areaReinCurves[0].get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_TOP_DIR_1);
-            var flag = ParameterUtil.SetParaNullId(para);
+            var flag = ParameterAccess.SetParaNullId(para);
 
-            ParameterUtil.SetParaInt(temp, BuiltInParameter.REBAR_SYSTEM_OVERRIDE, -1);
+            ParameterAccess.SetParaInt(temp, BuiltInParameter.REBAR_SYSTEM_OVERRIDE, -1);
             para = temp.get_Parameter(
                 BuiltInParameter.REBAR_SYSTEM_HOOK_TYPE_TOP_DIR_1);
-            flag &= ParameterUtil.SetParaNullId(para);
+            flag &= ParameterAccess.SetParaNullId(para);
 
             return flag;
         }

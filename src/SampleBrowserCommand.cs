@@ -58,27 +58,8 @@ namespace Ara3D.RevitSampleBrowser
                     .Select(t => new SampleData(t))
                     .OrderBy(t => t.Name);
 
-                var header1 = new ColumnHeader
-                {
-                    Text = "Name",
-                    Width = 400
-                };
-
-                var header2 = new ColumnHeader
-                {
-                    Text = "Type",
-                    Width = 200
-                };
-
-                var header3 = new ColumnHeader
-                {
-                    Text = "Readme",
-                    Width = 400
-                };
-
-                Form.listView1.Columns.Add(header1);
-                Form.listView1.Columns.Add(header2);
-                Form.listView1.Columns.Add(header3);
+                foreach (var (text, width) in new[] { ("Name", 400), ("Type", 200), ("Readme", 400) })
+                    Form.listView1.Columns.Add(new ColumnHeader { Text = text, Width = width });
 
                 Form.listView1.Items.Clear();
 

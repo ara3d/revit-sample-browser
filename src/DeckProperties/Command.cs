@@ -6,6 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -133,26 +134,7 @@ namespace Ara3D.RevitSampleBrowser.DeckProperties.CS
         private void DumpParameters(Element element)
         {
             foreach (Parameter parameter in element.Parameters)
-            {
-                var value = "";
-                switch (parameter.StorageType)
-                {
-                    case StorageType.Double:
-                        value = parameter.AsDouble().ToString();
-                        break;
-                    case StorageType.ElementId:
-                        value = parameter.AsElementId().ToString();
-                        break;
-                    case StorageType.String:
-                        value = parameter.AsString();
-                        break;
-                    case StorageType.Integer:
-                        value = parameter.AsInteger().ToString();
-                        break;
-                }
-
-                m_displayForm.WriteLine($"{parameter.Definition.Name} = {value}");
-            }
+                m_displayForm.WriteLine($"{parameter.Definition.Name} = {ParameterAccess.FormatParameterValue(parameter)}");
         }
 
         /// <summary>

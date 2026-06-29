@@ -8,6 +8,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
     /// <summary>
@@ -26,7 +27,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ret = Result.Succeeded;
 
             // Selected the elements to be connected.
-            var ids = StructuralConnectionSelectionUtils.SelectConnectionElements(activeDoc);
+            var ids = SelectionHelper.SelectConnectionElements(activeDoc);
             if (ids.Count() > 0)
             {
                 // Start a new transaction.
@@ -68,7 +69,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ret = Result.Succeeded;
 
             // Prompt to select a structural connection.
-            var conn = StructuralConnectionSelectionUtils.SelectConnection(activeDoc);
+            var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
                 using (var tran = new Transaction(activeDoc.Document, "Change detailed connection type"))
@@ -149,8 +150,8 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ret = Result.Succeeded;
 
             // Prompt to select a structural connection
-            var srcConn = StructuralConnectionSelectionUtils.SelectConnection(activeDoc);
-            var destConn = StructuralConnectionSelectionUtils.SelectConnection(activeDoc);
+            var srcConn = SelectionHelper.SelectConnection(activeDoc);
+            var destConn = SelectionHelper.SelectConnection(activeDoc);
 
             if (srcConn != null && destConn != null)
             {
@@ -207,7 +208,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 
             // Prompt to select a structural connection.
 
-            var conn = StructuralConnectionSelectionUtils.SelectConnection(activeDoc);
+            var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
                 using (var tran = new Transaction(activeDoc.Document, "Change detailed connection type"))

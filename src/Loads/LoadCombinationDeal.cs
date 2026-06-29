@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Structural;
 namespace Ara3D.RevitSampleBrowser.Loads.CS
 {
     /// <summary>
@@ -109,7 +110,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             {
                 if (usageMap.Set)
                 {
-                    var usage = FindUsageByName(usageMap.Name);
+                    var usage = AnalyticalModelHelper.FindUsageByName(m_dataBuffer.LoadUsages, usageMap.Name);
                     if (null != usage) usageIds.Add(usage.Id);
                 }
             }
@@ -119,7 +120,7 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             {
                 var formulaMap = m_dataBuffer.FormulaMap[i];
                 factorArray[i] = formulaMap.Factor;
-                var loadCase = FindLoadCaseByName(formulaMap.Case);
+                var loadCase = AnalyticalModelHelper.FindLoadCaseByName(m_dataBuffer.LoadCases, formulaMap.Case);
                 if (null != loadCase)
                 {
                     var component = new LoadComponent(loadCase.Id, formulaMap.Factor);
@@ -337,46 +338,6 @@ namespace Ara3D.RevitSampleBrowser.Loads.CS
             var map = new FormulaMap(caseName);
             m_dataBuffer.FormulaMap.Add(map);
             return true;
-        }
-
-        /// <summary>
-        ///     Find a load usage by the load usage name
-        /// </summary>
-        /// <param name="name">The name of load usage</param>
-        /// <returns>The reference of the LoadUsage</returns>
-        private LoadUsage FindUsageByName(string name)
-        {
-            LoadUsage usage = null;
-            foreach (var l in m_dataBuffer.LoadUsages)
-            {
-                if (name == l.Name)
-                {
-                    usage = l;
-                    break;
-                }
-            }
-
-            return usage;
-        }
-
-        /// <summary>
-        ///     Find a load case by the load case name
-        /// </summary>
-        /// <param name="name">The name of load case</param>
-        /// <returns>The reference of the LoadCase</returns>
-        private LoadCase FindLoadCaseByName(string name)
-        {
-            LoadCase loadCase = null;
-            foreach (var l in m_dataBuffer.LoadCases)
-            {
-                if (name == l.Name)
-                {
-                    loadCase = l;
-                    break;
-                }
-            }
-
-            return loadCase;
         }
     }
 }

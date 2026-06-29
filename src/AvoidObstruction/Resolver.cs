@@ -8,6 +8,10 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Mep;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
     /// <summary>
@@ -63,29 +67,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         }
 
         /// <summary>
-        ///     Calculate the uniform perpendicular directions with inputting direction "dir".
-        /// </summary>
-        /// <param name="dir">Direction to calculate</param>
-        /// <param name="count">How many perpendicular directions will be calculated</param>
-        /// <returns>The calculated perpendicular directions with dir</returns>
-        private List<XYZ> PerpendicularDirs(XYZ dir, int count)
-        {
-            var dirs = new List<XYZ>();
-            var plane = Plane.CreateByNormalAndOrigin(dir, XYZ.Zero);
-            var arc = Arc.Create(plane, 1.0, 0, 6.28);
-
-            var delta = 1.0 / count;
-            for (var i = 1; i <= count; i++)
-            {
-                var pt = arc.Evaluate(delta * i, true);
-                dirs.Add(pt);
-            }
-
-            return dirs;
-        }
-
-        /// <summary>
-        ///     Detect the obstructions of pipe and resolve them.
+        ///     Resolve one obstruction of Pipe.
         /// </summary>
         /// <param name="pipe">Pipe to resolve</param>
         private void Resolve(Pipe pipe)
@@ -143,22 +125,22 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
                 var tmpPipe = Pipe.Create(m_rvtDoc, systemTypeId, pipe.PipeType.Id, levelId, start, end);
 
                 // Copy pipe's parameters values to tmpPipe.
-                CopyParameters(pipe, tmpPipe);
+                ParameterAccess.CopyParameters(pipe, tmpPipe);
 
                 // Create elbow fitting to connect previous section with tmpPipe.
-                var conn1 = FindConnector(sections[i - 1].Pipes[2], start);
-                var conn2 = FindConnector(tmpPipe, start);
+                var conn1 = ConnectorHelper.FindConnector(sections[i - 1].Pipes[2], start);
+                var conn2 = ConnectorHelper.FindConnector(tmpPipe, start);
                 m_rvtDoc.Create.NewElbowFitting(conn1, conn2);
 
                 // Create elbow fitting to connect current section with tmpPipe.
-                var conn3 = FindConnector(sections[i].Pipes[0], end);
-                var conn4 = FindConnector(tmpPipe, end);
+                var conn3 = ConnectorHelper.FindConnector(sections[i].Pipes[0], end);
+                var conn4 = ConnectorHelper.FindConnector(tmpPipe, end);
                 m_rvtDoc.Create.NewElbowFitting(conn3, conn4);
             }
 
             // Find two connectors which pipe's two ends connector connected to. 
-            var startConn = FindConnectedTo(pipe, pipeLine.GetEndPoint(0));
-            var endConn = FindConnectedTo(pipe, pipeLine.GetEndPoint(1));
+            var startConn = ElementQuery.FindConnectedTo(pipe, pipeLine.GetEndPoint(0));
+            var endConn = ElementQuery.FindConnectedTo(pipe, pipeLine.GetEndPoint(1));
 
             Pipe startPipe = null;
             if (null != startConn)
@@ -170,11 +152,11 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
                     pipeLine.GetEndPoint(0));
 
             // Copy parameters from pipe to startPipe. 
-            CopyParameters(pipe, startPipe);
+            ParameterAccess.CopyParameters(pipe, startPipe);
 
             // Connect the startPipe and first section with elbow fitting.
-            var connStart1 = FindConnector(startPipe, sections[0].Start);
-            var connStart2 = FindConnector(sections[0].Pipes[0], sections[0].Start);
+            var connStart1 = ConnectorHelper.FindConnector(startPipe, sections[0].Start);
+            var connStart2 = ConnectorHelper.FindConnector(sections[0].Pipes[0], sections[0].Start);
             m_rvtDoc.Create.NewElbowFitting(connStart1, connStart2);
 
             Pipe endPipe = null;
@@ -188,11 +170,11 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
                     pipeLine.GetEndPoint(1));
 
             // Copy parameters from pipe to endPipe.
-            CopyParameters(pipe, endPipe);
+            ParameterAccess.CopyParameters(pipe, endPipe);
 
             // Connect the endPipe and last section with elbow fitting.
-            var connEnd1 = FindConnector(endPipe, sections[count - 1].End);
-            var connEnd2 = FindConnector(sections[count - 1].Pipes[2], sections[count - 1].End);
+            var connEnd1 = ConnectorHelper.FindConnector(endPipe, sections[count - 1].End);
+            var connEnd2 = ConnectorHelper.FindConnector(sections[count - 1].Pipes[2], sections[count - 1].End);
             m_rvtDoc.Create.NewElbowFitting(connEnd1, connEnd2);
 
             // Delete the pipe after resolved.
@@ -251,7 +233,7 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             if (dirs.Count == 0)
             {
                 // Calculate perpendicular directions with dir in four directions.
-                var perDirs = PerpendicularDirs(section.PipeCenterLineDirection, 4);
+                var perDirs = SampleBrowserUtils.PerpendicularDirs(section.PipeCenterLineDirection, 4);
                 dirs.Add(perDirs[0]);
                 dirs.Add(perDirs[1]);
             }
@@ -275,8 +257,8 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
                     Filter(pipe, obs2);
 
                     // Find out the minimal intersections in two opposite direction.
-                    var mins1 = GetClosestSectionsToOrigin(obs1);
-                    var mins2 = GetClosestSectionsToOrigin(obs2);
+                    var mins1 = SampleBrowserUtils.GetClosestSectionsToOrigin(obs1);
+                    var mins2 = SampleBrowserUtils.GetClosestSectionsToOrigin(obs2);
 
                     // Find solution in the given direction and its opposite direction.
                     for (var j = 0; null == foundLine && j < 2; j++)
@@ -331,37 +313,6 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
         }
 
         /// <summary>
-        ///     Find out two References, whose ProximityParameter is negative or positive,
-        ///     And Get the minimal value from all positive reference, and get the maximal value
-        ///     from the negative reference. if there are no such reference, using null instead.
-        /// </summary>
-        /// <param name="refs">References</param>
-        /// <returns>Reference array</returns>
-        private ReferenceWithContext[] GetClosestSectionsToOrigin(List<ReferenceWithContext> refs)
-        {
-            var mins = new ReferenceWithContext[2];
-            if (refs.Count == 0) return mins;
-
-            if (refs[0].Proximity > 0)
-            {
-                mins[1] = refs[0];
-                return mins;
-            }
-
-            for (var i = 0; i < refs.Count - 1; i++)
-                if (refs[i].Proximity < 0 && refs[i + 1].Proximity > 0)
-                {
-                    mins[0] = refs[i];
-                    mins[1] = refs[i + 1];
-                    return mins;
-                }
-
-            mins[0] = refs[refs.Count - 1];
-
-            return mins;
-        }
-
-        /// <summary>
         ///     Resolve one obstruction of Pipe.
         /// </summary>
         /// <param name="pipe">Pipe to resolve</param>
@@ -396,9 +347,9 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             var pipe3 = Pipe.Create(m_rvtDoc, systemTypeId, pipeType.Id, levelId, endOffset, end);
 
             // Copy parameters from pipe to other three created pipes.
-            CopyParameters(pipe, pipe1);
-            CopyParameters(pipe, pipe2);
-            CopyParameters(pipe, pipe3);
+            ParameterAccess.CopyParameters(pipe, pipe1);
+            ParameterAccess.CopyParameters(pipe, pipe2);
+            ParameterAccess.CopyParameters(pipe, pipe3);
 
             // Add the created three pipes to current section.
             section.Pipes.Add(pipe1);
@@ -406,64 +357,14 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             section.Pipes.Add(pipe3);
 
             // Create the first elbow to connect two neighbor pipes of "U" shape.
-            var conn1 = FindConnector(pipe1, startOffset);
-            var conn2 = FindConnector(pipe2, startOffset);
+            var conn1 = ConnectorHelper.FindConnector(pipe1, startOffset);
+            var conn2 = ConnectorHelper.FindConnector(pipe2, startOffset);
             m_rvtDoc.Create.NewElbowFitting(conn1, conn2);
 
             // Create the second elbow to connect another two neighbor pipes of "U" shape.
-            var conn3 = FindConnector(pipe2, endOffset);
-            var conn4 = FindConnector(pipe3, endOffset);
+            var conn3 = ConnectorHelper.FindConnector(pipe2, endOffset);
+            var conn4 = ConnectorHelper.FindConnector(pipe3, endOffset);
             m_rvtDoc.Create.NewElbowFitting(conn3, conn4);
-        }
-
-        /// <summary>
-        ///     Copy parameters from source pipe to target pipe.
-        /// </summary>
-        /// <param name="source">Coping source</param>
-        /// <param name="target">Coping target</param>
-        private void CopyParameters(Pipe source, Pipe target)
-        {
-            var diameter = source.get_Parameter(BuiltInParameter.RBS_PIPE_DIAMETER_PARAM).AsDouble();
-            target.get_Parameter(BuiltInParameter.RBS_PIPE_DIAMETER_PARAM).Set(diameter);
-        }
-
-        /// <summary>
-        ///     Find out a connector from pipe with a specified point.
-        /// </summary>
-        /// <param name="pipe">Pipe to find the connector</param>
-        /// <param name="conXyz">Specified point</param>
-        /// <returns>Connector whose origin is conXYZ</returns>
-        private Connector FindConnector(Pipe pipe, XYZ conXyz)
-        {
-            var conns = pipe.ConnectorManager.Connectors;
-            foreach (Connector conn in conns)
-            {
-                if (conn.Origin.IsAlmostEqualTo(conXyz))
-                    return conn;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        ///     Find out the connector which the pipe's specified connector connected to.
-        ///     The pipe's specified connector is given by point conxyz.
-        /// </summary>
-        /// <param name="pipe">Pipe to find the connector</param>
-        /// <param name="conXyz">Specified point</param>
-        /// <returns>Connector whose origin is conXYZ</returns>
-        private Connector FindConnectedTo(Pipe pipe, XYZ conXyz)
-        {
-            var connItself = FindConnector(pipe, conXyz);
-            var connSet = connItself.AllRefs;
-            foreach (Connector conn in connSet)
-            {
-                if (conn.Owner.Id != pipe.Id &&
-                    conn.ConnectorType == ConnectorType.End)
-                    return conn;
-            }
-
-            return null;
         }
     }
 }

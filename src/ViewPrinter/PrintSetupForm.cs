@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using Control = System.Windows.Forms.Control;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     public partial class PrintSetupForm : Form
@@ -366,7 +367,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             double doubleValue;
             if (!double.TryParse(userDefinedMarginXTextBox.Text, out doubleValue))
             {
-                PrintMgr.MyMessageBox("Invalid input");
+                PrintHelper.MyMessageBox("Invalid input");
                 return;
             }
 
@@ -380,7 +381,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             double doubleValue;
             if (!double.TryParse(userDefinedMarginYTextBox.Text, out doubleValue))
             {
-                PrintMgr.MyMessageBox("Invalid input");
+                PrintHelper.MyMessageBox("Invalid input");
                 return;
             }
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -23,25 +24,13 @@ namespace Ara3D.RevitSampleBrowser.Openings.CS
             try
             {
                 transaction.Start();
-                var haveOpening = false;
+                var openingInfos = new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document)
+                    .OfClass(typeof(Opening))
+                    .Cast<Opening>()
+                    .Select(opening => new OpeningInfo(opening, commandData.Application))
+                    .ToList();
 
-                //search Opening in Revit
-                var openingInfos = new List<OpeningInfo>();
-                var iter = new FilteredElementCollector(commandData.Application.ActiveUIDocument.Document)
-                    .OfClass(typeof(Opening)).GetElementIterator();
-                iter.Reset();
-                while (iter.MoveNext())
-                {
-                    object obj = iter.Current;
-                    if (obj is Opening opening)
-                    {
-                        haveOpening = true;
-                        var openingInfo = new OpeningInfo(opening, commandData.Application);
-                        openingInfos.Add(openingInfo);
-                    }
-                }
-
-                if (!haveOpening)
+                if (openingInfos.Count == 0)
                 {
                     message = "don't have opening in the project";
                     return Result.Cancelled;

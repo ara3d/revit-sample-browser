@@ -19,6 +19,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 {
     /// <summary>
@@ -149,7 +150,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
             try
             {
-                var settings = ExportPDFSettings.FindByName(doc, "sample");
+                var settings = PrintHelper.FindSampleSettings(doc);
                 if (settings == null)
                 {
                     message = "Cannot find sample settings";
@@ -196,7 +197,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
             try
             {
-                var settings = ExportPDFSettings.FindByName(doc, "sample");
+                var settings = PrintHelper.FindSampleSettings(doc);
                 if (settings == null)
                 {
                     message = "Cannot find sample settings";
@@ -267,7 +268,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
             try
             {
-                var settings = ExportPDFSettings.FindByName(doc, "sample");
+                var settings = PrintHelper.FindSampleSettings(doc);
                 if (settings == null)
                 {
                     message = "Cannot find sample settings";
@@ -342,7 +343,7 @@ namespace Ara3D.RevitSampleBrowser.ExportPDFSettingsSample.CS
 
             try
             {
-                var settings = ExportPDFSettings.FindByName(doc, "sample");
+                var settings = PrintHelper.FindSampleSettings(doc);
                 if (settings == null)
                 {
                     message = "Cannot find sample settings";

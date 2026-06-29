@@ -14,9 +14,10 @@
 
 using System;
 using System.Windows;
-using Ara3D.RevitSampleBrowser.DockableDialogs.CS.Utility;
+using Ara3D.RevitSampleBrowser.DockableDialogs.CS;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
 {
     /// <summary>
@@ -36,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.DockableDialogs.CS.DockingSetupDialog
         public DockingSetupDialog()
         {
             InitializeComponent();
-            tb_newGuid.Text = Globals.SmUserDockablePaneId.Guid.ToString();
+            tb_newGuid.Text = SampleBrowserUtils.SmUserDockablePaneId.Guid.ToString();
         }
 
         public int FloatLeft => m_left;

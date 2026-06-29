@@ -6,6 +6,9 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
 {
     /// <summary>
@@ -15,16 +18,6 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
     [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        /// <summary>
-        ///     This is the increment by which the code checks for embedded columns on a curved wall.
-        /// </summary>
-        private static readonly double WallIncrement = 0.5; // Check every 1/2'
-
-        /// <summary>
-        ///     This is a slight offset to ensure that the ray-trace occurs just outside the extents of the wall.
-        /// </summary>
-        private static readonly double WallEpsilon = 1.0 / 8.0 / 12.0; // 1/8"
-
         /// <summary>
         ///     ElementId list for columns which are on walls
         /// </summary>
@@ -84,7 +77,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
             m_doc = revit.Application.ActiveUIDocument.Document;
 
             // Find a 3D view to use for the ray tracing operation
-            Get3DView("{3D}");
+            m_view3D = ElementQuery.Get3DView(m_doc);
 
             var selection = revit.Application.ActiveUIDocument.Selection;
             var wallsToCheck = new List<Wall>();
@@ -171,7 +164,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         /// <param name="wallCurve">The profile of the wall.</param>
         private void CheckLinearWallForEmbeddedColumns(Wall wall, LocationCurve locationCurve, Curve wallCurve)
         {
-            var bottomHeight = GetElevationForRay(wall);
+            var bottomHeight = ElementQuery.GetElevationForRay(m_doc, wall);
 
             FindColumnsOnEitherSideOfWall(wall, locationCurve, wallCurve, 0, bottomHeight, wallCurve.Length);
         }
@@ -188,10 +181,10 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         private void FindColumnsOnEitherSideOfWall(Wall wall, LocationCurve locationCurve, Curve wallCurve,
             double parameter, double elevation, double within)
         {
-            var rayDirection = GetTangentAt(wallCurve, parameter);
+            var rayDirection = CurveGeometry.GetTangentAt(wallCurve, parameter);
             var wallLocation = wallCurve.Evaluate(parameter, true);
 
-            var wallDelta = GetWallDeltaAt(wall, locationCurve, parameter);
+            var wallDelta = PlaneAndTransform.GetWallDeltaAt(wall, locationCurve, parameter);
 
             var rayStart = new XYZ(wallLocation.X + wallDelta.X, wallLocation.Y + wallDelta.Y, elevation);
             FindColumnsByDirection(rayStart, rayDirection, within, wall);
@@ -211,7 +204,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         {
             var referenceIntersector = new ReferenceIntersector(m_view3D);
             var intersectedReferences = referenceIntersector.Find(rayStart, rayDirection);
-            FindColumnsWithin(intersectedReferences, within, wall);
+            ElementQuery.FindColumnsWithin(intersectedReferences, within, wall, m_allColumnsOnWalls, m_columnsOnWall);
         }
 
         /// <summary>
@@ -222,10 +215,10 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         /// <param name="wallCurve">The profile of the wall.</param>
         private void CheckProfiledWallForEmbeddedColumns(Wall wall, LocationCurve locationCurve, Curve wallCurve)
         {
-            var bottomHeight = GetElevationForRay(wall);
+            var bottomHeight = ElementQuery.GetElevationForRay(m_doc, wall);
 
             // Figure out the increment for the normalized parameter based on how long the wall is.  
-            var parameterIncrement = WallIncrement / wallCurve.Length;
+            var parameterIncrement = SampleBrowserUtils.WallIncrement / wallCurve.Length;
 
             // Find columns within 2' of the start of the ray.  Any smaller, and you run the risk of not finding a boundary
             // face of the column within the target range.
@@ -238,159 +231,13 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.FindColumns.CS
         }
 
         /// <summary>
-        ///     Obtains the elevation for ray casting evaluation for a given wall.
-        /// </summary>
-        /// <param name="wall">The wall.</param>
-        /// <returns>The elevation.</returns>
-        private double GetElevationForRay(Wall wall)
-        {
-            var level = m_doc.GetElement(wall.LevelId) as Level;
-
-            // Start at 1 foot above the bottom level
-            var bottomHeight = level.Elevation + 1.0;
-
-            return bottomHeight;
-        }
-
-        /// <summary>
-        ///     Obtains the offset to the wall at a given location along the wall's profile.
-        /// </summary>
-        /// <param name="wall">The wall.</param>
-        /// <param name="locationCurve">The location curve of the wall.</param>
-        /// <param name="parameter">The normalized parameter along the location curve of the wall.</param>
-        /// <returns>An XY vector representing the offset from the wall centerline.</returns>
-        private XYZ GetWallDeltaAt(Wall wall, LocationCurve locationCurve, double parameter)
-        {
-            var wallNormal = GetNormalToWallAt(wall, locationCurve, parameter);
-            var wallWidth = wall.Width;
-
-            // The LocationCurve is always the wall centerline, regardless of the setting for the wall Location Line.
-            // So the delta to place the ray just outside the wall extents is always 1/2 the wall width + a little extra.
-            var wallDelta = new XYZ(wallNormal.X * wallWidth / 2 + WallEpsilon,
-                wallNormal.Y * wallWidth / 2 + WallEpsilon, 0);
-
-            return wallDelta;
-        }
-
-        /// <summary>
-        ///     Finds column elements which occur within a given set of references within the designated proximity, and stores them
-        ///     to the results.
-        /// </summary>
-        /// <param name="references">The references obtained from FindReferencesByDirection()</param>
-        /// <param name="proximity">The maximum proximity.</param>
-        /// <param name="wall">The wall from which these references were found.</param>
-        private void FindColumnsWithin(IList<ReferenceWithContext> references, double proximity, Wall wall)
-        {
-            foreach (var reference in references)
-                // Exclude items too far from the start point.
-            {
-                if (reference.Proximity < proximity)
-                {
-                    var referenceElement = wall.Document.GetElement(reference.GetReference());
-                    if (referenceElement is FamilyInstance familyInstance)
-                    {
-                        var familyInstanceId = familyInstance.Id;
-                        var wallId = wall.Id;
-                        var categoryValue = familyInstance.Category.BuiltInCategory;
-                        if (categoryValue == BuiltInCategory.OST_Columns ||
-                            categoryValue == BuiltInCategory.OST_StructuralColumns)
-                        {
-                            // Add the column to the map of wall->columns
-                            if (m_columnsOnWall.ContainsKey(wallId))
-                            {
-                                var columnsOnWall = m_columnsOnWall[wallId];
-                                if (!columnsOnWall.Contains(familyInstanceId))
-                                    columnsOnWall.Add(familyInstanceId);
-                            }
-                            else
-                            {
-                                var columnsOnWall = new List<ElementId> { familyInstanceId };
-                                m_columnsOnWall.Add(wallId, columnsOnWall);
-                            }
-
-                            // Add the column to the complete list of all embedded columns
-                            if (!m_allColumnsOnWalls.Contains(familyInstanceId))
-                                m_allColumnsOnWalls.Add(familyInstanceId);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Obtains the tangent of the given curve at the given parameter.
-        /// </summary>
-        /// <param name="curve">The curve.</param>
-        /// <param name="parameter">The normalized parameter.</param>
-        /// <returns>The normalized tangent vector.</returns>
-        private XYZ GetTangentAt(Curve curve, double parameter)
-        {
-            var t = curve.ComputeDerivatives(parameter, true);
-            // BasisX is the tangent vector of the curve.
-            return t.BasisX.Normalize();
-        }
-
-        /// <summary>
-        ///     Finds the normal to the wall centerline at the given parameter.
-        /// </summary>
-        /// <param name="wall">The wall.</param>
-        /// <param name="curve">The location curve of the wall.</param>
-        /// <param name="parameter">The normalized parameter.</param>
-        /// <returns>The normalized normal vector.</returns>
-        private XYZ GetNormalToWallAt(Wall wall, LocationCurve curve, double parameter)
-        {
-            var wallCurve = curve.Curve;
-
-            // There is no normal at a given point for a line.  We need to get the normal based on the tangent of the wall location curve.
-            if (wallCurve is Line)
-            {
-                var wallDirection = GetTangentAt(wallCurve, 0);
-                var wallNormal = new XYZ(wallDirection.Y, wallDirection.X, 0);
-                return wallNormal;
-            }
-
-            var t = wallCurve.ComputeDerivatives(parameter, true);
-            // For non-linear curves, BasisY is the normal vector to the curve.
-            return t.BasisY.Normalize();
-        }
-
-        /// <summary>
         ///     Dump wall's curve(end points) to log
         /// </summary>
-        /// <param name="wallCurve">Wall curve to be dumped.</param>
         private void LogWallCurve(Line wallCurve)
         {
             Debug.WriteLine("Wall curve is line: ");
-
-            Debug.WriteLine($"Start point: {XyzToString(wallCurve.GetEndPoint(0))}");
-            Debug.WriteLine($"End point: {XyzToString(wallCurve.GetEndPoint(1))}");
-        }
-
-        /// <summary>
-        ///     Format XYZ to string
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
-        private string XyzToString(XYZ point)
-        {
-            return $"( {point.X}, {point.Y}, {point.Z})";
-        }
-
-        /// <summary>
-        ///     Get a 3D view from active document
-        /// </summary>
-        private void Get3DView(string viewName)
-        {
-            var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
-            foreach (View3D v in collector.OfClass(typeof(View3D)).ToElements())
-                // skip view template here because view templates are invisible in project browsers
-            {
-                if (v != null && !v.IsTemplate && v.Name == viewName)
-                {
-                    m_view3D = v;
-                    break;
-                }
-            }
+            Debug.WriteLine($"Start point: {XyzMath.XyzToString(wallCurve.GetEndPoint(0))}");
+            Debug.WriteLine($"End point: {XyzMath.XyzToString(wallCurve.GetEndPoint(1))}");
         }
     }
 }

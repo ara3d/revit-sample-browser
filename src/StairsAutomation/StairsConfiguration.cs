@@ -25,34 +25,15 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
         /// <summary>
         ///     Implements the interface method.
         /// </summary>
-        public int GetNumberOfRuns()
-        {
-            return RunConfigurations.Count;
-        }
+        public int GetNumberOfRuns() => RunConfigurations.Count;
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
-        public void CreateStairsRun(Document document, ElementId stairsElementId, int runIndex)
-        {
+        public void CreateStairsRun(Document document, ElementId stairsElementId, int runIndex) =>
             RunConfigurations[runIndex].CreateStairsRun(document, stairsElementId);
-        }
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
-        public int GetNumberOfLandings()
-        {
-            return LandingConfigurations.Count;
-        }
+        public int GetNumberOfLandings() => LandingConfigurations.Count;
 
-        /// <summary>
-        ///     Implements the interface method.
-        /// </summary>
-        public void CreateLanding(Document document, ElementId stairsElementId, int landingIndex)
-        {
+        public void CreateLanding(Document document, ElementId stairsElementId, int landingIndex) =>
             LandingConfigurations[landingIndex].CreateLanding(document, stairsElementId);
-        }
 
         /// <summary>
         ///     Implements the interface method.

@@ -4,11 +4,9 @@ using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 {
     /// <summary>
@@ -24,29 +22,13 @@ namespace Ara3D.RevitSampleBrowser.UIAPI.CS.OptionsDialog
 
             m_name = name;
 
-            image1.Source = GetBitmapAsImageSource(Properties.Resources.autodesk);
+            image1.Source = BitmapHelper.GetBitmapAsImageSource(Properties.Resources.autodesk);
         }
 
-        public static ImageSource GetBitmapAsImageSource(Bitmap bitmap)
-        {
-            var hBitmap = bitmap.GetHbitmap();
-            return Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions());
-        }
+        public void OnOK() => TaskDialog.Show("OK", m_name);
 
-        public void OnOK()
-        {
-            TaskDialog.Show("OK", m_name);
-        }
+        public void OnCancel() => TaskDialog.Show("OnCancel", m_name);
 
-        public void OnCancel()
-        {
-            TaskDialog.Show("OnCancel", m_name);
-        }
-
-        public void OnRestoreDefaults()
-        {
-            TaskDialog.Show("OnRestoreDefaults", m_name);
-        }
+        public void OnRestoreDefaults() => TaskDialog.Show("OnRestoreDefaults", m_name);
     }
 }

@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
 {
     /// <summary>
@@ -167,11 +168,10 @@ namespace Ara3D.RevitSampleBrowser.CreateBeamSystem.CS
             }
 
             // lines should in the same horizontal plane
-            if (!GeometryUtil.InSameHorizontalPlane(lines))
+            if (!XyzMath.InSameHorizontalPlane(lines))
                 throw new ErrorMessageException("The selected beams can't form a horizontal profile.");
 
-            // sorted lines so that all lines are intersect end to end
-            m_lines = GeometryUtil.SortLines(lines);
+            m_lines = XyzMath.SortLines(lines);
             // lines can't make a closed profile
             if (null == m_lines) throw new ErrorMessageException("The selected beams can't form a closed profile.");
         }

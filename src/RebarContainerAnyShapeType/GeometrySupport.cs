@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using RebarGeomHelper = Ara3D.RevitSampleBrowser.Common.Structural.RebarGeometry;
 namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 {
     using GeoInstance = GeometryInstance;
@@ -61,7 +63,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             if (null != line)
             {
                 DrivingLine = line; // driving path
-                DrivingVector = GeomUtil.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
+                DrivingVector = XyzMath.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
             }
 
             //get the geometry object
@@ -111,7 +113,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         private XYZ Transform(XYZ point)
         {
             // only invoke the TransformPoint() method.
-            return GeomUtil.TransformPoint(point, m_transform);
+            return XyzMath.TransformPoint(point, m_transform);
         }
 
         /// <summary>
@@ -120,7 +122,7 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
         /// <returns>the length of the driving line</returns>
         protected double GetDrivingLineLength()
         {
-            return GeomUtil.GetLength(DrivingVector);
+            return XyzMath.GetLength(DrivingVector);
         }
 
         /// <summary>
@@ -138,15 +140,15 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             // And get the vector from this point to another point
             foreach (var line in m_edges)
             {
-                if (GeomUtil.IsEqual(point, line.GetEndPoint(0)))
+                if (XyzMath.IsEqual(point, line.GetEndPoint(0)))
                 {
-                    var vector = GeomUtil.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
+                    var vector = XyzMath.SubXyz(line.GetEndPoint(1), line.GetEndPoint(0));
                     vectors.Add(vector);
                 }
 
-                if (GeomUtil.IsEqual(point, line.GetEndPoint(1)))
+                if (XyzMath.IsEqual(point, line.GetEndPoint(1)))
                 {
-                    var vector = GeomUtil.SubXyz(line.GetEndPoint(0), line.GetEndPoint(1));
+                    var vector = XyzMath.SubXyz(line.GetEndPoint(0), line.GetEndPoint(1));
                     vectors.Add(vector);
                 }
             }
@@ -176,8 +178,8 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
                 var secondDir = directions[1];
 
                 // offset the point in two direction
-                var movedPoint = GeomUtil.OffsetPoint(point, firstDir, offset);
-                movedPoint = GeomUtil.OffsetPoint(movedPoint, secondDir, offset);
+                var movedPoint = XyzMath.OffsetPoint(point, firstDir, offset);
+                movedPoint = XyzMath.OffsetPoint(movedPoint, secondDir, offset);
 
                 // add the offset point into the array
                 points.Add(movedPoint);
@@ -233,14 +235,14 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
 
                 // some edges should be paralleled with the driving line,
                 // and the start point of that edge should be the wanted point
-                var edgeVector = GeomUtil.SubXyz(second, first);
-                if (GeomUtil.IsSameDirection(edgeVector, DrivingVector))
+                var edgeVector = XyzMath.SubXyz(second, first);
+                if (XyzMath.IsSameDirection(edgeVector, DrivingVector))
                 {
                     refPoint = first;
                     break;
                 }
 
-                if (GeomUtil.IsOppositeDirection(edgeVector, DrivingVector))
+                if (XyzMath.IsOppositeDirection(edgeVector, DrivingVector))
                 {
                     refPoint = second;
                     break;
@@ -253,12 +255,12 @@ namespace Ara3D.RevitSampleBrowser.RebarContainerAnyShapeType.CS
             {
                 if (null != sweptFace) break;
                 // the swept face should be perpendicular with the driving line
-                if (!GeomUtil.IsVertical(face, DrivingLine, m_transform, null)) continue;
+                if (!RebarGeomHelper.IsVertical(face, DrivingLine, m_transform, null)) continue;
                 // use the got point to get the swept face
                 foreach (var point in face.Triangulate().Vertices)
                 {
                     var pnt = Transform(point); // all points in solid should be transform
-                    if (GeomUtil.IsEqual(refPoint, pnt))
+                    if (XyzMath.IsEqual(refPoint, pnt))
                     {
                         sweptFace = face;
                         break;

@@ -31,10 +31,8 @@ namespace Ara3D.RevitSampleBrowser.NewRebar.CS.Constraints
         /// <summary>
         ///     Update the parameter list value for property grid.
         /// </summary>
-        protected void UpdateParameterTypeConverter()
-        {
+        protected void UpdateParameterTypeConverter() =>
             TypeConverterRebarShapeParameter.RebarShapeParameters = ShapeDef.Parameters;
-        }
 
         /// <summary>
         ///     Commit the dimension.

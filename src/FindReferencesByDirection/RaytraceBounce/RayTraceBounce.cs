@@ -6,6 +6,9 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
 {
     /// <summary>
@@ -34,7 +37,7 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             {
                 // should have a line style "bounce" created in the document before running this
                 m_app = commandData.Application;
-                Get3DView();
+                m_view = ElementQuery.Get3DView(m_app.ActiveUIDocument.Document);
                 if (m_view == null)
                 {
                     TaskDialog.Show("Revit", "A default 3D view (named {3D}) must exist before running this command");
@@ -49,25 +52,6 @@ namespace Ara3D.RevitSampleBrowser.FindReferencesByDirection.RaytraceBounce.CS
             {
                 message = e.ToString();
                 return Result.Failed;
-            }
-        }
-
-        /// <summary>
-        ///     Get a 3D view from active document
-        /// </summary>
-        public void Get3DView()
-        {
-            var list = new List<Element>();
-            var collector = new FilteredElementCollector(m_app.ActiveUIDocument.Document);
-            list.AddRange(collector.OfClass(typeof(View3D)).ToElements());
-            foreach (View3D v in list)
-                // skip view template here because view templates are invisible in project browsers
-            {
-                if (v != null && !v.IsTemplate && v.Name == "{3D}")
-                {
-                    m_view = v;
-                    break;
-                }
             }
         }
     }

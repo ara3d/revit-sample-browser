@@ -8,6 +8,7 @@ using Autodesk.Revit.UI;
 using Document = Autodesk.Revit.DB.Document;
 using Point = System.Drawing.Point;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
     /// <summary>

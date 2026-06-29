@@ -1,0 +1,1847 @@
+{
+  "AccessOrCreateSharedParameterFile": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "Add": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Add2D": {
+    "area": "Geometry",
+    "class": "Point2DMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "AddDataRow": {
+    "area": "Views",
+    "class": "ScheduleHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "AddScheduleToNewSheet": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "AddSharedParameters": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "AddSharedTestParameter": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "AddTagSymbolByCategory": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "AddTo": {
+    "area": "Views",
+    "class": "CustomExportHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "AddXyz": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "AllowElement": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "AlreadyAddedSharedParameter": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "AngleRatio": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "AngleStringToDouble": {
+    "area": "Units",
+    "class": "ValueFormatting",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "ApplicationName": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "AreFaceNormalsPaired": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "AverageY": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CalculateAlignedCurve": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "CalculateClickAsModelRay": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CalculateControlPoints": {
+    "area": "Views",
+    "class": "StairsHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "CalculateControlPoints2": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "CalculateLeader": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CalculateMaxStepsCount": {
+    "area": "Views",
+    "class": "StairsHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "CalculateOffset": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CenterOnScreen": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ChangeSubregionAndPointsElevation": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "CheckOrientation": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CheckSelectedElement": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "CheckTotalNumber": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ClickTolerance": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CloseFile": {
+    "area": "Infrastructure",
+    "class": "EventLoggingHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CollectExteriorWalls": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "CollectPointsFromImportInstance": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "CollectRuleInfo": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "CollectWindows": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "ColorsEqual": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CompareDouble": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CompareReferencesWithContext": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CompareXyz": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "ComputeCrossProduct": {
+    "area": "Mep",
+    "class": "ConnectorHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "ComputeLeaderPosition": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ComputeParameter": {
+    "area": "Geometry",
+    "class": "CurveGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "ConstructCorbelFrame": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ConvertFrom": {
+    "area": "Units",
+    "class": "UnitConversion",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "ConvertFromBitmap": {
+    "area": "Infrastructure",
+    "class": "BitmapHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ConvertTo": {
+    "area": "Units",
+    "class": "UnitConversion",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "ConvertTo2DLine": {
+    "area": "Units",
+    "class": "UnitConversion",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "ConvertValueDocumentUnits": {
+    "area": "Units",
+    "class": "DocumentUnits",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "ConvertValueToFeet": {
+    "area": "Units",
+    "class": "DocumentUnits",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "CopyParameters": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "CovertFromApi": {
+    "area": "Units",
+    "class": "UnitConversion",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "CovertToApi": {
+    "area": "Units",
+    "class": "UnitConversion",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "Create3DView": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "CreateAndAddSchedules": {
+    "area": "Views",
+    "class": "ScheduleHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "CreateDirectShapeWithExternallyTaggedBRep": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CreateElementFilterFromFilterRules": {
+    "area": "Document",
+    "class": "FilterBuilder",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "CreateExternallyTaggedPodium": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CreateFilterRuleBuilder": {
+    "area": "Document",
+    "class": "FilterBuilder",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "CreateFloor": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CreateGraphicsData": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CreateMatrix": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "CreateNegativeBlock": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CreateRectangleLoop": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "CreateRectangularWallCurves": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "CreateReversedCurve": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "CreateSchedules": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "CreateTable": {
+    "area": "Views",
+    "class": "ScheduleHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "Cross2D": {
+    "area": "Geometry",
+    "class": "Point2DMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "CrossMatrix": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "CuttingSolidElementId": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "DealDecimalNumber": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DealPrecision": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DefaultPrecision": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DegreesToRadians": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DiagnosticsPanelName": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DiagnosticsTabName": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DisplayExport": {
+    "area": "Views",
+    "class": "CustomExportHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "Distance2D": {
+    "area": "Geometry",
+    "class": "Point2DMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "Distribute": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DockablePanesExist": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DoesAnyStorageExist": {
+    "area": "Infrastructure",
+    "class": "ExtensibleStorageHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Dot": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Dot2D": {
+    "area": "Geometry",
+    "class": "Point2DMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "DotMatrix": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "DoubleEpsilon": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DoubleEquals": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "DoubleToAngleString": {
+    "area": "Units",
+    "class": "ValueFormatting",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "DoubleToString": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DoubleTolerance": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DrawLine": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "DrawLines": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "DrawProfile": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "DuplicateDetailingAcrossViews": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "DuplicateDraftingViews": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "DuplicateElementsAcrossDocuments": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "DuplicateSchedules": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "DuplicateSymbol": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ElementsWithStorage": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "Equal": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ExecuteCreateBRepCommand": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ExtractSystemFromConnectors": {
+    "area": "Mep",
+    "class": "ConnectorHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "FailureCondition": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "FindColumnsWithin": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindConnectedTo": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindConnector": {
+    "area": "Mep",
+    "class": "ConnectorHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "FindDirection": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindDistance": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindFamilySymbol": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "FindFloorViewDirection": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "FindGenericModelTemplate": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "FindIntersection": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindLoadCaseByName": {
+    "area": "Structural",
+    "class": "AnalyticalModelHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Structural"
+  },
+  "FindLongestEndpointConnection": {
+    "area": "Geometry",
+    "class": "CurveGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "FindMidPoint": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindMiddlePoint": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindMinMax": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindParaByName": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "FindParameter": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "FindProperFamilySymbol": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindReferenceInList": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindRightDirection": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindSampleSettings": {
+    "area": "Views",
+    "class": "PrintHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "FindTargetLevels": {
+    "area": "Views",
+    "class": "StairsHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "FindUpDirection": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FindUsageByName": {
+    "area": "Structural",
+    "class": "AnalyticalModelHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Structural"
+  },
+  "FindWallViewDirection": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "FlipHandAndFace": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "FloatEpsilon": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "FormatElementIdParameter": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "FormatFractionalInches": {
+    "area": "Units",
+    "class": "ValueFormatting",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "FormatNumber": {
+    "area": "Units",
+    "class": "ValueFormatting",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "FormatParameterLine": {
+    "area": "Units",
+    "class": "ValueFormatting",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "FormatParameterValue": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "GenerateCircleSurrounding": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GeneratePondPointsSurrounding": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GenerateRandomColor": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Get3DView": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetApplicationResourcesPath": {
+    "area": "Infrastructure",
+    "class": "AssemblyPathHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetAppropriatePlane": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetAssemblyFullName": {
+    "area": "Infrastructure",
+    "class": "AssemblyPathHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetAssemblyPath": {
+    "area": "Infrastructure",
+    "class": "AssemblyPathHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetAverageElevation": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetBitmapAsImageSource": {
+    "area": "Infrastructure",
+    "class": "BitmapHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetBoolean": {
+    "area": "Infrastructure",
+    "class": "SerializationHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetBottomFace": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetCenterOf": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetClosestSectionsToOrigin": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetColor": {
+    "area": "Infrastructure",
+    "class": "SerializationHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetColorXElement": {
+    "area": "Infrastructure",
+    "class": "SerializationHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetCommonVertex": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetConjunctionOfFilterRulesFromElementFilter": {
+    "area": "Document",
+    "class": "FilterBuilder",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetConnectedConnector": {
+    "area": "Mep",
+    "class": "ConnectorHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "GetContiguousCurvesFromSelectedCurveElements": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetDefaultElementType": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetDistance": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetDocumentDisplayName": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetDouble": {
+    "area": "Infrastructure",
+    "class": "SerializationHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetElementById": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetElementFace": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetElementSolid": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetElementsWithAllSchemas": {
+    "area": "Infrastructure",
+    "class": "ExtensibleStorageHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetElementsWithSchema": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetElevationForRay": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetExteriorFace": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetExteriorWallDirection": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetExtrusionFace": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetFaces": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetFloorProfile": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetHookOrient": {
+    "area": "Structural",
+    "class": "RebarGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Structural"
+  },
+  "GetInteger": {
+    "area": "Infrastructure",
+    "class": "SerializationHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetInteriorFace": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetLength": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetMax": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetMaxBBox": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetMin": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetNonBoundaryPoints": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetNormalOutside": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetNormalToWallAt": {
+    "area": "Geometry",
+    "class": "PlaneAndTransform",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetNumberOfRowsAndColumns": {
+    "area": "Views",
+    "class": "ScheduleHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetOffsetFromConstraintAtTarget": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetOrCreateDef": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetPoints": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetPointsFromSubregionExact": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetPointsFromSubregionRough": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetProperty": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetRevitDbEventName": {
+    "area": "Infrastructure",
+    "class": "EventLoggingHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetRevitUiEventName": {
+    "area": "Infrastructure",
+    "class": "EventLoggingHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetRoomAndSpaceElements": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetScaledLine": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetSelectedBeams": {
+    "area": "Document",
+    "class": "SelectionHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetSelectedModelGroup": {
+    "area": "Document",
+    "class": "SelectionHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetSelectedObject": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetSelectedObjects": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetSharedParameterFile": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "GetSketchPlaneById": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetSmallIcon": {
+    "area": "Infrastructure",
+    "class": "BitmapHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetSolidFaces": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetSourceFolder": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetSpatialFieldManager": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetSpecialData": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetStdIcon": {
+    "area": "Infrastructure",
+    "class": "BitmapHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetTangentAt": {
+    "area": "Geometry",
+    "class": "CurveGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetTargetFolderUrn": {
+    "area": "Infrastructure",
+    "class": "CloudApiHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetTargetSolids": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetTopographySurfaceHost": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetTransformMatrix": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetUnitLabel": {
+    "area": "Units",
+    "class": "UnitConversion",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "GetVector": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetViewFilters": {
+    "area": "Document",
+    "class": "FilterBuilder",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "GetViewPlanCutPlane": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetViewportAtClick": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetWallDeltaAt": {
+    "area": "Geometry",
+    "class": "PlaneAndTransform",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "GetWallFace": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetWindowDirection": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "GetXElement": {
+    "area": "Infrastructure",
+    "class": "SerializationHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "GetXyParallelLine": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "GetXyz": {
+    "area": "Infrastructure",
+    "class": "SerializationHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "HasCommonEndPoint": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "HideAllAttachedDetailGroups": {
+    "area": "Views",
+    "class": "GroupVisibilityHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "HideAllInView": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "HidePage": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ImperialToMetric": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "InReferenceArray": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "InSameHorizontalPlane": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "InSessionName": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "InquireGeometry": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "IsACoupling": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "IsADuct": {
+    "area": "Mep",
+    "class": "FabricationPartHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "IsAPipe": {
+    "area": "Mep",
+    "class": "FabricationPartHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "IsCurveInXyPlane": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "IsElementBelongsToCircuit": {
+    "area": "Mep",
+    "class": "ConnectorHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "IsEqual": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "IsExterior": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "IsHorizontalFace": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "IsInRightDir": {
+    "area": "Structural",
+    "class": "RebarGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Structural"
+  },
+  "IsLinesParallel": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "IsOppositeDirection": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "IsParallel": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "IsPlanarFloor": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "IsPointInsideCurveLoop": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "IsRectangular": {
+    "area": "Structural",
+    "class": "AreaReinforcementHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Structural"
+  },
+  "IsSameDirection": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "IsSouthFacing": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "IsTrapezoid": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "IsVertical": {
+    "area": "Structural",
+    "class": "RebarGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Structural"
+  },
+  "IsVerticalEdge": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "IsVerticalFace": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "LimitValue": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "LoadTrianglesData": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Log": {
+    "area": "Infrastructure",
+    "class": "EventLoggingHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "MakeArc": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "MakeFromViewportClick": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "MakeLeft": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "MakeLine": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "MakeRight": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "MakeSheetToModelTransform": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "MepWarning": {
+    "area": "Mep",
+    "class": "RoutingPreferenceHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "Message": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "MetricToImperial": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ModifySelectedDoors": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "MoveElement": {
+    "area": "Document",
+    "class": "SelectionHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "MoveXyzToElevation": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "MultiXyz": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "Multiply": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "MultiplyVector": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "MyMessageBox": {
+    "area": "Views",
+    "class": "PrintHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "NewGuid": {
+    "area": "Infrastructure",
+    "class": "ExtensibleStorageHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Normalize2D": {
+    "area": "Geometry",
+    "class": "Point2DMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "NormalizeSampleNamespace": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "OffsetPoint": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "ParseBracketedId": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "ParseCorbelGeometry": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ParseFromString": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ParseReference": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ParseTrianglesData": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "PerpendicularDirs": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "PickPointNearToposurface": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "PickSubregion": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "PickTopographySurface": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "PipesDefinedWarning": {
+    "area": "Mep",
+    "class": "RoutingPreferenceHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "PlanarPrecision": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "PointDto": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "PrintElementInfo": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "Project": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ProjectCurveToElevation": {
+    "area": "Geometry",
+    "class": "CurveGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "ProjectCurvesToElevation": {
+    "area": "Geometry",
+    "class": "CurveGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "ProjectPointOnPlane": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "ProjectToTrackball": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "RadiansToDegrees": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "RandomXScale": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "RandomYScale": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ReflectToInnerRule": {
+    "area": "Document",
+    "class": "FilterBuilder",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "RefreshListControl": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "RegisterPage": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ReplaceIllegalCharacters": {
+    "area": "Views",
+    "class": "ScheduleHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "ResManager": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Rescale": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ResolveDirectoryPath": {
+    "area": "Infrastructure",
+    "class": "AssemblyPathHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "SElevationOrigin": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "SIndicator": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "STextBackground": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "STextOrientation": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "STopBottomValue": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "SampleName": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "SampleSettingsName": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "SelectConnection": {
+    "area": "Document",
+    "class": "SelectionHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "SelectConnectionElements": {
+    "area": "Document",
+    "class": "SelectionHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "SelectMarker": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "SetIconsForPushButtonData": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "SetParaInt": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "SetParaNullId": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "SetParameter": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "ShareParameterExists": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "ShouldSkip": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ShowAllAttachedDetailGroups": {
+    "area": "Views",
+    "class": "GroupVisibilityHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "ShowDialog": {
+    "area": "Infrastructure",
+    "class": "EventLoggingHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ShowErrorMessage": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ShowInformationMessageBox": {
+    "area": "Views",
+    "class": "ViewTemplateHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "ShowMessage": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ShowPage": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ShowWarningMessage": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ShowWarningMessageBox": {
+    "area": "Views",
+    "class": "ViewTemplateHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "SkipParameters": {
+    "area": "Parameters",
+    "class": "ParameterAccess",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Parameters"
+  },
+  "SmUserDockablePaneId": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "SolidToBeCutElementId": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "SortLines": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "StringToDouble": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "StringToXyz": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "Sub2D": {
+    "area": "Geometry",
+    "class": "Point2DMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "SubXyz": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "Subtract": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "SupportsLoopUtilities": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "TimeZoneDoubleToString": {
+    "area": "Units",
+    "class": "ValueFormatting",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "TimeZoneStringToDouble": {
+    "area": "Units",
+    "class": "ValueFormatting",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "TitleNoExt": {
+    "area": "Infrastructure",
+    "class": "EventLoggingHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ToFractionalInches": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Tolerance": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "TotalMaxValue": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "TransformByProjectLocation": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "TransformCurve": {
+    "area": "Geometry",
+    "class": "CurveGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "TransformCurves": {
+    "area": "Geometry",
+    "class": "CurveGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "TransformPoint": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "Translate": {
+    "area": "Views",
+    "class": "ViewHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "TrianglesDataDto": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "TryGetDemoSolids": {
+    "area": "Geometry",
+    "class": "FaceAndSolidGeometry",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "TryGetFirstToposolidTypeAndLevel": {
+    "area": "Views",
+    "class": "SiteTopographyHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Views"
+  },
+  "TurnIn": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "TurnOut": {
+    "area": "Infrastructure",
+    "class": "DialogHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "UnitDictionary": {
+    "area": "Units",
+    "class": "UnitConversion",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Units"
+  },
+  "UnitVector": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "ValidateCoord": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidateDegree": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidateDegrees": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidateLabel": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidateLabels": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidateLength": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidateMep": {
+    "area": "Mep",
+    "class": "RoutingPreferenceHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "ValidateNotNull": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidateNumber": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidateNumbers": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "ValidatePipesDefined": {
+    "area": "Mep",
+    "class": "RoutingPreferenceHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "ValueConversion": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "VerifyUnusedConnectors": {
+    "area": "Mep",
+    "class": "ConnectorHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Mep"
+  },
+  "WallEpsilon": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "WallFilter": {
+    "area": "Document",
+    "class": "ElementQuery",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Documents"
+  },
+  "WallIncrement": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "Write": {
+    "area": "Infrastructure",
+    "class": "EventLoggingHelper",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  },
+  "XyzToString": {
+    "area": "Geometry",
+    "class": "XyzMath",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Geometry"
+  },
+  "sCounter": {
+    "area": "Infrastructure",
+    "class": "SampleBrowserUtils",
+    "ns": "Ara3D.RevitSampleBrowser.Common.Infrastructure"
+  }
+}

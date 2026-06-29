@@ -36,7 +36,7 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
         /// </remarks>
         public VisibilityCtrl(UIDocument document)
         {
-            if (null == document)
+            if (document == null)
                 throw new ArgumentNullException(nameof(document));
             m_document = document;
 
@@ -47,11 +47,10 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
             // fill out the two table
             foreach (Category category in m_document.Document.Settings.Categories)
             {
-                if (category.get_AllowsVisibilityControl(m_document.Document.ActiveView))
-                {
-                    AllCategories.Add(category.Name, category.get_Visible(m_document.Document.ActiveView));
-                    m_categoriesWithName.Add(category.Name, category);
-                }
+                if (!category.get_AllowsVisibilityControl(m_document.Document.ActiveView))
+                    continue;
+                AllCategories.Add(category.Name, category.get_Visible(m_document.Document.ActiveView));
+                m_categoriesWithName.Add(category.Name, category);
             }
         }
 

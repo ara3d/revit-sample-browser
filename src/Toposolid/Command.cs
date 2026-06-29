@@ -9,6 +9,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.Toposolid.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -21,19 +22,9 @@ namespace Ara3D.RevitSampleBrowser.Toposolid.CS
             try
             {
                 var doc = commandData.Application.ActiveUIDocument.Document;
-                var typeId = new FilteredElementCollector(doc).OfClass(typeof(ToposolidType)).OfType<ToposolidType>()
-                    .FirstOrDefault()?.Id;
-                if (typeId == null)
+                if (!SiteTopographyHelper.TryGetFirstToposolidTypeAndLevel(doc, out var typeId, out var levelId))
                 {
-                    TaskDialog.Show("Error", "Can not find a valid ToposolidType");
-                    return Result.Failed;
-                }
-
-                var levelId = new FilteredElementCollector(doc).OfClass(typeof(Level)).OfType<Level>().FirstOrDefault()
-                    ?.Id;
-                if (levelId == null)
-                {
-                    TaskDialog.Show("Error", "Can not find a valid Level");
+                    TaskDialog.Show("Error", "Can not find a valid ToposolidType or Level");
                     return Result.Failed;
                 }
 

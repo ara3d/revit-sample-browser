@@ -5,6 +5,9 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
 {
     /// <summary>
@@ -31,7 +34,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
             var boundaries = uiDoc.Selection.PickObjects(ObjectType.Element,
                 new BoundarySelectionFilter(),
                 "Select boundary");
-            var familyPath = FreeFormElementUtils.FindGenericModelTemplate(doc.Application.FamilyTemplatePath);
+            var familyPath = ViewHelper.FindGenericModelTemplate(doc.Application.FamilyTemplatePath);
 
             if (string.IsNullOrEmpty(familyPath))
             {
@@ -39,22 +42,22 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
                 return Result.Failed;
             }
 
-            var condition = FreeFormElementUtils.CreateNegativeBlock(targetElement, boundaries,
+            var condition = SampleBrowserUtils.CreateNegativeBlock(targetElement, boundaries,
                 UIDocument.GetRevitUIFamilyLoadOptions(), familyPath);
 
             // Show error message for failure condition
-            if (condition != FreeFormElementUtils.FailureCondition.Success)
+            if (condition != SampleBrowserUtils.FailureCondition.Success)
             {
                 switch (condition)
                 {
-                    case FreeFormElementUtils.FailureCondition.CurvesNotContigous:
+                    case SampleBrowserUtils.FailureCondition.CurvesNotContigous:
                         message =
                             "Could not create the block as the boundary curves do not make a contiguous closed boundary.";
                         break;
-                    case FreeFormElementUtils.FailureCondition.CurveLoopAboveTarget:
+                    case SampleBrowserUtils.FailureCondition.CurveLoopAboveTarget:
                         message = "Could not create the block as the boundary curves lie above their target element.";
                         break;
-                    case FreeFormElementUtils.FailureCondition.NoIntersection:
+                    case SampleBrowserUtils.FailureCondition.NoIntersection:
                         message = "Could not create the block as the curves and the target element does not intersect.";
                         break;
                 }
@@ -74,7 +77,7 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
         public bool AllowElement(Element element)
         {
             // Element must have at least one usable solid
-            var solids = FreeFormElementUtils.GetTargetSolids(element);
+            var solids = SampleBrowserUtils.GetTargetSolids(element);
 
             return solids.Count > 0;
         }
@@ -99,9 +102,9 @@ namespace Ara3D.RevitSampleBrowser.FreeFormElement.CS
             var curve = curveElement.GeometryCurve;
 
             // Curves must support the utilities used by the tool (e.g. ReverseCurve)
-            return FreeFormElementUtils.SupportsLoopUtilities(curve) &&
+            return SampleBrowserUtils.SupportsLoopUtilities(curve) &&
                    // Curves must be in XY plane
-                   FreeFormElementUtils.IsCurveInXyPlane(curve);
+                   XyzMath.IsCurveInXyPlane(curve);
         }
 
         public bool AllowReference(Reference refer, XYZ point)

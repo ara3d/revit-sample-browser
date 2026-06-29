@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.Journaling.CS
 {
     public class Journaling
@@ -35,7 +38,7 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
         {
             // Initialize the data members
             m_commandData = commandData;
-            m_canReadData = 0 < commandData.JournalData.Count ? true : false;
+            m_canReadData = commandData.JournalData.Count > 0;
 
             // Initialize the two list data members
             m_levelList = new List<Level>();
@@ -132,7 +135,7 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
 
             var dataValue = // store the journal data value temporarily
                 // Get the wall type from the journal
-                GetSpecialData(dataMap, "Wall Type Name"); // get wall type name
+                SampleBrowserUtils.GetSpecialData(dataMap, "Wall Type Name"); // get wall type name
             foreach (var type in m_wallTypeList) // get the wall type by the name
             {
                 if (dataValue == type.Name)
@@ -146,7 +149,7 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
                 throw new InvalidDataException("Can't find the wall type from the journal.");
 
             // Get the level information from the journal
-            dataValue = GetSpecialData(dataMap, "Level Id"); // get the level id
+            dataValue = SampleBrowserUtils.GetSpecialData(dataMap, "Level Id"); // get the level id
             var id = ElementId.Parse(dataValue); // get the level by its id
 
             m_createlevel = doc.GetElement(id) as Level;
@@ -154,12 +157,11 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
                 throw new InvalidDataException("Can't find the level from the journal.");
 
             // Get the start point information from the journal
-            dataValue = GetSpecialData(dataMap, "Start Point");
-            m_startPoint = StirngToXyz(dataValue);
+            dataValue = SampleBrowserUtils.GetSpecialData(dataMap, "Start Point");
+            m_startPoint = XyzMath.StringToXyz(dataValue);
 
-            // Get the end point information from the journal
-            dataValue = GetSpecialData(dataMap, "End Point");
-            m_endPoint = StirngToXyz(dataValue);
+            dataValue = SampleBrowserUtils.GetSpecialData(dataMap, "End Point");
+            m_endPoint = XyzMath.StringToXyz(dataValue);
 
             // Create wall don't allow the start point equals end point
             if (m_startPoint.Equals(m_endPoint)) throw new InvalidDataException("Start point is equal to end point.");
@@ -214,79 +216,14 @@ namespace Ara3D.RevitSampleBrowser.Journaling.CS
             // Begin to add the support data
             dataMap.Add("Wall Type Name", m_createType.Name); // add wall type name
             dataMap.Add("Level Id", m_createlevel.Id.ToString()); // add level id
-            dataMap.Add("Start Point", XyzToString(m_startPoint)); // add start point
-            dataMap.Add("End Point", XyzToString(m_endPoint)); // add end point
+            dataMap.Add("Start Point", XyzMath.XyzToString(m_startPoint));
+            dataMap.Add("End Point", XyzMath.XyzToString(m_endPoint));
         }
 
-        /// <summary>
-        ///     The helper function which convert a format string to a Autodesk.Revit.DB.XYZ point
-        /// </summary>
-        /// <param name="pointString">a format string</param>
-        /// <returns>the converted Autodesk.Revit.DB.XYZ point</returns>
-        private static XYZ StirngToXyz(string pointString)
-        {
-            // Define some temporary data
-            double x = 0; // Store the temporary x coordinate
-            double y = 0; // Store the temporary y coordinate
-            double z = 0; // Store the temporary z coordinate
-
-            var subString = // A part of the format string 
-                // Get the data string from the format string
-                pointString.TrimStart('(');
-            subString = subString.TrimEnd(')');
-            var coordinateString = subString.Split(',');
-            if (3 != coordinateString.Length)
-                throw new InvalidDataException("The point information in journal is incorrect");
-
-            // Return a Autodesk.Revit.DB.XYZ point using the collected data
-            try
-            {
-                x = Convert.ToDouble(coordinateString[0]);
-                y = Convert.ToDouble(coordinateString[1]);
-                z = Convert.ToDouble(coordinateString[2]);
-            }
-            catch (Exception)
-            {
-                throw new InvalidDataException("The point information in journal is incorrect");
-            }
-
-            return new XYZ(x, y, z);
-        }
-
-        /// <summary>
-        ///     The helper function which convert a Autodesk.Revit.DB.XYZ point to a format string
-        /// </summary>
-        /// <param name="point">A Autodesk.Revit.DB.XYZ point</param>
-        /// <returns>The format string which store the information of the point</returns>
-        private static string XyzToString(XYZ point)
-        {
-            var pointString = $"({point.X},{point.Y},{point.Z})";
-            return pointString;
-        }
-
-        /// <summary>
-        ///     Get the data which is related to a special key in journal
-        /// </summary>
-        /// <param name="dataMap">the map which store the journal data</param>
-        /// <param name="key">a key which indicate which data to get</param>
-        /// <returns>The gotten data in string format</returns>
-        private static string GetSpecialData(IDictionary<string, string> dataMap, string key)
-        {
-            var dataValue = dataMap[key];
-
-            if (string.IsNullOrEmpty(dataValue)) throw new Exception($"{key}information is not exist in journal.");
-            return dataValue;
-        }
-
-        /// <summary>
-        ///     Define a comparer which compare WallType by name property
-        /// </summary>
         private class WallTypeComparer : IComparer<WallType>
         {
-            int IComparer<WallType>.Compare(WallType first, WallType second)
-            {
-                return string.Compare(first.Name, second.Name);
-            }
+            int IComparer<WallType>.Compare(WallType first, WallType second) =>
+                string.Compare(first.Name, second.Name);
         }
     }
 }

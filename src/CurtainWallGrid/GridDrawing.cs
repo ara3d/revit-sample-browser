@@ -10,6 +10,9 @@ using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Units;
+using Ara3D.RevitSampleBrowser.CreateBeamSystem.CS;
 namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
 {
     /// <summary>
@@ -457,10 +460,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 var vec = new Vector4(xyz);
                 vec = Coordinates.RestoreMatrix.Transform(vec);
                 offset = vec.Z - Geometry.LineToBeMoved.FullCurve.GetEndPoint(0).Z;
-                offset = Unit.CovertFromApi(m_myDocument.LengthUnit, offset);
+                offset = UnitConversion.CovertFromApi(m_myDocument.LengthUnit, offset);
 
                 // showing the move offset
-                DrawObject.Text = $"Offset: {Math.Round(offset, 1)}{Unit.GetUnitLabel(m_myDocument.LengthUnit)}";
+                DrawObject.Text = $"Offset: {Math.Round(offset, 1)}{UnitConversion.GetUnitLabel(m_myDocument.LengthUnit)}";
                 DrawObject.TextPosition = mousePosition;
                 DrawObject.TextPen = redPen;
                 return;
@@ -484,10 +487,10 @@ namespace Ara3D.RevitSampleBrowser.CurtainWallGrid.CS
                 var vec = new Vector4(xyz);
                 vec = Coordinates.RestoreMatrix.Transform(vec);
                 offset = vec.X - Geometry.LineToBeMoved.FullCurve.GetEndPoint(0).X;
-                offset = Unit.CovertFromApi(m_myDocument.LengthUnit, offset);
+                offset = UnitConversion.CovertFromApi(m_myDocument.LengthUnit, offset);
 
                 // showing the move offset
-                DrawObject.Text = $"Offset: {Math.Round(offset, 1)}{Unit.GetUnitLabel(m_myDocument.LengthUnit)}";
+                DrawObject.Text = $"Offset: {Math.Round(offset, 1)}{UnitConversion.GetUnitLabel(m_myDocument.LengthUnit)}";
                 DrawObject.TextPosition = mousePosition;
                 DrawObject.TextPen = redPen;
             }

@@ -3,6 +3,7 @@
 using System;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.NewPathReinforcement.CS
 {
     /// <summary>

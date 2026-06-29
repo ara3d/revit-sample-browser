@@ -12,6 +12,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
 {
     /// <summary>
@@ -84,7 +85,7 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
         private bool FindRoomBoundingRoofs(ref string message, ElementSet elements)
         {
             // Get all rooms
-            var rooms = GetRoomsElements();
+            var rooms = ElementQuery.GetRoomAndSpaceElements(m_document);
             if (rooms.Count == 0)
             {
                 message = "Unable to identify any rooms, please create room first!";
@@ -196,19 +197,6 @@ namespace Ara3D.RevitSampleBrowser.RoofsRooms.CS
             }
 
             return true;
-        }
-
-        /// <summary>
-        ///     Retrieve all Rooms and Spaces elements from active document.
-        /// </summary>
-        /// <returns>Element list retrieved from current document.</returns>
-        private List<Element> GetRoomsElements()
-        {
-            var array = new List<Element>();
-            var roomSpaceFilter = new LogicalOrFilter(new RoomFilter(), new SpaceFilter());
-            var collector = new FilteredElementCollector(m_document);
-            array.AddRange(collector.WherePasses(roomSpaceFilter).ToElements());
-            return array;
         }
     }
 }

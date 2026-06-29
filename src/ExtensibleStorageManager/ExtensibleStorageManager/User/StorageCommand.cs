@@ -6,6 +6,7 @@ using Ara3D.RevitSampleBrowser.ExtensibleStorageManager.SchemaWrapperTools.CS;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageManager.CS.User
 {
     /// <summary>
@@ -23,9 +24,6 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
     /// </summary>
     public static class StorageCommand
     {
-        //A counter field used to assist in creating pseudorandom Guids
-        private static int _sCounter = DateTime.Now.Second;
-
         //Field names and schema guids used in sample schemas
         private static readonly string Int0Name = "int0Name";
         private static readonly string Double0Name = "double0Name";
@@ -40,13 +38,13 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
         private static readonly string Map0Name = "map0Name";
         private static readonly string Array0Name = "array0Name";
 
-        private static readonly Guid SubEntityGuid0 = NewGuid();
+        private static readonly Guid SubEntityGuid0 = ExtensibleStorageHelper.NewGuid();
         private static readonly string Entity0Name = "entity0Name";
 
-        private static readonly Guid SubEntityGuidMap1 = NewGuid();
+        private static readonly Guid SubEntityGuidMap1 = ExtensibleStorageHelper.NewGuid();
         private static readonly string Entity1NameMap = "entity1Name_Map";
 
-        private static readonly Guid SubEntityGuidArray2 = NewGuid();
+        private static readonly Guid SubEntityGuidArray2 = ExtensibleStorageHelper.NewGuid();
         private static readonly string Entity2NameArray = "entity2Name_Array";
 
         private static readonly string Array1Name = Entity2NameArray;
@@ -359,17 +357,5 @@ namespace Ara3D.RevitSampleBrowser.ExtensibleStorageManager.ExtensibleStorageMan
             sWrapper.SetXmlPath(path);
         }
 
-        /// <summary>
-        ///     Create a new pseudorandom Guid
-        /// </summary>
-        /// <returns></returns>
-        public static Guid NewGuid()
-        {
-            var guidBytes = new byte[16];
-            var randomGuidBytes = new Random(_sCounter);
-            randomGuidBytes.NextBytes(guidBytes);
-            _sCounter++;
-            return new Guid(guidBytes);
-        }
     }
 }

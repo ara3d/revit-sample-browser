@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBuilder
 {
     /// <summary>
@@ -381,7 +382,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             }
 
             var pipeSegment = PipeSegment.Create(m_document, materialId, scheduleId, sizes);
-            pipeSegment.Roughness = Convert.ConvertValueToFeet(roughness, m_document);
+            pipeSegment.Roughness = DocumentUnits.ConvertValueToFeet(roughness, m_document);
         }
 
         /// <summary>
@@ -397,7 +398,7 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 GetPipeScheduleTypeNamebyId(pipeSegment.ScheduleTypeId)));
             xPipeSegment.Add(new XAttribute(XName.Get("materialName"), GetMaterialNameById(pipeSegment.MaterialId)));
 
-            var roughnessInDocumentUnits = Convert.ConvertValueDocumentUnits(pipeSegment.Roughness, m_document);
+            var roughnessInDocumentUnits = DocumentUnits.ConvertValueDocumentUnits(pipeSegment.Roughness, m_document);
             xPipeSegment.Add(new XAttribute(XName.Get("roughness"), roughnessInDocumentUnits.ToString("r")));
 
             foreach (var size in pipeSegment.GetSizes())
@@ -438,8 +439,8 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
 
             try
             {
-                newSize = new MEPSize(Convert.ConvertValueToFeet(nominal, document),
-                    Convert.ConvertValueToFeet(inner, document), Convert.ConvertValueToFeet(outer, document),
+                newSize = new MEPSize(DocumentUnits.ConvertValueToFeet(nominal, document),
+                    DocumentUnits.ConvertValueToFeet(inner, document), DocumentUnits.ConvertValueToFeet(outer, document),
                     usedInSizeLists, usedInSizing);
             }
 
@@ -462,11 +463,11 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
             var xMepSize = new XElement(XName.Get("MEPSize"));
 
             xMepSize.Add(new XAttribute(XName.Get("innerDiameter"),
-                Convert.ConvertValueDocumentUnits(size.InnerDiameter, document).ToString()));
+                DocumentUnits.ConvertValueDocumentUnits(size.InnerDiameter, document).ToString()));
             xMepSize.Add(new XAttribute(XName.Get("nominalDiameter"),
-                Convert.ConvertValueDocumentUnits(size.NominalDiameter, document).ToString()));
+                DocumentUnits.ConvertValueDocumentUnits(size.NominalDiameter, document).ToString()));
             xMepSize.Add(new XAttribute(XName.Get("outerDiameter"),
-                Convert.ConvertValueDocumentUnits(size.OuterDiameter, document).ToString()));
+                DocumentUnits.ConvertValueDocumentUnits(size.OuterDiameter, document).ToString()));
             xMepSize.Add(new XAttribute(XName.Get("usedInSizeLists"), size.UsedInSizeLists));
             xMepSize.Add(new XAttribute(XName.Get("usedInSizing"), size.UsedInSizing));
             return xMepSize;
@@ -644,8 +645,8 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 if (min > max)
                     throw new RoutingPreferenceDataException("Invalid size range.");
 
-                min = Convert.ConvertValueToFeet(min, m_document);
-                max = Convert.ConvertValueToFeet(max, m_document);
+                min = DocumentUnits.ConvertValueToFeet(min, m_document);
+                max = DocumentUnits.ConvertValueToFeet(max, m_document);
                 sizeCriterion = new PrimarySizeCriterion(min, max);
             }
 
@@ -681,9 +682,9 @@ namespace Ara3D.RevitSampleBrowser.RoutingPreferenceTools.CS.RoutingPreferenceBu
                 else //Only specify "maximumSize" if not specifying "All" or "None" for minimum size, just like in the UI.
                 {
                     xRoutingPreferenceRule.Add(new XAttribute(XName.Get("minimumSize"),
-                        Convert.ConvertValueDocumentUnits(psc.MinimumSize, m_document).ToString()));
+                        DocumentUnits.ConvertValueDocumentUnits(psc.MinimumSize, m_document).ToString()));
                     xRoutingPreferenceRule.Add(new XAttribute(XName.Get("maximumSize"),
-                        Convert.ConvertValueDocumentUnits(psc.MaximumSize, m_document).ToString()));
+                        DocumentUnits.ConvertValueDocumentUnits(psc.MaximumSize, m_document).ToString()));
                 }
             }
             else

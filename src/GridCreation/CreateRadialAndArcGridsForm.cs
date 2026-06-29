@@ -4,6 +4,8 @@ using System;
 using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.GridCreation.CS.Properties;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 {
     public partial class CreateRadialAndArcGridsForm : Form
@@ -38,9 +40,9 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             labelYCoordUnit.Text = unit;
 
             // Set length values
-            textBoxArcSpacing.Text = Unit.CovertFromApi(m_data.Unit, 10).ToString();
+            textBoxArcSpacing.Text = UnitConversion.CovertFromApi(m_data.Unit, 10).ToString();
             textBoxArcFirstRadius.Text = textBoxArcSpacing.Text;
-            textBoxLineFirstDistance.Text = Unit.CovertFromApi(m_data.Unit, 8).ToString();
+            textBoxLineFirstDistance.Text = UnitConversion.CovertFromApi(m_data.Unit, 8).ToString();
 
             radioButton360.Checked = true;
             radioButtonCustomize.Checked = false;
@@ -81,8 +83,8 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         /// </summary>
         private void SetData()
         {
-            m_data.XOrigin = Unit.CovertToApi(Convert.ToDouble(textBoxXCoord.Text), m_data.Unit);
-            m_data.YOrigin = Unit.CovertToApi(Convert.ToDouble(textBoxYCoord.Text), m_data.Unit);
+            m_data.XOrigin = UnitConversion.CovertToApi(Convert.ToDouble(textBoxXCoord.Text), m_data.Unit);
+            m_data.YOrigin = UnitConversion.CovertToApi(Convert.ToDouble(textBoxYCoord.Text), m_data.Unit);
 
             if (radioButton360.Checked)
             {
@@ -100,8 +102,8 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
 
             if (Convert.ToUInt32(textBoxArcNumber.Text) != 0)
             {
-                m_data.ArcSpacing = Unit.CovertToApi(Convert.ToDouble(textBoxArcSpacing.Text), m_data.Unit);
-                m_data.ArcFirstRadius = Unit.CovertToApi(Convert.ToDouble(textBoxArcFirstRadius.Text), m_data.Unit);
+                m_data.ArcSpacing = UnitConversion.CovertToApi(Convert.ToDouble(textBoxArcSpacing.Text), m_data.Unit);
+                m_data.ArcFirstRadius = UnitConversion.CovertToApi(Convert.ToDouble(textBoxArcFirstRadius.Text), m_data.Unit);
                 m_data.ArcFirstBubbleLoc = (BubbleLocation)comboBoxArcBubbleLocation.SelectedIndex;
                 m_data.ArcFirstLabel = textBoxArcFirstLabel.Text;
             }
@@ -109,7 +111,7 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
             if (Convert.ToUInt32(textBoxLineNumber.Text) != 0)
             {
                 m_data.LineFirstDistance =
-                    Unit.CovertToApi(Convert.ToDouble(textBoxLineFirstDistance.Text), m_data.Unit);
+                    UnitConversion.CovertToApi(Convert.ToDouble(textBoxLineFirstDistance.Text), m_data.Unit);
                 m_data.LineFirstBubbleLoc = (BubbleLocation)comboBoxLineBubbleLocation.SelectedIndex;
                 m_data.LineFirstLabel = textBoxLineFirstLabel.Text;
             }
@@ -121,27 +123,27 @@ namespace Ara3D.RevitSampleBrowser.GridCreation.CS
         /// <returns>Whether input is validated</returns>
         private bool ValidateValues()
         {
-            if (!Validation.ValidateNumbers(textBoxArcNumber, textBoxLineNumber)) return false;
+            if (!SampleBrowserUtils.ValidateNumbers(textBoxArcNumber, textBoxLineNumber)) return false;
 
-            if (!Validation.ValidateCoord(textBoxXCoord) || !Validation.ValidateCoord(textBoxYCoord)) return false;
+            if (!SampleBrowserUtils.ValidateCoord(textBoxXCoord) || !SampleBrowserUtils.ValidateCoord(textBoxYCoord)) return false;
 
             if (Convert.ToUInt32(textBoxArcNumber.Text) != 0)
-                if (!Validation.ValidateLength(textBoxArcSpacing, "Spacing", false) ||
-                    !Validation.ValidateLength(textBoxArcFirstRadius, "Radius", false) ||
-                    !Validation.ValidateLabel(textBoxArcFirstLabel, m_data.LabelsList))
+                if (!SampleBrowserUtils.ValidateLength(textBoxArcSpacing, "Spacing", false) ||
+                    !SampleBrowserUtils.ValidateLength(textBoxArcFirstRadius, "Radius", false) ||
+                    !SampleBrowserUtils.ValidateLabel(textBoxArcFirstLabel, m_data.LabelsList))
                     return false;
 
             if (Convert.ToUInt32(textBoxLineNumber.Text) != 0)
-                if (!Validation.ValidateLength(textBoxLineFirstDistance, "Distance", true) ||
-                    !Validation.ValidateLabel(textBoxLineFirstLabel, m_data.LabelsList))
+                if (!SampleBrowserUtils.ValidateLength(textBoxLineFirstDistance, "Distance", true) ||
+                    !SampleBrowserUtils.ValidateLabel(textBoxLineFirstLabel, m_data.LabelsList))
                     return false;
 
             if (Convert.ToUInt32(textBoxArcNumber.Text) != 0 && Convert.ToUInt32(textBoxLineNumber.Text) != 0)
-                if (!Validation.ValidateLabels(textBoxArcFirstLabel, textBoxLineFirstLabel))
+                if (!SampleBrowserUtils.ValidateLabels(textBoxArcFirstLabel, textBoxLineFirstLabel))
                     return false;
 
             if (radioButtonCustomize.Checked)
-                if (!Validation.ValidateDegrees(textBoxStartDegree, textBoxEndDegree))
+                if (!SampleBrowserUtils.ValidateDegrees(textBoxStartDegree, textBoxEndDegree))
                     return false;
 
             return true;

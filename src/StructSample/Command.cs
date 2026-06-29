@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.StructSample.CS
 {
     /// <summary>
@@ -59,7 +60,7 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
                 }
 
                 //  next, we need a column symbol. For simplicity, the symbol name is hard-coded here. 
-                var colType = FindFamilySymbol(rvtDoc.Document, "M_Wood Timber Column", "191 x 292mm");
+                var colType = ParameterAccess.FindFamilySymbol(rvtDoc.Document, "M_Wood Timber Column", "191 x 292mm");
                 if (colType == null)
                 {
                     TaskDialog.Show("Revit",
@@ -86,36 +87,6 @@ namespace Ara3D.RevitSampleBrowser.StructSample.CS
                 message = ex.ToString();
                 return Result.Failed;
             }
-        }
-
-        /// <summary>
-        ///     find Column which will be used to placed to Wall
-        /// </summary>
-        /// <param name="rvtDoc">Revit document</param>
-        /// <param name="familyName">Family name of Column</param>
-        /// <param name="symbolName">Symbol of Column</param>
-        /// <returns></returns>
-        private FamilySymbol FindFamilySymbol(Document rvtDoc, string familyName, string symbolName)
-        {
-            var collector = new FilteredElementCollector(rvtDoc);
-            var itr = collector.OfClass(typeof(Family)).GetElementIterator();
-            itr.Reset();
-            while (itr.MoveNext())
-            {
-                var elem = itr.Current;
-                if (elem.GetType() == typeof(Family))
-                    if (elem.Name == familyName)
-                    {
-                        var family = (Family)elem;
-                        foreach (var symbolId in family.GetFamilySymbolIds())
-                        {
-                            var symbol = (FamilySymbol)rvtDoc.GetElement(symbolId);
-                            if (symbol.Name == symbolName) return symbol;
-                        }
-                    }
-            }
-
-            return null;
         }
 
         /// <summary>

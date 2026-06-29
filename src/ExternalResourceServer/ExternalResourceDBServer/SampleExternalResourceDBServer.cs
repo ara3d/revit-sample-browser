@@ -8,6 +8,7 @@ using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExternalService;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServer.CS
 {
     /// <summary>
@@ -225,7 +226,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             // Either the ExternalResourceReference has a valid database key (German/French keynote case) ...
             var refMap = extRef.GetReferenceInformation();
             if (refMap.ContainsKey(RefMapDbKeyEntry))
-                return KeynotesDatabase.IsValidDbKey(refMap[RefMapDbKeyEntry]);
+                return ExternalResourceHelper.IsValidDbKey(refMap[RefMapDbKeyEntry]);
             if (refMap.ContainsKey(RefMapLinkPathEntry)) // ... OR it is a Revit link file
                 return File.Exists(GetFullServerLinkFilePath(extRef));
 
@@ -370,7 +371,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             var refMap = extResRef.GetReferenceInformation();
             if (refMap.ContainsKey(RefMapDbKeyEntry))
             {
-                return KeynotesDatabase.CurrentVersion;
+                return ExternalResourceHelper.CurrentVersion;
             }
 
             if (refMap.ContainsKey(RefMapLinkPathEntry)) // ... OR it is a Revit link file
@@ -410,7 +411,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                     {
                         [RefMapDbKeyEntry] = "1"
                     };
-                    browserData.AddResource("Keynotes1_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
+                    browserData.AddResource("Keynotes1_de-DE.txt", ExternalResourceHelper.CurrentVersion, refMap);
                     break;
                 }
                 case "de-DE":
@@ -421,7 +422,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                         {
                             [RefMapDbKeyEntry] = "2"
                         };
-                        browserData.AddResource("Keynotes2_de-DE.txt", KeynotesDatabase.CurrentVersion, refMap);
+                        browserData.AddResource("Keynotes2_de-DE.txt", ExternalResourceHelper.CurrentVersion, refMap);
                     }
 
                     break;
@@ -437,7 +438,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                     {
                         [RefMapDbKeyEntry] = "3"
                     };
-                    browserData.AddResource("Keynotes1_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
+                    browserData.AddResource("Keynotes1_fr-FR.txt", ExternalResourceHelper.CurrentVersion, refMap);
                     break;
                 }
                 case "fr-FR":
@@ -448,7 +449,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
                         {
                             [RefMapDbKeyEntry] = "4"
                         };
-                        browserData.AddResource("Keynotes2_fr-FR.txt", KeynotesDatabase.CurrentVersion, refMap);
+                        browserData.AddResource("Keynotes2_fr-FR.txt", ExternalResourceHelper.CurrentVersion, refMap);
                     }
 
                     break;
@@ -571,7 +572,7 @@ namespace Ara3D.RevitSampleBrowser.ExternalResourceServer.ExternalResourceDBServ
             {
                 try
                 {
-                    KeynotesDatabase.LoadKeynoteEntries(refMap[RefMapDbKeyEntry], ref kdrlc);
+                    ExternalResourceHelper.LoadKeynoteEntries(refMap[RefMapDbKeyEntry], ref kdrlc);
                     kdrlc.BuildEntries();
                     loadContent.LoadStatus = ExternalResourceLoadStatus.Success;
                 }

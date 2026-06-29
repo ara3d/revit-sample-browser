@@ -1,12 +1,12 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
 {
     /// <summary>
@@ -51,57 +51,7 @@ namespace Ara3D.RevitSampleBrowser.ParameterUtils.CS
                 foreach (Parameter param in parameters)
                 {
                     if (param == null) continue;
-
-                    // We will make a string that has the following format,
-                    // name type value
-                    // create a StringBuilder object to store the string of one parameter
-                    // using the character '\t' to delimit parameter name, type and value 
-                    var sb = new StringBuilder();
-
-                    // the name of the parameter can be found from its definition.
-                    sb.AppendFormat("{0}\t", param.Definition.Name);
-
-                    // Revit parameters can be one of 5 different public storage types:
-                    // double, int, string, Autodesk.Revit.DB.ElementId and None. 
-                    // if it is double then use AsDouble to get the double value
-                    // then int AsInteger, string AsString, None AsStringValue.
-                    // Switch based on the storage type
-                    switch (param.StorageType)
-                    {
-                        case StorageType.Double:
-                            // append the type and value
-                            sb.AppendFormat("double\t{0}", param.AsDouble());
-                            break;
-                        case StorageType.ElementId:
-                            // for element ids, we will try and retrieve the element from the 
-                            // document if it can be found we will display its name.
-                            sb.Append("Element\t");
-
-                            // using ActiveDocument.GetElement(the element id) to 
-                            // retrieve the element from the active document
-                            var elemId = param.AsElementId();
-                            var elem = app.ActiveUIDocument.Document.GetElement(elemId);
-
-                            // if there is an element then display its name, 
-                            // otherwise display the fact that it is not set
-                            sb.Append(elem != null ? elem.Name : "Not set");
-                            break;
-                        case StorageType.Integer:
-                            // append the type and value
-                            sb.AppendFormat("int\t{0}", param.AsInteger());
-                            break;
-                        case StorageType.String:
-                            // append the type and value
-                            sb.AppendFormat("string\t{0}", param.AsString());
-                            break;
-                        case StorageType.None:
-                            // append the type and value
-                            sb.AppendFormat("none\t{0}", param.AsValueString());
-                            break;
-                    }
-
-                    // add the completed line to the string list
-                    parameterItems.Add(sb.ToString());
+                    parameterItems.Add(ValueFormatting.FormatParameterLine(param, app.ActiveUIDocument.Document));
                 }
 
                 // Create our dialog, passing it the parameters array for display.

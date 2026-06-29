@@ -23,16 +23,13 @@ namespace Ara3D.RevitSampleBrowser.ImportExport.CS
         {
             try
             {
-                // Verify active document
                 if (null == commandData.Application.ActiveUIDocument.Document)
                 {
                     message = "Active view is null.";
                     return Result.Failed;
                 }
 
-                var mainData = new MainData(commandData);
-                // Show the dialog
-                using (var mainForm = new MainForm(mainData))
+                using (var mainForm = new MainForm(new MainData(commandData)))
                 {
                     if (mainForm.ShowDialog() == DialogResult.Cancel) return Result.Cancelled;
                 }

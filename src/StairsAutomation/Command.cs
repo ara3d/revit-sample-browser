@@ -27,9 +27,7 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS
             // Generate the stairs
             utility.GenerateStairs();
 
-            _stairsIndex++;
-            if (_stairsIndex > 4)
-                _stairsIndex = 0;
+            _stairsIndex = _stairsIndex > 4 ? 0 : _stairsIndex + 1;
 
             return Result.Succeeded;
         }

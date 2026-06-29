@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.PathReinforcement.CS
 {
     /// <summary>

@@ -2,12 +2,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -48,7 +50,7 @@ namespace Ara3D.RevitSampleBrowser.CustomExporter.Custom2DExporter.CS
                             out points,
                             out resSummary);
 
-                        Utilities.DisplayExport(activeView, points);
+                        CustomExportHelper.DisplayExport(activeView, points);
 
                         ShowResults(resSummary);
                     }

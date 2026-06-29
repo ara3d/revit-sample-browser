@@ -16,20 +16,12 @@ namespace Ara3D.RevitSampleBrowser.ContextualAnalyticalModel.CS
             //Expected results: The Analytical Member is flipped, you can observe the IDs of the end nodes
             try
             {
-                // Get the Document
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                // Create an Analytical Member
-                var analyticalMember = CreateAnalyticalMember.CreateMember(document);
-
-                // Start transaction
-                using (var transaction = new Transaction(document, "Flip Analytical Member"))
-                {
-                    transaction.Start();
-                    // Flip the Analytical Member
-                    analyticalMember.FlipCurve();
-                    transaction.Commit();
-                }
+                using var transaction = new Transaction(document, "Flip Analytical Member");
+                transaction.Start();
+                CreateAnalyticalMember.CreateMember(document).FlipCurve();
+                transaction.Commit();
 
                 return Result.Succeeded;
             }

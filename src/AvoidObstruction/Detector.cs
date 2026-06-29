@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
 {
     /// <summary>
@@ -48,11 +49,11 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
             var obstructionsOnUnboundLine = referenceIntersector.Find(origin, dir);
             foreach (var gRef in obstructionsOnUnboundLine)
             {
-                if (!InArray(result, gRef))
+                if (!SampleBrowserUtils.InReferenceArray(result, gRef))
                     result.Add(gRef);
             }
 
-            result.Sort(CompareReferencesWithContext);
+            result.Sort(SampleBrowserUtils.CompareReferencesWithContext);
             return result;
         }
 
@@ -78,47 +79,12 @@ namespace Ara3D.RevitSampleBrowser.AvoidObstruction.CS
                 // Judge whether the point is in the bound line or not, if the distance between the point and line
                 // is Zero, then the point is in the bound line.
                 if (boundLine.Distance(gRef.GlobalPoint) < 1e-9)
-                    if (!InArray(result, gRefWithContext))
+                    if (!SampleBrowserUtils.InReferenceArray(result, gRefWithContext))
                         result.Add(gRefWithContext);
             }
 
-            result.Sort(CompareReferencesWithContext);
+            result.Sort(SampleBrowserUtils.CompareReferencesWithContext);
             return result;
-        }
-
-        /// <summary>
-        ///     Judge whether a given Reference is in a Reference list.
-        ///     Give two References, if their Proximity and Element Id is equal,
-        ///     we say the two reference is equal.
-        /// </summary>
-        /// <param name="arr">Reference Array</param>
-        /// <param name="entry">Reference</param>
-        /// <returns>True of false</returns>
-        private bool InArray(List<ReferenceWithContext> arr, ReferenceWithContext entry)
-        {
-            foreach (var tmp in arr)
-            {
-                if (Math.Abs(tmp.Proximity - entry.Proximity) < 1e-9 &&
-                    tmp.GetReference().ElementId == entry.GetReference().ElementId)
-                    return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Used to compare two references, just compare their ProximityParameter.
-        /// </summary>
-        /// <param name="a">First Reference to compare</param>
-        /// <param name="b">Second Reference to compare</param>
-        /// <returns>-1, 0, or 1</returns>
-        private int CompareReferencesWithContext(ReferenceWithContext a, ReferenceWithContext b)
-        {
-            if (a.Proximity > b.Proximity) return 1;
-
-            if (a.Proximity < b.Proximity) return -1;
-
-            return 0;
         }
     }
 }

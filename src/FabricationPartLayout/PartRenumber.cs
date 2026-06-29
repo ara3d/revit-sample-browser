@@ -7,6 +7,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Fabrication;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -64,16 +66,16 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                         if (string.IsNullOrWhiteSpace(part1.ItemNumber))
                         {
                             // part has not already been checked
-                            if (IsADuct(part1))
+                            if (FabricationPartHelper.IsADuct(part1))
                             {
-                                if (IsACoupling(part1))
+                                if (SampleBrowserUtils.IsACoupling(part1))
                                     part1.ItemNumber = $"DUCT COUPLING: {m_ductCouplingNum++}";
                                 else
                                     part1.ItemNumber = $"DUCT: {m_ductNum++}";
                             }
-                            else if (IsAPipe(part1))
+                            else if (FabricationPartHelper.IsAPipe(part1))
                             {
-                                if (IsACoupling(part1))
+                                if (SampleBrowserUtils.IsACoupling(part1))
                                     part1.ItemNumber = $"PIPE COUPLING: {m_pipeCouplingNum++}";
                                 else
                                     part1.ItemNumber = $"PIPE: {m_pipeNum++}";
@@ -120,48 +122,6 @@ namespace Ara3D.RevitSampleBrowser.FabricationPartLayout.CS
                 message = ex.Message;
                 return Result.Failed;
             }
-        }
-
-        /// <summary>
-        ///     Checks if the given part is fabrication ductwork.
-        /// </summary>
-        /// <param name="fabPart">The part to check.</param>
-        /// <returns>True if the part is fabrication ductwork.</returns>
-        private bool IsADuct(FabricationPart fabPart)
-        {
-            return fabPart != null && fabPart.Category.BuiltInCategory == BuiltInCategory.OST_FabricationDuctwork;
-        }
-
-        /// <summary>
-        ///     Checks if the part is fabrication pipework.
-        /// </summary>
-        /// <param name="fabPart">The part to check.</param>
-        /// <returns>True if the part is fabrication pipework.</returns>
-        private bool IsAPipe(FabricationPart fabPart)
-        {
-            return fabPart != null && fabPart.Category.BuiltInCategory == BuiltInCategory.OST_FabricationPipework;
-        }
-
-        /// <summary>
-        ///     Checks if the part is a coupling.
-        ///     The CID's (the fabrication part item customer Id) that are recognized internally as couplings are:
-        ///     CID 522, 1112 - Round Ductwork
-        ///     CID 1522 - Oval Ductwork
-        ///     CID 4522 - Rectangular Ductwork
-        ///     CID 2522 - Pipe Work
-        ///     CID 3522 - Electrical
-        /// </summary>
-        /// <param name="fabPart">The part to check.</param>
-        /// <returns>True if the part is a coupling.</returns>
-        private bool IsACoupling(FabricationPart fabPart)
-        {
-            if (fabPart != null)
-            {
-                var cid = fabPart.ItemCustomId;
-                if (cid == 522 || cid == 1522 || cid == 2522 || cid == 3522 || cid == 1112) return true;
-            }
-
-            return false;
         }
     }
 }

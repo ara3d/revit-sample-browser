@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 
+using Ara3D.RevitSampleBrowser.Common.Mep;
 namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 {
     /// <summary>
@@ -377,7 +378,7 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
                 }
 
                 // Get the connector connected to current connector
-                var connectedConnector = GetConnectedConnector(connector);
+                var connectedConnector = ConnectorHelper.GetConnectedConnector(connector);
                 if (connectedConnector != null)
                 {
                     var node = new TreeNode(m_document, connectedConnector.Owner.Id)
@@ -391,29 +392,6 @@ namespace Ara3D.RevitSampleBrowser.TraverseSystem.CS
 
             nodes.Sort((t1, t2) => t1.Id > t2.Id ? 1 : t1.Id < t2.Id ? -1 : 0
             );
-        }
-
-        /// <summary>
-        ///     Get the connected connector of one connector
-        /// </summary>
-        /// <param name="connector">The connector to be analyzed</param>
-        /// <returns>The connected connector</returns>
-        private static Connector GetConnectedConnector(Connector connector)
-        {
-            Connector connectedConnector = null;
-            var allRefs = connector.AllRefs;
-            foreach (Connector conn in allRefs)
-            {
-                // Ignore non-EndConn connectors and connectors of the current element
-                if (conn.ConnectorType != ConnectorType.End ||
-                    conn.Owner.Id == connector.Owner.Id)
-                    continue;
-
-                connectedConnector = conn;
-                break;
-            }
-
-            return connectedConnector;
         }
 
         /// <summary>

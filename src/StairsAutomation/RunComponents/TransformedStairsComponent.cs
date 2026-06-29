@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
 namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
 {
     /// <summary>
@@ -33,40 +34,17 @@ namespace Ara3D.RevitSampleBrowser.StairsAutomation.CS.RunComponents
         /// </summary>
         /// <param name="point">The point.</param>
         /// <returns>The transformed point.</returns>
-        public XYZ TransformPoint(XYZ point)
-        {
-            var xyz = m_transform.OfPoint(point);
-            return xyz;
-        }
+        public XYZ TransformPoint(XYZ point) => m_transform.OfPoint(point);
 
         /// <summary>
         ///     Transforms the given curve by the stored transform.
         /// </summary>
         /// <param name="curve">The curve.</param>
         /// <returns>The transformed curve.</returns>
-        public Curve Transform(Curve curve)
-        {
-            return GeometryUtils.TransformCurve(curve, m_transform);
-        }
+        public Curve Transform(Curve curve) => CurveGeometry.TransformCurve(curve, m_transform);
 
-        /// <summary>
-        ///     Transforms the given line by the stored transform.
-        /// </summary>
-        /// <param name="line">The line.</param>
-        /// <returns>The transformed line.</returns>
-        public Line Transform(Line line)
-        {
-            return Transform(line as Curve) as Line;
-        }
+        public Line Transform(Line line) => Transform(line as Curve) as Line;
 
-        /// <summary>
-        ///     Transforms all members of the given curve array by the stored transform.
-        /// </summary>
-        /// <param name="inputs">The input curves.</param>
-        /// <returns>The transformed curves.</returns>
-        public IList<Curve> Transform(IList<Curve> inputs)
-        {
-            return GeometryUtils.TransformCurves(inputs, m_transform);
-        }
+        public IList<Curve> Transform(IList<Curve> inputs) => CurveGeometry.TransformCurves(inputs, m_transform);
     }
 }

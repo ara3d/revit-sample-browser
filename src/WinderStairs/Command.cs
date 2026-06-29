@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Ara3D.RevitSampleBrowser.WinderStairs.CS.Forms;
 using Ara3D.RevitSampleBrowser.WinderStairs.CS.Winders;
@@ -10,6 +11,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -34,10 +36,10 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
                 selectedIds.AddRange(selectionIds);
 
                 // Generate the winder creation parameters from selected elements.
-                var controlPoints = WinderUtil.CalculateControlPoints(rvtDoc, selectedIds);
+                var controlPoints = StairsHelper.CalculateControlPoints(rvtDoc, selectedIds);
                 double runWidth = 0, treadDepth = 0;
                 GetStairsData(rvtDoc, out runWidth, out treadDepth);
-                var maxCount = WinderUtil.CalculateMaxStepsCount(controlPoints, runWidth, treadDepth);
+                var maxCount = StairsHelper.CalculateMaxStepsCount(controlPoints, runWidth, treadDepth);
                 uint numStepsInCorner = 3;
                 var centerOffset = 0.0;
                 switch (selectionIds.Count)
@@ -134,9 +136,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
             var filterLevels = new FilteredElementCollector(rvtDoc);
             var levels = filterLevels.OfClass(typeof(Level)).ToElements();
             if (levels.Count < 2) throw new InvalidOperationException("Need two Levels to create Stairs.");
-            var levelList = new List<Element>();
-            levelList.AddRange(levels);
-            levelList.Sort((a, b) => ((Level)a).Elevation.CompareTo(((Level)b).Elevation));
+            var levelList = levels.Cast<Level>().OrderBy(level => level.Elevation).Cast<Element>().ToList();
             using (var stairsMode = new StairsEditScope(rvtDoc, "DUMMY STAIRS SCOPE"))
             {
                 var stairsId = stairsMode.Start(levelList[0].Id, levelList[1].Id);

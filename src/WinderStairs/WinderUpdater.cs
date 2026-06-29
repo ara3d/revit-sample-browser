@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
 {
     /// <summary>
@@ -147,7 +148,7 @@ namespace Ara3D.RevitSampleBrowser.WinderStairs.CS
             }
 
             // Create the winder
-            m_winder.ControlPoints = WinderUtil.CalculateControlPoints(rvtDoc, m_curveElements);
+            m_winder.ControlPoints = StairsHelper.CalculateControlPoints(rvtDoc, m_curveElements);
             m_winder.Build(rvtDoc, m_drawSketch, ref m_winderRunId);
         }
     }

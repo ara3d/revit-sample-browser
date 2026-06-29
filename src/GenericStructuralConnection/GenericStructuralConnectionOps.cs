@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
 {
     /// <summary>
@@ -23,7 +24,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
         {
             var ret = Result.Succeeded;
 
-            var ids = StructuralConnectionSelectionUtils.SelectConnectionElements(activeDoc);
+            var ids = SelectionHelper.SelectConnectionElements(activeDoc);
             if (ids.Count() > 0)
             {
                 // Start a new transaction.
@@ -61,7 +62,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ret = Result.Succeeded;
 
             // Select a structural connection.
-            var conn = StructuralConnectionSelectionUtils.SelectConnection(activeDoc);
+            var conn = SelectionHelper.SelectConnection(activeDoc);
 
             if (conn != null)
             {
@@ -101,7 +102,7 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ret = Result.Succeeded;
 
             // Select structural connection.
-            var conn = StructuralConnectionSelectionUtils.SelectConnection(activeDoc);
+            var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
                 // Get information from structural connection.
@@ -142,11 +143,11 @@ namespace Ara3D.RevitSampleBrowser.GenericStructuralConnection.CS
             var ret = Result.Succeeded;
 
             // Prompt to select a structural connection.
-            var conn = StructuralConnectionSelectionUtils.SelectConnection(activeDoc);
+            var conn = SelectionHelper.SelectConnection(activeDoc);
             if (conn != null)
             {
                 // Select elements to add to connection.
-                var ids = StructuralConnectionSelectionUtils.SelectConnectionElements(activeDoc);
+                var ids = SelectionHelper.SelectConnectionElements(activeDoc);
                 if (ids.Count() > 0)
                     // Start a new transaction.
                     using (var transaction =

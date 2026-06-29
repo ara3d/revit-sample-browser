@@ -450,7 +450,25 @@
     <None Include="WinderStairs\Readme_WinderStairs.rtf" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\**\*.cs" />
     <Compile Include="Revit2025Aliases.cs" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <Compile Include="BoundaryConditions\ConversionValue.cs" />
+
     <Compile Include="AddSpaceAndZone\Command.cs" />
     <Compile Include="AddSpaceAndZone\DataManager.cs" />
     <Compile Include="AddSpaceAndZone\MainForm.cs">
@@ -507,7 +525,7 @@
     <Compile Include="AppearanceAssetEditing\Request.cs" />
     <Compile Include="AppearanceAssetEditing\RequestHandler.cs" />
     <Compile Include="AreaReinCurve\AreaReinCurve.cs" />
-    <Compile Include="AreaReinCurve\ParameterUtil.cs" />
+
     <Compile Include="AreaReinParameters\AreaReinData.cs" />
     <Compile Include="AreaReinParameters\AreaReinEnum.cs" />
     <Compile Include="AreaReinParameters\AreaReinParameters.cs" />
@@ -519,12 +537,10 @@
     </Compile>
     <Compile Include="AreaReinParameters\FloorAreaReinData.cs" />
     <Compile Include="AreaReinParameters\HookTypeConverter.cs" />
-    <Compile Include="AreaReinParameters\ParameterUtil.cs" />
     <Compile Include="AreaReinParameters\WallAreaReinData.cs" />
     <Compile Include="AttachedDetailGroup\Application.cs" />
     <Compile Include="AttachedDetailGroup\AttachedDetailGroupHideAllCommand.cs" />
     <Compile Include="AttachedDetailGroup\AttachedDetailGroupShowAllCommand.cs" />
-    <Compile Include="AttachedDetailGroup\GroupHelper.cs" />
     <Compile Include="AttachedDetailGroup\Properties\Resources.Designer.cs" />
     <Compile Include="AutoRoute\Command.cs" />
     <Compile Include="AutoTagRooms\AutoTagRoomsForm.cs">
@@ -558,7 +574,6 @@
     <Compile Include="BoundaryConditions\SpringModulusForm.Designer.cs">
       <DependentUpon>SpringModulusForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BoundaryConditions\UnitConversion.cs" />
     <Compile Include="CapitalizeAllTextNotes\Command.cs" />
     <Compile Include="CloudAPISample\Application.cs" />
     <Compile Include="CloudAPISample\Coroutine\Coroutine.cs" />
@@ -607,7 +622,6 @@
     <Compile Include="ContextualAnalyticalModel\ReleaseConditionsAnalyticalMember.cs" />
     <Compile Include="ContextualAnalyticalModel\RemoveAssociation.cs" />
     <Compile Include="ContextualAnalyticalModel\SetOuterContourForPanels.cs" />
-    <Compile Include="ContextualAnalyticalModel\Utilities.cs" />
     <Compile Include="CreateBeamsColumnsBraces\CreateBeamsColumnsBraces.cs" />
     <Compile Include="CreateBeamsColumnsBraces\CreateBeamsColumnsBracesForm.cs">
       <SubType>Form</SubType>
@@ -625,7 +639,6 @@
     <Compile Include="CreateBeamSystem\BeamTypeConverter.cs" />
     <Compile Include="CreateBeamSystem\Command.cs" />
     <Compile Include="CreateBeamSystem\ErrorMessageException.cs" />
-    <Compile Include="CreateBeamSystem\GeometryUtil.cs" />
     <Compile Include="CreateBeamSystem\Line2D.cs" />
     <Compile Include="CreateBeamSystem\LineSketch.cs" />
     <Compile Include="CreateBeamSystem\ObjectSketch.cs" />
@@ -638,8 +651,6 @@
       <DependentUpon>CreateComplexAreaReinForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CreateComplexAreaRein\GeomHelper.cs" />
-    <Compile Include="CreateComplexAreaRein\GeomUtil.cs" />
-    <Compile Include="CreateComplexAreaRein\ParameterUtil.cs" />
     <Compile Include="CreateDimensions\Command.cs" />
     <Compile Include="CreateDuctworkStiffener\Command.cs" />
     <Compile Include="CreateFillPattern\Command.cs" />
@@ -658,12 +669,9 @@
       <DependentUpon>CreateSimpleAreaReinForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CreateSimpleAreaRein\GeomHelper.cs" />
-    <Compile Include="CreateSimpleAreaRein\GeomUtil.cs" />
-    <Compile Include="CreateSimpleAreaRein\ParameterUtil.cs" />
     <Compile Include="CreateTrianglesTopography\Command.cs" />
     <Compile Include="CreateTrianglesTopography\TrianglesData.cs" />
     <Compile Include="CreateViewSection\Command.cs" />
-    <Compile Include="CreateViewSection\XYZMath.cs" />
     <Compile Include="CreateWallinBeamProfile\CreateWallinBeamProfile.cs" />
     <Compile Include="CreateWallinBeamProfile\CreateWallinBeamProfileForm.cs">
       <SubType>Form</SubType>
@@ -708,11 +716,8 @@
     <Compile Include="CurtainWallGrid\GridGeometry.cs" />
     <Compile Include="CurtainWallGrid\GridLine2D.cs" />
     <Compile Include="CurtainWallGrid\GridProperties.cs" />
-    <Compile Include="CurtainWallGrid\MathTools.cs" />
     <Compile Include="CurtainWallGrid\MyDocument.cs" />
     <Compile Include="CurtainWallGrid\Properties\Resources.Designer.cs" />
-    <Compile Include="CurtainWallGrid\Unit.cs" />
-    <Compile Include="CurtainWallGrid\Utility.cs" />
     <Compile Include="CurtainWallGrid\WallDrawing.cs" />
     <Compile Include="CurtainWallGrid\WallGeometry.cs" />
     <Compile Include="CurvedBeam\CurvedBeam.cs" />
@@ -731,7 +736,6 @@
       <DependentUpon>Export2DView.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomExporter\Custom2DExporter\TessellatedGeomAndText2DExportContext.cs" />
-    <Compile Include="CustomExporter\Custom2DExporter\Utilities.cs" />
     <Compile Include="DatumsModification\AlignmentSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -773,6 +777,7 @@
     <Compile Include="DisplacementElementAnimation\DisplacementStructureModelAnimatorCommand.cs" />
     <Compile Include="DisplacementElementAnimation\Properties\Resources.Designer.cs" />
     <Compile Include="DockableDialogs\APIUtility\APIUtility.cs" />
+    <Compile Include="DockableDialogs\StandardIORouter.cs" />
     <Compile Include="DockableDialogs\APIUtility\APIUtilityCommandParser.cs" />
     <Compile Include="DockableDialogs\Application\ThisApplication.cs" />
     <Compile Include="DockableDialogs\DockingSetupDialog\DockingSetupDialog.xaml.cs">
@@ -787,10 +792,6 @@
     <Compile Include="DockableDialogs\TopLevelCommands\ExternalCommandHidePage.cs" />
     <Compile Include="DockableDialogs\TopLevelCommands\ExternalCommandRegisterPage.cs" />
     <Compile Include="DockableDialogs\TopLevelCommands\ExternalCommandShowPage.cs" />
-    <Compile Include="DockableDialogs\Utility\Constants.cs" />
-    <Compile Include="DockableDialogs\Utility\FileUtility.cs" />
-    <Compile Include="DockableDialogs\Utility\Log.cs" />
-    <Compile Include="DockableDialogs\Utility\StandardIORouter.cs" />
     <Compile Include="DocumentChanged\ChangesInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -801,7 +802,6 @@
     <Compile Include="DoorSwing\Command.cs" />
     <Compile Include="DoorSwing\DoorFamily.cs" />
     <Compile Include="DoorSwing\DoorFamilyGeometry.cs" />
-    <Compile Include="DoorSwing\DoorSharedParameters.cs" />
     <Compile Include="DoorSwing\DoorSwingData.cs" />
     <Compile Include="DoorSwing\DoorSwingResource.Designer.cs" />
     <Compile Include="DoorSwing\ExternalApplication.cs" />
@@ -816,14 +816,12 @@
     <Compile Include="DuplicateGraphics\RevitElementDrawingServer.cs" />
     <Compile Include="DuplicateViews\Application.cs" />
     <Compile Include="DuplicateViews\DuplicateAcrossDocumentsCommand.cs" />
-    <Compile Include="DuplicateViews\DuplicateViewUtils.cs" />
     <Compile Include="DuplicateViews\Properties\Resources.Designer.cs" />
     <Compile Include="DynamicModelUpdate\Application.cs" />
     <Compile Include="DynamicModelUpdate\SectionUpdater.cs" />
     <Compile Include="ElementFilterSample\Command.cs" />
     <Compile Include="ElementFilterSample\Extensions.cs" />
     <Compile Include="ElementFilterSample\FilterData.cs" />
-    <Compile Include="ElementFilterSample\FilterUtil.cs" />
     <Compile Include="ElementFilterSample\NewFilterForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -877,6 +875,7 @@
     <Compile Include="Events\SelectionChanged\SelectionChanged.cs" />
     <Compile Include="Events\SelectionChanged\SelectionChangedEventArgsExtension.cs" />
     <Compile Include="ExportPDFSettingsSample\Application.cs" />
+
     <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\Application\Application.cs" />
     <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\Application\Command.cs" />
     <Compile Include="ExtensibleStorageManager\ExtensibleStorageManager\User\StorageCommand.cs" />
@@ -891,7 +890,6 @@
     <Compile Include="ExtensibleStorageManager\SchemaWrapperTools\SchemaWrapper.cs" />
     <Compile Include="ExtensibleStorageUtility\DeleteStorage.cs" />
     <Compile Include="ExtensibleStorageUtility\QueryStorage.cs" />
-    <Compile Include="ExtensibleStorageUtility\Utility.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ExternalCommand\ExternalCommandRegistration\AvailabilityClass.cs" />
     <Compile Include="ExternalCommand\ExternalCommandRegistration\ExternalCommandClass.cs" />
@@ -907,7 +905,6 @@
     </Compile>
     <Compile Include="GenericExternalEventHandler.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\Application.cs" />
-    <Compile Include="ExternalResourceServer\ExternalResourceDBServer\KeynotesDatabase.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\SampleExternalResourceDBServer.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceDBServer\ServerInterfaceExtensionsForRevitLinks.cs" />
     <Compile Include="ExternalResourceServer\ExternalResourceUIServer\Application.cs" />
@@ -960,8 +957,6 @@
     <Compile Include="FamilyCreation\WindowWizard\CreateExtrusion.cs" />
     <Compile Include="FamilyCreation\WindowWizard\CreateReferencePlane.cs" />
     <Compile Include="FamilyCreation\WindowWizard\DoubleHungWinCreation.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\GeoHelper.cs" />
-    <Compile Include="FamilyCreation\WindowWizard\Utility.cs" />
     <Compile Include="FamilyCreation\WindowWizard\ValidateWindowParameter.cs" />
     <Compile Include="FamilyCreation\WindowWizard\WindowCreation.cs" />
     <Compile Include="FamilyCreation\WindowWizard\WindowParameter.cs" />
@@ -1004,7 +999,6 @@
       <DependentUpon>FoundationSlabForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FoundationSlab\RegularSlab.cs" />
-    <Compile Include="FoundationSlab\Sketch.cs" />
     <Compile Include="FoundationSlab\SlabData.cs" />
     <Compile Include="FrameBuilder\Command.cs" />
     <Compile Include="FrameBuilder\CreateFrameForm.cs">
@@ -1032,7 +1026,6 @@
     <Compile Include="FrameBuilder\FrameTypesMgr.cs" />
     <Compile Include="FreeFormElement\Application.cs" />
     <Compile Include="FreeFormElement\CreateNegativeBlockCommand.cs" />
-    <Compile Include="FreeFormElement\FreeFormElementUtils.cs" />
     <Compile Include="FreeFormElement\Properties\Resources.Designer.cs" />
     <Compile Include="GenerateFloor\Command.cs" />
     <Compile Include="GenerateFloor\Data.cs" />
@@ -1053,7 +1046,6 @@
       <DependentUpon>StructuralConnectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GenericStructuralConnection\StructuralConnectionSelectionFilter.cs" />
-    <Compile Include="GenericStructuralConnection\StructuralConnectionSelectionUtils.cs" />
     <Compile Include="GeometryAPI\BRepBuilderExample\Application.cs" />
     <Compile Include="GeometryAPI\BRepBuilderExample\CreateCube.cs" />
     <Compile Include="GeometryAPI\BRepBuilderExample\CreateNURBS.cs" />
@@ -1084,7 +1076,6 @@
     <Compile Include="GeometryAPI\ProximityDetection_WallJoinControl\WallJoinControl.cs" />
     <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\Application.cs" />
     <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\CreateBRep.cs" />
-    <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\HelperMethods.cs" />
     <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\Podium.cs" />
     <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\Properties\Resources.Designer.cs" />
     <Compile Include="GeometryAPI\UpdateExternallyTaggedBRep\UpdateBRep.cs" />
@@ -1129,8 +1120,6 @@
     </Compile>
     <Compile Include="GridCreation\Properties\Resources.Designer.cs" />
     <Compile Include="GridCreation\Properties\Settings.Designer.cs" />
-    <Compile Include="GridCreation\Unit.cs" />
-    <Compile Include="GridCreation\Validation.cs" />
     <Compile Include="HelloRevit\Command.cs" />
     <Compile Include="ImportExport\Command.cs" />
     <Compile Include="ImportExport\Export\ExportBaseOptionsData.cs" />
@@ -1206,11 +1195,9 @@
     <Compile Include="ImportExport\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportExport\Unit.cs" />
     <Compile Include="InCanvasControlAPI\Application.cs" />
     <Compile Include="InCanvasControlAPI\Command.cs" />
     <Compile Include="InCanvasControlAPI\IssueMarker.cs" />
-    <Compile Include="InCanvasControlAPI\IssueMarkerSelector.cs" />
     <Compile Include="InCanvasControlAPI\IssueMarkerTracking.cs" />
     <Compile Include="InCanvasControlAPI\IssueMarkerTrackingManager.cs" />
     <Compile Include="InCanvasControlAPI\IssueMarkerUpdater.cs" />
@@ -1218,7 +1205,6 @@
     <Compile Include="InCanvasControlAPI\ResourceProvider.cs" />
     <Compile Include="InPlaceMembers\Command.cs" />
     <Compile Include="InPlaceMembers\GraphicsData.cs" />
-    <Compile Include="InPlaceMembers\GraphicsDataFactory.cs" />
     <Compile Include="InPlaceMembers\InPlaceMembersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1247,7 +1233,6 @@
       <DependentUpon>LevelsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LevelsProperty\Properties\Resources.Designer.cs" />
-    <Compile Include="LevelsProperty\Unit.cs" />
     <Compile Include="Loads\LoadCaseDeal.cs" />
     <Compile Include="Loads\LoadCaseMap.cs" />
     <Compile Include="Loads\LoadCaseTabPage.cs">
@@ -1324,6 +1309,7 @@
     <Compile Include="MoveLinear\Command.cs" />
     <Compile Include="MultiplanarRebar\Command.cs" />
     <Compile Include="MultiplanarRebar\CorbelFrame.cs" />
+    <Compile Include="MultiplanarRebar\MultiplanarRebarHelper.cs" />
     <Compile Include="MultiplanarRebar\CorbelReinforcementOptions.cs" />
     <Compile Include="MultiplanarRebar\CorbelReinforcementOptionsForm.cs">
       <SubType>Form</SubType>
@@ -1331,9 +1317,7 @@
     <Compile Include="MultiplanarRebar\CorbelReinforcementOptionsForm.Designer.cs">
       <DependentUpon>CorbelReinforcementOptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MultiplanarRebar\GeometryUtil.cs" />
     <Compile Include="MultiplanarRebar\Properties\Resources.Designer.cs" />
-    <Compile Include="MultiplanarRebar\SharedParameterUtil.cs" />
     <Compile Include="SampleBrowserApplication.cs" />
     <Compile Include="SampleBrowserMainForm.cs">
       <SubType>Form</SubType>
@@ -1391,7 +1375,6 @@
     <Compile Include="NewOpenings\EmptyTool.cs" />
     <Compile Include="NewOpenings\ITool.cs" />
     <Compile Include="NewOpenings\LineTool.cs" />
-    <Compile Include="NewOpenings\MathTools.cs" />
     <Compile Include="NewOpenings\NewOpeningsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1443,7 +1426,6 @@
       <DependentUpon>NewRebarShapeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="NewRebar\Geom\GeometrySupport.cs" />
-    <Compile Include="NewRebar\Geom\GeomUtil.cs" />
     <Compile Include="NewRebar\Parameters\RebarShapeParameter.cs" />
     <Compile Include="NewRebar\Parameters\RebarShapeParameterDouble.cs" />
     <Compile Include="NewRebar\Parameters\RebarShapeParameterFormula.cs" />
@@ -1583,13 +1565,13 @@
     <Compile Include="PlacementOptions\SketchbasedForm.Designer.cs">
       <DependentUpon>SketchbasedForm.cs</DependentUpon>
     </Compile>
+
     <Compile Include="PointCloudEngine\FileBasedPointCloud.cs" />
     <Compile Include="PointCloudEngine\PointCloudAccessBase.cs" />
     <Compile Include="PointCloudEngine\PointCloudCellStorage.cs" />
     <Compile Include="PointCloudEngine\PointCloudEngineSample.cs" />
     <Compile Include="PointCloudEngine\PredefinedPointCloud.cs" />
     <Compile Include="PointCloudEngine\PredefinedPointCloudEngine.cs" />
-    <Compile Include="PointCloudEngine\XmlUtils.cs" />
     <Compile Include="PostCommandWorkflow\Application.cs" />
     <Compile Include="PostCommandWorkflow\PostCommandRevisionMonitor.cs" />
     <Compile Include="PostCommandWorkflow\PostCommandRevisionMonitorCommand.cs" />
@@ -1664,15 +1646,13 @@
     <Compile Include="RebarContainerAnyShapeType\FramReinMaker.cs" />
     <Compile Include="RebarContainerAnyShapeType\GeomData.cs" />
     <Compile Include="RebarContainerAnyShapeType\GeometrySupport.cs" />
-    <Compile Include="RebarContainerAnyShapeType\GeomUtil.cs" />
-    <Compile Include="RebarContainerAnyShapeType\ParameterUtil.cs" />
+
     <Compile Include="RebarFreeForm\AddSharedParams.cs" />
     <Compile Include="RebarFreeForm\Application.cs" />
     <Compile Include="RebarFreeForm\Command.cs" />
     <Compile Include="RebarFreeForm\CurveElementRegenUpdater.cs" />
     <Compile Include="RebarFreeForm\RebarUpdateServer.cs" />
     <Compile Include="ReferencePlane\Command.cs" />
-    <Compile Include="ReferencePlane\GeoHelper.cs" />
     <Compile Include="ReferencePlane\ReferencePlaneForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1701,8 +1681,6 @@
     <Compile Include="Reinforcement\FramReinMaker.cs" />
     <Compile Include="Reinforcement\GeomData.cs" />
     <Compile Include="Reinforcement\GeometrySupport.cs" />
-    <Compile Include="Reinforcement\GeomUtil.cs" />
-    <Compile Include="Reinforcement\ParameterUtil.cs" />
     <Compile Include="SampleBrowserCommand.cs" />
     <Compile Include="Ribbon\AddInCommand.cs" />
     <Compile Include="Ribbon\Ribbon.cs" />
@@ -1740,7 +1718,6 @@
     <Compile Include="RoutingPreferenceTools\RoutingPreferenceBuilder\CommandWritePreferences.cs" />
     <Compile Include="RoutingPreferenceTools\RoutingPreferenceBuilder\RoutingPreferenceBuilder.cs" />
     <Compile Include="RoutingPreferenceTools\RoutingPreferenceBuilder\RoutingPreferenceBuilderUtility.cs" />
-    <Compile Include="RoutingPreferenceTools\Utility.cs" />
     <Compile Include="RvtSamples\Application.cs" />
     <Compile Include="RvtSamples\Properties\Resource.Designer.cs" />
     <Compile Include="RvtSamples\SampleItem.cs" />
@@ -1750,7 +1727,6 @@
     <Compile Include="ScheduleAutomaticFormatter\ScheduleFormatter.cs" />
     <Compile Include="ScheduleAutomaticFormatter\ScheduleFormatterCommand.cs" />
     <Compile Include="ScheduleCreation\Command.cs" />
-    <Compile Include="ScheduleCreation\ScheduleCreationUtility.cs" />
     <Compile Include="ScheduleToHTML\Application.cs" />
     <Compile Include="ScheduleToHTML\Properties\Resources.Designer.cs" />
     <Compile Include="ScheduleToHTML\ScheduleHTMLExportCommand.cs" />
@@ -1767,7 +1743,6 @@
     <Compile Include="ShaftHolePuncher\Command.cs" />
     <Compile Include="ShaftHolePuncher\Tool.cs" />
     <Compile Include="ShaftHolePuncher\LineTool.cs" />
-    <Compile Include="ShaftHolePuncher\MathTools.cs" />
     <Compile Include="ShaftHolePuncher\Profile.cs" />
     <Compile Include="ShaftHolePuncher\ProfileBeam.cs" />
     <Compile Include="ShaftHolePuncher\ProfileFloor.cs" />
@@ -1795,7 +1770,6 @@
       <DependentUpon>DuplicateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SharedCoordinateSystem\PlaceInfo.cs" />
-    <Compile Include="SharedCoordinateSystem\UnitConversion.cs" />
     <Compile Include="SheetToView3D\SheetToView3D.cs" />
     <Compile Include="SinePlotter\Application.cs" />
     <Compile Include="SinePlotter\Command.cs" />
@@ -1804,12 +1778,10 @@
     <Compile Include="Site\Properties\Resources.Designer.cs" />
     <Compile Include="Site\SiteAddRetainingPondCommand.cs" />
     <Compile Include="Site\SiteDeleteRegionAndPointsCommand.cs" />
-    <Compile Include="Site\SiteEditingUtils.cs" />
     <Compile Include="Site\SiteLowerTerrainInRegionCommand.cs" />
     <Compile Include="Site\SiteMoveRegionAndPointsCommand.cs" />
     <Compile Include="Site\SiteNormalizeTerrainInRegionCommand.cs" />
     <Compile Include="Site\SiteRaiseTerrainInRegionCommand.cs" />
-    <Compile Include="Site\SiteUIUtils.cs" />
     <Compile Include="Site\TopographyEditFailuresPreprocessor.cs" />
     <Compile Include="SlabProperties\Command.cs" />
     <Compile Include="SlabProperties\SlabProperitiesForm.cs">
@@ -1838,10 +1810,8 @@
     <Compile Include="SpotDimension\SpotDimensionParams.cs" />
     <Compile Include="SpotDimension\SpotDimensionsData.cs" />
     <Compile Include="StairsAutomation\Command.cs" />
-    <Compile Include="StairsAutomation\GeometryUtils.cs" />
     <Compile Include="StairsAutomation\IStairsConfiguration.cs" />
     <Compile Include="StairsAutomation\LandingComponents\IStairsLandingComponent.cs" />
-    <Compile Include="StairsAutomation\LandingComponents\LandingComponentUtils.cs" />
     <Compile Include="StairsAutomation\LandingComponents\StairsRectangleLandingComponent.cs" />
     <Compile Include="StairsAutomation\RunComponents\CurvedStairsRunComponent.cs" />
     <Compile Include="StairsAutomation\RunComponents\IStairsRunComponent.cs" />
@@ -1886,9 +1856,9 @@
     </Compile>
     <Compile Include="TraverseSystem\Command.cs" />
     <Compile Include="TraverseSystem\TraversalTree.cs" />
+
     <Compile Include="Truss\Command.cs" />
     <Compile Include="Truss\LineTool.cs" />
-    <Compile Include="Truss\MathTools.cs" />
     <Compile Include="Truss\Properties\Resources.Designer.cs" />
     <Compile Include="Truss\TrussForm.cs">
       <SubType>Form</SubType>
@@ -1983,7 +1953,6 @@
       <DependentUpon>ViewSheetSetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewTemplateCreation\Command.cs" />
-    <Compile Include="ViewTemplateCreation\Utils.cs" />
     <Compile Include="ViewTemplateCreation\ViewTemplateCreationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -2018,7 +1987,6 @@
     <Compile Include="WinderStairs\Winders\WinderCorner.cs" />
     <Compile Include="WinderStairs\Winders\WinderSinglePoint.cs" />
     <Compile Include="WinderStairs\Winders\WinderStraight.cs" />
-    <Compile Include="WinderStairs\Winders\WinderUtil.cs" />
     <Compile Include="WinderStairs\WinderUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2679,7 +2647,7 @@
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
   </ProjectExtensions>
-  <Target Name="InstallRevitAddin" AfterTargets="Build">
+  <Target Name="InstallRevitAddin" AfterTargets="Build" Condition="'$(SkipInstallRevitAddin)' != 'true'">
     <ItemGroup>
       <RevitSampleBrowserOutput Include="$(TargetDir)**\*.*" />
     </ItemGroup>

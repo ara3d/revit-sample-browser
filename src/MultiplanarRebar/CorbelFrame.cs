@@ -6,6 +6,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
 {
     /// <summary>
@@ -187,10 +188,10 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
             var shapedef = new RebarShapeDefinitionBySegments(revitDoc, 2);
 
             // Define parameters for the dimension.
-            var b = SharedParameterUtil.GetOrCreateDef("B", revitDoc);
-            var h = SharedParameterUtil.GetOrCreateDef("H", revitDoc);
-            var k = SharedParameterUtil.GetOrCreateDef("K", revitDoc);
-            var mm = SharedParameterUtil.GetOrCreateDef("MM", revitDoc);
+            var b = MultiplanarRebarHelper.GetOrCreateDef("B", revitDoc);
+            var h = MultiplanarRebarHelper.GetOrCreateDef("H", revitDoc);
+            var k = MultiplanarRebarHelper.GetOrCreateDef("K", revitDoc);
+            var mm = MultiplanarRebarHelper.GetOrCreateDef("MM", revitDoc);
 
             // Set parameters default values according to the size Trapezoid shape. 
             shapedef.AddParameter(b, Top.Length);
@@ -337,8 +338,7 @@ namespace Ara3D.RevitSampleBrowser.MultiplanarRebar.CS
         /// <returns>A created CorbelFrame</returns>
         public static CorbelFrame Parse(FamilyInstance corbel)
         {
-            // This just delegates a call to GeometryUtil class.
-            return GeometryUtil.ParseCorbelGeometry(corbel);
+            return MultiplanarRebarHelper.ParseCorbelGeometry(corbel);
         }
 
         /// <summary>

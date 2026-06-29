@@ -7,27 +7,9 @@ using System.ComponentModel;
 using System.Drawing;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
 {
-    /// <summary>
-    ///     The Util class is used to translate Revit coordination to windows coordination.
-    /// </summary>
-    public class Util
-    {
-        /// <summary>
-        ///     Translate a Revit 3D point to a windows 2D point according the boundingbox.
-        /// </summary>
-        /// <param name="pointXyz">A Revit 3D point</param>
-        /// <param name="boundingbox">The boundingbox of the roof whose footprint lines will be displayed in GDI.</param>
-        /// <returns>A windows 2D point.</returns>
-        public static PointF Translate(XYZ pointXyz, BoundingBoxXYZ boundingbox)
-        {
-            var centerX = (boundingbox.Min.X + boundingbox.Max.X) / 2;
-            var centerY = (boundingbox.Min.Y + boundingbox.Max.Y) / 2;
-            return new PointF((float)(pointXyz.X - centerX), -(float)(pointXyz.Y - centerY));
-        }
-    }
-
     /// <summary>
     ///     The FootPrintRoofLine class is used to edit the foot print data of a footprint roof.
     /// </summary>
@@ -142,7 +124,7 @@ namespace Ara3D.RevitSampleBrowser.NewRoof.CS.RoofForms
             var poinsts = new List<PointF>();
             foreach (var point in curve.Tessellate())
             {
-                poinsts.Add(Util.Translate(point, m_boundingbox));
+                poinsts.Add(ViewHelper.Translate(point, m_boundingbox));
             }
 
             graphics.DrawCurve(pen, poinsts.ToArray());

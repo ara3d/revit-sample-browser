@@ -21,7 +21,7 @@ namespace Ara3D.RevitSampleBrowser.VisibilityControl.CS
             trans.Start();
             try
             {
-                if (null == commandData)
+                if (commandData == null)
                 {
                     trans.RollBack();
                     throw new ArgumentNullException(nameof(commandData));

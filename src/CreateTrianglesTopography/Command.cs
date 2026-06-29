@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.CreateTrianglesTopography.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -19,7 +20,7 @@ namespace Ara3D.RevitSampleBrowser.CreateTrianglesTopography.CS
             {
                 var document = commandData.Application.ActiveUIDocument.Document;
 
-                var trianglesData = TrianglesData.Load();
+                var trianglesData = SampleBrowserUtils.LoadTrianglesData();
 
                 using (var tran = new Transaction(document, "CreateTrianglesTopography"))
                 {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Analysis;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
 namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
 {
     /// <summary>
@@ -77,7 +78,7 @@ namespace Ara3D.RevitSampleBrowser.MultiThreading.WorkThread.CS
         private Reference GetReference()
         {
             if (m_view != null && m_sreference.Length > 0)
-                return Reference.ParseFromStableRepresentation(m_view.Document, m_sreference);
+                return SampleBrowserUtils.ParseReference(m_view.Document, m_sreference);
             return null;
         }
 

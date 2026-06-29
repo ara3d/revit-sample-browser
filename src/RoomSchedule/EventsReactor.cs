@@ -8,6 +8,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Events;
 
+using Ara3D.RevitSampleBrowser.Common.Infrastructure;
+using Ara3D.RevitSampleBrowser.Common.Parameters;
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
     /// <summary>
@@ -378,7 +380,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             try
             {
                 // get area without unit, then converting it to double will be ok.
-                var areaStr = RoomsData.GetProperty(activeDocument, room, BuiltInParameter.ROOM_AREA, false);
+                var areaStr = SampleBrowserUtils.GetProperty(activeDocument, room, BuiltInParameter.ROOM_AREA, false);
                 roomArea = double.Parse(areaStr);
                 if (roomArea <= double.Epsilon) return false;
             }
@@ -390,7 +392,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 
             // get the shared parameter value of room
             Parameter externalIdSharedParam = null;
-            var bExist = RoomsData.ShareParameterExists(room, RoomsData.SharedParam, ref externalIdSharedParam);
+            var bExist = ParameterAccess.ShareParameterExists(room, RoomsData.SharedParam, ref externalIdSharedParam);
             if (false == bExist || null == externalIdSharedParam)
                 return false;
             externalId = externalIdSharedParam.AsString();

@@ -6,6 +6,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -45,7 +46,7 @@ namespace Ara3D.RevitSampleBrowser.LevelsProperty.CS
 
                     var elevationPara = systemLevel.get_Parameter(BuiltInParameter.LEVEL_ELEV);
 
-                    var temValue = Unit.CovertFromApi(UnitTypeId, elevationPara.AsDouble());
+                    var temValue = UnitConversion.CovertFromApi(UnitTypeId, elevationPara.AsDouble());
                     var temValue2 = double.Parse(temValue.ToString("#.0"));
 
                     levelsDataSourceRow.Elevation = temValue2;

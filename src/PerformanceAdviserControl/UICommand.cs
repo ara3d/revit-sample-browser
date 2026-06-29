@@ -5,6 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
+using Ara3D.RevitSampleBrowser.Common.Documents;
 namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
 {
     [Transaction(TransactionMode.Manual)]
@@ -15,27 +16,7 @@ namespace Ara3D.RevitSampleBrowser.PerformanceAdviserControl.CS
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             //A list of rule information to be used below
-            var ruleInfoList = new List<RuleInfo>();
-
-            ///Here, we query the information about rules registered in PerformanceAdviser so that
-            ///we can later decide in a dialog which rules we want to run.
-
-            var performanceAdviser = PerformanceAdviser.GetPerformanceAdviser();
-
-            ICollection<PerformanceAdviserRuleId> allIds = performanceAdviser.GetAllRuleIds();
-            foreach (var ruleId in allIds)
-            {
-                var ruleName = performanceAdviser.GetRuleName(ruleId);
-                var ruleDescription = performanceAdviser.GetRuleDescription(ruleId);
-                var isEnabled = performanceAdviser.IsRuleEnabled(ruleId);
-
-                //We want to mark user-defined (API) rules, so we check to see if the current rule ID is
-                //equal to the rule ID we created.
-                var isOurRule = ruleId == FlippedDoorCheck.Id;
-
-                var oneRule = new RuleInfo(ruleId, isOurRule, ruleName, ruleDescription, isEnabled);
-                ruleInfoList.Add(oneRule);
-            }
+            var ruleInfoList = ElementQuery.CollectRuleInfo(PerformanceAdviser.GetPerformanceAdviser());
 
             //This dialog box will allow the user to select and run performance rules, so it needs
             //the PerformanceAdviser and active document passed to it.

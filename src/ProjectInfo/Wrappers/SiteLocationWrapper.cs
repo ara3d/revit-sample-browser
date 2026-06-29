@@ -1,10 +1,11 @@
 // Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
 
-using System;
 using System.ComponentModel;
 using Ara3D.RevitSampleBrowser.ProjectInfo.CS.Converters;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Geometry;
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
 {
     /// <summary>
@@ -32,7 +33,7 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
         /// </summary>
         [DisplayName("Time Zone")]
         [TypeConverter(typeof(TimeZoneConverter))]
-        public string TimeZone => GetTimeZoneFromDouble(m_siteLocation.TimeZone);
+        public string TimeZone => ValueFormatting.TimeZoneDoubleToString(m_siteLocation.TimeZone, RevitStartInfo.TimeZones);
 
         //set
         //{
@@ -93,49 +94,11 @@ namespace Ara3D.RevitSampleBrowser.ProjectInfo.CS.Wrappers
         {
             foreach (City city in RevitStartInfo.RevitApp.Cities)
             {
-                if (DoubleEquals(city.Latitude, latitude) && DoubleEquals(city.Longitude, longitude))
+                if (XyzMath.DoubleEquals(city.Latitude, latitude) && XyzMath.DoubleEquals(city.Longitude, longitude))
                     return city;
             }
 
             return null;
-        }
-
-        public static bool DoubleEquals(double x, double y)
-        {
-            return Math.Abs(x - y) < 1E-9;
-        }
-
-        /// <summary>
-        ///     Get time zone double value from time zone string
-        /// </summary>
-        /// <param name="value">time zone string</param>
-        /// <returns>the value of time zone</returns>
-        private double GetTimeZoneFromString(string value)
-        {
-            //i.e. convert "(GMT-12:00) International Date Line West" to 12.0
-            //i.e. convert "(GMT-03:30) Newfoundland" to 3.30
-            var timeZoneDouble = value.Substring(4, value.IndexOf(')') - 4).Replace(':', '.').Trim();
-            return string.IsNullOrEmpty(timeZoneDouble) ? 0d : double.Parse(timeZoneDouble);
-        }
-
-        /// <summary>
-        ///     Get time zone display string from time zone value
-        /// </summary>
-        /// <param name="timeZone">zone value</param>
-        /// <returns>display string</returns>
-        private string GetTimeZoneFromDouble(double timeZone)
-        {
-            // e.g. get "(GMT-04:00) Santiago" from double number 4.0
-            // should find the last one who matches the time zone
-            string lastTimeZone = null;
-            foreach (var tmpTimeZone in RevitStartInfo.TimeZones)
-            {
-                object tmpZone = GetTimeZoneFromString(tmpTimeZone);
-                if ((double)tmpZone == timeZone)
-                    lastTimeZone = tmpTimeZone;
-            }
-
-            return lastTimeZone;
         }
     }
 }

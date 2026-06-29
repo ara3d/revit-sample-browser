@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using Control = System.Windows.Forms.Control;
 using Form = System.Windows.Forms.Form;
 
+using Ara3D.RevitSampleBrowser.Common.Views;
 namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
 {
     public partial class PrintMgrForm : Form
@@ -281,7 +282,7 @@ namespace Ara3D.RevitSampleBrowser.ViewPrinter.CS
             }
             catch (Exception)
             {
-                PrintMgr.MyMessageBox("Print Failed");
+                PrintHelper.MyMessageBox("Print Failed");
             }
         }
     }

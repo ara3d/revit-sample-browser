@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 
+using Ara3D.RevitSampleBrowser.Common.Units;
 namespace Ara3D.RevitSampleBrowser.BoundaryConditions.CS
 {
     /// <summary>
