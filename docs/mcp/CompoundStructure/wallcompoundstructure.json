@@ -1,0 +1,38 @@
+{
+  "name": "revit_set_wall_compound_structure",
+  "description": "Creates or updates a vertical compound structure and applies it to walls or a wall type.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "wall_type_id": {
+        "type": "integer",
+        "description": "Wall type to receive the compound structure"
+      },
+      "wall_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Optional wall instance ids to update"
+      },
+      "layers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "function": { "type": "string" },
+            "material_id": { "type": "integer" },
+            "width": { "type": "number", "description": "Layer width in feet (internal units)" }
+          },
+          "required": ["function", "width"]
+        },
+        "description": "Compound structure layers outside to inside"
+      }
+    },
+    "required": ["layers"]
+  },
+  "commandClass": "WallCompoundStructure",
+  "sample": "CompoundStructure",
+  "source": "src/CompoundStructure/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Generalize hard-coded layer recipe; require wall_type_id or wall_ids."
+}

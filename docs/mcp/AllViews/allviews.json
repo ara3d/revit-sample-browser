@@ -1,0 +1,29 @@
+{
+  "name": "revit_create_sheet_with_views",
+  "description": "Creates a sheet and places the specified views as viewports using an automatic layout.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "view_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Element ids of views to place on the sheet"
+      },
+      "title_block_type_id": {
+        "type": "integer",
+        "description": "FamilySymbol id of the title block to use"
+      },
+      "sheet_name": {
+        "type": "string",
+        "description": "Name/number for the new sheet"
+      }
+    },
+    "required": ["view_ids", "title_block_type_id", "sheet_name"]
+  },
+  "commandClass": "Command",
+  "sample": "AllViews",
+  "source": "src/AllViews/CS/AllViews.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "ViewsMgr.GenerateSheet contains the automation; bypass AllViewsForm for MCP."
+}

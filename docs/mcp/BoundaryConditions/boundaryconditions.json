@@ -1,0 +1,28 @@
+{
+  "name": "revit_set_boundary_conditions",
+  "description": "Creates or updates structural boundary conditions on a single element.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_id": {
+        "type": "integer",
+        "description": "Structural element id (column, beam, brace, wall, or slab)"
+      },
+      "translations": {
+        "type": "object",
+        "description": "Translation fixities per axis (fixed, released, spring)"
+      },
+      "rotations": {
+        "type": "object",
+        "description": "Rotation fixities per axis (fixed, released, spring)"
+      }
+    },
+    "required": ["element_id"]
+  },
+  "commandClass": "Command",
+  "sample": "BoundaryConditions",
+  "source": "src/BoundaryConditions/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Map BCProperties enum values to API; bypass BoundaryConditionsForm for headless use."
+}

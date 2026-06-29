@@ -1,0 +1,38 @@
+{
+  "name": "revit_manage_spaces_zones",
+  "description": "Lists, creates, or updates MEP spaces and zones on a specified level and phase.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": ["list", "create_spaces", "create_zone", "assign_spaces"],
+        "description": "Operation to perform"
+      },
+      "level_id": {
+        "type": "integer",
+        "description": "Element id of the target level"
+      },
+      "phase_id": {
+        "type": "integer",
+        "description": "Element id of the target phase"
+      },
+      "zone_name": {
+        "type": "string",
+        "description": "Name for a new zone (create_zone)"
+      },
+      "space_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Space element ids to add or remove from a zone"
+      }
+    },
+    "required": ["action", "level_id"]
+  },
+  "commandClass": "Command",
+  "sample": "AddSpaceAndZone",
+  "source": "src/AddSpaceAndZone/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Current command uses MainForm; MCP wrapper should call DataManager/SpaceManager/ZoneManager directly."
+}

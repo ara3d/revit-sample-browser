@@ -1,0 +1,28 @@
+{
+  "name": "revit_auto_tag_rooms",
+  "description": "Creates room tags for untagged rooms on a level using the specified room tag type.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "level_id": {
+        "type": "integer",
+        "description": "Level element id whose rooms should be tagged"
+      },
+      "room_tag_type_id": {
+        "type": "integer",
+        "description": "RoomTagType element id"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "Plan view for tag placement; defaults to active view"
+      }
+    },
+    "required": ["level_id", "room_tag_type_id"]
+  },
+  "commandClass": "Command",
+  "sample": "AutoTagRooms",
+  "source": "src/AutoTagRooms/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Extract tag creation from RoomsData; bypass AutoTagRoomsForm."
+}

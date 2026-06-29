@@ -1,0 +1,24 @@
+{
+  "name": "revit_show_attached_detail_groups",
+  "description": "Shows all attached detail groups for a model group in the specified view.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "group_id": {
+        "type": "integer",
+        "description": "Element id of the model group"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "View element id; defaults to the active view"
+      }
+    },
+    "required": ["group_id"]
+  },
+  "commandClass": "AttachedDetailGroupShowAllCommand",
+  "sample": "AttachedDetailGroup",
+  "source": "src/AttachedDetailGroup/CS/AttachedDetailGroupShowAllCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Wraps Group.ShowAllAttachedDetailGroups; replace selection check with group_id argument."
+}

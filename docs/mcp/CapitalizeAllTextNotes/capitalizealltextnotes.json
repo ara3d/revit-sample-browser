@@ -1,0 +1,21 @@
+{
+  "name": "revit_capitalize_text_notes",
+  "description": "Applies all-caps formatting to text notes in the document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "text_note_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Specific text note ids; omit to process all text notes in the document"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "CapitalizeAllTextNotes",
+  "source": "src/CapitalizeAllTextNotes/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Direct port of Command.Execute logic; returns updated count as JSON."
+}

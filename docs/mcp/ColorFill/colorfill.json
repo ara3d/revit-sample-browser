@@ -1,0 +1,29 @@
+{
+  "name": "revit_apply_color_fill",
+  "description": "Applies a color fill scheme to a view for the specified categories or filters.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "view_id": {
+        "type": "integer",
+        "description": "Target view element id"
+      },
+      "scheme_id": {
+        "type": "integer",
+        "description": "Color fill scheme element id"
+      },
+      "category_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "BuiltInCategory values or category ids to color"
+      }
+    },
+    "required": ["view_id", "scheme_id"]
+  },
+  "commandClass": "Command",
+  "sample": "ColorFill",
+  "source": "src/ColorFill/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Extract assignment logic from ColorFillMgr; bypass ColorFillForm."
+}
