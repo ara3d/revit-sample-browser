@@ -1,4 +1,4 @@
-# Agent runbook: command docs & MCP descriptors
+﻿# Agent runbook: command docs & MCP descriptors
 
 Instructions for AI agents continuing the work tracked in [`todo.md`](../todo.md).
 
@@ -16,8 +16,8 @@ Every command has at least one task. Commands rated **MCP 3 or above** have two.
 
 | Task | Output | Required when |
 |------|--------|---------------|
-| **A — Command doc** | `docs/commands/.../<slug>.md` | Always |
-| **B — MCP descriptor** | `docs/mcp/.../<slug>.json` | MCP rating ≥ 3 |
+| **A — Command doc** | `src/.../<slug>.md` | Always |
+| **B — MCP descriptor** | `src/.../<slug>.json` | MCP rating ≥ 3 |
 
 ### Task A — Write the command markdown
 
@@ -37,17 +37,17 @@ Every command has at least one task. Commands rated **MCP 3 or above** have two.
 - **Be specific.** Name key API types, transactions, filters, and elements touched.
 - **Note UI honestly.** If the command opens a dialog or requires picks, say so and whether headless/MCP use would need refactoring.
 - **Omit empty sections.** Delete any section that would only say "none" or "N/A".
-- Use the template at [`docs/commands/_template.md`](commands/_template.md). Replace placeholders; remove HTML comments before saving.
+- Use the template at [`src/_template.md`](../src/_template.md). Replace placeholders; remove HTML comments before saving.
 
 ### Task B — Write the MCP tool descriptor JSON
 
 Required when the command's MCP rating is **3, 4, or 5**.
 
-**Output path:** mirror the command doc path under `docs/mcp/` (same folders and slug, `.json` extension).
+**Output path:** mirror the command doc path under `src/` (same folders and slug, `.json` extension).
 
-Example: doc `docs/commands/AllViews/allviews.md` → MCP `docs/mcp/AllViews/allviews.json`.
+Example: doc `src/AllViews/allviews.md` → MCP `src/AllViews/allviews.json`.
 
-**Format:** follow [`docs/mcp/_template.json`](mcp/_template.json) and match existing Bowerbird tools (`revit_document_info`, `echo`):
+**Format:** follow [`src/_template.json`](../src/_template.json) and match existing Bowerbird tools (`revit_document_info`, `echo`):
 
 - `name` — snake_case, unique, prefixed with `revit_` when exposing Revit document operations (e.g. `revit_list_views`).
 - `description` — one sentence an LLM can use to choose this tool.
@@ -66,11 +66,11 @@ Add optional metadata fields from the template (`commandClass`, `sample`, `mcpRa
 
 | Item | Rule |
 |------|------|
-| Command doc | `docs/commands/<SampleFolder>/<slug>.md` |
-| MCP descriptor | `docs/mcp/<SampleFolder>/<slug>.json` |
+| Command doc | `src/<SampleFolder>/<slug>.md` |
+| MCP descriptor | `src/<SampleFolder>/<slug>.json` |
 | Slug | kebab-case class name; for class `Command`, use the leaf subfolder (e.g. `Events/PrintLog` → `printlog`) |
 
-Nested samples use the full subfolder path (e.g. `docs/commands/Events/PrintLog/printlog.md`).
+Nested samples use the full subfolder path (e.g. `src/Events/PrintLog/printlog.md`).
 
 ## Updating `todo.md`
 
@@ -104,6 +104,6 @@ Before marking a row complete:
 ## Reference
 
 - MCP rating scale — `todo.md` § MCP usefulness scale
-- Command template — `docs/commands/_template.md`
-- MCP template — `docs/mcp/_template.json`
-- Existing MCP examples — `.cursor/projects/.../mcps/user-bowerbird-revit/tools/` (local Cursor config; repo copies live under `docs/mcp/`)
+- Command template — `src/_template.md`
+- MCP template — `src/_template.json`
+- Existing MCP examples — `.cursor/projects/.../mcps/user-bowerbird-revit/tools/` (local Cursor config; repo copies live under `src/`)
