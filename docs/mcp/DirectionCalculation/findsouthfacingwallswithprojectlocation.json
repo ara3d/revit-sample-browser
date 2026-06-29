@@ -1,0 +1,21 @@
+{
+  "name": "revit_find_south_facing_walls_by_project_north",
+  "description": "Returns exterior walls facing south using the active project location north direction.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "use_project_location": {
+        "type": "boolean",
+        "const": true,
+        "description": "Always true for this command variant"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "FindSouthFacingWallsWithProjectLocation",
+  "sample": "DirectionCalculation",
+  "source": "src/DirectionCalculation/CS/Commands.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Alias of revit_find_south_facing_walls with use_project_location true."
+}

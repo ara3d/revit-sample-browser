@@ -1,0 +1,24 @@
+{
+  "name": "revit_create_curved_beam",
+  "description": "Creates a structural beam along an arc, ellipse, or NURBS curve at a specified level.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "beam_type_id": { "type": "integer", "description": "Structural framing FamilySymbol id" },
+      "level_id": { "type": "integer", "description": "Reference level id" },
+      "curve_type": {
+        "type": "string",
+        "enum": ["arc", "ellipse", "nurbs"],
+        "description": "Preset curve shape from sample or custom curve data"
+      },
+      "elevation": { "type": "number", "description": "Z elevation for horizontal curve (internal units)" }
+    },
+    "required": ["beam_type_id", "level_id", "curve_type"]
+  },
+  "commandClass": "Command",
+  "sample": "CurvedBeam",
+  "source": "src/CurvedBeam/CS/CurvedBeam.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Extend with arbitrary curve control points; activate symbol before NewFamilyInstance."
+}

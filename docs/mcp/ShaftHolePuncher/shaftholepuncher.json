@@ -1,0 +1,46 @@
+{
+  "name": "revit_create_opening_from_profile",
+  "description": "Creates a host opening or shaft opening from a 2D profile on a wall, floor, beam, or between levels.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "host_element_id": {
+        "type": "integer",
+        "description": "Wall, floor, or structural beam id for a host opening; omit for shaft opening"
+      },
+      "profile_points": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          },
+          "required": ["x", "y", "z"]
+        },
+        "description": "Profile vertices in model coordinates defining the opening boundary"
+      },
+      "opening_type": {
+        "type": "string",
+        "enum": ["host", "shaft"],
+        "description": "Host-specific opening or vertical shaft between levels"
+      },
+      "base_level_id": {
+        "type": "integer",
+        "description": "Bottom level for shaft openings"
+      },
+      "top_level_id": {
+        "type": "integer",
+        "description": "Top level for shaft openings"
+      }
+    },
+    "required": ["profile_points", "opening_type"]
+  },
+  "commandClass": "Command",
+  "sample": "ShaftHolePuncher",
+  "source": "src/ShaftHolePuncher/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Profile.CreateOpening logic is separable; bypass ShaftHolePuncherForm mouse drawing."
+}

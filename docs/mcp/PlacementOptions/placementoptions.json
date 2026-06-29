@@ -1,0 +1,29 @@
+{
+  "name": "revit_place_family_with_options",
+  "description": "Places a family instance using FaceBasedPlacementType or sketch-based FamilyPlacementOptions.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "family_symbol_id": {
+        "type": "integer",
+        "description": "FamilySymbol id to place"
+      },
+      "placement_mode": {
+        "type": "string",
+        "enum": ["face_based", "sketch_based"],
+        "description": "Whether to use face-based or sketch-based placement options"
+      },
+      "face_placement_type": {
+        "type": "string",
+        "description": "FaceBasedPlacementType name when placement_mode is face_based"
+      }
+    },
+    "required": ["family_symbol_id", "placement_mode"]
+  },
+  "commandClass": "Command",
+  "sample": "PlacementOptions",
+  "source": "src/PlacementOptions/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Replace OptionsForm and PromptForFamilyInstancePlacement with direct NewFamilyInstance or scripted picks."
+}

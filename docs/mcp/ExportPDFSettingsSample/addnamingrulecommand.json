@@ -1,0 +1,31 @@
+{
+  "name": "revit_add_pdf_export_naming_rule",
+  "description": "Adds a parameter-based entry to the PDF export file naming rule for a named ExportPDFSettings preset.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "settings_name": {
+        "type": "string",
+        "description": "Name of the ExportPDFSettings element to modify"
+      },
+      "category_id": {
+        "type": "integer",
+        "description": "Category id for the naming rule parameter (e.g. OST_Sheets)"
+      },
+      "parameter_id": {
+        "type": "integer",
+        "description": "BuiltInParameter or shared parameter element id"
+      },
+      "prefix": { "type": "string" },
+      "separator": { "type": "string" },
+      "sample_value": { "type": "string" }
+    },
+    "required": ["settings_name", "category_id", "parameter_id"]
+  },
+  "commandClass": "AddNamingRuleCommand",
+  "sample": "ExportPDFSettingsSample",
+  "source": "src/ExportPDFSettingsSample/CS/Application.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Export must not use combined PDF output (options.Combine=false) or naming rule changes are ignored."
+}

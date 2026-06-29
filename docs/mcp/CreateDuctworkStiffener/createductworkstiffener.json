@@ -1,0 +1,22 @@
+{
+  "name": "revit_create_ductwork_stiffener",
+  "description": "Places a fabrication duct stiffener on a duct at a specified distance along the centerline.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "duct_id": { "type": "integer", "description": "FabricationPart duct element id" },
+      "stiffener_type_id": { "type": "integer", "description": "FamilySymbol id for the stiffener" },
+      "distance_from_start": {
+        "type": "number",
+        "description": "Distance from duct start along centerline (0 to CenterlineLength)"
+      }
+    },
+    "required": ["duct_id", "stiffener_type_id", "distance_from_start"]
+  },
+  "commandClass": "Command",
+  "sample": "CreateDuctworkStiffener",
+  "source": "src/CreateDuctworkStiffener/CS/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Generalize stiffener type lookup; activate symbol and regenerate before MEPSupportUtils call."
+}

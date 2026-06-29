@@ -1,0 +1,29 @@
+{
+  "name": "revit_create_negative_block",
+  "description": "Creates a generic-model family block representing the negative volume of a target element within a boundary.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "target_element_id": {
+        "type": "integer",
+        "description": "Element with solids to subtract from the block volume"
+      },
+      "boundary_curve_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "XY-plane curve element ids forming a closed boundary"
+      },
+      "family_template_path": {
+        "type": "string",
+        "description": "Path to GenericModel.rft; defaults to application family template path"
+      }
+    },
+    "required": ["target_element_id", "boundary_curve_ids"]
+  },
+  "commandClass": "CreateNegativeBlockCommand",
+  "sample": "FreeFormElement",
+  "source": "src/FreeFormElement/CS/CreateNegativeBlockCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Replace PickObject calls with element ids; returns loaded family instance id on success."
+}

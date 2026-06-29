@@ -1,0 +1,43 @@
+{
+  "name": "revit_tag_beams",
+  "description": "Creates independent tags at both ends of selected structural beams.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "beam_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Structural beam FamilyInstance ids"
+      },
+      "tag_type_id": {
+        "type": "integer",
+        "description": "FamilySymbol id for the tag type"
+      },
+      "tag_mode": {
+        "type": "string",
+        "enum": ["by_category", "by_material", "by_multicategory"],
+        "description": "TagMode equivalent"
+      },
+      "has_leader": {
+        "type": "boolean",
+        "description": "Whether tags include leaders"
+      },
+      "orientation": {
+        "type": "string",
+        "enum": ["horizontal", "vertical"],
+        "description": "Tag orientation"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "View id where tags are created"
+      }
+    },
+    "required": ["beam_ids", "tag_type_id", "view_id"]
+  },
+  "commandClass": "Command",
+  "sample": "TagBeam",
+  "source": "src/TagBeam/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "TagBeamData.CreateTag is separable; bypass TagBeamForm."
+}

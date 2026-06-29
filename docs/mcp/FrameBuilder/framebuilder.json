@@ -1,0 +1,48 @@
+{
+  "name": "revit_create_structural_frame",
+  "description": "Creates columns, beams, and braces for a structural frame from layout and type parameters.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "base_level_id": {
+        "type": "integer",
+        "description": "Base level element id"
+      },
+      "top_level_id": {
+        "type": "integer",
+        "description": "Top level element id"
+      },
+      "bay_count_x": {
+        "type": "integer",
+        "description": "Number of bays along X"
+      },
+      "bay_count_y": {
+        "type": "integer",
+        "description": "Number of bays along Y"
+      },
+      "bay_spacing_feet": {
+        "type": "number",
+        "description": "Bay spacing in feet"
+      },
+      "column_type_id": {
+        "type": "integer",
+        "description": "Structural column family symbol id"
+      },
+      "beam_type_id": {
+        "type": "integer",
+        "description": "Structural framing beam family symbol id"
+      },
+      "brace_type_id": {
+        "type": "integer",
+        "description": "Structural brace family symbol id"
+      }
+    },
+    "required": ["base_level_id", "top_level_id", "column_type_id", "beam_type_id"]
+  },
+  "commandClass": "Command",
+  "sample": "FrameBuilder",
+  "source": "src/FrameBuilder/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Parameterize FrameBuilder.CreateFraming from FrameData without CreateFrameForm."
+}

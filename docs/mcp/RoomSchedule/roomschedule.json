@@ -1,0 +1,32 @@
+{
+  "name": "revit_import_rooms_from_spreadsheet",
+  "description": "Imports or synchronizes rooms from a spreadsheet against existing Revit room data.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "file_path": {
+        "type": "string",
+        "description": "Path to the Excel or ODBC data source"
+      },
+      "worksheet_name": {
+        "type": "string",
+        "description": "Worksheet or table name containing room rows"
+      },
+      "level_id": {
+        "type": "integer",
+        "description": "Target level for new rooms"
+      },
+      "phase_id": {
+        "type": "integer",
+        "description": "Target phase for room creation"
+      }
+    },
+    "required": ["file_path", "level_id"]
+  },
+  "commandClass": "Command",
+  "sample": "RoomSchedule",
+  "source": "src/RoomSchedule/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Bypass RoomScheduleForm; reuse RoomsData import methods with explicit paths."
+}

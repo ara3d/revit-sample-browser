@@ -1,0 +1,45 @@
+{
+  "name": "revit_print_views",
+  "description": "Prints views or sheet sets using PrintManager settings equivalent to the native Revit print dialog.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "printer_name": {
+        "type": "string",
+        "description": "Installed printer or virtual PDF/DWF/XPS driver name"
+      },
+      "print_range": {
+        "type": "string",
+        "enum": ["Current", "Visible", "Select", "Range"],
+        "description": "PrintRange value matching Revit PrintManager"
+      },
+      "view_sheet_set_name": {
+        "type": "string",
+        "description": "Named ViewSheetSet to print when range is Select or Range"
+      },
+      "print_to_file": {
+        "type": "boolean",
+        "description": "Whether to print to file instead of a physical printer"
+      },
+      "file_path": {
+        "type": "string",
+        "description": "Output path when print_to_file is true"
+      },
+      "copies": {
+        "type": "integer",
+        "description": "Number of copies"
+      },
+      "collate": {
+        "type": "boolean",
+        "description": "Whether to collate copies"
+      }
+    },
+    "required": ["printer_name", "print_range"]
+  },
+  "commandClass": "Command",
+  "sample": "ViewPrinter",
+  "source": "src/ViewPrinter/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Replace PrintMgrForm with direct PrintManager configuration; verify at least one installed printer exists."
+}

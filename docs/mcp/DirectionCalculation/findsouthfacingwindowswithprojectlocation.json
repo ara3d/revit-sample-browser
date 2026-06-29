@@ -1,0 +1,21 @@
+{
+  "name": "revit_find_south_facing_windows_by_project_north",
+  "description": "Returns window instances facing south using the active project location north direction.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "use_project_location": {
+        "type": "boolean",
+        "const": true,
+        "description": "Always true for this command variant"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "FindSouthFacingWindowsWithProjectLocation",
+  "sample": "DirectionCalculation",
+  "source": "src/DirectionCalculation/CS/Commands.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Alias of revit_find_south_facing_windows with use_project_location true."
+}

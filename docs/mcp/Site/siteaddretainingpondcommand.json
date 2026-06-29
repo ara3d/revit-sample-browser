@@ -1,0 +1,31 @@
+{
+  "name": "revit_add_retaining_pond",
+  "description": "Adds a circular retaining pond subregion on a topography surface with graded interior points.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "topography_surface_id": {
+        "type": "integer",
+        "description": "Host TopographySurface element id"
+      },
+      "center_x": { "type": "number" },
+      "center_y": { "type": "number" },
+      "center_z": { "type": "number" },
+      "radius": {
+        "type": "number",
+        "description": "Pond radius in feet (sample default 32)"
+      },
+      "material_name": {
+        "type": "string",
+        "description": "Optional subregion material name (sample uses Water)"
+      }
+    },
+    "required": ["topography_surface_id", "center_x", "center_y", "radius"]
+  },
+  "commandClass": "SiteAddRetainingPondCommand",
+  "sample": "Site",
+  "source": "src/Site/CS/SiteAddRetainingPondCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "AddNewRetainingPond is separable; replace interactive picks with supplied center and surface id."
+}

@@ -1,0 +1,22 @@
+{
+  "name": "revit_create_curtain_system",
+  "description": "Creates a curtain system on selected mass faces using a curtain system type.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "face_reference_ids": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Stable references to mass faces (or element_id + face index pairs)"
+      },
+      "curtain_system_type_id": { "type": "integer", "description": "CurtainSystemType element id" }
+    },
+    "required": ["face_reference_ids", "curtain_system_type_id"]
+  },
+  "commandClass": "Command",
+  "sample": "CurtainSystem",
+  "source": "src/CurtainSystem/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Mass must be parallelepiped; use SystemData.NewCurtainSystem logic without CurtainForm."
+}

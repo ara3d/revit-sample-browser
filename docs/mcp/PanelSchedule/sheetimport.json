@@ -1,0 +1,32 @@
+{
+  "name": "revit_place_panel_schedules_on_sheet",
+  "description": "Places panel schedule views on a sheet, spacing instances horizontally.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "sheet_view_id": {
+        "type": "integer",
+        "description": "ViewSheet element id to receive schedules"
+      },
+      "schedule_view_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "PanelScheduleView ids to place; omit to place all instance views"
+      },
+      "start_origin": {
+        "type": "array",
+        "items": { "type": "number" },
+        "minItems": 3,
+        "maxItems": 3,
+        "description": "Optional placement origin in sheet coordinates"
+      }
+    },
+    "required": ["sheet_view_id"]
+  },
+  "commandClass": "SheetImport",
+  "sample": "PanelSchedule",
+  "source": "src/PanelSchedule/CS/SheetImport.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Uses active sheet in sample; MCP should accept explicit sheet_view_id."
+}

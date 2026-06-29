@@ -1,0 +1,32 @@
+{
+  "name": "revit_calculate_material_quantities",
+  "description": "Calculates net and gross material volumes and areas for walls, floors, and roofs in the active document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "categories": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["walls", "floors", "roofs"]
+        },
+        "description": "Element categories to include; defaults to all three"
+      },
+      "include_gross": {
+        "type": "boolean",
+        "description": "When true, compute gross quantities by temporarily removing cutting elements"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Optional file path for CSV export instead of the default text file"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "MaterialQuantities",
+  "source": "src/MaterialQuantities/CS/MaterialQuantities.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "MaterialQuantityCalculator.ReportResults defines the return shape; gross pass uses a rolled-back delete transaction."
+}

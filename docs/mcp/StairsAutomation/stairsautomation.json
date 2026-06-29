@@ -1,0 +1,30 @@
+{
+  "name": "revit_create_stairs_automation",
+  "description": "Creates stairs using one of five predefined automation configurations (straight, curved, or standard multi-run).",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "configuration_index": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4,
+        "description": "Stairs config index (0 straight, 1 curved, 2 curved two-level, 3 standard one-level, 4 standard multi-level)"
+      },
+      "bottom_level_name": {
+        "type": "string",
+        "description": "Bottom level name (sample default Level 1)"
+      },
+      "top_level_name": {
+        "type": "string",
+        "description": "Top level name (sample default Level 2 or Level 3)"
+      }
+    },
+    "required": ["configuration_index"]
+  },
+  "commandClass": "Command",
+  "sample": "StairsAutomation",
+  "source": "src/StairsAutomation/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "StairsAutomationUtility.GenerateStairs contains creation logic; pass explicit config index instead of cycling."
+}

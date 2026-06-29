@@ -1,0 +1,28 @@
+{
+  "name": "revit_create_wall_schedule_on_sheet",
+  "description": "Creates a wall view schedule with fields and filters, then places it on a new sheet.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "schedule_name": {
+        "type": "string",
+        "description": "Name for the new ViewSchedule"
+      },
+      "title_block_type_id": {
+        "type": "integer",
+        "description": "Optional title block FamilySymbol id; sample uses first available"
+      },
+      "sheet_name": {
+        "type": "string",
+        "description": "Name for the new sheet hosting the schedule"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "ScheduleCreation",
+  "source": "src/ScheduleCreation/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Wraps ScheduleCreationUtility.CreateAndAddSchedules; defaults to OST_Walls sample logic."
+}

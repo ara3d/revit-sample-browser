@@ -1,0 +1,32 @@
+{
+  "name": "revit_measure_vertical_distance",
+  "description": "Measures vertical distance from a source element to a target floor or face using ray casting.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "source_element_id": {
+        "type": "integer",
+        "description": "Element id of the source (e.g. skylight window)"
+      },
+      "target_element_id": {
+        "type": "integer",
+        "description": "Element id of the target floor or host for face intersection"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "3D view id used for bounding box and intersector"
+      },
+      "create_model_line": {
+        "type": "boolean",
+        "description": "Whether to create a visualization model curve in the document"
+      }
+    },
+    "required": ["source_element_id", "target_element_id"]
+  },
+  "commandClass": "Command",
+  "sample": "FindReferencesByDirection/MeasureHeight",
+  "source": "src/FindReferencesByDirection/MeasureHeight/CS/MeasureHeight.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Sample hard-codes floor ElementId 150314; MCP must accept target_element_id."
+}

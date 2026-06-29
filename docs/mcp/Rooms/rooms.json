@@ -1,0 +1,24 @@
+{
+  "name": "revit_list_rooms",
+  "description": "Lists rooms, tags, and department assignments in the active document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "level_id": {
+        "type": "integer",
+        "description": "Optional filter by level element id"
+      },
+      "include_untagged_only": {
+        "type": "boolean",
+        "description": "When true, return only rooms without tags"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "Rooms",
+  "source": "src/Rooms/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Pair with revit_update_room for tag, rename, and department changes via RoomsData."
+}

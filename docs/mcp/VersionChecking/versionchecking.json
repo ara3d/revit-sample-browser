@@ -1,0 +1,15 @@
+{
+  "name": "revit_get_version_info",
+  "description": "Returns the Revit product name, version number, and build string for the running application.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "VersionChecking",
+  "source": "src/VersionChecking/CS/VersionChecking.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Read Application.VersionName, VersionNumber, and VersionBuild without VersionCheckingForm."
+}

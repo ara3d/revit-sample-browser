@@ -1,0 +1,20 @@
+{
+  "name": "revit_find_south_facing_walls",
+  "description": "Returns exterior walls facing south, using project location north or model Y-axis.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "use_project_location": {
+        "type": "boolean",
+        "description": "Transform directions by active project location north (default false)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "FindSouthFacingWallsWithoutProjectLocation",
+  "sample": "DirectionCalculation",
+  "source": "src/DirectionCalculation/CS/Commands.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Shared by With/Without ProjectLocation variants; return ids without changing selection for MCP."
+}

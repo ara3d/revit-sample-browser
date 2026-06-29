@@ -1,0 +1,39 @@
+{
+  "name": "revit_create_paths_of_travel",
+  "description": "Creates PathOfTravel elements on a floor plan from room start points to door endpoints.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "view_id": {
+        "type": "integer",
+        "description": "ViewPlan element id for path creation"
+      },
+      "mode": {
+        "type": "string",
+        "enum": [
+          "room_corners_to_door",
+          "all_room_centers_to_door",
+          "all_corners_to_all_doors"
+        ],
+        "description": "Path generation strategy matching PathCreateOptions"
+      },
+      "room_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Room element ids for single-room modes"
+      },
+      "door_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Door instance ids as path endpoints"
+      }
+    },
+    "required": ["view_id", "mode"]
+  },
+  "commandClass": "Command",
+  "sample": "PathOfTravel",
+  "source": "src/PathOfTravel/CS/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "Uses PathOfTravel.CreateMapped and CreateMultiple; near-corner points computed via AppendRoomNearCornerPoints."
+}

@@ -1,0 +1,25 @@
+{
+  "name": "revit_create_pdf_export_settings",
+  "description": "Creates a named ExportPDFSettings preset with PDFExportOptions in the active document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Unique name for the new export settings preset"
+      },
+      "paper_format": {
+        "type": "string",
+        "description": "ExportPaperFormat value (e.g. ISO_A4)"
+      },
+      "hide_crop_boundaries": { "type": "boolean" },
+      "combine": { "type": "boolean" }
+    },
+    "required": ["name"]
+  },
+  "commandClass": "CreateExportPdfSettingsCommand",
+  "sample": "ExportPDFSettingsSample",
+  "source": "src/ExportPDFSettingsSample/CS/Application.cs",
+  "mcpRating": 5,
+  "requiresUi": false
+}

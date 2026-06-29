@@ -1,0 +1,29 @@
+{
+  "name": "revit_manage_default_types",
+  "description": "Gets or sets default family and element types for the active document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": ["list_family_defaults", "list_element_defaults", "set_family_default", "set_element_default"],
+        "description": "Operation to perform"
+      },
+      "category_or_class": {
+        "type": "string",
+        "description": "Category name or class key for the default type entry"
+      },
+      "type_id": {
+        "type": "integer",
+        "description": "FamilySymbol or ElementType id when setting a default"
+      }
+    },
+    "required": ["action"]
+  },
+  "commandClass": "ThisCommand",
+  "sample": "GetSetDefaultTypes",
+  "source": "src/GetSetDefaultTypes/CS/ThisCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Sample only shows dockable panes; MCP should call DefaultFamilyTypes/DefaultElementTypes logic directly."
+}

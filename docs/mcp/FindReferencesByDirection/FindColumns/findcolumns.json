@@ -1,0 +1,29 @@
+{
+  "name": "revit_find_columns_near_walls",
+  "description": "Ray-traces from walls to find nearby structural columns and returns their element ids.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "wall_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Wall element ids to check; omit to scan all walls"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "3D view id for ReferenceIntersector (defaults to view named {3D})"
+      },
+      "search_distance_feet": {
+        "type": "number",
+        "description": "Maximum proximity along ray for column hits (default 2 for curved walls)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "FindReferencesByDirection/FindColumns",
+  "source": "src/FindReferencesByDirection/FindColumns/CS/FindColumns.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Returns map of wall_id to column_ids; skip selection.SetElementIds for MCP."
+}

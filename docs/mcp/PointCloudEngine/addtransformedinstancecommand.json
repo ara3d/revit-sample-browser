@@ -1,0 +1,28 @@
+{
+  "name": "revit_add_transformed_point_cloud",
+  "description": "Adds a randomized point cloud instance at a specified transform.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "engine_type": {
+        "type": "string",
+        "description": "Engine identifier (sample uses apipcr)"
+      },
+      "transform": {
+        "type": "object",
+        "description": "Placement transform (rotation and translation)"
+      },
+      "identifier": {
+        "type": "string",
+        "description": "Optional point cloud identifier"
+      }
+    },
+    "required": ["transform"]
+  },
+  "commandClass": "AddTransformedInstanceCommand",
+  "sample": "PointCloudEngine",
+  "source": "src/PointCloudEngine/CS/PointCloudEngineSample.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Sample hard-codes a Z rotation; MCP caller should supply full transform."
+}

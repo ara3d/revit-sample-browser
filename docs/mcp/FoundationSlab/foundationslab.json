@@ -1,0 +1,33 @@
+{
+  "name": "revit_create_foundation_slab",
+  "description": "Creates a foundation slab from a boundary, level, and slab type.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "boundary_curve_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Model curve or edge element ids defining the slab boundary"
+      },
+      "level_id": {
+        "type": "integer",
+        "description": "Level element id for the slab"
+      },
+      "slab_type_id": {
+        "type": "integer",
+        "description": "FloorType or foundation slab type element id"
+      },
+      "structural": {
+        "type": "boolean",
+        "description": "Whether the slab is structural"
+      }
+    },
+    "required": ["boundary_curve_ids", "level_id", "slab_type_id"]
+  },
+  "commandClass": "Command",
+  "sample": "FoundationSlab",
+  "source": "src/FoundationSlab/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Extract slab creation from FoundationSlabForm/SlabData handlers."
+}

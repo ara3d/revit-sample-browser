@@ -1,0 +1,18 @@
+{
+  "name": "revit_create_drafting_view",
+  "description": "Creates a new empty drafting view from a drafting ViewFamilyType.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "view_family_type_id": { "type": "integer", "description": "ViewFamilyType id (Drafting family); defaults to first found" },
+      "view_name": { "type": "string", "description": "Optional name for the new view" }
+    },
+    "required": []
+  },
+  "commandClass": "CreateDraftingView",
+  "sample": "CreateViewSection",
+  "source": "src/CreateViewSection/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Set view name via parameter after ViewDrafting.Create if provided."
+}

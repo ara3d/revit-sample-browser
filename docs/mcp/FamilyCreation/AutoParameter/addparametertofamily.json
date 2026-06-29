@@ -1,0 +1,24 @@
+{
+  "name": "revit_add_family_parameters",
+  "description": "Adds family and shared parameters from definitions to the active family document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "parameter_definitions_path": {
+        "type": "string",
+        "description": "Path to familyParameter.txt and sharedParameter.txt folder, or inline definitions file"
+      },
+      "family_document_only": {
+        "type": "boolean",
+        "description": "When true, requires the active document to be a family (default behavior)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "AddParameterToFamily",
+  "sample": "FamilyCreation/AutoParameter",
+  "source": "src/FamilyCreation/AutoParameter/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Refactor FamilyParameterAssigner to accept structured definitions instead of fixed assembly-folder txt files."
+}

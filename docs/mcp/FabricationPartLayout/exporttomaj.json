@@ -1,0 +1,25 @@
+{
+  "name": "revit_export_fabrication_maj",
+  "description": "Exports selected fabrication parts to a MAJ fabrication job file.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Fabrication part element ids to export"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Full path for the output .maj file"
+      }
+    },
+    "required": ["element_ids", "output_path"]
+  },
+  "commandClass": "ExportToMaj",
+  "sample": "FabricationPartLayout",
+  "source": "src/FabricationPartLayout/CS/ExportToMAJ.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Replace FileSaveDialog with output_path parameter for headless export."
+}

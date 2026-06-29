@@ -1,0 +1,25 @@
+{
+  "name": "revit_copy_views_across_documents",
+  "description": "Copies schedules and drafting views (with detailing) from one Revit document to another.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "target_document_id": {
+        "type": "integer",
+        "description": "Element id or session identifier of the destination document"
+      },
+      "view_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Optional subset of schedule and drafting view ids to copy; omit to copy all eligible views"
+      }
+    },
+    "required": ["target_document_id"]
+  },
+  "commandClass": "DuplicateAcrossDocumentsCommand",
+  "sample": "DuplicateViews",
+  "source": "src/DuplicateViews/CS/DuplicateAcrossDocumentsCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "DuplicateViewUtils contains the core logic. Replace the two-document-only guard with explicit document parameters."
+}

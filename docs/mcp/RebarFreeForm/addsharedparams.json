@@ -1,0 +1,20 @@
+{
+  "name": "revit_bind_rebar_shared_parameters",
+  "description": "Creates and binds Updated and CurveElementId shared parameters to the Rebar category if missing.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "shared_parameter_file": {
+        "type": "string",
+        "description": "Optional path for the shared parameter file; sample uses add-in folder"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "AddSharedParams",
+  "sample": "RebarFreeForm",
+  "source": "src/RebarFreeForm/CS/AddSharedParams.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Idempotent when parameters already exist on OST_Rebar."
+}

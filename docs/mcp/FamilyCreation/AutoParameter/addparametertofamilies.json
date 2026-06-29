@@ -1,0 +1,24 @@
+{
+  "name": "revit_batch_add_family_parameters",
+  "description": "Opens each family in a folder, adds parameters from definition files, saves, and closes.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "family_folder": {
+        "type": "string",
+        "description": "Directory containing .rfa files to process"
+      },
+      "parameter_definitions_path": {
+        "type": "string",
+        "description": "Folder containing familyParameter.txt and sharedParameter.txt"
+      }
+    },
+    "required": ["family_folder"]
+  },
+  "commandClass": "AddParameterToFamilies",
+  "sample": "FamilyCreation/AutoParameter",
+  "source": "src/FamilyCreation/AutoParameter/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Replace hard-coded MyDocuments\\AutoParameter_Families path with family_folder argument."
+}

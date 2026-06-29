@@ -1,0 +1,43 @@
+{
+  "name": "revit_create_roof",
+  "description": "Creates a footprint or extrusion roof on a specified level from profile geometry and roof type parameters.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "roof_kind": {
+        "type": "string",
+        "enum": ["footprint", "extrusion"],
+        "description": "Roof creation method"
+      },
+      "level_id": {
+        "type": "integer",
+        "description": "Level element id for roof placement"
+      },
+      "roof_type_id": {
+        "type": "integer",
+        "description": "Roof type element id"
+      },
+      "footprint_points": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "description": "Footprint boundary vertices in feet"
+      },
+      "slope_angle": {
+        "type": "number",
+        "description": "Optional slope angle in degrees for footprint roofs"
+      }
+    },
+    "required": ["roof_kind", "level_id", "roof_type_id", "footprint_points"]
+  },
+  "commandClass": "Command",
+  "sample": "NewRoof",
+  "source": "src/NewRoof/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "RoofsManager and FootPrintRoofWrapper contain creation logic; bypass RoofForm for MCP."
+}

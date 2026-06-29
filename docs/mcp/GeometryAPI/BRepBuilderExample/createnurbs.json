@@ -1,0 +1,42 @@
+{
+  "name": "revit_create_nurbs_direct_shape",
+  "description": "Creates an open-shell NURBS surface with BRepBuilder and places it as a DirectShape.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "degree_u": { "type": "integer", "description": "NURBS degree in U" },
+      "degree_v": { "type": "integer", "description": "NURBS degree in V" },
+      "knots_u": {
+        "type": "array",
+        "items": { "type": "number" },
+        "description": "Knot vector in U"
+      },
+      "knots_v": {
+        "type": "array",
+        "items": { "type": "number" },
+        "description": "Knot vector in V"
+      },
+      "control_points": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "description": "Control points as [x, y, z] arrays"
+      },
+      "category_id": {
+        "type": "integer",
+        "description": "Category for DirectShape (sample uses OST_GenericModel)"
+      }
+    },
+    "required": ["degree_u", "degree_v", "knots_u", "knots_v", "control_points"]
+  },
+  "commandClass": "CreateNurbs",
+  "sample": "GeometryAPI/BRepBuilderExample",
+  "source": "src/GeometryAPI/BRepBuilderExample/CS/CreateNURBS.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Sample uses fixed control grid; MCP accepts full NURBS definition."
+}

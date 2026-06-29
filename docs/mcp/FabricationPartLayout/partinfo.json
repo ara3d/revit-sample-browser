@@ -1,0 +1,20 @@
+{
+  "name": "revit_get_fabrication_part_info",
+  "description": "Returns metadata for a fabrication part including service, material, specification, and dimensions.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_id": {
+        "type": "integer",
+        "description": "FabricationPart element id"
+      }
+    },
+    "required": ["element_id"]
+  },
+  "commandClass": "PartInfo",
+  "sample": "FabricationPartLayout",
+  "source": "src/FabricationPartLayout/CS/PartInfo.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Replace PickObject with element_id parameter; return JSON instead of TaskDialog."
+}

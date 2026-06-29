@@ -1,0 +1,21 @@
+{
+  "name": "revit_get_project_info",
+  "description": "Reads project information, site location, construction, and energy analysis settings from the active document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "fields": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Optional subset of ProjectInfoWrapper property names to return"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "ProjectInfo",
+  "source": "src/ProjectInfo/CS/Command.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Pair with revit_set_project_info for writes; bypass ProjectInfoForm using wrapper layer."
+}

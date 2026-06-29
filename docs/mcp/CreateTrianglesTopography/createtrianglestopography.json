@@ -1,0 +1,36 @@
+{
+  "name": "revit_create_topography_mesh",
+  "description": "Creates a topography surface from a list of points and triangular facet indices.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "points": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+          "required": ["x", "y", "z"]
+        },
+        "minItems": 3
+      },
+      "facets": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "description": "Triangle vertex indices into points array"
+      },
+      "name": { "type": "string", "description": "Optional topography surface name" }
+    },
+    "required": ["points", "facets"]
+  },
+  "commandClass": "Command",
+  "sample": "CreateTrianglesTopography",
+  "source": "src/CreateTrianglesTopography/CS/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Replace TrianglesData.Load file dependency with caller-supplied mesh."
+}

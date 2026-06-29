@@ -1,0 +1,24 @@
+{
+  "name": "revit_create_fill_pattern",
+  "description": "Creates a model fill pattern element and optionally applies it to a wall surface or cut face.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "pattern_name": { "type": "string", "description": "Name for the new FillPatternElement" },
+      "complex": { "type": "boolean", "description": "Create complex pattern with grid lines (default false)" },
+      "wall_id": { "type": "integer", "description": "Wall to apply the pattern to (optional)" },
+      "apply_to": {
+        "type": "string",
+        "enum": ["surface", "cut"],
+        "description": "Which wall faces receive the pattern when wall_id is set"
+      }
+    },
+    "required": ["pattern_name"]
+  },
+  "commandClass": "Command",
+  "sample": "CreateFillPattern",
+  "source": "src/CreateFillPattern/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Logic lives in PatternForm (FillPatternForm.cs); bypass dialog for MCP automation."
+}

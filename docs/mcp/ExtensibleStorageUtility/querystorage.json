@@ -1,0 +1,19 @@
+{
+  "name": "revit_query_extensible_storage",
+  "description": "Lists extensible storage schemas and elements that host storage entities in the active document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "schema_guid": {
+        "type": "string",
+        "description": "Optional schema GUID to limit results to one schema"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "QueryStorage",
+  "sample": "ExtensibleStorageUtility",
+  "source": "src/ExtensibleStorageUtility/CS/QueryStorage.cs",
+  "mcpRating": 5,
+  "requiresUi": false
+}

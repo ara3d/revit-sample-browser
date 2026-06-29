@@ -1,0 +1,42 @@
+{
+  "name": "revit_raytrace_bounce",
+  "description": "Casts a ray with optional bounces through the model and returns intersection points.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "origin": {
+        "type": "array",
+        "items": { "type": "number" },
+        "minItems": 3,
+        "maxItems": 3,
+        "description": "Ray start point [x, y, z] in feet"
+      },
+      "direction": {
+        "type": "array",
+        "items": { "type": "number" },
+        "minItems": 3,
+        "maxItems": 3,
+        "description": "Ray direction vector [x, y, z]"
+      },
+      "max_bounces": {
+        "type": "integer",
+        "description": "Maximum number of reflections"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "3D view id for ReferenceIntersector"
+      },
+      "draw_lines": {
+        "type": "boolean",
+        "description": "Create detail/model lines along the ray path using bounce line style"
+      }
+    },
+    "required": ["origin", "direction", "view_id"]
+  },
+  "commandClass": "Command",
+  "sample": "FindReferencesByDirection/RaytraceBounce",
+  "source": "src/FindReferencesByDirection/RaytraceBounce/CS/RayTraceBounce.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Bypass RayTraceBounceForm; requires bounce line style when draw_lines is true."
+}

@@ -1,0 +1,29 @@
+{
+  "name": "revit_frame_walls_with_columns",
+  "description": "Places structural columns along selected walls at a fixed spacing between base and top levels.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "wall_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Level-constrained wall element ids"
+      },
+      "column_type_id": {
+        "type": "integer",
+        "description": "FamilySymbol id for the column type"
+      },
+      "spacing_feet": {
+        "type": "number",
+        "description": "Spacing between columns in feet (sample default 5)"
+      }
+    },
+    "required": ["wall_ids", "column_type_id"]
+  },
+  "commandClass": "Command",
+  "sample": "StructSample",
+  "source": "src/StructSample/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "FrameWall/PlaceColumn logic is separable; replace hardcoded family name and spacing."
+}

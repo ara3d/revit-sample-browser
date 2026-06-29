@@ -1,0 +1,34 @@
+{
+  "name": "revit_create_periodic_brep",
+  "description": "Creates a periodic cylindrical BRep solid (cylinder or truncated cone) as a DirectShape.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "shape": {
+        "type": "string",
+        "enum": ["cylinder", "truncated_cone"],
+        "description": "Which demonstration solid to create"
+      },
+      "radius": { "type": "number", "description": "Base radius in feet" },
+      "height": { "type": "number", "description": "Height in feet" },
+      "top_radius": {
+        "type": "number",
+        "description": "Top radius for truncated_cone"
+      },
+      "origin": {
+        "type": "array",
+        "items": { "type": "number" },
+        "minItems": 3,
+        "maxItems": 3,
+        "description": "Base center [x, y, z]"
+      }
+    },
+    "required": ["shape"]
+  },
+  "commandClass": "CreatePeriodic",
+  "sample": "GeometryAPI/BRepBuilderExample",
+  "source": "src/GeometryAPI/BRepBuilderExample/CS/CreatePeriodic.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Sample creates both shapes; MCP may create one per call."
+}

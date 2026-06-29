@@ -1,0 +1,20 @@
+{
+  "name": "revit_list_model_curves",
+  "description": "Lists model curves in the document grouped by curve type with element ids.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "view_id": {
+        "type": "integer",
+        "description": "Optional view id to limit collection scope"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "ModelLines",
+  "source": "src/ModelLines/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Creation of lines, arcs, ellipses, and splines would be a separate tool using ModelLines.Run logic without ModelLinesForm."
+}

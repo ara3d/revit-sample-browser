@@ -1,0 +1,56 @@
+{
+  "name": "revit_create_winder_stairs",
+  "description": "Creates L-shaped or U-shaped winder stair runs from connected curve elements with configurable step counts and run geometry.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "curve_element_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "minItems": 2,
+        "maxItems": 3,
+        "description": "Two ids for L-winder or three for U-winder (walls or model lines)"
+      },
+      "winder_type": {
+        "type": "string",
+        "enum": ["L", "U"],
+        "description": "Winder layout derived from selection count when omitted"
+      },
+      "num_steps_at_start": {
+        "type": "integer",
+        "description": "Steps before the first corner"
+      },
+      "num_steps_in_corner": {
+        "type": "integer",
+        "description": "Steps in each corner (default 3)"
+      },
+      "num_steps_at_end": {
+        "type": "integer",
+        "description": "Steps after the last corner"
+      },
+      "run_width": {
+        "type": "number",
+        "description": "Stair run width in internal units"
+      },
+      "tread_depth": {
+        "type": "number",
+        "description": "Tread depth in internal units"
+      },
+      "enable_dmu": {
+        "type": "boolean",
+        "description": "Register WinderUpdater for dynamic model update on curve changes"
+      },
+      "draw_sketch": {
+        "type": "boolean",
+        "description": "Whether to draw the winder sketch curves"
+      }
+    },
+    "required": ["curve_element_ids"]
+  },
+  "commandClass": "Command",
+  "sample": "WinderStairs",
+  "source": "src/WinderStairs/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Replace LWinderOptions/UWinderOptions dialogs; WinderUtil derives control points from curve_element_ids."
+}

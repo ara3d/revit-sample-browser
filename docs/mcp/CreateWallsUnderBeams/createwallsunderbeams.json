@@ -1,0 +1,25 @@
+{
+  "name": "revit_create_walls_under_beams",
+  "description": "Creates walls along horizontal beam location curves, offset below each beam.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "beam_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Horizontal structural beam element ids"
+      },
+      "wall_type_id": { "type": "integer", "description": "WallType id" },
+      "is_structural": { "type": "boolean", "description": "Create structural walls (default true)" },
+      "height": { "type": "number", "description": "Wall height (default 10 internal units)" },
+      "vertical_offset": { "type": "number", "description": "Offset below beam elevation (default ~3000 mm)" }
+    },
+    "required": ["beam_ids", "wall_type_id"]
+  },
+  "commandClass": "CreateWallsUnderBeams",
+  "sample": "CreateWallsUnderBeams",
+  "source": "src/CreateWallsUnderBeams/CS/CreateWallsUnderBeams.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Each beam uses its reference level; beams must be horizontal."
+}

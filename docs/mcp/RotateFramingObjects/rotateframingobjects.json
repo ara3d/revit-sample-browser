@@ -1,0 +1,29 @@
+{
+  "name": "revit_rotate_framing",
+  "description": "Rotates selected structural beams, braces, or columns by angle in degrees.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "FamilyInstance ids of beams, braces, or columns"
+      },
+      "angle_degrees": {
+        "type": "number",
+        "description": "Rotation angle in degrees"
+      },
+      "absolute": {
+        "type": "boolean",
+        "description": "When true, set absolute rotation; when false, add to current rotation"
+      }
+    },
+    "required": ["element_ids", "angle_degrees"]
+  },
+  "commandClass": "RotateFramingObjects",
+  "sample": "RotateFramingObjects",
+  "source": "src/RotateFramingObjects/CS/RotateFramingObjects.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Call RotateElement logic directly; skip RotateFramingObjectsForm."
+}

@@ -1,0 +1,34 @@
+{
+  "name": "revit_move_linear_element",
+  "description": "Moves a linear-hosted element by setting new start and end points on its LocationCurve.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_id": {
+        "type": "integer",
+        "description": "Element id with a LocationCurve"
+      },
+      "start_point": {
+        "type": "array",
+        "items": { "type": "number" },
+        "minItems": 3,
+        "maxItems": 3,
+        "description": "New curve start point in feet"
+      },
+      "end_point": {
+        "type": "array",
+        "items": { "type": "number" },
+        "minItems": 3,
+        "maxItems": 3,
+        "description": "New curve end point in feet"
+      }
+    },
+    "required": ["element_id", "start_point", "end_point"]
+  },
+  "commandClass": "Command",
+  "sample": "MoveLinear",
+  "source": "src/MoveLinear/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Sample uses fixed +100 ft offsets on X and Y; MCP tool should accept explicit endpoints."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "revit_list_piping_networks",
+  "description": "Lists valid mechanical piping networks in the active document with identifiers for reporting or visualization.",
+  "arguments": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "NetworkPressureLossReport",
+  "source": "src/NetworkPressureLossReport/CS/Command.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "CSV export uses NetworkDialog.Report_Click and NetworkInfo; AVF view uses AvfViewer. Separate revit_export_pressure_loss_report tool would take network_id and output_path."
+}

@@ -1,0 +1,25 @@
+{
+  "name": "revit_export_fabrication_pcf",
+  "description": "Exports selected fabrication parts to a PCF file, optionally setting spool name first.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_ids": {
+        "type": "array",
+        "items": { "type": "integer" }
+      },
+      "output_path": { "type": "string" },
+      "spool_name": {
+        "type": "string",
+        "description": "Spool name assigned to parts before export"
+      }
+    },
+    "required": ["element_ids", "output_path"]
+  },
+  "commandClass": "ExportToPcf",
+  "sample": "FabricationPartLayout",
+  "source": "src/FabricationPartLayout/CS/ExportToPCF.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Replace FileSaveDialog with output_path; spool_name replaces hard-coded 'My Spool'."
+}

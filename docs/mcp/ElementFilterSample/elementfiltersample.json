@@ -1,0 +1,20 @@
+{
+  "name": "revit_list_view_filters",
+  "description": "Lists parameter-based view filters defined in the active document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "include_rules": {
+        "type": "boolean",
+        "description": "When true, include serialized filter rule definitions for each filter"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "ElementFilterSample",
+  "source": "src/ElementFilterSample/CS/Command.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Pair with revit_create_or_update_view_filter for write operations. Extract FiltersUtil and FilterData from ViewFiltersForm/NewFilterForm."
+}

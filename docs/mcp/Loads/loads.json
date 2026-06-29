@@ -1,0 +1,20 @@
+{
+  "name": "revit_list_structural_loads",
+  "description": "Lists load cases, load natures, load combinations, and load usages in the active structural project.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "include_formulas": {
+        "type": "boolean",
+        "description": "When true, include load combination formula details"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Loads",
+  "sample": "Loads",
+  "source": "src/Loads/CS/Loads.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Create/update/delete operations need LoadCaseDeal and LoadCombinationDeal exposed without LoadsForm; see Loads.NewLoadCombination and related methods."
+}

@@ -1,0 +1,27 @@
+{
+  "name": "revit_set_dimension_leader_point",
+  "description": "Sets dimension leader end positions to a specified point, offsetting multi-segment leaders.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "dimension_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Dimension element ids"
+      },
+      "leader_point": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Target leader end position"
+      }
+    },
+    "required": ["dimension_ids", "leader_point"]
+  },
+  "commandClass": "MoveToPickedPoint",
+  "sample": "DimensionLeaderEnd",
+  "source": "src/DimensionLeaderEnd/CS/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": true,
+  "notes": "Replace PickPoint with supplied coordinates; preserve multi-segment offset logic."
+}

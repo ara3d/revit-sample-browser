@@ -1,0 +1,20 @@
+{
+  "name": "revit_delete_topography_subregion",
+  "description": "Deletes a topography subregion and removes all non-boundary points it contains.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "subregion_id": {
+        "type": "integer",
+        "description": "SiteSubRegion element id to delete"
+      }
+    },
+    "required": ["subregion_id"]
+  },
+  "commandClass": "SiteDeleteRegionAndPointsCommand",
+  "sample": "Site",
+  "source": "src/Site/CS/SiteDeleteRegionAndPointsCommand.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "DeleteSubregionAndPoints logic is separable; bypass PickSubregion."
+}

@@ -1,0 +1,32 @@
+{
+  "name": "revit_create_reference_plane",
+  "description": "Creates or lists reference planes relative to walls, floors, or free coordinates in the active document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "host_element_id": {
+        "type": "integer",
+        "description": "Optional wall or floor host for host-based creation"
+      },
+      "bubble_end": {
+        "type": "object",
+        "description": "Bubble end XYZ for free reference plane creation"
+      },
+      "free_end": {
+        "type": "object",
+        "description": "Free end XYZ for free reference plane creation"
+      },
+      "cut_vec": {
+        "type": "object",
+        "description": "Cut vector defining plane orientation"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "ReferencePlane",
+  "source": "src/ReferencePlane/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Use ReferencePlaneMgr without ReferencePlaneForm; support list mode when no creation args supplied."
+}

@@ -1,0 +1,20 @@
+{
+  "name": "revit_get_floor_layer_functions",
+  "description": "Returns compound structure layer functions for a floor, ordered outside to inside.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "floor_id": {
+        "type": "integer",
+        "description": "Floor element id to inspect"
+      }
+    },
+    "required": ["floor_id"]
+  },
+  "commandClass": "Command",
+  "sample": "StructuralLayerFunction",
+  "source": "src/StructuralLayerFunction/CS/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Read-only; extract layer Function enumeration without StructuralLayerFunctionForm."
+}

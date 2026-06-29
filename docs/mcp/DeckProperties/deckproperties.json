@@ -1,0 +1,21 @@
+{
+  "name": "revit_get_deck_properties",
+  "description": "Returns compound structure and structural deck profile data for selected floors.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "floor_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Floor element ids to inspect"
+      }
+    },
+    "required": ["floor_ids"]
+  },
+  "commandClass": "Command",
+  "sample": "DeckProperties",
+  "source": "src/DeckProperties/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Read-only; extract DumpSlab/DumbDeck logic without DeckPropertyForm."
+}

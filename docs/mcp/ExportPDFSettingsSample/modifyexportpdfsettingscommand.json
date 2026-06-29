@@ -1,0 +1,19 @@
+{
+  "name": "revit_modify_pdf_export_settings",
+  "description": "Updates PDFExportOptions on an existing ExportPDFSettings preset in the document.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "settings_name": { "type": "string" },
+      "paper_format": { "type": "string" },
+      "hide_crop_boundaries": { "type": "boolean" },
+      "combine": { "type": "boolean" }
+    },
+    "required": ["settings_name"]
+  },
+  "commandClass": "ModifyExportPdfSettingsCommand",
+  "sample": "ExportPDFSettingsSample",
+  "source": "src/ExportPDFSettingsSample/CS/Application.cs",
+  "mcpRating": 5,
+  "requiresUi": false
+}

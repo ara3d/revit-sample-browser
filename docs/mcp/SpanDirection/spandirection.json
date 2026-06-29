@@ -1,0 +1,20 @@
+{
+  "name": "revit_get_span_direction",
+  "description": "Returns span direction angle and span-direction symbol type names for a structural floor.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "floor_id": {
+        "type": "integer",
+        "description": "Structural floor element id"
+      }
+    },
+    "required": ["floor_id"]
+  },
+  "commandClass": "Command",
+  "sample": "SpanDirection",
+  "source": "src/SpanDirection/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Read-only; uses Floor.SpanDirectionAngle and GetSpanDirectionSymbolIds."
+}

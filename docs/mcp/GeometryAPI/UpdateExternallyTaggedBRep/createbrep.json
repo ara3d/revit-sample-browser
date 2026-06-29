@@ -1,0 +1,23 @@
+{
+  "name": "revit_create_externally_tagged_brep",
+  "description": "Creates an ExternallyTaggedBRep geometry, adds it to a DirectShape, and returns element and external ids.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "width": { "type": "number", "description": "Podium width in feet" },
+      "depth": { "type": "number", "description": "Podium depth in feet" },
+      "height": { "type": "number", "description": "Podium height in feet" },
+      "external_geometry_id": {
+        "type": "string",
+        "description": "Stable external id for the tagged BRep (default Podium id from sample)"
+      }
+    },
+    "required": []
+  },
+  "commandClass": "CreateBRep",
+  "sample": "GeometryAPI/UpdateExternallyTaggedBRep",
+  "source": "src/GeometryAPI/UpdateExternallyTaggedBRep/CS/CreateBRep.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Wraps HelperMethods.ExecuteCreateBRepCommand; pair with update tool using same external id."
+}

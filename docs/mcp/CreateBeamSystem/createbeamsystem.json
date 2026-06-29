@@ -1,0 +1,30 @@
+{
+  "name": "revit_create_beam_system",
+  "description": "Creates a beam system from a closed profile polygon, layout rule, and beam type.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "profile_points": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+          "required": ["x", "y", "z"]
+        },
+        "minItems": 3,
+        "description": "Ordered vertices of the closed beam-system boundary"
+      },
+      "beam_type_id": { "type": "integer", "description": "FamilySymbol id for beam system members" },
+      "layout_rule": { "type": "string", "description": "BeamSystemLayoutRule enum value" },
+      "elevation": { "type": "number", "description": "Beam system elevation offset (default 0)" },
+      "view_id": { "type": "integer", "description": "View providing sketch plane (defaults to active view)" }
+    },
+    "required": ["profile_points", "beam_type_id", "layout_rule"]
+  },
+  "commandClass": "Command",
+  "sample": "CreateBeamSystem",
+  "source": "src/CreateBeamSystem/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Use BeamSystemBuilder with programmatic BeamSystemData; active view sketch plane required."
+}

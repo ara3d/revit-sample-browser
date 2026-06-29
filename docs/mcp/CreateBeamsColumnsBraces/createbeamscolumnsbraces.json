@@ -1,0 +1,25 @@
+{
+  "name": "revit_create_structural_grid",
+  "description": "Creates a rectilinear grid of structural columns, beams, and braces across consecutive levels.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "column_type_id": { "type": "integer", "description": "FamilySymbol id for structural columns" },
+      "beam_type_id": { "type": "integer", "description": "FamilySymbol id for beams" },
+      "brace_type_id": { "type": "integer", "description": "FamilySymbol id for braces" },
+      "x_count": { "type": "integer", "minimum": 2, "description": "Number of grid points in X" },
+      "y_count": { "type": "integer", "minimum": 2, "description": "Number of grid points in Y" },
+      "spacing": { "type": "number", "description": "Distance between grid points (internal units)" },
+      "floor_count": { "type": "integer", "minimum": 1, "description": "Number of story intervals to fill" },
+      "origin_u": { "type": "number", "description": "Grid origin U coordinate (default 0)" },
+      "origin_v": { "type": "number", "description": "Grid origin V coordinate (default 0)" }
+    },
+    "required": ["column_type_id", "beam_type_id", "brace_type_id", "x_count", "y_count", "spacing", "floor_count"]
+  },
+  "commandClass": "Command",
+  "sample": "CreateBeamsColumnsBraces",
+  "source": "src/CreateBeamsColumnsBraces/CS/CreateBeamsColumnsBraces.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Extract AddInstance and CreateMatrix from CreateBeamsColumnsBracesForm; levels sorted by elevation."
+}

@@ -1,0 +1,37 @@
+{
+  "name": "revit_import_export",
+  "description": "Imports or exports the active document using supported Revit interchange formats.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "operation": {
+        "type": "string",
+        "enum": ["import", "export"],
+        "description": "Whether to import into or export from the document"
+      },
+      "format": {
+        "type": "string",
+        "description": "Format key matching MainData options (e.g. dwg, dwf, gbxml, image, fbx)"
+      },
+      "file_path": {
+        "type": "string",
+        "description": "Source or destination file path"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "View element id when the format requires a view"
+      },
+      "options": {
+        "type": "object",
+        "description": "Format-specific options object (layer mapping, image size, etc.)"
+      }
+    },
+    "required": ["operation", "format", "file_path"]
+  },
+  "commandClass": "Command",
+  "sample": "ImportExport",
+  "source": "src/ImportExport/CS/Command.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Map each MainForm/MainData handler to a headless function; large surface area across formats."
+}

@@ -1,0 +1,37 @@
+{
+  "name": "revit_create_floor",
+  "description": "Creates a floor from a closed profile curve loop, floor type, and level.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "profile_curve_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Ordered curve element ids forming a closed boundary"
+      },
+      "floor_type_id": {
+        "type": "integer",
+        "description": "FloorType element id"
+      },
+      "level_id": {
+        "type": "integer",
+        "description": "Level element id"
+      },
+      "structural": {
+        "type": "boolean",
+        "description": "Whether the floor is structural"
+      },
+      "height_offset": {
+        "type": "number",
+        "description": "Height offset from level in feet (default 0)"
+      }
+    },
+    "required": ["profile_curve_ids", "floor_type_id", "level_id"]
+  },
+  "commandClass": "Command",
+  "sample": "GenerateFloor",
+  "source": "src/GenerateFloor/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Call Command.CreateFloor directly; bypass GenerateFloorForm."
+}

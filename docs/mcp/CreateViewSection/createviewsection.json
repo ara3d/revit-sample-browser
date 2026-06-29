@@ -1,0 +1,20 @@
+{
+  "name": "revit_create_detail_section",
+  "description": "Creates a detail section view centered on a selected wall, beam, or structural floor.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_id": { "type": "integer", "description": "Wall, beam, or structural floor element id" },
+      "box_half_size": { "type": "number", "description": "Half width/depth of section box (default 10)" },
+      "box_height": { "type": "number", "description": "Section box height below origin (default 5)" },
+      "detail_view_type_id": { "type": "integer", "description": "ViewFamilyType id for Detail views" }
+    },
+    "required": ["element_id"]
+  },
+  "commandClass": "Command",
+  "sample": "CreateViewSection",
+  "source": "src/CreateViewSection/CS/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Beams must be horizontal; floors need associated AnalyticalPanel."
+}

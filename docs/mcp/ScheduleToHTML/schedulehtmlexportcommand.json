@@ -1,0 +1,24 @@
+{
+  "name": "revit_export_schedule_html",
+  "description": "Exports a view schedule to an HTML file for viewing outside Revit.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "schedule_view_id": {
+        "type": "integer",
+        "description": "Element id of the ViewSchedule to export"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Destination HTML file path"
+      }
+    },
+    "required": ["schedule_view_id", "output_path"]
+  },
+  "commandClass": "ScheduleHtmlExportCommand",
+  "sample": "ScheduleToHTML",
+  "source": "src/ScheduleToHTML/CS/ScheduleHTMLExportCommand.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Set bInteractive false for headless export via ScheduleHtmlExporter."
+}

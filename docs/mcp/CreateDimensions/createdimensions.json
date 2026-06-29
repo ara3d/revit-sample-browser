@@ -1,0 +1,23 @@
+{
+  "name": "revit_dimension_walls",
+  "description": "Creates linear dimensions for selected basic walls using analytical panel references in a 2D view.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "wall_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Element ids of basic walls to dimension"
+      },
+      "view_id": { "type": "integer", "description": "Target 2D view (defaults to active view)" },
+      "offset": { "type": "number", "description": "Offset distance for dimension line placement (default 5)" }
+    },
+    "required": ["wall_ids"]
+  },
+  "commandClass": "Command",
+  "sample": "CreateDimensions",
+  "source": "src/CreateDimensions/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Walls need associated AnalyticalPanel with horizontal outer-contour edge; view must not be 3D or sheet."
+}

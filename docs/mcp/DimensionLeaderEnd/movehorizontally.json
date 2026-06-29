@@ -1,0 +1,22 @@
+{
+  "name": "revit_move_dimension_leader",
+  "description": "Moves dimension leader end positions along the dimension line by a signed offset.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "dimension_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Linear dimension element ids"
+      },
+      "offset": { "type": "number", "description": "Signed offset along dimension direction (default -10)" }
+    },
+    "required": ["dimension_ids"]
+  },
+  "commandClass": "MoveHorizontally",
+  "sample": "DimensionLeaderEnd",
+  "source": "src/DimensionLeaderEnd/CS/Command.cs",
+  "mcpRating": 3,
+  "requiresUi": false,
+  "notes": "Apply to each DimensionSegment when Segments is non-empty."
+}

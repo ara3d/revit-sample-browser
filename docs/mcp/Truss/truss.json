@@ -1,0 +1,37 @@
+{
+  "name": "revit_create_truss",
+  "description": "Creates or edits a structural truss from two columns or an existing truss with profile and member type settings.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "column_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Two structural column element ids for new truss placement"
+      },
+      "truss_id": {
+        "type": "integer",
+        "description": "Existing truss element id when editing instead of creating"
+      },
+      "truss_type_id": {
+        "type": "integer",
+        "description": "TrussType id to assign"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "ViewPlan id whose level elevation positions the truss"
+      },
+      "beam_type_ids": {
+        "type": "object",
+        "description": "Optional map of truss member indices to FamilySymbol ids for chord and web members"
+      }
+    },
+    "required": ["truss_type_id", "view_id"]
+  },
+  "commandClass": "Command",
+  "sample": "Truss",
+  "source": "src/Truss/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Replace TrussForm and LineTool sketching with profile curve data or pre-defined TrussGeometry; require either column_ids or truss_id."
+}

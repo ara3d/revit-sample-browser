@@ -1,0 +1,37 @@
+{
+  "name": "revit_tag_rebar",
+  "description": "Creates a category tag on the first subelement of a selected rebar at its centerline start.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "rebar_id": {
+        "type": "integer",
+        "description": "Rebar element id"
+      },
+      "view_id": {
+        "type": "integer",
+        "description": "View id where the tag is created"
+      },
+      "tag_type_id": {
+        "type": "integer",
+        "description": "Optional FamilySymbol id for the tag type"
+      },
+      "has_leader": {
+        "type": "boolean",
+        "description": "Whether the tag has a leader (sample uses true)"
+      },
+      "orientation": {
+        "type": "string",
+        "enum": ["horizontal", "vertical"],
+        "description": "Tag orientation (sample uses horizontal)"
+      }
+    },
+    "required": ["rebar_id", "view_id"]
+  },
+  "commandClass": "TagRebar",
+  "sample": "TagBeam",
+  "source": "src/TagBeam/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Uses Rebar.GetSubelements and IndependentTag.Create with subelement Reference."
+}

@@ -1,0 +1,20 @@
+{
+  "name": "revit_export_view_2d_geometry",
+  "description": "Exports tessellated 2D geometry and text from a printable plan, section, or elevation view.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "view_id": { "type": "integer", "description": "View to export (defaults to active view)" },
+      "include_annotations": { "type": "boolean", "description": "Export annotation objects (default true)" },
+      "include_pattern_lines": { "type": "boolean", "description": "Include pattern lines on geometric objects (default true)" },
+      "display_style": { "type": "string", "description": "DisplayStyle enum name (default view display style)" }
+    },
+    "required": []
+  },
+  "commandClass": "Command",
+  "sample": "CustomExporter/Custom2DExporter",
+  "source": "src/CustomExporter/Custom2DExporter/CS/Command.cs",
+  "mcpRating": 5,
+  "requiresUi": true,
+  "notes": "Use ExportView static method; return ResultsSummary counts and optional serialized points."
+}

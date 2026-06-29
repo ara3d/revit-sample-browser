@@ -1,0 +1,20 @@
+{
+  "name": "revit_get_material_physical_properties",
+  "description": "Returns structural physical material properties for a selected structural family instance.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "element_id": {
+        "type": "integer",
+        "description": "Element id of a structural FamilyInstance (beam, column, or brace)"
+      }
+    },
+    "required": ["element_id"]
+  },
+  "commandClass": "DumpMaterialPhysicalParameters",
+  "sample": "PhysicalProp",
+  "source": "src/PhysicalProp/CS/Command.cs",
+  "mcpRating": 5,
+  "requiresUi": false,
+  "notes": "Resolve Material via Structural Material parameter; return PHY_MATERIAL_PARAM_* values as structured data instead of TaskDialog."
+}

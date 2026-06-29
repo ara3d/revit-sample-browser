@@ -1,0 +1,29 @@
+{
+  "name": "revit_edit_curtain_grid",
+  "description": "Adds or adjusts U/V grid lines on a curtain wall with optional alignment settings.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "wall_id": { "type": "integer", "description": "Curtain wall element id" },
+      "u_offsets": {
+        "type": "array",
+        "items": { "type": "number" },
+        "description": "Distances for new or moved U-direction grid lines"
+      },
+      "v_offsets": {
+        "type": "array",
+        "items": { "type": "number" },
+        "description": "Distances for new or moved V-direction grid lines"
+      },
+      "horizontal_justification": { "type": "string", "description": "CurtainGridAlign for horizontal grids" },
+      "vertical_justification": { "type": "string", "description": "CurtainGridAlign for vertical grids" }
+    },
+    "required": ["wall_id"]
+  },
+  "commandClass": "Command",
+  "sample": "CurtainWallGrid",
+  "source": "src/CurtainWallGrid/CS/Command.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Extract GridGeometry grid mutations from GridForm for headless use."
+}

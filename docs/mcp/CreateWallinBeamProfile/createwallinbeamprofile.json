@@ -1,0 +1,24 @@
+{
+  "name": "revit_create_wall_from_beam_profile",
+  "description": "Creates a wall whose profile is a closed loop traced by selected beam location curves in a vertical plane.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "beam_ids": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Beam element ids forming one closed vertical profile"
+      },
+      "wall_type_id": { "type": "integer", "description": "WallType id" },
+      "level_id": { "type": "integer", "description": "Base constraint level id" },
+      "is_structural": { "type": "boolean", "description": "Create as structural wall (default true)" }
+    },
+    "required": ["beam_ids", "wall_type_id", "level_id"]
+  },
+  "commandClass": "CreateWallinBeamProfile",
+  "sample": "CreateWallinBeamProfile",
+  "source": "src/CreateWallinBeamProfile/CS/CreateWallinBeamProfile.cs",
+  "mcpRating": 4,
+  "requiresUi": true,
+  "notes": "Validate coplanar closed loop before Wall.Create; set base/top offsets from beam Z extents."
+}
