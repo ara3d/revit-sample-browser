@@ -1,0 +1,48 @@
+{
+  "name": "revit_create_line_load",
+  "description": "Creates a line load along a segment on an analytical host element.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "host_element_id": {
+        "type": "integer",
+        "description": "Analytical host element id"
+      },
+      "start_point": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Line load start point"
+      },
+      "end_point": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Line load end point"
+      },
+      "force_at_start": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Force vector at the start of the load line"
+      },
+      "force_at_end": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Force vector at the end of the load line"
+      },
+      "load_case_id": {
+        "type": "integer",
+        "description": "Optional load case element id"
+      }
+    },
+    "required": ["host_element_id", "start_point", "end_point", "force_at_start", "force_at_end"]
+  },
+  "commandClass": "CreateCustomLineLoad",
+  "sample": "ContextualAnalyticalModel",
+  "source": "src/ContextualAnalyticalModel/CS/CustomLineLoad.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Validate with LineLoad.IsCurveInsideHostBoundaries before create."
+}

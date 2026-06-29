@@ -1,0 +1,54 @@
+{
+  "name": "revit_create_area_load_with_ref_points",
+  "description": "Creates an area load on an analytical host with per-reference-point force vectors and curve-end bindings.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "host_element_id": {
+        "type": "integer",
+        "description": "Analytical host element id"
+      },
+      "boundary_corners": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+          "required": ["x", "y", "z"]
+        },
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "Diagonal corners defining the rectangular load area"
+      },
+      "force_vectors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+          "required": ["x", "y", "z"]
+        },
+        "description": "Force vector at each reference point"
+      },
+      "ref_point_indexes": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Reference point indices on the load boundary"
+      },
+      "ref_point_curve_ends": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "Curve end index (0 or 1) for each reference point"
+      },
+      "load_case_id": {
+        "type": "integer",
+        "description": "Optional load case element id"
+      }
+    },
+    "required": ["host_element_id", "boundary_corners", "force_vectors", "ref_point_indexes", "ref_point_curve_ends"]
+  },
+  "commandClass": "CreateAreaLoadWithRefPoint",
+  "sample": "ContextualAnalyticalModel",
+  "source": "src/ContextualAnalyticalModel/CS/CreateAreaLoadWithRefPoint.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Replace element and point picks; validate with AreaLoad.IsCurveLoopsInsideHostBoundaries."
+}

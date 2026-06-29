@@ -1,0 +1,47 @@
+{
+  "name": "revit_create_analytical_curved_panel",
+  "description": "Creates a curved analytical panel from arc geometry and sets structural role and analysis type.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "arc_start": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Arc start point in feet (internal units)"
+      },
+      "arc_end": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Arc end point"
+      },
+      "arc_point_on_arc": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Third point defining the arc"
+      },
+      "normal": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "description": "Panel normal vector (default 0,0,1)"
+      },
+      "structural_role": {
+        "type": "string",
+        "description": "AnalyticalStructuralRole value (e.g. StructuralRoleFloor)"
+      },
+      "analyze_as": {
+        "type": "string",
+        "description": "AnalyzeAs value (e.g. SlabOneWay)"
+      }
+    },
+    "required": ["arc_start", "arc_end", "arc_point_on_arc"]
+  },
+  "commandClass": "CreateAnalyticalCurvedPanel",
+  "sample": "ContextualAnalyticalModel",
+  "source": "src/ContextualAnalyticalModel/CS/CreateAnalyticalCurvedPanel.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Generalize hard-coded Arc.Create call; return created panel element id."
+}

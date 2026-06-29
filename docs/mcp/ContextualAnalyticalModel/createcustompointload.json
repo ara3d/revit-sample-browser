@@ -1,0 +1,42 @@
+{
+  "name": "revit_create_point_load",
+  "description": "Creates a point load at a location on an analytical host element.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "host_element_id": {
+        "type": "integer",
+        "description": "Analytical host element id"
+      },
+      "location": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Point load location in feet (internal units)"
+      },
+      "force": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Applied force vector"
+      },
+      "moment": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Applied moment vector"
+      },
+      "load_case_id": {
+        "type": "integer",
+        "description": "Optional load case element id"
+      }
+    },
+    "required": ["host_element_id", "location", "force", "moment"]
+  },
+  "commandClass": "CreateCustomPointLoad",
+  "sample": "ContextualAnalyticalModel",
+  "source": "src/ContextualAnalyticalModel/CS/CustomPointLoad.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Validate with PointLoad.IsPointInsideHostBoundaries before create."
+}

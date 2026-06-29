@@ -1,0 +1,24 @@
+{
+  "name": "revit_add_analytical_physical_association",
+  "description": "Creates a one-to-one association between an analytical element and a physical element.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "analytical_element_id": {
+        "type": "integer",
+        "description": "Element id of the analytical model element"
+      },
+      "physical_element_id": {
+        "type": "integer",
+        "description": "Element id of the physical structural element"
+      }
+    },
+    "required": ["analytical_element_id", "physical_element_id"]
+  },
+  "commandClass": "AddAssociation",
+  "sample": "ContextualAnalyticalModel",
+  "source": "src/ContextualAnalyticalModel/CS/AddAssociation.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Replace interactive picks with element ids; requires AnalyticalToPhysicalAssociationManager."
+}

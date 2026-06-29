@@ -1,0 +1,46 @@
+{
+  "name": "revit_create_analytical_panel",
+  "description": "Creates a rectangular analytical panel from a boundary curve loop and optional opening cutouts.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "boundary_points": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+          "required": ["x", "y", "z"]
+        },
+        "minItems": 3,
+        "description": "Ordered vertices of the closed panel boundary"
+      },
+      "opening_boundaries": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+            "required": ["x", "y", "z"]
+          }
+        },
+        "description": "Optional list of opening curve-loop vertex sets"
+      },
+      "structural_role": {
+        "type": "string",
+        "description": "AnalyticalStructuralRole (default StructuralRoleFloor)"
+      },
+      "analyze_as": {
+        "type": "string",
+        "description": "AnalyzeAs value (default SlabOneWay)"
+      }
+    },
+    "required": ["boundary_points"]
+  },
+  "commandClass": "CreateAnalyticalPanel",
+  "sample": "ContextualAnalyticalModel",
+  "source": "src/ContextualAnalyticalModel/CS/CreateAnalytcalPanel.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Validate openings with IsCurveLoopValidForAnalyticalOpening; return panel and opening ids."
+}

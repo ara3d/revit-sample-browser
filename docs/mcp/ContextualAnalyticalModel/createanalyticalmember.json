@@ -1,0 +1,36 @@
+{
+  "name": "revit_create_analytical_member",
+  "description": "Creates a straight analytical member between two points with optional structural role and analysis settings.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "start_point": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Member start in feet (internal units)"
+      },
+      "end_point": {
+        "type": "object",
+        "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "z": { "type": "number" } },
+        "required": ["x", "y", "z"],
+        "description": "Member end point"
+      },
+      "structural_role": {
+        "type": "string",
+        "description": "AnalyticalStructuralRole (default StructuralRoleBeam)"
+      },
+      "analyze_as": {
+        "type": "string",
+        "description": "AnalyzeAs value (default Lateral)"
+      }
+    },
+    "required": ["start_point", "end_point"]
+  },
+  "commandClass": "CreateAnalyticalMember",
+  "sample": "ContextualAnalyticalModel",
+  "source": "src/ContextualAnalyticalModel/CS/CreateAnalyticalMember.cs",
+  "mcpRating": 4,
+  "requiresUi": false,
+  "notes": "Return created AnalyticalMember element id."
+}
