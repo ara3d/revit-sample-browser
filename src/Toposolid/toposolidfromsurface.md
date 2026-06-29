@@ -1,11 +1,11 @@
-# ToposolidFromSurface
+﻿# ToposolidFromSurface
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Toposolid |
 | **Class** | `ToposolidFromSurface` |
-| **Source** | `src/Toposolid/CS/Command.cs` |
-| **SDK ReadMe** | `src/Toposolid/CS/ReadMe_Toposolid.rtf` |
+| **Source** | `src/Toposolid/Command.cs` |
+| **SDK ReadMe** | `src/Toposolid/ReadMe_Toposolid.rtf` |
 | **MCP rating** | 2/5 |
 
 Converts a picked legacy topography surface into a new toposolid element.

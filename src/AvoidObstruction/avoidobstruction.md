@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | AvoidObstruction |
 | **Class** | `Command` |
-| **Source** | `src/AvoidObstruction/CS/Command.cs` |
-| **SDK ReadMe** | `src/AvoidObstruction/CS/ReadMe_AvoidObstruction.rtf` |
+| **Source** | `src/AvoidObstruction/Command.cs` |
+| **SDK ReadMe** | `src/AvoidObstruction/ReadMe_AvoidObstruction.rtf` |
 | **MCP rating** | 2/5 |
 
 Resolves duct/pipe routing obstructions by adjusting fitting placement using the sample's `Resolver` engine.

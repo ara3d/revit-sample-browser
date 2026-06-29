@@ -1,11 +1,11 @@
-# FabPartGeometry
+﻿# FabPartGeometry
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `FabPartGeometry` |
-| **Source** | `src/FabricationPartLayout/CS/FabPartGeometry.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/FabPartGeometry.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Exports coarse mesh geometry and insulation/lining meshes for selected fabrication parts to CSV triangle files.

@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | PanelSchedule |
 | **Class** | `InstanceViewCreation` |
-| **Source** | `src/PanelSchedule/CS/InstanceViewCreation.cs` |
-| **SDK ReadMe** | `src/PanelSchedule/CS/ReadMe_PanelSchedule.rtf` |
+| **Source** | `src/PanelSchedule/InstanceViewCreation.cs` |
+| **SDK ReadMe** | `src/PanelSchedule/ReadMe_PanelSchedule.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a panel schedule instance view for a user-picked electrical equipment panel.

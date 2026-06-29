@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_delete_extensible_storage",
   "description": "Erases extensible storage schemas and all entity data from the active document.",
   "arguments": {
@@ -14,7 +14,7 @@
   },
   "commandClass": "DeleteStorage",
   "sample": "ExtensibleStorageUtility",
-  "source": "src/ExtensibleStorageUtility/CS/DeleteStorage.cs",
+  "source": "src/ExtensibleStorageUtility/DeleteStorage.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Destructive operation. Document save required to persist deletion."

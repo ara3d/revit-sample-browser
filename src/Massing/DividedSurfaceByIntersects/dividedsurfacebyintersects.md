@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Massing/DividedSurfaceByIntersects |
 | **Class** | `Command` |
-| **Source** | `src/Massing/DividedSurfaceByIntersects/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/DividedSurfaceByIntersects/CS/ReadMe_DividedSurfaceByIntersects.rtf` |
+| **Source** | `src/Massing/DividedSurfaceByIntersects/Command.cs` |
+| **SDK ReadMe** | `src/Massing/DividedSurfaceByIntersects/ReadMe_DividedSurfaceByIntersects.rtf` |
 | **MCP rating** | 2/5 |
 
 Demonstrates adding and removing intersection elements on a `DividedSurface`, first with reference planes and levels, then with model lines, in a bundled mass family.

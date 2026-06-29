@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_import_routing_preferences",
   "description": "Imports pipe routing preferences, segments, schedules, and fitting rules from RoutingPreference Builder XML.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "CommandReadPreferences",
   "sample": "RoutingPreferenceTools",
-  "source": "src/RoutingPreferenceTools/CS/RoutingPreferenceBuilder/CommandReadPreferences.cs",
+  "source": "src/RoutingPreferenceTools/RoutingPreferenceBuilder/CommandReadPreferences.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "Bypass OpenFileDialog; validate XML against RoutingPreferenceBuilderData.xsd before import."

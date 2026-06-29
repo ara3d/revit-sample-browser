@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_brep_direct_shape",
   "description": "Builds a box solid with BRepBuilder and places it as a DirectShape element.",
   "arguments": {
@@ -23,7 +23,7 @@
   },
   "commandClass": "CreateCube",
   "sample": "GeometryAPI/BRepBuilderExample",
-  "source": "src/GeometryAPI/BRepBuilderExample/CS/CreateCube.cs",
+  "source": "src/GeometryAPI/BRepBuilderExample/CreateCube.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Generalize CreateCubeImpl dimensions; returns DirectShape element id."

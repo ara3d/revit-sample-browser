@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_pdf_export_settings",
   "description": "Creates a named ExportPDFSettings preset with PDFExportOptions in the active document.",
   "arguments": {
@@ -19,7 +19,7 @@
   },
   "commandClass": "CreateExportPdfSettingsCommand",
   "sample": "ExportPDFSettingsSample",
-  "source": "src/ExportPDFSettingsSample/CS/Application.cs",
+  "source": "src/ExportPDFSettingsSample/Application.cs",
   "mcpRating": 5,
   "requiresUi": false
 }

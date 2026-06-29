@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Journaling |
 | **Class** | `Command` |
-| **Source** | `src/Journaling/CS/Command.cs` |
+| **Source** | `src/Journaling/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 1/5 |
 

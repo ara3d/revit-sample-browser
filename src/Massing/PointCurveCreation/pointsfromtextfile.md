@@ -1,11 +1,11 @@
-# PointsFromTextFile
+﻿# PointsFromTextFile
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Massing/PointCurveCreation |
 | **Class** | `PointsFromTextFile` |
-| **Source** | `src/Massing/PointCurveCreation/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/PointCurveCreation/CS/ReadMe_PointCurveCreation.rtf` |
+| **Source** | `src/Massing/PointCurveCreation/Command.cs` |
+| **SDK ReadMe** | `src/Massing/PointCurveCreation/ReadMe_PointCurveCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Reads comma-separated XYZ coordinates from `sphere.csv` beside the add-in and creates a reference point at each location.

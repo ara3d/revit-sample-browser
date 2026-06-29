@@ -1,10 +1,10 @@
-# Dummy
+﻿# Dummy
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Ribbon |
 | **Class** | `Dummy` |
-| **Source** | `src/Ribbon/CS/AddInCommand.cs` |
+| **Source** | `src/Ribbon/AddInCommand.cs` |
 | **MCP rating** | 1/5 |
 
 No-op external command required because ribbon `ToggleButton` items must bind to an `IExternalCommand`.

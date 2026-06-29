@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_list_levels",
   "description": "Lists all levels in the active document with id, name, and elevation.",
   "arguments": {
@@ -8,7 +8,7 @@
   },
   "commandClass": "Command",
   "sample": "LevelsProperty",
-  "source": "src/LevelsProperty/CS/Command.cs",
+  "source": "src/LevelsProperty/Command.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Write operations (create, rename, elevate, delete) would be a separate revit_manage_levels tool using Command.SetLevel, CreateLevel, and DeleteLevel without LevelsForm."

@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | SpotDimension |
 | **Class** | `Command` |
-| **Source** | `src/SpotDimension/CS/Command.cs` |
-| **SDK ReadMe** | `src/SpotDimension/CS/ReadMe_SpotDimension.rtf` |
+| **Source** | `src/SpotDimension/Command.cs` |
+| **SDK ReadMe** | `src/SpotDimension/ReadMe_SpotDimension.rtf` |
 | **MCP rating** | 4/5 |
 
 Lists all spot dimensions in the project by view and optionally highlights a user-selected dimension in the failure message set.

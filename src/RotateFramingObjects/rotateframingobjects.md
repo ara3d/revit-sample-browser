@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | RotateFramingObjects |
 | **Class** | `RotateFramingObjects` |
-| **Source** | `src/RotateFramingObjects/CS/RotateFramingObjects.cs` |
+| **Source** | `src/RotateFramingObjects/RotateFramingObjects.cs` |
 | **MCP rating** | 4/5 |
 
 Rotates selected structural beams, braces, or columns by updating cross-section rotation or column location rotation.

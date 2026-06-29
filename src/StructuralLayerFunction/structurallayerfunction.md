@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | StructuralLayerFunction |
 | **Class** | `Command` |
-| **Source** | `src/StructuralLayerFunction/CS/Command.cs` |
-| **SDK ReadMe** | `src/StructuralLayerFunction/CS/ReadMe_StructuralLayerFunction.rtf` |
+| **Source** | `src/StructuralLayerFunction/Command.cs` |
+| **SDK ReadMe** | `src/StructuralLayerFunction/ReadMe_StructuralLayerFunction.rtf` |
 | **MCP rating** | 3/5 |
 
 Lists each compound-structure layer function for a selected floor, outside to inside, in a dialog.

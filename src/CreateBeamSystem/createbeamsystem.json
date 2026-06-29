@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_beam_system",
   "description": "Creates a beam system from a closed profile polygon, layout rule, and beam type.",
   "arguments": {
@@ -23,7 +23,7 @@
   },
   "commandClass": "Command",
   "sample": "CreateBeamSystem",
-  "source": "src/CreateBeamSystem/CS/Command.cs",
+  "source": "src/CreateBeamSystem/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Use BeamSystemBuilder with programmatic BeamSystemData; active view sketch plane required."

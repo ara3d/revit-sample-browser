@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | AppearanceAssetEditing |
 | **Class** | `Command` |
-| **Source** | `src/AppearanceAssetEditing/CS/Command.cs` |
-| **SDK ReadMe** | `src/AppearanceAssetEditing/CS/Readme_AppearanceAssetEditing.rtf` |
+| **Source** | `src/AppearanceAssetEditing/Command.cs` |
+| **SDK ReadMe** | `src/AppearanceAssetEditing/Readme_AppearanceAssetEditing.rtf` |
 | **MCP rating** | 2/5 |
 
 Launches a modeless/form-based UI for editing rendering appearance assets on materials.

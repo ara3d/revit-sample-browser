@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_edit_slab_shape",
   "description": "Adds or modifies slab shape vertices and creases on a selected floor.",
   "arguments": {
@@ -38,7 +38,7 @@
   },
   "commandClass": "Command",
   "sample": "SlabShapeEditing",
-  "source": "src/SlabShapeEditing/CS/Command.cs",
+  "source": "src/SlabShapeEditing/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "SlabShapeEditor API is separable; bypass SlabShapeEditingForm mouse drawing."

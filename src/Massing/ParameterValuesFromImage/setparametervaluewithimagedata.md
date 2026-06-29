@@ -1,11 +1,11 @@
-# SetParameterValueWithImageData
+﻿# SetParameterValueWithImageData
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Massing/ParameterValuesFromImage |
 | **Class** | `SetParameterValueWithImageData` |
-| **Source** | `src/Massing/ParameterValuesFromImage/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/ParameterValuesFromImage/CS/ReadMe_ParameterValuesFromImage.rtf` |
+| **Source** | `src/Massing/ParameterValuesFromImage/Command.cs` |
+| **SDK ReadMe** | `src/Massing/ParameterValuesFromImage/ReadMe_ParameterValuesFromImage.rtf` |
 | **MCP rating** | 2/5 |
 
 Maps grayscale pixel values from a companion bitmap onto divided-surface panel `Grayscale` parameters, deleting panels where the pixel is black.

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_place_family_on_face",
   "description": "Places a family instance on a host face using face-based, point-based, or line-based placement.",
   "arguments": {
@@ -26,7 +26,7 @@
   },
   "commandClass": "Command",
   "sample": "PlaceFamilyInstanceByFace",
-  "source": "src/PlaceFamilyInstanceByFace/CS/Command.cs",
+  "source": "src/PlaceFamilyInstanceByFace/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Bypass BasedTypeForm and PlaceFamilyInstanceForm; use FamilyInstanceCreator logic with explicit references."

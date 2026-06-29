@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | MultiThreading/WorkThread |
 | **Class** | `Command` |
-| **Source** | `src/MultiThreading/WorkThread/CS/Command.cs` |
-| **SDK ReadMe** | `src/MultiThreading/WorkThread/CS/Readme_WorkThread.rtf` |
+| **Source** | `src/MultiThreading/WorkThread/Command.cs` |
+| **SDK ReadMe** | `src/MultiThreading/WorkThread/Readme_WorkThread.rtf` |
 | **MCP rating** | 2/5 |
 
 Prompts for a wall or face-wall face, then runs a background worker thread to analyze face geometry while respecting Revit API threading rules.

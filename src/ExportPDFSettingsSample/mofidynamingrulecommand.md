@@ -1,10 +1,10 @@
-# MofidyNamingRuleCommand
+﻿# MofidyNamingRuleCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ExportPDFSettingsSample |
 | **Class** | `MofidyNamingRuleCommand` |
-| **Source** | `src/ExportPDFSettingsSample/CS/Application.cs` |
+| **Source** | `src/ExportPDFSettingsSample/Application.cs` |
 | **MCP rating** | 2/5 |
 
 Modifies the sample value on the **Approved By** naming rule entry in the "sample" PDF export settings and reorders rules by sample value.

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_negative_block",
   "description": "Creates a generic-model family block representing the negative volume of a target element within a boundary.",
   "arguments": {
@@ -22,7 +22,7 @@
   },
   "commandClass": "CreateNegativeBlockCommand",
   "sample": "FreeFormElement",
-  "source": "src/FreeFormElement/CS/CreateNegativeBlockCommand.cs",
+  "source": "src/FreeFormElement/CreateNegativeBlockCommand.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Replace PickObject calls with element ids; returns loaded family instance id on success."

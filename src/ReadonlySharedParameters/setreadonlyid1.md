@@ -1,10 +1,10 @@
-# SetReadonlyId1
+﻿# SetReadonlyId1
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ReadonlySharedParameters |
 | **Class** | `SetReadonlyId1` |
-| **Source** | `src/ReadonlySharedParameters/CS/ReadonlySharedParametersCommands.cs` |
+| **Source** | `src/ReadonlySharedParameters/ReadonlySharedParametersCommands.cs` |
 | **MCP rating** | 2/5 |
 
 Sets the **ReadonlyId** instance parameter on all elements that expose it to each element's `UniqueId`.

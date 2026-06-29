@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_find_rooms_without_roofs",
   "description": "Reports which rooms or spaces have bounding roof elements and which do not, using spatial geometry analysis.",
   "arguments": {
@@ -18,7 +18,7 @@
   },
   "commandClass": "Command",
   "sample": "RoofsRooms",
-  "source": "src/RoofsRooms/CS/Command.cs",
+  "source": "src/RoofsRooms/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Read-only; mirrors FindRoomBoundingRoofs without TaskDialog."

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_3d_view_from_sheet_click",
   "description": "Creates a perspective 3D view with its camera at a sheet click mapped through viewport transforms into model space.",
   "arguments": {
@@ -21,7 +21,7 @@
   },
   "commandClass": "Command",
   "sample": "SheetToView3D",
-  "source": "src/SheetToView3D/CS/SheetToView3D.cs",
+  "source": "src/SheetToView3D/SheetToView3D.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "MakeView3D.MakeFromViewportClick contains the logic; replace PickPoint with supplied coordinates."

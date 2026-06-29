@@ -1,10 +1,10 @@
-# PlaceAtPickedFaceWorkplane
+﻿# PlaceAtPickedFaceWorkplane
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Selections |
 | **Class** | `PlaceAtPickedFaceWorkplane` |
-| **Source** | `src/Selections/CS/Command.cs` |
+| **Source** | `src/Selections/Command.cs` |
 | **MCP rating** | 2/5 |
 
 Sets the active view work plane to a picked planar face, then creates a model circle at a picked point on that plane.

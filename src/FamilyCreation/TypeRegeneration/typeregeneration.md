@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FamilyCreation/TypeRegeneration |
 | **Class** | `Command` |
-| **Source** | `src/FamilyCreation/TypeRegeneration/CS/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/TypeRegeneration/CS/ReadMe_TypeRegeneration.rtf` |
+| **Source** | `src/FamilyCreation/TypeRegeneration/Command.cs` |
+| **SDK ReadMe** | `src/FamilyCreation/TypeRegeneration/ReadMe_TypeRegeneration.rtf` |
 | **MCP rating** | 2/5 |
 
 Iterates every family type, switches `FamilyManager.CurrentType` to test regeneration, and logs results to file and a WinForms message window.

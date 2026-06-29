@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | CreateSimpleAreaRein |
 | **Class** | `Command` |
-| **Source** | `src/CreateSimpleAreaRein/CS/CreateSimpleAreaRein.cs` |
-| **SDK ReadMe** | `src/CreateSimpleAreaRein/CS/ReadMe_CreateSimpleAreaRein.rtf` |
+| **Source** | `src/CreateSimpleAreaRein/CreateSimpleAreaRein.cs` |
+| **SDK ReadMe** | `src/CreateSimpleAreaRein/ReadMe_CreateSimpleAreaRein.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates area reinforcement on a single selected basic wall or horizontal rectangular floor using default types and a parameter dialog.

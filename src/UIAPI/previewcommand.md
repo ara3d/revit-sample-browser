@@ -1,10 +1,10 @@
-# PreviewCommand
+﻿# PreviewCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | UIAPI |
 | **Class** | `PreviewCommand` |
-| **Source** | `src/UIAPI/CS/PreviewControl/PreviewCommand.cs` |
+| **Source** | `src/UIAPI/PreviewControl/PreviewCommand.cs` |
 | **MCP rating** | 1/5 |
 
 Opens a dialog that previews all views in the document using the WPF `PreviewControl` API inside a rolled-back transaction group.

@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | Massing/MeasurePanelArea |
 | **Class** | `MeasurePanelArea` |
-| **Source** | `src/Massing/MeasurePanelArea/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/MeasurePanelArea/CS/ReadMe_MeasurePanelArea.rtf` |
+| **Source** | `src/Massing/MeasurePanelArea/Command.cs` |
+| **SDK ReadMe** | `src/Massing/MeasurePanelArea/ReadMe_MeasurePanelArea.rtf` |
 | **MCP rating** | 5/5 |
 
 Computes divided-surface panel areas, classifies panels into min/mid/max area buckets, optionally swaps panel types, and exports id/area pairs to a text file.

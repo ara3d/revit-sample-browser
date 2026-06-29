@@ -1,11 +1,11 @@
-# PointsParabola
+﻿# PointsParabola
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Massing/PointCurveCreation |
 | **Class** | `PointsParabola` |
-| **Source** | `src/Massing/PointCurveCreation/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/PointCurveCreation/CS/ReadMe_PointCurveCreation.rtf` |
+| **Source** | `src/Massing/PointCurveCreation/Command.cs` |
+| **SDK ReadMe** | `src/Massing/PointCurveCreation/ReadMe_PointCurveCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates mirrored reference-point grids following power-law curves `z = x^power` for exponents between 1.2 and 1.4.

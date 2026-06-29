@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | FoundationSlab |
 | **Class** | `Command` |
-| **Source** | `src/FoundationSlab/CS/Command.cs` |
+| **Source** | `src/FoundationSlab/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

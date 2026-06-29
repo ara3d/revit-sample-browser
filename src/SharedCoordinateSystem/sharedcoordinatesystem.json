@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_list_project_locations",
   "description": "Lists project locations and returns shared coordinate offsets, angle to true north, and elevation.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "Command",
   "sample": "SharedCoordinateSystem",
-  "source": "src/SharedCoordinateSystem/CS/Command.cs",
+  "source": "src/SharedCoordinateSystem/Command.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Read path uses CoordinateSystemData.GetLocationData and GetOffset; pair with revit_set_project_location for writes."

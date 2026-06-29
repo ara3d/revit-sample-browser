@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | FamilyCreation/AutoParameter |
 | **Class** | `AddParameterToFamilies` |
-| **Source** | `src/FamilyCreation/AutoParameter/CS/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/AutoParameter/CS/ReadMe_AutoParameter.rtf` |
+| **Source** | `src/FamilyCreation/AutoParameter/Command.cs` |
+| **SDK ReadMe** | `src/FamilyCreation/AutoParameter/ReadMe_AutoParameter.rtf` |
 | **MCP rating** | 4/5 |
 
 Batch-opens `.rfa` files from a fixed folder, adds parameters from text files, saves, and closes each family.

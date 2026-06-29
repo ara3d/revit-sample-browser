@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | AreaReinParameters |
 | **Class** | `Command` |
-| **Source** | `src/AreaReinParameters/CS/AreaReinParameters.cs` |
-| **SDK ReadMe** | `src/AreaReinParameters/CS/ReadMe_AreaReinParameters.rtf` |
+| **Source** | `src/AreaReinParameters/AreaReinParameters.cs` |
+| **SDK ReadMe** | `src/AreaReinParameters/ReadMe_AreaReinParameters.rtf` |
 | **MCP rating** | 2/5 |
 
 Displays and edits area reinforcement parameters through a property-grid form bound to wall or floor reinforcement data.

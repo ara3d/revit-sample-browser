@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ImportExport |
 | **Class** | `Command` |
-| **Source** | `src/ImportExport/CS/Command.cs` |
+| **Source** | `src/ImportExport/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 5/5 |
 

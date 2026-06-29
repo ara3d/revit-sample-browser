@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | GeometryAPI/UpdateExternallyTaggedBRep |
 | **Class** | `CreateBRep` |
-| **Source** | `src/GeometryAPI/UpdateExternallyTaggedBRep/CS/CreateBRep.cs` |
+| **Source** | `src/GeometryAPI/UpdateExternallyTaggedBRep/CreateBRep.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

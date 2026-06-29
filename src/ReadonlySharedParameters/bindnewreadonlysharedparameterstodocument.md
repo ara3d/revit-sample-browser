@@ -1,10 +1,10 @@
-# BindNewReadonlySharedParametersToDocument
+﻿# BindNewReadonlySharedParametersToDocument
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ReadonlySharedParameters |
 | **Class** | `BindNewReadonlySharedParametersToDocument` |
-| **Source** | `src/ReadonlySharedParameters/CS/ReadonlySharedParametersCommands.cs` |
+| **Source** | `src/ReadonlySharedParameters/ReadonlySharedParametersCommands.cs` |
 | **MCP rating** | 2/5 |
 
 Creates a temporary shared parameter file and binds read-only **ReadonlyId** and **ReadonlyCost** parameters to selected categories.

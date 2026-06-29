@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | GeometryAPI/BRepBuilderExample |
 | **Class** | `CreateCube` |
-| **Source** | `src/GeometryAPI/BRepBuilderExample/CS/CreateCube.cs` |
+| **Source** | `src/GeometryAPI/BRepBuilderExample/CreateCube.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

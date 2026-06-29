@@ -1,11 +1,11 @@
-# FlipPart
+﻿# FlipPart
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `FlipPart` |
-| **Source** | `src/FabricationPartLayout/CS/FlipPart.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/FlipPart.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Flips a user-picked fabrication part when `CanFlipPart` returns true.

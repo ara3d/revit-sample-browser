@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_delete_unpinned_dimensions",
   "description": "Deletes unpinned dimensions from the current selection or a supplied id list.",
   "arguments": {
@@ -14,7 +14,7 @@
   },
   "commandClass": "Command",
   "sample": "DeleteDimensions",
-  "source": "src/DeleteDimensions/CS/DeleteDimesions.cs",
+  "source": "src/DeleteDimensions/DeleteDimesions.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Skip pinned dimensions; fail if none eligible."

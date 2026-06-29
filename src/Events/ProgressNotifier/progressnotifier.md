@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Events / ProgressNotifier |
 | **Class** | `Command` |
-| **Source** | `src/Events/ProgressNotifier/CS/Command.cs` |
-| **SDK ReadMe** | `src/Events/ProgressNotifier/CS/ReadMe_ProgressNotifier.rtf` |
+| **Source** | `src/Events/ProgressNotifier/Command.cs` |
+| **SDK ReadMe** | `src/Events/ProgressNotifier/ReadMe_ProgressNotifier.rtf` |
 | **MCP rating** | 1/5 |
 
 Opens a WPF window that subscribes to Revit progress-related events and displays a live stack of progress notifications.

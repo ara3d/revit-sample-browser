@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FamilyParametersOrder |
 | **Class** | `Command` |
-| **Source** | `src/FamilyParametersOrder/CS/Command.cs` |
+| **Source** | `src/FamilyParametersOrder/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

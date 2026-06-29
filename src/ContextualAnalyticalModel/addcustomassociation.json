@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_add_analytical_physical_associations",
   "description": "Associates multiple analytical elements with multiple physical elements in one operation.",
   "arguments": {
@@ -19,7 +19,7 @@
   },
   "commandClass": "AddCustomAssociation",
   "sample": "ContextualAnalyticalModel",
-  "source": "src/ContextualAnalyticalModel/CS/AddCustomAssociation.cs",
+  "source": "src/ContextualAnalyticalModel/AddCustomAssociation.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Uses AddAssociation overload accepting ISet<ElementId>; replace multi-pick UI."

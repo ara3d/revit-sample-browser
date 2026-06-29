@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_opening",
   "description": "Creates an opening in a selected wall or floor from a closed profile loop.",
   "arguments": {
@@ -23,7 +23,7 @@
   },
   "commandClass": "Command",
   "sample": "NewOpenings",
-  "source": "src/NewOpenings/CS/command.cs",
+  "source": "src/NewOpenings/command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "ProfileWall and ProfileFloor contain host-specific opening creation; bypass NewOpeningsForm sketch UI for MCP."

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_curved_beam",
   "description": "Creates a structural beam along an arc, ellipse, or NURBS curve at a specified level.",
   "arguments": {
@@ -17,7 +17,7 @@
   },
   "commandClass": "Command",
   "sample": "CurvedBeam",
-  "source": "src/CurvedBeam/CS/CurvedBeam.cs",
+  "source": "src/CurvedBeam/CurvedBeam.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Extend with arbitrary curve control points; activate symbol before NewFamilyInstance."

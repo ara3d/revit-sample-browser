@@ -1,10 +1,10 @@
-# SetReadonlyCost1
+﻿# SetReadonlyCost1
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ReadonlySharedParameters |
 | **Class** | `SetReadonlyCost1` |
-| **Source** | `src/ReadonlySharedParameters/CS/ReadonlySharedParametersCommands.cs` |
+| **Source** | `src/ReadonlySharedParameters/ReadonlySharedParametersCommands.cs` |
 | **MCP rating** | 2/5 |
 
 Populates the **ReadonlyCost** type parameter on all element types that expose it, using a formula based on element id.

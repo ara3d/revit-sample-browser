@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | GetSetDefaultTypes |
 | **Class** | `ThisCommand` |
-| **Source** | `src/GetSetDefaultTypes/CS/ThisCommand.cs` |
+| **Source** | `src/GetSetDefaultTypes/ThisCommand.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

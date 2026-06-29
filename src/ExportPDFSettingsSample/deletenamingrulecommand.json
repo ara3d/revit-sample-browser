@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_delete_pdf_export_naming_rule",
   "description": "Removes a parameter entry from the PDF export naming rule on a named ExportPDFSettings preset.",
   "arguments": {
@@ -12,7 +12,7 @@
   },
   "commandClass": "DeleteNamingRuleCommand",
   "sample": "ExportPDFSettingsSample",
-  "source": "src/ExportPDFSettingsSample/CS/Application.cs",
+  "source": "src/ExportPDFSettingsSample/Application.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Requires options.Combine=false on the target preset."

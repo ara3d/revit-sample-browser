@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_get_material_physical_properties",
   "description": "Returns structural physical material properties for a selected structural family instance.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "DumpMaterialPhysicalParameters",
   "sample": "PhysicalProp",
-  "source": "src/PhysicalProp/CS/Command.cs",
+  "source": "src/PhysicalProp/Command.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Resolve Material via Structural Material parameter; return PHY_MATERIAL_PARAM_* values as structured data instead of TaskDialog."

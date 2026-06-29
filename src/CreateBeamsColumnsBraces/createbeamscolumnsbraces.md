@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | CreateBeamsColumnsBraces |
 | **Class** | `Command` |
-| **Source** | `src/CreateBeamsColumnsBraces/CS/CreateBeamsColumnsBraces.cs` |
-| **SDK ReadMe** | `src/CreateBeamsColumnsBraces/CS/ReadMe_CreateBeamsColumnsBraces.rtf` |
+| **Source** | `src/CreateBeamsColumnsBraces/CreateBeamsColumnsBraces.cs` |
+| **SDK ReadMe** | `src/CreateBeamsColumnsBraces/ReadMe_CreateBeamsColumnsBraces.rtf` |
 | **MCP rating** | 4/5 |
 
 Builds a rectilinear grid of structural columns, beams, and diagonal braces across consecutive levels from user-specified family types and bay spacing.

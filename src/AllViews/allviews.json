@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_sheet_with_views",
   "description": "Creates a sheet and places the specified views as viewports using an automatic layout.",
   "arguments": {
@@ -22,7 +22,7 @@
   },
   "commandClass": "Command",
   "sample": "AllViews",
-  "source": "src/AllViews/CS/AllViews.cs",
+  "source": "src/AllViews/AllViews.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "ViewsMgr.GenerateSheet contains the automation; bypass AllViewsForm for MCP."

@@ -1,10 +1,10 @@
-# CalcCommand
+﻿# CalcCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | UIAPI |
 | **Class** | `CalcCommand` |
-| **Source** | `src/UIAPI/CS/ExternalApplication.cs` |
+| **Source** | `src/UIAPI/ExternalApplication.cs` |
 | **MCP rating** | 1/5 |
 
 Placeholder ribbon command that shows a task dialog; used to demonstrate contextual help on ribbon buttons.

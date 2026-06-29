@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ViewTemplateCreation |
 | **Class** | `Command` |
-| **Source** | `src/ViewTemplateCreation/CS/Command.cs` |
-| **SDK ReadMe** | `src/ViewTemplateCreation/CS/Readme_ViewTemplateCreation.rtf` |
+| **Source** | `src/ViewTemplateCreation/Command.cs` |
+| **SDK ReadMe** | `src/ViewTemplateCreation/Readme_ViewTemplateCreation.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a view template from a selected view and configures parts visibility, detail level, and category graphic overrides.

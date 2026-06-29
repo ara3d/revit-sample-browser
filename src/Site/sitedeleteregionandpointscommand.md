@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | Site |
 | **Class** | `SiteDeleteRegionAndPointsCommand` |
-| **Source** | `src/Site/CS/SiteDeleteRegionAndPointsCommand.cs` |
-| **SDK ReadMe** | `src/Site/CS/Readme_Site.rtf` |
+| **Source** | `src/Site/SiteDeleteRegionAndPointsCommand.cs` |
+| **SDK ReadMe** | `src/Site/Readme_Site.rtf` |
 | **MCP rating** | 4/5 |
 
 Deletes a topography subregion and removes all non-boundary topography points contained within it.

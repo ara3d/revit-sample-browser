@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_frame_walls_with_columns",
   "description": "Places structural columns along selected walls at a fixed spacing between base and top levels.",
   "arguments": {
@@ -22,7 +22,7 @@
   },
   "commandClass": "Command",
   "sample": "StructSample",
-  "source": "src/StructSample/CS/Command.cs",
+  "source": "src/StructSample/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "FrameWall/PlaceColumn logic is separable; replace hardcoded family name and spacing."

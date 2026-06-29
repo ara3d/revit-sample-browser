@@ -1,10 +1,10 @@
-# SetReadonlyCost2
+﻿# SetReadonlyCost2
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ReadonlySharedParameters |
 | **Class** | `SetReadonlyCost2` |
-| **Source** | `src/ReadonlySharedParameters/CS/ReadonlySharedParametersCommands.cs` |
+| **Source** | `src/ReadonlySharedParameters/ReadonlySharedParametersCommands.cs` |
 | **MCP rating** | 2/5 |
 
 Populates **ReadonlyCost** on applicable element types using a simple incrementing seed formula.

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_set_category_visibility",
   "description": "Shows or hides categories in a view, or isolates categories of selected elements in the active view.",
   "arguments": {
@@ -23,7 +23,7 @@
   },
   "commandClass": "Command",
   "sample": "VisibilityControl",
-  "source": "src/VisibilityControl/CS/Command.cs",
+  "source": "src/VisibilityControl/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Replace VisibilityCtrlForm and PickObject isolate flow with explicit category_visibility or isolate_element_ids."

@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ScheduleAutomaticFormatter |
 | **Class** | `ScheduleFormatterCommand` |
-| **Source** | `src/ScheduleAutomaticFormatter/CS/ScheduleFormatterCommand.cs` |
+| **Source** | `src/ScheduleAutomaticFormatter/ScheduleFormatterCommand.cs` |
 | **MCP rating** | 4/5 |
 
 Formats columns on the active schedule and registers an updater so formatting is reapplied when the schedule changes.

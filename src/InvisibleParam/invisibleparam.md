@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | InvisibleParam |
 | **Class** | `Command` |
-| **Source** | `src/InvisibleParam/CS/Command.cs` |
+| **Source** | `src/InvisibleParam/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

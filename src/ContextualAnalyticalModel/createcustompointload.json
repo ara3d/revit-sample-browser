@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_point_load",
   "description": "Creates a point load at a location on an analytical host element.",
   "arguments": {
@@ -35,7 +35,7 @@
   },
   "commandClass": "CreateCustomPointLoad",
   "sample": "ContextualAnalyticalModel",
-  "source": "src/ContextualAnalyticalModel/CS/CustomPointLoad.cs",
+  "source": "src/ContextualAnalyticalModel/CustomPointLoad.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Validate with PointLoad.IsPointInsideHostBoundaries before create."

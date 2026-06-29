@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | Rooms |
 | **Class** | `Command` |
-| **Source** | `src/Rooms/CS/Command.cs` |
+| **Source** | `src/Rooms/Command.cs` |
 | **MCP rating** | 4/5 |
 
 Displays room and room-tag information and supports tagging, renaming, and department assignment operations from a WinForms UI.
@@ -34,4 +34,4 @@ Displays room and room-tag information and supports tagging, renaming, and depar
 ## See also
 
 - MCP descriptor: `src/Rooms/rooms.json`
-- Data class: `src/Rooms/CS/RoomsData.cs`
+- Data class: `src/Rooms/RoomsData.cs`

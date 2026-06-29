@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ProjectInfo |
 | **Class** | `Command` |
-| **Source** | `src/ProjectInfo/CS/Command.cs` |
-| **SDK ReadMe** | `src/ProjectInfo/CS/ReadMe_ProjectInfo.rtf` |
+| **Source** | `src/ProjectInfo/Command.cs` |
+| **SDK ReadMe** | `src/ProjectInfo/ReadMe_ProjectInfo.rtf` |
 | **MCP rating** | 5/5 |
 
 Opens a property-grid editor for project information, site location, construction, and energy analysis settings on the active document.
@@ -36,4 +36,4 @@ Opens a property-grid editor for project information, site location, constructio
 ## See also
 
 - MCP descriptor: `src/ProjectInfo/projectinfo.json`
-- Wrappers: `src/ProjectInfo/CS/Wrappers/`
+- Wrappers: `src/ProjectInfo/Wrappers/`

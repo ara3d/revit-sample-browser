@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ExtensibleStorageUtility |
 | **Class** | `QueryStorage` |
-| **Source** | `src/ExtensibleStorageUtility/CS/QueryStorage.cs` |
-| **SDK ReadMe** | `src/ExtensibleStorageUtility/CS/Readme_ExtensibleStorageUtility.rtf` |
+| **Source** | `src/ExtensibleStorageUtility/QueryStorage.cs` |
+| **SDK ReadMe** | `src/ExtensibleStorageUtility/Readme_ExtensibleStorageUtility.rtf` |
 | **MCP rating** | 5/5 |
 
 Reports all extensible storage schemas in the document and lists elements that carry storage for each schema.

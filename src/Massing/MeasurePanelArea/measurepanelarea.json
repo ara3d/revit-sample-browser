@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_analyze_panel_areas",
   "description": "Computes divided-surface panel areas, classifies panels by area thresholds, and optionally reports or reassigns panel types.",
   "arguments": {
@@ -26,7 +26,7 @@
   },
   "commandClass": "MeasurePanelArea",
   "sample": "Massing/MeasurePanelArea",
-  "source": "src/Massing/MeasurePanelArea/CS/Command.cs",
+  "source": "src/Massing/MeasurePanelArea/Command.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "Panel type reassignment from FrmPanelArea would be an optional apply_panel_types flag; core area math lives in FormPanelArea.cs."

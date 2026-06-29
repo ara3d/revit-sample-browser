@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_import_rooms_from_spreadsheet",
   "description": "Imports or synchronizes rooms from a spreadsheet against existing Revit room data.",
   "arguments": {
@@ -25,7 +25,7 @@
   },
   "commandClass": "Command",
   "sample": "RoomSchedule",
-  "source": "src/RoomSchedule/CS/Command.cs",
+  "source": "src/RoomSchedule/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Bypass RoomScheduleForm; reuse RoomsData import methods with explicit paths."

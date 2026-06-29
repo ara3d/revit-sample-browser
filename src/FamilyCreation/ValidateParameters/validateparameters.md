@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FamilyCreation/ValidateParameters |
 | **Class** | `Command` |
-| **Source** | `src/FamilyCreation/ValidateParameters/CS/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/ValidateParameters/CS/ReadMe_ValidateParameters.rtf` |
+| **Source** | `src/FamilyCreation/ValidateParameters/Command.cs` |
+| **SDK ReadMe** | `src/FamilyCreation/ValidateParameters/ReadMe_ValidateParameters.rtf` |
 | **MCP rating** | 2/5 |
 
 Validates that each family type can read every parameter value according to its storage type and reports failures.

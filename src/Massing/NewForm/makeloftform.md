@@ -1,11 +1,11 @@
-# MakeLoftForm
+﻿# MakeLoftForm
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Massing/NewForm |
 | **Class** | `MakeLoftForm` |
-| **Source** | `src/Massing/NewForm/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/NewForm/CS/ReadMe_NewForm.rtf` |
+| **Source** | `src/Massing/NewForm/Command.cs` |
+| **SDK ReadMe** | `src/Massing/NewForm/ReadMe_NewForm.rtf` |
 | **MCP rating** | 2/5 |
 
 Lofts four arc-based profiles (plus an empty fifth profile slot) into a single mass form.

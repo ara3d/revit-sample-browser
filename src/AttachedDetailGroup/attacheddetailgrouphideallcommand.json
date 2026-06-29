@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_hide_attached_detail_groups",
   "description": "Hides all attached detail groups for a model group in the specified view.",
   "arguments": {
@@ -17,7 +17,7 @@
   },
   "commandClass": "AttachedDetailGroupHideAllCommand",
   "sample": "AttachedDetailGroup",
-  "source": "src/AttachedDetailGroup/CS/AttachedDetailGroupHideAllCommand.cs",
+  "source": "src/AttachedDetailGroup/AttachedDetailGroupHideAllCommand.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Wraps Group.HideAllAttachedDetailGroups; replace selection check with group_id argument."

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_measure_vertical_distance",
   "description": "Measures vertical distance from a source element to a target floor or face using ray casting.",
   "arguments": {
@@ -25,7 +25,7 @@
   },
   "commandClass": "Command",
   "sample": "FindReferencesByDirection/MeasureHeight",
-  "source": "src/FindReferencesByDirection/MeasureHeight/CS/MeasureHeight.cs",
+  "source": "src/FindReferencesByDirection/MeasureHeight/MeasureHeight.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Sample hard-codes floor ElementId 150314; MCP must accept target_element_id."

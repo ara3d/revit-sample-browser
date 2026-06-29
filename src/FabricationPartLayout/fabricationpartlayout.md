@@ -1,11 +1,11 @@
-# FabricationPartLayout
+﻿# FabricationPartLayout
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `FabricationPartLayout` |
-| **Source** | `src/FabricationPartLayout/CS/FabricationPartLayout.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/FabricationPartLayout.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Builds a large demo HVAC and plumbing fabrication layout from an AHU connector, exercising creation, connection, taps, hangers, materials, and pipe insertion.

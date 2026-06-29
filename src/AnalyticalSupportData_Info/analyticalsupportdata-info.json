@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_get_analytical_support_info",
   "description": "Returns analytical support data for the specified structural elements.",
   "arguments": {
@@ -14,7 +14,7 @@
   },
   "commandClass": "Command",
   "sample": "AnalyticalSupportData_Info",
-  "source": "src/AnalyticalSupportData_Info/CS/AnalyticalSupportData_Info.cs",
+  "source": "src/AnalyticalSupportData_Info/AnalyticalSupportData_Info.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Reuse StoreInformationInDataTable; return JSON instead of showing AnalyticalSupportDataInfoForm."

@@ -1,11 +1,11 @@
-# SiteRaiseTerrainInRegionCommand
+﻿# SiteRaiseTerrainInRegionCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Site |
 | **Class** | `SiteRaiseTerrainInRegionCommand` |
-| **Source** | `src/Site/CS/SiteRaiseTerrainInRegionCommand.cs` |
-| **SDK ReadMe** | `src/Site/CS/Readme_Site.rtf` |
+| **Source** | `src/Site/SiteRaiseTerrainInRegionCommand.cs` |
+| **SDK ReadMe** | `src/Site/Readme_Site.rtf` |
 | **MCP rating** | 2/5 |
 
 Raises all non-boundary topography points inside a picked subregion by three feet.

@@ -1,10 +1,10 @@
-# CreateWall
+﻿# CreateWall
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Ribbon |
 | **Class** | `CreateWall` |
-| **Source** | `src/Ribbon/CS/AddInCommand.cs` |
+| **Source** | `src/Ribbon/AddInCommand.cs` |
 | **MCP rating** | 1/5 |
 
 Creates a non-structural wall using curve geometry and options read from custom ribbon controls.

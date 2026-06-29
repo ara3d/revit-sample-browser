@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | PointCloudEngine |
 | **Class** | `AddRandomizedInstanceCommand` |
-| **Source** | `src/PointCloudEngine/CS/PointCloudEngineSample.cs` |
+| **Source** | `src/PointCloudEngine/PointCloudEngineSample.cs` |
 | **MCP rating** | 4/5 |
 
 Adds a point cloud instance using the sample engine that randomizes points at cell borders (`apipcr`).

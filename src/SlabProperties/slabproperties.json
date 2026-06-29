@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_get_slab_properties",
   "description": "Returns level, type, span direction, and per-layer thickness, material, and Young's modulus for a floor slab.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "Command",
   "sample": "SlabProperties",
-  "source": "src/SlabProperties/CS/Command.cs",
+  "source": "src/SlabProperties/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Read-only; extract Initialize/SetLayer logic without SlabPropertiesForm."

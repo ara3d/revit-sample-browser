@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | Openings |
 | **Class** | `Command` |
-| **Source** | `src/Openings/CS/Command.cs` |
-| **SDK ReadMe** | `src/Openings/CS/ReadMe_Openings.rtf` |
+| **Source** | `src/Openings/Command.cs` |
+| **SDK ReadMe** | `src/Openings/ReadMe_Openings.rtf` |
 | **MCP rating** | 4/5 |
 
 Enumerates all `Opening` elements in the project and displays their host, geometry, and bounding information in a review dialog.

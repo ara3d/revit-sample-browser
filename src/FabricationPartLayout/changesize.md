@@ -1,11 +1,11 @@
-# ChangeSize
+﻿# ChangeSize
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `ChangeSize` |
-| **Source** | `src/FabricationPartLayout/CS/ChangeService.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/ChangeService.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Remaps rectangular duct sizes on selected fabrication parts using predefined `FabricationPartSizeMap` entries.

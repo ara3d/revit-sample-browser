@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_structural_frame",
   "description": "Creates columns, beams, and braces for a structural frame from layout and type parameters.",
   "arguments": {
@@ -41,7 +41,7 @@
   },
   "commandClass": "Command",
   "sample": "FrameBuilder",
-  "source": "src/FrameBuilder/CS/Command.cs",
+  "source": "src/FrameBuilder/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Parameterize FrameBuilder.CreateFraming from FrameData without CreateFrameForm."

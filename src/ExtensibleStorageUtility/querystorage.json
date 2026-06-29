@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_query_extensible_storage",
   "description": "Lists extensible storage schemas and elements that host storage entities in the active document.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "QueryStorage",
   "sample": "ExtensibleStorageUtility",
-  "source": "src/ExtensibleStorageUtility/CS/QueryStorage.cs",
+  "source": "src/ExtensibleStorageUtility/QueryStorage.cs",
   "mcpRating": 5,
   "requiresUi": false
 }

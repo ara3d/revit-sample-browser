@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_export_fabrication_maj",
   "description": "Exports selected fabrication parts to a MAJ fabrication job file.",
   "arguments": {
@@ -18,7 +18,7 @@
   },
   "commandClass": "ExportToMaj",
   "sample": "FabricationPartLayout",
-  "source": "src/FabricationPartLayout/CS/ExportToMAJ.cs",
+  "source": "src/FabricationPartLayout/ExportToMAJ.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "Replace FileSaveDialog with output_path parameter for headless export."

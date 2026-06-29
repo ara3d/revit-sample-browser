@@ -1,11 +1,11 @@
-# AnalyticalNodeConnStatus
+﻿# AnalyticalNodeConnStatus
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `AnalyticalNodeConnStatus` |
-| **Source** | `src/ContextualAnalyticalModel/CS/AnalyticalNodeConnStatus.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/AnalyticalNodeConnStatus.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Queries the connection status of a user-selected analytical node using `AnalyticalNodeData`.

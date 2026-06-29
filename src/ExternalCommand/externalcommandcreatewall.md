@@ -1,10 +1,10 @@
-# ExternalCommandCreateWall
+﻿# ExternalCommandCreateWall
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ExternalCommand |
 | **Class** | `ExternalCommandCreateWall` |
-| **Source** | `src/ExternalCommand/CS/ExternalCommandRegistration/ExternalCommandClass.cs` |
+| **Source** | `src/ExternalCommand/ExternalCommandRegistration/ExternalCommandClass.cs` |
 | **MCP rating** | 1/5 |
 
 Creates a rectangular wall loop from four bound lines to demonstrate a registered external command that modifies the model.

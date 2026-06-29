@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | GenerateFloor |
 | **Class** | `Command` |
-| **Source** | `src/GenerateFloor/CS/Command.cs` |
+| **Source** | `src/GenerateFloor/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

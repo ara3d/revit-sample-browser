@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_ductwork_stiffener",
   "description": "Places a fabrication duct stiffener on a duct at a specified distance along the centerline.",
   "arguments": {
@@ -15,7 +15,7 @@
   },
   "commandClass": "Command",
   "sample": "CreateDuctworkStiffener",
-  "source": "src/CreateDuctworkStiffener/CS/Command.cs",
+  "source": "src/CreateDuctworkStiffener/Command.cs",
   "mcpRating": 3,
   "requiresUi": false,
   "notes": "Generalize stiffener type lookup; activate symbol and regenerate before MEPSupportUtils call."

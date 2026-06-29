@@ -1,11 +1,11 @@
-# SetLengthAngleParams
+﻿# SetLengthAngleParams
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Massing/PanelEdgeLengthAngle |
 | **Class** | `SetLengthAngleParams` |
-| **Source** | `src/Massing/PanelEdgeLengthAngle/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/PanelEdgeLengthAngle/CS/ReadMe_PanelEdgeLengthAngle.rtf` |
+| **Source** | `src/Massing/PanelEdgeLengthAngle/Command.cs` |
+| **SDK ReadMe** | `src/Massing/PanelEdgeLengthAngle/ReadMe_PanelEdgeLengthAngle.rtf` |
 | **MCP rating** | 2/5 |
 
 Measures edge lengths and interior angles of divided-surface panel solids and pushes values into `Length1`–`Length4` and `Angle1`–`Angle4` instance parameters.

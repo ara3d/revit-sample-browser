@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | GeometryAPI/EnergyAnalysisModel |
 | **Class** | `Command` |
-| **Source** | `src/GeometryAPI/EnergyAnalysisModel/CS/Command.cs` |
+| **Source** | `src/GeometryAPI/EnergyAnalysisModel/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

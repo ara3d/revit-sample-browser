@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_list_openings",
   "description": "Lists opening elements in the document with host references and bounding box data.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "Command",
   "sample": "Openings",
-  "source": "src/Openings/CS/Command.cs",
+  "source": "src/Openings/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "OpeningInfo class builds the return payload; bypass OpeningForm for read-only MCP queries."

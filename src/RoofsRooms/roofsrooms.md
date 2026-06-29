@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | RoofsRooms |
 | **Class** | `Command` |
-| **Source** | `src/RoofsRooms/CS/Command.cs` |
+| **Source** | `src/RoofsRooms/Command.cs` |
 | **MCP rating** | 4/5 |
 
 Analyzes whether each room or space in the project has a bounding roof element using spatial element geometry.

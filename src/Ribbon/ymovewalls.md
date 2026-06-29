@@ -1,10 +1,10 @@
-# YMoveWalls
+﻿# YMoveWalls
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Ribbon |
 | **Class** | `YMoveWalls` |
-| **Source** | `src/Ribbon/CS/AddInCommand.cs` |
+| **Source** | `src/Ribbon/AddInCommand.cs` |
 | **MCP rating** | 1/5 |
 
 Moves all ribbon-created walls 12 feet in the positive Y direction.

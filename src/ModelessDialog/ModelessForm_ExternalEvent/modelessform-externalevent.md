@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ModelessDialog/ModelessForm_ExternalEvent |
 | **Class** | `Command` |
-| **Source** | `src/ModelessDialog/ModelessForm_ExternalEvent/CS/Command.cs` |
-| **SDK ReadMe** | `src/ModelessDialog/ModelessForm_ExternalEvent/CS/Readme_ModelessForm_ExternalEvent.rtf` |
+| **Source** | `src/ModelessDialog/ModelessForm_ExternalEvent/Command.cs` |
+| **SDK ReadMe** | `src/ModelessDialog/ModelessForm_ExternalEvent/Readme_ModelessForm_ExternalEvent.rtf` |
 | **MCP rating** | 1/5 |
 
 Opens a modeless WinForms dialog that posts Revit API work through an `ExternalEvent` and `RequestHandler`, demonstrating safe UI threading.

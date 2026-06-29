@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | NewOpenings |
 | **Class** | `Command` |
-| **Source** | `src/NewOpenings/CS/command.cs` |
-| **SDK ReadMe** | `src/NewOpenings/CS/ReadMe_NewOpenings.rtf` |
+| **Source** | `src/NewOpenings/command.cs` |
+| **SDK ReadMe** | `src/NewOpenings/ReadMe_NewOpenings.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates sketch-based openings in a selected wall or floor through an interactive profile editor.

@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | NewPathReinforcement |
 | **Class** | `Command` |
-| **Source** | `src/NewPathReinforcement/CS/Command.cs` |
-| **SDK ReadMe** | `src/NewPathReinforcement/CS/ReadMe_NewPathReinforcement.rtf` |
+| **Source** | `src/NewPathReinforcement/Command.cs` |
+| **SDK ReadMe** | `src/NewPathReinforcement/ReadMe_NewPathReinforcement.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates path reinforcement on a selected structural wall or floor using an interactive sketch form.

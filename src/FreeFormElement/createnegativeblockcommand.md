@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | FreeFormElement |
 | **Class** | `CreateNegativeBlockCommand` |
-| **Source** | `src/FreeFormElement/CS/CreateNegativeBlockCommand.cs` |
+| **Source** | `src/FreeFormElement/CreateNegativeBlockCommand.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

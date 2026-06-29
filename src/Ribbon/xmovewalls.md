@@ -1,10 +1,10 @@
-# XMoveWalls
+﻿# XMoveWalls
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Ribbon |
 | **Class** | `XMoveWalls` |
-| **Source** | `src/Ribbon/CS/AddInCommand.cs` |
+| **Source** | `src/Ribbon/AddInCommand.cs` |
 | **MCP rating** | 1/5 |
 
 Moves all ribbon-created walls 12 feet in the positive X direction.

@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | NewRoof |
 | **Class** | `Command` |
-| **Source** | `src/NewRoof/CS/Command.cs` |
-| **SDK ReadMe** | `src/NewRoof/CS/ReadMe_NewRoof.rtf` |
+| **Source** | `src/NewRoof/Command.cs` |
+| **SDK ReadMe** | `src/NewRoof/ReadMe_NewRoof.rtf` |
 | **MCP rating** | 4/5 |
 
 Provides a dialog to create and edit footprint or extrusion roofs, including sketch-based footprint definition and roof type properties.

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_tag_rebar",
   "description": "Creates a category tag on the first subelement of a selected rebar at its centerline start.",
   "arguments": {
@@ -30,7 +30,7 @@
   },
   "commandClass": "TagRebar",
   "sample": "TagBeam",
-  "source": "src/TagBeam/CS/Command.cs",
+  "source": "src/TagBeam/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Uses Rebar.GetSubelements and IndependentTag.Create with subelement Reference."

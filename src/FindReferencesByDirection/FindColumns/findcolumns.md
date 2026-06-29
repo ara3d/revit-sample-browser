@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | FindReferencesByDirection/FindColumns |
 | **Class** | `Command` |
-| **Source** | `src/FindReferencesByDirection/FindColumns/CS/FindColumns.cs` |
+| **Source** | `src/FindReferencesByDirection/FindColumns/FindColumns.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 5/5 |
 

@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | Site |
 | **Class** | `SiteAddRetainingPondCommand` |
-| **Source** | `src/Site/CS/SiteAddRetainingPondCommand.cs` |
-| **SDK ReadMe** | `src/Site/CS/Readme_Site.rtf` |
+| **Source** | `src/Site/SiteAddRetainingPondCommand.cs` |
+| **SDK ReadMe** | `src/Site/Readme_Site.rtf` |
 | **MCP rating** | 4/5 |
 
 Adds a circular retaining pond subregion on a topography surface, clears interior points, and inserts graded pond topography points.

@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ViewPrinter |
 | **Class** | `Command` |
-| **Source** | `src/ViewPrinter/CS/Command.cs` |
+| **Source** | `src/ViewPrinter/Command.cs` |
 | **MCP rating** | 4/5 |
 
 Wraps Revit's `PrintManager` in a WinForms print dialog mirroring File → Print options.

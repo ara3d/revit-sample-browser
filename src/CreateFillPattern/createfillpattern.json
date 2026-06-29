@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_fill_pattern",
   "description": "Creates a model fill pattern element and optionally applies it to a wall surface or cut face.",
   "arguments": {
@@ -17,7 +17,7 @@
   },
   "commandClass": "Command",
   "sample": "CreateFillPattern",
-  "source": "src/CreateFillPattern/CS/Command.cs",
+  "source": "src/CreateFillPattern/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Logic lives in PatternForm (FillPatternForm.cs); bypass dialog for MCP automation."

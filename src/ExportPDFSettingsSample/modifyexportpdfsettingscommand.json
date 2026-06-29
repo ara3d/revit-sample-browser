@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_modify_pdf_export_settings",
   "description": "Updates PDFExportOptions on an existing ExportPDFSettings preset in the document.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "ModifyExportPdfSettingsCommand",
   "sample": "ExportPDFSettingsSample",
-  "source": "src/ExportPDFSettingsSample/CS/Application.cs",
+  "source": "src/ExportPDFSettingsSample/Application.cs",
   "mcpRating": 5,
   "requiresUi": false
 }

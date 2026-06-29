@@ -1,11 +1,11 @@
-# SetCustomData
+﻿# SetCustomData
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `SetCustomData` |
-| **Source** | `src/FabricationPartLayout/CS/CustomData.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/CustomData.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Writes sample custom data values (install timestamp, hours, cost) to a picked fabrication part and reports before/after values.

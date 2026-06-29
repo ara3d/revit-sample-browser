@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_raytrace_bounce",
   "description": "Casts a ray with optional bounces through the model and returns intersection points.",
   "arguments": {
@@ -35,7 +35,7 @@
   },
   "commandClass": "Command",
   "sample": "FindReferencesByDirection/RaytraceBounce",
-  "source": "src/FindReferencesByDirection/RaytraceBounce/CS/RayTraceBounce.cs",
+  "source": "src/FindReferencesByDirection/RaytraceBounce/RayTraceBounce.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "Bypass RayTraceBounceForm; requires bounce line style when draw_lines is true."

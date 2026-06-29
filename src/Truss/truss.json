@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_truss",
   "description": "Creates or edits a structural truss from two columns or an existing truss with profile and member type settings.",
   "arguments": {
@@ -30,7 +30,7 @@
   },
   "commandClass": "Command",
   "sample": "Truss",
-  "source": "src/Truss/CS/Command.cs",
+  "source": "src/Truss/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Replace TrussForm and LineTool sketching with profile curve data or pre-defined TrussGeometry; require either column_ids or truss_id."

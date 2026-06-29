@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_example_tool",
   "description": "One sentence describing what this tool does for an LLM caller.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "Command",
   "sample": "SampleFolder",
-  "source": "src/SampleFolder/CS/Command.cs",
+  "source": "src/SampleFolder/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Optional: refactoring needed, prerequisites, or return shape not expressible in JSON Schema"

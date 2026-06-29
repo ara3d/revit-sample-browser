@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | PointCloudEngine |
 | **Class** | `AddTransformedInstanceCommand` |
-| **Source** | `src/PointCloudEngine/CS/PointCloudEngineSample.cs` |
+| **Source** | `src/PointCloudEngine/PointCloudEngineSample.cs` |
 | **MCP rating** | 4/5 |
 
 Adds a randomized point cloud instance with a non-identity transform (30° rotation about Z at a fixed point).

@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ErrorHandling |
 | **Class** | `Command` |
-| **Source** | `src/ErrorHandling/CS/Command.cs` |
-| **SDK ReadMe** | `src/ErrorHandling/CS/ReadMe_ErrorHandling.rtf` |
+| **Source** | `src/ErrorHandling/Command.cs` |
+| **SDK ReadMe** | `src/ErrorHandling/ReadMe_ErrorHandling.rtf` |
 | **MCP rating** | 1/5 |
 
 Demonstrates four strategies for handling Revit transaction failures: custom failure definitions, preprocessors, events, and a registered failures processor.

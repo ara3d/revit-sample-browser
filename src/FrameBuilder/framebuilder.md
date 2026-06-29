@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | FrameBuilder |
 | **Class** | `Command` |
-| **Source** | `src/FrameBuilder/CS/Command.cs` |
+| **Source** | `src/FrameBuilder/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

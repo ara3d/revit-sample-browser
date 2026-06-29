@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | PanelSchedule |
 | **Class** | `PanelScheduleExport` |
-| **Source** | `src/PanelSchedule/CS/PanelScheduleExport.cs` |
-| **SDK ReadMe** | `src/PanelSchedule/CS/ReadMe_PanelSchedule.rtf` |
+| **Source** | `src/PanelSchedule/PanelScheduleExport.cs` |
+| **SDK ReadMe** | `src/PanelSchedule/ReadMe_PanelSchedule.rtf` |
 | **MCP rating** | 5/5 |
 
 Exports every non-template `PanelScheduleView` in the document to CSV or HTML and opens the output file.

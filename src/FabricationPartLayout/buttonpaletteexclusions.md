@@ -1,11 +1,11 @@
-# ButtonPaletteExclusions
+﻿# ButtonPaletteExclusions
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `ButtonPaletteExclusions` |
-| **Source** | `src/FabricationPartLayout/CS/ButtonPaletteExclusions.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/ButtonPaletteExclusions.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Excludes a specific service button and an entire palette from the **ADSK - HVAC: Supply Air** fabrication service.

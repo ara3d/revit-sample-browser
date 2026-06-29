@@ -1,11 +1,11 @@
-# ToposolidCreation
+﻿# ToposolidCreation
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Toposolid |
 | **Class** | `ToposolidCreation` |
-| **Source** | `src/Toposolid/CS/Command.cs` |
-| **SDK ReadMe** | `src/Toposolid/CS/ReadMe_Toposolid.rtf` |
+| **Source** | `src/Toposolid/Command.cs` |
+| **SDK ReadMe** | `src/Toposolid/ReadMe_Toposolid.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates a toposolid from a rectangular profile, interior shape points, and an offset sub-division.

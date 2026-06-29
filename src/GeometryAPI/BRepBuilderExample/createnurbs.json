@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_nurbs_direct_shape",
   "description": "Creates an open-shell NURBS surface with BRepBuilder and places it as a DirectShape.",
   "arguments": {
@@ -35,7 +35,7 @@
   },
   "commandClass": "CreateNurbs",
   "sample": "GeometryAPI/BRepBuilderExample",
-  "source": "src/GeometryAPI/BRepBuilderExample/CS/CreateNURBS.cs",
+  "source": "src/GeometryAPI/BRepBuilderExample/CreateNURBS.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Sample uses fixed control grid; MCP accepts full NURBS definition."

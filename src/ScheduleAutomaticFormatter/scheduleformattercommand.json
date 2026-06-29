@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_format_schedule_columns",
   "description": "Applies automatic column formatting to a view schedule and registers an updater to maintain formatting on changes.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "ScheduleFormatterCommand",
   "sample": "ScheduleAutomaticFormatter",
-  "source": "src/ScheduleAutomaticFormatter/CS/ScheduleFormatterCommand.cs",
+  "source": "src/ScheduleAutomaticFormatter/ScheduleFormatterCommand.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Activate target schedule view or pass id; mirrors ScheduleFormatter.FormatScheduleColumns."

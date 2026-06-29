@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | GeometryAPI/BRepBuilderExample |
 | **Class** | `CreateNurbs` |
-| **Source** | `src/GeometryAPI/BRepBuilderExample/CS/CreateNURBS.cs` |
+| **Source** | `src/GeometryAPI/BRepBuilderExample/CreateNURBS.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

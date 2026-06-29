@@ -1,10 +1,10 @@
-# UpdateBRep
+﻿# UpdateBRep
 
 | Field | Value |
 |-------|-------|
 | **Sample** | GeometryAPI/UpdateExternallyTaggedBRep |
 | **Class** | `UpdateBRep` |
-| **Source** | `src/GeometryAPI/UpdateExternallyTaggedBRep/CS/UpdateBRep.cs` |
+| **Source** | `src/GeometryAPI/UpdateExternallyTaggedBRep/UpdateBRep.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

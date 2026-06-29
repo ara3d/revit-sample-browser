@@ -1,11 +1,11 @@
-# AssociativeSectionUpdater
+﻿# AssociativeSectionUpdater
 
 | Field | Value |
 |-------|-------|
 | **Sample** | DynamicModelUpdate |
 | **Class** | `AssociativeSectionUpdater` |
-| **Source** | `src/DynamicModelUpdate/CS/Application.cs` |
-| **SDK ReadMe** | `src/DynamicModelUpdate/CS/ReadMe_DynamicModelUpdate.rtf` |
+| **Source** | `src/DynamicModelUpdate/Application.cs` |
+| **SDK ReadMe** | `src/DynamicModelUpdate/ReadMe_DynamicModelUpdate.rtf` |
 | **MCP rating** | 2/5 |
 
 Registers a dynamic model updater so a section view moves and rotates when an associated window family instance changes geometry.

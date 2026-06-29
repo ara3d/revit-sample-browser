@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_add_pdf_export_naming_rule",
   "description": "Adds a parameter-based entry to the PDF export file naming rule for a named ExportPDFSettings preset.",
   "arguments": {
@@ -24,7 +24,7 @@
   },
   "commandClass": "AddNamingRuleCommand",
   "sample": "ExportPDFSettingsSample",
-  "source": "src/ExportPDFSettingsSample/CS/Application.cs",
+  "source": "src/ExportPDFSettingsSample/Application.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Export must not use combined PDF output (options.Combine=false) or naming rule changes are ignored."

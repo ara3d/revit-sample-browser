@@ -1,10 +1,10 @@
-# PlaceAtPointOnWallFace
+﻿# PlaceAtPointOnWallFace
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Selections |
 | **Class** | `PlaceAtPointOnWallFace` |
-| **Source** | `src/Selections/CS/Command.cs` |
+| **Source** | `src/Selections/Command.cs` |
 | **MCP rating** | 2/5 |
 
 Picks a point on a wall face and places a fixed 36" x 48" window family instance at that location.

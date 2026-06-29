@@ -1,10 +1,10 @@
-# PickforDeletion
+﻿# PickforDeletion
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Selections |
 | **Class** | `PickforDeletion` |
-| **Source** | `src/Selections/CS/Command.cs` |
+| **Source** | `src/Selections/Command.cs` |
 | **MCP rating** | 2/5 |
 
 Lets the user pick multiple elements in the graphics view and deletes them in one transaction.

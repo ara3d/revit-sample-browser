@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_floor",
   "description": "Creates a floor from a closed profile curve loop, floor type, and level.",
   "arguments": {
@@ -30,7 +30,7 @@
   },
   "commandClass": "Command",
   "sample": "GenerateFloor",
-  "source": "src/GenerateFloor/CS/Command.cs",
+  "source": "src/GenerateFloor/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Call Command.CreateFloor directly; bypass GenerateFloorForm."

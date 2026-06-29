@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | DuplicateGraphics |
 | **Class** | `CommandDuplicateGraphics` |
-| **Source** | `src/DuplicateGraphics/CS/Command.cs` |
-| **SDK ReadMe** | `src/DuplicateGraphics/CS/ReadMe_DuplicateGraphics.rtf` |
+| **Source** | `src/DuplicateGraphics/Command.cs` |
+| **SDK ReadMe** | `src/DuplicateGraphics/ReadMe_DuplicateGraphics.rtf` |
 | **MCP rating** | 4/5 |
 
 Duplicates graphics of user-picked elements as DirectContext3D overlays offset from the originals without creating new Revit elements.

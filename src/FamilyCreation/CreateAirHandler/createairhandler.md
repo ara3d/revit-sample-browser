@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FamilyCreation/CreateAirHandler |
 | **Class** | `Command` |
-| **Source** | `src/FamilyCreation/CreateAirHandler/CS/Command.cs` |
-| **SDK ReadMe** | `src/FamilyCreation/CreateAirHandler/CS/ReadMe_CreateAirHandler.rtf` |
+| **Source** | `src/FamilyCreation/CreateAirHandler/Command.cs` |
+| **SDK ReadMe** | `src/FamilyCreation/CreateAirHandler/ReadMe_CreateAirHandler.rtf` |
 | **MCP rating** | 2/5 |
 
 Builds a mechanical-equipment family air handler from five extrusions, then adds duct and pipe connectors and combines the solids.

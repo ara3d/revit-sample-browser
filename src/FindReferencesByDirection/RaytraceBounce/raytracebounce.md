@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | FindReferencesByDirection/RaytraceBounce |
 | **Class** | `Command` |
-| **Source** | `src/FindReferencesByDirection/RaytraceBounce/CS/RayTraceBounce.cs` |
+| **Source** | `src/FindReferencesByDirection/RaytraceBounce/RayTraceBounce.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 5/5 |
 

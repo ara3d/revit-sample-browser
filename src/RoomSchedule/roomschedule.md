@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | RoomSchedule |
 | **Class** | `Command` |
-| **Source** | `src/RoomSchedule/CS/Command.cs` |
+| **Source** | `src/RoomSchedule/Command.cs` |
 | **MCP rating** | 4/5 |
 
 Compares rooms in the Revit model with rows from an external spreadsheet and creates or updates rooms from the data source.

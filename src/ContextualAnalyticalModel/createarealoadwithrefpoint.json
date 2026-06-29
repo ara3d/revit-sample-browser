@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_area_load_with_ref_points",
   "description": "Creates an area load on an analytical host with per-reference-point force vectors and curve-end bindings.",
   "arguments": {
@@ -47,7 +47,7 @@
   },
   "commandClass": "CreateAreaLoadWithRefPoint",
   "sample": "ContextualAnalyticalModel",
-  "source": "src/ContextualAnalyticalModel/CS/CreateAreaLoadWithRefPoint.cs",
+  "source": "src/ContextualAnalyticalModel/CreateAreaLoadWithRefPoint.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Replace element and point picks; validate with AreaLoad.IsCurveLoopsInsideHostBoundaries."

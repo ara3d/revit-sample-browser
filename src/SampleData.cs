@@ -48,11 +48,7 @@ namespace Ara3D.RevitSampleBrowser
             Name = $"{Namespace}.{Type.Name}";
 
             var folderRelPath = Namespace.Replace(".", "\\");
-            FolderPath = $"{ThisFolderPath}\\{folderRelPath}\\CS";
-            if (!Directory.Exists(FolderPath))
-            {
-                FolderPath = $"{ThisFolderPath}\\{folderRelPath}\\..";
-            }
+            FolderPath = $"{ThisFolderPath}\\{folderRelPath}";
             if (Directory.Exists(FolderPath))
             {
                 ReadmePath = Directory.GetFiles(FolderPath, "*.rtf").FirstOrDefault();

@@ -1,11 +1,11 @@
-# MoveAnalyticalNodeUsingElementTransformUtils
+﻿# MoveAnalyticalNodeUsingElementTransformUtils
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `MoveAnalyticalNodeUsingElementTransformUtils` |
-| **Source** | `src/ContextualAnalyticalModel/CS/MoveAnalyticalNodeUsingElementTransformUtils.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/MoveAnalyticalNodeUsingElementTransformUtils.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Moves a user-selected analytical node with `ElementTransformUtils` while keeping converging element connectivity intact.

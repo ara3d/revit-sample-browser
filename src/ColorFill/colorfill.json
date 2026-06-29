@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_apply_color_fill",
   "description": "Applies a color fill scheme to a view for the specified categories or filters.",
   "arguments": {
@@ -22,7 +22,7 @@
   },
   "commandClass": "Command",
   "sample": "ColorFill",
-  "source": "src/ColorFill/CS/Command.cs",
+  "source": "src/ColorFill/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Extract assignment logic from ColorFillMgr; bypass ColorFillForm."

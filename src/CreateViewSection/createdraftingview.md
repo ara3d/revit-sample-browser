@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | CreateViewSection |
 | **Class** | `CreateDraftingView` |
-| **Source** | `src/CreateViewSection/CS/Command.cs` |
-| **SDK ReadMe** | `src/CreateViewSection/CS/ReadMe_CreateViewSection.rtf` |
+| **Source** | `src/CreateViewSection/Command.cs` |
+| **SDK ReadMe** | `src/CreateViewSection/ReadMe_CreateViewSection.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a new empty drafting view using the first available `ViewFamilyType` with `ViewFamily.Drafting`.

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_auto_tag_rooms",
   "description": "Creates room tags for untagged rooms on a level using the specified room tag type.",
   "arguments": {
@@ -21,7 +21,7 @@
   },
   "commandClass": "Command",
   "sample": "AutoTagRooms",
-  "source": "src/AutoTagRooms/CS/Command.cs",
+  "source": "src/AutoTagRooms/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Extract tag creation from RoomsData; bypass AutoTagRoomsForm."

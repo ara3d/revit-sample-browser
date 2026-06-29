@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_find_columns_near_walls",
   "description": "Ray-traces from walls to find nearby structural columns and returns their element ids.",
   "arguments": {
@@ -22,7 +22,7 @@
   },
   "commandClass": "Command",
   "sample": "FindReferencesByDirection/FindColumns",
-  "source": "src/FindReferencesByDirection/FindColumns/CS/FindColumns.cs",
+  "source": "src/FindReferencesByDirection/FindColumns/FindColumns.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Returns map of wall_id to column_ids; skip selection.SetElementIds for MCP."

@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | CreateDuctworkStiffener |
 | **Class** | `Command` |
-| **Source** | `src/CreateDuctworkStiffener/CS/Command.cs` |
-| **SDK ReadMe** | `src/CreateDuctworkStiffener/CS/ReadMe_CreateDuctworkStiffener.rtf` |
+| **Source** | `src/CreateDuctworkStiffener/Command.cs` |
+| **SDK ReadMe** | `src/CreateDuctworkStiffener/ReadMe_CreateDuctworkStiffener.rtf` |
 | **MCP rating** | 3/5 |
 
 Places a fabrication duct stiffener on the first fabrication duct in the project at the midpoint of its centerline.

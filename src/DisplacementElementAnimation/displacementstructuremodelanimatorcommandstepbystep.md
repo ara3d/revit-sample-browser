@@ -1,11 +1,11 @@
-# DisplacementStructureModelAnimatorCommandStepByStep
+﻿# DisplacementStructureModelAnimatorCommandStepByStep
 
 | Field | Value |
 |-------|-------|
 | **Sample** | DisplacementElementAnimation |
 | **Class** | `DisplacementStructureModelAnimatorCommandStepByStep` |
-| **Source** | `src/DisplacementElementAnimation/CS/DisplacementStructureModelAnimatorCommand.cs` |
-| **SDK ReadMe** | `src/DisplacementElementAnimation/CS/ReadMe_DisplacementElementAnimation.rtf` |
+| **Source** | `src/DisplacementElementAnimation/DisplacementStructureModelAnimatorCommand.cs` |
+| **SDK ReadMe** | `src/DisplacementElementAnimation/ReadMe_DisplacementElementAnimation.rtf` |
 | **MCP rating** | 1/5 |
 
 Advances a structural displacement animation one step per invocation, or starts the animator on first run.

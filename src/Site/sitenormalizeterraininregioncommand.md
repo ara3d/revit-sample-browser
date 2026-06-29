@@ -1,11 +1,11 @@
-# SiteNormalizeTerrainInRegionCommand
+﻿# SiteNormalizeTerrainInRegionCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Site |
 | **Class** | `SiteNormalizeTerrainInRegionCommand` |
-| **Source** | `src/Site/CS/SiteNormalizeTerrainInRegionCommand.cs` |
-| **SDK ReadMe** | `src/Site/CS/Readme_Site.rtf` |
+| **Source** | `src/Site/SiteNormalizeTerrainInRegionCommand.cs` |
+| **SDK ReadMe** | `src/Site/Readme_Site.rtf` |
 | **MCP rating** | 2/5 |
 
 Flattens all points in a picked subregion to the average elevation of the entire host topography surface.

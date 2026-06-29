@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | RoutingPreferenceTools |
 | **Class** | `Command` |
-| **Source** | `src/RoutingPreferenceTools/CS/RoutingPreferenceAnalysis/Command.cs` |
+| **Source** | `src/RoutingPreferenceTools/RoutingPreferenceAnalysis/Command.cs` |
 | **MCP rating** | 2/5 |
 
 Opens a WPF window to analyze routing preferences for pipe types in an MEP document.

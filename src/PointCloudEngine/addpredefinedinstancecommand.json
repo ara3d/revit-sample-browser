@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_add_point_cloud_instance",
   "description": "Creates a PointCloudType and PointCloudInstance using a registered custom point cloud engine.",
   "arguments": {
@@ -21,7 +21,7 @@
   },
   "commandClass": "AddPredefinedInstanceCommand",
   "sample": "PointCloudEngine",
-  "source": "src/PointCloudEngine/CS/PointCloudEngineSample.cs",
+  "source": "src/PointCloudEngine/PointCloudEngineSample.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Covers AddPredefinedInstanceCommand; pass engine_type apipcr for randomized engine."

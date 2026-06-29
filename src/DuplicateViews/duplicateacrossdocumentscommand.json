@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_copy_views_across_documents",
   "description": "Copies schedules and drafting views (with detailing) from one Revit document to another.",
   "arguments": {
@@ -18,7 +18,7 @@
   },
   "commandClass": "DuplicateAcrossDocumentsCommand",
   "sample": "DuplicateViews",
-  "source": "src/DuplicateViews/CS/DuplicateAcrossDocumentsCommand.cs",
+  "source": "src/DuplicateViews/DuplicateAcrossDocumentsCommand.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "DuplicateViewUtils contains the core logic. Replace the two-document-only guard with explicit document parameters."

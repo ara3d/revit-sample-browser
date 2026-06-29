@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | CreateViewSection |
 | **Class** | `Command` |
-| **Source** | `src/CreateViewSection/CS/Command.cs` |
-| **SDK ReadMe** | `src/CreateViewSection/CS/ReadMe_CreateViewSection.rtf` |
+| **Source** | `src/CreateViewSection/Command.cs` |
+| **SDK ReadMe** | `src/CreateViewSection/ReadMe_CreateViewSection.rtf` |
 | **MCP rating** | 3/5 |
 
 Creates a detail section view centered on a selected linear wall, horizontal beam, or structural floor using a computed `BoundingBoxXYZ` transform.

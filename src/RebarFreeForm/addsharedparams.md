@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | RebarFreeForm |
 | **Class** | `AddSharedParams` |
-| **Source** | `src/RebarFreeForm/CS/AddSharedParams.cs` |
+| **Source** | `src/RebarFreeForm/AddSharedParams.cs` |
 | **MCP rating** | 4/5 |
 
 Creates and binds two shared instance parameters on the Rebar category used by the free-form rebar update server sample.

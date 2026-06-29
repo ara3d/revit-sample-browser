@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | PlaceFamilyInstanceByFace |
 | **Class** | `Command` |
-| **Source** | `src/PlaceFamilyInstanceByFace/CS/Command.cs` |
-| **SDK ReadMe** | `src/PlaceFamilyInstanceByFace/CS/ReadMe_PlaceFamilyInstanceByFace.rtf` |
+| **Source** | `src/PlaceFamilyInstanceByFace/Command.cs` |
+| **SDK ReadMe** | `src/PlaceFamilyInstanceByFace/ReadMe_PlaceFamilyInstanceByFace.rtf` |
 | **MCP rating** | 4/5 |
 
 Launches a two-step workflow to place face-based, point-based, or line-based family instances on geometry extracted from the current selection.
@@ -37,4 +37,4 @@ Launches a two-step workflow to place face-based, point-based, or line-based fam
 ## See also
 
 - MCP descriptor: `src/PlaceFamilyInstanceByFace/placefamilyinstancebyface.json`
-- Helper: `src/PlaceFamilyInstanceByFace/CS/FamilyInstanceCreator.cs`
+- Helper: `src/PlaceFamilyInstanceByFace/FamilyInstanceCreator.cs`

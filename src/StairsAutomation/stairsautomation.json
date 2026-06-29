@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_stairs_automation",
   "description": "Creates stairs using one of five predefined automation configurations (straight, curved, or standard multi-run).",
   "arguments": {
@@ -23,7 +23,7 @@
   },
   "commandClass": "Command",
   "sample": "StairsAutomation",
-  "source": "src/StairsAutomation/CS/Command.cs",
+  "source": "src/StairsAutomation/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "StairsAutomationUtility.GenerateStairs contains creation logic; pass explicit config index instead of cycling."

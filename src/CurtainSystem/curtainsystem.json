@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_curtain_system",
   "description": "Creates a curtain system on selected mass faces using a curtain system type.",
   "arguments": {
@@ -15,7 +15,7 @@
   },
   "commandClass": "Command",
   "sample": "CurtainSystem",
-  "source": "src/CurtainSystem/CS/Command.cs",
+  "source": "src/CurtainSystem/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Mass must be parallelepiped; use SystemData.NewCurtainSystem logic without CurtainForm."

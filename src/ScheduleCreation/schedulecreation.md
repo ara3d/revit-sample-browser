@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ScheduleCreation |
 | **Class** | `Command` |
-| **Source** | `src/ScheduleCreation/CS/Command.cs` |
+| **Source** | `src/ScheduleCreation/Command.cs` |
 | **MCP rating** | 4/5 |
 
 Creates a wall category view schedule with fields, filters, and sorting, then places it on a new sheet.
@@ -33,4 +33,4 @@ Creates a wall category view schedule with fields, filters, and sorting, then pl
 ## See also
 
 - MCP descriptor: `src/ScheduleCreation/schedulecreation.json`
-- Utility: `src/ScheduleCreation/CS/ScheduleCreationUtility.cs`
+- Utility: `src/ScheduleCreation/ScheduleCreationUtility.cs`

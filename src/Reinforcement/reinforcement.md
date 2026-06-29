@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Reinforcement |
 | **Class** | `Command` |
-| **Source** | `src/Reinforcement/CS/Command.cs` |
+| **Source** | `src/Reinforcement/Command.cs` |
 | **MCP rating** | 2/5 |
 
 Adds standard reinforcement rebars to a selected concrete beam or column that lacks existing reinforcement.

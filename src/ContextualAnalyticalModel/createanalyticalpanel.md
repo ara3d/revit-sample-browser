@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `CreateAnalyticalPanel` |
-| **Source** | `src/ContextualAnalyticalModel/CS/CreateAnalytcalPanel.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/CreateAnalytcalPanel.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a rectangular analytical floor panel from a `CurveLoop` profile, then adds an `AnalyticalOpening` cutout on that panel.

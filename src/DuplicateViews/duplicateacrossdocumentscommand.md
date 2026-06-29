@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | DuplicateViews |
 | **Class** | `DuplicateAcrossDocumentsCommand` |
-| **Source** | `src/DuplicateViews/CS/DuplicateAcrossDocumentsCommand.cs` |
-| **SDK ReadMe** | `src/DuplicateViews/CS/Readme_DuplicateViews.rtf` |
+| **Source** | `src/DuplicateViews/DuplicateAcrossDocumentsCommand.cs` |
+| **SDK ReadMe** | `src/DuplicateViews/Readme_DuplicateViews.rtf` |
 | **MCP rating** | 4/5 |
 
 Copies all schedules and drafting views from the active document into the only other open project, including view-specific detailing on drafting views.
@@ -38,4 +38,4 @@ Copies all schedules and drafting views from the active document into the only o
 ## See also
 
 - MCP descriptor: `src/DuplicateViews/duplicateacrossdocumentscommand.json`
-- Helper: `DuplicateViewUtils` in `src/DuplicateViews/CS/DuplicateViewUtils.cs`
+- Helper: `DuplicateViewUtils` in `src/DuplicateViews/DuplicateViewUtils.cs`

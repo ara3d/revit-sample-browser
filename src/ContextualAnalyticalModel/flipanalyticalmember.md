@@ -1,11 +1,11 @@
-# FlipAnalyticalMember
+﻿# FlipAnalyticalMember
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `FlipAnalyticalMember` |
-| **Source** | `src/ContextualAnalyticalModel/CS/FlipAnalyticalMember.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/FlipAnalyticalMember.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates a sample analytical member, then reverses its curve direction with `FlipCurve()` so end-node IDs swap.

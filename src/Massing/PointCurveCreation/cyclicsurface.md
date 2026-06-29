@@ -1,11 +1,11 @@
-# CyclicSurface
+﻿# CyclicSurface
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Massing/PointCurveCreation |
 | **Class** | `CyclicSurface` |
-| **Source** | `src/Massing/PointCurveCreation/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/PointCurveCreation/CS/ReadMe_PointCurveCreation.rtf` |
+| **Source** | `src/Massing/PointCurveCreation/Command.cs` |
+| **SDK ReadMe** | `src/Massing/PointCurveCreation/ReadMe_PointCurveCreation.rtf` |
 | **MCP rating** | 2/5 |
 
 Builds a lofted mass form from curves sampled on a `z = cos(x) + cos(y)` surface grid.

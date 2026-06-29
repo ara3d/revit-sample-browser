@@ -1,11 +1,11 @@
-# SiteLowerTerrainInRegionCommand
+﻿# SiteLowerTerrainInRegionCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Site |
 | **Class** | `SiteLowerTerrainInRegionCommand` |
-| **Source** | `src/Site/CS/SiteLowerTerrainInRegionCommand.cs` |
-| **SDK ReadMe** | `src/Site/CS/Readme_Site.rtf` |
+| **Source** | `src/Site/SiteLowerTerrainInRegionCommand.cs` |
+| **SDK ReadMe** | `src/Site/Readme_Site.rtf` |
 | **MCP rating** | 2/5 |
 
 Lowers all non-boundary topography points inside a picked subregion by three feet.

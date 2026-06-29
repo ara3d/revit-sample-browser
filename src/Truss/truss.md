@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | Truss |
 | **Class** | `Command` |
-| **Source** | `src/Truss/CS/Command.cs` |
-| **SDK ReadMe** | `src/Truss/CS/ReadMe_Truss.rtf` |
+| **Source** | `src/Truss/Command.cs` |
+| **SDK ReadMe** | `src/Truss/ReadMe_Truss.rtf` |
 | **MCP rating** | 4/5 |
 
 Launches a WinForms UI to create, edit, and visualize structural trusses from two columns or an existing truss.

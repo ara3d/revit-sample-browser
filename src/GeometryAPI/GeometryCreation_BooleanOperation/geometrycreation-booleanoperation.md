@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | GeometryAPI/GeometryCreation_BooleanOperation |
 | **Class** | `Command` |
-| **Source** | `src/GeometryAPI/GeometryCreation_BooleanOperation/CS/Command.cs` |
+| **Source** | `src/GeometryAPI/GeometryCreation_BooleanOperation/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

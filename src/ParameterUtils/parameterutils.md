@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ParameterUtils |
 | **Class** | `Command` |
-| **Source** | `src/ParameterUtils/CS/Command.cs` |
-| **SDK ReadMe** | `src/ParameterUtils/CS/ReadMe_ParameterUtils.rtf` |
+| **Source** | `src/ParameterUtils/Command.cs` |
+| **SDK ReadMe** | `src/ParameterUtils/ReadMe_ParameterUtils.rtf` |
 | **MCP rating** | 5/5 |
 
 Shows a property-grid style list of every parameter on a single selected element, including name, storage type, and value.

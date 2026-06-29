@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ExtensibleStorageUtility |
 | **Class** | `DeleteStorage` |
-| **Source** | `src/ExtensibleStorageUtility/CS/DeleteStorage.cs` |
-| **SDK ReadMe** | `src/ExtensibleStorageUtility/CS/Readme_ExtensibleStorageUtility.rtf` |
+| **Source** | `src/ExtensibleStorageUtility/DeleteStorage.cs` |
+| **SDK ReadMe** | `src/ExtensibleStorageUtility/Readme_ExtensibleStorageUtility.rtf` |
 | **MCP rating** | 4/5 |
 
 Erases all extensible storage schemas and entities from the active document, or reports when no storage exists.

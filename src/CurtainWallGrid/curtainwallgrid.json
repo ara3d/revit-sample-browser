@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_edit_curtain_grid",
   "description": "Adds or adjusts U/V grid lines on a curtain wall with optional alignment settings.",
   "arguments": {
@@ -22,7 +22,7 @@
   },
   "commandClass": "Command",
   "sample": "CurtainWallGrid",
-  "source": "src/CurtainWallGrid/CS/Command.cs",
+  "source": "src/CurtainWallGrid/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Extract GridGeometry grid mutations from GridForm for headless use."

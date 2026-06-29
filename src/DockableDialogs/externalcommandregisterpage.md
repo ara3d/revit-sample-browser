@@ -1,11 +1,11 @@
-# ExternalCommandRegisterPage
+﻿# ExternalCommandRegisterPage
 
 | Field | Value |
 |-------|-------|
 | **Sample** | DockableDialogs |
 | **Class** | `ExternalCommandRegisterPage` |
-| **Source** | `src/DockableDialogs/CS/TopLevelCommands/ExternalCommandRegisterPage.cs` |
-| **SDK ReadMe** | `src/DockableDialogs/CS/ReadMe_DockableDialogs.rtf` |
+| **Source** | `src/DockableDialogs/TopLevelCommands/ExternalCommandRegisterPage.cs` |
+| **SDK ReadMe** | `src/DockableDialogs/ReadMe_DockableDialogs.rtf` |
 | **MCP rating** | 1/5 |
 
 Creates and registers a dockable WPF pane with user-chosen initial docking geometry when no document is open.

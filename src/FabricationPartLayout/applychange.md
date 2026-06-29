@@ -1,11 +1,11 @@
-# ApplyChange
+﻿# ApplyChange
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `ApplyChange` |
-| **Source** | `src/FabricationPartLayout/CS/ChangeService.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/ChangeService.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Applies a staged service change, palette swap, straight size mapping, and in-line part type remapping to selected fabrication parts using `FabricationNetworkChangeService`.

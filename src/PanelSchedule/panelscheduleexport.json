@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_export_panel_schedules",
   "description": "Exports panel schedule views to CSV or HTML files.",
   "arguments": {
@@ -23,7 +23,7 @@
   },
   "commandClass": "PanelScheduleExport",
   "sample": "PanelSchedule",
-  "source": "src/PanelSchedule/CS/PanelScheduleExport.cs",
+  "source": "src/PanelSchedule/PanelScheduleExport.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "CsvTranslator and HtmlTranslator perform export; bypass per-view TaskDialog by passing format explicitly."

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_add_randomized_point_cloud",
   "description": "Adds a point cloud instance using the apipcr randomized-points engine.",
   "arguments": {
@@ -17,7 +17,7 @@
   },
   "commandClass": "AddRandomizedInstanceCommand",
   "sample": "PointCloudEngine",
-  "source": "src/PointCloudEngine/CS/PointCloudEngineSample.cs",
+  "source": "src/PointCloudEngine/PointCloudEngineSample.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Uses engine_type apipcr internally."

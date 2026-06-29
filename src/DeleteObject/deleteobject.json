@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_delete_elements",
   "description": "Deletes the specified elements in a single transaction.",
   "arguments": {
@@ -14,7 +14,7 @@
   },
   "commandClass": "Command",
   "sample": "DeleteObject",
-  "source": "src/DeleteObject/CS/DeleteObject.cs",
+  "source": "src/DeleteObject/DeleteObject.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Roll back entire transaction if any delete throws; return failed ids."

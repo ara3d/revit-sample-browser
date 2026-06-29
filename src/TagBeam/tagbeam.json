@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_tag_beams",
   "description": "Creates independent tags at both ends of selected structural beams.",
   "arguments": {
@@ -36,7 +36,7 @@
   },
   "commandClass": "Command",
   "sample": "TagBeam",
-  "source": "src/TagBeam/CS/Command.cs",
+  "source": "src/TagBeam/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "TagBeamData.CreateTag is separable; bypass TagBeamForm."

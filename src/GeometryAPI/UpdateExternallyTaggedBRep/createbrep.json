@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_externally_tagged_brep",
   "description": "Creates an ExternallyTaggedBRep geometry, adds it to a DirectShape, and returns element and external ids.",
   "arguments": {
@@ -16,7 +16,7 @@
   },
   "commandClass": "CreateBRep",
   "sample": "GeometryAPI/UpdateExternallyTaggedBRep",
-  "source": "src/GeometryAPI/UpdateExternallyTaggedBRep/CS/CreateBRep.cs",
+  "source": "src/GeometryAPI/UpdateExternallyTaggedBRep/CreateBRep.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Wraps HelperMethods.ExecuteCreateBRepCommand; pair with update tool using same external id."

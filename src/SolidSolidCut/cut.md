@@ -1,11 +1,11 @@
-# Cut
+﻿# Cut
 
 | Field | Value |
 |-------|-------|
 | **Sample** | SolidSolidCut |
 | **Class** | `Cut` |
-| **Source** | `src/SolidSolidCut/CS/Command.cs` |
-| **SDK ReadMe** | `src/SolidSolidCut/CS/ReadMe_SolidSolidCut.rtf` |
+| **Source** | `src/SolidSolidCut/Command.cs` |
+| **SDK ReadMe** | `src/SolidSolidCut/ReadMe_SolidSolidCut.rtf` |
 | **MCP rating** | 2/5 |
 
 Applies a solid-solid cut so one family solid element cuts another in a family document.

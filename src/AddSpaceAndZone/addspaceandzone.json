@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_manage_spaces_zones",
   "description": "Lists, creates, or updates MEP spaces and zones on a specified level and phase.",
   "arguments": {
@@ -31,7 +31,7 @@
   },
   "commandClass": "Command",
   "sample": "AddSpaceAndZone",
-  "source": "src/AddSpaceAndZone/CS/Command.cs",
+  "source": "src/AddSpaceAndZone/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Current command uses MainForm; MCP wrapper should call DataManager/SpaceManager/ZoneManager directly."

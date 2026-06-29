@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_get_units",
   "description": "Reads project unit formatting settings including per-discipline spec format options and decimal grouping.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "Command",
   "sample": "Units",
-  "source": "src/Units/CS/Command.cs",
+  "source": "src/Units/Command.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Pair with revit_set_units for writes; bypass UnitsForm and FormatForm using Document.GetUnits and FormatOptions directly."

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_topography_mesh",
   "description": "Creates a topography surface from a list of points and triangular facet indices.",
   "arguments": {
@@ -29,7 +29,7 @@
   },
   "commandClass": "Command",
   "sample": "CreateTrianglesTopography",
-  "source": "src/CreateTrianglesTopography/CS/Command.cs",
+  "source": "src/CreateTrianglesTopography/Command.cs",
   "mcpRating": 3,
   "requiresUi": false,
   "notes": "Replace TrianglesData.Load file dependency with caller-supplied mesh."

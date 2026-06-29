@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | GeometryAPI/ProximityDetection_WallJoinControl |
 | **Class** | `Command` |
-| **Source** | `src/GeometryAPI/ProximityDetection_WallJoinControl/CS/Command.cs` |
+| **Source** | `src/GeometryAPI/ProximityDetection_WallJoinControl/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

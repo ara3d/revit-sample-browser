@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_panel_schedule_view",
   "description": "Creates a panel schedule instance view for a specified electrical panel element.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "InstanceViewCreation",
   "sample": "PanelSchedule",
-  "source": "src/PanelSchedule/CS/InstanceViewCreation.cs",
+  "source": "src/PanelSchedule/InstanceViewCreation.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Replace PickObject with panel_element_id parameter."

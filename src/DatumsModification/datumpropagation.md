@@ -1,11 +1,11 @@
-# DatumPropagation
+﻿# DatumPropagation
 
 | Field | Value |
 |-------|-------|
 | **Sample** | DatumsModification |
 | **Class** | `DatumPropagation` |
-| **Source** | `src/DatumsModification/CS/DatumsModificationCmd.cs` |
-| **SDK ReadMe** | `src/DatumsModification/CS/ReadMe_DatumsModification.rtf` |
+| **Source** | `src/DatumsModification/DatumsModificationCmd.cs` |
+| **SDK ReadMe** | `src/DatumsModification/ReadMe_DatumsModification.rtf` |
 | **MCP rating** | 2/5 |
 
 Propagates view-specific appearance of a single selected datum to other views chosen from its propagation view list.

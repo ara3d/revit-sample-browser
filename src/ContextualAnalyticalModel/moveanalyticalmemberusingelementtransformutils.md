@@ -1,11 +1,11 @@
-# MoveAnalyticalMemberUsingElementTransformUtils
+﻿# MoveAnalyticalMemberUsingElementTransformUtils
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `MoveAnalyticalMemberUsingElementTransformUtils` |
-| **Source** | `src/ContextualAnalyticalModel/CS/MoveAnalyticalMemberUsingElementTransformUtils.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/MoveAnalyticalMemberUsingElementTransformUtils.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Moves an analytical member with `ElementTransformUtils.MoveElement` while preserving connectivity to a convergent second member at the shared node.

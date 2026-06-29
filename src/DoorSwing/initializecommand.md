@@ -1,11 +1,11 @@
-# InitializeCommand
+﻿# InitializeCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | DoorSwing |
 | **Class** | `InitializeCommand` |
-| **Source** | `src/DoorSwing/CS/Command.cs` |
-| **SDK ReadMe** | `src/DoorSwing/CS/ReadMe_DoorSwing.rtf` |
+| **Source** | `src/DoorSwing/Command.cs` |
+| **SDK ReadMe** | `src/DoorSwing/ReadMe_DoorSwing.rtf` |
 | **MCP rating** | 2/5 |
 
 Adds shared parameters and initializes door swing, room, and public-door flags from family geometry and regional standards.

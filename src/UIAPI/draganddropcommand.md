@@ -1,10 +1,10 @@
-# DragAndDropCommand
+﻿# DragAndDropCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | UIAPI |
 | **Class** | `DragAndDropCommand` |
-| **Source** | `src/UIAPI/CS/DragAndDrop/DragAndDropCommand.cs` |
+| **Source** | `src/UIAPI/DragAndDrop/DragAndDropCommand.cs` |
 | **MCP rating** | 1/5 |
 
 Opens a modeless form for dragging furniture family types from a list into the active Revit view.

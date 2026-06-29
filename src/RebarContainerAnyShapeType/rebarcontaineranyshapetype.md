@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | RebarContainerAnyShapeType |
 | **Class** | `Command` |
-| **Source** | `src/RebarContainerAnyShapeType/CS/Command.cs` |
+| **Source** | `src/RebarContainerAnyShapeType/Command.cs` |
 | **MCP rating** | 2/5 |
 
 Creates reinforcement rebars on a selected concrete beam or column that has no existing reinforcement, using any-shape rebar container logic.

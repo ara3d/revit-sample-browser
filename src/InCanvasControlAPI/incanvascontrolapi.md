@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | InCanvasControlAPI |
 | **Class** | `Command` |
-| **Source** | `src/InCanvasControlAPI/CS/Command.cs` |
+| **Source** | `src/InCanvasControlAPI/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 1/5 |
 

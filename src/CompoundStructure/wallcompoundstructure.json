@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_set_wall_compound_structure",
   "description": "Creates or updates a vertical compound structure and applies it to walls or a wall type.",
   "arguments": {
@@ -31,7 +31,7 @@
   },
   "commandClass": "WallCompoundStructure",
   "sample": "CompoundStructure",
-  "source": "src/CompoundStructure/CS/Command.cs",
+  "source": "src/CompoundStructure/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Generalize hard-coded layer recipe; require wall_type_id or wall_ids."

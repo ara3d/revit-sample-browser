@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_paths_of_travel",
   "description": "Creates PathOfTravel elements on a floor plan from room start points to door endpoints.",
   "arguments": {
@@ -32,7 +32,7 @@
   },
   "commandClass": "Command",
   "sample": "PathOfTravel",
-  "source": "src/PathOfTravel/CS/Command.cs",
+  "source": "src/PathOfTravel/Command.cs",
   "mcpRating": 3,
   "requiresUi": true,
   "notes": "Uses PathOfTravel.CreateMapped and CreateMultiple; near-corner points computed via AppendRoomNearCornerPoints."

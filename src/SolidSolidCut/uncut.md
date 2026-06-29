@@ -1,11 +1,11 @@
-# Uncut
+﻿# Uncut
 
 | Field | Value |
 |-------|-------|
 | **Sample** | SolidSolidCut |
 | **Class** | `Uncut` |
-| **Source** | `src/SolidSolidCut/CS/Command.cs` |
-| **SDK ReadMe** | `src/SolidSolidCut/CS/ReadMe_SolidSolidCut.rtf` |
+| **Source** | `src/SolidSolidCut/Command.cs` |
+| **SDK ReadMe** | `src/SolidSolidCut/ReadMe_SolidSolidCut.rtf` |
 | **MCP rating** | 2/5 |
 
 Removes an existing solid-solid cut relationship between two family solids.

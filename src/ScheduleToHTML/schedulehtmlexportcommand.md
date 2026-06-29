@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ScheduleToHTML |
 | **Class** | `ScheduleHtmlExportCommand` |
-| **Source** | `src/ScheduleToHTML/CS/ScheduleHTMLExportCommand.cs` |
+| **Source** | `src/ScheduleToHTML/ScheduleHTMLExportCommand.cs` |
 | **MCP rating** | 5/5 |
 
 Exports the active view schedule to an HTML file using `ScheduleHtmlExporter`.
@@ -33,4 +33,4 @@ Exports the active view schedule to an HTML file using `ScheduleHtmlExporter`.
 ## See also
 
 - MCP descriptor: `src/ScheduleToHTML/schedulehtmlexportcommand.json`
-- Exporter: `src/ScheduleToHTML/CS/ScheduleHTMLExporter.cs`
+- Exporter: `src/ScheduleToHTML/ScheduleHTMLExporter.cs`

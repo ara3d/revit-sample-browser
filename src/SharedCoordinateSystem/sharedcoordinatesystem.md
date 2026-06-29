@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | SharedCoordinateSystem |
 | **Class** | `Command` |
-| **Source** | `src/SharedCoordinateSystem/CS/Command.cs` |
-| **SDK ReadMe** | `src/SharedCoordinateSystem/CS/ReadMe_SharedCoordinateSystem.rtf` |
+| **Source** | `src/SharedCoordinateSystem/Command.cs` |
+| **SDK ReadMe** | `src/SharedCoordinateSystem/ReadMe_SharedCoordinateSystem.rtf` |
 | **MCP rating** | 5/5 |
 
 Reads and edits shared project location data—offsets, angle to true north, elevation, and named locations—for the active Revit project.

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_set_boundary_conditions",
   "description": "Creates or updates structural boundary conditions on a single element.",
   "arguments": {
@@ -21,7 +21,7 @@
   },
   "commandClass": "Command",
   "sample": "BoundaryConditions",
-  "source": "src/BoundaryConditions/CS/Command.cs",
+  "source": "src/BoundaryConditions/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Map BCProperties enum values to API; bypass BoundaryConditionsForm for headless use."

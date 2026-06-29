@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `CreateCustomPointLoad` |
-| **Source** | `src/ContextualAnalyticalModel/CS/CustomPointLoad.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/CustomPointLoad.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Places a point load at a picked location on a selected analytical host element.

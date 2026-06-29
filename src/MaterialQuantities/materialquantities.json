@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_calculate_material_quantities",
   "description": "Calculates net and gross material volumes and areas for walls, floors, and roofs in the active document.",
   "arguments": {
@@ -25,7 +25,7 @@
   },
   "commandClass": "Command",
   "sample": "MaterialQuantities",
-  "source": "src/MaterialQuantities/CS/MaterialQuantities.cs",
+  "source": "src/MaterialQuantities/MaterialQuantities.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "MaterialQuantityCalculator.ReportResults defines the return shape; gross pass uses a rolled-back delete transaction."

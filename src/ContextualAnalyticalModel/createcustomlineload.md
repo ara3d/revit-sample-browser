@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `CreateCustomLineLoad` |
-| **Source** | `src/ContextualAnalyticalModel/CS/CustomLineLoad.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/CustomLineLoad.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates a line load along a user-picked segment on a selected analytical host element.

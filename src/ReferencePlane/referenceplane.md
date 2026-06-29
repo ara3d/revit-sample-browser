@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ReferencePlane |
 | **Class** | `Command` |
-| **Source** | `src/ReferencePlane/CS/Command.cs` |
-| **SDK ReadMe** | `src/ReferencePlane/CS/ReadMe_ReferencePlane.rtf` |
+| **Source** | `src/ReferencePlane/Command.cs` |
+| **SDK ReadMe** | `src/ReferencePlane/ReadMe_ReferencePlane.rtf` |
 | **MCP rating** | 4/5 |
 
 Manages reference planes in the active document: list existing planes and create new ones relative to walls or floors.
@@ -35,4 +35,4 @@ Manages reference planes in the active document: list existing planes and create
 ## See also
 
 - MCP descriptor: `src/ReferencePlane/referenceplane.json`
-- Manager: `src/ReferencePlane/CS/ReferencePlaneMgr.cs`
+- Manager: `src/ReferencePlane/ReferencePlaneMgr.cs`

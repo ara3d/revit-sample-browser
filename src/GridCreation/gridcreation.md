@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | GridCreation |
 | **Class** | `Command` |
-| **Source** | `src/GridCreation/CS/Command.cs` |
+| **Source** | `src/GridCreation/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

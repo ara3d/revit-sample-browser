@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | AreaReinCurve |
 | **Class** | `Command` |
-| **Source** | `src/AreaReinCurve/CS/AreaReinCurve.cs` |
-| **SDK ReadMe** | `src/AreaReinCurve/CS/ReadMe_AreaReinCurve.rtf` |
+| **Source** | `src/AreaReinCurve/AreaReinCurve.cs` |
+| **SDK ReadMe** | `src/AreaReinCurve/ReadMe_AreaReinCurve.rtf` |
 | **MCP rating** | 2/5 |
 
 Modifies layer visibility and parameters on curves belonging to a single rectangular area reinforcement.

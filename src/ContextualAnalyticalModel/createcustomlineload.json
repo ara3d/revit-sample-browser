@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_line_load",
   "description": "Creates a line load along a segment on an analytical host element.",
   "arguments": {
@@ -41,7 +41,7 @@
   },
   "commandClass": "CreateCustomLineLoad",
   "sample": "ContextualAnalyticalModel",
-  "source": "src/ContextualAnalyticalModel/CS/CustomLineLoad.cs",
+  "source": "src/ContextualAnalyticalModel/CustomLineLoad.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Validate with LineLoad.IsCurveInsideHostBoundaries before create."

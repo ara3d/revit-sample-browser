@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_grids",
   "description": "Creates structural grids from selected curves, orthogonal spacing, or radial and arc layouts.",
   "arguments": {
@@ -30,7 +30,7 @@
   },
   "commandClass": "Command",
   "sample": "GridCreation",
-  "source": "src/GridCreation/CS/Command.cs",
+  "source": "src/GridCreation/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Invoke CreateWithSelectedCurvesData, CreateOrthogonalGridsData, or CreateRadialAndArcGridsData without forms."

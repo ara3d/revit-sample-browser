@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_get_material_properties",
   "description": "Returns physical material properties for a structural beam, column, or brace element.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "MaterialProperties",
   "sample": "MaterialProperties",
-  "source": "src/MaterialProperties/CS/MaterialProperties.cs",
+  "source": "src/MaterialProperties/MaterialProperties.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "SetMaterial and ChangeUnitWeight support a companion revit_set_structural_material tool; bypass MaterialPropertiesForm for MCP."

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_print_views",
   "description": "Prints views or sheet sets using PrintManager settings equivalent to the native Revit print dialog.",
   "arguments": {
@@ -38,7 +38,7 @@
   },
   "commandClass": "Command",
   "sample": "ViewPrinter",
-  "source": "src/ViewPrinter/CS/Command.cs",
+  "source": "src/ViewPrinter/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Replace PrintMgrForm with direct PrintManager configuration; verify at least one installed printer exists."

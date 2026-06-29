@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_import_export",
   "description": "Imports or exports the active document using supported Revit interchange formats.",
   "arguments": {
@@ -30,7 +30,7 @@
   },
   "commandClass": "Command",
   "sample": "ImportExport",
-  "source": "src/ImportExport/CS/Command.cs",
+  "source": "src/ImportExport/Command.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "Map each MainForm/MainData handler to a headless function; large surface area across formats."

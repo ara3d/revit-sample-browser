@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_duplicate_graphics_overlay",
   "description": "Draws DirectContext3D duplicates of element graphics at a specified offset without creating new elements.",
   "arguments": {
@@ -19,7 +19,7 @@
   },
   "commandClass": "CommandDuplicateGraphics",
   "sample": "DuplicateGraphics",
-  "source": "src/DuplicateGraphics/CS/Command.cs",
+  "source": "src/DuplicateGraphics/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Replace PickObjects with element_ids; requires DuplicateGraphics Application OnStartup."

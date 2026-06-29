@@ -1,10 +1,10 @@
-# SerializePredefinedPointCloud
+﻿# SerializePredefinedPointCloud
 
 | Field | Value |
 |-------|-------|
 | **Sample** | PointCloudEngine |
 | **Class** | `SerializePredefinedPointCloud` |
-| **Source** | `src/PointCloudEngine/CS/PointCloudEngineSample.cs` |
+| **Source** | `src/PointCloudEngine/PointCloudEngineSample.cs` |
 | **MCP rating** | 2/5 |
 
 Utility command that serializes a dummy predefined point cloud to a fixed XML file on disk.

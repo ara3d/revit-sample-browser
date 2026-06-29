@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_show_attached_detail_groups",
   "description": "Shows all attached detail groups for a model group in the specified view.",
   "arguments": {
@@ -17,7 +17,7 @@
   },
   "commandClass": "AttachedDetailGroupShowAllCommand",
   "sample": "AttachedDetailGroup",
-  "source": "src/AttachedDetailGroup/CS/AttachedDetailGroupShowAllCommand.cs",
+  "source": "src/AttachedDetailGroup/AttachedDetailGroupShowAllCommand.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Wraps Group.ShowAllAttachedDetailGroups; replace selection check with group_id argument."

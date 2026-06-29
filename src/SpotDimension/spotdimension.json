@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_list_spot_dimensions",
   "description": "Lists spot dimensions in the project, optionally filtered by view name.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "Command",
   "sample": "SpotDimension",
-  "source": "src/SpotDimension/CS/Command.cs",
+  "source": "src/SpotDimension/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Read-only; SpotDimensionsData.GetSpotDimensions collects all spot dimensions."

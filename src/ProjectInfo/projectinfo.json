@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_get_project_info",
   "description": "Reads project information, site location, construction, and energy analysis settings from the active document.",
   "arguments": {
@@ -14,7 +14,7 @@
   },
   "commandClass": "Command",
   "sample": "ProjectInfo",
-  "source": "src/ProjectInfo/CS/Command.cs",
+  "source": "src/ProjectInfo/Command.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "Pair with revit_set_project_info for writes; bypass ProjectInfoForm using wrapper layer."

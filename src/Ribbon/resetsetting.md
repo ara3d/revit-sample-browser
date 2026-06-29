@@ -1,10 +1,10 @@
-# ResetSetting
+﻿# ResetSetting
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Ribbon |
 | **Class** | `ResetSetting` |
-| **Source** | `src/Ribbon/CS/AddInCommand.cs` |
+| **Source** | `src/Ribbon/AddInCommand.cs` |
 | **MCP rating** | 1/5 |
 
 Resets ribbon wall-creation controls to their default values (wall type, level, shape, and mark text).

@@ -1,11 +1,11 @@
-# MemberForcesAnalyticalMember
+﻿# MemberForcesAnalyticalMember
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `MemberForcesAnalyticalMember` |
-| **Source** | `src/ContextualAnalyticalModel/CS/MemberForcesAnalyticalMember.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/MemberForcesAnalyticalMember.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Reads and writes member end forces on a newly created analytical member using `GetMemberForces` and `SetMemberForces`.

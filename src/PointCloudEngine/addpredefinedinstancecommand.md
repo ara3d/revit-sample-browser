@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | PointCloudEngine |
 | **Class** | `AddPredefinedInstanceCommand` |
-| **Source** | `src/PointCloudEngine/CS/PointCloudEngineSample.cs` |
+| **Source** | `src/PointCloudEngine/PointCloudEngineSample.cs` |
 | **MCP rating** | 4/5 |
 
 Adds a point cloud instance to the active document using the sample's predefined (non-randomized) custom engine.

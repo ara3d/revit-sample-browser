@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_area_load",
   "description": "Creates a uniform area load on an analytical host within a rectangular boundary.",
   "arguments": {
@@ -34,7 +34,7 @@
   },
   "commandClass": "CreateCustomAreaLoad",
   "sample": "ContextualAnalyticalModel",
-  "source": "src/ContextualAnalyticalModel/CS/CustomAreaLoad.cs",
+  "source": "src/ContextualAnalyticalModel/CustomAreaLoad.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Replace picks with ids and coordinates; validate boundary inside host."

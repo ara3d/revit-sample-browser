@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ShaftHolePuncher |
 | **Class** | `Command` |
-| **Source** | `src/ShaftHolePuncher/CS/Command.cs` |
-| **SDK ReadMe** | `src/ShaftHolePuncher/CS/ReadMe_ShaftHolePuncher.rtf` |
+| **Source** | `src/ShaftHolePuncher/Command.cs` |
+| **SDK ReadMe** | `src/ShaftHolePuncher/ReadMe_ShaftHolePuncher.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates shaft openings or host-specific openings (wall, floor, or structural beam) from a 2D profile drawn in a preview dialog.

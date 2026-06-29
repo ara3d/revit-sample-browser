@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | GenericStructuralConnection |
 | **Class** | `Command` |
-| **Source** | `src/GenericStructuralConnection/CS/Command.cs` |
+| **Source** | `src/GenericStructuralConnection/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

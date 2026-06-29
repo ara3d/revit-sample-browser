@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | HelloRevit |
 | **Class** | `Command` |
-| **Source** | `src/HelloRevit/CS/Command.cs` |
+| **Source** | `src/HelloRevit/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

@@ -1,11 +1,11 @@
-# IncreaseRodStructureExtension
+﻿# IncreaseRodStructureExtension
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `IncreaseRodStructureExtension` |
-| **Source** | `src/FabricationPartLayout/CS/HangerRods.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/HangerRods.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Increases each hanger rod's structure extension by one foot on a picked hanger attached to structure.

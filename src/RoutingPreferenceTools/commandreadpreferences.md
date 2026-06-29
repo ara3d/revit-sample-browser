@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | RoutingPreferenceTools |
 | **Class** | `CommandReadPreferences` |
-| **Source** | `src/RoutingPreferenceTools/CS/RoutingPreferenceBuilder/CommandReadPreferences.cs` |
+| **Source** | `src/RoutingPreferenceTools/RoutingPreferenceBuilder/CommandReadPreferences.cs` |
 | **MCP rating** | 5/5 |
 
 Imports pipe segments, schedules, fittings, and routing preference rules from a RoutingPreference Builder XML file into the active document.

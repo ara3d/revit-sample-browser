@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | ModelLines |
 | **Class** | `Command` |
-| **Source** | `src/ModelLines/CS/Command.cs` |
-| **SDK ReadMe** | `src/ModelLines/CS/ReadMe_ModelLines.rtf` |
+| **Source** | `src/ModelLines/Command.cs` |
+| **SDK ReadMe** | `src/ModelLines/ReadMe_ModelLines.rtf` |
 | **MCP rating** | 4/5 |
 
 Counts existing model curves by type, then creates sample model lines, arcs, ellipses, Hermite splines, and NURBS curves through a dialog-driven workflow.

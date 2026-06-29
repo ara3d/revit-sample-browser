@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_analytical_panel",
   "description": "Creates a rectangular analytical panel from a boundary curve loop and optional opening cutouts.",
   "arguments": {
@@ -39,7 +39,7 @@
   },
   "commandClass": "CreateAnalyticalPanel",
   "sample": "ContextualAnalyticalModel",
-  "source": "src/ContextualAnalyticalModel/CS/CreateAnalytcalPanel.cs",
+  "source": "src/ContextualAnalyticalModel/CreateAnalytcalPanel.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Validate openings with IsCurveLoopValidForAnalyticalOpening; return panel and opening ids."

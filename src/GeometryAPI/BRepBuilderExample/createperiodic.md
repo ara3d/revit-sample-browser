@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | GeometryAPI/BRepBuilderExample |
 | **Class** | `CreatePeriodic` |
-| **Source** | `src/GeometryAPI/BRepBuilderExample/CS/CreatePeriodic.cs` |
+| **Source** | `src/GeometryAPI/BRepBuilderExample/CreatePeriodic.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 4/5 |
 

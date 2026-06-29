@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | NetworkPressureLossReport |
 | **Class** | `Command` |
-| **Source** | `src/NetworkPressureLossReport/CS/Command.cs` |
-| **SDK ReadMe** | `src/NetworkPressureLossReport/CS/ReadMe_NetworkPressureLossReport.rtf` |
+| **Source** | `src/NetworkPressureLossReport/Command.cs` |
+| **SDK ReadMe** | `src/NetworkPressureLossReport/ReadMe_NetworkPressureLossReport.rtf` |
 | **MCP rating** | 5/5 |
 
 Lists mechanical piping networks in the document and lets the user visualize pressure loss in the Analysis Visualization Framework or export a CSV report.

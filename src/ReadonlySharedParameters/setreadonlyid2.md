@@ -1,10 +1,10 @@
-# SetReadonlyId2
+﻿# SetReadonlyId2
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ReadonlySharedParameters |
 | **Class** | `SetReadonlyId2` |
-| **Source** | `src/ReadonlySharedParameters/CS/ReadonlySharedParametersCommands.cs` |
+| **Source** | `src/ReadonlySharedParameters/ReadonlySharedParametersCommands.cs` |
 | **MCP rating** | 2/5 |
 
 Sets **ReadonlyId** on filtered elements using a composite of type name prefix and element id.

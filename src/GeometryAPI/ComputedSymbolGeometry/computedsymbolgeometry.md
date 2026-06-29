@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | GeometryAPI/ComputedSymbolGeometry |
 | **Class** | `Command` |
-| **Source** | `src/GeometryAPI/ComputedSymbolGeometry/CS/Command.cs` |
+| **Source** | `src/GeometryAPI/ComputedSymbolGeometry/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

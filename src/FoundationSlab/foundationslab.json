@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_foundation_slab",
   "description": "Creates a foundation slab from a boundary, level, and slab type.",
   "arguments": {
@@ -26,7 +26,7 @@
   },
   "commandClass": "Command",
   "sample": "FoundationSlab",
-  "source": "src/FoundationSlab/CS/Command.cs",
+  "source": "src/FoundationSlab/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Extract slab creation from FoundationSlabForm/SlabData handlers."

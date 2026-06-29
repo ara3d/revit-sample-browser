@@ -1,11 +1,11 @@
-# ReleaseConditionsAnalyticalMember
+﻿# ReleaseConditionsAnalyticalMember
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `ReleaseConditionsAnalyticalMember` |
-| **Source** | `src/ContextualAnalyticalModel/CS/ReleaseConditionsAnalyticalMember.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/ReleaseConditionsAnalyticalMember.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Reads and updates end release conditions and release types on a sample analytical member.

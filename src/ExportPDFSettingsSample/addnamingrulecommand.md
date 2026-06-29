@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ExportPDFSettingsSample |
 | **Class** | `AddNamingRuleCommand` |
-| **Source** | `src/ExportPDFSettingsSample/CS/Application.cs` |
+| **Source** | `src/ExportPDFSettingsSample/Application.cs` |
 | **MCP rating** | 4/5 |
 
 Adds a sheet **Approved By** parameter rule to the PDF export naming rule on the document's `ExportPDFSettings` named "sample".

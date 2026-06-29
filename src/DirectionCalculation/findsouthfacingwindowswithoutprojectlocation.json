@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_find_south_facing_windows",
   "description": "Returns window instances facing south, using project location north or model Y-axis.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "FindSouthFacingWindowsWithoutProjectLocation",
   "sample": "DirectionCalculation",
-  "source": "src/DirectionCalculation/CS/Commands.cs",
+  "source": "src/DirectionCalculation/Commands.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Shared by With/Without ProjectLocation window variants."

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_winder_stairs",
   "description": "Creates L-shaped or U-shaped winder stair runs from connected curve elements with configurable step counts and run geometry.",
   "arguments": {
@@ -49,7 +49,7 @@
   },
   "commandClass": "Command",
   "sample": "WinderStairs",
-  "source": "src/WinderStairs/CS/Command.cs",
+  "source": "src/WinderStairs/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Replace LWinderOptions/UWinderOptions dialogs; WinderUtil derives control points from curve_element_ids."

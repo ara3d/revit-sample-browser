@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | InPlaceMembers |
 | **Class** | `Command` |
-| **Source** | `src/InPlaceMembers/CS/Command.cs` |
+| **Source** | `src/InPlaceMembers/Command.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 2/5 |
 

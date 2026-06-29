@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_manage_default_types",
   "description": "Gets or sets default family and element types for the active document.",
   "arguments": {
@@ -22,7 +22,7 @@
   },
   "commandClass": "ThisCommand",
   "sample": "GetSetDefaultTypes",
-  "source": "src/GetSetDefaultTypes/CS/ThisCommand.cs",
+  "source": "src/GetSetDefaultTypes/ThisCommand.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Sample only shows dockable panes; MCP should call DefaultFamilyTypes/DefaultElementTypes logic directly."

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_analytical_member",
   "description": "Creates a straight analytical member between two points with optional structural role and analysis settings.",
   "arguments": {
@@ -29,7 +29,7 @@
   },
   "commandClass": "CreateAnalyticalMember",
   "sample": "ContextualAnalyticalModel",
-  "source": "src/ContextualAnalyticalModel/CS/CreateAnalyticalMember.cs",
+  "source": "src/ContextualAnalyticalModel/CreateAnalyticalMember.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Return created AnalyticalMember element id."

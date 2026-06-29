@@ -1,11 +1,11 @@
-# UiCommand
+﻿# UiCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | PerformanceAdviserControl |
 | **Class** | `UiCommand` |
-| **Source** | `src/PerformanceAdviserControl/CS/UICommand.cs` |
-| **SDK ReadMe** | `src/PerformanceAdviserControl/CS/ReadMe_PerformanceAdviserControl.rtf` |
+| **Source** | `src/PerformanceAdviserControl/UICommand.cs` |
+| **SDK ReadMe** | `src/PerformanceAdviserControl/ReadMe_PerformanceAdviserControl.rtf` |
 | **MCP rating** | 1/5 |
 
 Opens a dialog that lists all Performance Adviser rules and lets the user choose which to run against the active document.
@@ -33,4 +33,4 @@ Poor automation candidate: the value is in interactive rule selection and Perfor
 
 ## See also
 
-- Custom rule implementation: `src/PerformanceAdviserControl/CS/FlippedDoorCheck.cs`
+- Custom rule implementation: `src/PerformanceAdviserControl/FlippedDoorCheck.cs`

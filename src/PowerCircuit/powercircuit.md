@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | PowerCircuit |
 | **Class** | `Command` |
-| **Source** | `src/PowerCircuit/CS/Command.cs` |
-| **SDK ReadMe** | `src/PowerCircuit/CS/ReadMe_PowerCircuit.rtf` |
+| **Source** | `src/PowerCircuit/Command.cs` |
+| **SDK ReadMe** | `src/PowerCircuit/ReadMe_PowerCircuit.rtf` |
 | **MCP rating** | 2/5 |
 
 Manages electrical circuits for the current selection through a sequence of WinForms dialogs and `CircuitOperationData.Operate()`.
@@ -31,4 +31,4 @@ Electrical circuit editing is domain-specific and dialog-driven; limited value a
 
 ## See also
 
-- Data layer: `src/PowerCircuit/CS/CircuitOperationData.cs`
+- Data layer: `src/PowerCircuit/CircuitOperationData.cs`

@@ -1,10 +1,10 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | RebarFreeForm |
 | **Class** | `Command` |
-| **Source** | `src/RebarFreeForm/CS/Command.cs` |
+| **Source** | `src/RebarFreeForm/Command.cs` |
 | **MCP rating** | 2/5 |
 
 Creates a free-form rebar hosted on a picked structural element, constrained by user-selected faces and optional model-curve data.

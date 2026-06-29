@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_view_template",
   "description": "Creates a view template from a source view and applies parts visibility, detail level, and category override settings.",
   "arguments": {
@@ -26,7 +26,7 @@
   },
   "commandClass": "Command",
   "sample": "ViewTemplateCreation",
-  "source": "src/ViewTemplateCreation/CS/Command.cs",
+  "source": "src/ViewTemplateCreation/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Replace ViewTemplateCreationForm; optional category override map can extend ChangeVgOverridesModelSettings behavior."

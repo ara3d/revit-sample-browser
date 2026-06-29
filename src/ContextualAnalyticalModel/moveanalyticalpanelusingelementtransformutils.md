@@ -1,11 +1,11 @@
-# MoveAnalyticalPanelUsingElementTransformUtils
+﻿# MoveAnalyticalPanelUsingElementTransformUtils
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `MoveAnalyticalPanelUsingElementTransformUtils` |
-| **Source** | `src/ContextualAnalyticalModel/CS/MoveAnalyticalPanelUsingElementTransformUtils.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/MoveAnalyticalPanelUsingElementTransformUtils.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Translates an analytical panel with `ElementTransformUtils` while maintaining its connection to an adjacent analytical member.

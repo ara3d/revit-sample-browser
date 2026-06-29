@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | AttachedDetailGroup |
 | **Class** | `AttachedDetailGroupShowAllCommand` |
-| **Source** | `src/AttachedDetailGroup/CS/AttachedDetailGroupShowAllCommand.cs` |
-| **SDK ReadMe** | `src/AttachedDetailGroup/CS/Readme_AttachedDetailGroup.rtf` |
+| **Source** | `src/AttachedDetailGroup/AttachedDetailGroupShowAllCommand.cs` |
+| **SDK ReadMe** | `src/AttachedDetailGroup/Readme_AttachedDetailGroup.rtf` |
 | **MCP rating** | 4/5 |
 
 Shows all attached detail groups on the selected model group in the active view.

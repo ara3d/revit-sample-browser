@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_export_view_2d_geometry",
   "description": "Exports tessellated 2D geometry and text from a printable plan, section, or elevation view.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "Command",
   "sample": "CustomExporter/Custom2DExporter",
-  "source": "src/CustomExporter/Custom2DExporter/CS/Command.cs",
+  "source": "src/CustomExporter/Custom2DExporter/Command.cs",
   "mcpRating": 5,
   "requiresUi": true,
   "notes": "Use ExportView static method; return ResultsSummary counts and optional serialized points."

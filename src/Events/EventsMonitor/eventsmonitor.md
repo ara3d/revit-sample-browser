@@ -1,11 +1,11 @@
-# Command
+﻿# Command
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Events / EventsMonitor |
 | **Class** | `Command` |
-| **Source** | `src/Events/EventsMonitor/CS/Command.cs` |
-| **SDK ReadMe** | `src/Events/EventsMonitor/CS/ReadMe_EventsMonitor.rtf` |
+| **Source** | `src/Events/EventsMonitor/Command.cs` |
+| **SDK ReadMe** | `src/Events/EventsMonitor/ReadMe_EventsMonitor.rtf` |
 | **MCP rating** | 1/5 |
 
 Opens a settings dialog so the user can choose which application-level Revit events to subscribe to, then displays live event data in an info window.

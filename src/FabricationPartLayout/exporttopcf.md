@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `ExportToPcf` |
-| **Source** | `src/FabricationPartLayout/CS/ExportToPCF.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/ExportToPCF.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 5/5 |
 
 Sets a spool name on selected fabrication parts and exports them to a PCF file.

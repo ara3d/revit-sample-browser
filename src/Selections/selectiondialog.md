@@ -1,10 +1,10 @@
-# SelectionDialog
+﻿# SelectionDialog
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Selections |
 | **Class** | `SelectionDialog` |
-| **Source** | `src/Selections/CS/Command.cs` |
+| **Source** | `src/Selections/Command.cs` |
 | **MCP rating** | 2/5 |
 
 Opens a modeless-style workflow that combines interactive element or point picking with a WinForms dialog to move the picked element to a new location.

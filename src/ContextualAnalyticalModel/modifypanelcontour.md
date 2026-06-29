@@ -1,11 +1,11 @@
-# ModifyPanelContour
+﻿# ModifyPanelContour
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `ModifyPanelContour` |
-| **Source** | `src/ContextualAnalyticalModel/CS/ModifyPanelContour.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/ModifyPanelContour.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Replaces one straight boundary edge of an analytical panel with an arc using `SketchEditScope` and sketch editing.

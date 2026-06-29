@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | CompoundStructure |
 | **Class** | `WallCompoundStructure` |
-| **Source** | `src/CompoundStructure/CS/Command.cs` |
-| **SDK ReadMe** | `src/CompoundStructure/CS/ReadMe_CompoundStructure.rtf` |
+| **Source** | `src/CompoundStructure/Command.cs` |
+| **SDK ReadMe** | `src/CompoundStructure/ReadMe_CompoundStructure.rtf` |
 | **MCP rating** | 4/5 |
 
 Builds a vertical compound wall structure (layers, materials, functions) and assigns it to selected walls.

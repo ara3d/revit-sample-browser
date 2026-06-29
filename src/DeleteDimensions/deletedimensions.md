@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | DeleteDimensions |
 | **Class** | `Command` |
-| **Source** | `src/DeleteDimensions/CS/DeleteDimesions.cs` |
-| **SDK ReadMe** | `src/DeleteDimensions/CS/ReadMe_DeleteDimensions.rtf` |
+| **Source** | `src/DeleteDimensions/DeleteDimesions.cs` |
+| **SDK ReadMe** | `src/DeleteDimensions/ReadMe_DeleteDimensions.rtf` |
 | **MCP rating** | 4/5 |
 
 Deletes all unpinned `Dimension` elements in the current selection.

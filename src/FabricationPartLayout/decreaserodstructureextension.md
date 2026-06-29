@@ -1,11 +1,11 @@
-# DecreaseRodStructureExtension
+﻿# DecreaseRodStructureExtension
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `DecreaseRodStructureExtension` |
-| **Source** | `src/FabricationPartLayout/CS/HangerRods.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/HangerRods.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Decreases each hanger rod's structure extension by one foot on a picked fabrication hanger that is attached to structure.

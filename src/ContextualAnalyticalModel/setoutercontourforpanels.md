@@ -1,11 +1,11 @@
-# SetOuterContourForPanels
+﻿# SetOuterContourForPanels
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ContextualAnalyticalModel |
 | **Class** | `SetOuterContourForPanels` |
-| **Source** | `src/ContextualAnalyticalModel/CS/SetOuterContourForPanels.cs` |
-| **SDK ReadMe** | `src/ContextualAnalyticalModel/CS/ReadMe_ContextualAnalyticalModel.rtf` |
+| **Source** | `src/ContextualAnalyticalModel/SetOuterContourForPanels.cs` |
+| **SDK ReadMe** | `src/ContextualAnalyticalModel/ReadMe_ContextualAnalyticalModel.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates an analytical panel, then replaces its outer boundary with a custom four-sided `CurveLoop` using `AnalyticalPanel.SetOuterContour`.

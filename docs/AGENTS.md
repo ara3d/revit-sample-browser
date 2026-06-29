@@ -23,11 +23,11 @@ Every command has at least one task. Commands rated **MCP 3 or above** have two.
 
 **Sources (read in this order):**
 
-1. **SDK ReadMe RTF** — each sample folder has a `ReadMe_*.rtf` or `Readme_*.rtf` beside its `CS` code. The sample browser loads the first `*.rtf` found in the command's folder (see `SampleData.ReadmePath` in `src/SampleData.cs`). Strip RTF markup or read plain-text content; do not paste the raw RTF into the doc.
+1. **SDK ReadMe RTF** — each sample folder has a `ReadMe_*.rtf` or `Readme_*.rtf` beside its source code. The sample browser loads the first `*.rtf` found in the command's folder (see `SampleData.ReadmePath` in `src/SampleData.cs`). Strip RTF markup or read plain-text content; do not paste the raw RTF into the doc.
 2. **Command source** — the `.cs` file listed in `todo.md`.
 3. **Related files** — forms, helpers, or `Application.cs` in the same sample only when needed to explain behavior.
 
-**RTF lookup:** for source `src/<Sample>/CS/Command.cs`, check `src/<Sample>/CS/*.rtf`. For nested samples (e.g. `src/Events/PrintLog/CS/Command.cs`), check `src/Events/PrintLog/CS/*.rtf`.
+**RTF lookup:** for source `src/<Sample>/Command.cs`, check `src/<Sample>/*.rtf`. For nested samples (e.g. `src/Events/PrintLog/Command.cs`), check `src/Events/PrintLog/*.rtf`.
 
 **Writing rules:**
 

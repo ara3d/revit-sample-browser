@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_rotate_framing",
   "description": "Rotates selected structural beams, braces, or columns by angle in degrees.",
   "arguments": {
@@ -22,7 +22,7 @@
   },
   "commandClass": "RotateFramingObjects",
   "sample": "RotateFramingObjects",
-  "source": "src/RotateFramingObjects/CS/RotateFramingObjects.cs",
+  "source": "src/RotateFramingObjects/RotateFramingObjects.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Call RotateElement logic directly; skip RotateFramingObjectsForm."

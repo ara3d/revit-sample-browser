@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_add_family_parameters",
   "description": "Adds family and shared parameters from definitions to the active family document.",
   "arguments": {
@@ -17,7 +17,7 @@
   },
   "commandClass": "AddParameterToFamily",
   "sample": "FamilyCreation/AutoParameter",
-  "source": "src/FamilyCreation/AutoParameter/CS/Command.cs",
+  "source": "src/FamilyCreation/AutoParameter/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Refactor FamilyParameterAssigner to accept structured definitions instead of fixed assembly-folder txt files."

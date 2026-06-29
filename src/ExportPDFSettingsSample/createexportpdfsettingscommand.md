@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ExportPDFSettingsSample |
 | **Class** | `CreateExportPdfSettingsCommand` |
-| **Source** | `src/ExportPDFSettingsSample/CS/Application.cs` |
+| **Source** | `src/ExportPDFSettingsSample/Application.cs` |
 | **MCP rating** | 5/5 |
 
 Creates a new `ExportPDFSettings` element in the document with default `PDFExportOptions` under the name "sample".

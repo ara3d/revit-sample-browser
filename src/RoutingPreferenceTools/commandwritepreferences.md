@@ -1,10 +1,10 @@
-# CommandWritePreferences
+﻿# CommandWritePreferences
 
 | Field | Value |
 |-------|-------|
 | **Sample** | RoutingPreferenceTools |
 | **Class** | `CommandWritePreferences` |
-| **Source** | `src/RoutingPreferenceTools/CS/RoutingPreferenceBuilder/CommandWritePreferences.cs` |
+| **Source** | `src/RoutingPreferenceTools/RoutingPreferenceBuilder/CommandWritePreferences.cs` |
 | **MCP rating** | 2/5 |
 
 Exports all piping routing preference policies from the active document to a RoutingPreference Builder XML file.

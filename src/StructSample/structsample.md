@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | StructSample |
 | **Class** | `Command` |
-| **Source** | `src/StructSample/CS/Command.cs` |
-| **SDK ReadMe** | `src/StructSample/CS/ReadMe_StructSample.rtf` |
+| **Source** | `src/StructSample/Command.cs` |
+| **SDK ReadMe** | `src/StructSample/ReadMe_StructSample.rtf` |
 | **MCP rating** | 4/5 |
 
 Places wood timber columns along selected walls at a fixed five-foot spacing, constrained to each wall's base and top levels.

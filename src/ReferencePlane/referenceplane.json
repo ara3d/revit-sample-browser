@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_reference_plane",
   "description": "Creates or lists reference planes relative to walls, floors, or free coordinates in the active document.",
   "arguments": {
@@ -25,7 +25,7 @@
   },
   "commandClass": "Command",
   "sample": "ReferencePlane",
-  "source": "src/ReferencePlane/CS/Command.cs",
+  "source": "src/ReferencePlane/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Use ReferencePlaneMgr without ReferencePlaneForm; support list mode when no creation args supplied."

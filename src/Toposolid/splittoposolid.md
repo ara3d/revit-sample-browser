@@ -1,11 +1,11 @@
-# SplitToposolid
+﻿# SplitToposolid
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Toposolid |
 | **Class** | `SplitToposolid` |
-| **Source** | `src/Toposolid/CS/Command.cs` |
-| **SDK ReadMe** | `src/Toposolid/CS/ReadMe_Toposolid.rtf` |
+| **Source** | `src/Toposolid/Command.cs` |
+| **SDK ReadMe** | `src/Toposolid/ReadMe_Toposolid.rtf` |
 | **MCP rating** | 2/5 |
 
 Splits a picked toposolid along model curves selected after the toposolid.

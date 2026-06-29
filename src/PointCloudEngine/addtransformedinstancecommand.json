@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_add_transformed_point_cloud",
   "description": "Adds a randomized point cloud instance at a specified transform.",
   "arguments": {
@@ -21,7 +21,7 @@
   },
   "commandClass": "AddTransformedInstanceCommand",
   "sample": "PointCloudEngine",
-  "source": "src/PointCloudEngine/CS/PointCloudEngineSample.cs",
+  "source": "src/PointCloudEngine/PointCloudEngineSample.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Sample hard-codes a Z rotation; MCP caller should supply full transform."

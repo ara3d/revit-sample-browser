@@ -1,11 +1,11 @@
-# PostCommandRevisionMonitorCommand
+﻿# PostCommandRevisionMonitorCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | PostCommandWorkflow |
 | **Class** | `PostCommandRevisionMonitorCommand` |
-| **Source** | `src/PostCommandWorkflow/CS/PostCommandRevisionMonitorCommand.cs` |
-| **SDK ReadMe** | `src/PostCommandWorkflow/CS/Readme_PostCommandWorkflow.rtf` |
+| **Source** | `src/PostCommandWorkflow/PostCommandRevisionMonitorCommand.cs` |
+| **SDK ReadMe** | `src/PostCommandWorkflow/Readme_PostCommandWorkflow.rtf` |
 | **MCP rating** | 1/5 |
 
 Toggles a post-command revision monitor on or off for the active document and updates the ribbon button label.
@@ -30,4 +30,4 @@ Infrastructure sample for post-command events, not a document query or edit tool
 
 ## See also
 
-- Monitor implementation: `src/PostCommandWorkflow/CS/PostCommandRevisionMonitor.cs`
+- Monitor implementation: `src/PostCommandWorkflow/PostCommandRevisionMonitor.cs`

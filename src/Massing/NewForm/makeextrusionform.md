@@ -1,11 +1,11 @@
-# MakeExtrusionForm
+﻿# MakeExtrusionForm
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Massing/NewForm |
 | **Class** | `MakeExtrusionForm` |
-| **Source** | `src/Massing/NewForm/CS/Command.cs` |
-| **SDK ReadMe** | `src/Massing/NewForm/CS/ReadMe_NewForm.rtf` |
+| **Source** | `src/Massing/NewForm/Command.cs` |
+| **SDK ReadMe** | `src/Massing/NewForm/ReadMe_NewForm.rtf` |
 | **MCP rating** | 2/5 |
 
 Creates an extrusion form from a triangular model-curve profile extruded along a fixed Z vector.

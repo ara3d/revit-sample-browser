@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `PartInfo` |
-| **Source** | `src/FabricationPartLayout/CS/PartInfo.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/PartInfo.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 5/5 |
 
 Displays detailed metadata for a picked fabrication part: alias, CID, materials, specs, service, status, and centerline length.

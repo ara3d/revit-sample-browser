@@ -1,11 +1,11 @@
-# RebarParas
+﻿# RebarParas
 
 | Field | Value |
 |-------|-------|
 | **Sample** | AreaReinParameters |
 | **Class** | `RebarParas` |
-| **Source** | `src/AreaReinParameters/CS/AreaReinParameters.cs` |
-| **SDK ReadMe** | `src/AreaReinParameters/CS/ReadMe_AreaReinParameters.rtf` |
+| **Source** | `src/AreaReinParameters/AreaReinParameters.cs` |
+| **SDK ReadMe** | `src/AreaReinParameters/ReadMe_AreaReinParameters.rtf` |
 | **MCP rating** | 2/5 |
 
 Dumps all parameter names and values for the first selected `Rebar` element to a task dialog.

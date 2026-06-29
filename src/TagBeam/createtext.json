@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_rebar_text_note",
   "description": "Creates a text note labeling a selected rebar near the start of its centerline.",
   "arguments": {
@@ -21,7 +21,7 @@
   },
   "commandClass": "CreateText",
   "sample": "TagBeam",
-  "source": "src/TagBeam/CS/Command.cs",
+  "source": "src/TagBeam/Command.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Selection-based in sample; pass rebar_id and view_id for automation."

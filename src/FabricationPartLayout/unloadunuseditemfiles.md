@@ -1,11 +1,11 @@
-# UnloadUnusedItemFiles
+﻿# UnloadUnusedItemFiles
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `UnloadUnusedItemFiles` |
-| **Source** | `src/FabricationPartLayout/CS/ItemFile.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/ItemFile.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Unloads fabrication item files that are loaded in the configuration but not referenced by any placed parts.

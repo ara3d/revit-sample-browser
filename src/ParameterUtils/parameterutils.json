@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_get_element_parameters",
   "description": "Returns all parameters for a Revit element with storage type and display values.",
   "arguments": {
@@ -13,7 +13,7 @@
   },
   "commandClass": "Command",
   "sample": "ParameterUtils",
-  "source": "src/ParameterUtils/CS/Command.cs",
+  "source": "src/ParameterUtils/Command.cs",
   "mcpRating": 5,
   "requiresUi": false,
   "notes": "Read-only; mirrors Command.Execute parameter iteration without PropertiesForm."

@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ExportPDFSettingsSample |
 | **Class** | `DeleteNamingRuleCommand` |
-| **Source** | `src/ExportPDFSettingsSample/CS/Application.cs` |
+| **Source** | `src/ExportPDFSettingsSample/Application.cs` |
 | **MCP rating** | 4/5 |
 
 Removes the **Approved By** sheet parameter entry from the PDF export naming rule on the "sample" `ExportPDFSettings`.

@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | DimensionLeaderEnd |
 | **Class** | `MoveToPickedPoint` |
-| **Source** | `src/DimensionLeaderEnd/CS/Command.cs` |
-| **SDK ReadMe** | `src/DimensionLeaderEnd/CS/ReadMe_DimensionLeaderEnd.rtf` |
+| **Source** | `src/DimensionLeaderEnd/Command.cs` |
+| **SDK ReadMe** | `src/DimensionLeaderEnd/ReadMe_DimensionLeaderEnd.rtf` |
 | **MCP rating** | 3/5 |
 
 Sets dimension leader end positions to a user-picked point, staggering multi-segment leaders by segment spacing.

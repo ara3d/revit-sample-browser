@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | SlabProperties |
 | **Class** | `Command` |
-| **Source** | `src/SlabProperties/CS/Command.cs` |
-| **SDK ReadMe** | `src/SlabProperties/CS/ReadMe_SlabProperties.rtf` |
+| **Source** | `src/SlabProperties/Command.cs` |
+| **SDK ReadMe** | `src/SlabProperties/ReadMe_SlabProperties.rtf` |
 | **MCP rating** | 4/5 |
 
 Displays structural and material properties of a single selected floor slab, including span direction and per-layer thickness and Young's modulus.

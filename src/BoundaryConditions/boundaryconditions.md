@@ -4,8 +4,8 @@
 |-------|-------|
 | **Sample** | BoundaryConditions |
 | **Class** | `Command` |
-| **Source** | `src/BoundaryConditions/CS/Command.cs` |
-| **SDK ReadMe** | `src/BoundaryConditions/CS/ReadMe_BoundaryConditions.rtf` |
+| **Source** | `src/BoundaryConditions/Command.cs` |
+| **SDK ReadMe** | `src/BoundaryConditions/ReadMe_BoundaryConditions.rtf` |
 | **MCP rating** | 4/5 |
 
 Creates or inspects structural boundary conditions on a single selected structural element.

@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | ExportPDFSettingsSample |
 | **Class** | `ModifyExportPdfSettingsCommand` |
-| **Source** | `src/ExportPDFSettingsSample/CS/Application.cs` |
+| **Source** | `src/ExportPDFSettingsSample/Application.cs` |
 | **MCP rating** | 5/5 |
 
 Updates PDF export options on the "sample" `ExportPDFSettings`: paper format, crop boundary visibility, and combined-export flag.

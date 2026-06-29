@@ -1,11 +1,11 @@
-# SiteMoveRegionAndPointsCommand
+﻿# SiteMoveRegionAndPointsCommand
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Site |
 | **Class** | `SiteMoveRegionAndPointsCommand` |
-| **Source** | `src/Site/CS/SiteMoveRegionAndPointsCommand.cs` |
-| **SDK ReadMe** | `src/Site/CS/Readme_Site.rtf` |
+| **Source** | `src/Site/SiteMoveRegionAndPointsCommand.cs` |
+| **SDK ReadMe** | `src/Site/Readme_Site.rtf` |
 | **MCP rating** | 2/5 |
 
 Moves a topography subregion and its interior points to a new location on the host surface.

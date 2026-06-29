@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_analytical_curved_panel",
   "description": "Creates a curved analytical panel from arc geometry and sets structural role and analysis type.",
   "arguments": {
@@ -40,7 +40,7 @@
   },
   "commandClass": "CreateAnalyticalCurvedPanel",
   "sample": "ContextualAnalyticalModel",
-  "source": "src/ContextualAnalyticalModel/CS/CreateAnalyticalCurvedPanel.cs",
+  "source": "src/ContextualAnalyticalModel/CreateAnalyticalCurvedPanel.cs",
   "mcpRating": 4,
   "requiresUi": false,
   "notes": "Generalize hard-coded Arc.Create call; return created panel element id."

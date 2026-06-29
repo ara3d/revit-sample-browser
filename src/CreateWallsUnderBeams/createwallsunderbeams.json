@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_walls_under_beams",
   "description": "Creates walls along horizontal beam location curves, offset below each beam.",
   "arguments": {
@@ -18,7 +18,7 @@
   },
   "commandClass": "CreateWallsUnderBeams",
   "sample": "CreateWallsUnderBeams",
-  "source": "src/CreateWallsUnderBeams/CS/CreateWallsUnderBeams.cs",
+  "source": "src/CreateWallsUnderBeams/CreateWallsUnderBeams.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Each beam uses its reference level; beams must be horizontal."

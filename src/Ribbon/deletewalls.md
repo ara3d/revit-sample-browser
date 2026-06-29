@@ -1,10 +1,10 @@
-# DeleteWalls
+﻿# DeleteWalls
 
 | Field | Value |
 |-------|-------|
 | **Sample** | Ribbon |
 | **Class** | `DeleteWalls` |
-| **Source** | `src/Ribbon/CS/AddInCommand.cs` |
+| **Source** | `src/Ribbon/AddInCommand.cs` |
 | **MCP rating** | 1/5 |
 
 Deletes all walls recorded in `CreateWall.CreatedWalls` and clears the static tracking set.

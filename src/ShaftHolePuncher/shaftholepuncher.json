@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "revit_create_opening_from_profile",
   "description": "Creates a host opening or shaft opening from a 2D profile on a wall, floor, beam, or between levels.",
   "arguments": {
@@ -39,7 +39,7 @@
   },
   "commandClass": "Command",
   "sample": "ShaftHolePuncher",
-  "source": "src/ShaftHolePuncher/CS/Command.cs",
+  "source": "src/ShaftHolePuncher/Command.cs",
   "mcpRating": 4,
   "requiresUi": true,
   "notes": "Profile.CreateOpening logic is separable; bypass ShaftHolePuncherForm mouse drawing."

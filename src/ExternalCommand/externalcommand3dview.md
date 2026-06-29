@@ -1,10 +1,10 @@
-# ExternalCommand3DView
+﻿# ExternalCommand3DView
 
 | Field | Value |
 |-------|-------|
 | **Sample** | ExternalCommand |
 | **Class** | `ExternalCommand3DView` |
-| **Source** | `src/ExternalCommand/CS/ExternalCommandRegistration/ExternalCommandClass.cs` |
+| **Source** | `src/ExternalCommand/ExternalCommandRegistration/ExternalCommandClass.cs` |
 | **MCP rating** | 1/5 |
 
 Shows a hello message when invoked from a 3D view context, demonstrating external command registration and availability classes.

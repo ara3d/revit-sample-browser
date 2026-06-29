@@ -1,11 +1,11 @@
-# ConvertToFabrication
+﻿# ConvertToFabrication
 
 | Field | Value |
 |-------|-------|
 | **Sample** | FabricationPartLayout |
 | **Class** | `ConvertToFabrication` |
-| **Source** | `src/FabricationPartLayout/CS/ConvertToFabrication.cs` |
-| **SDK ReadMe** | `src/FabricationPartLayout/CS/Readme_FabricationPartLayout.rtf` |
+| **Source** | `src/FabricationPartLayout/ConvertToFabrication.cs` |
+| **SDK ReadMe** | `src/FabricationPartLayout/Readme_FabricationPartLayout.rtf` |
 | **MCP rating** | 2/5 |
 
 Converts selected design MEP elements to fabrication parts on the first loaded service, optionally mapping a rectangular fire damper family to a fabrication part type.

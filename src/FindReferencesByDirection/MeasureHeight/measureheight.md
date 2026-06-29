@@ -4,7 +4,7 @@
 |-------|-------|
 | **Sample** | FindReferencesByDirection/MeasureHeight |
 | **Class** | `Command` |
-| **Source** | `src/FindReferencesByDirection/MeasureHeight/CS/MeasureHeight.cs` |
+| **Source** | `src/FindReferencesByDirection/MeasureHeight/MeasureHeight.cs` |
 | **SDK ReadMe** | — |
 | **MCP rating** | 5/5 |
 
