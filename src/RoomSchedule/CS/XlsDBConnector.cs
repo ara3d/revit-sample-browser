@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
 using System.IO;
+using System.Reflection;
 
 namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
 {
@@ -14,13 +14,13 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
     public class XlsDbConnector : IDisposable
     {
         // One command for this connection
-        private OleDbCommand m_command;
+        private object m_command;
 
         // The connection string
         private readonly string m_connectStr;
 
         // The connection created
-        private OleDbConnection m_objConn;
+        private object m_objConn;
 
         // All available tables(work sheets) in xls data source
         private readonly List<string> m_tables = new List<string>();
@@ -43,8 +43,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
                 $"Provider = Microsoft.Jet.OLEDB.4.0; Data Source = \"{strXlsFile}\"; Extended Properties = \"Excel 8.0;HDR=YES;\"";
 
             // create the .xls connection
-            m_objConn = new OleDbConnection(m_connectStr);
-            m_objConn.Open();
+            m_objConn = CreateOleDbConnection(m_connectStr);
+            Invoke(m_objConn, "Open");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             if (null != m_objConn)
             {
                 // close the OleDbConnection 
-                m_objConn.Close();
+                Invoke(m_objConn, "Close");
                 m_objConn = null;
                 GC.SuppressFinalize(this);
             }
@@ -79,8 +79,8 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
             m_tables.Clear();
 
             // get all table names from data source
-            var schemaTable = m_objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables,
-                new object[] { null, null, null, "TABLE" });
+            var schemaTable = (DataTable)Invoke(m_objConn, "GetOleDbSchemaTable",
+                OleDbSchemaTables, new object[] { null, null, null, "TABLE" });
             for (var i = 0; i < schemaTable.Rows.Count; i++)
                 m_tables.Add(schemaTable.Rows[i].ItemArray[2].ToString().TrimEnd('$'));
 
@@ -96,9 +96,9 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         {
             // Get all data via command and then fill data to table
             var strCom = $"Select * From [{tableName}$]";
-            var myCommand = new OleDbDataAdapter(strCom, m_objConn);
+            var myCommand = CreateOleDbDataAdapter(strCom, m_objConn);
             var myDataSet = new DataSet();
-            myCommand.Fill(myDataSet, $"[{tableName}$]");
+            Invoke(myCommand, "Fill", myDataSet, $"[{tableName}$]");
 
             try
             {
@@ -180,9 +180,9 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         {
             try
             {
-                if (null == m_command) m_command = m_objConn.CreateCommand();
-                m_command.CommandText = strCmd;
-                return m_command.ExecuteNonQuery();
+                if (null == m_command) m_command = Invoke(m_objConn, "CreateCommand");
+                m_command.GetType().GetProperty("CommandText").SetValue(m_command, strCmd);
+                return (int)Invoke(m_command, "ExecuteNonQuery");
             }
             catch (Exception ex)
             {
@@ -216,6 +216,38 @@ namespace Ara3D.RevitSampleBrowser.RoomSchedule.CS
         private static bool CheckSameColName(string baseName, string compName)
         {
             return string.Compare(baseName, compName) == 0;
+        }
+
+        private static object OleDbSchemaTables
+        {
+            get
+            {
+                var schemaType = GetOleDbType("System.Data.OleDb.OleDbSchemaGuid");
+                return schemaType.GetField("Tables", BindingFlags.Public | BindingFlags.Static).GetValue(null);
+            }
+        }
+
+        private static object CreateOleDbConnection(string connectionString)
+        {
+            return Activator.CreateInstance(GetOleDbType("System.Data.OleDb.OleDbConnection"), connectionString);
+        }
+
+        private static object CreateOleDbDataAdapter(string commandText, object connection)
+        {
+            return Activator.CreateInstance(GetOleDbType("System.Data.OleDb.OleDbDataAdapter"), commandText, connection);
+        }
+
+        private static Type GetOleDbType(string typeName)
+        {
+            var type = Type.GetType($"{typeName}, System.Data.OleDb");
+            if (type == null)
+                throw new InvalidOperationException("System.Data.OleDb is required for the RoomSchedule Excel sample.");
+            return type;
+        }
+
+        private static object Invoke(object target, string methodName, params object[] args)
+        {
+            return target.GetType().GetMethod(methodName).Invoke(target, args);
         }
     }
 }

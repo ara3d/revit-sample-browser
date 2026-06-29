@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Web.UI;
+using System.Net;
 using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
@@ -325,5 +325,88 @@ namespace Ara3D.RevitSampleBrowser.ScheduleToHTML.CS
 
             return updated;
         }
+    }
+}
+
+internal enum HtmlTextWriterAttribute
+{
+    Align,
+    Bgcolor,
+    Border,
+    Colspan,
+    Rowspan
+}
+
+internal enum HtmlTextWriterTag
+{
+    B,
+    Div,
+    I,
+    Table,
+    Td,
+    Tr,
+    U
+}
+
+internal sealed class HtmlTextWriter : IDisposable
+{
+    private readonly TextWriter m_writer;
+    private readonly Stack<string> m_openTags = new Stack<string>();
+    private readonly List<Tuple<string, string>> m_pendingAttributes = new List<Tuple<string, string>>();
+
+    public HtmlTextWriter(TextWriter writer)
+    {
+        m_writer = writer;
+    }
+
+    public void AddAttribute(HtmlTextWriterAttribute attribute, string value)
+    {
+        m_pendingAttributes.Add(new Tuple<string, string>(GetAttributeName(attribute), value));
+    }
+
+    public void RenderBeginTag(HtmlTextWriterTag tag)
+    {
+        var tagName = GetTagName(tag);
+        m_writer.Write("<");
+        m_writer.Write(tagName);
+        foreach (var attribute in m_pendingAttributes)
+        {
+            m_writer.Write(" ");
+            m_writer.Write(attribute.Item1);
+            m_writer.Write("=\"");
+            m_writer.Write(WebUtility.HtmlEncode(attribute.Item2));
+            m_writer.Write("\"");
+        }
+
+        m_pendingAttributes.Clear();
+        m_writer.Write(">");
+        m_openTags.Push(tagName);
+    }
+
+    public void RenderEndTag()
+    {
+        m_writer.Write("</");
+        m_writer.Write(m_openTags.Pop());
+        m_writer.Write(">");
+    }
+
+    public void Write(string value)
+    {
+        m_writer.Write(value == "&nbsp;" ? value : WebUtility.HtmlEncode(value));
+    }
+
+    public void Dispose()
+    {
+        m_writer?.Dispose();
+    }
+
+    private static string GetAttributeName(HtmlTextWriterAttribute attribute)
+    {
+        return attribute.ToString().ToLowerInvariant();
+    }
+
+    private static string GetTagName(HtmlTextWriterTag tag)
+    {
+        return tag.ToString().ToLowerInvariant();
     }
 }

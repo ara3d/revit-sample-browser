@@ -15,7 +15,7 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Web.Script.Serialization;
+using System.Text.Json;
 using System.Windows;
 using Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration;
 using Microsoft.Win32;
@@ -56,8 +56,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
             {
                 var model = ((MigrationToBim360)DataContext).Model;
                 var jsonString = File.ReadAllText(openFileDialog.FileName);
-                var serializer = new JavaScriptSerializer();
-                var info = serializer.Deserialize<SerializableProjectInfo>(jsonString);
+                var info = JsonSerializer.Deserialize<SerializableProjectInfo>(jsonString);
 
                 model.AccountGuid = info.AccountGuid;
                 model.ProjectGuid = info.ProjectGuid;
@@ -81,8 +80,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.View
                     ProjectGuid = model.ProjectGuid,
                     AvailableFolders = model.AvailableFolders.ToArray()
                 };
-                var serializer = new JavaScriptSerializer();
-                var jsonString = serializer.Serialize(info);
+                var jsonString = JsonSerializer.Serialize(info);
                 File.WriteAllText(saveFileDialog.FileName, jsonString);
             }
         }

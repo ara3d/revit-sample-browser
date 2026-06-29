@@ -3,7 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Web.Script.Serialization;
+using System.Linq;
+using System.Text.Json;
 using Autodesk.Revit.DB;
 
 namespace Ara3D.RevitSampleBrowser.CreateTrianglesTopography.CS
@@ -33,56 +34,25 @@ namespace Ara3D.RevitSampleBrowser.CreateTrianglesTopography.CS
 
         private static TrianglesData JsonParse(string jsonString)
         {
-            var serializer = new JavaScriptSerializer();
-            serializer.RegisterConverters(new JavaScriptConverter[] { new XyzConverter() });
-
-            return serializer.Deserialize(jsonString, typeof(TrianglesData)) as TrianglesData;
-        }
-    }
-
-    /// <summary>
-    ///     The converter for Revit XYZ.
-    /// </summary>
-    public class XyzConverter : JavaScriptConverter
-    {
-        /// <summary>
-        ///     gets a collection of the supported types
-        /// </summary>
-        public override IEnumerable<Type> SupportedTypes
-        {
-            get { return new[] { typeof(XYZ) }; }
+            var data = JsonSerializer.Deserialize<TrianglesDataDto>(jsonString);
+            return new TrianglesData
+            {
+                Points = data.Points.Select(point => new XYZ(point.X, point.Y, point.Z)).ToList(),
+                Facets = data.Facets
+            };
         }
 
-        /// <summary>
-        ///     Converts the provided dictionary into an object of Revit XYZ
-        /// </summary>
-        /// <param name="dictionary"></param>
-        /// <param name="type"></param>
-        /// <param name="serializer"></param>
-        /// <returns></returns>
-        public override object Deserialize(IDictionary<string, object> dictionary, Type type,
-            JavaScriptSerializer serializer)
+        private class TrianglesDataDto
         {
-            return new XYZ(Convert.ToDouble(dictionary["X"]), Convert.ToDouble(dictionary["Y"]),
-                Convert.ToDouble(dictionary["Z"]));
+            public IList<PointDto> Points { get; set; }
+            public IList<IList<int>> Facets { get; set; }
         }
 
-        /// <summary>
-        ///     Converts the provided Revit XYZ object to a dictionary of name/value pairs.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="serializer"></param>
-        /// <returns></returns>
-        public override IDictionary<string, object> Serialize(object obj, JavaScriptSerializer serializer)
+        private class PointDto
         {
-            var dic = new Dictionary<string, object>();
-            if (!(obj is XYZ node))
-                return null;
-            dic.Add("X", node.X);
-            dic.Add("Y", node.Y);
-            dic.Add("Z", node.Z);
-
-            return dic;
+            public double X { get; set; }
+            public double Y { get; set; }
+            public double Z { get; set; }
         }
     }
 }

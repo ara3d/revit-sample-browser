@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Web.Script.Serialization;
+using System.Text.Json;
 using System.Windows;
 using Ara3D.RevitSampleBrowser.CloudAPISample.CS.View;
 using Autodesk.Revit.DB;
@@ -134,8 +134,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
             }
 
             // All link info should be dump to local file in case something wrong happens during uploading process
-            var serializer = new JavaScriptSerializer();
-            var jsonString = serializer.Serialize(mapLocalModelPathToLinksName);
+            var jsonString = JsonSerializer.Serialize(mapLocalModelPathToLinksName);
 
             File.WriteAllText(FLinksInfo, jsonString);
 
@@ -172,7 +171,7 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
                 yield return null;
             }
 
-            jsonString = serializer.Serialize(mapModelsNameToGuid);
+            jsonString = JsonSerializer.Serialize(mapModelsNameToGuid);
             File.WriteAllText(FModelsGuid, jsonString);
 
             view.UpdateUploadingProgress("Uploading finished", 100);
@@ -204,10 +203,9 @@ namespace Ara3D.RevitSampleBrowser.CloudAPISample.CS.Samples.Migration
             // Read mapping info
             var jsonString = File.ReadAllText(FLinksInfo);
 
-            var serializer = new JavaScriptSerializer();
-            var mapLocalModelPathToLinksName = serializer.Deserialize<Dictionary<string, List<string>>>(jsonString);
+            var mapLocalModelPathToLinksName = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(jsonString);
             jsonString = File.ReadAllText(FModelsGuid);
-            var mapModelsNameToGuid = serializer.Deserialize<Dictionary<string, string>>(jsonString);
+            var mapModelsNameToGuid = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
 
             // Try to open each cloud model and reload if they have links, making that point to cloud path.
             foreach (var kvp in mapLocalModelPathToLinksName)

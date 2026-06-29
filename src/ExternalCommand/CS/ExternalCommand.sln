@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11919.86
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitAddInUtilitySample", "RevitAddInUtilitySample\RevitAddInUtilitySample.csproj", "{1FF1330C-F41E-4C18-9000-E78FB24F3AD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalCommandRegistration", "ExternalCommandRegistration\ExternalCommandRegistration.csproj", "{60316DFC-53FD-42B4-BBCE-25FD3D337815}"

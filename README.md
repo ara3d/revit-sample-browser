@@ -1,6 +1,6 @@
 # Ara 3D Revit Sample Browser
 
-The Ara3D Revit Sample Browser is a plug-in for Revit 2024 that provides a Windows Forms UI to browse the documentation and activate most of the Revit SDK C# samples for Revit 2024. 
+The Ara3D Revit Sample Browser is a plug-in for Revit 2025 that provides a Windows Forms UI to browse the documentation and activate most of the Revit SDK C# samples for Revit 2025. 
 The code for the samples was downloaded from [Jeremy Tammik's Revit SDK Samples](https://github.com/jeremytammik/RevitSdkSamples), then merged together in a single project
 with some code style changes applied via ReSharper, and some regular expression magic.   
 
@@ -29,8 +29,8 @@ Currently any sample that requires an external file, is using the wrong path.
 
 ## How to Build and Compile 
 
-The project runs a batch script after build that copies the add-in file and the DLLs into the Revit 2024 add-ins directory.
-Just launching Revit 2024 afterwards should work. 
+The project runs a batch script after build that copies the add-in file and the DLLs into the Revit 2025 add-ins directory.
+Just launching Revit 2025 afterwards should work. 
 
 ## How to Use
 

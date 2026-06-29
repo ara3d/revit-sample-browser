@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33122.133
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11919.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ara3D.RevitSampleBrowser", "Ara3D.RevitSampleBrowser.csproj", "{EF12A6B4-ADE7-438D-A469-6A590548C266}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ara3D.RevitSampleBrowser", "Ara3D.RevitSampleBrowser.csproj", "{EF12A6B4-ADE7-438D-A469-6A590548C266}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{4FFA90CA-2621-44DD-AFF6-BB4BCADB88EA}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,8 +23,8 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EF12A6B4-ADE7-438D-A469-6A590548C266}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{EF12A6B4-ADE7-438D-A469-6A590548C266}.Debug|Any CPU.Build.0 = Debug|x64
+		{EF12A6B4-ADE7-438D-A469-6A590548C266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF12A6B4-ADE7-438D-A469-6A590548C266}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF12A6B4-ADE7-438D-A469-6A590548C266}.Debug|x64.ActiveCfg = Debug|x64
 		{EF12A6B4-ADE7-438D-A469-6A590548C266}.Debug|x64.Build.0 = Debug|x64
 		{EF12A6B4-ADE7-438D-A469-6A590548C266}.Release|Any CPU.ActiveCfg = Release|x64

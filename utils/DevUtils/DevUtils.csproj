@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
 
     <Platforms>AnyCPU;x64</Platforms>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,19 +26,19 @@
 
   <ItemGroup>
     <Reference Include="RevitAddInUtility">
-      <HintPath>..\..\vendor\revit\2024\RevitAddInUtility.dll</HintPath>
+      <HintPath>..\..\vendor\revit\2025\RevitAddInUtility.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPI">
-      <HintPath>..\..\vendor\revit\2024\RevitAPI.dll</HintPath>
+      <HintPath>..\..\vendor\revit\2025\RevitAPI.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPIIFC">
-      <HintPath>..\..\vendor\revit\2024\RevitAPIIFC.dll</HintPath>
+      <HintPath>..\..\vendor\revit\2025\RevitAPIIFC.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>..\..\vendor\revit\2024\RevitAPIUI.dll</HintPath>
+      <HintPath>..\..\vendor\revit\2025\RevitAPIUI.dll</HintPath>
     </Reference>
     <Reference Include="RevitNET">
-      <HintPath>..\..\vendor\revit\2024\RevitNET.dll</HintPath>
+      <HintPath>..\..\vendor\revit\2025\RevitNET.dll</HintPath>
     </Reference>
   </ItemGroup>
 

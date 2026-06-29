@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11919.86
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensibleStorageManager", "ExtensibleStorageManager.csproj", "{D80CD23C-5D40-4BE6-8940-5CE791DEF719}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchemaWrapperTools", "..\..\SchemaWrapperTools\CS\SchemaWrapperTools.csproj", "{D5227927-E688-4996-BEEE-7DCA91A7365B}"

@@ -96,7 +96,7 @@ namespace Ara3D.RevitSampleBrowser
                 
                 Form.Show();
                 CurrentListener = new LoggingListener(Form.logTextBox);
-                Debug.Listeners.Add(CurrentListener);
+                Trace.Listeners.Add(CurrentListener);
                 Form.FormClosing += Form_FormClosing;
                 return Result.Succeeded;
             }
@@ -111,7 +111,7 @@ namespace Ara3D.RevitSampleBrowser
         {
             if (CurrentListener != null)
             {
-                Debug.Listeners.Remove(CurrentListener);
+                Trace.Listeners.Remove(CurrentListener);
                 CurrentListener = null;
             }
         }

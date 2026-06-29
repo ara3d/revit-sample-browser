@@ -30,7 +30,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
 
         private readonly MaterialProperties m_dataBuffer;
         private Button m_okButton;
-        private DataGrid m_parameterDataGrid;
+        private DataGridView m_parameterDataGrid;
         private ComboBox m_subTypeComboBox;
         private ComboBox m_typeComboBox;
         private Label m_typeLable;
@@ -49,7 +49,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             // Required for Windows Form Designer support
             //
             InitializeComponent();
-            m_parameterDataGrid.PreferredColumnWidth = m_parameterDataGrid.Width / 2 - 2;
+            m_parameterDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             m_dataBuffer = dataBuffer;
         }
@@ -76,7 +76,7 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             m_typeLable = new Label();
             m_typeComboBox = new ComboBox();
             m_subTypeComboBox = new ComboBox();
-            m_parameterDataGrid = new DataGrid();
+            m_parameterDataGrid = new DataGridView();
             m_okButton = new Button();
             m_cancelButton = new Button();
             m_applyButton = new Button();
@@ -115,9 +115,6 @@ namespace Ara3D.RevitSampleBrowser.MaterialProperties.CS
             // parameterDataGrid
             // 
             m_parameterDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            m_parameterDataGrid.CaptionVisible = false;
-            m_parameterDataGrid.DataMember = "";
-            m_parameterDataGrid.HeaderForeColor = SystemColors.ControlText;
             m_parameterDataGrid.Location = new Point(16, 88);
             m_parameterDataGrid.Name = "m_parameterDataGrid";
             m_parameterDataGrid.ReadOnly = true;

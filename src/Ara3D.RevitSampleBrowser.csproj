@@ -1,15 +1,45 @@
-﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <Platforms>AnyCPU;x64</Platforms>
     <ProjectGuid>{EF12A6B4-ADE7-438D-A469-6A590548C266}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Ara3D.RevitSampleBrowser</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <FileAlignment>512</FileAlignment>
+    <RevitAddinYear>2025</RevitAddinYear>
+    <RevitAddinsDir>$(AppData)\Autodesk\Revit\Addins\$(RevitAddinYear)</RevitAddinsDir>
+    <RevitSampleBrowserAddinDir>$(RevitAddinsDir)\Ara3D\RevitSampleBrowser</RevitSampleBrowserAddinDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Debug|Any CPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release|Any CPU'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,7 +76,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <DocumentationFile>
     </DocumentationFile>
@@ -57,49 +87,39 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="AdWindows">
+      <HintPath>..\vendor\revit\2025\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="RevitAddInUtility">
-      <HintPath>..\vendor\revit\2024\RevitAddInUtility.dll</HintPath>
+      <HintPath>..\vendor\revit\2025\RevitAddInUtility.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPI">
-      <HintPath>..\vendor\revit\2024\RevitAPI.dll</HintPath>
+      <HintPath>..\vendor\revit\2025\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIIFC">
-      <HintPath>..\vendor\revit\2024\RevitAPIIFC.dll</HintPath>
+      <HintPath>..\vendor\revit\2025\RevitAPIIFC.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>..\vendor\revit\2024\RevitAPIUI.dll</HintPath>
+      <HintPath>..\vendor\revit\2025\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitNET">
-      <HintPath>..\vendor\revit\2024\RevitNET.dll</HintPath>
+      <HintPath>..\vendor\revit\2025\RevitNET.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="UIFramework">
+      <HintPath>..\vendor\revit\2025\UIFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="APIAppStartup\CS\Resources\test.rvt-Revit_black-93694.bmp" />
@@ -431,6 +451,7 @@
     <None Include="WinderStairs\CS\Readme_WinderStairs.rtf" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Revit2025Aliases.cs" />
     <Compile Include="AddSpaceAndZone\CS\Command.cs" />
     <Compile Include="AddSpaceAndZone\CS\DataManager.cs" />
     <Compile Include="AddSpaceAndZone\CS\MainForm.cs">
@@ -2656,12 +2677,17 @@
     <Folder Include="ViewTemplateCreation\CS\Properties\" />
     <Folder Include="VisibilityControl\CS\Properties\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
   </ProjectExtensions>
-  <PropertyGroup>
-    <PostBuildEvent>call cd "$(ProjectDir)" 
-call "post-build.bat" "$(OutDir)"</PostBuildEvent>
-  </PropertyGroup>
+  <Target Name="InstallRevitAddin" AfterTargets="Build">
+    <ItemGroup>
+      <RevitSampleBrowserOutput Include="$(TargetDir)**\*.*" />
+    </ItemGroup>
+    <MakeDir Directories="$(RevitAddinsDir)" />
+    <MakeDir Directories="$(RevitSampleBrowserAddinDir)" />
+    <Copy SourceFiles="$(ProjectDir)Ara3D.RevitSampleBrowser.addin" DestinationFolder="$(RevitAddinsDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(RevitSampleBrowserOutput)" DestinationFiles="@(RevitSampleBrowserOutput->'$(RevitSampleBrowserAddinDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 </Project>
+
