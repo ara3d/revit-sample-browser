@@ -1,77 +1,69 @@
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 ﻿using System;
 using Autodesk.Revit.DB;
 
 namespace BuildingCoder
 {
     /// <summary>
-    ///     An integer-based 3D point class.
+    ///     An integer-based 2D point class.
     /// </summary>
-    internal class IntPoint3d : IComparable<IntPoint3d>
+    internal class IntPoint2d : IComparable<IntPoint2d>
     {
         /// <summary>
         ///     Initialise a 2D millimetre integer
         ///     point to the given values.
         /// </summary>
-        public IntPoint3d(int x, int y, int z)
+        public IntPoint2d(int x, int y)
         {
             X = x;
             Y = y;
-            Z = z;
         }
 
         /// <summary>
-        ///     Convert a 2D Revit UV to a 3D millimetre
+        ///     Convert a 2D Revit UV to a 2D millimetre
         ///     integer point by scaling from feet to mm.
         /// </summary>
-        public IntPoint3d(UV p)
+        public IntPoint2d(UV p)
         {
             X = Util.FootToMmInt(p.U);
             Y = Util.FootToMmInt(p.V);
-            Z = 0;
         }
 
         /// <summary>
-        ///     Convert a 3D Revit XYZ to a 3D millimetre
-        ///     integer point, scaling from feet to mm.
+        ///     Convert a 3D Revit XYZ to a 2D millimetre
+        ///     integer point by discarding the Z coordinate
+        ///     and scaling from feet to mm.
         /// </summary>
-        public IntPoint3d(XYZ p)
+        public IntPoint2d(XYZ p)
         {
             X = Util.FootToMmInt(p.X);
             Y = Util.FootToMmInt(p.Y);
-            Z = Util.FootToMmInt(p.Z);
         }
 
         /// <summary>
-        ///     Convert Revit coordinates XYZ to a 3D
+        ///     Convert Revit coordinates XYZ to a 2D
         ///     millimetre integer point by scaling
         ///     from feet to mm.
         /// </summary>
-        public IntPoint3d(double x, double y, double z)
+        public IntPoint2d(double x, double y)
         {
             X = Util.FootToMmInt(x);
             Y = Util.FootToMmInt(y);
-            Z = Util.FootToMmInt(z);
         }
 
         public int X { get; set; }
         public int Y { get; set; }
-        public int Z { get; set; }
 
         /// <summary>
         ///     Comparison with another point, important
         ///     for dictionary lookup support.
         /// </summary>
-        public int CompareTo(IntPoint3d a)
+        public int CompareTo(IntPoint2d a)
         {
             var d = X - a.X;
 
-            if (0 == d)
-            {
-                d = Y - a.Y;
-
-                if (0 == d) d = Z - a.Z;
-            }
-
+            if (0 == d) d = Y - a.Y;
             return d;
         }
 
@@ -80,7 +72,7 @@ namespace BuildingCoder
         /// </summary>
         public override string ToString()
         {
-            return $"({X},{Y},{Z})";
+            return $"({X},{Y})";
         }
 
         /// <summary>
@@ -90,22 +82,22 @@ namespace BuildingCoder
             bool onlySpaceSeparator)
         {
             var format_string = onlySpaceSeparator
-                ? "{0} {1} {2}"
-                : "({0},{1},{2})";
+                ? "{0} {1}"
+                : "({0},{1})";
 
-            return string.Format(format_string, X, Y, Z);
+            return string.Format(format_string, X, Y);
         }
 
         /// <summary>
         ///     Add two points, i.e. treat one of
         ///     them as a translation vector.
         /// </summary>
-        public static IntPoint3d operator +(
-            IntPoint3d a,
-            IntPoint3d b)
+        public static IntPoint2d operator +(
+            IntPoint2d a,
+            IntPoint2d b)
         {
-            return new IntPoint3d(
-                a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+            return new IntPoint2d(
+                a.X + b.X, a.Y + b.Y);
         }
     }
 }

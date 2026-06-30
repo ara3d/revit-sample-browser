@@ -463,7 +463,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\**\*.cs" />
-    <Compile Include="TBC_Shared\**\*.cs" />
     <Compile Include="TBC_*\**\*.cs" Exclude="TBC_Shared\**" />
     <EmbeddedResource Include="TBC_*\**\*.resx" Exclude="TBC_Shared\**" />
     <Compile Include="Revit2025Aliases.cs" />

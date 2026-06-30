@@ -1,3 +1,5 @@
+// Copyright 2023. See https://github.com/ara3d/revit-sample-browser/LICENSE.txt
+
 ﻿#region Namespaces
 
 #endregion // Namespaces
